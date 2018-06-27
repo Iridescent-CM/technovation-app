@@ -6,29 +6,31 @@ require('canvas')
 
 describe('PieChart Vue component', () => {
 
+  const chartData = {
+    labels: [
+      'With parental permission – (75%)',
+      'Without parental permission – (25%)',
+    ],
+    datasets: [
+      {
+        data: [
+          3,
+          1,
+        ],
+        urls: [
+          '/with/parental/permission',
+          '/without/parental/permission',
+        ],
+      },
+    ],
+  }
+
   let wrapper
 
   beforeEach(() => {
     wrapper = shallow(PieChart, {
       propsData: {
-        chartData: {
-          labels: [
-            'With parental permission – (75%)',
-            'Without parental permission – (25%)',
-          ],
-          datasets: [
-            {
-              data: [
-                3,
-                1,
-              ],
-              urls: [
-                '/with/parental/permission',
-                '/without/parental/permission',
-              ],
-            },
-          ],
-        },
+        chartData,
         colorRange: {
           start: '#fafa6e',
           end: '#2A4858',
@@ -54,6 +56,11 @@ describe('PieChart Vue component', () => {
         colorRange: {
           type: Object,
           default: expect.any(Function)
+        },
+
+        url: {
+          type: String,
+          default: '',
         },
       })
     })
@@ -84,6 +91,7 @@ describe('PieChart Vue component', () => {
     it('sets the correct initial state', () => {
       expect(PieChart.data()).toEqual({
         chart: null,
+        loading: true,
         mutableChartData: {},
       })
     })
@@ -99,7 +107,7 @@ describe('PieChart Vue component', () => {
 
         expect(chartDestroySpy).not.toHaveBeenCalled()
 
-        wrapper.vm.initializeChart()
+        wrapper.vm.initializeChart(chartData)
 
         expect(chartDestroySpy).toHaveBeenCalledTimes(1)
       })
@@ -177,6 +185,28 @@ describe('PieChart Vue component', () => {
             'rgba(42,72,88,1)',
           ],
         })
+      })
+
+    })
+
+    describe('isEmptyObject', () => {
+
+      it('returns true if object is empty', () => {
+        const object = {}
+
+        const result = wrapper.vm.isEmptyObject(object)
+
+        expect(result).toBe(true)
+      })
+
+      it('returns false if the object is not empty', () => {
+        const object = {
+          key: 'value'
+        }
+
+        const result = wrapper.vm.isEmptyObject(object)
+
+        expect(result).toBe(false)
       })
 
     })

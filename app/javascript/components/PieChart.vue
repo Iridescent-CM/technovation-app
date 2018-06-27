@@ -1,11 +1,13 @@
 <template>
   <div class="pie-chart">
-    <canvas :class="chartClasses"></canvas>
+    <p v-show="loading">Loading...</p>
+    <canvas v-show="!loading" :class="chartClasses"></canvas>
   </div>
 </template>
 
 <script>
 
+import axios from 'axios'
 import Chart from 'chart.js'
 import chroma from 'chroma-js'
 
@@ -27,6 +29,7 @@ export default {
   data () {
     return {
       chart: null,
+      loading: true,
       mutableChartData: {},
     }
   },
@@ -55,14 +58,26 @@ export default {
         }
       },
     },
+
+    url: {
+      type: String,
+      default: '',
+    },
   },
 
   mounted () {
-    this.initializeChart()
+    if (this.url !== '' && this.isEmptyObject(this.chartData)) {
+      axios.get(this.url)
+        .then(({ data }) => {
+          this.initializeChart(data)
+        })
+    } else {
+      this.initializeChart(this.chartData)
+    }
   },
 
   methods: {
-    initializeChart () {
+    initializeChart (chartData) {
       if (this.chart !== null) {
         this.chart.destroy()
       }
@@ -70,7 +85,7 @@ export default {
       const chartElement = this.$el.querySelector('canvas')
       const chartContext = chartElement.getContext('2d')
 
-      const extendedChartData = Object.assign({}, defaultData, this.chartData)
+      const extendedChartData = Object.assign({}, defaultData, chartData)
 
       // Generate colors based on number of data items in the dataset
       Object.keys(extendedChartData.datasets).forEach((key) => {
@@ -103,6 +118,11 @@ export default {
       })
 
       this.$set(this, 'mutableChartData', extendedChartData)
+
+      // Emit event for caching AJAX response on the parent component
+      this.$emit('pieChartInitialized', this.mutableChartData)
+
+      this.loading = false
     },
 
     generateBackgroundColors (numberOfColors) {
@@ -128,6 +148,10 @@ export default {
       })
 
       return backgroundColors
+    },
+
+    isEmptyObject(object) {
+      return Object.keys(object).length === 0 && object.constructor === Object
     },
   },
 }
