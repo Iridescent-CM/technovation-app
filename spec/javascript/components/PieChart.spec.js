@@ -58,19 +58,23 @@ describe('PieChart Vue component', () => {
       })
     })
 
-    it('chartClasses sets the quickview-charts class by default', () => {
-      expect(PieChart.props.chartClasses.default())
-        .toEqual({
-          'quickview-charts': true,
-        })
+    describe('chartClasses', () => {
+      it('sets the quickview-charts class by default', () => {
+        expect(PieChart.props.chartClasses.default())
+          .toEqual({
+            'quickview-charts': true,
+          })
+      })
     })
 
-    it('colorRange sets a light blue to light pink range by default', () => {
-      expect(PieChart.props.colorRange.default())
-        .toEqual({
-          start: 'rgb(54, 162, 235)',
-          end: 'rgb(255, 99, 132)',
-        })
+    describe('colorRange', () => {
+      it('sets a light blue to light pink range by default', () => {
+        expect(PieChart.props.colorRange.default())
+          .toEqual({
+            start: 'rgb(54, 162, 235)',
+            end: 'rgb(255, 99, 132)',
+          })
+      })
     })
 
   })
