@@ -33,7 +33,7 @@ describe('PieChart Vue component', () => {
           start: '#fafa6e',
           end: '#2A4858',
         },
-      }
+      },
     })
   })
 
@@ -87,6 +87,68 @@ describe('PieChart Vue component', () => {
   })
 
   describe('methods', () => {
+
+    describe('initializeChart', () => {
+
+      it('destroys the chart if already created', () => {
+        const chartDestroySpy = spyOn(wrapper.vm.chart, 'destroy')
+
+        expect(chartDestroySpy).not.toHaveBeenCalled()
+
+        wrapper.vm.initializeChart()
+
+        expect(chartDestroySpy).toHaveBeenCalledTimes(1)
+      })
+
+      it('sets the mutableChartData by extending the chartData prop', () => {
+        expect(wrapper.vm.mutableChartData).toEqual({
+          labels: [
+            'With parental permission – (75%)',
+            'Without parental permission – (25%)',
+          ],
+          datasets: [
+            expect.objectContaining({
+              backgroundColor: [
+                "rgba(250,250,110,0.7)",
+                "rgba(42,72,88,0.7)",
+              ],
+              data: [
+                3,
+                1,
+              ],
+              hoverBackgroundColor: [
+                "rgba(250,250,110,1)",
+                "rgba(42,72,88,1)",
+              ],
+              urls: [
+                '/with/parental/permission',
+                '/without/parental/permission',
+              ],
+            })
+          ],
+        })
+      })
+
+      it('creates a chart.js instance with the correct settings', () => {
+        const chartElement = wrapper.find('canvas').element
+        const chartContext = chartElement.getContext('2d')
+
+        expect(wrapper.vm.chart.canvas).toEqual(chartElement)
+        expect(wrapper.vm.chart.ctx).toEqual(chartContext)
+        expect(wrapper.vm.chart.config).toEqual(
+          expect.objectContaining({
+            type: 'pie',
+            data: wrapper.vm.mutableChartData,
+            options: expect.objectContaining({
+              legend: expect.objectContaining({
+                position: 'bottom',
+              }),
+              onClick: expect.any(Function),
+            }),
+          })
+        )
+      })
+    })
 
     describe('generateBackgroundColors', () => {
 

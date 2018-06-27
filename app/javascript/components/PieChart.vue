@@ -61,9 +61,6 @@ export default {
     this.initializeChart()
   },
 
-  // computed: {
-  // },
-
   methods: {
     initializeChart () {
       if (this.chart !== null) {
@@ -73,34 +70,25 @@ export default {
       const chartElement = this.$el.querySelector('canvas')
       const chartContext = chartElement.getContext('2d')
 
-      this.mutableChartData = Object.assign({}, defaultData, this.chartData)
+      const extendedChartData = Object.assign({}, defaultData, this.chartData)
 
       // Generate colors based on number of data items in the dataset
-      Object.keys(this.mutableChartData.datasets).forEach((key) => {
-        const numberOfDataItems = this.mutableChartData.datasets[key].data.length
+      Object.keys(extendedChartData.datasets).forEach((key) => {
+        const numberOfDataItems = extendedChartData.datasets[key].data.length
         const backgroundColors = this.generateBackgroundColors(numberOfDataItems)
 
-        // Set via Vue set method so we do not pollute the chartData prop
-        this.$set(
-          this.mutableChartData.datasets[key],
-          'hoverBackgroundColor',
-          backgroundColors.hoverBackgroundColor
-        )
-        this.$set(
-          this.mutableChartData.datasets[key],
-          'backgroundColor',
-          backgroundColors.backgroundColor
-        )
+        extendedChartData.datasets[key].hoverBackgroundColor = backgroundColors.hoverBackgroundColor
+        extendedChartData.datasets[key].backgroundColor = backgroundColors.backgroundColor
       })
 
-      const { urls } = this.mutableChartData.datasets[0]
+      const { urls } = extendedChartData.datasets[0]
 
       if (typeof urls !== 'undefined' && urls.length > 0)
         chartElement.style.cursor = 'pointer'
 
       this.chart = new Chart(chartContext, {
         type: 'pie',
-        data: this.mutableChartData,
+        data: extendedChartData,
         options: {
           legend: {
             position: 'bottom',
@@ -113,6 +101,8 @@ export default {
           },
         },
       })
+
+      this.$set(this, 'mutableChartData', extendedChartData)
     },
 
     generateBackgroundColors (numberOfColors) {
