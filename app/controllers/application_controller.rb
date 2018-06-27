@@ -32,9 +32,15 @@ class ApplicationController < ActionController::Base
     options = default_options.merge(passed_options)
 
     if options[:permanent]
-      cookies.permanent.signed[key] = value
+      cookies.permanent.signed[key] = {
+        value: value,
+        domain: ENV.fetch("COOKIE_DOMAIN"),
+      }
     else
-      cookies.signed[key] = value
+      cookies.signed[key] = {
+        value: value,
+        domain: ENV.fetch("COOKIE_DOMAIN"),
+      }
     end
   end
 
@@ -44,7 +50,7 @@ class ApplicationController < ActionController::Base
 
   def remove_cookie(key)
     value = get_cookie(key)
-    set_cookie(key, nil)
+    cookies.delete(key, domain: ENV.fetch("COOKIE_DOMAIN"))
     value
   end
 
