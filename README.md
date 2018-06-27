@@ -79,6 +79,12 @@ Install imagemagick
 brew install imagemagick
 ```
 
+Install canvas polyfill requirements for Jest test runner
+
+```
+brew install pkg-config cairo libpng jpeg giflib
+```
+
 Install pdftk
 
 [https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
@@ -123,6 +129,11 @@ rails s
 
 Navigate to [http://localhost:3000](http://localhost:3000)
 
+To compile and hot reload assets, run the following in a new terminal window
+
+```
+./bin/webpack-dev-server
+```
 
 ## User type logins:
 
