@@ -12,77 +12,73 @@
     <div class="grid__col-sm-6">
       <h6>Parental permission</h6>
 
-      <%= content_tag :canvas, nil,
-        class: "quickview-charts quickview-charts--students-permitted",
-        data: {
-          chart_data: {
+      <div class="vue-enable-pie-chart">
+        <pie-chart
+          :chart-classes="{
+            'quickview-charts': true,
+            'quickview-charts--students-permitted': true,
+          }"
+          :chart-data="{
             labels: [
-              "With parental permission – #{show_percentage(@permitted_students, @students)}",
-              "Without parental permission – #{show_percentage(@unpermitted_students, @students)}",
+              'With parental permission – <%= show_percentage(@permitted_students, @students) %>',
+              'Without parental permission – <%= show_percentage(@unpermitted_students, @students) %>',
             ],
             datasets: [
               {
                 data: [
-                  @permitted_students.count,
-                  @unpermitted_students.count,
-                ],
-                backgroundColor: [
-                  'rgba(54, 162, 235, 0.7)',
-                  'rgba(255, 99, 132, 0.7)',
-                ],
-                hoverBackgroundColor: [
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 99, 132, 1)',
+                  <%= @permitted_students.count %>,
+                  <%= @unpermitted_students.count %>,
                 ],
                 urls: [
-                  admin_participants_path(
+                  '<%= admin_participants_path(
                     accounts_grid: {
                       scope_names: ["student"],
                       parental_consent: "parental_consented",
                     }
-                  ),
-                  admin_participants_path(
+                  ) %>',
+                  '<%= admin_participants_path(
                     accounts_grid: {
                       scope_names: ["student"],
                       parental_consent: "not_parental_consented",
                     }
-                  ),
+                  ) %>',
                 ],
               },
             ],
-          },
-        } %>
+          }"
+        ></pie-chart>
       </div>
+    </div>
 
-      <div class="grid__col-sm-6">
-        <h6>New vs. Returning</h6>
+    <div class="grid__col-sm-6">
+      <h6>New vs. Returning</h6>
 
-        <%= content_tag :canvas, nil,
-          class: "quickview-charts quickview-charts--students-returning",
-          data: {
-            chart_data: {
-              labels: [
-                "Returning students – #{show_percentage(@returning_students, @students)}",
-                "New students – #{show_percentage(@new_students, @students)}",
-              ],
-              datasets: [
-                {
-                  data: [
-                    @returning_students.count,
-                    @new_students.count,
-                  ],
-                  backgroundColor: [
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                  ],
-                  hoverBackgroundColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                  ],
-                },
-              ],
-            },
-          } %>
+      <div class="vue-enable-pie-chart">
+        <pie-chart
+          :chart-classes="{
+            'quickview-charts': true,
+            'quickview-charts--students-returning': true,
+          }"
+          :color-range="{
+            start: 'rgba(54, 162, 235, 1)',
+            end: 'rgba(255, 206, 86, 1)',
+          }"
+          :chart-data="{
+            labels: [
+              'Returning students – <%= show_percentage(@returning_students, @students) %>',
+              'New students – <%= show_percentage(@new_students, @students) %>',
+            ],
+            datasets: [
+              {
+                data: [
+                  <%= @returning_students.count %>,
+                  <%= @new_students.count %>,
+                ],
+              },
+            ],
+          }"
+        ></pie-chart>
+      </div>
     </div>
   </div>
 </div>
@@ -97,101 +93,97 @@
     <div class="grid__col-sm-6">
       <h6>Background check / consent waivers</h6>
 
-      <%= content_tag :canvas, nil,
-        class: "quickview-charts quickview-charts--mentors",
-        data: {
-          chart_data: {
+      <div class="vue-enable-pie-chart">
+        <pie-chart
+          :chart-classes="{
+            'quickview-charts': true,
+            'quickview-charts--mentors': true,
+          }"
+          :chart-data="{
             labels: [
-              "Signed consent & cleared a background check, if required – #{show_percentage(@cleared_mentors, @mentors)}",
-              "Only signed consent – #{show_percentage(@signed_consent_mentors, @mentors)}",
-              "Only cleared bg check, if required – #{show_percentage(@cleared_bg_check_mentors, @mentors)}",
-              "Have done neither – #{show_percentage(@neither_mentors, @mentors)}",
+              'Signed consent & cleared a background check, if required – <%= show_percentage(@cleared_mentors, @mentors) %>',
+              'Only signed consent – <%= show_percentage(@signed_consent_mentors, @mentors) %>',
+              'Only cleared bg check, if required – <%= show_percentage(@cleared_bg_check_mentors, @mentors) %>',
+              'Have done neither – <%= show_percentage(@neither_mentors, @mentors) %>',
             ],
             datasets: [
               {
                 data: [
-                  @cleared_mentors.count,
-                  @signed_consent_mentors.count,
-                  @cleared_bg_check_mentors.count,
-                  @neither_mentors.count,
-                ],
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.7)',
-                  'rgba(54, 162, 235, 0.7)',
-                  'rgba(255, 206, 86, 0.7)',
-                  'rgba(75, 192, 192, 0.7)',
-                ],
-                hoverBackgroundColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
+                  <%= @cleared_mentors.count %>,
+                  <%= @signed_consent_mentors.count %>,
+                  <%= @cleared_bg_check_mentors.count %>,
+                  <%= @neither_mentors.count %>,
                 ],
                 urls: [
-                  admin_participants_path(
+                  '<%= admin_participants_path(
                     accounts_grid: {
                       scope_names: ["mentor"],
                       background_check: "bg_check_clear",
                       consent_waiver: "consent_signed",
                     }
-                  ),
-                  admin_participants_path(
+                  ) %>',
+                  '<%= admin_participants_path(
                     accounts_grid: {
                       scope_names: ["mentor"],
                       background_check: "bg_check_submitted",
                       consent_waiver: "consent_signed",
                     }
-                  ),
-                  admin_participants_path(
+                  ) %>',
+                  '<%= admin_participants_path(
                     accounts_grid: {
                       scope_names: ["mentor"],
                       background_check: "bg_check_clear",
                       consent_waiver: "consent_not_signed",
                     }
-                  ),
-                  admin_participants_path(
+                  ) %>',
+                  '<%= admin_participants_path(
                     accounts_grid: {
                       scope_names: ["mentor"],
                       background_check: "bg_check_unsubmitted",
                       consent_waiver: "consent_not_signed",
                     }
-                  ),
+                  ) %>',
                 ],
               },
             ],
-          },
-        } %>
+          }"
+          :color-range="{
+            start: 'rgba(255, 99, 132, 1)',
+            end: 'rgba(75, 192, 192, 1)',
+          }"
+        ></pie-chart>
+      </div>
     </div>
 
     <div class="grid__col-sm-6">
       <h6>New vs. Returning</h6>
 
-      <%= content_tag :canvas, nil,
-        class: "quickview-charts quickview-charts--mentors-returning",
-        data: {
-          chart_data: {
+      <div class="vue-enable-pie-chart">
+        <pie-chart
+          :chart-classes="{
+            'quickview-charts': true,
+            'quickview-charts--mentors-returning': true,
+          }"
+          :chart-data="{
             labels: [
-              "Returning mentors – #{show_percentage(@returning_mentors, @mentors)}",
-              "New mentors – #{show_percentage(@new_mentors, @mentors)}",
+              'Returning mentors – <%= show_percentage(@returning_mentors, @mentors) %>',
+              'New mentors – <%= show_percentage(@new_mentors, @mentors) %>',
             ],
             datasets: [
               {
                 data: [
-                  @returning_mentors.count,
-                  @new_mentors.count,
-                ],
-                backgroundColor: [
-                  'rgba(54, 162, 235, 0.6)',
-                  'rgba(255, 206, 86, 0.6)',
-                ],
-                hoverBackgroundColor: [
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
+                  <%= @returning_mentors.count %>,
+                  <%= @new_mentors.count %>,
                 ],
               },
             ],
-          },
-      } %>
+          }"
+          :color-range="{
+            start: 'rgba(54, 162, 235, 1)',
+            end: 'rgba(255, 206, 86, 1)',
+          }"
+        ></pie-chart>
+      </div>
     </div>
   </div>
 </div>

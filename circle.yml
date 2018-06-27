@@ -56,6 +56,9 @@ jobs:
 
       - run: sudo apt-get install yarn
 
+      # Needed to polyfill canvas elements for testing in Jest (NodeJs environment)
+      - run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+
       - run:
           name: Install dependencies
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
