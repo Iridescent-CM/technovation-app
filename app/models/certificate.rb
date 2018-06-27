@@ -7,4 +7,8 @@ class Certificate < ApplicationRecord
   belongs_to :team, required: false
 
   mount_uploader :file, FileProcessor
+
+  scope :judge_types, -> {
+    where(cert_type: CERTIFICATE_TYPES.select { |t| t.include?('_judge') })
+  }
 end
