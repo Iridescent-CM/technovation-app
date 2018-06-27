@@ -2,11 +2,11 @@ import Vue from 'vue/dist/vue.esm'
 import PieChart from '../components/PieChart'
 
 document.addEventListener('turbolinks:load', () => {
-  const btnEls = document.querySelectorAll('.vue-enable-pie-chart')
+  const pieChartElements = document.querySelectorAll('.vue-enable-pie-chart')
 
-  btnEls.forEach((btnEl) => {
+  pieChartElements.forEach((element) => {
     new Vue({
-      el: btnEl,
+      el: element,
 
       components: {
         PieChart,
