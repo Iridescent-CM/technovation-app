@@ -6,7 +6,6 @@
 //= require chosen-jquery
 //= require sweetalert2
 //= require jquery.sticky-kit.min
-//= require Chart.min
 
 // ******** APP
 //
@@ -19,7 +18,6 @@
 //= require forms
 //= require season-schedule
 //= require saved-searches
-//= require charts
 //= require jobs
 //= require sticky-cols
 
