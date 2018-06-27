@@ -1,5 +1,5 @@
 <template>
-  <div class="certificate-button">
+  <div class="pie-chart">
     <canvas :class="chartClasses"></canvas>
   </div>
 </template>
