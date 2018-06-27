@@ -49,7 +49,7 @@ RSpec.feature "Admins invite users to signup" do
       url = send(
         "#{scope}_signup_url",
         admin_permission_token: token,
-        host: ENV.fetch("HOST_DOMAIN")
+        host: ENV.fetch("COOKIE_DOMAIN")
       )
 
       visit url
@@ -118,7 +118,7 @@ RSpec.feature "Admins invite users to signup" do
       url = send(
         "#{scope}_signup_url",
         admin_permission_token: token,
-        host: ENV.fetch("HOST_DOMAIN")
+        host: ENV.fetch("COOKIE_DOMAIN")
       )
 
       visit url
@@ -140,7 +140,7 @@ RSpec.feature "Admins invite users to signup" do
     token = UserInvitation.last.admin_permission_token
     url = regional_ambassador_signup_url(
       admin_permission_token: token,
-      host: ENV.fetch("HOST_DOMAIN")
+      host: ENV.fetch("COOKIE_DOMAIN")
     )
 
     visit url
@@ -180,7 +180,7 @@ RSpec.feature "Admins invite users to signup" do
     token = UserInvitation.last.admin_permission_token
     url = regional_ambassador_signup_url(
       admin_permission_token: token,
-      host: ENV.fetch("HOST_DOMAIN")
+      host: ENV.fetch("COOKIE_DOMAIN")
     )
 
     visit url
