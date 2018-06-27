@@ -6,6 +6,7 @@
 
 <script>
 
+import Chart from 'chart.js'
 import chroma from 'chroma-js'
 
 const defaultData = {
@@ -69,10 +70,8 @@ export default {
         this.chart.destroy()
       }
 
-      console.log(this.$el.querySelector('canvas'))
       const chartElement = this.$el.querySelector('canvas')
       const chartContext = chartElement.getContext('2d')
-      console.log('chartContext', chartContext)
 
       this.mutableChartData = Object.assign({}, defaultData, this.chartData)
 

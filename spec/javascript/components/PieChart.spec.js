@@ -2,38 +2,39 @@ import { shallow } from '@vue/test-utils'
 
 import PieChart from 'components/PieChart'
 
+require('canvas')
+
 describe('PieChart Vue component', () => {
 
   let wrapper
 
   beforeEach(() => {
-    // TODO - Figure out how to get Canvas support into Jest before enabling this
-    // wrapper = shallow(PieChart, {
-    //   propsData: {
-    //     chartData: {
-    //       labels: [
-    //         'With parental permission – (75%)',
-    //         'Without parental permission – (25%)',
-    //       ],
-    //       datasets: [
-    //         {
-    //           data: [
-    //             3,
-    //             1,
-    //           ],
-    //           urls: [
-    //             '/with/parental/permission',
-    //             '/without/parental/permission',
-    //           ],
-    //         },
-    //       ],
-    //     },
-    //     colorRange: {
-    //       start: '#fafa6e',
-    //       end: '#2A4858',
-    //     },
-    //   }
-    // })
+    wrapper = shallow(PieChart, {
+      propsData: {
+        chartData: {
+          labels: [
+            'With parental permission – (75%)',
+            'Without parental permission – (25%)',
+          ],
+          datasets: [
+            {
+              data: [
+                3,
+                1,
+              ],
+              urls: [
+                '/with/parental/permission',
+                '/without/parental/permission',
+              ],
+            },
+          ],
+        },
+        colorRange: {
+          start: '#fafa6e',
+          end: '#2A4858',
+        },
+      }
+    })
   })
 
   describe('props', () => {
@@ -85,15 +86,31 @@ describe('PieChart Vue component', () => {
 
   })
 
-  xdescribe('methods', () => {
+  describe('methods', () => {
 
     describe('generateBackgroundColors', () => {
 
-      // TODO - Figure out how to enable canvas support in Jest before enabling this
       it('returns RGBA background and hover color scales based on number of colors passed in', () => {
         const backgroundColors = wrapper.vm.generateBackgroundColors(6)
 
-        expect(backgroundColors).toEqual({})
+        expect(backgroundColors).toEqual({
+          backgroundColor: [
+            'rgba(250,250,110,0.7)',
+            'rgba(161,218,97,0.7)',
+            'rgba(90,185,84,0.7)',
+            'rgba(71,153,104,0.7)',
+            'rgba(57,120,113,0.7)',
+            'rgba(42,72,88,0.7)',
+          ],
+          hoverBackgroundColor: [
+            'rgba(250,250,110,1)',
+            'rgba(161,218,97,1)',
+            'rgba(90,185,84,1)',
+            'rgba(71,153,104,1)',
+            'rgba(57,120,113,1)',
+            'rgba(42,72,88,1)',
+          ],
+        })
       })
 
     })
