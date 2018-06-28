@@ -1,24 +1,18 @@
 <template>
   <div class="pie-chart">
-    <canvas :class="chartClasses"></canvas>
+    <p v-show="loading">Loading...</p>
+    <canvas v-show="!loading" :class="chartClasses"></canvas>
   </div>
 </template>
 
 <script>
 
+import axios from 'axios'
 import Chart from 'chart.js'
 import chroma from 'chroma-js'
 
-const defaultData = {
-  labels: [],
-  datasets: [
-    {
-      data: [],
-      backgroundColor: [],
-      hoverBackgroundColor: [],
-      urls: [],
-    }
-  ],
+function isEmptyObject(object) {
+  return Object.keys(object).length === 0 && object.constructor === Object
 }
 
 export default {
@@ -27,14 +21,32 @@ export default {
   data () {
     return {
       chart: null,
-      mutableChartData: {},
+      loading: true,
+      extendedChartData: {},
     }
   },
 
   props: {
     chartData: {
       type: Object,
-      required: true,
+      default () {
+        return {}
+      },
+      validator (chartData) {
+        if (isEmptyObject(chartData))
+          return true
+
+        if (!(chartData.labels && chartData.labels.constructor === Array))
+          return false
+
+        if (!(chartData.data && chartData.data.constructor === Array))
+          return false
+
+        if (chartData.urls && chartData.urls.constructor !== Array)
+          return false
+
+        return true
+      },
     },
 
     chartClasses: {
@@ -55,14 +67,28 @@ export default {
         }
       },
     },
+
+    url: {
+      type: String,
+      default: '',
+    },
   },
 
   mounted () {
-    this.initializeChart()
+    if (this.url !== '' && this.isEmptyObject(this.chartData)) {
+      axios.get(this.url)
+        .then(({ data }) => {
+          this.initializeChart(data)
+        })
+    } else {
+      this.initializeChart(this.chartData)
+    }
   },
 
   methods: {
-    initializeChart () {
+    isEmptyObject,
+
+    initializeChart (chartData) {
       if (this.chart !== null) {
         this.chart.destroy()
       }
@@ -70,25 +96,29 @@ export default {
       const chartElement = this.$el.querySelector('canvas')
       const chartContext = chartElement.getContext('2d')
 
-      const extendedChartData = Object.assign({}, defaultData, this.chartData)
+      const numberOfDataItems = chartData.data.length
+      const backgroundColors = this.generateBackgroundColors(numberOfDataItems)
 
-      // Generate colors based on number of data items in the dataset
-      Object.keys(extendedChartData.datasets).forEach((key) => {
-        const numberOfDataItems = extendedChartData.datasets[key].data.length
-        const backgroundColors = this.generateBackgroundColors(numberOfDataItems)
+      const extendedChartData = Object.assign({}, chartData, backgroundColors)
 
-        extendedChartData.datasets[key].hoverBackgroundColor = backgroundColors.hoverBackgroundColor
-        extendedChartData.datasets[key].backgroundColor = backgroundColors.backgroundColor
-      })
-
-      const { urls } = extendedChartData.datasets[0]
+      const { urls } = extendedChartData
 
       if (typeof urls !== 'undefined' && urls.length > 0)
         chartElement.style.cursor = 'pointer'
 
       this.chart = new Chart(chartContext, {
         type: 'pie',
-        data: extendedChartData,
+        data: {
+          labels: extendedChartData.labels,
+          datasets: [
+            {
+              data: extendedChartData.data,
+              backgroundColor: extendedChartData.backgroundColor,
+              hoverBackgroundColor: extendedChartData.hoverBackgroundColor,
+              urls: extendedChartData.urls,
+            }
+          ],
+        },
         options: {
           legend: {
             position: 'bottom',
@@ -102,7 +132,12 @@ export default {
         },
       })
 
-      this.$set(this, 'mutableChartData', extendedChartData)
+      this.$set(this, 'extendedChartData', extendedChartData)
+
+      // Emit event for caching AJAX response on the parent component
+      this.$emit('pieChartInitialized', this.extendedChartData)
+
+      this.loading = false
     },
 
     generateBackgroundColors (numberOfColors) {
