@@ -2,37 +2,6 @@
 
 <div class="vue-enable-pie-chart">
   <pie-chart
-    :chart-classes="{
-      'quickview-charts': true,
-      'quickview-charts--mentors': true,
-    }"
-    :color-range="{
-      start: 'rgba(54, 162, 235, 1)',
-      end: 'rgba(255, 99, 132, 1)',
-    }"
-    :chart-data="{
-      labels: [
-        'Signed consent – <%= show_percentage(@consenting_mentors, @mentors) %>',
-        'Has not signed – <%= show_percentage(@unconsenting_mentors, @mentors) %>',
-      ],
-      data: [
-        <%= @consenting_mentors.count %>,
-        <%= @unconsenting_mentors.count %>,
-      ],
-      urls: [
-        '<%= regional_ambassador_participants_path(
-          accounts_grid: {
-            scope_names: ["mentor"],
-            consent_waiver: "consent_signed",
-          }
-        ) %>',
-        '<%= regional_ambassador_participants_path(
-          accounts_grid: {
-            scope_names: ["mentor"],
-            consent_waiver: "consent_not_signed",
-          }
-        ) %>',
-      ],
-    }"
-  ></pie-chart>
+    url="<%= regional_ambassador_data_analysis_path(:onboarding_international_mentors) %>"
+  />
 </div>

@@ -25,39 +25,8 @@
 
     <div class="vue-enable-pie-chart">
       <pie-chart
-        :chart-classes="{
-          'quickview-charts': true,
-          'quickview-charts--students-permitted': true,
-        }"
-        :color-range="{
-          start: 'rgba(54, 162, 235, 1)',
-          end: 'rgba(255, 99, 132, 1)',
-        }"
-        :chart-data="{
-          labels: [
-            'With parental permission – <%= show_percentage(@permitted_students, @students) %>',
-            'Without parental permission – <%= show_percentage(@unpermitted_students, @students) %>',
-          ],
-          data: [
-            <%= @permitted_students.count %>,
-            <%= @unpermitted_students.count %>,
-          ],
-          urls: [
-            '<%= regional_ambassador_participants_path(
-              accounts_grid: {
-                scope_names: ["student"],
-                parental_consent: "parental_consented",
-              }
-            ) %>',
-            '<%= regional_ambassador_participants_path(
-              accounts_grid: {
-                scope_names: ["student"],
-                parental_consent: "not_parental_consented",
-              }
-            ) %>',
-          ],
-        }"
-      ></pie-chart>
+        url="<%= regional_ambassador_data_analysis_path(:permitted_students) %>"
+      />
     </div>
   </div>
 
@@ -66,25 +35,12 @@
 
     <div class="vue-enable-pie-chart">
       <pie-chart
-        :chart-classes="{
-          'quickview-charts': true,
-          'quickview-charts--students-returning': true,
-        }"
+        url="<%= regional_ambassador_data_analysis_path(:returning_students) %>"
         :color-range="{
           start: 'rgba(54, 162, 235, 1)',
           end: 'rgba(255, 206, 86, 1)',
         }"
-        :chart-data="{
-          labels: [
-            'Returning students – <%= show_percentage(@returning_students, @students) %>',
-            'New students – <%= show_percentage(@new_students, @students) %>',
-          ],
-          data: [
-            <%= @returning_students.count %>,
-            <%= @new_students.count %>,
-          ],
-        }"
-      ></pie-chart>
+      />
     </div>
   </div>
 </div>
@@ -113,25 +69,12 @@
 
     <div class="vue-enable-pie-chart">
       <pie-chart
-        :chart-classes="{
-          'quickview-charts': true,
-          'quickview-charts--mentors-returning': true,
-        }"
+        url="<%= regional_ambassador_data_analysis_path(:returning_mentors) %>"
         :color-range="{
           start: 'rgba(54, 162, 235, 1)',
           end: 'rgba(255, 206, 86, 1)',
         }"
-        :chart-data="{
-          labels: [
-            'Returning mentors – <%= show_percentage(@returning_mentors, @mentors) %>',
-            'New mentors – <%= show_percentage(@new_mentors, @mentors) %>',
-          ],
-          data: [
-            <%= @returning_mentors.count %>,
-            <%= @new_mentors.count %>,
-          ],
-        }"
-      ></pie-chart>
+      />
     </div>
   </div>
 </div>

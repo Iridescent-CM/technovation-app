@@ -139,6 +139,7 @@ Rails.application.routes.draw do
     resource :location_details, only: :show
 
     resource :dashboard, only: :show
+    resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
 
     resource :introduction, only: [:edit, :update]

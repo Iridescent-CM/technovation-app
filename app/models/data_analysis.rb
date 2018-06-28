@@ -1,8 +1,15 @@
 class DataAnalysis
   include ActionView::Helpers::NumberHelper
 
-  def self.for(analysis_type)
-    "#{analysis_type.to_s.camelize}DataAnalysis".constantize.new
+  attr_reader :user
+
+  def self.for(user, analysis_type)
+    "#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
+  end
+
+  def initialize(user)
+    @user = user
+    init_data
   end
 
   def id
@@ -40,8 +47,13 @@ class DataAnalysis
 end
 
 class PermittedStudentsDataAnalysis < DataAnalysis
-  def initialize
-    @students = StudentProfile.current
+  def init_data
+    if user.is_admin?
+      @students = StudentProfile.current
+    else
+      @students = StudentProfile.current.in_region(user)
+    end
+
     @permitted_students = @students.joins(:signed_parental_consent)
     @unpermitted_students = @students.joins(:pending_parental_consent)
   end
@@ -62,14 +74,14 @@ class PermittedStudentsDataAnalysis < DataAnalysis
 
   def urls
     [
-      url_helper.admin_participants_path(
+      url_helper.public_send("#{user.scope_name}_participants_path",
         accounts_grid: {
           scope_names: ["student"],
           parental_consent: "parental_consented",
         }
       ),
 
-      url_helper.admin_participants_path(
+      url_helper.public_send("#{user.scope_name}_participants_path",
         accounts_grid: {
           scope_names: ["student"],
           parental_consent: "not_parental_consented",
@@ -80,12 +92,18 @@ class PermittedStudentsDataAnalysis < DataAnalysis
 end
 
 class ReturningStudentsDataAnalysis < DataAnalysis
-  def initialize
-    @students = StudentProfile.current
+  def init_data
+    if user.is_admin?
+      @students = StudentProfile.current
+    else
+      @students = StudentProfile.current.in_region(user)
+    end
+
     @new_students = @students.where(
       "accounts.created_at > ?",
       Date.new(Season.current.year - 1, 10, 18)
     )
+
     @returning_students = @students.where(
       "accounts.created_at < ?",
       Date.new(Season.current.year - 1, 10, 18)
@@ -108,10 +126,18 @@ class ReturningStudentsDataAnalysis < DataAnalysis
 end
 
 class OnboardingMentorsDataAnalysis < DataAnalysis
-  def initialize
-    @mentors = Account.current
-      .left_outer_joins(:mentor_profile)
-      .where("mentor_profiles.id IS NOT NULL")
+  def init_data
+    if user.is_admin?
+      @mentors = Account.current
+        .left_outer_joins(:mentor_profile)
+        .where("mentor_profiles.id IS NOT NULL")
+    else
+      @mentors = Account.current
+        .left_outer_joins(:mentor_profile)
+        .where("mentor_profiles.id IS NOT NULL")
+        .in_region(user)
+    end
+
     @cleared_mentors = @mentors.bg_check_clear.consent_signed
     @signed_consent_mentors = @mentors.bg_check_submitted.consent_signed
     @cleared_bg_check_mentors = @mentors.bg_check_clear.consent_not_signed
@@ -138,7 +164,7 @@ class OnboardingMentorsDataAnalysis < DataAnalysis
 
   def urls
     [
-      url_helper.admin_participants_path(
+      url_helper.public_send("#{user.scope_name}_participants_path",
         accounts_grid: {
           scope_names: ["mentor"],
           background_check: "bg_check_clear",
@@ -146,7 +172,7 @@ class OnboardingMentorsDataAnalysis < DataAnalysis
         }
       ),
 
-      url_helper.admin_participants_path(
+      url_helper.public_send("#{user.scope_name}_participants_path",
         accounts_grid: {
           scope_names: ["mentor"],
           background_check: "bg_check_submitted",
@@ -154,7 +180,7 @@ class OnboardingMentorsDataAnalysis < DataAnalysis
         }
       ),
 
-      url_helper.admin_participants_path(
+      url_helper.public_send("#{user.scope_name}_participants_path",
         accounts_grid: {
           scope_names: ["mentor"],
           background_check: "bg_check_clear",
@@ -162,7 +188,7 @@ class OnboardingMentorsDataAnalysis < DataAnalysis
         }
       ),
 
-      url_helper.admin_participants_path(
+      url_helper.public_send("#{user.scope_name}_participants_path",
         accounts_grid: {
           scope_names: ["mentor"],
           background_check: "bg_check_unsubmitted",
@@ -173,10 +199,63 @@ class OnboardingMentorsDataAnalysis < DataAnalysis
   end
 end
 
+class OnboardingInternationalMentorsDataAnalysis < DataAnalysis
+  def init_data
+    @mentors = Account.current
+      .left_outer_joins(:mentor_profile)
+      .where("mentor_profiles.id IS NOT NULL")
+      .in_region(user)
+
+    @consenting_mentors = @mentors.eager_load(:consent_waiver)
+        .where("consent_waivers.id IS NOT NULL")
+
+    @unconsenting_mentors = @mentors.eager_load(:consent_waiver)
+      .where("consent_waivers.id IS NULL")
+  end
+
+  def labels
+    [
+      "Signed consent – <%= show_percentage(@consenting_mentors, @mentors) %>",
+      "Has not signed – <%= show_percentage(@unconsenting_mentors, @mentors) %>",
+    ]
+  end
+
+  def data
+    [
+      @consenting_mentors.count,
+      @unconsenting_mentors.count,
+    ]
+  end
+
+  def urls
+    [
+      url_helper.regional_ambassador_participants_path(
+        accounts_grid: {
+          scope_names: ["mentor"],
+          consent_waiver: "consent_signed",
+        }
+      ),
+
+      url_helper.regional_ambassador_participants_path(
+        accounts_grid: {
+          scope_names: ["mentor"],
+          consent_waiver: "consent_not_signed",
+        }
+      ),
+    ]
+  end
+end
+
 class ReturningMentorsDataAnalysis < DataAnalysis
-  def initialize
-    @mentors = Account.current.left_outer_joins(:mentor_profile)
-    .where("mentor_profiles.id IS NOT NULL")
+  def init_data
+    if user.is_admin?
+      @mentors = Account.current.left_outer_joins(:mentor_profile)
+        .where("mentor_profiles.id IS NOT NULL")
+    else
+      @mentors = Account.current.left_outer_joins(:mentor_profile)
+        .where("mentor_profiles.id IS NOT NULL")
+        .in_region(user)
+    end
 
     @new_mentors = @mentors.where(
       "accounts.created_at > ?",
