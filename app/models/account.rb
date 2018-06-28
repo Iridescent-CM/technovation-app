@@ -540,6 +540,10 @@ class Account < ActiveRecord::Base
     regional_ambassador_profile.present?
   end
 
+  def is_admin?
+    admin_profile.present?
+  end
+
   def email_confirmed!
     update(email_confirmed_at: Time.current)
   end

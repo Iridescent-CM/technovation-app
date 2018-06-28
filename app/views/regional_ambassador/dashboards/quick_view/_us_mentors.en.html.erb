@@ -2,57 +2,6 @@
 
 <div class="vue-enable-pie-chart">
   <pie-chart
-    :chart-classes="{
-      'quickview-charts': true,
-      'quickview-charts--mentors': true,
-    }"
-    :color-range="{
-      start: 'rgba(255, 99, 132, 1)',
-      end: 'rgba(75, 192, 192, 1)',
-    }"
-    :chart-data="{
-      labels: [
-        'Signed consent & cleared a background check – <%= show_percentage(@cleared_mentors, @mentors) %>',
-        'Only signed consent – <%= show_percentage(@signed_consent_mentors, @mentors) %>',
-        'Only cleared bg check – <%= show_percentage(@cleared_bg_check_mentors, @mentors) %>',
-        'Have done neither – <%= show_percentage(@neither_mentors, @mentors) %>',
-      ],
-      data: [
-        <%= @cleared_mentors.count %>,
-        <%= @signed_consent_mentors.count %>,
-        <%= @cleared_bg_check_mentors.count %>,
-        <%= @neither_mentors.count %>,
-      ],
-      urls: [
-        '<%= regional_ambassador_participants_path(
-          accounts_grid: {
-            scope_names: ["mentor"],
-            background_check: "bg_check_clear",
-            consent_waiver: "consent_signed",
-          }
-        ) %>',
-        '<%= regional_ambassador_participants_path(
-          accounts_grid: {
-            scope_names: ["mentor"],
-            background_check: "bg_check_submitted",
-            consent_waiver: "consent_signed",
-          }
-        ) %>',
-        '<%= regional_ambassador_participants_path(
-          accounts_grid: {
-            scope_names: ["mentor"],
-            background_check: "bg_check_clear",
-            consent_waiver: "consent_not_signed",
-          }
-        ) %>',
-        '<%= regional_ambassador_participants_path(
-          accounts_grid: {
-            scope_names: ["mentor"],
-            background_check: "bg_check_unsubmitted",
-            consent_waiver: "consent_not_signed",
-          }
-        ) %>',
-      ],
-    }"
-  ></pie-chart>
+    url="<%= regional_ambassador_data_analysis_path(:onboarding_mentors) %>"
+  />
 </div>
