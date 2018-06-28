@@ -139,11 +139,6 @@ describe('PieChart Vue component', () => {
       })
 
       it('returns false if optional urls property is not an array', () => {
-        expect(PieChart.props.chartData.validator(dataWithInvalidLabels))
-          .toBe(false)
-      })
-
-      it('requires optional urls property to be an array', () => {
         expect(PieChart.props.chartData.validator(labelsAndDataWithInvalidUrls))
           .toBe(false)
       })
