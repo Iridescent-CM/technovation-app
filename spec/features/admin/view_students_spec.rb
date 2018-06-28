@@ -7,7 +7,7 @@ RSpec.feature "Admins view student profile pages" do
     sign_in(:admin)
 
     click_link "Participants"
-    within(".datagrid") { click_link "view" }
+    within("tr#account_#{student.account_id}") { click_link "view" }
 
     expect(current_path).to eq(admin_participant_path(student.account))
     expect(page).to have_css(

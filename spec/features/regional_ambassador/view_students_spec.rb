@@ -5,9 +5,8 @@ RSpec.feature "RAs view student profile pages" do
     student = FactoryBot.create(:student)
 
     sign_in(:ambassador, :approved)
-
     click_link "Participants"
-    within(".datagrid tbody tr:first-child") { click_link "view" }
+    within("tr#account_#{student.account_id}") { click_link "view" }
 
     expect(current_path).to eq(regional_ambassador_participant_path(student.account))
     expect(page).to have_css(
