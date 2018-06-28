@@ -77,8 +77,8 @@ export default {
   mounted () {
     if (this.url !== '' && this.isEmptyObject(this.chartData)) {
       axios.get(this.url)
-        .then(({ data }) => {
-          this.initializeChart(data)
+        .then((response) => {
+          this.initializeChart(response.data.data.attributes)
         })
     } else {
       this.initializeChart(this.chartData)
