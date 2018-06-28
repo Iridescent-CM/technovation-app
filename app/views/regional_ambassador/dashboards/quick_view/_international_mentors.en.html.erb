@@ -15,27 +15,23 @@
         'Signed consent – <%= show_percentage(@consenting_mentors, @mentors) %>',
         'Has not signed – <%= show_percentage(@unconsenting_mentors, @mentors) %>',
       ],
-      datasets: [
-        {
-          data: [
-            <%= @consenting_mentors.count %>,
-            <%= @unconsenting_mentors.count %>,
-          ],
-          urls: [
-            '<%= regional_ambassador_participants_path(
-              accounts_grid: {
-                scope_names: ["mentor"],
-                consent_waiver: "consent_signed",
-              }
-            ) %>',
-            '<%= regional_ambassador_participants_path(
-              accounts_grid: {
-                scope_names: ["mentor"],
-                consent_waiver: "consent_not_signed",
-              }
-            ) %>',
-          ],
-        },
+      data: [
+        <%= @consenting_mentors.count %>,
+        <%= @unconsenting_mentors.count %>,
+      ],
+      urls: [
+        '<%= regional_ambassador_participants_path(
+          accounts_grid: {
+            scope_names: ["mentor"],
+            consent_waiver: "consent_signed",
+          }
+        ) %>',
+        '<%= regional_ambassador_participants_path(
+          accounts_grid: {
+            scope_names: ["mentor"],
+            consent_waiver: "consent_not_signed",
+          }
+        ) %>',
       ],
     }"
   ></pie-chart>
