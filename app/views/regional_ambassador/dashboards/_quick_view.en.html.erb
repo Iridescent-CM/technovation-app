@@ -38,27 +38,23 @@
             'With parental permission – <%= show_percentage(@permitted_students, @students) %>',
             'Without parental permission – <%= show_percentage(@unpermitted_students, @students) %>',
           ],
-          datasets: [
-            {
-              data: [
-                <%= @permitted_students.count %>,
-                <%= @unpermitted_students.count %>,
-              ],
-              urls: [
-                '<%= regional_ambassador_participants_path(
-                  accounts_grid: {
-                    scope_names: ["student"],
-                    parental_consent: "parental_consented",
-                  }
-                ) %>',
-                '<%= regional_ambassador_participants_path(
-                  accounts_grid: {
-                    scope_names: ["student"],
-                    parental_consent: "not_parental_consented",
-                  }
-                ) %>',
-              ]
-            },
+          data: [
+            <%= @permitted_students.count %>,
+            <%= @unpermitted_students.count %>,
+          ],
+          urls: [
+            '<%= regional_ambassador_participants_path(
+              accounts_grid: {
+                scope_names: ["student"],
+                parental_consent: "parental_consented",
+              }
+            ) %>',
+            '<%= regional_ambassador_participants_path(
+              accounts_grid: {
+                scope_names: ["student"],
+                parental_consent: "not_parental_consented",
+              }
+            ) %>',
           ],
         }"
       ></pie-chart>
@@ -83,13 +79,9 @@
             'Returning students – <%= show_percentage(@returning_students, @students) %>',
             'New students – <%= show_percentage(@new_students, @students) %>',
           ],
-          datasets: [
-            {
-              data: [
-                <%= @returning_students.count %>,
-                <%= @new_students.count %>,
-              ],
-            },
+          data: [
+            <%= @returning_students.count %>,
+            <%= @new_students.count %>,
           ],
         }"
       ></pie-chart>
@@ -134,13 +126,9 @@
             'Returning mentors – <%= show_percentage(@returning_mentors, @mentors) %>',
             'New mentors – <%= show_percentage(@new_mentors, @mentors) %>',
           ],
-          datasets: [
-            {
-              data: [
-                <%= @returning_mentors.count %>,
-                <%= @new_mentors.count %>,
-              ],
-            },
+          data: [
+            <%= @returning_mentors.count %>,
+            <%= @new_mentors.count %>,
           ],
         }"
       ></pie-chart>
