@@ -6,8 +6,7 @@ import PieChart from 'components/PieChart'
 require('canvas')
 
 describe('PieChart Vue component', () => {
-
-  const chartData = {
+  const htmlChartData = {
     labels: [
       'With parental permission – (75%)',
       'Without parental permission – (25%)',
@@ -22,23 +21,28 @@ describe('PieChart Vue component', () => {
     ],
   }
 
-  const extendedChartData = Object.assign({}, chartData, {
-    backgroundColor: [
-      "rgba(250,250,110,0.7)",
-      "rgba(42,72,88,0.7)",
-    ],
-    hoverBackgroundColor: [
-      "rgba(250,250,110,1)",
-      "rgba(42,72,88,1)",
-    ],
-  })
+  const jsonChartData = {
+    data: {
+      attributes: Object.assign({}, htmlChartData),
+    },
+  }
+
+  const extendedChartData = Object.assign({}, htmlChartData)
+  extendedChartData.backgroundColor = [
+    "rgba(250,250,110,0.7)",
+    "rgba(42,72,88,0.7)",
+  ]
+  extendedChartData.hoverBackgroundColor = [
+    "rgba(250,250,110,1)",
+    "rgba(42,72,88,1)",
+  ]
 
   let wrapper
 
   beforeEach(() => {
     wrapper = shallow(PieChart, {
       propsData: {
-        chartData,
+        chartData: Object.assign({}, htmlChartData),
         colorRange: {
           start: '#fafa6e',
           end: '#2A4858',
@@ -110,7 +114,7 @@ describe('PieChart Vue component', () => {
       })
 
       it('returns true if label, data, and url props are present and arrays', () => {
-        expect(PieChart.props.chartData.validator(chartData)).toBe(true)
+        expect(PieChart.props.chartData.validator(htmlChartData)).toBe(true)
       })
 
       it('returns true if label and data props are present and arrays', () => {
@@ -181,7 +185,7 @@ describe('PieChart Vue component', () => {
   describe('mounted hook', () => {
     beforeEach(() => {
       axios.get.mockClear()
-      axios.mockResponseOnce('get', chartData)
+      axios.mockResponseOnce('get', jsonChartData)
     })
 
     it('loads the chart data via AJAX if chartData prop is empty and url is present', (done) => {
@@ -211,7 +215,7 @@ describe('PieChart Vue component', () => {
 
       wrapper = shallow(PieChart, {
         propsData: {
-          chartData,
+          chartData: Object.assign({}, htmlChartData),
           colorRange: {
             start: '#fafa6e',
             end: '#2A4858',
@@ -239,7 +243,7 @@ describe('PieChart Vue component', () => {
 
         expect(chartDestroySpy).not.toHaveBeenCalled()
 
-        wrapper.vm.initializeChart(chartData)
+        wrapper.vm.initializeChart(htmlChartData)
 
         expect(chartDestroySpy).toHaveBeenCalledTimes(1)
       })
