@@ -13,7 +13,7 @@ window.vueDragula = localVue.vueDragula
 
 import ScreenshotUploader from 'components/ScreenshotUploader'
 
-describe('ScreenshotUploader Vue component', () => {
+xdescribe('ScreenshotUploader Vue component', () => {
 
   const screenshot = {
     id: 1,
