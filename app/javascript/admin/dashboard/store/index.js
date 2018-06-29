@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     chartEndpoints: {},
     cachedStates: {},
+    totals: {},
   },
 
   getters: {
@@ -24,17 +25,29 @@ export default new Vuex.Store({
         return state.cachedStates[url]
 
       return {}
+    },
+
+    getTotalByName: (state) => (name) => {
+      if (state.totals[name])
+        return state.totals[name]
+
+      return null
     }
   },
 
   mutations: {
     addChartEndpoints (state, payload) {
       const mergedEndpoints = Object.assign({}, state.chartEndpoints, payload)
-      state.chartEndpoints = payload
+      state.chartEndpoints = mergedEndpoints
     },
 
     addChartDataToCache (state, payload) {
       state.cachedStates[payload.url] = payload.chartData
+    },
+
+    addTotals (state, payload) {
+      const mergedTotals = Object.assign({}, state.totals, payload)
+      state.totals = mergedTotals
     },
   },
 })

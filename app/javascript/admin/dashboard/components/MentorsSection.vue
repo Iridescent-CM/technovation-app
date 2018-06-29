@@ -1,6 +1,6 @@
 <template>
   <div id="mentors">
-    <h3>Mentors <span>([TODO POPULATE THIS WITH RESULTS])</span></h3>
+    <h3>Mentors <span v-if="showTotal">({{ getTotal('mentors') }})</span></h3>
 
     <div class="tab-content">
       <h6>Background check / consent waivers</h6>
@@ -35,6 +35,12 @@ export default {
   name: 'mentors-section',
 
   extends: DashboardSection,
+
+  computed: {
+    showTotal () {
+      return this.getTotal('mentors') !== null
+    },
+  },
 }
 </script>
 

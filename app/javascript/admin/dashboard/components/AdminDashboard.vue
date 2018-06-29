@@ -39,10 +39,18 @@ export default {
         return {}
       },
     },
+
+    totals: {
+      type: Object,
+      default () {
+        return {}
+      },
+    },
   },
 
   created () {
     this.$store.commit('addChartEndpoints', this.chartEndpoints)
+    this.$store.commit('addTotals', this.totals)
   },
 }
 </script>

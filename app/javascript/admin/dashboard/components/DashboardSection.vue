@@ -15,7 +15,11 @@ export default {
   methods: {
     addChartDataToCache (payload) {
       this.$store.commit('addChartDataToCache', payload)
-    }
+    },
+
+    getTotal(name) {
+      return this.$store.getters.getTotalByName(name)
+    },
   }
 }
 </script>
