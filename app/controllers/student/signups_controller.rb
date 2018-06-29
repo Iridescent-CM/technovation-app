@@ -15,12 +15,12 @@ module Student
       end
 
       if !!attempt
-        set_cookie(:signup_token, attempt.signup_token)
+        set_cookie(CookieNames::SIGNUP_TOKEN, attempt.signup_token)
       end
     }, only: :new
 
     def new
-      signup_token = get_cookie(:signup_token)
+      signup_token = get_cookie(CookieNames::SIGNUP_TOKEN)
 
       invite_token = params[:admin_permission_token]
       invite = UserInvitation.find_by(admin_permission_token: invite_token)
@@ -69,9 +69,9 @@ module Student
         ],
       ).tap do |tapped|
         attempt = SignupAttempt.find_by(
-          signup_token: get_cookie(:signup_token)
+          signup_token: get_cookie(CookieNames::SIGNUP_TOKEN)
         ) || UserInvitation.find_by!(
-          admin_permission_token: get_cookie(:admin_permission_token)
+          admin_permission_token: get_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
         )
 
         tapped[:account_attributes][:email] = attempt.email

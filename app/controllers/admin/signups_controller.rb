@@ -9,8 +9,8 @@ module Admin
         redirect_to root_path,
          alert: "You are not allowed to be there" and return
       else
-        remove_cookie(:auth_token)
-        set_cookie(:auth_token, @account.auth_token)
+        remove_cookie(CookieNames::AUTH_TOKEN)
+        set_cookie(CookieNames::AUTH_TOKEN, @account.auth_token)
       end
     end
 

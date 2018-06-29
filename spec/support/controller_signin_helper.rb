@@ -7,6 +7,6 @@ module ControllerSigninHelper
                profile
              end
 
-    controller.set_cookie(:auth_token, signin.account.auth_token)
+    controller.set_cookie(CookieNames::AUTH_TOKEN, signin.account.auth_token)
   end
 end
