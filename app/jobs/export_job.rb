@@ -6,7 +6,10 @@ class ExportJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    profile = job.arguments.first
+    profile_id = job.arguments[0]
+    profile_type = job.arguments[1]
+
+    profile = profile_type.constantize.find(profile_id)
 
     db_job = Job.create!(
       owner: profile,
@@ -21,11 +24,16 @@ class ExportJob < ActiveJob::Base
     db_job = Job.find_by(job_id: job.job_id)
     db_job.update_column(:status, "complete")
 
-    broadcast(db_job, job.arguments.first)
+    profile_id = job.arguments[0]
+    profile_type = job.arguments[1]
+    profile = profile_type.constantize.find(profile_id)
+
+    broadcast(db_job, profile)
   end
 
   def perform(
-    profile,
+    profile_id,
+    profile_type,
     grid_klass,
     params,
     context_name,
@@ -44,6 +52,8 @@ class ExportJob < ActiveJob::Base
         params[k] = v
       end
     end
+
+    profile = profile_type.constantize.find(profile_id)
 
     grid = grid_klass.constantize.new(params) do |scope|
       context_klass.class_eval(scope_modifier)

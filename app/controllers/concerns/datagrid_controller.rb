@@ -89,7 +89,8 @@ module DatagridController
                   end
 
         ExportJob.perform_later(
-          current_profile,
+          current_profile.id,
+          current_profile.class.name,
           self.class.csv_datagrid_klass.name,
           filters,
           self.class.name,
