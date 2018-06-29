@@ -2,71 +2,13 @@
 
 <h1>Technovation <%= Season.current.year %></h1>
 
-<div class="panel">
-  <h3>
-    Students
-    <span>(<%= number_with_delimiter @students.count %>)</span>
-  </h3>
-
-  <div class="grid grid--bleed">
-    <div class="grid__col-sm-6">
-      <h6>Parental permission</h6>
-
-      <div class="vue-enable-pie-chart">
-        <pie-chart url="<%= admin_data_analysis_path(:permitted_students) %>" />
-      </div>
-    </div>
-
-    <div class="grid__col-sm-6">
-      <h6>New vs. Returning</h6>
-
-      <div class="vue-enable-pie-chart">
-        <pie-chart
-          url="<%= admin_data_analysis_path(:returning_students) %>"
-          :color-range="{
-            start: 'rgba(54, 162, 235, 1)',
-            end: 'rgba(255, 206, 86, 1)',
-          }"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="panel">
-  <h3>
-    Mentors
-    <span>(<%= number_with_delimiter @mentors.count %>)</span>
-  </h3>
-
-  <div class="grid grid--bleed">
-    <div class="grid__col-sm-6">
-      <h6>Background check / consent waivers</h6>
-
-      <div class="vue-enable-pie-chart">
-        <pie-chart url="<%= admin_data_analysis_path(:onboarding_mentors) %>" />
-      </div>
-    </div>
-
-    <div class="grid__col-sm-6">
-      <h6>New vs. Returning</h6>
-
-      <div class="vue-enable-pie-chart">
-        <pie-chart
-          url="<%= admin_data_analysis_path(:returning_mentors) %>"
-          :color-range="{
-            start: 'rgba(54, 162, 235, 1)',
-            end: 'rgba(255, 206, 86, 1)',
-          }"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-
 <div id="admin-dashboard">
   <admin-dashboard
-    :total-students="<%= number_with_delimiter @students.count %>"
-    :total-mentors="<%= number_with_delimiter @mentors.count %>"
+    :chart-endpoints="{
+      permitted_students: '<%= admin_data_analysis_path(:permitted_students) %>',
+      returning_students: '<%= admin_data_analysis_path(:returning_students) %>',
+      onboarding_mentors: '<%= admin_data_analysis_path(:onboarding_mentors) %>',
+      returning_mentors: '<%= admin_data_analysis_path(:returning_mentors) %>',
+    }"
   />
 </div>

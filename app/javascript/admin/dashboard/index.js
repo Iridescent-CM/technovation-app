@@ -3,9 +3,11 @@ import VueRouter from 'vue-router'
 
 import AdminDashboard from './components/AdminDashboard'
 import PieChart from '../../components/PieChart'
-import { router } from './routes'
 
 Vue.use(VueRouter)
+
+import store from './store'
+import { router } from './routes'
 
 document.addEventListener('turbolinks:load', () => {
   const pieChartElements = document.querySelectorAll('.vue-enable-pie-chart')
@@ -25,6 +27,7 @@ document.addEventListener('turbolinks:load', () => {
   if (adminDashboardElement) {
     new Vue({
       router,
+      store,
       el: adminDashboardElement,
       components: {
         AdminDashboard,

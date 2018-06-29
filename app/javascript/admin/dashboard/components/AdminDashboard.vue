@@ -5,10 +5,7 @@
         tag="li"
         class="tab-link"
         active-class="tabs__menu-link--active"
-        :to="{
-          name: 'students',
-          params: { totalStudents: this.totalStudents }
-        }"
+        :to="{ name: 'students' }"
       >
         <button role="button" class="tab-button">
           Students
@@ -19,10 +16,7 @@
         tag="li"
         class="tab-link"
         active-class="tabs__menu-link--active"
-        :to="{
-          name: 'mentors',
-          params: { totalMentors: this.totalMentors }
-        }"
+        :to="{ name: 'mentors' }"
       >
         <button role="button" class="tab-button">
           Mentors
@@ -39,15 +33,16 @@ export default {
   name: 'admin-dashboard',
 
   props: {
-    totalMentors: {
-      type: Number,
-      default: null,
+    chartEndpoints: {
+      type: Object,
+      default () {
+        return {}
+      },
     },
+  },
 
-    totalStudents: {
-      type: Number,
-      default: null,
-    },
+  created () {
+    this.$store.commit('addChartEndpoints', this.chartEndpoints)
   },
 }
 </script>
