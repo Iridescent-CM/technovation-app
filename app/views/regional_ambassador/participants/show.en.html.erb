@@ -27,10 +27,6 @@
       <h5 class="reset">
         <%= @account.scope_name.titleize %> Profile
       </h5>
-
-      <h6 class="reset">
-        Seasons: <span><%= @account.seasons.to_sentence %></span>
-      </h6>
     </div>
 
     <div class="grid__col-4">
@@ -43,6 +39,9 @@
 
         <dt><%= t('models.account.age') %></dt>
         <dd><%= @account.age %></dd>
+
+        <dt>Seasons</dt>
+        <dd><%= @account.seasons.to_sentence %></dd>
 
         <% unless @account.student_profile.present? %>
           <dt><%= t('models.account.gender') %></dt>
