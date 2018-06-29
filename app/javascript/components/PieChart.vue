@@ -1,6 +1,15 @@
 <template>
   <div class="pie-chart">
-    <p v-show="loading">Loading...</p>
+    <div v-if="loading">
+      <icon
+        class="spin"
+        name="spinner"
+        size="16"
+      />
+
+      <span>Loading chart...</span>
+    </div>
+
     <canvas v-show="!loading" :class="chartClasses"></canvas>
   </div>
 </template>
@@ -8,6 +17,7 @@
 <script>
 
 import axios from 'axios'
+import Icon from './Icon.vue'
 import Chart from 'chart.js'
 import chroma from 'chroma-js'
 
@@ -17,6 +27,10 @@ function isEmptyObject(object) {
 
 export default {
   name: 'pie-chart',
+
+  components: {
+    Icon,
+  },
 
   data () {
     return {
