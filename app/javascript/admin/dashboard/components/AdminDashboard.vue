@@ -1,6 +1,6 @@
 <template>
   <div class="tabs tabs-vertical grid" id="admin-dashboard">
-    <ul class="tab-menu grid__col-4">
+    <ul class="tab-menu grid__col-md-3">
       <router-link
         tag="li"
         class="tab-link"
@@ -24,7 +24,7 @@
       </router-link>
     </ul>
 
-    <router-view class="content grid__col-8"></router-view>
+    <router-view class="content grid__col-md-9"></router-view>
   </div>
 </template>
 
