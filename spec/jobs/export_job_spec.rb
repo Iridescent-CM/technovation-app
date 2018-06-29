@@ -16,7 +16,8 @@ RSpec.describe ExportJob do
       allow(ra).to receive(:exports).and_return(double(:exports).as_null_object)
 
       ExportJob.perform_now(
-        ra,
+        ra.id,
+        "RegionalAmbassadorProfile",
         "AccountsGrid",
         {
           admin: false,
