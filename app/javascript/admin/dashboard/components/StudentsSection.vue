@@ -4,12 +4,18 @@
 
     <h6>Parental permission</h6>
 
-    <pie-chart :url="$store.state.chartEndpoints.permitted_students" />
+    <pie-chart
+      :url="$store.getters.getChartEndpoint('permitted_students')"
+      :chart-data="$store.getters.getCachedChartData('permitted_students')"
+      @pieChartInitialized="addChartDataToCache"
+    />
 
     <h6>New vs. Returning</h6>
 
     <pie-chart
-      :url="$store.state.chartEndpoints.returning_students"
+      :url="$store.getters.getChartEndpoint('returning_students')"
+      :chart-data="$store.getters.getCachedChartData('returning_students')"
+      @pieChartInitialized="addChartDataToCache"
       :color-range="{
         start: 'rgba(54, 162, 235, 1)',
         end: 'rgba(255, 206, 86, 1)',
