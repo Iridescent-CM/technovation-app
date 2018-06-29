@@ -19,14 +19,12 @@
 </template>
 
 <script>
-import PieChart from '../../../components/PieChart'
+import DashboardSection from './DashboardSection'
 
 export default {
-  name: 'admin-dashboard-section-students',
+  name: 'students-section',
 
-  components: {
-    PieChart,
-  },
+  extends: DashboardSection,
 }
 </script>
 
