@@ -135,7 +135,10 @@ export default {
       this.$set(this, 'extendedChartData', extendedChartData)
 
       // Emit event for caching AJAX response on the parent component
-      this.$emit('pieChartInitialized', this.extendedChartData)
+      this.$emit('pieChartInitialized', {
+        url: this.url,
+        chartData: this.extendedChartData
+      })
 
       this.loading = false
     },
