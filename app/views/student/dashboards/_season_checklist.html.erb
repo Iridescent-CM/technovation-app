@@ -71,7 +71,11 @@
       <li class="checklist__scores">
         <h4 class="locked">
           <span>
-            <%= web_icon('lock') %>
+            <% if SeasonToggles.display_scores? %>
+              <%= web_icon('circle-o', class: "scores--open") %>
+            <% else %>
+              <%= web_icon('lock', class: "scores--closed") %>
+            <% end %>
           </span>
           See your scores
         </h4>
