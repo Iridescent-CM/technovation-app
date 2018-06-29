@@ -35,7 +35,7 @@ class SignupAttemptsController < ApplicationController
         @signup_attempt = attempt
 
         if @signup_attempt.active?
-          set_cookie(:signup_token, @signup_attempt.signup_token)
+          set_cookie(CookieNames::SIGNUP_TOKEN, @signup_attempt.signup_token)
         end
       }
     })

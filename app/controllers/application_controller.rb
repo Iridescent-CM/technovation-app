@@ -24,10 +24,6 @@ class ApplicationController < ActionController::Base
     redirect_to timeout_error_path(back: request.fullpath)
   end
 
-  before_action -> {
-    cookies.delete("_technovation_app_session")
-  }
-
   def set_cookie(key, value, passed_options  = {})
     default_options = {
       permanent: false,
@@ -62,13 +58,13 @@ class ApplicationController < ActionController::Base
     return current_session if current_session.authenticated?
 
     @current_account ||= Account.find_by(
-      auth_token: get_cookie(:auth_token)
+      auth_token: get_cookie(CookieNames::AUTH_TOKEN)
     ) || ::NullAuth.new
   end
 
   def current_session
     @current_session ||= Account.find_by(
-      session_token: get_cookie(:session_token)
+      session_token: get_cookie(CookieNames::SESSION_TOKEN)
     ) || ::NullAuth.new
   end
 
@@ -132,7 +128,7 @@ class ApplicationController < ActionController::Base
   end
 
   def save_redirected_path
-    set_cookie(:redirected_from, request.fullpath)
+    set_cookie(CookieNames::REDIRECTED_FROM, request.fullpath)
   end
 
   def require_unauthenticated
@@ -145,8 +141,8 @@ class ApplicationController < ActionController::Base
   end
 
   def force_logout
-    remove_cookie(:auth_token)
-    remove_cookie(:session_token)
+    remove_cookie(CookieNames::AUTH_TOKEN)
+    remove_cookie(CookieNames::SESSION_TOKEN)
   end
 
   def setup_valid_profile_from_signup_attempt(scope, token)
@@ -198,7 +194,7 @@ class ApplicationController < ActionController::Base
       )
     )
 
-    remove_cookie(:auth_token)
+    remove_cookie(CookieNames::AUTH_TOKEN)
     GlobalInvitation.set_if_exists(@profile, token)
     set_cookie(*invite.to_cookie_params)
   end
@@ -206,8 +202,8 @@ class ApplicationController < ActionController::Base
   def set_last_profile_used(scope)
     return if current_session.authenticated?
 
-    if scope != get_cookie(:last_profile_used)
-      set_cookie(:last_profile_used, scope)
+    if scope != get_cookie(CookieNames::LAST_PROFILE_USED)
+      set_cookie(CookieNames::LAST_PROFILE_USED, scope)
     end
   end
 

@@ -1,7 +1,7 @@
 module RegionalAmbassador
   class SignupsController < ApplicationController
     def new
-      signup_token = get_cookie(:signup_token)
+      signup_token = get_cookie(CookieNames::SIGNUP_TOKEN)
 
       invite_token = params[:admin_permission_token]
       invite = UserInvitation.find_by(admin_permission_token: invite_token)
@@ -55,7 +55,7 @@ module RegionalAmbassador
           :referred_by_other,
         ],
       ).tap do |tapped|
-        attempt = SignupAttempt.find_by!(signup_token: get_cookie(:signup_token))
+        attempt = SignupAttempt.find_by!(signup_token: get_cookie(CookieNames::SIGNUP_TOKEN))
         tapped[:account_attributes][:email] = attempt.email
 
         unless attempt.temporary_password?

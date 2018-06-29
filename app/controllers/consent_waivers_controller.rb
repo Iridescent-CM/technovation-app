@@ -17,7 +17,7 @@ class ConsentWaiversController < ApplicationController
   def create
     @consent_waiver = ConsentWaiver.new(consent_waiver_params)
 
-    scope = get_cookie(:last_profile_used) ||
+    scope = get_cookie(CookieNames::LAST_PROFILE_USED) ||
       @consent_waiver.account_scope_name
 
     if @consent_waiver.save

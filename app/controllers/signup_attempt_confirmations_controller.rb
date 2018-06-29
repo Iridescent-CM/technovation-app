@@ -13,7 +13,7 @@ class SignupAttemptConfirmationsController < ApplicationController
 
     signup_attempt.active!
 
-    set_cookie(:signup_token, signup_attempt.signup_token)
+    set_cookie(CookieNames::SIGNUP_TOKEN, signup_attempt.signup_token)
 
     redirect_to signup_path,
       success: t("controllers.signup_attempt_confirmations.new.success")

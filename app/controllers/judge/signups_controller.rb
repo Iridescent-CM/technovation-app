@@ -1,7 +1,7 @@
 module Judge
   class SignupsController < ApplicationController
     def new
-      signup_token = get_cookie(:signup_token)
+      signup_token = get_cookie(CookieNames::SIGNUP_TOKEN)
 
       invite_token = params[:admin_permission_token] ||
         params[:invitation]
@@ -29,7 +29,7 @@ module Judge
       else
         GlobalInvitation.set_if_exists(
           @judge_profile,
-          get_cookie(:global_invitation_token)
+          get_cookie(CookieNames::GLOBAL_INVITATION_TOKEN)
         )
         render :new
       end
@@ -59,13 +59,13 @@ module Judge
         ],
       ).tap do |tapped|
         attempt = GlobalInvitation.find_by(
-          token: get_cookie(:global_invitation_token)
+          token: get_cookie(CookieNames::GLOBAL_INVITATION_TOKEN)
         ) ||
           SignupAttempt.find_by(
-            signup_token: get_cookie(:signup_token)
+            signup_token: get_cookie(CookieNames::SIGNUP_TOKEN)
           ) ||
             UserInvitation.find_by(
-              admin_permission_token: get_cookie(:admin_permission_token)
+              admin_permission_token: get_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
             )
 
         tapped[:account_attributes][:email] ||= attempt.email

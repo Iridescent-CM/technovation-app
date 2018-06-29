@@ -199,7 +199,7 @@ module TeamSubmissionController
     if params.fetch(:piece) { false }
       "team_submissions/pieces/#{params.fetch(:piece)}"
     else
-      section = get_cookie(:last_visited_submission_section) ||
+      section = get_cookie(CookieNames::LAST_VISITED_SUBMISSION_SECTION) ||
         SubmissionSection::SECTION_NAMES[1]
 
       if section.to_s.downcase == "marketing"

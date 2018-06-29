@@ -7,13 +7,13 @@ module SignIn
     }.merge(options)
 
     context.set_cookie(
-      :auth_token,
+      CookieNames::AUTH_TOKEN,
       signin.auth_token,
       permanent: options[:permanent]
     )
 
-    context.remove_cookie(:signup_token)
-    context.remove_cookie(:admin_permission_token)
+    context.remove_cookie(CookieNames::SIGNUP_TOKEN)
+    context.remove_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
 
     RegisterToCurrentSeasonJob.perform_later(signin)
 
@@ -29,7 +29,7 @@ module SignIn
     )
 
     context.redirect_to(
-      (context.remove_cookie(:redirected_from) or
+      (context.remove_cookie(CookieNames::REDIRECTED_FROM) or
         context.send(*Array(signin_options[:redirect_to]))),
       success: signin_options[:message]
     )
@@ -37,7 +37,7 @@ module SignIn
 
   private
   def self.after_signin_path(signin, context)
-    last_profile_used = context.remove_cookie(:last_profile_used)
+    last_profile_used = context.remove_cookie(CookieNames::LAST_PROFILE_USED)
 
     if last_profile_used and
         not signin.public_send("#{last_profile_used}_profile").present?
