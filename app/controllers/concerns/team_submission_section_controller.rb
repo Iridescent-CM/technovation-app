@@ -17,7 +17,7 @@ module TeamSubmissionSectionController
     )
 
     set_cookie(
-      :last_visited_submission_section,
+      CookieNames::LAST_VISITED_SUBMISSION_SECTION,
       section_name,
     )
 

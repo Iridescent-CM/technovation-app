@@ -31,7 +31,7 @@ class SubmissionSection
     }
       SECTION_NAMES[name_idx]
     elsif !!controller
-      controller.get_cookie(:last_visited_submission_section) ||
+      controller.get_cookie(CookieNames::LAST_VISITED_SUBMISSION_SECTION) ||
         SECTION_NAMES[1]
     else
       SECTION_NAMES[1]

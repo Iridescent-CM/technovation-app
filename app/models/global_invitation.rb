@@ -15,7 +15,7 @@ class GlobalInvitation < ApplicationRecord
   end
 
   def to_cookie_params
-    [:global_invitation_token, token]
+    [CookieNames::GLOBAL_INVITATION_TOKEN, token]
   end
 
   def self.set_if_exists(profile, token)

@@ -166,7 +166,7 @@ class UserInvitation < ApplicationRecord
   end
 
   def to_cookie_params
-    [:admin_permission_token, admin_permission_token]
+    [CookieNames::ADMIN_PERMISSION_TOKEN, admin_permission_token]
   end
 
   def scope_name

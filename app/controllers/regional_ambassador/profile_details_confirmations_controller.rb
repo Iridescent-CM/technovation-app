@@ -6,7 +6,7 @@ module RegionalAmbassador
       )
 
       if @regional_ambassador_profile.save
-        remove_cookie(:admin_permission_token)
+        remove_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
         ProfileCreating.execute(@regional_ambassador_profile, self)
       else
         render "regional_ambassador/signups/new"
@@ -26,8 +26,8 @@ module RegionalAmbassador
 
         @regional_ambassador_profile.account.signup_attempt.registered!
 
-        remove_cookie(:admin_permission_token)
-        remove_cookie(:signup_token)
+        remove_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
+        remove_cookie(CookieNames::SIGNUP_TOKEN)
 
         SignIn.(
           @regional_ambassador_profile.account,
@@ -61,7 +61,7 @@ module RegionalAmbassador
         tapped[:account_attributes][:skip_existing_password] = true
         if action_name == "create"
           tapped[:account_attributes][:email] = UserInvitation.find_by!(
-            admin_permission_token: get_cookie(:admin_permission_token)
+            admin_permission_token: get_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
           ).email
         end
       end
