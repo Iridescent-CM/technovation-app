@@ -65,7 +65,11 @@ class AccountsGrid
     end
   end
 
-  column :school_name, order: "student_profiles.school_name" do
+  column :school_name, order: ->(scope) {
+    scope.includes(:student_profile)
+      .references(:student_profiles)
+      .order("student_profiles.school_name")
+  } do
     if student_profile.present?
       student_profile.school_name
     else
