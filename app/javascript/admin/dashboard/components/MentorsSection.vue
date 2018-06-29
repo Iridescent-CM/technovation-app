@@ -1,6 +1,6 @@
 <template>
   <div class="tab-content" id="mentors">
-    <h3>Mentors <span>2</span></h3>
+    <h3>Mentors <span>({{ $route.params.totalMentors }})</span></h3>
 
     <p>[VUE CHARTS GO HERE]</p>
   </div>

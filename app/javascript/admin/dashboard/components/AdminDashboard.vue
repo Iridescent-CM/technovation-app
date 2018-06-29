@@ -5,7 +5,10 @@
         tag="li"
         class="tab-link"
         active-class="tabs__menu-link--active"
-        :to="{ name: 'students' }"
+        :to="{
+          name: 'students',
+          params: { totalStudents: this.totalStudents }
+        }"
       >
         <button role="button" class="tab-button">
           Students
@@ -16,7 +19,10 @@
         tag="li"
         class="tab-link"
         active-class="tabs__menu-link--active"
-        :to="{ name: 'mentors' }"
+        :to="{
+          name: 'mentors',
+          params: { totalMentors: this.totalMentors }
+        }"
       >
         <button role="button" class="tab-button">
           Mentors
@@ -31,6 +37,18 @@
 <script>
 export default {
   name: 'admin-dashboard',
+
+  props: {
+    totalMentors: {
+      type: Number,
+      default: null,
+    },
+
+    totalStudents: {
+      type: Number,
+      default: null,
+    },
+  },
 }
 </script>
 

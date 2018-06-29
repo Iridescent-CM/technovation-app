@@ -64,4 +64,9 @@
   </div>
 </div>
 
-<div id="admin-dashboard"></div>
+<div id="admin-dashboard">
+  <admin-dashboard
+    :total-students="<%= number_with_delimiter @students.count %>"
+    :total-mentors="<%= number_with_delimiter @mentors.count %>"
+  />
+</div>

@@ -25,8 +25,10 @@ document.addEventListener('turbolinks:load', () => {
   if (adminDashboardElement) {
     new Vue({
       router,
-      el: '#admin-dashboard',
-      render: h => h(AdminDashboard)
+      el: adminDashboardElement,
+      components: {
+        AdminDashboard,
+      },
     })
   }
 })
