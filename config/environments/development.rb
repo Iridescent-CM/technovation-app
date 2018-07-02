@@ -1,5 +1,9 @@
+require '_dev/spoof_ip'
+
 Rails.application.configure do
-    config.webpacker.check_yarn_integrity = true  # Settings specified here will take precedence over those in config/application.rb.
+  config.middleware.use(SpoofIp, ENV.fetch("DEV_SPOOF_IP") { "127.0.0.1" })
+
+  config.webpacker.check_yarn_integrity = true  # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
