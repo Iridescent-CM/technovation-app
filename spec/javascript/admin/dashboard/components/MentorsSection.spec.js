@@ -1,40 +1,231 @@
 import Vuex from 'vuex'
-import { shallow, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 
 import state from 'admin/dashboard/store/index'
-import { store } from 'admin/dashboard/store/__mocks__'
+import { __createMocks as createMocks } from 'admin/dashboard/store/__mocks__'
 
 import DashboardSection from 'admin/dashboard/components/DashboardSection'
 import MentorsSection from 'admin/dashboard/components/MentorsSection'
+import PieChart from 'components/PieChart'
 
 const localVue = createLocalVue()
 
 localVue.use(Vuex)
 
-/**
- * TODO - After doing research, this will fail until we update the following
- * yarn dependencies
- * - vue-test-utils - Replace with "@vue/test-utils"
- * - vue - Need v2.5.17-beta.0
- *   - Contains https://github.com/vuejs/vue/pull/7878
- */
+describe('Admin Dashboard - MentorSection component', () => {
 
-xdescribe('Admin Dashboard - MentorSection component', () => {
+  let wrapper
+
+  const onboardingMentors = {
+    labels: [
+      'Signed consent & cleared a background check, if required – (50%)',
+      'Only signed consent – (0%)',
+      'Only cleared bg check, if required – (50%)',
+      'Have done neither – (0%)',
+    ],
+    data: [
+      1,
+      0,
+      1,
+      0,
+    ],
+    urls: [
+      '/signed/cleared/',
+      '/signed/',
+      '/cleared/',
+      '/not/signed/not/cleared',
+    ],
+  }
+
+  const returningMentors = {
+    labels: [
+      'Returning mentors – (25%)',
+      'New mentors – (75%)',
+    ],
+    data: [
+      1,
+      3,
+    ],
+  }
 
   beforeEach(() => {
-    wrapper = shallow(
+    const initialState = Object.assign({}, state, {
+      chartEndpoints: {
+        'onboarding_mentors': '/onboarding/mentors',
+        'returning_mentors': '/returning/mentors',
+      },
+      cachedStates: {
+        '/onboarding/mentors': onboardingMentors,
+        '/returning/mentors': returningMentors,
+      },
+      totals: {
+        mentors: 402,
+      },
+    })
+
+    const storeMocks = createMocks({
+      state: initialState,
+    })
+
+    wrapper = shallowMount(
       MentorsSection, {
-        store,
         localVue,
+        store: storeMocks.store,
       }
     )
   })
 
+  it('has a name attribute', () => {
+    expect(MentorsSection.name).toEqual('mentors-section')
+  })
+
   it('extends the DashboardSection component', () => {
-    console.log('props', wrapper.vm.props)
-    console.log('computed', wrapper.vm.computed)
-    console.log('methods', wrapper.vm.methods)
-    expect(true).toBe(true)
+    expect(MentorsSection.extends).toEqual(DashboardSection)
+  })
+
+  describe('computed properties', () => {
+
+    describe('onboardingMentorsEndpoint', () => {
+
+      it('returns an AJAX endpoint for the onboarding mentors chart', () => {
+        expect(wrapper.vm.onboardingMentorsEndpoint)
+          .toEqual('/onboarding/mentors')
+      })
+
+    })
+
+    describe('onboardingMentorsChartData', () => {
+
+      it('returns the cached chart data for the onboarding mentors chart', () => {
+        expect(wrapper.vm.onboardingMentorsChartData)
+          .toEqual(onboardingMentors)
+
+        const initialState = Object.assign({}, state, {
+          cachedStates: {},
+        })
+
+        const storeMocks = createMocks({
+          state: initialState,
+        })
+
+        wrapper = shallowMount(
+          MentorsSection, {
+            localVue,
+            store: storeMocks.store,
+          }
+        )
+
+        expect(wrapper.vm.onboardingMentorsChartData)
+          .toEqual({})
+      })
+
+    })
+
+    describe('returningMentorsEndpoint', () => {
+
+      it('returns an AJAX endpoint for the returning mentors chart', () => {
+        expect(wrapper.vm.returningMentorsEndpoint)
+          .toEqual('/returning/mentors')
+      })
+
+    })
+
+    describe('returningMentorsChartData', () => {
+
+      it('returns the cached chart data for the returning mentors chart', () => {
+        expect(wrapper.vm.returningMentorsChartData)
+          .toEqual(returningMentors)
+
+        const initialState = Object.assign({}, state, {
+          cachedStates: {},
+        })
+
+        const storeMocks = createMocks({
+          state: initialState,
+        })
+
+        wrapper = shallowMount(
+          MentorsSection, {
+            localVue,
+            store: storeMocks.store,
+          }
+        )
+
+        expect(wrapper.vm.returningMentorsChartData)
+          .toEqual({})
+      })
+
+    })
+
+    describe('showTotal', () => {
+
+      it('returns true if the mentors total does not equal null', () => {
+        expect(wrapper.vm.$store.state.totals.mentors).toEqual(402)
+        expect(wrapper.vm.showTotal).toEqual(true)
+
+        const initialState = Object.assign({}, state, {
+          totals: {
+            mentors: 0,
+          },
+        })
+
+        const storeMocks = createMocks({
+          state: initialState,
+        })
+
+        const newWrapper = shallowMount(
+          MentorsSection, {
+            localVue,
+            store: storeMocks.store,
+          }
+        )
+
+        expect(newWrapper.vm.$store.state.totals.mentors).toEqual(0)
+        expect(newWrapper.vm.showTotal).toEqual(true)
+      })
+
+      it('returns false if the mentors total does not equal null', () => {
+        const initialState = Object.assign({}, state, {
+          totals: {},
+        })
+
+        const storeMocks = createMocks({
+          state: initialState,
+        })
+
+        wrapper = shallowMount(
+          MentorsSection, {
+            localVue,
+            store: storeMocks.store,
+          }
+        )
+
+        expect(wrapper.vm.$store.state.totals.mentors).not.toBeDefined()
+        expect(wrapper.vm.showTotal).toEqual(false)
+      })
+    })
+  })
+
+  describe('HTML markup', () => {
+
+    it('contains the correct markup', () => {
+      expect(wrapper.element.getAttribute('id')).toEqual('mentors')
+      expect(wrapper.find('h3').html())
+        .toEqual('<h3>Mentors <span>(402)</span></h3>')
+
+      const charts = wrapper.findAll('.tab-content')
+      const onboardingChart = charts.at(0)
+      const returningChart = charts.at(1)
+
+      expect(onboardingChart.find('h6').text())
+        .toEqual('Background check / consent waivers')
+      expect(onboardingChart.find(PieChart).exists()).toBe(true)
+
+      expect(returningChart.find('h6').text())
+        .toEqual('New vs. Returning')
+      expect(returningChart.find(PieChart).exists()).toBe(true)
+    })
+
   })
 
 })
