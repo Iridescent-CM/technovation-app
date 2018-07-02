@@ -27,7 +27,7 @@ export const getters = {
   },
 
   getTotalByName: (state) => (name) => {
-    if (state.totals[name])
+    if (typeof state.totals[name] !== 'undefined' && state.totals[name] !== null)
       return state.totals[name]
 
     return null

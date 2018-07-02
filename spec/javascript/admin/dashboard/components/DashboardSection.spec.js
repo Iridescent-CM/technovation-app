@@ -25,7 +25,7 @@ describe('Admin Dashboard - DashboardSection component', () => {
         mentors: 402,
         students: 876,
       },
-    });
+    })
 
     const storeMocks = createMocks({
       state: initialState,
