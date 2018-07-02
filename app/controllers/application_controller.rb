@@ -25,7 +25,11 @@ class ApplicationController < ActionController::Base
   end
 
   before_action -> {
-    StoreLocation.(ip_address: request.remote_ip, context: self)
+    StoreLocation.(
+      ip_address: request.remote_ip,
+      context: self,
+      account: current_account,
+    )
   }
 
   def set_cookie(key, value, passed_options  = {})

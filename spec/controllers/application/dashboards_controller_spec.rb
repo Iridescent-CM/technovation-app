@@ -12,6 +12,20 @@ RSpec.describe Application::DashboardsController do
       }
     end
 
+    it "saves it to the logged in user" do
+      student = FactoryBot.create(:student)
+
+      result = double(:GeocoderResult, coordinates: [1.23, 4.56])
+      expect(Geocoder).to receive(:search) { [result] }
+
+      sign_in(student)
+      get :show
+
+      expect(controller.get_cookie(CookieNames::IP_GEOLOCATION)).to eq([1.23, 4.56])
+      expect(student.account.reload.latitude).to eq(1.23)
+      expect(student.account.longitude).to eq(4.56)
+    end
+
     context "and the location is invalid" do
       it "tries again" do
         controller.set_cookie(CookieNames::IP_GEOLOCATION, "[0.0, 0.0]")
