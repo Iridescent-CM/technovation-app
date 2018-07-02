@@ -1,15 +1,15 @@
 // Module imports
-import { shallow, createLocalVue } from '@vue/test-utils'
-import VueDragula from 'vue-dragula'
+import Vue from 'vue'
+import { shallowMount } from '@vue/test-utils'
 
 // Mocked module imports
 import axios from 'axios'
 
-// We need to expose these globally since they are exposed globally in
-// application.js via Ruby
-const localVue = createLocalVue()
-localVue.use(VueDragula)
-window.vueDragula = localVue.vueDragula
+// Mock vue-dragula dependency so we don't break our component
+Vue.directive('dragula', (el, binding) => {})
+window.vueDragula = {
+  eventBus: new Vue(),
+}
 
 import ScreenshotUploader from 'components/ScreenshotUploader'
 
@@ -42,8 +42,7 @@ describe('ScreenshotUploader Vue component', () => {
       screenshotTwo,
     ])
 
-    wrapper = shallow(ScreenshotUploader, {
-      localVue,
+    wrapper = shallowMount(ScreenshotUploader, {
       propsData: {
         screenshotsUrl: '/student/screenshots',
         sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
@@ -98,8 +97,7 @@ describe('ScreenshotUploader Vue component', () => {
 
       expect(axios.get).not.toHaveBeenCalled()
 
-      wrapper = shallow(ScreenshotUploader, {
-        localVue,
+      wrapper = shallowMount(ScreenshotUploader, {
         propsData: {
           screenshotsUrl: '/student/screenshots',
           sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
@@ -191,8 +189,7 @@ describe('ScreenshotUploader Vue component', () => {
       })
 
       it('returns "screenshot" if only one file upload remains', () => {
-        wrapper = shallow(ScreenshotUploader, {
-          localVue,
+        wrapper = shallowMount(ScreenshotUploader, {
           propsData: {
             screenshotsUrl: '/student/screenshots',
             sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
@@ -218,8 +215,7 @@ describe('ScreenshotUploader Vue component', () => {
       })
 
       it('returns "" if only one file upload remains', () => {
-        wrapper = shallow(ScreenshotUploader, {
-          localVue,
+        wrapper = shallowMount(ScreenshotUploader, {
           propsData: {
             screenshotsUrl: '/student/screenshots',
             sortUrl: '/student/team_submissions/no-name-yet-by-all-star-team',
