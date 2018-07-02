@@ -30,15 +30,15 @@
     opacity: 1;
     float: right;
     margin: 0.4rem 0.5rem 0 0;
-    background-color: $mulberry-mid;
-    box-shadow: 0 2px 0 darken($mulberry-mid, 5);
+    background-color: $primary-mid;
+    box-shadow: 0 2px 0 darken($primary-mid, 5);
     color: white;
     font-size: 0.8rem;
 
     &:active,
     &:hover,
     &:focus {
-      background-color: darken($mulberry-mid, 5);
+      background-color: darken($primary-mid, 5);
       color: white;
     }
   }

@@ -11,7 +11,7 @@
 
       <screenshots />
 
-      <div class="grid grid--bleed submission-pieces mulberry-row">
+      <div class="grid grid--bleed submission-pieces primary-row">
         <pitch />
         <tc-code />
       </div>

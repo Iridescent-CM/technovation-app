@@ -45,7 +45,7 @@ h1 {
     margin: 1rem 0;
 
     &::after {
-      background-color: $shamrock-mid;
+      background-color: $secondary-mid;
       bottom: 0;
       content: '';
       display: block;
@@ -62,10 +62,10 @@ h1 {
 
       a {
         padding: 0.25rem 0;
-        color: $mulberry;
+        color: $primary;
 
         &:hover {
-          color: $mulberry-dark;
+          color: $primary-dark;
         }
       }
     }
@@ -74,7 +74,7 @@ h1 {
 
 h2 {
   font-size: 1.8rem;
-  color: $shamrock;
+  color: $secondary;
 
   &.content-subheading {
     font-size: 1.3rem;
