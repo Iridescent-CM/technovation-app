@@ -740,7 +740,7 @@ class Account < ActiveRecord::Base
       country = Country.find_country_by_name(geo.country_code) ||
                   Country.find_country_by_alpha3(geo.country_code) ||
                     Country.find_country_by_alpha2(geo.country_code)
-      self.country = country.alpha2
+      self.country = country && country.alpha2
     end
   end
 
