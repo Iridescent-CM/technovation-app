@@ -1,13 +1,13 @@
 <template>
   <div id="students">
-    <h3>Students <span v-if="showTotal">({{ getTotal('students') }})</span></h3>
+    <h3>Students<span v-if="showTotal"> ({{ getTotal('students') }})</span></h3>
 
     <div class="tab-content">
       <h6>Parental permission</h6>
 
       <pie-chart
-        :url="$store.getters.getChartEndpoint('permitted_students')"
-        :chart-data="$store.getters.getCachedChartData('permitted_students')"
+        :url="permittedStudentsEndpoint"
+        :chart-data="permittedStudentsChartData"
         @pieChartInitialized="addChartDataToCache"
       />
     </div>
@@ -16,8 +16,8 @@
       <h6>New vs. Returning</h6>
 
       <pie-chart
-        :url="$store.getters.getChartEndpoint('returning_students')"
-        :chart-data="$store.getters.getCachedChartData('returning_students')"
+        :url="returningStudentsEndpoint"
+        :chart-data="returningStudentsChartData"
         @pieChartInitialized="addChartDataToCache"
         :color-range="{
           start: 'rgba(54, 162, 235, 1)',
@@ -37,6 +37,22 @@ export default {
   extends: DashboardSection,
 
   computed: {
+    permittedStudentsEndpoint () {
+      return this.$store.getters.getChartEndpoint('permitted_students')
+    },
+
+    permittedStudentsChartData () {
+      return this.$store.getters.getCachedChartData('permitted_students')
+    },
+
+    returningStudentsEndpoint () {
+      return this.$store.getters.getChartEndpoint('returning_students')
+    },
+
+    returningStudentsChartData () {
+      return this.$store.getters.getCachedChartData('returning_students')
+    },
+
     showTotal () {
       return this.getTotal('students') !== null
     },
