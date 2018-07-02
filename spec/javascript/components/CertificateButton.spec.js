@@ -1,4 +1,4 @@
-import { shallow } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 
 import axios from 'axios'
 import Icon from 'components/Icon'
@@ -16,7 +16,7 @@ describe('CertificateButton Vue component', () => {
 
   describe('props', () => {
     it('defaults teamId to 0', () => {
-      const wrapper = shallow(CertificateButton, {
+      const wrapper = shallowMount(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -41,8 +41,8 @@ describe('CertificateButton Vue component', () => {
 
   describe('markup', () => {
     it('displays a loading spinner if the certificate button URL ' +
-        'is being requested', (done) => {
-      const wrapper = shallow(CertificateButton, {
+        'is being requested', () => {
+      const wrapper = shallowMount(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -50,22 +50,19 @@ describe('CertificateButton Vue component', () => {
 
       wrapper.vm.state = 'requesting'
 
-      wrapper.vm.$nextTick(() => {
-        const componentHasButton = wrapper.contains({
-          ref: 'certificateButton',
-        })
-
-        expect(wrapper.contains(Icon)).toBe(true)
-        expect(wrapper.find('span').html())
-          .toEqual('<span>Requesting certificate...</span>')
-        expect(componentHasButton).toBe(false)
-        done()
+      const componentHasButton = wrapper.contains({
+        ref: 'certificateButton',
       })
+
+      expect(wrapper.contains(Icon)).toBe(true)
+      expect(wrapper.find('span').html())
+        .toEqual('<span>Requesting certificate...</span>')
+      expect(componentHasButton).toBe(false)
     })
 
     it('displays a loading spinner if the certificate button URL ' +
         'is being generated', (done) => {
-      const wrapper = shallow(CertificateButton, {
+      const wrapper = shallowMount(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -97,7 +94,7 @@ describe('CertificateButton Vue component', () => {
         }
       )
 
-      const wrapper = shallow(CertificateButton, {
+      const wrapper = shallowMount(CertificateButton, {
         propsData: {
           userScope: 'mentor',
         },
@@ -122,7 +119,7 @@ describe('CertificateButton Vue component', () => {
   describe('methods', () => {
     describe('requestCertificate', () => {
       it('sets the state to "requesting"', () => {
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -136,7 +133,7 @@ describe('CertificateButton Vue component', () => {
       })
 
       it('sends a POST request to the request endpoint', () => {
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
             teamId: 42892,
@@ -164,7 +161,7 @@ describe('CertificateButton Vue component', () => {
           },
         }
 
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -179,7 +176,7 @@ describe('CertificateButton Vue component', () => {
 
       it('does not update the job id if the response does not contain ' +
           'a valid jobId', () => {
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -211,7 +208,7 @@ describe('CertificateButton Vue component', () => {
           },
         }
 
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -228,7 +225,7 @@ describe('CertificateButton Vue component', () => {
 
     describe('pollJobQueue', () => {
       it('sends a GET request to the job monitor endpoint', () => {
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -246,7 +243,7 @@ describe('CertificateButton Vue component', () => {
       })
 
       it('returns early if the state is already ready', () => {
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -273,7 +270,7 @@ describe('CertificateButton Vue component', () => {
           },
         }
 
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -296,7 +293,7 @@ describe('CertificateButton Vue component', () => {
           },
         }
 
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -319,7 +316,7 @@ describe('CertificateButton Vue component', () => {
           },
         }
 
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },
@@ -337,7 +334,7 @@ describe('CertificateButton Vue component', () => {
   describe('computed property', () => {
     describe('certificateRequestData', () => {
       it('appends the team id if it is greater than 0', () => {
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             teamId: 9,
             userScope: 'mentor',
@@ -350,7 +347,7 @@ describe('CertificateButton Vue component', () => {
       })
 
       it('sends nothing if the teamId is 0 or null', () => {
-        const wrapper = shallow(CertificateButton, {
+        const wrapper = shallowMount(CertificateButton, {
           propsData: {
             userScope: 'mentor',
           },

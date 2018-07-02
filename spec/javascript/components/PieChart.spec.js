@@ -1,4 +1,4 @@
-import { shallow } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import axios from 'axios'
 
 import PieChart from 'components/PieChart'
@@ -40,7 +40,7 @@ describe('PieChart Vue component', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(PieChart, {
+    wrapper = shallowMount(PieChart, {
       propsData: {
         chartData: Object.assign({}, htmlChartData),
         colorRange: {
@@ -191,7 +191,7 @@ describe('PieChart Vue component', () => {
     it('loads the chart data via AJAX if chartData prop is empty and url is present', (done) => {
       expect(axios.get).not.toHaveBeenCalled()
 
-      wrapper = shallow(PieChart, {
+      wrapper = shallowMount(PieChart, {
         propsData: {
           url: '/test/url',
           colorRange: {
@@ -213,7 +213,7 @@ describe('PieChart Vue component', () => {
     it('loads the chart data from chartData prop if url is not present', (done) => {
       expect(axios.get).not.toHaveBeenCalled()
 
-      wrapper = shallow(PieChart, {
+      wrapper = shallowMount(PieChart, {
         propsData: {
           chartData: Object.assign({}, htmlChartData),
           colorRange: {
