@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import vuexStore from '../index'
+import { state, getters, mutations } from '../index'
 
 Vue.use(Vuex)
 
-vuexStore.actions = {}
+const actions = {}
 
 // eslint-disable-next-line no-underscore-dangle
 export function __createMocks(custom = { getters: {}, mutations: {}, actions: {}, state: {} }) {
-  const mockGetters = Object.assign({}, vuexStore.getters, custom.getters)
-  const mockMutations = Object.assign({}, vuexStore.mutations, custom.mutations)
-  const mockActions = Object.assign({}, vuexStore.actions, custom.actions)
-  const mockState = Object.assign({}, vuexStore.state, custom.state)
+  const mockGetters = Object.assign({}, getters, custom.getters)
+  const mockMutations = Object.assign({}, mutations, custom.mutations)
+  const mockActions = Object.assign({}, actions, custom.actions)
+  const mockState = Object.assign({}, state, custom.state)
 
   return {
     getters: mockGetters,
