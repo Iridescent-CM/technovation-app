@@ -80,7 +80,9 @@ module StoreLocation
     end
 
     def maybe_run_account_updates
-      if account.authenticated? && (!account.latitude || !account.city)
+      if String(cookie_value) != "[0.0, 0.0]" &&
+          account.authenticated? &&
+            (!account.latitude || !account.city)
         account.latitude  = latitude
         account.longitude = longitude
         Geocoding.perform(account).with_save

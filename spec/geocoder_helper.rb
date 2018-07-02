@@ -2,21 +2,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     Geocoder.configure(lookup: :test)
 
-    [[0.0, 0.0], ""].each do |loc|
-      Geocoder::Lookup::Test.add_stub(
-        loc, [{
-          'latitude'     => 0.0,
-          'longitude'    => 0.0,
-          'address'      => '',
-          'state'        => '',
-          'city'         => '',
-          'state_code'   => '',
-          'country'      => '',
-          'country_code' => '',
-        }]
-      )
-    end
-
     ["Los Angeles", "Los Angeles, CA", "Los Angeles, CA, United States"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
