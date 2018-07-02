@@ -43,6 +43,7 @@ jobs:
           COOKIES_GLOBAL_INVITATION_TOKEN: global_invitation_token_JUNE_2018
           COOKIES_LAST_PROFILE_USED: last_profile_used_JUNE_2018
           COOKIES_LAST_VISITED_SUBMISSION_SECTION: last_visited_submission_section_JUNE_2018
+          COOKIES_IP_GEOLOCATION: ip_geolocation_JUNE_2018
           COOKIES_REDIRECTED_FROM: redirected_from_JUNE_2018
           COOKIES_SIGNUP_TOKEN: signup_token_JUNE_2018
           COOKIES_SESSION_TOKEN: session_token_JUNE_2018
