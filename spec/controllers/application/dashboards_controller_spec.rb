@@ -15,8 +15,14 @@ RSpec.describe Application::DashboardsController do
     it "saves it to the logged in user" do
       student = FactoryBot.create(:student)
 
-      result = double(:GeocoderResult, coordinates: [1.23, 4.56])
-      expect(Geocoder).to receive(:search) { [result] }
+      result = double(:GeocoderResult,
+        coordinates: [1.23, 4.56],
+        city: 'Any',
+        state_code: 'ANY',
+        country_code: 'US',
+      )
+
+      expect(Geocoder).to receive(:search).twice { [result] }
 
       sign_in(student)
       get :show
