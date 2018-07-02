@@ -52,6 +52,8 @@ RSpec.feature "Register from team invite" do
   let(:inviter) { team.students.first }
 
   before do
+    SeasonToggles.enable_signup(:student)
+
     team.team_member_invites.create!(
       inviter: inviter,
       invitee_email: email,
@@ -74,11 +76,11 @@ RSpec.feature "Register from team invite" do
   end
 
   def expect_profile_creation_page(email)
-    within(".navigation") {
-      expect(page).to have_link("Sign in")
-    }
     within(".new_student_profile") {
       expect(page).to have_content("Your email address: #{email.strip.downcase}")
+    }
+    within(".navigation") {
+      expect(page).to have_link("Sign in")
     }
   end
 end

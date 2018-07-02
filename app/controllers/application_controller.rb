@@ -59,11 +59,16 @@ class ApplicationController < ActionController::Base
   end
 
   def current_account
-    return current_session if current_session.authenticated?
+    auth_token = get_cookie(CookieNames::AUTH_TOKEN)
+    session_token = get_cookie(CookieNames::SESSION_TOKEN)
 
-    @current_account ||= Account.find_by(
-      auth_token: get_cookie(CookieNames::AUTH_TOKEN)
-    ) || ::NullAuth.new
+    return current_session if !!session_token && current_session.authenticated?
+
+    if !!auth_token
+      @current_account ||= Account.find_by(auth_token: auth_token) || ::NullAuth.new
+    else
+      ::NullAuth.new
+    end
   end
 
   def current_session
