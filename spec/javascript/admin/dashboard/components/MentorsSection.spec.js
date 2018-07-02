@@ -173,15 +173,15 @@ describe('Admin Dashboard - MentorSection component', () => {
           state: initialState,
         })
 
-        const newWrapper = shallowMount(
+        wrapper = shallowMount(
           MentorsSection, {
             localVue,
             store: storeMocks.store,
           }
         )
 
-        expect(newWrapper.vm.$store.state.totals.mentors).toEqual(0)
-        expect(newWrapper.vm.showTotal).toEqual(true)
+        expect(wrapper.vm.$store.state.totals.mentors).toEqual(0)
+        expect(wrapper.vm.showTotal).toEqual(true)
       })
 
       it('returns false if the mentors total does not equal null', () => {
@@ -211,7 +211,7 @@ describe('Admin Dashboard - MentorSection component', () => {
     it('contains the correct markup', () => {
       expect(wrapper.element.getAttribute('id')).toEqual('mentors')
       expect(wrapper.find('h3').html())
-        .toEqual('<h3>Mentors <span>(402)</span></h3>')
+        .toEqual('<h3>Mentors<span> (402)</span></h3>')
 
       const charts = wrapper.findAll('.tab-content')
       const onboardingChart = charts.at(0)
@@ -224,6 +224,26 @@ describe('Admin Dashboard - MentorSection component', () => {
       expect(returningChart.find('h6').text())
         .toEqual('New vs. Returning')
       expect(returningChart.find(PieChart).exists()).toBe(true)
+    })
+
+    it('hides the mentors count label if the mentors total is not found', () => {
+      const initialState = Object.assign({}, state, {
+        totals: {},
+      })
+
+      const storeMocks = createMocks({
+        state: initialState,
+      })
+
+      wrapper = shallowMount(
+        MentorsSection, {
+          localVue,
+          store: storeMocks.store,
+        }
+      )
+
+      expect(wrapper.find('h3').html())
+        .toEqual('<h3>Mentors<!----></h3>')
     })
 
   })

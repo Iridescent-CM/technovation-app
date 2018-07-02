@@ -1,6 +1,6 @@
 <template>
   <div id="mentors">
-    <h3>Mentors <span v-if="showTotal">({{ getTotal('mentors') }})</span></h3>
+    <h3>Mentors<span v-if="showTotal"> ({{ getTotal('mentors') }})</span></h3>
 
     <div class="tab-content">
       <h6>Background check / consent waivers</h6>
