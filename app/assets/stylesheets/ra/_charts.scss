@@ -38,12 +38,12 @@
     &:nth-child(1) {
       z-index: 4;
       border-width: 16px;
-      border-color: $shamrock;
+      border-color: $secondary;
     }
 
     &:nth-child(2) {
       z-index: 3;
-      border-color: $mulberry;
+      border-color: $primary;
       animation-delay: 0.4s;
     }
   }
