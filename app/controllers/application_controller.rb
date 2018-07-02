@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
     redirect_to timeout_error_path(back: request.fullpath)
   end
 
+  before_action -> {
+    StoreLocation.(ip_address: request.remote_ip, context: self)
+  }
+
   def set_cookie(key, value, passed_options  = {})
     default_options = {
       permanent: false,
