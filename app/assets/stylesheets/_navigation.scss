@@ -55,7 +55,7 @@
       }
 
       &::after {
-        background-color: $shamrock;
+        background-color: $secondary;
         bottom: 0;
         content: '';
         height: 0;
@@ -93,7 +93,7 @@
       width: 100vw;
       height: 100vh;
       z-index: $z-shade;
-      background: $mulberry-translucent;
+      background: $primary-translucent;
       opacity: 0;
       pointer-events: none;
 

@@ -2,9 +2,9 @@
   outline: 0;
   border: 0;
   user-select: none;
-  background-color: $shamrock-mid;
+  background-color: $secondary-mid;
   border-radius: 0.15rem;
-  box-shadow: 0 2px 0 darken($shamrock-mid, 5);
+  box-shadow: 0 2px 0 darken($secondary-mid, 5);
   color: white;
   cursor: pointer;
   display: inline-block;
@@ -36,34 +36,34 @@
 
   &.secondary,
   &.button--secondary {
-    background-color: $marine;
-    box-shadow: 0 2px 0 darken($marine, 5);
+    background-color: $tertiary;
+    box-shadow: 0 2px 0 darken($tertiary, 5);
 
     &:active,
     &:hover,
     &:focus {
-      background-color: darken($marine, 5);
+      background-color: darken($tertiary, 5);
     }
 
     &:active {
-      box-shadow: 0 0 0 darken($marine, 10);
+      box-shadow: 0 0 0 darken($tertiary, 10);
     }
   }
 
   &.button--reward {
     border-radius: 500px;
     margin: 2rem 0;
-    background: $mulberry;
-    box-shadow: 0 2px 0 darken($mulberry-mid, 5);
+    background: $primary;
+    box-shadow: 0 2px 0 darken($primary-mid, 5);
 
     &:active,
     &:hover,
     &:focus {
-      background-color: darken($mulberry, 5);
+      background-color: darken($primary, 5);
     }
 
     &:active {
-      box-shadow: 0 0 0 darken($mulberry, 10);
+      box-shadow: 0 0 0 darken($primary, 10);
     }
   }
 
@@ -96,7 +96,7 @@
     background: none;
     border: 0;
     box-shadow: none;
-    color: $shamrock;
+    color: $secondary;
     text-transform: uppercase;
     padding-left: 0;
     padding-right: 0;
@@ -136,12 +136,12 @@
   &:active,
   &:hover,
   &:focus {
-    background-color: darken($shamrock-mid, 5);
+    background-color: darken($secondary-mid, 5);
     color: white;
   }
 
   &:active {
-    box-shadow: 0 0 0 darken($shamrock-mid, 10);
+    box-shadow: 0 0 0 darken($secondary-mid, 10);
     transform: translateY(2px);
   }
 
@@ -153,7 +153,7 @@
     pointer-events: none;
 
     &:hover {
-      background-color: $shamrock-mid;
+      background-color: $secondary-mid;
     }
   }
 }

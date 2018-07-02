@@ -20,7 +20,7 @@ body {
 }
 
 a {
-  color: $shamrock;
+  color: $secondary;
   text-decoration: none;
   font-weight: 400;
   transition: color 150ms ease;
@@ -30,7 +30,7 @@ a {
   }
 
   &:hover {
-    color: $shamrock-dark;
+    color: $secondary-dark;
   }
 
   &.danger:hover {
@@ -111,7 +111,7 @@ table {
 
 .blurb {
   padding: 0.5rem;
-  background: $marine;
+  background: $tertiary;
 
   h5 {
     margin: 0;

@@ -11,7 +11,7 @@
 
       <div class="app-description" v-html="submission.description"></div>
 
-      <div class="grid grid--bleed submission-pieces mulberry-row">
+      <div class="grid grid--bleed submission-pieces primary-row">
         <pitch :solo="true" />
       </div>
 

@@ -18,7 +18,7 @@
 
       <screenshots />
 
-      <div class="grid grid--bleed submission-pieces mulberry-row">
+      <div class="grid grid--bleed submission-pieces primary-row">
         <pitch />
         <tc-code />
       </div>
@@ -105,7 +105,7 @@ export default {
     margin: 0;
   }
 
-  .mulberry-row {
+  .primary-row {
     background: #903D54;
     color: white;
     padding: 1rem;

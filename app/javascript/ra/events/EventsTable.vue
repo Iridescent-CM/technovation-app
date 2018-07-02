@@ -358,7 +358,7 @@
       border: none;
     }
 
-    .color-shamrock {
+    .color-secondary {
       color: #5ABF94;
     }
 
@@ -383,7 +383,7 @@
     .button--unmask {
       @extend .background-none;
       @extend .border-none;
-      @extend .color-shamrock;
+      @extend .color-secondary;
       @extend .text-uppercase;
       @extend .font-bold;
       @extend .cursor-pointer;
