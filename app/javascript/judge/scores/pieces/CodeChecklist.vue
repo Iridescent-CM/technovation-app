@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid--bleed submission-pieces">
-    <div class="grid__col-6 grid__col--bleed-y marine-row">
+    <div class="grid__col-6 grid__col--bleed-y tertiary-row">
       <h4 class="code_checklist-header">
         Technical Components
       </h4>
@@ -15,7 +15,7 @@
       <p v-else>No use of technical components was indicated.</p>
     </div>
 
-    <div class="grid__col-6 grid__col--bleed-y marine-row">
+    <div class="grid__col-6 grid__col--bleed-y tertiary-row">
       <h4 class="code_checklist-header">
         Databases and Connectivity
       </h4>
@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.marine-row {
+.tertiary-row {
   background: #4BC2C6;
   padding: 1rem;
   min-height: 240px;

@@ -15,22 +15,22 @@
   font-size: 0.9rem;
   font-weight: 700;
   box-shadow: $shadow-small;
-  background: $mulberry;
+  background: $primary;
   color: white;
 
   &.flag-notice {
-    background: $marine;
+    background: $tertiary;
   }
 
   &.flag-season--new {
-    background: $shamrock;
+    background: $secondary;
   }
 
   &.flag-season--past {
-    background: $mulberry;
+    background: $primary;
   }
 
   &.flag-season--returning {
-    background: $marine;
+    background: $tertiary;
   }
 }

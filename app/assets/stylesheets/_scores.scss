@@ -6,7 +6,7 @@
 }
 
 .score-banner {
-  background-color: $mulberry-light;
+  background-color: $primary-light;
   box-shadow: $shadow-small;
   color: black;
   margin: 1rem 0;
@@ -33,8 +33,8 @@
 
 #student-scores-tabs {
   .score-title {
-    background: $shamrock;
-    border-bottom: 1px solid $shamrock-mid;
+    background: $secondary;
+    border-bottom: 1px solid $secondary-mid;
     border-radius: 7px 7px 0 0;
     color: white;
     font-size: 2rem;
@@ -95,9 +95,9 @@
 
     .accordion {
       > dt {
-        border-bottom: 1px solid $shamrock-mid;
+        border-bottom: 1px solid $secondary-mid;
         border-radius: 7px 7px 0 0;
-        color: $shamrock-mid;
+        color: $secondary-mid;
         font-size: 2rem;
         padding: 0.5rem;
         transition: background-color 0.2s, opacity 0.2s, color 0.2s;
@@ -113,7 +113,7 @@
 
         &:hover,
         &.ui-accordion-header-active {
-          background-color: $shamrock-mid;
+          background-color: $secondary-mid;
           border-radius: 0;
           opacity: 0.5;
           color: white;
@@ -121,7 +121,7 @@
       }
 
       > dd {
-        border: 1px solid $shamrock;
+        border: 1px solid $secondary;
         border-top: none;
         border-radius: 0 0 7px 7px;
         padding: 1em;

@@ -87,7 +87,7 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
     }
 
     &.selected {
-      border: 4px solid $shamrock;
+      border: 4px solid $secondary;
       box-shadow: $shadow-default;
     }
   }
