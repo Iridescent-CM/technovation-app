@@ -148,7 +148,7 @@ export default {
         if (request[options.verify]()) {
           swal(options.confirmMsg)
         } else {
-          console.error(request, request.isApproved())
+          console.error(request, request[options.verify]())
           swal('Error. Please tell the dev team.')
         }
       }).catch((err) => {
