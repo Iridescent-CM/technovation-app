@@ -49,7 +49,7 @@
     </template>
 
     <div class="padding--medium color--light weight--bold align--center">
-      No more pending requests
+      No more {{ requestStatus }} requests
     </div>
   </div>
 </template>
@@ -78,11 +78,11 @@ export default {
     }
   },
 
-  props: ['sourceUrl'],
+  props: ['sourceUrl', 'requestStatus'],
 
   computed: {
     requests() {
-      return this.allRequests.filter(r => r.isPending())
+      return this.allRequests.filter(r => r.hasRequestStatus(this.requestStatus))
     },
   },
 

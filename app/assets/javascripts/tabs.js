@@ -22,6 +22,8 @@ $(document).on("turbolinks:load", function() {
       .first()
       .addClass("tabs__menu-link--active");
 
+    $contents.addClass("hidden");
+
     $contents.first()
       .removeClass("hidden");
 
@@ -32,14 +34,18 @@ $(document).on("turbolinks:load", function() {
         .find(".tab-button, .tabs__menu-button")
         .data("tab-id");
 
-    $links.each(function() {
-      var $btn = $(this).find('button').first();
-      $btn.data('update-hash', true);
+    $links.on('click', function(evt) {
+      evt.preventDefault()
 
-      $(this).on('click', function(e) {
-        e.preventDefault();
-        revealTab($(this), $contents, $links);
-      });
+      var $btn = $(this).find('button').first()
+      $btn.data('update-hash', true)
+
+      revealTab($btn, $contents, $links);
+    })
+
+    $links.each(function() {
+      var $btn = $(this).find('button').first()
+      $btn.data('update-hash', true)
 
       if ($btn && intendedTab === $btn.data('tab-id'))
         revealTab($btn, $contents, $links);

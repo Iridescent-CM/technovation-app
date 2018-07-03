@@ -2,9 +2,60 @@
   id="vue-enable-admin-requests"
   class="grid grid--justify-space-around"
 >
-  <div class="grid__col-10 panel">
-    <review-region-requests
-      source-url="<%= admin_requests_path(format: :json) %>"
-    />
+  <div class="grid__col-10 tabs" id="admin-requests-tabs">
+    <ul class="tab-menu">
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="pending"
+        >
+          Pending
+        </button>
+      </li>
+
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="approved"
+        >
+          Approved
+        </button>
+      </li>
+
+      <li class="tab-link">
+        <button
+          role="button"
+          class="tab-button"
+          data-tab-id="declined"
+        >
+          Declined
+        </button>
+      </li>
+    </ul>
+
+    <div class="content">
+      <div class="tab-content panel" id="pending">
+        <review-region-requests
+          request-status="pending"
+          source-url="<%= admin_requests_path(format: :json) %>"
+        />
+      </div>
+
+      <div class="tab-content panel" id="approved">
+        <review-region-requests
+          request-status="approved"
+          source-url="<%= admin_requests_path(format: :json) %>"
+        />
+      </div>
+
+      <div class="tab-content panel" id="declined">
+        <review-region-requests
+          request-status="declined"
+          source-url="<%= admin_requests_path(format: :json) %>"
+        />
+      </div>
+    </div>
   </div>
 </div>

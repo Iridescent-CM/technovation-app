@@ -8,4 +8,6 @@ export default function (request) {
   this.isPending  = () => this.request_status === 'pending'
   this.isApproved = () => this.request_status === 'approved'
   this.isDeclined = () => this.request_status === 'declined'
+
+  this.hasRequestStatus = (status) => this.request_status === status
 }
