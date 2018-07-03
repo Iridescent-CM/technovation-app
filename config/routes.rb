@@ -221,6 +221,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    root to: 'dashboards#show'
     resource :dashboard, only: :show
 
     resources :data_analyses, only: :show
