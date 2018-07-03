@@ -5,7 +5,7 @@ module Admin
         format.html
 
         format.json {
-          requests = Request.includes(:target, :requestor).all
+          requests = Request.includes(requestor: :account).all
           render json: RequestSerializer.new(requests).serialized_json
         }
       end

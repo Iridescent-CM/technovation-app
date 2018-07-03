@@ -11,18 +11,18 @@
     <template v-for="request in requests">
       <div :key="request.id" class="grid-list">
         <div class="grid-list__col-1">
-          <img :src="request.attributes.requestor_avatar" width="100" />
+          <img :src="request.requestor_avatar" width="100" />
         </div>
 
         <div class="grid-list__col-4">
-          <h1>{{ request.attributes.requestor_name }}</h1>
+          <h1>{{ request.requestor_name }}</h1>
 
-          <h2>{{ request.attributes.requestor_meta.primary_region }}</h2>
+          <h2>{{ request.requestor_meta.primary_region }}</h2>
 
           <ul class="list--reset">
             <li
               :key="region"
-              v-for="region in request.attributes.requestor_meta.other_regions"
+              v-for="region in request.requestor_meta.other_regions"
             >
               {{ region }}
             </li>
@@ -35,7 +35,7 @@
           <ul class="list--reset">
             <li
               :key="region"
-              v-for="region in request.attributes.requestor_meta.requesting_regions"
+              v-for="region in request.requestor_meta.requesting_regions"
             >
               {{ region }}
             </li>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="grid-list__col-2">
-          <button>Review</button>
+          <button @click="reviewRequest(request)">Review</button>
         </div>
       </div>
     </template>
@@ -56,6 +56,8 @@
 
 <script>
 import axios from 'axios'
+
+import Request from './models/request'
 
 export default {
   data () {
@@ -76,7 +78,8 @@ export default {
     loadData () {
       axios.get(this.sourceUrl).then(({ data }) => {
         data.data.forEach((request) => {
-          this.requests.push(request)
+          const myRequest = new Request(request)
+          this.requests.push(myRequest)
         })
 
         this.isLoading = false
@@ -84,6 +87,25 @@ export default {
         console.error(err)
         this.isLoading = false
         this.hasError = true
+      })
+    },
+
+    reviewRequest(request) {
+      let html = `<p>${request.requestor_message}</p>`
+
+      html += '<ul class="list--reset">'
+
+      request.requestor_meta.requesting_regions.forEach((region) => {
+        html += `<li key="${region}">`
+        html += region
+        html += '</li>'
+      })
+
+      html += '</ul>'
+
+      swal({
+        title: request.requestor_name,
+        html: html,
       })
     },
   },
@@ -120,14 +142,17 @@ button {
   border-radius: 500px;
   cursor: pointer;
   padding: 0.5rem 1rem;
-  transition: background-color 0.2s, color 0.2s;
+  opacity: 0.5;
+  transition: opacity 0.2s, background-color 0.2s, color 0.2s;
   font-weight: bold;
   font-size: 0.9rem;
   outline: none;
+  text-transform: uppercase;
 
   &:hover,
   &:active,
   &:focus {
+    opacity: 1;
     background: #006540;
     color: white;
   }
