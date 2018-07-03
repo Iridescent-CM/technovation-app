@@ -36,9 +36,7 @@ $(document).on("turbolinks:load", function() {
       var $btn = $(this).find('button').first();
       $btn.data('update-hash', true);
 
-      console.log($(this))
       $(this).on('click', function(e) {
-        console.log($(this))
         e.preventDefault();
         revealTab($(this), $contents, $links);
       });
