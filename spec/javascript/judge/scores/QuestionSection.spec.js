@@ -5,7 +5,7 @@ import VTooltip from 'v-tooltip'
 import Vue2Filters from 'vue2-filters'
 
 import state from 'judge/scores/store/state'
-import { __createMocks as createMocks } from 'judge/scores/store/__mocks__'
+import mockStore from 'judge/scores/store/__mocks__'
 import QuestionSection from 'judge/scores/QuestionSection'
 
 const sentimentResponse = [
@@ -59,7 +59,7 @@ describe('Question comments section', () => {
     initialState = Object.assign({}, state);
     initialState.submission.id = 1;
 
-    storeMocks = createMocks({
+    storeMocks = mockStore.createMocks({
       state: initialState,
       getters: {
         sectionQuestions: jest.fn(() => () => {}),
@@ -270,7 +270,7 @@ test('Getter sectionQuestions returns a filtered array based on the current sect
     question3,
   ]
 
-  storeMocks = createMocks({
+  storeMocks = mockStore.createMocks({
     state: initialState,
   })
 

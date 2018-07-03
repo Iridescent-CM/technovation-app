@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
-import { store } from 'admin/dashboard/store/__mocks__'
+import mockStore from 'admin/dashboard/store/__mocks__'
 import { router } from 'admin/dashboard/routes'
 
 import AdminDashboard from 'admin/dashboard/components/AdminDashboard'
@@ -28,6 +28,8 @@ describe('Admin Dashboard - AdminDashboard component', () => {
     mentors: 789,
     students: 4682,
   }
+
+  const store = mockStore.createMocks().store
 
   beforeEach(() => {
     axios.mockResponse('get', {
