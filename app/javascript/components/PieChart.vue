@@ -1,6 +1,15 @@
 <template>
   <div class="pie-chart">
-    <p v-show="loading">Loading...</p>
+    <div v-if="loading">
+      <icon
+        class="spin"
+        name="spinner"
+        size="16"
+      />
+
+      <span>Loading chart...</span>
+    </div>
+
     <canvas v-show="!loading" :class="chartClasses"></canvas>
   </div>
 </template>
@@ -11,12 +20,19 @@ import axios from 'axios'
 import Chart from 'chart.js'
 import chroma from 'chroma-js'
 
+import Icon from './Icon.vue'
+import '../utilities/chartjs-plugins.js'
+
 function isEmptyObject(object) {
   return Object.keys(object).length === 0 && object.constructor === Object
 }
 
 export default {
   name: 'pie-chart',
+
+  components: {
+    Icon,
+  },
 
   data () {
     return {
@@ -135,7 +151,10 @@ export default {
       this.$set(this, 'extendedChartData', extendedChartData)
 
       // Emit event for caching AJAX response on the parent component
-      this.$emit('pieChartInitialized', this.extendedChartData)
+      this.$emit('pieChartInitialized', {
+        url: this.url,
+        chartData: this.extendedChartData
+      })
 
       this.loading = false
     },
