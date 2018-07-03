@@ -55,10 +55,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import swal from 'sweetalert2'
 import axios from 'axios'
 
-import Request from './models/request'
+import Request from '../models/request'
 
 const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
 
@@ -74,13 +76,14 @@ export default {
     return {
       isLoading: true,
       hasError: false,
-      allRequests: [],
     }
   },
 
-  props: ['sourceUrl', 'requestStatus'],
+  props: ['requestStatus'],
 
   computed: {
+    ...mapState(['allRequests']),
+
     requests() {
       return this.allRequests.filter(r => r.hasRequestStatus(this.requestStatus))
     },
@@ -92,12 +95,7 @@ export default {
 
   methods: {
     loadData () {
-      axios.get(this.sourceUrl).then(({ data }) => {
-        data.data.forEach((request) => {
-          const myRequest = new Request(request)
-          this.allRequests.push(myRequest)
-        })
-
+      this.$store.dispatch("init").then(() => {
         this.isLoading = false
       }).catch((err) => {
         console.error(err)
@@ -145,24 +143,9 @@ export default {
     },
 
     updateRequest(request, options) {
-      axios.patch(
-        request.urls.patch,
-        options.attributes,
-      ).then(({ data }) => {
-        const request = new Request(data.data)
-
-        if (request[options.verify]()) {
-          const idx = this.allRequests.findIndex(r => r.id === request.id)
-          this.allRequests.splice(idx, 1, request)
-
-          swal(options.confirmMsg)
-        } else {
-          console.error(request, request[options.verify]())
-          swal('Error. Please tell the dev team.')
-        }
-      }).catch((err) => {
-        console.error(err)
-        swal('Error. Please tell the dev team.')
+      this.$store.dispatch('updateRequest', {
+        request: request,
+        options: options,
       })
     },
 

@@ -35,28 +35,19 @@
     <div class="content">
       <div class="tab-content panel" id="pending">
         <div class="vue-enable-admin-requests">
-          <review-region-requests
-            request-status="pending"
-            source-url="<%= admin_requests_path(format: :json) %>"
-          />
+          <review-region-requests request-status="pending" />
         </div>
       </div>
 
       <div class="tab-content panel" id="approved">
         <div class="vue-enable-admin-requests">
-          <review-region-requests
-            request-status="approved"
-            source-url="<%= admin_requests_path(format: :json) %>"
-          />
+          <review-region-requests request-status="approved" />
         </div>
       </div>
 
       <div class="tab-content panel" id="declined">
         <div class="vue-enable-admin-requests">
-          <review-region-requests
-            request-status="declined"
-            source-url="<%= admin_requests_path(format: :json) %>"
-          />
+          <review-region-requests request-status="declined" />
         </div>
       </div>
     </div>

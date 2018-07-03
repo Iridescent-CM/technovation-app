@@ -1,6 +1,8 @@
 import Vue from 'vue/dist/vue.esm'
 
-import ReviewRegionRequests from './ReviewRegionRequests'
+import store from './store'
+
+import ReviewRegionRequests from './components/ReviewRegionRequests'
 
 document.addEventListener('turbolinks:load', () => {
   const adminReqElems = document.querySelectorAll('.vue-enable-admin-requests')
@@ -8,6 +10,7 @@ document.addEventListener('turbolinks:load', () => {
   adminReqElems.forEach((elem) => {
     new Vue({
       el: elem,
+      store,
 
       components: {
         ReviewRegionRequests,

@@ -5,8 +5,8 @@ import Vuex from 'vuex'
 import VTooltip from 'v-tooltip'
 import Vue2Filters from 'vue2-filters'
 
-import ReviewRegionRequests from 'admin/review-requests/ReviewRegionRequests'
-import Request from 'admin/review-requests/models/Request'
+import ReviewRegionRequests from 'admin/review-requests/components/ReviewRegionRequests'
+import Request from 'admin/review-requests/models/request'
 
 const localVue = createLocalVue()
 
