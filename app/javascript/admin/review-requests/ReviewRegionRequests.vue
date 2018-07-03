@@ -1,13 +1,21 @@
 <template>
-  <div>
-    Review region requests
+  <div v-if="isLoading" class="loading">
+    Loading...
   </div>
 </template>
 
 <script>
 export default {
   data () {
-    return {}
+    return {
+      isLoading: true,
+    }
+  },
+
+  methods: {
+    loadData () {
+      this.isLoading = false
+    },
   },
 }
 </script>

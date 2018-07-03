@@ -23,7 +23,12 @@ describe('List pending requests', () => {
     )
   })
 
-  test('mounts', () => {
-    expect(wrapper.find('div').text()).toEqual('Review region requests')
+  test('starts out loading', () => {
+    expect(wrapper.find('.loading').text()).toEqual('Loading...')
+  })
+
+  test('can stop loading', () => {
+    wrapper.vm.loadData()
+    expect(wrapper.contains('.loading')).toBe(false)
   })
 })
