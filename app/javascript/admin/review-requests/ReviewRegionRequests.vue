@@ -48,7 +48,7 @@
       </div>
     </template>
 
-    <div class="padding-medium color--light weight--bold align--center">
+    <div class="padding--medium color--light weight--bold align--center">
       No more pending requests
     </div>
   </div>
