@@ -91,9 +91,7 @@ export default {
     },
 
     reviewRequest(request) {
-      let html = `<p>${request.requestor_message}</p>`
-
-      html += '<ul class="list--reset">'
+      let html = '<ul class="list--reset">'
 
       request.requestor_meta.requesting_regions.forEach((region) => {
         html += `<li key="${region}">`
@@ -102,6 +100,8 @@ export default {
       })
 
       html += '</ul>'
+
+      html += `<p>${request.requestor_message}</p>`
 
       swal({
         title: request.requestor_name,
