@@ -231,6 +231,8 @@ Rails.application.routes.draw do
 
     resources :job_statuses, only: :show
 
+    resources :requests, only: [:index, :update]
+
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
     resources :participants

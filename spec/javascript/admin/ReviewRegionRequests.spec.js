@@ -89,6 +89,9 @@ describe('List pending requests', () => {
       setImmediate(() => {
         expect(wrapper.vm.requests.length).toBe(2)
         expect(wrapper.vm.isLoading).toBe(false)
+        expect(wrapper.vm.requests[1].attributes.requestor_meta.regions).toEqual([
+          "Maine, US", "New York, US"
+        ])
         done()
       })
     })
