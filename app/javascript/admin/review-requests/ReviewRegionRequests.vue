@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert2'
 import axios from 'axios'
 
 import Request from './models/request'
@@ -116,33 +117,38 @@ export default {
     },
 
     approveRequest(request) {
-      axios.patch(
-        request.urls.patch,
-        { request_status: "approved" },
-      ).then(({ data }) => {
-        const request = new Request(data.data)
-        if (request.isApproved()) {
-          swal('Approved!')
-        } else {
-          console.error(request, request.isApproved())
-          swal('Error. Please tell the dev team.')
+      this.updateRequest(
+        request,
+        {
+          attributes: { request_status: "approved" },
+          verify: "isApproved",
+          confirmMsg: "Approved!",
         }
-      }).catch((err) => {
-        console.error(err)
-        swal('Error. Please tell the dev team.')
-      })
+      )
     },
 
     declineRequest(request) {
+      this.updateRequest(
+        request,
+        {
+          attributes: { request_status: "declined" },
+          verify: "isDeclined",
+          confirmMsg: "Declined!",
+        }
+      )
+    },
+
+    updateRequest(request, options) {
       axios.patch(
         request.urls.patch,
-        { request_status: "declined" },
+        options.attributes,
       ).then(({ data }) => {
         const request = new Request(data.data)
-        if (request.isDeclined()) {
-          swal('Declined!')
+
+        if (request[options.verify]()) {
+          swal(options.confirmMsg)
         } else {
-          console.error(request, request.isDeclined())
+          console.error(request, request.isApproved())
           swal('Error. Please tell the dev team.')
         }
       }).catch((err) => {

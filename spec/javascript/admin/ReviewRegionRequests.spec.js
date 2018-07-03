@@ -6,6 +6,7 @@ import VTooltip from 'v-tooltip'
 import Vue2Filters from 'vue2-filters'
 
 import ReviewRegionRequests from 'admin/review-requests/ReviewRegionRequests'
+import Request from 'admin/review-requests/models/Request'
 
 const localVue = createLocalVue()
 
@@ -16,6 +17,7 @@ localVue.use(Vue2Filters)
 describe('List pending requests', () => {
   beforeEach(() => {
     axios.get.mockClear()
+    axios.patch.mockClear()
   })
 
   it('starts out loading', () => {
@@ -29,6 +31,62 @@ describe('List pending requests', () => {
     )
 
     expect(wrapper.find('.loading').text()).toEqual('Loading...')
+  })
+
+  describe('#approveRequest()', () => {
+    it('patches request_status => approved to the request patch URL', (done) => {
+      const wrapper = shallowMount(
+        ReviewRegionRequests, {
+          localVue,
+          propsData: {
+            sourceUrl: '/some/url',
+          },
+        }
+      )
+
+      const axiosPatchSpy = jest.spyOn(axios, 'patch')
+
+      wrapper.vm.approveRequest(new Request({
+        id: 1,
+        attributes: { urls: { patch: '/endpoint/1' } }
+      }))
+
+      setImmediate(() => {
+        expect(axiosPatchSpy).toHaveBeenLastCalledWith('/endpoint/1', {
+          request_status: "approved"
+        })
+
+        done()
+      })
+    })
+  })
+
+  describe('#declineRequest()', () => {
+    it('patches request_status => declined to the request patch URL', (done) => {
+      const wrapper = shallowMount(
+        ReviewRegionRequests, {
+          localVue,
+          propsData: {
+            sourceUrl: '/some/url',
+          },
+        }
+      )
+
+      const axiosPatchSpy = jest.spyOn(axios, 'patch')
+
+      wrapper.vm.declineRequest(new Request({
+        id: 1,
+        attributes: { urls: { patch: '/endpoint/1' } }
+      }))
+
+      setImmediate(() => {
+        expect(axiosPatchSpy).toHaveBeenLastCalledWith('/endpoint/1', {
+          request_status: "declined"
+        })
+
+        done()
+      })
+    })
   })
 
   describe('#loadData()', () => {
