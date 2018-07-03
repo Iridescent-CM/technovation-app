@@ -59,6 +59,15 @@ import axios from 'axios'
 
 import Request from './models/request'
 
+const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
+
+if (csrfTokenMetaTag) {
+  axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
+  }
+}
+
 export default {
   data () {
     return {
@@ -91,6 +100,58 @@ export default {
     },
 
     reviewRequest(request) {
+      swal({
+        title: request.requestor_name,
+        html: this.buildReviewHTML(request),
+        confirmButtonText: 'Approve',
+        showCancelButton: true,
+        cancelButtonText: 'Decline',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+      }).then((result) => {
+        result.value ?
+          this.approveRequest(request) :
+          this.declineRequest(request)
+      })
+    },
+
+    approveRequest(request) {
+      axios.patch(
+        request.urls.patch,
+        { request_status: "approved" },
+      ).then(({ data }) => {
+        const request = new Request(data.data)
+        if (request.isApproved()) {
+          swal('Approved!')
+        } else {
+          console.error(request, request.isApproved())
+          swal('Error. Please tell the dev team.')
+        }
+      }).catch((err) => {
+        console.error(err)
+        swal('Error. Please tell the dev team.')
+      })
+    },
+
+    declineRequest(request) {
+      axios.patch(
+        request.urls.patch,
+        { request_status: "declined" },
+      ).then(({ data }) => {
+        const request = new Request(data.data)
+        if (request.isDeclined()) {
+          swal('Declined!')
+        } else {
+          console.error(request, request.isDeclined())
+          swal('Error. Please tell the dev team.')
+        }
+      }).catch((err) => {
+        console.error(err)
+        swal('Error. Please tell the dev team.')
+      })
+    },
+
+    buildReviewHTML(request) {
       let html = '<ul class="list--reset">'
 
       request.requestor_meta.requesting_regions.forEach((region) => {
@@ -103,10 +164,7 @@ export default {
 
       html += `<p>${request.requestor_message}</p>`
 
-      swal({
-        title: request.requestor_name,
-        html: html,
-      })
+      return html
     },
   },
 }
