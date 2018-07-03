@@ -144,8 +144,8 @@ export default {
 
     updateRequest(request, options) {
       this.$store.dispatch('updateRequest', {
-        request: request,
-        options: options,
+        request,
+        options,
       })
     },
 
