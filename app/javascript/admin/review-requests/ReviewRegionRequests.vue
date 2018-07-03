@@ -74,11 +74,17 @@ export default {
     return {
       isLoading: true,
       hasError: false,
-      requests: [],
+      allRequests: [],
     }
   },
 
   props: ['sourceUrl'],
+
+  computed: {
+    requests() {
+      return this.allRequests.filter(r => r.isPending())
+    },
+  },
 
   created () {
     this.loadData()
@@ -89,7 +95,7 @@ export default {
       axios.get(this.sourceUrl).then(({ data }) => {
         data.data.forEach((request) => {
           const myRequest = new Request(request)
-          this.requests.push(myRequest)
+          this.allRequests.push(myRequest)
         })
 
         this.isLoading = false
@@ -146,6 +152,9 @@ export default {
         const request = new Request(data.data)
 
         if (request[options.verify]()) {
+          const idx = this.allRequests.findIndex(r => r.id === request.id)
+          this.allRequests.splice(idx, 1, request)
+
           swal(options.confirmMsg)
         } else {
           console.error(request, request[options.verify]())

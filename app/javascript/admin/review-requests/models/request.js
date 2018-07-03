@@ -5,6 +5,7 @@ export default function (request) {
     this[key] = request.attributes[key]
   })
 
+  this.isPending  = () => this.request_status === 'pending'
   this.isApproved = () => this.request_status === 'approved'
   this.isDeclined = () => this.request_status === 'declined'
 }
