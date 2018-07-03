@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
 import state from 'admin/dashboard/store/index'
-import { __createMocks as createMocks } from 'admin/dashboard/store/__mocks__'
+import mockStore from 'admin/dashboard/store/__mocks__'
 
 import PieChart from 'components/PieChart'
 import DashboardSection from 'admin/dashboard/components/DashboardSection'
@@ -27,7 +27,7 @@ describe('Admin Dashboard - DashboardSection component', () => {
       },
     })
 
-    const storeMocks = createMocks({
+    const storeMocks = mockStore.createMocks({
       state: initialState,
     })
 
