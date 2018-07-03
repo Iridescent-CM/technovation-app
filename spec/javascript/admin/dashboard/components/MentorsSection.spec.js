@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
 import state from 'admin/dashboard/store/index'
-import { __createMocks as createMocks } from 'admin/dashboard/store/__mocks__'
+import mockStore from 'admin/dashboard/store/__mocks__'
 
 import DashboardSection from 'admin/dashboard/components/DashboardSection'
 import MentorsSection from 'admin/dashboard/components/MentorsSection'
@@ -63,7 +63,7 @@ describe('Admin Dashboard - MentorSection component', () => {
       },
     })
 
-    const storeMocks = createMocks({
+    const storeMocks = mockStore.createMocks({
       state: initialState,
     })
 
@@ -104,7 +104,7 @@ describe('Admin Dashboard - MentorSection component', () => {
           cachedStates: {},
         })
 
-        const storeMocks = createMocks({
+        const storeMocks = mockStore.createMocks({
           state: initialState,
         })
 
@@ -140,7 +140,7 @@ describe('Admin Dashboard - MentorSection component', () => {
           cachedStates: {},
         })
 
-        const storeMocks = createMocks({
+        const storeMocks = mockStore.createMocks({
           state: initialState,
         })
 
@@ -169,7 +169,7 @@ describe('Admin Dashboard - MentorSection component', () => {
           },
         })
 
-        const storeMocks = createMocks({
+        const storeMocks = mockStore.createMocks({
           state: initialState,
         })
 
@@ -189,7 +189,7 @@ describe('Admin Dashboard - MentorSection component', () => {
           totals: {},
         })
 
-        const storeMocks = createMocks({
+        const storeMocks = mockStore.createMocks({
           state: initialState,
         })
 
@@ -231,7 +231,7 @@ describe('Admin Dashboard - MentorSection component', () => {
         totals: {},
       })
 
-      const storeMocks = createMocks({
+      const storeMocks = mockStore.createMocks({
         state: initialState,
       })
 
