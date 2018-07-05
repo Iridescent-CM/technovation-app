@@ -3,7 +3,8 @@
     <h3>Mentors<span v-if="showTotal"> ({{ getTotal('mentors') }})</span></h3>
 
     <div class="tab-content">
-      <h6>Background check / consent waivers</h6>
+      <h6 v-if="international">Consent waivers</h6>
+      <h6 v-else>Background check / consent waivers</h6>
 
       <pie-chart
         :url="onboardingMentorsEndpoint"
@@ -35,6 +36,13 @@ export default {
   name: 'mentors-section',
 
   extends: DashboardSection,
+
+  props: {
+    international: {
+      type: Boolean,
+      default: false,
+    }
+  },
 
   computed: {
     onboardingMentorsEndpoint () {

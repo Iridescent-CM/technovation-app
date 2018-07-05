@@ -83,6 +83,21 @@ describe('Admin Dashboard - MentorSection component', () => {
     expect(MentorsSection.extends).toEqual(DashboardSection)
   })
 
+  describe('props', () => {
+
+    describe('international', () => {
+
+      it('is a boolean with a default value of false', () => {
+        expect(MentorsSection.props.international).toEqual({
+          type: Boolean,
+          default: false,
+        })
+      })
+
+    })
+
+  })
+
   describe('computed properties', () => {
 
     describe('onboardingMentorsEndpoint', () => {
@@ -244,6 +259,20 @@ describe('Admin Dashboard - MentorSection component', () => {
 
       expect(wrapper.find('h3').html())
         .toEqual('<h3>Mentors<!----></h3>')
+    })
+
+    it('changes the label of the onboarding chart if international changes', () => {
+      const onboardingChart = wrapper.findAll('.tab-content').at(0)
+
+      wrapper.setProps({ international: false })
+
+      expect(onboardingChart.find('h6').text())
+        .toEqual('Background check / consent waivers')
+
+      wrapper.setProps({ international: true })
+
+      expect(onboardingChart.find('h6').text())
+        .toEqual('Consent waivers')
     })
 
   })
