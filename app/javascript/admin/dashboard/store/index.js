@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export const state = {
   chartEndpoints: {},
   cachedStates: {},
-  totals: {},
 }
 
 export const getters = {
@@ -25,28 +24,18 @@ export const getters = {
 
     return {}
   },
-
-  getTotalByName: (state) => (name) => {
-    if (typeof state.totals[name] !== 'undefined' && state.totals[name] !== null)
-      return state.totals[name]
-
-    return null
-  },
 }
 
 export const mutations = {
   addChartEndpoints (state, payload) {
     const mergedEndpoints = Object.assign({}, state.chartEndpoints, payload)
-    state.chartEndpoints = mergedEndpoints
+    Object.keys(mergedEndpoints).forEach((key) => {
+      Vue.set(state.chartEndpoints, key, mergedEndpoints[key])
+    })
   },
 
   addChartDataToCache (state, payload) {
-    state.cachedStates[payload.url] = payload.chartData
-  },
-
-  addTotals (state, payload) {
-    const mergedTotals = Object.assign({}, state.totals, payload)
-    state.totals = mergedTotals
+    Vue.set(state.cachedStates, payload.url, payload.chartData)
   },
 }
 

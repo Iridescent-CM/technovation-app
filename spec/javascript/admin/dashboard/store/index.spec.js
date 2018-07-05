@@ -3,7 +3,6 @@ import store, { state, getters, mutations } from 'admin/dashboard/store'
 describe('Admin Dashboard - Vuex store', () => {
 
   beforeEach(() => {
-    store.state.totals = {}
     store.state.chartEndpoints = {}
     store.state.cachedStates = {}
   })
@@ -12,7 +11,6 @@ describe('Admin Dashboard - Vuex store', () => {
     expect(state).toEqual({
       chartEndpoints: {},
       cachedStates: {},
-      totals: {},
     })
   })
 
@@ -20,7 +18,6 @@ describe('Admin Dashboard - Vuex store', () => {
     expect(getters).toEqual({
       getChartEndpoint: expect.any(Function),
       getCachedChartData: expect.any(Function),
-      getTotalByName: expect.any(Function),
     })
   })
 
@@ -28,7 +25,6 @@ describe('Admin Dashboard - Vuex store', () => {
     expect(mutations).toEqual({
       addChartEndpoints: expect.any(Function),
       addChartDataToCache: expect.any(Function),
-      addTotals: expect.any(Function),
     })
   })
 
@@ -95,32 +91,6 @@ describe('Admin Dashboard - Vuex store', () => {
 
     })
 
-    describe('getTotalByName', () => {
-
-      it('returns the total if it exists in the store', () => {
-        store.state.totals = {
-          students: 8436,
-        }
-
-        expect(store.getters.getTotalByName('students')).toEqual(8436)
-
-        store.state.totals.students = 0
-
-        expect(store.getters.getTotalByName('students')).toEqual(0)
-      })
-
-      it('returns null if the total does not exist in the store', () => {
-        store.state.totals = {}
-
-        expect(store.getters.getTotalByName('students')).toEqual(null)
-
-        store.state.totals.students = null
-
-        expect(store.getters.getTotalByName('students')).toEqual(null)
-      })
-
-    })
-
   })
 
   describe('mutations', () => {
@@ -174,28 +144,6 @@ describe('Admin Dashboard - Vuex store', () => {
 
         expect(store.state.cachedStates).toEqual({
           '/some/url': chartData,
-        })
-      })
-
-    })
-
-    describe('addTotals', () => {
-
-      it('adds new chart totals by merging with the previous state data', () => {
-        store.state.totals = {
-          'chart_one': 1000,
-          'chart_two': 2000,
-        }
-
-        store.commit('addTotals', {
-          'chart_one': 8000,
-          'chart_three': 3000,
-        })
-
-        expect(store.state.totals).toEqual({
-          'chart_one': 8000,
-          'chart_two': 2000,
-          'chart_three': 3000,
         })
       })
 
