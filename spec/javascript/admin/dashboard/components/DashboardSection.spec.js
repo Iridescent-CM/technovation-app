@@ -49,6 +49,40 @@ describe('Admin Dashboard - DashboardSection component', () => {
     })
   })
 
+  describe('props', () => {
+
+    it('contains the proper properties used to populate the endpoints and totals', () => {
+      expect(DashboardSection.props).toEqual({
+        chartEndpoints: {
+          type: Object,
+          default: expect.any(Function),
+        },
+
+        totals: {
+          type: Object,
+          default: expect.any(Function),
+        },
+      })
+    })
+
+    describe('chartEndpoints', () => {
+
+      it('returns an empty object by default', () => {
+        expect(DashboardSection.props.chartEndpoints.default()).toEqual({})
+      })
+
+    })
+
+    describe('totals', () => {
+
+      it('returns an empty object by default', () => {
+        expect(DashboardSection.props.totals.default()).toEqual({})
+      })
+
+    })
+
+  })
+
   describe('methods', () => {
 
     describe('getTotal', () => {

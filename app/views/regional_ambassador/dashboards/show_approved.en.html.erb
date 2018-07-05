@@ -38,6 +38,39 @@
             <% end %>
           </div>
 
+          <div class="tab-content" id="students">
+            <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
+
+            <% if current_ambassador.needs_intro_prompt? %>
+              <p>Please fill in your regional program introduction to access this section</p>
+            <% else %>
+              <h3 class="reset">
+                <%= current_ambassador.region_name %>
+                <%= Season.current.year %>
+                recruitment performance
+              </h3>
+
+              <p>
+                <%= link_to "View all participants in your region",
+                  regional_ambassador_participants_path %>
+              </p>
+
+              <hr />
+
+              <div id="ra-admin-students-section">
+                <students-section
+                  :totals="{
+                    student: '<%= number_with_delimiter @students.count %>',
+                  }"
+                  :chart-endpoints="{
+                    permitted_students: '<%= regional_ambassador_data_analysis_path(:permitted_students) %>',
+                    returning_students: '<%= regional_ambassador_data_analysis_path(:returning_students) %>',
+                  }"
+                />
+              </div>
+            <% end %>
+          </div>
+
           <div class="tab-content" id="inactivity">
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your regional program introduction to access this section</p>
