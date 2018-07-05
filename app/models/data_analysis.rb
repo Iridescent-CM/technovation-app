@@ -215,8 +215,8 @@ class OnboardingInternationalMentorsDataAnalysis < DataAnalysis
 
   def labels
     [
-      "Signed consent – <%= show_percentage(@consenting_mentors, @mentors) %>",
-      "Has not signed – <%= show_percentage(@unconsenting_mentors, @mentors) %>",
+      "Signed consent – #{show_percentage(@consenting_mentors, @mentors)}",
+      "Has not signed – #{show_percentage(@unconsenting_mentors, @mentors)}",
     ]
   end
 
