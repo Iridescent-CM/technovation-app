@@ -24,17 +24,16 @@ describe('Admin Dashboard - AdminDashboard component', () => {
     returning_mentors: '/returning/mentors/',
   }
 
-  const totals = {
-    mentors: 789,
-    students: 4682,
-  }
-
   const store = mockStore.createMocks().store
 
   beforeEach(() => {
     axios.mockResponse('get', {
       data: {
         attributes: {
+          totals: {
+            mentors: '402',
+            students: '854',
+          },
           labels: [ 'One', 'Two' ],
           data: [ 1, 3 ],
           urls: [ '/one', '/two' ],
@@ -49,7 +48,6 @@ describe('Admin Dashboard - AdminDashboard component', () => {
         store,
         propsData: {
           chartEndpoints,
-          totals,
         }
       }
     )
@@ -61,14 +59,9 @@ describe('Admin Dashboard - AdminDashboard component', () => {
 
   describe('props', () => {
 
-    it('contains the proper properties used to populate the endpoints and totals', () => {
+    it('contains the proper properties used to populate the endpoints', () => {
       expect(AdminDashboard.props).toEqual({
         chartEndpoints: {
-          type: Object,
-          default: expect.any(Function),
-        },
-
-        totals: {
           type: Object,
           default: expect.any(Function),
         },
@@ -79,14 +72,6 @@ describe('Admin Dashboard - AdminDashboard component', () => {
 
       it('returns an empty object by default', () => {
         expect(AdminDashboard.props.chartEndpoints.default()).toEqual({})
-      })
-
-    })
-
-    describe('totals', () => {
-
-      it('returns an empty object by default', () => {
-        expect(AdminDashboard.props.totals.default()).toEqual({})
       })
 
     })
@@ -107,7 +92,6 @@ describe('Admin Dashboard - AdminDashboard component', () => {
           store,
           propsData: {
             chartEndpoints,
-            totals,
           }
         }
       )
@@ -115,29 +99,6 @@ describe('Admin Dashboard - AdminDashboard component', () => {
       expect(commitSpy).toHaveBeenCalledWith(
         'addChartEndpoints',
         wrapper.vm.chartEndpoints
-      )
-    })
-
-    it('commits the totals prop data to the store', () => {
-      const commitSpy = spyOn(store, 'commit')
-
-      expect(commitSpy).not.toHaveBeenCalled()
-
-      wrapper = shallowMount(
-        AdminDashboard, {
-          localVue,
-          router,
-          store,
-          propsData: {
-            chartEndpoints,
-            totals,
-          }
-        }
-      )
-
-      expect(commitSpy).toHaveBeenCalledWith(
-        'addTotals',
-        wrapper.vm.totals
       )
     })
 
