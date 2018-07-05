@@ -15,11 +15,7 @@
   <mentors-section
     :international="<%= current_ambassador.country != "US" %>"
     :chart-endpoints="{
-      <% if current_ambassador.country == "US" %>
-        onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_mentors) %>',
-      <% else %>
-        onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_international_mentors) %>',
-      <% end %>
+      onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_mentors) %>',
       returning_mentors: '<%= regional_ambassador_data_analysis_path(:returning_mentors) %>',
     }"
   />
