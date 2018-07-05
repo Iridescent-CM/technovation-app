@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import AdminDashboard from './components/AdminDashboard'
 import StudentsSection from './components/StudentsSection'
+import MentorsSection from './components/MentorsSection'
 import PieChart from '../../components/PieChart'
 
 Vue.use(VueRouter)
@@ -50,6 +51,18 @@ document.addEventListener('turbolinks:load', () => {
       el: studentsSectionElement,
       components: {
         StudentsSection,
+      },
+    })
+  }
+
+  const mentorsSectionElement = document.getElementById('ra-admin-mentors-section')
+
+  if (mentorsSectionElement) {
+    new Vue({
+      store,
+      el: mentorsSectionElement,
+      components: {
+        MentorsSection,
       },
     })
   }
