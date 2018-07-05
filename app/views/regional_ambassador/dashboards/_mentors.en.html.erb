@@ -13,11 +13,7 @@
 
 <div id="ra-admin-mentors-section">
   <mentors-section
-    <% if current_ambassador.country == "US" %>
-      :international="false"
-    <% else %>
-      :international="true"
-    <% end %>
+    :international="<%= current_ambassador.country != "US" %>"
     :totals="{
       mentors: '<%= number_with_delimiter @mentors.count %>',
     }"
