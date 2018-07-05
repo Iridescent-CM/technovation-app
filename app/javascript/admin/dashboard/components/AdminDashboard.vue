@@ -22,6 +22,17 @@
           Mentors
         </button>
       </router-link>
+
+      <router-link
+        tag="li"
+        class="tab-link"
+        active-class="tabs__menu-link--active"
+        :to="{ name: 'participants' }"
+      >
+        <button role="button" class="tab-button">
+          Participants
+        </button>
+      </router-link>
     </ul>
 
     <router-view class="content grid__col-md-9"></router-view>
