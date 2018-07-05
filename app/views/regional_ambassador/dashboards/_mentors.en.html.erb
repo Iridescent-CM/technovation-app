@@ -14,9 +14,6 @@
 <div id="ra-admin-mentors-section">
   <mentors-section
     :international="<%= current_ambassador.country != "US" %>"
-    :totals="{
-      mentors: '<%= number_with_delimiter @mentors.count %>',
-    }"
     :chart-endpoints="{
       <% if current_ambassador.country == "US" %>
         onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_mentors) %>',

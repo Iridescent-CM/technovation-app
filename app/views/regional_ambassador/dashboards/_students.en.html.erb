@@ -13,9 +13,6 @@
 
 <div id="ra-admin-students-section">
   <students-section
-    :totals="{
-      student: '<%= number_with_delimiter @students.count %>',
-    }"
     :chart-endpoints="{
       permitted_students: '<%= regional_ambassador_data_analysis_path(:permitted_students) %>',
       returning_students: '<%= regional_ambassador_data_analysis_path(:returning_students) %>',
