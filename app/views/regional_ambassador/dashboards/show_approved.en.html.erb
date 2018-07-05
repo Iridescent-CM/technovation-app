@@ -28,46 +28,13 @@
     <div class="content grid__col-sm-9 col--sticky-parent">
       <div class="col--sticky-spacer">
         <div class="col--sticky">
-          <div class="tab-content" id="recruitment">
-            <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
-
-            <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your regional program introduction to access this section</p>
-            <% else %>
-              <%= render "regional_ambassador/dashboards/quick_view" %>
-            <% end %>
-          </div>
-
           <div class="tab-content" id="students">
             <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
 
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your regional program introduction to access this section</p>
             <% else %>
-              <h3 class="reset">
-                <%= current_ambassador.region_name %>
-                <%= Season.current.year %>
-                recruitment performance
-              </h3>
-
-              <p>
-                <%= link_to "View all participants in your region",
-                  regional_ambassador_participants_path %>
-              </p>
-
-              <hr />
-
-              <div id="ra-admin-students-section">
-                <students-section
-                  :totals="{
-                    student: '<%= number_with_delimiter @students.count %>',
-                  }"
-                  :chart-endpoints="{
-                    permitted_students: '<%= regional_ambassador_data_analysis_path(:permitted_students) %>',
-                    returning_students: '<%= regional_ambassador_data_analysis_path(:returning_students) %>',
-                  }"
-                />
-              </div>
+              <%= render "regional_ambassador/dashboards/students" %>
             <% end %>
           </div>
 
@@ -77,39 +44,7 @@
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your regional program introduction to access this section</p>
             <% else %>
-              <h3 class="reset">
-                <%= current_ambassador.region_name %>
-                <%= Season.current.year %>
-                recruitment performance
-              </h3>
-
-              <p>
-                <%= link_to "View all participants in your region",
-                  regional_ambassador_participants_path %>
-              </p>
-
-              <hr />
-
-              <div id="ra-admin-mentors-section">
-                <mentors-section
-                  <% if current_ambassador.country == "US" %>
-                    :international="false"
-                  <% else %>
-                    :international="true"
-                  <% end %>
-                  :totals="{
-                    mentors: '<%= number_with_delimiter @mentors.count %>',
-                  }"
-                  :chart-endpoints="{
-                    <% if current_ambassador.country == "US" %>
-                      onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_mentors) %>',
-                    <% else %>
-                      onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_international_mentors) %>',
-                    <% end %>
-                    returning_mentors: '<%= regional_ambassador_data_analysis_path(:returning_mentors) %>',
-                  }"
-                />
-              </div>
+              <%= render "regional_ambassador/dashboards/mentors" %>
             <% end %>
           </div>
 

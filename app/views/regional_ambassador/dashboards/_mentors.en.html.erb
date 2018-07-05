@@ -1,0 +1,33 @@
+<h3 class="reset">
+  <%= current_ambassador.region_name %>
+  <%= Season.current.year %>
+  recruitment performance
+</h3>
+
+<p>
+  <%= link_to "View all participants in your region",
+    regional_ambassador_participants_path %>
+</p>
+
+<hr />
+
+<div id="ra-admin-mentors-section">
+  <mentors-section
+    <% if current_ambassador.country == "US" %>
+      :international="false"
+    <% else %>
+      :international="true"
+    <% end %>
+    :totals="{
+      mentors: '<%= number_with_delimiter @mentors.count %>',
+    }"
+    :chart-endpoints="{
+      <% if current_ambassador.country == "US" %>
+        onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_mentors) %>',
+      <% else %>
+        onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_international_mentors) %>',
+      <% end %>
+      returning_mentors: '<%= regional_ambassador_data_analysis_path(:returning_mentors) %>',
+    }"
+  />
+</div>
