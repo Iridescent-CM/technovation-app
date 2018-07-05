@@ -1,6 +1,6 @@
 <template>
   <div id="students">
-    <h3>Students<span v-if="showTotal"> ({{ getTotal('students') }})</span></h3>
+    <h3>Students<span v-if="getTotal('students')"> ({{ getTotal('students') }})</span></h3>
 
     <div class="tab-content">
       <h6>Parental permission</h6>
@@ -51,10 +51,6 @@ export default {
 
     returningStudentsChartData () {
       return this.$store.getters.getCachedChartData('returning_students')
-    },
-
-    showTotal () {
-      return this.getTotal('students') !== null
     },
   },
 }

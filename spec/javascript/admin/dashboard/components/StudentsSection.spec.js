@@ -17,6 +17,9 @@ describe('Admin Dashboard - StudentsSection component', () => {
   let wrapper
 
   const permittedStudents = {
+    totals: {
+      students: '854',
+    },
     labels: [
       'With parental permission – (75%)',
       'Without parental permission – (25%)'
@@ -32,6 +35,9 @@ describe('Admin Dashboard - StudentsSection component', () => {
   }
 
   const returningStudents = {
+    totals: {
+      students: '854',
+    },
     labels: [
       'Returning students – (25%)',
       'New students – (75%)'
@@ -52,9 +58,6 @@ describe('Admin Dashboard - StudentsSection component', () => {
         '/permitted/students': permittedStudents,
         '/returning/students': returningStudents,
       },
-      totals: {
-        students: 854,
-      },
     })
 
     const storeMocks = mockStore.createMocks({
@@ -67,6 +70,8 @@ describe('Admin Dashboard - StudentsSection component', () => {
         store: storeMocks.store,
       }
     )
+
+    wrapper.vm.totals = permittedStudents.totals
   })
 
   it('has a name attribute', () => {
@@ -151,53 +156,6 @@ describe('Admin Dashboard - StudentsSection component', () => {
 
     })
 
-    describe('showTotal', () => {
-
-      it('returns true if the students total does not equal null', () => {
-        expect(wrapper.vm.$store.state.totals.students).toEqual(854)
-        expect(wrapper.vm.showTotal).toEqual(true)
-
-        const initialState = Object.assign({}, state, {
-          totals: {
-            students: 0,
-          },
-        })
-
-        const storeMocks = mockStore.createMocks({
-          state: initialState,
-        })
-
-        const newWrapper = shallowMount(
-          StudentsSection, {
-            localVue,
-            store: storeMocks.store,
-          }
-        )
-
-        expect(newWrapper.vm.$store.state.totals.students).toEqual(0)
-        expect(newWrapper.vm.showTotal).toEqual(true)
-      })
-
-      it('returns false if the students total does not equal null', () => {
-        const initialState = Object.assign({}, state, {
-          totals: {},
-        })
-
-        const storeMocks = mockStore.createMocks({
-          state: initialState,
-        })
-
-        wrapper = shallowMount(
-          StudentsSection, {
-            localVue,
-            store: storeMocks.store,
-          }
-        )
-
-        expect(wrapper.vm.$store.state.totals.students).not.toBeDefined()
-        expect(wrapper.vm.showTotal).toEqual(false)
-      })
-    })
   })
 
   describe('HTML markup', () => {
@@ -221,20 +179,7 @@ describe('Admin Dashboard - StudentsSection component', () => {
     })
 
     it('hides the students count label if the students total is not found', () => {
-      const initialState = Object.assign({}, state, {
-        totals: {},
-      })
-
-      const storeMocks = mockStore.createMocks({
-        state: initialState,
-      })
-
-      wrapper = shallowMount(
-        StudentsSection, {
-          localVue,
-          store: storeMocks.store,
-        }
-      )
+      wrapper.vm.totals = {}
 
       expect(wrapper.find('h3').html())
         .toEqual('<h3>Students<!----></h3>')
