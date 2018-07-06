@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
-import state from 'admin/dashboard/store/index'
+import state from 'admin/dashboard/store/state'
 import mockStore from 'admin/dashboard/store/__mocks__'
 
 import PieChart from 'components/PieChart'
@@ -21,10 +21,6 @@ describe('Admin Dashboard - DashboardSection component', () => {
         'onboarding_mentors': '/onboarding/mentors',
       },
       cachedStates: {},
-      totals: {
-        mentors: 402,
-        students: 876,
-      },
     })
 
     const storeMocks = mockStore.createMocks({
@@ -49,19 +45,34 @@ describe('Admin Dashboard - DashboardSection component', () => {
     })
   })
 
-  describe('methods', () => {
+  it('contains the proper default data', () => {
+    expect(DashboardSection.data()).toEqual({
+      totals: {},
+    })
+  })
 
-    describe('getTotal', () => {
+  describe('props', () => {
 
-      it('returns total for the given named index from vuex state', () => {
-        const mentorsTotal = wrapper.vm.getTotal('mentors')
-        const studentsTotal = wrapper.vm.getTotal('students')
+    it('contains the proper properties used to populate the endpoints', () => {
+      expect(DashboardSection.props).toEqual({
+        chartEndpoints: {
+          type: Object,
+          default: expect.any(Function),
+        },
+      })
+    })
 
-        expect(mentorsTotal).toEqual(402)
-        expect(studentsTotal).toEqual(876)
+    describe('chartEndpoints', () => {
+
+      it('returns an empty object by default', () => {
+        expect(DashboardSection.props.chartEndpoints.default()).toEqual({})
       })
 
     })
+
+  })
+
+  describe('methods', () => {
 
     describe('addChartDataToCache', () => {
 
@@ -83,6 +94,32 @@ describe('Admin Dashboard - DashboardSection component', () => {
 
         expect(wrapper.vm.$store.commit)
           .toHaveBeenCalledWith('addChartDataToCache', payload)
+      })
+
+    })
+
+    describe('getTotal', () => {
+
+      it('returns the total if it exists in the store', () => {
+        wrapper.vm.totals = {
+          students: '8436',
+        }
+
+        expect(wrapper.vm.getTotal('students')).toEqual('8436')
+
+        wrapper.vm.totals.students = '0'
+
+        expect(wrapper.vm.getTotal('students')).toEqual('0')
+      })
+
+      it('returns null if the total does not exist in the store', () => {
+        wrapper.vm.totals = {}
+
+        expect(wrapper.vm.getTotal('students')).toEqual(null)
+
+        wrapper.vm.totals.students = null
+
+        expect(wrapper.vm.getTotal('students')).toEqual(null)
       })
 
     })

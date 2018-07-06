@@ -1,4 +1,4 @@
 class DataAnalysisSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :labels, :data, :urls
+  attributes :totals, :labels, :data, :urls
 end
