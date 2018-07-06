@@ -28,13 +28,23 @@
     <div class="content grid__col-sm-9 col--sticky-parent">
       <div class="col--sticky-spacer">
         <div class="col--sticky">
-          <div class="tab-content" id="recruitment">
+          <div class="tab-content" id="students">
             <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
 
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your regional program introduction to access this section</p>
             <% else %>
-              <%= render "regional_ambassador/dashboards/quick_view" %>
+              <%= render "regional_ambassador/dashboards/students" %>
+            <% end %>
+          </div>
+
+          <div class="tab-content" id="mentors">
+            <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
+
+            <% if current_ambassador.needs_intro_prompt? %>
+              <p>Please fill in your regional program introduction to access this section</p>
+            <% else %>
+              <%= render "regional_ambassador/dashboards/mentors" %>
             <% end %>
           </div>
 

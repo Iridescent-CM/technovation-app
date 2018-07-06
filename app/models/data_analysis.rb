@@ -4,7 +4,11 @@ class DataAnalysis
   attr_reader :user
 
   def self.for(user, analysis_type)
-    "#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
+    if analysis_type.to_s == "onboarding_mentors" && !user.is_admin? && user.country != "US"
+      OnboardingInternationalMentorsDataAnalysis.new(user)
+    else
+      "#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
+    end
   end
 
   def initialize(user)
@@ -14,6 +18,10 @@ class DataAnalysis
 
   def id
     Time.current.to_i
+  end
+
+  def totals
+    {}
   end
 
   def urls
@@ -56,6 +64,12 @@ class PermittedStudentsDataAnalysis < DataAnalysis
 
     @permitted_students = @students.joins(:signed_parental_consent)
     @unpermitted_students = @students.joins(:pending_parental_consent)
+  end
+
+  def totals
+    {
+      students: number_with_delimiter(@students.count),
+    }
   end
 
   def labels
@@ -110,6 +124,12 @@ class ReturningStudentsDataAnalysis < DataAnalysis
     )
   end
 
+  def totals
+    {
+      students: number_with_delimiter(@students.count),
+    }
+  end
+
   def labels
     [
       "Returning students – #{show_percentage(@returning_students, @students)}",
@@ -142,6 +162,12 @@ class OnboardingMentorsDataAnalysis < DataAnalysis
     @signed_consent_mentors = @mentors.bg_check_submitted.consent_signed
     @cleared_bg_check_mentors = @mentors.bg_check_clear.consent_not_signed
     @neither_mentors = @mentors.bg_check_unsubmitted.consent_not_signed
+  end
+
+  def totals
+    {
+      mentors: number_with_delimiter(@mentors.count),
+    }
   end
 
   def labels
@@ -213,10 +239,16 @@ class OnboardingInternationalMentorsDataAnalysis < DataAnalysis
       .where("consent_waivers.id IS NULL")
   end
 
+  def totals
+    {
+      mentors: number_with_delimiter(@mentors.count),
+    }
+  end
+
   def labels
     [
-      "Signed consent – <%= show_percentage(@consenting_mentors, @mentors) %>",
-      "Has not signed – <%= show_percentage(@unconsenting_mentors, @mentors) %>",
+      "Signed consent – #{show_percentage(@consenting_mentors, @mentors)}",
+      "Has not signed – #{show_percentage(@unconsenting_mentors, @mentors)}",
     ]
   end
 
@@ -266,6 +298,12 @@ class ReturningMentorsDataAnalysis < DataAnalysis
       "accounts.created_at < ?",
       Date.new(Season.current.year - 1, 10, 18)
     )
+  end
+
+  def totals
+    {
+      mentors: number_with_delimiter(@mentors.count),
+    }
   end
 
   def labels

@@ -2,6 +2,8 @@ import Vue from 'vue/dist/vue.esm'
 import VueRouter from 'vue-router'
 
 import AdminDashboard from './components/AdminDashboard'
+import StudentsSection from './components/StudentsSection'
+import MentorsSection from './components/MentorsSection'
 import PieChart from '../../components/PieChart'
 
 Vue.use(VueRouter)
@@ -22,6 +24,9 @@ document.addEventListener('turbolinks:load', () => {
     })
   })
 
+  /**
+   * Admin Dashboards
+   */
   const adminDashboardElement = document.getElementById('admin-dashboard')
 
   if (adminDashboardElement) {
@@ -31,6 +36,33 @@ document.addEventListener('turbolinks:load', () => {
       el: adminDashboardElement,
       components: {
         AdminDashboard,
+      },
+    })
+  }
+
+  /**
+   * Regional Ambassador Dashboards
+   */
+  const studentsSectionElement = document.getElementById('ra-admin-students-section')
+
+  if (studentsSectionElement) {
+    new Vue({
+      store,
+      el: studentsSectionElement,
+      components: {
+        StudentsSection,
+      },
+    })
+  }
+
+  const mentorsSectionElement = document.getElementById('ra-admin-mentors-section')
+
+  if (mentorsSectionElement) {
+    new Vue({
+      store,
+      el: mentorsSectionElement,
+      components: {
+        MentorsSection,
       },
     })
   }
