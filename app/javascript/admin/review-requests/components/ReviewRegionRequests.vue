@@ -84,26 +84,22 @@ export default {
   computed: {
     ...mapState(['allRequests']),
 
-    requests() {
+    requests () {
       return this.allRequests.filter(r => r.hasRequestStatus(this.requestStatus))
-    },
+    }
   },
 
   created () {
-    this.loadData()
+    this.$store.dispatch("init").then(() => {
+      this.isLoading = false
+    }).catch((err) => {
+      console.error(err)
+      this.isLoading = false
+      this.hasError = true
+    })
   },
 
   methods: {
-    loadData () {
-      this.$store.dispatch("init").then(() => {
-        this.isLoading = false
-      }).catch((err) => {
-        console.error(err)
-        this.isLoading = false
-        this.hasError = true
-      })
-    },
-
     reviewRequest(request) {
       swal({
         title: request.requestor_name,
@@ -126,7 +122,6 @@ export default {
         {
           attributes: { request_status: "approved" },
           verify: "isApproved",
-          confirmMsg: "Approved!",
         }
       )
     },
@@ -137,7 +132,6 @@ export default {
         {
           attributes: { request_status: "declined" },
           verify: "isDeclined",
-          confirmMsg: "Declined!",
         }
       )
     },
@@ -146,6 +140,14 @@ export default {
       this.$store.dispatch('updateRequest', {
         request,
         options,
+      }).then((updatedRequest) => {
+        swal(
+          `You ${updatedRequest.request_status}  ` +
+          `the request from ${updatedRequest.requestor_name}`
+        )
+      }).catch((req) => {
+        console.error(req)
+        swal("There was an error. Ask the dev team for help.")
       })
     },
 
