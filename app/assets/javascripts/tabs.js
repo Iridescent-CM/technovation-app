@@ -25,7 +25,7 @@ $(document).on("turbolinks:load", function() {
     $contents.first()
       .removeClass("hidden");
 
-    var intendedTab = (window.location.hash).replace(/#!?/, '');
+    var intendedTab = (window.location.hash).replace(/#\/?!?/, '');
 
     if (intendedTab.length === 0)
       intendedTab = $links.filter(":visible").first()
