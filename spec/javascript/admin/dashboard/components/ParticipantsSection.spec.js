@@ -5,6 +5,7 @@ import mockStore from 'admin/dashboard/store/__mocks__'
 
 import DashboardSection from 'admin/dashboard/components/DashboardSection'
 import ParticipantsSection from 'admin/dashboard/components/ParticipantsSection'
+import BarChart from 'components/BarChart'
 
 const localVue = createLocalVue()
 
@@ -35,14 +36,11 @@ describe('Admin Dashboard - ParticipantsSection component', () => {
 
   describe('HTML markup', () => {
 
-    // TODO - This test will change as we implement the actual bar chart
     it('contains the correct markup', () => {
       expect(wrapper.element.getAttribute('id')).toEqual('participants')
       expect(wrapper.find('h3').html())
         .toEqual('<h3>Participants</h3>')
-
-      expect(wrapper.find('.tab-content').text())
-        .toEqual('[[ BAR CHART GOES HERE ]]')
+      expect(wrapper.find(BarChart).exists()).toBe(true)
     })
 
   })
