@@ -9,25 +9,4 @@ task bootstrap: :environment do
       puts "Failed to find or create Expertise: #{name.titleize}"
     end
   end
-
-  email = ENV.fetch("ADMIN_EMAIL")
-
-  if AdminProfile.joins(:account).where("accounts.email = ?", email).any?
-    puts "Found Admin: #{email}"
-  else
-    AdminProfile.create!(
-      account_attributes: {
-        first_name: "Technovation",
-        last_name: "Staff",
-        email: email,
-        password: ENV.fetch("ADMIN_PASSWORD"),
-        city: "Guadalajara",
-        state_province: "Jal.",
-        country: "MX",
-        date_of_birth: 100.years.ago,
-        admin_status: :full_admin,
-      }
-    )
-    puts "Created Admin: #{email}"
-  end
 end
