@@ -19,11 +19,8 @@ import Chart from 'chart.js'
 import chroma from 'chroma-js'
 
 import Icon from './Icon.vue'
-import '../utilities/chartjs-plugins.js'
-
-function isEmptyObject(object) {
-  return Object.keys(object).length === 0 && object.constructor === Object
-}
+import '../utilities/chartjs-plugins'
+import { isEmptyObject } from '../utilities/utilities'
 
 export default {
   name: 'pie-chart',
