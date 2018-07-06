@@ -1,9 +1,10 @@
 <template>
   <div id="mentors">
-    <h3>Mentors<span v-if="showTotal"> ({{ getTotal('mentors') }})</span></h3>
+    <h3>Mentors<span v-if="getTotal('mentors')"> ({{ getTotal('mentors') }})</span></h3>
 
     <div class="tab-content">
-      <h6>Background check / consent waivers</h6>
+      <h6 v-if="international">Consent waivers</h6>
+      <h6 v-else>Background check / consent waivers</h6>
 
       <pie-chart
         :url="onboardingMentorsEndpoint"
@@ -36,6 +37,13 @@ export default {
 
   extends: DashboardSection,
 
+  props: {
+    international: {
+      type: Boolean,
+      default: false,
+    }
+  },
+
   computed: {
     onboardingMentorsEndpoint () {
       return this.$store.getters.getChartEndpoint('onboarding_mentors')
@@ -51,10 +59,6 @@ export default {
 
     returningMentorsChartData () {
       return this.$store.getters.getCachedChartData('returning_mentors')
-    },
-
-    showTotal () {
-      return this.getTotal('mentors') !== null
     },
   },
 }

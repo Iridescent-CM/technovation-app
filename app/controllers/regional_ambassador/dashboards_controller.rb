@@ -49,12 +49,6 @@ module RegionalAmbassador
           .not_staff
           .inactive
           .limit(3)
-
-        @students = StudentProfile.current.in_region(current_ambassador)
-
-        @mentors = Account.current.in_region(current_ambassador)
-          .left_outer_joins(:mentor_profile)
-          .where("mentor_profiles.id IS NOT NULL")
       end
 
       render "regional_ambassador/dashboards" +
