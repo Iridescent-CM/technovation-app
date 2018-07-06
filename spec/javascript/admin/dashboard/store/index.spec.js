@@ -1,10 +1,25 @@
-import store, { state, getters, mutations } from 'admin/dashboard/store'
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+import state from 'admin/dashboard/store/state'
+import getters from 'admin/dashboard/store/getters'
+import mutations from 'admin/dashboard/store/mutations'
+
+Vue.use(Vuex)
 
 describe('Admin Dashboard - Vuex store', () => {
 
+  let store
+
   beforeEach(() => {
-    store.state.chartEndpoints = {}
-    store.state.cachedStates = {}
+    const actions = {}
+
+    store = new Vuex.Store({
+      state,
+      getters,
+      mutations,
+      actions,
+    })
   })
 
   it('returns the initial state used by the AdminDashboard component', () => {

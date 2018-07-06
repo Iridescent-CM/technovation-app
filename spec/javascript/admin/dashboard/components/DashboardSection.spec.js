@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
-import state from 'admin/dashboard/store/index'
+import state from 'admin/dashboard/store/state'
 import mockStore from 'admin/dashboard/store/__mocks__'
 
 import PieChart from 'components/PieChart'
