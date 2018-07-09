@@ -198,6 +198,10 @@ describe('BarChart Vue component', () => {
             options: expect.objectContaining({
               legend: expect.objectContaining({
                 position: 'bottom',
+                onHover: expect.any(Function),
+              }),
+              hover: expect.objectContaining({
+                onHover: expect.any(Function),
               }),
               scales: expect.objectContaining({
                 xAxes: [

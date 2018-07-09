@@ -285,6 +285,10 @@ describe('PieChart Vue component', () => {
             options: expect.objectContaining({
               legend: expect.objectContaining({
                 position: 'bottom',
+                onHover: expect.any(Function),
+              }),
+              hover: expect.objectContaining({
+                onHover: expect.any(Function),
               }),
             }),
           })
