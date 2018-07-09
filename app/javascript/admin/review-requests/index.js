@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.esm'
 
 import store from './store'
+import router from './router'
 
 import App from './App'
 
@@ -11,6 +12,7 @@ document.addEventListener('turbolinks:load', () => {
     new Vue({
       el: adminReqElem,
       store,
+      router,
       components: {
         App,
       },

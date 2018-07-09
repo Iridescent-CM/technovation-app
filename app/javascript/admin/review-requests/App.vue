@@ -8,44 +8,54 @@
   </div>
 
   <div v-else class="grid grid--justify-space-around">
-    <div class="grid__col-10 tabs" id="admin-requests-tabs">
-      <ul class="tab-menu">
-        <tab-link
-          tab-id="pending"
-          :label="`Pending (${pendingRequests.length})`"
-        />
+    <div class="grid__col-10 tabs tabs--css-only">
+      <ul class="tabs__menu">
+        <router-link
+          :to="{ name: 'pending' }"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+        >
+          <button
+            role="button"
+            class="tabs__menu-button"
+          >
+            Pending ({{ pendingRequests.length }})
+          </button>
+        </router-link>
 
-        <tab-link
-          tab-id="approved"
-          :label="`Approved (${approvedRequests.length})`"
-        />
+        <router-link
+          :to="{ name: 'approved' }"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+        >
+          <button
+            role="button"
+            class="tabs__menu-button"
+          >
+            Approved ({{ approvedRequests.length }})
+          </button>
+        </router-link>
 
-        <tab-link
-          tab-id="declined"
-          :label="`Declined (${declinedRequests.length})`"
-        />
+        <router-link
+          :to="{ name: 'declined' }"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+        >
+          <button
+            role="button"
+            class="tabs__menu-button"
+          >
+            Declined ({{ declinedRequests.length }})
+          </button>
+        </router-link>
       </ul>
 
       <div class="content">
-        <div class="tab-content panel" id="pending">
-          <review-region-requests
-            :requests="pendingRequests"
-            request-status="pending"
-          />
-        </div>
-
-        <div class="tab-content panel" id="approved">
-          <review-region-requests
-            :requests="approvedRequests"
-            request-status="approved"
-          />
-        </div>
-
-        <div class="tab-content panel" id="declined">
-          <review-region-requests
-            :requests="declinedRequests"
-            request-status="declined"
-          />
+        <div class="tabs__tab-content panel">
+          <router-view />
         </div>
       </div>
     </div>
@@ -53,11 +63,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
-
 import { mapState } from 'vuex'
-import { TabLink } from '../../components/tabs'
-import ReviewRegionRequests from './components/ReviewRegionRequests'
 
 import axios from 'axios'
 
@@ -76,11 +82,6 @@ export default {
       isLoading: true,
       hasError: false,
     }
-  },
-
-  components: {
-    TabLink,
-    ReviewRegionRequests,
   },
 
   computed: {
@@ -107,12 +108,6 @@ export default {
       this.isLoading = false
       this.hasError = true
     })
-
-    $(document).trigger('vue:created')
-  },
-
-  updated () {
-    $(document).trigger('vue:updated')
   },
 }
 </script>
