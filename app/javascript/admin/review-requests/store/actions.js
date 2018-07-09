@@ -1,9 +1,10 @@
+import axios from 'axios'
 import Request from '../models/request'
 
 export default {
   init ({ commit, state }) {
     return new Promise((resolve, reject) => {
-      window.axios.get('/admin/requests.json')
+      axios.get('/admin/requests.json')
         .then(({ data }) => {
           if (data.data) {
             data.data.forEach((request) => {
@@ -20,7 +21,7 @@ export default {
 
   updateRequest({ commit }, { request, options }) {
     return new Promise((resolve, reject) => {
-      window.axios.patch(
+      axios.patch(
         request.urls.patch,
         options.attributes,
       ).then(({ data }) => {
