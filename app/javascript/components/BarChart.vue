@@ -101,7 +101,13 @@ export default {
       extendedChartData.datasets.forEach((dataset, index) => {
         dataset.backgroundColor = backgroundColors.backgroundColor[index]
         dataset.hoverBackgroundColor = backgroundColors.hoverBackgroundColor[index]
-        dataset.urls = extendedChartData.urls[index]
+
+        if (
+          typeof extendedChartData.urls !== 'undefined'
+          && typeof extendedChartData.urls[index] !== 'undefined'
+        ) {
+          dataset.urls = extendedChartData.urls[index]
+        }
       })
 
       this.chart = new Chart(chartContext, {

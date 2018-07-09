@@ -104,18 +104,12 @@ export default {
         this.chart.destroy()
       }
 
-      const chartElement = this.$el.querySelector('canvas')
-      const chartContext = chartElement.getContext('2d')
+      const chartContext = this.$el.querySelector('canvas').getContext('2d')
 
       const numberOfDataItems = chartData.data.length
       const backgroundColors = this.generateBackgroundColors(numberOfDataItems)
 
       const extendedChartData = Object.assign({}, chartData, backgroundColors)
-
-      const { urls } = extendedChartData
-
-      if (typeof urls !== 'undefined' && urls.length > 0)
-        chartElement.style.cursor = 'pointer'
 
       this.chart = new Chart(chartContext, {
         type: 'pie',

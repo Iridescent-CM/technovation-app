@@ -37,7 +37,7 @@ Chart.plugins.register({
       const { type } = chart.config
       const { urls } = chart.data.datasets[datasetIndex]
 
-      if (typeof urls !== 'undefined'&& urls.length > 0) {
+      if (typeof urls !== 'undefined' && urls.length > 0) {
         window.location.href = urls[index]
       }
     }
