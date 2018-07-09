@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function() {
-  $('.tabs').each(function() {
+  $('.tabs').not('.tabs--css-only').each(function() {
     var $links = $(this).find('.tab-menu, .tabs__menu')
                         .first()
                         .find('.tab-link, .tabs__menu-link'),

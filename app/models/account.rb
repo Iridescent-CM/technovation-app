@@ -477,6 +477,7 @@ class Account < ActiveRecord::Base
   def avatar_url
     profile_image_url
   end
+  alias :avatar :avatar_url
 
   def took_survey!
     update(survey_completed_at: Time.current)

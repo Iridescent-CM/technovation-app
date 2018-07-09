@@ -221,6 +221,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    root to: 'dashboards#show'
     resource :dashboard, only: :show
 
     resources :data_analyses, only: :show
@@ -230,6 +231,8 @@ Rails.application.routes.draw do
     patch :signups, to: 'signups#update'
 
     resources :job_statuses, only: :show
+
+    resources :requests, only: [:index, :update]
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 

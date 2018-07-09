@@ -105,6 +105,11 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
       Country[country].name
     end
   end
+  alias :primary_region :region_name
+
+  def other_regions
+    secondary_regions
+  end
 
   def onboarded?
     account.email_confirmed? and
