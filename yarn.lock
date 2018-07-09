@@ -6587,6 +6587,10 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+sweetalert2@^7.24.4:
+  version "7.24.4"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.24.4.tgz#537494d8151567e511f933368737c56130420ce4"
+
 symbol-tree@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"

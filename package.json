@@ -33,6 +33,7 @@
     "escape-string-regexp": "^1.0.5",
     "flatpickr": "^4.2.4",
     "lodash": "^4.17.4",
+    "sweetalert2": "^7.24.4",
     "url-search-params": "^0.10.0",
     "v-tooltip": "^2.0.0-rc.31",
     "vue": "2.5.16",
