@@ -286,7 +286,6 @@ describe('PieChart Vue component', () => {
               legend: expect.objectContaining({
                 position: 'bottom',
               }),
-              onClick: expect.any(Function),
             }),
           })
         )
