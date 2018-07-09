@@ -26,19 +26,18 @@ Chart.plugins.register({
 })
 
 Chart.plugins.register({
-  id: 'urlHandler',
+  id: 'onClickUrlHandler',
   afterEvent: (chart, event) => {
     const chartElements = chart.getElementAtEvent(event)
 
     if (event.type === 'click' && chartElements.length) {
       const index = chartElements[0]._index
-      const { urls } = chart.data.datasets[0]
+      const datasetIndex = chartElements[0]._datasetIndex
 
-      if (
-        typeof index !== 'undefined'
-        && typeof urls !== 'undefined'
-        && urls.length > 0
-      ) {
+      const { type } = chart.config
+      const { urls } = chart.data.datasets[datasetIndex]
+
+      if (typeof urls !== 'undefined'&& urls.length > 0) {
         window.location.href = urls[index]
       }
     }
