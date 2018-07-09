@@ -1,7 +1,7 @@
 import { routes } from 'admin/dashboard/routes'
 import Mentors from 'admin/dashboard/components/MentorsSection'
 import Students from 'admin/dashboard/components/StudentsSection'
-import Participants from 'admin/dashboard/components/ParticipantsSection'
+import TopCountries from 'admin/dashboard/components/TopCountriesSection'
 
 describe('Admin Dashboard - routes', () => {
 
@@ -10,7 +10,7 @@ describe('Admin Dashboard - routes', () => {
       { path: '/', redirect: { name: 'students' }},
       { path: '/students', name: 'students', component: Students },
       { path: '/mentors', name: 'mentors', component: Mentors },
-      { path: '/participants', name: 'participants', component: Participants },
+      { path: '/top_countries', name: 'top_countries', component: TopCountries },
     ])
   })
 

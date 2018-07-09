@@ -27,10 +27,10 @@
         tag="li"
         class="tab-link"
         active-class="tabs__menu-link--active"
-        :to="{ name: 'participants' }"
+        :to="{ name: 'top_countries' }"
       >
         <button role="button" class="tab-button">
-          Participants
+          Top Countries
         </button>
       </router-link>
     </ul>

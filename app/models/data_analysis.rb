@@ -329,7 +329,7 @@ class ReturningMentorsDataAnalysis < DataAnalysis
   end
 end
 
-class ParticipantsDataAnalysis < DataAnalysis
+class TopCountriesDataAnalysis < DataAnalysis
   def init_data
     if user.is_admin?
       @students = StudentProfile.current
@@ -354,7 +354,7 @@ class ParticipantsDataAnalysis < DataAnalysis
 
   def totals
     {
-      participants: number_with_delimiter(@students.count + @mentors.count + @judges.count),
+      top_countries: number_with_delimiter(@students.count + @mentors.count + @judges.count),
     }
   end
 

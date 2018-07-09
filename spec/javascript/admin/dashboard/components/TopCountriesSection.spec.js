@@ -5,18 +5,18 @@ import state from 'admin/dashboard/store/state'
 import mockStore from 'admin/dashboard/store/__mocks__'
 
 import DashboardSection from 'admin/dashboard/components/DashboardSection'
-import ParticipantsSection from 'admin/dashboard/components/ParticipantsSection'
+import TopCountriesSection from 'admin/dashboard/components/TopCountriesSection'
 import BarChart from 'components/BarChart'
 
 const localVue = createLocalVue()
 
 localVue.use(Vuex)
 
-describe('Admin Dashboard - ParticipantsSection component', () => {
+describe('Admin Dashboard - TopCountriesSection component', () => {
 
   let wrapper
 
-  const participants = {
+  const topCountries = {
     totals: {
       mentors: '19,765',
     },
@@ -40,10 +40,10 @@ describe('Admin Dashboard - ParticipantsSection component', () => {
   beforeEach(() => {
     const initialState = Object.assign({}, state, {
       chartEndpoints: {
-        'participants': '/participants/endpoint',
+        'top_countries': '/top_countries/endpoint',
       },
       cachedStates: {
-        '/participants/endpoint': participants,
+        '/top_countries/endpoint': topCountries,
       },
     })
 
@@ -52,39 +52,39 @@ describe('Admin Dashboard - ParticipantsSection component', () => {
     })
 
     wrapper = shallowMount(
-      ParticipantsSection, {
+      TopCountriesSection, {
         localVue,
         store: storeMocks.store,
       }
     )
 
-    wrapper.vm.totals = participants.totals
+    wrapper.vm.totals = topCountries.totals
   })
 
   it('has a name attribute', () => {
-    expect(ParticipantsSection.name).toEqual('participants-section')
+    expect(TopCountriesSection.name).toEqual('top-countries-section')
   })
 
   it('extends the DashboardSection component', () => {
-    expect(ParticipantsSection.extends).toEqual(DashboardSection)
+    expect(TopCountriesSection.extends).toEqual(DashboardSection)
   })
 
   describe('computed properties', () => {
 
-    describe('participantsEndpoint', () => {
+    describe('topCountriesEndpoint', () => {
 
-      it('returns an AJAX endpoint for the participants chart', () => {
-        expect(wrapper.vm.participantsEndpoint)
-          .toEqual('/participants/endpoint')
+      it('returns an AJAX endpoint for the top countries chart', () => {
+        expect(wrapper.vm.topCountriesEndpoint)
+          .toEqual('/top_countries/endpoint')
       })
 
     })
 
-    describe('participantsChartData', () => {
+    describe('topCountriesChartData', () => {
 
-      it('returns the cached chart data for the participants chart', () => {
-        expect(wrapper.vm.participantsChartData)
-          .toEqual(participants)
+      it('returns the cached chart data for the top countries chart', () => {
+        expect(wrapper.vm.topCountriesChartData)
+          .toEqual(topCountries)
 
         const initialState = Object.assign({}, state, {
           cachedStates: {},
@@ -95,13 +95,13 @@ describe('Admin Dashboard - ParticipantsSection component', () => {
         })
 
         wrapper = shallowMount(
-          ParticipantsSection, {
+          TopCountriesSection, {
             localVue,
             store: storeMocks.store,
           }
         )
 
-        expect(wrapper.vm.participantsChartData)
+        expect(wrapper.vm.topCountriesChartData)
           .toEqual({})
       })
 
@@ -112,9 +112,9 @@ describe('Admin Dashboard - ParticipantsSection component', () => {
   describe('HTML markup', () => {
 
     it('contains the correct markup', () => {
-      expect(wrapper.element.getAttribute('id')).toEqual('participants')
+      expect(wrapper.element.getAttribute('id')).toEqual('top-countries')
       expect(wrapper.find('h3').html())
-        .toEqual('<h3>Participants<!----></h3>')
+        .toEqual('<h3>Top Countries<!----></h3>')
       expect(wrapper.find(BarChart).exists()).toBe(true)
     })
 
