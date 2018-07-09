@@ -21,7 +21,8 @@ describe('BarChart Vue component', () => {
         label: 'Judges',
         data: [ 20, 40, 60, 80, 10, 3 ],
       }
-    ]
+    ],
+    urls: []
   }
 
   const jsonChartData = {
