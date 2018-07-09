@@ -2,19 +2,18 @@ import Vue from 'vue/dist/vue.esm'
 
 import store from './store'
 
-import ReviewRegionRequests from './components/ReviewRegionRequests'
+import App from './App'
 
 document.addEventListener('turbolinks:load', () => {
-  const adminReqElems = document.querySelectorAll('.vue-enable-admin-requests')
+  const adminReqElem = document.querySelector('#vue-enable-admin-requests')
 
-  adminReqElems.forEach((elem) => {
+  if (adminReqElem) {
     new Vue({
-      el: elem,
+      el: adminReqElem,
       store,
-
       components: {
-        ReviewRegionRequests,
+        App,
       },
     })
-  })
+  }
 })
