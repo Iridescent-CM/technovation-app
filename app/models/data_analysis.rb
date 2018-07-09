@@ -20,6 +20,14 @@ class DataAnalysis
     Time.current.to_i
   end
 
+  def data
+    []
+  end
+
+  def datasets
+    []
+  end
+
   def totals
     {}
   end
@@ -317,6 +325,64 @@ class ReturningMentorsDataAnalysis < DataAnalysis
     [
       @returning_mentors.count,
       @new_mentors.count,
+    ]
+  end
+end
+
+class ParticipantsDataAnalysis < DataAnalysis
+  def init_data
+    if user.is_admin?
+      @students = StudentProfile.current
+      @mentors = Account.current
+        .left_outer_joins(:mentor_profile)
+        .where("mentor_profiles.id IS NOT NULL")
+      @judges = Account.current
+        .left_outer_joins(:judge_profile)
+        .where("judge_profiles.id IS NOT NULL")
+    else
+      @students = StudentProfile.current.in_region(user)
+      @mentors = Account.current
+        .left_outer_joins(:mentor_profile)
+        .where("mentor_profiles.id IS NOT NULL")
+        .in_region(user)
+      @judges = Account.current
+        .left_outer_joins(:judge_profile)
+        .where("judge_profiles.id IS NOT NULL")
+        .in_region(user)
+    end
+  end
+
+  def totals
+    {
+      participants: number_with_delimiter(@students.count + @mentors.count + @judges.count),
+    }
+  end
+
+  def labels
+    [
+      'US',
+      'Spain',
+      'Mexico',
+      'Ethiopia',
+      'Germany',
+      'India',
+    ]
+  end
+
+  def datasets
+    [
+      {
+        label: 'Students',
+        data: [ 400, 500, 600, 900, 300, 100 ],
+      },
+      {
+        label: 'Mentors',
+        data: [ 100, 200, 300, 500, 100, 64 ],
+      },
+      {
+        label: 'Judges',
+        data: [ 20, 40, 60, 80, 10, 3 ],
+      }
     ]
   end
 end
