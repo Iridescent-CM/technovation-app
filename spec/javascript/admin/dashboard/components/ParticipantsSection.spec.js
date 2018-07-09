@@ -114,7 +114,7 @@ describe('Admin Dashboard - ParticipantsSection component', () => {
     it('contains the correct markup', () => {
       expect(wrapper.element.getAttribute('id')).toEqual('participants')
       expect(wrapper.find('h3').html())
-        .toEqual('<h3>Participants</h3>')
+        .toEqual('<h3>Participants<!----></h3>')
       expect(wrapper.find(BarChart).exists()).toBe(true)
     })
 
