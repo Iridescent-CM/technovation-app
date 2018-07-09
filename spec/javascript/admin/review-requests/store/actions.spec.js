@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
 import actions from 'admin/review-requests/store/actions'
-import Request from 'admin/review-requests/models/Request'
+import Request from 'admin/review-requests/models/request'
 
 import axios from 'axios'
 
