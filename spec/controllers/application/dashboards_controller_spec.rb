@@ -71,5 +71,20 @@ RSpec.describe Application::DashboardsController do
       results = controller.get_cookie(CookieNames::IP_GEOLOCATION)
       expect(results).to eq([31.1324413, -45.1038208])
     end
+
+    context "and the geocoder returns no results" do
+      it "fallsback to 0.0, 0.0" do
+        request.remote_ip = "192.168.1.1"
+
+        expect(Geocoder).to receive(:search)
+          .with("192.168.1.1")
+          .and_return([])
+
+        get :show
+
+        results = controller.get_cookie(CookieNames::IP_GEOLOCATION)
+        expect(results).to eq([0.0, 0.0])
+      end
+    end
   end
 end
