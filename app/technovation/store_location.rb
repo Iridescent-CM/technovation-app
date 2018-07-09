@@ -49,7 +49,8 @@ module StoreLocation
 
     private
     def first_geocoded_result(search_value)
-      @first_geocoded_result ||= geocoded_results(search_value).first
+      @first_geocoded_result ||= geocoded_results(search_value).first ||
+        StoreLocation::NullGeocodedResult.new
     end
 
     def geocoded_results(search_value)
@@ -114,6 +115,12 @@ module StoreLocation
     private
     def log_label
       "LAT, LNG from IP"
+    end
+  end
+
+  class NullGeocodedResult
+    def coordinates
+      [0.0, 0.0]
     end
   end
 end
