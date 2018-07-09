@@ -1,6 +1,6 @@
 require "./app/constants/certificate_types"
 require "./app/constants/badge_levels"
-require "./app/technovation/friendly_country"
+require "./app/models/friendly_country"
 
 class CertificateRecipient
   attr_reader :account, :team,
