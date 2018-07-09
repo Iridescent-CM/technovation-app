@@ -1,6 +1,7 @@
 Chart.defaults.global.defaultFontFamily = 'sans-serif'
 
 Chart.plugins.register({
+  id: 'noDataToDisplay',
 	afterDraw: (chart) => {
     const chartHasNonZeroData = chart.data.datasets[0].data.some((value) => {
       return value > 0
@@ -20,6 +21,24 @@ Chart.plugins.register({
       ctx.fillStyle = '#999'
       ctx.fillText('No data to display', width / 2, height / 2)
       ctx.restore()
+    }
+  },
+})
+
+Chart.plugins.register({
+  id: 'urlHandler',
+  afterEvent: (chart, event) => {
+    if (event.type === 'click') {
+      const index = chart.getElementAtEvent(event)[0]._index
+      const { urls } = chart.data.datasets[0]
+
+      if (
+        typeof index !== 'undefined'
+        && typeof urls !== 'undefined'
+        && urls.length > 0
+      ) {
+        window.location.href = urls[index]
+      }
     }
   },
 })

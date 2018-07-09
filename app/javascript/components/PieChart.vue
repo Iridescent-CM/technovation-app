@@ -134,12 +134,6 @@ export default {
           legend: {
             position: 'bottom',
           },
-          onClick: (evt, els) => {
-            const i = els[0]._index
-
-            if (typeof urls !== 'undefined' && urls.length > 0)
-              window.location.href = urls[i]
-          },
         },
       })
 
