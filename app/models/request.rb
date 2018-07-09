@@ -13,7 +13,7 @@ class Request < ApplicationRecord
   belongs_to :requestor, polymorphic: true
   belongs_to :target, polymorphic: true
 
-  delegate :avatar, :name,
+  delegate :avatar, :name, :email,
     to: :requestor,
     prefix: true
 

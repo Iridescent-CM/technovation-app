@@ -2,6 +2,8 @@
   <review-region-requests
     :requests="declinedRequests"
     request-status="declined"
+    action-btn-txt="Change"
+    list-title="Requested"
   />
 </template>
 

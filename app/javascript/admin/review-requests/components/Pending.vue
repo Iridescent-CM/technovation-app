@@ -2,6 +2,8 @@
   <review-region-requests
     :requests="pendingRequests"
     request-status="pending"
+    action-btn-txt="Review"
+    list-title="Requesting"
   />
 </template>
 

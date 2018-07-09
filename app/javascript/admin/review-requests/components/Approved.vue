@@ -2,6 +2,8 @@
   <review-region-requests
     :requests="approvedRequests"
     request-status="approved"
+    action-btn-txt="Change"
+    list-title="Requested"
   />
 </template>
 

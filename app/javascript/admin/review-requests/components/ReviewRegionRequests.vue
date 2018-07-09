@@ -22,7 +22,7 @@
         </div>
 
         <div class="grid-list__col-4">
-          <h3>Requesting</h3>
+          <h3>{{ listTitle }}</h3>
 
           <ul class="list--reset">
             <li
@@ -35,7 +35,7 @@
         </div>
 
         <div class="grid-list__col-2">
-          <button @click="reviewRequest(request)">Review</button>
+          <button @click="reviewRequest(request)">{{ actionBtnTxt }}</button>
         </div>
       </div>
     </template>
@@ -50,7 +50,7 @@
 import swal from 'sweetalert2'
 
 export default {
-  props: ['requests', 'requestStatus'],
+  props: ['requests', 'requestStatus', 'actionBtnTxt', 'listTitle'],
 
   methods: {
     reviewRequest(request) {
@@ -62,10 +62,13 @@ export default {
         cancelButtonText: 'Decline',
         reverseButtons: true,
         showLoaderOnConfirm: true,
+        showCloseButton: true,
       }).then((result) => {
-        result.value ?
-          this.approveRequest(request) :
+        if (result.value) {
+          this.approveRequest(request)
+        } else if (result.dismiss === swal.DismissReason.cancel) {
           this.declineRequest(request)
+        }
       })
     },
 
@@ -94,13 +97,13 @@ export default {
         request,
         options,
       }).then((updatedRequest) => {
-        swal(
-          `You ${updatedRequest.request_status}  ` +
-          `the request from ${updatedRequest.requestor_name}`
-        )
+        swal({
+          text: `You ${updatedRequest.request_status}  ` +
+                `the request from ${updatedRequest.requestor_name}`,
+        })
       }).catch((req) => {
         console.error(req)
-        swal("There was an error. Ask the dev team for help.")
+        swal({ text: "There was an error. Ask the dev team for help." })
       })
     },
 

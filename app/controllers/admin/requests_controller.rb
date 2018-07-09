@@ -13,7 +13,7 @@ module Admin
 
     def update
       request = Request.find(params.fetch(:id))
-      request.public_send("#{request_params[:request_status]}!")
+      SetRequestStatus.(request, request_params[:request_status])
       render json: RequestSerializer.new(request).serialized_json
     end
 
