@@ -53,7 +53,7 @@
         </router-link>
       </ul>
 
-      <div class="tabs__content">
+      <div class="content">
         <div class="tabs__tab-content panel">
           <router-view />
         </div>
@@ -64,6 +64,17 @@
 
 <script>
 import { mapState } from 'vuex'
+
+import axios from 'axios'
+
+const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
+
+if (csrfTokenMetaTag) {
+  axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
+  }
+}
 
 export default {
   data () {

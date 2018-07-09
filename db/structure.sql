@@ -2687,41 +2687,6 @@ CREATE INDEX trgm_team_name_indx ON public.teams USING gist (name public.gist_tr
 
 
 --
--- Name: uniq_admins_accounts; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX uniq_admins_accounts ON public.admin_profiles USING btree (account_id);
-
-
---
--- Name: uniq_ambassadors_accounts; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX uniq_ambassadors_accounts ON public.regional_ambassador_profiles USING btree (account_id);
-
-
---
--- Name: uniq_judges_accounts; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX uniq_judges_accounts ON public.judge_profiles USING btree (account_id) WHERE (deleted_at IS NULL);
-
-
---
--- Name: uniq_mentors_accounts; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX uniq_mentors_accounts ON public.mentor_profiles USING btree (account_id);
-
-
---
--- Name: uniq_students_accounts; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX uniq_students_accounts ON public.student_profiles USING btree (account_id);
-
-
---
 -- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3105,6 +3070,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180622151517'),
 ('20180622152409'),
 ('20180622161117'),
-('20180626200957');
+('20180626200957'),
+('20180703153546');
 
 
