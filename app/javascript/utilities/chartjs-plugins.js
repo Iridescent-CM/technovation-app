@@ -28,8 +28,10 @@ Chart.plugins.register({
 Chart.plugins.register({
   id: 'urlHandler',
   afterEvent: (chart, event) => {
-    if (event.type === 'click') {
-      const index = chart.getElementAtEvent(event)[0]._index
+    const chartElements = chart.getElementAtEvent(event)
+
+    if (event.type === 'click' && chartElements.length) {
+      const index = chartElements[0]._index
       const { urls } = chart.data.datasets[0]
 
       if (
