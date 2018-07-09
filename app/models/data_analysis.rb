@@ -385,4 +385,123 @@ class TopCountriesDataAnalysis < DataAnalysis
       }
     ]
   end
+
+  def urls
+    [
+      [
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["student"],
+            country: ["US"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["student"],
+            country: ["ES"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["student"],
+            country: ["MX"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["student"],
+            country: ["ET"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["student"],
+            country: ["DE"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["student"],
+            country: ["IN"],
+          }
+        ),
+      ],
+      [
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["mentor"],
+            country: ["US"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["mentor"],
+            country: ["ES"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["mentor"],
+            country: ["MX"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["mentor"],
+            country: ["ET"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["mentor"],
+            country: ["DE"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["mentor"],
+            country: ["IN"],
+          }
+        ),
+      ],
+      [
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["judge"],
+            country: ["US"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["judge"],
+            country: ["ES"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["judge"],
+            country: ["MX"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["judge"],
+            country: ["ET"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["judge"],
+            country: ["DE"],
+          }
+        ),
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["judge"],
+            country: ["IN"],
+          }
+        ),
+      ],
+    ]
+  end
 end
