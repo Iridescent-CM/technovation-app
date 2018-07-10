@@ -113,16 +113,16 @@ describe('Admin Dashboard - TopCountriesSection component', () => {
 
     it('contains the correct markup', () => {
       expect(wrapper.element.getAttribute('id')).toEqual('top-countries')
-      expect(wrapper.find('h3').html())
-        .toEqual('<h3>Top Countries<span> (19,765)</span></h3>')
+
+      expect(wrapper.find('h3 span').text()).toEqual('(19,765)')
+
       expect(wrapper.find(BarChart).exists()).toBe(true)
     })
 
     it('hides the students count label if the students total is not found', () => {
       wrapper.vm.totals = {}
 
-      expect(wrapper.find('h3').html())
-        .toEqual('<h3>Top Countries<!----></h3>')
+      expect(wrapper.find('h3 span').exists()).toBe(false)
     })
 
   })
