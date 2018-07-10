@@ -65,17 +65,6 @@
 <script>
 import { mapState } from 'vuex'
 
-import axios from 'axios'
-
-const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
-
-if (csrfTokenMetaTag) {
-  axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
-  }
-}
-
 export default {
   data () {
     return {

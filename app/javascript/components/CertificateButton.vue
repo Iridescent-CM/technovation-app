@@ -26,17 +26,7 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Icon from './Icon.vue'
-
-const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
-
-if (csrfTokenMetaTag) {
-  axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
-  }
-}
 
 export default {
   name: 'certificate-button',
@@ -104,7 +94,7 @@ export default {
     requestCertificate () {
       this.state = 'requesting'
 
-      return axios.post(
+      return window.axios.post(
         `/${this.userScope}/certificates/`,
          this.certificateRequestData
       )
@@ -128,7 +118,7 @@ export default {
 
     pollJobQueue () {
       if (this.isLoading) {
-        axios.get(this.jobMonitorUrl).then(this.handlePollRequest)
+        window.axios.get(this.jobMonitorUrl).then(this.handlePollRequest)
       }
     },
 

@@ -22,6 +22,7 @@
       media: :all
     ) %>
 
+    <%= stylesheet_pack_tag("application", data: { turbolinks_track: :reload }) %>
     <%= stylesheet_pack_tag("ra", data: { turbolinks_track: :reload }) %>
 
     <%= yield :css %>
@@ -31,6 +32,7 @@
     <%= javascript_include_tag 'regional_ambassador',
       'data-turbolinks-track' => true %>
 
+    <%= javascript_pack_tag("application", data: { turbolinks_track: :reload }) %>
     <%= javascript_pack_tag("ra", data: { turbolinks_track: :reload }) %>
 
     <%= yield :js %>

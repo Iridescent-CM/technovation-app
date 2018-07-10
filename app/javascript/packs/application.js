@@ -10,6 +10,8 @@
 import Vue from 'vue/dist/vue.esm'
 import CertificateButton from '../components/CertificateButton'
 
+import '../config/axios'
+
 document.addEventListener('turbolinks:load', () => {
   const btnEls = document.querySelectorAll('.vue-enable-certificate-btn')
 
