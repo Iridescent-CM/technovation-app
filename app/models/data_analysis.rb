@@ -331,177 +331,106 @@ end
 
 class TopCountriesDataAnalysis < DataAnalysis
   def init_data
-    if user.is_admin?
-      @students = StudentProfile.current
-      @mentors = Account.current
-        .left_outer_joins(:mentor_profile)
-        .where("mentor_profiles.id IS NOT NULL")
-      @judges = Account.current
-        .left_outer_joins(:judge_profile)
-        .where("judge_profiles.id IS NOT NULL")
-    else
-      @students = StudentProfile.current.in_region(user)
-      @mentors = Account.current
-        .left_outer_joins(:mentor_profile)
-        .where("mentor_profiles.id IS NOT NULL")
-        .in_region(user)
-      @judges = Account.current
-        .left_outer_joins(:judge_profile)
-        .where("judge_profiles.id IS NOT NULL")
-        .in_region(user)
-    end
+    @top_countries = Account.current
+      .where("country IS NOT NULL")
+      .group(:country)
+      .limit(10)
+      .order('count_all desc')
+      .count
+
+    @top_students = Account.current
+      .left_outer_joins(:student_profile)
+      .where("student_profiles.id IS NOT NULL")
+      .where(:country => @top_countries.keys)
+      .group(:country)
+      .order('country desc')
+      .count
+
+    @top_mentors = Account.current
+      .left_outer_joins(:mentor_profile)
+      .where("mentor_profiles.id IS NOT NULL")
+      .where(:country => @top_countries.keys)
+      .group(:country)
+      .order('country desc')
+      .count
+
+    @top_judges = Account.current
+      .left_outer_joins(:judge_profile)
+      .where("judge_profiles.id IS NOT NULL")
+      .where(:country => @top_countries.keys)
+      .group(:country)
+      .order('country desc')
+      .count
   end
 
   def totals
     {
-      top_countries: number_with_delimiter(@students.count + @mentors.count + @judges.count),
+      top_countries: number_with_delimiter(@top_students.values.sum + @top_mentors.values.sum + @top_judges.values.sum),
     }
   end
 
   def labels
-    [
-      'US',
-      'Spain',
-      'Mexico',
-      'Ethiopia',
-      'Germany',
-      'India',
-    ]
+    @top_students.keys
   end
 
   def datasets
     [
       {
         label: 'Students',
-        data: [ 400, 500, 600, 900, 300, 100 ],
+        data: @top_students.values,
       },
       {
         label: 'Mentors',
-        data: [ 100, 200, 300, 500, 100, 64 ],
+        data: @top_mentors.values,
       },
       {
         label: 'Judges',
-        data: [ 20, 40, 60, 80, 10, 3 ],
+        data: @top_judges.values,
       }
     ]
   end
 
   def urls
+    students = []
+    @top_students.keys.each do |country_code|
+      students.push(
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["student"],
+            country: [country_code],
+          }
+        )
+      )
+    end
+
+    mentors = []
+    @top_mentors.keys.each do |country_code|
+      mentors.push(
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["mentor"],
+            country: [country_code],
+          }
+        )
+      )
+    end
+
+    judges = []
+    @top_judges.keys.each do |country_code|
+      judges.push(
+        url_helper.public_send("#{user.scope_name}_participants_path",
+          accounts_grid: {
+            scope_names: ["judge"],
+            country: [country_code],
+          }
+        )
+      )
+    end
+
     [
-      [
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["student"],
-            country: ["US"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["student"],
-            country: ["ES"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["student"],
-            country: ["MX"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["student"],
-            country: ["ET"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["student"],
-            country: ["DE"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["student"],
-            country: ["IN"],
-          }
-        ),
-      ],
-      [
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            country: ["US"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            country: ["ES"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            country: ["MX"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            country: ["ET"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            country: ["DE"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            country: ["IN"],
-          }
-        ),
-      ],
-      [
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["judge"],
-            country: ["US"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["judge"],
-            country: ["ES"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["judge"],
-            country: ["MX"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["judge"],
-            country: ["ET"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["judge"],
-            country: ["DE"],
-          }
-        ),
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["judge"],
-            country: ["IN"],
-          }
-        ),
-      ],
+      students,
+      mentors,
+      judges,
     ]
   end
 end
