@@ -7,10 +7,30 @@ describe('Admin Dashboard - routes', () => {
 
   it('returns the routes used by the AdminDashboard component', () => {
     expect(routes).toEqual([
-      { path: '/', redirect: { name: 'students' }},
-      { path: '/students', name: 'students', component: Students },
-      { path: '/mentors', name: 'mentors', component: Mentors },
-      { path: '/top_countries', name: 'top_countries', component: TopCountries },
+      {
+        path: '/',
+        redirect: {
+          name: 'students',
+        },
+      },
+      {
+        path: '/students',
+        name: 'students',
+        component: Students,
+      },
+      {
+        path: '/mentors',
+        name: 'mentors',
+        component: Mentors,
+      },
+      {
+        path: '/top_countries',
+        name: 'top_countries',
+        component: TopCountries,
+        props: {
+          hideTotal: true,
+        },
+      },
     ])
   })
 
