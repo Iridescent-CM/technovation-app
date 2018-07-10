@@ -115,7 +115,7 @@ export default {
       this.chart = new Chart(chartContext, {
         type: 'bar',
         data: extendedChartData,
-				options: {
+        options: {
           legend: {
             position: 'bottom',
             onHover (e) {
@@ -146,7 +146,7 @@ export default {
               stacked: true,
             }]
           },
-				},
+        },
       })
 
       this.$set(this, 'extendedChartData', extendedChartData)
