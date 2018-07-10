@@ -1,25 +1,36 @@
 <template>
-  <div class="tabs tabs-vertical grid" id="admin-dashboard">
-    <ul class="tab-menu grid__col-md-3">
+  <div class="tabs tabs--vertical grid" id="admin-dashboard">
+    <ul class="tabs__menu grid__col-md-3">
       <router-link
         tag="li"
-        class="tab-link"
+        class="tabs__menu-link"
         active-class="tabs__menu-link--active"
         :to="{ name: 'students' }"
       >
-        <button role="button" class="tab-button">
+        <button role="button" class="tabs__menu-button">
           Students
         </button>
       </router-link>
 
       <router-link
         tag="li"
-        class="tab-link"
+        class="tabs__menu-link"
         active-class="tabs__menu-link--active"
         :to="{ name: 'mentors' }"
       >
-        <button role="button" class="tab-button">
+        <button role="button" class="tabs__menu-button">
           Mentors
+        </button>
+      </router-link>
+
+      <router-link
+        tag="li"
+        class="tabs__menu-link"
+        active-class="tabs__menu-link--active"
+        :to="{ name: 'top_countries' }"
+      >
+        <button role="button" class="tabs__menu-button">
+          Top Countries
         </button>
       </router-link>
     </ul>

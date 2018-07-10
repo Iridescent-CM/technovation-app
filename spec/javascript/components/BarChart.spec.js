@@ -1,24 +1,28 @@
 import { shallowMount } from '@vue/test-utils'
 import axios from 'axios'
 
-import PieChart from 'components/PieChart'
+import BarChart from 'components/BarChart'
 
 require('canvas')
 
-describe('PieChart Vue component', () => {
+describe('BarChart Vue component', () => {
   const htmlChartData = {
-    labels: [
-      'With parental permission – (75%)',
-      'Without parental permission – (25%)',
+    labels: [ 'US', 'Spain', 'Mexico', 'Ethiopia', 'Germany', 'India' ],
+    datasets: [
+      {
+        label: 'Students',
+        data: [ 400, 500, 600, 900, 300, 100 ],
+      },
+      {
+        label: 'Mentors',
+        data: [ 100, 200, 300, 500, 100, 64 ],
+      },
+      {
+        label: 'Judges',
+        data: [ 20, 40, 60, 80, 10, 3 ],
+      }
     ],
-    data: [
-      3,
-      1,
-    ],
-    urls: [
-      '/with/parental/permission',
-      '/without/parental/permission',
-    ],
+    urls: []
   }
 
   const jsonChartData = {
@@ -28,19 +32,19 @@ describe('PieChart Vue component', () => {
   }
 
   const extendedChartData = Object.assign({}, htmlChartData)
-  extendedChartData.backgroundColor = [
-    "rgba(250,250,110,0.7)",
-    "rgba(42,72,88,0.7)",
-  ]
-  extendedChartData.hoverBackgroundColor = [
-    "rgba(250,250,110,1)",
-    "rgba(42,72,88,1)",
-  ]
+
+  extendedChartData.datasets[0].backgroundColor = "rgba(250,250,110,0.7)"
+  extendedChartData.datasets[1].backgroundColor = "rgba(0,0,255,0.7)"
+  extendedChartData.datasets[2].backgroundColor = "rgba(42,72,88,0.7)"
+
+  extendedChartData.datasets[0].hoverBackgroundColor = "rgba(250,250,110,1)"
+  extendedChartData.datasets[1].hoverBackgroundColor = "rgba(0,0,255,1)"
+  extendedChartData.datasets[2].hoverBackgroundColor = "rgba(42,72,88,1)"
 
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(PieChart, {
+    wrapper = shallowMount(BarChart, {
       propsData: {
         chartData: Object.assign({}, htmlChartData),
         colorRange: {
@@ -54,11 +58,10 @@ describe('PieChart Vue component', () => {
   describe('props', () => {
 
     it('contains valid props', () => {
-      expect(PieChart.props).toEqual({
+      expect(BarChart.props).toEqual({
         chartData: {
           type: Object,
           default: expect.any(Function),
-          validator: expect.any(Function),
         },
 
         chartClasses: {
@@ -78,80 +81,9 @@ describe('PieChart Vue component', () => {
       })
     })
 
-    describe('chartData', () => {
-      const labels = [ 'One', 'Two' ]
-      const data = [ 1, 3 ]
-      const urls = [ '/url/one', '/url/two' ]
-
-      const invalidLabels = 'string'
-      const invalidData = 'string'
-      const invalidUrls = 'string'
-
-      const dataWithoutLabels = { data, urls }
-      const labelsWithoutData = { labels, urls }
-      const labelsAndDataWithoutUrls = { labels, data }
-
-      const dataWithInvalidLabels = {
-        data,
-        urls,
-        labels: invalidLabels,
-      }
-
-      const labelsWithInvalidData = {
-        labels,
-        urls,
-        data: invalidData,
-      }
-
-      const labelsAndDataWithInvalidUrls = {
-        labels,
-        data,
-        urls: invalidUrls,
-      }
-
-      it('returns true if it is an empty object (needed for default value)', () => {
-        expect(PieChart.props.chartData.validator({})).toBe(true)
-      })
-
-      it('returns true if label, data, and url props are present and arrays', () => {
-        expect(PieChart.props.chartData.validator(htmlChartData)).toBe(true)
-      })
-
-      it('returns true if label and data props are present and arrays', () => {
-        expect(PieChart.props.chartData.validator(labelsAndDataWithoutUrls))
-          .toBe(true)
-      })
-
-      it('returns false if data is array and labels is not present', () => {
-        expect(PieChart.props.chartData.validator(dataWithoutLabels))
-          .toBe(false)
-      })
-
-      it('returns false if labels is array and data is not present', () => {
-        expect(PieChart.props.chartData.validator(labelsWithoutData))
-          .toBe(false)
-      })
-
-      it('returns false if labels is array and data is not an array', () => {
-        expect(PieChart.props.chartData.validator(labelsWithInvalidData))
-          .toBe(false)
-      })
-
-      it('returns false if data is array and labels is not an array', () => {
-        expect(PieChart.props.chartData.validator(dataWithInvalidLabels))
-          .toBe(false)
-      })
-
-      it('returns false if optional urls property is not an array', () => {
-        expect(PieChart.props.chartData.validator(labelsAndDataWithInvalidUrls))
-          .toBe(false)
-      })
-
-    })
-
     describe('chartClasses', () => {
       it('sets the quickview-charts class by default', () => {
-        expect(PieChart.props.chartClasses.default())
+        expect(BarChart.props.chartClasses.default())
           .toEqual({
             'quickview-charts': true,
           })
@@ -160,7 +92,7 @@ describe('PieChart Vue component', () => {
 
     describe('colorRange', () => {
       it('sets a light blue to light pink range by default', () => {
-        expect(PieChart.props.colorRange.default())
+        expect(BarChart.props.colorRange.default())
           .toEqual({
             start: 'rgb(54, 162, 235)',
             end: 'rgb(255, 99, 132)',
@@ -173,7 +105,7 @@ describe('PieChart Vue component', () => {
   describe('data', () => {
 
     it('sets the correct initial state', () => {
-      expect(PieChart.data()).toEqual({
+      expect(BarChart.data()).toEqual({
         chart: null,
         loading: true,
         extendedChartData: {},
@@ -191,7 +123,7 @@ describe('PieChart Vue component', () => {
     it('loads the chart data via AJAX if chartData prop is empty and url is present', (done) => {
       expect(axios.get).not.toHaveBeenCalled()
 
-      wrapper = shallowMount(PieChart, {
+      wrapper = shallowMount(BarChart, {
         propsData: {
           url: '/test/url',
           colorRange: {
@@ -213,7 +145,7 @@ describe('PieChart Vue component', () => {
     it('loads the chart data from chartData prop if url is not present', (done) => {
       expect(axios.get).not.toHaveBeenCalled()
 
-      wrapper = shallowMount(PieChart, {
+      wrapper = shallowMount(BarChart, {
         propsData: {
           chartData: Object.assign({}, htmlChartData),
           colorRange: {
@@ -258,30 +190,12 @@ describe('PieChart Vue component', () => {
         const chartElement = wrapper.find('canvas').element
         const chartContext = chartElement.getContext('2d')
 
-        const {
-          labels,
-          data,
-          backgroundColor,
-          hoverBackgroundColor,
-          urls
-        } = wrapper.vm.extendedChartData
-
         expect(wrapper.vm.chart.canvas).toEqual(chartElement)
         expect(wrapper.vm.chart.ctx).toEqual(chartContext)
         expect(wrapper.vm.chart.config).toEqual(
           expect.objectContaining({
-            type: 'pie',
-            data: expect.objectContaining({
-              labels,
-              datasets: [
-                expect.objectContaining({
-                  data,
-                  backgroundColor,
-                  hoverBackgroundColor,
-                  urls,
-                })
-              ],
-            }),
+            type: 'bar',
+            data: expect.objectContaining(wrapper.vm.extendedChartData),
             options: expect.objectContaining({
               legend: expect.objectContaining({
                 position: 'bottom',
@@ -290,7 +204,24 @@ describe('PieChart Vue component', () => {
               hover: expect.objectContaining({
                 onHover: expect.any(Function),
               }),
-            }),
+              scales: expect.objectContaining({
+                xAxes: [
+                  expect.objectContaining({
+                    stacked: true,
+                    ticks: expect.objectContaining({
+                      stepSize: 1,
+                      min: 0,
+                      autoSkip: false,
+                    })
+                  }),
+                ],
+                yAxes: [
+                  expect.objectContaining({
+                    stacked: true,
+                  }),
+                ]
+              }),
+            })
           })
         )
       })
@@ -317,6 +248,102 @@ describe('PieChart Vue component', () => {
             'rgba(71,153,104,1)',
             'rgba(57,120,113,1)',
             'rgba(42,72,88,1)',
+          ],
+        })
+      })
+
+    })
+
+    describe('sortDataDescending', () => {
+
+      it('should sort the labels, dataset data, and urls based on dataset totals', () => {
+        const chartData = {
+          labels: [ 'US', 'Spain', 'Mexico', 'Ethiopia', 'Germany', 'India' ],
+          datasets: [
+            {
+              label: 'Students',
+              data: [ 400, 500, 600, 900, 300, 100 ],
+            },
+            {
+              label: 'Mentors',
+              data: [ 100, 200, 300, 500, 104, 64 ],
+            },
+            {
+              label: 'Judges',
+              data: [ 20, 40, 60, 3, 10, 15 ],
+            }
+          ],
+          urls: [
+            [
+              '/students/us/',
+              '/students/es/',
+              '/students/mx/',
+              '/students/et/',
+              '/students/de/',
+              '/students/in/',
+            ],
+            [
+              '/mentors/us/',
+              '/mentors/es/',
+              '/mentors/mx/',
+              '/mentors/et/',
+              '/mentors/de/',
+              '/mentors/in/',
+            ],
+            [
+              '/judges/us/',
+              '/judges/es/',
+              '/judges/mx/',
+              '/judges/et/',
+              '/judges/de/',
+              '/judges/in/',
+            ],
+          ],
+        }
+
+        wrapper.vm.sortDataDescending(chartData)
+
+        expect(chartData).toEqual({
+          labels: [ 'Ethiopia', 'Mexico', 'Spain', 'US', 'Germany', 'India' ],
+          datasets: [
+            {
+              label: 'Students',
+              data: [ 900, 600, 500, 400, 300, 100 ],
+            },
+            {
+              label: 'Mentors',
+              data: [ 500, 300, 200, 100, 104, 64 ],
+            },
+            {
+              label: 'Judges',
+              data: [ 3, 60, 40, 20, 10, 15 ],
+            }
+          ],
+          urls: [
+            [
+              '/students/et/',
+              '/students/mx/',
+              '/students/es/',
+              '/students/us/',
+              '/students/de/',
+              '/students/in/',
+            ],
+            [
+              '/mentors/et/',
+              '/mentors/mx/',
+              '/mentors/es/',
+              '/mentors/us/',
+              '/mentors/de/',
+              '/mentors/in/',
+            ],
+            [
+              '/judges/et/',
+              '/judges/mx/',
+              '/judges/es/',
+              '/judges/us/',
+              '/judges/de/',
+              '/judges/in/',
+            ],
           ],
         })
       })

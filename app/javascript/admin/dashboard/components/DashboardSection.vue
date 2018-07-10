@@ -3,12 +3,14 @@
 </template>
 
 <script>
+import BarChart from '../../../components/BarChart'
 import PieChart from '../../../components/PieChart'
 
 export default {
   name: 'dashboard-section',
 
   components: {
+    BarChart,
     PieChart,
   },
 
