@@ -208,6 +208,11 @@ describe('BarChart Vue component', () => {
                 xAxes: [
                   expect.objectContaining({
                     stacked: true,
+                    ticks: expect.objectContaining({
+                      stepSize: 1,
+                      min: 0,
+                      autoSkip: false,
+                    })
                   }),
                 ],
                 yAxes: [

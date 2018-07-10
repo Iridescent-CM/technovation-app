@@ -370,7 +370,14 @@ class TopCountriesDataAnalysis < DataAnalysis
   end
 
   def labels
-    @top_students.keys
+    @top_students.keys.map do |country_code|
+      FriendlyCountry.(
+        OpenStruct.new(country: country_code),
+        {
+          prefix: false,
+        }
+      )
+    end
   end
 
   def datasets

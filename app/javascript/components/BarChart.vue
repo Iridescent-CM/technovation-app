@@ -134,14 +134,19 @@ export default {
               }
             },
           },
-					scales: {
-						xAxes: [{
-							stacked: true,
-						}],
-						yAxes: [{
-							stacked: true
-						}]
-					},
+          scales: {
+            xAxes: [{
+              stacked: true,
+              ticks: {
+                stepSize: 1,
+                min: 0,
+                autoSkip: false,
+              }
+            }],
+            yAxes: [{
+              stacked: true,
+            }]
+          },
 				},
       })
 
