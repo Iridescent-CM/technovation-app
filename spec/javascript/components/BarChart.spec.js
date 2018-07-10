@@ -249,6 +249,102 @@ describe('BarChart Vue component', () => {
 
     })
 
+    describe('sortDataDescending', () => {
+
+      it('should sort the labels, dataset data, and urls based on dataset totals', () => {
+        const chartData = {
+          labels: [ 'US', 'Spain', 'Mexico', 'Ethiopia', 'Germany', 'India' ],
+          datasets: [
+            {
+              label: 'Students',
+              data: [ 400, 500, 600, 900, 300, 100 ],
+            },
+            {
+              label: 'Mentors',
+              data: [ 100, 200, 300, 500, 104, 64 ],
+            },
+            {
+              label: 'Judges',
+              data: [ 20, 40, 60, 3, 10, 15 ],
+            }
+          ],
+          urls: [
+            [
+              '/students/us/',
+              '/students/es/',
+              '/students/mx/',
+              '/students/et/',
+              '/students/de/',
+              '/students/in/',
+            ],
+            [
+              '/mentors/us/',
+              '/mentors/es/',
+              '/mentors/mx/',
+              '/mentors/et/',
+              '/mentors/de/',
+              '/mentors/in/',
+            ],
+            [
+              '/judges/us/',
+              '/judges/es/',
+              '/judges/mx/',
+              '/judges/et/',
+              '/judges/de/',
+              '/judges/in/',
+            ],
+          ],
+        }
+
+        wrapper.vm.sortDataDescending(chartData)
+
+        expect(chartData).toEqual({
+          labels: [ 'Ethiopia', 'Mexico', 'Spain', 'US', 'Germany', 'India' ],
+          datasets: [
+            {
+              label: 'Students',
+              data: [ 900, 600, 500, 400, 300, 100 ],
+            },
+            {
+              label: 'Mentors',
+              data: [ 500, 300, 200, 100, 104, 64 ],
+            },
+            {
+              label: 'Judges',
+              data: [ 3, 60, 40, 20, 10, 15 ],
+            }
+          ],
+          urls: [
+            [
+              '/students/et/',
+              '/students/mx/',
+              '/students/es/',
+              '/students/us/',
+              '/students/de/',
+              '/students/in/',
+            ],
+            [
+              '/mentors/et/',
+              '/mentors/mx/',
+              '/mentors/es/',
+              '/mentors/us/',
+              '/mentors/de/',
+              '/mentors/in/',
+            ],
+            [
+              '/judges/et/',
+              '/judges/mx/',
+              '/judges/es/',
+              '/judges/us/',
+              '/judges/de/',
+              '/judges/in/',
+            ],
+          ],
+        })
+      })
+
+    })
+
     describe('isEmptyObject', () => {
 
       it('returns true if object is empty', () => {
