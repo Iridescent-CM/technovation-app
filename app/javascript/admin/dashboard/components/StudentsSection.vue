@@ -1,6 +1,11 @@
 <template>
   <div id="students">
-    <h3>Students<span v-if="getTotal('students')"> ({{ getTotal('students') }})</span></h3>
+    <h3>
+      Students
+      <span v-if="getTotal('students')">
+        ({{ getTotal('students') }})
+      </span>
+    </h3>
 
     <div class="tab-content">
       <h6>Parental permission</h6>

@@ -4,6 +4,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import state from 'admin/dashboard/store/state'
 import mockStore from 'admin/dashboard/store/__mocks__'
 
+import BarChart from 'components/BarChart'
 import PieChart from 'components/PieChart'
 import DashboardSection from 'admin/dashboard/components/DashboardSection'
 
@@ -41,6 +42,7 @@ describe('Admin Dashboard - DashboardSection component', () => {
 
   it('uses the PieChart component', () => {
     expect(DashboardSection.components).toEqual({
+      BarChart,
       PieChart,
     })
   })
