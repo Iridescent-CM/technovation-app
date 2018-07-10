@@ -5,10 +5,30 @@ import Students from '../components/StudentsSection'
 import TopCountries from '../components/TopCountriesSection'
 
 export const routes = [
-  { path: '/', redirect: { name: 'students' }},
-  { path: '/students', name: 'students', component: Students },
-  { path: '/mentors', name: 'mentors', component: Mentors },
-  { path: '/top_countries', name: 'top_countries', component: TopCountries },
+  {
+    path: '/',
+    redirect: {
+      name: 'students',
+    },
+  },
+  {
+    path: '/students',
+    name: 'students',
+    component: Students,
+  },
+  {
+    path: '/mentors',
+    name: 'mentors',
+    component: Mentors,
+  },
+  {
+    path: '/top_countries',
+    name: 'top_countries',
+    component: TopCountries,
+    props: {
+      hideTotal: true,
+    },
+  },
 ]
 
 export const router = new VueRouter({
