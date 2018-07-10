@@ -126,13 +126,23 @@ if (mentor = MentorProfile.create(
     school_company_name: "Boeing",
     job_title: "Aerospace Engineer",
     expertise_ids: Expertise.pluck(:id)[0..1],
+    bio: "Cool Colorado mentor with an adequate length of a bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    mentor_type: "Industry professional",
   )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.email}"
   puts ""
   puts "============================================================="
   puts ""
+elsif mentor = Account.find_by(email: "mentor@mentor.com").try(:mentor_profile)
+  puts "Found seeded mentor #{mentor.email}"
+  puts ""
+  puts "============================================================="
+  puts ""
 else
-  mentor = Account.find_by(email: "mentor@mentor.com").try(:mentor_profile)
+  puts "Could not find or create seeded mentor mentor@mentor.com"
+  puts ""
+  puts "============================================================="
+  puts ""
 end
 
 if mentor
@@ -172,7 +182,8 @@ if (mentor = MentorProfile.create(
     school_company_name: "Boeing",
     job_title: "Aerospace Engineer",
     expertise_ids: Expertise.pluck(:id)[0..1],
-    bio: "Cool chicago mentor",
+    bio: "Cool chicago mentor with an adequate length of a bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    mentor_type: "Industry professional",
   )).valid?
   mentor.account.update_column(:profile_image, "foo/bar/baz.png")
   mentor.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))
