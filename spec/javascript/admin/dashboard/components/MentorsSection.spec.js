@@ -183,8 +183,8 @@ describe('Admin Dashboard - MentorSection component', () => {
 
     it('contains the correct markup', () => {
       expect(wrapper.element.getAttribute('id')).toEqual('mentors')
-      expect(wrapper.find('h3').html())
-        .toEqual('<h3>Mentors<span> (402)</span></h3>')
+
+      expect(wrapper.find('h3 span').text()).toEqual('(402)')
 
       const charts = wrapper.findAll('.tab-content')
       const onboardingChart = charts.at(0)
@@ -202,8 +202,7 @@ describe('Admin Dashboard - MentorSection component', () => {
     it('hides the mentors count label if the mentors total is not found', () => {
       wrapper.vm.totals = {}
 
-      expect(wrapper.find('h3').html())
-        .toEqual('<h3>Mentors<!----></h3>')
+      expect(wrapper.find('h3 span').exists()).toBe(false)
     })
 
     it('changes the label of the onboarding chart if international changes', () => {

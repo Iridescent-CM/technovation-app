@@ -162,8 +162,8 @@ describe('Admin Dashboard - StudentsSection component', () => {
 
     it('contains the correct markup', () => {
       expect(wrapper.element.getAttribute('id')).toEqual('students')
-      expect(wrapper.find('h3').html())
-        .toEqual('<h3>Students<span> (854)</span></h3>')
+
+      expect(wrapper.find('h3 span').text()).toEqual('(854)')
 
       const charts = wrapper.findAll('.tab-content')
       const onboardingChart = charts.at(0)
@@ -181,8 +181,7 @@ describe('Admin Dashboard - StudentsSection component', () => {
     it('hides the students count label if the students total is not found', () => {
       wrapper.vm.totals = {}
 
-      expect(wrapper.find('h3').html())
-        .toEqual('<h3>Students<!----></h3>')
+      expect(wrapper.find('h3 span').exists()).toBe(false)
     })
 
   })
