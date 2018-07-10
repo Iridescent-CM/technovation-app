@@ -59,17 +59,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
-const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
-
-if (csrfTokenMetaTag) {
-  axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
-  }
-}
-
 export default {
   name: 'screenshot-uploader',
 
@@ -120,7 +109,7 @@ export default {
 
       form.append("team_id", this.teamId)
 
-      axios.patch(url, form)
+      window.axios.patch(url, form)
         .then(() => {
           if (window.timeout) {
             clearTimeout(window.timeout)
@@ -152,7 +141,7 @@ export default {
 
   methods: {
     loadScreenshots () {
-      axios.get(`${this.screenshotsUrl}?team_id=${this.teamId}`)
+      window.axios.get(`${this.screenshotsUrl}?team_id=${this.teamId}`)
         .then(({data}) => {
           this.screenshots = data
         })
@@ -181,7 +170,7 @@ export default {
       const url = this.screenshotsUrl +
                   `/${screenshot.id}?team_id=${this.teamId}`
 
-      axios.delete(url);
+      window.axios.delete(url);
     },
 
     handleFileInput (e) {
@@ -194,7 +183,7 @@ export default {
         form.append("team_submission[screenshots_attributes][]image", file)
         form.append("team_id", this.teamId)
 
-        axios.post(this.screenshotsUrl, form)
+        window.axios.post(this.screenshotsUrl, form)
           .then(({data}) => {
             this.screenshots.push({
               id: data.id,
