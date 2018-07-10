@@ -61,6 +61,11 @@ describe('Admin Dashboard - DashboardSection component', () => {
           type: Object,
           default: expect.any(Function),
         },
+
+        hideTotal: {
+          type: Boolean,
+          default: false,
+        },
       })
     })
 
