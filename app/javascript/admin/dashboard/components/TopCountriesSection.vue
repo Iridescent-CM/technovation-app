@@ -2,7 +2,7 @@
   <div id="top-countries">
     <h3>
       Top Countries
-      <span v-if="getTotal('top_countries')">
+      <span v-if="getTotal('top_countries') && !hideTotal">
         ({{ getTotal('top_countries') }})
       </span>
     </h3>

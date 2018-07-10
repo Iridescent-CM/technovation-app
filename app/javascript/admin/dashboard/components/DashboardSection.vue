@@ -27,6 +27,11 @@ export default {
         return {}
       },
     },
+
+    hideTotal: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   created () {

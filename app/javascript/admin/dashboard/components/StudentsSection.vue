@@ -2,7 +2,7 @@
   <div id="students">
     <h3>
       Students
-      <span v-if="getTotal('students')">
+      <span v-if="getTotal('students') && !hideTotal">
         ({{ getTotal('students') }})
       </span>
     </h3>

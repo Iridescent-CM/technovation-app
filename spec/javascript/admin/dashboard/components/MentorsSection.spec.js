@@ -205,6 +205,14 @@ describe('Admin Dashboard - MentorSection component', () => {
       expect(wrapper.find('h3 span').exists()).toBe(false)
     })
 
+    it('hides the mentors count label if the hideTotal prop is true', () => {
+      wrapper.setProps({
+        hideTotal: true,
+      })
+
+      expect(wrapper.find('h3 span').exists()).toBe(false)
+    })
+
     it('changes the label of the onboarding chart if international changes', () => {
       const onboardingChart = wrapper.findAll('.tab-content').at(0)
 
