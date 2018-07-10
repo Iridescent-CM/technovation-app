@@ -341,7 +341,7 @@ class TopCountriesDataAnalysis < DataAnalysis
     @top_students = Account.current
       .left_outer_joins(:student_profile)
       .where("student_profiles.id IS NOT NULL")
-      .where(:country => @top_countries.keys)
+      .where(country: @top_countries.keys)
       .group(:country)
       .order('country desc')
       .count
@@ -349,7 +349,7 @@ class TopCountriesDataAnalysis < DataAnalysis
     @top_mentors = Account.current
       .left_outer_joins(:mentor_profile)
       .where("mentor_profiles.id IS NOT NULL")
-      .where(:country => @top_countries.keys)
+      .where(country: @top_countries.keys)
       .group(:country)
       .order('country desc')
       .count
@@ -357,7 +357,7 @@ class TopCountriesDataAnalysis < DataAnalysis
     @top_judges = Account.current
       .left_outer_joins(:judge_profile)
       .where("judge_profiles.id IS NOT NULL")
-      .where(:country => @top_countries.keys)
+      .where(country: @top_countries.keys)
       .group(:country)
       .order('country desc')
       .count
@@ -365,7 +365,10 @@ class TopCountriesDataAnalysis < DataAnalysis
 
   def totals
     {
-      top_countries: number_with_delimiter(@top_students.values.sum + @top_mentors.values.sum + @top_judges.values.sum),
+      top_countries: number_with_delimiter(
+        @top_students.values.sum +
+        @top_mentors.values.sum +
+        @top_judges.values.sum),
     }
   end
 
@@ -373,9 +376,7 @@ class TopCountriesDataAnalysis < DataAnalysis
     @top_students.keys.map do |country_code|
       FriendlyCountry.(
         OpenStruct.new(country: country_code),
-        {
-          prefix: false,
-        }
+        prefix: false,
       )
     end
   end
@@ -398,46 +399,31 @@ class TopCountriesDataAnalysis < DataAnalysis
   end
 
   def urls
-    students = []
-    @top_students.keys.each do |country_code|
-      students.push(
+    [
+      @top_students.keys.map do |country_code|
         url_helper.public_send("#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["student"],
             country: [country_code],
           }
         )
-      )
-    end
-
-    mentors = []
-    @top_mentors.keys.each do |country_code|
-      mentors.push(
+      end,
+      @top_mentors.keys.map do |country_code|
         url_helper.public_send("#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["mentor"],
             country: [country_code],
           }
         )
-      )
-    end
-
-    judges = []
-    @top_judges.keys.each do |country_code|
-      judges.push(
+      end,
+      @top_judges.keys.map do |country_code|
         url_helper.public_send("#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["judge"],
             country: [country_code],
           }
         )
-      )
-    end
-
-    [
-      students,
-      mentors,
-      judges,
+      end,
     ]
   end
 end
