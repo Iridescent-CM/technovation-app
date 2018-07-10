@@ -400,30 +400,35 @@ class TopCountriesDataAnalysis < DataAnalysis
 
   def urls
     [
-      @top_students.keys.map do |country_code|
-        url_helper.public_send("#{user.scope_name}_participants_path",
+      @top_students.keys.map { |country_code|
+        url_helper.public_send(
+          "#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["student"],
             country: [country_code],
           }
         )
-      end,
-      @top_mentors.keys.map do |country_code|
-        url_helper.public_send("#{user.scope_name}_participants_path",
+      },
+
+      @top_mentors.keys.map { |country_code|
+        url_helper.public_send(
+          "#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["mentor"],
             country: [country_code],
           }
         )
-      end,
-      @top_judges.keys.map do |country_code|
-        url_helper.public_send("#{user.scope_name}_participants_path",
+      },
+
+      @top_judges.keys.map { |country_code|
+        url_helper.public_send(
+          "#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["judge"],
             country: [country_code],
           }
         )
-      end,
+      },
     ]
   end
 end
