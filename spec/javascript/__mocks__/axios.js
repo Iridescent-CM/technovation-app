@@ -1,4 +1,4 @@
-export default {
+const mockedAxios = {
   mockResponse (method, returnData, opts) {
     const options = Object.assign({}, opts)
 
@@ -42,4 +42,14 @@ export default {
       data: {}
     })
   }),
-};
+}
+
+if (!global.window) {
+  global.window = {
+    axios: mockedAxios,
+  }
+} else {
+  global.window.axios = mockedAxios
+}
+
+export default mockedAxios

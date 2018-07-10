@@ -15,8 +15,6 @@
 </template>
 
 <script>
-
-import axios from 'axios'
 import Chart from 'chart.js'
 import chroma from 'chroma-js'
 
@@ -92,7 +90,7 @@ export default {
 
   mounted () {
     if (this.url !== '' && this.isEmptyObject(this.chartData)) {
-      axios.get(this.url)
+      window.axios.get(this.url)
         .then((response) => {
           this.initializeChart(response.data.data.attributes)
         })
