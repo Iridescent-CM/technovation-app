@@ -7,6 +7,7 @@ class MentorProfile < ActiveRecord::Base
     Industry\ professional
     Educator
     Parent
+    Past\ Technovation\ student
   }
 
   scope :unmatched, -> {
