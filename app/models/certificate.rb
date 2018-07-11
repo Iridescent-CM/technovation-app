@@ -9,6 +9,6 @@ class Certificate < ApplicationRecord
   mount_uploader :file, FileProcessor
 
   scope :judge_types, -> {
-    where(cert_type: CERTIFICATE_TYPES.select { |t| t.include?('_judge') })
+    where(cert_type: CERTIFICATE_TYPES.select { |t| t.include?('judge') })
   }
 end
