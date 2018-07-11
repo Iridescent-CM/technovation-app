@@ -1,5 +1,15 @@
 .datagrid {
   background: white;
+
+  td.actions,
+  th.actions {
+    right: 0;
+    position: sticky;
+    top: auto;
+    width: 1%;
+    white-space: nowrap;
+    background: white;
+  }
 }
 
 .filter {

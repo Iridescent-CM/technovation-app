@@ -1,3 +1,11 @@
+.table--scrollable {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
 .datagrid {
   width: 100%;
   border-collapse: collapse;
@@ -17,6 +25,8 @@
     position: relative;
     text-align: left;
     padding: 0.5rem;
+    width: 1%;
+    white-space: nowrap;
 
     span {
       &:hover {

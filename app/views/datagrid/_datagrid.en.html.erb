@@ -30,7 +30,9 @@
     </p>
   <% end %>
 
-  <%= datagrid_table(grid) %>
+  <div class="table--scrollable">
+    <%= datagrid_table(grid) %>
+  </div>
 
   <%= will_paginate grid.assets %>
 </div>
