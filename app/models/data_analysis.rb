@@ -361,6 +361,12 @@ class TopCountriesDataAnalysis < DataAnalysis
       .group(:country)
       .order('country desc')
       .count
+
+    @top_countries.each {|key, value| @top_countries[key] = 0 }
+
+    @top_students = @top_countries.merge(@top_students)
+    @top_mentors = @top_countries.merge(@top_mentors)
+    @top_judges = @top_countries.merge(@top_judges)
   end
 
   def totals
