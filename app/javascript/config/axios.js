@@ -1,4 +1,10 @@
+import PromisePolyfill from 'es6-promise'
 import axios from 'axios'
+
+// Polyfill Promise for IE11 to support axios
+if (typeof Promise === 'undefined') {
+  PromisePolyfill.polyfill()
+}
 
 window.axios = axios
 
