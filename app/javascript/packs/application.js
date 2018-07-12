@@ -10,8 +10,6 @@
 import Vue from 'vue/dist/vue.esm'
 import CertificateButton from '../components/CertificateButton'
 
-import '../utilities/jquery-double-scroll'
-
 import '../config/axios'
 
 document.addEventListener('turbolinks:load', () => {
@@ -28,9 +26,4 @@ document.addEventListener('turbolinks:load', () => {
       })
     }
   }
-
-  // Scrollable datagrid table dual scrollbars
-  $('.table--scrollable').doubleScroll({
-    resetOnWindowResize: true,
-  })
 })
