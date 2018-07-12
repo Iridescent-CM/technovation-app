@@ -27,11 +27,10 @@
   content="<%= asset_url "social-sharing-preview-image.png" %>"
 />
 
-<%= content_tag :meta, nil,
-  data: {
-    current_profile_id: current_profile.id,
-    current_profile_type: current_profile_type,
-  } %>
+<meta
+  data-current-profile-id="<%= current_profile.id %>"
+  data-current-profile-type="<%= current_profile_type %>"
+/>
 
 <%= csrf_meta_tags %>
 <%= action_cable_meta_tag %>

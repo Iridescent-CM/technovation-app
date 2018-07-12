@@ -10,25 +10,20 @@
 import Vue from 'vue/dist/vue.esm'
 import CertificateButton from '../components/CertificateButton'
 
-import '../utilities/jquery-double-scroll'
-
 import '../config/axios'
 
 document.addEventListener('turbolinks:load', () => {
   const btnEls = document.querySelectorAll('.vue-enable-certificate-btn')
 
-  btnEls.forEach((btnEl) => {
-    new Vue({
-      el: btnEl,
+  if (btnEls.length) {
+    for (let i = 0; i < btnEls.length; i += 1) {
+      new Vue({
+        el: btnEls[i],
 
-      components: {
-        CertificateButton,
-      },
-    })
-  })
-
-  // Scrollable datagrid table dual scrollbars
-  $('.table--scrollable').doubleScroll({
-    resetOnWindowResize: true,
-  })
+        components: {
+          CertificateButton,
+        },
+      })
+    }
+  }
 })
