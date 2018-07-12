@@ -64,9 +64,8 @@ class ApplicationController < ActionController::Base
 
   def current_account
     auth_token = get_cookie(CookieNames::AUTH_TOKEN)
-    session_token = get_cookie(CookieNames::SESSION_TOKEN)
 
-    return current_session if !!session_token && current_session.authenticated?
+    return current_session if current_session.authenticated?
 
     if !!auth_token
       @current_account ||= Account.find_by(auth_token: auth_token) || ::NullAuth.new
@@ -76,9 +75,17 @@ class ApplicationController < ActionController::Base
   end
 
   def current_session
-    @current_session ||= Account.find_by(
-      session_token: get_cookie(CookieNames::SESSION_TOKEN)
-    ) || ::NullAuth.new
+    return @current_session if defined?(@current_session)
+
+    session_token = get_cookie(CookieNames::SESSION_TOKEN)
+
+    if !!session_token
+      @current_session = Account.find_by(
+        session_token: get_cookie(CookieNames::SESSION_TOKEN)
+      ) || ::NullAuth.new
+    else
+      @current_session = ::NullAuth.new
+    end
   end
 
   private
