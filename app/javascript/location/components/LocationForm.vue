@@ -44,6 +44,12 @@ export default {
   },
 
   props: {
+    accountId: {
+      type: [Number, Boolean],
+      required: false,
+      default: false,
+    },
+
     scopeName: {
       type: String,
       required: true,
@@ -69,7 +75,13 @@ export default {
 
   computed: {
     getCurrentLocationEndpoint () {
-      return `/${this.scopeName}/current_location`
+      const endpointRoot = `/${this.scopeName}/current_location`
+
+      if (this.accountId) {
+        return `${endpointRoot}?account_id=${this.accountId}`
+      } else {
+        return endpointRoot
+      }
     },
   },
 
