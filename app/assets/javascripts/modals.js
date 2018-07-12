@@ -78,7 +78,7 @@ $(document).on("ready turbolinks:load", function() {
 });
 
 $(document).on("click", ".img-modal", function(e) {
-  let html, animation
+  var html, animation
 
   if (typeof $(e.target).data("modalIdx") !== 'undefined') {
     const last = parseInt($("#screenshots-nav").data("modalLast"))
