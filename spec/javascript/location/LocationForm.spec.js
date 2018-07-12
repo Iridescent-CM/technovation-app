@@ -60,4 +60,23 @@ describe('location/components/LocationForm', () => {
       done()
     })
   })
+
+  it('accepts an optional teamId prop for the current location request', (done) => {
+    shallowMount(LocationForm, {
+      localVue,
+      propsData: {
+        teamId: 1,
+        scopeName: "admin",
+        countries: [["United States", "US"]],
+      },
+      methods: {
+        initChosen () { },
+      },
+    })
+
+    setImmediate(() => {
+      expect(axios.get).toHaveBeenCalledWith('/admin/current_location?team_id=1')
+      done()
+    })
+  })
 })

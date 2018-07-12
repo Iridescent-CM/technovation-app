@@ -50,6 +50,12 @@ export default {
       default: false,
     },
 
+    teamId: {
+      type: [Number, Boolean],
+      required: false,
+      default: false,
+    },
+
     scopeName: {
       type: String,
       required: true,
@@ -79,6 +85,8 @@ export default {
 
       if (this.accountId) {
         return `${endpointRoot}?account_id=${this.accountId}`
+      } else if (this.teamId) {
+        return `${endpointRoot}?team_id=${this.teamId}`
       } else {
         return endpointRoot
       }

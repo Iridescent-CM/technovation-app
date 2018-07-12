@@ -1,12 +1,16 @@
 module Admin
   class CurrentLocationsController < AdminController
     def show
-      account = Account.find(params.fetch(:account_id))
+      if params.fetch(:account_id) { false }
+        record = Account.find(params.fetch(:account_id))
+      else
+        record = Team.find(params.fetch(:team_id))
+      end
 
       render json: {
-        city: account.city,
-        state_code: account.state_province,
-        country_code: account.country,
+        city: record.city,
+        state_code: record.state_province,
+        country_code: record.country,
       }
     end
   end
