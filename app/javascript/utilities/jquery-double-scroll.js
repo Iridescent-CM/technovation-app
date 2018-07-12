@@ -16,7 +16,7 @@
  */
 (function( $ ) {
 
-  jQuery.fn.doubleScroll = function(userOptions) {
+  $.fn.doubleScroll = function(userOptions) {
 
    // Default options
    var options = {
@@ -123,4 +123,4 @@
 
  }
 
-}( jQuery ));
+}( $ ));
