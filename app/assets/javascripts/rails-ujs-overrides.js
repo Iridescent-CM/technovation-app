@@ -25,7 +25,7 @@ $.rails.showConfirmationDialog = function(link) {
     showCancelButton: true,
     reverseButtons: true,
     focusCancel: true,
-  }).then(result => {
+  }).then(function(result) {
     if (result.value) {
       $.rails.confirmed(link);
     }

@@ -18,6 +18,7 @@
 
   tr:hover > td {
     background: #ddd;
+    background-clip: padding-box;
   }
 
   > thead th {
