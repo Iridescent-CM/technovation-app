@@ -14,18 +14,6 @@ RSpec.feature "Edit account spec" do
     expect(page.find("[type=email]").value).to eq("original@email.com")
   end
 
-  scenario "edit geocoded info" do
-    click_link "Change your location"
-
-    expect(page).to have_css('input[value="Chicago"]')
-
-    fill_in "City", with: "Los Angeles"
-    fill_in "State / Province", with: "CA"
-    click_button "Save"
-
-    expect(StudentProfile.last.city).to eq("Los Angeles")
-  end
-
   scenario "attempt to edit with wrong existing password" do
     within("#change-password") do
       fill_in "Change your password", with: "something@else.com"
