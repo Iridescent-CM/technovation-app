@@ -6,6 +6,7 @@
 //= require chosen-jquery
 //= require sweetalert2
 //= require jquery.sticky-kit.min
+//= require jquery.double-scroll
 
 // ******** APP
 //
@@ -44,6 +45,11 @@ document.addEventListener("turbolinks:load", function() {
       url: $el.data('url'),
       data: data,
     })
+  })
+
+  // Scrollable datagrid table dual scrollbars
+  $('.table--scrollable').doubleScroll({
+    resetOnWindowResize: true,
   })
 });
 
