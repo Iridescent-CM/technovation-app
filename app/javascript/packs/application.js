@@ -17,15 +17,17 @@ import '../config/axios'
 document.addEventListener('turbolinks:load', () => {
   const btnEls = document.querySelectorAll('.vue-enable-certificate-btn')
 
-  btnEls.forEach((btnEl) => {
-    new Vue({
-      el: btnEl,
+  if (btnEls.length) {
+    for (let i = 0; i < btnEls.length; i += 1) {
+      new Vue({
+        el: btnEls[i],
 
-      components: {
-        CertificateButton,
-      },
-    })
-  })
+        components: {
+          CertificateButton,
+        },
+      })
+    }
+  }
 
   // Scrollable datagrid table dual scrollbars
   $('.table--scrollable').doubleScroll({
