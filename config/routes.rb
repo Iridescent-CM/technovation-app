@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     post :profiles, to: "signups#create"
 
     resource :location_details, only: :show
+    resource :current_location, only: :show
 
     resources :cookies, only: :create
     resource :survey_reminder, only: :create

@@ -6,23 +6,8 @@ import LocationForm from 'location/components/LocationForm'
 const localVue = createLocalVue()
 
 describe('location/components/LocationForm', () => {
-  let wrapper
-
   beforeEach(() => {
     axios.get.mockClear()
-
-    wrapper = shallowMount(LocationForm, {
-      localVue,
-      propsData: {
-        scopeName: "student",
-      },
-    })
-  })
-
-  it('mounts with city, state, country input fields', () => {
-    expect(wrapper.contains('input[type=text]#location_city')).toBe(true)
-    expect(wrapper.contains('input[type=text]#location_state')).toBe(true)
-    expect(wrapper.contains('select#location_country')).toBe(true)
   })
 
   it('fills in the user location data from the server', (done) => {
@@ -36,14 +21,23 @@ describe('location/components/LocationForm', () => {
       localVue,
       propsData: {
         scopeName: "student",
+        countries: [["United States", "US"]],
+      },
+      methods: {
+        initChosen () { },
       },
     })
 
     setImmediate(() => {
       expect(axios.get).toHaveBeenCalledWith('/student/current_location')
+
       expect(myWrapper.vm.city).toEqual("Chicago")
-      expect(myWrapper.vm.state_code).toEqual("IL")
-      expect(myWrapper.vm.country_code).toEqual("US")
+      expect(myWrapper.vm.stateCode).toEqual("IL")
+      expect(myWrapper.vm.countryCode).toEqual("US")
+
+      expect(myWrapper.find('#location_city').element.value).toEqual("Chicago")
+      expect(myWrapper.find('#location_state').element.value).toEqual("IL")
+      expect(myWrapper.find('#location_country').element.value).toEqual("US")
       done()
     })
   })

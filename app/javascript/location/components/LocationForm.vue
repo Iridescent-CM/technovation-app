@@ -1,8 +1,35 @@
 <template>
   <div>
-    <input type="text" id="location_city" />
-    <input type="text" id="location_state" />
-    <select id="location_country"></select>
+    <label for="location_city">City</label>
+
+    <input
+      type="text"
+      id="location_city"
+      v-model="city"
+    />
+
+    <label for="location_state">State / Province</label>
+
+    <input
+      type="text"
+      id="location_state"
+      v-model="stateCode"
+    />
+
+    <label for="location_country">Country / Territory</label>
+
+    <select
+      id="location_country"
+      v-model="countryCode"
+    >
+      <option
+        v-for="country in countries"
+        :key="country[1]"
+        :value="country[1]"
+      >
+        {{ country[0] }}
+      </option>
+    </select>
   </div>
 </template>
 
@@ -11,12 +38,34 @@ export default {
   data () {
     return {
       city: "",
-      state_code: "",
-      country_code: "",
+      stateCode: "",
+      countryCode: "",
     }
   },
 
-  props: ['scopeName'],
+  props: {
+    scopeName: {
+      type: String,
+      required: true,
+    },
+
+    countries: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  created () {
+    window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
+      this.city = data.city
+      this.stateCode = data.state_code
+      this.countryCode = data.country_code
+    })
+  },
+
+  updated () {
+    this.initChosen()
+  },
 
   computed: {
     getCurrentLocationEndpoint () {
@@ -24,12 +73,17 @@ export default {
     },
   },
 
-  created() {
-    window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
-      this.city = data.city
-      this.state_code = data.state_code
-      this.country_code = data.country_code
-    })
+  methods: {
+    initChosen () {
+      const $country = $("#location_country")
+
+      $country.chosen({
+        allow_single_deselect: true,
+      })
+
+      $country.val(this.countryCode)
+      $country.trigger("chosen:updated")
+    },
   },
 }
 </script>
