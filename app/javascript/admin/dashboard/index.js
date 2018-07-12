@@ -14,15 +14,17 @@ import { router } from './routes'
 document.addEventListener('turbolinks:load', () => {
   const pieChartElements = document.querySelectorAll('.vue-enable-pie-chart')
 
-  pieChartElements.forEach((element) => {
-    new Vue({
-      el: element,
+  if (pieChartElements.length) {
+    for (let i = 0; i < pieChartElements.length; i += 1) {
+      new Vue({
+        el: pieChartElements[i],
 
-      components: {
-        PieChart,
-      },
-    })
-  })
+        components: {
+          PieChart,
+        },
+      })
+    }
+  }
 
   /**
    * Admin Dashboards
