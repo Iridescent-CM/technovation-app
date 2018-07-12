@@ -8,7 +8,7 @@ $(document).on('click', '.flash .icon-close', function() {
 document.addEventListener("turbolinks:load", function() {
   $(document).ajaxComplete(function(_, xhr) {
     if (xhr.status === 200) {
-      let res = false
+      var res = false
 
       try {
         res = JSON.parse(xhr.responseText)

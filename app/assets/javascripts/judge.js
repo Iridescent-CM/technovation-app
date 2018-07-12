@@ -1,8 +1,8 @@
 //= require application
 //= require toggling-select
 
-$(document).on("click", ".screenshot-nav__item", evt => {
-  let goToIdx
+$(document).on("click", ".screenshot-nav__item", function(evt) {
+  var goToIdx
 
   if (evt.target.nodeName === "IMG") {
     goToIdx = $(evt.target.parentElement).data('goTo')
