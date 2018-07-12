@@ -234,6 +234,7 @@ Rails.application.routes.draw do
     resources :job_statuses, only: :show
 
     resources :requests, only: [:index, :update]
+    resource :current_location, only: :show
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 

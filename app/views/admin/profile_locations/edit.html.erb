@@ -1,20 +1,11 @@
-<div class="panel">
-  <h1 class="page-heading">Edit location details</h1>
+<div class="panel panel--left">
+  <h1>Edit location</h1>
+  <h3>For participant <span><%= @account.name %></span></h3>
 
-  <h3><%= @account.scope_name.titleize %> - <%= @account.full_name %></h3>
+  <p>
+    <%= link_to 'Go back to profile page',
+      admin_participant_path(@account) %>
+  </p>
 
-  <%= simple_form_for @account, url: admin_participant_path(@account) do |f| %>
-    <%= f.input :city %>
-    <%= f.input :state_province %>
-
-    <p>
-      <%= f.input :country,
-        collection: CountryStateSelect.countries_collection,
-        input_html: {
-          class: "chosen",
-        } %>
-    </p>
-
-    <%= f.submit "Save location details", class: "button" %>
-  <% end %>
+  <%= render 'signups/location_fields', account_id: @account.id %>
 </div>

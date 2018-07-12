@@ -1,6 +1,9 @@
+<% account_id ||= false %>
+
 <div class="vue-enable-location-form">
   <location-form
     scope-name="<%= current_scope %>"
+    :account-id="<%= account_id %>"
     :countries='<%=raw CountryStateSelect.countries_collection.to_json %>'
   >
   </location-form>
