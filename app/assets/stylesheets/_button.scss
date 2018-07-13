@@ -2,9 +2,9 @@
   outline: 0;
   border: 0;
   user-select: none;
-  background-color: $secondary-mid;
+  background-color: $primary-mid;
   border-radius: 0.15rem;
-  box-shadow: 0 2px 0 darken($secondary-mid, 5);
+  box-shadow: 0 2px 0 darken($primary-mid, 5);
   color: white;
   cursor: pointer;
   display: inline-block;
@@ -36,17 +36,17 @@
 
   &.secondary,
   &.button--secondary {
-    background-color: $tertiary;
-    box-shadow: 0 2px 0 darken($tertiary, 5);
+    background-color: $secondary;
+    box-shadow: 0 2px 0 darken($secondary, 5);
 
     &:active,
     &:hover,
     &:focus {
-      background-color: darken($tertiary, 5);
+      background-color: darken($secondary, 5);
     }
 
     &:active {
-      box-shadow: 0 0 0 darken($tertiary, 10);
+      box-shadow: 0 0 0 darken($secondary, 10);
     }
   }
 
@@ -96,7 +96,7 @@
     background: none;
     border: 0;
     box-shadow: none;
-    color: $secondary;
+    color: $primary;
     text-transform: uppercase;
     padding-left: 0;
     padding-right: 0;
@@ -136,12 +136,12 @@
   &:active,
   &:hover,
   &:focus {
-    background-color: darken($secondary-mid, 5);
+    background-color: darken($primary-mid, 5);
     color: white;
   }
 
   &:active {
-    box-shadow: 0 0 0 darken($secondary-mid, 10);
+    box-shadow: 0 0 0 darken($primary-mid, 10);
     transform: translateY(2px);
   }
 
@@ -153,7 +153,7 @@
     pointer-events: none;
 
     &:hover {
-      background-color: $secondary-mid;
+      background-color: $primary-mid;
     }
   }
 }
