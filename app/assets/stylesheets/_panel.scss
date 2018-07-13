@@ -19,19 +19,35 @@
     }
   }
 
+  &.panel--contains-bottom-bar {
+    @extend .padding--none;
+  }
+
   &.panel--with-flags {
     position: relative;
   }
 
   .panel__heading,
   .panel--heading {
+    @extend .padding--small;
     margin: -1rem -1rem 1rem;
-    padding: 0.5rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   }
 
+  .panel__content {
+    @extend .padding--large;
+  }
+
   .panel--footer {
-    text-align: right;
+    @extend .text-align--right;
+  }
+
+  .panel__bottom-bar {
+    @extend .margin--t-large;
+    @extend .box-shadow--t-subtle;
+    @extend .padding--medium;
+    @extend .text-align--right;
+    @extend .background-color--subtle-gray;
   }
 }
 
