@@ -1,22 +1,22 @@
 $(document).on("turbolinks:load", function() {
   $('.tabs').not('.tabs--css-only').each(function() {
-    var $links = $(this).find('.tab-menu, .tabs__menu')
+    var $links = $(this).find('.tabs__menu')
                         .first()
-                        .find('.tab-link, .tabs__menu-link'),
+                        .find('.tabs__menu-link'),
 
-        $contents = $(this).find('.content, .tabs__content')
+        $contents = $(this).find('.tabs__content')
                            .first()
-                           .find('> .tab-content, > .tabs__tab-content');
+                           .find('> .tabs__tab-content');
 
     // possible col--sticky
     if ($contents.length === 0)
-      $contents = $(this).find('.content .col--sticky')
+      $contents = $(this).find('.tabs__content .col--sticky')
                          .first()
-                         .find('> .tab-content');
+                         .find('> .tabs__tab-content');
 
-    // possible tabs-vertical layout
+    // Possible tabs--vertical layout
     if ($contents.length === 0)
-      $contents = $('#' + $(this).prop('id') + ' + .content .tab-content');
+      $contents = $('#' + $(this).prop('id') + ' + .tabs__content .tabs__tab-content');
 
     $links.filter(":visible")
       .first()
@@ -29,7 +29,7 @@ $(document).on("turbolinks:load", function() {
 
     if (intendedTab.length === 0)
       intendedTab = $links.filter(":visible").first()
-        .find(".tab-button, .tabs__menu-button")
+        .find(".tabs__menu-button")
         .data("tab-id");
 
     $links.each(function() {
@@ -56,10 +56,10 @@ $(document).on("turbolinks:load", function() {
     openTabMenu.bind(this)();
   });
 
-  $(".content, .tabs__content").on("click", closeTabMenu);
+  $(".tabs__content").on("click", closeTabMenu);
 
   function closeTabMenu() {
-    var $menu = $(this).closest(".tabs").find(".tab-menu, .tabs__menu");
+    var $menu = $(this).closest(".tabs").find(".tabs__menu");
 
     if ($menu.data("open")) {
       $menu
@@ -73,7 +73,7 @@ $(document).on("turbolinks:load", function() {
   }
 
   function openTabMenu() {
-    var $menu = $(this).closest(".tabs").find(".tab-menu, .tabs__menu");
+    var $menu = $(this).closest(".tabs").find(".tabs__menu");
 
     if ($menu.data("closed")) {
       $menu
@@ -99,13 +99,13 @@ $(document).on("turbolinks:load", function() {
     $_contents.addClass('hidden');
     $_links.removeClass('tabs__menu-link--active');
 
-    $_btn.closest('.tab-link, .tabs__menu-link')
+    $_btn.closest('.tabs__menu-link')
       .addClass('tabs__menu-link--active');
 
     var $revealEl = $('#' + $_btn.data('tab-id'));
     $revealEl.removeClass('hidden');
 
-    var $parentTab = $_btn.closest('.tab-content, .tabs__tab-content');
+    var $parentTab = $_btn.closest('.tabs__tab-content');
 
     if ($parentTab.length !== 0) {
       var $parentBtn = $('[data-tab-id]').filter(function() {
@@ -117,21 +117,14 @@ $(document).on("turbolinks:load", function() {
       revealTab($parentBtn, $_contents, $_links);
     }
 
-    var $links = $revealEl.find('.tab-menu, .tabs__menu')
+    var $links = $revealEl.find('.tabs__menu')
                           .first()
-                          .find('.tab-link, .tabs__menu-link'),
-        $contents = $revealEl.find('.content, .tabs__content')
+                          .find('.tabs__menu-link'),
+        $contents = $revealEl.find('.tabs__content')
                              .first()
-                             .find('> .tab-content, > .tabs__tab-content');
+                             .find('> .tabs__tab-content');
 
-    // possible tabs-vertical layout
-    if ($contents.length === 0)
-      $contents = $(
-        '#' +
-        $revealEl.prop('id') +
-        ' + .content .tab-content'
-      );
-
+    // Possible tabs--vertical layout
     if ($contents.length === 0)
       $contents = $(
         '#' +

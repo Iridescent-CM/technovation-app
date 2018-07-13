@@ -1,45 +1,45 @@
 <h3 class="heading--page">View your Scores and Certificate</h3>
 
 <div id="student-scores-tabs" class="tabs">
-  <ul class="score-tabs-menu tab-menu">
+  <ul class="score-tabs-menu tabs__menu">
     <% if @quarterfinals_scores.official.any? %>
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="quarterfinal"
         >Quarterfinals</button>
       </li>
     <% end %>
 
     <% if @quarterfinals_scores.unofficial.any? %>
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="unofficial"
         >Celebration Scores</button>
       </li>
     <% end %>
 
     <% if @semifinals_scores.any? %>
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="semifinal"
         >Semifinals</button>
       </li>
     <% end %>
 
-    <li class="tab-link">
+    <li class="tabs__menu-link">
       <button
-        class="tab-button"
+        class="tabs__menu-button"
         data-tab-id="certificates"
       >Certificate</button>
     </li>
   </ul>
 
-  <div class="score-tab-content content">
+  <div class="score-tab-content tabs__content">
     <% if @quarterfinals_scores.official.any? %>
-      <div class="score-tab tab-content" id="quarterfinal">
+      <div class="score-tab tabs__tab-content" id="quarterfinal">
         <%= render "student/scores/scores",
           round: :quarterfinals,
           scores: @quarterfinals_scores.official %>
@@ -47,7 +47,7 @@
     <% end %>
 
     <% if @quarterfinals_scores.unofficial.any? %>
-      <div class="score-tab tab-content" id="unofficial">
+      <div class="score-tab tabs__tab-content" id="unofficial">
         <%= render "student/scores/scores",
           round: UnofficialJudgingRound.new,
           scores: @quarterfinals_scores.unofficial %>
@@ -55,14 +55,14 @@
     <% end %>
 
     <% if @semifinals_scores.any? %>
-      <div class="score-tab tab-content" id="semifinal">
+      <div class="score-tab tabs__tab-content" id="semifinal">
         <%= render "student/scores/scores",
           round: :semifinals,
           scores: @semifinals_scores %>
       </div>
     <% end %>
 
-    <div class="score-tab tab-content" id="certificates">
+    <div class="score-tab tabs__tab-content" id="certificates">
       <h2>Congratulations on all your hard work!</h2>
 
       <p>

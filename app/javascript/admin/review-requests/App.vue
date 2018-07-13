@@ -53,7 +53,7 @@
         </router-link>
       </ul>
 
-      <div class="content">
+      <div class="tabs__content">
         <div class="tabs__tab-content panel">
           <router-view />
         </div>

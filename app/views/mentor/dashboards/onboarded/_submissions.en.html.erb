@@ -3,15 +3,15 @@
     <% if current_mentor.is_on_team? %>
       <div class="grid">
         <div
-          class="gird__col-sm-3 tabs tabs-vertical"
+          class="gird__col-sm-3 tabs tabs--vertical"
           id="team-submissions-team-list"
         >
-          <ul class="tab-menu">
+          <ul class="tabs__menu">
             <% @teams.each do |team| %>
-              <li class="tab-link">
+              <li class="tabs__menu-link">
                 <button
                   role="button"
-                  class="tab-button"
+                  class="tabs__menu-button"
                   data-tab-id="submissions-team-<%= team.id %>">
                   <%= team.name %>
                 </button>
@@ -20,11 +20,11 @@
           </ul>
         </div>
 
-        <div class="grid__col-sm-9 content">
+        <div class="grid__col-sm-9 tabs__content">
           <% @teams.each do |team| %>
             <div
               id="submissions-team-<%= team.id %>"
-              class="tab-content"
+              class="tabs__tab-content"
             >
               <div class="grid">
                 <dl class="grid__col-sm-6">

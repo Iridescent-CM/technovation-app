@@ -1,9 +1,9 @@
-<ul class="tab-menu">
+<ul class="tabs__menu">
   <% if current_mentor.mentor_invites.pending.any? %>
-    <li class="tab-link">
+    <li class="tabs__menu-link">
       <button
         role="button"
-        class="tab-button"
+        class="tabs__menu-button"
         data-tab-id="invitations">
         Invitations
       </button>
@@ -11,29 +11,29 @@
   <% end %>
 
   <% if current_mentor.is_on_team? and SeasonToggles.display_scores? %>
-    <li class="tab-link">
+    <li class="tabs__menu-link">
       <button
         role="button"
-        class="tab-button"
+        class="tabs__menu-button"
         data-tab-id="scores">
         Scores
       </button>
     </li>
   <% end %>
 
-  <li class="tab-link">
+  <li class="tabs__menu-link">
     <button
       role="button"
-      class="tab-button"
+      class="tabs__menu-button"
       data-tab-id="submissions">
       Team Submissions
     </button>
   </li>
 
-  <li class="tab-link">
+  <li class="tabs__menu-link">
     <button
       role="button"
-      class="tab-button"
+      class="tabs__menu-button"
       data-tab-id="pitch-events">
       Pitch Events
     </button>
