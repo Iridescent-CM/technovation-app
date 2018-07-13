@@ -45,7 +45,7 @@ h1 {
     margin: 1rem 0;
 
     &::after {
-      background-color: $secondary-mid;
+      background-color: $primary-mid;
       bottom: 0;
       content: '';
       display: block;
@@ -62,10 +62,10 @@ h1 {
 
       a {
         padding: 0.25rem 0;
-        color: $primary;
+        color: $secondary;
 
         &:hover {
-          color: $primary-dark;
+          color: $secondary-dark;
         }
       }
     }

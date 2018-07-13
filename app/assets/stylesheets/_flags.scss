@@ -15,7 +15,7 @@
   font-size: 0.9rem;
   font-weight: 700;
   box-shadow: $shadow-small;
-  background: $primary;
+  background: $secondary;
   color: white;
 
   &.flag-notice {
@@ -23,11 +23,11 @@
   }
 
   &.flag-season--new {
-    background: $secondary;
+    background: $primary;
   }
 
   &.flag-season--past {
-    background: $primary;
+    background: $secondary;
   }
 
   &.flag-season--returning {
