@@ -10,7 +10,7 @@ h6 {
   font-weight: bold;
   font-family: "Eagle", sans-serif;
   line-height: 1.2;
-  -webkit-font-smoothing: antialiased;
+  @extend .font-smoothing--antialiased;
 
   &.heading--reset,
   &.reset {

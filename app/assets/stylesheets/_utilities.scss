@@ -1,3 +1,7 @@
+.background-color--subtle-primary {
+  background-color: $primary-translucent;
+}
+
 .background-color--subtle-gray {
   background-color: rgba(200, 200, 200, 0.4);
 }
@@ -6,12 +10,48 @@
   box-shadow: 0 -0.1rem 0.1rem rgba(0, 0, 0, 0.25);
 }
 
+.box-shadow--b-subtle {
+  box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.25);
+}
+
+.color--primary {
+  color: $primary;
+}
+
+.color--secondary {
+  color: $secondary;
+}
+
+.color--danger {
+  color: $alert-txt;
+}
+
+.color--white {
+  color: white
+}
+
+.font-size--small {
+  font-size: 0.8rem;
+}
+
+.font-smoothing--antialiased {
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-weight--bold {
+  font-weight: bold;
+}
+
 .margin--none {
   margin: 0;
 }
 
 .margin--t-large {
   margin-top: 1rem;
+}
+
+.margin--b-large {
+  margin-bottom: 1rem;
 }
 
 .padding--none {
@@ -28,6 +68,18 @@
 
 .padding--large {
   padding: 1rem;
+}
+
+.padding--t-r-l-none {
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.padding--r-l-b-none {
+  padding-right: 0;
+  padding-left: 0;
+  padding-bottom: 0;
 }
 
 .text-align--right {
