@@ -3,16 +3,19 @@
  */
 $doc-bg: #ececec;
 
-$secondary: #5ABF94;
-$secondary-mid: #28A880;
-$secondary-dark: #006540;
+$primary: #5ABF94;
+$primary-mid: #28A880;
+$primary-dark: #006540;
+$primary-light: #65d4ac;
 
-$primary: #903D54;
-$primary-mid: #7C324D;
-$primary-dark: #53042D;
-$primary-light: #D3B1BB;
+$primary-translucent: rgba(40, 168, 128, 0.95);
 
-$primary-translucent: rgba(144, 61, 84, 0.95);
+$secondary: #903D54;
+$secondary-mid: #7C324D;
+$secondary-dark: #53042D;
+$secondary-light: #D3B1BB;
+
+$secondary-translucent: rgba(144, 61, 84, 0.95);
 
 $tertiary: #4BC2C6;
 $tertiary-mid: #00ABAD;
