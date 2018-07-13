@@ -7,7 +7,7 @@
       </span>
     </h3>
 
-    <div class="tab-content">
+    <div class="tabs__tab-content">
       <h6>Parental permission</h6>
 
       <pie-chart
@@ -17,7 +17,7 @@
       />
     </div>
 
-    <div class="tab-content">
+    <div class="tabs__tab-content">
       <h6>New vs. Returning</h6>
 
       <pie-chart

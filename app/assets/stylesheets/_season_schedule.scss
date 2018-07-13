@@ -3,7 +3,7 @@
     color: $alert-txt;
   }
 
-  .tab-button {
+  .tabs__menu-button {
     [class^="icon-"], [class*=" icon-"] {
       display: none;
     }
@@ -15,7 +15,7 @@
     }
   }
 
-  .tab-content {
+  .tabs__tab-content {
     margin: 0 0 1rem;
     padding: 0 1rem;
     background: white;

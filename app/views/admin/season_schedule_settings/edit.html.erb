@@ -8,74 +8,74 @@
               url: admin_season_schedule_settings_path,
               local: true,
               method: :patch) do |f| %>
-  <div class="tabs tabs-vertical grid" id="admin-season-schedule">
-    <ul class="tab-menu grid__col-4">
-      <li class="tab-link">
+  <div class="tabs tabs--vertical grid" id="admin-season-schedule">
+    <ul class="tabs__menu grid__col-4">
+      <li class="tabs__menu-link">
         <button
           role="button"
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="user-reg">
           <%= web_icon "exclamation-circle", text: "Registration" %>
         </button>
       </li>
 
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
           role="button"
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="notices">
           Notices
         </button>
       </li>
 
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
           role="button"
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="surveys">
           Surveys
         </button>
       </li>
 
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
           role="button"
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="teams">
           <%= web_icon "exclamation-circle", text: "Teams & Submissions" %>
         </button>
       </li>
 
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
           role="button"
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="events">
           <%= web_icon "exclamation-circle", text: "Events" %>
         </button>
       </li>
 
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
           role="button"
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="judging">
           Judging
         </button>
       </li>
 
-      <li class="tab-link">
+      <li class="tabs__menu-link">
         <button
           role="button"
-          class="tab-button"
+          class="tabs__menu-button"
           data-tab-id="scores">
           <%= web_icon "exclamation-circle", text: "Scores & Certificates" %>
         </button>
       </li>
     </ul>
 
-    <div class="content grid__col-8">
-      <div class="tab-content" id="user-reg">
+    <div class="tabs__content grid__col-8">
+      <div class="tabs__tab-content" id="user-reg">
         <h4>User Registrations</h4>
 
         <% %w{student mentor}.each do |scope| %>
@@ -93,7 +93,7 @@
         <% end %>
       </div>
 
-      <div class="tab-content" id="notices">
+      <div class="tabs__tab-content" id="notices">
         <h4>Dashboard Notices</h4>
 
         <div class="notice info hint">
@@ -113,7 +113,7 @@
         <% end %>
       </div>
 
-      <div class="tab-content" id="surveys">
+      <div class="tabs__tab-content" id="surveys">
         <h4>Survey Links</h4>
 
         <div class="notice info hint">
@@ -151,7 +151,7 @@
         <% end %>
       </div>
 
-      <div class="tab-content" id="teams">
+      <div class="tabs__tab-content" id="teams">
         <h4>Teams & Submissions</h4>
 
         <p class="inline-checkbox">
@@ -181,7 +181,7 @@
         </p>
       </div>
 
-      <div class="tab-content" id="events">
+      <div class="tabs__tab-content" id="events">
         <h4>Regional Pitch Events</h4>
 
         <p class="inline-checkbox">
@@ -199,7 +199,7 @@
         </p>
       </div>
 
-      <div class="tab-content" id="judging">
+      <div class="tabs__tab-content" id="judging">
         <h4>Judging Round</h4>
 
         <p>
@@ -222,7 +222,7 @@
         </p>
       </div>
 
-      <div class="tab-content" id="scores">
+      <div class="tabs__tab-content" id="scores">
         <h4>Scores & Certificates</h4>
 
         <p class="inline-checkbox">

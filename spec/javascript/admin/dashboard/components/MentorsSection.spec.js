@@ -186,7 +186,7 @@ describe('Admin Dashboard - MentorSection component', () => {
 
       expect(wrapper.find('h3 span').text()).toEqual('(402)')
 
-      const charts = wrapper.findAll('.tab-content')
+      const charts = wrapper.findAll('.tabs__tab-content')
       const onboardingChart = charts.at(0)
       const returningChart = charts.at(1)
 
@@ -214,7 +214,7 @@ describe('Admin Dashboard - MentorSection component', () => {
     })
 
     it('changes the label of the onboarding chart if international changes', () => {
-      const onboardingChart = wrapper.findAll('.tab-content').at(0)
+      const onboardingChart = wrapper.findAll('.tabs__tab-content').at(0)
 
       wrapper.setProps({ international: false })
 
