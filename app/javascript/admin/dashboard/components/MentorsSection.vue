@@ -7,7 +7,7 @@
       </span>
     </h3>
 
-    <div class="tab-content">
+    <div class="tabs__tab-content">
       <h6 v-if="international">Consent waivers</h6>
       <h6 v-else>Background check / consent waivers</h6>
 
@@ -18,7 +18,7 @@
       />
     </div>
 
-    <div class="tab-content">
+    <div class="tabs__tab-content">
       <h6>New vs. Returning</h6>
 
       <pie-chart

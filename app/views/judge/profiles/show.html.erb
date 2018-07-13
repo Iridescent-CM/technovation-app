@@ -1,6 +1,6 @@
 <% provide :title, "My profile" %>
 
-<div id="judge-profile-tabs" class="grid tabs tabs-vertical">
+<div id="judge-profile-tabs" class="grid tabs tabs--vertical">
   <div class="grid__col-sm-3">
     <div class="hidden-xs hidden-xxs">
       <h3><%= current_judge.full_name %></h3>
@@ -22,12 +22,12 @@
     <%= render 'judge/profiles/menu' %>
   </div>
 
-  <div class="content grid__col-sm-9">
-    <div class="tab-content" id="basic">
+  <div class="tabs__content grid__col-sm-9">
+    <div class="tabs__tab-content" id="basic">
       <%= render 'judge/profiles/basic' %>
     </div>
 
-    <div class="hidden-sm hidden-md hidden-lg tab-content" id="avatar">
+    <div class="hidden-sm hidden-md hidden-lg tabs__tab-content" id="avatar">
       <%= image_tag current_judge.profile_image_url,
         class: "grid__cell-img" %>
 
@@ -42,19 +42,19 @@
         size: "300x300" %>
     </div>
 
-    <div class="tab-content" id="survey-answers">
+    <div class="tabs__tab-content" id="survey-answers">
       <%= render 'judge/profiles/survey_answers' %>
     </div>
 
-    <div class="tab-content" id="location">
+    <div class="tabs__tab-content" id="location">
       <%= render 'judge/profiles/location' %>
     </div>
 
-    <div class="tab-content" id="change-email">
+    <div class="tabs__tab-content" id="change-email">
       <%= render 'profiles/email' %>
     </div>
 
-    <div class="tab-content" id="change-password">
+    <div class="tabs__tab-content" id="change-password">
       <%= render 'profiles/password' %>
     </div>
   </div>

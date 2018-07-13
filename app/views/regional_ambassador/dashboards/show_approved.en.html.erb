@@ -1,7 +1,7 @@
 <% if current_ambassador.onboarding? %>
   <%= render "regional_ambassador/dashboards/onboarding" %>
 <% else %>
-  <div class="grid tabs tabs-vertical">
+  <div class="grid tabs tabs--vertical">
     <div class="grid__col-sm-3 col--sticky-parent">
       <div class="col--sticky-spacer">
         <div class="col--sticky">
@@ -25,10 +25,10 @@
       </div>
     </div>
 
-    <div class="content grid__col-sm-9 col--sticky-parent">
+    <div class="tabs__content grid__col-sm-9 col--sticky-parent">
       <div class="col--sticky-spacer">
         <div class="col--sticky">
-          <div class="tab-content" id="students">
+          <div class="tabs__tab-content" id="students">
             <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
 
             <% if current_ambassador.needs_intro_prompt? %>
@@ -38,7 +38,7 @@
             <% end %>
           </div>
 
-          <div class="tab-content" id="mentors">
+          <div class="tabs__tab-content" id="mentors">
             <%= SeasonToggles.dashboard_text(:regional_ambassador) %>
 
             <% if current_ambassador.needs_intro_prompt? %>
@@ -48,7 +48,7 @@
             <% end %>
           </div>
 
-          <div class="tab-content" id="inactivity">
+          <div class="tabs__tab-content" id="inactivity">
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your regional program introduction to access this section</p>
             <% else %>
@@ -56,7 +56,7 @@
             <% end %>
           </div>
 
-          <div class="tab-content" id="recent-activity">
+          <div class="tabs__tab-content" id="recent-activity">
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your regional program introduction to access this section</p>
             <% else %>
@@ -64,7 +64,7 @@
             <% end %>
           </div>
 
-          <div class="tab-content" id="ra-info">
+          <div class="tabs__tab-content" id="ra-info">
             <% if current_ambassador.needs_intro_prompt? %>
               <h4>
                 New this year: Introduce your region to your program!
@@ -88,7 +88,7 @@
             <% end %>
           </div>
 
-          <div class="tab-content" id="resources">
+          <div class="tabs__tab-content" id="resources">
             <%= render "regional_ambassador/dashboards/info_sidebar" %>
           </div>
         </div>

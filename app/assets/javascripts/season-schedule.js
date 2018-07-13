@@ -10,7 +10,7 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   function handleJudgingRoundChanges($choices) {
-    const $container = $choices.closest('.tab-content'),
+    const $container = $choices.closest('.tabs__tab-content'),
 
           $blockedByJudging = $('[data-blocked-by-judging=true]'),
           originalTextColor = $blockedByJudging.css('color'),
@@ -99,7 +99,7 @@ document.addEventListener("turbolinks:load", function() {
           .not('.user-notified')
           .each(function() {
 
-          const $tab = $(this).closest('.tab-content');
+          const $tab = $(this).closest('.tabs__tab-content');
 
           var $notice = $('<div>');
 
@@ -112,7 +112,7 @@ document.addEventListener("turbolinks:load", function() {
 
           $(this).next('label').after($notice);
 
-          const $menuItem = $('.tab-menu').find(
+          const $menuItem = $('.tabs__menu').find(
             '[data-tab-id=' + $tab.prop('id') + ']'
           );
 
@@ -185,7 +185,7 @@ document.addEventListener("turbolinks:load", function() {
 
           appendLabels(
             $panel,
-            $(this).closest('.tab-content').find('label')
+            $(this).closest('.tabs__tab-content').find('label')
           );
         })
 

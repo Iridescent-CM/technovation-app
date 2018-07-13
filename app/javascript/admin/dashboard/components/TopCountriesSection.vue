@@ -7,7 +7,7 @@
       </span>
     </h3>
 
-    <div class="tab-content">
+    <div class="tabs__tab-content">
       <bar-chart
         :url="topCountriesEndpoint"
         :chart-data="topCountriesChartData"

@@ -35,7 +35,7 @@
       </router-link>
     </ul>
 
-    <router-view class="content grid__col-md-9"></router-view>
+    <router-view class="tabs__content grid__col-md-9"></router-view>
   </div>
 </template>
 

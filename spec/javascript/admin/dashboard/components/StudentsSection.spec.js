@@ -165,7 +165,7 @@ describe('Admin Dashboard - StudentsSection component', () => {
 
       expect(wrapper.find('h3 span').text()).toEqual('(854)')
 
-      const charts = wrapper.findAll('.tab-content')
+      const charts = wrapper.findAll('.tabs__tab-content')
       const onboardingChart = charts.at(0)
       const returningChart = charts.at(1)
 
