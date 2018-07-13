@@ -10,7 +10,7 @@ document.addEventListener('turbolinks:load', () => {
 
   if (csrfTokenMetaTag) {
     window.axios.interceptors.request.use(function (config) {
-      if (config.url.match(/^\//)) {
+      if (config.url && config.url.match(/^\//)) {
         config.headers.common = {
           'X-Requested-With': 'XMLHttpRequest',
           'X-CSRF-TOKEN' : csrfTokenMetaTag.getAttribute('content')
