@@ -20,7 +20,11 @@
   }
 
   &.panel--contains-bottom-bar {
-    @extend .padding--none;
+    @extend .padding--r-l-b-none;
+  }
+
+  &.panel--contains-top-bar {
+    @extend .padding--t-r-l-none;
   }
 
   &.panel--with-flags {
@@ -40,6 +44,16 @@
 
   .panel--footer {
     @extend .text-align--right;
+  }
+
+  .panel__top-bar {
+    @extend .margin--b-large;
+    @extend .box-shadow--b-subtle;
+    @extend .padding--medium;
+    @extend .background-color--subtle-primary;
+    @extend .color--white;
+    @extend .font-weight--bold;
+    @extend .font-smoothing--antialiased;
   }
 
   .panel__bottom-bar {
