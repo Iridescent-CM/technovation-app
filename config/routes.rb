@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
     resource :location_details, only: :show
     resource :current_location, only: :show
+    resource :location, only: :update
 
     resources :cookies, only: :create
     resource :survey_reminder, only: :create

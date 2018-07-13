@@ -1,11 +1,19 @@
 <template>
-  <div class="panel panel--contains-bottom-bar">
+  <form
+    class="panel panel--contains-bottom-bar panel--contains-top-bar"
+    @submit.prevent="handleSubmit"
+  >
+    <div class="panel__top-bar">
+      Confirm the location that we have on file for {{ subject }}
+    </div>
+
     <div class="panel__content">
       <label for="location_city">City</label>
 
       <input
         type="text"
         id="location_city"
+        ref="cityField"
         v-model="city"
       />
 
@@ -31,6 +39,23 @@
           {{ country[0] }}
         </option>
       </select>
+      &nbsp;
+      <a
+        href="#"
+        class="color--danger font-size--small"
+        @click.prevent="resetForm"
+      >
+        reset this form
+      </a>
+
+      <ul v-if="suggestions.length">
+        <li
+          v-for="suggestion in suggestions"
+          :key="suggestion.city"
+         >
+          {{ suggestion.city }} - {{ suggestion.stateCode }} - {{ suggestion.countryCode }}
+        </li>
+      </ul>
     </div>
 
     <div class="panel__bottom-bar">
@@ -44,22 +69,26 @@
         &nbsp;
         <button
           class="button"
-          @click="handleClick"
+          @click.prevent="handleSubmit"
         >
           Save
         </button>
       </p>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
+import LocationResult from '../models/LocationResult'
+import HttpStatusCodes from '../../constants/HttpStatusCodes'
+
 export default {
   data () {
     return {
       city: "",
       stateCode: "",
       countryCode: "",
+      suggestions: [],
     }
   },
 
@@ -100,22 +129,63 @@ export default {
   },
 
   computed: {
-    getCurrentLocationEndpoint () {
-      const endpointRoot = `/${this.scopeName}/current_location`
-
+    subject () {
       if (this.accountId) {
-        return `${endpointRoot}?account_id=${this.accountId}`
+        return 'this person'
       } else if (this.teamId) {
-        return `${endpointRoot}?team_id=${this.teamId}`
+        return 'this team'
       } else {
-        return endpointRoot
+        return 'you'
       }
+    },
+
+    getCurrentLocationEndpoint () {
+      return this._getEndpoint('current_location')
+    },
+
+    patchLocationEndpoint () {
+      return this._getEndpoint('location')
+    },
+
+    params () {
+      const rootParamName = `${this.scopeName}_location`
+      let params = {}
+
+      params[rootParamName] = {
+        city: this.city,
+        state_code: this.stateCode,
+        country_code: this.countryCode,
+      }
+
+      return params
     },
   },
 
   methods: {
-    handleClick () {
+    handleSubmit () {
+      window.axios.patch(this.patchLocationEndpoint, this.params)
+        .then(({ status, data }) => {
+          console.log(status, data)
+        }).catch(err => {
+          switch(err.response.status) {
+            case HttpStatusCodes.MULTIPLE_CHOICES:
+              this.suggestions = err.response.data.results.map(result => {
+                return new LocationResult(result)
+              })
+            case HttpStatusCodes.NOT_FOUND:
+              console.warn('geocoding results not found')
+              this.$refs.cityField.focus()
+            default:
+              console.error(err)
+          }
+        })
+    },
 
+    resetForm () {
+      this.city = ""
+      this.stateCode = ""
+      this.countryCode = ""
+      this.$refs.cityField.focus()
     },
 
     initChosen () {
@@ -127,6 +197,18 @@ export default {
 
       $country.val(this.countryCode)
       $country.trigger("chosen:updated")
+    },
+
+    _getEndpoint (pathPart) {
+      const endpointRoot = `/${this.scopeName}/${pathPart}`
+
+      if (this.accountId) {
+        return `${endpointRoot}?account_id=${this.accountId}`
+      } else if (this.teamId) {
+        return `${endpointRoot}?team_id=${this.teamId}`
+      } else {
+        return endpointRoot
+      }
     },
   },
 }
