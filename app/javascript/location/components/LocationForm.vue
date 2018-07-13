@@ -1,35 +1,55 @@
 <template>
-  <div>
-    <label for="location_city">City</label>
+  <div class="panel panel--contains-bottom-bar">
+    <div class="panel__content">
+      <label for="location_city">City</label>
 
-    <input
-      type="text"
-      id="location_city"
-      v-model="city"
-    />
+      <input
+        type="text"
+        id="location_city"
+        v-model="city"
+      />
 
-    <label for="location_state">State / Province</label>
+      <label for="location_state">State / Province</label>
 
-    <input
-      type="text"
-      id="location_state"
-      v-model="stateCode"
-    />
+      <input
+        type="text"
+        id="location_state"
+        v-model="stateCode"
+      />
 
-    <label for="location_country">Country / Territory</label>
+      <label for="location_country">Country / Territory</label>
 
-    <select
-      id="location_country"
-      v-model="countryCode"
-    >
-      <option
-        v-for="country in countries"
-        :key="country[1]"
-        :value="country[1]"
+      <select
+        id="location_country"
+        v-model="countryCode"
       >
-        {{ country[0] }}
-      </option>
-    </select>
+        <option
+          v-for="country in countries"
+          :key="country[1]"
+          :value="country[1]"
+        >
+          {{ country[0] }}
+        </option>
+      </select>
+    </div>
+
+    <div class="panel__bottom-bar">
+      <p class="padding--none margin--none">
+        <a
+          href="javascript:history.back();"
+          class="color--secondary"
+        >
+          cancel
+        </a>
+        &nbsp;
+        <button
+          class="button"
+          @click="handleClick"
+        >
+          Save
+        </button>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -94,6 +114,10 @@ export default {
   },
 
   methods: {
+    handleClick () {
+
+    },
+
     initChosen () {
       const $country = $("#location_country")
 

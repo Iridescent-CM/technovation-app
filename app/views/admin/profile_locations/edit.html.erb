@@ -1,11 +1,9 @@
-<div class="panel panel--left">
-  <h1>Edit location</h1>
-  <h3>For participant <span><%= @account.name %></span></h3>
+<h1>Edit location</h1>
+<h3>For participant <span><%= @account.name %></span></h3>
 
-  <p>
-    <%= link_to 'Go back to profile page',
-      admin_participant_path(@account) %>
-  </p>
+<p>
+  <%= link_to 'Go back to profile page',
+    admin_participant_path(@account) %>
+</p>
 
-  <%= render 'signups/location_fields', account_id: @account.id %>
-</div>
+<%= render 'signups/location_fields', account_id: @account.id %>
