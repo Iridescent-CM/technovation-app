@@ -2687,7 +2687,6 @@ CREATE INDEX trgm_team_name_indx ON public.teams USING gist (name public.gist_tr
 
 
 --
-<<<<<<< HEAD
 -- Name: uniq_admins_accounts; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2723,15 +2722,6 @@ CREATE UNIQUE INDEX uniq_students_accounts ON public.student_profiles USING btre
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
-
-
---
-=======
->>>>>>> Admin assigns ra requested regions (#1576)
 -- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3115,15 +3105,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180622151517'),
 ('20180622152409'),
 ('20180622161117'),
-<<<<<<< HEAD
-<<<<<<< HEAD
-('20180716151350');
-=======
-('20180626200957');
->>>>>>> Add 'mentor_type' enum to MentorProfile for registration
-=======
 ('20180626200957'),
-('20180703153546');
->>>>>>> Admin assigns ra requested regions (#1576)
+('20180703153546'),
+('20180716151350');
 
 
