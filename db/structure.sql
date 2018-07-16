@@ -2347,13 +2347,6 @@ CREATE INDEX index_activities_on_trackable_id_and_trackable_type ON public.activ
 
 
 --
--- Name: index_admin_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_admin_profiles_on_account_id ON public.admin_profiles USING btree (account_id);
-
-
---
 -- Name: index_background_checks_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2431,13 +2424,6 @@ CREATE INDEX index_judge_assignments_on_team_id ON public.judge_assignments USIN
 
 
 --
--- Name: index_judge_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_judge_profiles_on_account_id ON public.judge_profiles USING btree (account_id);
-
-
---
 -- Name: index_judge_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2466,13 +2452,6 @@ CREATE INDEX index_mentor_profile_expertises_on_mentor_profile_id ON public.ment
 
 
 --
--- Name: index_mentor_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_mentor_profiles_on_account_id ON public.mentor_profiles USING btree (account_id);
-
-
---
 -- Name: index_mentor_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2484,13 +2463,6 @@ CREATE INDEX index_mentor_profiles_on_user_invitation_id ON public.mentor_profil
 --
 
 CREATE INDEX index_parental_consents_on_student_profile_id ON public.parental_consents USING btree (student_profile_id);
-
-
---
--- Name: index_regional_ambassador_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_regional_ambassador_profiles_on_account_id ON public.regional_ambassador_profiles USING btree (account_id);
 
 
 --
@@ -2533,13 +2505,6 @@ CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING
 --
 
 CREATE INDEX index_signup_attempts_on_status ON public.signup_attempts USING btree (status);
-
-
---
--- Name: index_student_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_student_profiles_on_account_id ON public.student_profiles USING btree (account_id);
 
 
 --
@@ -2638,6 +2603,41 @@ CREATE INDEX trgm_last_name_indx ON public.accounts USING gist (last_name public
 --
 
 CREATE INDEX trgm_team_name_indx ON public.teams USING gist (name public.gist_trgm_ops);
+
+
+--
+-- Name: uniq_admins_accounts; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uniq_admins_accounts ON public.admin_profiles USING btree (account_id);
+
+
+--
+-- Name: uniq_ambassadors_accounts; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uniq_ambassadors_accounts ON public.regional_ambassador_profiles USING btree (account_id);
+
+
+--
+-- Name: uniq_judges_accounts; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uniq_judges_accounts ON public.judge_profiles USING btree (account_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: uniq_mentors_accounts; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uniq_mentors_accounts ON public.mentor_profiles USING btree (account_id);
+
+
+--
+-- Name: uniq_students_accounts; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uniq_students_accounts ON public.student_profiles USING btree (account_id);
 
 
 --
@@ -3034,6 +3034,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180619194316'),
 ('20180622151517'),
 ('20180622152409'),
-('20180622161117');
+('20180622161117'),
+('20180716151350');
 
 
