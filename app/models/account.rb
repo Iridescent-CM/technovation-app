@@ -157,13 +157,16 @@ class Account < ActiveRecord::Base
       )
   }
 
-  scope :invited_mentor_pending, -> {
-    includes(mentor_profile: :pending_mentor_invites)
-    .references(:mentor_profiles, :team_member_invites)
+  scope :mentors_pending_teams, -> {
+    includes(mentor_profile: [:pending_mentor_invites, :pending_join_requests])
+    .references(:mentor_profiles, :team_member_invites, :join_requests)
     .where(
       "mentor_profiles.id IS NOT NULL AND " +
-      "team_member_invites.id IS NOT NULL AND " +
-      "team_member_invites.status = ?",
+      "(team_member_invites.id IS NOT NULL AND " +
+      "team_member_invites.status = ?) OR " +
+      "(join_requests.id IS NOT NULL AND " +
+      "join_requests.accepted_at IS NULL AND  " +
+      "join_requests.declined_at IS NULL)",
       TeamMemberInvite.statuses[:pending]
     )
   }
