@@ -129,6 +129,12 @@ class MentorProfile < ActiveRecord::Base
     as: :requestor,
     dependent: :destroy
 
+  has_many :pending_join_requests,
+    -> { pending },
+    as: :requestor,
+    class_name: "JoinRequest",
+    dependent: :destroy
+
   has_many :mentor_invites,
     foreign_key: :invitee_id,
     dependent: :destroy
