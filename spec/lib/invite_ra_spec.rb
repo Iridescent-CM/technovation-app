@@ -58,8 +58,6 @@ RSpec.describe InviteRA do
     bg_check = invited.account.background_check
     expect(bg_check.report_id).to eq("unique-for-this-test")
     expect(bg_check.candidate_id).to eq("also-unique-for-this-test")
-
-    invited.account.create_mentor_profile!(FactoryBot.attributes_for(:mentor))
     expect(invited.account.mentor_profile).to be_background_check_complete
   end
 end
