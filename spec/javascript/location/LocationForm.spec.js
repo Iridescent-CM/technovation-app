@@ -37,7 +37,6 @@ describe('location/components/LocationForm', () => {
 
       expect(myWrapper.find('#location_city').element.value).toEqual("Chicago")
       expect(myWrapper.find('#location_state').element.value).toEqual("IL")
-      expect(myWrapper.find('#location_country').element.value).toEqual("US")
       done()
     })
   })

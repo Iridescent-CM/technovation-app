@@ -57,12 +57,12 @@
           v-model="stateCode"
         />
 
-        <label :for="`location_country_${this._uid}`">
+        <label :for="location_country">
           Country / Territory
         </label>
 
         <vue-select
-          :id="`location_country_${this._uid}`"
+          input-id="location_country"
           :value="countryCode"
           :options="countryOptions"
           @input="handleCountryChange"

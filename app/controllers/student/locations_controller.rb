@@ -3,7 +3,8 @@ module Student
     def update
       data, status = HandleGeocoderSearch.(
         location_params,
-        current_account,
+        params.fetch(:team_id) { false } ?
+          current_team : current_account,
       )
       render json: data, status: status
     end

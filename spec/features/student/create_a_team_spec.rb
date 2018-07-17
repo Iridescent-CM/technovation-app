@@ -37,17 +37,6 @@ RSpec.feature "Student creates a team" do
 
     team = Team.last
     expect(current_path).to eq(edit_student_team_location_path(team))
-
-    fill_in "City", with: "Chicago"
-    fill_in "State", with: "IL"
-    select "United States", from: "Region"
-
-    click_button "Save"
-
-    expect(team.reload.city).to eq("Chicago")
-    expect(student.reload.city).to eq("Chicago")
-
-    expect(student.latitude).to eq(team.latitude)
   end
 
   scenario "Re-using a past team name" do
