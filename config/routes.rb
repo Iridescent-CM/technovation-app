@@ -236,6 +236,7 @@ Rails.application.routes.draw do
 
     resources :requests, only: [:index, :update]
     resource :current_location, only: :show
+    resource :location, only: :update
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
