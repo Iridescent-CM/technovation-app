@@ -48,11 +48,11 @@ module HandleGeocoderSearch
   def self.handle_one_result(db_record, result, params)
     geocoded = Geocoded.new(result)
 
-    if !geocoded.valid?
-      status_code = :not_found
-    else
+    if geocoded.valid?
       geocode_db_record(db_record, geocoded)
       status_code = :ok
+    else
+      status_code = :not_found
     end
 
     return { results: [geocoded] }, status_code
