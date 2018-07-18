@@ -1,5 +1,5 @@
 module HandleGeocoderSearch
-  def self.call(params, account)
+  def self.call(db_record, params)
     results = search_geocoder(params)
 
     if results.one?

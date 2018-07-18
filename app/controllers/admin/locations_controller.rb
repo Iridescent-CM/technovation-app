@@ -4,8 +4,8 @@ module Admin
       account = Account.find(params.fetch(:account_id))
 
       data, status = HandleGeocoderSearch.(
-        location_params,
         account,
+        location_params,
       )
 
       render json: data, status: status

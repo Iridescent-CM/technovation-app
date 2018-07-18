@@ -2,9 +2,8 @@ module Student
   class LocationsController < StudentController
     def update
       data, status = HandleGeocoderSearch.(
+        params.fetch(:team_id) { false } ? current_team : current_account,
         location_params,
-        params.fetch(:team_id) { false } ?
-          current_team : current_account,
       )
       render json: data, status: status
     end
