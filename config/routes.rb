@@ -74,6 +74,8 @@ Rails.application.routes.draw do
     post :profiles, to: "signups#create"
 
     resource :location_details, only: :show
+    resource :current_location, only: :show
+    resource :location, only: :update
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
