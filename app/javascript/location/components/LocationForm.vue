@@ -57,17 +57,14 @@
           v-model="stateCode"
         />
 
-        <label :for="location_country">
-          Country / Territory
-        </label>
+        <label for="location_country">Country / Territory</label>
 
-        <vue-select
-          input-id="location_country"
-          :value="countryCode"
-          :options="countryOptions"
-          @input="handleCountryChange"
+        <input
+          type="text"
+          id="location_country"
+          v-model="countryCode"
         />
-        &nbsp;
+
         <a
           href="#"
           class="color--danger font-size--small"
@@ -133,15 +130,10 @@
 </template>
 
 <script>
-import VueSelect from 'vue-select'
 import LocationResult from '../models/LocationResult'
 import HttpStatusCodes from '../../constants/HttpStatusCodes'
 
 export default {
-  components: {
-    VueSelect,
-  },
-
   data () {
     return {
       city: "",
