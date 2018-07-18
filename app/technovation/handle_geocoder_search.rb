@@ -14,7 +14,7 @@ module HandleGeocoderSearch
     if results.one?
       handle_one_result(db_record, results.first, params)
     elsif results.many?
-      return geocoded_results_json(results), :multiple_choices
+      return { results: results.map { |r| Geocoded.new(r) } }, :multiple_choices
     elsif results.none?
       return {}, :not_found
     end
@@ -43,10 +43,6 @@ module HandleGeocoderSearch
     results.none? ?
       Geocoder.search(query, lookup: :bing) :
       results
-  end
-
-  def self.geocoded_results_json(results)
-    { results: results.map { |r| Geocoded.new(r) } }
   end
 
   def self.handle_one_result(db_record, result, params)
