@@ -1,12 +1,13 @@
 module Admin
   class LocationsController < AdminController
     def update
-      account = Account.find(params.fetch(:account_id))
+      if account_id = params.fetch(:account_id) { false }
+        record = Account.find(params.fetch(:account_id))
+      else
+        record = Team.find(params.fetch(:team_id))
+      end
 
-      data, status = HandleGeocoderSearch.(
-        account,
-        location_params,
-      )
+      data, status = HandleGeocoderSearch.(record, location_params)
 
       render json: data, status: status
     end
