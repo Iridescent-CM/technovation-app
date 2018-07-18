@@ -72,15 +72,25 @@ class Geocoded
 
   def initialize(geocoder_result)
     @id = SecureRandom.hex(4)
+    @state_code = geocoder_result.state_code
+    set_city(geocoder_result)
+    set_country(geocoder_result)
+  end
 
+  def valid?
+    !city.blank? && !country_code.blank?
+  end
+
+  private
+  def set_city(geocoder_result)
     @city = geocoder_result.city
 
     if @city.blank?
       @city = geocoder_result.data.fetch("address") { {} }["adminDistrict2"]
     end
+  end
 
-    @state_code = geocoder_result.state_code
-
+  def set_country(geocoder_result)
     code = geocoder_result.country_code
     country_result = Country.find_country_by_name(code) ||
                       Country.find_country_by_alpha3(code) ||
@@ -95,11 +105,6 @@ class Geocoded
     end
   end
 
-  def valid?
-    !city.blank? && !country_code.blank?
-  end
-
-  private
   def maybe_palestine?(result)
     return false unless result.country.blank?
 
