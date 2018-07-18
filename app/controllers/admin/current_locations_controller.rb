@@ -1,8 +1,8 @@
 module Admin
   class CurrentLocationsController < AdminController
     def show
-      if params.fetch(:account_id) { false }
-        record = Account.find(params.fetch(:account_id))
+      if account_id = params.fetch(:account_id) { false }
+        record = Account.find(account_id)
       else
         record = Team.find(params.fetch(:team_id))
       end
