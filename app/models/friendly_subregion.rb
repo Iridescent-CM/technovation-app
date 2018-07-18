@@ -6,25 +6,30 @@ module FriendlySubregion
     return "" if (record.country.nil? or record.country.strip == "") or
       (record.state_province.nil? or record.state_province.strip == "")
 
-    return record.state_province if Carmen::Country.coded(record.country).blank?
+    country = Carmen::Country.coded(record.country) ||
+                Carmen::Country.named(record.country)
 
-    country = Carmen::Country.coded(record.country)
+    return record.state_province.strip if country.blank?
+    return record.state_province.strip if country.subregions.empty?
 
-    if country.subregions.empty? or
-         country.subregions.coded(record.state_province).blank?
-      return record.state_province.strip
-    end
+    subregion = country.subregions.coded(record.state_province) ||
+                  country.subregions.named(record.state_province)
+
+    return record.state_province.strip if subregion.blank?
 
     default_options = {
       prefix: true,
+      short_code: false,
     }
 
     merged_options = default_options.merge(options)
 
-    if merged_options[:prefix]
-      "#{record.state_province} - #{country.subregions.coded(record.state_province).name}"
+    if merged_options[:short_code]
+      subregion.code
+    elsif merged_options[:prefix]
+      "#{subregion.code} - #{subregion.name}"
     else
-      country.subregions.coded(record.state_province).name
+      subregion.name
     end
   end
 end
