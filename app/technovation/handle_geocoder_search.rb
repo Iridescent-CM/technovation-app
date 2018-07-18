@@ -1,13 +1,29 @@
 module HandleGeocoderSearch
   def self.call(db_record, params)
-    results = search_geocoder(params)
+    if params[:country_code] == 'PS'
+      object = OpenStruct.new(
+        city: params[:city],
+        state_code: params[:state_code],
+        country_code: params[:country_code],
+        latitude: 30,
+        longitude: 35,
+      )
 
-    if results.one?
-      handle_one_result(account, results.first, params)
-    elsif results.many?
-      return geocoded_results_json(results), :multiple_choices
-    elsif results.none?
-      return {}, :not_found
+      geocoded = Geocoded.new(object)
+
+      geocode_db_record(db_record, geocoded)
+
+      return { results: [geocoded] }, :ok
+    else
+      results = search_geocoder(params)
+
+      if results.one?
+        handle_one_result(db_record, results.first, params)
+      elsif results.many?
+        return geocoded_results_json(results), :multiple_choices
+      elsif results.none?
+        return {}, :not_found
+      end
     end
   end
 
@@ -25,24 +41,25 @@ module HandleGeocoderSearch
     { results: results.map { |r| Geocoded.new(r) } }
   end
 
-  def self.handle_one_result(account, result, params)
+  def self.handle_one_result(db_record, result, params)
     geocoded = Geocoded.new(result)
 
     if !geocoded.valid?
       status_code = :not_found
-    elsif !geocoded.match?(params)
-      status_code = :multiple_choices
     else
-      account.city = geocoded.city
-      account.state_province = geocoded.state_code
-      account.country = geocoded.country_code
-
-      Geocoding.perform(account).with_save
-
+      geocode_db_record(db_record, geocoded)
       status_code = :ok
     end
 
     return { results: [geocoded] }, status_code
+  end
+
+  def self.geocode_db_record(db_record, geocoded)
+    db_record.city = geocoded.city
+    db_record.state_province = geocoded.state_code
+    db_record.country = geocoded.country_code
+
+    Geocoding.perform(db_record).with_save
   end
 end
 
@@ -66,21 +83,16 @@ class Geocoded
                         Country.find_country_by_alpha2(code)
 
     @country_code = country_result && country_result.alpha2
-    @country = country_result.name
+    @country = country_result && country_result.name
 
-    @country_code = "PS" if maybe_palestine?(geocoder_result)
-  end
-
-  def match?(other)
-    hsh = other.to_h
-
-    (city || "").downcase == hsh["city"].downcase &&
-      (state_code || "").downcase == hsh["state_code"].downcase &&
-        (country_code || "").downcase == hsh["country_code"].downcase
+    if maybe_palestine?(geocoder_result)
+      @country_code = "PS"
+      @country = "State of Palestine"
+    end
   end
 
   def valid?
-    !city.blank? && !country.blank?
+    !city.blank? && !country_code.blank?
   end
 
   private
@@ -97,9 +109,9 @@ class Geocoded
       lat_north: 33.3356,
     }
 
-    lat > bbox[:lat_south] and
-      lat < bbox[:lat_north] and
-        lng < bbox[:lng_east] and
+    lat > bbox[:lat_south] &&
+      lat < bbox[:lat_north] &&
+        lng < bbox[:lng_east] &&
           lng > bbox[:lng_west]
   end
 end
