@@ -1,33 +1,41 @@
 module HandleGeocoderSearch
   def self.call(db_record, params)
     if params[:country_code] == 'PS'
-      object = OpenStruct.new(
-        city: params[:city],
-        state_code: params[:state_code],
-        country_code: params[:country_code],
-        latitude: 30,
-        longitude: 35,
-      )
-
-      geocoded = Geocoded.new(object)
-
-      geocode_db_record(db_record, geocoded)
-
-      return { results: [geocoded] }, :ok
+      handle_palestine_search(db_record, params)
     else
-      results = search_geocoder(params)
-
-      if results.one?
-        handle_one_result(db_record, results.first, params)
-      elsif results.many?
-        return geocoded_results_json(results), :multiple_choices
-      elsif results.none?
-        return {}, :not_found
-      end
+      handle_search(db_record, params)
     end
   end
 
   private
+  def self.handle_search(db_record, params)
+    results = search_geocoder(params)
+
+    if results.one?
+      handle_one_result(db_record, results.first, params)
+    elsif results.many?
+      return geocoded_results_json(results), :multiple_choices
+    elsif results.none?
+      return {}, :not_found
+    end
+  end
+
+  def self.handle_palestine_search(db_record, params)
+    object = OpenStruct.new(
+      city: params[:city],
+      state_code: params[:state_code],
+      country_code: params[:country_code],
+      latitude: 30,
+      longitude: 35,
+    )
+
+    geocoded = Geocoded.new(object)
+
+    geocode_db_record(db_record, geocoded)
+
+    return { results: [geocoded] }, :ok
+  end
+
   def self.search_geocoder(params)
     query = params.values.join(", ")
     results = Geocoder.search(query)
