@@ -14,32 +14,72 @@
       We're sorry, but we cannot find a location with that information.
     </div>
 
+    <div
+      v-if="suggestions.length"
+      class="flash"
+    >
+      We couldn't match exact results to the information that you gave us.<br />
+      Select a result below, or try the form fields again.
+    </div>
+
     <div class="panel__content">
       <template v-if="savedLocation">
-        We have saved {{ subjectPossessive }} location as:
+        <p class="padding--t-r-l-none margin--t-r-l-none margin--b-medium">
+          We have saved {{ subjectPossessive }} location as:
+        </p>
 
         <div class="Rtable Rtable--3cols">
-          <div class="Rtable-cell"><h6>City</h6></div>
-          <div class="Rtable-cell"><h6>State / Province</h6></div>
-          <div class="Rtable-cell"><h6>Country / Territory</h6></div>
+          <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
+          <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
+          <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
         </div>
 
         <div class="Rtable Rtable--3cols">
-          <div class="Rtable-cell">
+          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
             {{ savedLocation.city || "(no city)" }}
           </div>
 
-          <div class="Rtable-cell">
+          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
             {{ savedLocation.stateCode || "(no state/province)" }}
           </div>
 
-          <div class="Rtable-cell">
+          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
             {{ savedLocation.country || "(no country)" }}
           </div>
         </div>
       </template>
 
-      <template v-else>
+      <template v-if="suggestions.length">
+        <div class="Rtable Rtable--3cols">
+          <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
+          <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
+          <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
+        </div>
+
+        <div
+          class="Rtable Rtable--3cols suggestion"
+          v-for="suggestion in suggestions"
+          :key="suggestion.id"
+          @click="handleSuggestionClick(suggestion)"
+        >
+          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+            {{ suggestion.city || "(no city)" }}
+          </div>
+
+          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+            {{ suggestion.stateCode || "(no state/province)" }}
+          </div>
+
+          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+            {{ suggestion.country || "(no country)" }}
+          </div>
+        </div>
+      </template>
+
+      <div
+        v-show="!savedLocation"
+        class="padding--t-medium"
+      >
         <label for="location_city">City</label>
 
         <input
@@ -68,44 +108,13 @@
         <a
           href="#"
           class="color--danger font-size--small"
-          @click.prevent="resetForm"
+          @click.prevent="resetAll"
+          v-if="formHasInput"
         >
           reset this form
         </a>
-      </template>
+      </div>
     </div>
-
-    <template v-if="suggestions.length">
-      <div class="flash">
-        We couldn't match results to your information.<br />
-        Change the form and try again, or select a result below.
-      </div>
-
-      <div class="Rtable Rtable--3cols">
-        <div class="Rtable-cell"><h6>City</h6></div>
-        <div class="Rtable-cell"><h6>State / Province</h6></div>
-        <div class="Rtable-cell"><h6>Country / Territory</h6></div>
-      </div>
-
-      <div
-        class="Rtable Rtable--3cols suggestion"
-        v-for="suggestion in suggestions"
-        :key="suggestion.id"
-        @click="handleSuggestionClick(suggestion)"
-      >
-        <div class="Rtable-cell">
-          {{ suggestion.city || "(no city)" }}
-        </div>
-
-        <div class="Rtable-cell">
-          {{ suggestion.stateCode || "(no state/province)" }}
-        </div>
-
-        <div class="Rtable-cell">
-          {{ suggestion.country || "(no country)" }}
-        </div>
-      </div>
-    </template>
 
     <div class="panel__bottom-bar">
       <p class="padding--none margin--none">
@@ -219,6 +228,12 @@ export default {
       return this.status === HttpStatusCodes.NOT_FOUND
     },
 
+    formHasInput () {
+      return (this.city && this.city.length) ||
+              (this.stateCode && this.stateCode.length) ||
+                (this.countryCode && this.countryCode.length)
+    },
+
     getCurrentLocationEndpoint () {
       return this._getEndpoint('current_location')
     },
@@ -266,8 +281,10 @@ export default {
     handleSubmit () {
       if (this.savedLocation) {
         history.back()
+      } else if (!this.formHasInput) {
+        this.handleErrorResponse({ response: { status: 404 } })
       } else {
-        this.suggestions = []
+        this.resetMeta()
         this.searching = true
 
         window.axios.patch(this.patchLocationEndpoint, this.params)
@@ -281,7 +298,7 @@ export default {
 
     handleCancel () {
       if (this.savedLocation) {
-        this.resetForm()
+        this.resetAll()
       } else {
         history.back()
       }
@@ -319,15 +336,26 @@ export default {
       if (country.value) this.countryCode = country.value
     },
 
+    resetAll () {
+      this.resetForm()
+      this.resetMeta()
+    },
+
     resetForm () {
       this.city = ""
       this.stateCode = ""
       this.countryCode = ""
+    },
+
+    resetMeta () {
       this.suggestions = []
       this.savedLocation = null
       this.status = null
       this.searching = false
-      this.$refs.cityField.focus()
+
+      this.$nextTick(() => {
+        this.$refs.cityField.focus()
+      })
     },
 
     _getEndpoint (pathPart) {
@@ -368,7 +396,6 @@ export default {
 .Rtable-cell {
   flex-grow: 1;
   width: 100%;  // Default to full width
-  padding: 0.8em 1.2em;
   overflow: hidden; // Or flex might break
   list-style: none;
 }
