@@ -23,9 +23,6 @@ describe('location/components/LocationForm', () => {
         scopeName: "student",
         countries: [["United States", "US"]],
       },
-      methods: {
-        initChosen () { },
-      },
     })
 
     setImmediate(() => {
@@ -49,9 +46,6 @@ describe('location/components/LocationForm', () => {
         scopeName: "admin",
         countries: [["United States", "US"]],
       },
-      methods: {
-        initChosen () { },
-      },
     })
 
     setImmediate(() => {
@@ -67,9 +61,6 @@ describe('location/components/LocationForm', () => {
         teamId: 1,
         scopeName: "admin",
         countries: [["United States", "US"]],
-      },
-      methods: {
-        initChosen () { },
       },
     })
 
