@@ -26,17 +26,15 @@ class JudgesGrid
   column :email, mandatory: true
 
   column :quarterfinals_scores_count,
-    header: "Quarterfinals Scores",
+    header: "Complete Quarterfinals Scores",
     order: "judge_profiles.quarterfinals_scores_count" do |asset, grid|
     asset.judge_profile.quarterfinals_scores_count
   end
 
-  column :current_round_scores_count,
-  header: "Complete #{current_judging_round} Scores",
-    order: "judge_profiles.#{current_judging_round}_scores_count",
-    mandatory: true do |asset, grid|
-
-    asset.judge_profile.public_send("#{grid.current_judging_round}_scores_count")
+  column :semifinals_scores_count,
+  header: "Complete Semifinals Scores",
+    order: "judge_profiles.semifinals_scores_count" do |asset, grid|
+    asset.judge_profile.semifinals_scores_count
   end
 
   column :judge_rank do |account, grid|
