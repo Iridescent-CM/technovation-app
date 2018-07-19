@@ -108,6 +108,34 @@ describe('Question comments section', () => {
     })
   })
 
+  test('debouncedCommentWatcher calls handleCommentChange', () => {
+    jest.useFakeTimers()
+
+    wrapper = shallowMount(
+      QuestionSection, {
+        store: storeMocks.store,
+        localVue,
+        propsData: {
+          section: 'ideation',
+        },
+        computed: {
+          shouldRunSentimentAnalysis: () => true,
+          shouldRunProfanityAnalysis: () => true,
+        },
+      }
+    )
+
+    const handleCommentChangeSpy = jest.spyOn(wrapper.vm, 'handleCommentChange')
+
+    expect(handleCommentChangeSpy).not.toHaveBeenCalled()
+
+    wrapper.vm.debouncedCommentWatcher()
+
+    jest.runAllTimers()
+
+    expect(handleCommentChangeSpy).toHaveBeenCalled()
+  })
+
   test('saves comments after changes, if analysis is run', (done) => {
     wrapper = shallowMount(
       QuestionSection, {
