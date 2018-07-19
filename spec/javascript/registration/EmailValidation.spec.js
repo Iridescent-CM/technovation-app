@@ -9,7 +9,7 @@ jest.mock('lodash/debounce', () => jest.fn(fn => fn()))
 
 describe('EmailValidation Vue component', () => {
   it('mounts with an email field', () => {
-    const wrapper = shallowMount(EmailValidation)
+    const wrapper = shallowMount(EmailValidation, { propsData: { apiKey: 'a' } })
     wrapper.vm.email = 'joe@joesak.com'
     expect(wrapper.find('input[type=email]').element.value).toEqual('joe@joesak.com')
   })
@@ -17,7 +17,7 @@ describe('EmailValidation Vue component', () => {
   it('debounces the email validation method on email input', () => {
     debounce.mockClear()
 
-    const wrapper = shallowMount(EmailValidation)
+    const wrapper = shallowMount(EmailValidation, { propsData: { apiKey: 'a' } })
 
     const validateEmailInputSpy = jest.spyOn(wrapper.vm, 'validateEmailInput')
 

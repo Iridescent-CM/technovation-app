@@ -17,6 +17,13 @@ export default {
     }
   },
 
+  props: {
+    apiKey: {
+      type: String,
+      required: true,
+    },
+  },
+
   watch: {
     email () {
       debounce(this.validateEmailInput, 500)
@@ -28,10 +35,10 @@ export default {
       axios.get('https://api.mailgun.net/v3/address/validate', {
         auth: {
           username: 'api',
-          password: 'abc123',
+          password: this.apiKey,
         },
         data: {
-          address: encodeURIComponent('joe@joesak.com')
+          address: encodeURIComponent(this.email)
         },
       })
     },
