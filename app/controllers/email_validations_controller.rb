@@ -3,17 +3,27 @@ require 'json'
 
 class EmailValidationsController < ApplicationController
   def new
-    response = HTTParty.get(
-      'https://api.mailgun.net/v3/address/private/validate',
-      query: {
-        address: params.fetch(:address),
-        mailbox_verification: true,
-      },
-      basic_auth: {
-        username: 'api',
-        password: ENV.fetch("MAILGUN_PRIVATE_KEY"),
+    address = params.fetch(:address)
+
+    if Account.exists?(email: address.strip.downcase)
+      response = {
+        is_valid: true,
+        mailbox_verification: "true",
+        is_taken: true,
       }
-    )
+    else
+      response = HTTParty.get(
+        'https://api.mailgun.net/v3/address/private/validate',
+        query: {
+          address: address,
+          mailbox_verification: true,
+        },
+        basic_auth: {
+          username: 'api',
+          password: ENV.fetch("MAILGUN_PRIVATE_KEY"),
+        }
+      )
+    end
 
     render json: response
   end

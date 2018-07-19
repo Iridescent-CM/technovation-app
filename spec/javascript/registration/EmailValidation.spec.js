@@ -116,5 +116,21 @@ describe('EmailValidation Vue component', () => {
         done()
       })
     })
+
+    it('detects a duplicate email', (done) => {
+      const wrapper = shallowMount(EmailValidation)
+
+      axios.mockResponse('get', {
+        "is_taken": true,
+      })
+
+      wrapper.vm.email = 'taken@gmail.com'
+      wrapper.vm.validateEmailInput()
+
+      setImmediate(() => {
+        expect(wrapper.vm.emailIsTaken).toBe(true)
+        done()
+      })
+    })
   })
 })
