@@ -48,6 +48,7 @@ jobs:
           COOKIES_SIGNUP_TOKEN: signup_token_JUNE_2018
           COOKIES_SESSION_TOKEN: session_token_JUNE_2018
           COOKIES_SIGNUP_EMAIL: n-a
+          MAILGUN_PRIVATE_KEY: n-a
       - image: circleci/postgres:9.6-alpine-ram
 
     steps:
