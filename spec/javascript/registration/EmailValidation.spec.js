@@ -1,42 +1,29 @@
 import { shallowMount } from '@vue/test-utils'
 import axios from 'axios'
 
-import debounce from 'lodash/debounce'
-
 import EmailValidation from 'registration/components/EmailValidation'
-
-jest.mock('lodash/debounce', () => jest.fn(fn => fn()))
 
 describe('EmailValidation Vue component', () => {
   it('mounts with an email field', () => {
-    const wrapper = shallowMount(EmailValidation, { propsData: { apiKey: 'a' } })
+    const wrapper = shallowMount(EmailValidation)
     wrapper.vm.email = 'joe@joesak.com'
     expect(wrapper.find('input[type=email]').element.value).toEqual('joe@joesak.com')
   })
 
   it('debounces the email validation method on email input', () => {
-    debounce.mockClear()
+    const wrapper = shallowMount(EmailValidation)
 
-    const wrapper = shallowMount(EmailValidation, { propsData: { apiKey: 'a' } })
-
-    const validateEmailInputSpy = jest.spyOn(wrapper.vm, 'validateEmailInput')
+    const emailWatcherSpy = jest.spyOn(wrapper.vm, 'debouncedEmailWatcher')
 
     wrapper.vm.email = 'joe@joesak.com'
 
-    expect(debounce).toHaveBeenCalledTimes(1)
-    expect(validateEmailInputSpy).toHaveBeenCalledTimes(1)
+    expect(emailWatcherSpy).toHaveBeenCalledTimes(1)
   })
 
   describe('#validateEmailInput()', () => {
     it('calls the validation service with the email', () => {
       const wrapper = shallowMount(EmailValidation, {
-        propsData: {
-          apiKey: 'abc123',
-        },
-
-        watch: {
-          email: jest.fn(),
-        },
+        watch: { email: jest.fn() },
       })
 
       wrapper.vm.email = 'joe@joesak.com'
@@ -58,16 +45,7 @@ describe('EmailValidation Vue component', () => {
       wrapper.vm.validateEmailInput()
 
       expect(axios.get).toHaveBeenCalledWith(
-        'https://api.mailgun.net/v3/address/validate',
-        {
-          auth: {
-            username: 'api',
-            password: 'abc123',
-          },
-          data: {
-            address: encodeURIComponent('joe@joesak.com')
-          },
-        }
+        `/validate_email?address=${encodeURIComponent('joe@joesak.com')}`
       )
     })
   })

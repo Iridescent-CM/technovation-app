@@ -1,7 +1,12 @@
 <template>
   <form>
-    <label for="email">Email</label>
-    <input type="email" name="email" v-model="email" />
+    <label for="email">Email Address</label>
+    <input
+      type="email"
+      id="email"
+      autocomplete="email"
+      v-model="email"
+    />
   </form>
 </template>
 
@@ -14,33 +19,34 @@ export default {
   data () {
     return {
       email: '',
+      isValidating: false,
     }
   },
 
-  props: {
-    apiKey: {
-      type: String,
-      required: true,
-    },
+  created () {
+    this.debouncedEmailWatcher = debounce(this.validateEmailInput, 500)
   },
 
   watch: {
     email () {
-      debounce(this.validateEmailInput, 500)
+      this.debouncedEmailWatcher()
     },
   },
 
   methods: {
     validateEmailInput () {
-      axios.get('https://api.mailgun.net/v3/address/validate', {
-        auth: {
-          username: 'api',
-          password: this.apiKey,
-        },
-        data: {
-          address: encodeURIComponent(this.email)
-        },
-      })
+      if (!this.email.length || this.isValidating) return false
+
+      this.isValidating = true
+
+      axios.get(`/validate_email?address=${encodeURIComponent(this.email)}`)
+        .then(resp => {
+          this.isValidating = false
+          console.log(resp)
+        }).catch(err => {
+          this.isValidating = false
+          console.error(err)
+        })
     },
   },
 }

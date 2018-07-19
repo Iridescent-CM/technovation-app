@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable', constraints: AdminConstraint.new
 
   get '/sidekiq' => 'signins#new'
+  get '/validate_email' => 'email_validations#new'
 
   resource :survey_completion, only: :show
 
