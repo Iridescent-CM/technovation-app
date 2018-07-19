@@ -10,6 +10,7 @@
   <%= f.input :email,
     as: :email,
     placeholder: "Example: janie.doe@gmail.com",
+    input_html: { autocomplete: "email" },
     label: t("models.signup_attempt.email") %>
 
   <p class="hint">
@@ -21,6 +22,7 @@
   <% if attempt.new_record? %>
     <%= f.input :password,
       placeholder: "Use 8 characters or more",
+      input_html: { autocomplete: "new-password current-password" },
       label: t("models.account.password") %>
   <% end %>
 
