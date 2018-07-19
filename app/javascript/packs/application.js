@@ -14,11 +14,11 @@ import LocationForm from '../location/components/LocationForm'
 import '../config/axios'
 
 document.addEventListener('turbolinks:load', () => {
-  const btnEls = document.querySelectorAll('.vue-enable-certificate-btn')
+  const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn')
 
-  for (let i = 0; i < btnEls.length; i += 1) {
+  for (let i = 0; i < buttonElems.length; i += 1) {
     new Vue({
-      el: btnEls[i],
+      el: buttonElems[i],
 
       components: {
         CertificateButton,
