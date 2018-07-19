@@ -16,25 +16,25 @@ import '../config/axios'
 document.addEventListener('turbolinks:load', () => {
   const btnEls = document.querySelectorAll('.vue-enable-certificate-btn')
 
-  btnEls.forEach((btnEl) => {
+  for (let i = 0; i < btnEls.length; i += 1) {
     new Vue({
-      el: btnEl,
+      el: btnEls[i],
 
       components: {
         CertificateButton,
       },
     })
-  })
+  }
 
   const locationFormElems = document.querySelectorAll('.vue-enable-location-form')
 
-  locationFormElems.forEach((locationFormElem) => {
+  for (let i = 0; i < locationFormElems.length; i += 1) {
     new Vue({
-      el: locationFormElem,
+      el: locationFormElems[i],
 
       components: {
         LocationForm,
       },
     })
-  })
+  }
 })
