@@ -9,6 +9,7 @@ gem 'casting', '~> 0.7'
 gem 'bootsnap', '~> 1.3', require: false
 
 gem 'fast_jsonapi', "~> 1.2"
+gem 'httparty', "~> 0.16"
 
 gem 'textacular',
   git: 'https://github.com/Iridescent-CM/textacular.git',

@@ -688,6 +688,7 @@ DEPENDENCIES
   has_secure_token (~> 1.0)
   heroku-deflater!
   hiredis (~> 0.6)
+  httparty
   i18n-tasks (~> 0.9)
   indefinite_article (~> 0.2)
   jquery-rails (~> 4.3)
