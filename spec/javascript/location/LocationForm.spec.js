@@ -21,7 +21,6 @@ describe('location/components/LocationForm', () => {
       localVue,
       propsData: {
         scopeName: "student",
-        countries: [["United States", "US"]],
       },
     })
 
@@ -44,7 +43,6 @@ describe('location/components/LocationForm', () => {
       propsData: {
         accountId: 1,
         scopeName: "admin",
-        countries: [["United States", "US"]],
       },
     })
 
@@ -60,7 +58,6 @@ describe('location/components/LocationForm', () => {
       propsData: {
         teamId: 1,
         scopeName: "admin",
-        countries: [["United States", "US"]],
       },
     })
 

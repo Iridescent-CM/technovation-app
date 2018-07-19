@@ -172,11 +172,6 @@ export default {
       type: String,
       required: true,
     },
-
-    countries: {
-      type: Array,
-      required: true,
-    },
   },
 
   created () {
@@ -254,15 +249,6 @@ export default {
 
       return params
     },
-
-    countryOptions () {
-      return this.countries.map(country => {
-        return {
-          label: country[0],
-          value: country[1],
-        }
-      })
-    },
   },
 
   watch: {
@@ -329,11 +315,6 @@ export default {
           return new LocationResult(result)
         })
       }
-    },
-
-    handleCountryChange (value) {
-      const country = Object.assign({}, value)
-      if (country.value) this.countryCode = country.value
     },
 
     resetAll () {
