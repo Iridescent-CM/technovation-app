@@ -30,6 +30,10 @@
   color: white
 }
 
+.cursor--pointer {
+  cursor: pointer;
+}
+
 .font-size--small {
   font-size: 0.8rem;
 }
@@ -124,4 +128,8 @@
 
 .text-align--right {
   text-align: right !important;
+}
+
+.text-decoration--underline {
+  text-decoration: underline;
 }
