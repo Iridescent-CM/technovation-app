@@ -96,6 +96,7 @@
 import _ from 'lodash'
 import { mapState, mapGetters } from 'vuex'
 
+import { debounce } from '../../utilities/utilities'
 import ScoreEntry from './ScoreEntry'
 
 export default {
@@ -363,7 +364,9 @@ export default {
   },
 
   created () {
-    this.debouncedCommentWatcher = _.debounce(this.handleCommentChange, 500)
+    this.debouncedCommentWatcher = debounce(() => {
+      this.handleCommentChange()
+    }, 500)
   }
 }
 </script>
