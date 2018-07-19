@@ -9,21 +9,32 @@
 
 import Vue from 'vue/dist/vue.esm'
 import CertificateButton from '../components/CertificateButton'
+import LocationForm from '../location/components/LocationForm'
 
 import '../config/axios'
 
 document.addEventListener('turbolinks:load', () => {
-  const btnEls = document.querySelectorAll('.vue-enable-certificate-btn')
+  const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn')
 
-  if (btnEls.length) {
-    for (let i = 0; i < btnEls.length; i += 1) {
-      new Vue({
-        el: btnEls[i],
+  for (let i = 0; i < buttonElems.length; i += 1) {
+    new Vue({
+      el: buttonElems[i],
 
-        components: {
-          CertificateButton,
-        },
-      })
-    }
+      components: {
+        CertificateButton,
+      },
+    })
+  }
+
+  const locationFormElems = document.querySelectorAll('.vue-enable-location-form')
+
+  for (let i = 0; i < locationFormElems.length; i += 1) {
+    new Vue({
+      el: locationFormElems[i],
+
+      components: {
+        LocationForm,
+      },
+    })
   }
 })

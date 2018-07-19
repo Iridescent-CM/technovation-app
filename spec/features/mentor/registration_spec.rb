@@ -31,27 +31,6 @@ RSpec.feature "Register as a mentor" do
     expect(MentorProfile.last.mentor_type).not_to be_nil
   end
 
-  scenario "saves location details" do
-    allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
-
-    click_link "Update your location"
-
-    fill_in "City", with: "Chicago"
-    fill_in "State / Province", with: "IL"
-    select "United States", from: "Region"
-    click_button "Save"
-
-    expect(MentorProfile.last.address_details).to eq(
-      "Chicago, IL, United States"
-    )
-    expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-      .with(
-        MentorProfile.last.account_id,
-        "mentor@mentor.com",
-        "MENTOR_LIST_ID",
-    )
-  end
-
   scenario "signup attempt attached" do
     attempt = SignupAttempt.find_by(
       account_id: MentorProfile.last.account_id
