@@ -1,56 +1,7 @@
 <% provide :title, "Change your team location" %>
 
 <div class="grid grid--justify-space-around">
-  <div class="panel grid__col-8">
-    <h5>
-      Change team location for:<br />
-      <%= @team.name %>
-    </h5>
-
-    <%= simple_form_for [current_scope, @team],
-      html: {
-        class: "geocoding"
-      } do |f| %>
-      <div class="while-geocoding">
-        <%= web_icon "spinner2", class: "spin" %>
-        Detecting your location...
-      </div>
-
-      <%= f.input :city,
-        input_html: {
-          id: "city",
-          data: {
-            geolocation_url: geolocation_results_path,
-          }
-        } %>
-
-      <%= f.input :state_province,
-        input_html: {
-          id: "state_province",
-        },
-        label: t("models.account.state_province") %>
-
-      <%= f.input :country,
-        label: t("models.team.country"),
-        collection: CountryStateSelect.countries_collection,
-        input_html: {
-          class: "chosen",
-          id: "country",
-        } %>
-
-      <%= f.input :latitude, as: :hidden,
-        input_html: {
-          id: "latitude",
-        } %>
-
-      <%= f.input :longitude, as: :hidden,
-        input_html: {
-          id: "longitude",
-        } %>
-
-      <p>
-        <%= f.submit "Save", class: "button" %>
-      </p>
-    <% end %>
+  <div class="grid__col-sm-8">
+    <%= render 'signups/location_fields', team_id: @team.id %>
   </div>
 </div>

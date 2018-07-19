@@ -20,19 +20,6 @@ RSpec.feature "Register as a student" do
     expect(current_path).to eq(student_dashboard_path)
   end
 
-  scenario "saves location details" do
-    click_link "Update your location"
-
-    fill_in "City", with: "Chicago"
-    fill_in "State / Province", with: "IL"
-    select "United States", from: "Region"
-    click_button "Save"
-
-    expect(StudentProfile.last.address_details).to eq(
-      "Chicago, IL, United States"
-    )
-  end
-
   scenario "signup attempt attached" do
     attempt = SignupAttempt.find_by(
       account_id: StudentProfile.last.account_id
