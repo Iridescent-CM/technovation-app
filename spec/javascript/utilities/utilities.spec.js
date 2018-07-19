@@ -24,4 +24,51 @@ describe('Helper Utilities', () => {
 
   })
 
+  describe('debounce', () => {
+
+    let booleanVariable
+    let debouncedFunction
+
+    beforeEach(() => {
+      jest.useFakeTimers()
+      booleanVariable = false
+    })
+
+    it('calls function after 500ms when no wait parameter is present', () => {
+      debouncedFunction = Utils.debounce(() => {
+        booleanVariable = true
+      })
+
+      expect(booleanVariable).toBe(false)
+
+      debouncedFunction()
+
+      jest.advanceTimersByTime(250)
+
+      expect(booleanVariable).toBe(false)
+
+      jest.advanceTimersByTime(251)
+
+      expect(booleanVariable).toBe(true)
+    })
+
+    it('calls function after 1000ms when wait is set to 1000', () => {
+      debouncedFunction = Utils.debounce(() => {
+        booleanVariable = true
+      }, 1000)
+
+      expect(booleanVariable).toBe(false)
+
+      debouncedFunction()
+
+      jest.advanceTimersByTime(600)
+
+      expect(booleanVariable).toBe(false)
+
+      jest.advanceTimersByTime(401)
+
+      expect(booleanVariable).toBe(true)
+    })
+  })
+
 })
