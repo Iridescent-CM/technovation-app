@@ -28,25 +28,93 @@ describe('EmailValidation Vue component', () => {
 
       wrapper.vm.email = 'joe@joesak.com'
 
-      axios.mockResponseOnce('get', {
-        "address": "foo@mailgun.net",
-        "did_you_mean": null,
-        "is_disposable_address": false,
-        "is_role_address": true,
-        "is_valid": true,
-        "mailbox_verification": "true",
-        "parts": {
-            "display_name": null,
-            "domain": "mailgun.net",
-            "local_part": "foo"
-        }
-      })
+      axios.mockResponseOnce('get', {})
 
       wrapper.vm.validateEmailInput()
 
       expect(axios.get).toHaveBeenCalledWith(
         `/validate_email?address=${encodeURIComponent('joe@joesak.com')}`
       )
+    })
+
+    it('detects invalid email', (done) => {
+      const wrapper = shallowMount(EmailValidation)
+
+      axios.mockResponse('get', {
+        "is_valid": false,
+      })
+
+      wrapper.vm.email = 'invalid'
+      wrapper.vm.validateEmailInput()
+
+      setImmediate(() => {
+        expect(wrapper.vm.validationStatus).toBe(false)
+        done()
+      })
+    })
+
+    it('detects temporary email', (done) => {
+      const wrapper = shallowMount(EmailValidation)
+
+      axios.mockResponse('get', {
+        "is_disposable_address": true,
+      })
+
+      wrapper.vm.email = 'something@disposable.com'
+      wrapper.vm.validateEmailInput()
+
+      setImmediate(() => {
+        expect(wrapper.vm.isDisposableAddress).toBe(true)
+        done()
+      })
+    })
+
+    it('detects a "did you mean...?" suggestion', (done) => {
+      const wrapper = shallowMount(EmailValidation)
+
+      axios.mockResponse('get', {
+        "did_you_mean": "joe@gmail.com",
+      })
+
+      wrapper.vm.email = 'joe@gmil.com'
+      wrapper.vm.validateEmailInput()
+
+      setImmediate(() => {
+        expect(wrapper.vm.didYouMean).toEqual("joe@gmail.com")
+        done()
+      })
+    })
+
+    it('detects a mailbox_verification', (done) => {
+      const wrapper = shallowMount(EmailValidation)
+
+      axios.mockResponse('get', {
+        "mailbox_verification": "true",
+      })
+
+      wrapper.vm.email = 'exists@gmail.com'
+      wrapper.vm.validateEmailInput()
+
+      setImmediate(() => {
+        expect(wrapper.vm.mailboxVerification).toBe(true)
+        done()
+      })
+    })
+
+    it('detects a failed mailbox_verification', (done) => {
+      const wrapper = shallowMount(EmailValidation)
+
+      axios.mockResponse('get', {
+        "mailbox_verification": "false",
+      })
+
+      wrapper.vm.email = 'missing@gmail.com'
+      wrapper.vm.validateEmailInput()
+
+      setImmediate(() => {
+        expect(wrapper.vm.mailboxVerification).toBe(false)
+        done()
+      })
     })
   })
 })

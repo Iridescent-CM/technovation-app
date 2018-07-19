@@ -5,7 +5,10 @@ class EmailValidationsController < ApplicationController
   def new
     response = HTTParty.get(
       'https://api.mailgun.net/v3/address/private/validate',
-      query: { address: params.fetch(:address), },
+      query: {
+        address: params.fetch(:address),
+        mailbox_verification: true,
+      },
       basic_auth: {
         username: 'api',
         password: ENV.fetch("MAILGUN_PRIVATE_KEY"),

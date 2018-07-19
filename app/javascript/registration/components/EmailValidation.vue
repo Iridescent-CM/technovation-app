@@ -19,6 +19,10 @@ export default {
   data () {
     return {
       email: '',
+      validationStatus: 'pending',
+      isDisposableAddress: false,
+      didYouMean: null,
+      mailboxVerification: null,
       isValidating: false,
     }
   },
@@ -40,9 +44,12 @@ export default {
       this.isValidating = true
 
       axios.get(`/validate_email?address=${encodeURIComponent(this.email)}`)
-        .then(resp => {
+        .then(({ data }) => {
           this.isValidating = false
-          console.log(resp)
+          this.validationStatus = data.is_valid
+          this.isDisposableAddress = data.is_disposable_address
+          this.didYouMean = data.did_you_mean
+          this.mailboxVerification = data.mailbox_verification === "true"
         }).catch(err => {
           this.isValidating = false
           console.error(err)
