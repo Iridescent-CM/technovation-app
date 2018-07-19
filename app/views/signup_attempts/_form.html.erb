@@ -1,5 +1,9 @@
 <% url ||= signup_attempts_url %>
 
+<div id="vue-enable-email-validation">
+  <email-validation api-key="<%= ENV.fetch("MAILGUN_PUBLIC_KEY") %>" />
+</div>
+
 <%= simple_form_for attempt, url: url do |f| %>
   <%= render 'errors', record: attempt %>
 

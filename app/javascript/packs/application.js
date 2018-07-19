@@ -8,9 +8,11 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import Vue from 'vue/dist/vue.esm'
+
 import AutocompleteInput from '../components/AutocompleteInput'
 import CertificateButton from '../components/CertificateButton'
 import LocationForm from '../location/components/LocationForm'
+import EmailValidation from '../registration/components/EmailValidation'
 
 import '../config/axios'
 
@@ -47,6 +49,18 @@ document.addEventListener('turbolinks:load', () => {
 
       components: {
         AutocompleteInput,
+      },
+    })
+  }
+
+  const emailValidationElem = document.querySelector('#vue-enable-email-validation')
+
+  if (emailValidationElem) {
+    new Vue({
+      el: emailValidationElem,
+
+      components: {
+        EmailValidation,
       },
     })
   }
