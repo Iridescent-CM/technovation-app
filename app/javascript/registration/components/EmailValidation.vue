@@ -1,5 +1,5 @@
 <template>
-  <form @submit="handleSubmit">
+  <form @submit.prevent="handleSubmit">
     <p>
       We need an email address that you can be contacted at, and we will
       <strong>only</strong> use it to send you important updates to help
@@ -86,7 +86,7 @@
       <button
         class="button"
         :disabled="!nextStepEnabled"
-        @click="handleSubmit"
+        @click.prevent="handleSubmit"
       >
         Next
       </button>

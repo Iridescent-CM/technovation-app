@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import EmailValidation from '../components/EmailValidation'
 import PasswordValidation from '../components/PasswordValidation'
+import LocationForm from '../../location/components/LocationForm'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,11 @@ export const routes = [
     path: '/password',
     name: 'password-validation',
     component: PasswordValidation,
+  },
+  {
+    path: '/location',
+    name: 'location',
+    component: LocationForm,
   },
 ]
 

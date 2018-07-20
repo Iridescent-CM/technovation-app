@@ -1,5 +1,8 @@
 <template>
-  <form id="password-form">
+  <form
+    id="password-form"
+    @submit.prevent="handleSubmit"
+  >
     <label for="password">Password</label>
 
     <Password
@@ -22,6 +25,7 @@
       <button
         class="button"
         :disabled="!nextStepEnabled"
+        @click.prevent="handleSubmit"
       >
         Next
       </button>
@@ -76,6 +80,11 @@ export default {
     showScore (score) {
       this.score = score
     },
+
+    handleSubmit () {
+      if (!this.nextStepEnabled) return false
+      this.$router.push('location')
+    }
   },
 }
 </script>
