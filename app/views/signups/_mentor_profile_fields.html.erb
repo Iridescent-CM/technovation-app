@@ -4,8 +4,25 @@
     collection: Account.genders.keys %>
 <% end %>
 
-<%= f.input :school_company_name,
-  label: t('models.mentor_profile.school_company_name') %>
+<%= f.input :school_company_name, {
+  as: :autocomplete,
+  label: t('models.mentor_profile.school_company_name'),
+  input_html: {
+    ":options": [
+      "Salesforce",
+      "Adobe",
+      "Google",
+      "uber",
+      "Samsung",
+      "oracle",
+      "AECOM",
+      "HARMAN",
+      "Microsoft",
+      "Accenture",
+      "Bank of America"
+    ]
+  }
+} %>
 
 <%= f.input :job_title %>
 
