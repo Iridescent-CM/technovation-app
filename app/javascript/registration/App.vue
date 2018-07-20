@@ -1,17 +1,17 @@
 <template>
   <div>
-    <EmailValidation />
+    <PasswordValidation />
   </div>
 </template>
 
 <script>
-import EmailValidation from './components/EmailValidation'
+import PasswordValidation from './components/PasswordValidation'
 
 export default {
   name: 'app',
 
   components: {
-    EmailValidation,
+    PasswordValidation,
   },
 
   data () {
