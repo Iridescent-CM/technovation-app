@@ -18,7 +18,6 @@ export default {
 
   data() {
     return {
-      xhr: null,
       autoCompleteInstance: null,
     }
   },
@@ -54,21 +53,32 @@ export default {
   },
 
   mounted () {
-    this.autoCompleteInstance = new autoComplete({
-      selector: '.autocomplete-input > input',
-      minChars: 2,
-      source: (term, suggest) => {
-        this.getSuggestionsDebounced(term, suggest)
-      },
-    })
+    this.initializeAutocomplete()
   },
 
   methods: {
+    initializeAutocomplete () {
+      if (
+        this.autoCompleteInstance !== null
+        && typeof this.autoCompleteInstance.destroy !== 'undefined'
+      ) {
+        this.autoCompleteInstance.destroy()
+      }
+
+      this.autoCompleteInstance = new autoComplete({
+        selector: '.autocomplete-input > input',
+        minChars: 2,
+        source: (term, suggest) => {
+          this.getSuggestionsDebounced(term, suggest)
+        },
+      })
+    },
+
     getSuggestions (term, suggest) {
       const query = term.toLowerCase()
 
       if (this.url !== '') {
-        window.axios.get('/user', {
+        window.axios.get(this.url, {
           params: {
             q: query,
           },
