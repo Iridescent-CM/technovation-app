@@ -48,7 +48,7 @@ describe('EmailValidation Vue component', () => {
       wrapper.vm.validateEmailInput()
 
       setImmediate(() => {
-        expect(wrapper.vm.validationStatus).toBe(false)
+        expect(wrapper.vm.emailIsValid).toBe(false)
         done()
       })
     })
