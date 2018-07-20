@@ -7,14 +7,14 @@ RSpec.feature "Off-season splash page" do
     %w{student mentor judge regional_ambassador}.each do |scope|
       SeasonToggles.enable_signup(scope)
       visit root_path
-      expect(page).to have_css("form#new_signup_attempt")
+      expect(page).to have_css("#vue-enable-signup-wizard")
     end
   end
 
   scenario "when all registrations are disabled" do
     SeasonToggles.disable_signups!
     visit root_path
-    expect(page).not_to have_css("form#new_signup_attempt")
+    expect(page).not_to have_css("#vue-enable-signup-wizard")
     expect(page).to have_content(
       "Registration for Technovation " +
       Season.next.year.to_s +
