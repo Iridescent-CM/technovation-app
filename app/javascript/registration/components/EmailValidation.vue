@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit="handleSubmit">
     <p>
       We need an email address that you can be contacted at, and we will
       <strong>only</strong> use it to send you important updates to help
@@ -86,6 +86,7 @@
       <button
         class="button"
         :disabled="!nextStepEnabled"
+        @click="handleSubmit"
       >
         Next
       </button>
@@ -148,6 +149,11 @@ export default {
   },
 
   methods: {
+    handleSubmit () {
+      if (!this.nextStepEnabled) return false
+      this.$router.push('password')
+    },
+
     validateEmailInput () {
       axios.get(`/validate_email?address=${encodeURIComponent(this.email)}`)
         .then(({ data }) => {

@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue.esm'
-import App from './App'
+import router from './routes'
 
 document.addEventListener('turbolinks:load', () => {
   const wizardElem = document.querySelector('#vue-enable-signup-wizard')
@@ -7,10 +7,7 @@ document.addEventListener('turbolinks:load', () => {
   if (wizardElem) {
     new Vue({
       el: wizardElem,
-
-      components: {
-        App
-      },
+      router,
     })
   }
 })
