@@ -1,9 +1,13 @@
 <template>
   <form>
     <p>
-      First, we would like to have an email address that you can access.
-      We use this only to send you important updates to help you do your best
-      during the season.
+      We need an email address that you can be contacted at, and we will
+      <strong>only</strong> use it to send you important updates to help
+      you do your best during the season.
+    </p>
+
+    <p class="font-style--italic">
+      We do not work with marketers or advertisers in any form whatsoever.
     </p>
 
     <label for="email">Email Address</label>
