@@ -302,6 +302,11 @@ Rails.application.routes.draw do
     resources :top_companies, only: :index
   end
 
+  namespace :registration do
+    resource :current_location, only: :show
+    resource :location, only: :update
+  end
+
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
 

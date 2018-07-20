@@ -23,6 +23,9 @@ export const routes = [
     path: '/location',
     name: 'location',
     component: LocationForm,
+    props: {
+      scopeName: 'registration',
+    },
   },
 ]
 
