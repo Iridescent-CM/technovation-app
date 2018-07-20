@@ -6,9 +6,12 @@ class AutocompleteInput < SimpleForm::Inputs::Base
       merged_input_options[":options".to_sym] = merged_input_options[":options".to_sym].to_s
     end
 
+    merged_input_options[:id] = "#{object_name.to_s}_#{attribute_name.to_s}"
+    merged_input_options[:name] = "#{object_name.to_s}[#{attribute_name.to_s}]"
+
     template.content_tag(
       :div,
-      content_tag("autocomplete-input", "", merged_input_options),
+      template.content_tag("autocomplete-input", "", merged_input_options),
       class: "vue-enable-autocomplete-input"
     )
   end
