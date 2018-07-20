@@ -70,11 +70,11 @@ RSpec.feature "Admins invite users to signup" do
       when :student
         fill_in "School name", with: "John Hughes High."
       when :mentor
-        fill_in "School or company name", with: "John Hughes High."
+        fill_in "mentor_profile_school_company_name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
         select "Parent", from: "I am a..."
       when :judge
-        fill_in "Company name", with: "John Hughes High."
+        fill_in "judge_profile_company_name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
       when :regional_ambassador
         fill_in "Organization/company name", with: "John Hughes High."
