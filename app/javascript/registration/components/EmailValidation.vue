@@ -127,7 +127,8 @@ export default {
       return this.emailHasBeenChecked && (
               !this.emailIsValid ||
                 this.emailIsTaken ||
-                  this.isDisposableAddress
+                  this.isDisposableAddress ||
+                    !this.mailboxVerification
               )
     },
 
