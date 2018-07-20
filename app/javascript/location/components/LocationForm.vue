@@ -86,6 +86,7 @@
           type="text"
           id="location_city"
           ref="cityField"
+          autocomplete="address-level2"
           v-model="city"
         />
 
@@ -94,6 +95,7 @@
         <input
           type="text"
           id="location_state"
+          autocomplete="address-level1"
           v-model="stateCode"
         />
 
@@ -102,6 +104,7 @@
         <input
           type="text"
           id="location_country"
+          autocomplete="country-name"
           v-model="countryCode"
         />
 
