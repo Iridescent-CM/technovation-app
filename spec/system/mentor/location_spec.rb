@@ -4,8 +4,6 @@ RSpec.describe "Mentors register with their location", :js do
   before do
     SeasonToggles.enable_signups!
 
-    allow(SubscribeEmailListJob).to receive(:perform_later)
-
     set_signup_token("mentor@mentor.com")
 
     visit mentor_signup_path
@@ -13,7 +11,7 @@ RSpec.describe "Mentors register with their location", :js do
     fill_in "First name", with: "Mentor"
     fill_in "Last name", with: "McGee"
 
-    select_date Date.today - 31.years, from: "Date of birth"
+    select_chosen_date Date.today - 31.years, from: "Date of birth"
 
     fill_in "School or company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
@@ -26,23 +24,16 @@ RSpec.describe "Mentors register with their location", :js do
   end
 
   it "saves location details" do
-    allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
-
     click_link "Update your location"
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"
-    select "United States", from: "Region"
-    click_button "Save"
+    fill_in "Country / Territory", with: "United States"
+    click_button "Next"
 
-    expect(MentorProfile.last.address_details).to eq(
-      "Chicago, IL, United States"
-    )
-    expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-      .with(
-        MentorProfile.last.account_id,
-        "mentor@mentor.com",
-        "MENTOR_LIST_ID",
-    )
+    account = Account.find_by(email: "mentor@mentor.com")
+
+    visit mentor_profile_path(anchor: '!location')
+    expect(page).to have_content("Chicago, IL, United States")
   end
 end
