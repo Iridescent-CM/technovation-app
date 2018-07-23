@@ -139,7 +139,7 @@ RSpec.describe "Admins invite users to signup", :js do
     token = UserInvitation.last.admin_permission_token
     url = regional_ambassador_signup_url(
       admin_permission_token: token,
-      host: ENV.fetch("HOST_DOMAIN")
+      host: Capybara.app_host
     )
 
     visit url
@@ -179,7 +179,7 @@ RSpec.describe "Admins invite users to signup", :js do
     token = UserInvitation.last.admin_permission_token
     url = regional_ambassador_signup_url(
       admin_permission_token: token,
-      host: ENV.fetch("HOST_DOMAIN")
+      host: Capybara.app_host
     )
 
     visit url

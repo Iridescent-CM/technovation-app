@@ -37,7 +37,7 @@ jobs:
           JUDGE_TRAINING_URL: n-a
           FINALISTS_URL: "https://some/url"
           NEWSLETTER_URL: "https://some/other/url"
-          COOKIE_DOMAIN: "example.org"
+          MAILGUN_PRIVATE_KEY: n-a
           COOKIES_ADMIN_PERMISSION_TOKEN: admin_permission_token_JUNE_2018
           COOKIES_AUTH_TOKEN: auth_token_JUNE_2018
           COOKIES_GLOBAL_INVITATION_TOKEN: global_invitation_token_JUNE_2018
