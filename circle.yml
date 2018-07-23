@@ -97,7 +97,9 @@ jobs:
 
       - run:
           name: Parallel RSpec
-          command: bundle exec rspec --order rand
+          command: bundle exec rspec --order rand \
+                    $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
 
       # Save artifacts
       - store_test_results:
