@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Admins invite users to signup" do
+RSpec.feature "Admins invite users to signup", :js do
   let(:admin) { FactoryBot.create(:admin) }
 
   before { sign_in(admin) }
