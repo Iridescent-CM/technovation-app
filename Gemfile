@@ -6,6 +6,8 @@ gem 'puma', '~> 3.11'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
+gem 'bootsnap', '>= 1.1.0', require: false
+
 gem 'fast_jsonapi', "~> 1.2"
 
 gem 'textacular',
@@ -95,8 +97,6 @@ gem "oink", "~> 0.10"
 gem 'loofah', '~> 2.2'
 
 group :development, :test do
-  gem 'rspec-rails', "~> 3.7"
-  gem 'launchy', "~> 2.4"
   gem 'dotenv-rails', "~> 2.4"
 end
 
@@ -108,6 +108,9 @@ group :development do
   gem 'memory_profiler', "~> 0.9"
   gem 'listen', '~> 3.1'
   gem 'churn', "~> 1.0", require: false
+  gem 'web-console', '>= 3.3.0'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :test do
@@ -116,13 +119,14 @@ group :test do
   gem 'webmock', "~> 3.4"
   gem 'sinatra', '~> 2.0'
 
-  gem 'capybara-webkit',
-    git: "https://github.com/thoughtbot/capybara-webkit.git",
-    branch: :master
-
-  gem 'database_cleaner', "~> 1.7"
   gem 'rails-controller-testing', "~> 1.0"
   gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
+
+  gem 'capybara', '~> 2.13'
+  gem 'selenium-webdriver'
+  # Easy installation and use of chromedriver to run system tests with Chrome
+  gem 'chromedriver-helper'
+  gem 'rspec-rails'
 
   # deprecated
   gem 'font-awesome-rails', "~> 4.7"
