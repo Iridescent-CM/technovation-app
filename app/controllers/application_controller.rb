@@ -42,12 +42,12 @@ class ApplicationController < ActionController::Base
     if options[:permanent]
       cookies.permanent.signed[key] = {
         value: value,
-        domain: ENV.fetch("COOKIE_DOMAIN"),
+        domain: request.host,
       }
     else
       cookies.signed[key] = {
         value: value,
-        domain: ENV.fetch("COOKIE_DOMAIN"),
+        domain: request.host,
       }
     end
   end
@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
 
   def remove_cookie(key)
     value = get_cookie(key)
-    cookies.delete(key, domain: ENV.fetch("COOKIE_DOMAIN"))
+    cookies.delete(key, domain: request.host)
     value
   end
 
