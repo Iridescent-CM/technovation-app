@@ -49,7 +49,6 @@ jobs:
           COOKIES_SIGNUP_TOKEN: signup_token_JUNE_2018
           COOKIES_SESSION_TOKEN: session_token_JUNE_2018
       - image: circleci/postgres:9.6-alpine-ram
-      - image: selenium/standalone-chrome:3.5.3
 
     steps:
       - checkout
@@ -98,13 +97,7 @@ jobs:
 
       - run:
           name: Parallel RSpec
-          command: bundle exec rspec --order rand \
-                      --profile 10 \
-                      --format RspecJunitFormatter \
-                      --out /tmp/test-results/rspec.xml \
-                      --format progress \
-                      $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
+          command: bundle exec rspec --order rand
 
       # Save artifacts
       - store_test_results:
