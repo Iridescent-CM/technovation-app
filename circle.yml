@@ -2,7 +2,6 @@ version: 2
 
 jobs:
   build:
-    parallelism: 4
     working_directory: ~/circleci-demo-ruby-rails
     docker:
       - image: circleci/ruby:latest-node-browsers
@@ -97,9 +96,7 @@ jobs:
 
       - run:
           name: Parallel RSpec
-          command: |
-            TESTFILES=$(circleci tests glob "spec/**/*.rb" | circleci tests split --split-by=timings)
-            bundle exec rspec --order rand -- ${TESTFILES}
+          command: bundle exec rspec --order rand
 
 
       # Save artifacts
