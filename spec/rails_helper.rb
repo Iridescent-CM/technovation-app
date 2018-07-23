@@ -8,7 +8,7 @@ end
 
 require 'spec_helper'
 require 'rspec/rails'
-require 'capybara/rspec'
+require 'capybara'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -20,7 +20,6 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ::Timezone::Lookup.config(:test)
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
-Capybara.javascript_driver = :webkit
 Capybara.automatic_label_click = true
 
 require 'rake'
@@ -32,12 +31,16 @@ RSpec.configure do |config|
   config.include SigninHelper, type: :feature
   config.include SignupHelper, type: :feature
 
+  config.include SigninHelper, type: :system
+  config.include SignupHelper, type: :system
+
   config.include ControllerSigninHelper, type: :controller
   config.include ControllerSignupHelper, type: :controller
 
   config.include SigninHelper, type: :request
 
   config.include SelectDateHelper, type: :feature
+  config.include SelectDateHelper, type: :system
 
   config.include JudgingHelper
   config.include WebMock::API
@@ -46,46 +49,13 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
 
-  config.before(:suite) do
-    if config.use_transactional_fixtures?
-      raise(<<-MSG)
-        Delete line `config.use_transactional_fixtures = true` from rails_helper.rb
-        (or set it to false) to prevent uncommitted transactions being used in
-        JavaScript-dependent specs.
-
-        During testing, the app-under-test that the browser driver connects to
-        uses a different database connection to the database connection used by
-        the spec. The app's database connection would not be able to access
-        uncommitted transaction data setup over the spec's database connection.
-      MSG
-    end
-    DatabaseCleaner.clean_with(:truncation)
+  config.before(:each, type: :system) do
+    driven_by :rack_test
   end
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, type: :feature) do
-    # :rack_test driver's Rack app under test shares database connection
-    # with the specs, so continue to use transaction strategy for speed.
-    driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
-
-    unless driver_shares_db_connection_with_specs
-      # Driver is probably for an external browser with an app
-      # under test that does *not* share a database connection with the
-      # specs, so use truncation strategy.
-      DatabaseCleaner.strategy = :truncation
-    end
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.append_after(:each) do
-    DatabaseCleaner.clean
+  config.before(:each, type: :system, js: true) do
+    driven_by :selenium_chrome_headless
   end
 end

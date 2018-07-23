@@ -50,15 +50,6 @@ GIT
     heroku-deflater (0.6.3)
       rack (>= 1.4.5)
 
-GIT
-  remote: https://github.com/thoughtbot/capybara-webkit.git
-  revision: 7bb9385421fcb1efed98c0431cb7673f32061b1c
-  branch: master
-  specs:
-    capybara-webkit (1.15.0)
-      capybara (>= 2.3, < 4.0)
-      json
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -110,6 +101,8 @@ GEM
       airbrake-ruby (~> 2.4)
     airbrake-ruby (2.10.0)
     anbt-sql-formatter (0.0.6)
+    archive-zip (0.11.0)
+      io-like (~> 0.3.0)
     arel (8.0.0)
     arrayfields (4.9.2)
     ast (2.4.0)
@@ -124,15 +117,18 @@ GEM
       aws-sdk-core (= 2.11.62)
     aws-sigv4 (1.0.2)
     bcrypt (3.1.12)
+    bindex (0.5.0)
+    bootsnap (1.3.1)
+      msgpack (~> 1.0)
     browser (2.5.3)
     builder (3.2.3)
-    capybara (3.2.1)
+    capybara (2.18.0)
       addressable
       mini_mime (>= 0.1.3)
-      nokogiri (~> 1.8)
-      rack (>= 1.6.0)
-      rack-test (>= 0.6.3)
-      xpath (~> 3.1)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (>= 2.0, < 4.0)
     carmen (1.1.1)
       activesupport (>= 3.0.0)
     carrierwave_direct (0.0.15)
@@ -143,6 +139,11 @@ GEM
     checkr-official (1.5.2)
       json (>= 1.8.1)
       rest-client (>= 1.4)
+    childprocess (0.9.0)
+      ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (1.2.0)
+      archive-zip (~> 0.10)
+      nokogiri (~> 1.8)
     chronic (0.10.2)
     churn (1.0.2)
       chronic (>= 0.2.3)
@@ -182,7 +183,6 @@ GEM
       addressable
     currencies (0.4.2)
     dalli (2.7.8)
-    database_cleaner (1.7.0)
     datagrid (1.5.8)
       rails (>= 4.0)
     diff-lcs (1.3)
@@ -403,6 +403,7 @@ GEM
     indefinite_article (0.2.4)
       activesupport
     inflecto (0.0.2)
+    io-like (0.3.0)
     ipaddress (0.8.3)
     jmespath (1.4.0)
     jquery-rails (4.3.3)
@@ -443,13 +444,14 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    msgpack (1.2.4)
     multi_json (1.13.1)
     multi_xml (0.6.0)
     mustermann (1.0.2)
     netrc (0.11.0)
     newrelic_rpm (3.18.1.330)
     nio4r (2.3.1)
-    nokogiri (1.8.2)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     normalize-rails (4.1.1)
     oink (0.10.1)
@@ -490,7 +492,7 @@ GEM
     rack-proxy (0.6.4)
       rack
     rack-rewrite (1.5.1)
-    rack-test (1.0.0)
+    rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rack-timeout (0.5.1)
     rails (5.1.6)
@@ -575,6 +577,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (3.13.1)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.2)
     sexp_processor (4.11.0)
     sidekiq (4.2.10)
       concurrent-ruby (~> 1.0)
@@ -586,6 +591,11 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.2)
       tilt (~> 2.0)
+    spring (2.0.2)
+      activesupport (>= 4.2)
+    spring-watcher-listen (2.0.1)
+      listen (>= 2.7, < 4.0)
+      spring (>= 1.2, < 3.0)
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -615,6 +625,11 @@ GEM
     unicode-display_width (1.4.0)
     uuidtools (2.1.5)
     vcr (3.0.3)
+    web-console (3.6.2)
+      actionview (>= 5.0)
+      activemodel (>= 5.0)
+      bindex (>= 0.4.0)
+      railties (>= 5.0)
     webmock (3.4.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -640,13 +655,15 @@ DEPENDENCIES
   autoprefixer-rails (~> 6.7)
   aws-sdk (~> 2.11)
   bcrypt (~> 3.1)
+  bootsnap (>= 1.1.0)
   browser (~> 2.5)
-  capybara-webkit!
+  capybara (~> 2.13)
   carmen (~> 1.1)
   carrierwave!
   carrierwave_direct (~> 0.0)
   casting (~> 0.7)
   checkr-official (~> 1.5)
+  chromedriver-helper
   churn (~> 1.0)
   city-state!
   clipboard-rails (~> 1.7)
@@ -657,7 +674,6 @@ DEPENDENCIES
   country_state_select!
   createsend (~> 4.1)
   dalli (~> 2.7)
-  database_cleaner (~> 1.7)
   datagrid (~> 1.5)
   dotenv-rails (~> 2.4)
   dropzonejs-rails (~> 0.8)
@@ -676,7 +692,6 @@ DEPENDENCIES
   indefinite_article (~> 0.2)
   jquery-rails (~> 4.3)
   jquery-ui-rails (~> 6.0)
-  launchy (~> 2.4)
   letter_opener (~> 1.6)
   listen (~> 3.1)
   lodash-rails (~> 4.17)
@@ -700,17 +715,21 @@ DEPENDENCIES
   rails (~> 5.1)
   rails-controller-testing (~> 1.0)
   rails-i18n (~> 5.1)
-  rspec-rails (~> 3.7)
+  rspec-rails
   sass-rails (~> 5.0)
+  selenium-webdriver
   sidekiq (~> 4.2)
   simple_form!
   sinatra (~> 2.0)
+  spring
+  spring-watcher-listen (~> 2.0.0)
   textacular!
   timecop (~> 0.9)
   timezone (~> 1.2)
   turbolinks (~> 5.1)
   uglifier (~> 3.2)
   vcr (~> 3.0)
+  web-console (>= 3.3.0)
   webmock (~> 3.4)
   webpacker (~> 3.5)
   will_paginate (~> 3.1)
@@ -719,4 +738,4 @@ RUBY VERSION
    ruby 2.5.0p0
 
 BUNDLED WITH
-   1.16.2
+   1.16.3
