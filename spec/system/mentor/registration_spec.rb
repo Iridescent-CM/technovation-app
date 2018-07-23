@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Register as a mentor" do
+RSpec.describe "Register as a mentor", :js do
   before do
     allow(SubscribeEmailListJob).to receive(:perform_later)
 
@@ -11,7 +11,7 @@ RSpec.feature "Register as a mentor" do
     fill_in "First name", with: "Mentor"
     fill_in "Last name", with: "McGee"
 
-    select_date Date.today - 31.years, from: "Date of birth"
+    select_chosen_date Date.today - 31.years, from: "Date of birth"
 
     fill_in "School or company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
@@ -23,22 +23,22 @@ RSpec.feature "Register as a mentor" do
     click_button "Create Your Account"
   end
 
-  scenario "Redirected to mentor dashboard" do
+  it "redirects to the mentor dashboard" do
     expect(current_path).to eq(mentor_dashboard_path)
   end
 
-  scenario "saves the mentor type" do
+  it "saves the mentor type" do
     expect(MentorProfile.last.mentor_type).not_to be_nil
   end
 
-  scenario "signup attempt attached" do
+  it "attaches the signup attempt" do
     attempt = SignupAttempt.find_by(
       account_id: MentorProfile.last.account_id
     )
     expect(attempt).to be_present
   end
 
-  scenario "Email list subscribed" do
+  it "Email list subscribed" do
     expect(SubscribeEmailListJob).to have_received(:perform_later)
       .with(
         "mentor@mentor.com",
