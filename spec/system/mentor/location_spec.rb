@@ -31,8 +31,6 @@ RSpec.describe "Mentors register with their location", :js do
     fill_in "Country / Territory", with: "United States"
     click_button "Next"
 
-    account = Account.find_by(email: "mentor@mentor.com")
-
     visit mentor_profile_path(anchor: '!location')
     expect(page).to have_content("Chicago, IL, United States")
   end
