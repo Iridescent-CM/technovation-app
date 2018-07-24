@@ -6,6 +6,14 @@ module ApplicationHelper
     regional_ambassador
   }
 
+  def safe_time_ago_in_words(time, postfix = nil)
+    if time
+      time_ago_in_words(time) + (" #{postfix}" if postfix)
+    else
+      "never"
+    end
+  end
+
   def determine_manifest
     namespace = controller_path.split("/").first
 
