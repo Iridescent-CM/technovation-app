@@ -15,12 +15,8 @@ module Public
         "Bank of America"
       ]
 
-      filtered_companies = companies.select{ |company|
-        company.downcase().include? params[:q].downcase()
-      }
-
       render json: {
-        attributes: filtered_companies,
+        attributes: companies,
       }
     end
   end

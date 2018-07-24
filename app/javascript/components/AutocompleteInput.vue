@@ -19,6 +19,7 @@ export default {
   data() {
     return {
       autoCompleteInstance: null,
+      mutableOptions: [],
     }
   },
 
@@ -47,9 +48,18 @@ export default {
   },
 
   created () {
+    if (this.url !== '') {
+      window.axios.get(this.url)
+        .then((response) => {
+          this.mutableOptions = response.data.attributes
+        })
+    } else {
+      this.mutableOptions = this.options
+    }
+
     this.getSuggestionsDebounced = debounce((term, suggest) => {
       this.getSuggestions(term, suggest)
-    })
+    }, 250)
   },
 
   mounted () {
@@ -77,24 +87,14 @@ export default {
     getSuggestions (term, suggest) {
       const query = term.toLowerCase()
 
-      if (this.url !== '') {
-        window.axios.get(this.url, {
-          params: {
-            q: query,
-          },
-        })
-        .then((response) => {
-          suggest(response.data.attributes)
-        })
-      } else {
-        const matches = []
-        for (let i = 0; i < this.options.length; i += 1) {
-          if (this.options[i].toLowerCase().includes(query)) {
-            matches.push(this.options[i])
-          }
+      const matches = []
+      for (let i = 0; i < this.mutableOptions.length; i += 1) {
+        if (this.mutableOptions[i].toLowerCase().includes(query)) {
+          matches.push(this.mutableOptions[i])
         }
-        suggest(matches)
       }
+
+      suggest(matches)
     },
   },
 }

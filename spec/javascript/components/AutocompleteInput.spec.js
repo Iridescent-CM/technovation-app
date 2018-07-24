@@ -7,21 +7,28 @@ describe('AutocompleteInput Vue component', () => {
 
   let wrapper
 
+  function propsData(propsToMerge = {}) {
+    const propsData = {
+      name: 'input_name',
+      id: 'input_id',
+      url: '',
+      options: [
+        'Apple',
+        'Orange',
+        'Grape',
+        'Gravy',
+        'Strawberry',
+      ],
+    }
+
+    return Object.assign({}, propsData, propsToMerge)
+  }
+
+
   beforeEach(() => {
     wrapper = shallowMount(AutocompleteInput, {
+      propsData: propsData(),
       attachToDocument: true,
-      propsData: {
-        name: 'input_name',
-        id: 'input_id',
-        url: '',
-        options: [
-          'Apple',
-          'Orange',
-          'Grape',
-          'Gravy',
-          'Strawberry',
-        ],
-      },
     })
 
     axios.get.mockClear()
@@ -72,12 +79,61 @@ describe('AutocompleteInput Vue component', () => {
     it('sets the correct initial state', () => {
       expect(AutocompleteInput.data()).toEqual({
         autoCompleteInstance: null,
+        mutableOptions: [],
       })
     })
 
   })
 
   describe('created hook', () => {
+
+    beforeEach(() => {
+      axios.mockResponseOnce('get', {
+        attributes: [
+          'Rock',
+          'Paper',
+          'Scissors',
+        ],
+      })
+    })
+
+    it('populates mutableOptions via AJAX if url prop is supplied', (done) => {
+      wrapper = shallowMount(AutocompleteInput, {
+        propsData: propsData({
+          url: '/test/url',
+        }),
+        attachToDocument: true,
+      })
+
+      setImmediate(() => {
+        expect(wrapper.vm.mutableOptions).toEqual([
+          'Rock',
+          'Paper',
+          'Scissors',
+        ])
+        done()
+      })
+    })
+
+    it('populates mutableOptions from options prop if url is not supplied', (done) => {
+      wrapper = shallowMount(AutocompleteInput, {
+        propsData: propsData({
+          url: '',
+        }),
+        attachToDocument: true,
+      })
+
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.vm.mutableOptions).toEqual([
+          'Apple',
+          'Orange',
+          'Grape',
+          'Gravy',
+          'Strawberry',
+        ])
+        done()
+      })
+    })
 
     it('creates debounced getSuggestions function', () => {
       jest.useFakeTimers()
@@ -89,7 +145,7 @@ describe('AutocompleteInput Vue component', () => {
 
       wrapper.vm.getSuggestionsDebounced('Test', testFunction)
 
-      jest.advanceTimersByTime(400)
+      jest.advanceTimersByTime(150)
 
       expect(getSuggestionsSpy).not.toHaveBeenCalled()
 
@@ -137,59 +193,15 @@ describe('AutocompleteInput Vue component', () => {
 
     describe('getSuggestions', () => {
 
-      beforeEach(() => {
-        axios.mockResponseOnce('get', {
-          attributes: [
-            'Grape',
-            'Gravy',
-          ],
-        })
-      })
+      it('makes filtered suggestions from mutableOptions', () => {
+        const testFunction = jest.fn(() => {})
 
-      it('makes GET request to fetch suggestions and uses them with callback ' +
-        'if url prop is not empty', (done) => {
-          const testFunction = jest.fn(() => {})
+        wrapper.vm.getSuggestions('GRA', testFunction)
 
-          wrapper.setProps({
-            url: '/test/url',
-          })
-
-          wrapper.vm.getSuggestions('GRA', testFunction)
-
-          wrapper.vm.$nextTick(() => {
-            expect(axios.get).toHaveBeenCalledWith(
-              '/test/url',
-              {
-                params: {
-                  q: 'gra',
-                },
-              }
-            )
-
-            expect(testFunction).toHaveBeenCalledTimes(1)
-            expect(testFunction).toHaveBeenCalledWith([
-              'Grape',
-              'Gravy',
-            ])
-            done()
-          })
-      })
-
-      it('makes suggestions from options prop if url prop is not empty', (done) => {
-          const testFunction = jest.fn(() => {})
-
-          wrapper.vm.getSuggestions('GRA', testFunction)
-
-          wrapper.vm.$nextTick(() => {
-            expect(axios.get).not.toHaveBeenCalled()
-
-            expect(testFunction).toHaveBeenCalledTimes(1)
-            expect(testFunction).toHaveBeenCalledWith([
-              'Grape',
-              'Gravy',
-            ])
-            done()
-          })
+        expect(testFunction).toHaveBeenCalledWith([
+          'Grape',
+          'Gravy',
+        ])
       })
     })
 
