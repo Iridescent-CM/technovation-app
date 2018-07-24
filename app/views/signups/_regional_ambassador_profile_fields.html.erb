@@ -5,7 +5,12 @@
 <% end %>
 
 <%= f.input :organization_company_name,
-  label: t("models.regional_ambassador_profile.organization_company_name") %>
+  as: :autocomplete,
+  label: t("models.regional_ambassador_profile.organization_company_name"),
+  input_html: {
+    url: "/public/top_companies",
+    no_options_text: "Please begin typing to select your company from a list or add your own"
+  } %>
 
 <%= f.input :job_title,
   label: t("models.regional_ambassador_profile.job_title") %>
