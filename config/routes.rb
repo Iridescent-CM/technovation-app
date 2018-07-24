@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable', constraints: AdminConstraint.new
 
   get '/sidekiq' => 'signins#new'
-  get '/validate_email' => 'email_validations#new'
 
   resource :survey_completion, only: :show
 
@@ -300,6 +299,7 @@ Rails.application.routes.draw do
     resources :embed_codes, only: :show
 
     resources :top_companies, only: :index
+    get '/email_validations/new' => 'email_validations#new'
   end
 
   namespace :registration do
