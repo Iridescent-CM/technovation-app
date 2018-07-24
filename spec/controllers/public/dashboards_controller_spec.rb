@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Application::DashboardsController do
+RSpec.describe Public::DashboardsController do
   context "when visitors have a location cookie" do
     it "does not add a cookie" do
       controller.set_cookie(CookieNames::IP_GEOLOCATION, '[31.123, -45.678]')

@@ -1,0 +1,13 @@
+<% if SeasonToggles.registration_open? %>
+  <div class="grid grid--justify-space-around margin--t-xlarge">
+    <div class="grid__col-12 grid__col-md-10">
+      <%= render 'signup_wizard', previous_attempt: @signup_attempt %>
+    </div>
+  </div>
+<% else %>
+  <div class="grid grid--justify-space-around">
+    <div class="panel grid__col-12 grid__col-md-6">
+      <%= render 'off_season_splash' %>
+    </div>
+  </div>
+<% end %>

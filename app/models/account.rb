@@ -680,7 +680,7 @@ class Account < ActiveRecord::Base
     elsif regional_ambassador_profile.present?
       "#{regional_ambassador_profile.status}_regional_ambassador"
     else
-      "application"
+      "public"
     end
   end
 

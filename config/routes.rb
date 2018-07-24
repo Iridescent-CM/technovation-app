@@ -291,11 +291,8 @@ Rails.application.routes.draw do
     resource :certificate_overrides, only: :create
   end
 
-  namespace :application do
-    resource :dashboard, only: :show
-  end
-
   namespace :public do
+    resource :dashboard, only: :show
     resources :embed_codes, only: :show
 
     resources :top_companies, only: :index
@@ -351,5 +348,5 @@ Rails.application.routes.draw do
 
   resources :apps, only: :show
 
-  root to: "application/dashboards#show"
+  root to: "public/dashboards#show"
 end

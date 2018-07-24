@@ -1,4 +1,4 @@
-module Application
+module Public
   class DashboardsController < ApplicationController
     def show
       if current_account.authenticated?
@@ -8,7 +8,8 @@ module Application
               user_scope_dashbaord_path
         )
       else
-        @signup_attempt = SignupAttempt.new(email: params[:email])
+        token = get_cookie(CookieNames::SIGNUP_TOKEN)
+        @signup_attempt = SignupAttempt.find_by(wizard_token: token)
       end
     end
 
