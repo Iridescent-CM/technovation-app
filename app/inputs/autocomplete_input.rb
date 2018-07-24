@@ -9,6 +9,9 @@ class AutocompleteInput < SimpleForm::Inputs::Base
     merged_input_options[:id] = "#{object_name.to_s}_#{attribute_name.to_s}"
     merged_input_options[:name] = "#{object_name.to_s}[#{attribute_name.to_s}]"
 
+    merged_input_options["no-options-text"] = merged_input_options[:no_options_text]
+    merged_input_options.delete(:no_options_text)
+
     template.content_tag(
       :div,
       template.content_tag("autocomplete-input", "", merged_input_options),

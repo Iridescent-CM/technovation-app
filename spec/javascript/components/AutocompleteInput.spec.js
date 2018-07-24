@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import axios from 'axios'
+import VueSelect from 'vue-select'
 
 import AutocompleteInput from 'components/AutocompleteInput'
 
@@ -38,21 +39,27 @@ describe('AutocompleteInput Vue component', () => {
     expect(AutocompleteInput.name).toEqual('autocomplete-input')
   })
 
+  it('contains the vue-select component', () => {
+    expect(AutocompleteInput.components).toEqual({
+      VueSelect,
+    })
+  })
+
   describe('props', () => {
 
     it('contains valid props', () => {
       expect(AutocompleteInput.props).toEqual({
-        name: {
-          type: String,
-          default: '',
-        },
-
         id: {
           type: String,
           default: '',
         },
 
-        url: {
+        name: {
+          type: String,
+          default: '',
+        },
+
+        noOptionsText: {
           type: String,
           default: '',
         },
@@ -60,6 +67,16 @@ describe('AutocompleteInput Vue component', () => {
         options: {
           type: Array,
           default: expect.any(Function),
+        },
+
+        url: {
+          type: String,
+          default: '',
+        },
+
+        value: {
+          type: String,
+          default: '',
         },
       })
     })
@@ -80,6 +97,7 @@ describe('AutocompleteInput Vue component', () => {
       expect(AutocompleteInput.data()).toEqual({
         autoCompleteInstance: null,
         mutableOptions: [],
+        mutableValue: null,
       })
     })
 
@@ -135,102 +153,25 @@ describe('AutocompleteInput Vue component', () => {
       })
     })
 
-    it('creates debounced getSuggestions function', () => {
-      jest.useFakeTimers()
-
-      const testFunction = jest.fn(() => {})
-      const getSuggestionsSpy = spyOn(wrapper.vm, 'getSuggestions')
-
-      expect(getSuggestionsSpy).not.toHaveBeenCalled()
-
-      wrapper.vm.getSuggestionsDebounced('Test', testFunction)
-
-      jest.advanceTimersByTime(150)
-
-      expect(getSuggestionsSpy).not.toHaveBeenCalled()
-
-      jest.advanceTimersByTime(101)
-
-      expect(getSuggestionsSpy).toHaveBeenCalledWith('Test', testFunction)
-    })
-
-  })
-
-  describe('mounted hook', () => {
-
-    it('initializes autoCompleteInstance using autoComplete', () => {
-      expect(wrapper.vm.autoCompleteInstance).not.toBe(null)
-      expect(wrapper.vm.autoCompleteInstance.destroy)
-        .toEqual(expect.any(Function))
-    })
-
-  })
-
-  describe('methods', () => {
-
-    describe('initializeAutocomplete', () => {
-
-      it('destroys the autoCompleteInstance if already initialized', () => {
-        const destroySpy = spyOn(wrapper.vm.autoCompleteInstance, 'destroy')
-
-        wrapper.vm.initializeAutocomplete()
-
-        expect(destroySpy).toHaveBeenCalledTimes(1)
+    it('populates mutableValue from value prop if supplied', (done) => {
+      wrapper = shallowMount(AutocompleteInput, {
+        propsData: propsData({
+          value: 'Hello',
+        }),
+        attachToDocument: true,
       })
 
-      it('initializes the autoComplete widget on the input', () => {
-        wrapper.vm.autoCompleteInstance.destroy()
-        wrapper.vm.autoCompleteInstance = null
-
-        wrapper.vm.initializeAutocomplete()
-
-        expect(wrapper.vm.autoCompleteInstance).not.toEqual(null)
-        expect(wrapper.vm.autoCompleteInstance.destroy)
-          .toEqual(expect.any(Function))
-      })
-
-    })
-
-    describe('getSuggestions', () => {
-
-      it('makes filtered suggestions from mutableOptions', () => {
-        const testFunction = jest.fn(() => {})
-
-        wrapper.vm.getSuggestions('GRA', testFunction)
-
-        expect(testFunction).toHaveBeenCalledWith([
-          'Grape',
-          'Gravy',
-        ])
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.vm.mutableValue).toEqual('Hello')
+        done()
       })
     })
 
-  })
-
-  describe('auto-complete functionality', () => {
-
-    it('calls getSuggestionsDebounced for input on change', () => {
-      jest.useFakeTimers()
-
-      spyOn(wrapper.vm, 'getSuggestionsDebounced')
-
-      const input = wrapper.find('input').element
-      input.value = 'New value'
-
-      input.dispatchEvent(
-        new KeyboardEvent(
-          'keyup',
-          {
-            keyCode: 25,
-            which: 25,
-          }
-        )
-      )
-
-      jest.advanceTimersByTime(2000)
-
-      expect(input.value).toEqual('New value')
-      expect(wrapper.vm.getSuggestionsDebounced).toHaveBeenCalledTimes(1)
+    it('sets mutableValue to null if value prop is not supplied', (done) => {
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.vm.mutableValue).toEqual(null)
+        done()
+      })
     })
 
   })

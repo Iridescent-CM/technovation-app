@@ -1,40 +1,54 @@
 <template>
   <div class="autocomplete-input">
     <input
-      type="text"
+      type="hidden"
       :name="name"
-      :id="id"
+      :value="mutableValue"
     />
+    <vue-select
+      :input-id="id"
+      :options="mutableOptions"
+      v-model="mutableValue"
+      taggable
+    >
+      <template slot="no-options">
+        {{ noOptionsText }}
+      </template>
+    </vue-select>
   </div>
 </template>
 
 <script>
 
-import { debounce } from '../utilities/utilities'
-import autoComplete from '../../../app/assets/javascripts/auto-complete'
+import VueSelect from 'vue-select'
 
 export default {
   name: 'autocomplete-input',
+
+  components: {
+    VueSelect,
+  },
 
   data() {
     return {
       autoCompleteInstance: null,
       mutableOptions: [],
+      mutableValue: null,
     }
   },
 
   props: {
-    name: {
-      type: String,
-      default: '',
-    },
-
     id: {
       type: String,
       default: '',
     },
 
-    url: {
+    name: {
+      type: String,
+      default: '',
+    },
+
+    noOptionsText: {
       type: String,
       default: '',
     },
@@ -44,6 +58,16 @@ export default {
       default() {
         return []
       },
+    },
+
+    url: {
+      type: String,
+      default: '',
+    },
+
+    value: {
+      type: String,
+      default: '',
     },
   },
 
@@ -57,45 +81,9 @@ export default {
       this.mutableOptions = this.options
     }
 
-    this.getSuggestionsDebounced = debounce((term, suggest) => {
-      this.getSuggestions(term, suggest)
-    }, 250)
-  },
-
-  mounted () {
-    this.initializeAutocomplete()
-  },
-
-  methods: {
-    initializeAutocomplete () {
-      if (
-        this.autoCompleteInstance !== null
-        && typeof this.autoCompleteInstance.destroy !== 'undefined'
-      ) {
-        this.autoCompleteInstance.destroy()
-      }
-
-      this.autoCompleteInstance = new autoComplete({
-        selector: '.autocomplete-input > input',
-        minChars: 2,
-        source: (term, suggest) => {
-          this.getSuggestionsDebounced(term, suggest)
-        },
-      })
-    },
-
-    getSuggestions (term, suggest) {
-      const query = term.toLowerCase()
-
-      const matches = []
-      for (let i = 0; i < this.mutableOptions.length; i += 1) {
-        if (this.mutableOptions[i].toLowerCase().includes(query)) {
-          matches.push(this.mutableOptions[i])
-        }
-      }
-
-      suggest(matches)
-    },
+    if (this.value.length) {
+      this.mutableValue = this.value
+    }
   },
 }
 </script>
