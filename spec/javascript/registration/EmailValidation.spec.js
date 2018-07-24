@@ -33,7 +33,7 @@ describe('EmailValidation Vue component', () => {
       wrapper.vm.validateEmailInput()
 
       expect(axios.get).toHaveBeenCalledWith(
-        `/validate_email?address=${encodeURIComponent('joe@joesak.com')}`
+        `/public/email_validations/new?address=${encodeURIComponent('joe@joesak.com')}`
       )
     })
 
