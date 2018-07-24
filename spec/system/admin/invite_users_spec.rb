@@ -69,14 +69,14 @@ RSpec.describe "Admins invite users to signup", :js do
       when :student
         fill_in "School name", with: "John Hughes High."
       when :mentor
-        fill_in "School or company name", with: "John Hughes High."
+        fill_in_vue_select "School or company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
         select "Parent", from: "I am a..."
       when :judge
-        fill_in "Company name", with: "John Hughes High."
+        fill_in_vue_select "Company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
       when :regional_ambassador
-        fill_in "Organization/company name", with: "John Hughes High."
+        fill_in_vue_select "Organization/company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
         fill_in "Tell us about yourself",
           with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
@@ -151,7 +151,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     select_chosen_date birthdate, from: "Date of birth"
 
-    fill_in "Organization/company name", with: "John Hughes High."
+    fill_in_vue_select "Organization/company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
     fill_in "Tell us about yourself",
       with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
@@ -191,7 +191,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     select_chosen_date birthdate, from: "Date of birth"
 
-    fill_in "Organization/company name", with: "John Hughes High."
+    fill_in_vue_select "Organization/company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
     fill_in "Tell us about yourself",
       with: "Lorem ipsum dolor sit amet, " +

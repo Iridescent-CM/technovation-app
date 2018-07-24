@@ -22,13 +22,11 @@ RSpec.describe "Judges sign up at special link", :js do
 
     visit judge_signup_path(invitation: invitation.token)
 
-    expect(current_path).to eq(judge_signup_path)
-
     fill_in "Email", with: "my@email.com"
     fill_in "First name", with: "Judgey"
     fill_in "Last name", with: "McJudgeface"
     select_chosen_date 20.years.ago, from: "Date of birth"
-    fill_in "Company name", with: "testing"
+    fill_in_vue_select "Company name", with: "testing"
     fill_in "Job title", with: "test"
     fill_in "Create a password", with: "secret1234"
 

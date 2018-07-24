@@ -13,7 +13,7 @@ RSpec.describe "Mentors register with their location", :js do
 
     select_chosen_date Date.today - 31.years, from: "Date of birth"
 
-    fill_in "School or company name", with: "John Hughes High."
+    fill_in_vue_select "School or company name", with: "John Hughes High"
     fill_in "Job title", with: "Janitor / Man of the Year"
 
     MentorProfile.mentor_types.keys.shuffle.each do |mentor_type|
