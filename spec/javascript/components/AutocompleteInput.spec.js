@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import axios from 'axios'
 import VueSelect from 'vue-select'
 
@@ -10,8 +10,8 @@ describe('AutocompleteInput Vue component', () => {
 
   function propsData(propsToMerge = {}) {
     const propsData = {
-      name: 'input_name',
-      id: 'input_id',
+      name: 'this_is_the_input_name',
+      id: 'this_is_the_input_id',
       url: '',
       options: [
         'Apple',
@@ -170,6 +170,89 @@ describe('AutocompleteInput Vue component', () => {
     it('sets mutableValue to null if value prop is not supplied', (done) => {
       wrapper.vm.$nextTick(() => {
         expect(wrapper.vm.mutableValue).toEqual(null)
+        done()
+      })
+    })
+
+  })
+
+  describe('watchers', () => {
+
+    describe('value', () => {
+
+      it('sets the mutableValue if new value is a valid string input', (done) => {
+        wrapper.setProps({
+          value: 'New',
+        })
+
+        wrapper.vm.$nextTick(() => {
+          expect(wrapper.vm.mutableValue).toEqual('New')
+          done()
+        })
+      })
+
+      it('sets the mutableValue to null if new value is null', (done) => {
+        wrapper.setProps({
+          value: null,
+        })
+
+        wrapper.vm.$nextTick(() => {
+          expect(wrapper.vm.mutableValue).toEqual(null)
+          done()
+        })
+      })
+
+      it('sets the mutableValue to null if new value is empty string', (done) => {
+        wrapper.setProps({
+          value: '',
+        })
+
+        wrapper.vm.$nextTick(() => {
+          expect(wrapper.vm.mutableValue).toEqual(null)
+          done()
+        })
+      })
+    })
+
+  })
+
+  describe('markup and interactions', () => {
+
+    beforeEach(() => {
+      wrapper = mount(AutocompleteInput, {
+        propsData: propsData(),
+        attachToDocument: true,
+      })
+    })
+
+    it('initializes a hidden input to store the value for submission', (done) => {
+      wrapper.setProps({
+        value: 'Bam!',
+      })
+
+      wrapper.vm.$nextTick(() => {
+        const inputAttributes = wrapper.find({ ref: 'valueInput' }).attributes()
+
+        expect(inputAttributes.type).toEqual('hidden')
+        expect(inputAttributes.name).toEqual(wrapper.vm.name)
+        expect(inputAttributes.value).toEqual(wrapper.vm.mutableValue)
+        expect(inputAttributes.value).toEqual('Bam!')
+        done()
+      })
+    })
+
+    it('initializes the vue-select with the required properties', (done) => {
+      wrapper.setProps({
+        value: 'Howdy',
+      })
+
+      wrapper.vm.$nextTick(() => {
+        const vueSelectProps = wrapper.find(VueSelect).props()
+
+        expect(vueSelectProps.inputId).toEqual(wrapper.vm.id)
+        expect(vueSelectProps.options).toEqual(wrapper.vm.mutableOptions)
+        expect(vueSelectProps.value).toEqual('Howdy')
+        expect(vueSelectProps.taggable).toBe(true)
         done()
       })
     })

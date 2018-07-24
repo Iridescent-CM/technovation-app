@@ -1,6 +1,7 @@
 <template>
   <div class="autocomplete-input">
     <input
+      ref="valueInput"
       type="hidden"
       :name="name"
       :value="mutableValue"
@@ -84,6 +85,16 @@ export default {
     if (this.value.length) {
       this.mutableValue = this.value
     }
+  },
+
+  watch: {
+    value (newValue) {
+      if (!newValue) {
+        this.mutableValue = null
+      } else {
+        this.mutableValue = this.value
+      }
+    },
   },
 }
 </script>
