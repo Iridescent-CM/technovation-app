@@ -78,6 +78,18 @@
     }
   }
 
+  &.tabs--remove-bg {
+    background: none !important;
+
+    .tabs__menu {
+      background: none !important;
+
+      .tabs__menu-link--active {
+        background: none !important;
+      }
+    }
+  }
+
   .tabs__tab-content {
     position: relative;
     margin-top: -2px;
