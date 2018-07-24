@@ -11,7 +11,7 @@
 <script>
 
 import { debounce } from '../utilities/utilities'
-import autoComplete from '../../../vendor/assets/javascripts/auto-complete.min'
+import autoComplete from '../../../app/assets/javascripts/auto-complete'
 
 export default {
   name: 'autocomplete-input',
