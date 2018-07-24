@@ -8,15 +8,15 @@ import LocationForm from '../../location/components/LocationForm'
 Vue.use(VueRouter)
 
 export const routes = [
-  { path: '/', redirect: { name: 'email-validation' } },
+  { path: '/', redirect: { name: 'email' } },
   {
     path: '/email',
-    name: 'email-validation',
+    name: 'email',
     component: EmailValidation,
   },
   {
     path: '/password',
-    name: 'password-validation',
+    name: 'password',
     component: PasswordValidation,
   },
   {

@@ -8,6 +8,9 @@ document.addEventListener('turbolinks:load', () => {
     new Vue({
       el: wizardElem,
       router,
+      created() {
+        router.replace({ name: 'email' })
+      },
     })
   }
 })
