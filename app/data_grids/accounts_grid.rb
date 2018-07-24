@@ -77,10 +77,21 @@ class AccountsGrid
     end
   end
 
-  column :company_name,
-    order: "regional_ambassador_profiles.organization_company_name, " +
-           "mentor_profiles.school_company_name, " +
-           "judge_profiles.company_name" do
+  column :company_name, order: ->(scope) {
+    scope.includes(
+      :regional_ambassador_profile,
+      :mentor_profile,
+      :judge_profile,
+    ).references(
+      :regional_ambassador_profiles,
+      :mentor_profiles,
+      :judge_profiles,
+    ).order(
+      "regional_ambassador_profiles.organization_company_name, " +
+      "mentor_profiles.school_company_name, " +
+      "judge_profiles.company_name"
+    )
+  } do
     if student_profile.present?
       "-"
     elsif regional_ambassador_profile.present?
