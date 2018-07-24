@@ -12,9 +12,9 @@ module Public
       )
 
       response = if !!account
-                   email_taken_response
+                   MailgunResponse.new(email_taken_response)
                  else
-                   get_mailgun_response(address)
+                   MailgunResponse.new(get_mailgun_response(address))
                  end
 
       attempt = SignupAttempt.find_by(
@@ -22,19 +22,18 @@ module Public
         address.strip.downcase
       )
 
-      if !attempt && response[:is_valid] && !response[:is_taken]
-        attempt = SignupAttempt.create!({
+      if !attempt && response.is_valid && !response.is_taken
+        attempt = SignupAttempt.create!(
           email: address,
           status: :wizard,
-        })
+        )
       end
 
       if !!attempt
         set_cookie(CookieNames::SIGNUP_TOKEN, attempt.wizard_token)
       end
 
-      mailgun_response = MailgunResponse.new(response)
-      render json: MailgunResponseSerializer.new(mailgun_response).serialized_json
+      render json: MailgunResponseSerializer.new(response).serialized_json
     end
 
     private

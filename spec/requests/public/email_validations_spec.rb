@@ -44,6 +44,16 @@ RSpec.describe Public::EmailValidationsController do
         it "renders the email not is_taken" do
           expect(json['is_taken']).to be(nil)
         end
+
+        it "creates a wizarding signup attempt" do
+          attempt = SignupAttempt.find_by!(email: email)
+          expect(attempt).to be_wizard
+        end
+
+        it "sets the signup attempt signup token in cookies" do
+          attempt = SignupAttempt.find_by!(email: email)
+          expect(controller.get_cookie(CookieNames::SIGNUP_TOKEN)).to eq(attempt.wizard_token)
+        end
       end
     end
   end

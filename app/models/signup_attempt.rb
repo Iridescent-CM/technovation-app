@@ -1,7 +1,14 @@
 class SignupAttempt < ActiveRecord::Base
-  has_secure_password
+  has_secure_password validations: false
 
-  enum status: %i{pending active registered temporary_password}
+  enum status: %i{
+    pending
+    active
+    registered
+    temporary_password
+    wizard
+  }
+
   belongs_to :account, required: false
 
   before_validation -> {
@@ -9,10 +16,19 @@ class SignupAttempt < ActiveRecord::Base
   }
 
   validates :email, presence: true, email: true
-  validates :password, length: { minimum: 8, on: :create }
+
+  validates :password,
+   presence: true,
+   length: { minimum: 8 },
+   if: :password_required?
 
   has_secure_token :pending_token
   has_secure_token :activation_token
   has_secure_token :signup_token
   has_secure_token :admin_permission_token
+  has_secure_token :wizard_token
+
+  def password_required?
+    new_record? && !wizard?
+  end
 end
