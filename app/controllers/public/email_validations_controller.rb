@@ -13,8 +13,9 @@ module Public
 
       if !!account
         response = {
+          address: address,
           is_valid: true,
-          mailbox_verification: true,
+          mailbox_verification: "true",
           is_taken: true,
         }
       else
@@ -47,7 +48,8 @@ module Public
         set_cookie(CookieNames::SIGNUP_TOKEN, attempt.wizard_token)
       end
 
-      render json: response
+      mailgun_response = MailgunResponse.new(response)
+      render json: MailgunResponseSerializer.new(mailgun_response).serialized_json
     end
   end
 end
