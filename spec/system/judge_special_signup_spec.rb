@@ -24,8 +24,6 @@ RSpec.describe "Judges sign up at special link", :js do
 
     expect(current_path).to eq(judge_signup_path)
 
-    click_button "Create Your Account"
-
     fill_in "Email", with: "my@email.com"
     fill_in "First name", with: "Judgey"
     fill_in "Last name", with: "McJudgeface"
