@@ -55,6 +55,24 @@ RSpec.describe Public::EmailValidationsController do
           expect(controller.get_cookie(CookieNames::SIGNUP_TOKEN)).to eq(attempt.wizard_token)
         end
       end
+
+      context "and it matches an existing signup attempt" do
+        it "sets the signup attempt signup token in cookies" do
+          email = "existing@attempt.com"
+          encoded = URI.encode(email)
+
+          SignupAttempt.create!(email: email, status: :wizard)
+
+          expect {
+            get "/public/email_validations/new?address=#{encoded}"
+          }.not_to change {
+            SignupAttempt.count
+          }
+
+          attempt = SignupAttempt.find_by!(email: email)
+          expect(controller.get_cookie(CookieNames::SIGNUP_TOKEN)).to eq(attempt.wizard_token)
+        end
+      end
     end
   end
 end

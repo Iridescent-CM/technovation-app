@@ -5,18 +5,28 @@ module Public
   class EmailValidationsController < PublicController
     def new
       address = params.fetch(:address)
+      response = get_email_validation_response(address)
 
+      handle_signup_attempt(address, response)
+
+      render json: MailgunResponseSerializer.new(response).serialized_json
+    end
+
+    private
+    def get_email_validation_response(address)
       account = Account.find_by(
         "lower(trim(unaccent(email))) = ?",
         address.strip.downcase
       )
 
-      response = if !!account
-                   MailgunResponse.new(email_taken_response)
-                 else
-                   MailgunResponse.new(get_mailgun_response(address))
-                 end
+      if !!account
+        MailgunResponse.new(email_taken_response)
+      else
+        MailgunResponse.new(get_mailgun_response(address))
+      end
+    end
 
+    def handle_signup_attempt(address, response)
       attempt = SignupAttempt.find_by(
         "lower(trim(unaccent(email))) = ?",
         address.strip.downcase
@@ -32,11 +42,8 @@ module Public
       if !!attempt
         set_cookie(CookieNames::SIGNUP_TOKEN, attempt.wizard_token)
       end
-
-      render json: MailgunResponseSerializer.new(response).serialized_json
     end
 
-    private
     def email_taken_response
       {
         is_valid: true,
