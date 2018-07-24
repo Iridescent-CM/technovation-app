@@ -5,11 +5,11 @@ module Public
   class EmailValidationsController < PublicController
     def new
       address = params.fetch(:address)
-      response = get_email_validation_response(address)
+      resp = get_email_validation_response(address)
 
-      handle_signup_attempt(address, response)
+      handle_signup_attempt(address, resp)
 
-      render json: MailgunResponseSerializer.new(response).serialized_json
+      render json: MailgunResponseSerializer.new(resp).serialized_json
     end
 
     private
@@ -26,13 +26,13 @@ module Public
       end
     end
 
-    def handle_signup_attempt(address, response)
+    def handle_signup_attempt(address, resp)
       attempt = SignupAttempt.find_by(
         "lower(trim(unaccent(email))) = ?",
         address.strip.downcase
       )
 
-      if !attempt && response.is_valid && !response.is_taken
+      if !attempt && resp.is_valid && !resp.is_taken
         attempt = SignupAttempt.create!(
           email: address,
           status: :wizard,
@@ -40,6 +40,10 @@ module Public
       end
 
       if !!attempt
+        if attempt.wizard_token.blank?
+          attempt.regenerate_wizard_token
+        end
+
         set_cookie(CookieNames::SIGNUP_TOKEN, attempt.wizard_token)
       end
     end
