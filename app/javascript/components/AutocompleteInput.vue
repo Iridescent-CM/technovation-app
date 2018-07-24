@@ -1,5 +1,5 @@
 <template>
-  <div class="autocomplete-input">
+  <div class="margin--b-medium">
     <input
       ref="valueInput"
       type="hidden"
