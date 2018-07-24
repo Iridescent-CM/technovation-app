@@ -11,26 +11,11 @@ module Public
         address.strip.downcase
       )
 
-      if !!account
-        response = {
-          address: address,
-          is_valid: true,
-          mailbox_verification: "true",
-          is_taken: true,
-        }
-      else
-        response = HTTParty.get(
-          'https://api.mailgun.net/v3/address/private/validate',
-          query: {
-            address: address,
-            mailbox_verification: true,
-          },
-          basic_auth: {
-            username: 'api',
-            password: ENV.fetch("MAILGUN_PRIVATE_KEY"),
-          }
-        )
-      end
+      response = if !!account
+                   email_taken_response
+                 else
+                   get_mailgun_response(address)
+                 end
 
       attempt = SignupAttempt.find_by(
         "lower(trim(unaccent(email))) = ?",
@@ -50,6 +35,29 @@ module Public
 
       mailgun_response = MailgunResponse.new(response)
       render json: MailgunResponseSerializer.new(mailgun_response).serialized_json
+    end
+
+    private
+    def email_taken_response
+      {
+        is_valid: true,
+        mailbox_verification: "true",
+        is_taken: true,
+      }
+    end
+
+    def get_mailgun_response(address)
+      HTTParty.get(
+        'https://api.mailgun.net/v3/address/private/validate',
+        query: {
+          address: address,
+          mailbox_verification: true,
+        },
+        basic_auth: {
+          username: 'api',
+          password: ENV.fetch("MAILGUN_PRIVATE_KEY"),
+        }
+      )
     end
   end
 end
