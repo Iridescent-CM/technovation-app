@@ -6,7 +6,7 @@ import EmailValidation from 'registration/components/EmailValidation'
 describe('EmailValidation Vue component', () => {
   it('mounts with an email field', () => {
     const wrapper = shallowMount(EmailValidation)
-    wrapper.vm.email = 'joe@joesak.com'
+    wrapper.vm.mutableEmail = 'joe@joesak.com'
     expect(wrapper.find('input[type=email]').element.value).toEqual('joe@joesak.com')
   })
 
@@ -15,7 +15,7 @@ describe('EmailValidation Vue component', () => {
 
     const emailWatcherSpy = jest.spyOn(wrapper.vm, 'debouncedEmailWatcher')
 
-    wrapper.vm.email = 'joe@joesak.com'
+    wrapper.vm.mutableEmail = 'joe@joesak.com'
 
     expect(emailWatcherSpy).toHaveBeenCalledTimes(1)
   })
@@ -26,7 +26,7 @@ describe('EmailValidation Vue component', () => {
         watch: { email: jest.fn() },
       })
 
-      wrapper.vm.email = 'joe@joesak.com'
+      wrapper.vm.mutableEmail = 'joe@joesak.com'
 
       axios.mockResponseOnce('get', {})
 
@@ -46,7 +46,7 @@ describe('EmailValidation Vue component', () => {
         } }
       })
 
-      wrapper.vm.email = 'invalid'
+      wrapper.vm.mutableEmail = 'invalid'
       wrapper.vm.validateEmailInput()
 
       setImmediate(() => {
@@ -64,7 +64,7 @@ describe('EmailValidation Vue component', () => {
         } }
       })
 
-      wrapper.vm.email = 'something@disposable.com'
+      wrapper.vm.mutableEmail = 'something@disposable.com'
       wrapper.vm.validateEmailInput()
 
       setImmediate(() => {
@@ -82,7 +82,7 @@ describe('EmailValidation Vue component', () => {
         } }
       })
 
-      wrapper.vm.email = 'joe@gmil.com'
+      wrapper.vm.mutableEmail = 'joe@gmil.com'
       wrapper.vm.validateEmailInput()
 
       setImmediate(() => {
@@ -100,7 +100,7 @@ describe('EmailValidation Vue component', () => {
         } }
       })
 
-      wrapper.vm.email = 'exists@gmail.com'
+      wrapper.vm.mutableEmail = 'exists@gmail.com'
       wrapper.vm.validateEmailInput()
 
       setImmediate(() => {
@@ -118,7 +118,7 @@ describe('EmailValidation Vue component', () => {
         } }
       })
 
-      wrapper.vm.email = 'missing@gmail.com'
+      wrapper.vm.mutableEmail = 'missing@gmail.com'
       wrapper.vm.validateEmailInput()
 
       setImmediate(() => {
@@ -136,7 +136,7 @@ describe('EmailValidation Vue component', () => {
         } }
       })
 
-      wrapper.vm.email = 'taken@gmail.com'
+      wrapper.vm.mutableEmail = 'taken@gmail.com'
       wrapper.vm.validateEmailInput()
 
       setImmediate(() => {

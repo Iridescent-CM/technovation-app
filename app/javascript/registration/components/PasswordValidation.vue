@@ -1,34 +1,43 @@
 <template>
   <form
     id="password-form"
+    class="panel panel--contains-bottom-bar panel--contains-top-bar"
     @submit.prevent="handleSubmit"
   >
-    <label for="password">Password</label>
-
-    <Password
-      autocomplete="new-password"
-      placeholder="Use at least 8 characters"
-      v-model="password"
-      :toggle="true"
-      :secure-length="8"
-      @score="showScore"
-    />
-
-    <div
-      v-if="nextStepEnabled"
-      :class="['flash', flashForStrength]"
-    >
-      {{ strengthNextStepMsg }}
+    <div class="panel__top-bar">
+      Set your password
     </div>
 
-    <div class="text-align--right">
-      <button
-        class="button"
-        :disabled="!nextStepEnabled"
-        @click.prevent="handleSubmit"
+    <div class="panel__content">
+      <label for="password">Password</label>
+
+      <Password
+        autocomplete="new-password"
+        placeholder="Use at least 8 characters"
+        v-model="password"
+        :toggle="true"
+        :secure-length="8"
+        @score="showScore"
+      />
+
+      <div
+        v-if="nextStepEnabled"
+        :class="['flash', flashForStrength]"
       >
-        Next
-      </button>
+        {{ strengthNextStepMsg }}
+      </div>
+    </div>
+
+    <div class="panel__bottom-bar">
+      <div class="text-align--right">
+        <button
+          class="button"
+          :disabled="!nextStepEnabled"
+          @click.prevent="handleSubmit"
+        >
+          Next
+        </button>
+      </div>
     </div>
   </form>
 </template>
@@ -93,6 +102,7 @@ export default {
 #password-form {
   .Password {
     max-width: 100% !important;
+    margin: 0.5rem 0;
   }
 
   .Password__badge {
