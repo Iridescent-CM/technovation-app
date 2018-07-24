@@ -110,5 +110,19 @@ export default {
     height: auto !important;
     text-align: center !important;
   }
+
+  .Password__field {
+    border: 2px solid #ccc !important;
+
+    &:hover {
+      border-color: #a3a3a3 !important;
+    }
+
+    &:focus {
+      border-color: #903D54 !important;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06), 0 0 5px rgba(144, 61, 84, 0.7);
+      outline: none !important;
+    }
+  }
 }
 </style>

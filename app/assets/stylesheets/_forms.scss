@@ -148,7 +148,7 @@ select[multiple] {
 
   &:focus {
     border-color: $secondary;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06),0 0 5px rgba(72,184,136,0.7);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06), 0 0 5px rgba(144, 61, 84, 0.7);
     outline: none;
   }
 
