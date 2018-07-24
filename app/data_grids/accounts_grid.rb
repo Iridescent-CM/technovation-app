@@ -169,11 +169,13 @@ class AccountsGrid
 
   column :age, order: "accounts.date_of_birth desc"
   column :city
-  column :state_province, header: "State"
-  column :country do
-    if found_country = Carmen::Country.coded(country)
-      found_country.name
-    end
+
+  column :state_province, header: "State" do |account, _grid|
+    FriendlySubregion.(account)
+  end
+
+  column :country do |account, _grid|
+    FriendlyCountry.(account)
   end
 
   column :referred_by do
