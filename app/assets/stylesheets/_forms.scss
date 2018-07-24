@@ -247,19 +247,3 @@ form[data-remote] {
   background: $secondary;
   border-radius: 100px;
 }
-
-.autocomplete-suggestions {
-  position: absolute;
-  z-index: 9999;
-  background-color: #fff;
-  border: 2px solid #ccc;
-  padding: 0.33333rem;
-
-  .autocomplete-suggestion {
-    cursor: pointer;
-
-    &:hover {
-      background-color: #eee;
-    }
-  }
-}
