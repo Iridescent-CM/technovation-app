@@ -158,14 +158,17 @@ export default {
     validateEmailInput () {
       axios.get(`/validate_email?address=${encodeURIComponent(this.email)}`)
         .then(({ data }) => {
+          const attributes = Object.assign({}, data.data).attributes
+          const resp = Object.assign({}, attributes)
+
           this.emailHasBeenChecked = true
           this.emailNeedsValidation = false
 
-          this.emailIsValid = data.is_valid
-          this.isDisposableAddress = data.is_disposable_address
-          this.didYouMean = data.did_you_mean
-          this.mailboxVerification = data.mailbox_verification === "true"
-          this.emailIsTaken = data.is_taken
+          this.emailIsValid = resp.is_valid
+          this.isDisposableAddress = resp.is_disposable_address
+          this.didYouMean = resp.did_you_mean
+          this.mailboxVerification = resp.mailbox_verification
+          this.emailIsTaken = resp.is_taken
         }).catch(err => {
           console.error(err)
         })

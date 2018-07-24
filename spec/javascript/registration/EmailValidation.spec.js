@@ -41,7 +41,9 @@ describe('EmailValidation Vue component', () => {
       const wrapper = shallowMount(EmailValidation)
 
       axios.mockResponse('get', {
-        "is_valid": false,
+        data: { attributes: {
+          "is_valid": false,
+        } }
       })
 
       wrapper.vm.email = 'invalid'
@@ -57,7 +59,9 @@ describe('EmailValidation Vue component', () => {
       const wrapper = shallowMount(EmailValidation)
 
       axios.mockResponse('get', {
-        "is_disposable_address": true,
+        data: { attributes: {
+          "is_disposable_address": true,
+        } }
       })
 
       wrapper.vm.email = 'something@disposable.com'
@@ -73,7 +77,9 @@ describe('EmailValidation Vue component', () => {
       const wrapper = shallowMount(EmailValidation)
 
       axios.mockResponse('get', {
-        "did_you_mean": "joe@gmail.com",
+        data: { attributes: {
+          "did_you_mean": "joe@gmail.com",
+        } }
       })
 
       wrapper.vm.email = 'joe@gmil.com'
@@ -89,7 +95,9 @@ describe('EmailValidation Vue component', () => {
       const wrapper = shallowMount(EmailValidation)
 
       axios.mockResponse('get', {
-        "mailbox_verification": "true",
+        data: { attributes: {
+          "mailbox_verification": true,
+        } }
       })
 
       wrapper.vm.email = 'exists@gmail.com'
@@ -105,7 +113,9 @@ describe('EmailValidation Vue component', () => {
       const wrapper = shallowMount(EmailValidation)
 
       axios.mockResponse('get', {
-        "mailbox_verification": "false",
+        data: { attributes: {
+          "mailbox_verification": false,
+        } }
       })
 
       wrapper.vm.email = 'missing@gmail.com'
@@ -121,7 +131,9 @@ describe('EmailValidation Vue component', () => {
       const wrapper = shallowMount(EmailValidation)
 
       axios.mockResponse('get', {
-        "is_taken": true,
+        data: { attributes: {
+          "is_taken": true,
+        } }
       })
 
       wrapper.vm.email = 'taken@gmail.com'
