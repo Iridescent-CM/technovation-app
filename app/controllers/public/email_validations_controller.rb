@@ -4,11 +4,7 @@ require 'json'
 module Public
   class EmailValidationsController < PublicController
     def new
-      address = params.fetch(:address)
-      resp = get_email_validation_response(address)
-
-      handle_signup_attempt(address, resp)
-
+      resp = get_email_validation_response(params.fetch(:address))
       render json: MailgunResponseSerializer.new(resp).serialized_json
     end
 
@@ -23,28 +19,6 @@ module Public
         MailgunResponse.new(email_taken_response)
       else
         MailgunResponse.new(get_mailgun_response(address))
-      end
-    end
-
-    def handle_signup_attempt(address, resp)
-      attempt = SignupAttempt.find_by(
-        "lower(trim(unaccent(email))) = ?",
-        address.strip.downcase
-      )
-
-      if !attempt && resp.is_valid && !resp.is_taken
-        attempt = SignupAttempt.create!(
-          email: address,
-          status: :wizard,
-        )
-      end
-
-      if !!attempt
-        if attempt.wizard_token.blank?
-          attempt.regenerate_wizard_token
-        end
-
-        set_cookie(CookieNames::SIGNUP_TOKEN, attempt.wizard_token)
       end
     end
 

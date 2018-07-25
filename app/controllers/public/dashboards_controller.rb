@@ -7,10 +7,8 @@ module Public
             last_used_scope_dashboard_path ||
               user_scope_dashbaord_path
         )
-      else
-        if token = get_cookie(CookieNames::SIGNUP_TOKEN)
-          @signup_attempt = SignupAttempt.find_by(wizard_token: token)
-        end
+      elsif token = get_cookie(CookieNames::SIGNUP_TOKEN)
+        @signup_attempt = SignupAttempt.wizard.find_by(wizard_token: token)
       end
     end
 
