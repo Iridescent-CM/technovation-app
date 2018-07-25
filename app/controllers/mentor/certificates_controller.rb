@@ -5,11 +5,15 @@ module Mentor
     def create
       team_id = params.fetch(:team_id)
 
-      if current_mentor.current_certificates.exists?(team_id: team_id)
+      certificate = current_mentor.current_certificates.find_by(
+        team_id: team_id
+      )
+
+      if certificate.present?
         render json: {
           status: "complete",
           payload: {
-            fileUrl: current_mentor.current_certificates.last.file_url,
+            fileUrl: certificate.file_url,
           },
         }
       else
