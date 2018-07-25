@@ -4,14 +4,14 @@
     @submit.prevent="handleSubmit"
   >
     <div class="panel__top-bar">
-      Confirm the location that we have on file for {{ subject }}
+      Confirm {{ subjectPossessive }} region
     </div>
 
     <div
       v-if="isNotFound"
       class="flash flash--error"
     >
-      We're sorry, but we cannot find a location with that information.
+      We're sorry, but we cannot find a region with that information.
     </div>
 
     <div
@@ -25,7 +25,7 @@
     <div class="panel__content">
       <template v-if="savedLocation">
         <p class="padding--t-r-l-none margin--t-r-l-none margin--b-medium">
-          We have saved {{ subjectPossessive }} location as:
+          We have saved {{ subjectPossessive }} region as:
         </p>
 
         <div class="Rtable Rtable--3cols">
@@ -188,7 +188,7 @@ export default {
   computed: {
     cancelText () {
       if (this.savedLocation) {
-        return 'change location'
+        return 'change region'
       } else {
         return 'cancel'
       }
@@ -199,16 +199,6 @@ export default {
         return 'Confirm'
       } else {
         return 'Next'
-      }
-    },
-
-    subject () {
-      if (this.accountId) {
-        return 'this person'
-      } else if (this.teamId) {
-        return 'this team'
-      } else {
-        return 'you'
       }
     },
 
