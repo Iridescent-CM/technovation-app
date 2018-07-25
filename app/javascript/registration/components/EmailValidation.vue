@@ -25,8 +25,7 @@
         id="email"
         autocomplete="email"
         placeholder="example: janie.doe@gmail.com"
-        v-model="mutableEmail"
-        @input="emailSetByProps = false"
+        v-model="email"
       />
 
       <p class="hint">
@@ -55,7 +54,7 @@
           That email is taken. Try
           <a
             class="cursor--pointer text-decoration--underline"
-            :href="`/signin?email=${this.mutableEmail}`"
+            :href="`/signin?email=${this.email}`"
           >
             signing in
           </a>
@@ -108,6 +107,8 @@
 import Icon from '../../components/Icon'
 import debounce from 'lodash/debounce'
 
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'email-validation',
 
@@ -117,8 +118,6 @@ export default {
 
   data () {
     return {
-      mutableEmail: '',
-      emailSetByProps: false,
       emailNeedsValidation: false,
       emailHasBeenChecked: false,
       emailIsValid: false,
@@ -129,30 +128,28 @@ export default {
     }
   },
 
-  props: {
-    email: {
-      type: String,
-      required: false,
-      default: '',
-    },
-  },
-
   created () {
     this.debouncedEmailWatcher = debounce(this.validateEmailInput, 750)
-
     if (this.email.length) {
-      this.emailHasBeenChecked = true
-      this.emailIsValid = true
-      this.emailIsTaken = false
-      this.isDisposableAddress = false
-      this.mailboxVerification = true
-
-      this.emailSetByProps = true
-      this.mutableEmail = this.email
+      this.emailHasBeenChecked = false
+      this.emailNeedsValidation = true
+      this.debouncedEmailWatcher()
     }
   },
 
   computed: {
+    ...mapGetters(['getEmail']),
+
+    email: {
+      get () {
+        return this.getEmail
+      },
+
+      set (value) {
+        this.saveEmail({ email: value })
+      },
+    },
+
     problemsWithInput () {
       return this.emailHasBeenChecked && (
               !this.emailIsValid ||
@@ -168,18 +165,20 @@ export default {
   },
 
   watch: {
-    mutableEmail () {
-      if (!this.emailSetByProps && this.mutableEmail.length) {
+    email () {
+      if (this.email.length) {
         this.emailHasBeenChecked = false
         this.emailNeedsValidation = true
         this.debouncedEmailWatcher()
-      } else if (!this.emailSetByProps) {
+      } else {
         this.reset()
       }
     },
   },
 
   methods: {
+    ...mapActions(['saveEmail']),
+
     handleSubmit () {
       if (!this.nextStepEnabled) return false
       this.$router.push('password')
@@ -187,7 +186,7 @@ export default {
 
     validateEmailInput () {
       let url = "/public/email_validations/new?address="
-      url += encodeURIComponent(this.mutableEmail)
+      url += encodeURIComponent(this.email)
 
       axios.get(url).then(({ data }) => {
         const attributes = Object.assign({}, data.data).attributes
@@ -209,13 +208,11 @@ export default {
     handleDidYouMean () {
       this.emailNeedsValidation = false
       this.emailHasBeenChecked = false
-      this.emailSetByProps = false
-      this.mutableEmail = this.didYouMean
+      this.email = this.didYouMean
     },
 
     reset () {
-      this.mutableEmail = ''
-      this.emailSetByProps = false
+      this.email = ''
       this.emailNeedsValidation = false
       this.emailHasBeenChecked = false
       this.emailIsValid = false

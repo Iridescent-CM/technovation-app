@@ -16,4 +16,17 @@ export default {
       commit('termsAgreed', resp.termsAgreed)
     }).catch(err => console.error(err))
   },
+
+  saveEmail ({ commit, state }, { email }) {
+    axios.post('/registration/email', {
+      email: {
+        email,
+        wizard_token: state.wizardToken,
+      }
+    }).then(({ data }) => {
+      const attrs = Object.assign({}, data.data).attributes
+      const resp = Object.assign({}, attrs)
+      commit('email', resp.email)
+    }).catch(err => console.error(err))
+  },
 }
