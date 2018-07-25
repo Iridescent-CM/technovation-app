@@ -93,15 +93,13 @@
     </div>
 
     <div class="panel__bottom-bar">
-      <div class="text-align--right">
-        <button
-          class="button"
-          :disabled="!nextStepEnabled"
-          @click.prevent="handleSubmit"
-        >
-          Next
-        </button>
-      </div>
+      <button
+        class="button"
+        :disabled="!nextStepEnabled"
+        @click.prevent="handleSubmit"
+      >
+        Next
+      </button>
     </div>
   </form>
 </template>
