@@ -25,7 +25,7 @@ document.addEventListener('turbolinks:load', () => {
       },
 
       created() {
-        if (!router.currentRoute.name) router.replace({ name: 'email' })
+        if (!router.currentRoute.name) router.replace({ name: 'data-use' })
 
         if (previousAttemptUrl) {
           axios.get(previousAttemptUrl).then(({ data }) => {

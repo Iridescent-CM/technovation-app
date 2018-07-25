@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.esm'
 import VueRouter from 'vue-router'
 
+import DataUseTerms from '../components/DataUseTerms'
 import EmailValidation from '../components/EmailValidation'
 import PasswordValidation from '../components/PasswordValidation'
 import LocationForm from '../../location/components/LocationForm'
@@ -8,7 +9,12 @@ import LocationForm from '../../location/components/LocationForm'
 Vue.use(VueRouter)
 
 export const routes = [
-  { path: '/', redirect: { name: 'email' } },
+  { path: '/', redirect: { name: 'data-use' } },
+  {
+    path: '/data-use',
+    name: 'data-use',
+    component: DataUseTerms,
+  },
   {
     path: '/email',
     name: 'email',
