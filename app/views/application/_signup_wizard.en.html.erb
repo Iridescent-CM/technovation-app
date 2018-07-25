@@ -3,7 +3,7 @@
 <div
   id="vue-enable-signup-wizard"
   <% if previous_attempt %>
-    data-previous-attempt-url="<%= public_wizard_in_progress_path(previous_attempt.wizard_token) %>"
+    data-previous-attempt="<%= SignupAttemptSerializer.new(previous_attempt).serialized_json %>"
   <% end %>
 >
   <div class="tabs tabs--vertical tabs--remove-bg tabs--css-only grid">
@@ -16,7 +16,6 @@
 
     <router-view
       v-if="isReady"
-      :email="email"
       class="grid__col-9"
     ></router-view>
   </div>

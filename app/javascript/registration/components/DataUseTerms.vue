@@ -65,7 +65,7 @@
 
     <div class="panel__bottom-bar">
       <label>
-        <input type="checkbox" />
+        <input type="checkbox" v-model="termsAgreed" />
         I agree to Technovation's data use terms
       </label>
     </div>
@@ -73,8 +73,26 @@
 </template>
 
 <script>
-export default {
+import { mapActions, mapGetters } from 'vuex'
 
+export default {
+  name: 'data-use-terms',
+
+  computed: {
+    ...mapGetters(['getTermsAgreed']),
+
+    termsAgreed: {
+      get () {
+        return this.getTermsAgreed
+      },
+
+      set (value) {
+        this.updateTermsAgreed({ termsAgreed: value })
+      }
+    },
+  },
+
+  methods: mapActions(['updateTermsAgreed']),
 }
 </script>
 

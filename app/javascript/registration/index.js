@@ -1,5 +1,8 @@
 import Vue from 'vue/dist/vue.esm'
+import { mapActions } from 'vuex'
+
 import router from './routes'
+import store from './store'
 
 import TabLink from '../tabs/components/TabLink'
 
@@ -7,11 +10,12 @@ document.addEventListener('turbolinks:load', () => {
   const wizardElem = document.querySelector('#vue-enable-signup-wizard')
 
   if (wizardElem) {
-    const previousAttemptUrl = wizardElem.dataset.previousAttemptUrl
+    const previousAttempt = wizardElem.dataset.previousAttempt
 
     new Vue({
       el: wizardElem,
 
+      store,
       router,
 
       components: {
@@ -19,31 +23,21 @@ document.addEventListener('turbolinks:load', () => {
       },
 
       data: {
-        email: null,
-        canContinue: null,
         isReady: false,
       },
 
       created() {
         if (!router.currentRoute.name) router.replace({ name: 'data-use' })
 
-        if (previousAttemptUrl) {
-          axios.get(previousAttemptUrl).then(({ data }) => {
-            const attrs = Object.assign({}, data.data).attributes
-            const resp = Object.assign({}, attrs)
-
-            this.email = resp.email
-            this.canContinue = true
-
-            this.isReady = true
-          }).catch(err => {
-            console.error(err)
-          })
+        if (previousAttempt) {
+          this.initWizard({ previousAttempt })
+          this.isReady = true
         } else {
           this.isReady = true
-          this.canContinue = false
         }
       },
+
+      methods: mapActions(['initWizard']),
     })
   }
 })
