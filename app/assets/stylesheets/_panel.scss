@@ -39,7 +39,8 @@
   }
 
   .panel__content {
-    @extend .padding--large;
+    @extend .padding--r-l-large;
+    @extend .height--100-percent;
   }
 
   .panel--footer {

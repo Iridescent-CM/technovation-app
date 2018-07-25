@@ -50,6 +50,10 @@
   font-weight: bold;
 }
 
+.height--100-percent {
+  height: 100%;
+}
+
 .margin--none {
   margin: 0;
 }
@@ -114,6 +118,23 @@
   padding-bottom: 0.5rem;
 }
 
+.padding--r-l-large {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.padding--r-l-b-none {
+  padding-right: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
+.padding--r-l-b-large {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+}
+
 .padding--l-medium {
   padding-left: 0.5rem;
 }
@@ -126,12 +147,6 @@
   padding-top: 0;
   padding-right: 0;
   padding-left: 0;
-}
-
-.padding--r-l-b-none {
-  padding-right: 0;
-  padding-left: 0;
-  padding-bottom: 0;
 }
 
 .text-align--center {
