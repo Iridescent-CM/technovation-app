@@ -69,3 +69,15 @@ export default {
 
 }
 </script>
+
+<style scoped>
+h3,
+h4 {
+  -webkit-font-smoothing: antialiased;
+}
+
+h4 {
+  margin: 1rem 0 0;
+  padding: 0;
+}
+</style>
