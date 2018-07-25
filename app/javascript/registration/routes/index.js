@@ -2,6 +2,10 @@ import Vue from 'vue/dist/vue.esm'
 import VueRouter from 'vue-router'
 
 import DataUseTerms from '../components/DataUseTerms'
+
+import AgeVerification from '../components/AgeVerification'
+import GenderIdentity from '../components/GenderIdentity'
+
 import EmailValidation from '../components/EmailValidation'
 import PasswordValidation from '../components/PasswordValidation'
 import LocationForm from '../../location/components/LocationForm'
@@ -14,6 +18,16 @@ export const routes = [
     path: '/data-use',
     name: 'data-use',
     component: DataUseTerms,
+  },
+  {
+    path: '/age',
+    name: 'age',
+    component: AgeVerification,
+  },
+  {
+    path: '/gender-identity',
+    name: 'gender',
+    component: GenderIdentity,
   },
   {
     path: '/email',

@@ -1,22 +1,9 @@
 <% previous_attempt ||= false %>
 
-<div
-  id="vue-enable-signup-wizard"
-  <% if previous_attempt %>
-    data-previous-attempt="<%= SignupAttemptSerializer.new(previous_attempt).serialized_json %>"
-  <% end %>
->
-  <div class="tabs tabs--vertical tabs--remove-bg tabs--css-only grid">
-    <ul class="tabs__menu grid__col-3">
-      <tab-link :to="{ name: 'data-use' }">Data agreement</tab-link>
-      <tab-link :to="{ name: 'email' }">Email</tab-link>
-      <tab-link :to="{ name: 'password' }">Password</tab-link>
-      <tab-link :to="{ name: 'location' }">Location</tab-link>
-    </ul>
-
-    <router-view
-      v-if="isReady"
-      class="grid__col-9"
-    ></router-view>
-  </div>
+<div id="vue-enable-signup-wizard">
+  <App
+    <% if previous_attempt %>
+      previous-attempt="<%= SignupAttemptSerializer.new(previous_attempt).serialized_json %>"
+    <% end %>
+  />
 </div>
