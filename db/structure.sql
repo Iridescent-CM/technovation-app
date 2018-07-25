@@ -1260,7 +1260,7 @@ ALTER SEQUENCE public.screenshots_id_seq OWNED BY public.screenshots.id;
 
 CREATE TABLE public.signup_attempts (
     id integer NOT NULL,
-    email character varying NOT NULL,
+    email character varying,
     activation_token character varying NOT NULL,
     account_id integer,
     status integer DEFAULT 0 NOT NULL,
@@ -1270,7 +1270,8 @@ CREATE TABLE public.signup_attempts (
     pending_token character varying,
     password_digest character varying,
     admin_permission_token character varying,
-    wizard_token character varying
+    wizard_token character varying,
+    terms_agreed_at timestamp without time zone
 );
 
 
@@ -3094,6 +3095,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180626200957'),
 ('20180703153546'),
 ('20180716151350'),
-('20180724171119');
+('20180724171119'),
+('20180725175239'),
+('20180725175328');
 
 

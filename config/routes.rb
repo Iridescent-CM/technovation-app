@@ -303,6 +303,7 @@ Rails.application.routes.draw do
   namespace :registration do
     resource :current_location, only: :show
     resource :location, only: :update
+    resource :terms_agreement, only: :create
   end
 
   resources :password_resets, only: [:new, :create]
