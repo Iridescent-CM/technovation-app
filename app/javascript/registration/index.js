@@ -39,5 +39,17 @@ document.addEventListener('turbolinks:load', () => {
 
       methods: mapActions(['initWizard']),
     })
+
+    router.beforeEach((to, _from, next) => {
+      if (to.matched.some(record => record.name !== 'data-use')) {
+        if (!store.state.termsAgreed) {
+          next({ name: 'data-use' })
+        } else {
+          next()
+        }
+      } else {
+        next()
+      }
+    })
   }
 })
