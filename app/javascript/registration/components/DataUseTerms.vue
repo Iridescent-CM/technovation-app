@@ -25,34 +25,42 @@
 
       <p>Technovation is owned by a non-profit organization called Iridescent.</p>
 
-      <h4>No Advertising</h4>
+      <h4>No advertising</h4>
 
       <p>
         We will never use, share, rent, or sell your personal data to
-        anyone to advertise to or manipulate you.
+        anyone to advertise to you, or to manipulate you.
       </p>
 
-      <h4>Use of your personal data</h4>
+      <h4>Your personal data</h4>
 
       <p>
         We will only use your data to help guide you through the
-        Technovation program, and to make the program better for everyone.
+        Technovation program, and to learn how we can make the program
+        better and easier for everyone.
       </p>
 
       <p>
         We may share your personal data and activity with a trusted volunteer
-        manager in your region who has been trained through a proper verification
-        process in order for them to support you and your team during the program.
+        manager in your region—who has been trained through a proper verification
+        process—in order for them to support you and your team during the program.
       </p>
 
-      <h4>Program Update email from us</h4>
+      <h4>Newsletters and informational email</h4>
 
       <p>
-        You can stop getting newsletter emails about the curriculum and program at any time by unsubscribing. You will continue to receive informational email about your account and team activity on the site.
+        You can unsubcribe from our newsletters about the curriculum and
+        program at any time. These emails are different from informational
+        email about your account and team activity, which you will continue
+        to receive.
       </p>
 
       <h4>Deleting your account and data</h4>
-      <p>You can delete your account and our copy of your data at any time.</p>
+
+      <p>
+        You can delete your account and data, and get a copy of your data, at any time.
+        This would remove you from your team and our program.
+      </p>
     </div>
 
     <div class="panel__bottom-bar">
