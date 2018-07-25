@@ -8,8 +8,9 @@ module Public
               user_scope_dashbaord_path
         )
       else
-        token = get_cookie(CookieNames::SIGNUP_TOKEN)
-        @signup_attempt = SignupAttempt.find_by(wizard_token: token)
+        if token = get_cookie(CookieNames::SIGNUP_TOKEN)
+          @signup_attempt = SignupAttempt.find_by(wizard_token: token)
+        end
       end
     end
 
