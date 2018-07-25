@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include CookiesHelper
+
   protect_from_forgery with: :exception
 
   add_flash_types :success
@@ -31,36 +33,6 @@ class ApplicationController < ActionController::Base
       account: current_account,
     )
   }
-
-  def set_cookie(key, value, passed_options  = {})
-    default_options = {
-      permanent: false,
-    }
-
-    options = default_options.merge(passed_options)
-
-    if options[:permanent]
-      cookies.permanent.signed[key] = {
-        value: value,
-        domain: request.host,
-      }
-    else
-      cookies.signed[key] = {
-        value: value,
-        domain: request.host,
-      }
-    end
-  end
-
-  def get_cookie(key)
-    cookies.signed[key] || false
-  end
-
-  def remove_cookie(key)
-    value = get_cookie(key)
-    cookies.delete(key, domain: request.host)
-    value
-  end
 
   def current_account
     auth_token = get_cookie(CookieNames::AUTH_TOKEN)
