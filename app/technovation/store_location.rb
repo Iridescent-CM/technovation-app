@@ -21,16 +21,21 @@ module StoreLocation
     attr_reader  :account, :context, :cookie_name
 
     def execute
-      existing_value = context.get_cookie(cookie_name)
+      existing_ip = nil
 
-      if String(existing_value) == "[0.0, 0.0]"
-        status = "EXECUTED"
-        context.set_cookie(cookie_name, cookie_value)
-      else
-        status = !!existing_value ? "SKIPPED" : "EXECUTED"
+      if existing_value = context.get_cookie(cookie_name)
+        existing_coordinates = existing_value['coordinates']
+        existing_ip = existing_value['ip_address']
+
+        if String(existing_coordinates) == "[0.0, 0.0]" || ip_address != existing_ip
+          status = "EXECUTED"
+          context.set_cookie(cookie_name, cookie_value)
+        else
+          status = !!existing_coordinates ? "SKIPPED" : "EXECUTED"
+        end
       end
 
-      maybe_run_account_updates
+      maybe_run_account_updates(existing_ip)
 
       Rails.logger.info(
         [
@@ -80,8 +85,8 @@ module StoreLocation
       @cookie_name = CookieNames::IP_GEOLOCATION
     end
 
-    def maybe_run_account_updates
-      if String(cookie_value) != "[0.0, 0.0]" &&
+    def maybe_run_account_updates(existing_ip)
+      if (String(cookie_value) != "[0.0, 0.0]" || existing_ip != ip_address) &&
           account.authenticated? &&
             (!account.latitude || !account.city)
         account.latitude  = latitude
@@ -106,10 +111,16 @@ module StoreLocation
 
     def cookie_value
       @cookie_value ||= if account.authenticated? && account.latitude
-                          [account.latitude, account.longitude]
-                        else
-                          first_geocoded_result(ip_address).coordinates
-                        end
+        {
+          ip_address: ip_address,
+          coordinates: [account.latitude, account.longitude],
+        }
+      else
+        {
+          ip_address: ip_address,
+          coordinates: first_geocoded_result(ip_address).coordinates,
+        }
+      end
     end
 
     private
