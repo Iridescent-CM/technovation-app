@@ -35,9 +35,9 @@ export default {
 
   props: {
     previousAttempt: {
-      type: [String, Boolean],
+      type: String,
       required: false,
-      default: false
+      default: null
     },
   },
 
