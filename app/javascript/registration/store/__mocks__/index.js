@@ -1,4 +1,4 @@
-import VuexMockStore from '../../../utilities/vuex-mock-store'
+import VuexMockStore from 'utilities/vuex-mock-store'
 
 import state from '../state'
 import getters from '../getters'
