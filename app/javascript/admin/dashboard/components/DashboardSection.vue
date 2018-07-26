@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import BarChart from '../../../components/BarChart'
-import PieChart from '../../../components/PieChart'
+import BarChart from '@appjs/components/BarChart'
+import PieChart from '@appjs/components/PieChart'
 
 export default {
   name: 'dashboard-section',

@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import AdminDashboard from './components/AdminDashboard'
 import StudentsSection from './components/StudentsSection'
 import MentorsSection from './components/MentorsSection'
-import PieChart from '../../components/PieChart'
+import PieChart from '@appjs/components/PieChart'
 
 Vue.use(VueRouter)
 
