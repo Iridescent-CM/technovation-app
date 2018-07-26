@@ -13,6 +13,7 @@ class AutocompleteInput < SimpleForm::Inputs::Base
 
     merged_input_options[:id] = "#{object_name}_#{attribute_name}"
     merged_input_options[:name] = "#{object_name}[#{attribute_name}]"
+    merged_input_options[:value] = @builder.object.send(attribute_name)
 
     merged_input_options["no-options-text"] =
       merged_input_options[:no_options_text]
