@@ -22,10 +22,8 @@ export default {
         email,
         wizard_token: state.wizardToken,
       }
-    }).then(({ data }) => {
-      const attrs = Object.assign({}, data.data).attributes
-      const resp = Object.assign({}, attrs)
-      commit('email', resp.email)
+    }).then(({ data: { data: { attributes }} }) => {
+      commit('email', attributes.email)
     }).catch(err => console.error(err))
   },
 }
