@@ -1,9 +1,10 @@
 class Geocoded
-  attr_reader :id, :city, :state_code, :country, :country_code
+  attr_reader :id, :city, :state_code, :state, :country, :country_code
 
   def initialize(geocoder_result)
     @id = SecureRandom.hex(4)
     @state_code = geocoder_result.state_code
+    @state = geocoder_result.state
     set_city(geocoder_result)
     set_country(geocoder_result)
   end

@@ -13,8 +13,8 @@ describe('location/components/LocationForm', () => {
   it('fills in the user location data from the server', (done) => {
     axios.mockResponseOnce('get', {
       city: "Chicago",
-      state_code: "IL",
-      country_code: "US",
+      state: "IL",
+      country: "US",
     })
 
     const myWrapper = shallowMount(LocationForm, {
@@ -28,8 +28,8 @@ describe('location/components/LocationForm', () => {
       expect(axios.get).toHaveBeenCalledWith('/student/current_location')
 
       expect(myWrapper.vm.city).toEqual("Chicago")
-      expect(myWrapper.vm.stateCode).toEqual("IL")
-      expect(myWrapper.vm.countryCode).toEqual("US")
+      expect(myWrapper.vm.state).toEqual("IL")
+      expect(myWrapper.vm.country).toEqual("US")
 
       expect(myWrapper.find('#location_city').element.value).toEqual("Chicago")
       expect(myWrapper.find('#location_state').element.value).toEqual("IL")

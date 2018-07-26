@@ -24,14 +24,22 @@
 
     <div class="panel__content">
       <template v-if="savedLocation">
-        <p class="padding--t-r-l-none margin--t-r-l-none margin--b-medium">
+        <p class="padding--t-r-l-none margin--t-r-l-none margin--b-large">
           We have saved {{ subjectPossessive }} region as:
         </p>
 
         <div class="Rtable Rtable--3cols">
-          <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
-          <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
-          <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
+          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+            <h6 class="margin--none">City</h6>
+          </div>
+
+          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+            <h6 class="margin--none">State / Province</h6>
+          </div>
+
+          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+            <h6 class="margin--none">Country / Territory</h6>
+          </div>
         </div>
 
         <div class="Rtable Rtable--3cols">
@@ -40,7 +48,7 @@
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ savedLocation.stateCode || "(no state/province)" }}
+            {{ savedLocation.state || "(no state/province)" }}
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
@@ -67,7 +75,7 @@
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ suggestion.stateCode || "(no state/province)" }}
+            {{ suggestion.state || "(no state/province)" }}
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
@@ -96,7 +104,7 @@
           type="text"
           id="location_state"
           autocomplete="address-level1"
-          v-model="stateCode"
+          v-model="state"
         />
 
         <label for="location_country">Country / Territory</label>
@@ -105,7 +113,7 @@
           type="text"
           id="location_country"
           autocomplete="country-name"
-          v-model="countryCode"
+          v-model="country"
         />
 
         <a
@@ -149,8 +157,8 @@ export default {
   data () {
     return {
       city: "",
-      stateCode: "",
-      countryCode: "",
+      state: "",
+      country: "",
       suggestions: [],
       savedLocation: null,
       searching: false,
@@ -180,8 +188,8 @@ export default {
   created () {
     window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
       this.city = data.city
-      this.stateCode = data.state_code
-      this.countryCode = data.country_code
+      this.state = data.state
+      this.country = data.country
     })
   },
 
@@ -218,8 +226,8 @@ export default {
 
     formHasInput () {
       return (this.city && this.city.length) ||
-              (this.stateCode && this.stateCode.length) ||
-                (this.countryCode && this.countryCode.length)
+              (this.state && this.state.length) ||
+                (this.country && this.country.length)
     },
 
     getCurrentLocationEndpoint () {
@@ -236,8 +244,8 @@ export default {
 
       params[rootParamName] = {
         city: this.city,
-        state_code: this.stateCode,
-        country_code: this.countryCode,
+        state: this.state,
+        country: this.country,
       }
 
       return params
@@ -277,7 +285,7 @@ export default {
 
     handleCancel () {
       if (this.savedLocation) {
-        this.resetAll()
+        this.resetMeta()
       } else {
         history.back()
       }
@@ -285,8 +293,8 @@ export default {
 
     handleSuggestionClick (suggestion) {
       this.city = suggestion.city
-      this.stateCode = suggestion.stateCode
-      this.countryCode = suggestion.countryCode
+      this.state = suggestion.state
+      this.country = suggestion.country
       this.handleSubmit()
     },
 
@@ -317,8 +325,8 @@ export default {
 
     resetForm () {
       this.city = ""
-      this.stateCode = ""
-      this.countryCode = ""
+      this.state = ""
+      this.country = ""
     },
 
     resetMeta () {
