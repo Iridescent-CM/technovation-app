@@ -6,7 +6,7 @@ gem 'puma', '~> 3.11'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '~> 1.3', require: false
 
 gem 'fast_jsonapi', "~> 1.2"
 
@@ -22,7 +22,7 @@ gem 'counter_culture', '~> 1.11'
 
 gem "autoprefixer-rails", "~> 6.7"
 gem 'uglifier', '~> 3.2'
-gem 'coffee-rails'
+gem 'coffee-rails', "~> 4.2"
 
 gem 'turbolinks', "~> 5.1"
 gem 'jquery-rails', "~> 4.3"
@@ -108,9 +108,9 @@ group :development do
   gem 'memory_profiler', "~> 0.9"
   gem 'listen', '~> 3.1'
   gem 'churn', "~> 1.0", require: false
-  gem 'web-console', '>= 3.3.0'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console', '~> 3.6'
+  gem 'spring', "~> 2.0"
+  gem 'spring-watcher-listen', '~> 2.0'
 end
 
 group :test do
@@ -122,11 +122,11 @@ group :test do
   gem 'rails-controller-testing', "~> 1.0"
   gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
 
-  gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
+  gem 'capybara', '~> 2.18'
+  gem 'selenium-webdriver', "~> 3.13"
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
-  gem 'rspec-rails'
+  gem 'chromedriver-helper', "~> 1.2"
+  gem 'rspec-rails', "~> 3.7"
 
   # deprecated
   gem 'font-awesome-rails', "~> 4.7"

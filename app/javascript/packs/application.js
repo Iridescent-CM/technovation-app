@@ -8,6 +8,7 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import Vue from 'vue/dist/vue.esm'
+import AutocompleteInput from '../components/AutocompleteInput'
 import CertificateButton from '../components/CertificateButton'
 import LocationForm from '../location/components/LocationForm'
 
@@ -34,6 +35,18 @@ document.addEventListener('turbolinks:load', () => {
 
       components: {
         LocationForm,
+      },
+    })
+  }
+
+  const autocompleteInputs = document.querySelectorAll('.vue-enable-autocomplete-input')
+
+  for (let i = 0; i < autocompleteInputs.length; i += 1) {
+    new Vue({
+      el: autocompleteInputs[i],
+
+      components: {
+        AutocompleteInput,
       },
     })
   }

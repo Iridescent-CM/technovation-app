@@ -4,5 +4,12 @@
     collection: Account.genders.keys %>
 <% end %>
 
-<%= f.input :company_name %>
+<%= f.input :company_name, {
+  as: :autocomplete,
+  input_html: {
+    url: public_top_companies_path,
+    no_options_text: "Please begin typing to select your company from a list or add your own"
+  }
+} %>
+
 <%= f.input :job_title %>

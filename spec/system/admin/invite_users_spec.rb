@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.feature "Admins invite users to signup" do
+RSpec.describe "Admins invite users to signup", :js do
   let(:admin) { FactoryBot.create(:admin) }
 
   before { sign_in(admin) }
 
   %i{judge regional_ambassador mentor student}.each do |scope|
-    scenario "Inviting a user with profile type #{scope}" do
+    it "Inviting a user with profile type #{scope}" do
       email = "#{scope}@example.com"
 
       click_link "Invite users"
@@ -26,7 +26,7 @@ RSpec.feature "Admins invite users to signup" do
       url = send(
         "#{scope}_signup_url",
         admin_permission_token: token,
-        host: ENV.fetch("HOST_DOMAIN")
+        host: ENV["HOST_DOMAIN"],
       )
 
       expect(mail.to).to eq([email])
@@ -35,10 +35,9 @@ RSpec.feature "Admins invite users to signup" do
       visit(url)
 
       expect(current_path).to eq(send("#{scope}_signup_path"))
-      expect(UserInvitation.last).to be_opened
     end
 
-    scenario "#{scope} signs up, registering their invite" do
+    it "#{scope} signs up, registering their invite" do
       email = "#{scope}@example.com"
       UserInvitation.create!(
         profile_type: scope,
@@ -49,7 +48,7 @@ RSpec.feature "Admins invite users to signup" do
       url = send(
         "#{scope}_signup_url",
         admin_permission_token: token,
-        host: ENV.fetch("HOST_DOMAIN")
+        host: Capybara.app_host,
       )
 
       visit url
@@ -64,20 +63,20 @@ RSpec.feature "Admins invite users to signup" do
       fill_in "First name", with: "Pamela"
       fill_in "Last name", with: "Beasley"
 
-      select_date birthdate, from: "Date of birth"
+      select_chosen_date birthdate, from: "Date of birth"
 
       case scope
       when :student
         fill_in "School name", with: "John Hughes High."
       when :mentor
-        fill_in "School or company name", with: "John Hughes High."
+        fill_in_vue_select "School or company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
         select "Parent", from: "I am a..."
       when :judge
-        fill_in "Company name", with: "John Hughes High."
+        fill_in_vue_select "Company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
       when :regional_ambassador
-        fill_in "Organization/company name", with: "John Hughes High."
+        fill_in_vue_select "Organization/company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
         fill_in "Tell us about yourself",
           with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
@@ -98,7 +97,7 @@ RSpec.feature "Admins invite users to signup" do
       end
     end
 
-    scenario "#{scope} uses the invite link a second time" do
+    it "#{scope} uses the invite link a second time" do
       email = "#{scope}@example.com"
 
       invite = UserInvitation.create!(
@@ -118,7 +117,7 @@ RSpec.feature "Admins invite users to signup" do
       url = send(
         "#{scope}_signup_url",
         admin_permission_token: token,
-        host: ENV.fetch("HOST_DOMAIN")
+        host: Capybara.app_host,
       )
 
       visit url
@@ -127,7 +126,7 @@ RSpec.feature "Admins invite users to signup" do
     end
   end
 
-  scenario "invite an RA who has an existing mentor account" do
+  it "invite an RA who has an existing mentor account" do
     email = "ra@example.com"
     mentor = FactoryBot.create(:mentor, email: email)
     expect(mentor.account.reload.email).to eq(email)
@@ -140,7 +139,7 @@ RSpec.feature "Admins invite users to signup" do
     token = UserInvitation.last.admin_permission_token
     url = regional_ambassador_signup_url(
       admin_permission_token: token,
-      host: ENV.fetch("HOST_DOMAIN")
+      host: Capybara.app_host
     )
 
     visit url
@@ -150,9 +149,9 @@ RSpec.feature "Admins invite users to signup" do
     fill_in "First name", with: "Pamela"
     fill_in "Last name", with: "Beasley"
 
-    select_date birthdate, from: "Date of birth"
+    select_chosen_date birthdate, from: "Date of birth"
 
-    fill_in "Organization/company name", with: "John Hughes High."
+    fill_in_vue_select "Organization/company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
     fill_in "Tell us about yourself",
       with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
@@ -167,7 +166,7 @@ RSpec.feature "Admins invite users to signup" do
     expect(invite.account.mentor_profile).to eq(mentor)
   end
 
-  scenario "invite an RA who has an existing judge account" do
+  it "invite an RA who has an existing judge account" do
     email = "ra@example.com"
     judge = FactoryBot.create(:judge, email: email)
     expect(judge.account.reload.email).to eq(email)
@@ -180,7 +179,7 @@ RSpec.feature "Admins invite users to signup" do
     token = UserInvitation.last.admin_permission_token
     url = regional_ambassador_signup_url(
       admin_permission_token: token,
-      host: ENV.fetch("HOST_DOMAIN")
+      host: Capybara.app_host
     )
 
     visit url
@@ -190,9 +189,9 @@ RSpec.feature "Admins invite users to signup" do
     fill_in "First name", with: "Pamela"
     fill_in "Last name", with: "Beasley"
 
-    select_date birthdate, from: "Date of birth"
+    select_chosen_date birthdate, from: "Date of birth"
 
-    fill_in "Organization/company name", with: "John Hughes High."
+    fill_in_vue_select "Organization/company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
     fill_in "Tell us about yourself",
       with: "Lorem ipsum dolor sit amet, " +

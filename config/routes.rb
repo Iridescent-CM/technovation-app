@@ -297,6 +297,8 @@ Rails.application.routes.draw do
 
   namespace :public do
     resources :embed_codes, only: :show
+
+    resources :top_companies, only: :index
   end
 
   resources :password_resets, only: [:new, :create]

@@ -4,8 +4,14 @@
     collection: Account.genders.keys %>
 <% end %>
 
-<%= f.input :school_company_name,
-  label: t('models.mentor_profile.school_company_name') %>
+<%= f.input :school_company_name, {
+  as: :autocomplete,
+  label: t('models.mentor_profile.school_company_name'),
+  input_html: {
+    url: public_top_companies_path,
+    no_options_text: "Please begin typing to select your school/company from a list or add your own"
+  }
+} %>
 
 <%= f.input :job_title %>
 

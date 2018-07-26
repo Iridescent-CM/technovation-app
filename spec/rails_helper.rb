@@ -42,6 +42,8 @@ RSpec.configure do |config|
   config.include SelectDateHelper, type: :feature
   config.include SelectDateHelper, type: :system
 
+  config.include VueSelectInputHelper, type: :system
+
   config.include JudgingHelper
   config.include WebMock::API
 
