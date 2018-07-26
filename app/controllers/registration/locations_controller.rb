@@ -1,9 +1,16 @@
 module Registration
   class LocationsController < RegistrationController
     def update
-      result = Geocoder.search(get_cookie(CookieNames::IP_GEOLOCATION)).first
-      geocoded = Geocoded.new(result)
-      render json: { results: [geocoded] }
+      data, status = HandleGeocoderSearch.(
+        query: location_params
+      )
+      render json: data, status: status
+    end
+
+    private
+    def location_params
+      params.require(:registration_location)
+        .permit(:city, :state, :country)
     end
   end
 end
