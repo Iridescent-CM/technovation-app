@@ -15,6 +15,11 @@
       "json",
       "vue"
     ],
+    "moduleNameMapper": {
+      "@appjs(.*)$": "<rootDir>/app/javascript/$1",
+      "@assetsjs(.*)$": "<rootDir>/app/assets/javascripts/$1",
+      "@vendorjs(.*)$": "<rootDir>/vendor/assets/javascripts/$1"
+    },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
