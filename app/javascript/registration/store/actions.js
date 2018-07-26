@@ -10,10 +10,9 @@ export default {
     axios.post('/registration/terms_agreement', {
       terms_agreed: termsAgreed,
       wizard_token: state.wizardToken,
-    }).then(({ data }) => {
-      const attrs = Object.assign({}, data.data).attributes
-      const resp = Object.assign({}, attrs)
-      commit('termsAgreed', resp.termsAgreed)
+    }).then(({ data: { data: { attributes } } }) => {
+      commit('wizardToken', attributes.wizardToken)
+      commit('termsAgreed', attributes.termsAgreed)
     }).catch(err => console.error(err))
   },
 
