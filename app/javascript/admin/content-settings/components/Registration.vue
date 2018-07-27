@@ -22,7 +22,8 @@
         >{{ label }}</label>
       </p>
       <div v-if="judgingEnabled" class="notice info hint user-notice">
-        <icon name="exclamation-circle" :size="16" color="00529B" /> When judging is enabled, {{ `${scope}s` }} cannot sign up
+        <icon name="exclamation-circle" :size="16" color="00529B" />
+        When judging is enabled, {{ `${scope}s` }} cannot sign up
       </div>
     </div>
   </div>

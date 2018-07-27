@@ -29,7 +29,8 @@
       <label for="season_toggles_judging_round_sf">Semifinals</label>
     </p>
     <div v-if="judgingEnabled" class="notice info hint">
-      <icon name="exclamation-circle" :size="16" color="00529B" /> Enabling judging has affected other season features.
+      <icon name="exclamation-circle" :size="16" color="00529B" />
+      Enabling judging has affected other season features.
     </div>
   </div>
 </template>
