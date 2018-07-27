@@ -165,16 +165,44 @@ export default {
     },
 
     days () {
-      const endDay = 31
       let startDay = 1
       let days = []
 
-      while (startDay <= endDay) {
+      while (startDay <= this.monthEndDay) {
         days.push((startDay++).toString())
       }
 
       return days
     },
+
+    monthEndDay () {
+      switch(parseInt(this.month)) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12: return 31
+        case 4:
+        case 6:
+        case 9:
+        case 11: return 30
+        case 2:  return this.februaryEndDay
+        default: return 0
+      }
+    },
+
+    februaryEndDay () {
+      const year = parseInt(this.year)
+      if (year && year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+        return 29
+      } else if (year) {
+        return 28
+      } else {
+        return 0
+      }
+    }
   },
 
   methods: {

@@ -48,7 +48,7 @@ export default {
     }).then(({ data: { data: { attributes }} }) => {
       commit('birthYear',  attributes.birthYear)
       commit('birthMonth', attributes.birthMonth)
-      commit('birthDay',   attributs.birthDay)
+      commit('birthDay',   attributes.birthDay)
     }).catch(err => console.error(err))
   },
 }
