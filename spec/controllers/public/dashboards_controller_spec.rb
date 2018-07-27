@@ -1,9 +1,16 @@
 require "rails_helper"
 
 RSpec.describe Public::DashboardsController do
+  def preset_cookies(controller, coords = '[31.123, -45.678]')
+    controller.set_cookie(CookieNames::IP_GEOLOCATION, {
+      'ip_address'  => controller.request.remote_ip,
+      'coordinates' => coords,
+    })
+  end
+
   context "when visitors have a location cookie" do
     it "does not add a cookie" do
-      controller.set_cookie(CookieNames::IP_GEOLOCATION, '[31.123, -45.678]')
+      preset_cookies(controller)
 
       expect {
         get :show
@@ -27,14 +34,18 @@ RSpec.describe Public::DashboardsController do
       sign_in(student)
       get :show
 
-      expect(controller.get_cookie(CookieNames::IP_GEOLOCATION)).to eq([1.23, 4.56])
+      coordinates = controller.get_cookie(
+        CookieNames::IP_GEOLOCATION
+      )['coordinates']
+
+      expect(coordinates).to eq([1.23, 4.56])
       expect(student.account.reload.latitude).to eq(1.23)
       expect(student.account.longitude).to eq(4.56)
     end
 
     context "and the location is invalid" do
       it "tries again" do
-        controller.set_cookie(CookieNames::IP_GEOLOCATION, "[0.0, 0.0]")
+        preset_cookies(controller, "[0.0, 0.0]")
 
         result = double(:GeocoderResult, coordinates: [31.123, -45.678])
         expect(Geocoder).to receive(:search).with("0.0.0.0").and_return([result])
@@ -42,7 +53,7 @@ RSpec.describe Public::DashboardsController do
         expect {
           get :show
         }.to change {
-          controller.get_cookie(CookieNames::IP_GEOLOCATION)
+          controller.get_cookie(CookieNames::IP_GEOLOCATION)['coordinates']
         }.to([31.123, -45.678])
       end
     end
@@ -69,7 +80,7 @@ RSpec.describe Public::DashboardsController do
       get :show
 
       results = controller.get_cookie(CookieNames::IP_GEOLOCATION)
-      expect(results).to eq([31.1324413, -45.1038208])
+      expect(results['coordinates']).to eq([31.1324413, -45.1038208])
     end
 
     context "and the geocoder returns no results" do
@@ -83,7 +94,7 @@ RSpec.describe Public::DashboardsController do
         get :show
 
         results = controller.get_cookie(CookieNames::IP_GEOLOCATION)
-        expect(results).to eq([0.0, 0.0])
+        expect(results['coordinates']).to eq([0.0, 0.0])
       end
     end
   end
