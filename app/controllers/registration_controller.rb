@@ -5,4 +5,8 @@ class RegistrationController < ActionController::API
   def cookies
     request.cookie_jar
   end
+
+  def current_scope
+    'registration'
+  end
 end

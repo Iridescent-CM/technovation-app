@@ -1,4 +1,4 @@
-module ControllerSigninHelper
+module RequestSigninHelper
   def sign_in(profile, *factory_opts)
     signin = case profile
              when Symbol, String
@@ -7,6 +7,6 @@ module ControllerSigninHelper
                profile
              end
 
-    controller.set_cookie(CookieNames::AUTH_TOKEN, signin.account.auth_token)
+    post "/signins", params: { account: { email: profile.email, password: 'secret1234' } }
   end
 end

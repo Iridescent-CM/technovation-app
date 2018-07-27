@@ -41,11 +41,14 @@ module HandleGeocoderSearch
   end
 
   def self.search_geocoder(geocoder_query)
-    results = Geocoder.search(String(geocoder_query))
+    query = String(geocoder_query)
+    results = Geocoder.search(query)
 
-    results.none? ?
-      Geocoder.search(query, lookup: :bing) :
+    if results.none? && !Rails.env.test?
+      Geocoder.search(query, lookup: :bing)
+    else
       results
+    end
   end
 
   def self.handle_one_result(db_record, geocoded)
