@@ -21,21 +21,14 @@ module StoreLocation
     attr_reader  :account, :context, :cookie_name
 
     def execute
-      existing_ip = nil
-
-      if existing_value = context.get_cookie(cookie_name)
-        existing_coordinates = existing_value['coordinates']
-        existing_ip = existing_value['ip_address']
-
-        if String(existing_coordinates) == "[0.0, 0.0]" || ip_address != existing_ip
-          status = "EXECUTED"
-          context.set_cookie(cookie_name, cookie_value)
-        else
-          status = !!existing_coordinates ? "SKIPPED" : "EXECUTED"
-        end
+      if should_execute?
+        status = "EXECUTED"
+        context.set_cookie(cookie_name, cookie_value)
+      else
+        status = "SKIPPED"
       end
 
-      maybe_run_account_updates(existing_ip)
+      maybe_run_account_updates
 
       Rails.logger.info(
         [
@@ -85,8 +78,8 @@ module StoreLocation
       @cookie_name = CookieNames::IP_GEOLOCATION
     end
 
-    def maybe_run_account_updates(existing_ip)
-      if (String(cookie_value) != "[0.0, 0.0]" || existing_ip != ip_address) &&
+    def maybe_run_account_updates
+      if coordinates_valid? &&
           account.authenticated? &&
             (!account.latitude || !account.city)
         account.latitude  = latitude
@@ -98,11 +91,11 @@ module StoreLocation
     end
 
     def latitude
-      cookie_value.first
+      cookie_value['coordinates'].first
     end
 
     def longitude
-      cookie_value.last
+      cookie_value['coordinates'].last
     end
 
     def source
@@ -112,13 +105,13 @@ module StoreLocation
     def cookie_value
       @cookie_value ||= if account.authenticated? && account.latitude
         {
-          ip_address: ip_address,
-          coordinates: [account.latitude, account.longitude],
+          'ip_address'  => ip_address,
+          'coordinates' => [account.latitude, account.longitude],
         }
       else
         {
-          ip_address: ip_address,
-          coordinates: first_geocoded_result(ip_address).coordinates,
+          'ip_address'  => ip_address,
+          'coordinates' => first_geocoded_result(ip_address).coordinates,
         }
       end
     end
@@ -126,6 +119,29 @@ module StoreLocation
     private
     def log_label
       "LAT, LNG from IP"
+    end
+
+    def existing_value
+      context.get_cookie(cookie_name)
+    end
+
+    def existing_coordinates
+      existing_value && existing_value['coordinates']
+    end
+
+    def existing_ip
+      existing_value && existing_value['ip_address']
+    end
+
+    def should_execute?
+      !existing_value ||
+        !existing_coordinates ||
+          !coordinates_valid? ||
+            String(ip_address) != String(existing_ip)
+    end
+
+    def coordinates_valid?
+      String(existing_coordinates) != "[0.0, 0.0]"
     end
   end
 
