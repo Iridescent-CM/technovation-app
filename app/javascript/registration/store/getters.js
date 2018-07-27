@@ -6,4 +6,8 @@ export default {
   getEmail (state) {
     return state.email
   },
+
+  getBirthdate (state) {
+    return [state.birthYear, state.birthMonth, state.birthDay].join('-')
+  },
 }

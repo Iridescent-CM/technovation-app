@@ -1271,7 +1271,10 @@ CREATE TABLE public.signup_attempts (
     password_digest character varying,
     admin_permission_token character varying,
     wizard_token character varying,
-    terms_agreed_at timestamp without time zone
+    terms_agreed_at timestamp without time zone,
+    birth_year integer,
+    birth_month integer,
+    birth_day integer
 );
 
 
@@ -3097,6 +3100,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180716151350'),
 ('20180724171119'),
 ('20180725175239'),
-('20180725175328');
+('20180725175328'),
+('20180727200157');
 
 

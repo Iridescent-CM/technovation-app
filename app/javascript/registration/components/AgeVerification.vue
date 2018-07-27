@@ -4,45 +4,59 @@
       What is your birthdate?
     </div>
 
-    <div class="panel__content">
-      <label for="year">Year</label>
-      <autocomplete-input
-        id="year"
-        :options="years"
-        v-model="year"
-      />
+    <div class="panel__content grid">
+      <div class="grid__col-7 grid__col--bleed">
+        <label for="year">Year</label>
+        <autocomplete-input
+          id="year"
+          :options="years"
+          v-model="year"
+        />
 
-      <label for="month">Month</label>
-      <autocomplete-input
-        id="month"
-        :options="months"
-        v-model="month"
-      />
+        <label for="month">Month</label>
+        <autocomplete-input
+          id="month"
+          :options="months"
+          v-model="month"
+        />
 
-      <label for="day">Day</label>
-      <autocomplete-input
-        id="day"
-        :options="days"
-        v-model="day"
-      />
-
-      <div v-if="age">
-        <p>You are <strong>{{ age }}</strong> years old.</p>
-
-        <p>
-          You will be <strong>{{ ageByCutoff }}</strong> before {{ cutoffDay }}.
-        </p>
+        <label for="day">Day</label>
+        <autocomplete-input
+          id="day"
+          :options="days"
+          v-model="day"
+        />
       </div>
 
-      <h4>Team divisions explained:</h4>
+      <div class="grid__col-5 grid__col--bleed padding--t-l-large">
+        <dl v-if="age">
+          <dt>Your age today</dt>
+          <dd>You are <strong>{{ age }}</strong> years old.</dd>
 
-      <dl>
-        <dt>Junior Division Teams</dt>
-        <dd>All students on the team will be younger than 15 before {{ cutoffDay }}</dd>
+          <dt>Your age on {{ cutoffDay }}</dt>
+          <dd>
+            You will be <strong>{{ ageByCutoff }}</strong> on {{ cutoffDay }}.
+          </dd>
+        </dl>
+      </div>
 
-        <dt>Senior Division Teams</dt>
-        <dd>One student on the team will be 15 or older before {{ cutoffDay }}</dd>
-      </dl>
+      <div class="grid__col-auto grid__col--bleed-x">
+        <h4>Team divisions explained:</h4>
+
+        <dl>
+          <dt class="color--secondary">Junior Division Teams</dt>
+          <dd>
+            <strong>All</strong> students on the team will be
+            <strong>younger than 15</strong> on {{ cutoffDay }}
+          </dd>
+
+          <dt class="color--secondary">Senior Division Teams</dt>
+          <dd>
+            <strong>At least one</strong> student on your team will be
+            <strong>15 or older</strong> on {{ cutoffDay }}
+          </dd>
+        </dl>
+      </div>
     </div>
 
     <div class="panel__bottom-bar">
@@ -52,6 +66,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import AutocompleteInput from 'components/AutocompleteInput'
 
 export default {
@@ -59,15 +74,39 @@ export default {
     AutocompleteInput,
   },
 
-  data () {
-    return {
-      year: '',
-      month: '',
-      day: '',
-    }
-  },
-
   computed: {
+    ...mapGetters(['getBirthdate']),
+
+    year: {
+      get () {
+        return this.getBirthdate.split('-')[0]
+      },
+
+      set (year) {
+        this.updateBirthdate({ year })
+      },
+    },
+
+    month: {
+      get () {
+        return this.getBirthdate.split('-')[1]
+      },
+
+      set (month) {
+        this.updateBirthdate({ month })
+      },
+    },
+
+    day: {
+      get () {
+        return this.getBirthdate.split('-')[2]
+      },
+
+      set (day) {
+        this.updateBirthdate({ day })
+      },
+    },
+
     age () {
       return this.getAge(new Date())
     },
@@ -77,7 +116,7 @@ export default {
     },
 
     cutoffDay () {
-      return "the first day of August 2019"
+      return "August 1, 2019"
     },
 
     profileChoices () {
@@ -139,6 +178,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['updateBirthdate']),
+
     getAge (compareDate) {
       const year = parseInt(this.year)
       const month = parseInt(this.month)

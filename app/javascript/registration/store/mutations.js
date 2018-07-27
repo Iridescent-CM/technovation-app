@@ -10,4 +10,16 @@ export default {
   email (state, email) {
     state.email = email
   },
+
+  birthYear (state, year) {
+    state.birthYear = year
+  },
+
+  birthMonth (state, month) {
+    state.birthMonth = month
+  },
+
+  birthDay (state, day) {
+    state.birthDay = day
+  },
 }
