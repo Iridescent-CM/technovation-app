@@ -61,13 +61,21 @@
         You can delete your account and data, and get a copy of your data, at any time.
         This would remove you from your team and our program.
       </p>
+
+      <div class="padding--t-b-large text-align--right">
+        <label class="margin--none">
+          <input type="checkbox" v-model="termsAgreed" />
+          I agree to these data use terms
+        </label>
+      </div>
     </div>
 
     <div class="panel__bottom-bar">
-      <label>
-        <input type="checkbox" v-model="termsAgreed" />
-        I agree to Technovation's data use terms
-      </label>
+      <button
+        class="button"
+        :disabled="!termsAgreed"
+        @click="handleSubmit"
+      >Next</button>
     </div>
   </form>
 </template>
@@ -92,7 +100,14 @@ export default {
     },
   },
 
-  methods: mapActions(['updateTermsAgreed']),
+  methods: {
+    ...mapActions(['updateTermsAgreed']),
+
+    handleSubmit () {
+      if (!this.termsAgreed) return false
+      this.$router.push({ name: 'age' })
+    },
+  },
 }
 </script>
 

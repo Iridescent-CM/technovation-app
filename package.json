@@ -38,6 +38,7 @@
     "es6-promise": "^4.2.4",
     "escape-string-regexp": "^1.0.5",
     "flatpickr": "^4.2.4",
+    "fsevents": "^1.2.4",
     "lodash": "^4.17.4",
     "sweetalert2": "^7.24.4",
     "url-search-params": "^0.10.0",
