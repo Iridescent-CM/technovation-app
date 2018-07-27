@@ -2,10 +2,9 @@ import Vue from 'vue/dist/vue.esm'
 import Vuex from 'vuex'
 
 import state from './state'
-
-const getters = {}
-const mutations = {}
-const actions = {}
+import getters from './getters'
+import mutations from './mutations'
+import actions from './actions'
 
 Vue.use(Vuex)
 
