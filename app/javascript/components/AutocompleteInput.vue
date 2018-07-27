@@ -21,7 +21,7 @@
 
 <script>
 
-import VueSelect from 'vue-select'
+import VueSelect from '@vendorjs/vue-select'
 
 export default {
   name: 'autocomplete-input',
@@ -93,6 +93,14 @@ export default {
         this.mutableValue = null
       } else {
         this.mutableValue = this.value
+      }
+    },
+
+    mutableValue (newValue) {
+      if (newValue && typeof newValue === 'object') {
+        this.$emit('input', newValue.label)
+      } else {
+        this.$emit('input', newValue)
       }
     },
   },
