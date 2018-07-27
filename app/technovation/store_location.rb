@@ -91,11 +91,11 @@ module StoreLocation
     end
 
     def latitude
-      cookie_value['coordinates'].first
+      existing_coordinates.first
     end
 
     def longitude
-      cookie_value['coordinates'].last
+      existing_coordinates.last
     end
 
     def source
@@ -141,7 +141,7 @@ module StoreLocation
     end
 
     def coordinates_valid?
-      String(existing_coordinates) != "[0.0, 0.0]"
+      existing_coordinates && String(existing_coordinates) != "[0.0, 0.0]"
     end
   end
 
