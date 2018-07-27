@@ -28,12 +28,29 @@
       >
       <label for="season_toggles_judging_round_sf">Semifinals</label>
     </p>
+    <div v-if="judgingEnabled" class="notice info hint">
+      <icon name="exclamation-circle" :size="16" color="00529B" /> Enabling judging has affected other season features.
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
+import Icon from 'components/Icon'
+
 export default {
   name: 'judging-section',
+
+  components: {
+    Icon,
+  },
+
+  computed: {
+    ...mapGetters([
+      'judgingEnabled',
+    ])
+  },
 }
 </script>
 
