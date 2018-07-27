@@ -1,6 +1,47 @@
 <template>
   <div id="notices">
     <h4>Dashboard Notices</h4>
+
+    <div class="notice info hint">
+      Please keep these short!<br>
+      ex: "Submission Deadline: April 25th" or "Round One Judging Is Open!"
+    </div>
+
+    <p>
+      <label for="season_toggles_student_dashboard_text">Students</label>
+      <input
+        id="season_toggles_student_dashboard_text"
+        type="text"
+        v-model="$store.state.student_dashboard_text"
+      >
+    </p>
+
+    <p>
+      <label for="season_toggles_mentor_dashboard_text">Mentors</label>
+      <input
+        id="season_toggles_mentor_dashboard_text"
+        type="text"
+        v-model="$store.state.mentor_dashboard_text"
+      >
+    </p>
+
+    <p>
+      <label for="season_toggles_judge_dashboard_text">Judges</label>
+      <input
+        id="season_toggles_judge_dashboard_text"
+        type="text"
+        v-model="$store.state.judge_dashboard_text"
+      >
+    </p>
+
+    <p>
+      <label for="season_toggles_regional_ambassador_dashboard_text">Regional ambassadors</label>
+      <input
+        id="season_toggles_regional_ambassador_dashboard_text"
+        type="text"
+        v-model="$store.state.regional_ambassador_dashboard_text"
+      >
+    </p>
   </div>
 </template>
 

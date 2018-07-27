@@ -25,4 +25,51 @@ describe('Admin Content & Settings - Notices component', () => {
     expect(Notices.name).toEqual('notices-section')
   })
 
+  describe('markup', () => {
+
+    const scopes = {
+      student: 'Student notice text here.',
+      mentor: 'Mentor notice text here.',
+      judge: 'Judge notice text here.',
+      regional_ambassador: 'RA notice text here.',
+    }
+
+    beforeEach(() => {
+      wrapper = shallowMount(
+        Notices,
+        {
+          localVue,
+          store: mockStore.createMocks({
+            state: {
+              student_dashboard_text: scopes.student,
+              mentor_dashboard_text: scopes.mentor,
+              judge_dashboard_text: scopes.judge,
+              regional_ambassador_dashboard_text: scopes.regional_ambassador,
+            },
+          }).store,
+        }
+      )
+    })
+
+    it('contains the proper HTML based on data', () => {
+      Object.keys(scopes).forEach((scope) => {
+        const label = wrapper
+          .find(`label[for="season_toggles_${scope}_dashboard_text"]`)
+
+        const input = wrapper
+          .find(`#season_toggles_${scope}_dashboard_text`)
+
+        expect(label.exists()).toBe(true)
+        expect(input.attributes()).toEqual(
+          expect.objectContaining({
+            id: `season_toggles_${scope}_dashboard_text`,
+            type: 'text',
+          })
+        )
+        expect(input.element.value).toEqual(scopes[scope])
+      })
+    })
+
+  })
+
 })
