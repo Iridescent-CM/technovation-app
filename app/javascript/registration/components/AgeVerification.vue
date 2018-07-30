@@ -7,22 +7,22 @@
     <div class="panel__content grid">
       <div class="grid__col-7 grid__col--bleed">
         <label for="year">Year</label>
-        <autocomplete-input
-          id="year"
+        <vue-select
+          input-id="year"
           :options="years"
           v-model="year"
         />
 
         <label for="month">Month</label>
-        <autocomplete-input
-          id="month"
+        <vue-select
+          input-id="month"
           :options="months"
           v-model="month"
         />
 
         <label for="day">Day</label>
-        <autocomplete-input
-          id="day"
+        <vue-select
+          input-id="day"
           :options="days"
           v-model="day"
         />
@@ -66,15 +66,16 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import AutocompleteInput from 'components/AutocompleteInput'
+import { mapGetters, mapActions, mapState } from 'vuex'
+import VueSelect from '@vendorjs/vue-select'
 
 export default {
   components: {
-    AutocompleteInput,
+    VueSelect,
   },
 
   computed: {
+    ...mapState(['months', 'birthMonth']),
     ...mapGetters(['getBirthdate']),
 
     year: {
@@ -83,17 +84,17 @@ export default {
       },
 
       set (year) {
-        this.updateBirthdate({ year })
+        this.updateBirthdate({ year, month: this.month, day: this.day })
       },
     },
 
     month: {
       get () {
-        return this.getBirthdate.split('-')[1]
+        return this.birthMonth
       },
 
       set (month) {
-        this.updateBirthdate({ month })
+        this.updateBirthdate({ year: this.year, month: month, day: this.day })
       },
     },
 
@@ -103,7 +104,7 @@ export default {
       },
 
       set (day) {
-        this.updateBirthdate({ day })
+        this.updateBirthdate({ year: this.year, month: this.month, day })
       },
     },
 
@@ -147,23 +148,6 @@ export default {
       return years
     },
 
-    months () {
-      return [
-        { label: "01 - January", value: "1" },
-        { label: "02 - February", value: "2" },
-        { label: "03 - March", value: "3" },
-        { label: "04 - April", value: "4" },
-        { label: "05 - May", value: "5" },
-        { label: "06 - June", value: "6" },
-        { label: "07 - July", value: "7" },
-        { label: "08 - August", value: "8" },
-        { label: "09 - September", value: "9" },
-        { label: "10 - October", value: "10" },
-        { label: "11 - November", value: "11" },
-        { label: "12 - December", value: "12" },
-      ]
-    },
-
     days () {
       let startDay = 1
       let days = []
@@ -176,31 +160,29 @@ export default {
     },
 
     monthEndDay () {
-      switch(parseInt(this.month)) {
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12: return 31
+      switch(parseInt(this.month.value)) {
         case 4:
         case 6:
         case 9:
         case 11: return 30
-        case 2:  return this.februaryEndDay
-        default: return 0
+
+        case 2: return this.februaryEndDay
+
+        default: return 31
       }
     },
 
     februaryEndDay () {
-      const year = parseInt(this.year)
-      if (year && year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-        return 29
-      } else if (year) {
+      const year = parseInt(this.year) || 0
+
+      const isLeapYear = !!year && (year & 3) == 0 && (
+        (year % 25) != 0 || (year & 15) == 0
+      )
+
+      if (!!year && !isLeapYear) {
         return 28
       } else {
-        return 0
+        return 29
       }
     }
   },
@@ -210,7 +192,7 @@ export default {
 
     getAge (compareDate) {
       const year = parseInt(this.year)
-      const month = parseInt(this.month)
+      const month = parseInt(this.month.value)
       const day = parseInt(this.day)
 
       if (!year || !month || !day) return false

@@ -1,12 +1,12 @@
 export default {
-  initWizard ({ commit }, { previousAttempt }) {
+  initWizard ({ commit, getters }, { previousAttempt }) {
     const { data: { attributes } } = JSON.parse(previousAttempt)
     commit('wizardToken', attributes.wizardToken)
 
     commit('termsAgreed', attributes.termsAgreed)
 
     commit('birthYear', attributes.birthYear)
-    commit('birthMonth', attributes.birthMonth)
+    commit('birthMonth', getters.getMonthByValue(attributes.birthMonth))
     commit('birthDay', attributes.birthDay)
 
     commit('email', attributes.email)
@@ -33,21 +33,17 @@ export default {
     }).catch(err => console.error(err))
   },
 
-  updateBirthdate ({ commit, state }, { year, month, day }) {
-    year  = year  || state.birthYear
-    month = month || state.birthMonth
-    day   = day   || state.birthDay
-
+  updateBirthdate ({ commit, state, getters }, { year, month, day }) {
     axios.post('/registration/age', {
       birth_date: {
         year,
-        month,
+        month: Object.assign({}, month).value,
         day,
         wizard_token: state.wizardToken,
       },
     }).then(({ data: { data: { attributes }} }) => {
       commit('birthYear',  attributes.birthYear)
-      commit('birthMonth', attributes.birthMonth)
+      commit('birthMonth', getters.getMonthByValue(attributes.birthMonth))
       commit('birthDay',   attributes.birthDay)
     }).catch(err => console.error(err))
   },
