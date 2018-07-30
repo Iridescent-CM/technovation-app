@@ -1,13 +1,14 @@
 <template>
-  <form
-    @submit.prevent="handleSubmit"
+  <div
+    id="login-form"
     class="panel panel--contains-bottom-bar panel--contains-top-bar"
   >
     <div class="panel__top-bar">
-      Set your login password
+      Set your email & password for logging in
     </div>
 
     <div class="panel__content">
+      <EmailInput />
       <PasswordInput />
     </div>
 
@@ -20,16 +21,18 @@
         Next
       </button>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
+import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
 
 export default {
-  name: 'email-validation',
+  name: 'login',
 
   components: {
+    EmailInput,
     PasswordInput,
   },
 
@@ -41,8 +44,12 @@ export default {
 
   methods: {
     handleSubmit () {
-      return false
-    },
+      if (!this.nextStepEnabled) return false
+      console.log('we will see')
+    }
   },
 }
 </script>
+
+<style lang="scss">
+</style>

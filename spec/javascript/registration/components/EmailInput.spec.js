@@ -3,17 +3,17 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 import mockStore from 'registration/store/__mocks__'
-import EmailValidation from 'registration/components/EmailValidation'
+import EmailInput from 'registration/components/EmailInput'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
 let defaultWrapper
 
-describe('EmailValidation Vue component', () => {
+describe('EmailInput Vue component', () => {
   beforeEach(() => {
     defaultWrapper = shallowMount(
-      EmailValidation,
+      EmailInput,
       {
         localVue,
         store: mockStore.createMocks().store,
@@ -59,7 +59,7 @@ describe('EmailValidation Vue component', () => {
   describe('#validateEmailInput()', () => {
     it('calls the validation service with the email', (done) => {
       const wrapper = shallowMount(
-        EmailValidation,
+        EmailInput,
         {
           localVue,
           store: mockStore.createMocks().store,

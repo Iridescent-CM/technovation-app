@@ -4,9 +4,8 @@
       <tab-link :to="{ name: 'data-use' }">Data agreement</tab-link>
       <tab-link :to="{ name: 'age' }">Date of Birth</tab-link>
       <tab-link :to="{ name: 'gender' }">Gender Identity</tab-link>
-      <tab-link :to="{ name: 'email' }">Email</tab-link>
-      <tab-link :to="{ name: 'password' }">Password</tab-link>
       <tab-link :to="{ name: 'location' }">Region</tab-link>
+      <tab-link :to="{ name: 'login' }">Logging in</tab-link>
     </ul>
 
     <router-view

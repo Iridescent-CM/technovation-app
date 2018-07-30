@@ -6,8 +6,7 @@ import DataUseTerms from '../components/DataUseTerms'
 import AgeVerification from '../components/AgeVerification'
 import GenderIdentity from '../components/GenderIdentity'
 
-import EmailValidation from '../components/EmailValidation'
-import PasswordValidation from '../components/PasswordValidation'
+import Login from '../components/Login'
 import LocationForm from '../../location/components/LocationForm'
 
 Vue.use(VueRouter)
@@ -30,14 +29,9 @@ export const routes = [
     component: GenderIdentity,
   },
   {
-    path: '/email',
-    name: 'email',
-    component: EmailValidation,
-  },
-  {
-    path: '/password',
-    name: 'password',
-    component: PasswordValidation,
+    path: '/login',
+    name: 'login',
+    component: Login,
   },
   {
     path: '/location',
