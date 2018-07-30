@@ -33,7 +33,7 @@
           <dt>Your age today</dt>
           <dd>You are <strong>{{ age }}</strong> years old.</dd>
 
-          <dt>Your age on {{ cutoffDay }}</dt>
+          <dt>Your age during World Pitch</dt>
           <dd>
             You will be <strong>{{ ageByCutoff }}</strong> on {{ cutoffDay }}.
           </dd>
@@ -160,6 +160,8 @@ export default {
     },
 
     monthEndDay () {
+      if (!this.month) return 31
+
       switch(parseInt(this.month.value)) {
         case 4:
         case 6:
@@ -192,7 +194,7 @@ export default {
 
     getAge (compareDate) {
       const year = parseInt(this.year)
-      const month = parseInt(this.month.value)
+      const month = parseInt(Object.assign({}, this.month).value)
       const day = parseInt(this.day)
 
       if (!year || !month || !day) return false

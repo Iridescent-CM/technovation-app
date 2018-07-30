@@ -2,9 +2,9 @@ export default {
   wizardToken: '',
   termsAgreed: null,
   email: '',
-  birthYear: '',
-  birthMonth: '',
-  birthDay: '',
+  birthYear: null,
+  birthMonth: null,
+  birthDay: null,
   months: [
     { label: "01 - January", value: "1" },
     { label: "02 - February", value: "2" },
