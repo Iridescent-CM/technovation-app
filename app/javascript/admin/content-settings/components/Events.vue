@@ -14,7 +14,7 @@
         v-else
         id="season_toggles_select_regional_pitch_event"
         type="checkbox"
-        v-model="$store.select_regional_pitch_event"
+        v-model="$store.state.select_regional_pitch_event"
       >
       <label
         for="season_toggles_select_regional_pitch_event"

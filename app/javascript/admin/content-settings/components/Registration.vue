@@ -14,7 +14,7 @@
           v-else
           :id="`season_toggles_${scope}_signup`"
           type="checkbox"
-          v-model="$store[`${scope}_signup`]"
+          v-model="$store.state[`${scope}_signup`]"
         >
         <label
           :for="`season_toggles_${scope}_signup`"
