@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 import Icon from 'components/Icon'
 
@@ -126,10 +126,36 @@ export default {
     Icon,
   },
 
+  props: {
+    cancelButtonUrl: {
+      type: String,
+      required: true,
+    },
+
+    formData: {
+      type: Object,
+      default () {
+        return {}
+      },
+    }
+  },
+
+  created () {
+    this.setCancelButtonUrl(this.cancelButtonUrl)
+    this.setFormData(this.formData)
+  },
+
+  methods: {
+    ...mapMutations([
+      'setFormData',
+      'setCancelButtonUrl',
+    ]),
+  },
+
   computed: {
     ...mapGetters([
       'judgingEnabled',
-    ])
+    ]),
   },
 }
 </script>

@@ -14,13 +14,13 @@
           placeholder="Headline call to action (keep it short)"
           type="text"
           id="season_toggles_student_survey_link_text"
-          v-model="$store.state.student_survey_link.text"
+          v-model="$store.state.settings.student_survey_link.text"
         >
         <input
           placeholder="URL"
           type="text"
           id="season_toggles_student_survey_link_url"
-          v-model="$store.state.student_survey_link.url"
+          v-model="$store.state.settings.student_survey_link.url"
         >
       </p>
       <p class="margin--t-none">
@@ -28,7 +28,7 @@
         <textarea
           placeholder="Add more text that appears only in the popup modal"
           id="season_toggles_student_survey_link_long_desc"
-          v-model="$store.state.student_survey_link.long_desc"
+          v-model="$store.state.settings.student_survey_link.long_desc"
         />
       </p>
       <div class="notice info hint">
@@ -43,13 +43,13 @@
           placeholder="Headline call to action (keep it short)"
           type="text"
           id="season_toggles_mentor_survey_link_text"
-          v-model="$store.state.mentor_survey_link.text"
+          v-model="$store.state.settings.mentor_survey_link.text"
         >
         <input
           placeholder="URL"
           type="text"
           id="season_toggles_mentor_survey_link_url"
-          v-model="$store.state.mentor_survey_link.url"
+          v-model="$store.state.settings.mentor_survey_link.url"
         >
       </p>
       <p class="margin--t-none">
@@ -57,7 +57,7 @@
         <textarea
           placeholder="Add more text that appears only in the popup modal"
           id="season_toggles_mentor_survey_link_long_desc"
-          v-model="$store.state.mentor_survey_link.long_desc"
+          v-model="$store.state.settings.mentor_survey_link.long_desc"
         />
       </p>
       <div class="notice info hint">

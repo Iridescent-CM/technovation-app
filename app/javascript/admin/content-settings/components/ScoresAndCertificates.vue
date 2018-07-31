@@ -14,7 +14,7 @@
         v-else
         id="season_toggles_display_scores"
         type="checkbox"
-        v-model="$store.state.display_scores"
+        v-model="$store.state.settings.display_scores"
       >
       <label
         for="season_toggles_display_scores"

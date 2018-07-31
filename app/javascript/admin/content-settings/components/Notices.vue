@@ -12,7 +12,7 @@
       <input
         id="season_toggles_student_dashboard_text"
         type="text"
-        v-model="$store.state.student_dashboard_text"
+        v-model="$store.state.settings.student_dashboard_text"
       >
     </p>
 
@@ -21,7 +21,7 @@
       <input
         id="season_toggles_mentor_dashboard_text"
         type="text"
-        v-model="$store.state.mentor_dashboard_text"
+        v-model="$store.state.settings.mentor_dashboard_text"
       >
     </p>
 
@@ -30,7 +30,7 @@
       <input
         id="season_toggles_judge_dashboard_text"
         type="text"
-        v-model="$store.state.judge_dashboard_text"
+        v-model="$store.state.settings.judge_dashboard_text"
       >
     </p>
 
@@ -39,7 +39,7 @@
       <input
         id="season_toggles_regional_ambassador_dashboard_text"
         type="text"
-        v-model="$store.state.regional_ambassador_dashboard_text"
+        v-model="$store.state.settings.regional_ambassador_dashboard_text"
       >
     </p>
   </div>

@@ -14,7 +14,7 @@
         v-else
         id="season_toggles_team_building_enabled"
         type="checkbox"
-        v-model="$store.state.team_building_enabled"
+        v-model="$store.state.settings.team_building_enabled"
       >
       <label
         for="season_toggles_team_building_enabled"
@@ -39,7 +39,7 @@
         v-else
         id="season_toggles_team_submissions_editable"
         type="checkbox"
-        v-model="$store.state.team_submissions_editable"
+        v-model="$store.state.settings.team_submissions_editable"
       >
       <label
         for="season_toggles_team_submissions_editable"
