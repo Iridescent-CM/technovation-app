@@ -70,6 +70,10 @@
   margin-top: 3rem;
 }
 
+.margin--r-none {
+  margin-right: 0 !important;
+}
+
 .margin--b-medium {
   margin-bottom: 0.5rem;
 }
@@ -126,6 +130,10 @@
 .padding--t-l-large {
   padding-top: 1rem;
   padding-left: 1rem;
+}
+
+.padding--r-none {
+  padding-right: 0 !important;
 }
 
 .padding--r-l-large {
