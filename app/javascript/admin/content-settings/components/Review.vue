@@ -132,7 +132,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'review-and-save-settings',
+  name: 'review-and-save-settings-section',
 
   data () {
     return {
