@@ -183,14 +183,26 @@ export default {
       type: String,
       required: true,
     },
+
+    value: {
+      type: Object,
+      required: false,
+      default: null,
+    },
   },
 
   created () {
-    window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
-      this.city = data.city
-      this.state = data.state
-      this.country = data.country
-    })
+    if (this.value) {
+      this.city = this.value.city
+      this.state = this.value.state
+      this.country = this.value.country
+    } else {
+      window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
+        this.city = data.city
+        this.state = data.state
+        this.country = data.country
+      })
+    }
   },
 
   computed: {
@@ -262,6 +274,18 @@ export default {
           // no op
       }
     },
+
+    city (value) {
+      this.$emit('input', Object.assign({}, this.value, { city: value }))
+    },
+
+    state (value) {
+      this.$emit('input', Object.assign({}, this.value, { state: value }))
+    },
+
+    country (value) {
+      this.$emit('input', Object.assign({}, this.value, { country: value }))
+    },
   },
 
   methods: {
@@ -302,6 +326,9 @@ export default {
       this.searching = false
       this.status = status
       this.savedLocation = new LocationResult(data.results[0])
+      this.city = this.savedLocation.city
+      this.state = this.savedLocation.state
+      this.country = this.savedLocation.country
       console.log('OK', status, data)
     },
 

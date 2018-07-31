@@ -11,6 +11,14 @@ export default {
     return [state.birthYear, state.birthMonth, state.birthDay].join('-')
   },
 
+  getLocation (state) {
+    return {
+      city: state.city,
+      state: state.state,
+      country: state.country,
+    }
+  },
+
   getMonthByValue: (state) => (value) => {
     return state.months.find(month => {
       return month.value == (value || "").toString()

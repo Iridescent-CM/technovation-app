@@ -17,7 +17,14 @@ export default {
     state.birthDay = attributes.day
   },
 
+  location (state, attributes) {
+    state.city = attributes.city
+    state.state = attributes.state
+    state.country = attributes.country
+  },
+
   basicProfile (state, attributes) {
+    console.log(attributes)
     state.firstName = attributes.firstName
     state.lastName = attributes.lastName
     state.genderIdentity = attributes.genderIdentity

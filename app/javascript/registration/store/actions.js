@@ -5,6 +5,7 @@ export default {
     commit('wizardToken', attributes.wizardToken)
     commit('termsAgreed', attributes.termsAgreed)
     commit('birthDate', getters.getBirthdateAttributes(attributes))
+    commit('location', attributes)
     commit('basicProfile', attributes)
     commit('email', attributes.email)
   },
@@ -40,6 +41,23 @@ export default {
       },
     }).then(({ data: { data: { attributes }} }) => {
       commit('birthDate', getters.getBirthdateAttributes(attributes))
+    }).catch(err => console.error(err))
+  },
+
+  updateLocation ({ commit, state }, attrs) {
+    const attributes = Object.assign({}, {
+      city: state.city,
+      state: state.state,
+      country: state.country,
+    }, attrs)
+
+    axios.post('/registration/location', {
+      location: {
+        ...attributes,
+        wizardToken: state.wizardToken,
+      },
+    }).then(({ data: { data: { attributes }} }) => {
+      commit('location', attributes)
     }).catch(err => console.error(err))
   },
 

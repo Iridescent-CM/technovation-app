@@ -1280,7 +1280,12 @@ CREATE TABLE public.signup_attempts (
     gender_identity integer,
     school_company_name character varying,
     referred_by integer,
-    referred_by_other character varying
+    referred_by_other character varying,
+    city character varying,
+    state_code character varying,
+    country_code character varying,
+    latitude numeric(10,6),
+    longitude numeric(10,6)
 );
 
 
@@ -3108,6 +3113,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180725175239'),
 ('20180725175328'),
 ('20180727200157'),
-('20180731150846');
+('20180731150846'),
+('20180731162422');
 
 

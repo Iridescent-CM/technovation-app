@@ -7,7 +7,7 @@ import AgeVerification from '../components/AgeVerification'
 import BasicProfile from '../components/BasicProfile'
 
 import Login from '../components/Login'
-import LocationForm from '../../location/components/LocationForm'
+import Location from '../components/Location'
 
 Vue.use(VueRouter)
 
@@ -36,10 +36,7 @@ export const routes = [
   {
     path: '/location',
     name: 'location',
-    component: LocationForm,
-    props: {
-      scopeName: 'registration',
-    },
+    component: Location,
   },
 ]
 

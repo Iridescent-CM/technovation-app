@@ -9,6 +9,15 @@ module Public
         )
       elsif token = get_cookie(CookieNames::SIGNUP_TOKEN)
         @signup_attempt = SignupAttempt.wizard.find_by(wizard_token: token)
+
+        if result = Geocoder.search(get_cookie(CookieNames::IP_GEOLOCATION)['coordinates']).first
+          geocoded = Geocoded.new(result)
+          @signup_attempt.update({
+            city: geocoded.city,
+            state_code: geocoded.state_code,
+            country_code: geocoded.country_code,
+          })
+        end
       end
     end
 

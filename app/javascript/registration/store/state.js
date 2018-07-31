@@ -7,6 +7,10 @@ export default {
   birthMonth: null,
   birthDay: null,
 
+  city: null,
+  state: null,
+  country: null,
+
   firstName: null,
   lastName: null,
   genderIdentity: null,
