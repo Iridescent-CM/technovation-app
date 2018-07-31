@@ -108,6 +108,18 @@
           Scores &amp; Certificates
         </button>
       </router-link>
+
+      <router-link
+        ref="reviewLink"
+        tag="li"
+        class="tabs__menu-link"
+        active-class="tabs__menu-link--active"
+        :to="{ name: 'review' }"
+      >
+        <button role="button" class="tabs__menu-button">
+          Review
+        </button>
+      </router-link>
     </ul>
 
     <router-view class="tabs__content grid__col-md-9"></router-view>

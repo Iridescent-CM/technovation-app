@@ -6,6 +6,7 @@ import Registration from 'admin/content-settings/components/Registration'
 import ScoresAndCertificates from 'admin/content-settings/components/ScoresAndCertificates'
 import Surveys from 'admin/content-settings/components/Surveys'
 import TeamsAndSubmissions from 'admin/content-settings/components/TeamsAndSubmissions'
+import Review from 'admin/content-settings/components/Review'
 
 describe('Admin Content & Settings - routes', () => {
 
@@ -51,6 +52,11 @@ describe('Admin Content & Settings - routes', () => {
         path: '/teams_and_submissions',
         name: 'teams_and_submissions',
         component: TeamsAndSubmissions,
+      },
+      {
+        path: '/review',
+        name: 'review',
+        component: Review,
       },
     ])
   })

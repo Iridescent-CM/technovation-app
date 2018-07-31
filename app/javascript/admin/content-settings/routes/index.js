@@ -7,6 +7,7 @@ import Registration from '../components/Registration'
 import ScoresAndCertificates from '../components/ScoresAndCertificates'
 import Surveys from '../components/Surveys'
 import TeamsAndSubmissions from '../components/TeamsAndSubmissions'
+import Review from '../components/Review'
 
 export const routes = [
   {
@@ -49,6 +50,11 @@ export const routes = [
     path: '/teams_and_submissions',
     name: 'teams_and_submissions',
     component: TeamsAndSubmissions,
+  },
+  {
+    path: '/review',
+    name: 'review',
+    component: Review,
   },
 ]
 
