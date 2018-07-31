@@ -8,7 +8,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
       SeasonToggles.disable_signup(scope)
       visit edit_admin_season_schedule_settings_path
 
+      click_button "Registration"
+
       check "season_toggles_#{scope}_signup"
+
+      click_button "Review"
+
       click_button "Save"
 
       expect(SeasonToggles.signup_enabled?(scope)).to be(true),
@@ -21,8 +26,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
       SeasonToggles.set_dashboard_text(scope, "")
       visit edit_admin_season_schedule_settings_path
 
+      click_button "Notices"
+
       fill_in "season_toggles_#{scope}_dashboard_text",
         with: "Something short"
+
+      click_button "Review"
 
       click_button "Save"
 
@@ -36,8 +45,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
       SeasonToggles.set_survey_link(scope, nil, nil)
       visit edit_admin_season_schedule_settings_path
 
+      click_button "Surveys"
+
       fill_in "season_toggles_#{scope}_survey_link_text", with: "Pre-survey"
       fill_in "season_toggles_#{scope}_survey_link_url", with: "google.com"
+
+      click_button "Review"
 
       click_button "Save"
 
@@ -53,7 +66,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
     SeasonToggles.team_building_enabled = false
     visit edit_admin_season_schedule_settings_path
 
-    check "season_toggles[team_building_enabled]"
+    click_button "Teams"
+
+    check "season_toggles_team_building_enabled"
+
+    click_button "Review"
+
     click_button "Save"
 
     expect(SeasonToggles.team_building_enabled?).to be true
@@ -63,7 +81,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
     SeasonToggles.team_submissions_editable = false
     visit edit_admin_season_schedule_settings_path
 
-    check "season_toggles[team_submissions_editable]"
+    click_button "Teams"
+
+    check "season_toggles_team_submissions_editable"
+
+    click_button "Review"
+
     click_button "Save"
 
     expect(SeasonToggles.team_submissions_editable?).to be true
@@ -73,7 +96,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
     SeasonToggles.team_submissions_editable = true
     visit edit_admin_season_schedule_settings_path
 
-    page.uncheck "season_toggles[team_submissions_editable]"
+    click_button "Teams"
+
+    page.uncheck "season_toggles_team_submissions_editable"
+
+    click_button "Review"
+
     click_button "Save"
 
     expect(SeasonToggles.team_submissions_editable?).to be false
@@ -83,7 +111,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
     SeasonToggles.select_regional_pitch_event = false
     visit edit_admin_season_schedule_settings_path
 
-    check "season_toggles[select_regional_pitch_event]"
+    click_button "Events"
+
+    check "season_toggles_select_regional_pitch_event"
+
+    click_button "Review"
+
     click_button "Save"
 
     expect(SeasonToggles.select_regional_pitch_event?).to be true
@@ -93,7 +126,12 @@ RSpec.describe "Admin UI for season toggles:", :js do
     SeasonToggles.display_scores = false
     visit edit_admin_season_schedule_settings_path
 
-    check "season_toggles[display_scores]"
+    click_button "Scores"
+
+    check "season_toggles_display_scores"
+
+    click_button "Review"
+
     click_button "Save"
 
     expect(SeasonToggles.display_scores?).to be true
@@ -103,17 +141,23 @@ RSpec.describe "Admin UI for season toggles:", :js do
     SeasonToggles.judging_round = :off
 
     visit edit_admin_season_schedule_settings_path
+    click_button "Judging"
     choose "Quarterfinals"
+    click_button "Review"
     click_button "Save"
     expect(SeasonToggles.quarterfinals?).to be true
 
     visit edit_admin_season_schedule_settings_path
+    click_button "Judging"
     choose "Semifinals"
+    click_button "Review"
     click_button "Save"
     expect(SeasonToggles.semifinals?).to be true
 
     visit edit_admin_season_schedule_settings_path
+    click_button "Judging"
     choose "Off"
+    click_button "Review"
     click_button "Save"
     expect(SeasonToggles.judging_enabled?).to be false
   end
