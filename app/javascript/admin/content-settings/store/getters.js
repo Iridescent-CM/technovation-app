@@ -1,5 +1,5 @@
 export default {
   judgingEnabled: (state) => {
-    return state.judging_round !== 'off'
+    return state.settings.judging_round !== 'off'
   },
 }
