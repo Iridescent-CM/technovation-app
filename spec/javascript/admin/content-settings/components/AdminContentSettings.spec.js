@@ -43,6 +43,134 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
     expect(AdminContentSettings.name).toEqual('admin-content-settings')
   })
 
+  describe('props', () => {
+
+    it('contains the correct props', () => {
+      expect(AdminContentSettings.props).toEqual({
+        cancelButtonUrl: {
+          type: String,
+          required: true,
+        },
+
+        formData: {
+          type: Object,
+          default: expect.any(Function)
+        }
+      })
+    })
+
+    describe('formData', () => {
+
+      it('returns an empty object by default', () => {
+        expect(AdminContentSettings.props.formData.default()).toEqual({})
+      })
+
+    })
+
+  })
+
+  describe('created hook', () => {
+
+    it('calls the mapped mutations in order to store the cancel URL and form data state', () => {
+      const setCancelButtonUrl = jest.fn(() => {})
+      const setFormData = jest.fn(() => {})
+
+      expect(setCancelButtonUrl.mock.calls.length).toBe(0)
+      expect(setFormData.mock.calls.length).toBe(0)
+
+      wrapper = shallowMount(
+        AdminContentSettings,
+        {
+          localVue,
+          store: mockStore
+            .createMocks({
+              mutations: {
+                setCancelButtonUrl,
+                setFormData,
+              },
+            })
+            .store,
+          stubs: {
+            RouterLink: RouterLinkStub,
+            'router-view': true,
+          },
+          propsData: {
+            cancelButtonUrl: '/admin/dashboard',
+          },
+        }
+      )
+
+      expect(setCancelButtonUrl.mock.calls.length).toBe(1)
+      expect(setFormData.mock.calls.length).toBe(1)
+    })
+
+    it('applies the cancel button URL and form data props to the state', () => {
+      wrapper = shallowMount(
+        AdminContentSettings,
+        {
+          localVue,
+          store: mockStore.createMocks().store,
+          stubs: {
+            RouterLink: RouterLinkStub,
+            'router-view': true,
+          },
+          propsData: {
+            formData: {
+              student_signup: 1,
+              student_dashboard_text: 'Student dashboard text',
+              mentor_dashboard_text: 'Mentor dashboard text',
+              judge_dashboard_text: 'Judge dashboard text',
+              regional_ambassador_dashboard_text: 'RA dashboard text',
+              student_survey_link: {
+                text: 'Student Link',
+                url: 'http://google.com',
+                long_desc: 'This is a long description for student link',
+              },
+              mentor_survey_link: {
+                text: 'Mentor Link',
+                url: 'http://bing.com',
+                long_desc: 'This is a long description for mentor link',
+              },
+              team_building_enabled: 1,
+              select_regional_pitch_event: 0,
+              judging_round: 'qf',
+              display_scores: 1,
+            },
+            cancelButtonUrl: '/admin/dashboard',
+          },
+        }
+      )
+
+      expect(wrapper.vm.$store.state.settings).toEqual({
+        student_signup: 1,
+        mentor_signup: 0,
+        student_dashboard_text: 'Student dashboard text',
+        mentor_dashboard_text: 'Mentor dashboard text',
+        judge_dashboard_text: 'Judge dashboard text',
+        regional_ambassador_dashboard_text: 'RA dashboard text',
+        student_survey_link: {
+          text: 'Student Link',
+          url: 'http://google.com',
+          long_desc: 'This is a long description for student link',
+        },
+        mentor_survey_link: {
+          text: 'Mentor Link',
+          url: 'http://bing.com',
+          long_desc: 'This is a long description for mentor link',
+        },
+        team_building_enabled: 1,
+        team_submissions_editable: 0,
+        select_regional_pitch_event: 0,
+        judging_round: 'qf',
+        display_scores: 1,
+      })
+
+      expect(wrapper.vm.$store.state.cancelButtonUrl)
+        .toEqual('/admin/dashboard')
+    })
+
+  })
+
   describe('HTML layout', () => {
 
     it('contains the tab grid layout', () => {
