@@ -9,6 +9,9 @@ class SignupAttempt < ActiveRecord::Base
     wizard
   }
 
+  enum referred_by: REFERRED_BY_OPTIONS
+  enum gender_identity: GENDER_IDENTITY_OPTIONS
+
   belongs_to :account, required: false
 
   before_validation -> {

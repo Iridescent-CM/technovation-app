@@ -1274,7 +1274,13 @@ CREATE TABLE public.signup_attempts (
     terms_agreed_at timestamp without time zone,
     birth_year integer,
     birth_month integer,
-    birth_day integer
+    birth_day integer,
+    first_name character varying,
+    last_name character varying,
+    gender_identity integer,
+    school_company_name character varying,
+    referred_by integer,
+    referred_by_other character varying
 );
 
 
@@ -3101,6 +3107,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180724171119'),
 ('20180725175239'),
 ('20180725175328'),
-('20180727200157');
+('20180727200157'),
+('20180731150846');
 
 

@@ -101,7 +101,17 @@ export default {
   },
 
   created () {
-    this.debouncedProfileUpdate = debounce(this.updateBasicProfile, 500)
+    this.debouncedProfileUpdate = debounce(attrs => {
+      const attributes = Object.assign({}, {
+        firstName:         this.firstName,
+        lastName:          this.lastName,
+        genderIdentity:    this.genderIdentity,
+        schoolCompanyName: this.schoolCompanyName,
+        referredBy:        this.referredBy,
+        referredByOther:   this.referredByOther,
+      }, attrs)
+      this.updateBasicProfile(attributes)
+    }, 500)
   },
 
   computed: {
@@ -130,7 +140,7 @@ export default {
       },
 
       set (value) {
-        this.debouncedProfileUpdate({ lastname: value })
+        this.debouncedProfileUpdate({ lastName: value })
       },
     },
 

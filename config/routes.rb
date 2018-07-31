@@ -306,6 +306,7 @@ Rails.application.routes.draw do
     resource :terms_agreement, only: :create
     resource :email, only: :create
     resource :age, only: :create
+    resource :basic_profile, only: :create
   end
 
   resources :password_resets, only: [:new, :create]
