@@ -1,10 +1,19 @@
 export default {
   wizardToken: '',
+
   termsAgreed: null,
-  email: '',
+
   birthYear: null,
   birthMonth: null,
   birthDay: null,
+
+  firstName: null,
+  lastName: null,
+  genderIdentity: null,
+  schoolCompanyName: null,
+  referredBy: null,
+  referredByOther: null,
+
   months: [
     { label: "01 - January", value: "1" },
     { label: "02 - February", value: "2" },
@@ -19,4 +28,6 @@ export default {
     { label: "11 - November", value: "11" },
     { label: "12 - December", value: "12" },
   ],
+
+  email: '',
 }

@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import DataUseTerms from '../components/DataUseTerms'
 
 import AgeVerification from '../components/AgeVerification'
-import GenderIdentity from '../components/GenderIdentity'
+import BasicProfile from '../components/BasicProfile'
 
 import Login from '../components/Login'
 import LocationForm from '../../location/components/LocationForm'
@@ -24,9 +24,9 @@ export const routes = [
     component: AgeVerification,
   },
   {
-    path: '/gender-identity',
-    name: 'gender',
-    component: GenderIdentity,
+    path: '/basic-profile',
+    name: 'basic-profile',
+    component: BasicProfile,
   },
   {
     path: '/login',

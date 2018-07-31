@@ -16,4 +16,36 @@ export default {
       return month.value == (value || "").toString()
     }) || ''
   },
+
+  getBirthdateAttributes: (_state, getters) => (attributes) => {
+    return {
+      year: attributes.birthYear,
+      day: attributes.birthDay,
+      month: getters.getMonthByValue(attributes.birthMonth),
+    }
+  },
+
+  getFirstName (state) {
+    return state.firstName
+  },
+
+  getLastName (state) {
+    return state.lastName
+  },
+
+  getGenderIdentity (state) {
+    return state.genderIdentity
+  },
+
+  getSchoolCompanyName (state) {
+    return state.schoolCompanyName
+  },
+
+  getReferredBy (state) {
+    return state.referredBy
+  },
+
+  getRefferedByOther (state) {
+    return state.referredByOther
+  },
 }

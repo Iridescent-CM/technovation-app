@@ -1,14 +1,10 @@
 export default {
   initWizard ({ commit, getters }, { previousAttempt }) {
     const { data: { attributes } } = JSON.parse(previousAttempt)
+
     commit('wizardToken', attributes.wizardToken)
-
     commit('termsAgreed', attributes.termsAgreed)
-
-    commit('birthYear', attributes.birthYear)
-    commit('birthMonth', getters.getMonthByValue(attributes.birthMonth))
-    commit('birthDay', attributes.birthDay)
-
+    commit('birthDate', getters.getBirthdateAttributes(attributes))
     commit('email', attributes.email)
   },
 
@@ -42,9 +38,18 @@ export default {
         wizard_token: state.wizardToken,
       },
     }).then(({ data: { data: { attributes }} }) => {
-      commit('birthYear',  attributes.birthYear)
-      commit('birthMonth', getters.getMonthByValue(attributes.birthMonth))
-      commit('birthDay',   attributes.birthDay)
+      commit('birthDate', getters.getBirthdateAttributes(attributes))
+    }).catch(err => console.error(err))
+  },
+
+  updateBasicProfile ({ commit, state }, attributes) {
+    axios.post('/registration/basic_profile', {
+      basic_profile: {
+        ...attributes,
+        wizard_token: state.wizardToken,
+      },
+    }).then(({ data: { data: { attributes }} }) => {
+      commit('basicProfile',  attributes)
     }).catch(err => console.error(err))
   },
 }

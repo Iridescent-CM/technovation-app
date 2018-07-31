@@ -11,15 +11,9 @@ export default {
     state.email = email
   },
 
-  birthYear (state, year) {
-    state.birthYear = year
-  },
-
-  birthMonth (state, month) {
-    state.birthMonth = month
-  },
-
-  birthDay (state, day) {
-    state.birthDay = day
+  birthDate (state, attributes) {
+    state.birthYear = attributes.year
+    state.birthMonth = attributes.month
+    state.birthDay = attributes.day
   },
 }

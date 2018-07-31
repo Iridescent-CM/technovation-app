@@ -3,8 +3,8 @@
     <ul class="grid__col-3 tabs__menu">
       <tab-link :to="{ name: 'data-use' }">Data agreement</tab-link>
       <tab-link :to="{ name: 'age' }">Date of Birth</tab-link>
-      <tab-link :to="{ name: 'gender' }">Gender Identity</tab-link>
       <tab-link :to="{ name: 'location' }">Region</tab-link>
+      <tab-link :to="{ name: 'basic-profile' }">Basic Profile</tab-link>
       <tab-link :to="{ name: 'login' }">Logging in</tab-link>
     </ul>
 

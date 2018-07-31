@@ -11,10 +11,8 @@ export const defaultWrapperWithVuex = (component, mockStore) => {
       localVue,
       store: mockStore.createMocks({
         actions: {
-          updateBirthdate ({ commit }, { year, month, day }) {
-            commit('birthYear',  year)
-            commit('birthMonth', month)
-            commit('birthDay',   day)
+          updateBirthdate ({ commit }, attributes) {
+            commit('birthDate',  attributes)
           },
         }
       }).store,
