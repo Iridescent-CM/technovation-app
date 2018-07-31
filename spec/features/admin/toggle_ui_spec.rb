@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.feature "Admin UI for season toggles:" do
+RSpec.describe "Admin UI for season toggles:", :js do
   before { sign_in(FactoryBot.create(:admin)) }
 
-  scenario "toggle user signups" do
+  it "toggle user signups" do
     %w{student mentor}.each do |scope|
       SeasonToggles.disable_signup(scope)
       visit edit_admin_season_schedule_settings_path
@@ -16,7 +16,7 @@ RSpec.feature "Admin UI for season toggles:" do
     end
   end
 
-  scenario "set dashboard headlines" do
+  it "set dashboard headlines" do
     %w{student mentor judge}.each do |scope|
       SeasonToggles.set_dashboard_text(scope, "")
       visit edit_admin_season_schedule_settings_path
@@ -31,7 +31,7 @@ RSpec.feature "Admin UI for season toggles:" do
     end
   end
 
-  scenario "set the survey links" do
+  it "set the survey links" do
     %w{student mentor}.each do |scope|
       SeasonToggles.set_survey_link(scope, nil, nil)
       visit edit_admin_season_schedule_settings_path
@@ -49,7 +49,7 @@ RSpec.feature "Admin UI for season toggles:" do
     end
   end
 
-  scenario "configure team building enabled" do
+  it "configure team building enabled" do
     SeasonToggles.team_building_enabled = false
     visit edit_admin_season_schedule_settings_path
 
@@ -59,7 +59,7 @@ RSpec.feature "Admin UI for season toggles:" do
     expect(SeasonToggles.team_building_enabled?).to be true
   end
 
-  scenario "configure team submissions editable" do
+  it "configure team submissions editable" do
     SeasonToggles.team_submissions_editable = false
     visit edit_admin_season_schedule_settings_path
 
@@ -69,7 +69,7 @@ RSpec.feature "Admin UI for season toggles:" do
     expect(SeasonToggles.team_submissions_editable?).to be true
   end
 
-  scenario "configure team submissions not editable" do
+  it "configure team submissions not editable" do
     SeasonToggles.team_submissions_editable = true
     visit edit_admin_season_schedule_settings_path
 
@@ -79,7 +79,7 @@ RSpec.feature "Admin UI for season toggles:" do
     expect(SeasonToggles.team_submissions_editable?).to be false
   end
 
-  scenario "configure regional pitch event selection" do
+  it "configure regional pitch event selection" do
     SeasonToggles.select_regional_pitch_event = false
     visit edit_admin_season_schedule_settings_path
 
@@ -89,7 +89,7 @@ RSpec.feature "Admin UI for season toggles:" do
     expect(SeasonToggles.select_regional_pitch_event?).to be true
   end
 
-  scenario "configure scores & certificates" do
+  it "configure scores & certificates" do
     SeasonToggles.display_scores = false
     visit edit_admin_season_schedule_settings_path
 
@@ -99,7 +99,7 @@ RSpec.feature "Admin UI for season toggles:" do
     expect(SeasonToggles.display_scores?).to be true
   end
 
-  scenario "configure judging rounds" do
+  it "configure judging rounds" do
     SeasonToggles.judging_round = :off
 
     visit edit_admin_season_schedule_settings_path
