@@ -32,6 +32,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           RouterLink: RouterLinkStub,
           'router-view': true,
         },
+        propsData: {
+          cancelButtonUrl: '/admin/dashboard',
+        },
       }
     )
   })
@@ -92,6 +95,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           stubs: {
             RouterLink: RouterLinkStub,
             'router-view': true,
+          },
+          propsData: {
+            cancelButtonUrl: '/admin/dashboard',
           },
         }
       )
