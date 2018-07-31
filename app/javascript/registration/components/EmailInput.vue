@@ -83,6 +83,10 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'email-input',
 
+  components: {
+    Icon,
+  },
+
   data () {
     return {
       emailNeedsValidation: false,
@@ -95,8 +99,11 @@ export default {
     }
   },
 
-  components: {
-    Icon,
+  props: {
+    value: {
+      type: Boolean,
+      required: false,
+    },
   },
 
   created () {
@@ -144,6 +151,10 @@ export default {
       } else {
         this.reset()
       }
+    },
+
+    nextStepEnabled (bool) {
+      this.$emit('input', bool)
     },
   },
 

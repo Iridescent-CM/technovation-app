@@ -40,6 +40,13 @@ export default {
     }
   },
 
+  props: {
+    value: {
+      type: Boolean,
+      required: false,
+    },
+  },
+
   computed: {
     nextStepEnabled () {
       return this.password.length >= 8
@@ -66,6 +73,12 @@ export default {
     },
   },
 
+  watch: {
+    nextStepEnabled (bool) {
+      this.$emit('input', bool)
+    },
+  },
+
   methods: {
     showScore (score) {
       this.score = score
@@ -74,7 +87,7 @@ export default {
     handleSubmit () {
       if (!this.nextStepEnabled) return false
       this.$router.push('location')
-    }
+    },
   },
 }
 </script>

@@ -8,8 +8,8 @@
     </div>
 
     <div class="panel__content">
-      <EmailInput />
-      <PasswordInput />
+      <EmailInput v-model="emailComplete" />
+      <PasswordInput v-model="passwordComplete" />
     </div>
 
     <div class="panel__bottom-bar">
@@ -36,9 +36,16 @@ export default {
     PasswordInput,
   },
 
+  data () {
+    return {
+      emailComplete: false,
+      passwordComplete: false,
+    }
+  },
+
   computed: {
     nextStepEnabled () {
-      return false
+      return this.emailComplete && this.passwordComplete
     },
   },
 
