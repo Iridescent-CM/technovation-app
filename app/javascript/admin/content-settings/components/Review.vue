@@ -157,7 +157,7 @@ export default {
   methods: {
     saveSettings () {
       this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData)
-      //document.getElementById('season_schedule').submit()
+      document.getElementById('season_schedule').submit()
     },
 
     buildFormInputsMarkup (formData, prefix = 'season_toggles') {
