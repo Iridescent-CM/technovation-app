@@ -3,276 +3,41 @@
   Toggle user features and content throughout the season
 </h3>
 
-<%= form_with(id: "season_schedule",
-              scope: :season_toggles,
-              url: admin_season_schedule_settings_path,
-              local: true,
-              method: :patch) do |f| %>
-  <div class="tabs tabs--vertical grid" id="admin-season-schedule">
-    <ul class="tabs__menu grid__col-4">
-      <li class="tabs__menu-link">
-        <button
-          role="button"
-          class="tabs__menu-button"
-          data-tab-id="user-reg">
-          <%= web_icon "exclamation-circle", text: "Registration" %>
-        </button>
-      </li>
+<div id="admin-content-settings">
+  <%= form_with(
+        id: "season_schedule",
+        scope: :season_toggles,
+        url: admin_season_schedule_settings_path,
+        local: true,
+        method: :patch) do |f| %>
 
-      <li class="tabs__menu-link">
-        <button
-          role="button"
-          class="tabs__menu-button"
-          data-tab-id="notices">
-          Notices
-        </button>
-      </li>
-
-      <li class="tabs__menu-link">
-        <button
-          role="button"
-          class="tabs__menu-button"
-          data-tab-id="surveys">
-          Surveys
-        </button>
-      </li>
-
-      <li class="tabs__menu-link">
-        <button
-          role="button"
-          class="tabs__menu-button"
-          data-tab-id="teams">
-          <%= web_icon "exclamation-circle", text: "Teams & Submissions" %>
-        </button>
-      </li>
-
-      <li class="tabs__menu-link">
-        <button
-          role="button"
-          class="tabs__menu-button"
-          data-tab-id="events">
-          <%= web_icon "exclamation-circle", text: "Events" %>
-        </button>
-      </li>
-
-      <li class="tabs__menu-link">
-        <button
-          role="button"
-          class="tabs__menu-button"
-          data-tab-id="judging">
-          Judging
-        </button>
-      </li>
-
-      <li class="tabs__menu-link">
-        <button
-          role="button"
-          class="tabs__menu-button"
-          data-tab-id="scores">
-          <%= web_icon "exclamation-circle", text: "Scores & Certificates" %>
-        </button>
-      </li>
-    </ul>
-
-    <div class="tabs__content grid__col-8">
-      <div class="tabs__tab-content" id="user-reg">
-        <h4>User Registrations</h4>
-
-        <% %w{student mentor}.each do |scope| %>
-          <p class="inline-checkbox">
-            <%= f.check_box "#{scope}_signup",
-              id: "season_toggles_#{scope}_signup",
-              data: {
-                blocked_by_judging: scope === "student" || scope === "mentor",
-                when_blocked: scope + "s cannot sign up",
-              },
-              checked: SeasonToggles.signup_enabled?(scope) %>
-
-            <%= f.label "#{scope}_signup", scope.humanize.pluralize.titleize %>
-          </p>
-        <% end %>
-      </div>
-
-      <div class="tabs__tab-content" id="notices">
-        <h4>Dashboard Notices</h4>
-
-        <div class="notice info hint">
-          Please keep these short!<br />
-          ex: "Submission Deadline: <%= Season.deadline %>" or "Round One Judging Is Open!"
-        </div>
-
-        <% %w{student mentor judge regional_ambassador}.each do |scope| %>
-          <p>
-            <%= f.label "#{scope}_dashboard_text",
-              scope.humanize.pluralize.capitalize %>
-
-            <%= f.text_field "#{scope}_dashboard_text",
-              id: "season_toggles_#{scope}_dashboard_text",
-              value: SeasonToggles.dashboard_text(scope) %>
-          </p>
-        <% end %>
-      </div>
-
-      <div class="tabs__tab-content" id="surveys">
-        <h4>Survey Links</h4>
-
-        <div class="notice info hint">
-          Please use a full URL with correct formatting.<br />
-          (i.e., you must include the "https://" part)
-        </div>
-
-        <% %w{student mentor}.each do |scope| %>
-          <%= f.fields_for "#{scope}_survey_link" do |s| %>
-            <p>
-              <%= s.label :text, scope.pluralize.capitalize %>
-
-              <%= s.text_field :text,
-                data: { part_of_many: true },
-                placeholder: "Headline call to action (keep it short)",
-                value: SeasonToggles.survey_link(scope, :text) %>
-
-              <%= s.text_field :url,
-                data: { part_of_many: true },
-                placeholder: "URL",
-                value: SeasonToggles.survey_link(scope, :url) %>
-
-            <p>
-              <%= s.label :long_desc, "(optional popup modal text)", data: { subset: true } %>
-
-              <%= s.text_area :long_desc,
-                value: SeasonToggles.survey_link(scope, :long_desc),
-                placeholder: "Add more text that appears only in the popup modal" %>
-            </p>
-
-            <div class="notice info hint">
-              The text *and* URL must both be filled in or nothing will appear.
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-
-      <div class="tabs__tab-content" id="teams">
-        <h4>Teams & Submissions</h4>
-
-        <p class="inline-checkbox">
-          <%= f.check_box :team_building_enabled,
-            data: {
-              blocked_by_judging: true,
-              when_blocked: "teams cannot be formed",
-            },
-            disabled: SeasonToggles.judging_enabled?,
-            id: :season_toggles_team_building_enabled,
-            checked: SeasonToggles.team_building_enabled? %>
-
-          <%= f.label :team_building_enabled, "Forming teams allowed" %>
-        </p>
-
-        <p class="inline-checkbox">
-          <%= f.check_box :team_submissions_editable,
-            data: {
-              blocked_by_judging: true,
-              when_blocked: "submissions cannot be edited",
-            },
-            disabled: SeasonToggles.judging_enabled?,
-            id: :season_toggles_team_submissions_editable,
-            checked: SeasonToggles.team_submissions_editable? %>
-
-          <%= f.label :team_submissions_editable, "Team submissions are editable" %>
-        </p>
-      </div>
-
-      <div class="tabs__tab-content" id="events">
-        <h4>Regional Pitch Events</h4>
-
-        <p class="inline-checkbox">
-          <%= f.check_box :select_regional_pitch_event,
-            data: {
-              blocked_by_judging: true,
-              when_blocked: "regional pitch events cannot be selected",
-            },
-            disabled: SeasonToggles.judging_enabled?,
-            id: :season_toggles_select_regional_pitch_event,
-            checked: SeasonToggles.select_regional_pitch_event? %>
-
-          <%= f.label :select_regional_pitch_event,
-            "Selecting retional pitch events allowed" %>
-        </p>
-      </div>
-
-      <div class="tabs__tab-content" id="judging">
-        <h4>Judging Round</h4>
-
-        <p>
-          <%= f.collection_radio_buttons :judging_round, [
-            ["Off", :off],
-            ["Quarterfinals", :qf],
-            ["Semifinals", :sf]
-          ],
-          :last,
-          :first do |b| %>
-
-            <p class="inline-radio">
-              <%= b.radio_button(
-                id: "season_toggles_judging_round_#{b.value}",
-                checked: SeasonToggles.judging_round.to_s == b.value.to_s
-              ) %>
-              <%= b.label %>
-            </p>
-          <% end %>
-        </p>
-      </div>
-
-      <div class="tabs__tab-content" id="scores">
-        <h4>Scores & Certificates</h4>
-
-        <p class="inline-checkbox">
-          <%= f.check_box :display_scores,
-            data: {
-              blocked_by_judging: true,
-              when_blocked: "scores & certificates cannot be displayed",
-            },
-            disabled: SeasonToggles.judging_enabled?,
-            id: :season_toggles_display_scores,
-            checked: SeasonToggles.display_scores? %>
-
-          <%= f.label :display_scores, "Scores & Certificates Accessible" %>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <p>
-    <%= f.submit "Review settings",
-      class: "button",
-      data: { prepares_modal: "schedule-review" } %>
-    or
-    <%= link_to "cancel", admin_dashboard_path %>
-  </p>
-
-  <%= content_tag :div,
-    class: "modal",
-    id: "schedule-review",
-    data: {
-      width: 800,
-      heading: "Review Season Settings",
-    } do %>
-
-    <div class="modal-content">
-      <div id="season_review"></div>
-
-      <div class="notice warning">
-        The changes you make here affect the end-user experience.<br />
-        Please double check everything before saving.
-      </div>
-
-      <button class="button" data-submit-form="#season_schedule">
-        Save these settings
-      </button>
-
-      or
-
-      <%= link_to "cancel", '#', class: "close" %>
-    </div>
+    <admin-content-settings
+      cancel-button-url="<%= admin_dashboard_path %>"
+      :form-data="{
+        student_signup: <%= SeasonToggles.signup_enabled?('student') %>,
+        mentor_signup: <%= SeasonToggles.signup_enabled?('mentor') %>,
+        student_dashboard_text: '<%= SeasonToggles.dashboard_text('student') %>',
+        mentor_dashboard_text: '<%= SeasonToggles.dashboard_text('mentor') %>',
+        judge_dashboard_text: '<%= SeasonToggles.dashboard_text('judge') %>',
+        regional_ambassador_dashboard_text: '<%= SeasonToggles
+          .dashboard_text('regional_ambassador') %>',
+        student_survey_link: {
+          text: '<%= SeasonToggles.survey_link('student', :text) %>',
+          url: '<%= SeasonToggles.survey_link('student', :url) %>',
+          long_desc: '<%= SeasonToggles.survey_link('student', :long_desc) %>',
+        },
+        mentor_survey_link: {
+          text: '<%= SeasonToggles.survey_link('mentor', :text) %>',
+          url: '<%= SeasonToggles.survey_link('mentor', :url) %>',
+          long_desc: '<%= SeasonToggles.survey_link('mentor', :long_desc) %>',
+        },
+        team_building_enabled: <%= SeasonToggles.team_building_enabled? %>,
+        team_submissions_editable: <%= SeasonToggles.team_submissions_editable? %>,
+        select_regional_pitch_event: <%= SeasonToggles.select_regional_pitch_event? %>,
+        judging_round: '<%= SeasonToggles.judging_round.to_s %>',
+        display_scores: <%= SeasonToggles.display_scores? %>,
+      }"
+    />
 
   <% end %>
-<% end %>
+</div>
