@@ -41,10 +41,12 @@ describe('Admin Content & Settings - Notices component', () => {
           localVue,
           store: mockStore.createMocks({
             state: {
-              student_dashboard_text: scopes.student,
-              mentor_dashboard_text: scopes.mentor,
-              judge_dashboard_text: scopes.judge,
-              regional_ambassador_dashboard_text: scopes.regional_ambassador,
+              settings: {
+                student_dashboard_text: scopes.student,
+                mentor_dashboard_text: scopes.mentor,
+                judge_dashboard_text: scopes.judge,
+                regional_ambassador_dashboard_text: scopes.regional_ambassador,
+              },
             },
           }).store,
         }
