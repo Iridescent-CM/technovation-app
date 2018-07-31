@@ -1,9 +1,12 @@
 import axios from 'axios'
+import applyConverters from 'axios-case-converter'
 
 // Polyfill Promise for IE11 to support axios
 require('es6-promise').polyfill()
 
 window.axios = axios
+
+applyConverters(window.axios)
 
 document.addEventListener('turbolinks:load', () => {
   const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')

@@ -29,6 +29,7 @@
     "@rails/webpacker": "^3.2.1",
     "airbrake-js": "^1.1.0",
     "axios": "^0.18.0",
+    "axios-case-converter": "^0.2.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
