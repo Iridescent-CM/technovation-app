@@ -17,7 +17,6 @@
 //= require image-uploaders
 //= require modals
 //= require forms
-//= require season-schedule
 //= require saved-searches
 //= require jobs
 //= require sticky-cols
