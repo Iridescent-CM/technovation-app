@@ -13,12 +13,14 @@ import Location from '../components/Location'
 
 Vue.use(VueRouter)
 
+const initiateApp = () => {
+  const rootElem = document.getElementById('vue-enable-signup-wizard')
+  const previousAttempt = rootElem.dataset.previousAttempt
+  store.dispatch('initWizard', { previousAttempt })
+}
+
 const requireDataAgreement = (to, _from, next) => {
-  if (!store.state.isReady) {
-    const rootElem = document.getElementById('vue-enable-signup-wizard')
-    const previousAttempt = rootElem.dataset.previousAttempt
-    store.dispatch('initWizard', { previousAttempt })
-  }
+  if (!store.state.isReady) initiateApp()
 
   if (to.matched.some(record => record.name !== 'data-use')) {
     if (!store.state.termsAgreed) {
@@ -38,14 +40,8 @@ export const routes = [
     name: 'data-use',
     component: DataUseTerms,
     beforeEnter: (_to, _from, next) => {
-      if (!store.state.isReady) {
-        const rootElem = document.getElementById('vue-enable-signup-wizard')
-        const previousAttempt = rootElem.dataset.previousAttempt
-        store.dispatch('initWizard', { previousAttempt })
-        next()
-      } else {
-        next()
-      }
+      if (!store.state.isReady) initiateApp()
+      next()
     },
   },
   {
