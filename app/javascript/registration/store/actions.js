@@ -18,6 +18,7 @@ export default {
     }).then(({ data: { data: { attributes } } }) => {
       commit('wizardToken', attributes.wizardToken)
       commit('termsAgreed', attributes.termsAgreed)
+      commit('location', attributes)
     }).catch(err => console.error(err))
   },
 
