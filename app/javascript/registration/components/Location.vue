@@ -2,6 +2,7 @@
   <location-form
     scope-name="registration"
     :handleConfirm="handleConfirm"
+    :showFinalCancel="false"
     v-model="locationData"
   ></location-form>
 </template>

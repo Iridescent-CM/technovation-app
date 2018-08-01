@@ -132,6 +132,7 @@
         <a
           href="#"
           class="color--secondary"
+          v-if="showCancel"
           @click.prevent="handleCancel"
         >
           {{ cancelText }}
@@ -194,6 +195,12 @@ export default {
       type: Function,
       required: false,
       default: () => history.back(),
+    },
+
+    showFinalCancel: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
 
@@ -268,6 +275,10 @@ export default {
 
       return params
     },
+
+    showCancel () {
+      return this.showFinalCancel || this.savedLocation
+    },
   },
 
   watch: {
@@ -317,6 +328,7 @@ export default {
       if (this.savedLocation) {
         this.resetMeta()
       } else {
+        // for when we do showFinalCancel
         history.back()
       }
     },
