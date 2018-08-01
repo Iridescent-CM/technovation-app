@@ -3,6 +3,29 @@ export default {
     return state.termsAgreed
   },
 
+  readyForAccount (state, getters) {
+    return state.termsAgreed &&
+            getters.isAgeSet &&
+              getters.isLocationSet &&
+                getters.isBasicProfileSet
+  },
+
+  isAgeSet (state) {
+    return !!(state.birthYear &&
+                state.birthMonth &&
+                  state.birthDay)
+  },
+
+  isLocationSet (state) {
+    return !!state.country
+  },
+
+  isBasicProfileSet (state) {
+    return !!(state.firstName &&
+                state.lastName &&
+                  state.schoolCompanyName)
+  },
+
   getEmail (state) {
     return state.email
   },

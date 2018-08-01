@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
 
@@ -43,7 +45,19 @@ export default {
     }
   },
 
+  beforeRouteEnter (_to, from, next) {
+    next(vm => {
+      if (vm.readyForAccount) {
+        next()
+      } else {
+        vm.$router.replace(from.path)
+      }
+    })
+  },
+
   computed: {
+    ...mapGetters(['readyForAccount']),
+
     nextStepEnabled () {
       return this.emailComplete && this.passwordComplete
     },
