@@ -4,17 +4,13 @@ import Vuex from 'vuex'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-export const defaultWrapperWithVuex = (component, mockStore) => {
+export const defaultWrapperWithVuex = (component, mockStore, overrides) => {
   return shallowMount(
     component,
     {
       localVue,
       store: mockStore.createMocks({
-        actions: {
-          updateBirthdate ({ commit }, attributes) {
-            commit('birthDate',  attributes)
-          },
-        }
+        ...overrides,
       }).store,
     }
   )

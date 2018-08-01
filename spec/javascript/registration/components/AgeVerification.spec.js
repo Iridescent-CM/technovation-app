@@ -8,7 +8,17 @@ describe("Registration::Components::AgeVerification.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
-    defaultWrapper = defaultWrapperWithVuex(AgeVerification, mockStore)
+    defaultWrapper = defaultWrapperWithVuex(
+      AgeVerification,
+      mockStore,
+      {
+        actions: {
+          updateBirthdate ({ commit }, attributes) {
+            commit('birthDate',  attributes)
+          },
+        },
+      }
+    )
   })
 
   describe("computed.februaryEndDay", () => {
