@@ -8,6 +8,7 @@ export default {
     commit('location', attributes)
     commit('basicProfile', attributes)
     commit('email', attributes.email)
+    commit('isReady', true)
   },
 
   updateTermsAgreed ({ commit, state }, { termsAgreed }) {

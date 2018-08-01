@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import TabLink from '../tabs/components/TabLink'
 
 export default {
@@ -26,29 +26,6 @@ export default {
     TabLink,
   },
 
-  data () {
-    return {
-      isReady: false,
-    }
-  },
-
-  props: {
-    previousAttempt: {
-      type: String,
-      required: false,
-      default: null
-    },
-  },
-
-  created() {
-    if (this.previousAttempt) {
-      this.initWizard({ previousAttempt: this.previousAttempt })
-      this.isReady = true
-    } else {
-      this.isReady = true
-    }
-  },
-
-  methods: mapActions(['initWizard']),
+  computed: mapState(['isReady']),
 }
 </script>

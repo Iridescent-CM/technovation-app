@@ -1,4 +1,5 @@
 export default {
+  isReady: false,
   wizardToken: '',
 
   termsAgreed: null,

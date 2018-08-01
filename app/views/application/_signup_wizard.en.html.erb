@@ -1,9 +1,13 @@
-<% previous_attempt ||= false %>
+<% previous_attempt ||= OpenStruct.new(id: 0) %>
 
-<div id="vue-enable-signup-wizard">
-  <App
-    <% if previous_attempt %>
-      previous-attempt="<%= SignupAttemptSerializer.new(previous_attempt).serialized_json %>"
-    <% end %>
-  />
-</div>
+<%= content_tag
+  :div,
+  id: "vue-enable-signup-wizard",
+  data: {
+    previous_attempt: SignupAttemptSerializer.new(previous_attempt)
+                        .serialized_json,
+  } do %>
+
+  <App />
+
+<% end %>

@@ -1,4 +1,8 @@
 export default {
+  isReady (state, bool) {
+    state.isReady = bool
+  },
+
   wizardToken (state, wizardToken) {
     state.wizardToken = wizardToken
   },
