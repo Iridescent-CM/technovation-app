@@ -1,7 +1,6 @@
 <% previous_attempt ||= OpenStruct.new(id: 0) %>
 
-<%= content_tag
-  :div,
+<%= content_tag :div,
   id: "vue-enable-signup-wizard",
   data: {
     previous_attempt: SignupAttemptSerializer.new(previous_attempt)
