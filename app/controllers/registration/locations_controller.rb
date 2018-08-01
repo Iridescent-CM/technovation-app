@@ -4,15 +4,15 @@ module Registration
 
     def create
       attempt = SignupAttempt.wizard.find_by!(
-        wizard_token: location_params[:wizard_token]
+        wizard_token: custom_location_params[:wizard_token]
       )
 
-      country_param = (location_params[:country] || "").strip
+      country_param = (custom_location_params[:country] || "").strip
       country = Carmen::Country.named(country_param)
       country_code = country && country.code
 
       state_code = if country
-        state_param = (location_params[:state] || "").strip
+        state_param = (custom_location_params[:state] || "").strip
         state = country.subregions.named(state_param)
         state && state.code
       else
@@ -20,7 +20,7 @@ module Registration
       end
 
       attempt.update!({
-        city:         location_params[:city],
+        city:         custom_location_params[:city],
         state_code:   state_code,
         country_code: country_code,
       })
@@ -29,7 +29,7 @@ module Registration
     end
 
     private
-    def location_params
+    def custom_location_params
       params.require(:location).permit(:city, :state, :country, :wizard_token)
     end
   end
