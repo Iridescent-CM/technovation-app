@@ -33,7 +33,7 @@
           <dt>Your age today</dt>
           <dd>You are <strong>{{ age }}</strong> years old.</dd>
 
-          <dt>Your age during World Pitch</dt>
+          <dt class="margin--t-xlarge">Your age during World Pitch</dt>
           <dd>
             You will be <strong>{{ ageByCutoff }}</strong> on {{ cutoffDay }}.
           </dd>
@@ -213,3 +213,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+label:not(:first-child) {
+  margin: 2rem 0 0;
+}
+</style>

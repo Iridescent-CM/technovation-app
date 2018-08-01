@@ -5,7 +5,7 @@
     </div>
 
     <div class="panel__content">
-      <div class="grid">
+      <div class="grid margin--b-xlarge">
         <div class="grid__col-6 grid__col--bleed">
           <label for="firstName">First name(s)</label>
           <input
@@ -50,11 +50,9 @@
           :options="referralOptions"
           v-model="referredBy"
         />
-      </p>
 
-      <p>
         <input
-          ref="referralOther"
+          id="referralOther"
           type="text"
           placeholder="Tell us here"
           v-show="referredBy === 'Other'"
@@ -188,3 +186,14 @@ export default {
   methods: mapActions(['updateBasicProfile']),
 }
 </script>
+
+<style lang="scss" scoped>
+p {
+  margin: 0 0 2rem;
+}
+
+#referralOther {
+  margin-top: 0.5rem;
+  width: 50%;
+}
+</style>

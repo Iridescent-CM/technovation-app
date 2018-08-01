@@ -24,7 +24,6 @@ export default {
   },
 
   basicProfile (state, attributes) {
-    console.log(attributes)
     state.firstName = attributes.firstName
     state.lastName = attributes.lastName
     state.genderIdentity = attributes.genderIdentity

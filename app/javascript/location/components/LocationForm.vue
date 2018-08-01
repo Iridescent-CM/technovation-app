@@ -389,6 +389,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+label:not(:first-child) {
+  margin: 2rem 0 0;
+}
+
 .Rtable {
   display: flex;
   flex-wrap: wrap;
