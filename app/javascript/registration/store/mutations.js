@@ -35,4 +35,28 @@ export default {
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
   },
+
+  firstName (state, value) {
+    state.firstName = value
+  },
+
+  lastName (state, value) {
+    state.lastName = value
+  },
+
+  genderIdentity (state, value) {
+    state.genderIdentity = value
+  },
+
+  schoolCompanyName (state, value) {
+    state.schoolCompanyName = value
+  },
+
+  referredBy (state, value) {
+    state.referredBy = value
+  },
+
+  referredByOther (state, value) {
+    state.referredByOther = value
+  },
 }

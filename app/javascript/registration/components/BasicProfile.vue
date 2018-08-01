@@ -106,14 +106,16 @@ export default {
 
   created () {
     this.debouncedProfileUpdate = debounce(attrs => {
-      const attributes = Object.assign({}, {
-        firstName:         this.firstName,
-        lastName:          this.lastName,
-        genderIdentity:    this.genderIdentity,
-        schoolCompanyName: this.schoolCompanyName,
-        referredBy:        this.referredBy,
-        referredByOther:   this.referredByOther,
-      }, attrs)
+      const attributes = Object.assign({},
+        {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          genderIdentity: this.genderIdentity,
+          schoolCompanyName: this.schoolCompanyName,
+          referredBy: this.referredBy,
+          referredByOther: this.referredByOther,
+        }, attrs)
+
       this.updateBasicProfile(attributes)
     }, 500)
   },
@@ -131,7 +133,7 @@ export default {
     nextStepEnabled () {
       return !!this.firstName &&
               !!this.lastName &&
-                !!this.genderIdentity &&
+                !!this.genderIdentity &&    // mentors, judges, RAs only
                   !!this.schoolCompanyName
     },
 
@@ -141,7 +143,7 @@ export default {
       },
 
       set (value) {
-        this.debouncedProfileUpdate({ firstName: value })
+        this.$store.commit('firstName', value)
       },
     },
 
@@ -151,7 +153,7 @@ export default {
       },
 
       set (value) {
-        this.debouncedProfileUpdate({ lastName: value })
+        this.$store.commit('lastName', value)
       },
     },
 
@@ -161,7 +163,7 @@ export default {
       },
 
       set (value) {
-        this.debouncedProfileUpdate({ genderIdentity: value })
+        this.$store.commit('genderIdentity', value)
       },
     },
 
@@ -171,7 +173,7 @@ export default {
       },
 
       set (value) {
-        this.debouncedProfileUpdate({ schoolCompanyName: value })
+        this.$store.commit('schoolCompanyName', value)
       },
     },
 
@@ -181,7 +183,7 @@ export default {
       },
 
       set (value) {
-        this.debouncedProfileUpdate({ referredBy: value })
+        this.$store.commit('referredBy', value)
       },
     },
 
@@ -191,8 +193,34 @@ export default {
       },
 
       set (value) {
-        this.debouncedProfileUpdate({ referredByOther: value })
+        this.$store.commit('referredByOther', value)
       },
+    },
+  },
+
+  watch: {
+    firstName (value) {
+      this.debouncedProfileUpdate({ firstName: value })
+    },
+
+    lastName (value) {
+      this.debouncedProfileUpdate({ lastName: value })
+    },
+
+    genderIdentity (value) {
+      this.debouncedProfileUpdate({ genderIdentity: value })
+    },
+
+    schoolCompanyName (value) {
+      this.debouncedProfileUpdate({ schoolCompanyName: value })
+    },
+
+    referredBy (value) {
+      this.debouncedProfileUpdate({ referredBy: value })
+    },
+
+    referredByOther (value) {
+      this.debouncedProfileUpdate({ referredByOther: value })
     },
   },
 
