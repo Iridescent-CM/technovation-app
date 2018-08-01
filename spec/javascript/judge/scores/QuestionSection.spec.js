@@ -215,15 +215,15 @@ describe('Question comments section', () => {
   })
 
   test('it resets the word count when the text is deleted', (done) => {
-    wrapper.vm.$nextTick().then(() => {
+    wrapper.vm.$nextTick(() => {
       wrapper.vm.comment.text = 'hello beautiful world'
 
-      wrapper.vm.$nextTick().then(() => {
+      wrapper.vm.$nextTick(() => {
         expect(wrapper.vm.comment.word_count).toEqual(3)
 
         wrapper.vm.comment.text = ''
 
-        wrapper.vm.$nextTick().then(() => {
+        wrapper.vm.$nextTick(() => {
           expect(wrapper.vm.comment.word_count).toEqual(0)
           done()
         })
@@ -318,7 +318,7 @@ test('Getter sectionQuestions returns a filtered array based on the current sect
 })
 
 describe('shouldRunSentimentAnalysis', () => {
-  it('should run if word count is greater than 19 and it has not yet been analyzed', () => {
+  it('runs if word count is greater than 19 and it has not yet been analyzed', () => {
     wrapper = shallowMount(
       QuestionSection, {
         store: storeMocks.store,
@@ -336,7 +336,7 @@ describe('shouldRunSentimentAnalysis', () => {
     expect(wrapper.vm.shouldRunSentimentAnalysis).toBe(true)
   })
 
-  it('should run if word count is greater than 19, it has been analyzed, ' +
+  it('runs if word count is greater than 19, it has been analyzed, ' +
     'and the word count is divisible by 5', () => {
       wrapper = shallowMount(
         QuestionSection, {
@@ -355,7 +355,7 @@ describe('shouldRunSentimentAnalysis', () => {
       expect(wrapper.vm.shouldRunSentimentAnalysis).toBe(true)
   })
 
-  it('should not run if word count is greater than 19, it has been analyzed, ' +
+  it('does not run if word count is greater than 19, it has been analyzed, ' +
     'and the word count is not divisible by 5', () => {
       wrapper = shallowMount(
         QuestionSection, {
@@ -376,7 +376,7 @@ describe('shouldRunSentimentAnalysis', () => {
 })
 
 describe('shouldRunProfanityAnalysis', () => {
-  it('should run if word count is greater than 0 and it has not yet been analyzed', () => {
+  it('runs if word count is greater than 0 and it has not yet been analyzed', () => {
     wrapper = shallowMount(
       QuestionSection, {
         store: storeMocks.store,
@@ -394,7 +394,7 @@ describe('shouldRunProfanityAnalysis', () => {
     expect(wrapper.vm.shouldRunProfanityAnalysis).toBe(true)
   })
 
-  it('should run if word count is greater than 0, it has been analyzed, ' +
+  it('runs if word count is greater than 0, it has been analyzed, ' +
     'and the word count is divisible by 2', () => {
       wrapper = shallowMount(
         QuestionSection, {
@@ -404,7 +404,7 @@ describe('shouldRunProfanityAnalysis', () => {
             section: 'ideation',
           },
           computed: {
-            commentIsSentimentAnalyzed: () => true,
+            commentIsProfanityAnalyzed: () => true,
             wordCount: () => 6,
           },
         }
@@ -413,7 +413,7 @@ describe('shouldRunProfanityAnalysis', () => {
       expect(wrapper.vm.shouldRunProfanityAnalysis).toBe(true)
   })
 
-  it('should not run if word count is greater than 0, it has been analyzed, ' +
+  it('does not run if word count is greater than 0, it has been analyzed, ' +
     'and the word count is not divisible by 2', () => {
       wrapper = shallowMount(
         QuestionSection, {
@@ -423,7 +423,7 @@ describe('shouldRunProfanityAnalysis', () => {
             section: 'ideation',
           },
           computed: {
-            commentIsSentimentAnalyzed: () => true,
+            commentIsProfanityAnalyzed: () => true,
             wordCount: () => 3,
           },
         }

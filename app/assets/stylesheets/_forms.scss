@@ -17,6 +17,13 @@ label {
   &.label--reset {
     text-transform: none;
   }
+
+  &.label--disabled {
+    color: lightgrey;
+    font-style: italic;
+    font-size: 0.9rem;
+    cursor: not-allowed;
+  }
 }
 
 input[type="checkbox"],

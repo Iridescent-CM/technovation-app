@@ -111,12 +111,14 @@ export default {
 
   watch: {
     commentText () {
-      this.$store.commit('setComment', {
-        sectionName: this.section,
-        word_count: this.wordCount,
-      })
+      this.$nextTick(() => {
+        this.$store.commit('setComment', {
+          sectionName: this.section,
+          word_count: this.wordCount,
+        })
 
-      this.debouncedCommentWatcher()
+        this.debouncedCommentWatcher()
+      })
     },
 
     commentStorageKey () {

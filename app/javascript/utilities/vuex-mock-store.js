@@ -2,6 +2,7 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import merge from 'lodash/merge'
 
 Vue.use(Vuex)
 
@@ -29,10 +30,10 @@ export default class VuexMockStore {
   }
 
   createMocks(custom = { getters: {}, mutations: {}, actions: {}, state: {} }) {
-    const mockGetters = Object.assign({}, this.store.getters, custom.getters)
-    const mockMutations = Object.assign({}, this.store.mutations, custom.mutations)
-    const mockActions = Object.assign({}, this.store.actions, custom.actions)
-    const mockState = Object.assign({}, this.store.state, custom.state)
+    const mockGetters = merge({}, this.store.getters, custom.getters)
+    const mockMutations = merge({}, this.store.mutations, custom.mutations)
+    const mockActions = merge({}, this.store.actions, custom.actions)
+    const mockState = merge({}, this.store.state, custom.state)
 
     return {
       getters: mockGetters,

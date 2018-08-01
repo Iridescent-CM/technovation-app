@@ -14,5 +14,6 @@ Vue.use(Vue2Filters)
 
 import '../admin/review-requests'
 import '../admin/dashboard'
+import '../admin/content-settings'
 import '../admin/scores'
 import '../datagrids/scores'
