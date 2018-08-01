@@ -125,7 +125,7 @@ export default {
       'getGenderIdentity',
       'getSchoolCompanyName',
       'getReferredBy',
-      'getRefferedByOther',
+      'getReferredByOther',
     ]),
 
     nextStepEnabled () {

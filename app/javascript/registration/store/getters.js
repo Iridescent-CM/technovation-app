@@ -53,7 +53,7 @@ export default {
     return state.referredBy
   },
 
-  getRefferedByOther (state) {
+  getReferredByOther (state) {
     return state.referredByOther
   },
 }
