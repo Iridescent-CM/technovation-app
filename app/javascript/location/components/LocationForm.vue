@@ -327,6 +327,9 @@ export default {
     handleCancel () {
       if (this.savedLocation) {
         this.resetMeta()
+        this.$nextTick(() => {
+          this.$refs.cityField.focus()
+        })
       } else {
         // for when we do showFinalCancel
         history.back()
@@ -366,6 +369,10 @@ export default {
     resetAll () {
       this.resetForm()
       this.resetMeta()
+
+      this.$nextTick(() => {
+        this.$refs.cityField.focus()
+      })
     },
 
     resetForm () {
@@ -379,10 +386,6 @@ export default {
       this.savedLocation = null
       this.status = null
       this.searching = false
-
-      this.$nextTick(() => {
-        this.$refs.cityField.focus()
-      })
     },
 
     _getEndpoint (pathPart) {
