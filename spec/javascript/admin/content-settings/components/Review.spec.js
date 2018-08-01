@@ -338,4 +338,483 @@ describe('Admin Content & Settings - Events component', () => {
 
   })
 
+  describe('markup', () => {
+
+    describe('registration fields section', () => {
+
+      describe('student signup field', () => {
+
+        it('displays "yes" if enabled', () => {
+          wrapper.vm.$store.state.settings.student_signup = 1
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'signupFieldStudents' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'signupFieldStudents' })
+            .find('.off').exists()
+
+          expect(yes).toBe(true)
+          expect(no).toBe(false)
+        })
+
+        it('displays "no" if not enabled', () => {
+          wrapper.vm.$store.state.settings.student_signup = 0
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'signupFieldStudents' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'signupFieldStudents' })
+            .find('.off').exists()
+
+          expect(yes).toBe(false)
+          expect(no).toBe(true)
+        })
+
+      })
+
+      describe('mentor signup field', () => {
+
+        it('displays "yes" if enabled', () => {
+          wrapper.vm.$store.state.settings.mentor_signup = 1
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'signupFieldMentors' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'signupFieldMentors' })
+            .find('.off').exists()
+
+          expect(yes).toBe(true)
+          expect(no).toBe(false)
+        })
+
+        it('displays "no" if not enabled', () => {
+          wrapper.vm.$store.state.settings.mentor_signup = 0
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'signupFieldMentors' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'signupFieldMentors' })
+            .find('.off').exists()
+
+          expect(yes).toBe(false)
+          expect(no).toBe(true)
+        })
+
+      })
+
+    })
+
+    describe('notice fields section', () => {
+
+      describe('students field', () => {
+
+        it('displays a notice if no input available', () => {
+          wrapper.vm.$store.state.settings.student_dashboard_text = ''
+
+          const notice = wrapper.find({ ref: 'noticeFieldHintStudents' })
+          const input = wrapper.find({ ref: 'noticeFieldLabelStudents' })
+
+          expect(notice.exists()).toBe(true)
+          expect(input.exists()).toBe(false)
+        })
+
+        it('displays the input if available', () => {
+          wrapper.vm.$store.state.settings
+            .student_dashboard_text = 'Hello world, this is a test.'
+
+            const notice = wrapper.find({ ref: 'noticeFieldHintStudents' })
+            const input = wrapper.find({ ref: 'noticeFieldLabelStudents' })
+
+            expect(notice.exists()).toBe(false)
+            expect(input.text()).toBe('Hello world, this is a test.')
+        })
+
+      })
+
+      describe('mentors field', () => {
+
+        it('displays a notice if no input available', () => {
+          wrapper.vm.$store.state.settings.mentor_dashboard_text = ''
+
+          const notice = wrapper.find({ ref: 'noticeFieldHintMentors' })
+          const input = wrapper.find({ ref: 'noticeFieldLabelMentors' })
+
+          expect(notice.exists()).toBe(true)
+          expect(input.exists()).toBe(false)
+        })
+
+        it('displays the input if available', () => {
+          wrapper.vm.$store.state.settings
+            .mentor_dashboard_text = 'Hello world, this is a test.'
+
+            const notice = wrapper.find({ ref: 'noticeFieldHintMentors' })
+            const input = wrapper.find({ ref: 'noticeFieldLabelMentors' })
+
+            expect(notice.exists()).toBe(false)
+            expect(input.text()).toBe('Hello world, this is a test.')
+        })
+
+      })
+
+      describe('judges field', () => {
+
+        it('displays a notice if no input available', () => {
+          wrapper.vm.$store.state.settings.judge_dashboard_text = ''
+
+          const notice = wrapper.find({ ref: 'noticeFieldHintJudges' })
+          const input = wrapper.find({ ref: 'noticeFieldLabelJudges' })
+
+          expect(notice.exists()).toBe(true)
+          expect(input.exists()).toBe(false)
+        })
+
+        it('displays the input if available', () => {
+          wrapper.vm.$store.state.settings
+            .judge_dashboard_text = 'Hello world, this is a test.'
+
+            const notice = wrapper.find({ ref: 'noticeFieldHintJudges' })
+            const input = wrapper.find({ ref: 'noticeFieldLabelJudges' })
+
+            expect(notice.exists()).toBe(false)
+            expect(input.text()).toBe('Hello world, this is a test.')
+        })
+
+      })
+
+      describe('RA field', () => {
+
+        it('displays a notice if no input available', () => {
+          wrapper.vm.$store.state.settings.regional_ambassador_dashboard_text = ''
+
+          const notice = wrapper
+            .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
+          const input = wrapper
+            .find({ ref: 'noticeFieldLabelRegionalAmbassadors' })
+
+          expect(notice.exists()).toBe(true)
+          expect(input.exists()).toBe(false)
+        })
+
+        it('displays the input if available', () => {
+          wrapper.vm.$store.state.settings
+            .regional_ambassador_dashboard_text = 'Hello world, this is a test.'
+
+            const notice = wrapper
+              .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
+            const input = wrapper
+              .find({ ref: 'noticeFieldLabelRegionalAmbassadors' })
+
+            expect(notice.exists()).toBe(false)
+            expect(input.text()).toBe('Hello world, this is a test.')
+        })
+
+      })
+
+    })
+
+    describe('survey fields section', () => {
+
+      beforeEach(() => {
+        wrapper.vm.$store.state.settings.student_survey_link
+          .text = 'Student Link'
+        wrapper.vm.$store.state.settings.student_survey_link
+          .url = 'http://google.com'
+        wrapper.vm.$store.state.settings.student_survey_link
+          .long_desc = 'Student link long description.'
+        wrapper.vm.$store.state.settings.mentor_survey_link
+          .text = 'Mentor Link'
+        wrapper.vm.$store.state.settings.mentor_survey_link
+          .url = 'http://bing.com'
+        wrapper.vm.$store.state.settings.mentor_survey_link
+          .long_desc = 'Mentor link long description.'
+      })
+
+      describe('students field', () => {
+
+        it('displays a notice if text or URL input is not available', () => {
+          wrapper.vm.$store.state.settings.student_survey_link.text = ''
+
+          let notice = wrapper.find({ ref: 'surveyFieldTextUrlHintStudents' })
+          let text = wrapper.find({ ref: 'surveyFieldTextStudents' })
+          let url = wrapper.find({ ref: 'surveyFieldUrlStudents' })
+
+          expect(notice.exists()).toBe(true)
+          expect(text.exists()).toBe(false)
+          expect(url.exists()).toBe(false)
+
+          wrapper.vm.$store.state.settings.student_survey_link
+            .text = 'Student Link'
+          wrapper.vm.$store.state.settings.student_survey_link.url = ''
+
+          notice = wrapper.find({ ref: 'surveyFieldTextUrlHintStudents' })
+          text = wrapper.find({ ref: 'surveyFieldTextStudents' })
+          url = wrapper.find({ ref: 'surveyFieldUrlStudents' })
+
+          expect(notice.exists()).toBe(true)
+          expect(text.exists()).toBe(false)
+          expect(url.exists()).toBe(false)
+        })
+
+        it('displays text and url input if they are both available', () => {
+          const notice = wrapper.find({ ref: 'surveyFieldTextUrlHintStudents' })
+          const text = wrapper.find({ ref: 'surveyFieldTextStudents' })
+          const url = wrapper.find({ ref: 'surveyFieldUrlStudents' })
+
+          expect(notice.exists()).toBe(false)
+          expect(text.exists()).toBe(true)
+          expect(url.exists()).toBe(true)
+        })
+
+        it('displays a notice if long description is not available', () => {
+          wrapper.vm.$store.state.settings.student_survey_link.long_desc = ''
+
+          const notice = wrapper.find({ ref: 'surveyFieldDescHintStudents' })
+          const description = wrapper.find({ ref: 'surveyFieldDescStudents' })
+
+          expect(notice.exists()).toBe(true)
+          expect(description.exists()).toBe(false)
+        })
+
+        it('displays long description if it is available', () => {
+          const notice = wrapper.find({ ref: 'surveyFieldDescHintStudents' })
+          const description = wrapper.find({ ref: 'surveyFieldDescStudents' })
+
+          expect(notice.exists()).toBe(false)
+          expect(description.exists()).toBe(true)
+        })
+
+      })
+
+      describe('mentors field', () => {
+
+        it('displays a notice if text or URL input is not available', () => {
+          wrapper.vm.$store.state.settings.mentor_survey_link.text = ''
+
+          let notice = wrapper.find({ ref: 'surveyFieldTextUrlHintMentors' })
+          let text = wrapper.find({ ref: 'surveyFieldTextMentors' })
+          let url = wrapper.find({ ref: 'surveyFieldUrlMentors' })
+
+          expect(notice.exists()).toBe(true)
+          expect(text.exists()).toBe(false)
+          expect(url.exists()).toBe(false)
+
+          wrapper.vm.$store.state.settings.mentor_survey_link
+            .text = 'Student Link'
+          wrapper.vm.$store.state.settings.mentor_survey_link.url = ''
+
+          notice = wrapper.find({ ref: 'surveyFieldTextUrlHintMentors' })
+          text = wrapper.find({ ref: 'surveyFieldTextMentors' })
+          url = wrapper.find({ ref: 'surveyFieldUrlMentors' })
+
+          expect(notice.exists()).toBe(true)
+          expect(text.exists()).toBe(false)
+          expect(url.exists()).toBe(false)
+        })
+
+        it('displays text and url input if they are both available', () => {
+          const notice = wrapper.find({ ref: 'surveyFieldTextUrlHintMentors' })
+          const text = wrapper.find({ ref: 'surveyFieldTextMentors' })
+          const url = wrapper.find({ ref: 'surveyFieldUrlMentors' })
+
+          expect(notice.exists()).toBe(false)
+          expect(text.exists()).toBe(true)
+          expect(url.exists()).toBe(true)
+        })
+
+        it('displays a notice if long description is not available', () => {
+          wrapper.vm.$store.state.settings.mentor_survey_link.long_desc = ''
+
+          const notice = wrapper.find({ ref: 'surveyFieldDescHintMentors' })
+          const description = wrapper.find({ ref: 'surveyFieldDescMentors' })
+
+          expect(notice.exists()).toBe(true)
+          expect(description.exists()).toBe(false)
+        })
+
+        it('displays long description if it is available', () => {
+          const notice = wrapper.find({ ref: 'surveyFieldDescHintMentors' })
+          const description = wrapper.find({ ref: 'surveyFieldDescMentors' })
+
+          expect(notice.exists()).toBe(false)
+          expect(description.exists()).toBe(true)
+        })
+
+      })
+
+    })
+
+    describe('teams and submissions fields section', () => {
+
+      describe('team building enabled field', () => {
+
+        it('displays "yes" if enabled', () => {
+          wrapper.vm.$store.state.settings.team_building_enabled = 1
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'teamBuildingEnabledField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'teamBuildingEnabledField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(true)
+          expect(no).toBe(false)
+        })
+
+        it('displays "no" if not enabled', () => {
+          wrapper.vm.$store.state.settings.team_building_enabled = 0
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'teamBuildingEnabledField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'teamBuildingEnabledField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(false)
+          expect(no).toBe(true)
+        })
+
+      })
+
+      describe('team submissions editable field', () => {
+
+        it('displays "yes" if enabled', () => {
+          wrapper.vm.$store.state.settings.team_submissions_editable = 1
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'teamSubmissionsEditableField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'teamSubmissionsEditableField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(true)
+          expect(no).toBe(false)
+        })
+
+        it('displays "no" if not enabled', () => {
+          wrapper.vm.$store.state.settings.team_submissions_editable = 0
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'teamSubmissionsEditableField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'teamSubmissionsEditableField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(false)
+          expect(no).toBe(true)
+        })
+
+      })
+
+    })
+
+    describe('regional pitch events fields section', () => {
+
+      describe('select regional pitch event field', () => {
+
+        it('displays "yes" if enabled', () => {
+          wrapper.vm.$store.state.settings.select_regional_pitch_event = 1
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'selectRegionalPitchEventField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'selectRegionalPitchEventField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(true)
+          expect(no).toBe(false)
+        })
+
+        it('displays "no" if not enabled', () => {
+          wrapper.vm.$store.state.settings.select_regional_pitch_event = 0
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'selectRegionalPitchEventField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'selectRegionalPitchEventField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(false)
+          expect(no).toBe(true)
+        })
+
+      })
+
+    })
+
+    describe('judging round fields section', () => {
+
+      describe('judging round field', () => {
+
+        it('displays the selected judging round', () => {
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          let round = wrapper.find({ ref: 'judgingRoundField' }).text()
+
+          expect(round).toBe('Off')
+
+          wrapper.vm.$store.state.settings.judging_round = 'qf'
+
+          round = wrapper.find({ ref: 'judgingRoundField' }).text()
+
+          expect(round).toBe('Quarterfinals')
+
+          wrapper.vm.$store.state.settings.judging_round = 'sf'
+
+          round = wrapper.find({ ref: 'judgingRoundField' }).text()
+
+          expect(round).toBe('Semifinals')
+        })
+
+      })
+
+    })
+
+    describe('scores and certificates fields section', () => {
+
+      describe('scores and certificates accessible field', () => {
+
+        it('displays "yes" if enabled', () => {
+          wrapper.vm.$store.state.settings.display_scores = 1
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'displayScoresField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'displayScoresField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(true)
+          expect(no).toBe(false)
+        })
+
+        it('displays "no" if not enabled', () => {
+          wrapper.vm.$store.state.settings.display_scores = 0
+          wrapper.vm.$store.state.settings.judging_round = 'off'
+
+          const yes = wrapper.find({ ref: 'displayScoresField' })
+            .find('.on').exists()
+          const no = wrapper.find({ ref: 'displayScoresField' })
+            .find('.off').exists()
+
+          expect(yes).toBe(false)
+          expect(no).toBe(true)
+        })
+
+      })
+
+    })
+
+    describe('cancel button', () => {
+
+      it('links to the cancel button URL contained in the state', () => {
+        wrapper.vm.$store.state.cancelButtonUrl = 'http://youtube.com'
+
+        const cancelButton = wrapper.find({ ref: 'cancelButton' })
+
+        expect(cancelButton.attributes().href).toEqual('http://youtube.com')
+      })
+
+    })
+
+  })
+
 })

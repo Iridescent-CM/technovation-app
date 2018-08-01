@@ -3,7 +3,7 @@
     <div id="season_review">
       <div class="review-panel">
         <h4 class="reset">User Registrations</h4>
-        <div class="review-label">
+        <div ref="signupFieldStudents" class="review-label">
           <p>
             Students
             <strong :class="{ on: studentSignup, off: !studentSignup }">
@@ -11,7 +11,7 @@
             </strong>
           </p>
         </div>
-        <div class="review-label">
+        <div ref="signupFieldMentors" class="review-label">
           <p>
             Mentors
             <strong :class="{ on: mentorSignup, off: !mentorSignup }">
@@ -23,13 +23,20 @@
 
       <div class="review-panel">
         <h4 class="reset">Dashboard Notices</h4>
-        <div v-for="(label, key) in noticesFields" :key="key">
+        <div
+          v-for="(label, key) in noticesFields"
+          :key="key"
+        >
           <p class="review-label">{{ label }}</p>
           <p
             v-if="formData[key] === ''"
             class="hint"
+            :ref="`noticeFieldHint${label.replace(' ', '')}`"
           >Not filled in, nothing will appear</p>
-          <p v-else>{{ formData[key] }}</p>
+          <p
+            v-else
+            :ref="`noticeFieldLabel${label.replace(' ', '')}`
+          ">{{ formData[key] }}</p>
         </div>
       </div>
 
@@ -42,11 +49,18 @@
           <p
             v-if="formData[key].text === '' || formData[key].url === ''"
             class="hint"
+            :ref="`surveyFieldTextUrlHint${label}`"
           >Not filled in completely, nothing will appear.</p>
 
           <template v-else>
-            <p class="part-of-many">{{ formData[key].text }}</p>
-            <p class="part-of-many">{{ formData[key].url }}</p>
+            <p
+              class="part-of-many"
+              :ref="`surveyFieldText${label}`"
+            >{{ formData[key].text }}</p>
+            <p
+              class="part-of-many"
+              :ref="`surveyFieldUrl${label}`"
+            >{{ formData[key].url }}</p>
           </template>
 
           <p class="review-label-subset">(optional popup modal text)</p>
@@ -54,14 +68,18 @@
           <p
             v-if="formData[key].long_desc === ''"
             class="hint"
+            :ref="`surveyFieldDescHint${label}`"
           >Not filled in, nothing will appear</p>
-          <p v-else>{{ formData[key].long_desc }}</p>
+          <p
+            v-else
+            :ref="`surveyFieldDesc${label}`"
+          >{{ formData[key].long_desc }}</p>
         </div>
       </div>
 
       <div class="review-panel">
         <h4 class="reset">Teams &amp; Submissions</h4>
-        <div class="review-label">
+        <div ref="teamBuildingEnabledField" class="review-label">
           <p>
             Forming teams allowed
             <strong :class="{ on: teamBuildingEnabled, off: !teamBuildingEnabled }">
@@ -69,7 +87,7 @@
             </strong>
           </p>
         </div>
-        <div class="review-label">
+        <div ref="teamSubmissionsEditableField" class="review-label">
           <p>
             Team submissions are editable
             <strong :class="{ on: teamSubmissionsEditable, off: !teamSubmissionsEditable }">
@@ -81,7 +99,7 @@
 
       <div class="review-panel">
         <h4 class="reset">Regional Pitch Events</h4>
-        <div class="review-label">
+        <div ref="selectRegionalPitchEventField" class="review-label">
           <p>
             Selecting retional pitch events allowed
             <strong :class="{ on: selectRegionalPitchEvent, off: !selectRegionalPitchEvent }">
@@ -93,12 +111,15 @@
 
       <div class="review-panel">
         <h4 class="reset">Judging Round</h4>
-        <p class="review-label">{{ judgingRound[formData.judging_round] }}</p>
+        <p
+          ref="judgingRoundField"
+          class="review-label"
+        >{{ judgingRound[formData.judging_round] }}</p>
       </div>
 
       <div class="review-panel">
         <h4 class="reset">Scores &amp; Certificates</h4>
-        <div class="review-label">
+        <div ref="displayScoresField" class="review-label">
           <p>
             Scores &amp; Certificates Accessible
             <strong :class="{ on: displayScores, off: !displayScores }">
@@ -121,7 +142,10 @@
         @click.prevent="saveSettings"
       >Save these settings</button>
       or
-      <a :href="$store.state.cancelButtonUrl">cancel</a>
+      <a
+        ref="cancelButton"
+        :href="$store.state.cancelButtonUrl"
+      >cancel</a>
     </div>
 
     <div ref="formData"></div>
