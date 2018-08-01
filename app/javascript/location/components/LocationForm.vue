@@ -189,6 +189,12 @@ export default {
       required: false,
       default: null,
     },
+
+    handleConfirm: {
+      type: Function,
+      required: false,
+      default: () => history.back(),
+    },
   },
 
   created () {
@@ -291,7 +297,7 @@ export default {
   methods: {
     handleSubmit () {
       if (this.savedLocation) {
-        history.back()
+        this.handleConfirm()
       } else if (!this.formHasInput) {
         this.handleErrorResponse({ response: { status: 404 } })
       } else {
