@@ -1,6 +1,7 @@
 <template>
   <location-form
     scope-name="registration"
+    :handleConfirm="handleConfirm"
     v-model="locationData"
   ></location-form>
 </template>
@@ -33,6 +34,10 @@ export default {
   methods: {
     ...mapGetters(['getLocation']),
     ...mapActions(['updateLocation']),
+
+    handleConfirm () {
+      this.$router.push({ name: 'basic-profile' })
+    },
   },
 
   watch: {
