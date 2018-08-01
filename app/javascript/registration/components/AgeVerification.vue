@@ -60,7 +60,13 @@
     </div>
 
     <div class="panel__bottom-bar">
-      next...
+      <button
+        class="button"
+        :disabled="!nextStepEnabled"
+        @click.prevent="handleSubmit"
+      >
+        Next
+      </button>
     </div>
   </form>
 </template>
@@ -77,6 +83,10 @@ export default {
   computed: {
     ...mapState(['months', 'birthMonth']),
     ...mapGetters(['getBirthdate']),
+
+    nextStepEnabled () {
+      return !!this.year && !!this.month && !!this.day
+    },
 
     year: {
       get () {
@@ -191,6 +201,11 @@ export default {
 
   methods: {
     ...mapActions(['updateBirthdate']),
+
+    handleSubmit () {
+      if (!this.nextStepEnabled) return false
+      this.$router.push({ name: 'location' })
+    },
 
     getAge (compareDate) {
       const year = parseInt(this.year)

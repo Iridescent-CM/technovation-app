@@ -62,7 +62,13 @@
     </div>
 
     <div class="panel__bottom-bar">
-      next...
+      <button
+        class="button"
+        :disabled="!nextStepEnabled"
+        @click.prevent="handleSubmit"
+      >
+        Next
+      </button>
     </div>
   </form>
 </template>
@@ -121,6 +127,13 @@ export default {
       'getReferredBy',
       'getRefferedByOther',
     ]),
+
+    nextStepEnabled () {
+      return !!this.firstName &&
+              !!this.lastName &&
+                !!this.genderIdentity &&
+                  !!this.schoolCompanyName
+    },
 
     firstName: {
       get () {
@@ -183,7 +196,14 @@ export default {
     },
   },
 
-  methods: mapActions(['updateBasicProfile']),
+  methods: {
+    ...mapActions(['updateBasicProfile']),
+
+    handleSubmit () {
+      if (!this.nextStepEnabled) return false
+      this.$router.push({ name: 'login' })
+    },
+  },
 }
 </script>
 
