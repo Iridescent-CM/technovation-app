@@ -536,6 +536,10 @@ class Account < ActiveRecord::Base
           mentor_profile.present?
   end
 
+  def is_a_judge?
+    judge_profile.present?
+  end
+
   def is_not_a_judge?
     not judge_profile.present?
   end
