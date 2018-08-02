@@ -1,4 +1,7 @@
 class Season
+  START_MONTH = 10
+  START_DAY = 1
+
   attr_accessor :year
 
   def initialize(year)
@@ -32,15 +35,7 @@ class Season
   end
 
   def self.switch_date(year = Time.current.year)
-    Date.new(year, switch_month, switch_day)
-  end
-
-  def self.switch_month
-    10
-  end
-
-  def self.switch_day
-    1
+    Date.new(year, START_MONTH, START_DAY)
   end
 
   private

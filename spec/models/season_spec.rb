@@ -27,7 +27,7 @@ RSpec.describe Season do
 
     context "before switch date" do
       it "is the current year" do
-        Timecop.freeze(Date.new(2010, Season.switch_month - 1, 28)) do
+        Timecop.freeze(Date.new(2010, Season::START_MONTH - 1, 28)) do
           expect(Season.current.year).to eq(2010)
         end
       end
@@ -38,8 +38,8 @@ RSpec.describe Season do
         Timecop.freeze(
           Date.new(
             2010,
-            Season.switch_month,
-            Season.switch_day
+            Season::START_MONTH,
+            Season::START_DAY
           )
         ) do
           expect(Season.current.year).to eq(2011)

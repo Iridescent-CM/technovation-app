@@ -6,9 +6,12 @@
 
 <p>
   <strong>
-    Registrations for the Technovation
+    Registration for Technovation
     <%= Season.next.year %>
-    season will open on Wednesday, October 18.
+    will open on
+    <%= Date::MONTHNAMES[Season::START_MONTH] %>
+    <%= Season::START_DAY %>.
+
     Please
     <%= link_to "sign up for our newsletter",
       "https://confirmsubscription.com/h/d/15B1DBF38F40C405" %>

@@ -16,9 +16,9 @@ RSpec.feature "Off-season splash page" do
     visit root_path
     expect(page).not_to have_css("form#new_signup_attempt")
     expect(page).to have_content(
-      "Registrations for the Technovation " +
+      "Registration for Technovation " +
       Season.next.year.to_s +
-      " season will open on Wednesday, October 18."
+      " will open on October 1."
     )
   end
 end
