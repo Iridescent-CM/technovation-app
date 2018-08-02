@@ -1,13 +1,15 @@
 module Public
   class DashboardsController < ApplicationController
     def show
+      token = get_cookie(CookieNames::SIGNUP_TOKEN)
+
       if current_account.authenticated?
         redirect_to(
           remove_cookie(CookieNames::REDIRECTED_FROM) ||
             last_used_scope_dashboard_path ||
               user_scope_dashbaord_path
         )
-      elsif token = get_cookie(CookieNames::SIGNUP_TOKEN)
+      elsif token
         @signup_attempt = SignupAttempt.wizard.find_by(wizard_token: token)
 
         if !@signup_attempt.country_code
