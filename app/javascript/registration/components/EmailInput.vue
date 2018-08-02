@@ -177,11 +177,11 @@ export default {
         this.emailHasBeenChecked = true
         this.emailNeedsValidation = false
 
-        this.emailIsValid = resp.is_valid
-        this.isDisposableAddress = resp.is_disposable_address
-        this.didYouMean = resp.did_you_mean
-        this.mailboxVerification = resp.mailbox_verification
-        this.emailIsTaken = resp.is_taken
+        this.emailIsValid = resp.isValid
+        this.isDisposableAddress = resp.isDisposableAddress
+        this.didYouMean = resp.didYouMean
+        this.mailboxVerification = resp.mailboxVerification
+        this.emailIsTaken = resp.isTaken
       }).catch(err => {
         console.error(err)
       })

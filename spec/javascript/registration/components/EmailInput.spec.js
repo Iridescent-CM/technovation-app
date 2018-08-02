@@ -84,7 +84,7 @@ describe('EmailInput Vue component', () => {
     it('detects invalid email', (done) => {
       axios.mockResponse('get', {
         data: { attributes: {
-          "is_valid": false,
+          "isValid": false,
         } }
       })
 
@@ -100,7 +100,7 @@ describe('EmailInput Vue component', () => {
     it('detects temporary email', (done) => {
       axios.mockResponse('get', {
         data: { attributes: {
-          "is_disposable_address": true,
+          "isDisposableAddress": true,
         } }
       })
 
@@ -116,7 +116,7 @@ describe('EmailInput Vue component', () => {
     it('detects a "did you mean...?" suggestion', (done) => {
       axios.mockResponse('get', {
         data: { attributes: {
-          "did_you_mean": "joe@gmail.com",
+          "didYouMean": "joe@gmail.com",
         } }
       })
 
@@ -132,7 +132,7 @@ describe('EmailInput Vue component', () => {
     it('detects a mailbox_verification', (done) => {
       axios.mockResponse('get', {
         data: { attributes: {
-          "mailbox_verification": true,
+          "mailboxVerification": true,
         } }
       })
 
@@ -148,7 +148,7 @@ describe('EmailInput Vue component', () => {
     it('detects a failed mailbox_verification', (done) => {
       axios.mockResponse('get', {
         data: { attributes: {
-          "mailbox_verification": false,
+          "mailboxVerification": false,
         } }
       })
 
@@ -164,7 +164,7 @@ describe('EmailInput Vue component', () => {
     it('detects a duplicate email', (done) => {
       axios.mockResponse('get', {
         data: { attributes: {
-          "is_taken": true,
+          "isTaken": true,
         } }
       })
 
