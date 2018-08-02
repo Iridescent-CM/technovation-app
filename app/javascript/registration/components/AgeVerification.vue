@@ -94,7 +94,7 @@ export default {
       },
 
       set (year) {
-        this.updateBirthdate({ year, month: this.month, day: this.day })
+        this.$store.commit('birthYear', year)
       },
     },
 
@@ -104,7 +104,7 @@ export default {
       },
 
       set (month) {
-        this.updateBirthdate({ year: this.year, month: month, day: this.day })
+        this.$store.commit('birthMonth', month)
       },
     },
 
@@ -114,7 +114,7 @@ export default {
       },
 
       set (day) {
-        this.updateBirthdate({ year: this.year, month: this.month, day })
+        this.$store.commit('birthDay', day)
       },
     },
 
@@ -197,6 +197,20 @@ export default {
         return 29
       }
     }
+  },
+
+  watch: {
+    year (value) {
+      this.updateBirthdate({ year: value, month: this.month, day: this.day })
+    },
+
+    month (value) {
+      this.updateBirthdate({ year: this.year, month: value, day: this.day })
+    },
+
+    day (value) {
+      this.updateBirthdate({ year: this.year, month: this.month, day: value })
+    },
   },
 
   methods: {

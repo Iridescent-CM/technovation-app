@@ -21,6 +21,18 @@ export default {
     state.birthDay = attributes.day
   },
 
+  birthYear (state, year) {
+    state.birthYear = year
+  },
+
+  birthMonth (state, month) {
+    state.birthMonth = month
+  },
+
+  birthDay (state, day) {
+    state.birthDay = day
+  },
+
   location (state, attributes) {
     state.city = attributes.city
     state.state = attributes.state
