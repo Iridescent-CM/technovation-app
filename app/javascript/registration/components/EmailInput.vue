@@ -25,7 +25,7 @@
     </div>
 
     <template v-if="problemsWithInput">
-      <div class="padding--t-b-small font-weight--bold color--alert">
+      <div class="flash flash--alert">
         Sorry, the email address you typed appears to be invalid.
       </div>
 
