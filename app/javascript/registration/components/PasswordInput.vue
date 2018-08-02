@@ -1,14 +1,12 @@
 <template>
-  <form
-    id="password-form"
-    @submit.prevent="handleSubmit"
-  >
+  <form id="password-form">
     <label for="password">Password</label>
 
     <Password
       autocomplete="new-password"
       placeholder="Use at least 8 characters"
-      v-model="password"
+      v-model="value"
+      @input="$emit('input', value)"
       :toggle="true"
       :secure-length="8"
       @score="showScore"
@@ -35,21 +33,20 @@ export default {
 
   data () {
     return {
-      password: '',
       score: 0,
     }
   },
 
   props: {
     value: {
-      type: Boolean,
-      required: false,
+      type: String,
+      required: '',
     },
   },
 
   computed: {
     nextStepEnabled () {
-      return this.password.length >= 8
+      return this.value.length >= 8
     },
 
     strengthNextStepMsg () {
@@ -75,18 +72,13 @@ export default {
 
   watch: {
     nextStepEnabled (bool) {
-      this.$emit('input', bool)
+      this.$emit('nextStepEnabled', bool)
     },
   },
 
   methods: {
     showScore (score) {
       this.score = score
-    },
-
-    handleSubmit () {
-      if (!this.nextStepEnabled) return false
-      this.$router.push('location')
     },
   },
 }

@@ -9,7 +9,11 @@
 
     <div class="panel__content">
       <EmailInput v-model="emailComplete" />
-      <PasswordInput v-model="passwordComplete" />
+
+      <PasswordInput
+        v-model="password"
+        @nextStepEnabled="setPasswordComplete"
+      />
     </div>
 
     <div class="panel__bottom-bar">
@@ -25,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
@@ -42,6 +46,7 @@ export default {
     return {
       emailComplete: false,
       passwordComplete: false,
+      password: '',
     }
   },
 
@@ -64,6 +69,10 @@ export default {
   },
 
   methods: {
+    setPasswordComplete (bool) {
+      this.passwordComplete = bool
+    },
+
     handleSubmit () {
       if (!this.nextStepEnabled) return false
       console.log('we will see')
