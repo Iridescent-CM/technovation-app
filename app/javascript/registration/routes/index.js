@@ -22,12 +22,10 @@ const initiateApp = () => {
 const requireDataAgreement = (to, _from, next) => {
   if (!store.state.isReady) initiateApp()
 
-  if (to.matched.some(record => record.name !== 'data-use')) {
-    if (!store.state.termsAgreed) {
-      next({ name: 'data-use' })
-    } else {
-      next()
-    }
+  const notDataUseComponent = to.matched.some(record => record.name !== 'data-use')
+
+  if (notDataUseComponent && !store.state.termsAgreed) {
+    next({ name: 'data-use' })
   } else {
     next()
   }
@@ -51,6 +49,12 @@ export const routes = [
     beforeEnter: requireDataAgreement,
   },
   {
+    path: '/location',
+    name: 'location',
+    component: Location,
+    beforeEnter: requireDataAgreement,
+  },
+  {
     path: '/basic-profile',
     name: 'basic-profile',
     component: BasicProfile,
@@ -60,12 +64,6 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: Login,
-    beforeEnter: requireDataAgreement,
-  },
-  {
-    path: '/location',
-    name: 'location',
-    component: Location,
     beforeEnter: requireDataAgreement,
   },
 ]
