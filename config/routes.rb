@@ -296,7 +296,6 @@ Rails.application.routes.draw do
     resources :embed_codes, only: :show
 
     resources :top_companies, only: :index
-    resources :wizard_in_progress, only: :show
     get '/email_validations/new' => 'email_validations#new'
   end
 
