@@ -10,6 +10,9 @@ RSpec.feature "Mentors switch to judging mode" do
 
     click_link "Switch to Judge mode"
     expect(current_path).to eq(judge_dashboard_path)
+
+    click_link "Switch to Mentor mode"
+    expect(current_path).to eq(mentor_dashboard_path)
   end
 
   scenario "mentors with a judge profile can browse to judge profile" do
@@ -20,6 +23,7 @@ RSpec.feature "Mentors switch to judging mode" do
     visit judge_dashboard_path
 
     expect(current_path).to eq(judge_dashboard_path)
+    expect(page).to have_link("Switch to Mentor mode")
   end
 
   scenario "mentors without a judge profile do not see a judge mode link" do
