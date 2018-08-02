@@ -35,13 +35,17 @@ module Public
         'https://api.mailgun.net/v3/address/private/validate',
         query: {
           address: address,
-          mailbox_verification: true,
+          mailbox_verification: enable_mailbox_verification?(address),
         },
         basic_auth: {
           username: 'api',
           password: ENV.fetch("MAILGUN_PRIVATE_KEY"),
         }
       )
+    end
+
+    def enable_mailbox_verification?(address)
+      !(address.match(/^.+\+.+@/) && !address.match(/@gmail.com$/))
     end
   end
 end

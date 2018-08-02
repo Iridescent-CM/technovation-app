@@ -94,7 +94,7 @@ export default {
       emailIsValid: false,
       emailIsTaken: false,
       isDisposableAddress: false,
-      mailboxVerification: false,
+      mailboxVerification: null,
       didYouMean: null,
     }
   },
@@ -133,7 +133,7 @@ export default {
               !this.emailIsValid ||
                 this.emailIsTaken ||
                   this.isDisposableAddress ||
-                    !this.mailboxVerification
+                    (this.mailboxVerification != null && !this.mailboxVerification)
               )
     },
 
@@ -200,7 +200,7 @@ export default {
       this.emailIsValid = false
       this.emailIsTaken = false
       this.isDisposableAddress = false
-      this.mailboxVerification = false
+      this.mailboxVerification = null
       this.didYouMean = null
     }
   },
