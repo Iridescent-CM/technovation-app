@@ -4,9 +4,11 @@
       <h1 class="page-heading">
         <%= t("views.application.mentor_dashboard") %>
 
-        <small>
-          <%= link_to "Switch to Judge mode", judge_dashboard_path %>
-        </small>
+        <% if current_mentor.is_a_judge? %>
+          <small>
+            <%= link_to "Switch to Judge mode", judge_dashboard_path %>
+          </small>
+        <% end %>
 
         <% if current_mentor.is_an_ambassador? %>
           <small>
