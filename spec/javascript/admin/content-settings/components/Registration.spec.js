@@ -33,6 +33,8 @@ describe('Admin Content & Settings - Registration component', () => {
         checkboxes: {
           student: 'Students',
           mentor: 'Mentors',
+          judge: 'Judges',
+          regional_ambassador: 'Regional Ambassadors',
         },
       })
     })
@@ -130,7 +132,7 @@ describe('Admin Content & Settings - Registration component', () => {
       const notices = wrapper.findAll('.notice')
 
       expect(wrapper.vm.judgingEnabled).toBe(true)
-      expect(notices.length).toEqual(2)
+      expect(notices.length).toEqual(4)
       notices.wrappers.forEach((notice) => {
         const props = notice.find(Icon).props()
 

@@ -143,6 +143,12 @@ describe('Admin Content & Settings - Events component', () => {
               mentorSignup () {
                 return false
               },
+              judgeSignup () {
+                return false
+              },
+              ambassadorSignup () {
+                return false
+              },
               teamBuildingEnabled () {
                 return true
               },
@@ -162,6 +168,8 @@ describe('Admin Content & Settings - Events component', () => {
         expect(wrapper.vm.formData).toEqual({
           student_signup: true,
           mentor_signup: false,
+          judge_signup: false,
+          regional_ambassador_signup: false,
           student_dashboard_text: 'Student',
           mentor_dashboard_text: 'Mentor',
           judge_dashboard_text: 'Judge',

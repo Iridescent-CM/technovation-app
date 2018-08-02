@@ -3,6 +3,9 @@ export default {
     // Registration
     student_signup: 0,
     mentor_signup: 0,
+    judge_signup: 0,
+    regional_ambassador_signup: 0,
+
     // Notices
     student_dashboard_text: '',
     mentor_dashboard_text: '',

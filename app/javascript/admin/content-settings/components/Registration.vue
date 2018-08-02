@@ -46,6 +46,8 @@ export default {
       checkboxes: {
         student: 'Students',
         mentor: 'Mentors',
+        judge: 'Judges',
+        regional_ambassador: 'Regional Ambassadors',
       },
     }
   },

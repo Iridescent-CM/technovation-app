@@ -16,6 +16,8 @@
       :form-data="{
         student_signup: <%= SeasonToggles.signup_enabled?('student') %>,
         mentor_signup: <%= SeasonToggles.signup_enabled?('mentor') %>,
+        judge_signup: <%= SeasonToggles.signup_enabled?('judge') %>,
+        regional_ambassador_signup: <%= SeasonToggles.signup_enabled?('regional_ambassador') %>,
         student_dashboard_text: '<%= SeasonToggles.dashboard_text('student') %>',
         mentor_dashboard_text: '<%= SeasonToggles.dashboard_text('mentor') %>',
         judge_dashboard_text: '<%= SeasonToggles.dashboard_text('judge') %>',

@@ -144,6 +144,8 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
       expect(wrapper.vm.$store.state.settings).toEqual({
         student_signup: 1,
         mentor_signup: 0,
+        judge_signup: 0,
+        regional_ambassador_signup: 0,
         student_dashboard_text: 'Student dashboard text',
         mentor_dashboard_text: 'Mentor dashboard text',
         judge_dashboard_text: 'Judge dashboard text',

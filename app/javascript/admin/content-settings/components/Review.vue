@@ -3,6 +3,7 @@
     <div id="season_review">
       <div class="review-panel">
         <h4 class="reset">User Registrations</h4>
+
         <div ref="signupFieldStudents" class="review-label">
           <p>
             Students
@@ -11,11 +12,30 @@
             </strong>
           </p>
         </div>
+
         <div ref="signupFieldMentors" class="review-label">
           <p>
             Mentors
             <strong :class="{ on: mentorSignup, off: !mentorSignup }">
               {{ mentorSignup ? 'yes' : 'no' }}
+            </strong>
+          </p>
+        </div>
+
+        <div ref="signupFieldJudges" class="review-label">
+          <p>
+            Judges
+            <strong :class="{ on: judgeSignup, off: !judgeSignup }">
+              {{ judgeSignup ? 'yes' : 'no' }}
+            </strong>
+          </p>
+        </div>
+
+        <div ref="signupFieldAmbassadors" class="review-label">
+          <p>
+            Regional Ambassadors
+            <strong :class="{ on: ambassadorSignup, off: !ambassadorSignup }">
+              {{ ambassadorSignup ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -225,6 +245,9 @@ export default {
         // Registration
         student_signup: this.studentSignup,
         mentor_signup: this.mentorSignup,
+        judge_signup: this.judgeSignup,
+        regional_ambassador_signup: this.ambassadorSignup,
+
         // Notices
         student_dashboard_text: this.$store.state.settings
           .student_dashboard_text,
@@ -263,6 +286,14 @@ export default {
 
     mentorSignup () {
       return !this.judgingEnabled && this.$store.state.settings.mentor_signup
+    },
+
+    judgeSignup () {
+      return !this.judgingEnabled && this.$store.state.settings.judge_signup
+    },
+
+    ambassadorSignup () {
+      return !this.judgingEnabled && this.$store.state.settings.regional_ambassador_signup
     },
 
     teamBuildingEnabled () {
