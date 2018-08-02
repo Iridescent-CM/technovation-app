@@ -124,7 +124,7 @@ export default {
       },
 
       set (value) {
-        this.saveEmail({ email: value })
+        this.$store.commit('email', value)
       },
     },
 
@@ -167,6 +167,8 @@ export default {
     },
 
     validateEmailInput () {
+      this.saveEmail({ email: this.email })
+
       let url = "/public/email_validations/new?address="
       url += encodeURIComponent(this.email)
 
