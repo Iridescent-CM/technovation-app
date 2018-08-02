@@ -5,8 +5,8 @@
     <Password
       autocomplete="new-password"
       placeholder="Use at least 8 characters"
-      v-model="value"
-      @input="$emit('input', value)"
+      v-model="password"
+      @input="$emit('input', password)"
       :toggle="true"
       :secure-length="8"
       @score="showScore"
@@ -34,6 +34,7 @@ export default {
   data () {
     return {
       score: 0,
+      password: '',
     }
   },
 
@@ -46,7 +47,7 @@ export default {
 
   computed: {
     nextStepEnabled () {
-      return this.value.length >= 8
+      return this.password.length >= 8
     },
 
     strengthNextStepMsg () {
