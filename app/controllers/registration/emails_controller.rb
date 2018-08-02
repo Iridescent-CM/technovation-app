@@ -5,7 +5,7 @@ module Registration
         wizard_token: email_params[:wizard_token]
       )
 
-      attempt.update!(email: email_params[:email])
+      attempt.update!(email: email_params.fetch(:email))
 
       render json: SignupAttemptSerializer.new(attempt).serialized_json
     end
