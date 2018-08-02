@@ -301,12 +301,13 @@ Rails.application.routes.draw do
   end
 
   namespace :registration do
+    resource :terms_agreement, only: :create
+    resource :age, only: :create
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
-    resource :terms_agreement, only: :create
-    resource :email, only: :create
-    resource :age, only: :create
     resource :basic_profile, only: :create
+    resource :email, only: :create
+    resource :account, only: :create
   end
 
   resources :password_resets, only: [:new, :create]

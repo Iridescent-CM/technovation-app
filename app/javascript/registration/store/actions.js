@@ -88,4 +88,16 @@ export default {
       commit('basicProfile',  attributes)
     }).catch(err => console.error(err))
   },
+
+  createAccount ({ commit, state }, { password }) {
+    axios.post('/registration/account', {
+      account: {
+        email: state.email,
+        password,
+        wizardToken: state.wizardToken,
+      },
+    }).then(({ data: { data: { attributes }} }) => {
+      commit('account',  attributes)
+    }).catch(err => console.error(err))
+  },
 }

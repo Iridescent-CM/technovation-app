@@ -69,13 +69,15 @@ export default {
   },
 
   methods: {
+    ...mapActions(['createAccount']),
+
     setPasswordComplete (bool) {
       this.passwordComplete = bool
     },
 
     handleSubmit () {
       if (!this.nextStepEnabled) return false
-      console.log('we will see')
+      this.createAccount({ password: this.password })
     }
   },
 }
