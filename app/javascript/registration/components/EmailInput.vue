@@ -69,7 +69,7 @@
       v-if="nextStepEnabled"
       class="flash flash--success"
     >
-      Your email looks good! You're ready for the next step!
+      Your email looks good!
     </div>
   </form>
 </template>
