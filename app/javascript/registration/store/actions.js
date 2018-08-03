@@ -5,6 +5,7 @@ export default {
     commit('wizardToken', attributes.wizardToken)
     commit('termsAgreed', attributes.termsAgreed)
     commit('birthDate', getters.getBirthdateAttributes(attributes))
+    commit('profileChoice', attributes.profileChoice)
     commit('location', attributes)
     commit('basicProfile', attributes)
     commit('email', attributes.email)

@@ -59,7 +59,7 @@
       </div>
 
       <div v-if="age" class="grid__col-12 grid__col--bleed-x">
-        <h4>Profile choices</h4>
+        <h4>Profile choice</h4>
 
         I want to sign up as a:
 

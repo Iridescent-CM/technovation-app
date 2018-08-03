@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <p>
+      <p v-show="isGenderRequired">
         <label for="gender">Gender identity</label>
         <vue-select
           input-id="gender"
@@ -128,13 +128,19 @@ export default {
       'getSchoolCompanyName',
       'getReferredBy',
       'getReferredByOther',
+      'getProfileChoice',
     ]),
 
     nextStepEnabled () {
       return !!this.firstName &&
               !!this.lastName &&
-                !!this.genderIdentity &&    // mentors, judges, RAs only
+                (this.isGenderRequired && !!this.genderIdentity) &&
                   !!this.schoolCompanyName
+    },
+
+    isGenderRequired () {
+      console.log(this.getProfileChoice)
+      return this.getProfileChoice != 'student'
     },
 
     firstName: {
