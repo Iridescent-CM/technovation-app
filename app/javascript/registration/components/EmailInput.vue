@@ -1,11 +1,12 @@
 <template>
-  <form>
+  <div>
     <label for="email">Email Address</label>
 
     <input
       type="email"
       id="email"
       autocomplete="email"
+      name="account[email]"
       placeholder="example: janie.doe@gmail.com"
       v-model="email"
     />
@@ -71,7 +72,7 @@
     >
       Your email looks good!
     </div>
-  </form>
+  </div>
 </template>
 
 <script>

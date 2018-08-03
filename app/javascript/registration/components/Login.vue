@@ -1,8 +1,12 @@
 <template>
-  <div
+  <form
     id="login-form"
     class="panel panel--contains-bottom-bar panel--contains-top-bar"
+    action="/registration/account"
+    method="post"
   >
+    <input type="hidden" name="account[wizard_token]" :value="wizardToken" />
+
     <div class="panel__top-bar">
       Set your email & password for logging in
     </div>
@@ -19,17 +23,17 @@
     <div class="panel__bottom-bar">
       <button
         class="button"
+        type="submit"
         :disabled="!nextStepEnabled"
-        @click.prevent="handleSubmit"
       >
         Next
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
@@ -61,6 +65,7 @@ export default {
   },
 
   computed: {
+    ...mapState(['wizardToken']),
     ...mapGetters(['readyForAccount']),
 
     nextStepEnabled () {

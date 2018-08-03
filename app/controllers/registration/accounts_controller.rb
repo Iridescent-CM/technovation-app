@@ -5,7 +5,8 @@ module Registration
         wizard_token: account_params.fetch(:wizard_token)
       )
 
-      account = Account.create!({
+      account = Account.new({
+        id: 0,
         email: account_params.fetch(:email),
         password: account_params.fetch(:email),
 
@@ -30,12 +31,13 @@ module Registration
         referred_by_other: attempt.referred_by_other,
       })
 
-      attempt.update!({ account_id: account.id })
-      attempt.registered!
+      #attempt.update!({ account_id: account.id })
+      #attempt.registered!
 
-      remove_cookie(CookieNames::SIGNUP_TOKEN)
+      #remove_cookie(CookieNames::SIGNUP_TOKEN)
 
-      render json: AccountSerializer.new(account).serialized_json
+      json = AccountSerializer.new(account).serialized_json
+      render json: json
     end
 
     private

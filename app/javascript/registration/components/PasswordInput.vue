@@ -1,11 +1,12 @@
 <template>
-  <form id="password-form">
+  <div id="password-form">
     <label for="password">Password</label>
 
     <Password
       autocomplete="new-password"
       placeholder="Use at least 8 characters"
       v-model="password"
+      name="account[password]"
       @input="$emit('input', password)"
       :toggle="true"
       :secure-length="8"
@@ -18,7 +19,7 @@
     >
       {{ strengthNextStepMsg }}
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
