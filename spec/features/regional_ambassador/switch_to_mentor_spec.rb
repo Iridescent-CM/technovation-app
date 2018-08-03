@@ -53,17 +53,6 @@ RSpec.feature "RAs switch to mentor mode" do
     expect(current_path).to eq(regional_ambassador_dashboard_path)
   end
 
-  scenario "RAs with a judge profile can browse to judge profile" do
-    regional_ambassador = FactoryBot.create(:regional_ambassador, :approved, :has_judge_profile)
-
-    sign_in(regional_ambassador)
-
-    visit judge_dashboard_path
-
-    expect(current_path).to eq(judge_dashboard_path)
-    expect(page).to have_link("Switch to RA mode")
-  end
-
   scenario "RAs without a judge profile do not see a judge mode link" do
     regional_ambassador = FactoryBot.create(:regional_ambassador, :approved)
 
