@@ -16,6 +16,10 @@ describe("Registration::Components::AgeVerification.vue", () => {
           updateBirthdate ({ commit }, attributes) {
             commit('birthDate',  attributes)
           },
+
+          updateProfileChoice ({ commit }, choice) {
+            commit('profileChoice', choice)
+          },
         },
       }
     )

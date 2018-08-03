@@ -9,6 +9,13 @@ class SignupAttempt < ActiveRecord::Base
     wizard
   }
 
+  enum profile_choice: %w{
+    student
+    mentor
+    judge
+    regional_ambassador
+  }
+
   enum referred_by: REFERRED_BY_OPTIONS
   enum gender_identity: GENDER_IDENTITY_OPTIONS
 

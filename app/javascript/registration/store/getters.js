@@ -34,6 +34,10 @@ export default {
     return [state.birthYear, state.birthMonth, state.birthDay].join('-')
   },
 
+  getProfileChoice (state) {
+    return state.profileChoice
+  },
+
   getLocation (state) {
     return {
       city: state.city,

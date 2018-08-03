@@ -40,7 +40,7 @@
         </dl>
       </div>
 
-      <div class="grid__col-auto grid__col--bleed-x">
+      <div class="grid__col-12 grid__col--bleed-x">
         <h4>Team divisions explained:</h4>
 
         <dl>
@@ -56,6 +56,26 @@
             <strong>15 or older</strong> on {{ cutoffDay }}
           </dd>
         </dl>
+      </div>
+
+      <div v-if="age" class="grid__col-12 grid__col--bleed-x">
+        <h4>Profile choices</h4>
+
+        I want to sign up as a:
+
+        <ul class="margin--t-b-large margin--r-l-none padding--none list-style--none">
+          <li v-for="option in profileOptions" :key="option">
+            <label>
+              <input
+                type="radio"
+                name="profileChoice"
+                v-model="profileChoice"
+                :value="option"
+              />
+              {{ option }}
+            </label>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -82,10 +102,10 @@ export default {
 
   computed: {
     ...mapState(['months', 'birthMonth']),
-    ...mapGetters(['getBirthdate']),
+    ...mapGetters(['getBirthdate', 'getProfileChoice']),
 
     nextStepEnabled () {
-      return !!this.year && !!this.month && !!this.day
+      return !!this.year && !!this.month && !!this.day && !!this.profileChoice
     },
 
     year: {
@@ -118,6 +138,16 @@ export default {
       },
     },
 
+    profileChoice: {
+      get () {
+        return this.getProfileChoice
+      },
+
+      set (choice) {
+        this.$store.commit('profileChoice', choice)
+      },
+    },
+
     age () {
       return this.getAge(new Date())
     },
@@ -130,8 +160,17 @@ export default {
       return "August 1, 2019"
     },
 
-    profileChoices () {
-      return "a student or a mentor"
+    profileOptions () {
+      switch(true) {
+        case (this.age < 14):
+          return ['student']
+
+        case (this.age >= 14 && this.ageByCutoff < 19):
+          return ['student', 'mentor']
+
+        case (this.ageByCutoff > 18):
+          return ['mentor']
+      }
     },
 
     canBeAStudent () {
@@ -211,10 +250,18 @@ export default {
     day (value) {
       this.updateBirthdate({ year: this.year, month: this.month, day: value })
     },
+
+    profileChoice (value) {
+      this.updateProfileChoice(value)
+    },
+
+    profileOptions (arr) {
+      if (arr.length === 1) this.profileChoice = arr[0]
+    },
   },
 
   methods: {
-    ...mapActions(['updateBirthdate']),
+    ...mapActions(['updateBirthdate', 'updateProfileChoice']),
 
     handleSubmit () {
       if (!this.nextStepEnabled) return false

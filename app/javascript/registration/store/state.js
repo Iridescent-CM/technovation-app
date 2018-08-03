@@ -8,6 +8,8 @@ export default {
   birthMonth: null,
   birthDay: null,
 
+  profileChoice: null,
+
   city: null,
   state: null,
   country: null,

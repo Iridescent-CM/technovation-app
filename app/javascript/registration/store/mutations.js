@@ -33,6 +33,10 @@ export default {
     state.birthDay = day
   },
 
+  profileChoice (state, choice) {
+    state.profileChoice = choice
+  },
+
   location (state, attributes) {
     state.city = attributes.city
     state.state = attributes.state

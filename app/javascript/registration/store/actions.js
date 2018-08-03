@@ -59,6 +59,17 @@ export default {
     }).catch(err => console.error(err))
   },
 
+  updateProfileChoice ({ commit, state }, choice) {
+    axios.post('/registration/profile_choice', {
+      profile_choice: {
+        choice,
+        wizardToken: state.wizardToken,
+      },
+    }).then(({ data: { data: { attributes }} }) => {
+      commit('profileChoice', attributes.profileChoice)
+    }).catch(err => console.error(err))
+  },
+
   updateLocation ({ commit, state }, attrs) {
     const data = Object.assign({}, {
       city: state.city,

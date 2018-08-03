@@ -1285,7 +1285,8 @@ CREATE TABLE public.signup_attempts (
     state_code character varying,
     country_code character varying,
     latitude numeric(10,6),
-    longitude numeric(10,6)
+    longitude numeric(10,6),
+    profile_choice integer
 );
 
 
@@ -3114,6 +3115,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180725175328'),
 ('20180727200157'),
 ('20180731150846'),
-('20180731162422');
+('20180731162422'),
+('20180803154914');
 
 

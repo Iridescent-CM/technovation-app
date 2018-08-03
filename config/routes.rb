@@ -302,6 +302,7 @@ Rails.application.routes.draw do
   namespace :registration do
     resource :terms_agreement, only: :create
     resource :age, only: :create
+    resource :profile_choice, only: :create
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
     resource :basic_profile, only: :create
