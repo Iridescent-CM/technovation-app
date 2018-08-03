@@ -51,6 +51,15 @@
         />
       </p>
 
+      <p v-show="getProfileChoice != 'student'">
+        <label for="jobTitle">Job Title</label>
+        <input
+          id="jobTitle"
+          type="text"
+          v-model="jobTitle"
+        />
+      </p>
+
       <p>
         <label for="referredBy">How did you hear about Technovation? (optional)</label>
         <vue-select
@@ -136,6 +145,7 @@ export default {
       'getLastName',
       'getGenderIdentity',
       'getSchoolCompanyName',
+      'getJobTitle',
       'getReferredBy',
       'getReferredByOther',
       'getProfileChoice',
@@ -200,6 +210,16 @@ export default {
       },
     },
 
+    jobTitle: {
+      get () {
+        return this.getJobTitle
+      },
+
+      set (value) {
+        this.$store.commit('jobTitle', value)
+      },
+    },
+
     referredBy: {
       get () {
         return this.getReferredBy
@@ -236,6 +256,10 @@ export default {
 
     schoolCompanyName (value) {
       this.debouncedProfileUpdate({ schoolCompanyName: value })
+    },
+
+    jobTitle (value) {
+      this.debouncedProfileUpdate({ jobTitle: value })
     },
 
     referredBy (value) {

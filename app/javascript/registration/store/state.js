@@ -16,8 +16,11 @@ export default {
 
   firstName: null,
   lastName: null,
+
   genderIdentity: null,
   schoolCompanyName: null,
+  jobTitle: null,
+
   referredBy: null,
   referredByOther: null,
 

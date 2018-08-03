@@ -19,6 +19,7 @@ module Registration
         :last_name,
         :gender_identity,
         :school_company_name,
+        :job_title,
         :referred_by,
         :referred_by_other,
         :wizard_token,

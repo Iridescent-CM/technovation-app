@@ -76,6 +76,10 @@ export default {
     return state.schoolCompanyName
   },
 
+  getJobTitle (state) {
+    return state.jobTitle
+  },
+
   getReferredBy (state) {
     return state.referredBy
   },

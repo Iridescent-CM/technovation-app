@@ -48,6 +48,7 @@ export default {
     state.lastName = attributes.lastName
     state.genderIdentity = attributes.genderIdentity
     state.schoolCompanyName = attributes.schoolCompanyName
+    state.jobTitle = attributes.jobTitle
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
   },
@@ -70,6 +71,10 @@ export default {
 
   schoolCompanyName (state, value) {
     state.schoolCompanyName = value
+  },
+
+  jobTitle (state, value) {
+    state.jobTitle = value
   },
 
   referredBy (state, value) {
