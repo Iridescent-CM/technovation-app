@@ -31,12 +31,21 @@ module Registration
         referred_by_other: attempt.referred_by_other,
       })
 
+      profile = "#{attempt.profile_choice}_profile"
+      account.public_send(
+        "build_#{profile}",
+        {
+          school_company_name: attempt.school_company_name,
+          job_title: attempt.job_title,
+        }
+      )
+
       #attempt.update!({ account_id: account.id })
       #attempt.registered!
 
       #remove_cookie(CookieNames::SIGNUP_TOKEN)
 
-      json = AccountSerializer.new(account).serialized_json
+      json = AccountSerializer.new(account, include: [profile]).serialized_json
       render json: json
     end
 

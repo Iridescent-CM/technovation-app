@@ -7,6 +7,8 @@ class StudentProfile < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
+  alias_attribute :school_company_name, :school_name
+
   scope :current, -> {
     joins(:current_account)
   }
@@ -141,6 +143,10 @@ class StudentProfile < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def job_title=(*)
+    false
   end
 
   def participated?
