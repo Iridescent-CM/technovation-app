@@ -87,5 +87,11 @@ FactoryBot.define do
       state_province "Bahia"
       city "Salvador"
     end
+
+    trait :has_judge_profile do
+      after(:create) do |ambassador|
+        CreateJudgeProfile.(ambassador.account)
+      end
+    end
   end
 end

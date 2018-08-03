@@ -143,6 +143,12 @@ FactoryBot.define do
       end
     end
 
+    trait :has_judge_profile do
+      after(:create) do |mentor|
+        CreateJudgeProfile.(mentor.account)
+      end
+    end
+
     factory :onboarded_mentor
   end
 end

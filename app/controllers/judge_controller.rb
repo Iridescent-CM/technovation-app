@@ -1,5 +1,4 @@
 class JudgeController < ApplicationController
-  before_action :create_mentor_judge_on_dashboard
   include Authenticated
 
   layout "judge"
@@ -31,10 +30,6 @@ class JudgeController < ApplicationController
 
   def current_profile
     current_judge
-  end
-
-  def create_mentor_judge_on_dashboard
-    # Implemented in Judge::DashboardsController
   end
 
   def back_from_event_path
