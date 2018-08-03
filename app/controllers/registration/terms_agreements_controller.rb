@@ -14,6 +14,8 @@ module Registration
             city: geocoded.city,
             state_code: geocoded.state_code,
             country_code: geocoded.country_code,
+            latitude: geocoded.latitude,
+            longitude: geocoded.longitude,
           })
         end
       end
