@@ -35,11 +35,19 @@
       </p>
 
       <p>
-        <label for="schoolName">School name</label>
+        <label for="schoolName">{{ schoolCompanyNameLabel }}</label>
         <input
+          v-if="getProfileChoice === 'student'"
           id="schoolName"
           type="text"
           v-model="schoolCompanyName"
+        />
+
+        <autocomplete-input
+          v-else
+          id="schoolName"
+          v-model="schoolCompanyName"
+          url="/public/top_companies"
         />
       </p>
 
@@ -77,11 +85,13 @@
 import debounce from 'lodash/debounce'
 import { mapGetters, mapActions } from 'vuex'
 import VueSelect from '@vendorjs/vue-select'
+import AutocompleteInput from 'components/AutocompleteInput'
 
 export default {
   name: 'basic-profile',
 
   components: {
+    AutocompleteInput,
     VueSelect,
   },
 
@@ -139,8 +149,15 @@ export default {
     },
 
     isGenderRequired () {
-      console.log(this.getProfileChoice)
       return this.getProfileChoice != 'student'
+    },
+
+    schoolCompanyNameLabel () {
+      if (this.getProfileChoice == 'student') {
+        return "School Name"
+      } else {
+        return "School or Company Name"
+      }
     },
 
     firstName: {
