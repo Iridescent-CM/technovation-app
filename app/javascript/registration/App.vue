@@ -3,27 +3,62 @@
     <ul class="grid__col-3 tabs__menu">
       <tab-link
         :to="{ name: 'data-use' }"
-      >Data agreement</tab-link>
+      >
+        <icon
+          :name="termsAgreed ? 'check-circle-o' : 'circle-o'"
+          size="16"
+          :color="$route.name === 'data-use' ? '28A880' : '000000'"
+        />
+        Data agreement
+      </tab-link>
 
       <tab-link
         :to="{ name: 'age' }"
         :disabled-tooltip="termsNotAgreedMessage"
-      >Date of Birth</tab-link>
+      >
+        <icon
+          :name="(isAgeSet && !!profileChoice) ? 'check-circle-o' : 'circle-o'"
+          size="16"
+          :color="$route.name === 'age' ? '28A880' : '000000'"
+        />
+        Date of Birth
+      </tab-link>
 
       <tab-link
         :to="{ name: 'location' }"
         :disabled-tooltip="termsNotAgreedMessage"
-      >Region</tab-link>
+      >
+        <icon
+          :name="isLocationSet ? 'check-circle-o' : 'circle-o'"
+          size="16"
+          :color="$route.name === 'location' ? '28A880' : '000000'"
+        />
+        Region
+      </tab-link>
 
       <tab-link
         :to="{ name: 'basic-profile' }"
         :disabled-tooltip="basicProfileDisabledMessage"
-      >Basic Profile</tab-link>
+      >
+        <icon
+          :name="isBasicProfileSet ? 'check-circle-o' : 'circle-o'"
+          size="16"
+          :color="$route.name === 'basic-profile' ? '28A880' : '000000'"
+        />
+        Basic Profile
+      </tab-link>
 
       <tab-link
         :to="{ name: 'login' }"
         :disabled-tooltip="loginDisabledMessage"
-      >Logging in</tab-link>
+      >
+        <icon
+          name="circle-o"
+          size="16"
+          :color="$route.name === 'login' ? '28A880' : '000000'"
+        />
+        Logging in
+      </tab-link>
     </ul>
 
     <router-view
@@ -36,12 +71,14 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 
-import TabLink from '../tabs/components/TabLink'
+import Icon from 'components/Icon'
+import TabLink from 'tabs/components/TabLink'
 
 export default {
   name: 'app',
 
   components: {
+    Icon,
     TabLink,
   },
 
@@ -54,6 +91,8 @@ export default {
 
     ...mapGetters([
       'isAgeSet',
+      'isBasicProfileSet',
+      'isLocationSet',
       'readyForAccount',
     ]),
 
