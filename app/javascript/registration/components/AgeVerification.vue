@@ -162,6 +162,9 @@ export default {
 
     profileOptions () {
       switch(true) {
+        case (!this.age):
+          return []
+
         case (this.age < 14):
           return ['student']
 

@@ -73,4 +73,10 @@ describe("Registration::Components::AgeVerification.vue", () => {
       expect(defaultWrapper.vm.days[27]).toEqual("28")
     })
   })
+
+  describe("computed.profileOptions", () => {
+    it('is an empty array by default', () => {
+      expect(defaultWrapper.vm.profileOptions).toEqual([])
+    })
+  })
 })
