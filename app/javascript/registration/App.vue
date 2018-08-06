@@ -17,7 +17,7 @@
 
       <tab-link
         :to="{ name: 'basic-profile' }"
-        :disabled-tooltip="termsNotAgreedMessage"
+        :disabled-tooltip="basicProfileDisabledMessage"
       >Basic Profile</tab-link>
 
       <tab-link
@@ -35,6 +35,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+
 import TabLink from '../tabs/components/TabLink'
 
 export default {
@@ -47,14 +48,28 @@ export default {
   computed: {
     ...mapState([
       'isReady',
-      'termsAgreed'
+      'termsAgreed',
+      'profileChoice',
     ]),
 
-    ...mapGetters(['readyForAccount']),
+    ...mapGetters([
+      'isAgeSet',
+      'readyForAccount',
+    ]),
 
     termsNotAgreedMessage () {
       if (!this.termsAgreed) {
         return 'You must agree to the data use terms to continue'
+      }
+
+      return ''
+    },
+
+    basicProfileDisabledMessage () {
+      if (this.termsNotAgreedMessage !== '') {
+        return this.termsNotAgreedMessage
+      } else if (!this.isAgeSet || !this.profileChoice) {
+        return 'Please fill out your date of birth first'
       }
 
       return ''

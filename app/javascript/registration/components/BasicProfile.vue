@@ -1,5 +1,8 @@
 <template>
-  <form class="panel panel--contains-bottom-bar panel--contains-top-bar">
+  <form
+    v-if="isAgeSet && getProfileChoice !== null"
+    class="panel panel--contains-bottom-bar panel--contains-top-bar"
+  >
     <div class="panel__top-bar">
       Basic Profile
     </div>
@@ -123,6 +126,16 @@ export default {
     }
   },
 
+  beforeRouteEnter (_to, from, next) {
+    next(vm => {
+      if (vm.isAgeSet && vm.getProfileChoice !== null) {
+        next()
+      } else {
+        vm.$router.replace(from.path)
+      }
+    })
+  },
+
   created () {
     this.debouncedProfileUpdate = debounce(attrs => {
       const attributes = Object.assign({},
@@ -149,6 +162,7 @@ export default {
       'getReferredBy',
       'getReferredByOther',
       'getProfileChoice',
+      'isAgeSet',
     ]),
 
     nextStepEnabled () {
