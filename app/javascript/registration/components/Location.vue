@@ -42,8 +42,12 @@ export default {
   },
 
   watch: {
-    locationData (newObj) {
-      this.updateLocation(newObj)
+    locationData (newLocation, oldLocation) {
+      const locationChanged = Object.keys(newLocation).some((key) => {
+        return newLocation[key] !== oldLocation[key]
+      })
+
+      if (locationChanged) this.updateLocation(newLocation)
     },
   },
 }
