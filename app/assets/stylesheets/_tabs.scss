@@ -75,6 +75,14 @@
       &:hover {
         color: black;
       }
+
+      &.disabled {
+        cursor: not-allowed;
+
+        &:hover {
+          color: #999;
+        }
+      }
     }
   }
 
