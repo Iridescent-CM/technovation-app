@@ -152,10 +152,16 @@ export default {
     ]),
 
     nextStepEnabled () {
+      if (this.isGenderRequired) {
+        return !!this.firstName &&
+                !!this.lastName &&
+                  !!this.genderIdentity &&
+                    !!this.schoolCompanyName
+      }
+
       return !!this.firstName &&
               !!this.lastName &&
-                (this.isGenderRequired && !!this.genderIdentity) &&
-                  !!this.schoolCompanyName
+                !!this.schoolCompanyName
     },
 
     isGenderRequired () {
