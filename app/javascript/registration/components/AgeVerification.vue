@@ -102,7 +102,8 @@ export default {
 
   computed: {
     ...mapState(['months', 'birthMonth']),
-    ...mapGetters(['getBirthdate', 'getProfileChoice']),
+
+    ...mapGetters(['getBirthdate']),
 
     nextStepEnabled () {
       return !!this.year && !!this.month && !!this.day && !!this.profileChoice
@@ -140,7 +141,7 @@ export default {
 
     profileChoice: {
       get () {
-        return this.getProfileChoice
+        return this.$store.state.profileChoice
       },
 
       set (choice) {

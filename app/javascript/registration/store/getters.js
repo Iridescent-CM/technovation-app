@@ -7,7 +7,8 @@ export default {
     return state.termsAgreed &&
             getters.isAgeSet &&
               getters.isLocationSet &&
-                getters.isBasicProfileSet
+                !!state.profileChoice &&
+                  getters.isBasicProfileSet
   },
 
   isAgeSet (state) {
@@ -32,10 +33,6 @@ export default {
 
   getBirthdate (state) {
     return [state.birthYear, state.birthMonth, state.birthDay].join('-')
-  },
-
-  getProfileChoice (state) {
-    return state.profileChoice
   },
 
   getLocation (state) {

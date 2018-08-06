@@ -1,6 +1,6 @@
 <template>
   <form
-    v-if="isAgeSet && getProfileChoice !== null"
+    v-if="isAgeSet && profileChoice !== null"
     class="panel panel--contains-bottom-bar panel--contains-top-bar"
   >
     <div class="panel__top-bar">
@@ -40,7 +40,7 @@
       <p>
         <label for="schoolName">{{ schoolCompanyNameLabel }}</label>
         <input
-          v-if="getProfileChoice === 'student'"
+          v-if="profileChoice === 'student'"
           id="schoolName"
           type="text"
           v-model="schoolCompanyName"
@@ -54,7 +54,7 @@
         />
       </p>
 
-      <p v-show="getProfileChoice != 'student'">
+      <p v-show="profileChoice !== 'student'">
         <label for="jobTitle">Job Title</label>
         <input
           id="jobTitle"
@@ -95,7 +95,7 @@
 
 <script>
 import debounce from 'lodash/debounce'
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import VueSelect from '@vendorjs/vue-select'
 import AutocompleteInput from 'components/AutocompleteInput'
 
@@ -128,7 +128,7 @@ export default {
 
   beforeRouteEnter (_to, from, next) {
     next(vm => {
-      if (vm.isAgeSet && vm.getProfileChoice !== null) {
+      if (vm.isAgeSet && vm.profileChoice !== null) {
         next()
       } else {
         vm.$router.replace(from.path)
@@ -153,6 +153,8 @@ export default {
   },
 
   computed: {
+    ...mapState(['profileChoice']),
+
     ...mapGetters([
       'getFirstName',
       'getLastName',
@@ -161,7 +163,6 @@ export default {
       'getJobTitle',
       'getReferredBy',
       'getReferredByOther',
-      'getProfileChoice',
       'isAgeSet',
     ]),
 
@@ -179,11 +180,11 @@ export default {
     },
 
     isGenderRequired () {
-      return this.getProfileChoice != 'student'
+      return this.profileChoice !== 'student'
     },
 
     schoolCompanyNameLabel () {
-      if (this.getProfileChoice == 'student') {
+      if (this.profileChoice === 'student') {
         return "School Name"
       } else {
         return "School or Company Name"
