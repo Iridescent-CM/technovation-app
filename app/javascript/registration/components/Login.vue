@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
@@ -74,16 +74,9 @@ export default {
   },
 
   methods: {
-    ...mapActions(['createAccount']),
-
     setPasswordComplete (bool) {
       this.passwordComplete = bool
     },
-
-    handleSubmit () {
-      if (!this.nextStepEnabled) return false
-      this.createAccount({ password: this.password })
-    }
   },
 }
 </script>
