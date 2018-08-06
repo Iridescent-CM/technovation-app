@@ -7,14 +7,17 @@
 
       <tab-link
         :to="{ name: 'age' }"
+        :disabled-tooltip="termsNotAgreedMessage"
       >Date of Birth</tab-link>
 
       <tab-link
         :to="{ name: 'location' }"
+        :disabled-tooltip="termsNotAgreedMessage"
       >Region</tab-link>
 
       <tab-link
         :to="{ name: 'basic-profile' }"
+        :disabled-tooltip="termsNotAgreedMessage"
       >Basic Profile</tab-link>
 
       <tab-link
@@ -42,8 +45,20 @@ export default {
   },
 
   computed: {
-    ...mapState(['isReady']),
+    ...mapState([
+      'isReady',
+      'termsAgreed'
+    ]),
+
     ...mapGetters(['readyForAccount']),
+
+    termsNotAgreedMessage () {
+      if (!this.termsAgreed) {
+        return 'You must agree to the data use terms to continue'
+      }
+
+      return ''
+    },
 
     loginDisabledMessage () {
       if (!this.readyForAccount) {
