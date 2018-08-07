@@ -20,6 +20,8 @@ export default {
   genderIdentity: null,
   schoolCompanyName: null,
   jobTitle: null,
+  mentorType: null,
+  expertises: [],
 
   referredBy: null,
   referredByOther: null,

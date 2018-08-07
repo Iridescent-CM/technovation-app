@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export default {
   isReady (state, bool) {
     state.isReady = bool
@@ -75,6 +77,14 @@ export default {
 
   jobTitle (state, value) {
     state.jobTitle = value
+  },
+
+  mentorType (state, value) {
+    state.mentorType = value
+  },
+
+  expertises (state, value) {
+    Vue.set(state, 'expertises', value)
   },
 
   referredBy (state, value) {

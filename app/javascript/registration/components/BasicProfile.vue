@@ -63,6 +63,34 @@
         />
       </p>
 
+      <p v-show="profileChoice !== 'student'">
+        <label for="jobTitle">I am a...</label>
+        <vue-select
+          input-id="mentorType"
+          :options="mentorTypeOptions"
+          v-model="mentorType"
+        />
+      </p>
+
+      <h4 v-show="profileChoice !== 'student'">Choose expertise(s)</h4>
+      <p v-show="profileChoice !== 'student'">
+        <span v-for="expertise in expertiseOptions" :key="expertise.value">
+          <label :for="`mentor_profile_expertise_ids_${expertise.value}`">
+            <span class="inline-checkbox">
+              <input
+                type="checkbox"
+                :value="expertise.value"
+                :id="`mentor_profile_expertise_ids_${expertise.value}`"
+                v-model="expertises"
+              >
+              <label
+                :for="`mentor_profile_expertise_ids_${expertise.value}`"
+              >{{ expertise.label }}</label>
+            </span>
+          </label>
+        </span>
+      </p>
+
       <p>
         <label for="referredBy">How did you hear about Technovation? (optional)</label>
         <vue-select
@@ -111,18 +139,25 @@ export default {
     return {
       genderOptions: ['Female', 'Male', 'Non-binary', 'Prefer not to say'],
       referralOptions: [
-        "Friend",
-        "Colleague",
-        "Article",
-        "Internet",
-        "Social media",
-        "Print",
-        "Web search",
-        "Teacher",
-        "Parent/family",
-        "Company email",
-        "Other",
+        'Friend',
+        'Colleague',
+        'Article',
+        'Internet',
+        'Social media',
+        'Print',
+        'Web search',
+        'Teacher',
+        'Parent/family',
+        'Company email',
+        'Other',
       ],
+      mentorTypeOptions: [
+        'Industry professional',
+        'Educator',
+        'Parent',
+        'Past Technovation student',
+      ],
+      expertiseOptions: [],
     }
   },
 
@@ -150,6 +185,19 @@ export default {
 
       this.updateBasicProfile(attributes)
     }, 500)
+
+    if (this.expertiseOptions.length === 0) {
+      window.axios.get('/registration/expertises')
+        .then(({ data: { attributes } }) => {
+          attributes.forEach((expertise) => {
+            this.expertiseOptions.push({
+              label: expertise.name,
+              value: expertise.id,
+            })
+          })
+        })
+        .catch(err => console.error(err))
+    }
   },
 
   computed: {
@@ -185,9 +233,9 @@ export default {
 
     schoolCompanyNameLabel () {
       if (this.profileChoice === 'student') {
-        return "School Name"
+        return 'School Name'
       } else {
-        return "School or Company Name"
+        return 'School or Company Name'
       }
     },
 
@@ -238,6 +286,26 @@ export default {
 
       set (value) {
         this.$store.commit('jobTitle', value)
+      },
+    },
+
+    mentorType: {
+      get () {
+        return this.$store.state.mentorType
+      },
+
+      set (value) {
+        this.$store.commit('mentorType', value)
+      },
+    },
+
+    expertises: {
+      get () {
+        return this.$store.state.expertises
+      },
+
+      set (value) {
+        this.$store.commit('expertises', value)
       },
     },
 
