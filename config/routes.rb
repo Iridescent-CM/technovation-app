@@ -308,6 +308,7 @@ Rails.application.routes.draw do
     resource :basic_profile, only: :create
     resource :email, only: :create
     resource :account, only: :create
+    resources :expertises, only: :index
   end
 
   resources :password_resets, only: [:new, :create]
