@@ -64,7 +64,7 @@
       </p>
 
       <p v-show="profileChoice !== 'student'">
-        <label for="jobTitle">I am a...</label>
+        <label for="mentorType">I am a...</label>
         <vue-select
           input-id="mentorType"
           :options="mentorTypeOptions"
