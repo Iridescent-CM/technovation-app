@@ -51,6 +51,8 @@ export default {
     state.genderIdentity = attributes.genderIdentity
     state.schoolCompanyName = attributes.schoolCompanyName
     state.jobTitle = attributes.jobTitle
+    state.mentorType = attributes.mentorType
+    Vue.set(state, 'expertiseIds', attributes.expertiseIds)
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
   },
@@ -83,8 +85,8 @@ export default {
     state.mentorType = value
   },
 
-  expertises (state, value) {
-    Vue.set(state, 'expertises', value)
+  expertiseIds (state, value) {
+    Vue.set(state, 'expertiseIds', value)
   },
 
   referredBy (state, value) {

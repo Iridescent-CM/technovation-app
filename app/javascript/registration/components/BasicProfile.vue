@@ -301,11 +301,11 @@ export default {
 
     expertises: {
       get () {
-        return this.$store.state.expertises
+        return this.$store.state.expertiseIds
       },
 
       set (value) {
-        this.$store.commit('expertises', value)
+        this.$store.commit('expertiseIds', value)
       },
     },
 
@@ -349,6 +349,14 @@ export default {
 
     jobTitle (value) {
       this.debouncedProfileUpdate({ jobTitle: value })
+    },
+
+    mentorType (value) {
+      this.debouncedProfileUpdate({ mentorType: value })
+    },
+
+    expertises (value) {
+      this.debouncedProfileUpdate({ expertiseIds: value })
     },
 
     referredBy (value) {

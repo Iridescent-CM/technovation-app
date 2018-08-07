@@ -21,7 +21,7 @@ export default {
   schoolCompanyName: null,
   jobTitle: null,
   mentorType: null,
-  expertises: [],
+  expertiseIds: [],
 
   referredBy: null,
   referredByOther: null,
