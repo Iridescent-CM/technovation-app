@@ -56,32 +56,4 @@ export default {
       month: getters.getMonthByValue(attributes.birthMonth),
     }
   },
-
-  getFirstName (state) {
-    return state.firstName
-  },
-
-  getLastName (state) {
-    return state.lastName
-  },
-
-  getGenderIdentity (state) {
-    return state.genderIdentity
-  },
-
-  getSchoolCompanyName (state) {
-    return state.schoolCompanyName
-  },
-
-  getJobTitle (state) {
-    return state.jobTitle
-  },
-
-  getReferredBy (state) {
-    return state.referredBy
-  },
-
-  getReferredByOther (state) {
-    return state.referredByOther
-  },
 }

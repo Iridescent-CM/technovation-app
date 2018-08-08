@@ -203,16 +203,7 @@ export default {
   computed: {
     ...mapState(['profileChoice']),
 
-    ...mapGetters([
-      'getFirstName',
-      'getLastName',
-      'getGenderIdentity',
-      'getSchoolCompanyName',
-      'getJobTitle',
-      'getReferredBy',
-      'getReferredByOther',
-      'isAgeSet',
-    ]),
+    ...mapGetters(['isAgeSet']),
 
     nextStepEnabled () {
       if (this.isGenderRequired) {
@@ -241,7 +232,7 @@ export default {
 
     firstName: {
       get () {
-        return this.getFirstName
+        return this.$store.state.firstName
       },
 
       set (value) {
@@ -251,7 +242,7 @@ export default {
 
     lastName: {
       get () {
-        return this.getLastName
+        return this.$store.state.lastName
       },
 
       set (value) {
@@ -261,7 +252,7 @@ export default {
 
     genderIdentity: {
       get () {
-        return this.getGenderIdentity
+        return this.$store.state.genderIdentity
       },
 
       set (value) {
@@ -271,7 +262,7 @@ export default {
 
     schoolCompanyName: {
       get () {
-        return this.getSchoolCompanyName
+        return this.$store.state.schoolCompanyName
       },
 
       set (value) {
@@ -281,7 +272,7 @@ export default {
 
     jobTitle: {
       get () {
-        return this.getJobTitle
+        return this.$store.state.jobTitle
       },
 
       set (value) {
@@ -311,7 +302,7 @@ export default {
 
     referredBy: {
       get () {
-        return this.getReferredBy
+        return this.$store.state.referredBy
       },
 
       set (value) {
@@ -321,7 +312,7 @@ export default {
 
     referredByOther: {
       get () {
-        return this.getReferredByOther
+        return this.$store.state.referredByOther
       },
 
       set (value) {
