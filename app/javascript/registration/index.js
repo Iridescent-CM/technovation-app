@@ -17,8 +17,61 @@ document.addEventListener('turbolinks:load', () => {
         App,
       },
       created () {
-        if (!router.currentRoute.name)
-          router.replace({ name: 'data-use' })
+        router.replace({ name: this.getCurrentStep })
+      },
+      computed: {
+        onLoginStep () {
+          return !!this.$store.getters.readyForAccount
+        },
+
+        onBasicProfileStep () {
+          if (
+            this.$store.state.termsAgreed &&
+            this.$store.getters.isAgeSet &&
+            this.$store.state.profileChoice &&
+            this.$store.getters.isLocationSet
+          ) {
+            return true
+          }
+
+          return false
+        },
+
+        onLocationStep () {
+          if (
+            this.$store.state.termsAgreed &&
+            this.$store.getters.isAgeSet &&
+            this.$store.state.profileChoice
+          ) {
+            return true
+          }
+
+          return false
+        },
+
+        onAgeStep () {
+          if (this.$store.state.termsAgreed) {
+            return true
+          }
+
+          return false
+        },
+
+        getCurrentStep () {
+          let step = 'data-use'
+
+          if (this.onLoginStep) {
+            return 'login'
+          } else if (this.onBasicProfileStep) {
+            return 'basic-profile'
+          } else if (this.onLocationStep) {
+            return 'location'
+          } else if (this.onAgeStep) {
+            return 'age'
+          }
+
+          return step
+        },
       },
     })
   }
