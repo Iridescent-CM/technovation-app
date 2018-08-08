@@ -14,9 +14,15 @@ import Location from '../components/Location'
 Vue.use(VueRouter)
 
 const initiateApp = () => {
-  const rootElem = document.getElementById('vue-enable-signup-wizard')
-  const previousAttempt = rootElem.dataset.previousAttempt
-  store.dispatch('initWizard', { previousAttempt })
+  try {
+    const rootElem = document.getElementById('vue-enable-signup-wizard')
+    const { data: { attributes }} = JSON.parse(rootElem.dataset.previousAttempt)
+    const previousAttempt = Object.assign({}, store.state, attributes)
+
+    store.dispatch('initWizard', previousAttempt)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 const requireDataAgreement = (to, _from, next) => {

@@ -1,14 +1,12 @@
 export default {
-  initWizard ({ commit, getters }, { previousAttempt }) {
-    const { data: { attributes } } = JSON.parse(previousAttempt)
-
-    commit('wizardToken', attributes.wizardToken)
-    commit('termsAgreed', attributes.termsAgreed)
-    commit('birthDate', getters.getBirthdateAttributes(attributes))
-    commit('profileChoice', attributes.profileChoice)
-    commit('location', attributes)
-    commit('basicProfile', attributes)
-    commit('email', attributes.email)
+  initWizard ({ commit, getters }, previousAttempt) {
+    commit('wizardToken', previousAttempt.wizardToken)
+    commit('termsAgreed', previousAttempt.termsAgreed)
+    commit('birthDate', getters.getBirthdateAttributes(previousAttempt))
+    commit('profileChoice', previousAttempt.profileChoice)
+    commit('location', previousAttempt)
+    commit('basicProfile', previousAttempt)
+    commit('email', previousAttempt.email)
     commit('isReady', true)
   },
 
