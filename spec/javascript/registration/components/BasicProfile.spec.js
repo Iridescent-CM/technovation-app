@@ -1,14 +1,27 @@
-import 'axios'
-import { defaultWrapperWithVuex } from '../../__utils__/technovation-test-utils'
-import BasicProfile from 'registration/components/BasicProfile'
+import axios from 'axios'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 
+import BasicProfile from 'registration/components/BasicProfile'
 import mockStore from 'registration/store/__mocks__'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe("Registration::Components::BasicProfile.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
-    defaultWrapper = defaultWrapperWithVuex(BasicProfile, mockStore)
+    defaultWrapper = shallowMount(
+      BasicProfile,
+      {
+        localVue,
+        store: mockStore.createMocks().store,
+        methods: {
+          getExpertiseOptions: jest.fn(() => {})
+        },
+      }
+    )
   })
 
   describe("computed.referredByOther", () => {
@@ -20,16 +33,8 @@ describe("Registration::Components::BasicProfile.vue", () => {
       defaultWrapper.vm.$store.dispatch(
         'initWizard',
         {
-          previousAttempt: JSON.stringify(
-            {
-              data: {
-                attributes: {
-                  referredByOther: 'something',
-                },
-              },
-            }
-          )
-        }
+          referredByOther: 'something',
+        },
       )
 
       expect(defaultWrapper.vm.referredByOther).toEqual('something')

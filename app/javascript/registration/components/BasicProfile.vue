@@ -186,18 +186,7 @@ export default {
       this.updateBasicProfile(attributes)
     }, 500)
 
-    if (this.expertiseOptions.length === 0) {
-      window.axios.get('/registration/expertises')
-        .then(({ data: { attributes } }) => {
-          attributes.forEach((expertise) => {
-            this.expertiseOptions.push({
-              label: expertise.name,
-              value: expertise.id,
-            })
-          })
-        })
-        .catch(err => console.error(err))
-    }
+    this.getExpertiseOptions()
   },
 
   computed: {
@@ -365,6 +354,21 @@ export default {
     handleSubmit () {
       if (!this.nextStepEnabled) return false
       this.$router.push({ name: 'login' })
+    },
+
+    getExpertiseOptions () {
+      if (this.expertiseOptions.length === 0) {
+        window.axios.get('/registration/expertises')
+          .then(({ data: { attributes } }) => {
+            attributes.forEach((expertise) => {
+              this.expertiseOptions.push({
+                label: expertise.name,
+                value: expertise.id,
+              })
+            })
+          })
+          .catch(err => console.error(err))
+      }
     },
   },
 }
