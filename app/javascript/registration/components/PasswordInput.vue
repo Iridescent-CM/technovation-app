@@ -7,7 +7,6 @@
       placeholder="Use at least 8 characters"
       v-model="password"
       name="account[password]"
-      @input="$emit('input', password)"
       :toggle="true"
       :secure-length="8"
       @score="showScore"
@@ -41,8 +40,8 @@ export default {
 
   props: {
     value: {
-      type: String,
-      required: '',
+      type: Boolean,
+      required: false,
     },
   },
 
@@ -74,7 +73,7 @@ export default {
 
   watch: {
     nextStepEnabled (bool) {
-      this.$emit('nextStepEnabled', bool)
+      this.$emit('input', bool)
     },
   },
 

@@ -13,11 +13,7 @@
 
     <div class="panel__content">
       <EmailInput v-model="emailComplete" />
-
-      <PasswordInput
-        v-model="password"
-        @nextStepEnabled="setPasswordComplete"
-      />
+      <PasswordInput v-model="passwordComplete" />
     </div>
 
     <div class="panel__bottom-bar">
@@ -56,7 +52,6 @@ export default {
     return {
       emailComplete: false,
       passwordComplete: false,
-      password: '',
     }
   },
 
@@ -80,10 +75,6 @@ export default {
   },
 
   methods: {
-    setPasswordComplete (bool) {
-      this.passwordComplete = bool
-    },
-
     navigateBack () {
       this.$router.push({ name: 'basic-profile' })
     },
