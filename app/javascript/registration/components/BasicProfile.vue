@@ -198,19 +198,14 @@ export default {
   computed: {
     ...mapState(['profileChoice']),
 
-    ...mapGetters(['isAgeSet']),
+    ...mapGetters(['isAgeSet', 'isBasicProfileSet']),
 
     nextStepEnabled () {
       if (this.isGenderRequired) {
-        return !!this.firstName &&
-                !!this.lastName &&
-                  !!this.genderIdentity &&
-                    !!this.schoolCompanyName
+        return this.isBasicProfileSet && !!this.genderIdentity
       }
 
-      return !!this.firstName &&
-              !!this.lastName &&
-                !!this.schoolCompanyName
+      return this.isBasicProfileSet
     },
 
     isGenderRequired () {

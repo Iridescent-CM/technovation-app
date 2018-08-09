@@ -109,10 +109,10 @@ export default {
   computed: {
     ...mapState(['months', 'birthMonth']),
 
-    ...mapGetters(['getBirthdate']),
+    ...mapGetters(['isAgeSet', 'getBirthdate']),
 
     nextStepEnabled () {
-      return !!this.year && !!this.month && !!this.day && !!this.profileChoice
+      return this.isAgeSet && !!this.profileChoice
     },
 
     year: {
