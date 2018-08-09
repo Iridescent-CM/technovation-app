@@ -130,7 +130,7 @@
     <div class="panel__bottom-bar">
       <button
         class="button float--left"
-        @click.prevent="navigateBack"
+        @click.prevent="handleBack"
       >
         Back
       </button>
@@ -195,6 +195,12 @@ export default {
       type: Object,
       required: false,
       default: null,
+    },
+
+    handleBack: {
+      type: Function,
+      required: false,
+      default: () => history.back(),
     },
 
     handleConfirm: {
@@ -404,10 +410,6 @@ export default {
       } else {
         return endpointRoot
       }
-    },
-
-    navigateBack () {
-      this.$router.push({ name: 'age' })
     },
   },
 }
