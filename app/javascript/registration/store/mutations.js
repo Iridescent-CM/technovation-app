@@ -6,7 +6,7 @@ const expertiseIds =  (state, expertises) => {
   })
 
   if (expertiseIdsChanged) {
-    Vue.set(state, 'expertiseIds', value)
+    Vue.set(state, 'expertiseIds', expertises)
   }
 }
 

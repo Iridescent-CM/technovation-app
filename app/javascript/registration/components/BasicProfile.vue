@@ -180,17 +180,7 @@ export default {
   },
 
   created () {
-    this.debouncedProfileUpdate = debounce(attrs => {
-      const attributes = Object.assign({},
-        {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          genderIdentity: this.genderIdentity,
-          schoolCompanyName: this.schoolCompanyName,
-          referredBy: this.referredBy,
-          referredByOther: this.referredByOther,
-        }, attrs)
-
+    this.debouncedProfileUpdate = debounce(attributes => {
       this.updateBasicProfile(attributes)
     }, 500)
 
@@ -335,11 +325,11 @@ export default {
     },
 
     mentorType (value) {
-      this.debouncedProfileUpdate({ mentorType: value })
+      //this.debouncedProfileUpdate({ mentorType: value })
     },
 
     expertises (value) {
-      this.debouncedProfileUpdate({ expertiseIds: value })
+      //this.debouncedProfileUpdate({ expertiseIds: value })
     },
 
     referredBy (value) {
