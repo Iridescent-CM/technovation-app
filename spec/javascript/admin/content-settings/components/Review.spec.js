@@ -7,7 +7,7 @@ import Review from 'admin/content-settings/components/Review'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('Admin Content & Settings - Events component', () => {
+describe('Admin Content & Settings - Review component', () => {
 
   let wrapper
 
@@ -117,6 +117,10 @@ describe('Admin Content & Settings - Events component', () => {
               .createMocks({
                 state: {
                   settings: {
+                    student_signup: 1,
+                    mentor_signup: 0,
+                    judge_signup: 0,
+                    regional_ambassador_signup: 0,
                     student_dashboard_text: 'Student',
                     mentor_dashboard_text: 'Mentor',
                     judge_dashboard_text: 'Judge',
@@ -131,37 +135,15 @@ describe('Admin Content & Settings - Events component', () => {
                       url: 'http://bing.com',
                       long_desc: 'Mentor link long description',
                     },
+                    team_building_enabled: 1,
+                    team_submissions_editable: 0,
+                    select_regional_pitch_event: 1,
                     judging_round: 'off',
+                    display_scores: 0,
                   },
                 },
               })
               .store,
-            computed: {
-              studentSignup () {
-                return true
-              },
-              mentorSignup () {
-                return false
-              },
-              judgeSignup () {
-                return false
-              },
-              ambassadorSignup () {
-                return false
-              },
-              teamBuildingEnabled () {
-                return true
-              },
-              teamSubmissionsEditable () {
-                return false
-              },
-              selectRegionalPitchEvent () {
-                return true
-              },
-              displayScores () {
-                return false
-              },
-            },
           }
         )
 
@@ -190,156 +172,6 @@ describe('Admin Content & Settings - Events component', () => {
           judging_round: 'off',
           display_scores: false,
         })
-      })
-
-    })
-
-    describe('studentSignup', () => {
-
-      it('returns false if judging is enabled', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'qf'
-        wrapper.vm.$store.state.settings.student_signup = 1
-
-        expect(wrapper.vm.studentSignup).toBeFalsy()
-      })
-
-      it('returns false if judging is not enabled and value is falsy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.student_signup = 0
-
-        expect(wrapper.vm.studentSignup).toBeFalsy()
-      })
-
-      it('returns true if judging is not enabled and value is truthy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.student_signup = 1
-
-        expect(wrapper.vm.studentSignup).toBeTruthy()
-      })
-
-    })
-
-    describe('mentorSignup', () => {
-
-      it('returns false if judging is enabled', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'qf'
-        wrapper.vm.$store.state.settings.mentor_signup = 1
-
-        expect(wrapper.vm.mentorSignup).toBeFalsy()
-      })
-
-      it('returns false if judging is not enabled and value is falsy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.mentor_signup = 0
-
-        expect(wrapper.vm.mentorSignup).toBeFalsy()
-      })
-
-      it('returns true if judging is not enabled and value is truthy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.mentor_signup = 1
-
-        expect(wrapper.vm.mentorSignup).toBeTruthy()
-      })
-
-    })
-
-    describe('teamBuildingEnabled', () => {
-
-      it('returns false if judging is enabled', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'qf'
-        wrapper.vm.$store.state.settings.team_building_enabled = 1
-
-        expect(wrapper.vm.teamBuildingEnabled).toBeFalsy()
-      })
-
-      it('returns false if judging is not enabled and value is falsy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.team_building_enabled = 0
-
-        expect(wrapper.vm.teamBuildingEnabled).toBeFalsy()
-      })
-
-      it('returns true if judging is not enabled and value is truthy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.team_building_enabled = 1
-
-        expect(wrapper.vm.teamBuildingEnabled).toBeTruthy()
-      })
-
-    })
-
-    describe('teamSubmissionsEditable', () => {
-
-      it('returns false if judging is enabled', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'qf'
-        wrapper.vm.$store.state.settings.team_submissions_editable = 1
-
-        expect(wrapper.vm.teamSubmissionsEditable).toBeFalsy()
-      })
-
-      it('returns false if judging is not enabled and value is falsy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.team_submissions_editable = 0
-
-        expect(wrapper.vm.teamSubmissionsEditable).toBeFalsy()
-      })
-
-      it('returns true if judging is not enabled and value is truthy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.team_submissions_editable = 1
-
-        expect(wrapper.vm.teamSubmissionsEditable).toBeTruthy()
-      })
-
-    })
-
-    describe('selectRegionalPitchEvent', () => {
-
-      it('returns false if judging is enabled', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'qf'
-        wrapper.vm.$store.state.settings.select_regional_pitch_event = 1
-
-        expect(wrapper.vm.selectRegionalPitchEvent).toBeFalsy()
-      })
-
-      it('returns false if judging is not enabled and value is falsy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.select_regional_pitch_event = 0
-
-        expect(wrapper.vm.selectRegionalPitchEvent).toBeFalsy()
-      })
-
-      it('returns true if judging is not enabled and value is truthy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.select_regional_pitch_event = 1
-
-        expect(wrapper.vm.selectRegionalPitchEvent).toBeTruthy()
-      })
-
-    })
-
-    describe('displayScores', () => {
-
-      it('returns false if judging is enabled', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'qf'
-        wrapper.vm.$store.state.settings.display_scores = 1
-
-        expect(wrapper.vm.displayScores).toBeFalsy()
-      })
-
-      it('returns false if judging is not enabled and value is falsy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.display_scores = 0
-
-        expect(wrapper.vm.displayScores).toBeFalsy()
-      })
-
-      it('returns true if judging is not enabled and value is truthy', () => {
-        wrapper.vm.$store.state.settings.judging_round = 'off'
-        wrapper.vm.$store.state.settings.display_scores = 1
-
-        expect(wrapper.vm.displayScores).toBeTruthy()
       })
 
     })
