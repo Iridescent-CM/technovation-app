@@ -23,10 +23,6 @@ export default {
                   state.schoolCompanyName)
   },
 
-  getEmail (state) {
-    return state.email
-  },
-
   getBirthdate (state) {
     return [state.birthYear, state.birthMonth, state.birthDay].join('-')
   },

@@ -117,11 +117,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['getEmail']),
-
     email: {
       get () {
-        return this.getEmail
+        return this.$store.state.email
       },
 
       set (value) {
