@@ -423,6 +423,57 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
       assertIconProps(scoresAndCertificatesLink.find(Icon))
     })
 
+    it('displays save button if on review page; review router link otherwise', () => {
+      const properties = {
+        localVue,
+        store: mockStore
+          .createMocks({
+            getters: {
+              judgingEnabled: () => {
+                return true
+              },
+            },
+          })
+          .store,
+        stubs: {
+          RouterLink: RouterLinkStub,
+          'router-view': true,
+        },
+        propsData: {
+          cancelButtonUrl: '/admin/dashboard',
+        },
+      }
+
+      wrapper = shallowMount(
+        AdminContentSettings,
+        Object.assign({}, properties, {
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
+          }
+        })
+      )
+
+      let reviewLink = wrapper.find({ ref: 'reviewLink' })
+      let submitButton = wrapper.find({ ref: 'submitButton' })
+
+      expect(reviewLink.exists()).toBe(true)
+      expect(submitButton.exists()).toBe(false)
+
+      wrapper = shallowMount(
+        AdminContentSettings,
+        Object.assign({}, properties, {
+          computed: {
+            currentRoute: jest.fn(() => { return 'review' })
+          }
+        })
+      )
+
+      reviewLink = wrapper.find({ ref: 'reviewLink' })
+      submitButton = wrapper.find({ ref: 'submitButton' })
+
+      expect(reviewLink.exists()).toBe(false)
+      expect(submitButton.exists()).toBe(true)
+    })
   })
 
 })
