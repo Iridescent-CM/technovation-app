@@ -111,6 +111,12 @@
 
     <div class="panel__bottom-bar">
       <button
+        class="button float--left"
+        @click.prevent="navigateBack"
+      >
+        Back
+      </button>
+      <button
         class="button"
         :disabled="!nextStepEnabled"
         @click.prevent="handleSubmit"
@@ -369,6 +375,10 @@ export default {
           })
           .catch(err => console.error(err))
       }
+    },
+
+    navigateBack () {
+      this.$router.push({ name: 'location' })
     },
   },
 }

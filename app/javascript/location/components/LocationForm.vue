@@ -128,6 +128,12 @@
     </div>
 
     <div class="panel__bottom-bar">
+      <button
+        class="button float--left"
+        @click.prevent="navigateBack"
+      >
+        Back
+      </button>
       <p class="padding--none margin--none">
         <a
           href="#"
@@ -398,6 +404,10 @@ export default {
       } else {
         return endpointRoot
       }
+    },
+
+    navigateBack () {
+      this.$router.push({ name: 'age' })
     },
   },
 }

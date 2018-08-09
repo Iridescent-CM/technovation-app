@@ -22,6 +22,12 @@
 
     <div class="panel__bottom-bar">
       <button
+        class="button float--left"
+        @click.prevent="navigateBack"
+      >
+        Back
+      </button>
+      <button
         class="button"
         type="submit"
         :disabled="!nextStepEnabled"
@@ -76,6 +82,10 @@ export default {
   methods: {
     setPasswordComplete (bool) {
       this.passwordComplete = bool
+    },
+
+    navigateBack () {
+      this.$router.push({ name: 'basic-profile' })
     },
   },
 }

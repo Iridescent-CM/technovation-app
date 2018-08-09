@@ -81,6 +81,12 @@
 
     <div class="panel__bottom-bar">
       <button
+        class="button float--left"
+        @click.prevent="navigateBack"
+      >
+        Back
+      </button>
+      <button
         class="button"
         :disabled="!nextStepEnabled"
         @click.prevent="handleSubmit"
@@ -289,6 +295,10 @@ export default {
       ) ? 0 : 1
 
       return compareYear - year - extraYear
+    },
+
+    navigateBack () {
+      this.$router.push({ name: 'data-use' })
     },
   },
 }
