@@ -151,7 +151,7 @@ export default {
       required: true,
     },
 
-    formData: {
+    savedFormData: {
       type: Object,
       default () {
         return {}
@@ -160,13 +160,13 @@ export default {
   },
 
   created () {
-    this.setCancelButtonUrl(this.cancelButtonUrl)
-    this.setFormData(this.formData)
+    this.setFormData(this.savedFormData)
   },
 
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'formData',
     ]),
 
     currentRoute() {
@@ -177,7 +177,6 @@ export default {
   methods: {
     ...mapMutations([
       'setFormData',
-      'setCancelButtonUrl',
     ]),
   },
 }

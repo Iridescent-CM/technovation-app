@@ -55,7 +55,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           required: true,
         },
 
-        formData: {
+        savedFormData: {
           type: Object,
           default: expect.any(Function)
         }
@@ -65,7 +65,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
     describe('formData', () => {
 
       it('returns an empty object by default', () => {
-        expect(AdminContentSettings.props.formData.default()).toEqual({})
+        expect(AdminContentSettings.props.savedFormData.default()).toEqual({})
       })
 
     })
@@ -75,10 +75,8 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
   describe('created hook', () => {
 
     it('calls the mapped mutations in order to store the cancel URL and form data state', () => {
-      const setCancelButtonUrl = jest.fn(() => {})
       const setFormData = jest.fn(() => {})
 
-      expect(setCancelButtonUrl.mock.calls.length).toBe(0)
       expect(setFormData.mock.calls.length).toBe(0)
 
       wrapper = shallowMount(
@@ -88,7 +86,6 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           store: mockStore
             .createMocks({
               mutations: {
-                setCancelButtonUrl,
                 setFormData,
               },
             })
@@ -106,7 +103,6 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         }
       )
 
-      expect(setCancelButtonUrl.mock.calls.length).toBe(1)
       expect(setFormData.mock.calls.length).toBe(1)
     })
 
@@ -121,7 +117,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
             'router-view': true,
           },
           propsData: {
-            formData: {
+            savedFormData: {
               student_signup: 1,
               student_dashboard_text: 'Student dashboard text',
               mentor_dashboard_text: 'Mentor dashboard text',
@@ -150,7 +146,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         }
       )
 
-      expect(wrapper.vm.$store.state.settings).toEqual({
+      expect(wrapper.vm.$store.state).toEqual({
         student_signup: 1,
         mentor_signup: 0,
         judge_signup: 0,
@@ -175,9 +171,6 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         judging_round: 'qf',
         display_scores: 1,
       })
-
-      expect(wrapper.vm.$store.state.cancelButtonUrl)
-        .toEqual('/admin/dashboard')
     })
 
   })

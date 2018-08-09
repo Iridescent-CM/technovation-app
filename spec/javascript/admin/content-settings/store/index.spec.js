@@ -23,32 +23,29 @@ describe('Admin Content & Settings - Vuex store', () => {
 
   it('returns the initial state used by the AdminDashboard component', () => {
     expect(state).toEqual({
-      settings: {
-        student_signup: 0,
-        mentor_signup: 0,
-        judge_signup: 0,
-        regional_ambassador_signup: 0,
-        student_dashboard_text: '',
-        mentor_dashboard_text: '',
-        judge_dashboard_text: '',
-        regional_ambassador_dashboard_text: '',
-        student_survey_link: {
-          text: '',
-          url: '',
-          long_desc: '',
-        },
-        mentor_survey_link: {
-          text: '',
-          url: '',
-          long_desc: '',
-        },
-        team_building_enabled: 0,
-        team_submissions_editable: 0,
-        select_regional_pitch_event: 0,
-        judging_round: 'off',
-        display_scores: 0,
+      student_signup: 0,
+      mentor_signup: 0,
+      judge_signup: 0,
+      regional_ambassador_signup: 0,
+      student_dashboard_text: '',
+      mentor_dashboard_text: '',
+      judge_dashboard_text: '',
+      regional_ambassador_dashboard_text: '',
+      student_survey_link: {
+        text: '',
+        url: '',
+        long_desc: '',
       },
-      cancelButtonUrl: '',
+      mentor_survey_link: {
+        text: '',
+        url: '',
+        long_desc: '',
+      },
+      team_building_enabled: 0,
+      team_submissions_editable: 0,
+      select_regional_pitch_event: 0,
+      judging_round: 'off',
+      display_scores: 0,
     })
   })
 
@@ -57,13 +54,13 @@ describe('Admin Content & Settings - Vuex store', () => {
     describe('judgingEnabled', () => {
 
       it('returns false if judging is not enabled', () => {
-        expect(store.state.settings.judging_round).toEqual('off')
+        expect(store.state.judging_round).toEqual('off')
         expect(store.getters.judgingEnabled).toBe(false)
       })
 
       it('returns true if judging is enabled', () => {
-        store.state.settings.judging_round = 'qf'
-        expect(store.state.settings.judging_round).toEqual('qf')
+        store.state.judging_round = 'qf'
+        expect(store.state.judging_round).toEqual('qf')
         expect(store.getters.judgingEnabled).toBe(true)
       })
 

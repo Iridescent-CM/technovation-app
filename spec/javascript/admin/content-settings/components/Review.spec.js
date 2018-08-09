@@ -116,31 +116,29 @@ describe('Admin Content & Settings - Review component', () => {
             store: mockStore
               .createMocks({
                 state: {
-                  settings: {
-                    student_signup: 1,
-                    mentor_signup: 0,
-                    judge_signup: 0,
-                    regional_ambassador_signup: 0,
-                    student_dashboard_text: 'Student',
-                    mentor_dashboard_text: 'Mentor',
-                    judge_dashboard_text: 'Judge',
-                    regional_ambassador_dashboard_text: 'RA',
-                    student_survey_link: {
-                      text: 'Student Link',
-                      url: 'http://google.com',
-                      long_desc: 'Student link long description',
-                    },
-                    mentor_survey_link: {
-                      text: 'Mentor Link',
-                      url: 'http://bing.com',
-                      long_desc: 'Mentor link long description',
-                    },
-                    team_building_enabled: 1,
-                    team_submissions_editable: 0,
-                    select_regional_pitch_event: 1,
-                    judging_round: 'off',
-                    display_scores: 0,
+                  student_signup: 1,
+                  mentor_signup: 0,
+                  judge_signup: 0,
+                  regional_ambassador_signup: 0,
+                  student_dashboard_text: 'Student',
+                  mentor_dashboard_text: 'Mentor',
+                  judge_dashboard_text: 'Judge',
+                  regional_ambassador_dashboard_text: 'RA',
+                  student_survey_link: {
+                    text: 'Student Link',
+                    url: 'http://google.com',
+                    long_desc: 'Student link long description',
                   },
+                  mentor_survey_link: {
+                    text: 'Mentor Link',
+                    url: 'http://bing.com',
+                    long_desc: 'Mentor link long description',
+                  },
+                  team_building_enabled: 1,
+                  team_submissions_editable: 0,
+                  select_regional_pitch_event: 1,
+                  judging_round: 'off',
+                  display_scores: 0,
                 },
               })
               .store,
@@ -185,8 +183,8 @@ describe('Admin Content & Settings - Review component', () => {
       describe('student signup field', () => {
 
         it('displays "yes" if enabled', () => {
-          wrapper.vm.$store.state.settings.student_signup = 1
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.student_signup = 1
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'signupFieldStudents' })
             .find('.on').exists()
@@ -198,8 +196,8 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays "no" if not enabled', () => {
-          wrapper.vm.$store.state.settings.student_signup = 0
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.student_signup = 0
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'signupFieldStudents' })
             .find('.on').exists()
@@ -215,8 +213,8 @@ describe('Admin Content & Settings - Review component', () => {
       describe('mentor signup field', () => {
 
         it('displays "yes" if enabled', () => {
-          wrapper.vm.$store.state.settings.mentor_signup = 1
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.mentor_signup = 1
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'signupFieldMentors' })
             .find('.on').exists()
@@ -228,8 +226,8 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays "no" if not enabled', () => {
-          wrapper.vm.$store.state.settings.mentor_signup = 0
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.mentor_signup = 0
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'signupFieldMentors' })
             .find('.on').exists()
@@ -249,7 +247,7 @@ describe('Admin Content & Settings - Review component', () => {
       describe('students field', () => {
 
         it('displays a notice if no input available', () => {
-          wrapper.vm.$store.state.settings.student_dashboard_text = ''
+          wrapper.vm.$store.state.student_dashboard_text = ''
 
           const notice = wrapper.find({ ref: 'noticeFieldHintStudents' })
           const input = wrapper.find({ ref: 'noticeFieldLabelStudents' })
@@ -259,7 +257,7 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays the input if available', () => {
-          wrapper.vm.$store.state.settings
+          wrapper.vm.$store.state
             .student_dashboard_text = 'Hello world, this is a test.'
 
             const notice = wrapper.find({ ref: 'noticeFieldHintStudents' })
@@ -274,7 +272,7 @@ describe('Admin Content & Settings - Review component', () => {
       describe('mentors field', () => {
 
         it('displays a notice if no input available', () => {
-          wrapper.vm.$store.state.settings.mentor_dashboard_text = ''
+          wrapper.vm.$store.state.mentor_dashboard_text = ''
 
           const notice = wrapper.find({ ref: 'noticeFieldHintMentors' })
           const input = wrapper.find({ ref: 'noticeFieldLabelMentors' })
@@ -284,7 +282,7 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays the input if available', () => {
-          wrapper.vm.$store.state.settings
+          wrapper.vm.$store.state
             .mentor_dashboard_text = 'Hello world, this is a test.'
 
             const notice = wrapper.find({ ref: 'noticeFieldHintMentors' })
@@ -299,7 +297,7 @@ describe('Admin Content & Settings - Review component', () => {
       describe('judges field', () => {
 
         it('displays a notice if no input available', () => {
-          wrapper.vm.$store.state.settings.judge_dashboard_text = ''
+          wrapper.vm.$store.state.judge_dashboard_text = ''
 
           const notice = wrapper.find({ ref: 'noticeFieldHintJudges' })
           const input = wrapper.find({ ref: 'noticeFieldLabelJudges' })
@@ -309,7 +307,7 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays the input if available', () => {
-          wrapper.vm.$store.state.settings
+          wrapper.vm.$store.state
             .judge_dashboard_text = 'Hello world, this is a test.'
 
             const notice = wrapper.find({ ref: 'noticeFieldHintJudges' })
@@ -324,7 +322,7 @@ describe('Admin Content & Settings - Review component', () => {
       describe('RA field', () => {
 
         it('displays a notice if no input available', () => {
-          wrapper.vm.$store.state.settings.regional_ambassador_dashboard_text = ''
+          wrapper.vm.$store.state.regional_ambassador_dashboard_text = ''
 
           const notice = wrapper
             .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
@@ -336,7 +334,7 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays the input if available', () => {
-          wrapper.vm.$store.state.settings
+          wrapper.vm.$store.state
             .regional_ambassador_dashboard_text = 'Hello world, this is a test.'
 
             const notice = wrapper
@@ -355,24 +353,24 @@ describe('Admin Content & Settings - Review component', () => {
     describe('survey fields section', () => {
 
       beforeEach(() => {
-        wrapper.vm.$store.state.settings.student_survey_link
+        wrapper.vm.$store.state.student_survey_link
           .text = 'Student Link'
-        wrapper.vm.$store.state.settings.student_survey_link
+        wrapper.vm.$store.state.student_survey_link
           .url = 'http://google.com'
-        wrapper.vm.$store.state.settings.student_survey_link
+        wrapper.vm.$store.state.student_survey_link
           .long_desc = 'Student link long description.'
-        wrapper.vm.$store.state.settings.mentor_survey_link
+        wrapper.vm.$store.state.mentor_survey_link
           .text = 'Mentor Link'
-        wrapper.vm.$store.state.settings.mentor_survey_link
+        wrapper.vm.$store.state.mentor_survey_link
           .url = 'http://bing.com'
-        wrapper.vm.$store.state.settings.mentor_survey_link
+        wrapper.vm.$store.state.mentor_survey_link
           .long_desc = 'Mentor link long description.'
       })
 
       describe('students field', () => {
 
         it('displays a notice if text or URL input is not available', () => {
-          wrapper.vm.$store.state.settings.student_survey_link.text = ''
+          wrapper.vm.$store.state.student_survey_link.text = ''
 
           let notice = wrapper.find({ ref: 'surveyFieldTextUrlHintStudents' })
           let text = wrapper.find({ ref: 'surveyFieldTextStudents' })
@@ -382,9 +380,9 @@ describe('Admin Content & Settings - Review component', () => {
           expect(text.exists()).toBe(false)
           expect(url.exists()).toBe(false)
 
-          wrapper.vm.$store.state.settings.student_survey_link
+          wrapper.vm.$store.state.student_survey_link
             .text = 'Student Link'
-          wrapper.vm.$store.state.settings.student_survey_link.url = ''
+          wrapper.vm.$store.state.student_survey_link.url = ''
 
           notice = wrapper.find({ ref: 'surveyFieldTextUrlHintStudents' })
           text = wrapper.find({ ref: 'surveyFieldTextStudents' })
@@ -406,7 +404,7 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays a notice if long description is not available', () => {
-          wrapper.vm.$store.state.settings.student_survey_link.long_desc = ''
+          wrapper.vm.$store.state.student_survey_link.long_desc = ''
 
           const notice = wrapper.find({ ref: 'surveyFieldDescHintStudents' })
           const description = wrapper.find({ ref: 'surveyFieldDescStudents' })
@@ -428,7 +426,7 @@ describe('Admin Content & Settings - Review component', () => {
       describe('mentors field', () => {
 
         it('displays a notice if text or URL input is not available', () => {
-          wrapper.vm.$store.state.settings.mentor_survey_link.text = ''
+          wrapper.vm.$store.state.mentor_survey_link.text = ''
 
           let notice = wrapper.find({ ref: 'surveyFieldTextUrlHintMentors' })
           let text = wrapper.find({ ref: 'surveyFieldTextMentors' })
@@ -438,9 +436,9 @@ describe('Admin Content & Settings - Review component', () => {
           expect(text.exists()).toBe(false)
           expect(url.exists()).toBe(false)
 
-          wrapper.vm.$store.state.settings.mentor_survey_link
+          wrapper.vm.$store.state.mentor_survey_link
             .text = 'Student Link'
-          wrapper.vm.$store.state.settings.mentor_survey_link.url = ''
+          wrapper.vm.$store.state.mentor_survey_link.url = ''
 
           notice = wrapper.find({ ref: 'surveyFieldTextUrlHintMentors' })
           text = wrapper.find({ ref: 'surveyFieldTextMentors' })
@@ -462,7 +460,7 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays a notice if long description is not available', () => {
-          wrapper.vm.$store.state.settings.mentor_survey_link.long_desc = ''
+          wrapper.vm.$store.state.mentor_survey_link.long_desc = ''
 
           const notice = wrapper.find({ ref: 'surveyFieldDescHintMentors' })
           const description = wrapper.find({ ref: 'surveyFieldDescMentors' })
@@ -488,8 +486,8 @@ describe('Admin Content & Settings - Review component', () => {
       describe('team building enabled field', () => {
 
         it('displays "yes" if enabled', () => {
-          wrapper.vm.$store.state.settings.team_building_enabled = 1
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.team_building_enabled = 1
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'teamBuildingEnabledField' })
             .find('.on').exists()
@@ -501,8 +499,8 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays "no" if not enabled', () => {
-          wrapper.vm.$store.state.settings.team_building_enabled = 0
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.team_building_enabled = 0
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'teamBuildingEnabledField' })
             .find('.on').exists()
@@ -518,8 +516,8 @@ describe('Admin Content & Settings - Review component', () => {
       describe('team submissions editable field', () => {
 
         it('displays "yes" if enabled', () => {
-          wrapper.vm.$store.state.settings.team_submissions_editable = 1
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.team_submissions_editable = 1
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'teamSubmissionsEditableField' })
             .find('.on').exists()
@@ -531,8 +529,8 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays "no" if not enabled', () => {
-          wrapper.vm.$store.state.settings.team_submissions_editable = 0
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.team_submissions_editable = 0
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'teamSubmissionsEditableField' })
             .find('.on').exists()
@@ -552,8 +550,8 @@ describe('Admin Content & Settings - Review component', () => {
       describe('select regional pitch event field', () => {
 
         it('displays "yes" if enabled', () => {
-          wrapper.vm.$store.state.settings.select_regional_pitch_event = 1
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.select_regional_pitch_event = 1
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'selectRegionalPitchEventField' })
             .find('.on').exists()
@@ -565,8 +563,8 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays "no" if not enabled', () => {
-          wrapper.vm.$store.state.settings.select_regional_pitch_event = 0
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.select_regional_pitch_event = 0
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'selectRegionalPitchEventField' })
             .find('.on').exists()
@@ -586,19 +584,19 @@ describe('Admin Content & Settings - Review component', () => {
       describe('judging round field', () => {
 
         it('displays the selected judging round', () => {
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.judging_round = 'off'
 
           let round = wrapper.find({ ref: 'judgingRoundField' }).text()
 
           expect(round).toBe('Off')
 
-          wrapper.vm.$store.state.settings.judging_round = 'qf'
+          wrapper.vm.$store.state.judging_round = 'qf'
 
           round = wrapper.find({ ref: 'judgingRoundField' }).text()
 
           expect(round).toBe('Quarterfinals')
 
-          wrapper.vm.$store.state.settings.judging_round = 'sf'
+          wrapper.vm.$store.state.judging_round = 'sf'
 
           round = wrapper.find({ ref: 'judgingRoundField' }).text()
 
@@ -614,8 +612,8 @@ describe('Admin Content & Settings - Review component', () => {
       describe('scores and certificates accessible field', () => {
 
         it('displays "yes" if enabled', () => {
-          wrapper.vm.$store.state.settings.display_scores = 1
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.display_scores = 1
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'displayScoresField' })
             .find('.on').exists()
@@ -627,8 +625,8 @@ describe('Admin Content & Settings - Review component', () => {
         })
 
         it('displays "no" if not enabled', () => {
-          wrapper.vm.$store.state.settings.display_scores = 0
-          wrapper.vm.$store.state.settings.judging_round = 'off'
+          wrapper.vm.$store.state.display_scores = 0
+          wrapper.vm.$store.state.judging_round = 'off'
 
           const yes = wrapper.find({ ref: 'displayScoresField' })
             .find('.on').exists()
@@ -639,18 +637,6 @@ describe('Admin Content & Settings - Review component', () => {
           expect(no).toBe(true)
         })
 
-      })
-
-    })
-
-    describe('cancel button', () => {
-
-      it('links to the cancel button URL contained in the state', () => {
-        wrapper.vm.$store.state.cancelButtonUrl = 'http://youtube.com'
-
-        const cancelButton = wrapper.find({ ref: 'cancelButton' })
-
-        expect(cancelButton.attributes().href).toEqual('http://youtube.com')
       })
 
     })

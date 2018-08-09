@@ -47,10 +47,8 @@ describe('Admin Content & Settings - Surveys component', () => {
           localVue,
           store: mockStore.createMocks({
             state: {
-              settings: {
-                student_survey_link: scopes.student,
-                mentor_survey_link: scopes.mentor,
-              },
+              student_survey_link: scopes.student,
+              mentor_survey_link: scopes.mentor,
             },
           }).store,
         }
