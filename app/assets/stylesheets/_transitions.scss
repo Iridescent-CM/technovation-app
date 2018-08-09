@@ -10,3 +10,22 @@
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+// Affects <transition name="router-fade">
+.router-fade-enter {
+  opacity: 0;
+}
+
+.router-fade-enter-active {
+  transition: opacity .3s;
+}
+
+.router-fade-enter-to {
+  opacity: 1;
+}
+
+.router-fade-leave,
+.router-fade-leave-active,
+.router-fade-leave-to {
+  display: none;
+}

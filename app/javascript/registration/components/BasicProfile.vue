@@ -99,13 +99,15 @@
           v-model="referredBy"
         />
 
-        <input
-          id="referralOther"
-          type="text"
-          placeholder="Tell us here"
-          v-show="referredBy === 'Other'"
-          v-model="referredByOther"
-        />
+        <transition name="fade">
+          <input
+            id="referralOther"
+            type="text"
+            placeholder="Tell us here"
+            v-show="referredBy === 'Other'"
+            v-model="referredByOther"
+          />
+        </transition>
       </p>
     </div>
 

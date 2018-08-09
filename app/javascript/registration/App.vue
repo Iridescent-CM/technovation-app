@@ -61,10 +61,11 @@
       </tab-link>
     </ul>
 
-    <router-view
-      v-if="isReady"
-      class="grid__col-9"
-    ></router-view>
+    <div class="grid__col-9">
+      <transition name="router-fade">
+        <router-view v-if="isReady"></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
