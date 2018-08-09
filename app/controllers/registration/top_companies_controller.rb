@@ -1,5 +1,5 @@
-module Public
-  class TopCompaniesController < PublicController
+module Registration
+  class TopCompaniesController < RegistrationController
     def index
       companies = %w{
         Salesforce

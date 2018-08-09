@@ -295,7 +295,6 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
     resources :embed_codes, only: :show
 
-    resources :top_companies, only: :index
     get '/email_validations/new' => 'email_validations#new'
   end
 
@@ -308,6 +307,7 @@ Rails.application.routes.draw do
     resource :basic_profile, only: :create
     resource :email, only: :create
     resource :account, only: :create
+    resources :top_companies, only: :index
     resources :expertises, only: :index
   end
 

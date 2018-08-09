@@ -50,7 +50,7 @@
           v-else
           id="schoolName"
           v-model="schoolCompanyName"
-          url="/public/top_companies"
+          url="/registration/top_companies"
         />
       </p>
 
