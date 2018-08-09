@@ -87,11 +87,9 @@ export default {
   name: 'data-use-terms',
 
   computed: {
-    ...mapGetters(['getTermsAgreed']),
-
     termsAgreed: {
       get () {
-        return this.getTermsAgreed
+        return this.$store.state.termsAgreed
       },
 
       set (value) {

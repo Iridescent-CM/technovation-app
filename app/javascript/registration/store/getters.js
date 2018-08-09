@@ -1,8 +1,4 @@
 export default {
-  getTermsAgreed (state) {
-    return state.termsAgreed
-  },
-
   readyForAccount (state, getters) {
     return state.termsAgreed &&
             getters.isAgeSet &&
