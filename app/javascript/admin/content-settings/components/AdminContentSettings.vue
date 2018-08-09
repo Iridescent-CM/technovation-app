@@ -114,22 +114,29 @@
       <router-view class="tabs__content grid__col-md-9"></router-view>
     </div>
 
-    <div
-      v-if="this.currentRoute !== 'review'"
-      class="margin--t-large text-align--right"
-    >
+    <div class="margin--t-large text-align--right">
       <router-link
+        v-if="this.currentRoute !== 'review'"
         ref="reviewLink"
         tag="button"
         class="button primary"
         :to="{ name: 'review' }"
       >Review</router-link>
+      <button
+        v-else
+        ref="submitButton"
+        type="submit"
+        class="button primary"
+        @click.prevent="saveSettings"
+      >Save these settings</button>
       or
       <a
         ref="cancelButton"
         :href="cancelButtonUrl"
       >cancel</a>
     </div>
+
+    <div ref="formData"></div>
   </div>
 </template>
 
@@ -178,6 +185,41 @@ export default {
     ...mapMutations([
       'setFormData',
     ]),
+
+    saveSettings () {
+      this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData)
+      document.getElementById('season_schedule').submit()
+    },
+
+    buildFormInputsMarkup (formData, prefix = 'season_toggles') {
+      let markup = ''
+
+      Object.keys(formData).forEach((key) => {
+        const inputName = `${prefix}[${key}]`
+        let inputValue
+
+        if (formData[key] === false) {
+          inputValue = 0
+        } else if (formData[key] === true) {
+          inputValue = 1
+        } else {
+          inputValue = formData[key]
+        }
+
+        if (inputValue !== null && typeof inputValue === 'object') {
+          markup += this.buildFormInputsMarkup(inputValue, inputName)
+        } else {
+          markup += `
+            <input
+              type="hidden"
+              name="${inputName}"
+              value="${inputValue}"
+            />`
+        }
+      })
+
+      return markup
+    },
   },
 }
 </script>
