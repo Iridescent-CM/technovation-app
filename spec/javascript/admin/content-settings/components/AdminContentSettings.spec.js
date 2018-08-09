@@ -35,6 +35,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         propsData: {
           cancelButtonUrl: '/admin/dashboard',
         },
+        computed: {
+          currentRoute: jest.fn(() => { return 'not-review' })
+        },
       }
     )
   })
@@ -97,6 +100,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           propsData: {
             cancelButtonUrl: '/admin/dashboard',
           },
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
+          },
         }
       )
 
@@ -137,6 +143,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
               display_scores: 1,
             },
             cancelButtonUrl: '/admin/dashboard',
+          },
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
           },
         }
       )
@@ -192,9 +201,18 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         'grid__col-md-9',
       ])
 
-      const routerLinks = wrapper.findAll(RouterLinkStub).wrappers
+      const routerLinks = [
+        'registrationLink',
+        'noticesLink',
+        'surveysLink',
+        'teamsAndSubmissionsLink',
+        'eventsLink',
+        'judgingLink',
+        'scoresAndCertificatesLink',
+      ]
 
-      routerLinks.forEach((link) => {
+      routerLinks.forEach((ref) => {
+        const link = wrapper.find({ ref })
         const props = link.props()
         const attributes = link.attributes()
 
@@ -206,6 +224,18 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           'tabs__menu-button',
         ])
       })
+
+      const reviewLink = wrapper.find({ ref: 'reviewLink' })
+      const reviewLinkProps = reviewLink.props()
+
+      expect(reviewLinkProps.tag).toBe('button')
+      expect(reviewLinkProps.to).toEqual({ name: 'review' })
+      expect(reviewLink.attributes().class).toBe('button primary')
+
+      const cancelButton = wrapper.find({ ref: 'cancelButton' })
+      const cancelButtonAttributes= cancelButton.attributes()
+
+      expect(cancelButtonAttributes.href).toBe('/admin/dashboard')
     })
 
     it('displays warning icons on router links if judging is enabled', () => {
@@ -228,6 +258,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           },
           propsData: {
             cancelButtonUrl: '/admin/dashboard',
+          },
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
           },
         }
       )
