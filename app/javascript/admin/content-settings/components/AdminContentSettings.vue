@@ -1,128 +1,142 @@
 <template>
-  <div class="tabs tabs--vertical grid" id="admin-content-settings">
-    <ul class="tabs__menu grid__col-md-3">
-      <router-link
-        ref="registrationLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
-        :to="{ name: 'registration' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          <icon
-            v-if="judgingEnabled"
-            name="exclamation-circle"
-            :size="16"
-            color="D8000C"
-          />
-          Registration
-        </button>
-      </router-link>
+  <div>
+    <div class="tabs tabs--vertical grid" id="admin-content-settings">
+      <ul class="tabs__menu grid__col-md-3">
+        <router-link
+          ref="registrationLink"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+          :to="{ name: 'registration' }"
+        >
+          <button role="button" class="tabs__menu-button">
+            <icon
+              v-if="judgingEnabled"
+              name="exclamation-circle"
+              :size="16"
+              color="D8000C"
+            />
+            Registration
+          </button>
+        </router-link>
 
-      <router-link
-        ref="noticesLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
-        :to="{ name: 'notices' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          Notices
-        </button>
-      </router-link>
+        <router-link
+          ref="noticesLink"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+          :to="{ name: 'notices' }"
+        >
+          <button role="button" class="tabs__menu-button">
+            Notices
+          </button>
+        </router-link>
 
-      <router-link
-        ref="surveysLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
-        :to="{ name: 'surveys' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          Surveys
-        </button>
-      </router-link>
+        <router-link
+          ref="surveysLink"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+          :to="{ name: 'surveys' }"
+        >
+          <button role="button" class="tabs__menu-button">
+            Surveys
+          </button>
+        </router-link>
 
-      <router-link
-        ref="teamsAndSubmissionsLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
-        :to="{ name: 'teams_and_submissions' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          <icon
-            v-if="judgingEnabled"
-            name="exclamation-circle"
-            :size="16"
-            color="D8000C"
-          />
-          Teams &amp; Submissions
-        </button>
-      </router-link>
+        <router-link
+          ref="teamsAndSubmissionsLink"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+          :to="{ name: 'teams_and_submissions' }"
+        >
+          <button role="button" class="tabs__menu-button">
+            <icon
+              v-if="judgingEnabled"
+              name="exclamation-circle"
+              :size="16"
+              color="D8000C"
+            />
+            Teams &amp; Submissions
+          </button>
+        </router-link>
 
-      <router-link
-        ref="eventsLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
-        :to="{ name: 'events' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          <icon
-            v-if="judgingEnabled"
-            name="exclamation-circle"
-            :size="16"
-            color="D8000C"
-          />
-          Events
-        </button>
-      </router-link>
+        <router-link
+          ref="eventsLink"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+          :to="{ name: 'events' }"
+        >
+          <button role="button" class="tabs__menu-button">
+            <icon
+              v-if="judgingEnabled"
+              name="exclamation-circle"
+              :size="16"
+              color="D8000C"
+            />
+            Events
+          </button>
+        </router-link>
 
-      <router-link
-        ref="judgingLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
-        :to="{ name: 'judging' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          Judging
-        </button>
-      </router-link>
+        <router-link
+          ref="judgingLink"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+          :to="{ name: 'judging' }"
+        >
+          <button role="button" class="tabs__menu-button">
+            Judging
+          </button>
+        </router-link>
 
-      <router-link
-        ref="scoresAndCertificatesLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
-        :to="{ name: 'scores_and_certificates' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          <icon
-            v-if="judgingEnabled"
-            name="exclamation-circle"
-            :size="16"
-            color="D8000C"
-          />
-          Scores &amp; Certificates
-        </button>
-      </router-link>
+        <router-link
+          ref="scoresAndCertificatesLink"
+          tag="li"
+          class="tabs__menu-link"
+          active-class="tabs__menu-link--active"
+          :to="{ name: 'scores_and_certificates' }"
+        >
+          <button role="button" class="tabs__menu-button">
+            <icon
+              v-if="judgingEnabled"
+              name="exclamation-circle"
+              :size="16"
+              color="D8000C"
+            />
+            Scores &amp; Certificates
+          </button>
+        </router-link>
+      </ul>
 
+      <router-view class="tabs__content grid__col-md-9"></router-view>
+    </div>
+
+    <div class="margin--t-large text-align--right">
       <router-link
+        v-if="this.currentRoute !== 'review'"
         ref="reviewLink"
-        tag="li"
-        class="tabs__menu-link"
-        active-class="tabs__menu-link--active"
+        tag="button"
+        class="button primary"
         :to="{ name: 'review' }"
-      >
-        <button role="button" class="tabs__menu-button">
-          Review
-        </button>
-      </router-link>
-    </ul>
+      >Review</router-link>
+      <button
+        v-else
+        ref="submitButton"
+        type="submit"
+        class="button primary"
+        @click.prevent="saveSettings"
+      >Save these settings</button>
+      or
+      <a
+        ref="cancelButton"
+        :href="cancelButtonUrl"
+      >cancel</a>
+    </div>
 
-    <router-view class="tabs__content grid__col-md-9"></router-view>
+    <div ref="formData"></div>
   </div>
 </template>
 
@@ -144,7 +158,7 @@ export default {
       required: true,
     },
 
-    formData: {
+    savedFormData: {
       type: Object,
       default () {
         return {}
@@ -153,21 +167,59 @@ export default {
   },
 
   created () {
-    this.setCancelButtonUrl(this.cancelButtonUrl)
-    this.setFormData(this.formData)
-  },
-
-  methods: {
-    ...mapMutations([
-      'setFormData',
-      'setCancelButtonUrl',
-    ]),
+    this.setFormData(this.savedFormData)
   },
 
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'formData',
     ]),
+
+    currentRoute() {
+      return this.$route.name
+    },
+  },
+
+  methods: {
+    ...mapMutations([
+      'setFormData',
+    ]),
+
+    saveSettings () {
+      this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData)
+      document.getElementById('season_schedule').submit()
+    },
+
+    buildFormInputsMarkup (formData, prefix = 'season_toggles') {
+      let markup = ''
+
+      Object.keys(formData).forEach((key) => {
+        const inputName = `${prefix}[${key}]`
+        let inputValue
+
+        if (formData[key] === false) {
+          inputValue = 0
+        } else if (formData[key] === true) {
+          inputValue = 1
+        } else {
+          inputValue = formData[key]
+        }
+
+        if (inputValue !== null && typeof inputValue === 'object') {
+          markup += this.buildFormInputsMarkup(inputValue, inputName)
+        } else {
+          markup += `
+            <input
+              type="hidden"
+              name="${inputName}"
+              value="${inputValue}"
+            />`
+        }
+      })
+
+      return markup
+    },
   },
 }
 </script>

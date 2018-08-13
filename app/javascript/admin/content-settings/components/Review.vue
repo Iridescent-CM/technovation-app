@@ -7,8 +7,8 @@
         <div ref="signupFieldStudents" class="review-label">
           <p>
             Students
-            <strong :class="{ on: studentSignup, off: !studentSignup }">
-              {{ studentSignup ? 'yes' : 'no' }}
+            <strong :class="{ on: formData.student_signup, off: !formData.student_signup }">
+              {{ formData.student_signup ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -16,8 +16,13 @@
         <div ref="signupFieldMentors" class="review-label">
           <p>
             Mentors
-            <strong :class="{ on: mentorSignup, off: !mentorSignup }">
-              {{ mentorSignup ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.mentor_signup,
+                off: !formData.mentor_signup
+              }"
+            >
+              {{ formData.mentor_signup ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -25,8 +30,13 @@
         <div ref="signupFieldJudges" class="review-label">
           <p>
             Judges
-            <strong :class="{ on: judgeSignup, off: !judgeSignup }">
-              {{ judgeSignup ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.judge_signup,
+                off: !formData.judge_signup
+              }"
+            >
+              {{ formData.judge_signup ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -34,8 +44,13 @@
         <div ref="signupFieldAmbassadors" class="review-label">
           <p>
             Regional Ambassadors
-            <strong :class="{ on: ambassadorSignup, off: !ambassadorSignup }">
-              {{ ambassadorSignup ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.regional_ambassador_signup,
+                off: !formData.regional_ambassador_signup
+              }"
+            >
+              {{ formData.regional_ambassador_signup ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -102,16 +117,26 @@
         <div ref="teamBuildingEnabledField" class="review-label">
           <p>
             Forming teams allowed
-            <strong :class="{ on: teamBuildingEnabled, off: !teamBuildingEnabled }">
-              {{ teamBuildingEnabled ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.team_building_enabled,
+                off: !formData.team_building_enabled
+              }"
+            >
+              {{ formData.team_building_enabled ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
         <div ref="teamSubmissionsEditableField" class="review-label">
           <p>
             Team submissions are editable
-            <strong :class="{ on: teamSubmissionsEditable, off: !teamSubmissionsEditable }">
-              {{ teamSubmissionsEditable ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.team_submissions_editable,
+                off: !formData.team_submissions_editable
+              }"
+            >
+              {{ formData.team_submissions_editable ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -122,8 +147,13 @@
         <div ref="selectRegionalPitchEventField" class="review-label">
           <p>
             Selecting retional pitch events allowed
-            <strong :class="{ on: selectRegionalPitchEvent, off: !selectRegionalPitchEvent }">
-              {{ selectRegionalPitchEvent ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.select_regional_pitch_event,
+                off: !formData.select_regional_pitch_event
+              }"
+            >
+              {{ formData.select_regional_pitch_event ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -142,8 +172,13 @@
         <div ref="displayScoresField" class="review-label">
           <p>
             Scores &amp; Certificates Accessible
-            <strong :class="{ on: displayScores, off: !displayScores }">
-              {{ displayScores ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.display_scores,
+                off: !formData.display_scores
+              }"
+            >
+              {{ formData.display_scores ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -154,21 +189,6 @@
       The changes you make here affect the end-user experience.<br>
       Please double check everything before saving.
     </div>
-
-    <div>
-      <button
-        type="submit"
-        class="button primary"
-        @click.prevent="saveSettings"
-      >Save these settings</button>
-      or
-      <a
-        ref="cancelButton"
-        :href="$store.state.cancelButtonUrl"
-      >cancel</a>
-    </div>
-
-    <div ref="formData"></div>
   </div>
 </template>
 
@@ -198,125 +218,11 @@ export default {
     }
   },
 
-  methods: {
-    saveSettings () {
-      this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData)
-      document.getElementById('season_schedule').submit()
-    },
-
-    buildFormInputsMarkup (formData, prefix = 'season_toggles') {
-      let markup = ''
-
-      Object.keys(formData).forEach((key) => {
-        const inputName = `${prefix}[${key}]`
-        let inputValue
-
-        if (formData[key] === false) {
-          inputValue = 0
-        } else if (formData[key] === true) {
-          inputValue = 1
-        } else {
-          inputValue = formData[key]
-        }
-
-        if (inputValue !== null && typeof inputValue === 'object') {
-          markup += this.buildFormInputsMarkup(inputValue, inputName)
-        } else {
-          markup += `
-            <input
-              type="hidden"
-              name="${inputName}"
-              value="${inputValue}"
-            />`
-        }
-      })
-
-      return markup
-    },
-  },
-
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'formData'
     ]),
-
-    formData () {
-      return {
-        // Registration
-        student_signup: this.studentSignup,
-        mentor_signup: this.mentorSignup,
-        judge_signup: this.judgeSignup,
-        regional_ambassador_signup: this.ambassadorSignup,
-
-        // Notices
-        student_dashboard_text: this.$store.state.settings
-          .student_dashboard_text,
-        mentor_dashboard_text: this.$store.state.settings
-          .mentor_dashboard_text,
-        judge_dashboard_text: this.$store.state.settings
-          .judge_dashboard_text,
-        regional_ambassador_dashboard_text: this.$store.state.settings
-          .regional_ambassador_dashboard_text,
-        // Surveys
-        student_survey_link: {
-          text: this.$store.state.settings.student_survey_link.text,
-          url: this.$store.state.settings.student_survey_link.url,
-          long_desc: this.$store.state.settings.student_survey_link.long_desc,
-        },
-        mentor_survey_link: {
-          text: this.$store.state.settings.mentor_survey_link.text,
-          url: this.$store.state.settings.mentor_survey_link.url,
-          long_desc: this.$store.state.settings.mentor_survey_link.long_desc,
-        },
-        // Teams & Submissions
-        team_building_enabled: this.teamBuildingEnabled,
-        team_submissions_editable: this.teamSubmissionsEditable,
-        // Events
-        select_regional_pitch_event: this.selectRegionalPitchEvent,
-        // Judging
-        judging_round: this.$store.state.settings.judging_round,
-        // Scores & Certificates
-        display_scores: this.displayScores,
-      }
-    },
-
-    studentSignup () {
-      return !this.judgingEnabled && this.$store.state.settings.student_signup
-    },
-
-    mentorSignup () {
-      return !this.judgingEnabled && this.$store.state.settings.mentor_signup
-    },
-
-    judgeSignup () {
-      return !this.judgingEnabled && this.$store.state.settings.judge_signup
-    },
-
-    ambassadorSignup () {
-      return !this.judgingEnabled && this.$store.state.settings.regional_ambassador_signup
-    },
-
-    teamBuildingEnabled () {
-      return !this.judgingEnabled && this.$store.state.settings
-        .team_building_enabled
-    },
-
-    teamSubmissionsEditable () {
-      return !this.judgingEnabled && this.$store.state.settings
-        .team_submissions_editable
-    },
-
-    selectRegionalPitchEvent () {
-      return !this.judgingEnabled && this.$store.state.settings
-        .select_regional_pitch_event
-    },
-
-    displayScores () {
-      return !this.judgingEnabled && this.$store.state.settings.display_scores
-    },
   },
 }
 </script>
-
-<style scoped>
-</style>

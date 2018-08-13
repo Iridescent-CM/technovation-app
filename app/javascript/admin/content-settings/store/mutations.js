@@ -9,11 +9,7 @@ function mergeWithCustomizer(objValue, srcValue) {
 }
 
 export default {
-  setCancelButtonUrl (state, url) {
-    state.cancelButtonUrl = url
-  },
-
   setFormData (state, formData) {
-    mergeWith(state.settings, formData, mergeWithCustomizer)
+    mergeWith(state, formData, mergeWithCustomizer)
   },
 }

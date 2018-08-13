@@ -13,7 +13,7 @@
 
     <admin-content-settings
       cancel-button-url="<%= admin_dashboard_path %>"
-      :form-data="{
+      :saved-form-data="{
         student_signup: <%= SeasonToggles.signup_enabled?('student') %>,
         mentor_signup: <%= SeasonToggles.signup_enabled?('mentor') %>,
         judge_signup: <%= SeasonToggles.signup_enabled?('judge') %>,

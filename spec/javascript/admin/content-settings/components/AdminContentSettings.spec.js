@@ -35,6 +35,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         propsData: {
           cancelButtonUrl: '/admin/dashboard',
         },
+        computed: {
+          currentRoute: jest.fn(() => { return 'not-review' })
+        },
       }
     )
   })
@@ -52,7 +55,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           required: true,
         },
 
-        formData: {
+        savedFormData: {
           type: Object,
           default: expect.any(Function)
         }
@@ -62,7 +65,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
     describe('formData', () => {
 
       it('returns an empty object by default', () => {
-        expect(AdminContentSettings.props.formData.default()).toEqual({})
+        expect(AdminContentSettings.props.savedFormData.default()).toEqual({})
       })
 
     })
@@ -72,10 +75,8 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
   describe('created hook', () => {
 
     it('calls the mapped mutations in order to store the cancel URL and form data state', () => {
-      const setCancelButtonUrl = jest.fn(() => {})
       const setFormData = jest.fn(() => {})
 
-      expect(setCancelButtonUrl.mock.calls.length).toBe(0)
       expect(setFormData.mock.calls.length).toBe(0)
 
       wrapper = shallowMount(
@@ -85,7 +86,6 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           store: mockStore
             .createMocks({
               mutations: {
-                setCancelButtonUrl,
                 setFormData,
               },
             })
@@ -97,10 +97,12 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           propsData: {
             cancelButtonUrl: '/admin/dashboard',
           },
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
+          },
         }
       )
 
-      expect(setCancelButtonUrl.mock.calls.length).toBe(1)
       expect(setFormData.mock.calls.length).toBe(1)
     })
 
@@ -115,7 +117,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
             'router-view': true,
           },
           propsData: {
-            formData: {
+            savedFormData: {
               student_signup: 1,
               student_dashboard_text: 'Student dashboard text',
               mentor_dashboard_text: 'Mentor dashboard text',
@@ -138,10 +140,13 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
             },
             cancelButtonUrl: '/admin/dashboard',
           },
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
+          },
         }
       )
 
-      expect(wrapper.vm.$store.state.settings).toEqual({
+      expect(wrapper.vm.$store.state).toEqual({
         student_signup: 1,
         mentor_signup: 0,
         judge_signup: 0,
@@ -166,9 +171,145 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         judging_round: 'qf',
         display_scores: 1,
       })
+    })
 
-      expect(wrapper.vm.$store.state.cancelButtonUrl)
-        .toEqual('/admin/dashboard')
+  })
+
+  describe('methods', () => {
+
+    describe('buildFormInputsMarkup', () => {
+
+      it('builds input markup to submit form', () => {
+        const formData = {
+          student_signup: 1,
+          mentor_signup: false,
+          student_dashboard_text: 'Student',
+          mentor_dashboard_text: 'Mentor',
+          judge_dashboard_text: 'Judge',
+          regional_ambassador_dashboard_text: 'RA',
+          student_survey_link: {
+            text: 'Student Link',
+            url: 'http://google.com',
+            long_desc: 'This is a long student description',
+          },
+          mentor_survey_link: {
+            text: 'Mentor Link',
+            url: 'http://bing.com',
+            long_desc: 'This is a long mentor description',
+          },
+        }
+
+        const testElement = document.createElement('div')
+        testElement.innerHTML = wrapper.vm.buildFormInputsMarkup(formData)
+
+        const inputs = testElement.querySelectorAll('input')
+
+        expect(inputs[0].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[student_signup]" value="1">')
+        expect(inputs[1].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[mentor_signup]" value="0">')
+        expect(inputs[2].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[student_dashboard_text]" value="Student">')
+        expect(inputs[3].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[mentor_dashboard_text]" value="Mentor">')
+        expect(inputs[4].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[judge_dashboard_text]" value="Judge">')
+        expect(inputs[5].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[regional_ambassador_dashboard_text]" value="RA">')
+        expect(inputs[6].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[student_survey_link][text]" value="Student Link">')
+        expect(inputs[7].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[student_survey_link][url]" value="http://google.com">')
+        expect(inputs[8].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[student_survey_link][long_desc]" value="This is a long student description">')
+        expect(inputs[9].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[mentor_survey_link][text]" value="Mentor Link">')
+        expect(inputs[10].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[mentor_survey_link][url]" value="http://bing.com">')
+        expect(inputs[11].outerHTML)
+          .toEqual('<input type="hidden" name="season_toggles[mentor_survey_link][long_desc]" value="This is a long mentor description">')
+      })
+
+    })
+
+  })
+
+  describe('computed properties', () => {
+
+    describe('formData', () => {
+
+      it('returns an object used for populating form inputs based on dynamic data', () => {
+        wrapper = shallowMount(
+          AdminContentSettings,
+          {
+            localVue,
+            store: mockStore.createMocks({
+              state: {
+                student_signup: 1,
+                mentor_signup: 0,
+                judge_signup: 0,
+                regional_ambassador_signup: 0,
+                student_dashboard_text: 'Student',
+                mentor_dashboard_text: 'Mentor',
+                judge_dashboard_text: 'Judge',
+                regional_ambassador_dashboard_text: 'RA',
+                student_survey_link: {
+                  text: 'Student Link',
+                  url: 'http://google.com',
+                  long_desc: 'Student link long description',
+                },
+                mentor_survey_link: {
+                  text: 'Mentor Link',
+                  url: 'http://bing.com',
+                  long_desc: 'Mentor link long description',
+                },
+                team_building_enabled: 1,
+                team_submissions_editable: 0,
+                select_regional_pitch_event: 1,
+                judging_round: 'off',
+                display_scores: 0,
+              },
+            }).store,
+            stubs: {
+              RouterLink: RouterLinkStub,
+              'router-view': true,
+            },
+            propsData: {
+              cancelButtonUrl: '/admin/dashboard',
+            },
+            computed: {
+              currentRoute: jest.fn(() => { return 'not-review' })
+            },
+          }
+        )
+
+        expect(wrapper.vm.formData).toEqual({
+          student_signup: true,
+          mentor_signup: false,
+          judge_signup: false,
+          regional_ambassador_signup: false,
+          student_dashboard_text: 'Student',
+          mentor_dashboard_text: 'Mentor',
+          judge_dashboard_text: 'Judge',
+          regional_ambassador_dashboard_text: 'RA',
+          student_survey_link: {
+            text: 'Student Link',
+            url: 'http://google.com',
+            long_desc: 'Student link long description',
+          },
+          mentor_survey_link: {
+            text: 'Mentor Link',
+            url: 'http://bing.com',
+            long_desc: 'Mentor link long description',
+          },
+          team_building_enabled: true,
+          team_submissions_editable: false,
+          select_regional_pitch_event: true,
+          judging_round: 'off',
+          display_scores: false,
+        })
+      })
+
     })
 
   })
@@ -192,9 +333,18 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         'grid__col-md-9',
       ])
 
-      const routerLinks = wrapper.findAll(RouterLinkStub).wrappers
+      const routerLinks = [
+        'registrationLink',
+        'noticesLink',
+        'surveysLink',
+        'teamsAndSubmissionsLink',
+        'eventsLink',
+        'judgingLink',
+        'scoresAndCertificatesLink',
+      ]
 
-      routerLinks.forEach((link) => {
+      routerLinks.forEach((ref) => {
+        const link = wrapper.find({ ref })
         const props = link.props()
         const attributes = link.attributes()
 
@@ -206,6 +356,18 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           'tabs__menu-button',
         ])
       })
+
+      const reviewLink = wrapper.find({ ref: 'reviewLink' })
+      const reviewLinkProps = reviewLink.props()
+
+      expect(reviewLinkProps.tag).toBe('button')
+      expect(reviewLinkProps.to).toEqual({ name: 'review' })
+      expect(reviewLink.attributes().class).toBe('button primary')
+
+      const cancelButton = wrapper.find({ ref: 'cancelButton' })
+      const cancelButtonAttributes= cancelButton.attributes()
+
+      expect(cancelButtonAttributes.href).toBe('/admin/dashboard')
     })
 
     it('displays warning icons on router links if judging is enabled', () => {
@@ -228,6 +390,9 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           },
           propsData: {
             cancelButtonUrl: '/admin/dashboard',
+          },
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
           },
         }
       )
@@ -258,6 +423,57 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
       assertIconProps(scoresAndCertificatesLink.find(Icon))
     })
 
+    it('displays save button if on review page; review router link otherwise', () => {
+      const properties = {
+        localVue,
+        store: mockStore
+          .createMocks({
+            getters: {
+              judgingEnabled: () => {
+                return true
+              },
+            },
+          })
+          .store,
+        stubs: {
+          RouterLink: RouterLinkStub,
+          'router-view': true,
+        },
+        propsData: {
+          cancelButtonUrl: '/admin/dashboard',
+        },
+      }
+
+      wrapper = shallowMount(
+        AdminContentSettings,
+        Object.assign({}, properties, {
+          computed: {
+            currentRoute: jest.fn(() => { return 'not-review' })
+          }
+        })
+      )
+
+      let reviewLink = wrapper.find({ ref: 'reviewLink' })
+      let submitButton = wrapper.find({ ref: 'submitButton' })
+
+      expect(reviewLink.exists()).toBe(true)
+      expect(submitButton.exists()).toBe(false)
+
+      wrapper = shallowMount(
+        AdminContentSettings,
+        Object.assign({}, properties, {
+          computed: {
+            currentRoute: jest.fn(() => { return 'review' })
+          }
+        })
+      )
+
+      reviewLink = wrapper.find({ ref: 'reviewLink' })
+      submitButton = wrapper.find({ ref: 'submitButton' })
+
+      expect(reviewLink.exists()).toBe(false)
+      expect(submitButton.exists()).toBe(true)
+    })
   })
 
 })
