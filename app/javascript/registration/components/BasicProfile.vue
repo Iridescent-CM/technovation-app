@@ -193,10 +193,6 @@ export default {
     ...mapGetters(['isAgeSet', 'isBasicProfileSet']),
 
     nextStepEnabled () {
-      if (this.isGenderRequired) {
-        return this.isBasicProfileSet && !!this.genderIdentity
-      }
-
       return this.isBasicProfileSet
     },
 

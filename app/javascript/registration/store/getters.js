@@ -18,9 +18,17 @@ export default {
   },
 
   isBasicProfileSet (state) {
-    return !!(state.firstName &&
-                state.lastName &&
-                  state.schoolCompanyName)
+    if (state.profileChoice === 'student') {
+      return !!(state.firstName &&
+                  state.lastName &&
+                    state.schoolCompanyName)
+    } else {
+      return !!(state.firstName &&
+                  state.lastName &&
+                    state.schoolCompanyName &&
+                      state.jobTitle &&
+                          state.genderIdentity)
+    }
   },
 
   getBirthdate (state) {
