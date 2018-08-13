@@ -60,13 +60,17 @@ class SeasonToggles
       def between_rounds?(judge)
         return false if judging_enabled?
 
-        if LiveEventJudgingEnabled.(judge)
+        if judge && LiveEventJudgingEnabled.(judge)
           Time.current > live_judge_qf_deadline &&
             Time.current < sf_opening_date
         else
           Time.current > virtual_judge_qf_deadline &&
             Time.current < sf_opening_date
         end
+      end
+
+      def enabled_or_between?
+        judging_enabled? || between_rounds?(nil)
       end
 
       def quarterfinals_or_earlier?(judge)
