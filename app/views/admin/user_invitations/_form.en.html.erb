@@ -1,13 +1,4 @@
 <%= form_with model: [:admin, invitation], local: true do |f| %>
-  <% if SeasonToggles.judging_enabled? %>
-    <div class="notice">
-      <p>
-        Judging is currently enabled, so student and mentor invites
-        are unavailable.
-      </p>
-    </div>
-  <% end %>
-
   <% if invitation.errors.any? %>
     <div class="notice notice--error">
       <ul class="reset">
@@ -21,7 +12,7 @@
   <div class="field">
     <%= f.label :profile_type %>
     <%= f.select :profile_type,
-      @profile_types.keys.map { |k| [k.titleize, k] },
+      UserInvitation.profile_types.keys.map { |k| [k.titleize, k] },
       {},
       id: "user_invitation_profile_type" %>
   </div>

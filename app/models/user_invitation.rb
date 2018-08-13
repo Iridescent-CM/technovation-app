@@ -16,9 +16,7 @@ class UserInvitation < ApplicationRecord
   validates :email, uniqueness: true, email: true
 
   validate ->(invitation) {
-    if inviting_student_or_mentor_during_judging?
-      errors.add(:profile_type, :not_available_during_juding)
-    elsif inviting_existing_ra_to_be_an_ra?
+    if inviting_existing_ra_to_be_an_ra?
       errors.add(:email, :taken_by_account)
     elsif inviting_existing_mentor_to_be_an_ra?
       true
@@ -180,11 +178,6 @@ class UserInvitation < ApplicationRecord
   end
 
   private
-  def inviting_student_or_mentor_during_judging?
-    SeasonToggles.judging_enabled? &&
-      (profile_type.to_s == "student" || profile_type.to_s == "mentor")
-  end
-
   def inviting_existing_ra_to_be_an_ra?
     profile_type.to_s == "regional_ambassador" and
       Account.left_outer_joins(:regional_ambassador_profile)

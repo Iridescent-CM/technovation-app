@@ -55,5 +55,3 @@ en:
           attributes:
             email:
               taken_by_account: "An account already exists with that email"
-            profile_type:
-              not_available_during_juding: "Student and Mentor invites are not available during judging"
