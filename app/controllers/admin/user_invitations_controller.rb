@@ -6,14 +6,32 @@ module Admin
       @user_invitation = UserInvitation.new
       @user_invitations = UserInvitation.order('created_at desc')
         .page(params[:page])
+
+      if SeasonToggles.judging_enabled?
+        @profile_types = UserInvitation.profile_types.except(:student, :mentor)
+      else
+        @profile_types = UserInvitation.profile_types
+      end
     end
 
     def new
       @user_invitation = UserInvitation.new
+
+      if SeasonToggles.judging_enabled?
+        @profile_types = UserInvitation.profile_types.except(:student, :mentor)
+      else
+        @profile_types = UserInvitation.profile_types
+      end
     end
 
     def create
       @user_invitation = UserInvitation.new(user_invitation_params)
+
+      if SeasonToggles.judging_enabled?
+        @profile_types = UserInvitation.profile_types.except(:student, :mentor)
+      else
+        @profile_types = UserInvitation.profile_types
+      end
 
       if @user_invitation.save
         RegistrationMailer.admin_permission(@user_invitation.id)
