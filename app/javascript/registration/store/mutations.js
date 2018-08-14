@@ -33,18 +33,30 @@ export default {
     state.birthYear = attributes.year
     state.birthMonth = attributes.month
     state.birthDay = attributes.day
+
+    if (!state.birthYear || !state.birthMonth || !state.birthDay)
+      state.profileChoice = null
   },
 
   birthYear (state, year) {
     state.birthYear = year
+
+    if (!state.birthYear)
+      state.profileChoice = null
   },
 
   birthMonth (state, month) {
     state.birthMonth = month
+
+    if (!state.birthMonth)
+      state.profileChoice = null
   },
 
   birthDay (state, day) {
     state.birthDay = day
+
+    if (!state.birthDay)
+      state.profileChoice = null
   },
 
   profileChoice (state, choice) {
