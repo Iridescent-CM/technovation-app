@@ -28,6 +28,10 @@ class SignupAttempt < ActiveRecord::Base
   has_many :expertises,
     through: :mentor_profile_expertises
 
+  accepts_nested_attributes_for :mentor_profile_expertises,
+    allow_destroy: true,
+    reject_if: :all_blank
+
   before_validation -> {
     self.email = (email || "").strip.downcase
   }

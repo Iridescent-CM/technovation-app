@@ -268,12 +268,12 @@ export default {
 
     expertises: {
       get () {
+        console.log('computed: expertises: get ()', this.$store.state.expertiseIds)
         return this.$store.state.expertiseIds
       },
 
       set (value) {
-        if (value)
-          this.$store.commit('expertiseIds', { data: value.map(id => { return { id: id.toString() } }) })
+        this.$store.commit('expertiseIds', value)
       },
     },
 
@@ -324,6 +324,7 @@ export default {
     },
 
     expertises (value) {
+      console.log('watch: expertises (value)', value)
       this.debouncedProfileUpdate({ expertiseIds: value })
     },
 

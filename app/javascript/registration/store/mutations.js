@@ -1,17 +1,9 @@
 import Vue from 'vue'
 
-const setExpertiseIds =  (state, { data }) => {
-  const expertiseIdsChanged = (data || []).some(({ id }) => {
-    return !state.expertiseIds.includes(id)
-  })
-
-  if (expertiseIdsChanged) {
-    Vue.set(state, 'expertiseIds', data.map(({ id }) => id))
-  }
-}
-
 export default {
-  expertiseIds: setExpertiseIds,
+  expertiseIds (state, value) {
+    Vue.set(state, 'expertiseIds', value)
+  },
 
   isReady (state, bool) {
     state.isReady = bool
@@ -76,7 +68,7 @@ export default {
     state.schoolCompanyName = attributes.schoolCompanyName
     state.jobTitle = attributes.jobTitle
     state.mentorType = attributes.mentorType
-    setExpertiseIds(state, attributes.expertises || [])
+    state.expertiseIds = (attributes.expertises.data || []).map(({ id }) => id)
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
   },
