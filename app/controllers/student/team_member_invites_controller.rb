@@ -7,14 +7,22 @@ module Student
         invite_token: params.fetch(:id)
       )
 
-      decline_invites_that_cannot_be_accepted(invite) or
-        apply_chosen_status_to_existing_invite(invite) or
-          redirect_existing_invite_by_status or
-            redirect_back fallback_location: student_dashboard_path,
-              alert: t("controllers.application.general_error")
+      invites_are_disabled_by_judging or
+        decline_invites_that_cannot_be_accepted(invite) or
+          apply_chosen_status_to_existing_invite(invite) or
+            redirect_existing_invite_by_status or
+              redirect_back fallback_location: student_dashboard_path,
+                alert: t("controllers.application.general_error")
     end
 
     private
+    def invites_are_disabled_by_judging
+      if SeasonToggles.enabled_or_between?
+        redirect_to student_dashboard_path,
+          alert: t("views.team_member_invites.show.invites_disabled_by_judging")
+      end
+    end
+
     def decline_invites_that_cannot_be_accepted(invite)
       if invite.present? and
           invite_params[:status] == "accepted" and

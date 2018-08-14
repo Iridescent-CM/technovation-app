@@ -6,7 +6,10 @@ module TeamMemberInviteController
       invite_token: params.fetch(:id)
     ) || ::NullInvite.new
 
-    if @invite.invitee and @invite.invitee != current_profile
+    if SeasonToggles.enabled_or_between?
+      redirect_to student_dashboard_path,
+        alert: t("views.team_member_invites.show.invites_disabled_by_judging")
+    elsif @invite.invitee and @invite.invitee != current_profile
       signin = @invite.invitee.account
       SignIn.(
         signin,
