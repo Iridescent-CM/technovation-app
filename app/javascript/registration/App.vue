@@ -9,7 +9,7 @@
           size="16"
           :color="$route.name === 'data-use' ? '28A880' : '000000'"
         />
-        Data agreement
+        {{ termsAgreed ? 'Terms agreed' : 'Data agreement' }}
       </tab-link>
 
       <tab-link
