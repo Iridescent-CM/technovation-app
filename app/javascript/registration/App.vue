@@ -29,7 +29,7 @@
         :disabled-tooltip="termsNotAgreedMessage"
       >
         <icon
-          :name="(isAgeSet && !!profileChoice) ? 'check-circle-o' : 'circle-o'"
+          :name="isAgeSet ? 'check-circle-o' : 'circle-o'"
           size="16"
           :color="$route.name === 'age' ? '28A880' : '000000'"
         />

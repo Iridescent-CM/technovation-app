@@ -55,7 +55,7 @@ export default {
 
   beforeRouteEnter (_to, from, next) {
     next(vm => {
-      if (vm.isAgeSet && vm.profileChoice !== null) {
+      if (vm.isAgeSet) {
         next()
       } else {
         vm.$router.replace(from.path)
@@ -81,7 +81,6 @@ export default {
         this.$store.commit('profileChoice', choice)
       },
     },
-
 
     profileOptions () {
       switch(true) {
