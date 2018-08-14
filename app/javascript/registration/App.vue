@@ -21,7 +21,7 @@
           size="16"
           :color="$route.name === 'location' ? '28A880' : '000000'"
         />
-        Region
+        {{ regionLabel }}
       </tab-link>
 
       <tab-link
@@ -33,7 +33,7 @@
           size="16"
           :color="$route.name === 'age' ? '28A880' : '000000'"
         />
-        Date of Birth
+        {{ ageLabel }}
       </tab-link>
 
       <tab-link
@@ -45,7 +45,7 @@
           size="16"
           :color="$route.name === 'choose-profile' ? '28A880' : '000000'"
         />
-        Choose Profile
+        {{ profileChoice || "Choose Profile" | capitalize }}
       </tab-link>
 
       <tab-link
@@ -57,7 +57,7 @@
           size="16"
           :color="$route.name === 'basic-profile' ? '28A880' : '000000'"
         />
-        Setup Profile
+        {{ profileLabel }}
       </tab-link>
 
       <tab-link
@@ -104,11 +104,32 @@ export default {
 
     ...mapGetters([
       'isAgeSet',
+      'getAge',
       'isProfileChosen',
       'isBasicProfileSet',
       'isLocationSet',
+      'getLocation',
       'readyForAccount',
+      'getFullName',
     ]),
+
+    ageLabel () {
+      if (this.isAgeSet)
+        return `${this.getAge()} years old`
+
+      return "Date of Birth"
+    },
+
+    regionLabel () {
+      if (this.isLocationSet)
+        return Object.values(this.getLocation).join(', ')
+
+      return "Set Region"
+    },
+
+    profileLabel () {
+      return this.getFullName || "Setup Profile"
+    },
 
     termsNotAgreedMessage () {
       if (!this.termsAgreed)

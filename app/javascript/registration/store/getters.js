@@ -70,6 +70,13 @@ export default {
     }
   },
 
+  getFullName (state) {
+    if (state.firstName || state.lastName)
+      return [state.firstName, state.lastName].join(' ')
+
+    return null
+  },
+
   getMonthByValue: (state) => (value) => {
     return state.months.find(month => {
       return month.value == (value || "").toString()
