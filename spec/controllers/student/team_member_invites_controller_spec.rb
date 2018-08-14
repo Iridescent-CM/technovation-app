@@ -89,5 +89,20 @@ RSpec.describe Student::TeamMemberInvitesController do
       )
       expect(invite.reload).to be_declined
     end
+
+    it "shows a friendly message if accepting, but judging is enabled" do
+      SeasonToggles.judging_round = :qf
+
+      put :update, params: {
+        id: invite.invite_token,
+        team_member_invite: { status: :accepted }
+      }
+
+      expect(response).to redirect_to student_dashboard_path
+      expect(flash[:alert]).to eq(
+        "Sorry, but accepting invites is currently disabled because judging has already begun."
+      )
+      expect(invite.reload).to be_pending
+    end
   end
 end

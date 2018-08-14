@@ -7,6 +7,12 @@ class SeasonToggles
       base.extend ClassMethods
     end
 
+    SEMIFINALS_START_MONTH = 6
+    SEMIFINALS_START_DAY = 1
+    LIVE_JUDGE_QUARTERFINAL_DEADLINE_MONTH = 5
+    LIVE_JUDGE_QUARTERFINAL_DEADLINE_DAY = 22
+    VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_MONTH = 5
+    VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_DAY = 20
     VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}
     VALID_SF_JUDGING_ROUNDS = %w{sf semi_finals semifinals}
     VALID_JUDGING_ROUNDS = VALID_QF_JUDGING_ROUNDS +
@@ -15,15 +21,33 @@ class SeasonToggles
 
     module ClassMethods
       def sf_opening_date
-        Date.new(Season.current.year, 6, 1)
+        Date.new(
+          Season.current.year,
+          SEMIFINALS_START_MONTH,
+          SEMIFINALS_START_DAY
+        )
       end
 
       def live_judge_qf_deadline
-        DateTime.new(Season.current.year, 5, 22, 0, 0, 0)
+        DateTime.new(
+          Season.current.year,
+          LIVE_JUDGE_QUARTERFINAL_DEADLINE_MONTH,
+          LIVE_JUDGE_QUARTERFINAL_DEADLINE_DAY,
+          0,
+          0,
+          0
+        )
       end
 
       def virtual_judge_qf_deadline
-        DateTime.new(Season.current.year, 5, 20, 0, 0, 0)
+        DateTime.new(
+          Season.current.year,
+          VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_MONTH,
+          VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_DAY,
+          0,
+          0,
+          0
+        )
       end
 
       def judging_round=(value)
