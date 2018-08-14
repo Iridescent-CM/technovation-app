@@ -23,6 +23,7 @@ module Registration
         :referred_by,
         :referred_by_other,
         :wizard_token,
+        :mentor_type,
       )
     end
   end

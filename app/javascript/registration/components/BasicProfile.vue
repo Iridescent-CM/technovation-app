@@ -64,7 +64,7 @@
       </p>
 
       <p v-show="profileChoice !== 'student'">
-        <label for="mentorType">I am a...</label>
+        <label for="mentorType">As a mentor, you may call me a(n)...</label>
         <vue-select
           input-id="mentorType"
           :options="mentorTypeOptions"
@@ -321,7 +321,7 @@ export default {
     },
 
     mentorType (value) {
-      //this.debouncedProfileUpdate({ mentorType: value })
+      this.debouncedProfileUpdate({ mentorType: value })
     },
 
     expertises (value) {
