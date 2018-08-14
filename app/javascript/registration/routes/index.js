@@ -8,6 +8,8 @@ import DataUseTerms from '../components/DataUseTerms'
 import Location from '../components/Location'
 
 import AgeVerification from '../components/AgeVerification'
+import ChooseProfile from '../components/ChooseProfile'
+
 import BasicProfile from '../components/BasicProfile'
 
 import Login from '../components/Login'
@@ -67,6 +69,15 @@ export const routes = [
     component: Location,
     meta: {
       browserTitle: 'Step 2: Region'
+    },
+    beforeEnter: requireDataAgreement,
+  },
+  {
+    path: '/choose-profile',
+    name: 'choose-profile',
+    component: ChooseProfile,
+    meta: {
+      browserTitle: 'Step 4: Choose your profile'
     },
     beforeEnter: requireDataAgreement,
   },

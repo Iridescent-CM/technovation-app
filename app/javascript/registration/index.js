@@ -24,37 +24,27 @@ document.addEventListener('turbolinks:load', () => {
           return !!this.$store.getters.readyForAccount
         },
 
-        onBasicProfileStep () {
-          if (
-            this.$store.state.termsAgreed &&
-            this.$store.getters.isAgeSet &&
-            this.$store.state.profileChoice &&
-            this.$store.getters.isLocationSet
-          ) {
-            return true
-          }
+        onChooseProfileStep () {
+          return !!(this.$store.state.termsAgreed &&
+                    this.$store.getters.isAgeSet &&
+                      !this.$store.state.profileChoice)
+        },
 
-          return false
+        onBasicProfileStep () {
+          return !!(this.$store.state.termsAgreed &&
+                    this.$store.getters.isAgeSet &&
+                      this.$store.state.profileChoice &&
+                        this.$store.getters.isLocationSet)
         },
 
         onLocationStep () {
-          if (
-            this.$store.state.termsAgreed &&
-            this.$store.getters.isAgeSet &&
-            this.$store.state.profileChoice
-          ) {
-            return true
-          }
-
-          return false
+          return !!(this.$store.state.termsAgreed &&
+                      this.$store.getters.isAgeSet &&
+                        this.$store.state.profileChoice)
         },
 
         onAgeStep () {
-          if (this.$store.state.termsAgreed) {
-            return true
-          }
-
-          return false
+          return !!this.$store.state.termsAgreed
         },
 
         getCurrentStep () {
@@ -64,6 +54,8 @@ document.addEventListener('turbolinks:load', () => {
             return 'login'
           } else if (this.onBasicProfileStep) {
             return 'basic-profile'
+          } else if (this.onChooseProfileStep) {
+            return 'choose-profile'
           } else if (this.onAgeStep) {
             return 'age'
           } else if (this.onLocationStep) {

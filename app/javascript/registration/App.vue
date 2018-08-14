@@ -37,15 +37,15 @@
       </tab-link>
 
       <tab-link
-        :to="{ name: 'location' }"
-        :disabled-tooltip="termsNotAgreedMessage"
+        :to="{ name: 'choose-profile' }"
+        :disabled-tooltip="chooseProfileDisabledMessage"
       >
         <icon
-          :name="isLocationSet ? 'check-circle-o' : 'circle-o'"
+          :name="isProfileChosen ? 'check-circle-o' : 'circle-o'"
           size="16"
-          :color="$route.name === 'location' ? '28A880' : '000000'"
+          :color="$route.name === 'choose-profile' ? '28A880' : '000000'"
         />
-        Region
+        Choose Profile
       </tab-link>
 
       <tab-link
@@ -104,33 +104,52 @@ export default {
 
     ...mapGetters([
       'isAgeSet',
+      'isProfileChosen',
       'isBasicProfileSet',
       'isLocationSet',
       'readyForAccount',
     ]),
 
     termsNotAgreedMessage () {
-      if (!this.termsAgreed) {
+      if (!this.termsAgreed)
         return 'You must agree to the data use terms to continue'
-      }
+
+      return ''
+    },
+
+    ageNotSetMessage () {
+      if (!this.isAgeSet)
+        return 'Please fill out your date of birth first'
+
+      return ''
+    },
+
+    chooseProfileDisabledMessage () {
+      if (this.termsNotAgreedMessage !== '')
+        return this.termsNotAgreedMessage
+
+      if (!this.isAgeSet)
+        return this.ageNotSetMessage
 
       return ''
     },
 
     basicProfileDisabledMessage () {
-      if (this.termsNotAgreedMessage !== '') {
+      if (this.termsNotAgreedMessage !== '')
         return this.termsNotAgreedMessage
-      } else if (!this.isAgeSet || !this.profileChoice) {
-        return 'Please fill out your date of birth first'
-      }
+
+      if (!this.isAgeSet)
+        return this.ageNotSetMessage
+
+      if (!this.profileChoice)
+        return 'Please choose a profile first'
 
       return ''
     },
 
     loginDisabledMessage () {
-      if (!this.readyForAccount) {
+      if (!this.readyForAccount)
         return 'Please fill out other sections first'
-      }
 
       return ''
     },

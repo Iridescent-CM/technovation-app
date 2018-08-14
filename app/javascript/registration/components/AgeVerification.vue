@@ -35,7 +35,7 @@
 
           <dt class="margin--t-xlarge">Your age during World Pitch</dt>
           <dd>
-            You will be <strong>{{ ageByCutoff }}</strong> on {{ cutoffDay }}.
+            You will be <strong>{{ getAgeByCutoff }}</strong> on {{ cutoffDay }}.
           </dd>
         </dl>
       </div>
@@ -56,26 +56,6 @@
             <strong>15 or older</strong> on {{ cutoffDay }}
           </dd>
         </dl>
-      </div>
-
-      <div v-if="age" class="grid__col-12 grid__col--bleed-x">
-        <h4>Profile choice</h4>
-
-        I want to sign up as a:
-
-        <ul class="margin--t-b-large margin--r-l-none padding--none list-style--none">
-          <li v-for="option in profileOptions" :key="option">
-            <label>
-              <input
-                type="radio"
-                name="profileChoice"
-                v-model="profileChoice"
-                :value="option"
-              />
-              {{ option }}
-            </label>
-          </li>
-        </ul>
       </div>
     </div>
 
@@ -109,10 +89,14 @@ export default {
   computed: {
     ...mapState(['months', 'birthMonth']),
 
-    ...mapGetters(['isAgeSet', 'getBirthdate']),
+    ...mapGetters(['isAgeSet', 'getAge', 'getAgeByCutoff', 'getBirthdate']),
+
+    age () {
+      return this.getAge()
+    },
 
     nextStepEnabled () {
-      return this.isAgeSet && !!this.profileChoice
+      return this.isAgeSet
     },
 
     year: {
@@ -145,46 +129,8 @@ export default {
       },
     },
 
-    profileChoice: {
-      get () {
-        return this.$store.state.profileChoice
-      },
-
-      set (choice) {
-        this.$store.commit('profileChoice', choice)
-      },
-    },
-
-    age () {
-      return this.getAge(new Date())
-    },
-
-    ageByCutoff () {
-      return this.getAge(new Date("2019-08-01"))
-    },
-
     cutoffDay () {
       return "August 1, 2019"
-    },
-
-    profileOptions () {
-      switch(true) {
-        case (!this.age):
-          return []
-
-        case (this.age < 14):
-          return ['student']
-
-        case (this.age >= 14 && this.ageByCutoff < 19):
-          return ['student', 'mentor']
-
-        case (this.ageByCutoff > 18):
-          return ['mentor']
-      }
-    },
-
-    canBeAStudent () {
-      return true
     },
 
     divisionExplanation () {
@@ -260,41 +206,14 @@ export default {
     day (value) {
       this.updateBirthdate({ year: this.year, month: this.month, day: value })
     },
-
-    profileChoice (value) {
-      this.updateProfileChoice(value)
-    },
-
-    profileOptions (arr) {
-      if (arr.length === 1) this.profileChoice = arr[0]
-    },
   },
 
   methods: {
-    ...mapActions(['updateBirthdate', 'updateProfileChoice']),
+    ...mapActions(['updateBirthdate']),
 
     handleSubmit () {
       if (!this.nextStepEnabled) return false
-      this.$router.push({ name: 'location' })
-    },
-
-    getAge (compareDate) {
-      const year = parseInt(this.year)
-      const month = parseInt(Object.assign({}, this.month).value)
-      const day = parseInt(this.day)
-
-      if (!year || !month || !day) return false
-
-      const compareYear = compareDate.getFullYear()
-      const compareMonth = compareDate.getMonth() + 1
-      const compareDay = compareDate.getDate()
-
-      const extraYear = (
-        compareMonth > month ||
-          (compareMonth === month && compareDay >= day)
-      ) ? 0 : 1
-
-      return compareYear - year - extraYear
+      this.$router.push({ name: 'choose-profile' })
     },
 
     navigateBack () {
