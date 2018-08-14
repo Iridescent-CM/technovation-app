@@ -68,7 +68,7 @@ export default {
     state.schoolCompanyName = attributes.schoolCompanyName
     state.jobTitle = attributes.jobTitle
     state.mentorType = attributes.mentorType
-    state.expertiseIds = (attributes.expertises.data || []).map(({ id }) => id)
+    state.expertiseIds = attributes.expertiseIds
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
   },

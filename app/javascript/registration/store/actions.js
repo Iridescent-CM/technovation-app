@@ -94,8 +94,8 @@ export default {
         ...data,
         wizardToken: state.wizardToken,
       },
-    }).then(({ data: { data: { attributes, relationships }} }) => {
-      commit('basicProfile',  Object.assign({}, attributes, relationships))
+    }).then(({ data: { data: { attributes }} }) => {
+      commit('basicProfile',  Object.assign({}, attributes))
     }).catch(err => console.error(err))
   },
 }

@@ -2,12 +2,10 @@ class SignupAttemptSerializer
   include FastJsonapi::ObjectSerializer
   set_key_transform :camel_lower
 
-  has_many :expertises
-
   attributes :email, :birth_year, :birth_month, :birth_day, :profile_choice,
     :city, :state_code, :country_code, :latitude, :longitude, :first_name,
     :last_name, :gender_identity, :school_company_name, :job_title,
-    :referred_by, :referred_by_other, :wizard_token, :mentor_type
+    :referred_by, :referred_by_other, :wizard_token, :mentor_type, :expertise_ids
 
   attribute(:terms_agreed) do |attempt|
     attempt.terms_agreed?
