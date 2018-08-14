@@ -1,29 +1,25 @@
 <template>
   <form class="panel panel--contains-bottom-bar panel--contains-top-bar">
     <div class="panel__top-bar">
-      What is your birthdate?
+      Choose your profile type
     </div>
 
-    <div class="panel__content grid">
-      <div class="grid__col-12 grid__col--bleed-x">
-        <h4>Profile choice</h4>
+    <div class="panel__content">
+      Due to your age, you can be a:
 
-        I want to sign up as a:
-
-        <ul class="margin--t-b-large margin--r-l-none padding--none list-style--none">
-          <li v-for="option in profileOptions" :key="option">
-            <label>
-              <input
-                type="radio"
-                name="profileChoice"
-                v-model="profileChoice"
-                :value="option"
-              />
-              {{ option }}
-            </label>
-          </li>
-        </ul>
-      </div>
+      <ul class="margin--t-b-large margin--r-l-none padding--none list-style--none">
+        <li v-for="option in profileOptions" :key="option">
+          <label>
+            <input
+              type="radio"
+              name="profileChoice"
+              v-model="profileChoice"
+              :value="option"
+            />
+            {{ option }}
+          </label>
+        </li>
+      </ul>
     </div>
 
     <div class="panel__bottom-bar">
@@ -87,13 +83,16 @@ export default {
         case (!this.getAge()):
           return []
 
-        case (this.getAge() < 14):
+        case (this.getAge() < 14): {
+          this.profileChoice = 'student'
           return ['student']
+        }
 
         case (this.getAge() >= 14 && this.getAgeByCutoff < 19):
           return ['student', 'mentor']
 
         case (this.getAgeByCutoff > 18):
+          this.profileChoice = 'mentor'
           return ['mentor']
       }
     },
