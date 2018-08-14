@@ -1,6 +1,8 @@
 import Vue from 'vue'
 
-function expertiseIds (state, expertises) {
+function expertiseIds (state, exps) {
+  const expertises = exps || []
+
   const hasNewExpertiseId = expertises.some((expertise) => {
     return !state.expertiseIds.includes(expertise)
   })
