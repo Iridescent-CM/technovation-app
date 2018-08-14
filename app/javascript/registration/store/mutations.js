@@ -1,9 +1,17 @@
 import Vue from 'vue'
 
+function expertiseIds (state, expertises) {
+  const hasNewExpertiseId = expertises.some((expertise) => {
+    return !state.expertiseIds.includes(expertise)
+  })
+
+  if (hasNewExpertiseId || state.expertiseIds.length !== expertises.length) {
+    Vue.set(state, 'expertiseIds', expertises)
+  }
+}
+
 export default {
-  expertiseIds (state, value) {
-    Vue.set(state, 'expertiseIds', value)
-  },
+  expertiseIds,
 
   isReady (state, bool) {
     state.isReady = bool
@@ -68,7 +76,7 @@ export default {
     state.schoolCompanyName = attributes.schoolCompanyName
     state.jobTitle = attributes.jobTitle
     state.mentorType = attributes.mentorType
-    state.expertiseIds = attributes.expertiseIds
+    expertiseIds(state, attributes.expertiseIds)
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
   },
