@@ -268,7 +268,6 @@ export default {
 
     expertises: {
       get () {
-        console.log('computed: expertises: get ()', this.$store.state.expertiseIds)
         return this.$store.state.expertiseIds
       },
 
@@ -324,7 +323,6 @@ export default {
     },
 
     expertises (value) {
-      console.log('watch: expertises (value)', value)
       this.debouncedProfileUpdate({ expertiseIds: value })
     },
 

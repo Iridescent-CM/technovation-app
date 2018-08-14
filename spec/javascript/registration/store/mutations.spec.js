@@ -5,6 +5,7 @@ describe("Registration::Store::Mutations", () => {
     it("updates the state's referredByOther", () => {
       let state = {
         referredByOther: null,
+        expertiseIds: [],
       }
 
       mutations.basicProfile(state, { referredByOther: 'not null' })
