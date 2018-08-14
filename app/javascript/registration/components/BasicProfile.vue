@@ -83,10 +83,8 @@
                 :id="`mentor_profile_expertise_ids_${expertise.value}`"
                 v-model="expertises"
               >
-              <label
-                :for="`mentor_profile_expertise_ids_${expertise.value}`"
-              >{{ expertise.label }}</label>
             </span>
+            {{ expertise.label }}
           </label>
         </span>
       </p>
@@ -274,7 +272,8 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('expertiseIds', value)
+        if (value)
+          this.$store.commit('expertiseIds', { data: value.map(id => { return { id: id.toString() } }) })
       },
     },
 
@@ -325,7 +324,7 @@ export default {
     },
 
     expertises (value) {
-      //this.debouncedProfileUpdate({ expertiseIds: value })
+      this.debouncedProfileUpdate({ expertiseIds: value })
     },
 
     referredBy (value) {

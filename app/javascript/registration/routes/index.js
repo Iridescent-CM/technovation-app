@@ -19,8 +19,8 @@ Vue.use(VueRouter)
 const initiateApp = () => {
   try {
     const rootElem = document.getElementById('vue-enable-signup-wizard')
-    const { data: { attributes }} = JSON.parse(rootElem.dataset.previousAttempt)
-    const previousAttempt = Object.assign({}, store.state, attributes)
+    const { data: { attributes, relationships }} = JSON.parse(rootElem.dataset.previousAttempt)
+    const previousAttempt = Object.assign({}, store.state, attributes, relationships)
 
     store.dispatch('initWizard', previousAttempt)
   } catch (err) {

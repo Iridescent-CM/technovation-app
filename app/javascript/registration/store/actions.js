@@ -1,12 +1,12 @@
 export default {
-  initWizard ({ commit, getters }, previousAttempt) {
-    commit('wizardToken', previousAttempt.wizardToken)
-    commit('termsAgreed', previousAttempt.termsAgreed)
-    commit('birthDate', getters.getBirthdateAttributes(previousAttempt))
-    commit('profileChoice', previousAttempt.profileChoice)
-    commit('location', previousAttempt)
-    commit('basicProfile', previousAttempt)
-    commit('email', previousAttempt.email)
+  initWizard ({ commit, getters }, attempt) {
+    commit('wizardToken', attempt.wizardToken)
+    commit('termsAgreed', attempt.termsAgreed)
+    commit('birthDate', getters.getBirthdateAttributes(attempt))
+    commit('profileChoice', attempt.profileChoice)
+    commit('location', attempt)
+    commit('basicProfile', attempt)
+    commit('email', attempt.email)
     commit('isReady', true)
   },
 
@@ -94,8 +94,8 @@ export default {
         ...data,
         wizardToken: state.wizardToken,
       },
-    }).then(({ data: { data: { attributes }} }) => {
-      commit('basicProfile',  attributes)
+    }).then(({ data: { data: { attributes, relationships }} }) => {
+      commit('basicProfile',  Object.assign({}, attributes, relationships))
     }).catch(err => console.error(err))
   },
 }

@@ -2,6 +2,8 @@ class SignupAttemptSerializer
   include FastJsonapi::ObjectSerializer
   set_key_transform :camel_lower
 
+  has_many :expertises, class_name: "MentorProfileExpertises"
+
   attributes :email, :birth_year, :birth_month, :birth_day, :profile_choice,
     :city, :state_code, :country_code, :latitude, :longitude, :first_name,
     :last_name, :gender_identity, :school_company_name, :job_title,

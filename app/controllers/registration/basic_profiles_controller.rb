@@ -24,6 +24,7 @@ module Registration
         :referred_by_other,
         :wizard_token,
         :mentor_type,
+        expertise_ids: [],
       )
     end
   end

@@ -742,10 +742,11 @@ ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 
 CREATE TABLE public.mentor_profile_expertises (
     id integer NOT NULL,
-    mentor_profile_id integer NOT NULL,
+    mentor_profile_id integer,
     expertise_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    signup_attempt_id bigint
 );
 
 
@@ -2526,6 +2527,13 @@ CREATE INDEX index_mentor_profile_expertises_on_mentor_profile_id ON public.ment
 
 
 --
+-- Name: index_mentor_profile_expertises_on_signup_attempt_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentor_profile_expertises_on_signup_attempt_id ON public.mentor_profile_expertises USING btree (signup_attempt_id);
+
+
+--
 -- Name: index_mentor_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2783,6 +2791,14 @@ ALTER TABLE ONLY public.team_submissions
 
 ALTER TABLE ONLY public.regional_pitch_events_user_invitations
     ADD CONSTRAINT fk_rails_3bbe8623e3 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
+
+
+--
+-- Name: mentor_profile_expertises fk_rails_4e4dd86193; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentor_profile_expertises
+    ADD CONSTRAINT fk_rails_4e4dd86193 FOREIGN KEY (signup_attempt_id) REFERENCES public.signup_attempts(id);
 
 
 --
@@ -3120,6 +3136,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180731162422'),
 ('20180803154914'),
 ('20180803163656'),
-('20180814162134');
+('20180814162134'),
+('20180814163118'),
+('20180814163651');
 
 

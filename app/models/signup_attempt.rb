@@ -22,6 +22,12 @@ class SignupAttempt < ActiveRecord::Base
 
   belongs_to :account, required: false
 
+  has_many :mentor_profile_expertises,
+    dependent: :destroy
+
+  has_many :expertises,
+    through: :mentor_profile_expertises
+
   before_validation -> {
     self.email = (email || "").strip.downcase
   }
