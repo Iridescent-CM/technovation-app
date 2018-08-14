@@ -44,6 +44,9 @@ export const routes = [
     path: '/data-use',
     name: 'data-use',
     component: DataUseTerms,
+    meta: {
+      browserTitle: 'Step 1: Agreeement'
+    },
     beforeEnter: (_to, _from, next) => {
       if (!store.state.isReady) initiateApp()
       next()
@@ -53,30 +56,47 @@ export const routes = [
     path: '/age',
     name: 'age',
     component: AgeVerification,
+    meta: {
+      browserTitle: 'Step 3: Age'
+    },
     beforeEnter: requireDataAgreement,
   },
   {
-    path: '/location',
+    path: '/region',
     name: 'location',
     component: Location,
+    meta: {
+      browserTitle: 'Step 2: Region'
+    },
     beforeEnter: requireDataAgreement,
   },
   {
     path: '/basic-profile',
     name: 'basic-profile',
     component: BasicProfile,
+    meta: {
+      browserTitle: 'Step 5: Basic Profile'
+    },
     beforeEnter: requireDataAgreement,
   },
   {
-    path: '/login',
+    path: '/signin',
     name: 'login',
     component: Login,
+    meta: {
+      browserTitle: 'Final step: Sign In'
+    },
     beforeEnter: requireDataAgreement,
   },
 ]
 
 export const router = new VueRouter({
   routes,
+})
+
+router.afterEach((to, _from) => {
+  if(window && window.document)
+    window.document.title = to.meta.browserTitle + " • Technovation"
 })
 
 export default router
