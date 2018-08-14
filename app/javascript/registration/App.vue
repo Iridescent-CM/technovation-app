@@ -5,9 +5,9 @@
         :to="{ name: 'data-use' }"
       >
         <icon
-          :name="termsAgreed ? 'check-circle-o' : 'circle-o'"
+          :name="completedEnabledOrDisabledIcon(termsAgreed)"
           size="16"
-          :color="$route.name === 'data-use' ? '28A880' : '000000'"
+          :color="$route.name === 'data-use' ? '000000' : '28A880'"
         />
         {{ termsAgreed ? 'Terms agreed' : 'Data agreement' }}
       </tab-link>
@@ -17,9 +17,9 @@
         :disabled-tooltip="termsNotAgreedMessage"
       >
         <icon
-          :name="isLocationSet ? 'check-circle-o' : 'circle-o'"
+          :name="completedEnabledOrDisabledIcon(isLocationSet)"
           size="16"
-          :color="$route.name === 'location' ? '28A880' : '000000'"
+          :color="activeEnabledOrDisabledColor('location', termsAgreed)"
         />
         {{ regionLabel }}
       </tab-link>
@@ -29,9 +29,9 @@
         :disabled-tooltip="termsNotAgreedMessage"
       >
         <icon
-          :name="isAgeSet ? 'check-circle-o' : 'circle-o'"
+          :name="completedEnabledOrDisabledIcon(isAgeSet)"
           size="16"
-          :color="$route.name === 'age' ? '28A880' : '000000'"
+          :color="activeEnabledOrDisabledColor('age', termsAgreed)"
         />
         {{ ageLabel }}
       </tab-link>
@@ -41,9 +41,9 @@
         :disabled-tooltip="chooseProfileDisabledMessage"
       >
         <icon
-          :name="isProfileChosen ? 'check-circle-o' : 'circle-o'"
+          :name="completedEnabledOrDisabledIcon(isProfileChosen)"
           size="16"
-          :color="$route.name === 'choose-profile' ? '28A880' : '000000'"
+          :color="activeEnabledOrDisabledColor('choose-profile', (termsAgreed && isAgeSet))"
         />
         {{ profileChoice || "Choose Profile" | capitalize }}
       </tab-link>
@@ -53,9 +53,9 @@
         :disabled-tooltip="basicProfileDisabledMessage"
       >
         <icon
-          :name="isBasicProfileSet ? 'check-circle-o' : 'circle-o'"
+          :name="completedEnabledOrDisabledIcon(isBasicProfileSet)"
           size="16"
-          :color="$route.name === 'basic-profile' ? '28A880' : '000000'"
+          :color="activeEnabledOrDisabledColor('basic-profile', (termsAgreed && isAgeSet && isProfileChosen))"
         />
         {{ profileLabel }}
       </tab-link>
@@ -67,7 +67,7 @@
         <icon
           name="circle-o"
           size="16"
-          :color="$route.name === 'login' ? '28A880' : '000000'"
+          :color="activeEnabledOrDisabledColor('login', readyForAccount)"
         />
         Sign in
       </tab-link>
@@ -173,6 +173,25 @@ export default {
         return 'Please fill out other sections first'
 
       return ''
+    },
+  },
+
+  methods: {
+    completedEnabledOrDisabledIcon (conditionToComplete) {
+      if (conditionToComplete)
+        return 'check-circle'
+
+      return 'circle-o'
+    },
+
+    activeEnabledOrDisabledColor (routeName, conditionToEnable) {
+      if (this.$route.name === routeName)
+        return '000000'
+
+      if (conditionToEnable)
+        return '28A880'
+
+      return '999999'
     },
   },
 }
