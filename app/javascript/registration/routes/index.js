@@ -40,8 +40,59 @@ const requireDataAgreement = (to, _from, next) => {
   }
 }
 
+const onLoginStep = () => {
+  return !!store.getters.readyForAccount
+}
+
+const onChooseProfileStep = () => {
+  return !!(store.state.termsAgreed &&
+            store.getters.isAgeSet &&
+              !store.state.profileChoice)
+}
+
+const onBasicProfileStep = () => {
+  return !!(store.state.termsAgreed &&
+            store.getters.isAgeSet &&
+              store.state.profileChoice &&
+                store.getters.isLocationSet)
+}
+
+const onLocationStep = () => {
+  return !!(store.state.termsAgreed &&
+              store.getters.isAgeSet &&
+                store.state.profileChoice)
+}
+
+const onAgeStep = () => {
+  return !!store.state.termsAgreed
+}
+
+const getCurrentStep = () => {
+  let step = 'data-use'
+
+  if (onLoginStep()) {
+    return 'login'
+  } else if (onBasicProfileStep()) {
+    return 'basic-profile'
+  } else if (onChooseProfileStep()) {
+    return 'choose-profile'
+  } else if (onAgeStep()) {
+    return 'age'
+  } else if (onLocationStep()) {
+    return 'location'
+  }
+
+  return step
+}
+
 export const routes = [
-  { path: '/', redirect: { name: 'data-use' } },
+  {
+    path: '/',
+    beforeEnter: (_to, _from, next) => {
+      if (!store.state.isReady) initiateApp()
+      next({ name: getCurrentStep() })
+    },
+  },
   {
     path: '/data-use',
     name: 'data-use',
