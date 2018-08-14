@@ -38,11 +38,11 @@ export default {
     ...mapActions(['updateLocation']),
 
     handleBack () {
-      this.$router.push({ name: 'age' })
+      this.$router.push({ name: 'data-use' })
     },
 
     handleConfirm () {
-      this.$router.push({ name: 'basic-profile' })
+      this.$router.push({ name: 'age' })
     },
   },
 

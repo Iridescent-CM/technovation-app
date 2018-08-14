@@ -298,7 +298,7 @@ export default {
     },
 
     navigateBack () {
-      this.$router.push({ name: 'data-use' })
+      this.$router.push({ name: 'location' })
     },
   },
 }

@@ -5,11 +5,12 @@ import store from '../store'
 
 import DataUseTerms from '../components/DataUseTerms'
 
+import Location from '../components/Location'
+
 import AgeVerification from '../components/AgeVerification'
 import BasicProfile from '../components/BasicProfile'
 
 import Login from '../components/Login'
-import Location from '../components/Location'
 
 Vue.use(VueRouter)
 

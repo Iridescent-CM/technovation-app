@@ -13,6 +13,18 @@
       </tab-link>
 
       <tab-link
+        :to="{ name: 'location' }"
+        :disabled-tooltip="termsNotAgreedMessage"
+      >
+        <icon
+          :name="isLocationSet ? 'check-circle-o' : 'circle-o'"
+          size="16"
+          :color="$route.name === 'location' ? '28A880' : '000000'"
+        />
+        Region
+      </tab-link>
+
+      <tab-link
         :to="{ name: 'age' }"
         :disabled-tooltip="termsNotAgreedMessage"
       >
@@ -45,7 +57,7 @@
           size="16"
           :color="$route.name === 'basic-profile' ? '28A880' : '000000'"
         />
-        Basic Profile
+        Setup Profile
       </tab-link>
 
       <tab-link
@@ -57,7 +69,7 @@
           size="16"
           :color="$route.name === 'login' ? '28A880' : '000000'"
         />
-        Logging in
+        Sign in
       </tab-link>
     </ul>
 

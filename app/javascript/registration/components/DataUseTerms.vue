@@ -103,7 +103,7 @@ export default {
 
     handleSubmit () {
       if (!this.termsAgreed) return false
-      this.$router.push({ name: 'age' })
+      this.$router.push({ name: 'location' })
     },
   },
 }

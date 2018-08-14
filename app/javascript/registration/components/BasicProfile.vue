@@ -361,7 +361,7 @@ export default {
     },
 
     navigateBack () {
-      this.$router.push({ name: 'location' })
+      this.$router.push({ name: 'choose-profile' })
     },
   },
 }

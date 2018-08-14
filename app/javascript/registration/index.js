@@ -64,10 +64,10 @@ document.addEventListener('turbolinks:load', () => {
             return 'login'
           } else if (this.onBasicProfileStep) {
             return 'basic-profile'
-          } else if (this.onLocationStep) {
-            return 'location'
           } else if (this.onAgeStep) {
             return 'age'
+          } else if (this.onLocationStep) {
+            return 'location'
           }
 
           return step
