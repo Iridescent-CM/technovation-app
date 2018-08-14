@@ -68,8 +68,6 @@ const onAgeStep = () => {
 }
 
 const getCurrentStep = () => {
-  let step = 'data-use'
-
   if (onLoginStep()) {
     return 'login'
   } else if (onBasicProfileStep()) {
@@ -82,7 +80,7 @@ const getCurrentStep = () => {
     return 'location'
   }
 
-  return step
+  return 'data-use'
 }
 
 export const routes = [
