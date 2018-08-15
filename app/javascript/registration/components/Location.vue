@@ -19,22 +19,19 @@ export default {
     LocationForm,
   },
 
-  data () {
-    return {
-      locationData: {
-        city: "",
-        state: "",
-        country: "",
+  computed: {
+    locationData: {
+      get() {
+        return this.$store.getters.getLocation
       },
-    }
-  },
 
-  created () {
-    this.locationData = this.getLocation()
+      set(location) {
+        this.$store.commit('location', location)
+      },
+    },
   },
 
   methods: {
-    ...mapGetters(['getLocation']),
     ...mapActions(['updateLocation']),
 
     handleBack () {
