@@ -66,6 +66,12 @@
   height: 100%;
 }
 
+.hover--opacity-75:not(.opacity--100) {
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
 .list-style--none {
   list-style: none;
 }
@@ -124,6 +130,15 @@
 .margin--r-l-none {
   margin-right: 0;
   margin-left: 0;
+}
+
+.opacity--50 {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.opacity--100 {
+  opacity: 1;
 }
 
 .padding--none {

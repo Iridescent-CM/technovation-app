@@ -7,9 +7,20 @@
     <div class="panel__content">
       Due to your age, you can be a:
 
-      <ul class="margin--t-b-large margin--r-l-none padding--none list-style--none">
-        <li v-for="option in profileOptions" :key="option">
-          <label>
+      <div class="grid">
+        <div
+          :class="[
+            'grid__col-auto',
+            'opacity--50',
+            'hover--opacity-75',
+            getCSSForActiveOption(option)
+          ]"
+          v-for="option in profileOptions"
+          :key="option"
+        >
+          <label class="text-align--center">
+            <img :src="getProfileIconSrc(option)" />
+
             <input
               type="radio"
               name="profileChoice"
@@ -18,8 +29,8 @@
             />
             {{ option }}
           </label>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
 
     <div class="panel__bottom-bar">
@@ -118,6 +129,26 @@ export default {
 
     navigateBack () {
       this.$router.push({ name: 'age' })
+    },
+
+    getProfileIconSrc (choice) {
+      if (choice) {
+        const elem = document.getElementById('vue-enable-signup-wizard')
+        const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
+
+        if (choice === 'mentor' && this.$store.state.genderIdentity === 'Male') {
+          return elem.dataset.profileIconMentorMale
+        } else {
+          return elem.dataset[`profileIcon${capitalizedChoice}`]
+        }
+      } else {
+        return ''
+      }
+    },
+
+    getCSSForActiveOption (option) {
+      if (this.profileChoice === option)
+        return 'opacity--100'
     },
   },
 }
