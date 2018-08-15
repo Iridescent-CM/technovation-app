@@ -46,45 +46,7 @@ $(document).on("turbolinks:load", function() {
     });
   });
 
-  $(".close-tab-menu").on("click", function() {
-    $(this).hide();
-    closeTabMenu.bind(this)();
-  });
-
-  $(".open-tab-menu").on("click", function() {
-    $(this).hide();
-    openTabMenu.bind(this)();
-  });
-
   $(".tabs__content").on("click", closeTabMenu);
-
-  function closeTabMenu() {
-    var $menu = $(this).closest(".tabs").find(".tabs__menu");
-
-    if ($menu.data("open")) {
-      $menu
-        .data("closed", true)
-        .removeData("open")
-        .css({ left: "-100%" })
-        .closest(".tabs")
-        .find(".open-tab-menu")
-        .show();
-    }
-  }
-
-  function openTabMenu() {
-    var $menu = $(this).closest(".tabs").find(".tabs__menu");
-
-    if ($menu.data("closed")) {
-      $menu
-        .data("open", true)
-        .removeData("closed")
-        .css({ left: 0 })
-        .closest(".tabs")
-        .find(".close-tab-menu")
-        .show();
-    }
-  }
 
   function revealTab($_btn, $_contents, $_links) {
     if (!$_btn.data('tab-id'))
