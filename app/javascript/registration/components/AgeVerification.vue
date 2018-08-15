@@ -60,13 +60,14 @@
     </div>
 
     <div class="panel__bottom-bar">
-      <button
+      <a
         class="button float--left"
         @click.prevent="navigateBack"
       >
         Back
-      </button>
+      </a>
       <button
+        type="submit"
         class="button"
         :disabled="!nextStepEnabled"
         @click.prevent="handleSubmit"

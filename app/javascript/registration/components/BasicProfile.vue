@@ -110,12 +110,12 @@
     </div>
 
     <div class="panel__bottom-bar">
-      <button
+      <a
         class="button float--left"
         @click.prevent="navigateBack"
       >
         Back
-      </button>
+      </a>
       <button
         class="button"
         :disabled="!nextStepEnabled"

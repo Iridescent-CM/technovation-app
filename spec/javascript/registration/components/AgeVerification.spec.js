@@ -69,4 +69,14 @@ describe("Registration::Components::AgeVerification.vue", () => {
       expect(defaultWrapper.vm.days[27]).toEqual("28")
     })
   })
+
+  describe('markup', () => {
+    it('has one button element to prevent navigation issues when submitting', () => {
+      // Note: if this test is failing, you can change <button> to
+      // <a class="button"> for a similar effect
+      const buttons = defaultWrapper.findAll('button')
+
+      expect(buttons.length).toEqual(1)
+    })
+  })
 })

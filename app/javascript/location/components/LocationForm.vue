@@ -128,12 +128,12 @@
     </div>
 
     <div class="panel__bottom-bar">
-      <button
+      <a
         class="button float--left"
         @click.prevent="handleBack"
       >
         Back
-      </button>
+      </a>
       <p class="padding--none margin--none">
         <a
           href="#"

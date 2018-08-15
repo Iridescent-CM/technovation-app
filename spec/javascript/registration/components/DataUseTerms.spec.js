@@ -1,31 +1,17 @@
-
 import 'axios'
 import { defaultWrapperWithVuex } from '../../__utils__/technovation-test-utils'
-import ChooseProfile from 'registration/components/ChooseProfile'
+import DataUseTerms from 'registration/components/DataUseTerms'
 
 import mockStore from 'registration/store/__mocks__'
 
-describe("Registration::Components::ChooseProfile.vue", () => {
+describe("Registration::Components::DataUseTerms.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
     defaultWrapper = defaultWrapperWithVuex(
-      ChooseProfile,
+      DataUseTerms,
       mockStore,
-      {
-        actions: {
-          updateProfileChoice ({ commit }, choice) {
-            commit('profileChoice', choice)
-          },
-        },
-      }
     )
-  })
-
-  describe("computed.profileOptions", () => {
-    it('is an empty array by default', () => {
-      expect(defaultWrapper.vm.profileOptions).toEqual([])
-    })
   })
 
   describe('markup', () => {
