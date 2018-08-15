@@ -53,13 +53,8 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex'
-import VueSelect from '@vendorjs/vue-select'
 
 export default {
-  components: {
-    VueSelect,
-  },
-
   beforeRouteEnter (_to, from, next) {
     next(vm => {
       if (vm.isAgeSet) {

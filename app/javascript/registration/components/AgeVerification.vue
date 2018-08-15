@@ -8,6 +8,7 @@
       <div class="grid__col-7 grid__col--bleed">
         <label for="year">Year</label>
         <vue-select
+          :select-on-tab="true"
           input-id="year"
           :options="years"
           v-model="year"
@@ -15,6 +16,7 @@
 
         <label for="month">Month</label>
         <vue-select
+          :select-on-tab="true"
           input-id="month"
           :options="months"
           v-model="month"
@@ -22,6 +24,7 @@
 
         <label for="day">Day</label>
         <vue-select
+          :select-on-tab="true"
           input-id="day"
           :options="days"
           v-model="day"

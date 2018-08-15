@@ -7,6 +7,7 @@
       :value="mutableValue"
     />
     <vue-select
+      :select-on-tab="true"
       :input-id="id"
       :options="mutableOptions"
       v-model="mutableValue"

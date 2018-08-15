@@ -28,6 +28,7 @@
       <p v-show="isGenderRequired">
         <label for="gender">Gender identity</label>
         <vue-select
+          :select-on-tab="true"
           input-id="gender"
           :options="genderOptions"
           v-model="genderIdentity"
@@ -63,6 +64,7 @@
       <p v-show="profileChoice !== 'student'">
         <label for="mentorType">As a mentor, you may call me a(n)...</label>
         <vue-select
+          :select-on-tab="true"
           input-id="mentorType"
           :options="mentorTypeOptions"
           v-model="mentorType"
@@ -89,6 +91,7 @@
       <p>
         <label for="referredBy">How did you hear about Technovation? (optional)</label>
         <vue-select
+          :select-on-tab="true"
           input-id="referredBy"
           :options="referralOptions"
           v-model="referredBy"
