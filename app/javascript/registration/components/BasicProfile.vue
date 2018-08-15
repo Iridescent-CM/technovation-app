@@ -1,8 +1,5 @@
 <template>
-  <form
-    v-if="isAgeSet && profileChoice !== null"
-    class="panel panel--contains-bottom-bar panel--contains-top-bar"
-  >
+  <form class="panel panel--contains-bottom-bar panel--contains-top-bar">
     <div class="panel__top-bar">
       Basic Profile
     </div>

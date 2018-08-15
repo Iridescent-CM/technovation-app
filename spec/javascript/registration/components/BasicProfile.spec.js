@@ -18,7 +18,7 @@ describe("Registration::Components::BasicProfile.vue", () => {
         localVue,
         store: mockStore.createMocks().store,
         methods: {
-          getExpertiseOptions: jest.fn(() => {})
+          getExpertiseOptions: jest.fn(() => {}),
         },
       }
     )
@@ -38,6 +38,16 @@ describe("Registration::Components::BasicProfile.vue", () => {
       )
 
       expect(defaultWrapper.vm.referredByOther).toEqual('something')
+    })
+  })
+
+  describe('markup', () => {
+    it('has one button element to prevent navigation issues when submitting', () => {
+      // Note: if this test is failing, you can change <button> to
+      // <a class="button"> for a similar effect
+      const buttons = defaultWrapper.findAll('button')
+
+      expect(buttons.length).toEqual(1)
     })
   })
 })
