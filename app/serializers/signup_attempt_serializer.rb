@@ -13,7 +13,7 @@ class SignupAttemptSerializer
 
   attribute(:state) do |attempt|
     if country = Carmen::Country.coded(attempt.country_code)
-      country.subregions.coded(attempt.state_code.sub(".", ""))
+      country.subregions.coded((attempt.state_code || "").sub(".", ""))
     end
   end
 
