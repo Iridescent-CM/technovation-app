@@ -5,7 +5,7 @@ module Registration
         wizard_token: account_params.fetch(:wizard_token)
       )
 
-      account = Account.new({
+      account_attributes = {
         email: account_params.fetch(:email),
         password: account_params.fetch(:email),
 
@@ -28,16 +28,16 @@ module Registration
 
         referred_by: attempt.referred_by,
         referred_by_other: attempt.referred_by_other,
-      })
+      }
 
       profile_name = "#{attempt.profile_choice}_profile"
-      profile = account.public_send(
-        "build_#{profile_name}",
+      profile = profile_name.camelize.constantize.new(
         {
           school_company_name: attempt.school_company_name,
           job_title: attempt.job_title,
           mentor_type: attempt.mentor_type,
           expertise_ids: attempt.expertise_ids,
+          account_attributes: account_attributes,
         }
       )
 

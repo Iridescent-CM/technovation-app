@@ -157,7 +157,7 @@ class MentorProfile < ActiveRecord::Base
 
   after_validation -> { enable_searchability },
     on: :update,
-    if: -> { account.present? and account.country_changed? or bio_changed? }
+    if: -> { account.present? and account.country_changed? or saved_change_to_bio? }
 
   after_save { current_teams.find_each(&:touch) }
   after_touch { current_teams.find_each(&:touch) }
@@ -170,7 +170,7 @@ class MentorProfile < ActiveRecord::Base
   validates :bio,
     length: { minimum: 100 },
     allow_blank: true,
-    if: :bio_changed?
+    if: :saved_change_to_bio?
 
   delegate :submitted?,
            :candidate_id,
