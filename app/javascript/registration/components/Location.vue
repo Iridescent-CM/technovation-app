@@ -36,7 +36,6 @@ export default {
     ...mapActions(['updateLocation']),
 
     handleBack () {
-      console.log('Alan, handleBack')
       this.$router.push({ name: 'data-use' })
     },
 
