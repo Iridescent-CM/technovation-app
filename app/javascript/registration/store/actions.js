@@ -88,7 +88,19 @@ export default {
     }).catch(err => console.error(err))
   },
 
-  updateBasicProfile ({ commit, state }, data) {
+  updateBasicProfile ({ commit, state }, attrs) {
+    const data = Object.assign({}, {
+      firstName: state.firstName,
+      lastName: state.lastName,
+      genderIdentity: state.genderIdentity,
+      schoolCompanyName: state.schoolCompanyName,
+      jobTitle: state.jobTitle,
+      mentorType: state.mentorType,
+      expertiseIds: state.expertiseIds,
+      referredBy: state.referredBy,
+      referredByOther: state.referredByOther,
+    }, attrs)
+
     axios.post('/registration/basic_profile', {
       basicProfile: {
         ...data,
