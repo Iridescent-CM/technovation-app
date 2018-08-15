@@ -6,7 +6,6 @@ module Registration
       )
 
       account = Account.new({
-        id: 0,
         email: account_params.fetch(:email),
         password: account_params.fetch(:email),
 
@@ -31,22 +30,20 @@ module Registration
         referred_by_other: attempt.referred_by_other,
       })
 
-      profile = "#{attempt.profile_choice}_profile"
-      account.public_send(
-        "build_#{profile}",
+      profile_name = "#{attempt.profile_choice}_profile"
+      profile = account.public_send(
+        "build_#{profile_name}",
         {
           school_company_name: attempt.school_company_name,
           job_title: attempt.job_title,
         }
       )
 
-      #attempt.update!({ account_id: account.id })
-      #attempt.registered!
-
-      #remove_cookie(CookieNames::SIGNUP_TOKEN)
-
-      json = AccountSerializer.new(account, include: [profile]).serialized_json
-      render json: json
+      if profile.save
+        ProfileCreating.execute(profile, self)
+      else
+        render json: { errors: profile.errors }, status: :unprocessable_entity
+      end
     end
 
     private
