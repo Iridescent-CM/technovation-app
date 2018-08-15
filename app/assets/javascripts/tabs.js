@@ -46,8 +46,6 @@ $(document).on("turbolinks:load", function() {
     });
   });
 
-  $(".tabs__content").on("click", closeTabMenu);
-
   function revealTab($_btn, $_contents, $_links) {
     if (!$_btn.data('tab-id'))
       $_btn = $_btn.find('button').first();
