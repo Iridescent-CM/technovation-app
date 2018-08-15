@@ -4,6 +4,7 @@
     :handleBack="handleBack"
     :handleConfirm="handleConfirm"
     :showFinalCancel="false"
+    :showBackBtn="true"
     v-model="locationData"
   ></location-form>
 </template>

@@ -131,6 +131,7 @@
       <a
         class="button float--left"
         @click.prevent="handleBack"
+        v-if="showBackBtn"
       >
         Back
       </a>
@@ -201,6 +202,12 @@ export default {
       type: Function,
       required: false,
       default: () => history.back(),
+    },
+
+    showBackBtn: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
 
     handleConfirm: {
