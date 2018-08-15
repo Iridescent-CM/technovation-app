@@ -251,7 +251,7 @@
               },
 
               error: (err) => {
-                console.log(err);
+                console.error(err);
               },
             });
           } else {
@@ -305,7 +305,7 @@
           },
 
           error: (err) => {
-            console.log(err);
+            console.error(err);
           },
         });
       },

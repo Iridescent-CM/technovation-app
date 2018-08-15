@@ -369,12 +369,9 @@ export default {
       this.city = this.savedLocation.city
       this.state = this.savedLocation.state
       this.country = this.savedLocation.country
-      console.log('OK', status, data)
     },
 
     handleErrorResponse (err) {
-      console.error('ERR', err)
-
       this.searching = false
       this.status = err.response.status
 
