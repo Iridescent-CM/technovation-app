@@ -1,77 +1,81 @@
 <template>
   <div class="grid tabs tabs--vertical tabs--remove-bg tabs--css-only">
-    <ul class="grid__col-3 tabs__menu">
-      <tab-link
-        :to="{ name: 'data-use' }"
-      >
-        <icon
-          :name="completedEnabledOrDisabledIcon(termsAgreed)"
-          size="16"
-          :color="$route.name === 'data-use' ? '000000' : '28A880'"
-        />
-        {{ termsAgreed ? 'Terms agreed' : 'Data agreement' }}
-      </tab-link>
+    <div class="grid__col-3 col--sticky-parent">
+      <div class="col--sticky-spacer">
+        <ul class="tabs__menu col--sticky">
+          <tab-link
+            :to="{ name: 'data-use' }"
+          >
+            <icon
+              :name="completedEnabledOrDisabledIcon(termsAgreed)"
+              size="16"
+              :color="$route.name === 'data-use' ? '000000' : '28A880'"
+            />
+            {{ termsAgreed ? 'Terms agreed' : 'Data agreement' }}
+          </tab-link>
 
-      <tab-link
-        :to="{ name: 'location' }"
-        :disabled-tooltip="termsNotAgreedMessage"
-      >
-        <icon
-          :name="completedEnabledOrDisabledIcon(isLocationSet)"
-          size="16"
-          :color="activeEnabledOrDisabledColor('location', termsAgreed)"
-        />
-        {{ regionLabel }}
-      </tab-link>
+          <tab-link
+            :to="{ name: 'location' }"
+            :disabled-tooltip="termsNotAgreedMessage"
+          >
+            <icon
+              :name="completedEnabledOrDisabledIcon(isLocationSet)"
+              size="16"
+              :color="activeEnabledOrDisabledColor('location', termsAgreed)"
+            />
+            {{ regionLabel }}
+          </tab-link>
 
-      <tab-link
-        :to="{ name: 'age' }"
-        :disabled-tooltip="termsNotAgreedMessage"
-      >
-        <icon
-          :name="completedEnabledOrDisabledIcon(isAgeSet)"
-          size="16"
-          :color="activeEnabledOrDisabledColor('age', termsAgreed)"
-        />
-        {{ ageLabel }}
-      </tab-link>
+          <tab-link
+            :to="{ name: 'age' }"
+            :disabled-tooltip="termsNotAgreedMessage"
+          >
+            <icon
+              :name="completedEnabledOrDisabledIcon(isAgeSet)"
+              size="16"
+              :color="activeEnabledOrDisabledColor('age', termsAgreed)"
+            />
+            {{ ageLabel }}
+          </tab-link>
 
-      <tab-link
-        :to="{ name: 'choose-profile' }"
-        :disabled-tooltip="chooseProfileDisabledMessage"
-      >
-        <icon
-          :name="completedEnabledOrDisabledIcon(isProfileChosen)"
-          size="16"
-          :color="activeEnabledOrDisabledColor('choose-profile', (termsAgreed && isAgeSet))"
-        />
-        {{ profileChoice || "Choose Profile" | capitalize }}
-      </tab-link>
+          <tab-link
+            :to="{ name: 'choose-profile' }"
+            :disabled-tooltip="chooseProfileDisabledMessage"
+          >
+            <icon
+              :name="completedEnabledOrDisabledIcon(isProfileChosen)"
+              size="16"
+              :color="activeEnabledOrDisabledColor('choose-profile', (termsAgreed && isAgeSet))"
+            />
+            {{ profileChoice || "Choose Profile" | capitalize }}
+          </tab-link>
 
-      <tab-link
-        :to="{ name: 'basic-profile' }"
-        :disabled-tooltip="basicProfileDisabledMessage"
-      >
-        <icon
-          :name="completedEnabledOrDisabledIcon(isBasicProfileSet)"
-          size="16"
-          :color="activeEnabledOrDisabledColor('basic-profile', (termsAgreed && isAgeSet && isProfileChosen))"
-        />
-        {{ profileLabel }}
-      </tab-link>
+          <tab-link
+            :to="{ name: 'basic-profile' }"
+            :disabled-tooltip="basicProfileDisabledMessage"
+          >
+            <icon
+              :name="completedEnabledOrDisabledIcon(isBasicProfileSet)"
+              size="16"
+              :color="activeEnabledOrDisabledColor('basic-profile', (termsAgreed && isAgeSet && isProfileChosen))"
+            />
+            {{ profileLabel }}
+          </tab-link>
 
-      <tab-link
-        :to="{ name: 'login' }"
-        :disabled-tooltip="loginDisabledMessage"
-      >
-        <icon
-          name="circle-o"
-          size="16"
-          :color="activeEnabledOrDisabledColor('login', readyForAccount)"
-        />
-        Sign in
-      </tab-link>
-    </ul>
+          <tab-link
+            :to="{ name: 'login' }"
+            :disabled-tooltip="loginDisabledMessage"
+          >
+            <icon
+              name="circle-o"
+              size="16"
+              :color="activeEnabledOrDisabledColor('login', readyForAccount)"
+            />
+            Sign in
+          </tab-link>
+        </ul>
+      </div>
+    </div>
 
     <div class="grid__col-9">
       <transition name="router-fade">
@@ -174,6 +178,15 @@ export default {
 
       return ''
     },
+  },
+
+  mounted () {
+    if (jQuery)
+      $(".col--sticky").stick_in_parent({
+        parent: ".col--sticky-parent",
+        spacer: ".col--sticky-spacer",
+        recalc_every: 1,
+      })
   },
 
   methods: {
