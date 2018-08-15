@@ -148,6 +148,12 @@ class StudentProfile < ActiveRecord::Base
   def job_title=(*)
     false
   end
+  def mentor_type=(*)
+    false
+  end
+  def expertise_ids=(*)
+    false
+  end
 
   def participated?
     team.submission.present? &&

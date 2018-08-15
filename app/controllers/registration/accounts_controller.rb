@@ -36,6 +36,8 @@ module Registration
         {
           school_company_name: attempt.school_company_name,
           job_title: attempt.job_title,
+          mentor_type: attempt.mentor_type,
+          expertise_ids: attempt.expertise_ids,
         }
       )
 
