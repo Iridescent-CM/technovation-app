@@ -80,6 +80,10 @@
     }
   }
 
+  &.tabs__menu-button--tooltip {
+    margin-bottom: -15px;
+  }
+
   &[aria-hidden='true'] {
     visibility: hidden;
     opacity: 0;

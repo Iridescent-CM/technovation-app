@@ -19,7 +19,7 @@
   text-align: center;
   text-transform: none;
   transform: translateY(0);
-  transition: background-color 0.1s, box-shadow 0.1s, transform 0.1s;
+  transition: opacity 0.2s, background-color 0.2s, box-shadow 0.2s, transform 0.2s;
 
   .back-btn::before {
     border-style: solid;
@@ -151,6 +151,7 @@
   &.disabled {
     opacity: 0.5;
     pointer-events: none;
+    transition: opacity 0.2s;
 
     &:hover {
       background-color: $primary-mid;

@@ -9,7 +9,7 @@ class ConsentWaiversController < ApplicationController
         account_consent_token: params.fetch(:token)
       )
     else
-      redirect_to application_dashboard_path,
+      redirect_to public_dashboard_path,
         alert: t("controllers.consent_waivers.new.unauthorized")
     end
   end

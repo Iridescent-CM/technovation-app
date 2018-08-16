@@ -1,21 +1,14 @@
 module Mentor
   class LocationsController < MentorController
-    def update
-      if team_id = params.fetch(:team_id) { false }
-        record = current_mentor.current_teams.find(team_id)
-      else
-        record = current_account
-      end
-
-      data, status = HandleGeocoderSearch.(record, location_params)
-
-      render json: data, status: status
-    end
+    include LocationController
 
     private
-    def location_params
-      params.require(:mentor_location)
-        .permit(:city, :state_code, :country_code)
+    def db_record
+      @db_record ||= if team_id = params.fetch(:team_id) { false }
+        current_mentor.current_teams.find(team_id)
+      else
+        current_account
+      end
     end
   end
 end

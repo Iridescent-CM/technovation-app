@@ -115,7 +115,7 @@ export default function Attendee (json) {
       success: opts.callback,
 
       error: (err) => {
-        console.log(err);
+        console.error(err);
       },
     })
   }

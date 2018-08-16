@@ -75,6 +75,26 @@
       &:hover {
         color: black;
       }
+
+      &.disabled {
+        cursor: not-allowed;
+
+        &:hover {
+          color: #999;
+        }
+      }
+    }
+  }
+
+  &.tabs--remove-bg {
+    background: none !important;
+
+    .tabs__menu {
+      background: none !important;
+
+      .tabs__menu-link--active {
+        background: none !important;
+      }
     }
   }
 
@@ -112,62 +132,5 @@
 
   &:hover {
     background: white;
-  }
-}
-
-@media (max-width: 767px) {
-  .tabs {
-    -webkit-font-smoothing: antialiased;
-
-    &.tabs--vertical {
-      position: relative;
-
-      .close-tab-menu,
-      .open-tab-menu {
-        line-height: 1;
-        font-size: 2rem;
-        background: $primary-dark;
-        box-shadow: $shadow-darker;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: $z-under-shade;
-        color: white;
-        padding: 0.5rem;
-      }
-
-      .tabs__tab-content {
-        padding: 0;
-      }
-
-      .tabs__menu {
-        position: absolute;
-        left: -100%;
-        top: 3rem;
-        z-index: $z-under-shade;
-        padding: 0;
-        box-shadow: $shadow-darker;
-        background: $primary-dark;
-        transition: left 0.5s;
-        opacity: 0.9;
-
-        .tabs__menu-link {
-          .tabs__menu-button {
-            padding: 0.75rem 2rem;
-            font-size: 1.5rem;
-            color: white;
-            border-bottom-color: #999;
-
-            &:hover {
-              background: $primary-mid;
-            }
-          }
-
-          &.tabs__menu-link--active {
-            background: $primary-mid;
-          }
-        }
-      }
-    }
   }
 }

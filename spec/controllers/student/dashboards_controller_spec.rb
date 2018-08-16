@@ -11,7 +11,10 @@ RSpec.describe Student::DashboardsController do
           get :show
         }.to change {
           controller.get_cookie(CookieNames::IP_GEOLOCATION)
-        }.to ([student.latitude, student.longitude])
+        }.to ({
+          'ip_address' => request.remote_ip,
+          'coordinates' => [student.latitude, student.longitude],
+        })
       end
     end
 
