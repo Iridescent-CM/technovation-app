@@ -12,6 +12,7 @@ Geocoder.configure({
   },
 
   cache: Rails.cache,
+  ip_lookup: :ipapi_com,
   timeout: 15,
   lookup: :google_places_search,
 })
