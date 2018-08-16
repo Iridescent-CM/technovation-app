@@ -19,7 +19,7 @@ Vue.use(TurbolinksAdapter)
 import '../config/axios'
 import '../registration'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('turbolinks:load', function () {
   const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn')
 
   for (let i = 0; i < buttonElems.length; i += 1) {
