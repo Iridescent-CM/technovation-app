@@ -95,6 +95,26 @@ export default {
 
     ...mapGetters(['isAgeSet', 'getAge', 'getAgeByCutoff', 'getBirthdate']),
 
+    profileChoice: {
+      get () {
+        return this.$store.state.profileChoice
+      },
+
+      set (choice) {
+        this.$store.commit('profileChoice', choice)
+      },
+    },
+
+    genderIdentity: {
+      get () {
+        return this.$store.state.genderIdentity
+      },
+
+      set (identity) {
+        this.$store.commit('genderIdentity', identity)
+      },
+    },
+
     age () {
       return this.getAge()
     },
@@ -199,6 +219,14 @@ export default {
   },
 
   watch: {
+    getAgeByCutoff (value) {
+      if (value && value < 19 && this.genderIdentity !== 'Male') {
+        this.profileChoice = 'student'
+      } else if (value && value < 19 && this.genderIdentity === 'Male') {
+        this.genderIdentity = null
+      }
+    },
+
     year (value) {
       this.updateBirthdate({ year: value, month: this.month, day: this.day })
     },
