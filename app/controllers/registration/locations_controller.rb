@@ -14,6 +14,7 @@ module Registration
       state_code = if country
         state_param = (custom_location_params[:state] || "").strip
         state = country.subregions.named(state_param)
+        state ||= country.subregions.coded(state_param)
         state && state.code
       else
         nil
