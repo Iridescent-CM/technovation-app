@@ -1,3 +1,6 @@
+// ******** POLYFILLS
+//= require ie11-polyfills
+
 // ******** VENDOR
 //
 //= require turbolinks
