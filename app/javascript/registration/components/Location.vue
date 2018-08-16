@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { debounce } from 'utilities/utilities'
 import { mapGetters, mapActions } from 'vuex'
 import LocationForm from 'location/components/LocationForm'
 
@@ -18,6 +19,13 @@ export default {
 
   components: {
     LocationForm,
+  },
+
+  created() {
+    this.debouncedLocationUpdate = debounce(newLocation => {
+      console.log('called debouncedLocationUpdate', newLocation)
+      this.updateLocation(newLocation)
+    }, 500)
   },
 
   computed: {
@@ -50,7 +58,7 @@ export default {
         return newLocation[key] !== oldLocation[key]
       })
 
-      if (locationChanged) this.updateLocation(newLocation)
+      if (locationChanged) this.debouncedLocationUpdate(newLocation)
     },
   },
 }

@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import debounce from 'lodash/debounce'
+import { debounce } from 'utilities/utilities'
 import { mapState, mapGetters, mapActions } from 'vuex'
 import VueSelect from '@vendorjs/vue-select'
 import AutocompleteInput from 'components/AutocompleteInput'
