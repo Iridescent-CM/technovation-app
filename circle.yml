@@ -16,6 +16,7 @@ jobs:
           AIRBRAKE_PROJECT_KEY: n-a
           NEW_RELIC_LICENSE_KEY: n-a
           GOOGLE_MAPS_API_KEY: n-a
+          GOOGLE_PLACES_API_KEY: n-a
           HOST_DOMAIN: localhost:3000
           AWS_BUCKET_NAME: technovation-attachments-test
           CAMPAIGN_MONITOR_API_KEY: n-a

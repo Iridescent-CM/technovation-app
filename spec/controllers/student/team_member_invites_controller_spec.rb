@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe Student::TeamMemberInvitesController do
   before { SeasonToggles.team_building_enabled! }
 
+  before(:each) do
+    SeasonToggles.judging_round = :off
+  end
+
   describe "POST #create" do
     let(:student) { FactoryBot.create(:student, :on_team, :geocoded) }
 
@@ -106,8 +110,6 @@ RSpec.describe Student::TeamMemberInvitesController do
     end
 
     it "shows a friendly message if accepting, but the current date is between judging rounds" do
-      SeasonToggles.judging_round = :off
-
       semifinals_start_date = DateTime.new(
         Season.current.year,
         SeasonToggles::JudgingRoundToggles::SEMIFINALS_START_MONTH,
