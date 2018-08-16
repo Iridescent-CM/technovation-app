@@ -312,15 +312,27 @@ export default {
     },
 
     city (value) {
-      this.$emit('input', Object.assign({}, this.value, { city: value }))
+      this.$emit('input', Object.assign({}, {
+        city: value,
+        state: this.state,
+        country: this.country,
+      }))
     },
 
     state (value) {
-      this.$emit('input', Object.assign({}, this.value, { state: value }))
+      this.$emit('input', Object.assign({}, {
+        city: this.city,
+        state: value,
+        country: this.country,
+      }))
     },
 
     country (value) {
-      this.$emit('input', Object.assign({}, this.value, { country: value }))
+      this.$emit('input', Object.assign({}, {
+        city: this.city,
+        state: this.state,
+        country: value,
+      }))
     },
   },
 
