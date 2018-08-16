@@ -13,7 +13,12 @@ module Public
         @signup_attempt = SignupAttempt.wizard.find_by(wizard_token: token)
 
         if !@signup_attempt.country_code
-          if result = Geocoder.search(get_cookie(CookieNames::IP_GEOLOCATION)['coordinates']).first
+
+          if result = Geocoder.search(
+              get_cookie(CookieNames::IP_GEOLOCATION)['coordinates'],
+              lookup: :google
+            ).first
+
             geocoded = Geocoded.new(result)
             @signup_attempt.update({
               city: geocoded.city,
@@ -22,8 +27,11 @@ module Public
               latitude: geocoded.latitude,
               longitude: geocoded.longitude,
             })
+
           end
+
         end
+
       end
     end
 

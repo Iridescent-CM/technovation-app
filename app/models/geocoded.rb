@@ -38,14 +38,17 @@ class Geocoded
     @country_code = country_result && country_result.alpha2
     @country = country_result && country_result.name
 
-    if maybe_palestine?(geocoder_result)
+    if suggest_palestine?(geocoder_result)
       @country_code = "PS"
       @country = "State of Palestine"
     end
+
+    @country_code ||= geocoder_result.country_code
+    @country ||= geocoder_result.country
   end
 
-  def maybe_palestine?(result)
-    return false unless result.country.blank?
+  def suggest_palestine?(result)
+    return false unless result.country.blank? || (result.country || "").match?(/west bank/i)
 
     lat = Float(result.latitude)
     lng = Float(result.longitude)

@@ -8,7 +8,12 @@ module Registration
       attempt.set_terms_agreed(terms_agreement_params[:terms_agreed])
 
       if !attempt.country_code
-        if result = Geocoder.search(get_cookie(CookieNames::IP_GEOLOCATION)['coordinates']).first
+
+        if result = Geocoder.search(
+            get_cookie(CookieNames::IP_GEOLOCATION)['coordinates'],
+            lookup: :google,
+          ).first
+
           geocoded = Geocoded.new(result)
           attempt.update({
             city: geocoded.city,
@@ -17,7 +22,9 @@ module Registration
             latitude: geocoded.latitude,
             longitude: geocoded.longitude,
           })
+
         end
+
       end
 
       set_cookie(CookieNames::SIGNUP_TOKEN, attempt.wizard_token)

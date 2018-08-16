@@ -77,7 +77,20 @@ module HandleGeocoderSearch
 
     def initialize(geocoder_results, query = nil)
       @results = geocoder_results.map { |result|
-        Geocoded.new(result, query)
+        geocoded = Geocoded.new(result, query)
+
+        if !geocoded.valid?
+          data = (result.data['geocodePoints'] || [{}]).first['coordinates']
+          data ||= result.data.fetch('geometry') { { 'location' => {} } }['location'].values
+
+          if my_result = Geocoder.search(data, lookup: :google).first
+            geocoded = Geocoded.new(my_result)
+          else
+            geocoded
+          end
+        end
+
+        geocoded
       }.uniq { |geocoded|
         [geocoded.city, geocoded.state_code, geocoded.country_code]
       }
