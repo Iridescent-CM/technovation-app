@@ -104,10 +104,14 @@ module HandleGeocoderSearch
 
     private
     def get_country_code
-      country_result = Country.find_country_by_name(country) ||
-                        Country.find_country_by_alpha3(country) ||
-                          Country.find_country_by_alpha2(country)
-      country_result && country_result.alpha2
+      if country.match(/palestine/i)
+        "PS"
+      else
+        country_result = Country.find_country_by_name(country) ||
+                          Country.find_country_by_alpha3(country) ||
+                            Country.find_country_by_alpha2(country)
+        country_result && country_result.alpha2
+      end
     end
   end
 end
