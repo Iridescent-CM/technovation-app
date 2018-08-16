@@ -65,7 +65,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['months', 'birthMonth']),
+    ...mapState(['months', 'birthMonth', 'genderIdentity']),
 
     ...mapGetters(['getAge', 'getAgeByCutoff', 'isAgeSet', 'getBirthdate']),
 
@@ -88,17 +88,17 @@ export default {
         case (!this.getAge()):
           return []
 
-        case (this.getAge() < 14): {
+        case (this.genderIdentity !== 'Male' && this.getAge() < 14): {
           this.profileChoice = 'student'
           return ['student']
         }
 
-        case (this.getAge() >= 14 && this.getAgeByCutoff < 19):
-          return ['mentor', 'student']
-
         case (this.getAgeByCutoff > 18):
           this.profileChoice = 'mentor'
           return ['mentor']
+
+        case (this.genderIdentity !== 'Male' && this.getAge() >= 14 && this.getAgeByCutoff < 19):
+          return ['mentor', 'student']
       }
     },
   },
