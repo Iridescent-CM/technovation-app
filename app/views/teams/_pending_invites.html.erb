@@ -5,9 +5,16 @@
     <div class="grid__col-auto grid__col--bleed-x">
       <h3 class="reset">Invites sent</h1>
 
-      <p class="hint">
-        Your team is waiting for these people to accept your invitations
-      </p>
+      <% if SeasonToggles.judging_enabled_or_between? %>
+        <p class="hint">
+          Judging has begun or we are in between judging rounds, so other students
+          and mentors will not see these invitations.
+        </p>
+      <% else %>
+        <p class="hint">
+          Your team is waiting for these people to accept your invitations.
+        </p>
+      <% end %>
 
       <ul class="reset">
         <% invites.each do |invite| %>
