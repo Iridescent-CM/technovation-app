@@ -13,4 +13,5 @@ Geocoder.configure({
 
   cache: Rails.cache,
   timeout: 15,
+  lookup: :google_places_search,
 })

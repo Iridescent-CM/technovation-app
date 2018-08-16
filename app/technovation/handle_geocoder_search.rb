@@ -12,7 +12,7 @@ module HandleGeocoderSearch
 
   private
   def self.handle_search(db_record, geocoder_query)
-    results = GeocodedResults.new(search_geocoder(geocoder_query))
+    results = GeocodedResults.new(search_geocoder(geocoder_query), geocoder_query)
 
     if results.one?
       handle_one_result(db_record, results.first)
@@ -42,7 +42,7 @@ module HandleGeocoderSearch
 
   def self.search_geocoder(geocoder_query)
     query = String(geocoder_query)
-    results = Geocoder.search(query, lookup: :google_places_search)
+    results = Geocoder.search(query)
 
     if results.none? && !Rails.env.test?
       Geocoder.search(query, lookup: :bing)
@@ -75,9 +75,9 @@ module HandleGeocoderSearch
   class GeocodedResults
     include Enumerable
 
-    def initialize(geocoder_results)
+    def initialize(geocoder_results, query = nil)
       @results = geocoder_results.map { |result|
-        Geocoded.new(result)
+        Geocoded.new(result, query)
       }.uniq { |geocoded|
         [geocoded.city, geocoded.state_code, geocoded.country_code]
       }
@@ -104,7 +104,7 @@ module HandleGeocoderSearch
 
     private
     def get_country_code
-      if country.match(/palestine/i)
+      if country && country.match(/palestine/i)
         "PS"
       else
         country_result = Country.find_country_by_name(country) ||

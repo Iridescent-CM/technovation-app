@@ -2,13 +2,13 @@ class Geocoded
   attr_reader :id, :city, :state_code, :state, :country, :country_code,
    :latitude, :longitude
 
-  def initialize(geocoder_result)
+  def initialize(geocoder_result, query = nil)
     @id = SecureRandom.hex(4)
     @state_code = geocoder_result.state_code
     @state = geocoder_result.state
     @latitude = geocoder_result.latitude
     @longitude = geocoder_result.longitude
-    set_city(geocoder_result)
+    set_city(geocoder_result, query)
     set_country(geocoder_result)
   end
 
@@ -17,11 +17,15 @@ class Geocoded
   end
 
   private
-  def set_city(geocoder_result)
+  def set_city(geocoder_result, query)
     @city = geocoder_result.city
 
     if @city.blank?
       @city = geocoder_result.data.fetch("address") { {} }["adminDistrict2"]
+    end
+
+    if @city.blank? && query && query.city
+      @city = query.city
     end
   end
 
