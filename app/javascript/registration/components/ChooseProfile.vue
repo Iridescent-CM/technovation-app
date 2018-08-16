@@ -98,6 +98,7 @@ export default {
           return ['mentor']
 
         case (this.genderIdentity !== 'Male' && this.getAge() >= 14 && this.getAgeByCutoff < 19):
+          this.profileChoice = 'student'
           return ['mentor', 'student']
       }
     },
