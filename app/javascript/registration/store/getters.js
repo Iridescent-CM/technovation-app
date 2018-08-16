@@ -54,6 +54,7 @@ export default {
                   state.lastName &&
                     state.schoolCompanyName &&
                       state.jobTitle &&
+                        state.mentorType &&
                           state.genderIdentity)
     }
   },
