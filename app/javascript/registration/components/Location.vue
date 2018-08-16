@@ -23,7 +23,6 @@ export default {
 
   created() {
     this.debouncedLocationUpdate = debounce(newLocation => {
-      console.log('called debouncedLocationUpdate', newLocation)
       this.updateLocation(newLocation)
     }, 500)
   },
