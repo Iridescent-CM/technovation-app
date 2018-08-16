@@ -7,13 +7,12 @@
     <div class="panel__content">
       Due to your age, you can be a:
 
-      <div class="grid">
+      <div class="grid grid--justify-space-around">
         <div
           :class="[
-            'grid__col-auto',
             'opacity--50',
             'hover--opacity-75',
-            getCSSForActiveOption(option)
+            getCSSForOption(option)
           ]"
           v-for="option in profileOptions"
           :key="option"
@@ -95,7 +94,7 @@ export default {
         }
 
         case (this.getAge() >= 14 && this.getAgeByCutoff < 19):
-          return ['student', 'mentor']
+          return ['mentor', 'student']
 
         case (this.getAgeByCutoff > 18):
           this.profileChoice = 'mentor'
@@ -141,9 +140,14 @@ export default {
       }
     },
 
-    getCSSForActiveOption (option) {
+    getCSSForOption (option) {
+      if (this.profileOptions.length === 1)
+        return 'opacity--100 grid__col-6'
+
       if (this.profileChoice === option)
-        return 'opacity--100'
+        return 'opacity--100 grid__col-auto'
+
+      return 'grid__col-auto'
     },
   },
 }
