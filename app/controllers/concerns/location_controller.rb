@@ -13,7 +13,7 @@ module LocationController
   private
   def location_params
     params.require("#{current_scope}_location")
-      .permit(:city, :state_code, :country_code)
+      .permit(:city, :state, :country)
   end
 
   def db_record
