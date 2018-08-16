@@ -208,17 +208,19 @@ RSpec.configure do |config|
       )
     end
 
-    Geocoder::Lookup::Test.add_stub(
-      "Salvador, Bahia, Brazil", [{
-        "latitude"     => -12.7872335,
-        "longitude"    => -38.3067572,
-        'address'      => 'Salvador, Bahia, Brazil',
-        'state'        => 'Bahia',
-        'city'         => 'Salvador',
-        'state_code'   => 'BH',
-        'country'      => 'Brazil',
-        'country_code' => 'BR',
-      }]
-    )
+    ["Salvador, BH, Brazil", "Salvador, Bahia, Brazil"].each do |loc|
+      Geocoder::Lookup::Test.add_stub(
+        loc, [{
+          "latitude"     => -12.7872335,
+          "longitude"    => -38.3067572,
+          'address'      => 'Salvador, Bahia, Brazil',
+          'state'        => 'Bahia',
+          'city'         => 'Salvador',
+          'state_code'   => 'BH',
+          'country'      => 'Brazil',
+          'country_code' => 'BR',
+        }]
+      )
+    end
   end
 end
