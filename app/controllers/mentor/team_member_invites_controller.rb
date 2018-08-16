@@ -3,7 +3,7 @@ module Mentor
     include TeamMemberInviteController
 
     def update
-      if SeasonToggles.enabled_or_between?
+      if SeasonToggles.judging_enabled_or_between?
         redirect_to mentor_dashboard_path,
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
       elsif invite = current_mentor.mentor_invites.pending.find_by(

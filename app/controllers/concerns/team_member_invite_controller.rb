@@ -6,7 +6,7 @@ module TeamMemberInviteController
       invite_token: params.fetch(:id)
     ) || ::NullInvite.new
 
-    if SeasonToggles.enabled_or_between?
+    if SeasonToggles.judging_enabled_or_between?
       redirect_to [current_scope, :dashboard],
         alert: t("views.team_member_invites.show.invites_disabled_by_judging")
     elsif @invite.invitee and @invite.invitee != current_profile

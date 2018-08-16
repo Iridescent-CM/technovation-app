@@ -8,7 +8,7 @@
 
     <h1 class="content-heading">Team invitations</h1>
 
-    <% if SeasonToggles.enabled_or_between? %>
+    <% if SeasonToggles.judging_enabled_or_between? %>
       <p>
         <%= t("views.team_member_invites.show.invites_disabled_by_judging") %>
       </p>

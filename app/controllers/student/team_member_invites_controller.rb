@@ -17,7 +17,7 @@ module Student
 
     private
     def invites_are_disabled_by_judging
-      if SeasonToggles.enabled_or_between?
+      if SeasonToggles.judging_enabled_or_between?
         redirect_to student_dashboard_path,
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
       end

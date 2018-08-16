@@ -93,7 +93,7 @@ class SeasonToggles
         end
       end
 
-      def enabled_or_between?
+      def judging_enabled_or_between?
         judging_enabled? || between_rounds?(nil)
       end
 
