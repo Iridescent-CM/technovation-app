@@ -8,7 +8,11 @@
 
     <h1 class="content-heading">Team invitations</h1>
 
-    <% if invites.any? %>
+    <% if SeasonToggles.judging_enabled_or_between? %>
+      <p>
+        <%= t("views.team_member_invites.show.invites_disabled_by_judging") %>
+      </p>
+    <% elsif invites.any? %>
       <p>You have been invited!</p>
 
       <% if current_scope == :student and invites.many? %>
