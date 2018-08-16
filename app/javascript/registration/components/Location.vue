@@ -1,0 +1,57 @@
+<template>
+  <location-form
+    scope-name="registration"
+    :handleBack="handleBack"
+    :handleConfirm="handleConfirm"
+    :showFinalCancel="false"
+    :showBackBtn="true"
+    v-model="locationData"
+  ></location-form>
+</template>
+
+<script>
+import { mapGetters, mapActions } from 'vuex'
+import LocationForm from 'location/components/LocationForm'
+
+export default {
+  name: 'location',
+
+  components: {
+    LocationForm,
+  },
+
+  computed: {
+    locationData: {
+      get() {
+        return this.$store.getters.getLocation
+      },
+
+      set(location) {
+        this.$store.commit('location', location)
+      },
+    },
+  },
+
+  methods: {
+    ...mapActions(['updateLocation']),
+
+    handleBack () {
+      this.$router.push({ name: 'data-use' })
+    },
+
+    handleConfirm () {
+      this.$router.push({ name: 'age' })
+    },
+  },
+
+  watch: {
+    locationData (newLocation, oldLocation) {
+      const locationChanged = Object.keys(newLocation).some((key) => {
+        return newLocation[key] !== oldLocation[key]
+      })
+
+      if (locationChanged) this.updateLocation(newLocation)
+    },
+  },
+}
+</script>

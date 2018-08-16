@@ -12,9 +12,8 @@ RSpec.feature "Reset your forgotten password" do
 
     SeasonToggles.enable_signup(scope)
 
-    visit root_path
+    visit signin_path
 
-    click_link "sign in now"
     click_link "Reset your password"
   end
 
@@ -107,7 +106,7 @@ RSpec.feature "Reset your forgotten password" do
     click_button "Save"
 
     click_link "Logout"
-    click_link "sign in now"
+    visit signin_path
 
     fill_in "Email", with: account.email
     fill_in "Password", with: "greatnewsecret"

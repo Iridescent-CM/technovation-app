@@ -26,13 +26,13 @@ RSpec.describe "Admins invite users to signup", :js do
       url = send(
         "#{scope}_signup_url",
         admin_permission_token: token,
-        host: ENV["HOST_DOMAIN"],
+        host: ENV["HOST_DOMAIN"]
       )
 
       expect(mail.to).to eq([email])
       expect(mail.body).to include("href=\"#{url}\"")
 
-      visit(url)
+      visit(send("#{scope}_signup_path", admin_permission_token: token))
 
       expect(current_path).to eq(send("#{scope}_signup_path"))
     end

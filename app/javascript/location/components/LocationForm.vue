@@ -4,14 +4,14 @@
     @submit.prevent="handleSubmit"
   >
     <div class="panel__top-bar">
-      Confirm the location that we have on file for {{ subject }}
+      Confirm {{ subjectPossessive }} region
     </div>
 
     <div
       v-if="isNotFound"
       class="flash flash--error"
     >
-      We're sorry, but we cannot find a location with that information.
+      We're sorry, but we cannot find a region with that information.
     </div>
 
     <div
@@ -24,14 +24,22 @@
 
     <div class="panel__content">
       <template v-if="savedLocation">
-        <p class="padding--t-r-l-none margin--t-r-l-none margin--b-medium">
-          We have saved {{ subjectPossessive }} location as:
+        <p class="padding--t-r-l-none margin--t-r-l-none margin--b-large">
+          We have saved {{ subjectPossessive }} region as:
         </p>
 
         <div class="Rtable Rtable--3cols">
-          <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
-          <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
-          <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
+          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+            <h6 class="margin--none">City</h6>
+          </div>
+
+          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+            <h6 class="margin--none">State / Province</h6>
+          </div>
+
+          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+            <h6 class="margin--none">Country / Territory</h6>
+          </div>
         </div>
 
         <div class="Rtable Rtable--3cols">
@@ -40,7 +48,7 @@
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ savedLocation.stateCode || "(no state/province)" }}
+            {{ savedLocation.state || "(no state/province)" }}
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
@@ -67,7 +75,7 @@
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ suggestion.stateCode || "(no state/province)" }}
+            {{ suggestion.state || "(no state/province)" }}
           </div>
 
           <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
@@ -86,6 +94,7 @@
           type="text"
           id="location_city"
           ref="cityField"
+          autocomplete="address-level2"
           v-model="city"
         />
 
@@ -94,7 +103,8 @@
         <input
           type="text"
           id="location_state"
-          v-model="stateCode"
+          autocomplete="address-level1"
+          v-model="state"
         />
 
         <label for="location_country">Country / Territory</label>
@@ -102,7 +112,8 @@
         <input
           type="text"
           id="location_country"
-          v-model="countryCode"
+          autocomplete="country-name"
+          v-model="country"
         />
 
         <a
@@ -117,10 +128,18 @@
     </div>
 
     <div class="panel__bottom-bar">
+      <a
+        class="button float--left"
+        @click.prevent="handleBack"
+        v-if="showBackBtn"
+      >
+        Back
+      </a>
       <p class="padding--none margin--none">
         <a
           href="#"
           class="color--secondary"
+          v-if="showCancel"
           @click.prevent="handleCancel"
         >
           {{ cancelText }}
@@ -146,8 +165,8 @@ export default {
   data () {
     return {
       city: "",
-      stateCode: "",
-      countryCode: "",
+      state: "",
+      country: "",
       suggestions: [],
       savedLocation: null,
       searching: false,
@@ -172,20 +191,56 @@ export default {
       type: String,
       required: true,
     },
+
+    value: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+
+    handleBack: {
+      type: Function,
+      required: false,
+      default: () => history.back(),
+    },
+
+    showBackBtn: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+
+    handleConfirm: {
+      type: Function,
+      required: false,
+      default: () => history.back(),
+    },
+
+    showFinalCancel: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
 
   created () {
-    window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
-      this.city = data.city
-      this.stateCode = data.state_code
-      this.countryCode = data.country_code
-    })
+    if (this.value) {
+      this.city = this.value.city
+      this.state = this.value.state
+      this.country = this.value.country
+    } else {
+      window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
+        this.city = data.city
+        this.state = data.state
+        this.country = data.country
+      })
+    }
   },
 
   computed: {
     cancelText () {
       if (this.savedLocation) {
-        return 'change location'
+        return 'change region'
       } else {
         return 'cancel'
       }
@@ -196,16 +251,6 @@ export default {
         return 'Confirm'
       } else {
         return 'Next'
-      }
-    },
-
-    subject () {
-      if (this.accountId) {
-        return 'this person'
-      } else if (this.teamId) {
-        return 'this team'
-      } else {
-        return 'you'
       }
     },
 
@@ -225,8 +270,8 @@ export default {
 
     formHasInput () {
       return (this.city && this.city.length) ||
-              (this.stateCode && this.stateCode.length) ||
-                (this.countryCode && this.countryCode.length)
+              (this.state && this.state.length) ||
+                (this.country && this.country.length)
     },
 
     getCurrentLocationEndpoint () {
@@ -243,11 +288,15 @@ export default {
 
       params[rootParamName] = {
         city: this.city,
-        state_code: this.stateCode,
-        country_code: this.countryCode,
+        state: this.state,
+        country: this.country,
       }
 
       return params
+    },
+
+    showCancel () {
+      return this.showFinalCancel || this.savedLocation
     },
   },
 
@@ -261,12 +310,24 @@ export default {
           // no op
       }
     },
+
+    city (value) {
+      this.$emit('input', Object.assign({}, this.value, { city: value }))
+    },
+
+    state (value) {
+      this.$emit('input', Object.assign({}, this.value, { state: value }))
+    },
+
+    country (value) {
+      this.$emit('input', Object.assign({}, this.value, { country: value }))
+    },
   },
 
   methods: {
     handleSubmit () {
       if (this.savedLocation) {
-        history.back()
+        this.handleConfirm()
       } else if (!this.formHasInput) {
         this.handleErrorResponse({ response: { status: 404 } })
       } else {
@@ -284,16 +345,20 @@ export default {
 
     handleCancel () {
       if (this.savedLocation) {
-        this.resetAll()
+        this.resetMeta()
+        this.$nextTick(() => {
+          this.$refs.cityField.focus()
+        })
       } else {
+        // for when we do showFinalCancel
         history.back()
       }
     },
 
     handleSuggestionClick (suggestion) {
       this.city = suggestion.city
-      this.stateCode = suggestion.stateCode
-      this.countryCode = suggestion.countryCode
+      this.state = suggestion.state
+      this.country = suggestion.country
       this.handleSubmit()
     },
 
@@ -301,12 +366,12 @@ export default {
       this.searching = false
       this.status = status
       this.savedLocation = new LocationResult(data.results[0])
-      console.log('OK', status, data)
+      this.city = this.savedLocation.city
+      this.state = this.savedLocation.state
+      this.country = this.savedLocation.country
     },
 
     handleErrorResponse (err) {
-      console.error('ERR', err)
-
       this.searching = false
       this.status = err.response.status
 
@@ -320,12 +385,16 @@ export default {
     resetAll () {
       this.resetForm()
       this.resetMeta()
+
+      this.$nextTick(() => {
+        this.$refs.cityField.focus()
+      })
     },
 
     resetForm () {
       this.city = ""
-      this.stateCode = ""
-      this.countryCode = ""
+      this.state = ""
+      this.country = ""
     },
 
     resetMeta () {
@@ -333,10 +402,6 @@ export default {
       this.savedLocation = null
       this.status = null
       this.searching = false
-
-      this.$nextTick(() => {
-        this.$refs.cityField.focus()
-      })
     },
 
     _getEndpoint (pathPart) {
@@ -355,6 +420,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+label:not(:first-child) {
+  margin: 2rem 0 0;
+}
+
 .Rtable {
   display: flex;
   flex-wrap: wrap;

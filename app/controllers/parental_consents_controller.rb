@@ -10,7 +10,7 @@ class ParentalConsentsController < ApplicationController
       redirect_to parental_consent_path(student.parental_consent),
         success: t("controllers.parental_consents.create.success")
     else
-      redirect_to application_dashboard_path,
+      redirect_to root_path,
         alert: t("controllers.parental_consents.new.unauthorized")
     end
   end
@@ -24,7 +24,7 @@ class ParentalConsentsController < ApplicationController
       redirect_to parental_consent_path(student.parental_consent),
         success: t("controllers.parental_consents.create.success")
     else
-      redirect_to application_dashboard_path,
+      redirect_to root_path,
         alert: t("controllers.parental_consents.new.unauthorized")
     end
   end

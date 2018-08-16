@@ -94,27 +94,8 @@ class Account < ActiveRecord::Base
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 
-  enum referred_by: {
-    "Friend" => 0,
-    "Colleague" => 1,
-    "Article" => 2,
-    "Internet" => 3,
-    "Social media" => 4,
-    "Print" => 5,
-    "Web search" => 6,
-    "Teacher" => 7,
-    "Parent/family" => 8,
-    "Company email" => 9,
-    # 10 (Made With Code) was deleted!
-    "Other" => 11,
-  }
-
-  enum gender: %w{
-    Female
-    Male
-    Non-binary
-    Prefer\ not\ to\ say
-  }
+  enum referred_by: REFERRED_BY_OPTIONS
+  enum gender: GENDER_IDENTITY_OPTIONS
 
   scope :by_query, ->(query) {
     sanitized = sanitize_sql_like(query)
@@ -702,7 +683,7 @@ class Account < ActiveRecord::Base
     elsif regional_ambassador_profile.present?
       "#{regional_ambassador_profile.status}_regional_ambassador"
     else
-      "application"
+      "public"
     end
   end
 
