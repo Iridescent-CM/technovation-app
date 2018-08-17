@@ -86,10 +86,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
+
+const { mapState, mapGetters } = createNamespacedHelpers('registration')
 
 export default {
   name: 'app',

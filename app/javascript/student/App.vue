@@ -21,10 +21,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
+
+const { mapState, mapGetters } = createNamespacedHelpers('student')
 
 export default {
   name: 'app',
@@ -43,15 +45,13 @@ export default {
   },
 
   mounted () {
-    if (jQuery)
+    if (jQuery) {
       $(".col--sticky").stick_in_parent({
         parent: ".col--sticky-parent",
         spacer: ".col--sticky-spacer",
         recalc_every: 1,
       })
-  },
-
-  methods: {
+    }
   },
 }
 </script>

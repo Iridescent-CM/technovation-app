@@ -128,10 +128,13 @@
 </template>
 
 <script>
-import { debounce } from 'utilities/utilities'
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import VueSelect from '@vendorjs/vue-select'
+
+import { debounce } from 'utilities/utilities'
 import AutocompleteInput from 'components/AutocompleteInput'
+
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 
 export default {
   name: 'basic-profile',
@@ -209,91 +212,91 @@ export default {
 
     firstName: {
       get () {
-        return this.$store.state.firstName
+        return this.$store.state.registration.firstName
       },
 
       set (value) {
-        this.$store.commit('firstName', value)
+        this.$store.commit('registration/firstName', value)
       },
     },
 
     lastName: {
       get () {
-        return this.$store.state.lastName
+        return this.$store.state.registration.lastName
       },
 
       set (value) {
-        this.$store.commit('lastName', value)
+        this.$store.commit('registration/lastName', value)
       },
     },
 
     genderIdentity: {
       get () {
-        return this.$store.state.genderIdentity
+        return this.$store.state.registration.genderIdentity
       },
 
       set (value) {
-        this.$store.commit('genderIdentity', value)
+        this.$store.commit('registration/genderIdentity', value)
       },
     },
 
     schoolCompanyName: {
       get () {
-        return this.$store.state.schoolCompanyName
+        return this.$store.state.registration.schoolCompanyName
       },
 
       set (value) {
-        this.$store.commit('schoolCompanyName', value)
+        this.$store.commit('registration/schoolCompanyName', value)
       },
     },
 
     jobTitle: {
       get () {
-        return this.$store.state.jobTitle
+        return this.$store.state.registration.jobTitle
       },
 
       set (value) {
-        this.$store.commit('jobTitle', value)
+        this.$store.commit('registration/jobTitle', value)
       },
     },
 
     mentorType: {
       get () {
-        return this.$store.state.mentorType
+        return this.$store.state.registration.mentorType
       },
 
       set (value) {
-        this.$store.commit('mentorType', value)
+        this.$store.commit('registration/mentorType', value)
       },
     },
 
     expertises: {
       get () {
-        return this.$store.state.expertiseIds
+        return this.$store.state.registration.expertiseIds
       },
 
       set (value) {
-        this.$store.commit('expertiseIds', value)
+        this.$store.commit('registration/expertiseIds', value)
       },
     },
 
     referredBy: {
       get () {
-        return this.$store.state.referredBy
+        return this.$store.state.registration.referredBy
       },
 
       set (value) {
-        this.$store.commit('referredBy', value)
+        this.$store.commit('registration/referredBy', value)
       },
     },
 
     referredByOther: {
       get () {
-        return this.$store.state.referredByOther
+        return this.$store.state.registration.referredByOther
       },
 
       set (value) {
-        this.$store.commit('referredByOther', value)
+        this.$store.commit('registration/referredByOther', value)
       },
     },
   },

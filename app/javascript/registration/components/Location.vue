@@ -10,9 +10,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+
 import { debounce } from 'utilities/utilities'
-import { mapGetters, mapActions } from 'vuex'
 import LocationForm from 'location/components/LocationForm'
+
+const { mapActions } = createNamespacedHelpers('registration')
 
 export default {
   name: 'location',
@@ -34,7 +37,7 @@ export default {
       },
 
       set(location) {
-        this.$store.commit('location', location)
+        this.$store.commit('registration/location', location)
       },
     },
   },

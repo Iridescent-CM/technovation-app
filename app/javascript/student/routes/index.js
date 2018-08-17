@@ -15,9 +15,9 @@ const initiateApp = (_to, _from, next) => {
   try {
     const rootElem = document.getElementById('vue-data-registration')
     const { data: { attributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
-    const currentAccount = Object.assign({}, store.state, attributes, relationships)
+    const currentAccount = Object.assign({}, store.state.registration, attributes, relationships)
 
-    store.dispatch('initApp', { currentAccount })
+    store.dispatch('student/initApp', { currentAccount })
     next()
   } catch (err) {
     console.error(err)

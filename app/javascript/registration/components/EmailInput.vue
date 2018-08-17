@@ -76,10 +76,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+
 import Icon from '../../components/Icon'
 import debounce from 'lodash/debounce'
 
-import { mapActions, mapGetters } from 'vuex'
+const { mapActions } = createNamespacedHelpers('registration')
 
 export default {
   name: 'email-input',
@@ -119,11 +121,11 @@ export default {
   computed: {
     email: {
       get () {
-        return this.$store.state.email
+        return this.$store.state.registration.email
       },
 
       set (value) {
-        this.$store.commit('email', value)
+        this.$store.commit('registration/email', value)
       },
     },
 

@@ -56,7 +56,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 
 export default {
   beforeRouteEnter (_to, from, next) {
@@ -80,11 +82,11 @@ export default {
 
     profileChoice: {
       get () {
-        return this.$store.state.profileChoice
+        return this.$store.state.registration.profileChoice
       },
 
       set (choice) {
-        this.$store.commit('profileChoice', choice)
+        this.$store.commit('registration/profileChoice', choice)
       },
     },
 
@@ -136,7 +138,7 @@ export default {
         const elem = document.getElementById('vue-data-registration')
         const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
 
-        if (choice === 'mentor' && this.$store.state.genderIdentity === 'Male') {
+        if (choice === 'mentor' && this.$store.state.registration.genderIdentity === 'Male') {
           return elem.dataset.profileIconMentorMale
         } else {
           return elem.dataset[`profileIcon${capitalizedChoice}`]

@@ -12,8 +12,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    registration,
+    registration: {
+      namespaced: true,
+      ...registration,
+    },
     student: {
+      namespaced: true,
       state,
       getters,
       mutations,

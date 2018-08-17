@@ -85,7 +85,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 
 export default {
   name: 'data-use-terms',
@@ -95,7 +97,7 @@ export default {
 
     termsAgreed: {
       get () {
-        return this.$store.state.termsAgreed
+        return this.$store.state.registration.termsAgreed
       },
 
       set (value) {

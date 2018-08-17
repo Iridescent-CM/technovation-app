@@ -23,11 +23,11 @@ const initiateApp = () => {
     const { attributes, relationships } = data
 
     if (data.type === 'account') {
-      const currentAccount = Object.assign({}, store.state, attributes, relationships)
-      store.dispatch('initAccount', currentAccount)
+      const currentAccount = Object.assign({}, store.state.registration, attributes, relationships)
+      store.dispatch('registration/initAccount', currentAccount)
     } else {
-      const previousAttempt = Object.assign({}, store.state, attributes, relationships)
-      store.dispatch('initWizard', previousAttempt)
+      const previousAttempt = Object.assign({}, store.state.registration, attributes, relationships)
+      store.dispatch('registration/initWizard', previousAttempt)
     }
   } catch (err) {
     console.error(err)
@@ -35,11 +35,11 @@ const initiateApp = () => {
 }
 
 const requireDataAgreement = (to, _from, next) => {
-  if (!store.state.isReady) initiateApp()
+  if (!store.state.registration.isReady) initiateApp()
 
   const notDataUseComponent = to.matched.some(record => record.name !== 'data-use')
 
-  if (notDataUseComponent && !store.state.termsAgreed) {
+  if (notDataUseComponent && !store.state.registration.termsAgreed) {
     next({ name: 'data-use' })
   } else {
     next()
@@ -51,26 +51,26 @@ const onLoginStep = () => {
 }
 
 const onChooseProfileStep = () => {
-  return !!(store.state.termsAgreed &&
+  return !!(store.state.registration.termsAgreed &&
             store.getters.isAgeSet &&
-              !store.state.profileChoice)
+              !store.state.registration.profileChoice)
 }
 
 const onBasicProfileStep = () => {
-  return !!(store.state.termsAgreed &&
+  return !!(store.state.registration.termsAgreed &&
             store.getters.isAgeSet &&
-              store.state.profileChoice &&
+              store.state.registration.profileChoice &&
                 store.getters.isLocationSet)
 }
 
 const onLocationStep = () => {
-  return !!(store.state.termsAgreed &&
+  return !!(store.state.registration.termsAgreed &&
               store.getters.isAgeSet &&
-                store.state.profileChoice)
+                store.state.registration.profileChoice)
 }
 
 const onAgeStep = () => {
-  return !!store.state.termsAgreed
+  return !!store.state.registration.termsAgreed
 }
 
 const getCurrentStep = () => {
@@ -93,7 +93,7 @@ export const routes = [
   {
     path: '/',
     beforeEnter: (_to, _from, next) => {
-      if (!store.state.isReady) initiateApp()
+      if (!store.state.registration.isReady) initiateApp()
       next({ name: getCurrentStep() })
     },
   },
@@ -106,7 +106,7 @@ export const routes = [
     },
     beforeEnter: (_to, _from, next) => {
       const store = require('../store').default
-      if (!store.state.isReady) initiateApp()
+      if (!store.state.registration.isReady) initiateApp()
       next()
     },
   },

@@ -15,4 +15,11 @@ export const storeModule = {
   actions,
 }
 
-export default new Vuex.Store(storeModule)
+export default new Vuex.Store({
+  modules: {
+    registration: {
+      namespaced: true,
+      ...storeModule,
+    },
+  },
+})
