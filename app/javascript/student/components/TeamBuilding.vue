@@ -30,31 +30,15 @@
     </ul>
 
     <div class="tabs__content grid__col-9">
-      <form class="panel panel--contains-bottom-bar panel--contains-top-bar">
-        <div class="panel__top-bar">
-          Part 2: Team building
+      <div class="grid margin--t-xlarge">
+        <div class="grid__col-8">
+          <router-view :key="$route.name">
+            <div slot="parental-consent"><slot name="parental-consent" /></div>
+            <div slot="find-team"><slot name="find-team" /></div>
+            <div slot="create-team"><slot name="create-team" /></div>
+          </router-view>
         </div>
-
-        <div class="panel__content">
-          <router-view></router-view>
-        </div>
-
-        <div class="panel__bottom-bar">
-          <a
-            class="button float--left"
-            @click.prevent="navigateBack"
-          >
-            Back
-          </a>
-          <button
-            class="button"
-            :disabled="!nextStepEnabled"
-            @click.prevent="handleSubmit"
-          >
-            Next
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -83,10 +67,6 @@ export default {
 
     ...mapGetters([]),
 
-    nextStepEnabled () {
-      true
-    },
-
     hasParentalConsent () {
       return true
     },
@@ -101,15 +81,6 @@ export default {
 
   methods: {
     ...mapActions([]),
-
-    handleSubmit () {
-      if (!this.nextStepEnabled) return false
-      console.log("[TRIPLE LINDI]", "well? we're waiting...")
-    },
-
-    navigateBack () {
-      history.back()
-    },
 
     completedEnabledOrDisabledIcon (conditionToComplete) {
       if (conditionToComplete)

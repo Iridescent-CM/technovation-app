@@ -9,7 +9,11 @@
     </ul>
 
     <div class="tabs__content">
-      <router-view></router-view>
+      <router-view :key="$route.name">
+        <div slot="parental-consent"><slot name="parental-consent" /></div>
+        <div slot="find-team"><slot name="find-team" /></div>
+        <div slot="create-team"><slot name="create-team" /></div>
+      </router-view>
     </div>
   </div>
 </template>
@@ -43,8 +47,6 @@ export default {
         spacer: ".col--sticky-spacer",
         recalc_every: 1,
       })
-
-    this.$store.commit('refs', this.$refs)
   },
 
   methods: {
