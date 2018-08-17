@@ -128,7 +128,7 @@ export default {
 
     getProfileIconSrc (choice) {
       if (choice) {
-        const elem = document.getElementById('vue-enable-signup-wizard')
+        const elem = document.getElementById('vue-data-registration')
         const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
 
         if (choice === 'mentor' && this.$store.state.genderIdentity === 'Male') {

@@ -1,14 +1,14 @@
 <% previous_attempt ||= OpenStruct.new(id: 0) %>
 
-<%= content_tag :div,
-  id: "vue-enable-signup-wizard",
-  data: {
-    previous_attempt: SignupAttemptSerializer.new(previous_attempt).serialized_json,
-    profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
-    profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
-    profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
-  } do %>
-
-  <App />
-
-<% end %>
+<div id="vue-enable-signup-wizard">
+  <%= content_tag :div,
+    nil,
+    id: "vue-data-registration",
+    data: {
+      previous_attempt: SignupAttemptSerializer.new(previous_attempt).serialized_json,
+      profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
+      profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
+      profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
+    } %>
+    <App />
+</div>
