@@ -19,10 +19,16 @@ Vue.use(VueRouter)
 const initiateApp = () => {
   try {
     const rootElem = document.getElementById('vue-data-registration')
-    const { data: { attributes, relationships }} = JSON.parse(rootElem.dataset.previousAttempt)
-    const previousAttempt = Object.assign({}, store.state, attributes, relationships)
+    const { data } = JSON.parse(rootElem.dataset.previousAttempt)
+    const { attributes, relationships } = data
 
-    store.dispatch('initWizard', previousAttempt)
+    if (data.type === 'account') {
+      const currentAccount = Object.assign({}, store.state, attributes, relationships)
+      store.dispatch('initAccount', currentAccount)
+    } else {
+      const previousAttempt = Object.assign({}, store.state, attributes, relationships)
+      store.dispatch('initWizard', previousAttempt)
+    }
   } catch (err) {
     console.error(err)
   }

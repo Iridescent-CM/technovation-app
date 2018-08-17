@@ -4,18 +4,19 @@ import VueRouter from 'vue-router'
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'student/components/TeamBuilding'
 
+import store from '../store'
+
 Vue.use(VueRouter)
 
 import { routes as registrationRoutes } from 'registration/routes'
 
 const initiateApp = (_to, _from, next) => {
   try {
-    // initiateApp?
-    // const rootElem = document.getElementById('vue-enable-student-app')
-    // const { data: { attributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
-    // const currentAccount = Object.assign({}, store.state, attributes, relationships)
+    const rootElem = document.getElementById('vue-data-registration')
+    const { data: { attributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
+    const currentAccount = Object.assign({}, store.state, attributes, relationships)
 
-    //store.dispatch('initApp', currentAccount)
+    store.dispatch('initApp', { currentAccount })
     next()
   } catch (err) {
     console.error(err)
@@ -39,7 +40,6 @@ export const routes = [
   },
   {
     path: '/registration',
-    name: 'registration',
     component: RegistrationApp,
     meta: {
       browserTitle: 'Part 1: Registration'

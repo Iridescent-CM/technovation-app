@@ -2,7 +2,7 @@
   <div class="tabs tabs--css-only">
     <ul class="tabs__menu">
       <tab-link
-        :to="{ name: 'registration' }"
+        :to="{ name: 'basic-profile' }"
       >1. Registration</tab-link>
 
       <tab-link

@@ -83,10 +83,6 @@ export default {
     state.referredByOther = attributes.referredByOther
   },
 
-  account (state, attributes) {
-
-  },
-
   firstName (state, value) {
     state.firstName = value
   },

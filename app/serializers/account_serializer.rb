@@ -8,6 +8,46 @@ class AccountSerializer
   attributes :email, :date_of_birth, :city, :latitude, :longitude, :first_name,
    :last_name, :gender, :referred_by, :referred_by_other
 
+  attribute(:birth_year) do |account|
+    account.date_of_birth.to_s.split("-")[0]
+  end
+
+  attribute(:birth_month) do |account|
+    account.date_of_birth.to_s.split("-")[1]
+  end
+
+  attribute(:birth_day) do |account|
+    account.date_of_birth.to_s.split("-")[2]
+  end
+
+  attribute(:profile_choice) do |account|
+    account.scope_name
+  end
+
+  attribute(:gender_identity) do |account|
+    account.gender
+  end
+
+  attribute(:school_company_name) do |account|
+    account.profile_school_company_name
+  end
+
+  attribute(:job_title) do |account|
+    account.profile_job_title
+  end
+
+  attribute(:mentor_type) do |account|
+    account.profile_mentor_type
+  end
+
+  attribute(:expertise_ids) do |account|
+    account.profile_expertise_ids
+  end
+
+  attribute(:terms_agreed) do |attempt|
+    true
+  end
+
   attribute(:state) do |account|
     if country = Carmen::Country.coded(account.country)
       country.subregions.coded(account.state_province.sub(".", ""))

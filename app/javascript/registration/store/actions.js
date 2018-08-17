@@ -10,6 +10,17 @@ export default {
     commit('isReady', true)
   },
 
+  initAccount ({ commit, getters }, account) {
+    //commit('wizardToken', attempt.wizardToken)
+    commit('termsAgreed', true)
+    commit('birthDate', getters.getBirthdateAttributes(account))
+    commit('profileChoice', account.profileChoice)
+    commit('location', account)
+    commit('basicProfile', account)
+    commit('email', account.email)
+    commit('isReady', true)
+  },
+
   updateTermsAgreed ({ commit, state }, { termsAgreed }) {
     commit('termsAgreed', termsAgreed)
 

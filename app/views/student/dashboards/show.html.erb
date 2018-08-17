@@ -31,6 +31,7 @@
     nil,
     id: "vue-data-registration",
     data: {
+      current_account: AccountSerializer.new(current_account).serialized_json,
       previous_attempt: AccountSerializer.new(current_account).serialized_json,
       profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
       profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
