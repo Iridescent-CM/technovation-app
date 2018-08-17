@@ -1,7 +1,6 @@
 import Vue from 'vue/dist/vue.esm'
 import VueRouter from 'vue-router'
 
-import RegistrationWrapper from 'student/wrappers/Registration'
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'student/components/TeamBuilding'
 
@@ -47,6 +46,33 @@ export const routes = [
     },
     beforeEnter: initiateApp,
     children: registrationRoutes,
+  },
+  {
+    path: '/submission',
+    name: 'submission',
+    component: TeamBuilding,
+    meta: {
+      browserTitle: 'Part 3: Submit your project'
+    },
+    beforeEnter: initiateApp,
+  },
+  {
+    path: '/judging',
+    name: 'judging',
+    component: TeamBuilding,
+    meta: {
+      browserTitle: 'Part 4: Compete in the judging rounds'
+    },
+    beforeEnter: initiateApp,
+  },
+  {
+    path: '/scores',
+    name: 'scores',
+    component: TeamBuilding,
+    meta: {
+      browserTitle: 'Part 5: Read scores & feedback'
+    },
+    beforeEnter: initiateApp,
   },
 ]
 
