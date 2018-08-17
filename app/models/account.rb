@@ -180,6 +180,10 @@ class Account < ActiveRecord::Base
     :first_name
   end
 
+  def coordinates
+    [latitude, longitude]
+  end
+
   def virtual_event?
     judge_profile.present? && judge_profile.event.virtual?
   end

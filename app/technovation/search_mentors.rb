@@ -38,7 +38,7 @@ module SearchMentors
     end
 
     miles = filter.nearby == "anywhere" ? EARTH_CIRCUMFERENCE : 100
-    nearby = filter.nearby == "anywhere" ? filter.location : filter.nearby
+    nearby = filter.nearby == "anywhere" ? filter.coordinates : filter.nearby
 
     if filter.country == "PS"
       nearby = "Palestine"

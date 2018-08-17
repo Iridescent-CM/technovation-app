@@ -66,6 +66,7 @@ module MentorSearchesController
 
       h[:country] = current_account.country
       h[:location] = current_account.address_details
+      h[:coordinates] = current_account.coordinates
     end
   end
 
