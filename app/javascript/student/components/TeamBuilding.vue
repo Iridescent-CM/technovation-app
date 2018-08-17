@@ -1,33 +1,37 @@
 <template>
   <div class="tabs tabs--vertical tabs--css-only grid">
-    <ul class="tabs__menu grid__col-3">
-      <tab-link :to="{ name: 'parental-consent' }">
-        <icon
-          :name="completedEnabledOrDisabledIcon(hasParentalConsent)"
-          size="16"
-          :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
-        />
-        Parental Consent
-      </tab-link>
+    <div class="grid__col-3 col--sticky-parent">
+      <div class="col--sticky-spacer">
+        <ul class="tabs__menu col--sticky">
+          <tab-link :to="{ name: 'parental-consent' }">
+            <icon
+              :name="completedEnabledOrDisabledIcon(hasParentalConsent)"
+              size="16"
+              :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
+            />
+            Parental Consent
+          </tab-link>
 
-      <tab-link :to="{ name: 'find-team' }">
-        <icon
-          :name="completedEnabledOrDisabledIcon(isOnTeam)"
-          size="16"
-          :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
-        />
-        Find your team
-      </tab-link>
+          <tab-link :to="{ name: 'find-team' }">
+            <icon
+              :name="completedEnabledOrDisabledIcon(isOnTeam)"
+              size="16"
+              :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
+            />
+            Find your team
+          </tab-link>
 
-      <tab-link :to="{ name: 'create-team' }">
-        <icon
-          :name="completedEnabledOrDisabledIcon(isOnTeam)"
-          size="16"
-          :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
-        />
-        Create your team
-      </tab-link>
-    </ul>
+          <tab-link :to="{ name: 'create-team' }">
+            <icon
+              :name="completedEnabledOrDisabledIcon(isOnTeam)"
+              size="16"
+              :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
+            />
+            Create your team
+          </tab-link>
+        </ul>
+      </div>
+    </div>
 
     <div class="tabs__content grid__col-9">
       <div class="grid margin--t-xlarge">
