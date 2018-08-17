@@ -9,6 +9,7 @@ import store from '../store'
 Vue.use(VueRouter)
 
 import { routes as registrationRoutes } from 'registration/routes'
+import teamRoutes from './teams'
 
 const initiateApp = (_to, _from, next) => {
   try {
@@ -37,6 +38,7 @@ export const routes = [
       browserTitle: 'Part 2: Team building'
     },
     beforeEnter: initiateApp,
+    children: teamRoutes,
   },
   {
     path: '/registration',
