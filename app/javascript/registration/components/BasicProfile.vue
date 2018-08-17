@@ -178,6 +178,7 @@ export default {
   },
 
   created () {
+    console.log('basicprofile created')
     this.debouncedProfileUpdate = debounce(attributes => {
       this.updateBasicProfile(attributes)
     }, 500)

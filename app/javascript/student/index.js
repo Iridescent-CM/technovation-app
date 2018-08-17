@@ -2,7 +2,7 @@ import Vue from 'vue/dist/vue.esm'
 import Vue2Filters from 'vue2-filters'
 
 import router from './routes'
-import store from 'registration/store'
+import store from './store'
 
 import App from './App'
 

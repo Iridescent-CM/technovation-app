@@ -79,7 +79,7 @@
 
     <div class="grid__col-9">
       <transition name="router-fade">
-        <router-view v-if="isReady"></router-view>
+        <router-view v-if="isReady" :key="$route.path"></router-view>
       </transition>
     </div>
   </div>

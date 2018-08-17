@@ -105,6 +105,7 @@ export const routes = [
       browserTitle: 'Step 1: Agreeement'
     },
     beforeEnter: (_to, _from, next) => {
+      const store = require('../store').default
       if (!store.state.isReady) initiateApp()
       next()
     },

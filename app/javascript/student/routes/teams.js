@@ -1,7 +1,16 @@
 import Vue from 'vue/dist/vue.esm'
 
 const Test = Vue.component('test', {
-  template: "<div>Hi test</div>",
+  template: `<div>Hi test: {{ content }} :: {{ $route.name }}</div>`,
+  data () {
+    return {
+      content: 'none',
+    }
+  },
+
+  mounted () {
+    this.content = this.$refs.parentalConsent.innerHtml
+  }
 })
 
 export default [

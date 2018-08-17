@@ -43,6 +43,8 @@ export default {
         spacer: ".col--sticky-spacer",
         recalc_every: 1,
       })
+
+    this.$store.commit('refs', this.$refs)
   },
 
   methods: {
