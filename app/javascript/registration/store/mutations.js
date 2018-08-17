@@ -19,6 +19,14 @@ export default {
     state.isReady = bool
   },
 
+  isLocked (state, bool) {
+    state.isLocked = bool
+  },
+
+  apiRoot (state, value) {
+    state.apiRoot = value
+  },
+
   wizardToken (state, wizardToken) {
     state.wizardToken = wizardToken
   },

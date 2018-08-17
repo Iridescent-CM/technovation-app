@@ -8,6 +8,10 @@ class AccountSerializer
   attributes :email, :date_of_birth, :city, :latitude, :longitude, :first_name,
    :last_name, :gender, :referred_by, :referred_by_other
 
+  attribute(:api_root) do |account|
+    "/#{account.scope_name}"
+  end
+
   attribute(:birth_year) do |account|
     account.date_of_birth.to_s.split("-")[0]
   end

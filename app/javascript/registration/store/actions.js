@@ -19,6 +19,8 @@ export default {
     commit('basicProfile', account)
     commit('email', account.email)
     commit('isReady', true)
+    commit('isLocked', true)
+    commit('apiRoot', account.apiRoot)
   },
 
   updateTermsAgreed ({ commit, state }, { termsAgreed }) {

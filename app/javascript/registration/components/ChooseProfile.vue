@@ -5,9 +5,9 @@
     </div>
 
     <div class="panel__content">
-      Due to your age, you can be a:
+      <div v-if="!isLocked" class="grid grid--justify-space-around">
+        Due to your age, you can be a:
 
-      <div class="grid grid--justify-space-around">
         <div
           :class="[
             'opacity--50',
@@ -29,6 +29,11 @@
             {{ option }}
           </label>
         </div>
+      </div>
+
+      <div v-else class="text-align--center">
+        <img :src="getProfileIconSrc(profileChoice)" width="300" />
+        <br />You are a {{ profileChoice }}
       </div>
     </div>
 
@@ -65,7 +70,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['months', 'birthMonth', 'genderIdentity']),
+    ...mapState(['months', 'birthMonth', 'genderIdentity', 'isLocked']),
 
     ...mapGetters(['getAge', 'getAgeByCutoff', 'isAgeSet', 'getBirthdate']),
 

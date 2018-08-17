@@ -64,7 +64,11 @@
 
       <div class="padding--t-b-large text-align--right">
         <label class="margin--none">
-          <input type="checkbox" v-model="termsAgreed" />
+          <input
+            type="checkbox"
+            v-model="termsAgreed"
+            :disabled="isLocked"
+          />
           I agree to these data use terms
         </label>
       </div>
@@ -81,12 +85,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'data-use-terms',
 
   computed: {
+    ...mapState(['isLocked']),
+
     termsAgreed: {
       get () {
         return this.$store.state.termsAgreed
