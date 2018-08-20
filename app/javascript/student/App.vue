@@ -1,7 +1,11 @@
 <template>
-  <div class="tabs tabs--css-only col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <ul class="tabs__menu col--sticky">
+  <div class="tabs tabs--css-only">
+    <div
+      ref="navBar"
+      :class="navBarClasses"
+      :style="navBarStyles"
+    >
+      <ul class="tabs__menu">
         <tab-link
           :class="registrationTabLinkClasses"
           :to="{ name: 'basic-profile' }"
@@ -59,12 +63,43 @@ export default {
     TabLink,
   },
 
+  data () {
+    return {
+      isNavSticky: false,
+      globalTopNavHeight: 0,
+    }
+  },
+
+  created () {
+    this.globalTopNavHeight = document.querySelector('.header-container').offsetHeight
+
+    window.addEventListener('scroll', this.setStickyNav);
+  },
+
+  destroyed () {
+    window.removeEventListener('scroll', this.setStickyNav);
+  },
+
   computed: {
     ...mapState([
     ]),
 
     ...mapGetters([
     ]),
+
+    navBarClasses () {
+      return {
+        'sticky-nav': this.isNavSticky,
+      }
+    },
+
+    navBarStyles () {
+      const styles = {
+        'margin-top': this.isNavSticky ? `${this.globalTopNavHeight}px` : '0px',
+      }
+
+      return styles
+    },
 
     registrationTabLinkClasses () {
       return {
@@ -119,16 +154,14 @@ export default {
 
       return false
     },
-  },
 
-  mounted () {
-    if (jQuery) {
-      $(".col--sticky").stick_in_parent({
-        parent: ".col--sticky-parent",
-        spacer: ".col--sticky-spacer",
-        recalc_every: 1,
-      })
-    }
+    setStickyNav () {
+      if (this.$el && this.$refs.navBar) {
+        const appOffset = this.$el.offsetTop
+
+        this.isNavSticky = window.pageYOffset + this.globalTopNavHeight >= appOffset
+      }
+    },
   },
 }
 </script>
