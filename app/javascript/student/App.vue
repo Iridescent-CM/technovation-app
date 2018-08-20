@@ -1,10 +1,6 @@
 <template>
   <div class="tabs tabs--css-only">
-    <div
-      ref="navBar"
-      :class="navBarClasses"
-      :style="navBarStyles"
-    >
+    <div v-sticky-nav>
       <ul class="tabs__menu">
         <tab-link
           :class="registrationTabLinkClasses"
@@ -52,32 +48,20 @@ import { createNamespacedHelpers } from 'vuex'
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
+import StickyNav from 'directives/sticky-nav'
 
 const { mapState, mapGetters } = createNamespacedHelpers('student')
 
 export default {
   name: 'app',
 
+  directives: {
+    'sticky-nav': StickyNav,
+  },
+
   components: {
     Icon,
     TabLink,
-  },
-
-  data () {
-    return {
-      isNavSticky: false,
-      globalTopNavHeight: 0,
-    }
-  },
-
-  created () {
-    this.globalTopNavHeight = document.querySelector('.header-container').offsetHeight
-
-    window.addEventListener('scroll', this.setStickyNav);
-  },
-
-  destroyed () {
-    window.removeEventListener('scroll', this.setStickyNav);
   },
 
   computed: {
@@ -86,20 +70,6 @@ export default {
 
     ...mapGetters([
     ]),
-
-    navBarClasses () {
-      return {
-        'sticky-nav': this.isNavSticky,
-      }
-    },
-
-    navBarStyles () {
-      const styles = {
-        'margin-top': this.isNavSticky ? `${this.globalTopNavHeight}px` : '0px',
-      }
-
-      return styles
-    },
 
     registrationTabLinkClasses () {
       return {
@@ -153,14 +123,6 @@ export default {
       }
 
       return false
-    },
-
-    setStickyNav () {
-      if (this.$el && this.$refs.navBar) {
-        const appOffset = this.$el.offsetTop
-
-        this.isNavSticky = window.pageYOffset + this.globalTopNavHeight >= appOffset
-      }
     },
   },
 }
