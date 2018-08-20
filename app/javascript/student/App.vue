@@ -2,11 +2,30 @@
   <div class="tabs tabs--css-only col--sticky-parent">
     <div class="col--sticky-spacer">
       <ul class="tabs__menu col--sticky">
-        <tab-link :to="{ name: 'basic-profile' }">1. Registration</tab-link>
-        <tab-link :to="{ name: 'parental-consent' }">2. Build your team</tab-link>
-        <tab-link :to="{ name: 'submission' }">3. Submit your project</tab-link>
-        <tab-link :to="{ name: 'judging' }">4. Compete in the judging rounds</tab-link>
-        <tab-link :to="{ name: 'scores' }">5. Get scores & valuable feedback</tab-link>
+        <tab-link
+          :class="registrationTabLinkClasses"
+          :to="{ name: 'basic-profile' }"
+        >1. Registration</tab-link>
+
+        <tab-link
+          :class="teamTabLinkClasses"
+          :to="{ name: 'parental-consent' }"
+        >2. Build your team</tab-link>
+
+        <tab-link
+          :class="submissionTabLinkClasses"
+          :to="{ name: 'submission' }"
+        >3. Submit your project</tab-link>
+
+        <tab-link
+          :class="judgingTabLinkClasses"
+          :to="{ name: 'judging' }"
+        >4. Compete in the judging rounds</tab-link>
+
+        <tab-link
+          :class="scoresTabLinkClasses"
+          :to="{ name: 'scores' }"
+        >5. Get scores & valuable feedback</tab-link>
       </ul>
     </div>
 
@@ -42,6 +61,56 @@ export default {
 
     ...mapGetters([
     ]),
+
+    registrationTabLinkClasses () {
+      return {
+        'tabs__menu-link--active': this.subRouteIsActive('registration'),
+      }
+    },
+
+    teamTabLinkClasses () {
+      return {
+        'tabs__menu-link--active': this.subRouteIsActive('team'),
+      }
+    },
+
+    submissionTabLinkClasses () {
+      return {
+        'tabs__menu-link--active': this.subRouteIsActive('submission'),
+      }
+    },
+
+    judgingTabLinkClasses () {
+      return {
+        'tabs__menu-link--active': this.subRouteIsActive('judging'),
+      }
+    },
+
+    scoresTabLinkClasses () {
+      return {
+        'tabs__menu-link--active': this.subRouteIsActive('scores'),
+      }
+    },
+  },
+
+  methods: {
+    subRouteIsActive(parentRouteName) {
+      const parentRoute = this.$router.options.routes.find((parentRoute) => {
+        if (Object.prototype.hasOwnProperty.call(parentRoute, 'children')) {
+          return parentRoute.children.some((childRoute) => {
+            return this.$route.name === childRoute.name
+          })
+        }
+
+        return false
+      })
+
+      if (parentRoute) {
+        return parentRouteName === parentRoute.name
+      }
+
+      return false
+    },
   },
 
   mounted () {
@@ -55,6 +124,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

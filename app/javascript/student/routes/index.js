@@ -42,6 +42,7 @@ export const routes = [
   },
   {
     path: '/registration',
+    name: 'registration',
     component: RegistrationApp,
     meta: {
       browserTitle: 'Part 1: Registration'
