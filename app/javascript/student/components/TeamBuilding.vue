@@ -29,6 +29,15 @@
             />
             Create your team
           </tab-link>
+
+          <tab-link :to="{ name: 'find-mentor' }">
+            <icon
+              :name="completedEnabledOrDisabledIcon(hasMentor)"
+              size="16"
+              :color="$route.name === 'find-mentor' ? '000000' : '28A880'"
+            />
+            Add a mentor to your team
+          </tab-link>
         </ul>
       </div>
     </div>
@@ -40,6 +49,7 @@
             <div slot="parental-consent"><slot name="parental-consent" /></div>
             <div slot="find-team"><slot name="find-team" /></div>
             <div slot="create-team"><slot name="create-team" /></div>
+            <div slot="find-mentor"><slot name="find-mentor" /></div>
           </router-view>
         </div>
       </div>
@@ -76,6 +86,10 @@ export default {
     },
 
     isOnTeam () {
+      return false
+    },
+
+    hasMentor () {
       return false
     },
   },

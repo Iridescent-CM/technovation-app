@@ -34,6 +34,10 @@
         <div slot="parental-consent"><slot name="parental-consent" /></div>
         <div slot="find-team"><slot name="find-team" /></div>
         <div slot="create-team"><slot name="create-team" /></div>
+        <div slot="find-mentor"><slot name="find-mentor" /></div>
+        <div slot="submission"><slot name="submission" /></div>
+        <div slot="events"><slot name="events" /></div>
+        <div slot="scores"><slot name="scores" /></div>
       </router-view>
     </div>
   </div>

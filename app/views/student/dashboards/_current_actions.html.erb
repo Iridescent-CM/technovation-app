@@ -49,9 +49,4 @@
       </li>
     <% end %>
   <% end %>
-
-  <%= render "student/dashboards/completion_steps/team_submission" %>
-
-  <%= render "student/dashboards/completion_steps/find_a_mentor",
-    hidden: current_student.team.mentors.any? %>
 </ul>

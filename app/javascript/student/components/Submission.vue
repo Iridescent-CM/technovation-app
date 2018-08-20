@@ -1,0 +1,44 @@
+<template>
+  <div class="tabs tabs--css-only">
+    <div class="tabs__content">
+      <slot name="submission" />
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapActions, mapState } from 'vuex'
+
+import Icon from 'components/Icon'
+import TabLink from 'tabs/components/TabLink'
+
+export default {
+  beforeRouteEnter (_to, _from, next) {
+    next(vm => {
+      // need to check something with vm first?
+      next()
+    })
+  },
+
+  components: {
+    Icon,
+    TabLink,
+  },
+
+  computed: {
+    ...mapState([]),
+
+    ...mapGetters([]),
+  },
+
+  watch: {
+  },
+
+  methods: {
+    ...mapActions([]),
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+</style>

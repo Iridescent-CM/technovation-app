@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'student/components/TeamBuilding'
+import Submission from 'student/components/Submission'
+import Scores from 'student/components/Scores'
+import Judging from 'student/components/Judging'
 
 import store from '../store'
 
@@ -10,6 +13,7 @@ Vue.use(VueRouter)
 
 import { routes as registrationRoutes } from 'registration/routes'
 import teamRoutes from './teams'
+import judgingRoutes from './judging'
 
 const initiateApp = (_to, _from, next) => {
   try {
@@ -56,7 +60,7 @@ export const routes = [
   {
     path: '/submission',
     name: 'submission',
-    component: TeamBuilding,
+    component: Submission,
     meta: {
       browserTitle: 'Part 3: Submit your project'
     },
@@ -65,16 +69,17 @@ export const routes = [
   {
     path: '/judging',
     name: 'judging',
-    component: TeamBuilding,
+    component: Judging,
     meta: {
       browserTitle: 'Part 4: Compete in the judging rounds'
     },
     beforeEnter: initiateApp,
+    children: judgingRoutes,
   },
   {
     path: '/scores',
     name: 'scores',
-    component: TeamBuilding,
+    component: Scores,
     meta: {
       browserTitle: 'Part 5: Read scores & feedback'
     },

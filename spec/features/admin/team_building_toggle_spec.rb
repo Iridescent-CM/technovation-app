@@ -54,28 +54,6 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     end
   end
 
-  context "Student dashboard" do
-    before { sign_in(:student) }
-
-    scenario "Toggle on" do
-      toggle_on
-      visit student_dashboard_path
-
-      within(".steps") do
-        expect(page).to have_link("Join a team")
-        expect(page).to have_link("Register your team")
-      end
-    end
-
-    scenario "Toggle off" do
-      toggle_off
-      visit student_dashboard_path
-
-      expect(page).not_to have_link("Join a team")
-      expect(page).not_to have_link("Register your team")
-    end
-  end
-
   context "Viewing team as student" do
     let(:user) { FactoryBot.create(:student) }
     let(:team) { FactoryBot.create(:team) }
