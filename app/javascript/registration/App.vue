@@ -1,5 +1,5 @@
 <template>
-  <div class="grid tabs tabs--vertical tabs--remove-bg tabs--css-only">
+  <div :class="wrapperClasses">
     <div class="grid__col-3 col--sticky-parent">
       <div class="col--sticky-spacer">
         <ul class="tabs__menu col--sticky">
@@ -101,6 +101,13 @@ export default {
     TabLink,
   },
 
+  props: {
+    removeWhiteBackground: {
+      type: Boolean,
+      default: true,
+    },
+  },
+
   computed: {
     ...mapState([
       'isReady',
@@ -179,6 +186,16 @@ export default {
         return 'Please fill out other sections first'
 
       return ''
+    },
+
+    wrapperClasses () {
+      return {
+        grid: true,
+        tabs: true,
+        'tabs--vertical': true,
+        'tabs--remove-bg': this.removeWhiteBackground,
+        'tabs--css-only': true,
+      }
     },
   },
 

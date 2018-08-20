@@ -46,6 +46,9 @@ export const routes = [
     meta: {
       browserTitle: 'Part 1: Registration'
     },
+    props: {
+      removeWhiteBackground: false,
+    },
     beforeEnter: initiateApp,
     children: registrationRoutes,
   },
