@@ -5,6 +5,7 @@ let containingElement = null
 
 function setStickyNav () {
   if (containingElement && navBar) {
+    const siblingContent = navBar.nextElementSibling
     const appOffset = containingElement.offsetTop
 
     navIsSticky = window.pageYOffset + globalTopNavHeight >= appOffset
@@ -12,9 +13,11 @@ function setStickyNav () {
     if (navIsSticky) {
       navBar.classList.add('sticky-nav')
       navBar.style.marginTop = `${globalTopNavHeight}px`
+      siblingContent.style.paddingTop = `${navBar.offsetHeight}px`
     } else {
       navBar.classList.remove('sticky-nav')
       navBar.style.marginTop = '0px'
+      siblingContent.style.paddingTop = '0px'
     }
   }
 }
