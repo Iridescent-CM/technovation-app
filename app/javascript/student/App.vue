@@ -29,7 +29,7 @@
       </ul>
     </div>
 
-    <div class="tabs__content">
+    <div class="tabs__content background-color--white">
       <router-view :key="$route.name">
         <div slot="parental-consent"><slot name="parental-consent" /></div>
         <div slot="find-team"><slot name="find-team" /></div>

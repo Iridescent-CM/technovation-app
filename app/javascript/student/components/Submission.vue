@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs tabs--css-only">
+  <div class="tabs tabs--vertical tabs--css-only">
     <div class="tabs__content">
       <slot name="submission" />
     </div>
