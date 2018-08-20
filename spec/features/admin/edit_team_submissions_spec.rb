@@ -120,48 +120,4 @@ RSpec.feature "Toggling editable team submissions" do
       end
     end
   end
-
-  context "as a student" do
-    context "with editing on" do
-      before { set_editable_team_submissions(true) }
-
-      scenario "begin and edit a submission" do
-        create_authenticated_user_on_team(:student, submission: false)
-
-        within("#your-submission") { click_link "Begin your submission" }
-        check "team_submission[integrity_affirmed]"
-        click_button "Start now!"
-
-        expect(page).to have_css('.button', text: "Set your app's name")
-
-        visit student_dashboard_path
-        within("#your-submission") do
-          expect(page).not_to have_content("Submissions are not editable")
-          expect(page).to have_link(
-            "Your app's name",
-            href: student_team_submission_path(
-              team.reload.submission,
-              piece: :app_name
-            )
-          )
-        end
-      end
-
-      scenario "edit technical checklist" do
-        create_authenticated_user_on_team(:student, submission: true)
-
-        within("#your-submission") { click_link("Code checklist") }
-
-        check "technical_checklist[used_strings]"
-        fill_in "technical_checklist[used_strings_explanation]",
-          with: "My explanation"
-
-        click_button "Save checklist"
-
-        tc = TechnicalChecklist.last
-        expect(tc.used_strings).to be true
-        expect(tc.used_strings_explanation).to eq("My explanation")
-      end
-    end
-  end
 end

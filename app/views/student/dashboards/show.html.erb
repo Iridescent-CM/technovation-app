@@ -26,82 +26,87 @@
   </div>
 </div>
 
-<div id="vue-enable-student-app">
-  <%= content_tag :div,
-    nil,
-    id: "vue-data-registration",
-    data: {
-      current_account: AccountSerializer.new(current_account).serialized_json,
-      previous_attempt: AccountSerializer.new(current_account).serialized_json,
-      profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
-      profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
-      profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
-    } %>
-  <app>
-    <div slot="parental-consent">
-      <%= render 'student/dashboards/completion_steps/parental_consent_form' %>
-    </div>
+<% if not current_student.email_confirmed? %>
+  <%= render 'completion_steps/confirm_changed_email',
+    profile: current_student %>
+<% else %>
+  <div id="vue-enable-student-app">
+    <%= content_tag :div,
+      nil,
+      id: "vue-data-registration",
+      data: {
+        current_account: AccountSerializer.new(current_account).serialized_json,
+        previous_attempt: AccountSerializer.new(current_account).serialized_json,
+        profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
+        profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
+        profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
+      } %>
+    <app>
+      <div slot="parental-consent">
+        <%= render 'student/dashboards/completion_steps/parental_consent_form' %>
+      </div>
 
-    <div slot="find-team">
-      <%= render "completion_steps/invitations",
-        hidden: current_student.is_on_team?,
-        invites: current_student.team_member_invites.pending %>
+      <div slot="find-team">
+        <%= render "completion_steps/invitations",
+          hidden: current_student.is_on_team?,
+          invites: current_student.team_member_invites.pending %>
 
-      <%= render "student/dashboards/completion_steps/incoming_join_requests",
-        requests: current_team.pending_requests %>
+        <%= render "student/dashboards/completion_steps/incoming_join_requests",
+          requests: current_team.pending_requests %>
 
-      <%= render "completion_steps/join_requests",
-        hidden: current_student.is_on_team?,
-        requests: current_student.join_requests.pending %>
-    </div>
+        <%= render "completion_steps/join_requests",
+          hidden: current_student.is_on_team?,
+          requests: current_student.join_requests.pending %>
+      </div>
 
-    <div slot="create-team">
-      <%= render "completion_steps/create_team",
-        hidden: SeasonToggles.team_building_disabled? ||
-                  current_student.is_on_team? %>
-    </div>
+      <div slot="create-team">
+        <%= render "completion_steps/create_team",
+          hidden: SeasonToggles.team_building_disabled? ||
+                    current_student.is_on_team? %>
+      </div>
 
-    <div slot="find-mentor">
-      <%= render "student/dashboards/completion_steps/find_a_mentor",
-        hidden: current_student.team.mentors.any? %>
-    </div>
+      <div slot="find-mentor">
+        <%= render "student/dashboards/completion_steps/find_a_mentor",
+          hidden: current_student.team.mentors.any? %>
+      </div>
 
-    <div slot="submission">
-      <%= render "student/dashboards/completion_steps/team_submission" %>
-    </div>
+      <div slot="submission">
+        <%= render "student/dashboards/completion_steps/team_submission" %>
+      </div>
 
-    <div slot="events">
-      <% if SeasonToggles.select_regional_pitch_event? %>
-        <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
-      <% end %>
-    </div>
-
-    <div slot="scores">
-      <% if SeasonToggles.display_scores? %>
-        <% if current_team.submission.complete? %>
-          <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
-        <% elsif current_student.participated? %>
-          <%= render "student/dashboards/completion_steps/participation_certificate" %>
-        <% else %>
-          <li class="completion-step">
-            <div class="flags">
-              <span class="flag">
-                Post-season
-              </span>
-            </div>
-
-            <h1 class="content-heading">Thank you for your participation</h1>
-
-            <p>
-              Unfortunately, no scores are available for your team because your
-              submission was incomplete. We hope you will continue working on your
-              app and join us again next season!
-            </p>
-          </li>
+      <div slot="events">
+        <% if SeasonToggles.select_regional_pitch_event? %>
+          <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
         <% end %>
-      <% end %>
-    </div>
-  </app>
-</div>
+      </div>
+
+      <div slot="scores">
+        <% if SeasonToggles.display_scores? %>
+          <% if current_team.submission.complete? %>
+            <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
+          <% elsif current_student.participated? %>
+            <%= render "student/dashboards/completion_steps/participation_certificate" %>
+          <% else %>
+            <li class="completion-step">
+              <div class="flags">
+                <span class="flag">
+                  Post-season
+                </span>
+              </div>
+
+              <h1 class="content-heading">Thank you for your participation</h1>
+
+              <p>
+                Unfortunately, no scores are available for your team because your
+                submission was incomplete. We hope you will continue working on your
+                app and join us again next season!
+              </p>
+            </li>
+          <% end %>
+        <% end %>
+      </div>
+    </app>
+  </div>
+<% end %>
 
 <%= render 'program_survey_modal' %>
