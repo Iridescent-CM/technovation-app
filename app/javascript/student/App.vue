@@ -19,7 +19,7 @@
 
         <tab-link
           :class="judgingTabLinkClasses"
-          :to="{ name: 'judging' }"
+          :to="{ name: 'events' }"
         >4. Compete in the judging rounds</tab-link>
 
         <tab-link
