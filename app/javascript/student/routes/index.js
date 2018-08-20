@@ -37,21 +37,16 @@ export const routes = [
   {
     path: '/team',
     component: TeamBuilding,
-    meta: {
-      browserTitle: 'Part 2: Team building'
-    },
     beforeEnter: initiateApp,
     children: teamRoutes,
     meta: {
       routeId: 'team',
+      browserTitle: 'Part 2: Team building',
     },
   },
   {
     path: '/registration',
     component: RegistrationApp,
-    meta: {
-      browserTitle: 'Part 1: Registration'
-    },
     props: {
       removeWhiteBackground: false,
     },
@@ -59,43 +54,38 @@ export const routes = [
     children: registrationRoutes,
     meta: {
       routeId: 'registration',
+      browserTitle: 'Part 1: Registration',
     },
   },
   {
     path: '/submission',
     name: 'submission',
     component: Submission,
-    meta: {
-      browserTitle: 'Part 3: Submit your project'
-    },
     beforeEnter: initiateApp,
     meta: {
       routeId: 'submission',
+      browserTitle: 'Part 3: Submit your project',
     },
   },
   {
     path: '/judging',
     name: 'judging',
     component: Judging,
-    meta: {
-      browserTitle: 'Part 4: Compete in the judging rounds'
-    },
     beforeEnter: initiateApp,
     children: judgingRoutes,
     meta: {
       routeId: 'judging',
+      browserTitle: 'Part 4: Compete in the judging rounds',
     },
   },
   {
     path: '/scores',
     name: 'scores',
     component: Scores,
-    meta: {
-      browserTitle: 'Part 5: Read scores & feedback'
-    },
     beforeEnter: initiateApp,
     meta: {
       routeId: 'scores',
+      browserTitle: 'Part 5: Read scores & feedback',
     },
   },
 ]
