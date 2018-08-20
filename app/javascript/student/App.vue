@@ -98,7 +98,7 @@ export default {
   },
 
   methods: {
-    subRouteIsActive(parentRouteName) {
+    subRouteIsActive(parentRouteId) {
       const parentRoute = this.$router.options.routes.find((parentRoute) => {
         if (Object.prototype.hasOwnProperty.call(parentRoute, 'children')) {
           return parentRoute.children.some((childRoute) => {
@@ -109,8 +109,12 @@ export default {
         return false
       })
 
-      if (parentRoute) {
-        return parentRouteName === parentRoute.name
+      if (
+        parentRoute &&
+        Object.prototype.hasOwnProperty.call(parentRoute, 'meta') &&
+        Object.prototype.hasOwnProperty.call(parentRoute.meta, 'routeId')
+      ) {
+        return parentRouteId === parentRoute.meta.routeId
       }
 
       return false
