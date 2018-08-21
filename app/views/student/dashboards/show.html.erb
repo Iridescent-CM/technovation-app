@@ -36,38 +36,59 @@
       id: "vue-data-registration",
       data: {
         current_account: AccountSerializer.new(current_account).serialized_json,
+        current_team: TeamSerializer.new(current_team).serialized_json,
         previous_attempt: AccountSerializer.new(current_account).serialized_json,
+        # TODO: make original registration wizard open to currentAccount ?
         profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
         profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
         profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
       } %>
     <app>
       <div slot="parental-consent">
-        <%= render 'student/dashboards/completion_steps/parental_consent_form' %>
+        <%= render 'student/profiles/parent' %>
       </div>
 
       <div slot="find-team">
-        <%= render "completion_steps/invitations",
-          hidden: current_student.is_on_team?,
-          invites: current_student.team_member_invites.pending %>
+        <% if current_student.is_on_team? %>
+          You're on a team!
+          Your team is called <%= current_team.name %>.
+          You can
+          <%= link_to 'manage your team',
+            student_team_path(current_team) %>
+        <% else %>
+          <%= render "completion_steps/invitations",
+            invites: current_student.team_member_invites.pending %>
 
-        <%= render "student/dashboards/completion_steps/incoming_join_requests",
-          requests: current_team.pending_requests %>
+          <%= render "student/dashboards/completion_steps/incoming_join_requests",
+            requests: current_team.pending_requests %>
 
-        <%= render "completion_steps/join_requests",
-          hidden: current_student.is_on_team?,
-          requests: current_student.join_requests.pending %>
+          <%= render "completion_steps/join_requests",
+            requests: current_student.join_requests.pending %>
+        <% end %>
       </div>
 
       <div slot="create-team">
-        <%= render "completion_steps/create_team",
-          hidden: SeasonToggles.team_building_disabled? ||
-                    current_student.is_on_team? %>
+        <% if current_student.is_on_team? %>
+          You're on a team!
+          Your team is called <%= current_team.name %>.
+          You can
+          <%= link_to 'manage your team',
+            student_team_path(current_team) %>
+        <% elsif SeasonToggles.team_building_disabled? %>
+          Technovation Staff has turned off forming teams for everyone right now.
+        <% else %>
+          <%= render "completion_steps/create_team" %>
+        <% end %>
       </div>
 
       <div slot="find-mentor">
-        <%= render "student/dashboards/completion_steps/find_a_mentor",
-          hidden: current_student.team.mentors.any? %>
+        <% if current_student.team.mentors.any? %>
+          Your team has a mentor! You can have more than one.
+          <%= link_to 'Manage your mentors',
+           student_team_path(current_team, anchor: '!mentors') %>
+        <% else %>
+          <%= render "student/dashboards/completion_steps/find_a_mentor" %>
+        <% end %>
       </div>
 
       <div slot="submission">

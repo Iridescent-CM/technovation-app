@@ -1,5 +1,6 @@
 export default {
-  initApp (_context, { currentAccount }) {
-    console.log('initApp student', currentAccount)
+  initApp ({ commit }, { currentAccount, currentTeam }) {
+    commit('currentAccount', currentAccount)
+    commit('currentTeam', currentTeam)
   },
 }

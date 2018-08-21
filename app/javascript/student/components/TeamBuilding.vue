@@ -58,7 +58,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapState, mapActions, mapGetters } = createNamespacedHelpers('student')
+
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
@@ -77,7 +80,9 @@ export default {
   },
 
   computed: {
-    ...mapState([]),
+    ...mapState({
+      currentTeam: state => state.currentTeam,
+    }),
 
     ...mapGetters([]),
 
@@ -86,11 +91,11 @@ export default {
     },
 
     isOnTeam () {
-      return false
+      return this.currentTeam && this.currentTeam.id !== null
     },
 
     hasMentor () {
-      return false
+      return this.currentTeam && this.currentTeam.mentorIds.length
     },
   },
 

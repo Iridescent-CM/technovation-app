@@ -12,6 +12,7 @@ RSpec.describe "Admin season toggle effects", :js do
 
       visit student_dashboard_path
 
+      click_button '2. Build your team'
       click_button 'Find your team'
       expect(page).to have_link("Join a team")
       expect(page).to have_link("Register your team")
@@ -22,6 +23,7 @@ RSpec.describe "Admin season toggle effects", :js do
 
       visit student_dashboard_path
 
+      click_button '2. Build your team'
       click_button 'Find your team'
       expect(page).not_to have_link("Join a team")
       expect(page).not_to have_link("Register your team")

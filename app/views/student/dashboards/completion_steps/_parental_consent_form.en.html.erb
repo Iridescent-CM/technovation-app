@@ -1,21 +1,15 @@
-<% unless current_student.consent_signed? %>
+<% if current_student.consent_signed? %>
+
+<% else %>
   <% path_prefix ||= 'student/dashboards/completion_steps' %>
 
-  <li>
-    <div class="flags">
-      <span class="flag flag-registration">
-        Registration
-      </span>
-    </div>
+  <h1 class="content-heading">
+    Get your parent or guardian's permission
+  </h1>
 
-    <h1 class="content-heading">
-      Get your parent or guardian's permission
-    </h1>
-
-    <% if current_student.parent_guardian_email.blank? %>
-      <%= render "#{path_prefix}/parental_consent_init" %>
-    <% else %>
-      <%= render "#{path_prefix}/parental_consent_troubleshoot" %>
-    <% end %>
-  </li>
+  <% if current_student.parent_guardian_email.blank? %>
+    <%= render "#{path_prefix}/parental_consent_init" %>
+  <% else %>
+    <%= render "#{path_prefix}/parental_consent_troubleshoot" %>
+  <% end %>
 <% end %>

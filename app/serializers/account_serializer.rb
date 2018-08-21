@@ -69,4 +69,10 @@ class AccountSerializer
   attribute(:country) do |account|
     Carmen::Country.coded(account.country).try(:name)
   end
+
+  attribute(:current_team_id) do |account|
+    if account.student_profile
+      account.student_profile.team_id
+    end
+  end
 end

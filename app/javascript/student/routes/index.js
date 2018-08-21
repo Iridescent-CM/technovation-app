@@ -18,10 +18,15 @@ import judgingRoutes from './judging'
 const initiateApp = (_to, _from, next) => {
   try {
     const rootElem = document.getElementById('vue-data-registration')
-    const { data: { attributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
-    const currentAccount = Object.assign({}, store.state.registration, attributes, relationships)
+    if (!rootElem) return false
 
-    store.dispatch('student/initApp', { currentAccount })
+    const { data: { id: teamId, attributes: teamAttributes }} = JSON.parse(rootElem.dataset.currentTeam)
+    const { data: { id: accountId, attributes: accountAttributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
+
+    const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
+    const currentTeam = Object.assign({ id: parseInt(teamId) }, teamAttributes)
+
+    store.dispatch('student/initApp', { currentAccount, currentTeam })
     next()
   } catch (err) {
     console.error(err)
