@@ -142,3 +142,9 @@
   z-index: 999;
   overflow: hidden;
 }
+
+.sticky-sidebar.grid__col-3 {
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 2em;
+}

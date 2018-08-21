@@ -233,9 +233,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sticky-sidebar.grid__col-3 {
-  background-color: transparent;
-  padding-left: 0;
-  padding-right: 2em;
-}
 </style>
