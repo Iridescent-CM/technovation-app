@@ -36,9 +36,6 @@ describe("Registration::Components::ChooseProfile.vue", () => {
             },
           },
         }),
-        methods: {
-          getExpertiseOptions: jest.fn(() => {}),
-        },
       }
     )
   })
