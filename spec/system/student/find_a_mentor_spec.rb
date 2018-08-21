@@ -9,6 +9,7 @@ RSpec.describe "Students invite mentors to join their team", :js do
   before do
     sign_in(student)
     visit student_team_path(student.team)
+    click_button 'Mentors'
     click_link "Add a mentor"
   end
 
