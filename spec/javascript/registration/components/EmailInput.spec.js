@@ -9,6 +9,7 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 let defaultWrapper
+const defaultStore = mockStore.createMocks()
 
 describe('EmailInput Vue component', () => {
   beforeEach(() => {
@@ -16,7 +17,17 @@ describe('EmailInput Vue component', () => {
       EmailInput,
       {
         localVue,
-        store: mockStore.createMocks().store,
+        store: new Vuex.Store({
+          modules: {
+            registration: {
+              namespaced: true,
+              state: defaultStore.state,
+              getters: defaultStore.getters,
+              mutations: defaultStore.mutations,
+              actions: defaultStore.actions,
+            },
+          },
+        })
       }
     )
 
@@ -48,7 +59,7 @@ describe('EmailInput Vue component', () => {
       'debouncedEmailWatcher'
     )
 
-    defaultWrapper.vm.email = 'joe@joesak.com'
+    defaultWrapper.vm.email = 'test@iridescentlearning.org'
 
     setImmediate(() => {
       expect(emailWatcherSpy).toHaveBeenCalledTimes(1)
@@ -62,7 +73,17 @@ describe('EmailInput Vue component', () => {
         EmailInput,
         {
           localVue,
-          store: mockStore.createMocks().store,
+          store: new Vuex.Store({
+            modules: {
+              registration: {
+                namespaced: true,
+                state: defaultStore.state,
+                getters: defaultStore.getters,
+                mutations: defaultStore.mutations,
+                actions: defaultStore.actions,
+              },
+            },
+          }),
           watch: { email: jest.fn() },
         }
       )
