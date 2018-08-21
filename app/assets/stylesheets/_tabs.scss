@@ -134,3 +134,11 @@
     background: white;
   }
 }
+
+.sticky-nav, .sticky-sidebar {
+  background-color: $doc-bg;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  overflow: hidden;
+}

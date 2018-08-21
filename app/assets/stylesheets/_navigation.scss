@@ -80,14 +80,6 @@
   }
 }
 
-.sticky-nav {
-  background-color: $doc-bg;
-  position: fixed;
-  top: 0;
-  z-index: 999;
-  overflow: hidden;
-}
-
 @media (max-width: 768px) {
   .navigation.logged-in {
     .icon-navicon {
