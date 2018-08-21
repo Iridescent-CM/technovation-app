@@ -42,6 +42,9 @@ export const routes = [
   {
     path: '/team',
     component: TeamBuilding,
+    props: {
+      stickySidebarClasses: ['grid__col-3'],
+    },
     beforeEnter: initiateApp,
     children: teamRoutes,
     meta: {
@@ -54,7 +57,7 @@ export const routes = [
     component: RegistrationApp,
     props: {
       removeWhiteBackground: false,
-      stickySidebarClasses: ['grid__col-3']
+      stickySidebarClasses: ['grid__col-3'],
     },
     beforeEnter: initiateApp,
     children: registrationRoutes,
@@ -67,6 +70,9 @@ export const routes = [
     path: '/submission',
     name: 'submission',
     component: Submission,
+    props: {
+      stickySidebarClasses: ['grid__col-3'],
+    },
     beforeEnter: initiateApp,
     meta: {
       routeId: 'submission',
@@ -77,6 +83,9 @@ export const routes = [
     path: '/judging',
     name: 'judging',
     component: Judging,
+    props: {
+      stickySidebarClasses: ['grid__col-3'],
+    },
     beforeEnter: initiateApp,
     children: judgingRoutes,
     meta: {
@@ -88,6 +97,9 @@ export const routes = [
     path: '/scores',
     name: 'scores',
     component: Scores,
+    props: {
+      stickySidebarClasses: ['grid__col-3'],
+    },
     beforeEnter: initiateApp,
     meta: {
       routeId: 'scores',

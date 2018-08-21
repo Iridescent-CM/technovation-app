@@ -1,8 +1,8 @@
 <template>
   <div class="tabs tabs--vertical tabs--css-only grid">
-    <div class="grid__col-3 col--sticky-parent">
-      <div class="col--sticky-spacer">
-        <ul class="tabs__menu col--sticky">
+    <div class="grid__col-3">
+      <div v-sticky-sidebar="stickySidebarClasses">
+        <ul class="tabs__menu">
           <tab-link :to="{ name: 'events' }">
             <icon
               :name="completedEnabledOrDisabledIcon(regionalEventCondition)"
@@ -32,6 +32,7 @@ import { mapGetters, mapActions, mapState } from 'vuex'
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
+import StickySidebar from 'directives/sticky-sidebar'
 
 export default {
   beforeRouteEnter (_to, _from, next) {
@@ -41,9 +42,22 @@ export default {
     })
   },
 
+  directives: {
+    'sticky-sidebar': StickySidebar,
+  },
+
   components: {
     Icon,
     TabLink,
+  },
+
+  props: {
+    stickySidebarClasses: {
+      type: Array,
+      default () {
+        return []
+      },
+    },
   },
 
   computed: {

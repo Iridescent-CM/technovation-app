@@ -15,6 +15,7 @@ import { mapGetters, mapActions, mapState } from 'vuex'
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
+import StickySidebar from 'directives/sticky-sidebar'
 
 export default {
   beforeRouteEnter (_to, _from, next) {
@@ -24,9 +25,22 @@ export default {
     })
   },
 
+  directives: {
+    'sticky-sidebar': StickySidebar,
+  },
+
   components: {
     Icon,
     TabLink,
+  },
+
+  props: {
+    stickySidebarClasses: {
+      type: Array,
+      default () {
+        return []
+      },
+    },
   },
 
   computed: {
