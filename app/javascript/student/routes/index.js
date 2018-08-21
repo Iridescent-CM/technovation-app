@@ -15,7 +15,7 @@ import { routes as registrationRoutes } from 'registration/routes'
 import teamRoutes from './teams'
 import judgingRoutes from './judging'
 
-const initiateApp = (_to, _from, next) => {
+const initiateApp = (to, from, next) => {
   try {
     const rootElem = document.getElementById('vue-data-registration')
     if (!rootElem) return false
@@ -27,7 +27,12 @@ const initiateApp = (_to, _from, next) => {
     const currentTeam = Object.assign({ id: parseInt(teamId) }, teamAttributes)
 
     store.dispatch('student/initApp', { currentAccount, currentTeam })
-    next()
+
+    if (to.path === '/' && from.path === '/') {
+      next({ name: 'parental-consent' })
+    } else {
+      next()
+    }
   } catch (err) {
     console.error(err)
     next()
@@ -37,7 +42,8 @@ const initiateApp = (_to, _from, next) => {
 export const routes = [
   {
     path: '/',
-    component: TeamBuilding
+    component: TeamBuilding,
+    beforeEnter: initiateApp,
   },
   {
     path: '/team',

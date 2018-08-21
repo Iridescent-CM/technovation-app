@@ -16,7 +16,7 @@
             <icon
               :name="completedEnabledOrDisabledIcon(isOnTeam)"
               size="16"
-              :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
+              :color="$route.name === 'find-team' ? '000000' : '28A880'"
             />
             Find your team
           </tab-link>
@@ -25,7 +25,7 @@
             <icon
               :name="completedEnabledOrDisabledIcon(isOnTeam)"
               size="16"
-              :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
+              :color="$route.name === 'create-team' ? '000000' : '28A880'"
             />
             Create your team
           </tab-link>
@@ -108,7 +108,9 @@ export default {
     },
 
     hasMentor () {
-      return this.currentTeam && this.currentTeam.mentorIds.length
+      return this.currentTeam &&
+        this.currentTeam.mentorIds &&
+          this.currentTeam.mentorIds.length
     },
   },
 
