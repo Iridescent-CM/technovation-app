@@ -54,6 +54,7 @@ export const routes = [
     component: RegistrationApp,
     props: {
       removeWhiteBackground: false,
+      stickySidebarClasses: ['grid__col-3']
     },
     beforeEnter: initiateApp,
     children: registrationRoutes,

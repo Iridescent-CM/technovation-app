@@ -1,8 +1,8 @@
 <template>
   <div :class="wrapperClasses">
-    <div class="grid__col-3 col--sticky-parent">
-      <div class="col--sticky-spacer">
-        <ul class="tabs__menu col--sticky">
+    <div class="grid__col-3">
+      <div v-sticky-sidebar="stickySidebarClasses">
+        <ul class="tabs__menu">
           <tab-link
             :to="{ name: 'data-use' }"
           >
@@ -90,11 +90,16 @@ import { createNamespacedHelpers } from 'vuex'
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
+import StickySidebar from 'directives/sticky-sidebar'
 
 const { mapState, mapGetters } = createNamespacedHelpers('registration')
 
 export default {
   name: 'app',
+
+  directives: {
+    'sticky-sidebar': StickySidebar,
+  },
 
   components: {
     Icon,
@@ -105,6 +110,13 @@ export default {
     removeWhiteBackground: {
       type: Boolean,
       default: true,
+    },
+
+    stickySidebarClasses: {
+      type: Array,
+      default () {
+        return []
+      },
     },
   },
 
@@ -199,15 +211,6 @@ export default {
     },
   },
 
-  mounted () {
-    if (jQuery)
-      $(".col--sticky").stick_in_parent({
-        parent: ".col--sticky-parent",
-        spacer: ".col--sticky-spacer",
-        recalc_every: 1,
-      })
-  },
-
   methods: {
     completedEnabledOrDisabledIcon (conditionToComplete) {
       if (conditionToComplete)
@@ -228,3 +231,11 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.sticky-sidebar.grid__col-3 {
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 2em;
+}
+</style>
