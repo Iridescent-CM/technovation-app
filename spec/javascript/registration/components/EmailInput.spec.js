@@ -8,11 +8,12 @@ import EmailInput from 'registration/components/EmailInput'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-let defaultWrapper
-const defaultStore = mockStore.createMocks()
-
 describe('EmailInput Vue component', () => {
+  let defaultWrapper
+
   beforeEach(() => {
+    const defaultStore = mockStore.createMocks()
+
     defaultWrapper = shallowMount(
       EmailInput,
       {
@@ -59,7 +60,7 @@ describe('EmailInput Vue component', () => {
       'debouncedEmailWatcher'
     )
 
-    defaultWrapper.vm.email = 'test@iridescentlearning.org'
+    defaultWrapper.vm.email = 'joe@joesak.com'
 
     setImmediate(() => {
       expect(emailWatcherSpy).toHaveBeenCalledTimes(1)
@@ -69,6 +70,8 @@ describe('EmailInput Vue component', () => {
 
   describe('#validateEmailInput()', () => {
     it('calls the validation service with the email', (done) => {
+      const defaultStore = mockStore.createMocks()
+
       const wrapper = shallowMount(
         EmailInput,
         {
