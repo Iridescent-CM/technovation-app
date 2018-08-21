@@ -16,8 +16,8 @@ let classes = []
 function setStickyNav () {
   if (containingElement && navBar) {
     const siblingContent = navBar.nextElementSibling
-    const stickyPoint = parseInt(window.pageYOffset)
-    const appOffset = parseInt(containingElement.offsetTop)
+    const stickyPoint = parseInt(window.pageYOffset, 10)
+    const appOffset = parseInt(containingElement.offsetTop, 10)
 
     navIsSticky = stickyPoint + globalTopNavHeight >= appOffset
 
@@ -45,7 +45,7 @@ export default {
       classes = binding.value
     }
 
-    globalTopNavHeight = parseInt(document.querySelector('.header-container').offsetHeight)
+    globalTopNavHeight = parseInt(document.querySelector('.header-container').offsetHeight, 10)
     containingElement = vnode.context.$el
     navBar = el
 
