@@ -3,7 +3,7 @@
  *
  * Takes an expression which is an array of classes to apply when the element
  * becomes sticky.
- * For example: v-sticky-sidebar="['col-3', 'background-white']"
+ * For example: v-sticky-nav="['col-3', 'background-white']"
  * Will apply: class="sticky-nav col-3 background-white"
  */
 
