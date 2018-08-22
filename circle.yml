@@ -51,6 +51,7 @@ jobs:
           COOKIES_SIGNUP_EMAIL: n-a
           MAILGUN_PRIVATE_KEY: n-a
       - image: circleci/postgres:9.6-alpine-ram
+      - image: selenium/standalone-chrome:3.5.3
 
     steps:
       - checkout
@@ -99,7 +100,13 @@ jobs:
 
       - run:
           name: Parallel RSpec
-          command: bundle exec rspec --order rand
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --order rand \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
 
       # Save artifacts
