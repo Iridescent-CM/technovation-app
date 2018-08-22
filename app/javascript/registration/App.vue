@@ -127,6 +127,7 @@ export default {
       'isReady',
       'termsAgreed',
       'profileChoice',
+      'currentAccount',
     ]),
 
     ...mapStudentState([

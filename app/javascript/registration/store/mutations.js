@@ -31,6 +31,10 @@ export default {
     state.wizardToken = wizardToken
   },
 
+  token (state, token) {
+    state.token = token
+  },
+
   termsAgreed (state, termsAgreed) {
     state.termsAgreed = termsAgreed
   },

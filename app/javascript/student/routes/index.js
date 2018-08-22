@@ -26,6 +26,7 @@ const initiateApp = (to, from, next) => {
     const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
     const currentTeam = Object.assign({ id: parseInt(teamId) }, teamAttributes)
 
+    store.dispatch('registration/initAccount', currentAccount)
     store.dispatch('student/initApp', { currentAccount, currentTeam })
 
     if (to.path === '/' && from.path === '/') {

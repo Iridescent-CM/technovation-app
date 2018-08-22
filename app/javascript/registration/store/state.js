@@ -1,8 +1,9 @@
 export default {
   isReady: false,
   isLocked: false,
-  apiRoot: null,
+  apiRoot: 'registration',
   wizardToken: null,
+  token: null,
 
   termsAgreed: null,
 

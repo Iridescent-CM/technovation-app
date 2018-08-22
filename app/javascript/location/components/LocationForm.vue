@@ -417,7 +417,7 @@ export default {
     },
 
     _getEndpoint (pathPart) {
-      const endpointRoot = `/${this.scopeName}/${pathPart}`
+      const endpointRoot = `${this.scopeName}/${pathPart}`
 
       if (this.accountId) {
         return `${endpointRoot}?account_id=${this.accountId}`

@@ -1,6 +1,7 @@
 export default {
   initWizard ({ commit, getters }, attempt) {
     commit('wizardToken', attempt.wizardToken)
+    commit('token', attempt.wizardToken)
     commit('termsAgreed', attempt.termsAgreed)
     commit('birthDate', getters.getBirthdateAttributes(attempt))
     commit('profileChoice', attempt.profileChoice)
@@ -10,8 +11,8 @@ export default {
     commit('isReady', true)
   },
 
-  initAccount ({ commit, getters }, account) {
-    //commit('wizardToken', attempt.wizardToken)
+  initAccount ({ commit, state, getters }, account) {
+    commit('token', account.authToken)
     commit('termsAgreed', true)
     commit('birthDate', getters.getBirthdateAttributes(account))
     commit('profileChoice', account.profileChoice)
@@ -91,10 +92,10 @@ export default {
 
     commit('location', data)
 
-    axios.post('/registration/location', {
+    axios.post(`${state.apiRoot}/location`, {
       location: {
         ...data,
-        wizardToken: state.wizardToken,
+        token: state.token,
       },
     }).then(({ data: { data: { attributes }} }) => {
       commit('location', attributes)
