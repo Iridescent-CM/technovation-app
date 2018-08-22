@@ -6,7 +6,9 @@
 
     <div class="panel__content">
       <div v-if="!isLocked" class="grid grid--justify-space-around">
-        Due to your age, you can be a:
+        <div class="grid__col-12">
+          Due to your age, you can be a:
+        </div>
 
         <div
           :class="[
