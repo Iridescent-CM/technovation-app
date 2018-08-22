@@ -1,6 +1,14 @@
 class NullTeam < NullObject
+  def id
+    0
+  end
+
   def touch
     # noop
+  end
+
+  def name
+    '::NullTeam'
   end
 
   def has_mentor?
@@ -17,6 +25,10 @@ class NullTeam < NullObject
 
   def mentors
     ::MentorProfile.none
+  end
+
+  def mentor_ids
+    []
   end
 
   def selected_regional_pitch_event
@@ -45,5 +57,25 @@ class NullTeam < NullObject
 
   def pending_mentor_join_requests
     ::JoinRequest.none
+  end
+
+  def city
+    false
+  end
+
+  def state_province
+    false
+  end
+
+  def latitude
+    false
+  end
+
+  def longitude
+    false
+  end
+
+  def country
+    ''
   end
 end

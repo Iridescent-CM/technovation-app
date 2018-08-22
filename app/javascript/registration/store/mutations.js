@@ -19,8 +19,20 @@ export default {
     state.isReady = bool
   },
 
+  isLocked (state, bool) {
+    state.isLocked = bool
+  },
+
+  apiRoot (state, value) {
+    state.apiRoot = value
+  },
+
   wizardToken (state, wizardToken) {
     state.wizardToken = wizardToken
+  },
+
+  token (state, token) {
+    state.token = token
   },
 
   termsAgreed (state, termsAgreed) {
@@ -81,10 +93,6 @@ export default {
     expertiseIds(state, attributes.expertiseIds)
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
-  },
-
-  account (state, attributes) {
-
   },
 
   firstName (state, value) {

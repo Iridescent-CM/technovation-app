@@ -1,23 +1,41 @@
 
 import 'axios'
-import { defaultWrapperWithVuex } from '../../__utils__/technovation-test-utils'
-import ChooseProfile from 'registration/components/ChooseProfile'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 
 import mockStore from 'registration/store/__mocks__'
+import ChooseProfile from 'registration/components/ChooseProfile'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe("Registration::Components::ChooseProfile.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
-    defaultWrapper = defaultWrapperWithVuex(
-      ChooseProfile,
-      mockStore,
-      {
-        actions: {
-          updateProfileChoice ({ commit }, choice) {
-            commit('profileChoice', choice)
-          },
+    const defaultStore = mockStore.createMocks({
+      actions: {
+        updateProfileChoice ({ commit }, choice) {
+          commit('profileChoice', choice)
         },
+      },
+    })
+
+    defaultWrapper = shallowMount(
+      ChooseProfile,
+      {
+        localVue,
+        store: new Vuex.Store({
+          modules: {
+            registration: {
+              namespaced: true,
+              state: defaultStore.state,
+              getters: defaultStore.getters,
+              mutations: defaultStore.mutations,
+              actions: defaultStore.actions,
+            },
+          },
+        }),
       }
     )
   })

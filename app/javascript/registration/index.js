@@ -1,6 +1,5 @@
 import Vue from 'vue/dist/vue.esm'
 import Vue2Filters from 'vue2-filters'
-import { mapState } from 'vuex'
 
 import router from './routes'
 import store from './store'

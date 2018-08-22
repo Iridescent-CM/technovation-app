@@ -5,9 +5,11 @@
     </div>
 
     <div class="panel__content">
-      Due to your age, you can be a:
+      <div v-if="!isLocked" class="grid grid--justify-space-around">
+        <div class="grid__col-12">
+          Due to your age, you can be a:
+        </div>
 
-      <div class="grid grid--justify-space-around">
         <div
           :class="[
             'opacity--50',
@@ -30,6 +32,11 @@
           </label>
         </div>
       </div>
+
+      <div v-else class="text-align--center">
+        <img :src="getProfileIconSrc(profileChoice)" width="300" />
+        <br />You are a {{ profileChoice }}
+      </div>
     </div>
 
     <div class="panel__bottom-bar">
@@ -51,7 +58,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+
+const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 
 export default {
   beforeRouteEnter (_to, from, next) {
@@ -65,7 +74,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['months', 'birthMonth', 'genderIdentity']),
+    ...mapState(['months', 'birthMonth', 'genderIdentity', 'isLocked']),
 
     ...mapGetters(['getAge', 'getAgeByCutoff', 'isAgeSet', 'getBirthdate']),
 
@@ -75,11 +84,11 @@ export default {
 
     profileChoice: {
       get () {
-        return this.$store.state.profileChoice
+        return this.$store.state.registration.profileChoice
       },
 
       set (choice) {
-        this.$store.commit('profileChoice', choice)
+        this.$store.commit('registration/profileChoice', choice)
       },
     },
 
@@ -128,10 +137,10 @@ export default {
 
     getProfileIconSrc (choice) {
       if (choice) {
-        const elem = document.getElementById('vue-enable-signup-wizard')
+        const elem = document.getElementById('vue-data-registration')
         const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
 
-        if (choice === 'mentor' && this.$store.state.genderIdentity === 'Male') {
+        if (choice === 'mentor' && this.$store.state.registration.genderIdentity === 'Male') {
           return elem.dataset.profileIconMentorMale
         } else {
           return elem.dataset[`profileIcon${capitalizedChoice}`]

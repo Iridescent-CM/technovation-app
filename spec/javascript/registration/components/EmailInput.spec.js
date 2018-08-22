@@ -8,15 +8,27 @@ import EmailInput from 'registration/components/EmailInput'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-let defaultWrapper
-
 describe('EmailInput Vue component', () => {
+  let defaultWrapper
+
   beforeEach(() => {
+    const defaultStore = mockStore.createMocks()
+
     defaultWrapper = shallowMount(
       EmailInput,
       {
         localVue,
-        store: mockStore.createMocks().store,
+        store: new Vuex.Store({
+          modules: {
+            registration: {
+              namespaced: true,
+              state: defaultStore.state,
+              getters: defaultStore.getters,
+              mutations: defaultStore.mutations,
+              actions: defaultStore.actions,
+            },
+          },
+        })
       }
     )
 
@@ -58,11 +70,23 @@ describe('EmailInput Vue component', () => {
 
   describe('#validateEmailInput()', () => {
     it('calls the validation service with the email', (done) => {
+      const defaultStore = mockStore.createMocks()
+
       const wrapper = shallowMount(
         EmailInput,
         {
           localVue,
-          store: mockStore.createMocks().store,
+          store: new Vuex.Store({
+            modules: {
+              registration: {
+                namespaced: true,
+                state: defaultStore.state,
+                getters: defaultStore.getters,
+                mutations: defaultStore.mutations,
+                actions: defaultStore.actions,
+              },
+            },
+          }),
           watch: { email: jest.fn() },
         }
       )

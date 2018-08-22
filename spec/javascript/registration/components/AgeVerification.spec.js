@@ -1,22 +1,40 @@
 import 'axios'
-import { defaultWrapperWithVuex } from '../../__utils__/technovation-test-utils'
-import AgeVerification from 'registration/components/AgeVerification'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 
 import mockStore from 'registration/store/__mocks__'
+import AgeVerification from 'registration/components/AgeVerification'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe("Registration::Components::AgeVerification.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
-    defaultWrapper = defaultWrapperWithVuex(
-      AgeVerification,
-      mockStore,
-      {
-        actions: {
-          updateBirthdate ({ commit }, attributes) {
-            commit('birthDate',  attributes)
-          },
+    const defaultStore = mockStore.createMocks({
+      actions: {
+        updateBirthdate ({ commit }, attributes) {
+          commit('birthDate',  attributes)
         },
+      },
+    })
+
+    defaultWrapper = shallowMount(
+      AgeVerification,
+      {
+        localVue,
+        store: new Vuex.Store({
+          modules: {
+            registration: {
+              namespaced: true,
+              state: defaultStore.state,
+              getters: defaultStore.getters,
+              mutations: defaultStore.mutations,
+              actions: defaultStore.actions,
+            },
+          },
+        })
       }
     )
   })
@@ -39,7 +57,7 @@ describe("Registration::Components::AgeVerification.vue", () => {
 
     it("is 31 when #month() is a long month", () => {
       [1, 3, 5, 7, 8, 10, 12].forEach(longMonth => {
-        const month = defaultWrapper.vm.$store.getters.getMonthByValue(longMonth)
+        const month = defaultWrapper.vm.$store.getters['registration/getMonthByValue'](longMonth)
         defaultWrapper.vm.month = month
         expect(defaultWrapper.vm.monthEndDay).toEqual(31)
       })
@@ -47,14 +65,14 @@ describe("Registration::Components::AgeVerification.vue", () => {
 
     it("is 30 when #month() is a non-Feb short month", () => {
       [4, 6, 9, 11].forEach(shortNonFebMonth => {
-        const month = defaultWrapper.vm.$store.getters.getMonthByValue(shortNonFebMonth)
+        const month = defaultWrapper.vm.$store.getters['registration/getMonthByValue'](shortNonFebMonth)
         defaultWrapper.vm.month = month
         expect(defaultWrapper.vm.monthEndDay).toEqual(30)
       })
     })
 
     it("is 29 when #month() is February (2)", () => {
-      const month = defaultWrapper.vm.$store.getters.getMonthByValue(2)
+      const month = defaultWrapper.vm.$store.getters['registration/getMonthByValue'](2)
       defaultWrapper.vm.month = month
       expect(defaultWrapper.vm.monthEndDay).toEqual(29)
     })
@@ -62,7 +80,7 @@ describe("Registration::Components::AgeVerification.vue", () => {
     it("is 28 when #month() is February (2) and #year() is not a leap year", () => {
       defaultWrapper.vm.year = 2009
 
-      const month = defaultWrapper.vm.$store.getters.getMonthByValue(2)
+      const month = defaultWrapper.vm.$store.getters['registration/getMonthByValue'](2)
       defaultWrapper.vm.month = month
 
       expect(defaultWrapper.vm.monthEndDay).toEqual(28)

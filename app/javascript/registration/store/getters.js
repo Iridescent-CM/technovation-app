@@ -80,7 +80,7 @@ export default {
 
   getMonthByValue: (state) => (value) => {
     return state.months.find(month => {
-      return month.value == (value || "").toString()
+      return month.value == (value || "").toString().replace(/^0/, "")
     }) || ''
   },
 

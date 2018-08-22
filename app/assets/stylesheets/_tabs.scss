@@ -134,3 +134,22 @@
     background: white;
   }
 }
+
+.sticky-nav, .sticky-sidebar {
+  background-color: $doc-bg;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.sticky-nav {
+  width: 100%;
+  border-bottom: 1px solid white;
+}
+
+.sticky-sidebar.grid__col-3 {
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 2em;
+}

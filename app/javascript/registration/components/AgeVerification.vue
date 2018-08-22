@@ -82,8 +82,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 import VueSelect from '@vendorjs/vue-select'
+
+const { mapGetters, mapActions, mapState } = createNamespacedHelpers('registration')
 
 export default {
   components: {
@@ -97,21 +99,21 @@ export default {
 
     profileChoice: {
       get () {
-        return this.$store.state.profileChoice
+        return this.$store.state.registration.profileChoice
       },
 
       set (choice) {
-        this.$store.commit('profileChoice', choice)
+        this.$store.commit('registration/profileChoice', choice)
       },
     },
 
     genderIdentity: {
       get () {
-        return this.$store.state.genderIdentity
+        return this.$store.state.registration.genderIdentity
       },
 
       set (identity) {
-        this.$store.commit('genderIdentity', identity)
+        this.$store.commit('registration/genderIdentity', identity)
       },
     },
 
@@ -129,7 +131,7 @@ export default {
       },
 
       set (year) {
-        this.$store.commit('birthYear', year)
+        this.$store.commit('registration/birthYear', year)
       },
     },
 
@@ -139,7 +141,7 @@ export default {
       },
 
       set (month) {
-        this.$store.commit('birthMonth', month)
+        this.$store.commit('registration/birthMonth', month)
       },
     },
 
@@ -149,7 +151,7 @@ export default {
       },
 
       set (day) {
-        this.$store.commit('birthDay', day)
+        this.$store.commit('registration/birthDay', day)
       },
     },
 
