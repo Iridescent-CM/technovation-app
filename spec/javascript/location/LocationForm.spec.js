@@ -25,7 +25,7 @@ describe('location/components/LocationForm', () => {
     })
 
     setImmediate(() => {
-      expect(axios.get).toHaveBeenCalledWith('student/current_location')
+      expect(axios.get).toHaveBeenCalledWith('/student/current_location')
 
       expect(myWrapper.vm.city).toEqual("Chicago")
       expect(myWrapper.vm.state).toEqual("IL")
@@ -47,7 +47,7 @@ describe('location/components/LocationForm', () => {
     })
 
     setImmediate(() => {
-      expect(axios.get).toHaveBeenCalledWith('admin/current_location?account_id=1')
+      expect(axios.get).toHaveBeenCalledWith('/admin/current_location?account_id=1')
       done()
     })
   })
@@ -62,7 +62,7 @@ describe('location/components/LocationForm', () => {
     })
 
     setImmediate(() => {
-      expect(axios.get).toHaveBeenCalledWith('admin/current_location?team_id=1')
+      expect(axios.get).toHaveBeenCalledWith('/admin/current_location?team_id=1')
       done()
     })
   })
