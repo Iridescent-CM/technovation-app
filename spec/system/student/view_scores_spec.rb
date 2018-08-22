@@ -32,7 +32,6 @@ RSpec.describe "Students view scores", :js do
     click_button "Get scores & valuable feedback"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
     accordions = page.all(:css, '.ui-accordion-content', visible: false)
     accordions.each do |el|
       execute_script("arguments[0].style.display = 'block'", el)
@@ -63,7 +62,6 @@ RSpec.describe "Students view scores", :js do
     click_button "Get scores & valuable feedback"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
     accordions = page.all(:css, '.ui-accordion-content', visible: false)
     accordions.each do |el|
       execute_script("arguments[0].style.display = 'block'", el)
@@ -88,7 +86,6 @@ RSpec.describe "Students view scores", :js do
     click_button "Get scores & valuable feedback"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
     accordions = page.all(:css, '.ui-accordion-content', visible: false)
     accordions.each do |el|
       execute_script("arguments[0].style.display = 'block'", el)
@@ -119,7 +116,6 @@ RSpec.describe "Students view scores", :js do
     click_button "Get scores & valuable feedback"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
     accordions = page.all(:css, '.ui-accordion-content', visible: false)
     accordions.each do |el|
       execute_script("arguments[0].style.display = 'block'", el)
