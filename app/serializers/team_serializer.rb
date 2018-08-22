@@ -6,7 +6,7 @@ class TeamSerializer
 
   attribute(:state) do |team|
     if country = Carmen::Country.coded(team.country)
-      country.subregions.coded(team.state_province.sub(".", ""))
+      country.subregions.coded((team.state_province || "").sub(".", ""))
     end
   end
 
