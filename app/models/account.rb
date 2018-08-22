@@ -457,6 +457,50 @@ class Account < ActiveRecord::Base
       ) or ::NullAuth.new
   end
 
+  def profile_school_company_name
+    if student_profile
+      student_profile.school_name
+    elsif regional_ambassador_profile
+      regional_ambassador_profile.school_organization_name
+    elsif mentor_profile
+      mentor_profile.school_company_name
+    elsif judge_profile
+      judge_profile.company_name
+    else
+      false
+    end
+  end
+
+  def profile_job_title
+    if student_profile
+      false
+    elsif regional_ambassador_profile
+      regional_ambassador_profile.job_title
+    elsif mentor_profile
+      mentor_profile.job_title
+    elsif judge_profile
+      judge_profile.job_title
+    else
+      false
+    end
+  end
+
+  def profile_mentor_type
+    if mentor_profile
+      mentor_profile.mentor_type
+    else
+      false
+    end
+  end
+
+  def profile_expertise_ids
+    if mentor_profile
+      mentor_profile.expertise_ids
+    else
+      []
+    end
+  end
+
   def events
     judge_profile && judge_profile.events ||
 

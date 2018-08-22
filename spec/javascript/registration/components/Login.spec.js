@@ -1,16 +1,35 @@
 import 'axios'
-import { defaultWrapperWithVuex } from '../../__utils__/technovation-test-utils'
-import Login from 'registration/components/Login'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 
 import mockStore from 'registration/store/__mocks__'
+import Login from 'registration/components/Login'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe("Registration::Components::Login.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
-    defaultWrapper = defaultWrapperWithVuex(
+    const defaultStore = mockStore.createMocks()
+
+    defaultWrapper = shallowMount(
       Login,
-      mockStore,
+      {
+        localVue,
+        store: new Vuex.Store({
+          modules: {
+            registration: {
+              namespaced: true,
+              state: defaultStore.state,
+              getters: defaultStore.getters,
+              mutations: defaultStore.mutations,
+              actions: defaultStore.actions,
+            },
+          },
+        }),
+      }
     )
   })
 

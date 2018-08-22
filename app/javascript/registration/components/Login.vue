@@ -35,10 +35,12 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 
 import EmailInput from './EmailInput'
 import PasswordInput from './PasswordInput'
+
+const { mapState, mapGetters } = createNamespacedHelpers('registration')
 
 export default {
   name: 'login',

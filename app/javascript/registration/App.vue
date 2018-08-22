@@ -1,8 +1,8 @@
 <template>
-  <div class="grid tabs tabs--vertical tabs--remove-bg tabs--css-only">
-    <div class="grid__col-3 col--sticky-parent">
-      <div class="col--sticky-spacer">
-        <ul class="tabs__menu col--sticky">
+  <div :class="wrapperClasses">
+    <div class="grid__col-3">
+      <div v-sticky-sidebar="stickySidebarClasses">
+        <ul class="tabs__menu">
           <tab-link
             :to="{ name: 'data-use' }"
           >
@@ -65,6 +65,7 @@
           <tab-link
             :to="{ name: 'login' }"
             :disabled-tooltip="loginDisabledMessage"
+            v-if="!currentAccount"
           >
             <icon
               name="circle-o"
@@ -73,30 +74,69 @@
             />
             Sign in
           </tab-link>
+
+          <tab-link
+            :to="{ name: 'change-email' }"
+            v-if="currentAccount"
+          >
+            Change email
+          </tab-link>
+
+          <tab-link
+            :to="{ name: 'change-password' }"
+            v-if="currentAccount"
+          >
+            Change password
+          </tab-link>
         </ul>
       </div>
     </div>
 
     <div class="grid__col-9">
       <transition name="router-fade">
-        <router-view v-if="isReady"></router-view>
+        <router-view v-if="isReady" :key="$route.path">
+          <div slot="change-email"><slot name="change-email" /></div>
+          <div slot="change-password"><slot name="change-password" /></div>
+        </router-view>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 
 import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
+import StickySidebar from 'directives/sticky-sidebar'
+
+const { mapState, mapGetters } = createNamespacedHelpers('registration')
+const { mapState: mapStudentState } = createNamespacedHelpers('student')
 
 export default {
   name: 'app',
 
+  directives: {
+    'sticky-sidebar': StickySidebar,
+  },
+
   components: {
     Icon,
     TabLink,
+  },
+
+  props: {
+    removeWhiteBackground: {
+      type: Boolean,
+      default: true,
+    },
+
+    stickySidebarClasses: {
+      type: Array,
+      default () {
+        return []
+      },
+    },
   },
 
   computed: {
@@ -104,6 +144,11 @@ export default {
       'isReady',
       'termsAgreed',
       'profileChoice',
+      'currentAccount',
+    ]),
+
+    ...mapStudentState([
+      'currentAccount',
     ]),
 
     ...mapGetters([
@@ -178,15 +223,16 @@ export default {
 
       return ''
     },
-  },
 
-  mounted () {
-    if (jQuery)
-      $(".col--sticky").stick_in_parent({
-        parent: ".col--sticky-parent",
-        spacer: ".col--sticky-spacer",
-        recalc_every: 1,
-      })
+    wrapperClasses () {
+      return {
+        grid: true,
+        tabs: true,
+        'tabs--vertical': true,
+        'tabs--remove-bg': this.removeWhiteBackground,
+        'tabs--css-only': true,
+      }
+    },
   },
 
   methods: {
@@ -209,3 +255,6 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

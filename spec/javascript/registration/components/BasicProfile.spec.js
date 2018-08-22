@@ -12,11 +12,23 @@ describe("Registration::Components::BasicProfile.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
+    const defaultStore = mockStore.createMocks()
+
     defaultWrapper = shallowMount(
       BasicProfile,
       {
         localVue,
-        store: mockStore.createMocks().store,
+        store: new Vuex.Store({
+          modules: {
+            registration: {
+              namespaced: true,
+              state: defaultStore.state,
+              getters: defaultStore.getters,
+              mutations: defaultStore.mutations,
+              actions: defaultStore.actions,
+            },
+          },
+        }),
         methods: {
           getExpertiseOptions: jest.fn(() => {}),
         },
@@ -31,7 +43,7 @@ describe("Registration::Components::BasicProfile.vue", () => {
 
     it("can be set during initWizard", () => {
       defaultWrapper.vm.$store.dispatch(
-        'initWizard',
+        'registration/initWizard',
         {
           referredByOther: 'something',
         },

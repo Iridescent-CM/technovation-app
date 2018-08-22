@@ -13,27 +13,35 @@ import ChooseProfile from '../components/ChooseProfile'
 import BasicProfile from '../components/BasicProfile'
 
 import Login from '../components/Login'
+import ChangeEmail from '../components/ChangeEmail'
+import ChangePassword from '../components/ChangePassword'
 
 Vue.use(VueRouter)
 
 const initiateApp = () => {
   try {
-    const rootElem = document.getElementById('vue-enable-signup-wizard')
-    const { data: { attributes, relationships }} = JSON.parse(rootElem.dataset.previousAttempt)
-    const previousAttempt = Object.assign({}, store.state, attributes, relationships)
+    const rootElem = document.getElementById('vue-data-registration')
+    const { data } = JSON.parse(rootElem.dataset.previousAttempt)
+    const { attributes, relationships } = data
 
-    store.dispatch('initWizard', previousAttempt)
+    if (data.type === 'account') {
+      const currentAccount = Object.assign({}, store.state.registration, attributes, relationships)
+      store.dispatch('registration/initAccount', currentAccount)
+    } else {
+      const previousAttempt = Object.assign({}, store.state.registration, attributes, relationships)
+      store.dispatch('registration/initWizard', previousAttempt)
+    }
   } catch (err) {
     console.error(err)
   }
 }
 
 const requireDataAgreement = (to, _from, next) => {
-  if (!store.state.isReady) initiateApp()
+  if (!store.state.registration.isReady) initiateApp()
 
   const notDataUseComponent = to.matched.some(record => record.name !== 'data-use')
 
-  if (notDataUseComponent && !store.state.termsAgreed) {
+  if (notDataUseComponent && !store.state.registration.termsAgreed) {
     next({ name: 'data-use' })
   } else {
     next()
@@ -45,26 +53,26 @@ const onLoginStep = () => {
 }
 
 const onChooseProfileStep = () => {
-  return !!(store.state.termsAgreed &&
+  return !!(store.state.registration.termsAgreed &&
             store.getters.isAgeSet &&
-              !store.state.profileChoice)
+              !store.state.registration.profileChoice)
 }
 
 const onBasicProfileStep = () => {
-  return !!(store.state.termsAgreed &&
+  return !!(store.state.registration.termsAgreed &&
             store.getters.isAgeSet &&
-              store.state.profileChoice &&
+              store.state.registration.profileChoice &&
                 store.getters.isLocationSet)
 }
 
 const onLocationStep = () => {
-  return !!(store.state.termsAgreed &&
+  return !!(store.state.registration.termsAgreed &&
               store.getters.isAgeSet &&
-                store.state.profileChoice)
+                store.state.registration.profileChoice)
 }
 
 const onAgeStep = () => {
-  return !!store.state.termsAgreed
+  return !!store.state.registration.termsAgreed
 }
 
 const getCurrentStep = () => {
@@ -87,7 +95,7 @@ export const routes = [
   {
     path: '/',
     beforeEnter: (_to, _from, next) => {
-      if (!store.state.isReady) initiateApp()
+      if (!store.state.registration.isReady) initiateApp()
       next({ name: getCurrentStep() })
     },
   },
@@ -99,7 +107,8 @@ export const routes = [
       browserTitle: 'Step 1: Agreeement'
     },
     beforeEnter: (_to, _from, next) => {
-      if (!store.state.isReady) initiateApp()
+      const store = require('../store').default
+      if (!store.state.registration.isReady) initiateApp()
       next()
     },
   },
@@ -147,6 +156,22 @@ export const routes = [
       browserTitle: 'Final step: Sign In'
     },
     beforeEnter: requireDataAgreement,
+  },
+  {
+    path: '/change-email',
+    name: 'change-email',
+    component: ChangeEmail,
+    meta: {
+      browserTitle: 'Change your Email'
+    },
+  },
+  {
+    path: '/change-password',
+    name: 'change-password',
+    component: ChangePassword,
+    meta: {
+      browserTitle: 'Change your Password'
+    },
   },
 ]
 

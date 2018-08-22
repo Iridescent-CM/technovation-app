@@ -1,19 +1,20 @@
 require "rails_helper"
 
-RSpec.feature "Students request to join a team",
+RSpec.describe "Students request to join a team",
+  :js,
   vcr: { match_requests_on: [:method, :host] } do
   include ActionView::RecordIdentifier
 
   before { SeasonToggles.team_building_enabled! }
 
-  scenario "students already on a team don't see the link" do
+  it "students already on a team don't see the link" do
     student = FactoryBot.create(:student, :on_team, not_onboarded: true)
     sign_in(student)
     expect(page).not_to have_link("Join a team")
   end
 
   %i{mentor student}.each do |scope|
-    scenario "#{scope} searches after their request is declined" do
+    it "#{scope} searches after their request is declined" do
       user = FactoryBot.create(scope, :geocoded)
       team = FactoryBot.create(:team, :geocoded)
 
@@ -49,7 +50,7 @@ RSpec.feature "Students request to join a team",
       click_button "Ask to join #{team.name}"
     end
 
-    scenario "students not on a team request to join an available team" do
+    it "students not on a team request to join an available team" do
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request email was sent"
 
@@ -58,19 +59,19 @@ RSpec.feature "Students request to join a team",
       expect(mail.subject).to eq("A student has asked to join your team!")
     end
 
-    scenario "the requesting student can see their pending request" do
-      within('.steps') do
-        expect(page).to have_content("You have asked to join a team")
-        expect(page).to have_content(team.name)
-        expect(page).to have_content(team.primary_location)
-        expect(page).to have_content(team.division_name.humanize)
-        expect(page).to have_css("img.thumbnail-md[src*='#{team.team_photo_url}']")
-      end
+    it "the requesting student can see their pending request" do
+      click_button '2. Build your team'
+      click_button "Find your team"
+      expect(page).to have_content("You have asked to join a team")
+      expect(page).to have_content(team.name)
+      expect(page).to have_content(team.primary_location)
+      expect(page).to have_content(team.division_name.humanize)
+      expect(page).to have_css("img.thumbnail-md[src*='#{team.team_photo_url}']")
 
       expect(page).not_to have_link("Join a team")
     end
 
-    scenario "student accepts the request" do
+    it "student accepts the request" do
       ActionMailer::Base.deliveries.clear
 
       sign_out
@@ -82,6 +83,7 @@ RSpec.feature "Students request to join a team",
       )
 
       click_button "Approve"
+      click_button "Yes, do it"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
@@ -108,7 +110,7 @@ RSpec.feature "Students request to join a team",
       expect(mail.body.to_s).to include("href=\"#{url}\"")
     end
 
-    scenario "student accepts from team page" do
+    it "student accepts from team page" do
       sign_out
       sign_in(team.students.sample)
 
@@ -118,10 +120,11 @@ RSpec.feature "Students request to join a team",
         within("#" + dom_id(JoinRequest.last)) do
           click_link "approve"
         end
+        click_button "Yes, do it"
       }.not_to raise_error
     end
 
-    scenario "student declines from team page" do
+    it "student declines from team page" do
       sign_out
       sign_in(team.students.sample)
 
@@ -131,10 +134,11 @@ RSpec.feature "Students request to join a team",
         within("#" + dom_id(JoinRequest.last)) do
           click_link "decline"
         end
+        click_button "Yes, do it"
       }.not_to raise_error
     end
 
-    scenario "mentor accepts the request" do
+    it "mentor accepts the request" do
       ActionMailer::Base.deliveries.clear
 
       sign_out
@@ -144,6 +148,7 @@ RSpec.feature "Students request to join a team",
         mailer_token: mentor.mailer_token
       )
       click_button "Approve"
+      click_button "Yes, do it"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
@@ -152,7 +157,7 @@ RSpec.feature "Students request to join a team",
       expect(mail.subject).to eq("Your request to join #{team.name} was accepted!")
     end
 
-    scenario "mentor accepts from team page" do
+    it "mentor accepts from team page" do
       sign_out
       sign_in(team.mentors.sample)
 
@@ -162,10 +167,11 @@ RSpec.feature "Students request to join a team",
         within("#" + dom_id(JoinRequest.last)) do
           click_link "approve"
         end
+        click_button "Yes, do it"
       }.not_to raise_error
     end
 
-    scenario "mentor declines from team page" do
+    it "mentor declines from team page" do
       sign_out
       sign_in(team.mentors.sample)
 
@@ -175,10 +181,11 @@ RSpec.feature "Students request to join a team",
         within("#" + dom_id(JoinRequest.last)) do
           click_link "decline"
         end
+        click_button "Yes, do it"
       }.not_to raise_error
     end
 
-    scenario "student declines the request" do
+    it "student declines the request" do
       ActionMailer::Base.deliveries.clear
 
       sign_out
@@ -190,6 +197,7 @@ RSpec.feature "Students request to join a team",
       )
 
       click_button "Decline"
+      click_button "Yes, do it"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request decline email was sent"
@@ -203,7 +211,7 @@ RSpec.feature "Students request to join a team",
       )
     end
 
-    scenario "mentor declines the request" do
+    it "mentor declines the request" do
       ActionMailer::Base.deliveries.clear
 
       sign_out
@@ -215,6 +223,7 @@ RSpec.feature "Students request to join a team",
       )
 
       click_button "Decline"
+      click_button "Yes, do it"
 
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request decline email was sent"

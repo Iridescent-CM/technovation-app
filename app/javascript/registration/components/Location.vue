@@ -1,6 +1,6 @@
 <template>
   <location-form
-    scope-name="registration"
+    :scope-name="apiRoot"
     :handleBack="handleBack"
     :handleConfirm="handleConfirm"
     :showFinalCancel="false"
@@ -10,9 +10,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+
 import { debounce } from 'utilities/utilities'
-import { mapGetters, mapActions } from 'vuex'
 import LocationForm from 'location/components/LocationForm'
+
+const { mapActions, mapState } = createNamespacedHelpers('registration')
 
 export default {
   name: 'location',
@@ -28,13 +31,15 @@ export default {
   },
 
   computed: {
+    ...mapState(['apiRoot']),
+
     locationData: {
       get() {
         return this.$store.getters.getLocation
       },
 
       set(location) {
-        this.$store.commit('location', location)
+        this.$store.commit('registration/location', location)
       },
     },
   },

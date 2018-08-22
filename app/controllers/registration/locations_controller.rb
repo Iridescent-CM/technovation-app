@@ -4,7 +4,7 @@ module Registration
 
     def create
       attempt = SignupAttempt.wizard.find_by!(
-        wizard_token: custom_location_params[:wizard_token]
+        wizard_token: custom_location_params[:token]
       )
 
       country_param = (custom_location_params[:country] || "").strip
@@ -31,7 +31,7 @@ module Registration
 
     private
     def custom_location_params
-      params.require(:location).permit(:city, :state, :country, :wizard_token)
+      params.require(:location).permit(:city, :state, :country, :token)
     end
   end
 end
