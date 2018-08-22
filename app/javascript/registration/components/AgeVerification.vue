@@ -12,6 +12,7 @@
           input-id="year"
           :options="years"
           v-model="year"
+          :disabled="currentAccount"
         />
 
         <label for="month">Month</label>
@@ -20,6 +21,7 @@
           input-id="month"
           :options="months"
           v-model="month"
+          :disabled="currentAccount"
         />
 
         <label for="day">Day</label>
@@ -28,6 +30,7 @@
           input-id="day"
           :options="days"
           v-model="day"
+          :disabled="currentAccount"
         />
       </div>
 
@@ -86,6 +89,7 @@ import { createNamespacedHelpers } from 'vuex'
 import VueSelect from '@vendorjs/vue-select'
 
 const { mapGetters, mapActions, mapState } = createNamespacedHelpers('registration')
+const { mapState: mapStudentState } = createNamespacedHelpers('student')
 
 export default {
   components: {
@@ -94,6 +98,8 @@ export default {
 
   computed: {
     ...mapState(['months', 'birthMonth']),
+
+    ...mapStudentState(['currentAccount']),
 
     ...mapGetters(['isAgeSet', 'getAge', 'getAgeByCutoff', 'getBirthdate']),
 
