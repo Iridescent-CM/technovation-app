@@ -65,6 +65,7 @@
           <tab-link
             :to="{ name: 'login' }"
             :disabled-tooltip="loginDisabledMessage"
+            v-if="!currentAccount"
           >
             <icon
               name="circle-o"
@@ -93,6 +94,7 @@ import TabLink from 'tabs/components/TabLink'
 import StickySidebar from 'directives/sticky-sidebar'
 
 const { mapState, mapGetters } = createNamespacedHelpers('registration')
+const { mapState: mapStudentState } = createNamespacedHelpers('student')
 
 export default {
   name: 'app',
@@ -125,6 +127,10 @@ export default {
       'isReady',
       'termsAgreed',
       'profileChoice',
+    ]),
+
+    ...mapStudentState([
+      'currentAccount',
     ]),
 
     ...mapGetters([
