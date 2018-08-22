@@ -74,13 +74,22 @@
             />
             Sign in
           </tab-link>
+
+          <tab-link
+            :to="{ name: 'email-password' }"
+            v-if="currentAccount"
+          >
+            Email & Password
+          </tab-link>
         </ul>
       </div>
     </div>
 
     <div class="grid__col-9">
       <transition name="router-fade">
-        <router-view v-if="isReady" :key="$route.path"></router-view>
+        <router-view v-if="isReady" :key="$route.path">
+          <div slot="email-password"><slot name="email-password" /></div>
+        </router-view>
       </transition>
     </div>
   </div>

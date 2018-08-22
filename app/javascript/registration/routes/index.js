@@ -13,6 +13,7 @@ import ChooseProfile from '../components/ChooseProfile'
 import BasicProfile from '../components/BasicProfile'
 
 import Login from '../components/Login'
+import EmailPassword from '../components/EmailPassword'
 
 Vue.use(VueRouter)
 
@@ -154,6 +155,14 @@ export const routes = [
       browserTitle: 'Final step: Sign In'
     },
     beforeEnter: requireDataAgreement,
+  },
+  {
+    path: '/email-password',
+    name: 'email-password',
+    component: EmailPassword,
+    meta: {
+      browserTitle: 'Update your Email, Password'
+    },
   },
 ]
 

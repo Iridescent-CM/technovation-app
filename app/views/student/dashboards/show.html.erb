@@ -44,6 +44,16 @@
         profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
       } %>
     <app>
+      <div slot="email-password">
+        <%= render 'profiles/email' %>
+
+        <hr />
+
+        <h4>Change your password</h4>
+
+        <%= render 'profiles/password' %>
+      </div>
+
       <div slot="parental-consent">
         <%= render 'student/profiles/parent' %>
       </div>

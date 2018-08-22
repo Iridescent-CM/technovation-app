@@ -31,6 +31,7 @@
 
     <div class="tabs__content background-color--white">
       <router-view :key="$route.name">
+        <div slot="email-password"><slot name="email-password" /></div>
         <div slot="parental-consent"><slot name="parental-consent" /></div>
         <div slot="find-team"><slot name="find-team" /></div>
         <div slot="create-team"><slot name="create-team" /></div>
