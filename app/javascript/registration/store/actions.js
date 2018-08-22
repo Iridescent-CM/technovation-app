@@ -92,7 +92,7 @@ export default {
 
     commit('location', data)
 
-    axios.post(`${state.apiRoot}/location`, {
+    axios.post(`/${state.apiRoot}/location`, {
       location: {
         ...data,
         token: state.token,

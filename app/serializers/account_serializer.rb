@@ -9,7 +9,7 @@ class AccountSerializer
    :last_name, :gender, :referred_by, :referred_by_other
 
   attribute(:api_root) do |account|
-    "/#{account.scope_name}"
+    "#{account.scope_name}"
   end
 
   attribute(:birth_year) do |account|
