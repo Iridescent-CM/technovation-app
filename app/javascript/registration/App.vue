@@ -76,10 +76,17 @@
           </tab-link>
 
           <tab-link
-            :to="{ name: 'email-password' }"
+            :to="{ name: 'change-email' }"
             v-if="currentAccount"
           >
-            Email & Password
+            Change email
+          </tab-link>
+
+          <tab-link
+            :to="{ name: 'change-password' }"
+            v-if="currentAccount"
+          >
+            Change password
           </tab-link>
         </ul>
       </div>
@@ -88,7 +95,8 @@
     <div class="grid__col-9">
       <transition name="router-fade">
         <router-view v-if="isReady" :key="$route.path">
-          <div slot="email-password"><slot name="email-password" /></div>
+          <div slot="change-email"><slot name="change-email" /></div>
+          <div slot="change-password"><slot name="change-password" /></div>
         </router-view>
       </transition>
     </div>

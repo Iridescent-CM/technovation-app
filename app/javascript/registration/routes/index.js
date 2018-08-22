@@ -13,7 +13,8 @@ import ChooseProfile from '../components/ChooseProfile'
 import BasicProfile from '../components/BasicProfile'
 
 import Login from '../components/Login'
-import EmailPassword from '../components/EmailPassword'
+import ChangeEmail from '../components/ChangeEmail'
+import ChangePassword from '../components/ChangePassword'
 
 Vue.use(VueRouter)
 
@@ -157,11 +158,19 @@ export const routes = [
     beforeEnter: requireDataAgreement,
   },
   {
-    path: '/email-password',
-    name: 'email-password',
-    component: EmailPassword,
+    path: '/change-email',
+    name: 'change-email',
+    component: ChangeEmail,
     meta: {
-      browserTitle: 'Update your Email, Password'
+      browserTitle: 'Change your Email'
+    },
+  },
+  {
+    path: '/change-password',
+    name: 'change-password',
+    component: ChangePassword,
+    meta: {
+      browserTitle: 'Change your Password'
     },
   },
 ]

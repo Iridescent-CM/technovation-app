@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot name="email-password" />
+    <slot name="change-password" />
   </div>
 </template>
 
