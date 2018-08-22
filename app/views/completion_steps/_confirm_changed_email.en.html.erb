@@ -1,11 +1,5 @@
 <% unless profile.email_confirmed? %>
-  <li>
-    <div class="flags">
-      <span class="flag flag-registration">
-        Registration
-      </span>
-    </div>
-
+  <div class="panel">
     <h1 class="content-heading">
       Check your email inbox!
     </h1>
@@ -52,5 +46,5 @@
         Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need more help!
       </li>
     </ul>
-  </li>
+  </div>
 <% end %>
