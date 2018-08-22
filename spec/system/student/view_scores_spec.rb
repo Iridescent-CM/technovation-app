@@ -32,7 +32,7 @@ RSpec.describe "Students view scores", :js do
     click_button "Get scores & valuable feedback"
     click_link "View your scores and certificate"
 
-    expect(page).to have_content("earned 2 points")
+    expect(page).to have_content("earned\n        2 points")
   end
 
   it "view SF scores" do
@@ -57,7 +57,7 @@ RSpec.describe "Students view scores", :js do
     click_button "Get scores & valuable feedback"
     click_link "View your scores and certificate"
 
-    expect(page).to have_content("earned 2 points")
+    expect(page).to have_content("earned\n        2 points")
   end
 
   it "view QF scores" do
@@ -76,7 +76,7 @@ RSpec.describe "Students view scores", :js do
     click_button "Get scores & valuable feedback"
     click_link "View your scores and certificate"
 
-    expect(page).to have_content("earned 2 points")
+    expect(page).to have_content("earned\n        2 points")
   end
 
   it "view SF scores" do
