@@ -12,4 +12,8 @@ export default {
   currentTeam (state, object) {
     Vue.set(state, 'currentTeam', object)
   },
+
+  parentalConsent (state, object) {
+    Vue.set(state, 'parentalConsent', object)
+  },
 }

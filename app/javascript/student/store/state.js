@@ -4,4 +4,6 @@ export default {
   currentAccount: {},
 
   currentTeam: {},
+
+  parentalConsent: {},
 }
