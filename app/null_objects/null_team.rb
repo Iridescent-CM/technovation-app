@@ -59,6 +59,14 @@ class NullTeam < NullObject
     ::JoinRequest.none
   end
 
+  def pending_mentor_invite_ids
+    []
+  end
+
+  def pending_mentor_join_request_ids
+    []
+  end
+
   def city
     false
   end
