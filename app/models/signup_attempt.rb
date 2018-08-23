@@ -61,9 +61,25 @@ class SignupAttempt < ActiveRecord::Base
     !!terms_agreed_at
   end
 
+  def profile_choice
+    self['profile_choice'] || ('student' if can_be_student?)
+  end
+
   def set_terms_agreed(bool)
     value = bool ? Time.current : nil
     self.terms_agreed_at = value
     save!
+  end
+
+  private
+  def can_be_student?
+    Account.new(
+      date_of_birth: Date.new(
+        birth_year || Date.today.year - 10,
+        birth_month || 1,
+        birth_day || 1
+      ),
+    ).age_by_cutoff < 19 &&
+      gender_identity != 'Male'
   end
 end
