@@ -12,7 +12,7 @@
           input-id="year"
           :options="years"
           v-model="year"
-          :disabled="currentAccount"
+          :disabled="!!currentAccount"
         />
 
         <label for="month">Month</label>
@@ -21,7 +21,7 @@
           input-id="month"
           :options="months"
           v-model="month"
-          :disabled="currentAccount"
+          :disabled="!!currentAccount"
         />
 
         <label for="day">Day</label>
@@ -30,7 +30,7 @@
           input-id="day"
           :options="days"
           v-model="day"
-          :disabled="currentAccount"
+          :disabled="!!currentAccount"
         />
       </div>
 
