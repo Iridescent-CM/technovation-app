@@ -33,6 +33,7 @@
       data: {
         current_account: AccountSerializer.new(current_account).serialized_json,
         current_team: TeamSerializer.new(current_team).serialized_json,
+        parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
         previous_attempt: AccountSerializer.new(current_account).serialized_json,
         # TODO: make original registration wizard open to currentAccount ?
         profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),

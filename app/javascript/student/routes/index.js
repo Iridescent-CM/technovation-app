@@ -22,12 +22,14 @@ const initiateApp = (to, from, next) => {
 
     const { data: { id: teamId, attributes: teamAttributes }} = JSON.parse(rootElem.dataset.currentTeam)
     const { data: { id: accountId, attributes: accountAttributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
+    const { data: { id: parentalConsentId, attributes: parentalConsentAttributes }} = JSON.parse(rootElem.dataset.parentalConsent)
 
     const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
     const currentTeam = Object.assign({ id: parseInt(teamId) }, teamAttributes)
+    const parentalConsent = Object.assign({ id: parseInt(parentalConsentId) }, parentalConsentAttributes)
 
     store.dispatch('registration/initAccount', currentAccount)
-    store.dispatch('student/initApp', { currentAccount, currentTeam })
+    store.dispatch('student/initApp', { currentAccount, currentTeam, parentalConsent })
 
     if (to.path === '/' && from.path === '/') {
       next({ name: 'parental-consent' })

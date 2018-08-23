@@ -95,12 +95,13 @@ export default {
   computed: {
     ...mapState({
       currentTeam: state => state.currentTeam,
+      parentalConsent: state => state.parentalConsent,
     }),
 
     ...mapGetters([]),
 
     hasParentalConsent () {
-      return true
+      return !!this.parentalConsent && this.parentalConsent.isSigned
     },
 
     isOnTeam () {
