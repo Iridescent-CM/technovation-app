@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+    resource :basic_profile, only: :update
 
     resources :teams, except: :destroy
     resources :team_memberships, only: :destroy

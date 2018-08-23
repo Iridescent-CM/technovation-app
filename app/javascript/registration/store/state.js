@@ -2,6 +2,7 @@ export default {
   isReady: false,
   isLocked: false,
   apiRoot: 'registration',
+  apiMethod: 'post',
   wizardToken: null,
   token: null,
 
