@@ -104,7 +104,7 @@ export default {
     },
 
     isOnTeam () {
-      return this.currentTeam && this.currentTeam.id !== null
+      return this.currentTeam && !!this.currentTeam.id
     },
 
     mentorNotPending () {
@@ -112,7 +112,7 @@ export default {
         this.currentTeam.mentorIds &&
           this.currentTeam.mentorIds.length &&
             !this.currentTeam.pendingMentorInviteIds.length &&
-              !this.currentTeam.pendingMentorJoinRequestIds.length
+              !this.currentTeam.pendingMentorRequestIds.length
     },
   },
 
