@@ -2,11 +2,8 @@
   <div class="grid__col-sm-6 grid__col--bleed-y">
     <div class="grid__cell">
       <h1 class="page-heading">
-        Student Dashboard
-
-        <small>
-          <%= render 'program_survey' %>
-        </small>
+        <%= current_student.name %>
+        <small><%= render 'program_survey' %></small>
       </h1>
     </div>
   </div>
@@ -14,8 +11,7 @@
   <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
     <div class="grid__cell">
       <h1 class="page-heading">
-        <%= SeasonToggles.dashboard_text(:student) %>
-
+        Student
         <small>
           <%= link_to "Internet Safety Training",
             "http://iridescentlearning.org/internet-safety/",
