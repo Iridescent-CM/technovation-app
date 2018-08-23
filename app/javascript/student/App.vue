@@ -3,19 +3,9 @@
     <div v-sticky-nav>
       <ul class="tabs__menu">
         <tab-link
-          :class="registrationTabLinkClasses"
-          :to="{ name: 'basic-profile' }"
-        >1. Registration</tab-link>
-
-        <tab-link
-          :class="teamTabLinkClasses"
-          :to="{ name: 'parental-consent' }"
-        >2. Build your team</tab-link>
-
-        <tab-link
-          :class="submissionTabLinkClasses"
-          :to="{ name: 'submission' }"
-        >3. Submit your project</tab-link>
+          :class="scoresTabLinkClasses"
+          :to="{ name: 'scores' }"
+        >5. Get scores & valuable feedback</tab-link>
 
         <tab-link
           :class="judgingTabLinkClasses"
@@ -23,9 +13,19 @@
         >4. Compete in the judging rounds</tab-link>
 
         <tab-link
-          :class="scoresTabLinkClasses"
-          :to="{ name: 'scores' }"
-        >5. Get scores & valuable feedback</tab-link>
+          :class="submissionTabLinkClasses"
+          :to="{ name: 'submission' }"
+        >3. Submit your project</tab-link>
+
+        <tab-link
+          :class="teamTabLinkClasses"
+          :to="{ name: 'parental-consent' }"
+        >2. Build your team</tab-link>
+
+        <tab-link
+          :class="registrationTabLinkClasses"
+          :to="{ name: 'basic-profile' }"
+        >1. Registration</tab-link>
       </ul>
     </div>
 

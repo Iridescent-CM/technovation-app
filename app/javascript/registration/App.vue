@@ -1,5 +1,14 @@
 <template>
   <div :class="wrapperClasses">
+    <div class="grid__col-9">
+      <transition name="router-fade">
+        <router-view v-if="isReady" :key="$route.path">
+          <div slot="change-email"><slot name="change-email" /></div>
+          <div slot="change-password"><slot name="change-password" /></div>
+        </router-view>
+      </transition>
+    </div>
+
     <div class="grid__col-3">
       <div v-sticky-sidebar="stickySidebarClasses">
         <ul class="tabs__menu">
@@ -90,15 +99,6 @@
           </tab-link>
         </ul>
       </div>
-    </div>
-
-    <div class="grid__col-9">
-      <transition name="router-fade">
-        <router-view v-if="isReady" :key="$route.path">
-          <div slot="change-email"><slot name="change-email" /></div>
-          <div slot="change-password"><slot name="change-password" /></div>
-        </router-view>
-      </transition>
     </div>
   </div>
 </template>

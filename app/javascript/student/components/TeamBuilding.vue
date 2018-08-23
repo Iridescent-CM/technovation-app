@@ -1,5 +1,18 @@
 <template>
   <div class="tabs tabs--vertical tabs--css-only grid">
+    <div class="tabs__content grid__col-9">
+      <div class="grid margin--t-xlarge">
+        <div class="grid__col-8">
+          <router-view :key="$route.name">
+            <div slot="parental-consent"><slot name="parental-consent" /></div>
+            <div slot="find-team"><slot name="find-team" /></div>
+            <div slot="create-team"><slot name="create-team" /></div>
+            <div slot="find-mentor"><slot name="find-mentor" /></div>
+          </router-view>
+        </div>
+      </div>
+    </div>
+
     <div class="grid__col-3">
       <div v-sticky-sidebar="stickySidebarClasses">
         <ul class="tabs__menu">
@@ -39,19 +52,6 @@
             Add a mentor to your team
           </tab-link>
         </ul>
-      </div>
-    </div>
-
-    <div class="tabs__content grid__col-9">
-      <div class="grid margin--t-xlarge">
-        <div class="grid__col-8">
-          <router-view :key="$route.name">
-            <div slot="parental-consent"><slot name="parental-consent" /></div>
-            <div slot="find-team"><slot name="find-team" /></div>
-            <div slot="create-team"><slot name="create-team" /></div>
-            <div slot="find-mentor"><slot name="find-mentor" /></div>
-          </router-view>
-        </div>
       </div>
     </div>
   </div>

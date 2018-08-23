@@ -1,5 +1,15 @@
 <template>
   <div class="tabs tabs--vertical tabs--css-only grid">
+    <div class="tabs__content grid__col-9">
+      <div class="grid margin--t-xlarge">
+        <div class="grid__col-8">
+          <router-view :key="$route.name">
+            <div slot="events"><slot name="events" /></div>
+          </router-view>
+        </div>
+      </div>
+    </div>
+
     <div class="grid__col-3">
       <div v-sticky-sidebar="stickySidebarClasses">
         <ul class="tabs__menu">
@@ -12,16 +22,6 @@
             Regional Live Events
           </tab-link>
         </ul>
-      </div>
-    </div>
-
-    <div class="tabs__content grid__col-9">
-      <div class="grid margin--t-xlarge">
-        <div class="grid__col-8">
-          <router-view :key="$route.name">
-            <div slot="events"><slot name="events" /></div>
-          </router-view>
-        </div>
       </div>
     </div>
   </div>
