@@ -67,9 +67,6 @@
           <%= render "completion_steps/invitations",
             invites: current_student.team_member_invites.pending %>
 
-          <%= render "student/dashboards/completion_steps/incoming_join_requests",
-            requests: current_team.pending_requests %>
-
           <%= render "completion_steps/join_requests",
             requests: current_student.join_requests.pending %>
         <% end %>
@@ -90,7 +87,14 @@
       </div>
 
       <div slot="find-mentor">
-        <% if current_student.team.mentors.any? %>
+        <% if current_team.pending_mentor_join_request_ids.any? or
+            current_team.pending_mentor_invite_ids.any? %>
+          <%= render "student/dashboards/completion_steps/incoming_join_requests",
+            requests: current_team.pending_mentor_join_requests %>
+
+          <%= render "student/dashboards/completion_steps/outgoing_team_invites",
+            invites: current_team.pending_mentor_invites %>
+        <% elsif current_student.team.mentors.any? %>
           Your team has a mentor! You can have more than one.
           <%= link_to 'Manage your mentors',
            student_team_path(current_team, anchor: '!mentors') %>
