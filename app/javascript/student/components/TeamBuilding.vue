@@ -32,7 +32,7 @@
 
           <tab-link :to="{ name: 'find-mentor' }">
             <icon
-              :name="completedEnabledOrDisabledIcon(hasMentor)"
+              :name="completedEnabledOrDisabledIcon(mentorNotPending)"
               size="16"
               :color="$route.name === 'find-mentor' ? '000000' : '28A880'"
             />
@@ -107,10 +107,12 @@ export default {
       return this.currentTeam && this.currentTeam.id !== null
     },
 
-    hasMentor () {
+    mentorNotPending () {
       return this.currentTeam &&
         this.currentTeam.mentorIds &&
-          this.currentTeam.mentorIds.length
+          this.currentTeam.mentorIds.length &&
+            !this.currentTeam.pendingMentorInviteIds.length &&
+              !this.currentTeam.pendingMentorJoinRequestIds.length
     },
   },
 

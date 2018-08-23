@@ -2,7 +2,9 @@ class TeamSerializer
   include FastJsonapi::ObjectSerializer
   set_key_transform :camel_lower
 
-  attributes :id, :mentor_ids, :city, :latitude, :longitude, :name
+  attributes :id, :mentor_ids, :city, :latitude, :longitude, :name,
+    :pending_mentor_invite_ids, :pending_mentor_join_request_ids
+
 
   attribute(:state) do |team|
     if country = Carmen::Country.coded(team.country)
