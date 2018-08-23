@@ -2,26 +2,31 @@ export default {
   initWizard ({ commit, getters }, attempt) {
     commit('wizardToken', attempt.wizardToken)
     commit('token', attempt.wizardToken)
+
     commit('termsAgreed', attempt.termsAgreed)
     commit('birthDate', getters.getBirthdateAttributes(attempt))
     commit('profileChoice', attempt.profileChoice)
     commit('location', attempt)
     commit('basicProfile', attempt)
     commit('email', attempt.email)
+
     commit('isReady', true)
   },
 
   initAccount ({ commit, state, getters }, account) {
     commit('token', account.authToken)
-    commit('termsAgreed', true)
+
     commit('birthDate', getters.getBirthdateAttributes(account))
     commit('profileChoice', account.profileChoice)
     commit('location', account)
     commit('basicProfile', account)
     commit('email', account.email)
+
+    commit('apiRoot', account.apiRoot)
+    commit('termsAgreed', true)
     commit('isReady', true)
     commit('isLocked', true)
-    commit('apiRoot', account.apiRoot)
+    commit('apiMethod', 'patch')
   },
 
   updateTermsAgreed ({ commit, state }, { termsAgreed }) {
@@ -115,7 +120,7 @@ export default {
       referredByOther: state.referredByOther,
     }, attrs)
 
-    axios.post('/registration/basic_profile', {
+    axios[state.apiMethod](`/${state.apiRoot}/basic_profile`, {
       basicProfile: {
         ...data,
         wizardToken: state.wizardToken,

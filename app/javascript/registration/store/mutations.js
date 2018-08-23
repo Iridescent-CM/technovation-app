@@ -27,6 +27,10 @@ export default {
     state.apiRoot = value
   },
 
+  apiMethod (state, value) {
+    state.apiMethod = value
+  },
+
   wizardToken (state, wizardToken) {
     state.wizardToken = wizardToken
   },

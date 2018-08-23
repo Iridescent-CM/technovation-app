@@ -82,10 +82,10 @@ module ProfileController
   end
 
   def after_update_path
-    if not params[:return_to].blank?
-      params[:return_to]
-    else
+    if params[:return_to].blank?
       [profile.class.name.underscore.sub("_profile", ""), :profile]
+    else
+      params[:return_to]
     end
   end
 end
