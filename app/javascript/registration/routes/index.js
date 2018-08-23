@@ -155,7 +155,15 @@ export const routes = [
     meta: {
       browserTitle: 'Final step: Sign In'
     },
-    beforeEnter: requireDataAgreement,
+    beforeEnter: (_to, _from, next) => {
+      requireDataAgreement(_to, _from, next)
+
+      if (store.state.registration.isLocked) {
+        next({ name: 'basic-profile' })
+      } else {
+        next()
+      }
+    },
   },
   {
     path: '/change-email',
