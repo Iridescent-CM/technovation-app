@@ -41,7 +41,10 @@ class FriendlyCountry
 
   private
   def result
-    result = Geocoder.search(record.address_details).first
-    Geocoded.new(result) || record
+    if result = Geocoder.search(record.address_details).first
+      Geocoded.new(result)
+    else
+      record
+    end
   end
 end
