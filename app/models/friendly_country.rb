@@ -1,7 +1,7 @@
 class FriendlyCountry
   def self.call(record, options = {})
-    return "" unless record.respond_to?(:country)
-    return "" if record.country.nil? or record.country.strip == ""
+    return "" unless record.respond_to?(:address_details)
+    return "" if record.address_details.nil? or record.address_details.strip == ""
 
     friendly_country = new(record)
 
@@ -32,11 +32,15 @@ class FriendlyCountry
   end
 
   def with_prefix
-    "#{result.country_code} - #{result.country}"
+    if result.country_code
+      "#{result.country_code} - #{country_name}"
+    else
+      country_name
+    end
   end
 
   def country_name
-    result.country
+    result.country || record.address_details
   end
 
   private
