@@ -12,7 +12,13 @@ module HandleGeocoderSearch
 
   private
   def self.handle_search(db_record, geocoder_query)
-    results = GeocodedResults.new(search_geocoder(geocoder_query), geocoder_query)
+    geocoded_results = GeocodedResults.new(
+      search_geocoder(geocoder_query),
+      geocoder_query
+    )
+
+
+    results = handle_possible_insert_of_palestine_multi_result(geocoded_results)
 
     if results.one?
       handle_one_result(db_record, results.first)
@@ -20,6 +26,20 @@ module HandleGeocoderSearch
       return { results: results }, :multiple_choices
     elsif results.none?
       return {}, :not_found
+    end
+  end
+
+  def self.handle_possible_insert_of_palestine_multi_result(geocoded_results)
+    return geocoded_results if geocoded_results.many? || geocoded_results.none?
+
+    if geocoded_results.first.country.downcase == "israel"
+      palestine_copy = geocoded_results.first.dup
+      palestine_copy.state = palestine_copy.state_code = nil
+      palestine_copy.country = "Palestine, State of"
+
+      geocoded_results.to_a + [palestine_copy]
+    else
+      geocoded_results
     end
   end
 
