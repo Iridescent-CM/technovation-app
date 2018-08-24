@@ -180,6 +180,10 @@ class Account < ActiveRecord::Base
     :first_name
   end
 
+  def random_id
+    SecureRandom.hex(4)
+  end
+
   def coordinates
     [latitude, longitude]
   end

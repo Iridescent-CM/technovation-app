@@ -3,6 +3,10 @@ class NullTeam < NullObject
     0
   end
 
+  def random_id
+    0
+  end
+
   def touch
     # noop
   end
