@@ -13,9 +13,7 @@ export default {
     commit('isReady', true)
   },
 
-  initAccount ({ commit, state, getters }, account) {
-    commit('token', account.authToken)
-
+  initAccount ({ commit, getters }, account) {
     commit('birthDate', getters.getBirthdateAttributes(account))
     commit('profileChoice', account.profileChoice)
     commit('location', account)
