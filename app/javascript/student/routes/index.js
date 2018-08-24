@@ -53,6 +53,7 @@ export const routes = [
     component: TeamBuilding,
     props: {
       stickySidebarClasses: ['grid__col-3'],
+      embedded: true,
     },
     beforeEnter: initiateApp,
     children: teamRoutes,
@@ -67,6 +68,7 @@ export const routes = [
     props: {
       removeWhiteBackground: false,
       stickySidebarClasses: ['grid__col-3'],
+      embedded: true,
     },
     beforeEnter: initiateApp,
     children: registrationRoutes,
@@ -94,6 +96,7 @@ export const routes = [
     component: Judging,
     props: {
       stickySidebarClasses: ['grid__col-3'],
+      embedded: true,
     },
     beforeEnter: initiateApp,
     children: judgingRoutes,
