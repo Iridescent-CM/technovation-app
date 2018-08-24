@@ -23,7 +23,7 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "try to edit an existing submission" do
       create_authenticated_user_on_team(:student, submission: true)
 
-      click_button "3. Submit your project"
+      click_button "Submit your project"
 
       expect(page).to have_content("Submissions are not editable")
       expect(page).not_to have_link("Your app's name")
@@ -42,7 +42,7 @@ RSpec.describe "Toggling editable team submissions", :js do
       set_editable_team_submissions(false)
       create_authenticated_user_on_team(:student, submission: false)
 
-      click_button "3. Submit your project"
+      click_button "Submit your project"
 
       expect(page).to have_content(
         "Starting a submission is not available"
@@ -58,7 +58,7 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "try to edit technical checklist" do
       create_authenticated_user_on_team(:student, submission: true)
 
-      click_button "3. Submit your project"
+      click_button "Submit your project"
 
       visit student_team_submission_path(team.reload.submission)
       expect(page).not_to have_link("Confirm your code checklist")
@@ -77,7 +77,7 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "begin and edit a submission" do
       create_authenticated_user_on_team(:student, submission: false)
 
-      click_button "3. Submit your project"
+      click_button "Submit your project"
 
       within("#your-submission") { click_link "Begin your submission" }
       check "team_submission[integrity_affirmed]"
@@ -86,7 +86,7 @@ RSpec.describe "Toggling editable team submissions", :js do
       expect(page).to have_css('.button', text: "Set your app's name")
 
       visit student_dashboard_path
-      click_button "3. Submit your project"
+      click_button "Submit your project"
 
       within("#your-submission") do
         expect(page).not_to have_content("Submissions are not editable")
@@ -103,7 +103,7 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "edit technical checklist" do
       create_authenticated_user_on_team(:student, submission: true)
 
-      click_button "3. Submit your project"
+      click_button "Submit your project"
 
       within("#your-submission") { click_link("Code checklist") }
 

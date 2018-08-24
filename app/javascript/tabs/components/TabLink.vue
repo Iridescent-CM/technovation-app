@@ -15,6 +15,7 @@
     >
       <slot></slot>
     </button>
+    <slot name="subnav" />
   </router-link>
 </template>
 
