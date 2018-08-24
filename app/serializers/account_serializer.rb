@@ -2,10 +2,12 @@ class AccountSerializer
   include FastJsonapi::ObjectSerializer
   set_key_transform :camel_lower
 
+  set_id :random_id
+
   has_one :student_profile, if: ->(record) { record.student_profile }
   has_one :mentor_profile,  if: Proc.new { |record| record.mentor_profile }
 
-  attributes :auth_token, :email, :date_of_birth, :city, :latitude, :longitude, :first_name,
+  attributes :email, :date_of_birth, :city, :latitude, :longitude, :first_name,
    :last_name, :gender, :referred_by, :referred_by_other
 
   attribute(:api_root) do |account|
@@ -54,7 +56,7 @@ class AccountSerializer
 
   attribute(:state) do |account|
     if country = Carmen::Country.coded(account.country)
-      country.subregions.coded(account.state_province.sub(".", ""))
+      country.subregions.coded((account.state_province || "").sub(".", ""))
     end
   end
 

@@ -2,6 +2,8 @@ class TeamSerializer
   include FastJsonapi::ObjectSerializer
   set_key_transform :camel_lower
 
+  set_id :random_id
+
   attributes :id, :mentor_ids, :city, :latitude, :longitude, :name,
     :pending_mentor_invite_ids, :pending_mentor_join_request_ids
 

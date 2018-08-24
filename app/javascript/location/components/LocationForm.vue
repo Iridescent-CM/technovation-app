@@ -88,6 +88,54 @@
         v-show="!savedLocation"
         class="padding--t-medium"
       >
+        <template v-if="countryConfirmed || country !== 'Israel'">
+          <label for="location_country">Country / Territory</label>
+
+          <input
+            ref="countryField"
+            type="text"
+            id="location_country"
+            autocomplete="country-name"
+            v-model="country"
+          />
+        </template>
+
+        <template v-else>
+          Please choose the correct terrritory:
+
+          <label>
+            <input
+              type="radio"
+              name="location_country"
+              value="Israel"
+              v-model="country"
+              @click="confirmCountry('Israel')"
+            />
+            Israel
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="location_country"
+              value="Palestine"
+              v-model="country"
+              @click="confirmCountry('Palestine')"
+            />
+            Palestine
+          </label>
+        </template>
+
+        <label for="location_state">State / Province {{ optionalStateLabel }}</label>
+
+        <input
+          type="text"
+          id="location_state"
+          autocomplete="address-level1"
+          :placeholder="optionalStatePlaceholder"
+          v-model="state"
+        />
+
         <label for="location_city">City</label>
 
         <input
@@ -96,24 +144,6 @@
           ref="cityField"
           autocomplete="address-level2"
           v-model="city"
-        />
-
-        <label for="location_state">State / Province</label>
-
-        <input
-          type="text"
-          id="location_state"
-          autocomplete="address-level1"
-          v-model="state"
-        />
-
-        <label for="location_country">Country / Territory</label>
-
-        <input
-          type="text"
-          id="location_country"
-          autocomplete="country-name"
-          v-model="country"
         />
 
         <a
@@ -167,6 +197,7 @@ export default {
       city: "",
       state: "",
       country: "",
+      countryConfirmed: null,
       suggestions: [],
       savedLocation: null,
       searching: false,
@@ -238,6 +269,30 @@ export default {
   },
 
   computed: {
+    countryDetectedInStateOptionalList () {
+      if (!this.country.length)
+        return false
+
+      return this.country.match(/^\s*(hong\s*kong|hk)\s*$/i) ||
+              this.country.match(/^\s*(palestine|ps)\s*/i) ||
+                this.country.match(/^\s*(india|ind?)\s*$/i) ||
+                  this.country.match(/^\s*(taiwan,?.*|tw)\s*$/i)
+    },
+
+    optionalStateLabel () {
+      if (this.countryDetectedInStateOptionalList)
+        return '(Optional)'
+
+      return ''
+    },
+
+    optionalStatePlaceholder () {
+      if (this.countryDetectedInStateOptionalList)
+        return "In your area, it's okay if this field is blank."
+
+      return ''
+    },
+
     cancelText () {
       if (this.savedLocation) {
         return 'change region'
@@ -305,7 +360,7 @@ export default {
       switch(newStatus) {
         case HttpStatusCodes.NOT_FOUND:
           console.warn('geocoding results not found')
-          this.$refs.cityField.focus()
+          this.$refs.countryField.focus()
         default:
           // no op
       }
@@ -359,7 +414,7 @@ export default {
       if (this.savedLocation) {
         this.resetMeta()
         this.$nextTick(() => {
-          this.$refs.cityField.focus()
+          this.$refs.countryField.focus()
         })
       } else {
         // for when we do showFinalCancel
@@ -370,7 +425,7 @@ export default {
     handleSuggestionClick (suggestion) {
       this.city = suggestion.city
       this.state = suggestion.state
-      this.country = suggestion.country
+      this.confirmCountry(suggestion.country)
       this.handleSubmit()
     },
 
@@ -380,7 +435,7 @@ export default {
       this.savedLocation = new LocationResult(data.results[0])
       this.city = this.savedLocation.city
       this.state = this.savedLocation.state
-      this.country = this.savedLocation.country
+      this.confirmCountry(this.savedLocation.country)
     },
 
     handleErrorResponse (err) {
@@ -391,7 +446,35 @@ export default {
         this.suggestions = err.response.data.results.map(result => {
           return new LocationResult(result)
         })
+
+        const countrySensitivityList = ['Israel', 'Palestine, State of']
+
+        const countries = this.suggestions.map(l => l.country)
+        const matched = countries.filter(c => c === this.country)[0]
+
+        if (
+          this.countryConfirmed &&
+            matched && matched.length &&
+              countries.length === countrySensitivityList.length &&
+                countries.sort().every((value, index) => value === countrySensitivityList.sort()[index])
+
+        ) {
+          const result = {
+            id: Math.floor(Math.random()*16777215).toString(16),
+            city: this.city,
+            state: this.state,
+            country: matched,
+          }
+
+          this.suggestions = []
+          this.handleOKResponse(200, { results: [result] })
+        }
       }
+    },
+
+    confirmCountry (country) {
+      this.country = country
+      this.countryConfirmed = true
     },
 
     resetAll () {
@@ -399,7 +482,7 @@ export default {
       this.resetMeta()
 
       this.$nextTick(() => {
-        this.$refs.cityField.focus()
+        this.$refs.countryField.focus()
       })
     },
 
