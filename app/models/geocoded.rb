@@ -1,8 +1,6 @@
 class Geocoded
-  attr_reader :id
-
-  attr_accessor :city, :state_code, :state, :country, :country_code, :latitude,
-   :longitude
+  attr_accessor :id, :city, :state_code, :state, :country, :country_code,
+   :latitude, :longitude
 
   def initialize(geocoder_result, query = nil)
     @id = SecureRandom.hex(4)

@@ -425,7 +425,7 @@ export default {
     handleSuggestionClick (suggestion) {
       this.city = suggestion.city
       this.state = suggestion.state
-      this.country = suggestion.country
+      this.confirmCountry(suggestion.country)
       this.handleSubmit()
     },
 
@@ -435,7 +435,7 @@ export default {
       this.savedLocation = new LocationResult(data.results[0])
       this.city = this.savedLocation.city
       this.state = this.savedLocation.state
-      this.country = this.savedLocation.country
+      this.confirmCountry(this.savedLocation.country)
     },
 
     handleErrorResponse (err) {
@@ -446,6 +446,29 @@ export default {
         this.suggestions = err.response.data.results.map(result => {
           return new LocationResult(result)
         })
+
+        const countrySensitivityList = ['Israel', 'Palestine, State of']
+
+        const countries = this.suggestions.map(l => l.country)
+        const matched = countries.filter(c => c === this.country)[0]
+
+        if (
+          this.countryConfirmed &&
+            matched && matched.length &&
+              countries.length === countrySensitivityList.length &&
+                countries.sort().every((value, index) => value === countrySensitivityList.sort()[index])
+
+        ) {
+          const result = {
+            id: Math.floor(Math.random()*16777215).toString(16),
+            city: this.city,
+            state: this.state,
+            country: matched,
+          }
+
+          this.suggestions = []
+          this.handleOKResponse(200, { results: [result] })
+        }
       }
     },
 

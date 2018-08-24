@@ -34,6 +34,7 @@ module HandleGeocoderSearch
 
     if geocoded_results.first.country.downcase == "israel"
       palestine_copy = geocoded_results.first.dup
+      palestine_copy.id = SecureRandom.hex(4)
       palestine_copy.state = palestine_copy.state_code = nil
       palestine_copy.country = "Palestine, State of"
 
