@@ -1,12 +1,9 @@
-module FriendlyCountry
+class FriendlyCountry
   def self.call(record, options = {})
     return "" unless record.respond_to?(:country)
     return "" if record.country.nil? or record.country.strip == ""
 
-    country = Carmen::Country.coded(record.country) ||
-                Carmen::Country.named(record.country)
-
-    return record.country if country.blank?
+    friendly_country = new(record)
 
     default_options = {
       prefix: true,
@@ -16,11 +13,35 @@ module FriendlyCountry
     merged_options = default_options.merge(options)
 
     if merged_options[:short_code]
-      country.code
+      friendly_country.as_short_code
     elsif merged_options[:prefix]
-      "#{country.code} - #{country.name}"
+      friendly_country.with_prefix
     else
-      country.name
+      friendly_country.country_name
     end
+  end
+
+  attr_accessor :record
+
+  def initialize(record)
+    @record = record
+  end
+
+  def as_short_code
+    result.country_code
+  end
+
+  def with_prefix
+    "#{result.country_code} - #{result.country}"
+  end
+
+  def country_name
+    result.country
+  end
+
+  private
+  def result
+    result = Geocoder.search(record.address_details).first
+    Geocoded.new(result) || record
   end
 end

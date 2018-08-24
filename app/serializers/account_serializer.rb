@@ -56,7 +56,7 @@ class AccountSerializer
 
   attribute(:state) do |account|
     if country = Carmen::Country.coded(account.country)
-      country.subregions.coded(account.state_province.sub(".", ""))
+      country.subregions.coded((account.state_province || "").sub(".", ""))
     end
   end
 
