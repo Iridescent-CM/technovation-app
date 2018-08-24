@@ -1,6 +1,6 @@
 <template>
   <div class="tabs tabs--vertical tabs--css-only grid">
-    <div class="tabs__content grid__col-9">
+    <div :class="['tabs__content', mainContainerGridColumn]">
       <div class="grid margin--t-xlarge">
         <div class="grid__col-8">
           <router-view :key="$route.name">
@@ -10,18 +10,9 @@
       </div>
     </div>
 
-    <div class="grid__col-3">
+    <div class="grid__col-3" v-if="!embedded">
       <div v-sticky-sidebar="stickySidebarClasses">
-        <ul class="tabs__menu">
-          <tab-link :to="{ name: 'events' }">
-            <icon
-              :name="completedEnabledOrDisabledIcon(regionalEventCondition)"
-              size="16"
-              :color="$route.name === 'events' ? '000000' : '28A880'"
-            />
-            Regional Live Events
-          </tab-link>
-        </ul>
+        <judging-menu />
       </div>
     </div>
   </div>
@@ -30,9 +21,9 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex'
 
-import Icon from 'components/Icon'
-import TabLink from 'tabs/components/TabLink'
 import StickySidebar from 'directives/sticky-sidebar'
+
+import JudgingMenu from './JudgingMenu'
 
 export default {
   beforeRouteEnter (_to, _from, next) {
@@ -47,8 +38,7 @@ export default {
   },
 
   components: {
-    Icon,
-    TabLink,
+    JudgingMenu,
   },
 
   props: {
@@ -58,6 +48,12 @@ export default {
         return []
       },
     },
+
+    embedded: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   computed: {
@@ -65,8 +61,11 @@ export default {
 
     ...mapGetters([]),
 
-    regionalEventCondition () {
-      return false
+    mainContainerGridColumn () {
+      if (this.embedded)
+        return 'grid__col-12'
+
+      return 'grid__col-9'
     },
   },
 
@@ -75,13 +74,6 @@ export default {
 
   methods: {
     ...mapActions([]),
-
-    completedEnabledOrDisabledIcon (conditionToComplete) {
-      if (conditionToComplete)
-        return 'check-circle'
-
-      return 'circle-o'
-    },
   },
 }
 </script>

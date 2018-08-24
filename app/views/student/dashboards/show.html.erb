@@ -117,21 +117,13 @@
           <% elsif current_student.participated? %>
             <%= render "student/dashboards/completion_steps/participation_certificate" %>
           <% else %>
-            <li class="completion-step">
-              <div class="flags">
-                <span class="flag">
-                  Post-season
-                </span>
-              </div>
+            <h1 class="content-heading">Thank you for your participation</h1>
 
-              <h1 class="content-heading">Thank you for your participation</h1>
-
-              <p>
-                Unfortunately, no scores are available for your team because your
-                submission was incomplete. We hope you will continue working on your
-                app and join us again next season!
-              </p>
-            </li>
+            <p>
+              Unfortunately, no scores are available for your team because your
+              submission was incomplete. We hope you will continue working on your
+              app and join us again next season!
+            </p>
           <% end %>
         <% end %>
       </div>

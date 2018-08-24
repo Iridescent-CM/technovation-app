@@ -1,6 +1,6 @@
 <template>
   <div class="tabs tabs--vertical tabs--css-only grid">
-    <div class="tabs__content grid__col-9">
+    <div :class="['tabs__content', mainContainerGridColumn]">
       <div class="grid margin--t-xlarge">
         <div class="grid__col-8">
           <router-view :key="$route.name">
@@ -13,74 +13,21 @@
       </div>
     </div>
 
-    <div class="grid__col-3">
+    <div class="grid__col-3" v-if="!embedded">
       <div v-sticky-sidebar="stickySidebarClasses">
-        <ul class="tabs__menu">
-          <tab-link :to="{ name: 'parental-consent' }">
-            <icon
-              :name="completedEnabledOrDisabledIcon(hasParentalConsent)"
-              size="16"
-              :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
-            />
-            Parental Consent
-          </tab-link>
-
-          <tab-link :to="{ name: 'find-team' }">
-            <icon
-              :name="completedEnabledOrDisabledIcon(isOnTeam)"
-              size="16"
-              :color="$route.name === 'find-team' ? '000000' : '28A880'"
-            />
-            Find your team
-          </tab-link>
-
-          <tab-link :to="{ name: 'create-team' }">
-            <icon
-              :name="completedEnabledOrDisabledIcon(isOnTeam)"
-              size="16"
-              :color="$route.name === 'create-team' ? '000000' : '28A880'"
-            />
-            Create your team
-          </tab-link>
-
-          <tab-link :to="{ name: 'find-mentor' }">
-            <icon
-              :name="completedEnabledOrDisabledIcon(mentorNotPending)"
-              size="16"
-              :color="$route.name === 'find-mentor' ? '000000' : '28A880'"
-            />
-            Add a mentor to your team
-          </tab-link>
-        </ul>
+        <team-menu />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-
-const { mapState, mapActions, mapGetters } = createNamespacedHelpers('student')
-
-import Icon from 'components/Icon'
-import TabLink from 'tabs/components/TabLink'
 import StickySidebar from 'directives/sticky-sidebar'
+import TeamMenu from './TeamMenu'
 
 export default {
-  beforeRouteEnter (_to, _from, next) {
-    next(vm => {
-      // need to check something with vm first?
-      next()
-    })
-  },
-
   directives: {
     'sticky-sidebar': StickySidebar,
-  },
-
-  components: {
-    Icon,
-    TabLink,
   },
 
   props: {
@@ -90,48 +37,21 @@ export default {
         return []
       },
     },
+
+    embedded: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   computed: {
-    ...mapState({
-      currentTeam: state => state.currentTeam,
-      parentalConsent: state => state.parentalConsent,
-    }),
+    mainContainerGridColumn () {
+      if (this.emebedded)
+        return 'grid__col-12'
 
-    ...mapGetters([]),
-
-    hasParentalConsent () {
-      return !!this.parentalConsent && this.parentalConsent.isSigned
-    },
-
-    isOnTeam () {
-      return this.currentTeam && !!this.currentTeam.id
-    },
-
-    mentorNotPending () {
-      return this.currentTeam &&
-        this.currentTeam.mentorIds &&
-          this.currentTeam.mentorIds.length &&
-            !this.currentTeam.pendingMentorInviteIds.length &&
-              !this.currentTeam.pendingMentorRequestIds.length
-    },
-  },
-
-  watch: {
-  },
-
-  methods: {
-    ...mapActions([]),
-
-    completedEnabledOrDisabledIcon (conditionToComplete) {
-      if (conditionToComplete)
-        return 'check-circle'
-
-      return 'circle-o'
+      return 'grid__col-9'
     },
   },
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
