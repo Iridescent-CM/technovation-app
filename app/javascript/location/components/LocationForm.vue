@@ -269,20 +269,25 @@ export default {
   },
 
   computed: {
+    countryDetectedInStateOptionalList () {
+      if (!this.country.length)
+        return false
+
+      return this.country.match(/^\s*(hong\s*kong|hk)\s*$/i) ||
+              this.country.match(/^\s*(palestine|ps)\s*/i) ||
+                this.country.match(/^\s*(india|ind?)\s*$/i) ||
+                  this.country.match(/^\s*(taiwan,?.*|tw)\s*$/i)
+    },
+
     optionalStateLabel () {
-      if (
-        this.country.match(/^\s*(hong\s*kong|hk)\s*$/i) ||
-          this.country.match(/^\s*(palestine|ps)\s*/i) ||
-            this.country.match(/^\s*(india|ind?)\s*$/i) ||
-              this.country.match(/^\s*(taiwan,?.*|tw)\s*$/i)
-      )
+      if (this.countryDetectedInStateOptionalList)
         return '(Optional)'
 
       return ''
     },
 
     optionalStatePlaceholder () {
-      if (this.optionalStateLabel.length)
+      if (this.countryDetectedInStateOptionalList)
         return "In your area, it's okay if this field is blank."
 
       return ''
