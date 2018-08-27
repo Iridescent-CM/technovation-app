@@ -171,6 +171,28 @@ class Account < ActiveRecord::Base
     )
   }
 
+  scope :mentors_pending_invites, -> {
+    includes(mentor_profile: :pending_mentor_invites)
+    .references(:mentor_profiles, :team_member_invites)
+    .where(
+      "mentor_profiles.id IS NOT NULL AND " +
+      "(team_member_invites.id IS NOT NULL AND " +
+      "team_member_invites.status = ?)",
+      TeamMemberInvite.statuses[:pending]
+    )
+  }
+
+  scope :mentors_pending_requests, -> {
+    includes(mentor_profile: :pending_join_requests)
+    .references(:mentor_profiles, :join_requests)
+    .where(
+      "mentor_profiles.id IS NOT NULL AND " +
+      "(join_requests.id IS NOT NULL AND " +
+      "join_requests.accepted_at IS NULL AND  " +
+      "join_requests.declined_at IS NULL)"
+    )
+  }
+
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
          saved_change_to_latitude ||
