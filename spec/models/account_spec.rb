@@ -58,7 +58,7 @@ RSpec.describe Account do
     expect(account).to be_valid
   end
 
-  describe ".mentor_pending_teams" do
+  describe ".mentors_pending_invites" do
     it "only includes mentors with pending team invites" do
       pending_mentor = FactoryBot.create(:mentor)
       accepted_mentor = FactoryBot.create(:mentor)
@@ -74,9 +74,11 @@ RSpec.describe Account do
       FactoryBot.create(:mentor_invite, :accepted, invitee: accepted_mentor)
       FactoryBot.create(:mentor_invite, :declined, invitee: declined_mentor)
 
-      expect(Account.mentors_pending_teams).to eq([pending_mentor.account])
+      expect(Account.mentors_pending_invites).to eq([pending_mentor.account])
     end
+  end
 
+  describe ".mentors_pending_requests" do
     it "only includes mentors with pending join requests" do
       pending_mentor = FactoryBot.create(:mentor)
       accepted_mentor = FactoryBot.create(:mentor)
@@ -92,7 +94,7 @@ RSpec.describe Account do
       FactoryBot.create(:join_request, :accepted, requestor: accepted_mentor)
       FactoryBot.create(:join_request, :declined, requestor: declined_mentor)
 
-      expect(Account.mentors_pending_teams).to eq([pending_mentor.account])
+      expect(Account.mentors_pending_requests).to eq([pending_mentor.account])
     end
   end
 
