@@ -54,6 +54,14 @@ class AccountSerializer
     true
   end
 
+  attribute(:terms_agreed_date) do |account|
+    if account.signup_attempt
+      account.signup_attempt.terms_agreed_at.strftime("%b %e, %Y")
+    else
+      account.created_at.strftime("%b %e, %Y")
+    end
+  end
+
   attribute(:state) do |account|
     if country = Carmen::Country.coded(account.country)
       country.subregions.coded((account.state_province || "").sub(".", ""))

@@ -7,6 +7,7 @@ export default {
   token: null,
 
   termsAgreed: null,
+  termsAgreedDate: '',
 
   birthYear: null,
   birthMonth: null,

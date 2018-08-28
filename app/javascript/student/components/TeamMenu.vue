@@ -1,6 +1,9 @@
 <template>
   <ul class="tabs__menu">
-    <tab-link :to="{ name: 'parental-consent' }">
+    <tab-link
+      :to="{ name: 'parental-consent' }"
+      css-classes="tabs__menu-link--has-subtitles"
+    >
       <icon
         :name="completedEnabledOrDisabledIcon(hasParentalConsent)"
         size="16"
@@ -9,7 +12,10 @@
       Parental Consent
     </tab-link>
 
-    <tab-link :to="{ name: 'find-team' }">
+    <tab-link
+      :to="{ name: 'find-team' }"
+      css-classes="tabs__menu-link--has-subtitles"
+    >
       <icon
         :name="completedEnabledOrDisabledIcon(isOnTeam)"
         size="16"
@@ -18,7 +24,10 @@
       Find your team
     </tab-link>
 
-    <tab-link :to="{ name: 'create-team' }">
+    <tab-link
+      :to="{ name: 'create-team' }"
+      css-classes="tabs__menu-link--has-subtitles"
+    >
       <icon
         :name="completedEnabledOrDisabledIcon(isOnTeam)"
         size="16"
@@ -27,7 +36,10 @@
       Create your team
     </tab-link>
 
-    <tab-link :to="{ name: 'find-mentor' }">
+    <tab-link
+      :to="{ name: 'find-mentor' }"
+      css-classes="tabs__menu-link--has-subtitles"
+    >
       <icon
         :name="completedEnabledOrDisabledIcon(mentorNotPending)"
         size="16"

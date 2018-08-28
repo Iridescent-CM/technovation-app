@@ -2,17 +2,20 @@
   <ul class="tabs__menu">
     <tab-link
       :to="{ name: 'data-use' }"
+      css-classes="tabs__menu-link--has-subtitles"
     >
       <icon
         :name="completedEnabledOrDisabledIcon(termsAgreed)"
         size="16"
         :color="$route.name === 'data-use' ? '000000' : '28A880'"
       />
-      {{ termsAgreed ? 'Terms agreed' : 'Data agreement' }}
+      Data agreement
+      <span>{{ termsAgreedLabel }}</span>
     </tab-link>
 
     <tab-link
       :to="{ name: 'location' }"
+      css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="termsNotAgreedMessage"
     >
       <icon
@@ -20,11 +23,13 @@
         size="16"
         :color="activeEnabledOrDisabledColor('location', termsAgreed)"
       />
-      {{ regionLabel }}
+      Region
+      <span>{{ regionLabel }}</span>
     </tab-link>
 
     <tab-link
       :to="{ name: 'age' }"
+      css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="termsNotAgreedMessage"
     >
       <icon
@@ -32,11 +37,13 @@
         size="16"
         :color="activeEnabledOrDisabledColor('age', termsAgreed)"
       />
-      {{ ageLabel }}
+      Date of birth / Age
+      <span>{{ ageLabel }}</span>
     </tab-link>
 
     <tab-link
       :to="{ name: 'choose-profile' }"
+      css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="chooseProfileDisabledMessage"
     >
       <icon
@@ -44,11 +51,13 @@
         size="16"
         :color="activeEnabledOrDisabledColor('choose-profile', (termsAgreed && isAgeSet))"
       />
-      {{ profileChoice || "Choose Profile" | capitalize }}
+      Choose profile
+      <span>{{ profileChoice || "" | capitalize }}</span>
     </tab-link>
 
     <tab-link
       :to="{ name: 'basic-profile' }"
+      css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="basicProfileDisabledMessage"
     >
       <icon
@@ -56,7 +65,8 @@
         size="16"
         :color="activeEnabledOrDisabledColor('basic-profile', (termsAgreed && isAgeSet && isProfileChosen))"
       />
-      {{ profileLabel }}
+      Profile detail
+      <span>{{ profileLabel }}</span>
     </tab-link>
 
     <tab-link
@@ -74,16 +84,20 @@
 
     <tab-link
       :to="{ name: 'change-email' }"
+      css-classes="tabs__menu-link--has-subtitles"
       v-if="currentAccount"
     >
       Change email
+      <span>{{ currentAccount.email }}</span>
     </tab-link>
 
     <tab-link
       :to="{ name: 'change-password' }"
+      css-classes="tabs__menu-link--has-subtitles"
       v-if="currentAccount"
     >
       Change password
+      <span>************</span>
     </tab-link>
   </ul>
 </template>
@@ -107,6 +121,7 @@ export default {
   computed: {
     ...mapState([
       'termsAgreed',
+      'termsAgreedDate',
       'profileChoice',
     ]),
 
@@ -125,22 +140,27 @@ export default {
       'getFullName',
     ]),
 
+    termsAgreedLabel () {
+      if (this.termsAgreed) return `Agreed on ${this.termsAgreedDate}`
+      return ''
+    },
+
     ageLabel () {
       if (this.isAgeSet)
         return `${this.getAge()} years old`
 
-      return "Date of Birth"
+      return ""
     },
 
     regionLabel () {
       if (this.isLocationSet)
         return Object.values(this.getLocation).join(', ')
 
-      return "Set Region"
+      return ""
     },
 
     profileLabel () {
-      return this.getFullName || "Setup Profile"
+      return this.getFullName || ""
     },
 
     termsNotAgreedMessage () {
@@ -208,5 +228,6 @@ export default {
   },
 }
 </script>
+
 <style lang="scss" scoped>
 </style>

@@ -11,6 +11,10 @@ class SignupAttemptSerializer
     attempt.terms_agreed?
   end
 
+  attribute(:terms_agreed_date) do |attempt|
+    attempt.terms_agreed_at.strftime("%b %e") if attempt.terms_agreed?
+  end
+
   attribute(:state) do |attempt|
     if country = Carmen::Country.coded(attempt.country_code)
       country.subregions.coded((attempt.state_code || "").sub(".", ""))

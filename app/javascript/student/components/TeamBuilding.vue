@@ -10,7 +10,7 @@
     </div>
 
     <div class="grid__col-3" v-if="!embedded">
-      <div v-sticky-sidebar="stickySidebarClasses">
+      <div class="tabs-menu__child-menu" v-sticky-sidebar="stickySidebarClasses">
         <team-menu />
       </div>
     </div>

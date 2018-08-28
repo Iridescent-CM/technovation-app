@@ -1,7 +1,7 @@
 <template>
   <router-link
     tag="li"
-    class="tabs__menu-link"
+    :class="['tabs__menu-link'].concat(cssClasses)"
     active-class="tabs__menu-link--active"
     :to="to"
   >
@@ -38,6 +38,12 @@ export default {
     to: {
       type: Object,
       required: true,
+    },
+
+    cssClasses: {
+      type: Array,
+      required: false,
+      default: [],
     },
   },
 

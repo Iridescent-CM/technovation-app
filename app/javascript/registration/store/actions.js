@@ -4,6 +4,7 @@ export default {
     commit('token', attempt.wizardToken)
 
     commit('termsAgreed', attempt.termsAgreed)
+    commit('termsAgreedDate', attempt.termsAgreedDate)
     commit('birthDate', getters.getBirthdateAttributes(attempt))
     commit('profileChoice', attempt.profileChoice)
     commit('location', attempt)
@@ -22,6 +23,7 @@ export default {
 
     commit('apiRoot', account.apiRoot)
     commit('termsAgreed', true)
+    commit('termsAgreedDate', account.termsAgreedDate)
     commit('isReady', true)
     commit('isLocked', true)
     commit('apiMethod', 'patch')

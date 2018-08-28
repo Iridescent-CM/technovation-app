@@ -14,7 +14,7 @@
       </router-view>
     </div>
 
-    <div class="grid__col-3">
+    <div class="grid__col-3 grid__col--bleed">
       <student-menu />
     </div>
   </div>

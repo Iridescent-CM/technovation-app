@@ -43,6 +43,10 @@ export default {
     state.termsAgreed = termsAgreed
   },
 
+  termsAgreedDate (state, termsAgreedDate) {
+    state.termsAgreedDate = termsAgreedDate
+  },
+
   email (state, email) {
     state.email = email
   },
