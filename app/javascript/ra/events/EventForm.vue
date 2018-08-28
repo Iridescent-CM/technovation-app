@@ -78,7 +78,7 @@
         <div class="grid__col-6">
           <label>
             From
-            <el-time-select
+            <input
               v-model="eventStartTime"
               :picker-options="{
                 start: '07:00',
@@ -86,15 +86,15 @@
                 end: '23:30',
                 format: 'HH:mm A',
               }"
-              placeholder="Select start time">
-            </el-time-select>
+              placeholder="Select start time"
+            />
           </label>
 
           <errors :errors="eventErrors.starts_at"></errors>
 
           <label>
             To
-            <el-time-select
+            <input
               v-model="eventEndTime"
               :picker-options="{
                 start: '07:00',
@@ -103,8 +103,8 @@
                 format: 'HH:mm A',
                 minTime: eventStartTime,
               }"
-              placeholder="Select start time">
-            </el-time-select>
+              placeholder="Select start time"
+            />
           </label>
 
           <errors :errors="eventErrors.ends_at"></errors>
