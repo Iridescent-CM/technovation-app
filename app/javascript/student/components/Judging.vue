@@ -63,7 +63,7 @@ export default {
 
     mainContainerGridColumn () {
       if (this.embedded)
-        return 'grid__col-12'
+        return 'grid__col-12 tabs__content--embedded'
 
       return 'grid__col-9'
     },
