@@ -63,8 +63,12 @@
     "jest": "^22.4.2",
     "jquery": "^3.3.1",
     "node-gyp": "^3.7.0",
+    "uglify-es": "^3.3.9",
+    "uglify-js": "^3.4.8",
+    "uglifyjs": "^2.4.11",
     "vue-jest": "^2.1.1",
     "vue-template-compiler": "2.5.16",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-dev-server": "^2.11.1"
   },
   "optionalDependencies": {

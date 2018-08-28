@@ -132,8 +132,6 @@
 </template>
 
 <script>
-  import _ from "lodash";
-
   import DatetimeInput from "../../components/DatetimeInput";
   import Errors from '../../components/Errors';
   import EventBus from '../../components/EventBus';
@@ -219,7 +217,7 @@
           return;
         }
 
-        ids = _.map((ids, i) => { return parseInt(i) });
+        ids = Array.from(ids).map((ids, i) => parseInt(i))
         this.event.division_names = []
 
         if (ids.includes(parseInt(this.seniorDivisionId)))
@@ -292,9 +290,9 @@
         form.append("regional_pitch_event[city]", vm.event.city);
         form.append("regional_pitch_event[ends_at]", vm.event.ends_at);
 
-        _.each(vm.event.division_ids, (id) => {
-          form.append("regional_pitch_event[division_ids][]", id);
-        });
+        Array.from(vm.event.division_ids).forEach(id => {
+          form.append("regional_pitch_event[division_ids][]", id)
+        })
 
         form.append("regional_pitch_event[venue_address]",
           vm.event.venue_address);
@@ -323,9 +321,9 @@
 
             vm.eventErrors = {};
 
-            _.each(Object.keys(errors), (k) => {
-              vm.bindError(k, errors[k]);
-            });
+            Object.keys(errors).forEach(k => {
+              vm.bindError(k, errors[k])
+            })
           },
 
           complete: () => {

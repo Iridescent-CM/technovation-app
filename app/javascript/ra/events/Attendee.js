@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import escapeRegExp from "escape-string-regexp";
 
 export default function Attendee (json) {
@@ -74,9 +73,7 @@ export default function Attendee (json) {
   }
 
   function verifyNotInList(item, list, callback) {
-    const idx = _.findIndex(list, i => {
-      return i.id === item.id
-    })
+    const idx = Array.from(list).findIndex(i => i.id === item.id)
 
     if (idx === -1 && !!callback) {
       callback(idx)
@@ -86,9 +83,7 @@ export default function Attendee (json) {
   }
 
   function verifyInList(item, list, callback) {
-    const idx = _.findIndex(list, i => {
-      return i.id === item.id
-    })
+    const idx = Array.from(list).findIndex(i => i.id === item.id)
 
     if (idx !== -1 && !!callback) {
       callback(idx)

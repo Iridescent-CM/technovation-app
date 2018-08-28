@@ -59,8 +59,6 @@
 </template>
 
 <script>
-  import _ from 'lodash';
-
   import Icon from "../../components/Icon";
 
   export default {
@@ -89,9 +87,8 @@
 
     watch: {
       filterTxt () {
-        this.items = _.filter(this.childItems, i => {
-          return i.matchesQuery(this.filterTxt)
-        })
+        this.items = Array.from(this.childItems)
+                          .filter(i => i.matchesQuery(this.filterTxt))
       },
     },
 

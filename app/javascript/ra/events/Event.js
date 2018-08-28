@@ -1,4 +1,4 @@
-import _ from "lodash";
+import find from "lodash/find";
 import Attendee from "./Attendee";
 
 export default function (event) {
@@ -52,7 +52,7 @@ export default function (event) {
   };
 
   this.addJudge = (judge) => {
-    var existingIdx = _.findIndex(this.selectedJudges, j => {
+    var existingIdx = Array.from(this.selectedJudges).findIndex(j => {
       return j.id === judge.id && j.email === judge.email
     });
 
@@ -65,7 +65,7 @@ export default function (event) {
   };
 
   this.removeJudge = (judge) => {
-    const existingIdx = _.findIndex(this.selectedJudges, j => {
+    const existingIdx = Array.from(this.selectedJudges).findIndex(j => {
       return j.id === judge.id && j.email === judge.email
     });
 
@@ -78,7 +78,7 @@ export default function (event) {
   };
 
   this.addTeam = (team) => {
-    const existingIdx = _.findIndex(this.selectedTeams, t => t.id === team.id)
+    const existingIdx = Array.from(this.selectedTeams).findIndex(t => t.id === team.id)
 
     if (existingIdx === -1) {
       team.addedToEvent();
@@ -89,7 +89,7 @@ export default function (event) {
   };
 
   this.removeTeam = (team) => {
-    const existingIdx = _.findIndex(this.selectedTeams, t => {
+    const existingIdx = Array.from(this.selectedTeams).findIndex(t => {
       return t.id === team.id;
     });
 
@@ -102,32 +102,28 @@ export default function (event) {
   };
 
   this.selectedJudgeIds = () => {
-    return _.map(this.selectedJudges, 'id');
-  };
+    return Array.from(this.selectedJudges).map(j => j.id)
+  }
 
   this.selectedTeamIds = () => {
-    return _.map(this.selectedTeams, 'id');
-  };
+    return Array.from(this.selectedTeams).map(t => t.id)
+  }
 
   this.judgeAssignmentsSaved = () => {
-    _.each(this.selectedJudges, (judge) => { judge.assignmentSaved() });
-  };
+    Array.from(this.selectedJudges).forEach(judge => judge.assignmentSaved())
+  }
 
   this.teamAssignmentsSaved = () => {
-    _.each(this.selectedTeams, t => { t.assignmentSaved() });
-  };
+    Array.from(this.selectedTeams).forEach(t => t.assignmentSaved())
+  }
 
   this.findTeam = (id) => {
-    return _.find(this.selectedTeams, (team) => {
-      return team.id === parseInt(id);
-    });
-  };
+    return find(this.selectedTeams, team => team.id === parseInt(id))
+  }
 
   this.findJudge = (id) => {
-    return _.find(this.selectedJudges, (judge) => {
-      return judge.id === parseInt(id);
-    });
-  };
+    return find(this.selectedJudges, judge => judge.id === parseInt(id))
+  }
 
   this.fetchTeams = (opts) => {
     const event = this
@@ -178,19 +174,19 @@ export default function (event) {
   this.resultReadyForList = (result, list) => {
     let attendee = new Attendee(result)
 
-    _.each(result.assignments.judge_ids, id => {
-      const idx = _.findIndex(this.selectedJudges, j => j.id === id)
+    Array.from(result.assignments.judge_ids).forEach(id => {
+      const idx = Array.from(this.selectedJudge).findIndex(j => j.id === id)
       if (idx !== -1)
         attendee.assignedJudgeFoundInEvent(this.selectedJudges[idx])
     })
 
-    _.each(result.assignments.team_ids, id => {
-      const idx = _.findIndex(this.selectedTeams, t => t.id === id)
+    Array.from(result.assignments.team_ids).forEach(id => {
+      const idx = Array.from(this.selectedTeams).findIndex(t => t.id === id)
       if (idx !== -1)
         attendee.assignedTeamFoundInEvent(this.selectedTeams[idx])
     })
 
-    const idx = _.findIndex(list, i => i.id === attendee.id)
+    const idx = Array.from(list).findIndex(i => i.id === attendee.id)
 
     if (idx === -1)
       list.push(attendee)
@@ -208,7 +204,7 @@ export default function (event) {
           url: opts.url,
 
           success (resp) {
-            _.each(resp.data, (result) => {
+            Array.from(resp.data).forEach(result => {
               opts.event.resultReadyForList(result.attributes, opts.list)
             })
             resolve(resp)

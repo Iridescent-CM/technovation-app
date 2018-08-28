@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import capitalize from 'lodash/capitalize'
 import { mapState, mapGetters } from 'vuex'
 
 import { debounce } from '../../utilities/utilities'
@@ -166,9 +166,9 @@ export default {
 
       if (!this.commentText) text = ''
 
-      return _.filter(text.split(' '), word => {
+      return text.split(' ').filter(word => {
 
-        return _.filter(word.split(''), char => {
+        return word.split('').filter(char => {
           return char.match(/\w/)
         }).length > 2
 
@@ -176,7 +176,7 @@ export default {
     },
 
     badWordCount () {
-      return _.reduce(this.detectedProfanity, (acc, value, key) => {
+      return this.detectedProfanity.reduce((acc, value, key) => {
         return acc += value
       }, 0)
     },
@@ -218,11 +218,11 @@ export default {
     },
 
     nextBtnTxt () {
-      return this.nextSectionTitle || _.capitalize(this.nextSection)
+      return this.nextSectionTitle || capitalize(this.nextSection)
     },
 
     prevBtnTxt () {
-      return _.capitalize(this.prevSection)
+      return capitalize(this.prevSection)
     },
 
     shouldRunSentimentAnalysis () {
