@@ -1,6 +1,6 @@
 
 <template>
-  <ul class="tabs__menu">
+  <ul class="tabs__menu tabs-menu__parent-menu">
     <tab-link
       :class="registrationTabLinkClasses"
       :to="{ name: 'basic-profile' }"

@@ -1,7 +1,7 @@
 <template>
   <div class="tabs tabs--vertical tabs--css-only grid">
     <div :class="['tabs__content', mainContainerGridColumn]">
-      <div class="grid margin--t-xlarge">
+      <div class="grid">
         <div class="grid__col-8">
           <router-view :key="$route.name">
             <div slot="events"><slot name="events" /></div>
