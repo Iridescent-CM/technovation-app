@@ -1,4 +1,3 @@
-import find from "lodash/find";
 import Attendee from "./Attendee";
 
 export default function (event) {
@@ -118,11 +117,13 @@ export default function (event) {
   }
 
   this.findTeam = (id) => {
-    return find(this.selectedTeams, team => team.id === parseInt(id))
+    return Array.from(this.selectedTeams || [])
+      .find(team => team.id === parseInt(id))
   }
 
   this.findJudge = (id) => {
-    return find(this.selectedJudges, judge => judge.id === parseInt(id))
+    return Array.from(this.selectedJudges || [])
+      .find(judge => judge.id === parseInt(id))
   }
 
   this.fetchTeams = (opts) => {
