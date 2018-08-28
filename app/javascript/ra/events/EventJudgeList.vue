@@ -181,7 +181,7 @@
 
     computed: {
       filteredTeams ()  {
-        return Array.from(this.event.selectedTeams)
+        return Array.from(this.event.selectedTeams || [])
                     .filter(t => t.matchesQuery(this.teamFilter))
       },
     },
@@ -207,12 +207,12 @@
       },
 
       hoverJudge (judge) {
-        Array.from(this.event.selectedJudges).forEach(j => jehovering = false)
+        Array.from(this.event.selectedJudges || []).forEach(j => jehovering = false)
         judge.hovering = true
       },
 
       addTeams (judge) {
-        Array.from(this.event.selectedJudges).forEach(j => j.addingTeams = false)
+        Array.from(this.event.selectedJudges || []).forEach(j => j.addingTeams = false)
         judge.addingTeams = true
       },
 
@@ -260,7 +260,7 @@
       saveAssignments () {
         var form = new FormData();
 
-        Array.from(this.event.selectedJudges).forEach((judge, idx) => {
+        Array.from(this.event.selectedJudges || []).forEach((judge, idx) => {
           form.append(
             `event_assignment[invites][${idx}][]id`,
             judge.id

@@ -87,7 +87,7 @@
 
     watch: {
       filterTxt () {
-        this.items = Array.from(this.childItems)
+        this.items = Array.from(this.childItems || [])
                           .filter(i => i.matchesQuery(this.filterTxt))
       },
     },

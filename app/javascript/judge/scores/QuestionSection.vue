@@ -176,8 +176,8 @@ export default {
     },
 
     badWordCount () {
-      return this.detectedProfanity.reduce((acc, value, key) => {
-        return acc += value
+      return Object.keys(this.detectedProfanity).reduce((acc, key) => {
+        return acc += this.detectedProfanity[key]
       }, 0)
     },
 

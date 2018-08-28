@@ -112,9 +112,9 @@
     computed: {
       filteredItems () {
         if (this.type == 'team') {
-          return Array.from(this.selectableItems).filter(i => {
+          return Array.from(this.selectableItems || []).filter(i => {
             return i.selected ||
-              !Array.from(this.$store.state.teams).map(t => t.id).includes(i.id)
+              !Array.from(this.$store.state.teams || []).map(t => t.id).includes(i.id)
           })
         } else {
           return this.selectableItems
@@ -128,7 +128,7 @@
 
     watch: {
       query (val) {
-        this.selectableItems = Array.from(this.items)
+        this.selectableItems = Array.from(this.items || [])
                                     .filter(item => item.matchesQuery(val))
 
         if (val.length >= 3 && !this.selectableItems.length)
@@ -174,14 +174,14 @@
           },
 
           success: (json) => {
-            Array.from(json.data).forEach(obj => {
+            Array.from(json.data || []).forEach(obj => {
               const item = new Attendee(obj.attributes)
               let idx
 
               if (vm.type === 'team') {
-                idx = Array.from(vm.items).findIndex(i => i.id === item.id)
+                idx = Array.from(vm.items || []).findIndex(i => i.id === item.id)
               } else {
-                idx = Array.from(vm.items).findIndex(i => i.email === item.email)
+                idx = Array.from(vm.items || []).findIndex(i => i.email === item.email)
               }
 
               if (idx === -1) {

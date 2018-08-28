@@ -217,7 +217,7 @@
           return;
         }
 
-        ids = Array.from(ids).map((ids, i) => parseInt(i))
+        ids = Array.from(ids || []).map((ids, i) => parseInt(i))
         this.event.division_names = []
 
         if (ids.includes(parseInt(this.seniorDivisionId)))
@@ -290,7 +290,7 @@
         form.append("regional_pitch_event[city]", vm.event.city);
         form.append("regional_pitch_event[ends_at]", vm.event.ends_at);
 
-        Array.from(vm.event.division_ids).forEach(id => {
+        Array.from(vm.event.division_ids || []).forEach(id => {
           form.append("regional_pitch_event[division_ids][]", id)
         })
 
