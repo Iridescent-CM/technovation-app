@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs tabs--vertical tabs--css-only grid">
+  <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">
     <div class="tabs__content background-color--white grid__col-9">
       <router-view :key="$route.name">
         <div slot="change-email"><slot name="change-email" /></div>

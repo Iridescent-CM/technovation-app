@@ -1,7 +1,7 @@
 <template>
   <div id="your-submission" class="tabs tabs--vertical tabs--css-only grid">
     <div class="tabs__content grid__col-12">
-      <div class="grid margin--t-xlarge">
+      <div class="grid">
         <div class="grid__col-8">
           <slot name="submission" />
         </div>
