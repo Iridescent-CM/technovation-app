@@ -72,7 +72,7 @@ export default {
       if (this.embedded)
         return ''
 
-      return 'grid__col-9'
+      return 'grid__col-3 grid__col--bleed'
     },
 
     wrapperClasses () {

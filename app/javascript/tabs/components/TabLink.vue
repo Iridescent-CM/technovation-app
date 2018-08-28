@@ -43,7 +43,7 @@ export default {
     cssClasses: {
       type: Array,
       required: false,
-      default: [],
+      default () { return [] },
     },
   },
 
