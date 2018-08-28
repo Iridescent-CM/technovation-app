@@ -158,8 +158,6 @@
 </template>
 
 <script>
-  import _ from 'lodash';
-
   import Icon from "../../components/Icon";
   import EventBus from '../../components/EventBus';
 
@@ -183,9 +181,8 @@
 
     computed: {
       filteredTeams ()  {
-        return _.filter(this.event.selectedTeams, t => {
-          return t.matchesQuery(this.teamFilter)
-        })
+        return Array.from(this.event.selectedTeams || [])
+                    .filter(t => t.matchesQuery(this.teamFilter))
       },
     },
 
@@ -210,12 +207,12 @@
       },
 
       hoverJudge (judge) {
-        _.each(this.event.selectedJudges, j => { j.hovering = false })
+        Array.from(this.event.selectedJudges || []).forEach(j => jehovering = false)
         judge.hovering = true
       },
 
       addTeams (judge) {
-        _.each(this.event.selectedJudges, j => { j.addingTeams = false })
+        Array.from(this.event.selectedJudges || []).forEach(j => j.addingTeams = false)
         judge.addingTeams = true
       },
 
@@ -263,7 +260,7 @@
       saveAssignments () {
         var form = new FormData();
 
-        _.each(this.event.selectedJudges, (judge, idx) => {
+        Array.from(this.event.selectedJudges || []).forEach((judge, idx) => {
           form.append(
             `event_assignment[invites][${idx}][]id`,
             judge.id

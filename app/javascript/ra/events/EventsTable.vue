@@ -106,8 +106,6 @@
 </template>
 
 <script>
-  import _ from "lodash";
-
   import Icon from '../../components/Icon';
   import EventBus from '../../components/EventBus';
 

@@ -6,8 +6,6 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import VTooltip from 'v-tooltip'
 import Vue2Filters from 'vue2-filters'
 
-import _ from 'lodash'
-
 import "../components/tooltip.scss"
 
 Vue.use(VueRouter)

@@ -33,6 +33,12 @@ describe("Registration::Components::AgeVerification.vue", () => {
               mutations: defaultStore.mutations,
               actions: defaultStore.actions,
             },
+            student: {
+              namespaced: true,
+              state: {
+                currentAccount: {},
+              },
+            },
           },
         })
       }
