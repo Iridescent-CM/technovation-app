@@ -27,6 +27,7 @@
 
         .tabs__menu-button {
           color: black;
+          font-weight: bold;
         }
       }
 
@@ -135,6 +136,12 @@
         padding: 0.4rem;
         margin: 0 0 0.25rem;
         border-bottom: none;
+      }
+    }
+
+    .tabs-menu__child-menu .tabs__menu-link:not(.tabs__menu-link--active) {
+      .tabs__menu-button {
+        font-weight: normal;
       }
     }
   }

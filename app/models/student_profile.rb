@@ -155,6 +155,13 @@ class StudentProfile < ActiveRecord::Base
     false
   end
 
+  def has_saved_parental_info?
+    persisted? &&
+      parent_guardian_email.present? &&
+        parent_guardian_name.present? &&
+          valid?
+  end
+
   def participated?
     team.submission.present? &&
       team.submission.qualifies_for_participation?

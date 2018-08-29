@@ -141,7 +141,9 @@ export default {
     ]),
 
     termsAgreedLabel () {
-      if (this.termsAgreed) return `Agreed on ${this.termsAgreedDate}`
+      if (this.termsAgreed && this.termsAgreedDate)
+        return `Agreed on ${this.termsAgreedDate}`
+
       return ''
     },
 
@@ -149,14 +151,14 @@ export default {
       if (this.isAgeSet)
         return `${this.getAge()} years old`
 
-      return ""
+      return ''
     },
 
     regionLabel () {
       if (this.isLocationSet)
         return Object.values(this.getLocation).join(', ')
 
-      return ""
+      return ''
     },
 
     profileLabel () {

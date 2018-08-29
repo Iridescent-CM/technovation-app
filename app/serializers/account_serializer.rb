@@ -50,8 +50,13 @@ class AccountSerializer
     account.profile_expertise_ids
   end
 
-  attribute(:terms_agreed) do |attempt|
+  attribute(:terms_agreed) do |_account|
     true
+  end
+
+  attribute(:has_saved_parental_info) do |account|
+    account.student_profile.present? &&
+      account.student_profile.has_saved_parental_info?
   end
 
   attribute(:terms_agreed_date) do |account|
