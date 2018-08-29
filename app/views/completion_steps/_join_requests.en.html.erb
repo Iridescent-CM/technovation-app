@@ -1,7 +1,11 @@
 <% unless hidden ||= false %>
   <h1 class="content-heading">Join a team</h1>
 
-  <% if requests.any? %>
+  <% if SeasonToggles.judging_enabled_or_between? %>
+    <p>
+      <%= t("views.team_member_invites.show.join_team_disabled_by_judging") %>
+    </p>
+  <% elsif requests.any? %>
     <p>You have asked to join a team!</p>
 
     <% requests.each do |join_request| %>
