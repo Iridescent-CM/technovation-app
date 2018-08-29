@@ -41,7 +41,7 @@ export default {
     },
 
     cssClasses: {
-      type: Array,
+      type: [Array, String],
       required: false,
       default () { return [] },
     },

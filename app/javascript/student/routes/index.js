@@ -15,24 +15,28 @@ import { routes as registrationRoutes } from 'registration/routes'
 import teamRoutes from './teams'
 import judgingRoutes from './judging'
 
+const initApp = () => {
+  const rootElem = document.getElementById('vue-data-registration')
+  if (!rootElem) return false
+
+  const { data: { id: teamId, attributes: teamAttributes }} = JSON.parse(rootElem.dataset.currentTeam)
+  const { data: { id: accountId, attributes: accountAttributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
+  const { data: { id: parentalConsentId, attributes: parentalConsentAttributes }} = JSON.parse(rootElem.dataset.parentalConsent)
+
+  const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
+  const currentTeam = Object.assign({ id: parseInt(teamId) }, teamAttributes)
+  const parentalConsent = Object.assign({ id: parseInt(parentalConsentId) }, parentalConsentAttributes)
+
+  store.dispatch('registration/initAccount', currentAccount)
+  store.dispatch('student/initApp', { currentAccount, currentTeam, parentalConsent })
+}
+
 const initiateApp = (to, from, next) => {
   try {
-    const rootElem = document.getElementById('vue-data-registration')
-    if (!rootElem) return false
-
-    const { data: { id: teamId, attributes: teamAttributes }} = JSON.parse(rootElem.dataset.currentTeam)
-    const { data: { id: accountId, attributes: accountAttributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
-    const { data: { id: parentalConsentId, attributes: parentalConsentAttributes }} = JSON.parse(rootElem.dataset.parentalConsent)
-
-    const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
-    const currentTeam = Object.assign({ id: parseInt(teamId) }, teamAttributes)
-    const parentalConsent = Object.assign({ id: parseInt(parentalConsentId) }, parentalConsentAttributes)
-
-    store.dispatch('registration/initAccount', currentAccount)
-    store.dispatch('student/initApp', { currentAccount, currentTeam, parentalConsent })
+    initApp()
 
     if (to.path === '/' && from.path === '/') {
-      next({ name: 'parental-consent' })
+      next(getRootRoute())
     } else {
       next()
     }
@@ -42,10 +46,33 @@ const initiateApp = (to, from, next) => {
   }
 }
 
+const getRootComponent = () => {
+  if (!store.state.isReady) initApp()
+
+  if (getCurrentTeamId()) {
+    return Submission
+  } else {
+    return TeamBuilding
+  }
+}
+
+const getRootRoute = () => {
+  if (getCurrentTeamId()) {
+    return { name: 'submission' }
+  } else {
+    return { name: 'parental-consent' }
+  }
+}
+
+const getCurrentTeamId = () => {
+  if (!store.state.isReady) initApp()
+  return store.state.student.currentTeam.id
+}
+
 export const routes = [
   {
     path: '/',
-    component: TeamBuilding,
+    component: getRootComponent(),
     beforeEnter: initiateApp,
   },
   {
