@@ -19,15 +19,31 @@
       .tabs__menu-button {
         display: block;
         width: 100%;
+        cursor: pointer;
+        border-radius: 0;
+        padding: 0.5rem 1rem;
+        border: 0;
+        outline: 0;
+        color: black;
+
+        background-color: transparent !important;
+        opacity: 0.7;
+        transition: opacity 0.2s, background-color 0.2s;
+
+        &:hover {
+          background: white;
+          opacity: 1;
+        }
       }
 
       &.tabs__menu-link--active {
         background: white;
         border-color: $primary;
 
-        .tabs__menu-button {
+        > .tabs__menu-button {
           color: black;
           font-weight: bold;
+          opacity: 1;
         }
       }
 
@@ -63,7 +79,18 @@
 
       .tabs__menu-button {
         font-size: 1rem;
-        color: #999;
+        color: black;
+        font-weight: normal;
+        font-family: sans-serif;
+        text-align: left;
+        padding: 1.5rem 1rem;
+        border-bottom: 1px solid #ddd;
+        text-transform: none;
+
+        &.disabled {
+          color: #999;
+          cursor: not-allowed;
+        }
       }
     }
 
@@ -91,32 +118,9 @@
       border: none;
     }
 
-    .tabs__menu-button {
-      color: #666;
-      font-weight: normal;
-      font-family: sans-serif;
-      text-align: left;
-      padding: 1.5rem 1rem;
-      border-bottom: 1px solid #ddd;
-      text-transform: none;
-
-      &:hover {
-        color: black;
-      }
-
-      &.disabled {
-        cursor: not-allowed;
-
-        &:hover {
-          color: #999;
-        }
-      }
-    }
-
     .tabs-menu__parent-menu > li {
       > .tabs__menu-button {
         padding: 0.75rem;
-        font-weight: bold;
         border-bottom: none;
         border-top: 1px solid #ddd;
       }
@@ -177,21 +181,6 @@
         border-color: black;
       }
     }
-  }
-}
-
-.tabs__menu-button {
-  cursor: pointer;
-  border-radius: 0;
-  background-color: transparent !important;
-  padding: 0.5rem 1rem;
-  border: 0;
-  outline: 0;
-  color: black;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background: white;
   }
 }
 
