@@ -113,20 +113,20 @@
       }
     }
 
-    .tabs-menu__parent-menu {
-      > li > .tabs__menu-button {
+    .tabs-menu__parent-menu > li {
+      > .tabs__menu-button {
         padding: 0.75rem;
         font-weight: bold;
         border-bottom: none;
         border-top: 1px solid #ddd;
+      }
 
-        &:first-child {
-          border-top: none;
-        }
+      &:first-child > .tabs__menu-button {
+        border-top: none;
+      }
 
-        &:last-child {
-          border-bottom: 1px solid #ddd;
-        }
+      &:last-child > .tabs__menu-button {
+        border-bottom: 1px solid #ddd;
       }
     }
 
