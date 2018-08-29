@@ -1,0 +1,34 @@
+<% if invites.any? %>
+  <h1 class="content-heading">
+    <% if invites.many? %>
+      You have invited others to join your team!
+    <% else %>
+      You have invited someone to join your team!
+    <% end %>
+  </h1>
+
+  <p>
+    Your team is awaiting a response from
+
+    <%= invites.group_by(&:invitee_type).map { |scope, reqs|
+      content_tag(
+        :strong,
+        pluralize(reqs.count, "#{scope.sub("Profile", "").downcase} invite")
+      )
+    }.join(" and ").html_safe %>.
+  </p>
+
+  <div class="grid grid--bleed step-actions">
+    <% invites.map(&:invitee_type).each do |req_type| %>
+      <% scope = req_type.sub("Profile", "").downcase %>
+
+      <div class="grid__col-auto">
+        <div class="grid__cell">
+          <%= link_to "Manage #{scope} invites",
+            student_team_path(current_team, anchor: "!#{scope.pluralize}"),
+            class: "button #{'secondary' if scope == "mentor"}" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

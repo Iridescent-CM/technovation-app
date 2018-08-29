@@ -3,12 +3,7 @@ class MentorProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
-  enum mentor_type: %w{
-    Industry\ professional
-    Educator
-    Parent
-    Past\ Technovation\ student
-  }
+  enum mentor_type: MENTOR_TYPE_OPTIONS
 
   scope :unmatched, -> {
     select("DISTINCT #{table_name}.*")
@@ -162,7 +157,7 @@ class MentorProfile < ActiveRecord::Base
 
   after_validation -> { enable_searchability },
     on: :update,
-    if: -> { account.present? and account.country_changed? or bio_changed? }
+    if: -> { account.present? and account.country_changed? or saved_change_to_bio? }
 
   after_save { current_teams.find_each(&:touch) }
   after_touch { current_teams.find_each(&:touch) }
@@ -175,7 +170,7 @@ class MentorProfile < ActiveRecord::Base
   validates :bio,
     length: { minimum: 100 },
     allow_blank: true,
-    if: :bio_changed?
+    if: :saved_change_to_bio?
 
   delegate :submitted?,
            :candidate_id,

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+    resource :basic_profile, only: :update
 
     resources :teams, except: :destroy
     resources :team_memberships, only: :destroy
@@ -291,14 +292,24 @@ Rails.application.routes.draw do
     resource :certificate_overrides, only: :create
   end
 
-  namespace :application do
-    resource :dashboard, only: :show
-  end
-
   namespace :public do
+    resource :dashboard, only: :show
     resources :embed_codes, only: :show
 
+    get '/email_validations/new' => 'email_validations#new'
+  end
+
+  namespace :registration do
+    resource :terms_agreement, only: :create
+    resource :age, only: :create
+    resource :profile_choice, only: :create
+    resource :current_location, only: :show
+    resource :location, only: [:update, :create]
+    resource :basic_profile, only: :create
+    resource :email, only: :create
+    resource :account, only: :create
     resources :top_companies, only: :index
+    resources :expertises, only: :index
   end
 
   resources :password_resets, only: [:new, :create]
@@ -345,5 +356,5 @@ Rails.application.routes.draw do
 
   resources :apps, only: :show
 
-  root to: "application/dashboards#show"
+  root to: "public/dashboards#show"
 end

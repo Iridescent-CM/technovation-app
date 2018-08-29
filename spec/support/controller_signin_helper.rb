@@ -1,7 +1,7 @@
 module ControllerSigninHelper
   def sign_in(profile, *factory_opts)
     signin = case profile
-             when Symbol
+             when Symbol, String
                FactoryBot.create(profile, *factory_opts)
              else
                profile

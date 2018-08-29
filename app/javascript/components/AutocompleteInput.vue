@@ -7,6 +7,7 @@
       :value="mutableValue"
     />
     <vue-select
+      :select-on-tab="true"
       :input-id="id"
       :options="mutableOptions"
       v-model="mutableValue"
@@ -82,7 +83,7 @@ export default {
       this.mutableOptions = this.options
     }
 
-    if (this.value.length) {
+    if (this.value !== null && this.value.length) {
       this.mutableValue = this.value
     }
   },

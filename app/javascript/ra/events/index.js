@@ -7,11 +7,6 @@ import EventForm from './EventForm';
 import "flatpickr/dist/themes/material_green.css";
 import "../../components/tooltip.scss";
 
-import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
-import 'element-ui/lib/theme-chalk/index.css'
-
-Vue.use(ElementUI, { locale });
 Vue.use(Vuex)
 
 const store = new Vuex.Store({

@@ -94,27 +94,8 @@ class Account < ActiveRecord::Base
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 
-  enum referred_by: {
-    "Friend" => 0,
-    "Colleague" => 1,
-    "Article" => 2,
-    "Internet" => 3,
-    "Social media" => 4,
-    "Print" => 5,
-    "Web search" => 6,
-    "Teacher" => 7,
-    "Parent/family" => 8,
-    "Company email" => 9,
-    # 10 (Made With Code) was deleted!
-    "Other" => 11,
-  }
-
-  enum gender: %w{
-    Female
-    Male
-    Non-binary
-    Prefer\ not\ to\ say
-  }
+  enum referred_by: REFERRED_BY_OPTIONS
+  enum gender: GENDER_IDENTITY_OPTIONS
 
   scope :by_query, ->(query) {
     sanitized = sanitize_sql_like(query)
@@ -219,6 +200,14 @@ class Account < ActiveRecord::Base
 
   def self.sort_column
     :first_name
+  end
+
+  def random_id
+    SecureRandom.hex(4)
+  end
+
+  def coordinates
+    [latitude, longitude]
   end
 
   def virtual_event?
@@ -472,6 +461,50 @@ class Account < ActiveRecord::Base
       ) or ::NullAuth.new
   end
 
+  def profile_school_company_name
+    if student_profile
+      student_profile.school_name
+    elsif regional_ambassador_profile
+      regional_ambassador_profile.school_organization_name
+    elsif mentor_profile
+      mentor_profile.school_company_name
+    elsif judge_profile
+      judge_profile.company_name
+    else
+      false
+    end
+  end
+
+  def profile_job_title
+    if student_profile
+      false
+    elsif regional_ambassador_profile
+      regional_ambassador_profile.job_title
+    elsif mentor_profile
+      mentor_profile.job_title
+    elsif judge_profile
+      judge_profile.job_title
+    else
+      false
+    end
+  end
+
+  def profile_mentor_type
+    if mentor_profile
+      mentor_profile.mentor_type
+    else
+      false
+    end
+  end
+
+  def profile_expertise_ids
+    if mentor_profile
+      mentor_profile.expertise_ids
+    else
+      []
+    end
+  end
+
   def events
     judge_profile && judge_profile.events ||
 
@@ -702,7 +735,7 @@ class Account < ActiveRecord::Base
     elsif regional_ambassador_profile.present?
       "#{regional_ambassador_profile.status}_regional_ambassador"
     else
-      "application"
+      "public"
     end
   end
 

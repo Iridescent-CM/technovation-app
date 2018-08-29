@@ -254,6 +254,10 @@ class Team < ActiveRecord::Base
 
   delegate :name, to: :division, prefix: true
 
+  def random_id
+    SecureRandom.hex(4)
+  end
+
   def is_team?
     true
   end

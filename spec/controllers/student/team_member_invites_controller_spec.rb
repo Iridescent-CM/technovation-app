@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe Student::TeamMemberInvitesController do
   before { SeasonToggles.team_building_enabled! }
 
+  before(:each) do
+    SeasonToggles.judging_round = :off
+  end
+
   describe "POST #create" do
     let(:student) { FactoryBot.create(:student, :on_team, :geocoded) }
 
@@ -88,6 +92,47 @@ RSpec.describe Student::TeamMemberInvitesController do
         "You are already on a team, so you cannot accept that invite."
       )
       expect(invite.reload).to be_declined
+    end
+
+    it "shows a friendly message if accepting, but judging is enabled" do
+      SeasonToggles.judging_round = :qf
+
+      put :update, params: {
+        id: invite.invite_token,
+        team_member_invite: { status: :accepted }
+      }
+
+      expect(response).to redirect_to student_dashboard_path
+      expect(flash[:alert]).to eq(
+        "Sorry, but accepting invites is currently disabled because judging has already begun."
+      )
+      expect(invite.reload).to be_pending
+    end
+
+    it "shows a friendly message if accepting, but the current date is between judging rounds" do
+      semifinals_start_date = DateTime.new(
+        Season.current.year,
+        SeasonToggles::JudgingRoundToggles::SEMIFINALS_START_MONTH,
+        SeasonToggles::JudgingRoundToggles::SEMIFINALS_START_DAY,
+        0,
+        0,
+        0
+      )
+
+      date_between_rounds = semifinals_start_date - 1
+
+      Timecop.freeze(date_between_rounds) do
+        put :update, params: {
+          id: invite.invite_token,
+          team_member_invite: { status: :accepted }
+        }
+
+        expect(response).to redirect_to student_dashboard_path
+        expect(flash[:alert]).to eq(
+          "Sorry, but accepting invites is currently disabled because judging has already begun."
+        )
+        expect(invite.reload).to be_pending
+      end
     end
   end
 end

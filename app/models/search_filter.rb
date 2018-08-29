@@ -39,6 +39,10 @@ class SearchFilter < Struct.new(:filter_options)
     filter_options.fetch(:location) { "" }
   end
 
+  def coordinates
+    filter_options.fetch(:coordinates) { [] }
+  end
+
   def needs_team
     filter_options.fetch(:needs_team) { "0" } == "1"
   end

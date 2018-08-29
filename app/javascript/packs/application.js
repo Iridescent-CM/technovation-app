@@ -8,13 +8,18 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import Vue from 'vue/dist/vue.esm'
+import TurbolinksAdapter from 'vue-turbolinks'
+
 import AutocompleteInput from '../components/AutocompleteInput'
 import CertificateButton from '../components/CertificateButton'
 import LocationForm from '../location/components/LocationForm'
 
-import '../config/axios'
+Vue.use(TurbolinksAdapter)
 
-document.addEventListener('turbolinks:load', () => {
+import '../config/axios'
+import '../registration'
+
+document.addEventListener('turbolinks:load', function () {
   const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn')
 
   for (let i = 0; i < buttonElems.length; i += 1) {

@@ -1,6 +1,10 @@
 module Mentor
   class MentorInvitesController < MentorController
     def show
+      if SeasonToggles.judging_enabled_or_between?
+        return redirect_when_invites_are_disabled_by_judging
+      end
+
       @invite = MentorInvite.find_by(
         invite_token: params.fetch(:id)
       ) || ::NullInvite.new
@@ -14,7 +18,9 @@ module Mentor
     end
 
     def update
-      if invite = current_mentor.mentor_invites.pending.find_by(
+      if SeasonToggles.judging_enabled_or_between?
+        redirect_when_invites_are_disabled_by_judging
+      elsif invite = current_mentor.mentor_invites.pending.find_by(
                     invite_token: params.fetch(:id)
                   )
         invite.update(invite_params)
@@ -26,6 +32,10 @@ module Mentor
     end
 
     def destroy
+      if SeasonToggles.judging_enabled_or_between?
+        return redirect_when_invites_are_disabled_by_judging
+      end
+
       @invite = MentorInvite.find_by(
         team_id: current_mentor.team_ids,
         invite_token: params.fetch(:id)
@@ -41,6 +51,11 @@ module Mentor
     end
 
     private
+    def redirect_when_invites_are_disabled_by_judging
+      redirect_to mentor_dashboard_path,
+        alert: t("views.team_member_invites.show.invites_disabled_by_judging")
+    end
+
     def redirect_based_on_status(invite)
       if invite.accepted?
         @path = mentor_team_path(invite.team)

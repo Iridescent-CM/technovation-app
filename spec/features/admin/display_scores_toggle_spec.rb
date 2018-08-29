@@ -13,7 +13,6 @@ RSpec.feature "Toggling display of scores" do
 
       expect(page).to have_content("Scores and Certificate")
       expect(page).to have_css(".button", text: "View your scores and certificate")
-      expect(page).to have_css(".checklist__scores .scores--open")
     end
 
     scenario "display scores off" do
@@ -23,7 +22,6 @@ RSpec.feature "Toggling display of scores" do
 
       expect(page).not_to have_content("Scores and Certificate")
       expect(page).not_to have_css(".button", text: "View your scores and certificate")
-      expect(page).to have_css(".checklist__scores .scores--closed")
     end
   end
 

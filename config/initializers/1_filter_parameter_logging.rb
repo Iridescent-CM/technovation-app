@@ -26,4 +26,8 @@ Rails.application.config.filter_parameters += [
   :password_digest,
   :invite_token,
   :confirmation_token,
+  :address,
+  :ip_address,
+  :coordinates,
+  :wizard_token,
 ]

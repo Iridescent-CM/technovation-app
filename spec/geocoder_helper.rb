@@ -2,6 +2,31 @@ RSpec.configure do |config|
   config.before(:suite) do
     Geocoder.configure(lookup: :test)
 
+    Geocoder::Lookup::Test.add_stub("x", [])
+
+    Geocoder::Lookup::Test.add_stub("stub-multiple", [
+      {
+        'latitude'     => 34.052363,
+        'longitude'    => -118.256551,
+        'address'      => 'Los Angeles, CA, USA',
+        'state'        => 'California',
+        'city'         => 'Los Angeles',
+        'state_code'   => 'CA',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      },
+      {
+        'latitude'     => 43.0389,
+        'longitude'    => 87.9065,
+        'address'      => 'Milwaukee, WI, USA',
+        'state'        => 'Wisconsin',
+        'city'         => 'Milwaukee',
+        'state_code'   => 'WI',
+        'country'      => 'United States',
+        'country_code' => 'US',
+      }
+    ])
+
     ["Los Angeles", "Los Angeles, CA", "Los Angeles, CA, United States"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
@@ -47,7 +72,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Chicago", "Chicago, IL", "Chicago, IL, United States"].each do |loc|
+    ["Chicago", "Chicago, IL", "Chicago, IL, United States", "Chicago, IL, US", "US"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 41.50196838,
@@ -183,17 +208,19 @@ RSpec.configure do |config|
       )
     end
 
-    Geocoder::Lookup::Test.add_stub(
-      "Salvador, Bahia, Brazil", [{
-        "latitude"     => -12.7872335,
-        "longitude"    => -38.3067572,
-        'address'      => 'Salvador, Bahia, Brazil',
-        'state'        => 'Bahia',
-        'city'         => 'Salvador',
-        'state_code'   => 'BH',
-        'country'      => 'Brazil',
-        'country_code' => 'BR',
-      }]
-    )
+    ["Salvador, BH, Brazil", "Salvador, Bahia, Brazil"].each do |loc|
+      Geocoder::Lookup::Test.add_stub(
+        loc, [{
+          "latitude"     => -12.7872335,
+          "longitude"    => -38.3067572,
+          'address'      => 'Salvador, Bahia, Brazil',
+          'state'        => 'Bahia',
+          'city'         => 'Salvador',
+          'state_code'   => 'BH',
+          'country'      => 'Brazil',
+          'country_code' => 'BR',
+        }]
+      )
+    end
   end
 end

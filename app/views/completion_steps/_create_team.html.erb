@@ -1,30 +1,21 @@
 <% unless hidden ||= false %>
-  <li>
-    <div class="flags">
-      <span class="flag flag-team">
-        Form a team
-      </span>
-    </div>
+  <h1 class="content-heading">Register a new team</h1>
 
-    <h1 class="content-heading">Register a new team</h1>
+  <p>
+    Create your own team and then invite your other team members,
+    or let team members find you.
+  </p>
 
-    <p>
-      Create your own team and then invite your other team members,
-      or let team members find you.
-    </p>
-
-    <div class="step-actions">
-      <%= link_to(
-        t("views.profile_requirements.create_join_team.links.create.text"),
-        [:new, current_scope, :team],
-        class: "button"
-      ) %>
-      or
-      <%= link_to(
-        "Find more teams",
-        [:new, current_scope, :team_search],
-        class: "button"
-      ) %>
-    </div>
-  </li>
+  <div class="step-actions">
+    <%= link_to(
+      t("views.profile_requirements.create_join_team.links.create.text"),
+      [:new, current_scope, :team],
+      class: "button"
+    ) %>
+    or
+    <%= link_to(
+      "Find more teams",
+      [:new, current_scope, :team_search]
+    ) %>
+  </div>
 <% end %>

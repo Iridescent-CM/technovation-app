@@ -1,45 +1,36 @@
 <% if requests.any? %>
-  <li>
-    <div class="flags">
-      <span class="flag flag-team">
-        Form a team
-      </span>
-    </div>
+  <h1 class="content-heading">
+    <% if requests.many? %>
+      Others have asked to join your team!
+    <% else %>
+      Someone has asked to join your team!
+    <% end %>
+  </h1>
 
-    <h1 class="content-heading">
-      <% if requests.many? %>
-        Others have asked to join your team!
-      <% else %>
-        Someone has asked to join your team!
-      <% end %>
-    </h1>
+  <p>
+    You have
 
-    <p>
-      You have
+    <%= requests.group_by(&:requestor_type).map { |scope, reqs|
+      content_tag(
+        :strong,
+        pluralize(reqs.count, "#{scope.sub("Profile", "").downcase} request")
+      )
+    }.join(" and ").html_safe %>
 
-      <%= requests.group_by(&:requestor_type).map { |scope, reqs|
-        content_tag(
-          :strong,
-          pluralize(reqs.count, "#{scope.sub("Profile", "").downcase} request")
-        )
-      }.join(" and ").html_safe %>
+    waiting for you and your team members.
+  </p>
 
-      waiting for you and your team members.
-    </p>
+  <div class="grid grid--bleed step-actions">
+    <% requests.map(&:requestor_type).each do |req_type| %>
+      <% scope = req_type.sub("Profile", "").downcase %>
 
-    <div class="grid grid--bleed step-actions">
-      <% requests.map(&:requestor_type).each do |req_type| %>
-        <% scope = req_type.sub("Profile", "").downcase %>
-
-        <div class="grid__col-auto">
-          <div class="grid__cell">
-            <%= link_to "Manage #{scope} requests",
-              student_team_path(current_team, anchor: "!#{scope.pluralize}"),
-              class: "button #{'secondary' if scope == "mentor"}" %>
-          </div>
+      <div class="grid__col-auto">
+        <div class="grid__cell">
+          <%= link_to "Manage #{scope} requests",
+            student_team_path(current_team, anchor: "!#{scope.pluralize}"),
+            class: "button #{'secondary' if scope == "mentor"}" %>
         </div>
-      <% end %>
-    </div>
-  </li>
+      </div>
+    <% end %>
+  </div>
 <% end %>
-

@@ -9,6 +9,7 @@ gem 'casting', '~> 0.7'
 gem 'bootsnap', '~> 1.3', require: false
 
 gem 'fast_jsonapi', "~> 1.2"
+gem 'httparty', "~> 0.16"
 
 gem 'textacular',
   git: 'https://github.com/Iridescent-CM/textacular.git',
@@ -92,7 +93,6 @@ gem 'indefinite_article', "~> 0.2"
 gem 'rack-rewrite', '~> 1.5', require: 'rack/rewrite'
 
 gem 'browser', "~> 2.5"
-gem "oink", "~> 0.10"
 
 gem 'loofah', '~> 2.2'
 
@@ -104,8 +104,6 @@ group :development do
   gem 'pp_sql', "~> 0.2", require: false
   gem 'active_record_query_trace', "~> 1.5"
   gem "letter_opener", "~> 1.6"
-  gem 'rack-mini-profiler', "~> 0.10"
-  gem 'memory_profiler', "~> 0.9"
   gem 'listen', '~> 3.1'
   gem 'churn', "~> 1.0", require: false
   gem 'web-console', '~> 3.6'

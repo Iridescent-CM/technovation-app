@@ -31,6 +31,10 @@ class SeasonToggles
         self.team_building_enabled = true
       end
 
+      def team_building_disabled!
+        self.team_building_enabled = false
+      end
+
       def team_submissions(open:, closed:)
         if team_submissions_editable?
           open.call

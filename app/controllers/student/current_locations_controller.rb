@@ -1,19 +1,21 @@
 module Student
   class CurrentLocationsController < StudentController
     def show
-      if params.fetch(:team_id) { false }
-        render json: {
-          city: current_team.city,
-          state_code: current_team.state_province,
-          country_code: current_team.country,
-        }
-      else
-        render json: {
-          city: current_account.city,
-          state_code: current_account.state_province,
-          country_code: current_account.country,
-        }
-      end
+      record = if params.fetch(:team_id) { false }
+                 current_team
+               else
+                 current_account
+               end
+
+      country = FriendlyCountry.new(record).country_name
+
+      render json: {
+        city: record.city,
+        state: FriendlySubregion.(record, prefix: false),
+        state_code: record.state_province,
+        country: country,
+        country_code: record.country,
+      }
     end
   end
 end

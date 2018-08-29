@@ -83,7 +83,7 @@
 </template>
 
 <script>
-  import _ from "lodash";
+  import debounce from "lodash/debounce"
 
   import Icon from "../../components/Icon";
 
@@ -112,9 +112,9 @@
     computed: {
       filteredItems () {
         if (this.type == 'team') {
-          return _.filter(this.selectableItems, i => {
+          return Array.from(this.selectableItems || []).filter(i => {
             return i.selected ||
-              !_.map(this.$store.state.teams, 'id').includes(i.id)
+              !Array.from(this.$store.state.teams || []).map(t => t.id).includes(i.id)
           })
         } else {
           return this.selectableItems
@@ -128,12 +128,11 @@
 
     watch: {
       query (val) {
-        this.selectableItems = _.filter(this.items, item => {
-          return item.matchesQuery(val);
-        });
+        this.selectableItems = Array.from(this.items || [])
+                                    .filter(item => item.matchesQuery(val))
 
         if (val.length >= 3 && !this.selectableItems.length)
-          _.debounce(
+          debounce(
             this.fetchRemoteItems.bind(this, { expandSearch: 1 }),
             300
           )();
@@ -175,14 +174,14 @@
           },
 
           success: (json) => {
-            _.each(json.data, obj => {
+            Array.from(json.data || []).forEach(obj => {
               const item = new Attendee(obj.attributes)
               let idx
 
               if (vm.type === 'team') {
-                idx = _.findIndex(vm.items, i => i.id === item.id)
+                idx = Array.from(vm.items || []).findIndex(i => i.id === item.id)
               } else {
-                idx = _.findIndex(vm.items, i => i.email === item.email)
+                idx = Array.from(vm.items || []).findIndex(i => i.email === item.email)
               }
 
               if (idx === -1) {
