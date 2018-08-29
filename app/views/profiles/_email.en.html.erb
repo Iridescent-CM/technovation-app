@@ -20,9 +20,10 @@
 </p>
 
 <%= form_with model: current_profile, local: true do |f| %>
-  <%= f.fields_for :account do |a| %>
+  <%= f.fields_for :account, include_id: false do |a| %>
     <%= a.label :existing_password, "Current password" %>
     <%= a.password_field :existing_password,
+      id: "existing_password_field_email",
       placeholder: "Enter your password first" %>
 
     <% unless a.object.errors[:existing_password].empty? %>

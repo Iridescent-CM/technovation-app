@@ -19,6 +19,10 @@ document.addEventListener('turbolinks:load', () => {
       components: {
         App,
       },
+
+      mounted () {
+        this.$el.classList.remove('hidden')
+      },
     })
   }
 })
