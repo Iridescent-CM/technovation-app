@@ -39,7 +39,7 @@
 
 <div class="grid grid--bleed">
   <div class="grid__col-auto">
-    <% if SeasonToggles.team_building_enabled? %>
+    <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
       <% if !admin_ra && team.current? && team.spot_available? %>
         <%= render "team_member_invites/form" %>
 
