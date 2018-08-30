@@ -28,7 +28,7 @@
     <tab-link
       :class="submissionTabLinkClasses"
       :to="{ name: 'submission', meta: { active: submissionPagesActive } }"
-      :condition-to-enable="true"
+      :condition-to-enable="consentSigned && isOnTeam"
       :condition-to-complete="submissionComplete"
     >Submit your project</tab-link>
 

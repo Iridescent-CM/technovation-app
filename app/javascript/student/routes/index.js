@@ -57,7 +57,7 @@ const getRootComponent = () => {
 }
 
 const getRootRoute = () => {
-  if (getCurrentTeamId()) {
+  if (getCurrentTeamId() && getParentalConsentSigned()) {
     return { name: 'submission' }
   } else {
     return { name: 'parental-consent' }
@@ -67,6 +67,11 @@ const getRootRoute = () => {
 const getCurrentTeamId = () => {
   if (!store.state.isReady) initApp()
   return store.state.student.currentTeam.id
+}
+
+const getParentalConsentSigned = () => {
+  if (!store.state.isReady) initApp()
+  return store.state.student.parentalConsent.isSigned
 }
 
 export const routes = [
