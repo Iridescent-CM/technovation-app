@@ -1,11 +1,11 @@
-import Vue from 'vue/dist/vue.esm';
+import Vue from 'vue'
 import Vuex from 'vuex'
 
-import EventsTable from './EventsTable';
-import EventForm from './EventForm';
+import EventsTable from './EventsTable'
+import EventForm from './EventForm'
 
-import "flatpickr/dist/themes/material_green.css";
-import "../../components/tooltip.scss";
+import "flatpickr/dist/themes/material_green.css"
+import "../../components/tooltip.scss"
 
 Vue.use(Vuex)
 
@@ -16,7 +16,7 @@ const store = new Vuex.Store({
 
   mutations: {
     addTeam (state, team) {
-      const idx = _.findIndex(state.teams, t => {
+      const idx = state.teams.findIndex((t) => {
         return t.id === team.id
       })
 
@@ -25,7 +25,7 @@ const store = new Vuex.Store({
     },
 
     removeTeam (state, team) {
-      const idx = _.findIndex(state.teams, t => {
+      const idx = state.teams.findIndex((t) => {
         return t.id === team.id
       })
 

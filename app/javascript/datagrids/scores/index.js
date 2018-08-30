@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 
 document.addEventListener('turbolinks:load', () => {
   const table = document.querySelector("table.scored_submissions_grid")

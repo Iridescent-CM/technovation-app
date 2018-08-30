@@ -14,7 +14,9 @@ export const validateScore = ({ commit, state }) => {
     }
   })
 
-  _.each(state.score.comments, (comment, section) => {
+  Object.keys(state.score.comments).forEach((section) => {
+    const comment = state.score.comments[section]
+
     if (state.team.division === 'junior' && section === 'entrepreneurship') {
       return true
     } else if (comment.word_count < 40 ||

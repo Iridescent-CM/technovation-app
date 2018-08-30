@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 
 const TeamBuildingStep = Vue.component('team-building-step', {
   template: `<div><slot :name="$route.name">add App.vue and TeamBuilding.vue slots for route named {{ $route.name }}</slot></div>`,

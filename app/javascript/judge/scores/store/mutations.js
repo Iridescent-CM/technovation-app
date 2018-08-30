@@ -74,7 +74,7 @@ export const saveComment = (state, sectionName) => {
 }
 
 export const updateScores = (state, qData) => {
-  let question = _.find(state.questions, q => {
+  const question = state.questions.find((q) => {
     return q.section === qData.section && q.idx === qData.idx
   })
 

@@ -7,7 +7,7 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 
 import AutocompleteInput from '../components/AutocompleteInput'

@@ -1,5 +1,5 @@
-import Vue from 'vue/dist/vue.common'
-import VueDragula from 'vue-dragula';
+import Vue from 'vue'
+import VueDragula from 'vue-dragula'
 
 Vue.use(VueDragula)
 

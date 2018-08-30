@@ -141,7 +141,10 @@
       },
 
       editingOne () {
-        return this.formActive || _.some(this.events, "editing");
+        const editingEvent = this.events.some((event) => {
+          return Boolean(event.editing)
+        })
+        return this.formActive || editingEvent
       },
     },
 
@@ -162,7 +165,7 @@
 
       editEvent (event) {
         event.editing = true;
-        _.each(this.events, (e) => { e.managing = false });
+        this.events.forEach((e) => { e.managing = false })
         EventBus.$emit("EventsTable.editEvent", event);
       },
 
@@ -206,7 +209,7 @@
 
       EventBus.$on("EventForm.reset", () => {
         this.formActive = false;
-        _.each(this.events, (e) => { e.editing = false; });
+        this.events.forEach((e) => { e.editing = false; })
       });
 
       EventBus.$on("EventForm.active", () => {
@@ -217,8 +220,7 @@
         method: "GET",
         url: this.fetchUrl,
         success: (resp) => {
-          _.each(resp, (event) => {
-
+          Array.from(resp).forEach((event) => {
             event.fetchTeamsUrlRoot = this.teamsListUrl;
             event.fetchJudgesUrlRoot = this.judgesListUrl;
 
