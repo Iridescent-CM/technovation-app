@@ -3,12 +3,9 @@
     <tab-link
       :to="{ name: 'parental-consent' }"
       css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="hasParentalConsent"
+      :condition-to-enable="true"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(hasParentalConsent)"
-        size="16"
-        :color="$route.name === 'parental-consent' ? '000000' : '28A880'"
-      />
       Parental Consent
       <span>{{ parentalConsentStatusLabel }}</span>
     </tab-link>
@@ -16,12 +13,9 @@
     <tab-link
       :to="{ name: 'find-team' }"
       css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="isOnTeam"
+      :condition-to-enable="true"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(isOnTeam)"
-        size="16"
-        :color="$route.name === 'find-team' ? '000000' : '28A880'"
-      />
       Find your team
       <span>{{ findTeamLabel }}</span>
     </tab-link>
@@ -29,12 +23,9 @@
     <tab-link
       :to="{ name: 'create-team' }"
       css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="isOnTeam"
+      :condition-to-enable="true"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(isOnTeam)"
-        size="16"
-        :color="$route.name === 'create-team' ? '000000' : '28A880'"
-      />
       Create your team
       <span>{{ createTeamLabel }}</span>
     </tab-link>
@@ -42,12 +33,9 @@
     <tab-link
       :to="{ name: 'find-mentor' }"
       css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="mentorNotPending"
+      :condition-to-enable="true"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(mentorNotPending)"
-        size="16"
-        :color="$route.name === 'find-mentor' ? '000000' : '28A880'"
-      />
       Add a mentor to your team
       <span>{{ findMentorLabel }}</span>
     </tab-link>
@@ -59,12 +47,10 @@ import { createNamespacedHelpers } from 'vuex'
 
 const { mapState } = createNamespacedHelpers('student')
 
-import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
 
 export default {
   components: {
-    Icon,
     TabLink,
   },
 
@@ -139,15 +125,6 @@ export default {
 
     mentorIds () {
       return (this.currentTeam && this.currentTeam.mentorIds) || []
-    },
-  },
-
-  methods: {
-    completedEnabledOrDisabledIcon (conditionToComplete) {
-      if (conditionToComplete)
-        return 'check-circle'
-
-      return 'circle-o'
     },
   },
 }

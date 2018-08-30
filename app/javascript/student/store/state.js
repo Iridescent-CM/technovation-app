@@ -6,4 +6,6 @@ export default {
   currentTeam: {},
 
   parentalConsent: {},
+
+  submission: {},
 }

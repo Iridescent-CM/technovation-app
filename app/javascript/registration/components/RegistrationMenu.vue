@@ -3,12 +3,9 @@
     <tab-link
       :to="{ name: 'data-use' }"
       css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-enable="true"
+      :condition-to-complete="termsAgreed"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(termsAgreed)"
-        size="16"
-        :color="$route.name === 'data-use' ? '000000' : '28A880'"
-      />
       Data agreement
       <span>{{ termsAgreedLabel }}</span>
     </tab-link>
@@ -17,12 +14,9 @@
       :to="{ name: 'location' }"
       css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="termsNotAgreedMessage"
+      :condition-to-enable="termsAgreed"
+      :condition-to-complete="isLocationSet"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(isLocationSet)"
-        size="16"
-        :color="activeEnabledOrDisabledColor('location', termsAgreed)"
-      />
       Region
       <span>{{ regionLabel }}</span>
     </tab-link>
@@ -31,12 +25,9 @@
       :to="{ name: 'age' }"
       css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="termsNotAgreedMessage"
+      :condition-to-enable="termsAgreed"
+      :condition-to-complete="isAgeSet"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(isAgeSet)"
-        size="16"
-        :color="activeEnabledOrDisabledColor('age', termsAgreed)"
-      />
       Date of birth / Age
       <span>{{ ageLabel }}</span>
     </tab-link>
@@ -45,12 +36,9 @@
       :to="{ name: 'choose-profile' }"
       css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="chooseProfileDisabledMessage"
+      :condition-to-enable="termsAgreed && isAgeSet"
+      :condition-to-complete="isProfileChosen"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(isProfileChosen)"
-        size="16"
-        :color="activeEnabledOrDisabledColor('choose-profile', (termsAgreed && isAgeSet))"
-      />
       Choose profile
       <span>{{ profileChoice || "" | capitalize }}</span>
     </tab-link>
@@ -59,12 +47,9 @@
       :to="{ name: 'basic-profile' }"
       css-classes="tabs__menu-link--has-subtitles"
       :disabled-tooltip="basicProfileDisabledMessage"
+      :condition-to-enable="termsAgreed && isAgeSet && isProfileChosen"
+      :condition-to-complete="isBasicProfileSet"
     >
-      <icon
-        :name="completedEnabledOrDisabledIcon(isBasicProfileSet)"
-        size="16"
-        :color="activeEnabledOrDisabledColor('basic-profile', (termsAgreed && isAgeSet && isProfileChosen))"
-      />
       Profile detail
       <span>{{ profileLabel }}</span>
     </tab-link>
@@ -72,19 +57,16 @@
     <tab-link
       :to="{ name: 'login' }"
       :disabled-tooltip="loginDisabledMessage"
+      :condition-to-enable="readyForAccount"
       v-if="!currentAccount"
     >
-      <icon
-        name="circle-o"
-        size="16"
-        :color="activeEnabledOrDisabledColor('login', readyForAccount)"
-      />
       Sign in
     </tab-link>
 
     <tab-link
       :to="{ name: 'change-email' }"
       css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="true"
       v-if="currentAccount"
     >
       Change email
@@ -94,6 +76,7 @@
     <tab-link
       :to="{ name: 'change-password' }"
       css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="true"
       v-if="currentAccount"
     >
       Change password
@@ -104,7 +87,6 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-import Icon from 'components/Icon'
 import TabLink from 'tabs/components/TabLink'
 
 const { mapState, mapGetters } = createNamespacedHelpers('registration')
@@ -114,7 +96,6 @@ export default {
   name: 'registration-menu',
 
   components: {
-    Icon,
     TabLink,
   },
 
@@ -207,25 +188,6 @@ export default {
         return 'Please fill out other sections first'
 
       return ''
-    },
-  },
-
-  methods: {
-    completedEnabledOrDisabledIcon (conditionToComplete) {
-      if (conditionToComplete)
-        return 'check-circle'
-
-      return 'circle-o'
-    },
-
-    activeEnabledOrDisabledColor (routeName, conditionToEnable) {
-      if (this.$route.name === routeName)
-        return '000000'
-
-      if (conditionToEnable)
-        return '28A880'
-
-      return '999999'
     },
   },
 }
