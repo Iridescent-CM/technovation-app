@@ -59,7 +59,26 @@
 
       <p>
         You can delete your account and data, and get a copy of your data, at any time.
-        This would remove you from your team and our program.
+        Deleting your data will remove you from your team and our program.
+      </p>
+
+      <h4>Mentors outside US: Background checks</h4>
+
+      <p>
+        In countries where background checks—reports of your employment and legal
+        history—are uniformally easy or required, we will submit all mentors to
+        this process in order for them to be allowed and verified on our site.
+      </p>
+
+      <p>
+        In other countries and territories, we will be randomly selecting mentors
+        to provide references and/or certifications, and to submit to background
+        checks where possible. If you are selected, we will contact you to complete
+        this process. You must do this to be allowed and verified on our site.
+      </p>
+
+      <p>
+        Thank you for helping us keep our students safe.
       </p>
 
       <div class="padding--t-b-large text-align--right">
