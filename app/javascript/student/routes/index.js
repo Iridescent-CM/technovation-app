@@ -15,17 +15,13 @@ import { routes as registrationRoutes } from 'registration/routes'
 import teamRoutes from './teams'
 import judgingRoutes from './judging'
 
-let modifiedRegistrationRoutes = Array.from(registrationRoutes)
-const basicProfileRouteIndex = modifiedRegistrationRoutes.findIndex(
+const basicProfileRoute = registrationRoutes.find(
   route => route.name === 'basic-profile'
 )
-let basicProfileRoute = modifiedRegistrationRoutes[basicProfileRouteIndex]
 
 basicProfileRoute.props = {
   embedded: true,
 }
-
-modifiedRegistrationRoutes[basicProfileRouteIndex] = basicProfileRoute
 
 const initApp = () => {
   const rootElem = document.getElementById('vue-data-registration')
