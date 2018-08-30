@@ -1,6 +1,57 @@
 require "rails_helper"
 
 RSpec.describe Student::JoinRequestsController do
+  describe "POST #new" do
+    let(:team) { FactoryBot.create(:team, members_count: 2) }
+    let(:student) { FactoryBot.create(:student) }
+
+    before do
+      sign_in(student)
+    end
+
+    it "redirects and displays alert if judging is enabled or between rounds" do
+      SeasonToggles.judging_round = :qf
+
+      post :new, params: { team_id: team.id }
+
+      expect(response).to redirect_to student_team_path(team)
+      expect(flash[:alert]).to eq(
+        "Sorry, but team invitations are currently disabled because judging has already begun."
+      )
+    end
+  end
+
+  describe "POST #show" do
+    let(:team) { FactoryBot.create(:team, members_count: 2) }
+    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:join_request) {
+      FactoryBot.create(
+        :join_request,
+        team: team,
+        requestor: mentor
+      )
+    }
+
+    before do
+      sign_in(team.students.sample)
+    end
+
+    it "redirects and displays alert if judging is enabled or between rounds" do
+      SeasonToggles.judging_round = :qf
+
+      post :show, params: { id: join_request.review_token }
+
+      expect(response).to redirect_to student_team_path(
+        team,
+        anchor: join_request.requestor_scope_name.pluralize
+      )
+
+      expect(flash[:alert]).to eq(
+        "Sorry, but team invitations are currently disabled because judging has already begun."
+      )
+    end
+  end
+
   describe "POST #create" do
     let(:team) { FactoryBot.create(:team) }
     let(:student) { FactoryBot.create(:student) }
@@ -10,6 +61,10 @@ RSpec.describe Student::JoinRequestsController do
       TeamRosterManaging.add(team, mentor)
       sign_in(student)
       request.env["HTTP_REFERER"] = "/somewhere"
+    end
+
+    before(:each) do
+      SeasonToggles.judging_round = :off
     end
 
     it "emails all members" do
@@ -36,6 +91,17 @@ RSpec.describe Student::JoinRequestsController do
       }.to change { JoinRequest.count }.by(1)
 
       expect(response).to redirect_to(student_dashboard_path)
+    end
+
+    it "redirects and displays alert if judging is enabled or between rounds" do
+      SeasonToggles.judging_round = :qf
+
+      post :create, params: { team_id: team.id }
+
+      expect(response).to redirect_to student_team_path(team)
+      expect(flash[:alert]).to eq(
+        "Sorry, but team invitations are currently disabled because judging has already begun."
+      )
     end
   end
 
@@ -122,6 +188,44 @@ RSpec.describe Student::JoinRequestsController do
 
         expect(mail.body.to_s).to include(
           "#{team.name} has declined your request to be their mentor."
+        )
+      end
+    end
+
+    context "judging is enabled or between judging rounds" do
+      before(:each) do
+        SeasonToggles.judging_round = :qf
+      end
+
+      it "redirects and displays alert if approved" do
+        put :update, params: {
+          id: join_request.review_token,
+          join_request: { status: :approved },
+        }
+
+        expect(response).to redirect_to student_team_path(
+          team,
+          anchor: join_request.requestor_scope_name.pluralize
+        )
+
+        expect(flash[:alert]).to eq(
+          "Sorry, but team invitations are currently disabled because judging has already begun."
+        )
+      end
+
+      it "redirects and displays alert if denied" do
+        put :update, params: {
+          id: join_request.review_token,
+          join_request: { status: :declined },
+        }
+
+        expect(response).to redirect_to student_team_path(
+          team,
+          anchor: join_request.requestor_scope_name.pluralize
+        )
+
+        expect(flash[:alert]).to eq(
+          "Sorry, but team invitations are currently disabled because judging has already begun."
         )
       end
     end

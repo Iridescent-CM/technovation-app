@@ -350,7 +350,8 @@ en:
         greeting: "You've been invited to join %{name}!"
         message: "Review this team and respond below"
         missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was removed by the team."
-        invites_disabled_by_judging: "Sorry, but accepting invites is currently disabled because judging has already begun."
+        invites_disabled_by_judging: "Sorry, but team invitations are currently disabled because judging has already begun."
+        join_team_disabled_by_judging: "Sorry, but you cannot join a team because judging has already begun."
 
     team_searches:
       new:

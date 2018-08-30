@@ -5,9 +5,16 @@
     <div class="grid__col-auto">
       <h3 class="reset">Requests from others</h3>
 
-      <p class="hint">
-        These people are waiting for your team's response
-      </p>
+      <% if SeasonToggles.judging_enabled_or_between? %>
+        <p class="hint">
+          Judging has begun or we are in between judging rounds, so you cannot
+          approve or decline these invitations.
+        </p>
+      <% else %>
+        <p class="hint">
+          These people are waiting for your team's response
+        </p>
+      <% end %>
 
       <ul class="reset">
         <% requests.each do |join_request| %>
@@ -35,38 +42,40 @@
                       )
                     ) %>
 
-                  <p class="buttons">
-                    <%= link_to t("views.application.approved"),
-                      [
-                        current_scope,
-                        join_request,
-                        join_request: { status: :approved },
-                      ],
+                  <% if !SeasonToggles.judging_enabled_or_between? %>
+                    <p class="buttons">
+                      <%= link_to t("views.application.approved"),
+                        [
+                          current_scope,
+                          join_request,
+                          join_request: { status: :approved },
+                        ],
 
-                      class: "button small",
+                        class: "button small",
 
-                      data: {
-                        method: :put,
-                        confirm: t("views.application.confirm_approved",
-                                  name: join_request.requestor_first_name),
-                        positive: true,
-                      } %>
+                        data: {
+                          method: :put,
+                          confirm: t("views.application.confirm_approved",
+                                    name: join_request.requestor_first_name),
+                          positive: true,
+                        } %>
 
-                    <%= link_to t("views.application.declined"),
-                      [
-                        current_scope,
-                        join_request,
-                        join_request: { status: :declined },
-                      ],
+                      <%= link_to t("views.application.declined"),
+                        [
+                          current_scope,
+                          join_request,
+                          join_request: { status: :declined },
+                        ],
 
-                      class: "button small danger",
+                        class: "button small danger",
 
-                      data: {
-                        method: :put,
-                        confirm: t("views.application.confirm_declined",
-                                  name: join_request.requestor_first_name),
-                      } %>
-                  </p>
+                        data: {
+                          method: :put,
+                          confirm: t("views.application.confirm_declined",
+                                    name: join_request.requestor_first_name),
+                        } %>
+                    </p>
+                  <% end %>
                 </div>
               </div>
             </div>
