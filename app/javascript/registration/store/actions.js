@@ -121,7 +121,7 @@ export default {
       referredByOther: state.referredByOther,
     }, attrs)
 
-    axios[state.apiMethod](`/${state.apiRoot}/basic_profile`, {
+    return axios[state.apiMethod](`/${state.apiRoot}/basic_profile`, {
       basicProfile: {
         ...data,
         wizardToken: state.wizardToken,

@@ -118,10 +118,10 @@
       </a>
       <button
         class="button"
-        :disabled="!nextStepEnabled"
+        :disabled="!nextStepEnabled || embedded"
         @click.prevent="handleSubmit"
       >
-        Next
+        {{ nextButtonLabel }}
       </button>
     </div>
   </form>
@@ -167,7 +167,17 @@ export default {
         'Past Technovation student',
       ],
       expertiseOptions: [],
+      saving: false,
+      saved: false,
     }
+  },
+
+  props: {
+    embedded: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   beforeRouteEnter (_to, from, next) {
@@ -182,7 +192,17 @@ export default {
 
   created () {
     this.debouncedProfileUpdate = debounce(attributes => {
-      this.updateBasicProfile(attributes)
+      if (this.embedded) {
+        this.saving = true
+        this.saved = false
+      }
+
+      this.updateBasicProfile(attributes).then(() => {
+        if (this.embedded) {
+          this.saving = false
+          this.saved = true
+        }
+      })
     }, 500)
 
     this.getExpertiseOptions()
@@ -195,6 +215,16 @@ export default {
 
     nextStepEnabled () {
       return this.isBasicProfileSet
+    },
+
+    nextButtonLabel () {
+      if (this.saved)
+        return 'Saved!'
+
+      if (this.saving)
+        return 'Saving...'
+
+      return 'Next'
     },
 
     isGenderRequired () {
@@ -215,7 +245,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/firstName', value)
+        this.handleDataChanges('registration/firstName', value)
       },
     },
 
@@ -225,7 +255,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/lastName', value)
+        this.handleDataChanges('registration/lastName', value)
       },
     },
 
@@ -235,7 +265,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/genderIdentity', value)
+        this.handleDataChanges('registration/genderIdentity', value)
       },
     },
 
@@ -245,7 +275,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/schoolCompanyName', value)
+        this.handleDataChanges('registration/schoolCompanyName', value)
       },
     },
 
@@ -255,7 +285,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/jobTitle', value)
+        this.handleDataChanges('registration/jobTitle', value)
       },
     },
 
@@ -265,7 +295,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/mentorType', value)
+        this.handleDataChanges('registration/mentorType', value)
       },
     },
 
@@ -275,7 +305,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/expertiseIds', value)
+        this.handleDataChanges('registration/expertiseIds', value)
       },
     },
 
@@ -285,7 +315,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/referredBy', value)
+        this.handleDataChanges('registration/referredBy', value)
       },
     },
 
@@ -295,7 +325,7 @@ export default {
       },
 
       set (value) {
-        this.$store.commit('registration/referredByOther', value)
+        this.handleDataChanges('registration/referredByOther', value)
       },
     },
   },
@@ -344,6 +374,10 @@ export default {
     handleSubmit () {
       if (!this.nextStepEnabled) return false
       this.$router.push({ name: 'login' })
+    },
+
+    handleDataChanges (mutation, value) {
+      this.$store.commit(mutation, value)
     },
 
     getExpertiseOptions () {

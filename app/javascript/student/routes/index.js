@@ -15,6 +15,14 @@ import { routes as registrationRoutes } from 'registration/routes'
 import teamRoutes from './teams'
 import judgingRoutes from './judging'
 
+const basicProfileRoute = registrationRoutes.find(
+  route => route.name === 'basic-profile'
+)
+
+basicProfileRoute.props = {
+  embedded: true,
+}
+
 const initApp = () => {
   const rootElem = document.getElementById('vue-data-registration')
   if (!rootElem) return false
