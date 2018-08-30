@@ -270,7 +270,7 @@ export default {
 
   computed: {
     countryDetectedInStateOptionalList () {
-      if (!this.country.length)
+      if (!this.country || !this.country.length)
         return false
 
       return this.country.match(/^\s*(hong\s*kong|hk)\s*$/i) ||
