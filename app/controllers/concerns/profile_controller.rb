@@ -70,7 +70,9 @@ module ProfileController
         :icon_path,
       ],
     ).tap do |tapped|
-      tapped[:account_attributes][:id] = current_account.id
+      if tapped[:account_attributes]
+        tapped[:account_attributes][:id] = current_account.id
+      end
     end
   end
 
