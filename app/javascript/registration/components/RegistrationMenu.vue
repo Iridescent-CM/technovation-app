@@ -67,6 +67,7 @@
       :to="{ name: 'change-email' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="true"
+      :condition-to-enable="true"
       v-if="currentAccount"
     >
       Change email
@@ -77,6 +78,7 @@
       :to="{ name: 'change-password' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="true"
+      :condition-to-enable="true"
       v-if="currentAccount"
     >
       Change password

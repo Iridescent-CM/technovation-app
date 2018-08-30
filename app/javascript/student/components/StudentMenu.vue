@@ -3,7 +3,7 @@
   <ul class="tabs__menu tabs-menu__parent-menu padding--none">
     <tab-link
       :class="registrationTabLinkClasses"
-      :to="{ name: 'basic-profile' }"
+      :to="{ name: 'basic-profile', meta: { active: registrationPagesActive } }"
       :condition-to-enable="true"
       :condition-to-complete="true"
     >
@@ -15,7 +15,7 @@
 
     <tab-link
       :class="teamTabLinkClasses"
-      :to="{ name: 'parental-consent' }"
+      :to="{ name: 'parental-consent', meta: { active: teamPagesActive } }"
       :condition-to-enable="true"
       :condition-to-complete="consentSigned && isOnTeam"
     >
@@ -27,14 +27,14 @@
 
     <tab-link
       :class="submissionTabLinkClasses"
-      :to="{ name: 'submission' }"
+      :to="{ name: 'submission', meta: { active: submissionPagesActive } }"
       :condition-to-enable="true"
       :condition-to-complete="submissionComplete"
     >Submit your project</tab-link>
 
     <tab-link
       :class="judgingTabLinkClasses"
-      :to="{ name: 'events' }"
+      :to="{ name: 'events', meta: { active: judgingPagesActive } }"
     >
       Compete
       <div slot="subnav" class="tabs-menu__child-menu" v-if="judgingPagesActive">
@@ -45,7 +45,7 @@
 
     <tab-link
       :class="scoresTabLinkClasses"
-      :to="{ name: 'scores' }"
+      :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
     >Scores & Feedback</tab-link>
   </ul>
 </template>
@@ -86,36 +86,44 @@ export default {
 
     registrationTabLinkClasses () {
       return {
-        'tabs__menu-link--active': this.subRouteIsActive('registration'),
+        'tabs__menu-link--active': this.registrationPagesActive,
       }
     },
 
     teamTabLinkClasses () {
       return {
-        'tabs__menu-link--active': this.subRouteIsActive('team'),
+        'tabs__menu-link--active': this.teamPagesActive,
       }
     },
 
     submissionTabLinkClasses () {
       return {
-        'tabs__menu-link--active': this.subRouteIsActive('submission'),
+        'tabs__menu-link--active': this.submissionPagesActive,
       }
     },
 
     judgingTabLinkClasses () {
       return {
-        'tabs__menu-link--active': this.subRouteIsActive('judging'),
+        'tabs__menu-link--active': this.judgingPagesActive,
       }
     },
 
     scoresTabLinkClasses () {
       return {
-        'tabs__menu-link--active': this.subRouteIsActive('scores'),
+        'tabs__menu-link--active': this.scoresPagesActive,
       }
+    },
+
+    scoresPagesActive () {
+      return this.subRouteIsActive('scores')
     },
 
     judgingPagesActive () {
       return this.subRouteIsActive('judging')
+    },
+
+    submissionPagesActive () {
+      return this.subRouteIsActive('submission')
     },
 
     teamPagesActive () {

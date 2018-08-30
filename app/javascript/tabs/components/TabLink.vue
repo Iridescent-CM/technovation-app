@@ -86,7 +86,8 @@ export default {
     },
 
     activeEnabledOrDisabledColor () {
-      if (this.$route.name === this.to.name)
+      if ((this.to.meta && this.to.meta.active) ||
+            this.$route.name === this.to.name)
         return '000000'
 
       if (this.conditionToEnable)
