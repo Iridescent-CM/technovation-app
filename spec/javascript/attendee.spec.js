@@ -1,6 +1,4 @@
-import _ from "lodash";
-
-import Attendee from 'ra/events/Attendee';
+import Attendee from 'ra/events/Attendee'
 
 test('assignedTeamFoundInEvent adds teams to assignedTeams list', () => {
   const team = new Attendee({ id: 1 })
@@ -8,6 +6,6 @@ test('assignedTeamFoundInEvent adds teams to assignedTeams list', () => {
 
   judge.assignedTeamFoundInEvent(team)
 
-  expect(_.map(judge.assignedTeams, 'id')).toEqual([1])
-  expect(_.map(team.assignedJudges, 'id')).toEqual([2])
+  expect(judge.assignedTeams.map((team) => team.id)).toEqual([1])
+  expect(team.assignedJudges.map((judge) => judge.id)).toEqual([2])
 })

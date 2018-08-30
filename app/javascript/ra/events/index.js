@@ -16,7 +16,7 @@ const store = new Vuex.Store({
 
   mutations: {
     addTeam (state, team) {
-      const idx = _.findIndex(state.teams, t => {
+      const idx = state.teams.findIndex((t) => {
         return t.id === team.id
       })
 
@@ -25,7 +25,7 @@ const store = new Vuex.Store({
     },
 
     removeTeam (state, team) {
-      const idx = _.findIndex(state.teams, t => {
+      const idx = state.teams.findIndex((t) => {
         return t.id === team.id
       })
 
