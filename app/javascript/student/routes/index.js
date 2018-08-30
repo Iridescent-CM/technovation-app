@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import RegistrationApp from 'registration/App'

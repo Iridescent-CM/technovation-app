@@ -1,5 +1,5 @@
 import URLSearchParams from 'url-search-params'
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 
 import store from './store'
 import { router } from './routes'

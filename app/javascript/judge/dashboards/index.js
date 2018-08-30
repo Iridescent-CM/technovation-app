@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 
 import store from './scores/store'
 import { router } from './scores/routes'

@@ -1,4 +1,3 @@
-import Vue from 'vue/dist/vue.esm';
 import VueRouter from 'vue-router'
 
 import ReviewSubmission from './sections/ReviewSubmission'
