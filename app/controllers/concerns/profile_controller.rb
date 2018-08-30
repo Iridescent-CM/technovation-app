@@ -55,7 +55,6 @@ module ProfileController
     params.require(profile_param_root).permit(
       profile_params,
       account_attributes: [
-        :id,
         :existing_password,
         :email,
         :password,
@@ -70,7 +69,9 @@ module ProfileController
         :longitude,
         :icon_path,
       ],
-    )
+    ).tap do |tapped|
+      tapped[:account_attributes][:id] = current_account.id
+    end
   end
 
   def profile_param_root
