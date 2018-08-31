@@ -1,32 +1,24 @@
-<% if current_student.parental_consent_signed? %>
-  <div class="notice notice--success">
-    Your parent/guardian has given you permission to compete in Technovation!
+  <div class="panel panel--contains-bottom-bar panel--contains-top-bar">
+    <div class="panel__top-bar">
+      Parental Consent
+    </div>
+
+    <div class="panel__content">
+      <% if current_student.parental_consent_signed? %>
+        <%= render "student/profiles/parent_signed" %>
+      <% elsif current_student.parent_guardian_email.blank? %>
+        <%= render "student/profiles/parent_info_blank" %>
+      <% else %>
+        <%= render "student/profiles/parent_info_troubleshoot" %>
+      <% end %>
+    </div>
+
+    <div class="panel__bottom-bar">
+      If you need any help at all,
+      <%= mail_to(
+        ENV.fetch("HELP_EMAIL"),
+        "contact us",
+        subject: "Parental consent help needed"
+      ) %>.
+    </div>
   </div>
-
-  <dl>
-    <dt>Parent/guardian name</dt>
-    <dd><%= current_student.parent_guardian_name %></dd>
-
-    <dt>Parent/guardian email</dt>
-    <dd><%= current_student.parent_guardian_email %></dd>
-
-    <dt>Signed on:</dt>
-    <dd><%= current_student.parental_consent.signed_at.strftime("%B %e, %Y") %></dd>
-  </dl>
-
-  <p>
-    <%= link_to "Change your parent/guardian details",
-      new_student_parental_consent_notice_path(
-        back: student_profile_path(anchor: "!parent")
-      ),
-      class: "button" %>
-  </p>
-
-  <p class="hint">Changing this email will send and require a new consent.</p>
-<% elsif current_student.parent_guardian_email.blank? %>
-  <%= render "student/dashboards/completion_steps/parental_consent_init" %>
-<% else %>
-  <%= render(
-    "student/dashboards/completion_steps/parental_consent_troubleshoot"
-  ) %>
-<% end %>

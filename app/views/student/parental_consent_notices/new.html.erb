@@ -4,18 +4,6 @@
   <div class="panel grid__col-sm-8">
     <h3><%= t("views.student.parental_consent_notices.new.title") %></h3>
 
-    <%= simple_form_for current_student,
-      url: [:student, :parental_consent_notice],
-      method: :post do |f| %>
-      <%= render 'signups/student_profile_parental_fields', f: f %>
-
-      <%= f.button :submit,
-        t("views.student.parental_consent_notices.form.submit"),
-        class: "button" %>
-
-      or
-
-      <%= link_to 'cancel', params[:back] || student_dashboard_path %>
-    <% end %>
+    <%= render 'form' %>
   </div>
 </div>

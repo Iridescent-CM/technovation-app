@@ -8,7 +8,7 @@
   </h1>
 
   <% if current_student.parent_guardian_email.blank? %>
-    <%= render "#{path_prefix}/parental_consent_init" %>
+
   <% else %>
     <%= render "#{path_prefix}/parental_consent_troubleshoot" %>
   <% end %>
