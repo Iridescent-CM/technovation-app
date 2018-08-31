@@ -1,11 +1,10 @@
 require "rails_helper"
 
-RSpec.feature "Parental consent" do
-  scenario "sort of invalid email" do
+RSpec.describe "Parental consent", :js do
+  it "handles invalid email" do
     student = FactoryBot.create(:onboarding_student)
 
     sign_in(student)
-    click_link "Enter parent/guardian name & email"
     fill_in "Parent or guardian's email", with: "no-work"
 
     click_button "Send the link"
@@ -25,7 +24,7 @@ RSpec.feature "Parental consent" do
     )
   end
 
-  scenario "invalid token" do
+  it "handles invalid tokens" do
     [{ }, { token: "bad" }].each do |bad_token_params|
       visit edit_parental_consent_path(bad_token_params)
       expect(current_path).to eq(root_path)
@@ -33,7 +32,7 @@ RSpec.feature "Parental consent" do
     end
   end
 
-  scenario "valid token, invalid signature form" do
+  it "handles valid token, but an invalid signature form" do
     student = FactoryBot.create(:onboarding_student)
 
     visit edit_parental_consent_path(token: student.consent_token)
@@ -47,7 +46,7 @@ RSpec.feature "Parental consent" do
     )
   end
 
-  scenario "valid token, valid form" do
+  it "handls a valid token, with a valid form" do
     student = FactoryBot.create(:onboarding_student)
     visit edit_parental_consent_path(token: student.reload.consent_token)
 
@@ -60,11 +59,10 @@ RSpec.feature "Parental consent" do
     )
   end
 
-  scenario "fill it out on dashboard steps" do
+  it "can be filled out on the dashboard" do
     student = FactoryBot.create(:onboarding_student)
 
     sign_in(student)
-    click_link "Enter parent/guardian name & email"
 
     fill_in "Parent or guardian's name", with: "Parent name"
     fill_in "Parent or guardian's email", with: "parent@parent.com"
@@ -76,11 +74,10 @@ RSpec.feature "Parental consent" do
     expect(mail.subject).to include("Your daughter needs permission")
   end
 
-  scenario "validate parental consent info" do
+  it "validates parental consent info" do
     student = FactoryBot.create(:onboarding_student)
 
     sign_in(student)
-    click_link "Enter parent/guardian name & email"
 
     fill_in "Parent or guardian's name", with: ""
     fill_in "Parent or guardian's email", with: ""
