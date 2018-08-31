@@ -23,13 +23,15 @@ RSpec.describe "Admins invite users to signup", :js do
       expect(mail).to be_present, "no mail was sent"
 
       token = UserInvitation.last.admin_permission_token
+      visit send("#{scope}_signup_path", admin_permission_token: token)
+
+      expect(mail.to).to eq([email])
+
       url = send(
         "#{scope}_signup_url",
         admin_permission_token: token,
-        host: ENV["HOST_DOMAIN"]
+        host: ENV.fetch("HOST_DOMAIN"),
       )
-
-      expect(mail.to).to eq([email])
       expect(mail.body).to include("href=\"#{url}\"")
 
       visit(send("#{scope}_signup_path", admin_permission_token: token))
@@ -45,13 +47,7 @@ RSpec.describe "Admins invite users to signup", :js do
       )
 
       token = UserInvitation.last.admin_permission_token
-      url = send(
-        "#{scope}_signup_url",
-        admin_permission_token: token,
-        host: Capybara.app_host,
-      )
-
-      visit url
+      visit send("#{scope}_signup_path", admin_permission_token: token)
 
       birthdate = case scope
                   when :student
@@ -114,13 +110,10 @@ RSpec.describe "Admins invite users to signup", :js do
 
       token = invite.admin_permission_token
 
-      url = send(
-        "#{scope}_signup_url",
+      visit send(
+        "#{scope}_signup_path",
         admin_permission_token: token,
-        host: Capybara.app_host,
       )
-
-      visit url
 
       expect(current_path).to eq(send("#{scope}_dashboard_path"))
     end
@@ -137,12 +130,8 @@ RSpec.describe "Admins invite users to signup", :js do
     )
 
     token = UserInvitation.last.admin_permission_token
-    url = regional_ambassador_signup_url(
-      admin_permission_token: token,
-      host: Capybara.app_host
-    )
 
-    visit url
+    visit regional_ambassador_signup_path(admin_permission_token: token)
 
     birthdate = Date.today - 25.years
 
@@ -177,12 +166,11 @@ RSpec.describe "Admins invite users to signup", :js do
     )
 
     token = UserInvitation.last.admin_permission_token
-    url = regional_ambassador_signup_url(
+
+    visit regional_ambassador_signup_path(
       admin_permission_token: token,
       host: Capybara.app_host
     )
-
-    visit url
 
     birthdate = Date.today - 25.years
 
