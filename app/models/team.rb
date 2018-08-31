@@ -368,6 +368,7 @@ class Team < ActiveRecord::Base
     end
   end
   alias :location :primary_location
+  alias :address_details :primary_location
 
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)

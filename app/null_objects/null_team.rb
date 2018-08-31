@@ -90,4 +90,8 @@ class NullTeam < NullObject
   def country
     ''
   end
+
+  def address_details
+    ''
+  end
 end
