@@ -28,6 +28,7 @@
     <tab-link
       :class="submissionTabLinkClasses"
       :to="{ name: 'submission', meta: { active: submissionPagesActive } }"
+      :disabled-tooltip="submissionDisabledTooltipMessage"
       :condition-to-enable="consentSigned && isOnTeam"
       :condition-to-complete="submissionComplete"
     >Submit your project</tab-link>
@@ -35,6 +36,9 @@
     <tab-link
       :class="judgingTabLinkClasses"
       :to="{ name: 'events', meta: { active: judgingPagesActive } }"
+      :disabled-tooltip="Tooltips.AVAILABLE_LATER"
+      :condition-to-enable="false"
+      :condition-to-complete="false"
     >
       Compete
       <div slot="subnav" class="tabs-menu__child-menu" v-if="judgingPagesActive">
@@ -46,6 +50,9 @@
     <tab-link
       :class="scoresTabLinkClasses"
       :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
+      :disabled-tooltip="Tooltips.AVAILABLE_LATER"
+      :condition-to-enable="false"
+      :condition-to-complete="false"
     >Scores & Feedback</tab-link>
   </ul>
 </template>
@@ -61,12 +68,23 @@ import RegistrationMenu from 'registration/components/RegistrationMenu'
 import JudgingMenu from './JudgingMenu'
 import TeamMenu from './TeamMenu'
 
+const Tooltips = {
+  MUST_HAVE_PERMISSION_ON_TEAM: 'You must be on a team and have parental consent to work on your submission',
+  MUST_HAVE_PERMISSION: 'You must have parental consent to work on your submission',
+  MUST_BE_ON_TEAM: 'You must be on a team to work on your submission',
+  AVAILABLE_LATER: 'This feature will open later in the Season',
+}
+
 export default {
   components: {
     TabLink,
     RegistrationMenu,
     TeamMenu,
     JudgingMenu,
+  },
+
+  created () {
+    this.Tooltips = Tooltips
   },
 
   computed: {
@@ -132,6 +150,16 @@ export default {
 
     registrationPagesActive () {
       return this.subRouteIsActive('registration')
+    },
+
+    submissionDisabledTooltipMessage () {
+      if (!this.isOnTeam && !this.consentSigned)
+        return Tooltips.MUST_HAVE_PERMISSION_ON_TEAM
+
+      if (!this.consentSigned)
+        return Tooltips.MUST_HAVE_PERMISSION
+
+      return Tooltips.MUST_BE_ON_TEAM
     },
   },
 

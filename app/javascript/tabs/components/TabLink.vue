@@ -69,7 +69,7 @@ export default {
 
   computed: {
     tooltipContent () {
-      if (!this.conditionToEnable) {
+      if (!this.conditionToEnable && this.disabledTooltip.length) {
         return {
           content: this.disabledTooltipMessage,
           classes: ['tabs__menu-button--tooltip'],
