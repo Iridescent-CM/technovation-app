@@ -13,7 +13,7 @@
     <tab-link
       :to="{ name: 'location' }"
       css-classes="tabs__menu-link--has-subtitles"
-      :disabled-tooltip="termsNotAgreedMessage"
+      :disabled-tooltip="Tooltips.MUST_AGREE_TERMS"
       :condition-to-enable="termsAgreed"
       :condition-to-complete="isLocationSet"
     >
@@ -24,7 +24,7 @@
     <tab-link
       :to="{ name: 'age' }"
       css-classes="tabs__menu-link--has-subtitles"
-      :disabled-tooltip="termsNotAgreedMessage"
+      :disabled-tooltip="Tooltips.MUST_AGREE_TERMS"
       :condition-to-enable="termsAgreed"
       :condition-to-complete="isAgeSet"
     >
@@ -56,7 +56,7 @@
 
     <tab-link
       :to="{ name: 'login' }"
-      :disabled-tooltip="loginDisabledMessage"
+      :disabled-tooltip="Tooltips.MUST_FILL_OTHER_SECTIONS"
       :condition-to-enable="readyForAccount"
       v-if="!currentAccount"
     >
@@ -94,11 +94,22 @@ import TabLink from 'tabs/components/TabLink'
 const { mapState, mapGetters } = createNamespacedHelpers('registration')
 const { mapState: mapStudentState } = createNamespacedHelpers('student')
 
+const Tooltips = {
+  MUST_AGREE_TERMS:         'You must agree to the data use terms to continue',
+  MUST_SET_AGE:             'Please fill out your date of birth first',
+  MUST_CHOOSE_PROFILE:      'Please choose a profile first',
+  MUST_FILL_OTHER_SECTIONS: 'Please fill out other sections first',
+}
+
 export default {
   name: 'registration-menu',
 
   components: {
     TabLink,
+  },
+
+  created () {
+    this.Tooltips = Tooltips
   },
 
   computed: {
@@ -148,46 +159,25 @@ export default {
       return this.getFullName || ""
     },
 
-    termsNotAgreedMessage () {
-      if (!this.termsAgreed)
-        return 'You must agree to the data use terms to continue'
-
-      return ''
-    },
-
-    ageNotSetMessage () {
-      if (!this.isAgeSet)
-        return 'Please fill out your date of birth first'
-
-      return ''
-    },
-
     chooseProfileDisabledMessage () {
-      if (this.termsNotAgreedMessage !== '')
-        return this.termsNotAgreedMessage
+      if (!this.termsAgreed)
+        return Tooltips.MUST_AGREE_TERMS
 
       if (!this.isAgeSet)
-        return this.ageNotSetMessage
+        return Tooltips.MUST_SET_AGE
 
       return ''
     },
 
     basicProfileDisabledMessage () {
-      if (this.termsNotAgreedMessage !== '')
-        return this.termsNotAgreedMessage
+      if (!this.termsAgreed)
+        return Tooltips.MUST_AGREE_TERMS
 
       if (!this.isAgeSet)
-        return this.ageNotSetMessage
+        return Tooltips.MUST_SET_AGE
 
       if (!this.profileChoice)
-        return 'Please choose a profile first'
-
-      return ''
-    },
-
-    loginDisabledMessage () {
-      if (!this.readyForAccount)
-        return 'Please fill out other sections first'
+        return Tooltips.MUST_CHOOSE_PROFILE
 
       return ''
     },

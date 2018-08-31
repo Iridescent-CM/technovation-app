@@ -8,10 +8,7 @@
     <button
       role="button"
       :class="buttonClasses"
-      v-tooltip="{
-        content: disabledTooltip,
-        classes: ['tabs__menu-button--tooltip'],
-      }"
+      v-tooltip="tooltipContent"
     >
       <icon
         :name="completedEnabledOrDisabledIcon"
@@ -71,10 +68,21 @@ export default {
   },
 
   computed: {
+    tooltipContent () {
+      if (!this.conditionToEnable) {
+        return {
+          content: this.disabledTooltipMessage,
+          classes: ['tabs__menu-button--tooltip'],
+        }
+      } else {
+        return false
+      }
+    },
+
     buttonClasses () {
       return {
         'tabs__menu-button': true,
-        disabled: this.disabledTooltip !== '',
+        disabled: !this.conditionToEnable,
       }
     },
 
@@ -96,5 +104,15 @@ export default {
       return '999999'
     },
   },
+
+  methods: {
+    disabledTooltipMessage () {
+      if (!this.conditionToEnable)
+        return this.disabledTooltip
+
+      return ''
+    },
+  },
+
 }
 </script>
