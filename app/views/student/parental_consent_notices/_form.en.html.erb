@@ -7,7 +7,9 @@
     t("views.student.parental_consent_notices.form.submit"),
     class: "button" %>
 
-  or
+  <% unless current_page?(student_dashboard_path) %>
+    or
 
-  <%= link_to 'cancel', params[:back] || :back || student_dashboard_path %>
+    <%= link_to 'cancel', params[:back] || student_dashboard_path %>
+  <% end %>
 <% end %>
