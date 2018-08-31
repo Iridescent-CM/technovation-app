@@ -305,7 +305,7 @@ en:
 
       parental_consent_notices:
         form:
-          submit: "Send the link"
+          submit: "Send the form"
         new:
           title: "Email a consent form to your parent or guardian"
 
