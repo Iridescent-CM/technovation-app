@@ -83,4 +83,10 @@ class MentorController < ApplicationController
   def back_from_event_path
     mentor_regional_pitch_events_team_list_path
   end
+
+  def require_onboarded
+    current_mentor.onboarded? ||
+      (redirect_to mentor_dashboard_path,
+        alert: "You must complete your profile to go there.")
+  end
 end
