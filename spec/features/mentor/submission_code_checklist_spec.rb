@@ -12,7 +12,7 @@ RSpec.feature "Mentors edit submission code checklist" do
   before do
     SeasonToggles.team_submissions_editable!
     sign_in(mentor)
-    click_link "Edit this team's submission"
+    within("#find-team") { click_link "Edit this team's submission" }
   end
 
   scenario "visit the checklist" do
