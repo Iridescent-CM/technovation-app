@@ -89,7 +89,7 @@ import { createNamespacedHelpers } from 'vuex'
 import VueSelect from '@vendorjs/vue-select'
 
 const { mapGetters, mapActions, mapState } = createNamespacedHelpers('registration')
-const { mapState: mapStudentState } = createNamespacedHelpers('student')
+const { mapState: mapAuthState } = createNamespacedHelpers('authenticated')
 
 export default {
   components: {
@@ -99,7 +99,7 @@ export default {
   computed: {
     ...mapState(['months', 'birthMonth']),
 
-    ...mapStudentState(['currentAccount']),
+    ...mapAuthState(['currentAccount']),
 
     ...mapGetters(['isAgeSet', 'getAge', 'getAgeByCutoff', 'getBirthdate']),
 
