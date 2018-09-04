@@ -36,8 +36,14 @@
 
 <% if not current_mentor.email_confirmed? %>
   <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
-<% elsif !current_session && current_mentor.needs_mentor_type? %>
-  <%= render 'completion_steps/select_mentor_type' %>
+<% elsif !current_session.authenticated? && current_mentor.needs_mentor_type? %>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-8">
+      <div class="panel">
+        <%= render 'completion_steps/select_mentor_type' %>
+      </div>
+    </div>
+  </div>
 <% else %>
   <div id="vue-enable-mentor-app" class="hidden">
     <%= content_tag :div,
