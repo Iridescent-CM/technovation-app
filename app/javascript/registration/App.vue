@@ -11,7 +11,7 @@
 
     <div :class="menuGridColumn" v-if="!embedded">
       <div v-sticky-sidebar="stickySidebarClasses">
-        <menu />
+        <Menu />
       </div>
     </div>
   </div>

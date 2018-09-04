@@ -15,7 +15,7 @@
     </div>
 
     <div class="grid__col-3 grid__col--bleed">
-      <menu />
+      <Menu />
     </div>
   </div>
 </template>
