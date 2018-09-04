@@ -65,14 +65,15 @@
       <h4>Mentors outside US: Background checks</h4>
 
       <p>
-        In countries where background checks—reports of your employment and legal
-        history—are uniformally easy or required, we will submit all mentors to
-        this process in order for them to be allowed and verified on our site.
+        Background checks are reports of your work and legal history. In
+        countries where these checks are universally easy or required, we will
+        submit all mentors to this process. You may be required to complete and
+        pass a background check in order to be allowed and verified on our site.
       </p>
 
       <p>
-        In other countries and territories, we will be randomly selecting mentors
-        to provide references and/or certifications, and to submit to background
+        In other countries and territories, we will randomly select mentors to
+        provide references and legal certifications, and to submit to background
         checks where possible. If you are selected, we will contact you to complete
         this process. You must do this to be allowed and verified on our site.
       </p>
