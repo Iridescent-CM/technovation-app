@@ -85,8 +85,11 @@ class MentorController < ApplicationController
   end
 
   def require_onboarded
-    current_mentor.onboarded? ||
-      (redirect_to mentor_dashboard_path,
-        alert: "You must complete your profile to go there.")
+    if current_mentor.onboarded?
+      true
+    else
+      redirect_to mentor_dashboard_path,
+        notice: t("controllers.application.onboarding_required")
+    end
   end
 end

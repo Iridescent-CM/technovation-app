@@ -6,12 +6,10 @@ class SpoofIp
   end
 
   def call(env)
-    Rails.logger.info(
-      [
-        "[SPOOFING IP]",
-        env['REMOTE_ADDR'] = env['action_dispatch.remote_ip'] = @ip
-      ].join(" ")
-    )
+    env['REMOTE_ADDR'] = @ip
+    env['action_dispatch.remote_ip'] = @ip
+
+    Rails.logger.info(["[SPOOFING IP]", @ip].join(" "))
 
     @status, @headers, @response = @app.call(env)
     [@status, @headers, @response]
