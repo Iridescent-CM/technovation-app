@@ -173,6 +173,7 @@ en:
       consent_waiver:
         heading: "Consent Waiver"
         label: "Please sign the consent waiver in order to participate in Technovation."
+        signed: "You already signed a consent waiver for this season. Thank you!"
         links:
           view:
             text: "Sign Consent Waiver"

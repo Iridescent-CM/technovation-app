@@ -60,33 +60,39 @@
         <%= render 'profiles/password' %>
       </div>
 
+      <div slot="consent-waiver">
+        <%= render 'completion_steps/consent_waiver', profile: current_mentor %>
+      </div>
+
       <div slot="find-team">
         <% if current_mentor.is_on_team? %>
-          You're on a team!
-          Your team is called <%= current_team.name %>.
-          You can
-          <%= link_to 'manage your team',
-            mentor_team_path(current_team) %>
+          <%= render 'mentor/teams/team_list',
+            type: :current,
+            teams: @current_teams %>
+        <% elsif SeasonToggles.team_building_disabled? %>
+          Technovation Staff has turned off forming teams for everyone right now.
         <% else %>
           <%= render "completion_steps/invitations",
+            hidden: current_mentor.onboarding?,
             invites: current_mentor.team_member_invites.pending %>
 
           <%= render "completion_steps/join_requests",
+            hidden: current_mentor.onboarding?,
+            allow_many: true,
             requests: current_mentor.join_requests.pending %>
         <% end %>
       </div>
 
       <div slot="create-team">
         <% if current_mentor.is_on_team? %>
-          You're on a team!
-          Your team is called <%= current_team.name %>.
-          You can
-          <%= link_to 'manage your team',
-            mentor_team_path(current_team) %>
+          <%= render 'mentor/teams/team_list',
+            type: :current,
+            teams: @current_teams %>
         <% elsif SeasonToggles.team_building_disabled? %>
           Technovation Staff has turned off forming teams for everyone right now.
         <% else %>
-          <%= render "completion_steps/create_team" %>
+          <%= render "completion_steps/create_team",
+            hidden: current_mentor.onboarding? %>
         <% end %>
       </div>
 

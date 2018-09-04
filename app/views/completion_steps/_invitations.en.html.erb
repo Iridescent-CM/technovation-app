@@ -1,10 +1,9 @@
-<% unless hidden ||= false %>
-  <h1 class="content-heading">Team invitations</h1>
-
+<h1 class="content-heading">Team invitations</h1>
+<% if hidden ||= false %>
+    <p>This feature is not available right now.</p>
+<% else %>
   <% if SeasonToggles.judging_enabled_or_between? %>
-    <p>
-      <%= t("views.team_member_invites.show.invites_disabled_by_judging") %>
-    </p>
+    <p><%= t("views.team_member_invites.show.invites_disabled_by_judging") %></p>
   <% elsif invites.any? %>
     <p>You have been invited!</p>
 

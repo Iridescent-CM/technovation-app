@@ -1,23 +1,17 @@
-<% unless profile.consent_signed? %>
-  <li>
-    <div class="flags">
-      <span class="flag flag-registration">
-        Registration
-      </span>
-    </div>
+<h1 class="content-heading">
+  <%= t("views.profile_requirements.consent_waiver.heading") %>
+</h1>
 
-    <h1 class="content-heading">
-      <%= t("views.profile_requirements.consent_waiver.heading") %>
-    </h1>
+<% if profile.consent_signed? %>
+  <p><%= t("views.profile_requirements.consent_waiver.signed") %></p>
+<% else %>
+  <p><%= t("views.profile_requirements.consent_waiver.label") %></p>
 
-    <p><%= t("views.profile_requirements.consent_waiver.label") %></p>
-
-    <div class="step-actions">
-      <%= link_to(
-        t("views.profile_requirements.consent_waiver.links.view.text"),
-        new_consent_waiver_path(token: profile.account.consent_token),
-        class: "button",
-      ) %>
-    </div>
-  </li>
+  <div class="step-actions">
+    <%= link_to(
+      t("views.profile_requirements.consent_waiver.links.view.text"),
+      new_consent_waiver_path(token: profile.account.consent_token),
+      class: "button",
+    ) %>
+  </div>
 <% end %>
