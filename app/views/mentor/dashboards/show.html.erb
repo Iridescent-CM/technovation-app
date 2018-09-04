@@ -2,7 +2,19 @@
   <div class="grid__col-sm-6 grid__col--bleed-y">
     <div class="grid__cell">
       <h1 class="page-heading">
-        <%= t("views.application.mentor_dashboard") %>
+        Mentor
+
+        <small>
+          <%= render 'program_survey' %>
+        </small>
+      </h1>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
+    <div class="grid__cell">
+      <h1 class="page-heading">
+        <%= current_mentor.name %>
 
         <% if current_mentor.is_a_judge? %>
           <small>
@@ -20,90 +32,87 @@
       </h1>
     </div>
   </div>
-
-  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
-    <div class="grid__cell">
-      <% if SeasonToggles.dashboard_text(:mentor).blank? %>
-        <%= render 'program_survey' %>
-      <% else %>
-        <h1 class="page-heading">
-          <%= SeasonToggles.dashboard_text(:mentor) %>
-
-          <small>
-            <%= render 'program_survey' %>
-          </small>
-        </h1>
-      <% end %>
-    </div>
-  </div>
 </div>
 
-<div class="grid">
-  <div class="grid__col-sm-3 grid__col--bleed-y col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="panel">
-          <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
-
-          <h3 class="reset"><%= current_mentor.full_name %></h3>
-
-          <%= link_to "View your profile", mentor_profile_path %>
-        </div>
-
-        <%= render "dashboards/ra_intro" %>
+<% if not current_mentor.email_confirmed? %>
+  <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
+<% else %>
+  <div id="vue-enable-mentor-app" class="hidden">
+    <%= content_tag :div,
+      nil,
+      id: "vue-data-registration",
+      data: {
+        current_account: AccountSerializer.new(current_account).serialized_json,
+        current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
+        consent_waiver: ConsentSerializer.new(current_mentor.consent_waiver).serialized_json,
+        previous_attempt: AccountSerializer.new(current_account).serialized_json,
+        # TODO: make original registration wizard open to currentAccount ?
+        profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
+        profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
+        profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
+      } %>
+    <app>
+      <div slot="change-email">
+        <%= render 'profiles/email' %>
       </div>
-    </div>
+
+      <div slot="change-password">
+        <%= render 'profiles/password' %>
+      </div>
+
+      <div slot="find-team">
+        <% if current_mentor.is_on_team? %>
+          You're on a team!
+          Your team is called <%= current_team.name %>.
+          You can
+          <%= link_to 'manage your team',
+            mentor_team_path(current_team) %>
+        <% else %>
+          <%= render "completion_steps/invitations",
+            invites: current_mentor.team_member_invites.pending %>
+
+          <%= render "completion_steps/join_requests",
+            requests: current_mentor.join_requests.pending %>
+        <% end %>
+      </div>
+
+      <div slot="create-team">
+        <% if current_mentor.is_on_team? %>
+          You're on a team!
+          Your team is called <%= current_team.name %>.
+          You can
+          <%= link_to 'manage your team',
+            mentor_team_path(current_team) %>
+        <% elsif SeasonToggles.team_building_disabled? %>
+          Technovation Staff has turned off forming teams for everyone right now.
+        <% else %>
+          <%= render "completion_steps/create_team" %>
+        <% end %>
+      </div>
+
+      <div slot="submission">
+        <%= render "mentor/dashboards/onboarded/submissions" %>
+      </div>
+
+      <div slot="events">
+        <% if SeasonToggles.select_regional_pitch_event? %>
+          <%= render "mentor/dashboards/onboarded/pitch_events" %>
+        <% end %>
+      </div>
+
+      <div slot="scores">
+        <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
+          <div class="grid__col-sm-9 grid__col--bleed-y">
+            <% if current_mentor.current_teams.any? %>
+              <%= render 'mentor/dashboards/onboarded/scores' %>
+            <% else %>
+              <%= render 'dashboards/no_certificates' %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </app>
   </div>
-
-  <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
-    <div
-      class="
-        grid__col-sm-9
-        grid__col--bleed-y
-        col--sticky-parent
-      "
-    >
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <% if current_mentor.current_teams.any? %>
-            <%= render 'mentor/dashboards/onboarded/scores' %>
-          <% else %>
-            <%= render 'dashboards/no_certificates' %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% else %>
-    <div
-      class="
-        grid__col-md-6
-        grid__col-sm-9
-        grid__col--bleed-y
-        col--sticky-parent
-      "
-    >
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <%= render 'mentor/dashboards/current_actions' %>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="
-        grid__col-md-3
-        grid__col--bleed
-        dashboard-sidebar
-        col--sticky-parent
-      "
-    >
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <%= render "mentor/dashboards/info_sidebar" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<% end %>
 
 <%= render 'program_survey_modal' %>
