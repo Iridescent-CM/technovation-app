@@ -14,19 +14,21 @@ RSpec.feature "Student team submissions" do
     sign_out
     sign_in(team_mentor)
 
-    expect(page).to have_link(
-      "Start a submission now",
-      href: new_mentor_team_submission_path(
-        team_id: team_mentor.teams.first.id
+    within("#find-team") {
+      expect(page).to have_link(
+        "Start a submission now",
+        href: new_mentor_team_submission_path(
+          team_id: team_mentor.teams.first.id
+        )
       )
-    )
+    }
   end
 
   scenario "Confirm submissions are created solely by team students" do
     mentor = FactoryBot.create(:mentor, :on_junior_team)
     sign_in(mentor)
 
-    click_link "Start a submission now"
+    within("#find-team") { click_link "Start a submission now" }
 
     check "team_submission[integrity_affirmed]"
     click_button "Start now!"
@@ -47,7 +49,7 @@ RSpec.feature "Student team submissions" do
 
     sign_in(mentor)
 
-    click_link "Edit this team's submission"
+    within("#find-team") { click_link "Edit this team's submission" }
 
     expect(page).to have_link(
       "Set your app's name",
@@ -121,7 +123,7 @@ RSpec.feature "Student team submissions" do
 
     sign_in(mentor)
 
-    click_link "Edit this team's submission"
+    within("#find-team") { click_link "Edit this team's submission" }
 
     click_link "Business"
 
@@ -141,7 +143,7 @@ RSpec.feature "Student team submissions" do
     })
 
     visit mentor_dashboard_path
-    click_link "Edit this team's submission"
+    within("#find-team") { click_link "Edit this team's submission" }
 
     click_link "Business"
 
@@ -163,7 +165,7 @@ RSpec.feature "Student team submissions" do
 
     sign_in(mentor)
 
-    click_link "Edit this team's submission"
+    within("#find-team") { click_link "Edit this team's submission" }
     click_link "Regional events"
 
     expect(page).not_to have_link(
@@ -183,7 +185,7 @@ RSpec.feature "Student team submissions" do
     rpe.teams << mentor.teams.first
 
     visit mentor_dashboard_path
-    click_link "Edit this team's submission"
+    within("#find-team") { click_link "Edit this team's submission" }
     click_link "Regional events"
 
     expect(page).to have_link(
