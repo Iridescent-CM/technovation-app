@@ -1,5 +1,5 @@
 class MentorProfileSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :school_company_name, :job_title
+  attributes :school_company_name, :job_title, :bio
 end

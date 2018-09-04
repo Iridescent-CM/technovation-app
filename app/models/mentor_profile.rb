@@ -170,7 +170,7 @@ class MentorProfile < ActiveRecord::Base
   validates :bio,
     length: { minimum: 100 },
     allow_blank: true,
-    if: :saved_change_to_bio?
+    if: :bio_changed?
 
   delegate :submitted?,
            :candidate_id,

@@ -739,6 +739,10 @@ class Account < ActiveRecord::Base
     super || ::NullConsentWaiver.new
   end
 
+  def background_check
+    super || ::NullBackgroundCheck.new
+  end
+
   def authenticated?
     true
   end

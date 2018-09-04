@@ -4,7 +4,9 @@
       <router-view :key="$route.name">
         <div slot="change-email"><slot name="change-email" /></div>
         <div slot="change-password"><slot name="change-password" /></div>
+        <div slot="bio"><slot name="bio" /></div>
         <div slot="consent-waiver"><slot name="consent-waiver" /></div>
+        <div slot="background-check"><slot name="background-check" /></div>
         <div slot="find-team"><slot name="find-team" /></div>
         <div slot="create-team"><slot name="create-team" /></div>
         <div slot="submission"><slot name="submission" /></div>

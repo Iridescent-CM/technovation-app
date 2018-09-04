@@ -1,60 +1,15 @@
 <% unless profile.bio_complete? %>
-  <li>
-    <div class="flags">
-      <span class="flag flag-registration">
-        Registration
-      </span>
-    </div>
+  <h1 class="content-heading">
+    <%= t("views.profile_requirements.build_profile.heading") %>
+  </h1>
 
-    <h1 class="content-heading">
-      <%= t("views.profile_requirements.build_profile.heading") %>
-    </h1>
+  <p>
+    <%= t("views.profile_requirements.build_profile.label") %>
+  </p>
 
-    <p>
-      <%= t("views.profile_requirements.build_profile.label") %>
-    </p>
-
-    <div class="step-actions">
-      <%= link_to "Tell the students more about yourself",
-        send("edit_#{current_scope}_bio_path"),
-        class: "button" %>
-    </div>
-  </li>
-<% end %>
-
-<% if profile.needs_mentor_type? %>
-  <li>
-    <div class="flags">
-      <span class="flag flag-registration">Registration</span>
-    </div>
-
-    <h1 class="content-heading">Help us improve</h1>
-
-    <p>
-      We've recently updated mentor profiles to help us improve your
-      experience in future seasons. Please let us know what type of
-      mentor you are.
-    </p>
-
-    <p class="scent--strong">
-      If you're not an educator or parent of a competing student,
-      then "Industry professional" is the appropriate answer.
-    </p>
-
-    <%= form_with model: current_mentor,
-      url: mentor_profile_path(return_to: mentor_dashboard_path),
-      local: true do |f| %>
-      <p>
-        <%= f.label "Choose your mentor type",
-          for: :mentor_profile_mentor_type %>
-
-        <%= f.select :mentor_type,
-          MentorProfile.mentor_types.keys,
-          {},
-          id: :mentor_profile_mentor_type %>
-      </p>
-
-      <%= f.submit "Save", class: "button" %>
-    <% end %>
-  </li>
+  <div class="step-actions">
+    <%= link_to "Tell the students more about yourself",
+      send("edit_#{current_scope}_bio_path"),
+      class: "button" %>
+  </div>
 <% end %>

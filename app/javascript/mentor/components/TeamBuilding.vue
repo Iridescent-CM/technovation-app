@@ -2,7 +2,9 @@
   <div class="tabs tabs--vertical tabs--css-only grid">
     <div :class="['tabs__content', mainContainerGridColumn]">
       <router-view :key="$route.name">
+        <div slot="bio"><slot name="bio" /></div>
         <div slot="consent-waiver"><slot name="consent-waiver" /></div>
+        <div slot="background-check"><slot name="background-check" /></div>
         <div slot="find-team"><slot name="find-team" /></div>
         <div slot="create-team"><slot name="create-team" /></div>
       </router-view>

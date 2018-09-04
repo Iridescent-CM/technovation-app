@@ -92,7 +92,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTeams', 'consentWaiver']),
+    ...mapState(['currentTeams', 'consentWaiver', 'backgroundCheck']),
 
     consentSigned () {
       return !!this.consentWaiver.isSigned

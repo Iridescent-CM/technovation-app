@@ -6,11 +6,29 @@ const TeamBuildingStep = Vue.component('team-building-step', {
 
 export default [
   {
+    path: '/bio',
+    name: 'bio',
+    component: TeamBuildingStep,
+    meta: {
+      browserTitle: "Fill out a summary"
+    },
+  },
+
+  {
     path: '/consent-waiver',
     name: 'consent-waiver',
     component: TeamBuildingStep,
     meta: {
       browserTitle: "Sign the volunteer consent waiver"
+    },
+  },
+
+  {
+    path: '/background-check',
+    name: 'background-check',
+    component: TeamBuildingStep,
+    meta: {
+      browserTitle: "Background check"
     },
   },
 
