@@ -464,7 +464,7 @@ class Account < ActiveRecord::Base
     if student_profile
       student_profile.school_name
     elsif regional_ambassador_profile
-      regional_ambassador_profile.school_organization_name
+      regional_ambassador_profile.organization_company_name
     elsif mentor_profile
       mentor_profile.school_company_name
     elsif judge_profile
