@@ -92,7 +92,7 @@
         <%= render 'completion_steps/background_check', profile: current_mentor %>
       </div>
 
-      <div slot="find-team">
+      <div id="find-team" slot="find-team">
         <% if current_mentor.is_on_team? %>
           <%= render 'mentor/teams/team_list',
             type: :current,
