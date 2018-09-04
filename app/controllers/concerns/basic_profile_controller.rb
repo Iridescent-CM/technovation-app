@@ -1,6 +1,12 @@
 module BasicProfileController
   extend ActiveSupport::Concern
 
+  included do
+    instance_variable_set(:@profile_helper_method, :current_profile)
+    instance_variable_set(:@params_safelist_arr, [])
+    instance_variable_set(:@params_safelist_hsh, {})
+  end
+
   module ClassMethods
     def with_profile(helper_method)
       instance_variable_set(:@profile_helper_method, helper_method)
