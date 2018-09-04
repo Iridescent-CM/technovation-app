@@ -32,7 +32,7 @@ const initApp = () => {
   const { data: { id: consentId, attributes: consentAttributes }} = JSON.parse(rootElem.dataset.consentWaiver)
 
   const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
-  const consentWaiver = Object.assign({ id: parseInt(consentId) }, store.state.mentor, consentAttributes)
+  const consentWaiver = Object.assign({ id: parseInt(consentId) }, store.state.authenticated, consentAttributes)
 
   store.dispatch('registration/initAccount', currentAccount)
   store.dispatch('authenticated/initApp', { currentAccount, currentTeams, consentWaiver })
@@ -74,7 +74,7 @@ const getRootRoute = () => {
 const anyCurrentTeams = () => {
   if (!store.state.isReady) initApp()
 
-  return store.state.mentor.currentTeams.length
+  return store.state.authenticated.currentTeams.length
 }
 
 export const routes = [

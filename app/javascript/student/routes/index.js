@@ -74,12 +74,12 @@ const getRootRoute = () => {
 
 const getCurrentTeamId = () => {
   if (!store.state.isReady) initApp()
-  return store.state.student.currentTeam.id
+  return store.state.authenticated.currentTeam.id
 }
 
 const getParentalConsentSigned = () => {
   if (!store.state.isReady) initApp()
-  return store.state.student.parentalConsent.isSigned
+  return store.state.authenticated.parentalConsent.isSigned
 }
 
 export const routes = [
