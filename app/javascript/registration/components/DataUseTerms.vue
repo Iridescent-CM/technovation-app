@@ -75,7 +75,7 @@
         In other countries and territories, we will randomly select mentors to
         provide references and legal certifications, and to submit to background
         checks where possible. If you are selected, we will contact you to complete
-        this process. You must do this to be allowed and verified on our site.
+        this process. You must consent to this to be allowed and verified on our site.
       </p>
 
       <p>
