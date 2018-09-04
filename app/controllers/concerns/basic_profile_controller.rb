@@ -6,19 +6,9 @@ module BasicProfileController
       instance_variable_set(:@profile_helper_method, helper_method)
     end
 
-    def with_params(*params_safelist)
-      instance_variable_set(:@params_safelist_arr, [])
-      instance_variable_set(:@params_safelist_hsh, {})
-
-      params_safelist.each do |item|
-        case item
-        when Symbol, String
-          arr = instance_variable_get(:@params_safelist_arr)
-          instance_variable_set(:@params_safelist_arr, arr.push(item))
-        when Hash
-          instance_variable_set(:@params_safelist_hsh, item)
-        end
-      end
+    def with_params(*params_safelist_arr, **params_safelist_hsh)
+      instance_variable_set(:@params_safelist_arr, params_safelist_arr)
+      instance_variable_set(:@params_safelist_hsh, params_safelist_hsh)
     end
 
     def modify_params(func)
@@ -67,24 +57,8 @@ module BasicProfileController
       :referred_by,
       :referred_by_other,
       :gender_identity,
-      *get_permitted_params_from_safelist,
+      *params_safelist.to_permitted_params_list,
     )
-  end
-
-  def get_permitted_params_from_safelist
-    append_hsh = {}
-    arr = []
-
-    params_safelist.each do |key|
-      if key.permit_format
-        append_hsh[key.original_name] = key.permit_format
-      else
-        arr.push(key.original_name)
-      end
-    end
-
-    append_hsh = nil if append_hsh.keys.none?
-    [arr, append_hsh].flatten.compact
   end
 
   def params_safelist
@@ -101,12 +75,37 @@ module BasicProfileController
     include Enumerable
 
     def initialize(arr, hsh)
-      hsh = nil unless hsh.keys.any?
       @keys = [arr, hsh].flatten.compact
     end
 
     def each(&block)
       @keys.each { |k| block.call(ParamKey.new(k)) }
+    end
+
+    def to_permitted_params_list
+      [to_a, to_h(convert_empty_to_nil: true)].flatten.compact
+    end
+
+    def to_a
+      map { |k| k.original_name unless k.permit_format }.compact
+    end
+
+    def to_h(opts = {})
+      default_options = { convert_empty_to_nil: false }
+      options = default_options.merge(opts)
+      hsh = {}
+
+      each do |k|
+        if k.permit_format
+          hsh[k.original_name] = k.permit_format
+        end
+      end
+
+      if hsh.empty? && options[:convert_empty_to_nil]
+        nil
+      else
+        hsh
+      end
     end
   end
 
