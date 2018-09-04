@@ -4,7 +4,7 @@ class AccountSerializer
 
   set_id :random_id
 
-  has_one :student_profile, if: ->(record) { record.student_profile }
+  has_one :student_profile, if: Proc.new { |record| record.student_profile }
   has_one :mentor_profile,  if: Proc.new { |record| record.mentor_profile }
 
   attributes :name, :email, :date_of_birth, :city, :state, :country, :state_code,

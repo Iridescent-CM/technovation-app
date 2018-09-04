@@ -8,7 +8,7 @@ gem 'casting', '~> 0.7'
 
 gem 'bootsnap', '~> 1.3', require: false
 
-gem 'fast_jsonapi', "~> 1.2"
+gem 'fast_jsonapi', "~> 1.3"
 gem 'httparty', "~> 0.16"
 
 gem 'textacular',
