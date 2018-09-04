@@ -36,7 +36,7 @@
 
 <% if not current_mentor.email_confirmed? %>
   <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
-<% elsif current_mentor.needs_mentor_type? %>
+<% elsif !current_session && current_mentor.needs_mentor_type? %>
   <%= render 'completion_steps/select_mentor_type' %>
 <% else %>
   <div id="vue-enable-mentor-app" class="hidden">
@@ -125,12 +125,12 @@
       </div>
 
       <div slot="submission">
-        <%= render "mentor/dashboards/onboarded/submissions" %>
+        QA Note: this is in progress...
       </div>
 
       <div slot="events">
         <% if SeasonToggles.select_regional_pitch_event? %>
-          <%= render "mentor/dashboards/onboarded/pitch_events" %>
+          <%= render "mentor/dashboards/onboarded/regional_pitch_events" %>
         <% end %>
       </div>
 
