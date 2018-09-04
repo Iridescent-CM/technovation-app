@@ -26,7 +26,6 @@ module BasicProfileController
 
   private
   def profile_params
-    hashed_params = basic_profile_params.to_h
     params = {}
 
     params_safelist.each do |key|
@@ -35,19 +34,27 @@ module BasicProfileController
       }
     end
 
-    params.merge({
+    params.merge(account_attributes)
+  end
+
+  def account_attributes
+    {
       account_attributes: {
         id: current_account.id,
 
-        first_name: hashed_params.fetch(:first_name) { account.first_name },
-        last_name: hashed_params.fetch(:last_name) { account.last_name },
+        first_name: hashed_params.fetch(:first_name) { current_account.first_name },
+        last_name: hashed_params.fetch(:last_name) { current_account.last_name },
 
-        referred_by_other: hashed_params.fetch(:referred_by_other) { account.referred_by_other },
-        referred_by: hashed_params.fetch(:referred_by) { account.referred_by},
+        referred_by_other: hashed_params.fetch(:referred_by_other) { current_account.referred_by_other },
+        referred_by: hashed_params.fetch(:referred_by) { current_account.referred_by},
 
-        gender: hashed_params.fetch(:gender_identity) { account.gender },
+        gender: hashed_params.fetch(:gender_identity) { current_account.gender },
       },
-    })
+    }
+  end
+
+  def hashed_params
+    basic_profile_params.to_h
   end
 
   def basic_profile_params
@@ -67,80 +74,8 @@ module BasicProfileController
     ParamKeys.new(arr, hsh)
   end
 
+
   def profile
     send(self.class.instance_variable_get(:@profile_helper_method))
-  end
-
-  class ParamKeys
-    include Enumerable
-
-    def initialize(arr, hsh)
-      @keys = [arr, hsh].flatten.compact
-    end
-
-    def each(&block)
-      @keys.each { |k| block.call(ParamKey.new(k)) }
-    end
-
-    def to_permitted_params_list
-      [to_a, to_h(convert_empty_to_nil: true)].flatten.compact
-    end
-
-    def to_a
-      map { |k| k.original_name unless k.permit_format }.compact
-    end
-
-    def to_h(opts = {})
-      default_options = { convert_empty_to_nil: false }
-      options = default_options.merge(opts)
-      hsh = {}
-
-      each do |k|
-        if k.permit_format
-          hsh[k.original_name] = k.permit_format
-        end
-      end
-
-      if hsh.empty? && options[:convert_empty_to_nil]
-        nil
-      else
-        hsh
-      end
-    end
-  end
-
-  class ParamKey
-    attr_reader :attribute_name, :method_name, :original_name, :permit_format
-
-    def initialize(key)
-      case key
-      when Hash
-        key.each do |k, opts|
-          @key = k
-          @original_name = k
-
-          if opts.any? && opts.fetch(:rename) { false }
-            @attribute_name = opts[:attribute_name]
-            @method_name = opts[:method_name]
-          else
-            @permit_format = opts
-          end
-        end
-      else
-        @key = key
-      end
-    end
-
-    def attribute_name
-      @attribute_name ||= @key
-    end
-
-    def method_name
-      @method_name ||= @key
-    end
-
-    def original_name
-      @original_name ||= @key
-    end
   end
 end
