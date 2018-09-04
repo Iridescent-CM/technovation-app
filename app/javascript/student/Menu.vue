@@ -64,9 +64,9 @@ const { mapState } = createNamespacedHelpers('student')
 
 import TabLink from 'tabs/components/TabLink'
 
-import RegistrationMenu from 'registration/components/RegistrationMenu'
-import JudgingMenu from './JudgingMenu'
-import TeamMenu from './TeamMenu'
+import RegistrationMenu from 'registration/Menu'
+import JudgingMenu from './menus/Judging'
+import TeamMenu from './menus/Team'
 
 const Tooltips = {
   MUST_HAVE_PERMISSION_ON_TEAM: 'You must be on a team and have parental consent to work on your submission',
