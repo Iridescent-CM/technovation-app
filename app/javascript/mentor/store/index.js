@@ -16,7 +16,7 @@ export default new Vuex.Store({
       namespaced: true,
       ...registration,
     },
-    mentor: {
+    authenticated: {
       namespaced: true,
       state,
       getters,

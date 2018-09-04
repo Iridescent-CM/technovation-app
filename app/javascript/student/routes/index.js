@@ -36,7 +36,7 @@ const initApp = () => {
   const parentalConsent = Object.assign({ id: parseInt(parentalConsentId) }, parentalConsentAttributes)
 
   store.dispatch('registration/initAccount', currentAccount)
-  store.dispatch('student/initApp', { currentAccount, currentTeam, parentalConsent })
+  store.dispatch('authenticated/initApp', { currentAccount, currentTeam, parentalConsent })
 }
 
 const initiateApp = (to, from, next) => {

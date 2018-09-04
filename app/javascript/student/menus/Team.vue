@@ -45,7 +45,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState } = createNamespacedHelpers('student')
+const { mapState } = createNamespacedHelpers('authenticated')
 
 import TabLink from 'tabs/components/TabLink'
 

@@ -35,7 +35,7 @@ const initApp = () => {
   const consentWaiver = Object.assign({ id: parseInt(consentId) }, store.state.mentor, consentAttributes)
 
   store.dispatch('registration/initAccount', currentAccount)
-  store.dispatch('mentor/initApp', { currentAccount, currentTeams, consentWaiver })
+  store.dispatch('authenticated/initApp', { currentAccount, currentTeams, consentWaiver })
 }
 
 const initiateApp = (to, from, next) => {

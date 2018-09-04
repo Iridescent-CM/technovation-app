@@ -61,7 +61,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import menuMixin from 'mixins/menu'
 
-const { mapState } = createNamespacedHelpers('student')
+const { mapState } = createNamespacedHelpers('authenticated')
 
 import TabLink from 'tabs/components/TabLink'
 
