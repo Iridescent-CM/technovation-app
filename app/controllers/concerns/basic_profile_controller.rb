@@ -10,10 +10,6 @@ module BasicProfileController
       instance_variable_set(:@params_safelist_arr, params_safelist_arr)
       instance_variable_set(:@params_safelist_hsh, params_safelist_hsh)
     end
-
-    def modify_params(func)
-      instance_variable_set(:@params_modification_func, func)
-    end
   end
 
   def update
@@ -26,15 +22,10 @@ module BasicProfileController
 
   private
   def profile_params
-    params = {}
-
-    params_safelist.each do |key|
-      params[key.attribute_name] = hashed_params.fetch(key.original_name) {
-        profile.public_send(key.method_name)
-      }
-    end
-
-    params.merge(account_attributes)
+    params_safelist.to_update_hash(
+      given: hashed_params,
+      fallback: profile,
+    ).merge(account_attributes)
   end
 
   def account_attributes
@@ -73,7 +64,6 @@ module BasicProfileController
     hsh = self.class.instance_variable_get(:@params_safelist_hsh)
     ParamKeys.new(arr, hsh)
   end
-
 
   def profile
     send(self.class.instance_variable_get(:@profile_helper_method))

@@ -16,6 +16,18 @@ class ParamKeys
     ].flatten.compact
   end
 
+  def to_update_hash(given:, fallback:)
+    params = {}
+
+    each do |key|
+      params[key.attribute_name] = given.fetch(key.original_name) {
+        fallback.public_send(key.method_name)
+      }
+    end
+
+    params
+  end
+
   private
   def permitted_param_array_args
     map { |k| k.permit_format ? nil : k.original_name }.compact
