@@ -12,10 +12,7 @@ module Mentor
           prefix: false,
         )
 
-        country = FriendlyCountry.(
-          OpenStruct.new(country: team.country),
-          prefix: false,
-        )
+        country = FriendlyCountry.new(team).country_name
 
         render json: {
           city: team.city,
@@ -33,10 +30,7 @@ module Mentor
           prefix: false,
         )
 
-        country = FriendlyCountry.(
-          OpenStruct.new(country: current_account.country),
-          prefix: false,
-        )
+        country = FriendlyCountry.new(current_account).country_name
 
         render json: {
           city: current_account.city,
