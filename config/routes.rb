@@ -80,6 +80,7 @@ Rails.application.routes.draw do
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+    resource :basic_profile, only: :update
     resource :bio, only: [:edit, :update]
 
     resources :cookies, only: :create
