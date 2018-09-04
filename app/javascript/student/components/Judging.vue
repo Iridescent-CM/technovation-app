@@ -23,7 +23,7 @@ import { mapGetters, mapActions, mapState } from 'vuex'
 
 import StickySidebar from 'directives/sticky-sidebar'
 
-import JudgingMenu from './JudgingMenu'
+import JudgingMenu from 'student/menus/Judging'
 
 export default {
   beforeRouteEnter (_to, _from, next) {

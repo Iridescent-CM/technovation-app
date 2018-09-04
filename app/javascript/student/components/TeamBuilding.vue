@@ -19,7 +19,7 @@
 
 <script>
 import StickySidebar from 'directives/sticky-sidebar'
-import TeamMenu from './TeamMenu'
+import TeamMenu from 'student/menus/Team'
 
 export default {
   directives: {

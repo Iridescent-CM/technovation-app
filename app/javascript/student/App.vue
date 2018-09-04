@@ -15,19 +15,19 @@
     </div>
 
     <div class="grid__col-3 grid__col--bleed">
-      <student-menu />
+      <Menu />
     </div>
   </div>
 </template>
 
 <script>
-import StudentMenu from './components/StudentMenu'
+import Menu from './Menu'
 
 export default {
   name: 'app',
 
   components: {
-    StudentMenu,
+    Menu,
   },
 }
 </script>

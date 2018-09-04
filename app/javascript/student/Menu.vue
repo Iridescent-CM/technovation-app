@@ -59,14 +59,15 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import menuMixin from 'mixins/menu'
 
 const { mapState } = createNamespacedHelpers('student')
 
 import TabLink from 'tabs/components/TabLink'
 
-import RegistrationMenu from 'registration/components/RegistrationMenu'
-import JudgingMenu from './JudgingMenu'
-import TeamMenu from './TeamMenu'
+import RegistrationMenu from 'registration/Menu'
+import JudgingMenu from './menus/Judging'
+import TeamMenu from './menus/Team'
 
 const Tooltips = {
   MUST_HAVE_PERMISSION_ON_TEAM: 'You must be on a team and have parental consent to work on your submission',
@@ -76,6 +77,10 @@ const Tooltips = {
 }
 
 export default {
+  mixins: [
+    menuMixin,
+  ],
+
   components: {
     TabLink,
     RegistrationMenu,
@@ -160,30 +165,6 @@ export default {
         return Tooltips.MUST_HAVE_PERMISSION
 
       return Tooltips.MUST_BE_ON_TEAM
-    },
-  },
-
-  methods: {
-    subRouteIsActive(parentRouteId) {
-      const parentRoute = this.$router.options.routes.find((parentRoute) => {
-        if (Object.prototype.hasOwnProperty.call(parentRoute, 'children')) {
-          return parentRoute.children.some((childRoute) => {
-            return this.$route.name === childRoute.name
-          })
-        }
-
-        return false
-      })
-
-      if (
-        parentRoute &&
-        Object.prototype.hasOwnProperty.call(parentRoute, 'meta') &&
-        Object.prototype.hasOwnProperty.call(parentRoute.meta, 'routeId')
-      ) {
-        return parentRouteId === parentRoute.meta.routeId
-      }
-
-      return false
     },
   },
 }
