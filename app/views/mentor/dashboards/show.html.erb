@@ -21,20 +21,59 @@
     </div>
   </div>
 
-  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
-    <div class="grid__cell">
-      <% if SeasonToggles.dashboard_text(:mentor).blank? %>
-        <%= render 'program_survey' %>
-      <% else %>
-        <h1 class="page-heading">
+  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end vue-top-section-header">
+    <top-section-header>
+      <% if !SeasonToggles.dashboard_text(:mentor).blank? %>
+        <template slot="title">
           <%= SeasonToggles.dashboard_text(:mentor) %>
-
-          <small>
-            <%= render 'program_survey' %>
-          </small>
-        </h1>
+        </template>
       <% end %>
-    </div>
+      <template slot="links">
+        <small><%= render 'program_survey' %></small>
+      </template>
+      <template slot="content">
+        <h6>
+          Mentor training
+          <small>
+            <%= link_to "Open the Mentor Training E-book",
+              "https://iridescentlearning.atavist.com/technovation-mentor-training",
+              target: "_blank" %>
+          </small>
+        </h6>
+        <h6>
+          Curriculum
+          <small>
+            <%= link_to "Open the Technovation Curriculum",
+              "https://www.technovationchallenge.org/curriculum-intro/registered",
+              target: "_blank" %>
+          </small>
+        </h6>
+        <h6>
+          Project Workbook
+          <small>
+            <%= link_to "Open the Student Project Workbook",
+              "https://bit.ly/2z7xwP9",
+              target: "_blank" %>
+          </small>
+        </h6>
+        <h6>
+          Submission Guide
+          <small>
+            <%= link_to "Read the Submission Guidelines",
+              "https://www.technovationchallenge.org/submission-guidelines/",
+              target: "_blank" %>
+          </small>
+        </h6>
+        <h6>
+          Judging Rubric
+          <small>
+            <%= link_to "Read the Judging Rubric",
+              "https://www.technovationchallenge.org/judging-rubric/",
+              target: "_blank" %>
+          </small>
+        </h6>
+      </template>
+    </top-section-header>
   </div>
 </div>
 
