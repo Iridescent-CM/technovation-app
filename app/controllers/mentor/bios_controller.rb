@@ -5,7 +5,8 @@ module Mentor
         current_mentor.errors.add(:bio, :blank)
         render :edit
       elsif ProfileUpdating.execute(current_mentor, current_scope, bio_params)
-        redirect_to mentor_dashboard_path, success: "Thank you for telling us more!"
+        redirect_to mentor_dashboard_path(anchor: '/bio'),
+          success: "Thank you for telling us more!"
       else
         render :edit
       end
