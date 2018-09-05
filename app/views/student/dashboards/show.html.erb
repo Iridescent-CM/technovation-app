@@ -12,13 +12,31 @@
     </div>
   </div>
 
-  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= current_student.name %>
+  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end vue-top-section-header">
+    <top-section-header>
+      <template slot="title"><%= current_student.name %></template>
+      <template slot="links">
         <small><%= render 'program_survey' %></small>
-      </h1>
-    </div>
+      </template>
+      <template slot="content">
+        <h6>
+          Submission Guide
+          <small>
+            <%= link_to "Read the Submission Guidelines",
+              "https://www.technovationchallenge.org/submission-guidelines/",
+              target: "_blank" %>
+          </small>
+        </h6>
+        <h6>
+          Judging Rubric
+          <small>
+            <%= link_to "Read the Judging Rubric",
+              "https://www.technovationchallenge.org/judging-rubric/",
+              target: "_blank" %>
+          </small>
+        </h6>
+      </template>
+    </top-section-header>
   </div>
 </div>
 
