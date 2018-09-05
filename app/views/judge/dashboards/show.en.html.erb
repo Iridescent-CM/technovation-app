@@ -19,19 +19,40 @@
     </div>
   </div>
 
-  <div
-    class="
-      grid__col-sm-6
-      grid__col-xs-12
-      grid__col--bleed-y
-      grid--align-end
-    "
-  >
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= SeasonToggles.dashboard_text(:judge) %>
-      </h1>
-    </div>
+  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y grid--align-end vue-top-section-header">
+    <top-section-header>
+      <% if !SeasonToggles.dashboard_text(:judge).blank? %>
+        <template slot="title">
+          <%= SeasonToggles.dashboard_text(:judge) %>
+        </template>
+      <% end %>
+      <template slot="content">
+        <h6>
+          Judge resources
+          <small>
+            <%= link_to "Read the judging rubric",
+              "http://www.technovationchallenge.org/judging-rubric/",
+              target: "_blank" %>
+          </small>
+        </h6>
+        <h6>
+          Get support
+          <small>
+            <%= link_to "Join our chat community for judges",
+              ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
+              target: "_blank" %>
+          </small>
+        </h6>
+        <h6>
+          Judge training
+          <small>
+            <%= link_to "Review your judge training",
+              ENV.fetch("JUDGE_TRAINING_URL"),
+              target: "_blank" %>
+          </small>
+        </h6>
+      </template>
+    </top-section-header>
   </div>
 </div>
 
