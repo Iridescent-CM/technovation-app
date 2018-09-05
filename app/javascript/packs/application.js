@@ -10,8 +10,9 @@
 import Vue from 'vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 
-import AutocompleteInput from '../components/AutocompleteInput'
-import CertificateButton from '../components/CertificateButton'
+import AutocompleteInput from 'components/AutocompleteInput'
+import CertificateButton from 'components/CertificateButton'
+import TopSectionHeader from 'components/TopSectionHeader'
 import LocationForm from '../location/components/LocationForm'
 
 Vue.use(TurbolinksAdapter)
@@ -52,6 +53,18 @@ document.addEventListener('turbolinks:load', function () {
 
       components: {
         AutocompleteInput,
+      },
+    })
+  }
+
+  const topSectionHeaders = document.querySelectorAll('.vue-top-section-header')
+
+  for (let i = 0; i < topSectionHeaders.length; i += 1) {
+    new Vue({
+      el: topSectionHeaders[i],
+
+      components: {
+        TopSectionHeader,
       },
     })
   }
