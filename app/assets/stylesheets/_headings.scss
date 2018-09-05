@@ -18,13 +18,28 @@ h6 {
     padding: 0;
   }
 
-  small {
-    font-size: 0.9rem;
-    font-weight: 300;
-  }
-
   span {
     color: rgba(0, 0, 0, 0.5);
+  }
+
+  a {
+    cursor: pointer;
+  }
+
+  small {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 300;
+
+    a {
+      padding: 0.25rem 0;
+      color: $secondary;
+      text-transform: uppercase;
+
+      &:hover {
+        color: $secondary-dark;
+      }
+    }
   }
 }
 
@@ -53,21 +68,6 @@ h1 {
       left: 0;
       position: absolute;
       width: 100%;
-    }
-
-    small {
-      display: block;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-
-      a {
-        padding: 0.25rem 0;
-        color: $secondary;
-
-        &:hover {
-          color: $secondary-dark;
-        }
-      }
     }
   }
 }
