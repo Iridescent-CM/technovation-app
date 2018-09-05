@@ -26,6 +26,9 @@ class SeasonToggles
       def team_building_disabled?
         not team_building_enabled?
       end
+      alias :team_invites_disabled? :team_building_disabled?
+      alias :join_team_disabled?    :team_building_disabled?
+      alias :create_team_disabled?  :team_building_disabled?
 
       def team_building_enabled!
         self.team_building_enabled = true
@@ -50,6 +53,10 @@ class SeasonToggles
 
       def team_submissions_editable?
         convert_to_bool(store.get(:team_submissions_editable))
+      end
+
+      def submissions_disabled?
+        not team_submissions_editable?
       end
 
       def team_submissions_editable!
