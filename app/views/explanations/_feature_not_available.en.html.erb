@@ -5,7 +5,5 @@
 <%= simple_format feature.explanation(:not_available) %>
 
 <% if feature.only_requires_action? %>
-  <ul>
-    <%=raw feature.actions_required_as_simple_list %>
-  </ul>
+  <%= feature.actions_required_as_html_list.html_safe %>
 <% end %>

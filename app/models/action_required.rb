@@ -1,0 +1,16 @@
+class ActionRequired
+  attr_reader :action
+
+  def initialize(action)
+    @action = action
+    freeze
+  end
+
+  def message
+    case action
+    when :join_team; "You must join a team first"
+    else
+      "[Error] ActionRequired#message is missing for `:#{action}`"
+    end
+  end
+end

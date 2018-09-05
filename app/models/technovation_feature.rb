@@ -6,9 +6,10 @@ class TechnovationFeature
   extend Forwardable
   def_delegators :@feature,
     :gerundize,
+    :disabled_by_staff?,
     :requires_action?,
     :only_requires_action?,
-    :actions_required_as_simple_list
+    :actions_required_as_html_list
 
   def initialize(profile, feature_name)
     @profile = profile
@@ -32,7 +33,7 @@ class TechnovationFeature
   def explanation_for_not_available
     if feature.disabled_by_staff?
       "Technovation staff has disabled this feature for everyone."
-    elsif feature.requires_onboarding? && profile.onboarding?
+    elsif feature.requires_onboarding?(profile.onboarded?)
       "You need to finish some required steps to continue."
     elsif feature.requires_action?
       "This feature requires some more action on your part"
@@ -46,6 +47,10 @@ class TechnovationFeature
       "technovation_feature/#{feature_name}_feature".camelize.constantize.new
     end
 
+    def to_s
+      feature_name
+    end
+
     def disabled_by_staff?
       SeasonToggles.disabled?(self)
     end
@@ -54,12 +59,12 @@ class TechnovationFeature
       false
     end
 
-    def requires_onboarding?
-      true
+    def requires_onboarding?(is_onboarded = false)
+      !is_onboarded
     end
 
-    def only_requires_action?
-      requires_action? && !requires_onboarding? && !disabled_by_staff?
+    def only_requires_action?(is_onboarded = false)
+      requires_action? && requires_onboarding?(is_onboarded) && !disabled_by_staff?
     end
 
     def feature_name
@@ -69,6 +74,8 @@ class TechnovationFeature
 
   module ActionRequiredFeature
     extend ActiveSupport::Concern
+
+    attr_reader :actions_required
 
     included do
       instance_variable_set(:@actions_required_by_name, [])
@@ -87,45 +94,11 @@ class TechnovationFeature
     end
 
     def actions_required
-      ActionsRequired.new(self.class.instance_variable_get(:@actions_required_by_name))
+      @actions_required ||= ActionsRequired.new(self, self.class.instance_variable_get(:@actions_required_by_name))
     end
 
-    def actions_required_as_simple_list
-      actions_required.as_simple_list
-    end
-
-    class ActionsRequired
-      include Enumerable
-
-      def initialize(actions)
-        @actions = actions
-        freeze
-      end
-
-      def each(&block)
-        @actions.each { |a| block.call(ActionRequired.new(a)) }
-      end
-
-      def as_simple_list
-        map { |action| "<li>#{action.message}</li>" }.join("")
-      end
-    end
-
-    class ActionRequired
-      attr_reader :action
-
-      def initialize(action)
-        @action = action
-        freeze
-      end
-
-      def message
-        case action
-        when :join_team; "You must join a team first"
-        else
-          "[Error] ActionRequired#message is missing for `:#{action}`"
-        end
-      end
+    def actions_required_as_html_list
+      actions_required.as_html_list
     end
   end
 
@@ -168,6 +141,10 @@ class TechnovationFeature
   end
 
   class ScoresFeature < Feature
+    include ActionRequiredFeature
+
+    actions_required :join_team
+
     def gerundize
       "Reading your scores and certificates"
     end
