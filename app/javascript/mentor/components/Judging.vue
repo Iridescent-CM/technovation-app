@@ -1,13 +1,9 @@
 <template>
-  <div class="tabs tabs--vertical tabs--css-only grid">
+  <div :class="['tabs', 'tabs--vertical', 'tabs--css-only', mainTabsGridCss]">
     <div :class="['tabs__content', mainContainerGridColumn]">
-      <div class="grid">
-        <div class="grid__col-8">
-          <router-view :key="$route.name">
-            <div slot="events"><slot name="events" /></div>
-          </router-view>
-        </div>
-      </div>
+      <router-view :key="$route.name">
+        <div slot="events"><slot name="events" /></div>
+      </router-view>
     </div>
 
     <div class="grid__col-3" v-if="!embedded">
@@ -61,9 +57,16 @@ export default {
 
     ...mapGetters([]),
 
+    mainTabsGridCss () {
+      if (this.embedded)
+        return ''
+
+      return 'grid'
+    },
+
     mainContainerGridColumn () {
       if (this.embedded)
-        return 'grid__col-12 tabs__content--embedded'
+        return 'tabs__content--embedded'
 
       return 'grid__col-9'
     },
