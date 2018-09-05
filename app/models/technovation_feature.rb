@@ -1,7 +1,7 @@
 require 'forwardable'
 
 class TechnovationFeature
-  attr_reader :profile, :feature
+  attr_reader :feature
 
   extend Forwardable
   def_delegators :@feature,
@@ -12,8 +12,12 @@ class TechnovationFeature
     :actions_required_as_html_list
 
   def initialize(profile, feature_name)
-    @profile = profile
-    @feature = Feature.for(feature_name)
+    if feature_name.is_a?(TechnovationFeature)
+      @feature = feature_name.feature
+    else
+      @feature = Feature.for(profile, feature_name)
+    end
+
     freeze
   end
 
@@ -29,13 +33,25 @@ class TechnovationFeature
     end
   end
 
+  def partial_path
+    if feature.available?
+      "slots/#{feature.profile_scope_name}/available/#{feature.name}"
+    else
+      "explanations/feature_not_available"
+    end
+  end
+
+  def partial_locals
+    { feature: self }
+  end
+
   private
   def explanation_for_not_available
     if feature.disabled_by_staff?
       "Technovation staff has disabled this feature for everyone."
-    elsif feature.requires_onboarding?(profile.onboarded?)
+    elsif feature.requires_onboarding?
       "You need to finish some required steps to continue."
-    elsif feature.requires_action?
+    elsif feature.only_requires_action?
       "This feature requires some more action on your part"
     else
       "[Error] This feature should be available. Please report this to the developers."
@@ -43,12 +59,35 @@ class TechnovationFeature
   end
 
   class Feature
-    def self.for(feature_name)
-      "technovation_feature/#{feature_name}_feature".camelize.constantize.new
+    attr_reader :profile
+
+    def self.for(profile, feature_name)
+      "technovation_feature/#{feature_name}_feature".camelize.constantize.new(profile)
+    end
+
+    def initialize(profile)
+      @profile = profile
+      #freeze
     end
 
     def to_s
       feature_name
+    end
+
+    def name
+      feature_name
+    end
+
+    def profile_scope_name
+      profile.scope_name
+    end
+
+    def available?
+      !disabled_by_staff? && !requires_onboarding? && !actions_remaining?
+    end
+
+    def actions_remaining?
+      false
     end
 
     def disabled_by_staff?
@@ -59,12 +98,12 @@ class TechnovationFeature
       false
     end
 
-    def requires_onboarding?(is_onboarded = false)
-      !is_onboarded
+    def requires_onboarding?
+      !profile.onboarded?
     end
 
-    def only_requires_action?(is_onboarded = false)
-      requires_action? && requires_onboarding?(is_onboarded) && !disabled_by_staff?
+    def only_requires_action?
+      requires_action? && !requires_onboarding? && !disabled_by_staff?
     end
 
     def feature_name
@@ -91,6 +130,15 @@ class TechnovationFeature
 
     def requires_action?
       true
+    end
+
+    def actions_completed?
+      actions_required.any? &&
+        actions_required.all? { |a| profile.has_completed_action?(a) }
+    end
+
+    def actions_remaining?
+      !actions_completed?
     end
 
     def actions_required

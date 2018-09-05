@@ -1,3 +1,4 @@
-<h1>Submissions</h1>
+<% feature = TechnovationFeature.new(current_mentor, :submissions) %>
 
-<%= render 'explanations/feature_not_available', feature: :submissions %>
+<h1>Submissions</h1>
+<%= render partial: feature.partial_path, locals: feature.partial_locals  %>

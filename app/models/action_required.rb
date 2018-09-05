@@ -6,6 +6,14 @@ class ActionRequired
     freeze
   end
 
+  def to_s
+    name
+  end
+
+  def name
+    action
+  end
+
   def message
     case action
     when :join_team; "You must join a team first"

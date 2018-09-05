@@ -183,6 +183,15 @@ class MentorProfile < ActiveRecord::Base
     account.public_send(method_name, *args)
   end
 
+  def has_completed_action?(action)
+    case action.name
+    when :join_team
+      is_on_team?
+    else
+      raise "Implement MentorProfile#has_completed_action? case for :#{action.name}"
+    end
+  end
+
   def status
     if current_account && onboarded?
       "ready"
