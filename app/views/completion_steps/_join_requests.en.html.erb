@@ -1,7 +1,7 @@
 <h1 class="margin--none padding--none">Join a team</h1>
 
 <% if hidden ||= false %>
-  <p>This feature is not available right now.</p>
+  <%= render 'explanations/feature_not_available', feature: :join_team %>
 <% else %>
   <% if SeasonToggles.judging_enabled_or_between? %>
     <p>

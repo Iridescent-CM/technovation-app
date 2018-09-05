@@ -1,7 +1,7 @@
 <h1 class="margin--none padding--none">Create a new team</h1>
 
 <% if hidden ||= false %>
-  <p>This feature is not available right now.</p>
+  <%= render 'explanations/feature_not_available', feature: :create_team %>
 <% else %>
   <p>
     Create your own team and then invite your other team members,

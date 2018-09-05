@@ -71,23 +71,7 @@
       </div>
 
       <div slot="bio">
-        <h1 class="content-heading">
-          <%= t("views.profile_requirements.build_profile.heading") %>
-        </h1>
-
-        <% if current_mentor.bio.blank? %>
-          <p>
-            <%= t("views.profile_requirements.build_profile.label") %>
-          </p>
-
-          <%= render 'mentor/bios/form' %>
-        <% else %>
-          <%= simple_format current_mentor.bio %>
-
-          <p>
-            <%= link_to "Edit your summary", edit_mentor_bio_path, class: "button" %>
-          </p>
-        <% end %>
+        <%= render 'slots/mentor/bio' %>
       </div>
 
       <div slot="consent-waiver">
@@ -99,22 +83,7 @@
       </div>
 
       <div id="find-team" slot="find-team">
-        <% if current_mentor.is_on_team? %>
-          <%= render 'mentor/teams/team_list',
-            type: :current,
-            teams: @current_teams %>
-        <% elsif SeasonToggles.team_building_disabled? %>
-          Technovation Staff has turned off forming teams for everyone right now.
-        <% else %>
-          <%= render "completion_steps/invitations",
-            hidden: current_mentor.onboarding?,
-            invites: current_mentor.team_member_invites.pending %>
-
-          <%= render "completion_steps/join_requests",
-            hidden: current_mentor.onboarding?,
-            allow_many: true,
-            requests: current_mentor.join_requests.pending %>
-        <% end %>
+        <%= render 'slots/mentor/find_team' %>
       </div>
 
       <div slot="create-team">
@@ -131,25 +100,15 @@
       </div>
 
       <div slot="submission">
-        QA Note: this is in progress...
+        <%= render 'slots/mentor/submissions' %>
       </div>
 
       <div slot="events">
-        <% if SeasonToggles.select_regional_pitch_event? %>
-          <%= render "mentor/dashboards/onboarded/regional_pitch_events" %>
-        <% end %>
+        <%= render 'slots/mentor/events' %>
       </div>
 
       <div slot="scores">
-        <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
-          <div class="grid__col-sm-9 grid__col--bleed-y">
-            <% if current_mentor.current_teams.any? %>
-              <%= render 'mentor/dashboards/onboarded/scores' %>
-            <% else %>
-              <%= render 'dashboards/no_certificates' %>
-            <% end %>
-          </div>
-        <% end %>
+        <%= render 'slots/mentor/scores' %>
       </div>
     </app>
   </div>

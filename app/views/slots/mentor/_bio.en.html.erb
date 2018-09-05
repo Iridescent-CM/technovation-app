@@ -1,0 +1,9 @@
+<% if current_mentor.bio.blank? %>
+  <h1 class="content-heading">Set your personal summary</h1>
+  <p><%= t("views.profile_requirements.build_profile.label") %></p>
+  <%= render 'mentor/bios/form' %>
+<% else %>
+  <h1 class="content-heading">Your personal summary</h1>
+  <%= simple_format current_mentor.bio %>
+  <p><%= link_to "Change your summary", edit_mentor_bio_path %></p>
+<% end %>

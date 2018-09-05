@@ -1,7 +1,7 @@
 <h1 class="margin--none padding--none">Team invitations</h1>
 
 <% if hidden ||= false %>
-    <p>This feature is not available right now.</p>
+  <%= render 'explanations/feature_not_available', feature: :team_invites %>
 <% else %>
   <% if SeasonToggles.judging_enabled_or_between? %>
     <p><%= t("views.team_member_invites.show.invites_disabled_by_judging") %></p>

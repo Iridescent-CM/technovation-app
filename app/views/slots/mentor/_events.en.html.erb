@@ -1,0 +1,7 @@
+<h1>Live pitch events in your region</h1>
+
+<% if current_mentor.onboarded? && SeasonToggles.select_regional_pitch_event? %>
+  <%= render "mentor/dashboards/onboarded/regional_pitch_events" %>
+<% else %>
+  <%= render "explanations/feature_not_available", feature: :events %>
+<% end %>

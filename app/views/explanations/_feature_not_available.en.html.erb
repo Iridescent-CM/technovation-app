@@ -1,0 +1,11 @@
+<% feature = TechnovationFeature.new(current_profile, feature) %>
+
+<p><%= feature.gerundize %> is not available right now.</p>
+
+<%= simple_format feature.explanation(:not_available) %>
+
+<% if feature.only_requires_action? %>
+  <ul>
+    <%=raw feature.actions_required_as_simple_list %>
+  </ul>
+<% end %>
