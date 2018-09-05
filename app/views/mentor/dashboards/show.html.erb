@@ -28,7 +28,7 @@
           <%= SeasonToggles.dashboard_text(:mentor) %>
         </template>
       <% end %>
-      <template slot="links">
+      <template slot="survey-links">
         <small><%= render 'program_survey' %></small>
       </template>
       <template slot="content">
@@ -53,22 +53,6 @@
           <small>
             <%= link_to "Open the Student Project Workbook",
               "https://bit.ly/2z7xwP9",
-              target: "_blank" %>
-          </small>
-        </h6>
-        <h6>
-          Submission Guide
-          <small>
-            <%= link_to "Read the Submission Guidelines",
-              "https://www.technovationchallenge.org/submission-guidelines/",
-              target: "_blank" %>
-          </small>
-        </h6>
-        <h6>
-          Judging Rubric
-          <small>
-            <%= link_to "Read the Judging Rubric",
-              "https://www.technovationchallenge.org/judging-rubric/",
               target: "_blank" %>
           </small>
         </h6>
