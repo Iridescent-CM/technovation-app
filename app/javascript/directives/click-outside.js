@@ -1,5 +1,5 @@
 /**
- * Sticky Sidebar Directive
+ * Click Outside Directive
  *
  * Fires off an expression when element outside of component is clicked.
  * Example: v-click-outside="nameOfExpressionToCall"
