@@ -106,6 +106,7 @@ module StoreLocation
       {
         'ip_address'  => existing_ip,
         'coordinates' => [account.latitude, account.longitude],
+        'overwritten_by' => 'user',
       }
     end
 
@@ -171,11 +172,15 @@ module StoreLocation
         {
           'ip_address'  => ip_address,
           'coordinates' => [account.latitude, account.longitude],
+          'overwritten_by_user' => false,
+          'written_by' => 'platform',
         }
       else
         {
           'ip_address'  => ip_address,
           'coordinates' => first_geocoded_result(ip_address).coordinates,
+          'overwritten_by_user' => false,
+          'written_by' => 'platform',
         }
       end
     end
