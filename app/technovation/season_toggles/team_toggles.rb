@@ -30,6 +30,7 @@ class SeasonToggles
       def team_building_enabled!
         self.team_building_enabled = true
       end
+      alias :enable_team_building! :team_building_enabled!
 
       def team_building_disabled!
         self.team_building_enabled = false
