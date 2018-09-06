@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div slot="survey-links"><slot name="suvery-links" /></div>
+    <dashboard-header>
+      <div slot="survey-links"><slot name="survey-links" /></div>
+    </dashboard-header>
 
-    <dashboard-header />
 
     <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">
       <div class="tabs__content background-color--white grid__col-9">
