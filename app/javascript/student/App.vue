@@ -2,8 +2,28 @@
   <div>
     <dashboard-header>
       <div slot="survey-links"><slot name="survey-links" /></div>
-    </dashboard-header>
+      <div>
+        <h6>
+          Curriculum
+          <small>
+            <a
+              href="https://www.technovationchallenge.org/curriculum-intro/registered"
+              target="_blank"
+            >Open the Technovation Curriculum</a>
+          </small>
+        </h6>
 
+        <h6>
+          Project Workbook
+          <small>
+            <a
+              href="https://bit.ly/2z7xwP9"
+              target="_blank"
+            >Open the Student Project Workbook</a>
+          </small>
+        </h6>
+      </div>
+    </dashboard-header>
 
     <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">
       <div class="tabs__content background-color--white grid__col-9">
