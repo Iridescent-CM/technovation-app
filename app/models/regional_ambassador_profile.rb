@@ -80,11 +80,11 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   end
 
   def background_check_complete?
-    country != "US" or !!background_check && background_check.clear?
+    country_code != "US" or !!background_check && background_check.clear?
   end
 
   def requires_background_check?
-    country == "US" and
+    country_code == "US" and
       not background_check_complete?
   end
 
@@ -99,8 +99,8 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   def region_name
     return unless Country[country]
 
-    if country == "US"
-      Country[country].states.fetch(state_province) { {} }['name']
+    if country_code == "US"
+      Country[country_code].states.fetch(state_province) { {} }['name']
     else
       Country[country].name
     end

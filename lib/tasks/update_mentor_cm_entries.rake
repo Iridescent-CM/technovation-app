@@ -10,7 +10,7 @@ task update_mentor_cm_info: :environment do
 
     fields = [{ Key: 'City', Value: mentor.city },
               { Key: 'State/Province', Value: mentor.state_province },
-              { Key: 'Country', Value: Country[mentor.country].name }]
+              { Key: 'Country', Value: mentor.country_code }]
     begin
       subscriber.update(
         mentor.email.strip,

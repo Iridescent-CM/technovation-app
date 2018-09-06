@@ -1,7 +1,7 @@
 module Registration
   class CurrentLocationsController < RegistrationController
     def show
-      if current_attempt.latitude
+      if current_attempt.valid_coordinates?
         geocoded = Geocoded.new(current_attempt)
       else
         result = Geocoder.search(CookiedCoordinates.get(self)).first

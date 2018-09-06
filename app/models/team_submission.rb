@@ -169,6 +169,7 @@ class TeamSubmission < ActiveRecord::Base
            :city,
            :state_province,
            :country,
+           :country_code,
            :ages,
     to: :team,
     prefix: true
@@ -406,7 +407,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def country
-    team_country
+    team_country_code
   end
 
   def state_province

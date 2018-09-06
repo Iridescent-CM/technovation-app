@@ -22,7 +22,7 @@
 
         <%= f.label :state_province, "State / Province" %>
 
-        <% if current_ambassador.country == "US" %>
+        <% if current_ambassador.country_code == "US" %>
           <%= FriendlySubregion.(current_ambassador.account) %>
         <% else %>
           <%= f.text_field :state_province %>

@@ -1,7 +1,7 @@
 module Mentor
   class TeamSearchesController < MentorController
     def new
-      if current_mentor.latitude.blank?
+      unless current_mentor.valid_coordinates?
         redirect_to mentor_location_details_path(
           return_to: request.fullpath
         ),

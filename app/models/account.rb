@@ -18,15 +18,12 @@ class Account < ActiveRecord::Base
 
   include Regioned
 
+  include ActiveGeocoded
+
   include Casting::Client
   delegate_missing_methods
 
   include PublicActivity::Common
-
-  geocoded_by :address_details
-  reverse_geocoded_by :latitude, :longitude do |account, results|
-    account.update_address_details_from_reverse_geocoding(results)
-  end
 
   attr_accessor :existing_password,
     :skip_existing_password,
@@ -210,10 +207,6 @@ class Account < ActiveRecord::Base
 
   def random_id
     SecureRandom.hex(4)
-  end
-
-  def coordinates
-    [latitude, longitude]
   end
 
   def virtual_event?
@@ -643,14 +636,6 @@ class Account < ActiveRecord::Base
 
   def full_name
     [first_name, last_name].join(' ')
-  end
-
-  def address_details
-    [
-      city,
-      state_province,
-      Country[country].try(:name)
-    ].reject(&:blank?).join(', ')
   end
 
   def oldest_birth_year

@@ -19,7 +19,7 @@
 
     <dt>Location entered?</dt>
     <dd>
-      <% if not profile.latitude.blank? %>
+    <% if profile.valid_coordinates? %>
         <%= web_icon("check-circle icon-green", text: "Yes!") %>
       <% else %>
         <%= web_icon(

@@ -77,7 +77,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   scope :visible_to, ->(admin_ra) {
     if admin_ra.admin?
       unscoped
-    elsif admin_ra.country == "US"
+    elsif admin_ra.country_code == "US"
       joins(ambassador: :account)
         .where(
           "accounts.country = 'US' AND accounts.state_province = ?",
@@ -87,48 +87,13 @@ class RegionalPitchEvent < ActiveRecord::Base
       joins(ambassador: :account)
         .where(
           "accounts.country = ?",
-          admin_ra.country
+          admin_ra.country_code
         )
     end
   }
 
   scope :available_to, ->(record) {
-    if record.present?
-      case record
-      when JudgeProfile
-        if record.country === "US"
-          current
-            .joins(ambassador: :account)
-            .where(
-              "accounts.country = 'US' AND accounts.state_province = ?",
-              record.state_province
-            )
-        else
-          current
-            .joins(ambassador:  :account)
-            .where("accounts.country = ?", record.country)
-        end
-      when TeamSubmission
-        if record.country === "US"
-          current
-            .joins(:divisions)
-            .where("divisions.id = ?", record.division_id)
-            .joins(ambassador: :account)
-            .where(
-              "accounts.country = 'US' AND accounts.state_province = ?",
-              record.state_province
-            )
-        else
-          current
-            .joins(:divisions)
-            .where("divisions.id = ?", record.division_id)
-            .joins(ambassador: :account)
-            .where("accounts.country = ?", record.country)
-        end
-      end
-    else
-      none
-    end
+    "#{record.class.name}EventScope".constantize.new(self, record).execute
   }
 
   def self.find(id)
@@ -223,5 +188,53 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def dec_teams_count(team)
     RegionalPitchEvent.decrement_counter('teams_count', id)
+  end
+end
+
+class EventScope
+  attr_reader :scope, :record
+
+  def initialize(scope, record)
+    @scope = scope
+    @record = record
+    freeze
+  end
+end
+
+class JudgeProfileEventScope < EventScope
+  def execute
+    if record.country_code === "US"
+      scope.current
+        .joins(ambassador: :account)
+        .where(
+          "accounts.country = 'US' AND accounts.state_province = ?",
+          record.state_province
+        )
+    else
+      scope.current
+        .joins(ambassador:  :account)
+        .where("accounts.country = ?", record.country_code)
+    end
+  end
+end
+
+class TeamSubmissionEventScope < EventScope
+  def execute
+    if record.country === "US"
+      scope.current
+        .joins(:divisions)
+        .where("divisions.id = ?", record.division_id)
+        .joins(ambassador: :account)
+        .where(
+          "accounts.country = 'US' AND accounts.state_province = ?",
+          record.state_province
+        )
+    else
+      scope.current
+        .joins(:divisions)
+        .where("divisions.id = ?", record.division_id)
+        .joins(ambassador: :account)
+        .where("accounts.country = ?", record.country)
+    end
   end
 end

@@ -98,7 +98,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       { Key: 'City',
         Value: record.city },
       { Key: 'State/Province',
-        Value: record.state_province },
+        Value: record.state_code },
       { Key: 'Country',
         Value: FriendlyCountry.(record, prefix: false) },
     ]

@@ -5,11 +5,11 @@ module RegionalAmbassador
 
       @account.city = nil
 
-      if current_ambassador.country == "US"
+      if current_ambassador.country_code == "US"
         @account.state_province = current_ambassador.state_province
       end
 
-      @account.country = current_ambassador.country
+      @account.country_code = current_ambassador.country_code
     end
 
     def update
@@ -30,11 +30,11 @@ module RegionalAmbassador
         :city,
         :state_province,
       ).tap do |tapped|
-        if current_ambassador.country == "US"
+        if current_ambassador.country_code == "US"
           tapped[:state_province] = current_ambassador.state_province
         end
 
-        tapped[:country] = current_ambassador.country
+        tapped[:country] = current_ambassador.country_code
       end
     end
   end

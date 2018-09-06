@@ -1,11 +1,8 @@
 class SignupAttempt < ActiveRecord::Base
+  include ActiveGeocoded
+
   include Casting::Client
   delegate_missing_methods
-
-  geocoded_by :address_details
-  reverse_geocoded_by :latitude, :longitude do |attempt, results|
-    attempt.update_address_details_from_reverse_geocoding(results)
-  end
 
   has_secure_password validations: false
 
@@ -57,23 +54,10 @@ class SignupAttempt < ActiveRecord::Base
   has_secure_token :admin_permission_token
   has_secure_token :wizard_token
 
-  def state
-    FriendlySubregion.(self, with_prefix: false)
-  end
-
-  def country
-    me = OpenStruct.new(country: '', address_details: [city, state, country_code].join(", "))
-    FriendlyCountry.new(me).country_name
-  end
-
   def assign_address_details(geocoded)
     self.city = geocoded.city
     self.state_code = geocoded.state_code
     self.country_code = geocoded.country_code
-  end
-
-  def address_details
-    [city, state, country].reject(&:blank?).join(", ")
   end
 
   def password_required?
@@ -96,25 +80,6 @@ class SignupAttempt < ActiveRecord::Base
     value = bool ? Time.current : nil
     self.terms_agreed_at = value
     save!
-  end
-
-  def update_address_details_from_reverse_geocoding(results)
-    return false if results.none?
-
-    result = results.first
-
-    self.city = result.city
-    self.state_code = result.state_code
-
-    address_details = [
-      result.city,
-      result.state,
-      result.country,
-    ].reject(&:blank?).join(", ")
-
-    geo = OpenStruct.new(address_details: address_details)
-
-    self.country_code = FriendlyCountry.new(geo).country_code
   end
 
   private

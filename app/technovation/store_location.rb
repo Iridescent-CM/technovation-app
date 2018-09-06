@@ -81,13 +81,18 @@ module StoreLocation
     def maybe_run_account_updates
       if coordinates_valid? &&
           account.authenticated? &&
-            (!account.latitude || !account.city)
+            coordinates_different?(account.coordinates)
         account.latitude  = latitude
         account.longitude = longitude
         Geocoding.perform(account).with_save
       else
         false
       end
+    end
+
+    def coordinates_different?(coordinates)
+      existing_coordinates[0] != coordinates[0] ||
+        existing_coordinates[1] != coordinates[1]
     end
 
     def latitude
@@ -103,7 +108,7 @@ module StoreLocation
     end
 
     def cookie_value
-      @cookie_value ||= if account.authenticated? && account.latitude
+      if account.authenticated? && account.valid_coordinates?
         {
           'ip_address'  => ip_address,
           'coordinates' => [account.latitude, account.longitude],

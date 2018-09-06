@@ -81,8 +81,7 @@ require "rails_helper"
         },
       }
 
-      expect(profile.reload.latitude).to be_blank
-      expect(profile.reload.longitude).to be_blank
+      expect(profile.reload.account).not_to be_valid_coordinates
       expect(response).to render_template("location_details/show")
     end
 

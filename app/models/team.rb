@@ -1,6 +1,7 @@
 class Team < ActiveRecord::Base
   include Seasoned
   include Regioned
+  include ActiveGeocoded
 
   acts_as_paranoid
 
@@ -8,11 +9,6 @@ class Team < ActiveRecord::Base
   delegate_missing_methods
 
   include PublicActivity::Common
-
-  geocoded_by :geolocation_str
-  reverse_geocoded_by :latitude, :longitude do |team, results|
-    team.update_address_details_from_reverse_geocoding(results)
-  end
 
   after_commit -> {
     return false if destroyed?
@@ -28,7 +24,6 @@ class Team < ActiveRecord::Base
       update_column(:has_students, false)
     end
   }
-
 
   scope :has_students, -> { where(has_students: true) }
   scope :no_students, -> { where(has_students: false) }
@@ -96,7 +91,7 @@ class Team < ActiveRecord::Base
       location: [
         city,
         state_province,
-        country,
+        country_code,
       ].join(", "),
       scope: self.class.model_name,
       status: status,
@@ -310,7 +305,7 @@ class Team < ActiveRecord::Base
   def region_name
     if %w{Brasil Brazil}.include?(state_province || "")
       "Brazil"
-    elsif country == "US"
+    elsif country_code == "US"
       state = Country["US"].states[state_province.strip]
       (state && state['name']) || state_province
     else
@@ -320,7 +315,7 @@ class Team < ActiveRecord::Base
 
   def region_division_name
     Rails.cache.fetch("#{cache_key}/region_division_name") do
-      name = country || ""
+      name = country_code || ""
       if name == "US"
         name += "_#{state_province}"
       end
@@ -360,16 +355,6 @@ class Team < ActiveRecord::Base
         pending_student_join_requests).size < 5
   end
 
-  def primary_location
-    if geolocation_str.empty?
-      "No location has been set"
-    else
-      geolocation_str
-    end
-  end
-  alias :location :primary_location
-  alias :address_details :primary_location
-
   def pending_invitee_emails
     team_member_invites.pending.flat_map(&:invitee_email)
   end
@@ -399,26 +384,5 @@ class Team < ActiveRecord::Base
 
   def assigned_judge_names
     assigned_judges.flat_map(&:full_name)
-  end
-
-  def update_address_details_from_reverse_geocoding(results)
-    if geo = results.first
-      self.city = geo.city
-      self.state_province = geo.state_code
-      country = Country.find_country_by_name(geo.country_code) ||
-                  Country.find_country_by_alpha3(geo.country_code) ||
-                    Country.find_country_by_alpha2(geo.country_code)
-      self.country = country.alpha2
-    end
-  end
-
-  private
-  def geolocation_str
-    [
-      city,
-      state_province,
-      Country[country].try(:name)
-    ].reject(&:blank?)
-     .join(', ')
   end
 end

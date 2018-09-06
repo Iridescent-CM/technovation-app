@@ -24,7 +24,7 @@ class TeamUpdating
   def perform_callbacks
     Geocoding.perform(team)
 
-    if updater.present? and (updater.latitude.blank? or updater.longitude.blank?)
+    if updater.present? && !updater.valid_coordinates?
       updater.latitude = team.latitude
       updater.longitude = team.longitude
       Geocoding.perform(updater).with_save
@@ -53,7 +53,7 @@ class TeamUpdating
 
     private
     def us_state_changed?
-      country == "US" and saved_change_to_state_province?
+      country_code == "US" and saved_change_to_state_province?
     end
   end
 end

@@ -34,10 +34,10 @@ module RegionalAmbassador
 
       grid = (params[:scored_submissions_grid] ||= {}).merge(
         admin: false,
-        allow_state_search: current_ambassador.country != "US",
-        country: [current_ambassador.country],
+        allow_state_search: current_ambassador.country_code != "US",
+        country: [current_ambassador.country_code],
         state_province: (
-          if current_ambassador.country == "US"
+          if current_ambassador.country_code == "US"
             [current_ambassador.state_province]
           else
             Array(params[:scored_submissions_grid][:state_province])

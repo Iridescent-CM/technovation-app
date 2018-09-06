@@ -311,7 +311,7 @@ class StudentProfile < ActiveRecord::Base
     actions = []
     actions << "Confirm their new email address" unless account.email_confirmed?
     actions << "Get their parent or guardian's permission to compete" unless parental_consent_signed?
-    actions << "Enter their location details" if latitude.blank?
+    actions << "Enter their location details" if !valid_coordinates?
     actions
   end
 
@@ -319,7 +319,7 @@ class StudentProfile < ActiveRecord::Base
     account.present? &&
       signed_parental_consent.present? &&
         !account.email_confirmed_at.blank? &&
-          !account.latitude.blank?
+          account.valid_coordinates?
   end
 
   private

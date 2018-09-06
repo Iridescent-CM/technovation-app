@@ -1,6 +1,28 @@
 require "rails_helper"
 
 RSpec.describe LocationController do
+  describe "PATCH /registration/location with current_attempt" do
+    include Rack::Test::Methods
+
+    it "updates the attempt's lat/lng values" do
+      attempt = FactoryBot.create(:signup_attempt, :chicago)
+
+      set_cookie("#{CookieNames::SIGNUP_TOKEN}=#{attempt.wizard_token}")
+
+      allow_any_instance_of(Registration::LocationsController).to(
+        receive(:current_attempt).and_return(attempt)
+      )
+
+      patch "/registration/location", {
+        registration_location: { city: "Los Angeles" }
+      }
+
+      expect(attempt.reload.city).to eq("Los Angeles")
+      expect(attempt.state_code).to eq("CA")
+      expect(attempt.latitude).to eq(34.052363)
+    end
+  end
+
   %w{mentor student judge admin registration}.each do |scope|
     context "PATCH #{scope}/locations" do
       before do

@@ -1,7 +1,7 @@
 module Student
   class TeamSearchesController < StudentController
     def new
-      if current_student.latitude.blank?
+      unless current_student.valid_coordinates?
         redirect_to student_location_details_path(return_to: request.fullpath),
           notice: "Please save your location so that you can search for nearby teams"
       end

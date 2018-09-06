@@ -17,7 +17,7 @@ module GridParams
       ),
 
       state_province: (
-        if !is_admin && profile.country == "US"
+        if !is_admin && profile.country_code == "US"
           Array(profile.state_province)
         else
           Array(grid_params[:state_province])

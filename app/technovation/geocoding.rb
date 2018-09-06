@@ -32,16 +32,15 @@ class Geocoding
   private
   module GeocodingUpdater
     def apply_geocoding_changes
-      if latitude.blank? or (not city_was.blank? and saved_change_to_city?)
-        geocode
-      end
+      geocode if !valid_coordinates? || (
+                   (saved_change_to_city? || city_changed?) &&
+                     !city_was.blank?
+                 )
 
-      if saved_change_to_latitude? or
-          saved_change_to_longitude? or
-            latitude_changed? or
-              longitude_changed?
-        reverse_geocode
-      end
+      reverse_geocode if saved_change_to_latitude? ||
+                           saved_change_to_longitude? ||
+                             latitude_changed? ||
+                               longitude_changed?
     end
   end
 end

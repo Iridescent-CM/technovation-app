@@ -1,4 +1,4 @@
-<% if profile.latitude.blank? %>
+<% unless profile.valid_coordinates? %>
   <li>
     <div class="flags">
       <span class="flag flag-registration">

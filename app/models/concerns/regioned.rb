@@ -36,12 +36,12 @@ module Regioned
     end
 
     def construct_query(source)
-      if source.country == "US"
+      if source.country_code == "US"
         "(#{region_source_table}.country = 'US' AND " +
         "#{region_source_table}.state_province " +
-        "= '#{source.state_province}')"
+        "= '#{source.state_code}')"
       else
-        "(#{region_source_table}.country = '#{source.country}')"
+        "(#{region_source_table}.country = '#{source.country_code}')"
       end
     end
 
@@ -91,12 +91,12 @@ module Regioned
     end
 
     class SecondaryRegion
-      attr_reader :state, :country
-      alias :state_province :state
+      attr_reader :state_code, :country_code
+      alias :state_province :state_code
 
       def initialize(region)
-        @state = region.split(", ").first
-        @country = region.split(", ").last
+        @state_code = region.split(", ").first
+        @country_code = region.split(", ").last
       end
     end
   end
