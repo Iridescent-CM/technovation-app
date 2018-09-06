@@ -76,6 +76,10 @@ class SignupAttempt < ActiveRecord::Base
     [city, state, country].reject(&:blank?).join(", ")
   end
 
+  def password_required?
+    new_record? && !wizard?
+  end
+
   def email_required?
     new_record? && !wizard? && !terms_agreed?
   end
