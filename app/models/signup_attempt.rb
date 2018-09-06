@@ -53,6 +53,19 @@ class SignupAttempt < ActiveRecord::Base
     new_record? && !wizard?
   end
 
+  def state
+    FriendlySubregion.(self, with_prefix: false)
+  end
+
+  def country
+    me = OpenStruct.new(address_details: [city, state, country_code].join(", "))
+    FriendlyCountry.new(me).country_name
+  end
+
+  def address_details
+    [city, state, country].reject(&:blank?).join(", ")
+  end
+
   def email_required?
     new_record? && !wizard? && !terms_agreed?
   end

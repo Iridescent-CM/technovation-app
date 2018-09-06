@@ -1,0 +1,2 @@
+class NullSignupAttempt < NullObject
+end

@@ -87,8 +87,18 @@ module HandleGeocoderSearch
     return false if !db_record
 
     db_record.city = geocoded.city
-    db_record.state_province = geocoded.state_code
-    db_record.country = geocoded.country_code
+
+    begin
+      db_record.state_province = geocoded.state_code
+    rescue
+      db_record.state_code = geocoded.state_code
+    end
+
+    begin
+      db_record.country = geocoded.country_code
+    rescue
+      db_record.country_code = geocoded.country_code
+    end
 
     Geocoding.perform(db_record).with_save
   end
