@@ -74,7 +74,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Chicago", "Chicago, IL", "Chicago, IL, United States", "Chicago, IL, US", "US"].each do |loc|
+    ["Chicago", "Chicago, Illinois, United States", "Chicago, IL", "Chicago, IL, United States", "Chicago, IL, US", "US"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 41.50196838,
@@ -89,18 +89,24 @@ RSpec.configure do |config|
       )
     end
 
-    Geocoder::Lookup::Test.add_stub(
-      [41.50196838, -87.64051818], [{
-        'latitude'     => 41.50196838,
-        'longitude'    => -87.64051818,
-        'address'      => 'Chicago, IL, USA',
-        'state'        => 'Illinois',
-        'city'         => 'Chicago',
-        'state_code'   => 'IL',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
+    [
+      [BigDecimal.new('41.50196838'), BigDecimal.new('-87.64051818')],
+      [41.50196838, -87.64051818],
+      [41.501968, -87.640518],
+    ].each do |coords|
+      Geocoder::Lookup::Test.add_stub(
+        coords, [{
+          'latitude'     => 41.50196838,
+          'longitude'    => -87.64051818,
+          'address'      => 'Chicago, IL, USA',
+          'state'        => 'Illinois',
+          'city'         => 'Chicago',
+          'state_code'   => 'IL',
+          'country'      => 'United States',
+          'country_code' => 'US',
+        }]
+      )
+    end
 
     Geocoder::Lookup::Test.add_stub(
       [43.0389, 87.9065], [{
@@ -215,7 +221,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Salvador, BH, Brazil", "Salvador, Bahia, Brazil"].each do |loc|
+    ["Salvador, BH, Brazil", "Salvador, Bahia, Brazil", "Salvador, Bahia, BR"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           "latitude"     => -12.7872335,
