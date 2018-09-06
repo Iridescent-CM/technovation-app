@@ -7,6 +7,12 @@ module LocationController
       query: location_params
     })
 
+    StoreLocation.(
+      coordinates: db_record.coordinates,
+      account: db_record,
+      context: self
+    )
+
     render json: data, status: status
   end
 

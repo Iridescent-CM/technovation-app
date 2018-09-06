@@ -12,6 +12,12 @@ module StoreLocation
           options.fetch(:account),
           options.fetch(:context),
         )
+      elsif options.fetch(:coordinates) { false }
+        CoordinateLocationStorage.new(
+          options.fetch(:coordinates),
+          options.fetch(:account),
+          options.fetch(:context),
+        )
       else
         raise ArgumentError,
           "LocationStorage subclass not found for given options - try `ip_address`"
@@ -65,6 +71,59 @@ module StoreLocation
 
     def geocoder
       Geocoder
+    end
+
+    def existing_value
+      context.get_cookie(cookie_name)
+    end
+
+    def existing_coordinates
+      existing_value && existing_value['coordinates']
+    end
+
+    def existing_ip
+      existing_value && existing_value['ip_address']
+    end
+
+    def coordinates_valid?
+      existing_coordinates &&
+        String(existing_coordinates) != "[0.0, 0.0]" &&
+          String(existing_coordinates) != "[nil, nil]"
+    end
+  end
+
+  class CoordinateLocationStorage < LocationStorage
+    attr_reader :coordinates
+
+    def initialize(coordinates, account, context)
+      @coordinates = coordinates
+      @account = account
+      @context = context
+      @cookie_name = CookieNames::IP_GEOLOCATION
+    end
+
+    def cookie_value
+      {
+        'ip_address'  => existing_ip,
+        'coordinates' => [account.latitude, account.longitude],
+      }
+    end
+
+    private
+    def log_label
+      "OVERWRITE! LAT, LNG for IP"
+    end
+
+    def should_execute?
+      true
+    end
+
+    def maybe_run_account_updates
+      false
+    end
+
+    def source
+      coordinates
     end
   end
 
@@ -126,29 +185,11 @@ module StoreLocation
       "LAT, LNG from IP"
     end
 
-    def existing_value
-      context.get_cookie(cookie_name)
-    end
-
-    def existing_coordinates
-      existing_value && existing_value['coordinates']
-    end
-
-    def existing_ip
-      existing_value && existing_value['ip_address']
-    end
-
     def should_execute?
       !existing_value ||
         !existing_coordinates ||
           !coordinates_valid? ||
             String(ip_address) != String(existing_ip)
-    end
-
-    def coordinates_valid?
-      existing_coordinates &&
-        String(existing_coordinates) != "[0.0, 0.0]" &&
-          String(existing_coordinates) != "[nil, nil]"
     end
   end
 
