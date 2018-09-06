@@ -10,8 +10,8 @@
 import Vue from 'vue'
 import TurbolinksAdapter from 'vue-turbolinks'
 
-import AutocompleteInput from '../components/AutocompleteInput'
-import CertificateButton from '../components/CertificateButton'
+import AutocompleteInput from 'components/AutocompleteInput'
+import CertificateButton from 'components/CertificateButton'
 import LocationForm from '../location/components/LocationForm'
 
 Vue.use(TurbolinksAdapter)
