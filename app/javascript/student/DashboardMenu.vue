@@ -77,6 +77,8 @@ const Tooltips = {
 }
 
 export default {
+  name: 'dashboard-menu',
+
   mixins: [
     menuMixin,
   ],
