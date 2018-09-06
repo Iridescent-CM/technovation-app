@@ -7,7 +7,11 @@ class MailgunResponse
     @id = SecureRandom.hex(4)
 
     response.each do |key, value|
-      send("#{key}=", value)
+      begin
+        send("#{key}=", value)
+      rescue NoMethodError
+        next
+      end
     end
   end
 end
