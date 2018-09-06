@@ -1,3 +1,5 @@
+require 'bigdecimal'
+
 RSpec.configure do |config|
   config.before(:suite) do
     Geocoder.configure(lookup: :test)
@@ -27,7 +29,7 @@ RSpec.configure do |config|
       }
     ])
 
-    ["Los Angeles", "Los Angeles, CA", "Los Angeles, CA, United States"].each do |loc|
+    ["Los Angeles", "Los Angeles, California, United States", "Los Angeles, United States", "Los Angeles, , US", "Los Angeles, , United States", "Los Angeles, CA", "Los Angeles, CA, US", "Los Angeles, CA, United States"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 34.052363,
@@ -113,18 +115,23 @@ RSpec.configure do |config|
       }]
     )
 
-    Geocoder::Lookup::Test.add_stub(
-      [34.052363, -118.256551], [{
-        'latitude'     => 34.052363,
-        'longitude'    => -118.256551,
-        'address'      => 'Los Angeles, CA, USA',
-        'state'        => 'California',
-        'city'         => 'Los Angeles',
-        'state_code'   => 'CA',
-        'country'      => 'United States',
-        'country_code' => 'US',
-      }]
-    )
+    [
+      [BigDecimal.new('34.052363'), BigDecimal.new('-118.256551')],
+      [34.052363, -118.256551],
+    ].each do |coords|
+      Geocoder::Lookup::Test.add_stub(
+        coords, [{
+          'latitude'     => 34.052363,
+          'longitude'    => -118.256551,
+          'address'      => 'Los Angeles, CA, USA',
+          'state'        => 'California',
+          'city'         => 'Los Angeles',
+          'state_code'   => 'CA',
+          'country'      => 'United States',
+          'country_code' => 'US',
+        }]
+      )
+    end
 
     Geocoder::Lookup::Test.add_stub(
       [24.6769697, 46.2431716], [{

@@ -9,13 +9,15 @@ module Student
 
       country = FriendlyCountry.new(record).country_name
 
-      render json: {
+      json = {
         city: record.city,
         state: FriendlySubregion.(record, prefix: false),
         state_code: record.state_province,
         country: country,
         country_code: record.country,
       }
+
+      render json: json
     end
   end
 end

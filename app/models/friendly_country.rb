@@ -30,6 +30,7 @@ class FriendlyCountry
   def as_short_code
     result.country_code
   end
+  alias :country_code :as_short_code
 
   def with_prefix
     if result.country_code

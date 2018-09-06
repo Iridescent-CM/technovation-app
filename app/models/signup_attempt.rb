@@ -1,4 +1,12 @@
 class SignupAttempt < ActiveRecord::Base
+  include Casting::Client
+  delegate_missing_methods
+
+  geocoded_by :address_details
+  reverse_geocoded_by :latitude, :longitude do |attempt, results|
+    attempt.update_address_details_from_reverse_geocoding(results)
+  end
+
   has_secure_password validations: false
 
   enum status: %i{
@@ -58,7 +66,7 @@ class SignupAttempt < ActiveRecord::Base
   end
 
   def country
-    me = OpenStruct.new(address_details: [city, state, country_code].join(", "))
+    me = OpenStruct.new(country: '', address_details: [city, state, country_code].join(", "))
     FriendlyCountry.new(me).country_name
   end
 
@@ -82,6 +90,25 @@ class SignupAttempt < ActiveRecord::Base
     value = bool ? Time.current : nil
     self.terms_agreed_at = value
     save!
+  end
+
+  def update_address_details_from_reverse_geocoding(results)
+    return false if results.none?
+
+    result = results.first
+
+    self.city = result.city
+    self.state_code = result.state_code
+
+    address_details = [
+      result.city,
+      result.state,
+      result.country,
+    ].reject(&:blank?).join(", ")
+
+    geo = OpenStruct.new(address_details: address_details)
+
+    self.country_code = FriendlyCountry.new(geo).country_code
   end
 
   private
