@@ -62,25 +62,24 @@
         Deleting your data will remove you from your team and our program.
       </p>
 
-      <h4>Mentors outside US: Background checks</h4>
+
+      <h4>Background Checks</h4>
 
       <p>
-        Background checks are reports of your work and legal history. In
-        countries where these checks are universally easy or required, we will
-        submit all mentors to this process. You may be required to complete and
-        pass a background check in order to be allowed and verified on our site.
+        Background checks are reports of your work and legal history.
+        In the United States all mentors are required to complete and pass
+        a background check in order to be allowed and verified on our site.
       </p>
 
       <p>
-        In other countries and territories, we will randomly select mentors to
-        provide references and legal certifications, and to submit to background
-        checks where possible. If you are selected, we will contact you to complete
-        this process. You must consent to this to be allowed and verified on our site.
+        In other countries and territories, we will randomly select mentors
+        to provide references and legal certifications, and to submit to
+        background checks where possible. If you are selected, we will
+        contact you to complete this process. You must consent to this to
+        be allowed and verified on our site.
       </p>
 
-      <p>
-        Thank you for helping us keep our students safe.
-      </p>
+      <p>Thank you for helping us keep our students safe.</p>
 
       <div class="padding--t-b-large text-align--right">
         <label class="margin--none">
