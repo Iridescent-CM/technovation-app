@@ -17,8 +17,16 @@ module LocationController
   end
 
   def db_record
-    if respond_to?(:current_account)
-      current_account
+    begin
+      current_account.authenticated? ?
+        current_account :
+        raise("try current_attempt")
+    rescue
+      begin
+        current_attempt
+      rescue
+        false
+      end
     end
   end
 end
