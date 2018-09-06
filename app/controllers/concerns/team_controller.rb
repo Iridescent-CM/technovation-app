@@ -30,7 +30,6 @@ module TeamController
 
   def create
     @team = Team.new(team_params)
-    @team.send("#{current_scope.pluralize}").push(current_profile)
 
     if @team.save
       TeamCreating.execute(@team, current_profile, self)
@@ -96,6 +95,8 @@ module TeamController
     ).tap do |tapped|
       unless params.fetch(:id) { false }
         tapped[:division] = Division.for(current_profile)
+        tapped["#{current_scope}_ids"] ||= []
+        tapped["#{current_scope}_ids"].push(current_profile.id)
       end
     end
   end
