@@ -57,10 +57,6 @@ class SignupAttempt < ActiveRecord::Base
   has_secure_token :admin_permission_token
   has_secure_token :wizard_token
 
-  def password_required?
-    new_record? && !wizard?
-  end
-
   def state
     FriendlySubregion.(self, with_prefix: false)
   end
@@ -68,6 +64,12 @@ class SignupAttempt < ActiveRecord::Base
   def country
     me = OpenStruct.new(country: '', address_details: [city, state, country_code].join(", "))
     FriendlyCountry.new(me).country_name
+  end
+
+  def assign_address_details(geocoded)
+    self.city = geocoded.city
+    self.state_code = geocoded.state_code
+    self.country_code = geocoded.country_code
   end
 
   def address_details
