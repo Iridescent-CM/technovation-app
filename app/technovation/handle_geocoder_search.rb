@@ -84,22 +84,8 @@ module HandleGeocoderSearch
   end
 
   def self.geocode_db_record(db_record, geocoded)
-    return false if !db_record
-
-    db_record.city = geocoded.city
-
-    begin
-      db_record.state_province = geocoded.state_code
-    rescue
-      db_record.state_code = geocoded.state_code
-    end
-
-    begin
-      db_record.country = geocoded.country_code
-    rescue
-      db_record.country_code = geocoded.country_code
-    end
-
+    return false unless db_record.present?
+    db_record.assign_address_details(geocoded)
     Geocoding.perform(db_record).with_save
   end
 

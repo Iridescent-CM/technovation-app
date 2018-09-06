@@ -59,7 +59,7 @@
         <% end %>
       </div>
 
-      <div slot="create-team">
+      <div id="create-team" slot="create-team">
         <% if current_student.is_on_team? %>
           You're on a team!
           Your team is called <%= current_team.name %>.

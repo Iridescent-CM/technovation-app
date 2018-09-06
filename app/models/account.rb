@@ -202,6 +202,12 @@ class Account < ActiveRecord::Base
     :first_name
   end
 
+  def assign_address_details(geocoded)
+    self.city = geocoded.city
+    self.state_province = geocoded.state_code
+    self.country = geocoded.country_code
+  end
+
   def random_id
     SecureRandom.hex(4)
   end
