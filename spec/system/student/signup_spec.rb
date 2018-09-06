@@ -35,19 +35,7 @@ RSpec.describe "Students signing up", :js do
       fill_in "School Name", with: "Springfield Middle School"
       click_button "Next"
 
-      allow(HTTParty).to receive(:get).and_return({
-        "address" => "margeyb@springfield.net",
-        "did_you_mean" => nil,
-        "is_disposable_address" => false,
-        "is_role_address" => true,
-        "is_valid" => true,
-        "mailbox_verification" => "true",
-        "parts" => {
-            "display_name" => nil,
-            "domain" => "springfield.net",
-            "local_part" => "margeyb"
-        }
-      })
+      stub_mailgun_validation(valid: true, email: "margeyb@springfield.net")
 
       fill_in "Email", with: "margeyb@springfield.net"
       fill_in "Password", with: "margeysecret1234"

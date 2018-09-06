@@ -44,6 +44,10 @@ RSpec.configure do |config|
 
   config.include VueSelectInputHelper, type: :system
 
+  config.include MailgunHelper, type: :system
+
+  config.include CoordinatesHelper, type: :system
+
   config.include JudgingHelper
   config.include WebMock::API
 
