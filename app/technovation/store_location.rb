@@ -141,7 +141,9 @@ module StoreLocation
     end
 
     def coordinates_valid?
-      existing_coordinates && String(existing_coordinates) != "[0.0, 0.0]"
+      existing_coordinates &&
+        String(existing_coordinates) != "[0.0, 0.0]" &&
+          String(existing_coordinates) != "[nil, nil]"
     end
   end
 
