@@ -15,20 +15,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
-
 import StickySidebar from 'directives/sticky-sidebar'
 
 import JudgingMenu from 'student/menus/Judging'
 
 export default {
-  beforeRouteEnter (_to, _from, next) {
-    next(vm => {
-      // need to check something with vm first?
-      next()
-    })
-  },
-
   directives: {
     'sticky-sidebar': StickySidebar,
   },
@@ -53,10 +44,6 @@ export default {
   },
 
   computed: {
-    ...mapState([]),
-
-    ...mapGetters([]),
-
     mainTabsGridCss () {
       if (this.embedded)
         return ''
@@ -70,13 +57,6 @@ export default {
 
       return 'grid__col-9'
     },
-  },
-
-  watch: {
-  },
-
-  methods: {
-    ...mapActions([]),
   },
 }
 </script>
