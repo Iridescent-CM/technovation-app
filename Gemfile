@@ -124,7 +124,7 @@ group :test do
   gem 'selenium-webdriver', "~> 3.13"
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper', "~> 1.2"
-  gem 'rspec-rails', "~> 3.7"
+  gem 'rspec-rails', "~> 3.8"
 
   # deprecated
   gem 'font-awesome-rails', "~> 4.7"
