@@ -6,22 +6,45 @@
     </div>
 
     <p v-if="statusCode === 'complete'">
-      <a class="button" :href="backUrl">Okay</a>
+      <a class="button" @click.stop.prevent="goBack">Okay</a>
     </p>
   </div>
 </template>
 
 <script>
+import { urlHelpers } from 'utilities/utilities'
 import Icon from '../Icon'
 
 export default {
-  data () {
-    return {
-      statusCode: 'init'
+  components: {
+    Icon,
+  },
+
+  props: {
+    statusUrl: {
+      type: String,
+      required: true,
     }
   },
 
-  props: ['statusUrl'],
+  data () {
+    return {
+      interval: null,
+      statusCode: 'init',
+    }
+  },
+
+  mounted () {
+    this.interval = setInterval(() => {
+      window.axios.get(this.statusUrl).then(({ data }) => {
+        this.handleJSON(data)
+      })
+    }, 500)
+  },
+
+  destroyed () {
+    clearInterval(this.interval)
+  },
 
   computed: {
     showLoading () {
@@ -29,19 +52,21 @@ export default {
     },
 
     backUrl () {
-      return window.location.search.back || '/'
+      return this.fetchGetParameterValue('back') || '/'
     },
 
     statusMsg () {
       switch(this.statusCode) {
         case 'init':
-          return "Creating a job for your file..."
+          return 'Creating a job for your file...'
         case 'queued':
-          return "Your file is waiting in line..."
+          return 'Your file is waiting in line...'
         case 'busy':
-          return "Your file is being processed..."
+          return 'Your file is being processed...'
+        case 'error':
+          return 'There was an error processing your file, please try again'
         case 'complete':
-          return "Your file is ready!"
+          return 'Your file is ready!'
       }
     },
 
@@ -62,22 +87,19 @@ export default {
   },
 
   methods: {
+    fetchGetParameterValue: urlHelpers.fetchGetParameterValue,
+
     handleJSON (json) {
       this.statusCode = json.status
+
+      if (this.statusCode === 'complete' || this.statusCode === 'error') {
+        clearInterval(this.interval)
+      }
     },
-  },
 
-  mounted () {
-    loopStatusCheck.bind(this)()
-
-    function loopStatusCheck () {
-      $.get(this.statusUrl, this.handleJSON)
-      setTimeout(loopStatusCheck.bind(this), 500)
+    goBack () {
+      window.location.href = this.backUrl
     }
-  },
-
-  components: {
-    Icon,
   },
 }
 </script>
