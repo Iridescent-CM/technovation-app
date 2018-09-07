@@ -22,6 +22,10 @@ class SeasonToggles
       end
     end
 
+    def disabled?(feature)
+      send("#{feature.feature_name}_disabled?")
+    end
+
     private
     def store
       @@store ||= Redis.new

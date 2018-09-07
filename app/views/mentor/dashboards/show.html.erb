@@ -1,109 +1,100 @@
-<div class="grid dashboard-notices">
-  <div class="grid__col-sm-6 grid__col--bleed-y">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= t("views.application.mentor_dashboard") %>
+<div id="vue-enable-mentor-app" class="hidden">
+  <%= content_tag :div,
+    nil,
+    id: "vue-data-registration",
+    data: {
+      current_account: AccountSerializer.new(current_account).serialized_json,
+      current_mentor: MentorProfileSerializer.new(current_mentor).serialized_json,
+      current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
+      consent_waiver: ConsentSerializer.new(current_mentor.consent_waiver).serialized_json,
+      background_check: BackgroundCheckSerializer.new(current_mentor.background_check).serialized_json,
+      profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
+      profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
+      profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
+    } %>
+  <app>
+    <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+      <template slot="survey-links"><%= render 'program_survey' %></template>
+    <% end %>
 
-        <% if current_mentor.is_a_judge? %>
-          <small>
-            <%= link_to "Switch to Judge mode", judge_dashboard_path %>
-          </small>
+    <% if current_mentor.is_a_judge? %>
+      <template slot="judge-switch-link">
+        <%= link_to "Switch to Judge mode",
+         judge_dashboard_path,
+         data: { turbolinks: false } %>
+      </template>
+    <% end %>
+
+    <% if current_mentor.is_an_ambassador? %>
+      <template slot="ra-switch-link">
+        <%= link_to "Switch to RA mode",
+          regional_ambassador_dashboard_path,
+          data: { turbolinks: false } %>
+      </template>
+    <% end %>
+
+    <% if not current_mentor.email_confirmed? %>
+      <%= render 'completion_steps/confirm_changed_email',
+        profile: current_mentor %>
+    <% elsif !current_session.authenticated? && current_mentor.needs_mentor_type? %>
+      <div class="grid grid--justify-space-around">
+        <div class="grid__col-8">
+          <div class="panel">
+            <%= render 'completion_steps/select_mentor_type' %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div slot="change-email">
+        <%= render 'profiles/email' %>
+      </div>
+
+      <div slot="change-password">
+        <%= render 'profiles/password' %>
+      </div>
+
+      <div slot="bio">
+        <%= render 'slots/mentor/bio' %>
+      </div>
+
+      <div slot="consent-waiver">
+        <%= render 'completion_steps/consent_waiver', profile: current_mentor %>
+      </div>
+
+      <div slot="background-check">
+        <%= render 'completion_steps/background_check', profile: current_mentor %>
+      </div>
+
+      <div id="find-team" slot="find-team">
+        <%= render 'slots/mentor/find_team' %>
+      </div>
+
+      <div slot="create-team">
+        <% if current_mentor.is_on_team? %>
+          <%= render 'mentor/teams/team_list',
+            type: :current,
+            teams: @current_teams %>
+        <% elsif SeasonToggles.team_building_disabled? %>
+          Technovation Staff has turned off forming teams for everyone right now.
+        <% else %>
+          <%= render "completion_steps/create_team",
+            hidden: current_mentor.onboarding? %>
         <% end %>
-
-        <% if current_mentor.is_an_ambassador? %>
-          <small>
-            <%= link_to "Switch to RA mode",
-              regional_ambassador_dashboard_path,
-              data: { turbolinks: false } %>
-          </small>
-        <% end %>
-      </h1>
-    </div>
-  </div>
-
-  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
-    <div class="grid__cell">
-      <% if SeasonToggles.dashboard_text(:mentor).blank? %>
-        <%= render 'program_survey' %>
-      <% else %>
-        <h1 class="page-heading">
-          <%= SeasonToggles.dashboard_text(:mentor) %>
-
-          <small>
-            <%= render 'program_survey' %>
-          </small>
-        </h1>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<div class="grid">
-  <div class="grid__col-sm-3 grid__col--bleed-y col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="panel">
-          <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
-
-          <h3 class="reset"><%= current_mentor.full_name %></h3>
-
-          <%= link_to "View your profile", mentor_profile_path %>
-        </div>
-
-        <%= render "dashboards/ra_intro" %>
       </div>
-    </div>
-  </div>
 
-  <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
-    <div
-      class="
-        grid__col-sm-9
-        grid__col--bleed-y
-        col--sticky-parent
-      "
-    >
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <% if current_mentor.current_teams.any? %>
-            <%= render 'mentor/dashboards/onboarded/scores' %>
-          <% else %>
-            <%= render 'dashboards/no_certificates' %>
-          <% end %>
-        </div>
+      <div slot="submission">
+        <%= render 'slots/mentor/submissions' %>
       </div>
-    </div>
-  <% else %>
-    <div
-      class="
-        grid__col-md-6
-        grid__col-sm-9
-        grid__col--bleed-y
-        col--sticky-parent
-      "
-    >
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <%= render 'mentor/dashboards/current_actions' %>
-        </div>
-      </div>
-    </div>
 
-    <div
-      class="
-        grid__col-md-3
-        grid__col--bleed
-        dashboard-sidebar
-        col--sticky-parent
-      "
-    >
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <%= render "mentor/dashboards/info_sidebar" %>
-        </div>
+      <div slot="events">
+        <%= render 'slots/mentor/events' %>
       </div>
-    </div>
-  <% end %>
+
+      <div slot="scores">
+        <%= render 'slots/mentor/scores' %>
+      </div>
+    <% end %>
+  </app>
 </div>
 
 <%= render 'program_survey_modal' %>

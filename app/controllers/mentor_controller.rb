@@ -83,4 +83,13 @@ class MentorController < ApplicationController
   def back_from_event_path
     mentor_regional_pitch_events_team_list_path
   end
+
+  def require_onboarded
+    if current_mentor.onboarded?
+      true
+    else
+      redirect_to mentor_dashboard_path,
+        notice: t("controllers.application.onboarding_required")
+    end
+  end
 end

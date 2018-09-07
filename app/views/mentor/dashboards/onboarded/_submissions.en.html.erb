@@ -7,7 +7,7 @@
           id="team-submissions-team-list"
         >
           <ul class="tabs__menu">
-            <% @teams.each do |team| %>
+            <% @current_teams.each do |team| %>
               <li class="tabs__menu-link">
                 <button
                   role="button"
@@ -21,7 +21,7 @@
         </div>
 
         <div class="grid__col-sm-9 tabs__content">
-          <% @teams.each do |team| %>
+          <% @current_teams.each do |team| %>
             <div
               id="submissions-team-<%= team.id %>"
               class="tabs__tab-content"

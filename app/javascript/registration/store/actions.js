@@ -14,16 +14,33 @@ export default {
     commit('isReady', true)
   },
 
-  initAccount ({ commit, getters }, account) {
+  initAccount ({ commit, getters, state }, dataset) {
+    const {
+      data: {
+        id: accountId,
+        attributes: accountAttributes,
+        relationships
+      }
+    } = JSON.parse(dataset.currentAccount)
+
+    const account = Object.assign(
+      { id: parseInt(accountId) },
+      state.registration,
+      accountAttributes,
+      relationships
+    )
+
+    commit('apiRoot', account.apiRoot)
+
+    commit('termsAgreedDate', account.termsAgreedDate)
+
     commit('birthDate', getters.getBirthdateAttributes(account))
     commit('profileChoice', account.profileChoice)
     commit('location', account)
     commit('basicProfile', account)
     commit('email', account.email)
 
-    commit('apiRoot', account.apiRoot)
     commit('termsAgreed', true)
-    commit('termsAgreedDate', account.termsAgreedDate)
     commit('isReady', true)
     commit('isLocked', true)
     commit('apiMethod', 'patch')

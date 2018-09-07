@@ -170,7 +170,7 @@ class MentorProfile < ActiveRecord::Base
   validates :bio,
     length: { minimum: 100 },
     allow_blank: true,
-    if: :saved_change_to_bio?
+    if: :bio_changed?
 
   delegate :submitted?,
            :candidate_id,
@@ -181,6 +181,15 @@ class MentorProfile < ActiveRecord::Base
 
   def method_missing(method_name, *args)
     account.public_send(method_name, *args)
+  end
+
+  def has_completed_action?(action)
+    case action.name
+    when :join_team
+      is_on_team?
+    else
+      raise "Implement MentorProfile#has_completed_action? case for :#{action.name}"
+    end
   end
 
   def status

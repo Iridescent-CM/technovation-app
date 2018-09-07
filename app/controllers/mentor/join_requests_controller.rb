@@ -1,5 +1,7 @@
 module Mentor
   class JoinRequestsController < MentorController
+    before_action :require_onboarded
+
     def new
       @team = Team.find(params.fetch(:team_id))
 

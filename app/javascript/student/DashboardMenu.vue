@@ -17,7 +17,7 @@
       :class="teamTabLinkClasses"
       :to="{ name: 'parental-consent', meta: { active: teamPagesActive } }"
       :condition-to-enable="true"
-      :condition-to-complete="consentSigned && isOnTeam"
+      :condition-to-complete="hasParentalConsent && isOnTeam"
     >
       Build your team
       <div slot="subnav" class="tabs-menu__child-menu" v-if="teamPagesActive">
@@ -29,14 +29,14 @@
       :class="submissionTabLinkClasses"
       :to="{ name: 'submission', meta: { active: submissionPagesActive } }"
       :disabled-tooltip="submissionDisabledTooltipMessage"
-      :condition-to-enable="consentSigned && isOnTeam"
+      :condition-to-enable="hasParentalConsent && isOnTeam"
       :condition-to-complete="submissionComplete"
     >Submit your project</tab-link>
 
     <tab-link
       :class="judgingTabLinkClasses"
       :to="{ name: 'events', meta: { active: judgingPagesActive } }"
-      :disabled-tooltip="Tooltips.AVAILABLE_LATER"
+      :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="false"
       :condition-to-complete="false"
     >
@@ -50,7 +50,7 @@
     <tab-link
       :class="scoresTabLinkClasses"
       :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
-      :disabled-tooltip="Tooltips.AVAILABLE_LATER"
+      :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="false"
       :condition-to-complete="false"
     >Scores & Feedback</tab-link>
@@ -60,8 +60,9 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import menuMixin from 'mixins/menu'
+import tooltipsMixin from 'mixins/tooltips'
 
-const { mapState } = createNamespacedHelpers('student')
+const { mapGetters } = createNamespacedHelpers('authenticated')
 
 import TabLink from 'tabs/components/TabLink'
 
@@ -69,18 +70,12 @@ import RegistrationMenu from 'registration/DashboardMenu'
 import JudgingMenu from './menus/Judging'
 import TeamMenu from './menus/Team'
 
-const Tooltips = {
-  MUST_HAVE_PERMISSION_ON_TEAM: 'You must be on a team and have parental consent to work on your submission',
-  MUST_HAVE_PERMISSION: 'You must have parental consent to work on your submission',
-  MUST_BE_ON_TEAM: 'You must be on a team to work on your submission',
-  AVAILABLE_LATER: 'This feature will open later in the Season',
-}
-
 export default {
   name: 'dashboard-menu',
 
   mixins: [
     menuMixin,
+    tooltipsMixin,
   ],
 
   components: {
@@ -90,24 +85,8 @@ export default {
     JudgingMenu,
   },
 
-  created () {
-    this.Tooltips = Tooltips
-  },
-
   computed: {
-    ...mapState(['currentTeam', 'parentalConsent', 'submission']),
-
-    consentSigned () {
-      return !!this.parentalConsent.isSigned
-    },
-
-    isOnTeam () {
-      return !!this.currentTeam.id
-    },
-
-    submissionComplete () {
-      return !!this.submission.isComplete
-    },
+    ...mapGetters(['isOnTeam', 'submissionComplete', 'hasParentalConsent']),
 
     registrationTabLinkClasses () {
       return {
@@ -161,12 +140,12 @@ export default {
 
     submissionDisabledTooltipMessage () {
       if (!this.isOnTeam && !this.consentSigned)
-        return Tooltips.MUST_HAVE_PERMISSION_ON_TEAM
+        return this.tooltips.student.submissions.MUST_HAVE_PERMISSION_ON_TEAM
 
       if (!this.consentSigned)
-        return Tooltips.MUST_HAVE_PERMISSION
+        return this.tooltips.student.submissions.MUST_HAVE_PERMISSION
 
-      return Tooltips.MUST_BE_ON_TEAM
+      return this.tooltips.student.submissions.MUST_BE_ON_TEAM
     },
   },
 }

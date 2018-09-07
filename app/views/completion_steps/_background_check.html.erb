@@ -1,40 +1,38 @@
+<h1 class="content-heading">
+  <%= t("views.profile_requirements.background_check.label") %>
+</h1>
+
 <% if profile.requires_background_check? %>
-  <li>
-    <div class="flags">
-      <span class="flag flag-registration">
-        Registration
-      </span>
-    </div>
+  <p>
+    <% if profile.background_check_submitted? %>
+      <%= t("views.profile_requirements.background_check." +
+            "links.background_check_submitted.prefix") %>
+    <% else %>
+      <%= t("views.profile_requirements.background_check." +
+            "links.fill_bg_check_form.prefix") %>
+    <% end %>
+  </p>
 
-    <h1 class="content-heading">
-      <%= t("views.profile_requirements.background_check.label") %>
-    </h1>
-
-    <p>
-      <% if profile.background_check_submitted? %>
-        <%= t("views.profile_requirements.background_check." +
-              "links.background_check_submitted.prefix") %>
-      <% else %>
-        <%= t("views.profile_requirements.background_check." +
-              "links.fill_bg_check_form.prefix") %>
-      <% end %>
-    </p>
-
-    <div class="step-actions">
-      <% if profile.background_check_submitted? %>
-        <%= link_to t("views.profile_requirements.background_check." +
-                      "links.background_check_submitted.text"),
-          send(
-            "#{current_scope}_background_check_path",
-            profile.background_check_report_id
-          ),
-          class: "button" %>
-      <% else %>
-        <%= link_to t("views.profile_requirements.background_check." +
-                      "links.fill_bg_check_form.text"),
-          [:new, current_scope, :background_check],
-          class: "button" %>
-      <% end %>
-    </div>
-  </li>
+  <div class="step-actions">
+    <% if profile.background_check_submitted? %>
+      <%= link_to t("views.profile_requirements.background_check." +
+                    "links.background_check_submitted.text"),
+        send(
+          "#{current_scope}_background_check_path",
+          profile.background_check_report_id
+        ),
+        class: "button" %>
+    <% else %>
+      <%= link_to t("views.profile_requirements.background_check." +
+                    "links.fill_bg_check_form.text"),
+        [:new, current_scope, :background_check],
+        class: "button" %>
+    <% end %>
+  </div>
+<% else %>
+  <p>
+    At this time, your profile doesn't require a background check.
+    Technovation staff may notify you at any time to submit to a verification
+    process.
+  </p>
 <% end %>

@@ -1,5 +1,7 @@
 module Mentor
   class TeamSearchesController < MentorController
+    before_action :require_onboarded
+
     def new
       unless current_mentor.valid_coordinates?
         redirect_to mentor_location_details_path(

@@ -1,6 +1,8 @@
-<% unless hidden ||= false %>
-  <h1 class="content-heading">Join a team</h1>
+<h1 class="margin--none padding--none">Join a team</h1>
 
+<% if hidden ||= false %>
+  <%= render 'explanations/feature_not_available', feature: :join_team %>
+<% else %>
   <% if SeasonToggles.judging_enabled_or_between? %>
     <p>
       <%= t("views.team_member_invites.show.join_team_disabled_by_judging") %>

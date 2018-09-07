@@ -24,7 +24,8 @@ RSpec.describe "Mentors register with their location", :js do
   end
 
   it "saves location details" do
-    click_link "Update your location"
+    click_button "Registration"
+    click_button "Region"
 
     fill_in "City", with: "Chicago"
     fill_in "State / Province", with: "IL"

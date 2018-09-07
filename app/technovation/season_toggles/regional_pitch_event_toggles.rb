@@ -31,6 +31,10 @@ class SeasonToggles
       def select_regional_pitch_event?
         convert_to_bool(store.get(:select_regional_pitch_event))
       end
+
+      def events_disabled?
+        not select_regional_pitch_event?
+      end
     end
   end
 end

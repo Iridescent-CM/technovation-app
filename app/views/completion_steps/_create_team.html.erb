@@ -1,6 +1,8 @@
-<% unless hidden ||= false %>
-  <h1 class="content-heading">Register a new team</h1>
+<h1 class="margin--none padding--none">Create a new team</h1>
 
+<% if hidden ||= false %>
+  <%= render 'explanations/feature_not_available', feature: :create_team %>
+<% else %>
   <p>
     Create your own team and then invite your other team members,
     or let team members find you.

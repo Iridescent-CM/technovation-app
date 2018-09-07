@@ -27,6 +27,10 @@ class SeasonToggles
       def display_scores?
         convert_to_bool(store.get(:display_scores))
       end
+
+      def scores_disabled?
+        not display_scores?
+      end
     end
   end
 end

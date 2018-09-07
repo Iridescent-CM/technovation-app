@@ -17,12 +17,32 @@
     <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
       <div class="grid__cell">
         <h1 class="page-heading">
-          {{ currentAccount.name }}
+          {{ currentAccountName }}
 
-          <slot name="survey-links"></slot>
+          <small><slot name="survey-links" /></small>
 
           <small>
             <drop-down label="More Information">
+               <h6>
+                Curriculum
+                <small>
+                  <a
+                    href="https://www.technovationchallenge.org/curriculum-intro/registered"
+                    target="_blank"
+                  >Open the Technovation Curriculum</a>
+                </small>
+              </h6>
+
+              <h6>
+                Submission Guide
+                <small>
+                  <a
+                    href="https://www.technovationchallenge.org/submission-guidelines/"
+                    target="_blank"
+                  >Read the Submission Guidelines</a>
+                </small>
+              </h6>
+
               <h6>
                 Submission Guide
                 <small>
@@ -58,7 +78,7 @@ import { createNamespacedHelpers } from 'vuex'
 import DropDown from 'components/DropDown'
 import Icon from 'components/Icon'
 
-const { mapState } = createNamespacedHelpers('student')
+const { mapGetters } = createNamespacedHelpers('authenticated')
 
 export default {
   name: 'dashboard-header',
@@ -68,6 +88,6 @@ export default {
     Icon,
   },
 
-  computed: mapState(['currentAccount']),
+  computed: mapGetters(['currentAccountName']),
 }
 </script>

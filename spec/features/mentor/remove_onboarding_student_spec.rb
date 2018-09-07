@@ -9,7 +9,7 @@ RSpec.feature "Remove an onboarding student" do
     TeamRosterManaging.add(team, [student, mentor])
 
     sign_in(mentor)
-    click_link team.name
+    within("#find-team") { click_link team.name }
 
     within(".onboarding_students") do
       click_link "remove this member"

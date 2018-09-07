@@ -92,7 +92,7 @@ import { createNamespacedHelpers } from 'vuex'
 import TabLink from 'tabs/components/TabLink'
 
 const { mapState, mapGetters } = createNamespacedHelpers('registration')
-const { mapState: mapStudentState } = createNamespacedHelpers('student')
+const { mapState: mapAuthState } = createNamespacedHelpers('authenticated')
 
 const Tooltips = {
   MUST_AGREE_TERMS:         'You must agree to the data use terms to continue',
@@ -119,7 +119,7 @@ export default {
       'profileChoice',
     ]),
 
-    ...mapStudentState([
+    ...mapAuthState([
       'currentAccount',
     ]),
 
