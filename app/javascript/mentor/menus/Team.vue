@@ -83,6 +83,14 @@ export default {
       return !!this.backgroundCheck.isClear
     },
 
+    bioLabel () {
+      if (this.isBioFilled) {
+        return 'Thank you for your summary!'
+      } else {
+        return 'Tell us more about yourself'
+      }
+    },
+
     consentStatusLabel () {
       if (this.isConsentSigned) {
         return `Signed on ${new Date(this.consentWaiver.signedAtEpoch).toDateString()}`
