@@ -55,8 +55,6 @@
         current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
         consent_waiver: ConsentSerializer.new(current_mentor.consent_waiver).serialized_json,
         background_check: BackgroundCheckSerializer.new(current_mentor.background_check).serialized_json,
-        previous_attempt: AccountSerializer.new(current_account).serialized_json,
-        # TODO: make original registration wizard open to currentAccount ?
         profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
         profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
         profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
