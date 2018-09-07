@@ -60,6 +60,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import menuMixin from 'mixins/menu'
+import tooltipsMixin from 'mixins/tooltips'
 
 const { mapGetters } = createNamespacedHelpers('authenticated')
 
@@ -69,18 +70,12 @@ import RegistrationMenu from 'registration/DashboardMenu'
 import JudgingMenu from './menus/Judging'
 import TeamMenu from './menus/Team'
 
-const Tooltips = {
-  MUST_HAVE_PERMISSION_ON_TEAM: 'You must be on a team and have parental consent to work on your submission',
-  MUST_HAVE_PERMISSION: 'You must have parental consent to work on your submission',
-  MUST_BE_ON_TEAM: 'You must be on a team to work on your submission',
-  AVAILABLE_LATER: 'This feature will open later in the Season',
-}
-
 export default {
   name: 'dashboard-menu',
 
   mixins: [
     menuMixin,
+    tooltipsMixin,
   ],
 
   components: {
@@ -88,10 +83,6 @@ export default {
     RegistrationMenu,
     TeamMenu,
     JudgingMenu,
-  },
-
-  created () {
-    this.Tooltips = Tooltips
   },
 
   computed: {
@@ -149,12 +140,12 @@ export default {
 
     submissionDisabledTooltipMessage () {
       if (!this.isOnTeam && !this.consentSigned)
-        return Tooltips.MUST_HAVE_PERMISSION_ON_TEAM
+        return this.Tooltips.student.submissions.MUST_HAVE_PERMISSION_ON_TEAM
 
       if (!this.consentSigned)
-        return Tooltips.MUST_HAVE_PERMISSION
+        return this.Tooltips.student.submissions.MUST_HAVE_PERMISSION
 
-      return Tooltips.MUST_BE_ON_TEAM
+      return this.Tooltips.student.submissions.MUST_BE_ON_TEAM
     },
   },
 }
