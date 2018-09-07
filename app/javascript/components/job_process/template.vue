@@ -16,6 +16,17 @@ import { fetchGetParameterValue } from 'utilities/utilities'
 import Icon from '../Icon'
 
 export default {
+  components: {
+    Icon,
+  },
+
+  props: {
+    statusUrl: {
+      type: String,
+      required: true,
+    }
+  },
+
   data () {
     return {
       interval: null,
@@ -23,7 +34,17 @@ export default {
     }
   },
 
-  props: ['statusUrl'],
+  mounted () {
+    this.interval = setInterval(() => {
+      window.axios.get(this.statusUrl).then(({ data }) => {
+        this.handleJSON(data)
+      })
+    }, 500)
+  },
+
+  destroyed () {
+    clearInterval(this.interval)
+  },
 
   computed: {
     showLoading () {
@@ -79,18 +100,6 @@ export default {
     goBack () {
       window.location.href = this.backUrl
     }
-  },
-
-  mounted () {
-    this.interval = setInterval(() => {
-      window.axios.get(this.statusUrl).then(({ data }) => {
-        this.handleJSON(data)
-      })
-    }, 500)
-  },
-
-  components: {
-    Icon,
   },
 }
 </script>
