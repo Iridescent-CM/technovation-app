@@ -26,20 +26,8 @@ basicProfileRoute.props = {
 const initApp = () => {
   const rootElem = document.getElementById('vue-data-registration')
   if (!rootElem) return false
-
-  const { data: currentTeams } = JSON.parse(rootElem.dataset.currentTeams)
-  const { data: { id: accountId, attributes: accountAttributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
-  const { data: { id: mentorId, attributes: mentorAttributes }} = JSON.parse(rootElem.dataset.currentMentor)
-  const { data: { id: consentId, attributes: consentAttributes }} = JSON.parse(rootElem.dataset.consentWaiver)
-  const { data: { id: bgCheckId, attributes: bgCheckAttributes }} = JSON.parse(rootElem.dataset.backgroundCheck)
-
-  const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
-  const currentMentor = Object.assign({ id: parseInt(mentorId) }, store.state.registration, mentorAttributes)
-  const consentWaiver = Object.assign({ id: parseInt(consentId) }, store.state.authenticated, consentAttributes)
-  const backgroundCheck = Object.assign({ id: parseInt(bgCheckId) }, store.state.authenticated, bgCheckAttributes)
-
-  store.dispatch('registration/initAccount', currentAccount)
-  store.dispatch('authenticated/initApp', { currentAccount, currentMentor, currentTeams, consentWaiver, backgroundCheck })
+  store.dispatch('authenticated/initApp', rootElem.dataset)
+  store.dispatch('registration/initAccount', rootElem.dataset)
 }
 
 const initiateApp = (to, from, next) => {

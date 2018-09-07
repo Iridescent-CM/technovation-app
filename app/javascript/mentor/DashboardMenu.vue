@@ -16,7 +16,7 @@
       :class="teamTabLinkClasses"
       :to="{ name: 'find-team', meta: { active: teamPagesActive } }"
       :condition-to-enable="true"
-      :condition-to-complete="consentSigned && isOnTeam"
+      :condition-to-complete="isConsentSigned && isOnTeam"
     >
       Build your team
       <div slot="subnav" class="tabs-menu__child-menu" v-if="teamPagesActive">
@@ -28,7 +28,7 @@
       :class="submissionTabLinkClasses"
       :to="{ name: 'submission', meta: { active: submissionPagesActive } }"
       :disabled-tooltip="submissionDisabledTooltipMessage"
-      :condition-to-enable="consentSigned && isOnTeam"
+      :condition-to-enable="isConsentSigned && isOnTeam"
       :condition-to-complete="submissionComplete"
     >Submit your project</tab-link>
 
@@ -60,7 +60,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import menuMixin from 'mixins/menu'
 
-const { mapState } = createNamespacedHelpers('authenticated')
+const { mapGetters } = createNamespacedHelpers('authenticated')
 
 import TabLink from 'tabs/components/TabLink'
 
@@ -94,15 +94,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTeams', 'consentWaiver', 'backgroundCheck']),
-
-    consentSigned () {
-      return !!this.consentWaiver.isSigned
-    },
-
-    isOnTeam () {
-      return !!this.currentTeams.length
-    },
+    ...mapGetters(['isOnTeam', 'isConsentSigned']),
 
     submissionComplete () {
       return false
@@ -159,10 +151,10 @@ export default {
     },
 
     submissionDisabledTooltipMessage () {
-      if (!this.isOnTeam && !this.consentSigned)
+      if (!this.isOnTeam && !this.isConsentSigned)
         return Tooltips.MUST_SIGN_CONSENT_ON_TEAM
 
-      if (!this.consentSigned)
+      if (!this.isConsentSigned)
         return Tooltips.MUST_SIGN_CONSENT
 
       return Tooltips.MUST_BE_ON_TEAM

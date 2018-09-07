@@ -3,27 +3,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex'
-
-import Icon from 'components/Icon'
-import TabLink from 'tabs/components/TabLink'
 import StickySidebar from 'directives/sticky-sidebar'
 
 export default {
-  beforeRouteEnter (_to, _from, next) {
-    next(vm => {
-      // need to check something with vm first?
-      next()
-    })
-  },
-
   directives: {
     'sticky-sidebar': StickySidebar,
-  },
-
-  components: {
-    Icon,
-    TabLink,
   },
 
   props: {
@@ -33,19 +17,6 @@ export default {
         return []
       },
     },
-  },
-
-  computed: {
-    ...mapState([]),
-
-    ...mapGetters([]),
-  },
-
-  watch: {
-  },
-
-  methods: {
-    ...mapActions([]),
   },
 }
 </script>

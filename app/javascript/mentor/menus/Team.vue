@@ -55,7 +55,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState } = createNamespacedHelpers('authenticated')
+const { mapGetters } = createNamespacedHelpers('authenticated')
 
 import TabLink from 'tabs/components/TabLink'
 
@@ -65,23 +65,15 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentAccount', 'currentMentor', 'currentTeams', 'consentWaiver']),
-
-    isBioFilled () {
-      return !!this.currentMentor.bio && this.currentMentor.bio.length
-    },
-
-    isConsentSigned () {
-      return !!this.consentWaiver && this.consentWaiver.isSigned
-    },
-
-    isBackgroundCheckWaived () {
-      return this.currentAccount.countryCode != 'US'
-    },
-
-    isBackgroundCheckClear () {
-      return !!this.backgroundCheck.isClear
-    },
+    ...mapGetters([
+      'isBackgroundCheckClear',
+      'isBackgroundCheckWaived',
+      'isBioFilled',
+      'isOnTeam',
+      'isConsentSigned',
+      'consentWaiverSignedAtEpoch',
+      'backgroundCheckUpdatedAtEpoch',
+    ]),
 
     bioLabel () {
       if (this.isBioFilled) {
@@ -93,7 +85,7 @@ export default {
 
     consentStatusLabel () {
       if (this.isConsentSigned) {
-        return `Signed on ${new Date(this.consentWaiver.signedAtEpoch).toDateString()}`
+        return `Signed on ${new Date(this.consentWaiverSignedAtEpoch).toDateString()}`
       } else {
         return 'You must sign the consent waiver to volunteer'
       }
@@ -103,7 +95,7 @@ export default {
       if (this.isBackgroundCheckWaived) {
         return 'Not required at this time'
       } else if (this.isBackgroundCheckClear) {
-        return `Cleared on ${new Date(this.backgrouncCheck.updatedAtEpoch).toDateString()}`
+        return `Cleared on ${new Date(this.backgroundCheckUpdatedAtEpoch).toDateString()}`
       } else {
         return 'You must sign the consent waiver to volunteer'
       }
@@ -111,7 +103,7 @@ export default {
 
     findTeamLabel () {
       if (this.isOnTeam) {
-        return `You are on the team ${this.currentTeams[0].name}`
+        return `You are on a team`
       } else {
         return 'Look for an existing team to join'
       }
@@ -119,14 +111,10 @@ export default {
 
     createTeamLabel () {
       if (this.isOnTeam) {
-        return `You are on the team ${this.currentTeams[0].name}`
+        return `You are on the team`
       } else {
         return 'Form a new team with others'
       }
-    },
-
-    isOnTeam () {
-      return this.currentTeams.length
     },
   },
 }
