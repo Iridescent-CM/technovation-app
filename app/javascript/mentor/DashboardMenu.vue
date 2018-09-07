@@ -35,7 +35,7 @@
     <tab-link
       :class="judgingTabLinkClasses"
       :to="{ name: 'events', meta: { active: judgingPagesActive } }"
-      :disabled-tooltip="Tooltips.AVAILABLE_LATER"
+      :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="false"
       :condition-to-complete="false"
     >
@@ -49,7 +49,7 @@
     <tab-link
       :class="scoresTabLinkClasses"
       :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
-      :disabled-tooltip="Tooltips.AVAILABLE_LATER"
+      :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="false"
       :condition-to-complete="false"
     >Scores & Feedback</tab-link>
@@ -143,12 +143,12 @@ export default {
 
     submissionDisabledTooltipMessage () {
       if (!this.isOnTeam && !this.isConsentSigned)
-        return Tooltips.mentor.submissions.MUST_SIGN_CONSENT_ON_TEAM
+        return this.tooltips.mentor.submissions.MUST_SIGN_CONSENT_ON_TEAM
 
       if (!this.isConsentSigned)
-        return Tooltips.mentor.submissions.MUST_SIGN_CONSENT
+        return this.tooltips.mentor.submissions.MUST_SIGN_CONSENT
 
-      return Tooltips.mentor.submissions.MUST_BE_ON_TEAM
+      return this.tooltips.mentor.submissions.MUST_BE_ON_TEAM
     },
   },
 }

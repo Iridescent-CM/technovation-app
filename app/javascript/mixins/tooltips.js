@@ -20,6 +20,6 @@ const Tooltips = {
 
 export default {
   created () {
-    this.Tooltips = Tooltips
+    this.tooltips = Tooltips
   },
 }
