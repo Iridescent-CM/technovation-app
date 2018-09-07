@@ -63,7 +63,7 @@ module StoreLocation
 
     def log_message(value)
       [
-        "[Account##{context.current_account.id}]",
+        "[Account##{account.id}]",
         "[SOURCE #{source}]",
         "[COOKIE #{String(value)}]",
       ].join(" ")

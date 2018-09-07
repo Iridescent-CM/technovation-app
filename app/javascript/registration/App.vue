@@ -11,7 +11,7 @@
 
     <div :class="menuGridColumn" v-if="!embedded">
       <div v-sticky-sidebar="stickySidebarClasses">
-        <Menu />
+        <dashboard-menu />
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
 import { createNamespacedHelpers } from 'vuex'
 
 import StickySidebar from 'directives/sticky-sidebar'
-import Menu from './Menu'
+import DashboardMenu from './DashboardMenu'
 
 const { mapState } = createNamespacedHelpers('registration')
 
@@ -33,7 +33,7 @@ export default {
   },
 
   components: {
-    Menu,
+    DashboardMenu,
   },
 
   props: {

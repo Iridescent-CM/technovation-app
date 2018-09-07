@@ -102,7 +102,7 @@ const Tooltips = {
 }
 
 export default {
-  name: 'registration-menu',
+  name: 'dashboard-menu',
 
   components: {
     TabLink,

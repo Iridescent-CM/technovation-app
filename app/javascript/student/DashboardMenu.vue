@@ -65,7 +65,7 @@ const { mapState } = createNamespacedHelpers('student')
 
 import TabLink from 'tabs/components/TabLink'
 
-import RegistrationMenu from 'registration/Menu'
+import RegistrationMenu from 'registration/DashboardMenu'
 import JudgingMenu from './menus/Judging'
 import TeamMenu from './menus/Team'
 

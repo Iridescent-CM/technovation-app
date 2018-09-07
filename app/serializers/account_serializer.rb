@@ -7,8 +7,9 @@ class AccountSerializer
   has_one :student_profile, if: ->(record) { record.student_profile }
   has_one :mentor_profile,  if: Proc.new { |record| record.mentor_profile }
 
-  attributes :name, :email, :date_of_birth, :city, :latitude, :longitude, :first_name,
-   :last_name, :gender, :referred_by, :referred_by_other
+  attributes :name, :email, :date_of_birth, :city, :state, :country, :state_code,
+    :country_code, :latitude, :longitude, :first_name, :last_name, :gender,
+    :referred_by, :referred_by_other
 
   attribute(:api_root) do |account|
     "#{account.scope_name}"
@@ -67,24 +68,6 @@ class AccountSerializer
     else
       account.created_at.strftime("%b %e, %Y")
     end
-  end
-
-  attribute(:state) do |account|
-    if country = Carmen::Country.coded(account.country)
-      country.subregions.coded((account.state_province || "").sub(".", ""))
-    end
-  end
-
-  attribute(:state_code) do |account|
-    account.state_province
-  end
-
-  attribute(:country_code) do |account|
-    account.country
-  end
-
-  attribute(:country) do |account|
-    Carmen::Country.coded(account.country).try(:name)
   end
 
   attribute(:current_team_id) do |account|
