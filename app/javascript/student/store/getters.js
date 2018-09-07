@@ -76,4 +76,8 @@ export default {
             !getters.pendingMentorInviteIds.length &&
               !getters.pendingMentorJoinRequestIds.length
   },
+
+  submissionComplete (state) {
+    return digStateAttributes(state, 'submission', 'isComplete')
+  },
 }
