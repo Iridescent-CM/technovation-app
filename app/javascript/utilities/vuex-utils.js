@@ -24,7 +24,10 @@ export const digStateAttributes  = (state, key, attribute, conditionFunc) => {
     if (!conditionFunc)
       return value
 
-    return conditionFunc(value)
+    if (!!value)
+      return conditionFunc(value)
+
+    return value
   } else {
     return undefined
   }

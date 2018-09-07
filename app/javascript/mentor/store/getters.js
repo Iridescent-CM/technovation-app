@@ -1,6 +1,10 @@
 import { digStateAttributes } from 'utilities/vuex-utils'
 
 export default {
+  currentAccountName (state) {
+    return digStateAttributes(state, 'currentAccount', 'name')
+  },
+
   isBioFilled (state) {
     return digStateAttributes(state, 'currentMentor', 'bio', bio => bio.length)
   },

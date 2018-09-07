@@ -3,13 +3,10 @@
     <div class="grid__col-sm-6 grid__col--bleed-y">
       <div class="grid__cell">
         <h1 class="page-heading">
-          Student Dashboard
+          Mentor Dashboard
 
-          <small>
-            <a href="https://iridescentlearning.org/internet-safety/" target="_blank">
-              Internet Safety Training
-            </a>
-          </small>
+          <small><slot name="ra-switch-link" /></small>
+          <small><slot name="judge-switch-link" /></small>
         </h1>
       </div>
     </div>
@@ -23,23 +20,13 @@
 
           <small>
             <drop-down label="More Information">
-               <h6>
+              <h6>
                 Curriculum
                 <small>
                   <a
                     href="https://www.technovationchallenge.org/curriculum-intro/registered"
                     target="_blank"
                   >Open the Technovation Curriculum</a>
-                </small>
-              </h6>
-
-              <h6>
-                Submission Guide
-                <small>
-                  <a
-                    href="https://www.technovationchallenge.org/submission-guidelines/"
-                    target="_blank"
-                  >Read the Submission Guidelines</a>
                 </small>
               </h6>
 

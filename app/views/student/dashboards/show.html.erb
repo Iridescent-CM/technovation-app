@@ -12,18 +12,7 @@
     } %>
   <app>
     <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-      <template slot="survey-links">
-        <small>
-          <%= link_to SeasonToggles.survey_link(current_scope, "text"),
-            SeasonToggles.survey_link(
-              current_scope,
-              "url",
-              format_url: true,
-              account: current_account
-            ),
-            target: "_blank" %>
-        </small>
-      </template>
+      <template slot="survey-links"><%= render 'program_survey' %></template>
     <% end %>
 
     <% if not current_student.email_confirmed? %>

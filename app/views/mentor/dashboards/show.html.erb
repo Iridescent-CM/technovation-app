@@ -1,65 +1,50 @@
-<div class="grid dashboard-notices">
-  <div class="grid__col-sm-6 grid__col--bleed-y">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        Mentor
+<div id="vue-enable-mentor-app" class="hidden">
+  <%= content_tag :div,
+    nil,
+    id: "vue-data-registration",
+    data: {
+      current_account: AccountSerializer.new(current_account).serialized_json,
+      current_mentor: MentorProfileSerializer.new(current_mentor).serialized_json,
+      current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
+      consent_waiver: ConsentSerializer.new(current_mentor.consent_waiver).serialized_json,
+      background_check: BackgroundCheckSerializer.new(current_mentor.background_check).serialized_json,
+      profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
+      profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
+      profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
+    } %>
+  <app>
+    <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+      <template slot="survey-links"><%= render 'program_survey' %></template>
+    <% end %>
 
-        <small>
-          <%= render 'program_survey' %>
-        </small>
-      </h1>
-    </div>
-  </div>
+    <% if current_mentor.is_a_judge? %>
+      <template slot="judge-switch-link">
+        <%= link_to "Switch to Judge mode",
+         judge_dashboard_path,
+         data: { turbolinks: false } %>
+      </template>
+    <% end %>
 
-  <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= current_mentor.name %>
+    <% if current_mentor.is_an_ambassador? %>
+      <template slot="ra-switch-link">
+        <%= link_to "Switch to RA mode",
+          regional_ambassador_dashboard_path,
+          data: { turbolinks: false } %>
+      </template>
+    <% end %>
 
-        <% if current_mentor.is_a_judge? %>
-          <small>
-            <%= link_to "Switch to Judge mode", judge_dashboard_path %>
-          </small>
-        <% end %>
-
-        <% if current_mentor.is_an_ambassador? %>
-          <small>
-            <%= link_to "Switch to RA mode",
-              regional_ambassador_dashboard_path,
-              data: { turbolinks: false } %>
-          </small>
-        <% end %>
-      </h1>
-    </div>
-  </div>
-</div>
-
-<% if not current_mentor.email_confirmed? %>
-  <%= render 'completion_steps/confirm_changed_email', profile: current_mentor %>
-<% elsif !current_session.authenticated? && current_mentor.needs_mentor_type? %>
-  <div class="grid grid--justify-space-around">
-    <div class="grid__col-8">
-      <div class="panel">
-        <%= render 'completion_steps/select_mentor_type' %>
+    <% if not current_mentor.email_confirmed? %>
+      <%= render 'completion_steps/confirm_changed_email',
+        profile: current_mentor %>
+    <% elsif !current_session.authenticated? && current_mentor.needs_mentor_type? %>
+      <div class="grid grid--justify-space-around">
+        <div class="grid__col-8">
+          <div class="panel">
+            <%= render 'completion_steps/select_mentor_type' %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-<% else %>
-  <div id="vue-enable-mentor-app" class="hidden">
-    <%= content_tag :div,
-      nil,
-      id: "vue-data-registration",
-      data: {
-        current_account: AccountSerializer.new(current_account).serialized_json,
-        current_mentor: MentorProfileSerializer.new(current_mentor).serialized_json,
-        current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
-        consent_waiver: ConsentSerializer.new(current_mentor.consent_waiver).serialized_json,
-        background_check: BackgroundCheckSerializer.new(current_mentor.background_check).serialized_json,
-        profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
-        profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
-        profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
-      } %>
-    <app>
+    <% else %>
       <div slot="change-email">
         <%= render 'profiles/email' %>
       </div>
@@ -108,8 +93,8 @@
       <div slot="scores">
         <%= render 'slots/mentor/scores' %>
       </div>
-    </app>
-  </div>
-<% end %>
+    <% end %>
+  </app>
+</div>
 
 <%= render 'program_survey_modal' %>
