@@ -14,26 +14,38 @@ export const debounce = function (func, wait = 500) {
   }
 }
 
-export const fetchGetParameters = function () {
-  return window.location.search.slice(1).split('&')
-    .map((parameter) => {
-      const keyValuePair = parameter.split('=')
-      return {
-        [`${keyValuePair[0]}`]: decodeURIComponent(keyValuePair[1]),
-      }
+export const urlHelpers = (() => {
+  const publicMethods = {}
+
+  publicMethods.getWindowSearch = () => {
+    return window.location.search
+  }
+
+  publicMethods.fetchGetParameters = () => {
+    return publicMethods.getWindowSearch()
+      .slice(1)
+      .split('&')
+      .map((parameter) => {
+        const keyValuePair = parameter.split('=')
+        return {
+          [`${keyValuePair[0]}`]: decodeURIComponent(keyValuePair[1]),
+        }
+      })
+  }
+
+  publicMethods.fetchGetParameterValue = (key) => {
+    const parameters = publicMethods.fetchGetParameters()
+
+    const foundParamater = parameters.find((parameter) => {
+      return Boolean(parameter[key])
     })
-}
 
-export const fetchGetParameterValue = function (key) {
-  const parameters = fetchGetParameters()
+    if (foundParamater && foundParamater[key]) {
+      return foundParamater[key]
+    }
 
-  const foundParamater = parameters.find((parameter) => {
-    return Boolean(parameter[key])
-  })
-
-  if (foundParamater && foundParamater[key]) {
     return foundParamater[key]
   }
 
-  return foundParamater[key]
-}
+  return publicMethods
+})()

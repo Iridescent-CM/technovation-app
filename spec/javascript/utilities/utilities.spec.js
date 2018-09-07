@@ -1,6 +1,15 @@
 import * as Utils from 'utilities/utilities'
 
 describe('Helper Utilities', () => {
+  beforeEach(() => {
+    Utils.urlHelpers.getWindowSearch = () => {
+      return '?back=%2Fstudent%2Fteam_submissions%2Fno-name-yet-by-all-star-team%3Fpiece%3Dsource_code' +
+        '&team_id=11600' +
+        '&bucket=technovation-uploads-dev' +
+        '&key=direct_uploads%2F6a534b62-cb41-4686-875a-59d0200399ab%2Ftesting.zip' +
+        '&etag=040215d1f4efa50e7571213bf1033f21'
+    }
+  })
 
   describe('isEmptyObject', () => {
 
@@ -71,4 +80,28 @@ describe('Helper Utilities', () => {
     })
   })
 
+  describe('urlHelpers', () => {
+    describe('fetchGetParameters', () => {
+      it('returns an array of objects with GET parameter key/value pairs', () => {
+        const parameters = Utils.urlHelpers.fetchGetParameters()
+
+        expect(parameters).toEqual([
+          { back: '/student/team_submissions/no-name-yet-by-all-star-team?piece=source_code' },
+          { team_id: '11600' },
+          { bucket: 'technovation-uploads-dev' },
+          { key: 'direct_uploads/6a534b62-cb41-4686-875a-59d0200399ab/testing.zip' },
+          { etag: '040215d1f4efa50e7571213bf1033f21' },
+        ])
+      })
+    })
+
+    describe('fetchGetParameterValue', () => {
+      it('returns the value for a passed GET parameter key', () => {
+        const value = Utils.urlHelpers.fetchGetParameterValue('back')
+
+        expect(value)
+          .toEqual('/student/team_submissions/no-name-yet-by-all-star-team?piece=source_code')
+      })
+    })
+  })
 })

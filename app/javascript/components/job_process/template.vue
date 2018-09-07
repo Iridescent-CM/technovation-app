@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { fetchGetParameterValue } from 'utilities/utilities'
+import { urlHelpers } from 'utilities/utilities'
 import Icon from '../Icon'
 
 export default {
@@ -87,7 +87,7 @@ export default {
   },
 
   methods: {
-    fetchGetParameterValue,
+    fetchGetParameterValue: urlHelpers.fetchGetParameterValue,
 
     handleJSON (json) {
       this.statusCode = json.status
