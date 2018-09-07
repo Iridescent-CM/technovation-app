@@ -1,32 +1,20 @@
-const digState = (state, key, attribute, conditionFunc) => {
-  const data = state[key].data
-
-  if (data) {
-    const value = state[key].data.attributes[attribute]
-    if (!conditionFunc)
-      return value
-
-    return conditionFunc(value)
-  } else {
-    return undefined
-  }
-}
+import { digStateAttributes } from 'utilities/vuex-utils'
 
 export default {
   isBioFilled (state) {
-    return digState(state, 'currentMentor', 'bio', bio => bio.length)
+    return digStateAttributes(state, 'currentMentor', 'bio', bio => bio.length)
   },
 
   isConsentSigned (state) {
-    return digState(state, 'consentWaiver', 'isSigned')
+    return digStateAttributes(state, 'consentWaiver', 'isSigned')
   },
 
   isBackgroundCheckClear (state) {
-    return digState(state, 'backgroundCheck', 'isClear')
+    return digStateAttributes(state, 'backgroundCheck', 'isClear')
   },
 
   isBackgroundCheckWaived (state) {
-    return digState(state, 'currentAccount', 'countryCode', code => code !== 'US')
+    return digStateAttributes(state, 'currentAccount', 'countryCode', code => code !== 'US')
   },
 
   isOnTeam (state) {
@@ -34,10 +22,10 @@ export default {
   },
 
   backgroundCheckUpdatedAtEpoch (state) {
-    return digState(state, 'backgroundCheck', 'updatedAtEpoch')
+    return digStateAttributes(state, 'backgroundCheck', 'updatedAtEpoch')
   },
 
   consentWaiverSignedAtEpoch (state) {
-    return digState(state, 'consentWaiver', 'signedAtEpoch')
+    return digStateAttributes(state, 'consentWaiver', 'signedAtEpoch')
   },
 }

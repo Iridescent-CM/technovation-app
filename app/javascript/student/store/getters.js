@@ -1,42 +1,4 @@
-const digStateType = (state, key) => {
-  if (state[key]) {
-    return state[key].type
-  } else {
-    return undefined
-  }
-}
-
-const digStateData = (state, key, property, conditionFunc) => {
-  const data = state[key].data
-
-  if (data) {
-    const value = state[key].data[property]
-    if (value) {
-      if (!conditionFunc)
-        return value
-
-      return conditionFunc(value)
-    } else {
-      return undefined
-    }
-  } else {
-    return undefined
-  }
-}
-
-const digStateAttributes  = (state, key, attribute, conditionFunc) => {
-  const attributes = digStateData(state, key, 'attributes')
-
-  if (attributes) {
-    const value = attributes[attribute]
-    if (!conditionFunc)
-      return value
-
-    return conditionFunc(value)
-  } else {
-    return undefined
-  }
-}
+import { digStateAttributes, digStateData } from 'utilities/vuex-utils'
 
 export default {
   currentAccountName (state) {
