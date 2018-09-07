@@ -18,7 +18,8 @@ import Icon from '../Icon'
 export default {
   data () {
     return {
-      statusCode: 'init'
+      interval: null,
+      statusCode: 'init',
     }
   },
 
@@ -67,16 +68,19 @@ export default {
 
     handleJSON (json) {
       this.statusCode = json.status
+
+      if (this.statusCode === 'complete' || this.statusCode === 'error') {
+        clearInterval(this.interval)
+      }
     },
   },
 
   mounted () {
-    loopStatusCheck.bind(this)()
-
-    function loopStatusCheck () {
-      $.get(this.statusUrl, this.handleJSON)
-      setTimeout(loopStatusCheck.bind(this), 500)
-    }
+    this.interval = setInterval(() => {
+      window.axios.get(this.statusUrl).then(({ data }) => {
+        this.handleJSON(data)
+      })
+    }, 500)
   },
 
   components: {
