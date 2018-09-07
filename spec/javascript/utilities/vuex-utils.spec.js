@@ -28,6 +28,22 @@ describe("vuex-utils", () => {
       expect(vuexUtils.digStateAttributes(state, 'foo', 'isSigned')).toEqual(undefined)
     })
 
+    it("returns empty values", () => {
+      const state = {
+        foo: { data: { attributes: { bar: null } } },
+      }
+
+      expect(vuexUtils.digStateAttributes(state, 'foo', 'bar', bar => bar.baz)).toEqual(null)
+    })
+
+    it("accepts callbacks to check conditions", () => {
+      const state = {
+        foo: { data: { attributes: { bar: 0 } } },
+      }
+
+      expect(vuexUtils.digStateAttributes(state, 'foo', 'bar', bar => !!bar)).toEqual(false)
+    })
+
     it("returns the object's data", () => {
       const state = {
         foo: { data: { attributes: { isSigned: false } } },
