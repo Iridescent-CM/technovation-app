@@ -37,13 +37,15 @@ export default {
     statusMsg () {
       switch(this.statusCode) {
         case 'init':
-          return "Creating a job for your file..."
+          return 'Creating a job for your file...'
         case 'queued':
-          return "Your file is waiting in line..."
+          return 'Your file is waiting in line...'
         case 'busy':
-          return "Your file is being processed..."
+          return 'Your file is being processed...'
+        case 'error':
+          return 'There was an error processing your file, please try again'
         case 'complete':
-          return "Your file is ready!"
+          return 'Your file is ready!'
       }
     },
 
