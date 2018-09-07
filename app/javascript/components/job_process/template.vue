@@ -6,7 +6,7 @@
     </div>
 
     <p v-if="statusCode === 'complete'">
-      <a class="button" :href="backUrl">Okay</a>
+      <a class="button" @click.stop.prevent="goBack">Okay</a>
     </p>
   </div>
 </template>
@@ -73,6 +73,10 @@ export default {
         clearInterval(this.interval)
       }
     },
+
+    goBack () {
+      window.location.href = this.backUrl
+    }
   },
 
   mounted () {
