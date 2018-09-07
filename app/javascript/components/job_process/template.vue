@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { fetchGetParameterValue } from 'utilities/utilities'
 import Icon from '../Icon'
 
 export default {
@@ -29,7 +30,7 @@ export default {
     },
 
     backUrl () {
-      return window.location.search.back || '/'
+      return this.fetchGetParameterValue('back') || '/'
     },
 
     statusMsg () {
@@ -62,6 +63,8 @@ export default {
   },
 
   methods: {
+    fetchGetParameterValue,
+
     handleJSON (json) {
       this.statusCode = json.status
     },
