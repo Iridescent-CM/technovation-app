@@ -58,7 +58,7 @@ import { createNamespacedHelpers } from 'vuex'
 import DropDown from 'components/DropDown'
 import Icon from 'components/Icon'
 
-const { mapState } = createNamespacedHelpers('student')
+const { mapState } = createNamespacedHelpers('authenticated')
 
 export default {
   name: 'dashboard-header',
