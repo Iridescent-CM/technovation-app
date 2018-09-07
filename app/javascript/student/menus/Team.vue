@@ -33,7 +33,7 @@
     <tab-link
       :to="{ name: 'find-mentor' }"
       css-classes="tabs__menu-link--has-subtitles"
-      :condition-to-complete="mentorNotPending"
+      :condition-to-complete="currentTeamHasMentorsNotPending"
       :condition-to-enable="true"
     >
       Add a mentor to your team
@@ -45,7 +45,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState } = createNamespacedHelpers('authenticated')
+const { mapGetters } = createNamespacedHelpers('authenticated')
 
 import TabLink from 'tabs/components/TabLink'
 
@@ -55,15 +55,21 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentAccount', 'currentTeam', 'parentalConsent']),
-
-    hasParentalConsent () {
-      return !!this.parentalConsent && this.parentalConsent.isSigned
-    },
+    ...mapGetters([
+      'hasParentalConsent',
+      'parentalConsentSignedAtEpoch',
+      'hasSavedParentalInfo',
+      'isOnTeam',
+      'currentTeamName',
+      'currentTeamHasMentorsNotPending',
+      'currentTeamMentorIds',
+      'pendingMentorInviteIds',
+      'pendingMentorJoinRequestIds',
+    ]),
 
     parentalConsentStatusLabel () {
       if (this.hasParentalConsent) {
-        return `Signed on ${new Date(this.parentalConsent.signedAtEpoch).toDateString()}`
+        return `Signed on ${new Date(this.parentalConsentSignedAtEpoch).toDateString()}`
       } else if (this.hasSavedParentalInfo) {
         return 'Waiting for parent to check email, sign form'
       } else {
@@ -71,13 +77,9 @@ export default {
       }
     },
 
-    hasSavedParentalInfo () {
-      return this.currentAccount.hasSavedParentalInfo
-    },
-
     findTeamLabel () {
       if (this.isOnTeam) {
-        return `You are on the team ${this.currentTeam.name}`
+        return `You are on the team ${this.currentTeamName}`
       } else {
         return 'Look for an existing team to join'
       }
@@ -85,7 +87,7 @@ export default {
 
     createTeamLabel () {
       if (this.isOnTeam) {
-        return `You are on the team ${this.currentTeam.name}`
+        return `You are on the team ${this.currentTeamName}`
       } else {
         return 'Form a new team with others'
       }
@@ -98,33 +100,11 @@ export default {
         return 'You are waiting for mentors to respond to your invites'
       } else if (this.pendingMentorJoinRequestIds.length) {
         return 'Mentors are waiting for your team to respond!'
-      } else if (this.mentorIds.length) {
+      } else if (this.currentTeamMentorIds.length) {
         return 'Your team has at least one mentor'
       } else {
         return 'Find a mentor for your team!'
       }
-    },
-
-    isOnTeam () {
-      return this.currentTeam && !!this.currentTeam.id
-    },
-
-    mentorNotPending () {
-      return this.mentorIds.length &&
-              !this.pendingMentorInviteIds.length &&
-                  !this.pendingMentorJoinRequestIds.length
-    },
-
-    pendingMentorInviteIds () {
-      return (this.currentTeam && this.currentTeam.pendingMentorInviteIds) || []
-    },
-
-    pendingMentorJoinRequestIds () {
-      return (this.currentTeam && this.currentTeam.pendingMentorJoinRequestIds) || []
-    },
-
-    mentorIds () {
-      return (this.currentTeam && this.currentTeam.mentorIds) || []
     },
   },
 }

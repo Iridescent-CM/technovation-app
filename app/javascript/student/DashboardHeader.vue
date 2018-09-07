@@ -17,7 +17,7 @@
     <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
       <div class="grid__cell">
         <h1 class="page-heading">
-          {{ currentAccount.name }}
+          {{ currentAccountName }}
 
           <slot name="survey-links"></slot>
 
@@ -58,7 +58,7 @@ import { createNamespacedHelpers } from 'vuex'
 import DropDown from 'components/DropDown'
 import Icon from 'components/Icon'
 
-const { mapState } = createNamespacedHelpers('authenticated')
+const { mapGetters } = createNamespacedHelpers('authenticated')
 
 export default {
   name: 'dashboard-header',
@@ -68,6 +68,6 @@ export default {
     Icon,
   },
 
-  computed: mapState(['currentAccount']),
+  computed: mapGetters(['currentAccountName']),
 }
 </script>

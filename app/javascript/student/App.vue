@@ -2,6 +2,7 @@
   <div>
     <dashboard-header>
       <div slot="survey-links"><slot name="survey-links" /></div>
+
       <div>
         <h6>
           Curriculum

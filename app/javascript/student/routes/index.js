@@ -26,17 +26,8 @@ basicProfileRoute.props = {
 const initApp = () => {
   const rootElem = document.getElementById('vue-data-registration')
   if (!rootElem) return false
-
-  const { data: { id: teamId, attributes: teamAttributes }} = JSON.parse(rootElem.dataset.currentTeam)
-  const { data: { id: accountId, attributes: accountAttributes, relationships }} = JSON.parse(rootElem.dataset.currentAccount)
-  const { data: { id: parentalConsentId, attributes: parentalConsentAttributes }} = JSON.parse(rootElem.dataset.parentalConsent)
-
-  const currentAccount = Object.assign({ id: parseInt(accountId) }, store.state.registration, accountAttributes, relationships)
-  const currentTeam = Object.assign({ id: parseInt(teamId) }, teamAttributes)
-  const parentalConsent = Object.assign({ id: parseInt(parentalConsentId) }, parentalConsentAttributes)
-
-  store.dispatch('registration/initAccount', currentAccount)
-  store.dispatch('authenticated/initApp', { currentAccount, currentTeam, parentalConsent })
+  store.dispatch('registration/initAccount', rootElem.dataset)
+  store.dispatch('authenticated/initApp', rootElem.dataset)
 }
 
 const initiateApp = (to, from, next) => {
