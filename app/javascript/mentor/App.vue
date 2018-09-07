@@ -16,19 +16,19 @@
     </div>
 
     <div class="grid__col-3 grid__col--bleed">
-      <Menu />
+      <dashboard-menu />
     </div>
   </div>
 </template>
 
 <script>
-import Menu from './Menu'
+import DashboardMenu from './DashboardMenu'
 
 export default {
   name: 'app',
 
   components: {
-    Menu,
+    DashboardMenu,
   },
 }
 </script>
