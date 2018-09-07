@@ -6,15 +6,21 @@ RSpec.describe Student::DashboardsController do
       it "adds the visitor's lat, lng" do
         student = FactoryBot.create(:student, :onboarded)
         sign_in(student)
+        cookie =
 
         expect {
           get :show
         }.to change {
-          controller.get_cookie(CookieNames::IP_GEOLOCATION)
-        }.to ({
-          'ip_address' => request.remote_ip,
-          'coordinates' => [student.latitude, student.longitude],
-        })
+          cookie = controller.get_cookie(CookieNames::IP_GEOLOCATION)
+          cookie && cookie['ip_address']
+        }.to(
+          request.remote_ip
+        ).and change {
+          cookie = controller.get_cookie(CookieNames::IP_GEOLOCATION)
+          cookie && cookie['coordinates']
+        }.to(
+          [student.latitude, student.longitude]
+        )
       end
     end
 
