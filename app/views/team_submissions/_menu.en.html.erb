@@ -125,7 +125,9 @@
         <%= link_to submission_progress_web_icon(
           submission,
           :code_checklist,
-          "Code checklist*"
+          submission.code_checklist_points > 0 ?
+            "Code checklist* (#{submission.code_checklist_points}/10)" :
+              "Code checklist*"
         ),
         [current_scope, submission, piece: :code_checklist] %>
 
