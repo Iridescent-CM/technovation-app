@@ -35,7 +35,7 @@
           class="submission-pieces__screenshot img-modal"
           :src="screenshot.src"
           :alt="screenshot.name"
-          :data-modal-url="screenshot.large_img_url"
+          :data-modal-url="screenshot.largeImgUrl"
         />
 
         <div class="sortable-list__item-actions">
@@ -185,12 +185,7 @@ export default {
 
         window.axios.post(this.screenshotsUrl, form)
           .then(({data}) => {
-            this.screenshots.push({
-              id: data.id,
-              src: data.src,
-              name: data.name,
-              large_img_url: data.large_img_url,
-            })
+            this.screenshots.push(data)
 
             const i = this.uploads.indexOf(file)
             this.uploads.splice(i, 1)
