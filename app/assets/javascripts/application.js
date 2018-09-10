@@ -10,6 +10,7 @@
 //= require promise-polyfill.min
 //= require sweetalert2
 //= require jquery.sticky-kit.min
+//= require ready
 
 // ******** APP
 //
