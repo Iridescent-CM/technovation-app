@@ -49,11 +49,11 @@ $(document).on("ready turbolinks:load", function() {
       $that.find('span:last-child').text(counted);
     }
   });
+});
 
-  $("[data-word-count]").each(function() {
-    $(".word-count__limit").text($(this).data("word-count-limit"));
-    executeWordCounting($(this));
-  });
+ready('[data-word-count]', function (element) {
+  $(".word-count__limit").text($(element).data("word-count-limit"));
+  executeWordCounting($(element));
 });
 
 $(document).on("click", ".actions", function(e) {
