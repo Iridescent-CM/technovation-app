@@ -14,7 +14,7 @@ export default {
   },
 
   isOnTeam (state) {
-    return digStateData(state, 'currentTeam', 'id', id => !!id)
+    return digStateData(state, 'currentTeam', 'id', id => !!id && !!parseInt(id))
   },
 
   currentTeamName (state) {
