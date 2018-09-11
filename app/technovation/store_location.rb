@@ -9,7 +9,7 @@ module StoreLocation
       if options.fetch(:ip_address) { false }
         IPLocationStorage.new(
           options.fetch(:ip_address),
-          options.fetch(:account),
+          options.fetch(:account) { ::NullAccount.new },
           options.fetch(:context),
         )
       elsif options.fetch(:coordinates) { false }

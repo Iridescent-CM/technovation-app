@@ -1,6 +1,30 @@
 require "rails_helper"
 
 RSpec.describe LocationController do
+  describe "GET /registration/current_location with NullSignupAttempt" do
+    it "returns the IP geolocation result anyway" do
+      result = double(:GeocoderResult,
+        coordinates: [1.23, 4.56],
+        latitude: 1.23,
+        longitude: 4.56,
+        city: "Chicago",
+        state_code: "IL",
+        state: "Illinois",
+        country_code: "US",
+        country: "United States",
+      )
+
+      expect(Geocoder).to receive(:search) { [result] }
+
+      get "/registration/current_location"
+
+      json = JSON.parse(response.body)
+      expect(json["city"]).to eq("Chicago")
+      expect(json["state"]).to eq("Illinois")
+      expect(json["country"]).to eq("United States")
+    end
+  end
+
   describe "PATCH /registration/location with current_attempt" do
     include Rack::Test::Methods
 
