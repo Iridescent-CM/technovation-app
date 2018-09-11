@@ -1,0 +1,18 @@
+<% if current_mentor.is_on_team? %>
+  <%= render 'mentor/teams/team_list',
+    type: :current,
+    teams: @current_teams %>
+<% elsif SeasonToggles.team_building_disabled? %>
+  Technovation Staff has turned off forming teams for everyone right now.
+<% else %>
+  <%= render "completion_steps/invitations",
+    hidden: current_mentor.onboarding?,
+    invites: current_mentor.team_member_invites.pending %>
+
+  <div class="margin--t-large">
+    <%= render "completion_steps/join_requests",
+      hidden: current_mentor.onboarding?,
+      allow_many: true,
+      requests: current_mentor.join_requests.pending %>
+  </div>
+<% end %>

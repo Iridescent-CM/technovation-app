@@ -8,8 +8,10 @@ class TechnovationFeature
     :gerundize,
     :disabled_by_staff?,
     :requires_action?,
+    :requires_onboarding?,
     :only_requires_action?,
-    :actions_required_as_html_list
+    :actions_required_as_html_list,
+    :onboarding_steps_required_as_html_list
 
   def initialize(profile, feature_name)
     if feature_name.is_a?(TechnovationFeature)
@@ -109,6 +111,14 @@ class TechnovationFeature
     def feature_name
       self.class.name.demodulize.underscore.sub("_feature", "")
     end
+
+    def onboarding_steps_required
+      @onboarding_steps_required ||= OnboardingStepsRequired.new(self)
+    end
+
+    def onboarding_steps_required_as_html_list
+      onboarding_steps_required.as_html_list
+    end
   end
 
   module ActionRequiredFeature
@@ -170,7 +180,6 @@ class TechnovationFeature
 
   class SubmissionsFeature < Feature
     include ActionRequiredFeature
-
     actions_required :join_team
 
     def gerundize
@@ -180,7 +189,6 @@ class TechnovationFeature
 
   class EventsFeature < Feature
     include ActionRequiredFeature
-
     actions_required :join_team
 
     def gerundize
@@ -190,7 +198,6 @@ class TechnovationFeature
 
   class ScoresFeature < Feature
     include ActionRequiredFeature
-
     actions_required :join_team
 
     def gerundize

@@ -7,3 +7,7 @@
 <% if feature.only_requires_action? %>
   <%= feature.actions_required_as_html_list.html_safe %>
 <% end %>
+
+<% if feature.requires_onboarding? %>
+  <%= feature.onboarding_steps_required_as_html_list.html_safe %>
+<% end %>

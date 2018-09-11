@@ -183,6 +183,30 @@ class MentorProfile < ActiveRecord::Base
     account.public_send(method_name, *args)
   end
 
+  def onboarding_steps
+    steps = []
+
+    methods = [
+      :email_confirmed?,
+      :consent_signed?,
+      :background_check_complete?,
+      :bio_complete?,
+      :mentor_type_complete?,
+    ]
+
+    methods.each do |method|
+      if !send(method)
+        steps.push(method)
+      end
+    end
+
+    steps
+  end
+
+  def mentor_type_complete?
+    !mentor_type.blank?
+  end
+
   def has_completed_action?(action)
     case action.name
     when :join_team

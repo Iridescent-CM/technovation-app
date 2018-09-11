@@ -1,0 +1,3 @@
+<% feature = TechnovationFeature.new(current_mentor, :create_team) %>
+<h1>Create a team</h1>
+<%= render partial: feature.partial_path, locals: feature.partial_locals  %>
