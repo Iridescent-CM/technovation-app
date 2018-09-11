@@ -30,6 +30,7 @@
           <div slot="events"><slot name="events" /></div>
           <div slot="scores"><slot name="scores" /></div>
         </router-view>
+        <slot></slot>
       </div>
 
       <div class="grid__col-3 grid__col--bleed">
