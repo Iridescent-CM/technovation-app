@@ -1,0 +1,10 @@
+<h1>Join or find a team</h1>
+
+<% if current_mentor.is_on_team? %>
+  <%= render 'mentor/teams/team_list',
+    type: :current,
+    teams: @current_teams %>
+<% else %>
+  <% feature = TechnovationFeature.new(current_mentor, :join_team) %>
+  <%= render partial: feature.partial_path, locals: feature.partial_locals  %>
+<% end %>

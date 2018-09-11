@@ -1,0 +1,10 @@
+<%= render "completion_steps/invitations",
+  hidden: current_mentor.onboarding?,
+  invites: current_mentor.team_member_invites.pending %>
+
+<div class="margin--t-large">
+  <%= render "completion_steps/join_requests",
+    hidden: current_mentor.onboarding?,
+    allow_many: true,
+    requests: current_mentor.join_requests.pending %>
+</div>
