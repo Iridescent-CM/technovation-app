@@ -11,6 +11,7 @@ describe('DropDown Vue component', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(DropDown, {
+      attachToDocument: true,
       propsData: {
         label: 'More Information',
       },
@@ -27,8 +28,12 @@ describe('DropDown Vue component', () => {
       },
       stubs: {
         transition: TransitionStub,
-      }
+      },
     })
+  })
+
+  afterEach(() => {
+    wrapper.destroy()
   })
 
   describe('directives', () => {
@@ -61,13 +66,13 @@ describe('DropDown Vue component', () => {
   describe('computed properties', () => {
     describe('caretTitle', () => {
       it('returns "Collapse" if expanded', () => {
-        wrapper.vm.expanded = true
+        wrapper.setData({ expanded: true })
 
         expect(wrapper.vm.caretTitle).toEqual('Collapse')
       })
 
       it('returns "Expand" if collapsed', () => {
-        wrapper.vm.expanded = false
+        wrapper.setData({ expanded: false })
 
         expect(wrapper.vm.caretTitle).toEqual('Expand')
       })
@@ -75,13 +80,13 @@ describe('DropDown Vue component', () => {
 
     describe('caretIcon', () => {
       it('returns "caret-up" if expanded', () => {
-        wrapper.vm.expanded = true
+        wrapper.setData({ expanded: true })
 
         expect(wrapper.vm.caretIcon).toEqual('caret-up')
       })
 
       it('returns "caret-down" if collapsed', () => {
-        wrapper.vm.expanded = false
+        wrapper.setData({ expanded: false })
 
         expect(wrapper.vm.caretIcon).toEqual('caret-down')
       })
@@ -91,7 +96,7 @@ describe('DropDown Vue component', () => {
   describe('methods', () => {
     describe('collapseDropDown', () => {
       it('collapses the dropdown', () => {
-        wrapper.vm.expanded = true
+        wrapper.setData({ expanded: true })
 
         wrapper.vm.collapseDropDown()
 
@@ -101,7 +106,7 @@ describe('DropDown Vue component', () => {
 
     describe('toggleCollapse', () => {
       it('toggles the drop down open and closed', () => {
-        wrapper.vm.expanded = true
+        wrapper.setData({ expanded: true })
 
         wrapper.vm.toggleCollapse()
 
@@ -156,19 +161,43 @@ describe('DropDown Vue component', () => {
 
       expect(caretIcon.exists()).toBe(true)
 
-      wrapper.vm.expanded = true
+      wrapper.setData({ expanded: true })
 
       expect(caretIcon.props('title')).toEqual('Collapse')
       expect(caretIcon.props('name')).toEqual('caret-up')
       expect(caretIcon.props('color')).toEqual('000000')
       expect(caretIcon.props('size')).toEqual(12)
 
-      wrapper.vm.expanded = false
+      wrapper.setData({ expanded: false })
 
       expect(caretIcon.props('title')).toEqual('Expand')
       expect(caretIcon.props('name')).toEqual('caret-down')
       expect(caretIcon.props('color')).toEqual('000000')
       expect(caretIcon.props('size')).toEqual(12)
+    })
+
+    it('uses the v-click-outside directive to collapse the drop down', (done) => {
+      const dropDownContent = wrapper.find('.drop-down__content')
+
+      const divNode = document.createElement('div')
+      const textNode = document.createTextNode('This is some text.')
+      divNode.appendChild(textNode)
+      document.body.appendChild(divNode)
+
+      wrapper.setData({ expanded: true })
+
+      expect(dropDownContent.exists()).toBe(true)
+      expect(dropDownContent.isVisible()).toBe(true)
+
+      divNode.click()
+
+      wrapper.vm.$nextTick(() => {
+        expect(dropDownContent.isVisible()).toBe(false)
+
+        divNode.remove()
+
+        done()
+      })
     })
   })
 })
