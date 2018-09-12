@@ -254,6 +254,9 @@ describe('Question comments section', () => {
     wrapper.vm.$nextTick().then(() => {
       expect(wrapper.vm.comment.text).toEqual(comment)
       expect(wrapper.vm.commentText).toEqual(comment)
+
+      wrapper.destroy()
+
       done()
     })
   })

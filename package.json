@@ -56,7 +56,7 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.20",
+    "@vue/test-utils": "^1.0.0-beta.25",
     "babel-jest": "^22.4.1",
     "babel-preset-es2015": "^6.24.1",
     "canvas": "^1.6.11",
