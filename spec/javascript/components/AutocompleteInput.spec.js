@@ -35,6 +35,10 @@ describe('AutocompleteInput Vue component', () => {
     axios.get.mockClear()
   })
 
+  afterEach(() => {
+    wrapper.destroy()
+  })
+
   it('has the correct name', () => {
     expect(AutocompleteInput.name).toEqual('autocomplete-input')
   })
@@ -129,6 +133,9 @@ describe('AutocompleteInput Vue component', () => {
           'Paper',
           'Scissors',
         ])
+
+        wrapper.destroy()
+
         done()
       })
     })
@@ -149,6 +156,9 @@ describe('AutocompleteInput Vue component', () => {
           'Gravy',
           'Strawberry',
         ])
+
+        wrapper.destroy()
+
         done()
       })
     })
@@ -163,6 +173,9 @@ describe('AutocompleteInput Vue component', () => {
 
       wrapper.vm.$nextTick(() => {
         expect(wrapper.vm.mutableValue).toEqual('Hello')
+
+        wrapper.destroy()
+
         done()
       })
     })
@@ -223,6 +236,10 @@ describe('AutocompleteInput Vue component', () => {
         propsData: propsData(),
         attachToDocument: true,
       })
+    })
+
+    afterEach(() => {
+      wrapper.destroy()
     })
 
     it('initializes a hidden input to store the value for submission', (done) => {
