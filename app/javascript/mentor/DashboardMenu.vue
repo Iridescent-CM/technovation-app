@@ -14,7 +14,7 @@
 
     <tab-link
       :class="teamTabLinkClasses"
-      :to="{ name: 'find-team', meta: { active: teamPagesActive } }"
+      :to="rootTeamRoute"
       :condition-to-enable="true"
       :condition-to-complete="isConsentSigned && isOnTeam"
     >
@@ -85,7 +85,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['isOnTeam', 'isConsentSigned']),
+    ...mapGetters(['isOnTeam', 'isConsentSigned', 'isOnboarded', 'nextOnboardingStep']),
+
+    rootTeamRoute () {
+      console.log(this.nextOnboardingStep)
+      if (this.isOnboarded) {
+        return { name: 'find-team', meta: { active: this.teamPagesActive } }
+      } else {
+        return { name: this.nextOnboardingStep, meta: { active: this.teamPagesActive } }
+      }
+    },
 
     submissionComplete () {
       return false

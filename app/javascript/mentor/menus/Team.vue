@@ -1,16 +1,6 @@
 <template>
   <ul class="tabs__menu">
     <tab-link
-      :to="{ name: 'bio' }"
-      css-classes="tabs__menu-link--has-subtitles"
-      :condition-to-complete="isBioFilled"
-      :condition-to-enable="true"
-    >
-      Personal summary
-      <span>{{ bioLabel }}</span>
-    </tab-link>
-
-    <tab-link
       :to="{ name: 'consent-waiver' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="isConsentSigned"
@@ -18,6 +8,16 @@
     >
       Consent Waiver
       <span>{{ consentStatusLabel }}</span>
+    </tab-link>
+
+    <tab-link
+      :to="{ name: 'bio' }"
+      css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="isBioFilled"
+      :condition-to-enable="true"
+    >
+      Personal summary
+      <span>{{ bioLabel }}</span>
     </tab-link>
 
     <tab-link
@@ -34,7 +34,7 @@
       :to="{ name: 'find-team' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="isOnTeam"
-      :condition-to-enable="true"
+      :condition-to-enable="canJoinTeams"
     >
       Find your team
       <span>{{ findTeamLabel }}</span>
@@ -44,7 +44,7 @@
       :to="{ name: 'create-team' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="isOnTeam"
-      :condition-to-enable="true"
+      :condition-to-enable="canJoinTeams"
     >
       Create your team
       <span>{{ createTeamLabel }}</span>
@@ -73,6 +73,7 @@ export default {
       'isConsentSigned',
       'consentWaiverSignedAtEpoch',
       'backgroundCheckUpdatedAtEpoch',
+      'canJoinTeams',
     ]),
 
     bioLabel () {
