@@ -123,7 +123,7 @@ RSpec.describe StudentProfile do
       FactoryBot.create(:student, :los_angeles)
 
       ra = FactoryBot.create(:ambassador, :brazil,
-        secondary_regions: ["Najran Province, Saudi Arabia"])
+        secondary_regions: ["Najran Province, SA"])
 
       expect(StudentProfile.in_region(ra)).to contain_exactly(
         br, dhurma, najran
