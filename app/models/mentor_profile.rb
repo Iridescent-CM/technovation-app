@@ -155,9 +155,7 @@ class MentorProfile < ActiveRecord::Base
 
   reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
-  after_validation -> { enable_searchability },
-    on: :update,
-    if: -> { account.present? and account.country_changed? or saved_change_to_bio? }
+  before_validation -> { enable_searchability }, on: :update
 
   after_save { current_teams.find_each(&:touch) }
   after_touch { current_teams.find_each(&:touch) }
@@ -169,8 +167,7 @@ class MentorProfile < ActiveRecord::Base
 
   validates :bio,
     length: { minimum: 100 },
-    allow_blank: true,
-    if: :bio_changed?
+    allow_blank: true
 
   delegate :submitted?,
            :candidate_id,
