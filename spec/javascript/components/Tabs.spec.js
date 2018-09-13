@@ -114,18 +114,20 @@ describe('Tabs Vue component', () => {
         expect(result).toBe(false)
       })
     })
+
+    describe('setSection', () => {
+      it('sets the current section', () => {
+        const historyState = history.state
+        const historySpy = spyOn(history, 'replaceState').and.callThrough()
+
+        expect(historySpy).not.toHaveBeenCalled()
+
+        wrapper.vm.setSection('mentors')
+
+        expect(wrapper.vm.mutableSection).toEqual('mentors')
+        expect(historySpy)
+          .toHaveBeenCalledWith(historyState, '', `#!mentors`)
+      })
+    })
   })
 })
-/*
-<script>
-  export default {
-
-
-      setSection (section) {
-        this.mutableSection = section
-        history.replaceState(history.state, '', `#!${this.mutableSection}`)
-      },
-    }
-  }
-</script>
-*/
