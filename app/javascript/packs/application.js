@@ -13,6 +13,7 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import AutocompleteInput from 'components/AutocompleteInput'
 import CertificateButton from 'components/CertificateButton'
 import LocationForm from '../location/components/LocationForm'
+import Tabs from 'components/Tabs'
 
 Vue.use(TurbolinksAdapter)
 
@@ -67,6 +68,18 @@ document.addEventListener('turbolinks:load', function () {
 
       components: {
         AutocompleteInput,
+      },
+    })
+  }
+
+  const tabElements = document.querySelectorAll('.vue-enable-tabs')
+
+  for (let i = 0; i < tabElements.length; i += 1) {
+    new Vue({
+      el: tabElements[i],
+      extends: Tabs,
+      propsData: {
+        section: 'students',
       },
     })
   }

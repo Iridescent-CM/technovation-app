@@ -1,19 +1,29 @@
 <ul class="tabs__menu" data-closed="true">
-  <li class="tabs__menu-link">
+  <li
+    class="tabs__menu-link"
+    :class="{
+      'tabs__menu-link--active': isSection('students')
+    }"
+  >
     <button
       role="button"
       class="tabs__menu-button"
-      data-tab-id="students"
+      @click.stop.prevent="setSection('students')"
     >
       Students
     </button>
   </li>
 
-  <li class="tabs__menu-link">
+  <li
+    class="tabs__menu-link"
+    :class="{
+      'tabs__menu-link--active': isSection('mentors')
+    }"
+  >
     <button
       role="button"
       class="tabs__menu-button"
-      data-tab-id="mentors"
+      @click.stop.prevent="setSection('mentors')"
     >
       Mentors
     </button>
@@ -23,37 +33,52 @@
     <button
       role="button"
       class="tabs__menu-button"
-      data-tab-id="photo"
+      @click.stop.prevent="setSection('photo')"
     >
       Team photo
     </button>
   </li>
 
-  <li class="tabs__menu-link">
+  <li
+    class="tabs__menu-link"
+    :class="{
+      'tabs__menu-link--active': isSection('description')
+    }"
+  >
     <button
       role="button"
       class="tabs__menu-button"
-      data-tab-id="description"
+      @click.stop.prevent="setSection('description')"
     >
       Summary
     </button>
   </li>
 
-  <li class="tabs__menu-link">
+  <li
+    class="tabs__menu-link"
+    :class="{
+      'tabs__menu-link--active': isSection('location')
+    }"
+  >
     <button
       role="button"
       class="tabs__menu-button"
-      data-tab-id="location"
+      @click.stop.prevent="setSection('location')"
     >
       Location
     </button>
   </li>
 
-  <li class="tabs__menu-link">
+  <li
+    class="tabs__menu-link"
+    :class="{
+      'tabs__menu-link--active': isSection('division')
+    }"
+  >
     <button
       role="button"
       class="tabs__menu-button"
-      data-tab-id="division"
+      @click.stop.prevent="setSection('division')"
     >
       Division
     </button>

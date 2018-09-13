@@ -1,6 +1,6 @@
 <% admin_ra ||= false %>
 
-<div class="grid tabs tabs--vertical">
+<div class="grid tabs tabs--vertical tabs--css-only vue-enable-tabs">
   <div class="grid__col-sm-3 col--sticky-parent">
     <div class="col--sticky-spacer">
       <div class="col--sticky">
@@ -18,7 +18,7 @@
   <div class="tabs__content grid__col-sm-9 col--sticky-parent">
     <div class="col--sticky-spacer">
       <div class="col--sticky">
-        <div class="tabs__tab-content" id="students">
+        <div class="tabs__tab-content" v-show="isSection('students')">
           <div class="grid grid--bleed">
             <div class="grid__col-auto">
               <h1 class="content-heading"><%= team.name %></h1>
@@ -30,7 +30,7 @@
             team: team %>
         </div>
 
-        <div class="tabs__tab-content" id="mentors">
+        <div class="tabs__tab-content" v-show="isSection('mentors')">
           <div class="grid grid--bleed">
             <div class="grid__col-auto">
               <h1 class="content-heading"><%= team.name %></h1>
@@ -55,7 +55,7 @@
             team: team %>
         </div>
 
-        <div class="tabs__tab-content" id="description">
+        <div class="tabs__tab-content" v-show="isSection('description')">
           <div class="grid grid--bleed">
             <div class="grid__col-auto">
               <h1 class="content-heading"><%= team.name %></h1>
@@ -65,7 +65,7 @@
           <%= render 'teams/edit_description', team: team %>
         </div>
 
-        <div class="tabs__tab-content" id="location">
+        <div class="tabs__tab-content" v-show="isSection('location')">
           <div class="grid grid--bleed">
             <div class="grid__col-auto">
               <h1 class="content-heading"><%= team.name %></h1>
@@ -75,7 +75,7 @@
           <%= render 'teams/location', team: team %>
         </div>
 
-        <div class="tabs__tab-content" id="division">
+        <div class="tabs__tab-content" v-show="isSection('division')">
           <div class="grid grid--bleed">
             <div class="grid__col-auto">
               <h1 class="content-heading"><%= team.name %></h1>
