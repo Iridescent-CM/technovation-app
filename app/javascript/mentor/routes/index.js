@@ -56,12 +56,14 @@ const getRootComponent = () => {
 }
 
 const getRootRoute = () => {
+  if (!store.state.isReady) initApp()
+
   if (anyCurrentTeams()) {
     return { name: 'submission' }
   } else if (isOnboarded())  {
     return { name: 'find-team' }
   } else {
-    return { name: store.getters.nextOnboardingStep }
+    return { name: store.getters['authenticated/nextOnboardingStep'] }
   }
 }
 
@@ -74,7 +76,7 @@ const anyCurrentTeams = () => {
 const isOnboarded = () => {
   if (!store.state.isReady) initApp()
 
-  return store.getters.isOnboarded
+  return store.getters['authenticated/isOnboarded']
 }
 
 export const routes = [
