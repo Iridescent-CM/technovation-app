@@ -48,6 +48,9 @@ RSpec.configure do |config|
 
   config.include CoordinatesHelper, type: :system
 
+  config.include AccountFormHelpers, type: :feature
+  config.include AccountFormHelpers, type: :system
+
   config.include JudgingHelper
   config.include WebMock::API
 

@@ -12,6 +12,8 @@ FactoryBot.define do
     state_province "IL"
     country "US"
 
+    gender "Prefer not to say"
+
     seasons { [] }
 
     trait :past do
