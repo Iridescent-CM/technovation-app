@@ -84,7 +84,7 @@ RSpec.describe Public::DashboardsController do
     end
 
     context "and the geocoder returns no results" do
-      it "fallsback to 0.0, 0.0" do
+      it "falls back to 0.0, 0.0" do
         request.remote_ip = "192.168.1.1"
 
         expect(Geocoder).to receive(:search)

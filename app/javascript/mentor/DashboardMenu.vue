@@ -88,7 +88,6 @@ export default {
     ...mapGetters(['isOnTeam', 'isConsentSigned', 'isOnboarded', 'nextOnboardingStep']),
 
     rootTeamRoute () {
-      console.log(this.nextOnboardingStep)
       if (this.isOnboarded) {
         return { name: 'find-team', meta: { active: this.teamPagesActive } }
       } else {
