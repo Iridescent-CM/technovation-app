@@ -336,11 +336,12 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def onboarded?
-    account.email_confirmed? and
-      consent_signed? and
-        background_check_complete? and
-            not bio.blank? and
-              not mentor_type.blank?
+    account.present? &&
+      account.email_confirmed? &&
+        consent_signed? &&
+          background_check_complete? &&
+              !bio.blank? &&
+                !mentor_type.blank?
   end
 
   def needs_mentor_type?
