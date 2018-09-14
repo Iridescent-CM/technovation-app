@@ -12,17 +12,33 @@ document.addEventListener('turbolinks:load', () => {
   const appElem = document.querySelector('#vue-enable-student-app')
 
   if (appElem) {
-    new Vue({
-      el: appElem,
-      store,
-      router,
-      components: {
-        App,
-      },
+    const rootElem = document.getElementById('vue-data-registration')
 
-      mounted () {
-        this.$el.classList.remove('hidden')
-      },
+    if (!rootElem) return false
+
+    const registrationInitialized = store.dispatch(
+      'registration/initAccount',
+      rootElem.dataset
+    )
+
+    const authenticatedInitialized = store.dispatch(
+      'authenticated/initApp',
+      rootElem.dataset
+    )
+
+    Promise.all([registrationInitialized, authenticatedInitialized]).then(() => {
+      new Vue({
+        el: appElem,
+        store,
+        router,
+        components: {
+          App,
+        },
+
+        mounted () {
+          this.$el.classList.remove('hidden')
+        },
+      })
     })
   }
 })

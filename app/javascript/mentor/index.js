@@ -16,8 +16,15 @@ document.addEventListener('turbolinks:load', () => {
 
     if (!rootElem) return false
 
-    const authenticatedInitialized = store.dispatch('authenticated/initApp', rootElem.dataset)
-    const registrationInitialized = store.dispatch('registration/initAccount', rootElem.dataset)
+    const authenticatedInitialized = store.dispatch(
+      'authenticated/initApp',
+      rootElem.dataset
+    )
+
+    const registrationInitialized = store.dispatch(
+      'registration/initAccount',
+      rootElem.dataset
+    )
 
     Promise.all([authenticatedInitialized, registrationInitialized]).then(() => {
       new Vue({

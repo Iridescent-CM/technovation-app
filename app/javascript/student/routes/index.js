@@ -23,17 +23,8 @@ basicProfileRoute.props = {
   embedded: true,
 }
 
-const initApp = () => {
-  const rootElem = document.getElementById('vue-data-registration')
-  if (!rootElem) return false
-  store.dispatch('registration/initAccount', rootElem.dataset)
-  store.dispatch('authenticated/initApp', rootElem.dataset)
-}
-
-const initiateApp = (to, from, next) => {
+const loadOrRedirect = (to, from, next) => {
   try {
-    initApp()
-
     if (to.path === '/' && from.path === '/') {
       next(getRootRoute())
     } else {
@@ -46,8 +37,6 @@ const initiateApp = (to, from, next) => {
 }
 
 const getRootComponent = () => {
-  if (!store.state.isReady) initApp()
-
   if (getCurrentTeamId()) {
     return Submission
   } else {
@@ -64,12 +53,10 @@ const getRootRoute = () => {
 }
 
 const getCurrentTeamId = () => {
-  if (!store.state.isReady) initApp()
   return store.state.authenticated.currentTeam.id
 }
 
 const getParentalConsentSigned = () => {
-  if (!store.state.isReady) initApp()
   return store.state.authenticated.parentalConsent.isSigned
 }
 
@@ -77,7 +64,7 @@ export const routes = [
   {
     path: '/',
     component: getRootComponent(),
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
   },
   {
     path: '/team',
@@ -86,7 +73,7 @@ export const routes = [
       stickySidebarClasses: ['grid__col-3'],
       embedded: true,
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     children: teamRoutes,
     meta: {
       routeId: 'team',
@@ -101,7 +88,7 @@ export const routes = [
       stickySidebarClasses: ['grid__col-3'],
       embedded: true,
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     children: registrationRoutes,
     meta: {
       routeId: 'registration',
@@ -115,7 +102,7 @@ export const routes = [
     props: {
       stickySidebarClasses: ['grid__col-3'],
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'submission',
       browserTitle: 'Part 3: Submit your project',
@@ -129,7 +116,7 @@ export const routes = [
       stickySidebarClasses: ['grid__col-3'],
       embedded: true,
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     children: judgingRoutes,
     meta: {
       routeId: 'judging',
@@ -143,7 +130,7 @@ export const routes = [
     props: {
       stickySidebarClasses: ['grid__col-3'],
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'scores',
       browserTitle: 'Part 5: Read scores & feedback',
