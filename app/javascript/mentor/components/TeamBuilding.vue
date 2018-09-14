@@ -27,6 +27,10 @@ export default {
     'sticky-sidebar': StickySidebar,
   },
 
+  components: {
+    TeamMenu,
+  },
+
   props: {
     stickySidebarClasses: {
       type: Array,

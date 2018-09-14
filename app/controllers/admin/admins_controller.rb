@@ -37,6 +37,7 @@ module Admin
         .tap do |permitted_params|
           permitted_params[:inviting_new_admin] = true
           permitted_params[:date_of_birth] = TECHNOVATION_ESTABLISHED_DATE
+          permitted_params[:gender] = "Prefer not to say"
         end
     end
   end

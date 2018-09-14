@@ -221,7 +221,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Salvador, BH, Brazil", "Salvador, Bahia, Brazil", "Salvador, Bahia, BR"].each do |loc|
+    ["Salvador, BH, BR", "Salvador, BH, Brazil", "Salvador, Bahia, Brazil", "Salvador, Bahia, BR"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           "latitude"     => -12.7872335,

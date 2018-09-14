@@ -1,6 +1,18 @@
 import { digStateAttributes } from 'utilities/vuex-utils'
 
 export default {
+  canJoinTeams (state) {
+    return digStateAttributes(state, 'currentMentor', 'isOnboarded')
+  },
+
+  isOnboarded (state) {
+    return digStateAttributes(state, 'currentMentor', 'isOnboarded')
+  },
+
+  nextOnboardingStep (state) {
+    return digStateAttributes(state, 'currentMentor', 'nextOnboardingStep')
+  },
+
   currentAccountName (state) {
     return digStateAttributes(state, 'currentAccount', 'name')
   },

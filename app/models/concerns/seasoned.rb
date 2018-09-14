@@ -16,16 +16,14 @@ module Seasoned
       where.not(seasoning_scope(Season.current.year))
     }
 
-    scope :by_season, ->(*args) {
-      years = args.select { |a| not a.is_a?(Hash) }.flatten
-      opts = args.select { |a| a.is_a?(Hash) }[0] ||
-              { match: "match_any" }
-
+    scope :by_season, ->(*years, **opts) {
       clauses = years.flatten.map do |year|
         seasoning_scope_as_string(year)
       end
 
-      if "match_all" == opts[:match].to_s
+      match = opts.fetch(:match) { "match_any" }.to_s
+
+      if "match_all" == match
         where(clauses.join(' AND '))
       else
         where(clauses.join(' OR '))

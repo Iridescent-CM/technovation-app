@@ -65,13 +65,16 @@ RSpec.describe "Admins invite users to signup", :js do
       when :student
         fill_in "School name", with: "John Hughes High."
       when :mentor
+        select_gender(:random)
         fill_in_vue_select "School or company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
         select "Parent", from: "I am a..."
       when :judge
+        select_gender(:random)
         fill_in_vue_select "Company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
       when :regional_ambassador
+        select_gender(:random)
         fill_in_vue_select "Organization/company name", with: "John Hughes High."
         fill_in "Job title", with: "Janitor / Man of the Year"
         fill_in "Tell us about yourself",
@@ -140,6 +143,8 @@ RSpec.describe "Admins invite users to signup", :js do
 
     select_chosen_date birthdate, from: "Date of birth"
 
+    select_gender(:random)
+
     fill_in_vue_select "Organization/company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"
     fill_in "Tell us about yourself",
@@ -178,6 +183,8 @@ RSpec.describe "Admins invite users to signup", :js do
     fill_in "Last name", with: "Beasley"
 
     select_chosen_date birthdate, from: "Date of birth"
+
+    select_gender(:random)
 
     fill_in_vue_select "Organization/company name", with: "John Hughes High."
     fill_in "Job title", with: "Janitor / Man of the Year"

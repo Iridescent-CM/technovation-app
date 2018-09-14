@@ -438,6 +438,8 @@ class Account < ActiveRecord::Base
 
   validates :date_of_birth, :first_name, :last_name, presence: true
 
+  validates :gender, presence: true, if: -> { not_student? }
+
   validate -> {
     errors.add(:email, :taken) if Account.where.not(id: id).exists?([
       "replace(email, '.', '') = ?",
@@ -828,5 +830,9 @@ class Account < ActiveRecord::Base
 
   def changing_password_or_temporary_password?
     changing_password? || temporary_password?
+  end
+
+  def not_student?
+    !student_profile.present?
   end
 end

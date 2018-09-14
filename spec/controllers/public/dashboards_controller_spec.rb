@@ -21,6 +21,7 @@ RSpec.describe Public::DashboardsController do
 
     it "saves it to the logged in user" do
       student = FactoryBot.create(:student)
+      student.account.update(latitude: nil, longitude: nil)
 
       result = double(:GeocoderResult,
         coordinates: [1.23, 4.56],
@@ -29,10 +30,12 @@ RSpec.describe Public::DashboardsController do
         country_code: 'US',
       )
 
-      expect(Geocoder).to receive(:search).twice { [result] }
+      allow(Geocoder).to receive(:search) { [result] }
 
       sign_in(student)
       get :show
+
+      expect(Geocoder).to have_received(:search).twice
 
       coordinates = controller.get_cookie(
         CookieNames::IP_GEOLOCATION
@@ -84,7 +87,7 @@ RSpec.describe Public::DashboardsController do
     end
 
     context "and the geocoder returns no results" do
-      it "fallsback to 0.0, 0.0" do
+      it "falls back to 0.0, 0.0" do
         request.remote_ip = "192.168.1.1"
 
         expect(Geocoder).to receive(:search)

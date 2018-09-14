@@ -43,6 +43,7 @@ module InviteRA
       state_province: attrs[:state_province],
       country: attrs[:country],
       date_of_birth: attrs[:date_of_birth],
+      gender: "Prefer not to say",
       password: SecureRandom.hex(17),
       email_confirmed_at: Time.current,
       skip_existing_password: true,
