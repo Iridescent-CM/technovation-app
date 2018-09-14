@@ -44,16 +44,6 @@
               </h6>
 
               <h6>
-                Submission Guide
-                <small>
-                  <a
-                    href="https://www.technovationchallenge.org/submission-guidelines/"
-                    target="_blank"
-                  >Read the Submission Guidelines</a>
-                </small>
-              </h6>
-
-              <h6>
                 Judging Rubric
                 <small>
                   <a
