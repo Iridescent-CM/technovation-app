@@ -7,7 +7,7 @@
       :condition-to-enable="true"
       :condition-to-complete="true"
     >
-      Registration
+      Profile
       <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">
         <registration-menu />
       </div>
@@ -40,7 +40,7 @@
       :condition-to-enable="false"
       :condition-to-complete="false"
     >
-      Compete
+      Judging
       <div slot="subnav" class="tabs-menu__child-menu" v-if="judgingPagesActive">
         <judging-menu />
       </div>
