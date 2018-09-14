@@ -8,7 +8,7 @@ RSpec.describe "Admin UI for season toggles:", :js do
       SeasonToggles.disable_signup(scope)
       visit edit_admin_season_schedule_settings_path
 
-      click_button "Profile"
+      click_button "Registration"
 
       check "season_toggles_#{scope}_signup"
 
