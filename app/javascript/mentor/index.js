@@ -12,17 +12,26 @@ document.addEventListener('turbolinks:load', () => {
   const appElem = document.querySelector('#vue-enable-mentor-app')
 
   if (appElem) {
-    new Vue({
-      el: appElem,
-      store,
-      router,
-      components: {
-        App,
-      },
+    const rootElem = document.getElementById('vue-data-registration')
 
-      mounted () {
-        this.$el.classList.remove('hidden')
-      },
+    if (!rootElem) return false
+
+    const authenticatedInitialized = store.dispatch('authenticated/initApp', rootElem.dataset)
+    const registrationInitialized = store.dispatch('registration/initAccount', rootElem.dataset)
+
+    Promise.all([authenticatedInitialized, registrationInitialized]).then(() => {
+      new Vue({
+        el: appElem,
+        store,
+        router,
+        components: {
+          App,
+        },
+
+        mounted () {
+          this.$el.classList.remove('hidden')
+        },
+      })
     })
   }
 })

@@ -23,17 +23,8 @@ basicProfileRoute.props = {
   embedded: true,
 }
 
-const initApp = () => {
-  const rootElem = document.getElementById('vue-data-registration')
-  if (!rootElem) return false
-  store.dispatch('authenticated/initApp', rootElem.dataset)
-  store.dispatch('registration/initAccount', rootElem.dataset)
-}
-
-const initiateApp = (to, from, next) => {
+const loadOrRedirect = (to, from, next) => {
   try {
-    initApp()
-
     if (to.path === '/' && from.path === '/') {
       next(getRootRoute())
     } else {
@@ -46,8 +37,6 @@ const initiateApp = (to, from, next) => {
 }
 
 const getRootComponent = () => {
-  if (!store.state.isReady) initApp()
-
   if (anyCurrentTeams()) {
     return Submission
   } else {
@@ -56,26 +45,25 @@ const getRootComponent = () => {
 }
 
 const getRootRoute = () => {
-  if (!store.state.isReady) initApp()
-
   if (anyCurrentTeams()) {
     return { name: 'submission' }
-  } else if (isOnboarded())  {
-    return { name: 'find-team' }
-  } else {
-    return { name: store.getters['authenticated/nextOnboardingStep'] }
   }
+
+  if (isOnboarded())  {
+    return { name: 'find-team' }
+  }
+
+  return { name: store.getters['authenticated/nextOnboardingStep'] }
 }
 
 const anyCurrentTeams = () => {
-  if (!store.state.isReady) initApp()
-
-  return store.state.authenticated.currentTeams.length
+  return Boolean(
+    store.state.authenticated.currentTeams.data
+    && store.state.authenticated.currentTeams.data.length
+  )
 }
 
 const isOnboarded = () => {
-  if (!store.state.isReady) initApp()
-
   return store.getters['authenticated/isOnboarded']
 }
 
@@ -86,7 +74,7 @@ export const routes = [
     props: {
       embedded: true,
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
   },
   {
     path: '/team',
@@ -95,7 +83,7 @@ export const routes = [
       stickySidebarClasses: ['grid__col-3'],
       embedded: true,
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     children: teamRoutes,
     meta: {
       routeId: 'team',
@@ -110,7 +98,7 @@ export const routes = [
       stickySidebarClasses: ['grid__col-3'],
       embedded: true,
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     children: registrationRoutes,
     meta: {
       routeId: 'registration',
@@ -124,7 +112,7 @@ export const routes = [
     props: {
       stickySidebarClasses: ['grid__col-3'],
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'submission',
       browserTitle: 'Part 3: Submit your project',
@@ -138,7 +126,7 @@ export const routes = [
       stickySidebarClasses: ['grid__col-3'],
       embedded: true,
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     children: judgingRoutes,
     meta: {
       routeId: 'judging',
@@ -152,7 +140,7 @@ export const routes = [
     props: {
       stickySidebarClasses: ['grid__col-3'],
     },
-    beforeEnter: initiateApp,
+    beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'scores',
       browserTitle: 'Part 5: Read scores & feedback',

@@ -6,7 +6,7 @@ const TeamBuildingStep = Vue.component('team-building-step', {
 })
 
 const mustBeOnboarded = (_to, from, next) => {
-  if (store.getters.isOnboarded) {
+  if (store.getters['authenticated/isOnboarded']) {
     next()
   } else {
     next(from)
