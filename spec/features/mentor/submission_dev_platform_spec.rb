@@ -26,17 +26,17 @@ RSpec.feature "Students edit submission development platform" do
       ".field_with_errors #team_submission_app_inventor_gmail",
     )
 
-    fill_in "What is your App Inventor 2 Project Name?",
+    fill_in "What is your App Inventor Project Name?",
       with: "my exact app name"
 
-    fill_in "What is the gmail address of the App Inventor 2 " +
+    fill_in "What is the gmail address of the App Inventor " +
             "account that your team is using?",
       with: "my@gmail.com"
 
     click_button "Save"
 
     within(".development_platform.complete") do
-      expect(page).to have_content "App Inventor 2"
+      expect(page).to have_content "App Inventor"
     end
   end
 end

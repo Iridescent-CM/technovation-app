@@ -34,14 +34,29 @@ class TeamSubmission < ActiveRecord::Base
     end
   }, on: :update
 
-  enum development_platform: %w{
-    App\ Inventor\ 2
-    Swift\ or\ XCode
-    Java
-    C++
-    PhoneGap/Apache\ Cordova
-    Other
+  enum development_platform: {
+    "App Inventor" => 0,
+      # Renamed from 'App Inventor 2' in Sept 2018
+
+    "Thunkable" => 7,
+    "Java" => 2,
+    "Swift or XCode" => 1,
+    "Android Studio" => 6,
+    "Other" => 5,
+
+    # LEGACY SUPPORT
+    # DO NOT USE THESE ENUMS
+    # IN FORM ELEMENTS
+    "C++" => 3,
+    "PhoneGap/Apache Cordova" => 4,
+    "Java" => 8
   }
+
+  def self.development_platform_keys
+    development_platforms.reject { |_key, value|
+     [3, 4, 8].include?(value)
+    }.keys
+  end
 
   enum contest_rank: %w{
     quarterfinalist
@@ -158,7 +173,7 @@ class TeamSubmission < ActiveRecord::Base
   validates :app_inventor_app_name,
             :app_inventor_gmail,
     presence: true,
-    if: ->(s) { s.development_platform == "App Inventor 2" }
+    if: ->(s) { s.development_platform == "App Inventor" }
 
   validates :app_inventor_gmail, email: true, allow_blank: true
 
@@ -434,9 +449,10 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def app_inventor_2?
-    send("App Inventor 2?")
+  def app_inventor?
+    send("App Inventor?")
   end
+  alias :app_inventor_2? :app_inventor?
 
   %i{
     source_code
