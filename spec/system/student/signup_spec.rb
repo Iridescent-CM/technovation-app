@@ -41,7 +41,7 @@ RSpec.describe "Students signing up", :js do
       fill_in "Password", with: "margeysecret1234"
       click_button "Next"
 
-      click_button "Registration"
+      click_button "Profile"
       click_button "Region"
 
       expect(page.find('#location_city').value).to eq("Los Angeles")
