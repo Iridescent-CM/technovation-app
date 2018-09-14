@@ -5,9 +5,10 @@ export default {
     [
       'currentAccount',
       'currentMentor',
-      'currentTeams',
       'consentWaiver',
       'backgroundCheck'
     ].forEach(key => Vue.set(state, key, JSON.parse(dataset[key])))
+
+    Vue.set(state, 'currentTeams', JSON.parse(dataset.currentTeams).data)
   },
 }

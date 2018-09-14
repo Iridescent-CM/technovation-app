@@ -57,10 +57,7 @@ const getRootRoute = () => {
 }
 
 const anyCurrentTeams = () => {
-  return Boolean(
-    store.state.authenticated.currentTeams.data
-    && store.state.authenticated.currentTeams.data.length
-  )
+  return store.state.authenticated.currentTeams.length
 }
 
 const isOnboarded = () => {
