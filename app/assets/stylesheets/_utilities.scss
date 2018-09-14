@@ -34,6 +34,10 @@
   color: white
 }
 
+.cursor--default {
+  cursor: default;
+}
+
 .cursor--pointer {
   cursor: pointer;
 }
@@ -222,6 +226,10 @@
   padding-top: 0;
   padding-right: 0;
   padding-left: 0;
+}
+
+.pointer-events--none {
+  pointer-events: none;
 }
 
 .text-align--center {

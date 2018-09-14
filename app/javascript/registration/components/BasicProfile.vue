@@ -116,12 +116,18 @@
       >
         Back
       </a>
+
       <button
         class="button"
-        :disabled="!nextStepEnabled || embedded"
+        v-if="!embedded"
+        :disabled="!nextStepEnabled"
         @click.prevent="handleSubmit"
       >
-        {{ nextButtonLabel }}
+        Next
+      </button>
+
+      <button class="button button--remove-bg pointer-events--none">
+        &nbsp;{{ saveLabel }}
       </button>
     </div>
   </form>
@@ -217,14 +223,14 @@ export default {
       return this.isBasicProfileSet
     },
 
-    nextButtonLabel () {
+    saveLabel () {
       if (this.saved)
-        return 'Saved!'
+        return 'All your changes have been saved!'
 
       if (this.saving)
         return 'Saving...'
 
-      return 'Next'
+      return ''
     },
 
     isGenderRequired () {
