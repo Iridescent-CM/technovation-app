@@ -126,7 +126,7 @@
         Next
       </button>
 
-      <button class="button button--remove-bg pointer-events--none">
+      <button v-else class="button button--remove-bg pointer-events--none">
         &nbsp;{{ saveLabel }}
       </button>
     </div>
