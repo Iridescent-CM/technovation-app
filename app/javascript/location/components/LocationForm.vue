@@ -101,9 +101,9 @@
         </template>
 
         <template v-else>
-          Please choose the correct terrritory:
+          <label>Please choose the correct terrritory:</label>
 
-          <label>
+          <p class="inline-checkbox">
             <input
               type="radio"
               name="location_country"
@@ -111,10 +111,10 @@
               v-model="country"
               @click="confirmCountry('Israel')"
             />
-            Israel
-          </label>
+            <label>Israel</label>
+          </p>
 
-          <label>
+          <p class="inline-checkbox">
             <input
               type="radio"
               name="location_country"
@@ -122,8 +122,8 @@
               v-model="country"
               @click="confirmCountry('Palestine')"
             />
-            Palestine
-          </label>
+            <label>Palestine</label>
+          </p>
         </template>
 
         <label for="location_state">State / Province {{ optionalStateLabel }}</label>
