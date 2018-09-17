@@ -12,6 +12,10 @@ class AccountSerializer
     "#{account.scope_name}"
   end
 
+  attribute(:avatar_url) do |account|
+    account.profile_image.thumb.url
+  end
+
   attribute(:birth_year) do |account|
     account.date_of_birth.to_s.split("-")[0]
   end

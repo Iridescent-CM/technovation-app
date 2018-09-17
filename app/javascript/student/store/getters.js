@@ -5,6 +5,10 @@ export default {
     return digStateAttributes(state, 'currentAccount', 'name')
   },
 
+  currentAccountAvatarUrl (state) {
+    return digStateAttributes(state, 'currentAccount', 'avatarUrl')
+  },
+
   hasParentalConsent (state) {
     return digStateAttributes(state, 'parentalConsent', 'isSigned')
   },
