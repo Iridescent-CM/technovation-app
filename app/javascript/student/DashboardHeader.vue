@@ -10,6 +10,12 @@
               Internet Safety Training
             </a>
           </small>
+
+          <small>
+            <drop-down label="Meet your Regional Ambassador">
+              <slot name="ra-intro" />
+            </drop-down>
+          </small>
         </h1>
       </div>
     </div>

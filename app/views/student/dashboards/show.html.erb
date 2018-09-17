@@ -19,6 +19,10 @@
       <%= render 'completion_steps/confirm_changed_email',
         profile: current_student %>
     <% else %>
+      <div slot="ra-intro">
+        <%= render 'dashboards/ra_intro' %>
+      </div>
+
       <div slot="change-email">
         <%= render 'profiles/email' %>
       </div>
