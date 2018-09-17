@@ -10,9 +10,10 @@ module StoreLocation
     end
 
     def maybe_run_account_updates
-      if coordinates_valid? &&
-          account.authenticated? &&
-            coordinates_different?(account.coordinates)
+      if !cookie_overwritten? &&
+          coordinates_valid? &&
+            account.authenticated? &&
+              coordinates_different?(account.coordinates)
         account.latitude  = latitude
         account.longitude = longitude
         Geocoding.perform(account).with_save
@@ -62,10 +63,11 @@ module StoreLocation
     end
 
     def should_execute?
-      !existing_value ||
-        !existing_coordinates ||
-          !coordinates_valid? ||
-            String(ip_address) != String(existing_ip)
+      !cookie_overwritten? &&
+        (!existing_value ||
+          !existing_coordinates ||
+            !coordinates_valid? ||
+              String(ip_address) != String(existing_ip))
     end
 
     def first_geocoded_result
