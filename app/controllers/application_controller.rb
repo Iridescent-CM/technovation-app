@@ -71,11 +71,11 @@ class ApplicationController < ActionController::Base
                      end
 
     intnl_find_by = {
-      "accounts.country" => region_account.country
+      "accounts.country" => region_account.country_code
     }
 
     find_by = intnl_find_by.merge({
-      "accounts.state_province" => region_account.state_province
+      "accounts.state_province" => region_account.state_code
     })
 
     @regional_ambassador = RegionalAmbassadorProfile.not_staff
