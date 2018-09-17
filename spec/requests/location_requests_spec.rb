@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe LocationController do
-  %w{mentor}.each do |scope|
+  %w{mentor student}.each do |scope|
     context "POST /#{scope}/location" do
       it "saves and geocodes to the current account" do
         profile = FactoryBot.create(scope, :chicago)
