@@ -394,7 +394,12 @@ export default {
   methods: {
     handleSubmit () {
       if (this.savedLocation) {
-        this.handleConfirm()
+        window.axios.post(this.patchLocationEndpoint, this.params)
+          .then(() => {
+            this.handleConfirm()
+          }).catch(err => {
+            console.error(err)
+          })
       } else if (!this.formHasInput) {
         this.handleErrorResponse({ response: { status: 404 } })
       } else {
