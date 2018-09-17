@@ -2,7 +2,9 @@ module LocationController
   extend ActiveSupport::Concern
 
   included do
-    skip_before_action :store_location
+    unless name.match(/registration/i)
+      skip_before_action :store_location
+    end
   end
 
   def create
