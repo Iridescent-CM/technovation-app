@@ -2,15 +2,9 @@
 
 <% if regional_ambassador.provided_intro? %>
   <% if ra_dashboard %>
-    <h5 class="reset">
-      Your program introduction
-    </h5>
+    <h5 class="reset">Introduce yourself to your region</h5>
   <% else %>
-    <div class="panel ra-intro">
-      <h5 class="reset">
-        Meet your Regional Ambassador!
-      </h5>
-
+    <div class="ra-intro">
       <%= image_tag regional_ambassador.profile_image_url,
         class: "grid__cell-img" %>
 
