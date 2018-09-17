@@ -22,7 +22,7 @@
       Select a result below, or try the form fields again.
     </div>
 
-    <div class="panel__content">
+    <div class="panel__content suggestions">
       <template v-if="savedLocation">
         <p class="padding--t-r-l-none margin--t-r-l-none margin--b-large">
           We have saved {{ subjectPossessive }} region as:

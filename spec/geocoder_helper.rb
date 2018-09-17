@@ -235,5 +235,20 @@ RSpec.configure do |config|
         }]
       )
     end
+
+    ["Tel Aviv, Tel Aviv, IL"].each do |loc|
+      Geocoder::Lookup::Test.add_stub(
+        loc, [{
+          "latitude" => 32.146611,
+          "longitude" => 34.8519761,
+          "address" => "Tel Aviv, Tel Aviv, Israel",
+          'state'        => 'Tel Aviv',
+          'city'         => 'Tel Aviv',
+          'state_code'   => 'IL-TA',
+          'country'      => 'Israel',
+          'country_code' => 'IL',
+        }]
+      )
+    end
   end
 end

@@ -1,6 +1,8 @@
 module Registration
   class CurrentLocationsController < RegistrationController
     def show
+      geocoded = {}
+
       if current_attempt.valid_coordinates?
         geocoded = Geocoded.new(current_attempt)
       elsif result = Geocoder.search(CookiedCoordinates.get(self)).first
@@ -10,8 +12,9 @@ module Registration
           ip_address: request.remote_ip,
           context: self,
         )
-        result = Geocoder.search(CookiedCoordinates.get(self)).first
-        geocoded = Geocoded.new(result)
+        if result = Geocoder.search(CookiedCoordinates.get(self)).first
+          geocoded = Geocoded.new(result)
+        end
       end
 
       render json: geocoded
