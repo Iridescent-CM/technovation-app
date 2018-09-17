@@ -41,7 +41,7 @@ module LocationController
   private
   def location_params
     params.require("#{current_scope}_location")
-      .permit(:city, :state, :country)
+      .permit(:city, :state, :country, :token)
   end
 
   def db_record

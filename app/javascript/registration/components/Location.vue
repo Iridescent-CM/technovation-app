@@ -1,5 +1,6 @@
 <template>
   <location-form
+    :wizard-token="wizardToken"
     :scope-name="apiRoot"
     :handleBack="handleBack"
     :handleConfirm="handleConfirm"
@@ -31,7 +32,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['apiRoot']),
+    ...mapState(['wizardToken', 'apiRoot']),
 
     locationData: {
       get() {

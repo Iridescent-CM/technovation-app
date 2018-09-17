@@ -206,6 +206,12 @@ export default {
   },
 
   props: {
+    wizardToken: {
+      type: String,
+      required: false,
+      default: '',
+    },
+
     accountId: {
       type: [Number, Boolean],
       required: false,
@@ -345,6 +351,7 @@ export default {
         city: this.city,
         state: this.state,
         country: this.country,
+        token: this.wizardToken,
       }
 
       return params

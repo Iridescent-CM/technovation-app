@@ -31,7 +31,7 @@ module Registration
 
     private
     def custom_location_params
-      params.require(:location).permit(:city, :state, :country, :token)
+      params.require(:registration_location).permit(:city, :state, :country, :token)
     end
 
     def current_attempt
