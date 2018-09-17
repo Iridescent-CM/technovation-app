@@ -26,13 +26,7 @@ class ApplicationController < ActionController::Base
     redirect_to timeout_error_path(back: request.fullpath)
   end
 
-  before_action -> {
-    StoreLocation.(
-      ip_address: request.remote_ip,
-      context: self,
-      account: current_account,
-    )
-  }
+  before_action :store_location
 
   def current_account
     auth_token = get_cookie(CookieNames::AUTH_TOKEN)
@@ -61,6 +55,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def store_location
+    StoreLocation.(
+      ip_address: request.remote_ip,
+      context: self,
+      account: current_account,
+    )
+  end
+
   def regional_ambassador
     return @regional_ambassador if defined?(@regional_ambassador)
 
