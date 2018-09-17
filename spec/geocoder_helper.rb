@@ -29,7 +29,7 @@ RSpec.configure do |config|
       }
     ])
 
-    ["Los Angeles", "Los Angeles, California, United States", "Los Angeles, United States", "Los Angeles, , US", "Los Angeles, , United States", "Los Angeles, CA", "Los Angeles, CA, US", "Los Angeles, CA, United States"].each do |loc|
+    ["Los Angeles", "Los Angeles, California, United States", "Los Angeles, United States", "Los Angeles, , US", "Los Angeles, , United States", "Los Angeles, CA", "Los Angeles, CA, US", "Los Angeles, CA, United States", "Los Angeles, California, US"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 34.052363,
