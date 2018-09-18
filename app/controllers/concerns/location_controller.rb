@@ -1,6 +1,28 @@
 module LocationController
   extend ActiveSupport::Concern
 
+  included do
+    unless name.match(/registration/i)
+      skip_before_action :store_location
+    end
+  end
+
+  def create
+    db_record.city = location_params.fetch(:city)
+    db_record.state_province = location_params.fetch(:state)
+    db_record.country = location_params.fetch(:country)
+
+    Geocoding.perform(db_record).with_save
+
+    StoreLocation.(
+      coordinates: db_record.coordinates,
+      account: db_record,
+      context: self
+    )
+
+    head 200
+  end
+
   def update
     data, status = HandleGeocoderSearch.({
       db_record: db_record,
@@ -19,7 +41,7 @@ module LocationController
   private
   def location_params
     params.require("#{current_scope}_location")
-      .permit(:city, :state, :country)
+      .permit(:city, :state, :country, :token)
   end
 
   def db_record

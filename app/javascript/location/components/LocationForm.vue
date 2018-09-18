@@ -22,7 +22,7 @@
       Select a result below, or try the form fields again.
     </div>
 
-    <div class="panel__content">
+    <div class="panel__content suggestions">
       <template v-if="savedLocation">
         <p class="padding--t-r-l-none margin--t-r-l-none margin--b-large">
           We have saved {{ subjectPossessive }} region as:
@@ -101,9 +101,9 @@
         </template>
 
         <template v-else>
-          Please choose the correct terrritory:
+          <label>Please choose the correct terrritory:</label>
 
-          <label>
+          <p class="inline-checkbox">
             <input
               type="radio"
               name="location_country"
@@ -111,10 +111,10 @@
               v-model="country"
               @click="confirmCountry('Israel')"
             />
-            Israel
-          </label>
+            <label>Israel</label>
+          </p>
 
-          <label>
+          <p class="inline-checkbox">
             <input
               type="radio"
               name="location_country"
@@ -122,8 +122,8 @@
               v-model="country"
               @click="confirmCountry('Palestine')"
             />
-            Palestine
-          </label>
+            <label>Palestine</label>
+          </p>
         </template>
 
         <label for="location_state">State / Province {{ optionalStateLabel }}</label>
@@ -206,6 +206,12 @@ export default {
   },
 
   props: {
+    wizardToken: {
+      type: String,
+      required: false,
+      default: '',
+    },
+
     accountId: {
       type: [Number, Boolean],
       required: false,
@@ -345,6 +351,7 @@ export default {
         city: this.city,
         state: this.state,
         country: this.country,
+        token: this.wizardToken,
       }
 
       return params
@@ -394,7 +401,12 @@ export default {
   methods: {
     handleSubmit () {
       if (this.savedLocation) {
-        this.handleConfirm()
+        window.axios.post(this.patchLocationEndpoint, this.params)
+          .then(() => {
+            this.handleConfirm()
+          }).catch(err => {
+            console.error(err)
+          })
       } else if (!this.formHasInput) {
         this.handleErrorResponse({ response: { status: 404 } })
       } else {

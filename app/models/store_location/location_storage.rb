@@ -25,11 +25,10 @@ module StoreLocation
       if should_execute?
         status = "EXECUTED"
         context.set_cookie(cookie_name, cookie_value)
+        maybe_run_account_updates
       else
         status = "SKIPPED"
       end
-
-      maybe_run_account_updates
 
       Rails.logger.info(
         [
@@ -75,6 +74,10 @@ module StoreLocation
       existing_coordinates &&
         String(existing_coordinates) != "[0.0, 0.0]" &&
           String(existing_coordinates) != "[nil, nil]"
+    end
+
+    def cookie_overwritten?
+      !!cookie_value['overwritten_by']
     end
   end
 end

@@ -29,7 +29,7 @@ RSpec.configure do |config|
       }
     ])
 
-    ["Los Angeles", "Los Angeles, California, United States", "Los Angeles, United States", "Los Angeles, , US", "Los Angeles, , United States", "Los Angeles, CA", "Los Angeles, CA, US", "Los Angeles, CA, United States"].each do |loc|
+    ["Los Angeles", "Los Angeles, California, United States", "Los Angeles, United States", "Los Angeles, , US", "Los Angeles, , United States", "Los Angeles, CA", "Los Angeles, CA, US", "Los Angeles, CA, United States", "Los Angeles, California, US"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 34.052363,
@@ -232,6 +232,21 @@ RSpec.configure do |config|
           'state_code'   => 'BH',
           'country'      => 'Brazil',
           'country_code' => 'BR',
+        }]
+      )
+    end
+
+    ["Tel Aviv, Tel Aviv, IL", "Tel Aviv, Tel Aviv, Israel", [32.146611, 34.8519761]].each do |loc|
+      Geocoder::Lookup::Test.add_stub(
+        loc, [{
+          "latitude" => 32.146611,
+          "longitude" => 34.8519761,
+          "address" => "Tel Aviv, Tel Aviv, Israel",
+          'state'        => 'Tel Aviv',
+          'city'         => 'Tel Aviv',
+          'state_code'   => 'IL-TA',
+          'country'      => 'Israel',
+          'country_code' => 'IL',
         }]
       )
     end
