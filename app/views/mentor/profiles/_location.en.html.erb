@@ -2,7 +2,9 @@
   <% if current_mentor.address_details.blank? %>
     <p>
       <%= link_to "Set your location",
-        mentor_location_details_path,
+        mentor_location_details_path(
+          return_to: mentor_profile_path(anchor: '!location')
+        ),
         class: "button" %>
     </p>
   <% else %>
@@ -25,7 +27,9 @@
 
   <p>
     <%= link_to "Change your location",
-      mentor_location_details_path,
+      mentor_location_details_path(
+        return_to: mentor_profile_path(anchor: '!location')
+      ),
       class: "button" %>
   </p>
 <% end %>

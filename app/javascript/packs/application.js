@@ -19,6 +19,8 @@ Vue.use(TurbolinksAdapter)
 import '../config/axios'
 import '../registration'
 
+import { urlHelpers } from 'utilities/utilities'
+
 document.addEventListener('turbolinks:load', function () {
   const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn')
 
@@ -40,6 +42,17 @@ document.addEventListener('turbolinks:load', function () {
 
       components: {
         LocationForm,
+      },
+
+      methods: {
+        goBack() {
+          const returnTo = urlHelpers.fetchGetParameterValue('return_to')
+          if (!!returnTo) {
+            window.location.href = returnTo
+          } else {
+            window.history.back()
+          }
+        },
       },
     })
   }
