@@ -6,13 +6,7 @@ module LocationController
     db_record.state_province = location_params.fetch(:state)
     db_record.country = location_params.fetch(:country)
 
-    Geocoding.perform(db_record).with_save
-
-    StoreLocation.(
-      coordinates: db_record.coordinates,
-      account: db_record,
-      context: self
-    )
+    Geocoding.perform(db_record, self).with_save
 
     head 200
   end
@@ -20,14 +14,9 @@ module LocationController
   def update
     data, status = HandleGeocoderSearch.({
       db_record: db_record,
-      query: location_params
+      query: location_params,
+      controller: self,
     })
-
-    StoreLocation.(
-      coordinates: db_record.coordinates,
-      account: db_record,
-      context: self
-    )
 
     render json: data, status: status
   end

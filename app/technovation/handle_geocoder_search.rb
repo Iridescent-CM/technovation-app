@@ -1,17 +1,18 @@
 module HandleGeocoderSearch
   def self.call(options)
     db_record = options[:db_record]
+    controller = options[:controller]
     geocoder_query = GeocoderQuery.new(options[:query])
 
     if geocoder_query.country_code == 'PS'
-      handle_palestine_search(db_record, geocoder_query)
+      handle_palestine_search(db_record, geocoder_query, controller)
     else
-      handle_search(db_record, geocoder_query)
+      handle_search(db_record, geocoder_query, controller)
     end
   end
 
   private
-  def self.handle_search(db_record, geocoder_query)
+  def self.handle_search(db_record, geocoder_query, controller)
     geocoded_results = GeocodedResults.new(
       search_geocoder(geocoder_query),
       geocoder_query
@@ -21,7 +22,7 @@ module HandleGeocoderSearch
     results = handle_possible_insert_of_palestine_multi_result(geocoded_results)
 
     if results.one?
-      handle_one_result(db_record, results.first)
+      handle_one_result(db_record, results.first, controller)
     elsif results.many?
       return { results: results }, :multiple_choices
     elsif results.none?
@@ -44,7 +45,7 @@ module HandleGeocoderSearch
     end
   end
 
-  def self.handle_palestine_search(db_record, geocoder_query)
+  def self.handle_palestine_search(db_record, geocoder_query, controller)
     object = OpenStruct.new(
       city: geocoder_query.city,
       state: geocoder_query.state,
@@ -56,7 +57,7 @@ module HandleGeocoderSearch
 
     geocoded = Geocoded.new(object)
 
-    geocode_db_record(db_record, geocoded)
+    geocode_db_record(db_record, geocoded, controller)
 
     return { results: [geocoded] }, :ok
   end
@@ -72,9 +73,9 @@ module HandleGeocoderSearch
     end
   end
 
-  def self.handle_one_result(db_record, geocoded)
+  def self.handle_one_result(db_record, geocoded, controller)
     if geocoded.valid?
-      geocode_db_record(db_record, geocoded)
+      geocode_db_record(db_record, geocoded, controller)
       status_code = :ok
     else
       status_code = :not_found
@@ -83,10 +84,10 @@ module HandleGeocoderSearch
     return { results: [geocoded] }, status_code
   end
 
-  def self.geocode_db_record(db_record, geocoded)
+  def self.geocode_db_record(db_record, geocoded, controller)
     return false unless db_record.present?
     db_record.assign_address_details(geocoded)
-    Geocoding.perform(db_record).with_save
+    Geocoding.perform(db_record, controller).with_save
   end
 
   class GeocodedResults
