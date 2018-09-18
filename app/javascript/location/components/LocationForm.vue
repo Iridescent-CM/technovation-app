@@ -108,25 +108,27 @@
           <label>Please choose the correct terrritory:</label>
 
           <p class="inline-checkbox">
-            <input
-              type="radio"
-              name="location_country"
-              value="Israel"
-              v-model="country"
-              @click="confirmCountry('Israel')"
-            />
-            <label>Israel</label>
+            <label>
+              <input
+                type="radio"
+                name="location_country"
+                value="Israel"
+                v-model="country"
+                @click="confirmCountry('Israel')"
+              /> Israel
+            </label>
           </p>
 
           <p class="inline-checkbox">
-            <input
-              type="radio"
-              name="location_country"
-              value="Palestine"
-              v-model="country"
-              @click="confirmCountry('Palestine')"
-            />
-            <label>Palestine</label>
+            <label>
+              <input
+                type="radio"
+                name="location_country"
+                value="Palestine"
+                v-model="country"
+                @click="confirmCountry('Palestine')"
+              /> Palestine
+            </label>
           </p>
         </template>
 
