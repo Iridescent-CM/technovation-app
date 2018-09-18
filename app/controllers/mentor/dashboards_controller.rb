@@ -2,6 +2,8 @@ require 'fill_pdfs'
 
 module Mentor
   class DashboardsController < MentorController
+    include LocationStorageController
+
     def show
       @current_teams = current_mentor.teams.current.order("teams.name")
     end

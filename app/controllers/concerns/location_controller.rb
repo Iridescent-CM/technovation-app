@@ -1,12 +1,6 @@
 module LocationController
   extend ActiveSupport::Concern
 
-  included do
-    unless name.match(/registration/i)
-      skip_before_action :store_location
-    end
-  end
-
   def create
     db_record.city = location_params.fetch(:city)
     db_record.state_province = location_params.fetch(:state)

@@ -1,5 +1,7 @@
 module Public
   class DashboardsController < ApplicationController
+    include LocationStorageController
+
     def show
       token = get_cookie(CookieNames::SIGNUP_TOKEN)
 

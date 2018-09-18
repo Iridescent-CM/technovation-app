@@ -2,6 +2,8 @@ require 'fill_pdfs'
 
 module Student
   class DashboardsController < StudentController
+    include LocationStorageController
+
     def show
       @regional_events = available_regional_events
 
