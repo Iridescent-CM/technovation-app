@@ -18,6 +18,16 @@
           </small>
         </h1>
       </div>
+
+      <div v-else class="grid__cell">
+        <h1 class="page-heading">
+          Student Dashboard
+
+          <small>
+            <slot name="survey-links" />
+          </small>
+        </h1>
+      </div>
     </div>
 
     <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
