@@ -13,5 +13,17 @@ describe("student/store/getters.js", () => {
 
       expect(getters.isOnTeam(state)).toBeFalsy()
     })
+
+    it ("is true if the server sent a team, indicated by a real ID", () => {
+      const state = {
+        currentTeam: {
+          data: {
+            id: "d243b3e3",
+          }
+        },
+      }
+
+      expect(getters.isOnTeam(state)).toBeTruthy()
+    })
   })
 })
