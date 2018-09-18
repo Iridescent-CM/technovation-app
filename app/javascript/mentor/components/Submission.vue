@@ -1,5 +1,9 @@
 <template>
-  <div><slot name="submission" /></div>
+  <div class="grid">
+    <div class="grid__col-12">
+      <slot name="submission" />
+    </div>
+  </div>
 </template>
 
 <script>
