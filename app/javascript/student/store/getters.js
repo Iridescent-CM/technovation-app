@@ -17,6 +17,10 @@ export default {
     return digStateAttributes(state, 'regionalAmbassador', 'avatarUrl')
   },
 
+  regionalAmbassadorHasProvidedIntro (state) {
+    return digStateAttributes(state, 'regionalAmbassador', 'hasProvidedIntro')
+  },
+
   hasParentalConsent (state) {
     return digStateAttributes(state, 'parentalConsent', 'isSigned')
   },

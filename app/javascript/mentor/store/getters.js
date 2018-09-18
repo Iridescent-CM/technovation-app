@@ -1,6 +1,26 @@
 import { digStateAttributes } from 'utilities/vuex-utils'
 
 export default {
+  currentAccountName (state) {
+    return digStateAttributes(state, 'currentAccount', 'name')
+  },
+
+  currentAccountAvatarUrl (state) {
+    return digStateAttributes(state, 'currentAccount', 'avatarUrl')
+  },
+
+  regionalAmbassadorName (state) {
+    return digStateAttributes(state, 'regionalAmbassador', 'name')
+  },
+
+  regionalAmbassadorAvatarUrl (state) {
+    return digStateAttributes(state, 'regionalAmbassador', 'avatarUrl')
+  },
+
+  regionalAmbassadorHasProvidedIntro (state) {
+    return digStateAttributes(state, 'regionalAmbassador', 'hasProvidedIntro')
+  },
+
   canJoinTeams (state) {
     return digStateAttributes(state, 'currentMentor', 'isOnboarded')
   },
@@ -11,10 +31,6 @@ export default {
 
   nextOnboardingStep (state) {
     return digStateAttributes(state, 'currentMentor', 'nextOnboardingStep')
-  },
-
-  currentAccountName (state) {
-    return digStateAttributes(state, 'currentAccount', 'name')
   },
 
   isBioFilled (state) {

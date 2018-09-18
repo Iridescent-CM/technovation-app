@@ -120,6 +120,7 @@ export default {
     'currentAccountAvatarUrl',
     'regionalAmbassadorName',
     'regionalAmbassadorAvatarUrl',
+    'regionalAmbassadorHasProvidedIntro',
   ]),
 }
 </script>

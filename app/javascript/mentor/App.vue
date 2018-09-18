@@ -14,6 +14,8 @@
           >Open the Mentor Training E-book</a>
         </small>
       </h6>
+
+      <div slot="ra-intro"><slot name="ra-intro" /></div>
     </dashboard-header>
 
     <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">

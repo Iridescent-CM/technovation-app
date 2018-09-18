@@ -13,4 +13,6 @@ class RegionalAmbassadorSerializer
   attribute(:avatar_url) do |account|
     account.profile_image.thumb.url
   end
+
+  attribute(:has_provided_intro, &:provided_intro?)
 end

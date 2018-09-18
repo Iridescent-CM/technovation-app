@@ -3,6 +3,7 @@
     nil,
     id: "vue-data-registration",
     data: {
+      regional_ambassador: RegionalAmbassadorSerializer.new(regional_ambassador).serialized_json,
       current_account: AccountSerializer.new(current_account).serialized_json,
       current_mentor: MentorProfileSerializer.new(current_mentor).serialized_json,
       current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
@@ -13,6 +14,10 @@
       profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
     } %>
   <app>
+    <div slot="ra-intro">
+      <%= render 'dashboards/ra_intro' %>
+    </div>
+
     <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
       <template slot="survey-links"><%= render 'program_survey' %></template>
     <% end %>
