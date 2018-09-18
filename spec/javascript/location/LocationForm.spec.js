@@ -66,4 +66,155 @@ describe('location/components/LocationForm', () => {
       done()
     })
   })
+
+  describe('suggestions table', () => {
+    let wrapper
+    let handleSuggestionClickSpy
+
+    beforeEach(() => {
+      handleSuggestionClickSpy = jest.fn(() => {})
+
+      wrapper = shallowMount(LocationForm, {
+        localVue,
+        propsData: {
+          teamId: 1,
+          scopeName: "admin",
+        },
+        methods: {
+          handleSuggestionClick: handleSuggestionClickSpy,
+        },
+      })
+
+      wrapper.setData({
+        suggestions: [
+          { id: 1, city: 'Kansas City', state: 'Missouri', country: 'United States' },
+          { id: 2, city: 'KC', state: 'MO', country: 'United States' },
+          { id: 3, city: null, state: null, country: null },
+        ],
+      })
+    })
+
+    it('appears if there are suggestions present', () => {
+      const suggestionsTable = wrapper.find({ ref: 'suggestionsTable' })
+
+      expect(suggestionsTable.exists()).toBe(true)
+
+      const suggestions = wrapper.findAll('.suggestion')
+
+      expect(suggestions.length).toEqual(3)
+    })
+
+    it('is not visible if there are no suggestions present', () => {
+      wrapper.setData({ suggestions: [] })
+
+      const suggestionsTable = wrapper.find({ ref: 'suggestionsTable' })
+
+      expect(suggestionsTable.exists()).toBe(false)
+
+      const suggestions = wrapper.findAll('.suggestion')
+
+      expect(suggestions.length).toEqual(0)
+    })
+
+    it('contains a row for each suggestion present', () => {
+      const suggestions = wrapper.findAll('.suggestion')
+
+      let suggestionText = suggestions.at(0).text()
+
+      expect(suggestionText).toContain('Kansas City')
+      expect(suggestionText).toContain('Missouri')
+      expect(suggestionText).toContain('United States')
+
+      suggestionText = suggestions.at(1).text()
+
+      expect(suggestionText).toContain('KC')
+      expect(suggestionText).toContain('MO')
+      expect(suggestionText).toContain('United States')
+
+      suggestionText = suggestions.at(2).text()
+
+      expect(suggestionText).toContain('(no city)')
+      expect(suggestionText).toContain('(no state/province)')
+      expect(suggestionText).toContain('(no country)')
+    })
+
+    it('calls handleSuggestionClick when a suggestion row is clicked', () => {
+      const suggestions = wrapper.findAll('.suggestion')
+
+      suggestions.at(0).element.click()
+
+      expect(handleSuggestionClickSpy).toHaveBeenCalledTimes(1)
+      expect(handleSuggestionClickSpy).toHaveBeenCalledWith({
+        id: 1,
+        city: 'Kansas City',
+        state: 'Missouri',
+        country: 'United States',
+      })
+
+      suggestions.at(1).element.click()
+
+      expect(handleSuggestionClickSpy).toHaveBeenCalledTimes(2)
+      expect(handleSuggestionClickSpy).toHaveBeenCalledWith({
+        id: 2,
+        city: 'KC',
+        state: 'MO',
+        country: 'United States',
+      })
+
+      suggestions.at(2).element.click()
+
+      expect(handleSuggestionClickSpy).toHaveBeenCalledTimes(3)
+      expect(handleSuggestionClickSpy).toHaveBeenCalledWith({
+        id: 3,
+        city: null,
+        state: null,
+        country: null,
+      })
+    })
+  })
+
+  describe('methods', () => {
+    describe('handleSuggestionClick', () => {
+      let wrapper
+      let handleSubmitSpy
+      const suggestion = {
+        id: 1,
+        city: 'Kansas City',
+        state: 'Missouri',
+        country: 'United States'
+      }
+
+      beforeEach(() => {
+        handleSubmitSpy = jest.fn(() => {})
+
+        wrapper = shallowMount(LocationForm, {
+          localVue,
+          propsData: {
+            teamId: 1,
+            scopeName: "admin",
+          },
+          methods: {
+            handleSubmit: handleSubmitSpy,
+          },
+        })
+      })
+
+      it('should set the city, state, and country information in the component data', () => {
+        wrapper.vm.handleSuggestionClick(suggestion)
+
+        expect(wrapper.vm.city).toEqual(suggestion.city)
+        expect(wrapper.vm.state).toEqual(suggestion.state)
+        expect(wrapper.vm.country).toEqual(suggestion.country)
+        expect(wrapper.vm.countryConfirmed).toBe(true)
+      })
+
+      it('should call handleSubmit', () => {
+        expect(handleSubmitSpy).not.toHaveBeenCalled()
+
+        wrapper.vm.handleSuggestionClick(suggestion)
+
+        expect(handleSubmitSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+  })
 })
