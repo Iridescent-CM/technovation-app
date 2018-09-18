@@ -136,6 +136,10 @@ export const routes = [
       browserTitle: 'Part 5: Read scores & feedback',
     },
   },
+  {
+    path: '*',
+    redirect: '/',
+  },
 ]
 
 export const router = new VueRouter({
