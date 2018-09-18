@@ -9,6 +9,14 @@ export default {
     return digStateAttributes(state, 'currentAccount', 'avatarUrl')
   },
 
+  regionalAmbassadorName (state) {
+    return digStateAttributes(state, 'regionalAmbassador', 'name')
+  },
+
+  regionalAmbassadorAvatarUrl (state) {
+    return digStateAttributes(state, 'regionalAmbassador', 'avatarUrl')
+  },
+
   hasParentalConsent (state) {
     return digStateAttributes(state, 'parentalConsent', 'isSigned')
   },

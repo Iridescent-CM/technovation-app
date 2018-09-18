@@ -1,15 +1,15 @@
 <template>
   <div class="grid dashboard-notices">
     <div class="grid__col-sm-6 grid__col--bleed-y">
-      <div class="grid__cell">
+      <div v-if="!!regionalAmbassadorName" class="grid__cell">
         <h1 class="page-heading">
-          Student Dashboard
-
-          <small>
-            <a href="https://iridescentlearning.org/internet-safety/" target="_blank">
-              Internet Safety Training
-            </a>
-          </small>
+          <img
+            :src="regionalAmbassadorAvatarUrl"
+            class="profile-image"
+            width="40"
+            height="40"
+          />
+          {{ regionalAmbassadorName }}
 
           <small>
             <drop-down label="Meet your Regional Ambassador">
@@ -32,10 +32,24 @@
 
           {{ currentAccountName }}
 
-          <small><slot name="survey-links" /></small>
-
           <small>
             <drop-down label="More Information">
+              <h6>
+                Safety information
+                <small>
+                  <a href="https://iridescentlearning.org/internet-safety/" target="_blank">
+                    Internet Safety Training
+                  </a>
+                </small>
+              </h6>
+
+              <h6>
+                Help us improve!
+                <small>
+                  <slot name="survey-links" />
+                </small>
+              </h6>
+
                <h6>
                 Curriculum
                 <small>
@@ -91,7 +105,12 @@ export default {
     Icon,
   },
 
-  computed: mapGetters(['currentAccountName', 'currentAccountAvatarUrl']),
+  computed: mapGetters([
+    'currentAccountName',
+    'currentAccountAvatarUrl',
+    'regionalAmbassadorName',
+    'regionalAmbassadorAvatarUrl',
+  ]),
 }
 </script>
 
