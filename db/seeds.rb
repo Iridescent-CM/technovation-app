@@ -110,6 +110,7 @@ if (mentor = MentorProfile.create(
       password: "mentor@mentor.com",
       first_name: "Tom",
       last_name: "McGee",
+      gender: "Male",
       date_of_birth: Date.today - 34.years,
       city: "Boulder",
       state_province: "CO",
@@ -173,6 +174,7 @@ if (mentor = MentorProfile.create(
 
       first_name: "Joe",
       last_name: "McGee",
+      gender: "Male",
       date_of_birth: Date.today - 34.years,
       city: "Evanston",
       state_province: "IL",
@@ -206,6 +208,7 @@ if (ra = RegionalAmbassadorProfile.create(
       first_name: "RA",
       last_name: "Ambassador",
       date_of_birth: Date.today - 34.years,
+      gender: "Prefer not to say",
       city: "Chicago",
       state_province: "IL",
       country: "US",
@@ -233,6 +236,7 @@ if (judge = JudgeProfile.create(
       first_name: "Judgey",
       last_name: "McGee",
       date_of_birth: Date.today - 34.years,
+      gender: "Female",
       city: "Evanston",
       state_province: "IL",
       country: "US",
@@ -273,6 +277,7 @@ if (admin = AdminProfile.create(
     state_province: "CA.",
     country: "US",
     date_of_birth: 100.years.ago,
+    gender: "Prefer not to say",
     admin_status: :full_admin,
   }
 )).valid?
