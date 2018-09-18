@@ -6,12 +6,20 @@ describe("mentor/store/getters.js", () => {
       const state = {
         currentTeams: [{
           data: {
-            id: 1,
+            id: 'db123',
           },
         }],
       }
 
       expect(getters.isOnTeam(state)).toBeTruthy()
+    })
+
+    it ("is false if the mentor has no teams in currentTeams", () => {
+      const state = {
+        currentTeams: [],
+      }
+
+      expect(getters.isOnTeam(state)).toBeFalsy()
     })
   })
 
