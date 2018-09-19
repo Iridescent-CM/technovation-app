@@ -28,58 +28,62 @@
           We have saved {{ subjectPossessive }} region as:
         </p>
 
-        <div class="Rtable Rtable--3cols">
-          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-            <h6 class="margin--none">City</h6>
+        <div ref="savedLocationTable">
+          <div class="Rtable Rtable--3cols">
+            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+              <h6 class="margin--none">City</h6>
+            </div>
+
+            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+              <h6 class="margin--none">State / Province</h6>
+            </div>
+
+            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+              <h6 class="margin--none">Country / Territory</h6>
+            </div>
           </div>
 
-          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-            <h6 class="margin--none">State / Province</h6>
-          </div>
+          <div class="Rtable Rtable--3cols" ref="savedLocationTableRow">
+            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              {{ savedLocation.city || "(no city)" }}
+            </div>
 
-          <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-            <h6 class="margin--none">Country / Territory</h6>
-          </div>
-        </div>
+            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              {{ savedLocation.state || "(no state/province)" }}
+            </div>
 
-        <div class="Rtable Rtable--3cols">
-          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ savedLocation.city || "(no city)" }}
-          </div>
-
-          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ savedLocation.state || "(no state/province)" }}
-          </div>
-
-          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ savedLocation.country || "(no country)" }}
+            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              {{ savedLocation.country || "(no country)" }}
+            </div>
           </div>
         </div>
       </template>
 
       <template v-if="suggestions.length">
-        <div class="Rtable Rtable--3cols">
-          <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
-          <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
-          <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
-        </div>
-
-        <div
-          class="Rtable Rtable--3cols suggestion"
-          v-for="suggestion in suggestions"
-          :key="suggestion.id"
-          @click="handleSuggestionClick(suggestion)"
-        >
-          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ suggestion.city || "(no city)" }}
+        <div ref="suggestionsTable">
+          <div class="Rtable Rtable--3cols">
+            <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
+            <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
+            <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
           </div>
 
-          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ suggestion.state || "(no state/province)" }}
-          </div>
+          <div
+            class="Rtable Rtable--3cols suggestion"
+            v-for="suggestion in suggestions"
+            :key="suggestion.id"
+            @click="handleSuggestionClick(suggestion)"
+          >
+            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              {{ suggestion.city || "(no city)" }}
+            </div>
 
-          <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-            {{ suggestion.country || "(no country)" }}
+            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              {{ suggestion.state || "(no state/province)" }}
+            </div>
+
+            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              {{ suggestion.country || "(no country)" }}
+            </div>
           </div>
         </div>
       </template>
@@ -104,25 +108,27 @@
           <label>Please choose the correct terrritory:</label>
 
           <p class="inline-checkbox">
-            <input
-              type="radio"
-              name="location_country"
-              value="Israel"
-              v-model="country"
-              @click="confirmCountry('Israel')"
-            />
-            <label>Israel</label>
+            <label>
+              <input
+                type="radio"
+                name="location_country"
+                value="Israel"
+                v-model="country"
+                @click="confirmCountry('Israel')"
+              /> Israel
+            </label>
           </p>
 
           <p class="inline-checkbox">
-            <input
-              type="radio"
-              name="location_country"
-              value="Palestine"
-              v-model="country"
-              @click="confirmCountry('Palestine')"
-            />
-            <label>Palestine</label>
+            <label>
+              <input
+                type="radio"
+                name="location_country"
+                value="Palestine"
+                v-model="country"
+                @click="confirmCountry('Palestine')"
+              /> Palestine
+            </label>
           </p>
         </template>
 
@@ -469,7 +475,6 @@ export default {
             matched && matched.length &&
               countries.length === countrySensitivityList.length &&
                 countries.sort().every((value, index) => value === countrySensitivityList.sort()[index])
-
         ) {
           const result = {
             id: Math.floor(Math.random()*16777215).toString(16),

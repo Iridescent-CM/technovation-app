@@ -5,6 +5,8 @@
 
 <p>
   <%= link_to "Change your location",
-    student_location_details_path,
+    student_location_details_path(
+      return_to: student_profile_path(anchor: '!location')
+    ),
     class: "button" %>
 </p>

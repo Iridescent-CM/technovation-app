@@ -14,7 +14,7 @@ describe('axios mock', () => {
 
       axios.get('/test/url').then((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { myField: 'myValue' } })
+        expect(response).toEqual({ data: { myField: 'myValue' }, status: 200 })
         done()
       })
     })
@@ -24,7 +24,7 @@ describe('axios mock', () => {
 
       axios.post('/test/url').then((response) => {
         expect(axios.post).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { some: 'value' } })
+        expect(response).toEqual({ data: { some: 'value' }, status: 200 })
         done()
       })
     })
@@ -34,7 +34,7 @@ describe('axios mock', () => {
 
       axios.delete('/test/url').then((response) => {
         expect(axios.delete).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { some: 'value' } })
+        expect(response).toEqual({ data: { some: 'value' }, status: 200 })
         done()
       })
     })
@@ -44,7 +44,7 @@ describe('axios mock', () => {
 
       axios.patch('/test/url').then((response) => {
         expect(axios.patch).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { some: 'value' } })
+        expect(response).toEqual({ data: { some: 'value' }, status: 200 })
         done()
       })
     })
@@ -54,7 +54,7 @@ describe('axios mock', () => {
 
       axios.post('/test/url').catch((response) => {
         expect(axios.post).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { rejected: 'value' } })
+        expect(response).toEqual({ data: { rejected: 'value' }, status: 200 })
         done()
       })
     })
@@ -65,13 +65,13 @@ describe('axios mock', () => {
 
       axios.post('/test/url').then((response) => {
         expect(axios.post).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { resolved: 'once' } })
-      })
+        expect(response).toEqual({ data: { resolved: 'once' }, status: 200 })
 
-      axios.post('/test/url').then((response) => {
-        expect(axios.post).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { always: 'resolved' } })
-        done()
+        axios.post('/test/url').then((response) => {
+          expect(axios.post).toHaveBeenCalledWith('/test/url')
+          expect(response).toEqual({ data: { always: 'resolved' }, status: 200 })
+          done()
+        })
       })
     })
 
@@ -86,6 +86,16 @@ describe('axios mock', () => {
         done()
       })
     })
+
+    it('takes a status option to return a specific status code', (done) => {
+      axios.mockResponse('post', { resolved: 'once' }, { status: 300 })
+
+      axios.post('/test/url').then((response) => {
+        expect(axios.post).toHaveBeenCalledWith('/test/url')
+        expect(response).toEqual({ data: { resolved: 'once' }, status: 300 })
+        done()
+      })
+    })
   })
 
   describe('axios.mockResponseOnce', () => {
@@ -95,12 +105,12 @@ describe('axios mock', () => {
 
       axios.get('/test/url').then((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { resolved: 'once' } })
+        expect(response).toEqual({ data: { resolved: 'once' }, status: 200 })
       })
 
       axios.get('/test/url').then((response) => {
         expect(axios.get).toHaveBeenCalledWith('/test/url')
-        expect(response).toEqual({ data: { resolved: 'always' } })
+        expect(response).toEqual({ data: { resolved: 'always' }, status: 200 })
         done()
       })
     })

@@ -1,6 +1,6 @@
 const mockedAxios = {
   mockResponse (method, returnData, opts) {
-    const options = Object.assign({}, opts)
+    const options = Object.assign({ status: 200 }, opts)
 
     const promiseState = options.reject ? 'reject' : 'resolve'
 
@@ -10,6 +10,7 @@ const mockedAxios = {
     this[method][mockImplementationFunc](() => {
       return Promise[promiseState]({
         data: returnData,
+        status: options.status
       })
     })
   },

@@ -5,6 +5,8 @@
 
 <p>
   <%= link_to "Change your location",
-    judge_location_details_path,
+    judge_location_details_path(
+      return_to: judge_profile_path(anchor: '!location')
+    ),
     class: "button" %>
 </p>
