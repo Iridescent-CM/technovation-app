@@ -174,6 +174,54 @@ describe('location/components/LocationForm', () => {
     })
   })
 
+  describe('saved locations table', () => {
+    let wrapper
+
+    beforeEach(() => {
+      wrapper = shallowMount(LocationForm, {
+        localVue,
+        propsData: {
+          teamId: 1,
+          scopeName: 'admin',
+        },
+      })
+
+      wrapper.setData({
+        savedLocation: {
+          id: 1,
+          city: 'Kansas City',
+          state: 'Missouri',
+          country: 'United States'
+        },
+      })
+    })
+
+    it('appears if there is a saved location present', () => {
+      const savedLocationTable = wrapper.find({ ref: 'savedLocationTable' })
+
+      expect(savedLocationTable.exists()).toBe(true)
+
+      const savedLocationText = wrapper.find({ ref: 'savedLocationTableRow' })
+        .text()
+
+      expect(savedLocationText).toContain('Kansas City')
+      expect(savedLocationText).toContain('Missouri')
+      expect(savedLocationText).toContain('United States')
+    })
+
+    it('is not visible if there is no saved location', () => {
+      wrapper.setData({ savedLocation: null })
+
+      const savedLocationTable = wrapper.find({ ref: 'savedLocationTable' })
+
+      expect(savedLocationTable.exists()).toBe(false)
+
+      const savedLocationRow = wrapper.find({ ref: 'savedLocationTableRow' })
+
+      expect(savedLocationRow.exists()).toBe(false)
+    })
+  })
+
   describe('methods', () => {
     describe('handleSuggestionClick', () => {
       let wrapper

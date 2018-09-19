@@ -28,7 +28,7 @@
           We have saved {{ subjectPossessive }} region as:
         </p>
 
-        <div ref="savedRegionTable">
+        <div ref="savedLocationTable">
           <div class="Rtable Rtable--3cols">
             <div class="Rtable-cell padding--t-b-none padding--r-l-large">
               <h6 class="margin--none">City</h6>
@@ -43,7 +43,7 @@
             </div>
           </div>
 
-          <div class="Rtable Rtable--3cols">
+          <div class="Rtable Rtable--3cols" ref="savedLocationTableRow">
             <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
               {{ savedLocation.city || "(no city)" }}
             </div>
