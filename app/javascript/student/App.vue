@@ -80,12 +80,6 @@ export default {
           url: 'https://www.technovationchallenge.org/judging-rubric/',
           text: 'Read the Judging Rubric',
         },
-
-        {
-          heading: 'Mentor Training',
-          url: 'https://iridescentlearning.atavist.com/technovation-mentor-training',
-          text: 'Open the Mentor Training E-book',
-        },
       ],
     }
   },
