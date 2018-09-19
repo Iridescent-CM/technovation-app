@@ -2,6 +2,9 @@
 
 <%= simple_form_for current_ambassador,
   url: regional_ambassador_introduction_path do |f| %>
+
+  <%= f.input :program_name, label: "Program name" %>
+
   <%= f.input :intro_summary,
     label: "Short summary",
     as: :text,

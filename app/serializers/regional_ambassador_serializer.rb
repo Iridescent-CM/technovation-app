@@ -4,7 +4,7 @@ class RegionalAmbassadorSerializer
 
   set_id :random_id
 
-  attributes :name
+  attributes :name, :program_name
 
   attribute(:api_root) do |account|
     "#{account.scope_name}"

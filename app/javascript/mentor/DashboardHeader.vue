@@ -9,7 +9,7 @@
             width="40"
             height="40"
           />
-          {{ regionalAmbassadorName }}
+          {{ regionalProgramName }}
 
           <small>
             <drop-down label="Meet your Regional Ambassador">
@@ -111,7 +111,7 @@ export default {
    computed: mapGetters([
     'currentAccountName',
     'currentAccountAvatarUrl',
-    'regionalAmbassadorName',
+    'regionalProgramName',
     'regionalAmbassadorAvatarUrl',
     'regionalAmbassadorHasProvidedIntro',
   ]),

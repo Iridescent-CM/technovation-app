@@ -66,17 +66,8 @@
 
           <div class="tabs__tab-content" id="ra-info">
             <% if current_ambassador.needs_intro_prompt? %>
-              <h4>
-                New this year: Introduce your region to your program!
-
-                <small>
-                  <%= link_to 'what is this?', '#',
-                    data: { opens_modal: "explain-intro" } %>
-                </small>
-              </h4>
-
-              <%= render "regional_ambassador/introductions/form",
-                ra_dashboard: true %>
+              <h4>Promote your program to your region</h4>
+              <%= render "regional_ambassador/introductions/form", ra_dashboard: true %>
             <% else %>
               <%= render "dashboards/ra_intro", ra_dashboard: true %>
 
@@ -95,22 +86,4 @@
       </div>
     </div>
   </div>
-
-  <% if current_ambassador.needs_intro_prompt? %>
-    <%= content_tag :div, class: "modal",
-      id: "explain-intro",
-      data: {
-        width: "750px",
-      } do %>
-      <div class="modal-content">
-        <p>
-          Tell the participants in your region about yourself and your regional program!
-          Add links to your various social sites, your whatsapp number, website,
-          and email so they can get to know you better.
-        </p>
-
-        <%= image_tag "ra-intro-explained.png", width: 650 %>
-      </div>
-    <% end %>
-  <% end %>
 <% end %>

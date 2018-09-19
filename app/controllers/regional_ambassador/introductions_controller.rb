@@ -16,6 +16,7 @@ module RegionalAmbassador
     private
     def introduction_params
       params.require(:regional_ambassador_profile).permit(
+        :program_name,
         :intro_summary,
         regional_links_attributes: [
           :id,
