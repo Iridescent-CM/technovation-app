@@ -475,7 +475,6 @@ export default {
             matched && matched.length &&
               countries.length === countrySensitivityList.length &&
                 countries.sort().every((value, index) => value === countrySensitivityList.sort()[index])
-
         ) {
           const result = {
             id: Math.floor(Math.random()*16777215).toString(16),

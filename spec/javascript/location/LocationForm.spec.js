@@ -1,6 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import axios from 'axios'
 
+import LocationResult from 'location/models/LocationResult'
 import LocationForm from 'location/components/LocationForm'
 
 const localVue = createLocalVue()
@@ -12,27 +13,27 @@ describe('location/components/LocationForm', () => {
 
   it('fills in the user location data from the server', (done) => {
     axios.mockResponseOnce('get', {
-      city: "Chicago",
-      state: "IL",
-      country: "US",
+      city: 'Chicago',
+      state: 'IL',
+      country: 'US',
     })
 
     const myWrapper = shallowMount(LocationForm, {
       localVue,
       propsData: {
-        scopeName: "student",
+        scopeName: 'student',
       },
     })
 
     setImmediate(() => {
       expect(axios.get).toHaveBeenCalledWith('/student/current_location')
 
-      expect(myWrapper.vm.city).toEqual("Chicago")
-      expect(myWrapper.vm.state).toEqual("IL")
-      expect(myWrapper.vm.country).toEqual("US")
+      expect(myWrapper.vm.city).toEqual('Chicago')
+      expect(myWrapper.vm.state).toEqual('IL')
+      expect(myWrapper.vm.country).toEqual('US')
 
-      expect(myWrapper.find('#location_city').element.value).toEqual("Chicago")
-      expect(myWrapper.find('#location_state').element.value).toEqual("IL")
+      expect(myWrapper.find('#location_city').element.value).toEqual('Chicago')
+      expect(myWrapper.find('#location_state').element.value).toEqual('IL')
       done()
     })
   })
@@ -42,7 +43,7 @@ describe('location/components/LocationForm', () => {
       localVue,
       propsData: {
         accountId: 1,
-        scopeName: "admin",
+        scopeName: 'admin',
       },
     })
 
@@ -57,7 +58,7 @@ describe('location/components/LocationForm', () => {
       localVue,
       propsData: {
         teamId: 1,
-        scopeName: "admin",
+        scopeName: 'admin',
       },
     })
 
@@ -78,7 +79,7 @@ describe('location/components/LocationForm', () => {
         localVue,
         propsData: {
           teamId: 1,
-          scopeName: "admin",
+          scopeName: 'admin',
         },
         methods: {
           handleSuggestionClick: handleSuggestionClickSpy,
@@ -191,7 +192,7 @@ describe('location/components/LocationForm', () => {
           localVue,
           propsData: {
             teamId: 1,
-            scopeName: "admin",
+            scopeName: 'admin',
           },
           methods: {
             handleSubmit: handleSubmitSpy,
@@ -199,7 +200,7 @@ describe('location/components/LocationForm', () => {
         })
       })
 
-      it('should set the city, state, and country information in the component data', () => {
+      it('sets the city, state, and country information in the component data', () => {
         wrapper.vm.handleSuggestionClick(suggestion)
 
         expect(wrapper.vm.city).toEqual(suggestion.city)
@@ -208,12 +209,118 @@ describe('location/components/LocationForm', () => {
         expect(wrapper.vm.countryConfirmed).toBe(true)
       })
 
-      it('should call handleSubmit', () => {
+      it('calls handleSubmit', () => {
         expect(handleSubmitSpy).not.toHaveBeenCalled()
 
         wrapper.vm.handleSuggestionClick(suggestion)
 
         expect(handleSubmitSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+  })
+
+  describe('full integration suite for single result', () => {
+    const suggestionsResults = [
+      {
+        id: 'd7070f84',
+        state_code: 'MO',
+        state: 'Missouri',
+        latitude: 39.0997265,
+        longitude: -94.5785667,
+        city: 'Kansas City',
+        country_code: 'US',
+        country: 'United States'
+      },
+    ]
+
+    let wrapper
+
+    beforeEach(() => {
+      axios.get.mockClear()
+      axios.post.mockClear()
+      axios.patch.mockClear()
+    })
+
+    it('it makes a GET request to populate the initial location', () => {
+      axios.mockResponseOnce('get', {
+        city: 'Chicago',
+        state: 'IL',
+        country: 'US',
+      })
+
+      expect(axios.get).not.toHaveBeenCalled()
+
+      wrapper = shallowMount(LocationForm, {
+        localVue,
+        propsData: {
+          teamId: 1,
+          scopeName: 'student',
+          handleConfirm: jest.fn(() => {}),
+        },
+      })
+
+      expect(axios.get).toHaveBeenCalledWith('/student/current_location?team_id=1')
+    })
+
+    it('sends a search request to the back-end using input data, returning one result', (done) => {
+      axios.mockResponseOnce('patch', {
+        results: suggestionsResults,
+      })
+
+      const handleOKResponseSpy = jest.spyOn(wrapper.vm, 'handleOKResponse')
+      const handleErrorResponseSpy = jest.spyOn(wrapper.vm, 'handleErrorResponse')
+      const suggestion = new LocationResult(suggestionsResults[0])
+
+      expect(axios.patch).not.toHaveBeenCalled()
+
+      wrapper.setData({
+        city: 'Kansas City',
+        state: 'Missouri',
+        country: 'United States',
+      })
+
+      wrapper.vm.handleSubmit()
+
+      expect(axios.patch).toHaveBeenCalledWith(
+        wrapper.vm.patchLocationEndpoint,
+        wrapper.vm.params
+      )
+
+      setImmediate(() => {
+        expect(wrapper.vm.status).toEqual(200)
+
+        expect(wrapper.vm.savedLocation).toEqual(suggestion)
+
+        expect(wrapper.vm.city).toEqual(suggestion.city)
+        expect(wrapper.vm.state).toEqual(suggestion.state)
+        expect(wrapper.vm.country).toEqual(suggestion.country)
+        expect(wrapper.vm.countryConfirmed).toBe(true)
+
+        expect(wrapper.vm.suggestions.length).toEqual(0)
+
+        expect(handleOKResponseSpy).toHaveBeenCalledTimes(1)
+        expect(handleErrorResponseSpy).toHaveBeenCalledTimes(0)
+        done()
+      })
+    })
+
+    it('saved the final saved location to the database via another XHR request', (done) => {
+      axios.mockResponseOnce('post', {})
+
+      const handleConfirmSpy = jest.spyOn(wrapper.vm, 'handleConfirm')
+
+      expect(axios.post).not.toHaveBeenCalled()
+
+      wrapper.vm.handleSubmit()
+
+      expect(axios.post).toHaveBeenCalledWith(
+        wrapper.vm.patchLocationEndpoint,
+        wrapper.vm.params
+      )
+
+      setImmediate(() => {
+        expect(handleConfirmSpy).toHaveBeenCalledTimes(1)
+        done()
       })
     })
   })
