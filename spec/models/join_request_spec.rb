@@ -1,6 +1,18 @@
 require "rails_helper"
 
 RSpec.describe JoinRequest do
+  describe ".pending" do
+    it "excludes deleted join requests" do
+      team = FactoryBot.create(:team)
+      mentor = FactoryBot.create(:mentor)
+
+      deleted_request = JoinRequest.create!(requestor: mentor, team: team)
+      deleted_request.deleted!
+
+      expect(JoinRequest.pending).not_to include(deleted_request)
+    end
+  end
+
   it "cannot be duplicated" do
     student = FactoryBot.create(:student)
     team = FactoryBot.create(:team)

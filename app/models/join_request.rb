@@ -1,7 +1,7 @@
 class JoinRequest < ActiveRecord::Base
-  after_create :notify_requested_team
+  after_commit :notify_requested_team, on: :create
 
-  scope :pending, -> { where(accepted_at: nil, declined_at: nil) }
+  scope :pending, -> { where(accepted_at: nil, declined_at: nil, deleted_at: nil) }
   scope :declined, -> { where(accepted_at: nil).where.not(declined_at: nil) }
 
   scope :for_students, -> { where(requestor_type: "StudentProfile") }
@@ -37,6 +37,15 @@ class JoinRequest < ActiveRecord::Base
 
   def requestor_name
     requestor_full_name
+  end
+
+  def pending!
+    update_columns({
+      accepted_at: nil,
+      declined_at: nil,
+      deleted_at: nil,
+    })
+    notify_requested_team
   end
 
   def approved!

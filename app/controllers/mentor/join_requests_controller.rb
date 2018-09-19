@@ -19,6 +19,7 @@ module Mentor
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
       elsif
         join_request = current_mentor.join_requests.find_or_create_by!(team: @team)
+        join_request.pending!
 
         redirect_to mentor_join_request_path(join_request),
           success: t("controllers.mentor.join_requests.create.success",

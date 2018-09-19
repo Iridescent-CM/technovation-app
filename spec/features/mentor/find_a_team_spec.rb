@@ -6,10 +6,9 @@ RSpec.feature "Mentors find a team" do
   let!(:available_team) { FactoryBot.create(:team, :geocoded) }
     # Default is in Chicago
 
-  before do
-    mentor = FactoryBot.create(:mentor, :geocoded) # City is Chicago
-    sign_in(mentor)
-  end
+  let(:mentor) { FactoryBot.create(:mentor, :geocoded) } # City is Chicago
+
+  before { sign_in(mentor) }
 
   scenario "browse nearby teams" do
     mentored_team = FactoryBot.create(:team, :with_mentor, :geocoded)
@@ -114,14 +113,35 @@ RSpec.feature "Mentors find a team" do
 
   scenario "request to join a team" do
     within('#find-team') { click_link "Join a team" }
+
     click_link "Ask to join"
     click_button "Ask to be a mentor for #{available_team.name}"
 
     join_request = JoinRequest.last
+
     expect(current_path).to eq(mentor_join_request_path(join_request))
     expect(page).to have_content(join_request.team_name)
     expect(page).to have_content(
       "You have requested to be a mentor for #{available_team.name}"
     )
+    expect(page).to have_content("You have requested to join this team")
+  end
+
+  scenario "request to join the same team again, even if you deleted an earlier request" do
+    join_request = JoinRequest.create!({
+      requestor: mentor,
+      team: available_team,
+    })
+
+    join_request.deleted!
+
+    within('#find-team') { click_link "Join a team" }
+
+    click_link "Ask to join"
+    click_button "Ask to be a mentor for #{available_team.name}"
+
+    expect(current_path).to eq(mentor_join_request_path(join_request))
+    expect(page).to have_content("You have requested to join this team")
+    expect(page).to have_content(join_request.team_name)
   end
 end
