@@ -13,6 +13,16 @@ export default {
     return digStateAttributes(state, 'regionalAmbassador', 'name')
   },
 
+  regionalProgramName (state) {
+    const programName = digStateAttributes(state, 'regionalAmbassador', 'programName')
+
+    if (!programName) {
+      return digStateAttributes(state, 'regionalAmbassador', 'name')
+    } else {
+      return programName
+    }
+  },
+
   regionalAmbassadorAvatarUrl (state) {
     return digStateAttributes(state, 'regionalAmbassador', 'avatarUrl')
   },
@@ -23,6 +33,10 @@ export default {
 
   hasParentalConsent (state) {
     return digStateAttributes(state, 'parentalConsent', 'isSigned')
+  },
+
+  parentalConsentSignedAtEpoch (state) {
+    return digStateAttributes(state, 'parentalConsent', 'signedAtEpoch')
   },
 
   hasSavedParentalInfo (state) {

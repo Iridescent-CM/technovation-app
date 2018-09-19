@@ -2,14 +2,14 @@ import 'axios'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 
-import mockStore from 'mentor/store/__mocks__'
-import DashboardHeader from 'mentor/DashboardHeader'
+import mockStore from 'student/store/__mocks__'
+import DashboardHeader from 'student/DashboardHeader'
 import DropDown from 'components/DropDown'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe("mentor/DashboardHeader.vue", () => {
+describe("student/DashboardHeader.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
@@ -56,7 +56,7 @@ describe("mentor/DashboardHeader.vue", () => {
   describe("when the RA has not provided an intro", () => {
     it("displays the default left header", () => {
       defaultWrapper.setProps({
-        defaultTitle: "Mentor Dashboard",
+        defaultTitle: "Student Dashboard",
         resourceLinks: [
           {
             url: 'something',
@@ -68,7 +68,7 @@ describe("mentor/DashboardHeader.vue", () => {
 
       expect(defaultWrapper.find(
         '.dashboard-notices .grid__col-sm-6:first-child'
-      ).text()).toContain("Mentor Dashboard")
+      ).text()).toContain("Student Dashboard")
 
       expect(defaultWrapper.find(
         '.dashboard-notices .grid__col-sm-6:first-child h1 small a'

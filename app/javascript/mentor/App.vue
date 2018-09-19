@@ -1,19 +1,13 @@
 <template>
   <div>
-    <dashboard-header>
-      <div slot="survey-links"><slot name="survey-links" /></div>
-      <div slot="ra-switch-link"><slot name="ra-switch-link" /></div>
-      <div slot="judge-switch-link"><slot name="judge-switch-link" /></div>
-
-      <h6>
-        Mentor Training
-        <small>
-          <a
-            href="https://iridescentlearning.atavist.com/technovation-mentor-training"
-            target="_blank"
-          >Open the Mentor Training E-book</a>
-        </small>
-      </h6>
+    <dashboard-header
+      default-title="Mentor Dashboard"
+      :resource-links="resourceLinks"
+    >
+      <div slot="right-sidebar">
+        <small><slot name="ra-switch-link" /></small>
+        <small><slot name="judge-switch-link" /></small>
+      </div>
 
       <div slot="ra-intro"><slot name="ra-intro" /></div>
     </dashboard-header>
@@ -32,6 +26,7 @@
           <div slot="events"><slot name="events" /></div>
           <div slot="scores"><slot name="scores" /></div>
         </router-view>
+
         <slot></slot>
       </div>
 
@@ -52,6 +47,57 @@ export default {
   components: {
     DashboardMenu,
     DashboardHeader,
+  },
+
+  data () {
+    return {
+      resourceLinks: [
+        {
+          heading: 'Curriculum',
+          url: 'https://www.technovationchallenge.org/curriculum-intro/registered',
+          text: 'Open the Technovation Curriculum',
+        },
+
+        {
+          heading: 'Help us improve!',
+          url: this.surveyLink,
+          text: this.surveyLinkText,
+          isSurveyLink: true,
+        },
+
+        {
+          heading: 'Submission Guide',
+          url: 'https://www.technovationchallenge.org/submission-guidelines/',
+          text: 'Read the Submission Guidelines',
+        },
+
+        {
+          heading: 'Judging Rubric',
+          url: 'https://www.technovationchallenge.org/judging-rubric/',
+          text: 'Read the Judging Rubric',
+        },
+
+        {
+          heading: 'Mentor Training',
+          url: 'https://iridescentlearning.atavist.com/technovation-mentor-training',
+          text: 'Open the Mentor Training E-book',
+        },
+      ],
+    }
+  },
+
+  props: {
+    surveyLink: {
+      type: String,
+      required: false,
+      default: '',
+    },
+
+    surveyLinkText: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
 }
 </script>

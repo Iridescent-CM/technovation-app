@@ -1,18 +1,9 @@
 <template>
   <div>
-    <dashboard-header>
-      <div slot="survey-links"><slot name="survey-links" /></div>
-
-      <h6>
-        Project Workbook
-        <small>
-          <a
-            href="https://bit.ly/2z7xwP9"
-            target="_blank"
-          >Open the Student Project Workbook</a>
-        </small>
-      </h6>
-
+    <dashboard-header
+      default-title="Student Dashboard"
+      :resource-links="resourceLinks"
+    >
       <div slot="ra-intro"><slot name="ra-intro" /></div>
     </dashboard-header>
 
@@ -48,6 +39,69 @@ export default {
   components: {
     DashboardHeader,
     DashboardMenu,
+  },
+
+  data () {
+    return {
+      resourceLinks: [
+        {
+          heading: 'Safety information',
+          url: 'https://iridescentlearning.org/internet-safety/',
+          text: 'Internet Safety Training',
+        },
+
+        {
+          heading: 'Curriculum',
+          url: 'https://www.technovationchallenge.org/curriculum-intro/registered',
+          text: 'Open the Technovation Curriculum',
+        },
+
+        {
+          heading: 'Help us improve!',
+          url: this.surveyLink,
+          text: this.surveyLinkText,
+          isSurveyLink: true,
+        },
+
+        {
+          heading: 'Project Workbook',
+          url: 'https://bit.ly/2z7xwP9',
+          text: 'Open the Student Project Workbook',
+        },
+
+        {
+          heading: 'Submission Guide',
+          url: 'https://www.technovationchallenge.org/submission-guidelines/',
+          text: 'Read the Submission Guidelines',
+        },
+
+        {
+          heading: 'Judging Rubric',
+          url: 'https://www.technovationchallenge.org/judging-rubric/',
+          text: 'Read the Judging Rubric',
+        },
+
+        {
+          heading: 'Mentor Training',
+          url: 'https://iridescentlearning.atavist.com/technovation-mentor-training',
+          text: 'Open the Mentor Training E-book',
+        },
+      ],
+    }
+  },
+
+  props: {
+    surveyLink: {
+      type: String,
+      required: false,
+      default: '',
+    },
+
+    surveyLinkText: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
 }
 </script>

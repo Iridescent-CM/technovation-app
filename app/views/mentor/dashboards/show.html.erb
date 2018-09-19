@@ -13,7 +13,17 @@
       profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
       profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
     } %>
-  <app>
+  <app
+    <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+      survey-link-text="<%= SeasonToggles.survey_link(current_scope, "text") %>"
+      survey-link="<%= SeasonToggles.survey_link(
+        current_scope,
+        "url",
+        format_url: true,
+        account: current_account
+      ) %>"
+    <% end %>
+  >
     <div slot="ra-intro">
       <%= render 'dashboards/ra_intro' %>
     </div>
