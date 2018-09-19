@@ -8,8 +8,12 @@ export default {
       'currentMentor',
       'consentWaiver',
       'backgroundCheck'
-    ].forEach(key => Vue.set(state, key, JSON.parse(dataset[key])))
+    ].forEach(key => {
+      if (dataset[key])
+        Vue.set(state, key, JSON.parse(dataset[key]))
+    })
 
-    Vue.set(state, 'currentTeams', JSON.parse(dataset.currentTeams).data)
+    if (dataset.currentTeams)
+      Vue.set(state, 'currentTeams', JSON.parse(dataset.currentTeams).data)
   },
 }

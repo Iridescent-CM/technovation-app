@@ -1,13 +1,17 @@
 export const digStateData = (state, key, property, conditionFunc) => {
-  const data = state[key].data
+  if (state[key]) {
+    const data = state[key].data
 
-  if (data) {
-    const value = state[key].data[property]
+    if (data) {
+      const value = state[key].data[property]
 
-    if (!conditionFunc) {
-      return value
-    } else if (value) {
-      return conditionFunc(value)
+      if (!conditionFunc) {
+        return value
+      } else if (value) {
+        return conditionFunc(value)
+      } else {
+        return undefined
+      }
     } else {
       return undefined
     }
