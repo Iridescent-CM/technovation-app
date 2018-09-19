@@ -41,6 +41,9 @@
 
           {{ currentAccountName }}
 
+          <small><slot name="ra-switch-link" /></small>
+          <small><slot name="judge-switch-link" /></small>
+
           <small>
             <drop-down label="More Information">
               <h6>
@@ -114,3 +117,14 @@ export default {
   ]),
 }
 </script>
+
+<style lang="scss" scoped>
+.page-heading {
+  background: #ececec;
+}
+
+.profile-image {
+  width: 40px;
+  clip-path: circle(20px at center);
+}
+</style>

@@ -100,9 +100,25 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
   margin: 0.5rem 0;
 }
 
+h1.page-heading .ra-intro,
 .ra-intro {
+  color: #333;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.2;
+  text-transform: none;
+
+  h6 {
+    font-size: 1.2rem;
+  }
+
   img {
     margin: 0 0 1rem;
+  }
+
+  ul {
+    margin: 1rem 0;
   }
 
   .reset li {
@@ -111,6 +127,22 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    a,
+    a span {
+      color: $secondary;
+      font-weight: bold;
+      text-transform: none;
+    }
+
+    a [class^="icon-"] {
+      color: $primary;
+    }
+
+    .web-icon-text {
+      display: inline-block;
+      padding-left: 0.5rem;
+    }
   }
 }
 
