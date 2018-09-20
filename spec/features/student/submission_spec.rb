@@ -160,12 +160,25 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_content(
-      "Your team is not set to attend a live regional pitch event."
+      "Your team is not set to attend a live Regional Pitch Event."
     )
 
     expect(page).to have_content(
-      "If your team is invited, then you will " +
-      "be required to upload your pitch presentation slides here."
+      "In the spring, Regional Ambassadors will invite teams " +
+      "to pitch at a live event."
+    )
+
+    expect(page).to have_content(
+      "If you attend, then you will be required to upload your " +
+      "pitch presentation slides here."
+    )
+
+    expect(page).to have_content(
+      "Contact your Regional Ambassador for the due date."
+    )
+
+    expect(page).to have_content(
+      "(Pitching at a live Regional Pitch Event is not required.)"
     )
 
     rpe = FactoryBot.create(:regional_pitch_event)
