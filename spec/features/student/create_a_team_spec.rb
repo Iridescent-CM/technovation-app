@@ -8,7 +8,7 @@ RSpec.feature "Student creates a team" do
 
     sign_in(student)
 
-    within(".navigation") { click_link "Register your team" }
+    within(".navigation") { click_link "Create your team" }
     fill_in "Name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
                         thing: I18n.t("models.team.class_name"))
@@ -30,7 +30,7 @@ RSpec.feature "Student creates a team" do
 
     sign_in(student)
 
-    within(".navigation") { click_link "Register your team" }
+    within(".navigation") { click_link "Create your team" }
     fill_in "Name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
                         thing: I18n.t("models.team.class_name"))
@@ -49,7 +49,7 @@ RSpec.feature "Student creates a team" do
 
     sign_in(student)
 
-    within(".navigation") { click_link "Register your team" }
+    within(".navigation") { click_link "Create your team" }
     fill_in "Name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
                         thing: I18n.t("models.team.class_name"))
@@ -66,7 +66,7 @@ RSpec.feature "Student creates a team" do
 
     sign_in(student)
 
-    within(".navigation") { click_link "Register your team" }
+    within(".navigation") { click_link "Create your team" }
     fill_in "Name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
                         thing: I18n.t("models.team.class_name"))

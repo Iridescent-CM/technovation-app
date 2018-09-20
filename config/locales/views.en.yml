@@ -179,18 +179,18 @@ en:
             text: "Sign Consent Waiver"
 
       create_join_team:
-        heading: "Register a team"
+        heading: "Create a team"
         labels:
-          mentor: "Register a team to get started."
-          student: "Your team can have up to five amazing girls. Join a team or register a new one to get started."
+          mentor: "Create a team to get started."
+          student: "Your team can have up to five amazing girls. Find a team or create a new one to get started."
         links:
           pre_unit:
             text: "This Build a Team Unit"
             postfix: "can help you get started."
           create:
-            text: "Register your team"
+            text: "Create your team"
           join:
-            text: "Join a team"
+            text: "Find a team"
 
       find_mentor:
         heading: "Find a Mentor"
@@ -298,9 +298,9 @@ en:
           virtual: "%{name} is open to guiding teams virtually (online) from anywhere."
 
       navigation:
-        create_a_team: "Register your team"
+        create_a_team: "Create your team"
         find_a_mentor: "Find a mentor"
-        join_team: "Join a team"
+        join_team: "Find a team"
         my_team: "My team"
 
 
@@ -325,8 +325,8 @@ en:
         submission_not_started: "%{name} has not begun their team submission."
       new:
         intro: "You aren’t part of a team yet! You can create your own, or join an existing one. You may only be on one team at a time."
-        join: "Join a Team"
-        title: "Register your team"
+        join: "Find a Team"
+        title: "Create your team"
       show:
         add_members: "Add members"
         confirm_leave: "Are you sure you want to REMOVE %{name} from the team?"

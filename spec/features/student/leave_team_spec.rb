@@ -16,6 +16,6 @@ RSpec.feature "Students leave their own team" do
     end
 
     expect(current_path).to eq(student_dashboard_path)
-    expect(page).to have_link("Register your team")
+    expect(page).to have_link("Create your team")
   end
 end

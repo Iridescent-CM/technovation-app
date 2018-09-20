@@ -10,7 +10,7 @@ RSpec.describe "Students request to join a team",
   it "students already on a team don't see the link" do
     student = FactoryBot.create(:student, :on_team, not_onboarded: true)
     sign_in(student)
-    expect(page).not_to have_link("Join a team")
+    expect(page).not_to have_link("Find a team")
   end
 
   %i{mentor student}.each do |scope|
@@ -68,7 +68,7 @@ RSpec.describe "Students request to join a team",
       expect(page).to have_content(team.division_name.humanize)
       expect(page).to have_css("img.thumbnail-md[src*='#{team.team_photo_url}']")
 
-      expect(page).not_to have_link("Join a team")
+      expect(page).not_to have_link("Find a team")
     end
 
     it "student accepts the request" do

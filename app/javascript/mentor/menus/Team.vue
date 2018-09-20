@@ -98,7 +98,7 @@ export default {
       } else if (this.isBackgroundCheckClear) {
         return `Cleared on ${new Date(this.backgroundCheckUpdatedAtEpoch).toDateString()}`
       } else {
-        return 'You must sign the consent waiver to volunteer'
+        return 'You must pass a background check to volunteer'
       }
     },
 

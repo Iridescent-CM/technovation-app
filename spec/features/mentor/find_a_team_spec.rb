@@ -19,7 +19,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within('#find-team') { click_link "Join a team" }
+    within('#find-team') { click_link "Find a team" }
 
     expect(page).to have_css(
       ".search-result-head",
@@ -48,7 +48,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within('#find-team') { click_link "Join a team" }
+    within('#find-team') { click_link "Find a team" }
 
     fill_in "text", with: "araw" # partial match
     fill_in "nearby", with: "anywhere"
@@ -71,7 +71,7 @@ RSpec.feature "Mentors find a team" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    within('#find-team') { click_link "Join a team" }
+    within('#find-team') { click_link "Find a team" }
 
     check "Junior"
     uncheck "Senior"
@@ -93,7 +93,7 @@ RSpec.feature "Mentors find a team" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    within('#find-team') { click_link "Join a team" }
+    within('#find-team') { click_link "Find a team" }
 
     check "Senior"
     uncheck "Junior"
@@ -112,7 +112,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join a team" do
-    within('#find-team') { click_link "Join a team" }
+    within('#find-team') { click_link "Find a team" }
 
     click_link "Ask to join"
     click_button "Ask to be a mentor for #{available_team.name}"
@@ -135,7 +135,7 @@ RSpec.feature "Mentors find a team" do
 
     join_request.deleted!
 
-    within('#find-team') { click_link "Join a team" }
+    within('#find-team') { click_link "Find a team" }
 
     click_link "Ask to join"
     click_button "Ask to be a mentor for #{available_team.name}"

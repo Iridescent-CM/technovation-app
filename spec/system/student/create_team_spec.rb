@@ -41,7 +41,7 @@ RSpec.describe "Students creating a team", :js do
       click_button "Next"
 
       click_button "Create your team"
-      within("#create-team") { click_link "Register your team" }
+      within("#create-team") { click_link "Create your team" }
 
       fill_in "Name", with: "Amazing Team!"
       click_button "Create this team"

@@ -1,8 +1,16 @@
+<p>Use our team search to find a team and ask to join them!</p>
+
+<%= link_to(
+  t("views.profile_requirements.create_join_team.links.join.text"),
+  [:new, current_scope, :team_search],
+  class: "button"
+) %>
+
 <%= render "completion_steps/invitations",
   hidden: current_mentor.onboarding?,
   invites: current_mentor.team_member_invites.pending %>
 
-<div class="margin--t-large">
+<div class="margin--t-large border--t-thin padding--t-medium">
   <%= render "completion_steps/join_requests",
     hidden: current_mentor.onboarding?,
     allow_many: true,
