@@ -56,7 +56,9 @@ export default {
   },
 
   isBackgroundCheckWaived (state) {
-    return digStateAttributes(state, 'currentAccount', 'countryCode', code => code !== 'US')
+    const isCountryUS = digStateAttributes(state, 'currentAccount', 'countryCode', code => code == 'US')
+    const isAgeAppropriate = digStateAttributes(state, 'currentAccount', 'age', age => parseInt(age) >= 18)
+    return !isCountryUS || !isAgeAppropriate
   },
 
   isOnTeam (state) {

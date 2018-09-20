@@ -1,6 +1,53 @@
 import getters from 'mentor/store/getters'
 
 describe("mentor/store/getters.js", () => {
+  describe("isBackgroundCheckWaived", () => {
+    it("is true when currentAccount.countryCode is not US", () => {
+      const state = {
+        currentAccount: {
+          data: {
+            attributes: {
+              countryCode: "BR",
+              age: 18,
+            },
+          },
+        },
+      }
+
+      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
+    })
+
+    it("is false when currentAccount.countryCode is US", () => {
+      const state = {
+        currentAccount: {
+          data: {
+            attributes: {
+              countryCode: "US",
+              age: 18,
+            },
+          },
+        },
+      }
+
+      expect(getters.isBackgroundCheckWaived(state)).toBe(false)
+    })
+
+    it("is true when currentAccount.age is under 18", () => {
+      const state = {
+        currentAccount: {
+          data: {
+            attributes: {
+              countryCode: "US",
+              age: "17",
+            },
+          },
+        },
+      }
+
+      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
+    })
+  })
+
   describe("isOnTeam", () => {
     it ("is true if the mentor has a team in currentTeams", () => {
       const state = {
