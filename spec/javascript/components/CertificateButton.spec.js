@@ -148,7 +148,7 @@ describe('CertificateButton Vue component', () => {
 
         expect(axios.post).toHaveBeenCalledWith(
           '/mentor/certificates/',
-          { team_id: 42892 },
+          expect.objectContaining({ team_id: 42892 }),
         )
       })
     })
@@ -341,9 +341,27 @@ describe('CertificateButton Vue component', () => {
           },
         })
 
-        expect(wrapper.vm.certificateRequestData).toEqual({
-          team_id: 9,
+        expect(wrapper.vm.certificateRequestData).toEqual(
+          expect.objectContaining({ team_id: 9 })
+        )
+      })
+
+      it('sends the profileId and profileType', () => {
+        const wrapper = shallowMount(CertificateButton, {
+          propsData: {
+            teamId: 9,
+            profileId: 1000,
+            profileType: "StudentProfile",
+            userScope: 'mentor',
+          },
         })
+
+        expect(wrapper.vm.certificateRequestData).toEqual(
+          expect.objectContaining({
+            profile_id: 1000,
+            profile_type: "StudentProfile",
+          })
+        )
       })
 
       it('sends nothing if the teamId is 0 or null', () => {

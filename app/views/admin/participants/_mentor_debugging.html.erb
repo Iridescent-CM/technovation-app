@@ -118,7 +118,7 @@
         <%= profile.accepting_team_invites? ? 'yes' : 'no' %>
 
         <p class="hint">
-          To change this, mentors should toggle 
+          To change this, mentors should toggle
           <strong>
             Allow teams to find you in search results and invite you to join
           </strong>
@@ -192,5 +192,21 @@
     <p>
       <%= submit_tag 'Add', class: "button" %>
     </p>
+  <% end %>
+</div>
+
+<h4 class="margin--none padding--none">Certificates</h4>
+
+<div class="panel panel--left debugging">
+  <% profile.current_teams.each do |team| %>
+    For team <%= team.name %>:
+    <div class="vue-enable-certificate-btn">
+      <certificate-button
+        :team-id="<%= team.id %>"
+        :profile-id="<%= profile.id %>"
+        profile-type="MentorProfile"
+        user-scope="admin"
+      />
+    </div>
   <% end %>
 </div>

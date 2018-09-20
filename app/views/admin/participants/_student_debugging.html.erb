@@ -95,3 +95,16 @@
       class: "button" %>
   </div>
 <% end %>
+
+<h4 class="margin--none padding--none">Certificates</h4>
+
+<div class="panel panel--left debugging">
+  <div class="vue-enable-certificate-btn">
+    <certificate-button
+      :team-id="<%= profile.team_id %>"
+      :profile-id="<%= profile.id %>"
+      profile-type="StudentProfile"
+      user-scope="admin"
+    />
+  </div>
+</div>

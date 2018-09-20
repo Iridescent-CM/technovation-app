@@ -291,6 +291,7 @@ Rails.application.routes.draw do
     resource :season_schedule_settings, only: [:edit, :update]
 
     resource :certificate_overrides, only: :create
+    resource :certificates, only: :create
   end
 
   namespace :public do

@@ -49,6 +49,16 @@ export default {
       default: 0,
     },
 
+    profileId: {
+      type: Number,
+      default: 0,
+    },
+
+    profileType: {
+      type: String,
+      default: '',
+    },
+
     userScope: {
       type: String,
       required: true,
@@ -56,7 +66,8 @@ export default {
         return [
           'mentor',
           'student',
-          'judge'
+          'judge',
+          'admin'
         ].includes(value)
       }
     },
@@ -83,7 +94,11 @@ export default {
 
     certificateRequestData () {
       if (Boolean(this.teamId)) {
-        return { team_id: this.teamId }
+        return {
+          team_id: this.teamId,
+          profile_id: this.profileId,
+          profile_type: this.profileType
+        }
       } else {
         return {}
       }
