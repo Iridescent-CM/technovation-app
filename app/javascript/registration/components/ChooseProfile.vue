@@ -97,7 +97,7 @@ export default {
         case (!this.getAge()):
           return []
 
-        case (this.genderIdentity !== 'Male' && this.getAge() < 14): {
+        case (this.getAge() < 14): {
           this.profileChoice = 'student'
           return ['student']
         }
@@ -106,7 +106,7 @@ export default {
           this.profileChoice = 'mentor'
           return ['mentor']
 
-        case (this.genderIdentity !== 'Male' && this.getAge() >= 14 && this.getAgeByCutoff < 19):
+        case (this.getAge() >= 14 && this.getAgeByCutoff < 19):
           this.profileChoice = 'student'
           return ['mentor', 'student']
       }
@@ -137,6 +137,7 @@ export default {
 
     getProfileIconSrc (choice) {
       if (choice) {
+        // This is an anti-pattern. We need to refactor these into props.
         const elem = document.getElementById('vue-data-registration')
         const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
 

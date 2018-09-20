@@ -1,4 +1,4 @@
-
+import merge from 'lodash/merge'
 import 'axios'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
@@ -11,15 +11,39 @@ localVue.use(Vuex)
 
 describe("Registration::Components::ChooseProfile.vue", () => {
   let defaultWrapper
+  let settingsDiv // This is an anti-pattern. We need to refactor these into props.
 
-  beforeEach(() => {
-    const defaultStore = mockStore.createMocks({
-      actions: {
-        updateProfileChoice ({ commit }, choice) {
-          commit('profileChoice', choice)
+  function createMockStore (options = {}) {
+    const mergedOptions = merge(
+      {},
+      {
+        actions: {
+          updateProfileChoice ({ commit }, choice) {
+            commit('profileChoice', choice)
+          },
         },
       },
-    })
+      options
+    )
+
+    return mockStore.createMocks(mergedOptions)
+  }
+
+  beforeAll(() => {
+    settingsDiv = document.createElement('div')
+    settingsDiv.id = 'vue-data-registration'
+    settingsDiv.dataset.profileIconMentor = 'male_mentor.svg'
+    settingsDiv.dataset.profileIconMentorMale = 'mentor.svg'
+    settingsDiv.dataset.profileIconStudent = 'student.svg'
+    document.body.appendChild(settingsDiv)
+  })
+
+  afterAll(() => {
+    settingsDiv.remove()
+  })
+
+  beforeEach(() => {
+    const defaultStore = createMockStore()
 
     defaultWrapper = shallowMount(
       ChooseProfile,
@@ -40,9 +64,66 @@ describe("Registration::Components::ChooseProfile.vue", () => {
     )
   })
 
-  describe("computed.profileOptions", () => {
-    it('is an empty array by default', () => {
-      expect(defaultWrapper.vm.profileOptions).toEqual([])
+  describe('computed properties', () => {
+    describe('profileOptions', () => {
+      function createWrapperWithAge (getAgeReturnValue = null) {
+        const defaultStore = createMockStore({
+          getters: {
+            getAge () {
+              return () => {
+                return getAgeReturnValue
+              }
+            },
+          },
+        })
+
+        return shallowMount(
+          ChooseProfile,
+          {
+            localVue,
+            store: new Vuex.Store({
+              modules: {
+                registration: {
+                  namespaced: true,
+                  state: defaultStore.state,
+                  getters: defaultStore.getters,
+                  mutations: defaultStore.mutations,
+                  actions: defaultStore.actions,
+                },
+              },
+            }),
+          }
+        )
+      }
+
+      it('returns an empty array if default or cannot calculate age', () => {
+        const wrapper = createWrapperWithAge(null)
+        expect(wrapper.vm.profileOptions).toEqual([])
+      })
+
+      it('returns student and sets profile choice to student if age < 14', () => {
+        const wrapper = createWrapperWithAge(13)
+
+        expect(wrapper.vm.getAge()).toEqual(13)
+        expect(wrapper.vm.profileOptions).toEqual(['student'])
+        expect(wrapper.vm.profileChoice).toEqual('student')
+      })
+
+      it('returns mentor and sets profile choice to mentor if age by cutoff > 18', () => {
+        const wrapper = createWrapperWithAge(19)
+
+        expect(wrapper.vm.getAge()).toEqual(19)
+        expect(wrapper.vm.profileOptions).toEqual(['mentor'])
+        expect(wrapper.vm.profileChoice).toEqual('mentor')
+      })
+
+      it('returns mentor and student if age >= 14 and < 19; sets profile choice to student', () => {
+        const wrapper = createWrapperWithAge(16)
+
+        expect(wrapper.vm.getAge()).toEqual(16)
+        expect(wrapper.vm.profileOptions).toEqual(['mentor', 'student'])
+        expect(wrapper.vm.profileChoice).toEqual('student')
+      })
     })
   })
 
