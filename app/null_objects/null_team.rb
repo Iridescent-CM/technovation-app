@@ -1,3 +1,5 @@
+require "./app/null_objects/null_object"
+
 class NullTeam < NullObject
   def id
     0
@@ -93,5 +95,9 @@ class NullTeam < NullObject
 
   def address_details
     ''
+  end
+
+  def season
+    1900
   end
 end

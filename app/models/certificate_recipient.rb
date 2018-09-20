@@ -1,15 +1,19 @@
 require "./app/constants/certificate_types"
 require "./app/constants/badge_levels"
 require "./app/models/friendly_country"
+require "./app/null_objects/null_team"
 
 class CertificateRecipient
   attr_reader :account, :team,
     :id, :mobile_app_name, :full_name,
-    :team_name, :region, :team_id
+    :team_name, :region, :team_id, :season
 
-  def initialize(account, team = nil)
-    if team.present?
-      @team = team
+  def initialize(account, team = ::NullTeam.new)
+    @team = team
+    @season = Season.current.year
+
+    unless team.nil?
+      @season = team.season
       @team_id = team.id
       @mobile_app_name = team.submission.app_name
       @team_name = team.name
@@ -23,6 +27,14 @@ class CertificateRecipient
 
   def [](fieldName)
     public_send(fieldName)
+  end
+
+  define_method("Recipient Name") do
+    account.name
+  end
+
+  define_method("app name") do
+    mobile_app_name
   end
 
   def certificate_types
@@ -53,7 +65,7 @@ class CertificateRecipient
   def certificates
     certificate_types.map { |certificate_type|
       account.certificates
-             .current
+             .by_season(season)
              .public_send(certificate_type)
              .last
     }.compact
@@ -61,8 +73,8 @@ class CertificateRecipient
 
   def certificate_url
     raise 'Recipient must be a judge' unless account.judge_profile.present?
-    !!account.certificates.current.last &&
-      account.certificates.current.last.file_url
+    !!account.certificates.by_season(season).last &&
+      account.certificates.by_season(season).last.file_url
   end
 
   def certificate_type
@@ -83,79 +95,80 @@ class CertificateRecipient
 
   private
   def needs_completion_certificate?
-    !account.current_completion_certificates.any?
+    !account.completion_certificates.by_season(season).any?
   end
 
   def gets_completion_certificate?
-    !!team &&
+    !team.nil? &&
       team.submission.complete? &&
         team.submission.quarterfinalist?
   end
 
   def needs_participation_certificate?
-    !account.current_participation_certificates.any?
+    !account.participation_certificates.by_season(season).any?
   end
 
   def gets_participation_certificate?
-    !!team && team.submission.qualifies_for_participation?
+    !team.nil? && team.submission.qualifies_for_participation?
   end
 
   def needs_semifinalist_certificate?
-    !account.current_semifinalist_certificates.any?
+    !account.semifinalist_certificates.by_season(season).any?
   end
 
   def gets_semifinalist_certificate?
     account.student_profile.present? &&
-      !!team && team.submission.semifinalist?
+      !team.nil? && team.submission.semifinalist?
   end
 
   def needs_mentor_appreciation_certificate?
-    account.current_appreciation_certificates.count < account.mentor_profile.current_teams.count
+    account.appreciation_certificates.by_season(season).count <
+      account.mentor_profile.teams.by_season(season).count
   end
 
   def gets_mentor_appreciation_certificate?
     account.mentor_profile.present? &&
-      account.mentor_profile.current_teams.any?
+      account.mentor_profile.teams.by_season(season).any?
   end
 
   def needs_general_judge_certificate?
-    !account.current_general_judge_certificates.any?
+    !account.general_judge_certificates.by_season(season).any?
   end
 
   def gets_general_judge_certificate?
     !!account.judge_profile &&
-      account.judge_profile.current_completed_scores.any? &&
-        account.judge_profile.current_completed_scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+      account.judge_profile.completed_scores.by_season(season).any? &&
+        account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
   end
 
   def needs_certified_judge_certificate?
-    !account.current_certified_judge_certificates.any?
+    !account.certified_judge_certificates.by_season(season).any?
   end
 
   def gets_certified_judge_certificate?
     !!account.judge_profile &&
-      account.judge_profile.current_completed_scores.any? &&
-        account.judge_profile.current_completed_scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+      account.judge_profile.completed_scores.by_season(season).any? &&
+        account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
   end
 
   def needs_head_judge_certificate?
-    !account.current_head_judge_certificates.any?
+    !account.head_judge_certificates.by_season(season).any?
   end
 
   def gets_head_judge_certificate?
     !!account.judge_profile &&
-      account.judge_profile.current_completed_scores.count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
+      account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
         (account.judge_profile.events.any? ||
-          account.judge_profile.current_completed_scores.count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+          account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
   end
 
   def needs_judge_advisor_certificate?
-    !account.current_judge_advisor_certificates.any?
+    !account.judge_advisor_certificates.by_season(season).any?
   end
 
   def gets_judge_advisor_certificate?
     !!account.judge_profile &&
-      account.judge_profile.current_completed_scores.count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
+      account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
   end
 
   def gets_rpe_winner_certificate?

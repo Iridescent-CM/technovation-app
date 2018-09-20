@@ -10,6 +10,11 @@ class NullProfile < NullObject
   def past_teams; ::Team.none; end
   def mailer_token; false; end
   def current_completed_scores; []; end
+  def completed_scores; NullCompletedScores.new; end
   def events; []; end
   def account; ::NullAccount.new; end
+end
+
+class NullCompletedScores < NullObject
+  def by_season(*); []; end
 end

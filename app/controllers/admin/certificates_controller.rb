@@ -6,7 +6,7 @@ module Admin
       team_id = params.fetch(:team_id)
       profile = params.fetch(:profile_type).constantize.find(params.fetch(:profile_id))
 
-      certificate = profile.current_certificates.find_by(
+      certificate = profile.certificates.find_by(
         team_id: team_id
       )
 
@@ -21,6 +21,7 @@ module Admin
         job = CertificateJob.perform_later(
           profile.account_id,
           team_id,
+          past_allowed: true,
         )
 
         render json: { jobId: job.job_id }

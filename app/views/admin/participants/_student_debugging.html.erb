@@ -104,7 +104,7 @@
   <% end %>
 
   <% profile.teams.each do |team| %>
-    For <%= team.seasons.first %> team <%= team.name %>:
+    For <%= team.seasons.first %> team <strong><%= team.name %></strong>:
 
     <div class="vue-enable-certificate-btn">
       <certificate-button

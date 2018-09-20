@@ -43,12 +43,13 @@ module FillPdfs
     end
   end
 
-  attr_reader :recipient, :account, :team, :type
+  attr_reader :recipient, :account, :team, :type, :season
 
   def initialize(recipient, type)
     @recipient = recipient
     @account = recipient.account
     @team = recipient.team
+    @season = recipient.season
     @type = type
   end
 
@@ -83,7 +84,7 @@ module FillPdfs
 
     account.certificates.create!({
       file: file,
-      season: Season.current.year,
+      season: season,
       cert_type: type.to_sym,
       team: team,
     })
@@ -100,11 +101,11 @@ module FillPdfs
   end
 
   def pathname
-    "./lib/certs/#{Season.current.year}/#{type}.pdf"
+    "./lib/certs/#{season}/#{type}.pdf"
   end
 
   def tmp_output
-    "./tmp/#{Season.current.year}-#{type}-#{recipient.id}-#{recipient.team_id}.pdf"
+    "./tmp/#{season}-#{type}-#{recipient.id}-#{recipient.team_id}.pdf"
   end
 
   class GenericPDFFiller

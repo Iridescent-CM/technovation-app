@@ -51,6 +51,10 @@ class Team < ActiveRecord::Base
     :name
   end
 
+  def season
+    Integer(seasons.last)
+  end
+
   def ambassador_route_key
     model_name.singular_route_key
   end

@@ -9,7 +9,7 @@ RSpec.describe CertificateRecipient do
       it "needs no certificates" do
         judge_profile = double(
           :JudgeProfile,
-          current_completed_scores: [],
+          completed_scores: double(:completed_scores, by_season: []),
           events: [],
         )
 
@@ -40,7 +40,13 @@ RSpec.describe CertificateRecipient do
           student_profile: NullProfile.new,
           override_certificate_type: nil,
         )
-        team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
+        team = double(
+          :Team,
+          id: 2,
+          name: "Team name",
+          submission: NullTeamSubmission.new,
+          season: 2018,
+        )
 
         recipient = CertificateRecipient.new(account, team)
 
@@ -59,14 +65,14 @@ RSpec.describe CertificateRecipient do
         )
       }
 
-      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission) }
+      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission, season: 2018) }
 
       it "needs a participation certificate" do
         account = double(
           :Account,
           id: 1,
           name: "My full name",
-          current_participation_certificates: [],
+          participation_certificates: double(:participation_certs, by_season: []),
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
@@ -84,7 +90,9 @@ RSpec.describe CertificateRecipient do
             :Account,
             id: 1,
             name: "My full name",
-            current_participation_certificates: [double(:participation_certificate)],
+            participation_certificates: double(:participation_certs, by_season: [
+              double(:participation_certificate)
+            ]),
             mentor_profile: NullProfile.new,
             judge_profile: NullProfile.new,
             student_profile: NullProfile.new,
@@ -110,14 +118,14 @@ RSpec.describe CertificateRecipient do
         )
       }
 
-      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission) }
+      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission, season: 2018) }
 
       it "needs a completion certificate" do
         account = double(
           :Account,
           id: 1,
           name: "My full name",
-          current_completion_certificates: [],
+          completion_certificates: double(:completion_certs, by_season: []),
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
@@ -135,7 +143,9 @@ RSpec.describe CertificateRecipient do
             :Account,
             id: 1,
             name: "My full name",
-            current_completion_certificates: [double(:completion_certificate)],
+            completion_certificates: double(:completion_certs, by_season: [
+              double(:completion_certificate),
+            ]),
             mentor_profile: NullProfile.new,
             judge_profile: NullProfile.new,
             student_profile: NullProfile.new,
@@ -161,7 +171,7 @@ RSpec.describe CertificateRecipient do
         )
       }
 
-      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission) }
+      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission, season: 2018) }
 
       it "needs a completion certificate" do
         student_profile = double(:StudentProfile, :present? => true)
@@ -170,7 +180,7 @@ RSpec.describe CertificateRecipient do
           :Account,
           id: 1,
           name: "My full name",
-          current_semifinalist_certificates: [],
+          semifinalist_certificates: double(:semi_certs, by_season: []),
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: student_profile,
@@ -188,7 +198,9 @@ RSpec.describe CertificateRecipient do
             :Account,
             id: 1,
             name: "My full name",
-            current_semifinalist_certificates: [double(:semifinalist_certificate)],
+            semifinalist_certificates: double(:semi_certs, by_season: [
+              double(:semifinalist_certificate),
+            ]),
             mentor_profile: NullProfile.new,
             judge_profile: NullProfile.new,
             student_profile: NullProfile.new,
@@ -216,7 +228,7 @@ RSpec.describe CertificateRecipient do
           override_certificate_type: nil,
         )
 
-        team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
+        team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new, season: 2018)
 
         recipient = CertificateRecipient.new(account, team)
 
@@ -235,14 +247,14 @@ RSpec.describe CertificateRecipient do
         )
       }
 
-      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission) }
+      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission, season: 2018) }
 
       it "gets a participation certificate" do
         account = double(
           :Account,
           id: 1,
           name: "My full name",
-          current_participation_certificates: [],
+          participation_certificates: double(:participation_certs, by_season: []),
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
@@ -267,14 +279,14 @@ RSpec.describe CertificateRecipient do
         )
       }
 
-      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission) }
+      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission, season: 2018) }
 
       it "gets a completion certificate" do
         account = double(
           :Account,
           id: 1,
           name: "My full name",
-          current_completion_certificates: [],
+          completion_certificates: double(:completion_certs, by_season: []),
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
@@ -299,14 +311,14 @@ RSpec.describe CertificateRecipient do
         )
       }
 
-      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission) }
+      let(:team) { double(:Team, id: 2, name: "Team name", submission: submission, season: 2018) }
 
       it "gets a semifinalist certificate" do
         account = double(
           :Account,
           id: 1,
           name: "My full name",
-          current_semifinalist_certificates: [],
+          semifinalist_certificates: double(:semi_certs, by_season: []),
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: double(:StudentProfile, :present? => true),
@@ -332,7 +344,7 @@ RSpec.describe CertificateRecipient do
           student_profile: NullProfile.new,
           override_certificate_type: nil,
         )
-        team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new)
+        team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new, season: 2018)
 
         recipient = CertificateRecipient.new(account, team)
 

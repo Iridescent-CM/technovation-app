@@ -56,28 +56,55 @@ class Account < ActiveRecord::Base
 
   has_many :current_certificates, -> { current }, class_name: "Certificate"
 
+  has_many :participation_certificates, -> { participation },
+    class_name: "Certificate"
+
   has_many :current_participation_certificates, -> { current.participation },
+    class_name: "Certificate"
+
+  has_many :completion_certificates, -> { completion },
     class_name: "Certificate"
 
   has_many :current_completion_certificates, -> { current.completion },
     class_name: "Certificate"
 
+  has_many :semifinalist_certificates, -> { semifinalist },
+    class_name: "Certificate"
+
   has_many :current_semifinalist_certificates, -> { current.semifinalist },
+    class_name: "Certificate"
+
+  has_many :appreciation_certificates, -> { mentor_appreciation },
     class_name: "Certificate"
 
   has_many :current_appreciation_certificates, -> { current.mentor_appreciation },
     class_name: "Certificate"
 
+  has_many :general_judge_certificates, -> { general_judge },
+    class_name: "Certificate"
+
   has_many :current_general_judge_certificates, -> { current.general_judge },
+    class_name: "Certificate"
+
+  has_many :certified_judge_certificates, -> { certified_judge },
     class_name: "Certificate"
 
   has_many :current_certified_judge_certificates, -> { current.certified_judge },
     class_name: "Certificate"
 
+  has_many :head_judge_certificates, -> { head_judge },
+    class_name: "Certificate"
+
   has_many :current_head_judge_certificates, -> { current.head_judge },
     class_name: "Certificate"
 
+  has_many :judge_advisor_certificates, -> { judge_advisor },
+    class_name: "Certificate"
+
   has_many :current_judge_advisor_certificates, -> { current.judge_advisor },
+    class_name: "Certificate"
+
+  has_many :judge_certificates, -> { judge_types },
     class_name: "Certificate"
 
   has_many :current_judge_certificates, -> { current.judge_types },
