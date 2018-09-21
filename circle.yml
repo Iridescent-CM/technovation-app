@@ -47,6 +47,7 @@ jobs:
           COOKIES_IP_GEOLOCATION: ip_geolocation_JUNE_2018
           COOKIES_REDIRECTED_FROM: redirected_from_JUNE_2018
           COOKIES_SIGNUP_TOKEN: signup_token_JUNE_2018
+          COOKIES_SIGNUP_WIZARD_MODE: signup_wizard_mode_SEPT_2018
           COOKIES_SESSION_TOKEN: session_token_JUNE_2018
           COOKIES_SIGNUP_EMAIL: n-a
           MAILGUN_PRIVATE_KEY: n-a

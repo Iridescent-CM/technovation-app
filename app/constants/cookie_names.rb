@@ -7,5 +7,6 @@ module CookieNames
   IP_GEOLOCATION                  = ENV.fetch("COOKIES_IP_GEOLOCATION")
   REDIRECTED_FROM                 = ENV.fetch("COOKIES_REDIRECTED_FROM")
   SIGNUP_TOKEN                    = ENV.fetch("COOKIES_SIGNUP_TOKEN")
+  SIGNUP_WIZARD_MODE              = ENV.fetch("COOKIES_SIGNUP_WIZARD_MODE")
   SESSION_TOKEN                   = ENV.fetch("COOKIES_SESSION_TOKEN")
 end

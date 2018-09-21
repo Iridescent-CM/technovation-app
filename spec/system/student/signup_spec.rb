@@ -10,6 +10,7 @@ RSpec.describe "Students signing up", :js do
       SeasonToggles.enable_signup(:student)
 
       visit root_path
+      click_link "Sign up today"
 
       check "I agree"
       click_button "Next"

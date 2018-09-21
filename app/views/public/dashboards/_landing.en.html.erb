@@ -1,0 +1,28 @@
+<% provide :html_id, "registration-landing" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-6 panel">
+    <h1>Join the movement</h1>
+
+    <%= image_tag asset_path('tc-landing-globe.svg'),
+      alt: 'Illustration of a globe',
+      width: 215 %>
+
+    <p class="flash">
+      QA Note: This landing page is still in progress, not yet submitted for testing. Thanks!
+    </p>
+
+    <p>
+      <%= link_to "Sign up today",
+        signup_path,
+        class: "button",
+        data: { turbolinks: false } %>
+
+      or
+
+      <%= link_to "Log in",
+        login_path,
+        data: { turbolinks: false } %>
+    </p>
+  </div>
+</div>

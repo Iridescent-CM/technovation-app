@@ -9,6 +9,7 @@ RSpec.describe "Students creating a team", :js do
       SeasonToggles.enable_team_building!
 
       visit root_path
+      click_link "Sign up today"
 
       check "I agree"
       click_button "Next"
