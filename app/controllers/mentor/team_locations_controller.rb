@@ -1,5 +1,7 @@
 module Mentor
   class TeamLocationsController < MentorController
+    before_action :require_current_team
+
     def edit
       @team = current_mentor.teams.find(params[:id])
       @team.city ||= current_mentor.city

@@ -7,6 +7,10 @@ module RequestSigninHelper
                profile
              end
 
-    post "/signins", params: { account: { email: profile.email, password: 'secret1234' } }
+    post "/signins", params: { account: { email: signin.email, password: 'secret1234' } }
+  end
+
+  def sign_out
+    get "/logout"
   end
 end

@@ -1,5 +1,7 @@
 module Student
   class TeamLocationsController < StudentController
+    before_action :require_current_team
+
     def edit
       @team = current_team
       @team.city ||= current_student.city
