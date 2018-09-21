@@ -95,9 +95,22 @@ describe("Registration::Components::ChooseProfile.vue", () => {
         )
       }
 
-      it('returns an empty array if default or cannot calculate age', () => {
+      it('returns an empty array and sets profile choice to null if cannot calculate age', () => {
         const wrapper = createWrapperWithAge(null)
+
+        expect(wrapper.vm.getAge()).toEqual(null)
+        expect(wrapper.vm.getAgeByCutoff).toEqual(null)
         expect(wrapper.vm.profileOptions).toEqual([])
+        expect(wrapper.vm.profileChoice).toEqual(null)
+      })
+
+      it('returns an empty array and sets profile choice to null if age < 10', () => {
+        const wrapper = createWrapperWithAge(9)
+
+        expect(wrapper.vm.getAge()).toEqual(9)
+        expect(wrapper.vm.getAgeByCutoff).toEqual(9)
+        expect(wrapper.vm.profileOptions).toEqual([])
+        expect(wrapper.vm.profileChoice).toEqual(null)
       })
 
       it('returns student and sets profile choice to student if age < 18', () => {

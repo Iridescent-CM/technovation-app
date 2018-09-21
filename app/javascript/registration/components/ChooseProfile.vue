@@ -4,7 +4,7 @@
       Choose your profile type
     </div>
 
-    <div class="panel__content">
+    <div class="panel__content" v-if="profileOptions.length">
       <div v-if="!isLocked" class="grid grid--justify-space-around">
         <div class="grid__col-12">
           Due to your age, you can be a:
@@ -36,6 +36,14 @@
       <div v-else class="text-align--center">
         <img :src="getProfileIconSrc(profileChoice)" width="300" />
         <br />You are a {{ profileChoice }}
+      </div>
+    </div>
+
+    <div class="panel__content" v-else-if="!profileOptions.length">
+      <div class="grid grid--justify-space-around">
+        <div class="grid__col-12">
+          You must be at least 10 years old to sign up.
+        </div>
       </div>
     </div>
 
@@ -106,23 +114,28 @@ export default {
     },
 
     profileOptions () {
-      switch(true) {
-        case (!this.getAge()):
-          return []
-
-        case (this.getAge() < 18): {
-          this.profileChoice = 'student'
-          return ['student']
-        }
-
-        case (this.getAgeByCutoff > 18):
-          this.profileChoice = 'mentor'
-          return ['mentor']
-
-        case (this.getAge() == 18 && this.getAgeByCutoff < 19):
-          this.profileChoice = 'student'
-          return ['mentor', 'student']
+      if (this.getAge() < 10) {
+        this.profileChoice = null
+        return []
       }
+
+      if (this.getAge() < 18) {
+        this.profileChoice = 'student'
+        return ['student']
+      }
+
+      if (this.getAgeByCutoff > 18) {
+        this.profileChoice = 'mentor'
+        return ['mentor']
+      }
+
+      if (this.getAge() == 18 && this.getAgeByCutoff < 19) {
+        this.profileChoice = 'student'
+        return ['mentor', 'student']
+      }
+
+      this.profileChoice = null
+      return []
     },
   },
 
