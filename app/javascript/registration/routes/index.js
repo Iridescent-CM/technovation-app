@@ -18,27 +18,7 @@ import ChangePassword from '../components/ChangePassword'
 
 Vue.use(VueRouter)
 
-const initiateApp = () => {
-  try {
-    const rootElem = document.getElementById('vue-data-registration')
-    const { data } = JSON.parse(rootElem.dataset.previousAttempt)
-    const { attributes, relationships } = data
-
-    if (data.type === 'account') {
-      const currentAccount = Object.assign({}, store.state.registration, attributes, relationships)
-      store.dispatch('registration/initAccount', currentAccount)
-    } else {
-      const previousAttempt = Object.assign({}, store.state.registration, attributes, relationships)
-      store.dispatch('registration/initWizard', previousAttempt)
-    }
-  } catch (err) {
-    console.error(err)
-  }
-}
-
 const requireDataAgreement = (to, _from, next) => {
-  if (!store.state.registration.isReady) initiateApp()
-
   const notDataUseComponent = to.matched.some(record => record.name !== 'data-use')
 
   if (notDataUseComponent && !store.state.registration.termsAgreed) {
@@ -95,7 +75,6 @@ export const routes = [
   {
     path: '/',
     beforeEnter: (_to, _from, next) => {
-      if (!store.state.registration.isReady) initiateApp()
       next({ name: getCurrentStep() })
     },
   },
@@ -105,11 +84,6 @@ export const routes = [
     component: DataUseTerms,
     meta: {
       browserTitle: 'Step 1: Agreeement'
-    },
-    beforeEnter: (_to, _from, next) => {
-      const store = require('../store').default
-      if (!store.state.registration.isReady) initiateApp()
-      next()
     },
   },
   {
