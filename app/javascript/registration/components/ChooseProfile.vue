@@ -110,7 +110,7 @@ export default {
         case (!this.getAge()):
           return []
 
-        case (this.getAge() < 14): {
+        case (this.getAge() < 18): {
           this.profileChoice = 'student'
           return ['student']
         }
@@ -119,7 +119,7 @@ export default {
           this.profileChoice = 'mentor'
           return ['mentor']
 
-        case (this.getAge() >= 14 && this.getAgeByCutoff < 19):
+        case (this.getAge() == 18 && this.getAgeByCutoff < 19):
           this.profileChoice = 'student'
           return ['mentor', 'student']
       }
