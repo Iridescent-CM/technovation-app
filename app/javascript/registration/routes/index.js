@@ -188,7 +188,7 @@ export const router = new VueRouter({
 })
 
 router.afterEach((to, _from) => {
-  if(window && window.document)
+  if(window && window.document && to.meta.browserTitle)
     window.document.title = to.meta.browserTitle + " • Technovation"
 })
 
