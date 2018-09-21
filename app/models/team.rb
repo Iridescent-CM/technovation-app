@@ -55,6 +55,12 @@ class Team < ActiveRecord::Base
     Integer(seasons.last)
   end
 
+  def assign_address_details(geocoded)
+    self.city = geocoded.city
+    self.state_province = geocoded.state_code
+    self.country = geocoded.country_code
+  end
+
   def ambassador_route_key
     model_name.singular_route_key
   end
