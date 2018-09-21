@@ -54,7 +54,10 @@
 
               <p>
                 <%= link_to "Edit location",
-                  edit_admin_profile_location_path(@account),
+                  edit_admin_profile_location_path(
+                    @account,
+                    return_to: admin_participant_path(@account)
+                  ),
                   class: "button secondary small" %>
               </p>
             </dd>
