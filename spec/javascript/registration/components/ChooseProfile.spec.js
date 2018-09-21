@@ -61,13 +61,16 @@ describe("Registration::Components::ChooseProfile.vue", () => {
 
   describe('computed properties', () => {
     describe('profileOptions', () => {
-      function createWrapperWithAge (getAgeReturnValue = null) {
+      function createWrapperWithAge (getAgeReturnValue = null, getAgeByCutoffReturnValue = null) {
         const defaultStore = createMockStore({
           getters: {
             getAge () {
               return () => {
                 return getAgeReturnValue
               }
+            },
+            getAgeByCutoff () {
+              return getAgeByCutoffReturnValue || getAgeReturnValue
             },
           },
         })
@@ -97,28 +100,38 @@ describe("Registration::Components::ChooseProfile.vue", () => {
         expect(wrapper.vm.profileOptions).toEqual([])
       })
 
-      it('returns student and sets profile choice to student if age < 14', () => {
-        const wrapper = createWrapperWithAge(13)
+      it('returns student and sets profile choice to student if age < 18', () => {
+        const wrapper = createWrapperWithAge(16)
 
-        expect(wrapper.vm.getAge()).toEqual(13)
+        expect(wrapper.vm.getAge()).toEqual(16)
+        expect(wrapper.vm.getAgeByCutoff).toEqual(16)
         expect(wrapper.vm.profileOptions).toEqual(['student'])
         expect(wrapper.vm.profileChoice).toEqual('student')
       })
 
-      it('returns mentor and sets profile choice to mentor if age by cutoff > 18', () => {
-        const wrapper = createWrapperWithAge(19)
+      it('returns mentor and student if age is 18 but not greater than 18 by cutoff', () => {
+        const wrapper = createWrapperWithAge(18)
 
-        expect(wrapper.vm.getAge()).toEqual(19)
-        expect(wrapper.vm.profileOptions).toEqual(['mentor'])
-        expect(wrapper.vm.profileChoice).toEqual('mentor')
-      })
-
-      it('returns mentor and student if age >= 14 and < 19; sets profile choice to student', () => {
-        const wrapper = createWrapperWithAge(16)
-
-        expect(wrapper.vm.getAge()).toEqual(16)
+        expect(wrapper.vm.getAge()).toEqual(18)
+        expect(wrapper.vm.getAgeByCutoff).toEqual(18)
         expect(wrapper.vm.profileOptions).toEqual(['mentor', 'student'])
         expect(wrapper.vm.profileChoice).toEqual('student')
+      })
+
+      it('returns mentor and sets profile choice to mentor if age by cutoff > 18', () => {
+        let wrapper = createWrapperWithAge(18, 19)
+
+        expect(wrapper.vm.getAge()).toEqual(18)
+        expect(wrapper.vm.getAgeByCutoff).toEqual(19)
+        expect(wrapper.vm.profileOptions).toEqual(['mentor'])
+        expect(wrapper.vm.profileChoice).toEqual('mentor')
+
+        wrapper = createWrapperWithAge(19)
+
+        expect(wrapper.vm.getAge()).toEqual(19)
+        expect(wrapper.vm.getAgeByCutoff).toEqual(19)
+        expect(wrapper.vm.profileOptions).toEqual(['mentor'])
+        expect(wrapper.vm.profileChoice).toEqual('mentor')
       })
     })
   })
