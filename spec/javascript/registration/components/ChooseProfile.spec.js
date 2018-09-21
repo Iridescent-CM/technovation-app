@@ -10,8 +10,15 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 describe("Registration::Components::ChooseProfile.vue", () => {
+  const propsData = {
+    profileIcons: {
+      profileIconMentor: 'mentor.svg',
+      profileIconMentorMale: 'male_mentor.svg',
+      profileIconStudent: 'student.svg',
+    },
+  }
+
   let defaultWrapper
-  let settingsDiv // This is an anti-pattern. We need to refactor these into props.
 
   function createMockStore (options = {}) {
     const mergedOptions = merge(
@@ -28,19 +35,6 @@ describe("Registration::Components::ChooseProfile.vue", () => {
 
     return mockStore.createMocks(mergedOptions)
   }
-
-  beforeAll(() => {
-    settingsDiv = document.createElement('div')
-    settingsDiv.id = 'vue-data-registration'
-    settingsDiv.dataset.profileIconMentor = 'mentor.svg'
-    settingsDiv.dataset.profileIconMentorMale = 'male_mentor.svg'
-    settingsDiv.dataset.profileIconStudent = 'student.svg'
-    document.body.appendChild(settingsDiv)
-  })
-
-  afterAll(() => {
-    settingsDiv.remove()
-  })
 
   beforeEach(() => {
     const defaultStore = createMockStore()
@@ -60,6 +54,7 @@ describe("Registration::Components::ChooseProfile.vue", () => {
             },
           },
         }),
+        propsData,
       }
     )
   })
@@ -92,6 +87,7 @@ describe("Registration::Components::ChooseProfile.vue", () => {
                 },
               },
             }),
+            propsData,
           }
         )
       }

@@ -63,6 +63,19 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 
 export default {
+  props: {
+    profileIcons: {
+      type: Object,
+      default () {
+        return {
+          profileIconMentor: '',
+          profileIconMentorMale: '',
+          profileIconStudent: '',
+        }
+      },
+    },
+  },
+
   beforeRouteEnter (_to, from, next) {
     next(vm => {
       if (vm.isAgeSet) {
@@ -137,14 +150,12 @@ export default {
 
     getProfileIconSrc (choice) {
       if (choice) {
-        // This is an anti-pattern. We need to refactor these into props.
-        const elem = document.getElementById('vue-data-registration')
         const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
 
         if (choice === 'mentor' && this.$store.state.registration.genderIdentity === 'Male') {
-          return elem.dataset.profileIconMentorMale
+          return this.profileIcons.profileIconMentorMale
         } else {
-          return elem.dataset[`profileIcon${capitalizedChoice}`]
+          return this.profileIcons[`profileIcon${capitalizedChoice}`]
         }
       } else {
         return ''

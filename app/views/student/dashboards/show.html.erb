@@ -7,11 +7,13 @@
       regional_ambassador: RegionalAmbassadorSerializer.new(regional_ambassador).serialized_json,
       current_team: TeamSerializer.new(current_team).serialized_json,
       parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
-      profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
-      profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
-      profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
     } %>
   <app
+    :profile-icons="{
+      profileIconStudent: '<%= asset_path('wizard-choose-profile__student-primary.svg') %>',
+      profileIconMentor: '<%= asset_path('wizard-choose-profile__mentor-secondary--female.svg') %>',
+      profileIconMentorMale: '<%= asset_path('wizard-choose-profile__mentor-secondary--male.svg') %>',
+    }"
     <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
       survey-link-text="<%= SeasonToggles.survey_link(current_scope, "text") %>"
       survey-link="<%= SeasonToggles.survey_link(
