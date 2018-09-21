@@ -64,68 +64,68 @@ describe("Registration::Components::ChooseProfile.vue", () => {
     )
   })
 
-  // describe('computed properties', () => {
-  //   describe('profileOptions', () => {
-  //     function createWrapperWithAge (getAgeReturnValue = null) {
-  //       const defaultStore = createMockStore({
-  //         getters: {
-  //           getAge () {
-  //             return () => {
-  //               return getAgeReturnValue
-  //             }
-  //           },
-  //         },
-  //       })
+  describe('computed properties', () => {
+    describe('profileOptions', () => {
+      function createWrapperWithAge (getAgeReturnValue = null) {
+        const defaultStore = createMockStore({
+          getters: {
+            getAge () {
+              return () => {
+                return getAgeReturnValue
+              }
+            },
+          },
+        })
 
-  //       return shallowMount(
-  //         ChooseProfile,
-  //         {
-  //           localVue,
-  //           store: new Vuex.Store({
-  //             modules: {
-  //               registration: {
-  //                 namespaced: true,
-  //                 state: defaultStore.state,
-  //                 getters: defaultStore.getters,
-  //                 mutations: defaultStore.mutations,
-  //                 actions: defaultStore.actions,
-  //               },
-  //             },
-  //           }),
-  //         }
-  //       )
-  //     }
+        return shallowMount(
+          ChooseProfile,
+          {
+            localVue,
+            store: new Vuex.Store({
+              modules: {
+                registration: {
+                  namespaced: true,
+                  state: defaultStore.state,
+                  getters: defaultStore.getters,
+                  mutations: defaultStore.mutations,
+                  actions: defaultStore.actions,
+                },
+              },
+            }),
+          }
+        )
+      }
 
-  //     it('returns an empty array if default or cannot calculate age', () => {
-  //       const wrapper = createWrapperWithAge(null)
-  //       expect(wrapper.vm.profileOptions).toEqual([])
-  //     })
+      it('returns an empty array if default or cannot calculate age', () => {
+        const wrapper = createWrapperWithAge(null)
+        expect(wrapper.vm.profileOptions).toEqual([])
+      })
 
-  //     it('returns student and sets profile choice to student if age < 14', () => {
-  //       const wrapper = createWrapperWithAge(13)
+      it('returns student and sets profile choice to student if age < 14', () => {
+        const wrapper = createWrapperWithAge(13)
 
-  //       expect(wrapper.vm.getAge()).toEqual(13)
-  //       expect(wrapper.vm.profileOptions).toEqual(['student'])
-  //       expect(wrapper.vm.profileChoice).toEqual('student')
-  //     })
+        expect(wrapper.vm.getAge()).toEqual(13)
+        expect(wrapper.vm.profileOptions).toEqual(['student'])
+        expect(wrapper.vm.profileChoice).toEqual('student')
+      })
 
-  //     it('returns mentor and sets profile choice to mentor if age by cutoff > 18', () => {
-  //       const wrapper = createWrapperWithAge(19)
+      it('returns mentor and sets profile choice to mentor if age by cutoff > 18', () => {
+        const wrapper = createWrapperWithAge(19)
 
-  //       expect(wrapper.vm.getAge()).toEqual(19)
-  //       expect(wrapper.vm.profileOptions).toEqual(['mentor'])
-  //       expect(wrapper.vm.profileChoice).toEqual('mentor')
-  //     })
+        expect(wrapper.vm.getAge()).toEqual(19)
+        expect(wrapper.vm.profileOptions).toEqual(['mentor'])
+        expect(wrapper.vm.profileChoice).toEqual('mentor')
+      })
 
-  //     it('returns mentor and student if age >= 14 and < 19; sets profile choice to student', () => {
-  //       const wrapper = createWrapperWithAge(16)
+      it('returns mentor and student if age >= 14 and < 19; sets profile choice to student', () => {
+        const wrapper = createWrapperWithAge(16)
 
-  //       expect(wrapper.vm.getAge()).toEqual(16)
-  //       expect(wrapper.vm.profileOptions).toEqual(['mentor', 'student'])
-  //       expect(wrapper.vm.profileChoice).toEqual('student')
-  //     })
-  //   })
-  // })
+        expect(wrapper.vm.getAge()).toEqual(16)
+        expect(wrapper.vm.profileOptions).toEqual(['mentor', 'student'])
+        expect(wrapper.vm.profileChoice).toEqual('student')
+      })
+    })
+  })
 
   describe('methods', () => {
     describe('getProfileIconSrc', () => {
@@ -175,13 +175,13 @@ describe("Registration::Components::ChooseProfile.vue", () => {
     })
   })
 
-  // describe('markup', () => {
-  //   it('has one button element to prevent navigation issues when submitting', () => {
-  //     // Note: if this test is failing, you can change <button> to
-  //     // <a class="button"> for a similar effect
-  //     const buttons = defaultWrapper.findAll('button')
+  describe('markup', () => {
+    it('has one button element to prevent navigation issues when submitting', () => {
+      // Note: if this test is failing, you can change <button> to
+      // <a class="button"> for a similar effect
+      const buttons = defaultWrapper.findAll('button')
 
-  //     expect(buttons.length).toEqual(1)
-  //   })
-  // })
+      expect(buttons.length).toEqual(1)
+    })
+  })
 })
