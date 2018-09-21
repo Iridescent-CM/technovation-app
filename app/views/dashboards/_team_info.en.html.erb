@@ -10,7 +10,7 @@
     <%= team.region_name %>
     <small>
       <%= link_to "Edit location",
-        edit_student_team_location_path(team) %>
+        edit_student_team_location_path(team, return_to: student_dashboard_path) %>
     </small>
   </dd>
 

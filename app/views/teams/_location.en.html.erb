@@ -6,11 +6,12 @@
     <% if team.current? %>
       <p>
         <%= link_to "Change this team's location",
-          [:edit, current_scope, :team_location],
+          [:edit, current_scope, :team_location,
+            { return_to: send("#{current_scope}_team_path", team, anchor: '!location') }],
           class: "button" %>
       </p>
     <% else %>
-      <dd>You cannot change the location of a past team</dd?
+      <dd>You cannot change the location of a past team</dd>
     <% end %>
   <% end %>
 </dl>
