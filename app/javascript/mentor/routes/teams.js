@@ -9,7 +9,7 @@ const mustBeOnboarded = (_to, from, next) => {
   if (store.getters['authenticated/isOnboarded']) {
     next()
   } else {
-    next(from)
+    next(false)
   }
 }
 
