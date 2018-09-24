@@ -19,7 +19,7 @@
 
       <p>
         <%= t("controllers.signins.new.no_account") %>
-        <%= link_to t("controllers.signups.new.link"), root_path %>
+        <%= link_to t("controllers.signups.new.link"), signup_path, data: { turbolinks: false } %>
       </p>
 
       <p>
