@@ -7,8 +7,7 @@
 <% else %>
   <% if SeasonToggles.judging_enabled_or_between? %>
     <p><%= t("views.team_member_invites.show.join_team_disabled_by_judging") %></p>
-  <% else %>
-
+  <% elsif SeasonToggles.team_building_enabled? && !requests.any? %>
     <p>Use our team search to find a team and ask to join them!</p>
 
     <%= link_to(
@@ -16,8 +15,12 @@
       [:new, current_scope, :team_search],
       class: "button"
     ) %>
-
     <hr />
+  <% else %>
+    <p>
+      Searching for, and joining, teams is not allowed right now.
+      Staff has turned this feature off for everyone.
+    </p>
   <% end %>
 
   <% if !SeasonToggles.judging_enabled_or_between? && requests.any? %>
