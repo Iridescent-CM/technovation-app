@@ -1,13 +1,26 @@
+<hr />
+
 <h1 class="margin--none padding--none">Join a team</h1>
 
 <% if hidden ||= false %>
   <%= render 'explanations/feature_not_available', feature: :join_team %>
 <% else %>
   <% if SeasonToggles.judging_enabled_or_between? %>
-    <p>
-      <%= t("views.team_member_invites.show.join_team_disabled_by_judging") %>
-    </p>
-  <% elsif requests.any? %>
+    <p><%= t("views.team_member_invites.show.join_team_disabled_by_judging") %></p>
+  <% else %>
+
+    <p>Use our team search to find a team and ask to join them!</p>
+
+    <%= link_to(
+      t("views.profile_requirements.create_join_team.links.join.text"),
+      [:new, current_scope, :team_search],
+      class: "button"
+    ) %>
+
+    <hr />
+  <% end %>
+
+  <% if !SeasonToggles.judging_enabled_or_between? && requests.any? %>
     <p>You have asked to join a team!</p>
 
     <% requests.each do |join_request| %>
