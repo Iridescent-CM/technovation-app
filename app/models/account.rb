@@ -630,6 +630,7 @@ class Account < ActiveRecord::Base
   def is_an_ambassador?
     regional_ambassador_profile.present?
   end
+  alias :is_ra? :is_an_ambassador?
 
   def is_admin?
     admin_profile.present?
