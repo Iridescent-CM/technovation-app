@@ -208,7 +208,7 @@ Rails.application.routes.draw do
 
     resource :location_details, only: :show
     resource :current_location, only: :show
-    resource :location, only: :update
+    resource :location, only: [:update, :create]
 
     resource :profile, only: [:show, :edit, :update]
 
