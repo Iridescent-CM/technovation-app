@@ -17,6 +17,12 @@ export const storeModule = {
 
 export default new Vuex.Store({
   modules: {
+    authenticated: {
+      namespaced: true,
+      state: {
+        currentAccount: null,
+      },
+    },
     registration: {
       namespaced: true,
       ...storeModule,
