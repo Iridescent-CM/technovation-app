@@ -5,7 +5,7 @@ const TeamBuildingStep = Vue.component('team-building-step', {
   template: `<div><slot :name="$route.name">add App.vue and TeamBuilding.vue slots for route named {{ $route.name }}</slot></div>`,
 })
 
-const mustBeOnboarded = (_to, from, next) => {
+const mustBeOnboarded = (_to, _from, next) => {
   if (store.getters['authenticated/isOnboarded']) {
     next()
   } else {
