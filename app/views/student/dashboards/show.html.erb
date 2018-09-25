@@ -100,9 +100,7 @@
       </div>
 
       <div slot="events">
-        <% if SeasonToggles.select_regional_pitch_event? %>
-          <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
-        <% end %>
+        <%= render 'slots/student/events' %>
       </div>
 
       <div slot="scores">
