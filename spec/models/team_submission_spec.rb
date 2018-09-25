@@ -3,6 +3,16 @@ require "rails_helper"
 RSpec.describe TeamSubmission do
   before { SeasonToggles.team_submissions_editable! }
 
+  it "requires app inventor app name not to have spaces" do
+    submission = FactoryBot.create(:submission, :complete)
+
+    submission.app_inventor_app_name = "spaces in the string"
+    expect(submission).not_to be_valid
+
+    submission.app_inventor_app_name = "nospacesinthe_string"
+    expect(submission).to be_valid
+  end
+
   describe "#developed_on?(platform_name)" do
     it "matches exact names" do
       submission = FactoryBot.create(:submission, :complete)

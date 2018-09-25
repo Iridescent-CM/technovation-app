@@ -182,6 +182,10 @@ class TeamSubmission < ActiveRecord::Base
     presence: true,
     if: ->(s) { s.development_platform == "Thunkable" }
 
+  validates :app_inventor_app_name,
+    format: { without: /\s+/ , message: "cannot have spaces" },
+    allow_blank: true
+
   validates :app_inventor_gmail, email: true, allow_blank: true
   validates :thunkable_account_email, email: true, allow_blank: true
 
