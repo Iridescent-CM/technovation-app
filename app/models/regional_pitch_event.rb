@@ -238,3 +238,9 @@ class TeamSubmissionEventScope < EventScope
     end
   end
 end
+
+class NullTeamSubmissionEventScope < EventScope
+  def execute
+    scope.unscoped.none
+  end
+end
