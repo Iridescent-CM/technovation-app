@@ -4,7 +4,7 @@
       Choose your profile type
     </div>
 
-    <div class="panel__content">
+    <div class="panel__content" v-if="profileOptions.length">
       <div v-if="!isLocked" class="grid grid--justify-space-around">
         <div class="grid__col-12">
           Due to your age, you can be a:
@@ -39,6 +39,14 @@
       </div>
     </div>
 
+    <div class="panel__content" v-else-if="!profileOptions.length">
+      <div class="grid grid--justify-space-around">
+        <div class="grid__col-12">
+          You must be at least 10 years old to sign up.
+        </div>
+      </div>
+    </div>
+
     <div class="panel__bottom-bar">
       <a
         class="button float--left"
@@ -63,6 +71,19 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 
 export default {
+  props: {
+    profileIcons: {
+      type: Object,
+      default () {
+        return {
+          profileIconMentor: '',
+          profileIconMentorMale: '',
+          profileIconStudent: '',
+        }
+      },
+    },
+  },
+
   beforeRouteEnter (_to, from, next) {
     next(vm => {
       if (vm.isAgeSet) {
@@ -93,23 +114,28 @@ export default {
     },
 
     profileOptions () {
-      switch(true) {
-        case (!this.getAge()):
-          return []
-
-        case (this.genderIdentity !== 'Male' && this.getAge() < 14): {
-          this.profileChoice = 'student'
-          return ['student']
-        }
-
-        case (this.getAgeByCutoff > 18):
-          this.profileChoice = 'mentor'
-          return ['mentor']
-
-        case (this.genderIdentity !== 'Male' && this.getAge() >= 14 && this.getAgeByCutoff < 19):
-          this.profileChoice = 'student'
-          return ['mentor', 'student']
+      if (this.getAge() < 10) {
+        this.profileChoice = null
+        return []
       }
+
+      if (this.getAge() < 18) {
+        this.profileChoice = 'student'
+        return ['student']
+      }
+
+      if (this.getAgeByCutoff > 18) {
+        this.profileChoice = 'mentor'
+        return ['mentor']
+      }
+
+      if (this.getAge() == 18 && this.getAgeByCutoff < 19) {
+        this.profileChoice = 'student'
+        return ['mentor', 'student']
+      }
+
+      this.profileChoice = null
+      return []
     },
   },
 
@@ -137,13 +163,12 @@ export default {
 
     getProfileIconSrc (choice) {
       if (choice) {
-        const elem = document.getElementById('vue-data-registration')
         const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
 
         if (choice === 'mentor' && this.$store.state.registration.genderIdentity === 'Male') {
-          return elem.dataset.profileIconMentorMale
+          return this.profileIcons.profileIconMentorMale
         } else {
-          return elem.dataset[`profileIcon${capitalizedChoice}`]
+          return this.profileIcons[`profileIcon${capitalizedChoice}`]
         }
       } else {
         return ''

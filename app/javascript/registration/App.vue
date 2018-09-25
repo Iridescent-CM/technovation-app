@@ -2,7 +2,7 @@
   <div :class="wrapperClasses">
     <div :class="mainContainerGridColumn">
       <transition name="router-fade">
-        <router-view v-if="isReady" :key="$route.path">
+        <router-view v-if="isReady" :key="$route.path" :profile-icons="profileIcons">
           <div slot="change-email"><slot name="change-email" /></div>
           <div slot="change-password"><slot name="change-password" /></div>
         </router-view>
@@ -53,6 +53,17 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+
+    profileIcons: {
+      type: Object,
+      default () {
+        return {
+          profileIconMentor: '',
+          profileIconMentorMale: '',
+          profileIconStudent: '',
+        }
+      },
     },
   },
 

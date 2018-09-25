@@ -6,9 +6,12 @@
     id: "vue-data-registration",
     data: {
       previous_attempt: SignupAttemptSerializer.new(previous_attempt).serialized_json,
-      profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
-      profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
-      profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
     } %>
-    <App />
+    <App
+      :profile-icons="{
+        profileIconStudent: '<%= asset_path('wizard-choose-profile__student-primary.svg') %>',
+        profileIconMentor: '<%= asset_path('wizard-choose-profile__mentor-secondary--female.svg') %>',
+        profileIconMentorMale: '<%= asset_path('wizard-choose-profile__mentor-secondary--male.svg') %>',
+      }"
+    />
 </div>

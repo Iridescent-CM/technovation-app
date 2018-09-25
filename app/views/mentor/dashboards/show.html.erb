@@ -9,11 +9,13 @@
       current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
       consent_waiver: ConsentSerializer.new(current_mentor.consent_waiver).serialized_json,
       background_check: BackgroundCheckSerializer.new(current_mentor.background_check).serialized_json,
-      profile_icon_student: asset_path('wizard-choose-profile__student-primary.svg'),
-      profile_icon_mentor: asset_path('wizard-choose-profile__mentor-secondary--female.svg'),
-      profile_icon_mentor_male: asset_path('wizard-choose-profile__mentor-secondary--male.svg'),
     } %>
   <app
+    :profile-icons="{
+      profileIconStudent: '<%= asset_path('wizard-choose-profile__student-primary.svg') %>',
+      profileIconMentor: '<%= asset_path('wizard-choose-profile__mentor-secondary--female.svg') %>',
+      profileIconMentorMale: '<%= asset_path('wizard-choose-profile__mentor-secondary--male.svg') %>',
+    }"
     <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
       survey-link-text="<%= SeasonToggles.survey_link(current_scope, "text") %>"
       survey-link="<%= SeasonToggles.survey_link(

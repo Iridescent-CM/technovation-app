@@ -12,13 +12,28 @@ document.addEventListener('turbolinks:load', () => {
   const wizardElem = document.querySelector('#vue-enable-signup-wizard')
 
   if (wizardElem) {
-    new Vue({
-      el: wizardElem,
-      store,
-      router,
-      components: {
-        App,
-      },
+    const rootElem = document.getElementById('vue-data-registration')
+    const { data } = JSON.parse(rootElem.dataset.previousAttempt)
+    const { attributes, relationships } = data
+    let storePromise
+
+    if (data.type === 'account') {
+      const currentAccount = Object.assign({}, store.state.registration, attributes, relationships)
+      storePromise = store.dispatch('registration/initAccount', currentAccount)
+    } else {
+      const previousAttempt = Object.assign({}, store.state.registration, attributes, relationships)
+      storePromise = store.dispatch('registration/initWizard', previousAttempt)
+    }
+
+    storePromise.then(() => {
+      new Vue({
+        el: wizardElem,
+        store,
+        router,
+        components: {
+          App,
+        },
+      })
     })
   }
 })

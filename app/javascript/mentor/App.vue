@@ -14,7 +14,7 @@
 
     <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">
       <div class="tabs__content background-color--white grid__col-9">
-        <router-view :key="$route.name">
+        <router-view :key="$route.name" :profile-icons="profileIcons">
           <div slot="change-email"><slot name="change-email" /></div>
           <div slot="change-password"><slot name="change-password" /></div>
           <div slot="bio"><slot name="bio" /></div>
@@ -97,6 +97,17 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+
+    profileIcons: {
+      type: Object,
+      default () {
+        return {
+          profileIconMentor: '',
+          profileIconMentorMale: '',
+          profileIconStudent: '',
+        }
+      },
     },
   },
 }
