@@ -20,13 +20,22 @@
   scope: current_scope,
   attribute: :development_platform,
   cta_when_empty: "Select your development platform",
-  cta_when_filled: "Change your selection" %>
+  cta_when_filled: "Change your selection" do %>
+  <% if @team_submission.developed_on?("Thunkable") %>
+    <%= @team_submission.development_platform_text %>
+
+    <p>
+      Project url:
+      <%= link_to @team_submission.thunkable_project_url,
+        @team_submission.thunkable_project_url %>
+    </p>
+  <% end %>
+<% end %>
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
   title: "Source code",
   scope: current_scope,
-  yield_block: true,
   attribute: :source_code,
   cta_when_empty: "Upload your app's source code",
   cta_when_filled: "Change your upload" do %>
@@ -41,7 +50,6 @@
   submission: @team_submission,
   title: "Code checklist",
   scope: current_scope,
-  yield_block: true,
   attribute: :code_checklist,
   cta_when_empty: "Confirm your code checklist",
   cta_when_filled: "Make changes to your code checklist" do %>

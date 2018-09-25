@@ -3,6 +3,18 @@ require "rails_helper"
 RSpec.describe TeamSubmission do
   before { SeasonToggles.team_submissions_editable! }
 
+  describe "#developed_on?(platform_name)" do
+    it "matches exact names" do
+      submission = FactoryBot.create(:submission, :complete)
+
+      submission.development_platform = "Swift or XCode"
+      expect(submission.developed_on?("Swift or XCode")).to be true
+
+      submission.development_platform = "Thunkable"
+      expect(submission.developed_on?("Thunkable")).to be true
+    end
+  end
+
   it "removes existing current round scores if unpublished" do
     SeasonToggles.set_judging_round(:qf)
 

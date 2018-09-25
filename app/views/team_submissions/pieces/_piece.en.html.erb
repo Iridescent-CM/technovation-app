@@ -2,7 +2,6 @@
   value_is_complete = RequiredField.for(submission, attribute).complete?
   base_path_name = "edit_#{scope}_team_submission_path"
   completion_css_class = value_is_complete ? :complete : :incomplete
-  yield_block ||= false
   link_options ||= {}
 %>
 
@@ -20,10 +19,10 @@
     "
   >
     <% if value_is_complete %>
-      <% if yield_block %>
-        <%= yield %>
-      <% else %>
+      <% if yield.blank? %>
         <p class="value"><%= submission.public_send(attribute) %></p>
+      <% else %>
+        <%= yield %>
       <% end %>
 
       <div class="panel--footer">

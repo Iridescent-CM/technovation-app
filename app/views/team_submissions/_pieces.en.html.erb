@@ -10,7 +10,6 @@
   submission: submission,
   title: "A description of your app",
   scope: scope,
-  yield_block: true,
   attribute: :app_description,
   cta_when_empty: "Add your app's description",
   cta_when_filled: "Change your app's description" do %>
@@ -22,7 +21,6 @@
   title: "Demo video",
   scope: scope,
   attribute: :demo_video_link,
-  yield_block: true,
   cta_when_empty: "Add the demo video link",
   cta_when_filled: "Change the demo video link" do %>
   <%= submission.embed_code(:demo_video_link).html_safe %>
@@ -32,7 +30,6 @@
   submission: submission,
   title: "Pitch video",
   scope: scope,
-  yield_block: true,
   attribute: :pitch_video_link,
   cta_when_empty: "Add the pitch video link",
   cta_when_filled: "Change the pitch video link" do %>
@@ -46,13 +43,22 @@
   attribute: :development_platform,
   cta_when_empty: "Select the development platform " +
                   "that your team used",
-  cta_when_filled: "Change your selection" %>
+  cta_when_filled: "Change your selection" do %>
+  <% if submission.developed_on?("Thunkable") %>
+    <%= submission.development_platform_text %>
+
+    <p>
+      Project url:
+      <%= link_to submission.thunkable_project_url,
+      submission.thunkable_project_url %>
+    </p>
+  <% end %>
+<% end %>
 
 <%= render 'team_submissions/pieces/piece',
   submission: submission,
   title: "Source code",
   scope: scope,
-  yield_block: true,
   attribute: :source_code,
   cta_when_empty: "Upload your app's source code",
   cta_when_filled: "Change your upload" do %>
@@ -67,7 +73,6 @@
   submission: submission,
   title: "Screenshots",
   scope: scope,
-  yield_block: true,
   attribute: :screenshots,
   cta_when_empty: "Upload screenshots of your app",
   cta_when_filled: "Make changes to your screenshots" do %>
@@ -86,7 +91,6 @@
   submission: submission,
   title: "Code checklist",
   scope: scope,
-  yield_block: true,
   attribute: :code_checklist,
   cta_when_empty: "Confirm your code checklist",
   cta_when_filled: "Make changes to your code checklist" do %>

@@ -19,7 +19,6 @@
   title: "Demo video",
   scope: current_scope,
   attribute: :demo_video_link,
-  yield_block: true,
   cta_when_empty: "Add the demo video link",
   cta_when_filled: "Change the demo video link" do %>
 
@@ -47,7 +46,6 @@
   submission: @team_submission,
   title: "Pitch video",
   scope: current_scope,
-  yield_block: true,
   attribute: :pitch_video_link,
   cta_when_empty: "Add the pitch video link",
   cta_when_filled: "Change the pitch video link" do %>
@@ -76,7 +74,6 @@
   submission: @team_submission,
   title: "Screenshots",
   scope: current_scope,
-  yield_block: true,
   attribute: :screenshots,
   link_options: { data: { turbolinks: false } },
   cta_when_empty: "Upload screenshots of your app",

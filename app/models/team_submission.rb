@@ -49,13 +49,16 @@ class TeamSubmission < ActiveRecord::Base
     # IN FORM ELEMENTS
     "C++" => 3,
     "PhoneGap/Apache Cordova" => 4,
-    "Java" => 8
   }
 
   def self.development_platform_keys
     development_platforms.reject { |_key, value|
-     [3, 4, 8].include?(value)
+     [3, 4].include?(value)
     }.keys
+  end
+
+  def developed_on?(platform_name)
+    development_platform == platform_name
   end
 
   enum contest_rank: %w{
@@ -175,7 +178,13 @@ class TeamSubmission < ActiveRecord::Base
     presence: true,
     if: ->(s) { s.development_platform == "App Inventor" }
 
+  validates :thunkable_account_email,
+            :thunkable_project_url,
+    presence: true,
+    if: ->(s) { s.development_platform == "Thunkable" }
+
   validates :app_inventor_gmail, email: true, allow_blank: true
+  validates :thunkable_account_email, email: true, allow_blank: true
 
   delegate :name,
            :division_name,

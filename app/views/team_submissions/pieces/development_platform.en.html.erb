@@ -19,6 +19,7 @@
         data: {
           toggles: {
             "App Inventor": "#app_inventor_fields",
+            "Thunkable": "#thunkable_fields",
             "Other": "#development_platform_other",
           },
         },
@@ -51,7 +52,31 @@
         id: :team_submission_app_inventor_gmail %>
 
       <p class="hint">
-        We are keeping your personal information private.
+        We are keeping this information private; it will help us improve how
+        our program works with App Inventor.
+      </p>
+    </div>
+
+    <div id="thunkable_fields">
+      <p class="scent">
+        We want to ask you two questions about your use of Thunkable.
+      </p>
+
+      <%= f.label :thunkable_account_email,
+        "What is the email address of your team's Thunkable account?" %>
+
+      <%= f.text_field :thunkable_account_email,
+        id: :team_submission_thunkable_account_email %>
+
+      <%= f.label :thunkable_project_url,
+       "What is the shareable URL of your Thunkable project?" %>
+
+      <%= f.text_field :thunkable_project_url,
+        id: :team_submission_thunkable_project_url %>
+
+      <p class="hint">
+        We are keeping this information private; it will help us improve how
+        our program works with Thunkable.
       </p>
     </div>
 
