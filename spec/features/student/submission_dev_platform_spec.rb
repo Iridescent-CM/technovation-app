@@ -32,7 +32,7 @@ RSpec.feature "Students edit submission development platform" do
       ".field_with_errors #team_submission_app_inventor_gmail",
     )
 
-    fill_in "What is your App Inventor Project Name?", with: "my exact app name"
+    fill_in "What is your App Inventor Project Name?", with: "my_exact_app_name"
 
     fill_in "What is the gmail address of the App Inventor account that your team is using?",
       with: "my@gmail.com"
