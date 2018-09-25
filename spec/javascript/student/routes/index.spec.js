@@ -1,9 +1,6 @@
 import { getRootRoute, getRootComponent } from 'student/routes'
 import store from 'student/store'
 
-import TeamBuilding from 'student/components/TeamBuilding'
-import Submission from 'student/components/Submission'
-
 describe("student/routes/index.js", () => {
   describe("#getRootRoute()", () => {
     it("returns parental consent if the student is not on a team or has no permission", () => {
