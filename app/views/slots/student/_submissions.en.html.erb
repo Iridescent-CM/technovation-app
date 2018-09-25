@@ -1,0 +1,4 @@
+<% feature = TechnovationFeature.new(current_student, :submissions) %>
+
+<h1>Submissions</h1>
+<%= render partial: feature.partial_path, locals: feature.partial_locals  %>

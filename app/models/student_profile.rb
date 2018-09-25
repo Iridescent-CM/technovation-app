@@ -145,6 +145,32 @@ class StudentProfile < ActiveRecord::Base
     end
   end
 
+  def onboarding_steps
+    steps = []
+
+    methods = [
+      :email_confirmed?,
+      :parental_consent_signed?,
+    ]
+
+    methods.each do |method|
+      if !send(method)
+        steps.push(method)
+      end
+    end
+
+    steps
+  end
+
+  def has_completed_action?(action)
+    case action.name
+    when :join_team
+      is_on_team?
+    else
+      raise "Implement StudentProfile#has_completed_action? case for :#{action.name}"
+    end
+  end
+
   def job_title=(*)
     false
   end

@@ -20,6 +20,8 @@ class OnboardingStepRequired
       "You need to confirm your new email address."
     when :consent_signed?
       "You need to sign the consent waiver"
+    when :parental_consent_signed?
+      "You need permission from your parent or guardian"
     when :background_check_complete?
       "You must pass a background check"
     when :bio_complete?
