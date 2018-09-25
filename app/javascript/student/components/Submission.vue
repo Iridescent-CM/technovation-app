@@ -14,6 +14,8 @@
 import StickySidebar from 'directives/sticky-sidebar'
 
 export default {
+  name: 'submission',
+
   directives: {
     'sticky-sidebar': StickySidebar,
   },

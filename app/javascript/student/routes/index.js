@@ -36,15 +36,15 @@ const loadOrRedirect = (to, from, next) => {
   }
 }
 
-const getRootComponent = () => {
-  if (isOnTeam()) {
+export const getRootComponent = () => {
+  if (isOnTeam() && hasParentalConsent()) {
     return Submission
   } else {
     return TeamBuilding
   }
 }
 
-const getRootRoute = () => {
+export const getRootRoute = () => {
   if (isOnTeam() && hasParentalConsent()) {
     return { name: 'submission' }
   } else {

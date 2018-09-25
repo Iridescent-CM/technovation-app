@@ -22,6 +22,8 @@ import StickySidebar from 'directives/sticky-sidebar'
 import TeamMenu from 'student/menus/Team'
 
 export default {
+  name: 'team-building',
+
   directives: {
     'sticky-sidebar': StickySidebar,
   },
