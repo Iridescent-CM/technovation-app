@@ -415,7 +415,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def complete?
-    not published_at.blank?
+    RequiredFields.new(self).all?(&:complete?) && !!published_at
   end
   alias :is_complete :complete?
 
