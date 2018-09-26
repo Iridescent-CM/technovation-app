@@ -216,6 +216,7 @@ module TeamSubmissionController
         :team_id,
         :integrity_affirmed,
         :source_code,
+        :source_code_external_url,
         :business_plan,
         :pitch_presentation,
         :app_description,

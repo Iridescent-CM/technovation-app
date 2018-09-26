@@ -36,14 +36,22 @@
   submission: @team_submission,
   title: "Source code",
   scope: current_scope,
-  attribute: :source_code,
+  attribute: :source_code_url,
   cta_when_empty: "Upload your app's source code",
   cta_when_filled: "Change your upload" do %>
-  <p>
-    Your team has uploaded:
-    <%= link_to @team_submission.source_code_filename,
-      @team_submission.source_code_url %>
-  </p>
+  <% if @team_submission.developed_on?("Thunkable") %>
+    <p>
+      Project url:
+      <%= link_to @team_submission.thunkable_project_url,
+        @team_submission.thunkable_project_url %>
+    </p>
+  <% else %>
+    <p>
+      Your team has uploaded:
+      <%= link_to @team_submission.source_code_filename,
+        @team_submission.source_code_url %>
+    </p>
+  <% end %>
 <% end %>
 
 <%= render 'team_submissions/pieces/piece',

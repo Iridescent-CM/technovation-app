@@ -1,7 +1,16 @@
-<div class="panel">
-  <h3 class="panel--heading">
-    Development platform
-  </h3>
+<% embedded ||= false %>
+
+<div class="<%= 'panel' if !embedded %>">
+  <% if embedded %>
+    <p>
+      To upload your source code,
+      we need to know about your development platform first.
+    </p>
+  <% else %>
+    <h3 class="panel--heading">
+      Development platform
+    </h3>
+  <% end %>
 
   <%= form_with(
     model: [current_scope, @team_submission],

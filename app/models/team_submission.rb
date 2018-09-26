@@ -18,6 +18,18 @@ class TeamSubmission < ActiveRecord::Base
     use: :scoped,
     scope: :deleted_at
 
+  before_validation -> {
+    return if thunkable_project_url.blank?
+
+    if !thunkable_project_url.match(/^https:\/\//)
+      self.thunkable_project_url = thunkable_project_url.sub("http", "https")
+    end
+
+    if !thunkable_project_url.match(/^https:\/\//)
+      self.thunkable_project_url = "https://" + thunkable_project_url
+    end
+  }
+
   after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) },
     on: :create
 
@@ -25,7 +37,14 @@ class TeamSubmission < ActiveRecord::Base
     columns = {
       percent_complete: calculate_percent_complete,
     }
-    columns[:published_at] = nil if RequiredFields.new(self).any?(&:blank?)
+
+    if RequiredFields.new(self).any?(&:blank?)
+      columns[:published_at] = nil
+    end
+
+    if source_code_external_url.blank?
+      columns[:source_code_external_url] = copy_possible_thunkable_url
+    end
 
     update_columns(columns)
 
@@ -188,6 +207,8 @@ class TeamSubmission < ActiveRecord::Base
 
   validates :app_inventor_gmail, email: true, allow_blank: true
   validates :thunkable_account_email, email: true, allow_blank: true
+
+  validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
   delegate :name,
            :division_name,
@@ -605,6 +626,12 @@ class TeamSubmission < ActiveRecord::Base
       else
         sum
       end
+    end
+  end
+
+  def copy_possible_thunkable_url
+    if developed_on?("Thunkable") && !saved_change_to_source_code_external_url
+      thunkable_project_url
     end
   end
 end

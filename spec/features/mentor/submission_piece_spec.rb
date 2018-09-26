@@ -210,7 +210,7 @@ RSpec.feature "Students edit submission pieces" do
 
     click_link "Code"
 
-    within(".source_code.incomplete") do
+    within(".source_code_url.incomplete") do
       click_link "Upload your app's source code"
     end
 
@@ -221,7 +221,7 @@ RSpec.feature "Students edit submission pieces" do
 
     click_button "Upload"
 
-    within(".source_code.complete") do
+    within(".source_code_url.complete") do
       expect(page).not_to have_link("Upload your app's source code")
 
       expect(page).to have_link(
@@ -242,7 +242,7 @@ RSpec.feature "Students edit submission pieces" do
     skip "Direct to s3 how to mock"
     click_link "Code"
 
-    within(".source_code.incomplete") do
+    within(".source_code_url.incomplete") do
       click_link "Upload your app's source code"
     end
 
@@ -252,7 +252,7 @@ RSpec.feature "Students edit submission pieces" do
     )
     upload_directly(FileUploader.new, "Upload")
 
-    within(".source_code.complete") do
+    within(".source_code_url.complete") do
       expect(page).not_to have_link("Upload your app's source code")
 
       expect(page).to have_link(

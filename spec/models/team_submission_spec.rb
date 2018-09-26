@@ -13,6 +13,33 @@ RSpec.describe TeamSubmission do
     expect(submission).to be_valid
   end
 
+  it "validates the thunkable URL" do
+    submission = FactoryBot.create(:submission, :complete)
+
+    submission.thunkable_project_url = "https://google.com"
+    expect(submission).not_to be_valid
+
+    submission.thunkable_project_url = "https://thunkable.com"
+    expect(submission).not_to be_valid
+
+    submission.thunkable_project_url = "https://thunkable.com/something"
+    expect(submission).not_to be_valid
+
+    submission.thunkable_project_url = "https://anything.thunkable.com/not-copy/something"
+    expect(submission).not_to be_valid
+
+    submission.thunkable_project_url = "http://anything-stuff_okay.thunkable.com/copy/abc123"
+    expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://anything-stuff_okay.thunkable.com/copy/abc123")
+
+    submission.thunkable_project_url = "anything-stuff_okay.thunkable.com/copy/abc123"
+    expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://anything-stuff_okay.thunkable.com/copy/abc123")
+
+    submission.thunkable_project_url = "https://anything-stuff_okey.thunkable.com/copy/abc123"
+    expect(submission).to be_valid
+  end
+
   describe "#developed_on?(platform_name)" do
     it "matches exact names" do
       submission = FactoryBot.create(:submission, :complete)

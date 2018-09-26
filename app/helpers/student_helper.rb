@@ -18,56 +18,51 @@ module StudentHelper
   end
 
   def submission_progress_web_icon(submission, piece, text)
-    complete_icon = "check-circle"
-    complete_opts = { class: "icon--green" }
-
-    incomplete_icon = "circle-o"
-    incomplete_opts = { class: "icon--orange" }
-
-    not_required_opts = { class: "not-required" }
-
-    status = :incomplete
-
-    case piece.to_sym
-    when :honor_code
-      status = :complete if submission.present?
-    when :team_photo
-      status = :complete if submission.team_photo_uploaded?
-    when :app_name
-      if RequiredAppNameField.new(submission, :app_name).complete?
-        status = :complete
-      end
-    when :app_description
-      status = :complete unless submission.app_description.blank?
-    when :pitch_video
-      status = :complete unless submission.pitch_video_link.blank?
-    when :demo_video
-      status = :complete unless submission.demo_video_link.blank?
-    when :screenshots
-      status = :complete if submission.screenshots.many?
-    when :development_platform
-      status = :complete unless submission.development_platform_text.blank?
-    when :source_code
-      status = :complete unless submission.source_code_url.blank?
-    when :code_checklist
-      status = :complete if submission.code_checklist_complete?
-    when :business_plan
-      status = :complete unless submission.business_plan_url.blank?
-      status = :not_required if submission.junior_division?
-    when :pitch_presentation
-      status = :complete unless submission.pitch_presentation_url.blank?
-
-      unless submission.team.selected_regional_pitch_event.live?
-        status = :not_required
-      end
-    end
+    status =  case piece.to_sym
+              when :honor_code
+                :complete if submission.present?
+              when :team_photo
+                :complete if submission.team_photo_uploaded?
+              when :app_name
+                if RequiredField.for(submission, :app_name).complete?
+                  :complete
+                end
+              when :app_description
+                :complete unless submission.app_description.blank?
+              when :pitch_video
+                :complete unless submission.pitch_video_link.blank?
+              when :demo_video
+                :complete unless submission.demo_video_link.blank?
+              when :screenshots
+                :complete if submission.screenshots.many?
+              when :development_platform
+                :complete unless submission.development_platform_text.blank?
+              when :source_code, :source_code_url
+                if RequiredField.for(submission, :source_code_url).complete?
+                  :complete
+                end
+              when :code_checklist
+                :complete if submission.code_checklist_complete?
+              when :business_plan
+                if submission.junior_division?
+                  :not_required
+                else
+                  :complete unless submission.business_plan_url.blank?
+                end
+              when :pitch_presentation
+                if !submission.pitch_presentation_url.blank?
+                  :complete
+                elsif !submission.team.selected_regional_pitch_event.live?
+                  :not_required
+                end
+              end
 
     if status == :complete
-      web_icon(complete_icon, complete_opts.merge(text: text))
+      web_icon("check-circle", { class: "icon--green", text: text })
     elsif status == :not_required
-      web_icon(incomplete_icon, not_required_opts.merge(text: text))
+      web_icon("circle-o", { class: "not-required", text: text })
     else
-      web_icon(incomplete_icon, incomplete_opts.merge(text: text))
+      web_icon("circle-o", { class: "icon--orange", text: text })
     end
   end
 end

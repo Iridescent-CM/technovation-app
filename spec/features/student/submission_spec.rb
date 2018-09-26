@@ -96,7 +96,7 @@ RSpec.feature "Student team submissions" do
       "Upload your app's source code",
       href: edit_student_team_submission_path(
         submission,
-        piece: :source_code
+        piece: :source_code_url
       )
     )
 

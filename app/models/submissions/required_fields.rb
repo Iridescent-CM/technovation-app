@@ -92,5 +92,14 @@ end
 class RequiredSourceCodeField < RequiredField
   def invalidate!
     submission.source_code = nil
+    submission.source_code_external_url = nil
+  end
+
+  def blank?
+    if submission.developed_on?("Thunkable")
+      submission.source_code_external_url.blank?
+    else
+      value.blank?
+    end
   end
 end
