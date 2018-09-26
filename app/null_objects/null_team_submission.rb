@@ -33,6 +33,7 @@ class NullTeamSubmission < NullObject
   def complete?
     false
   end
+  alias :is_complete :complete?
 
   def submission_scores
     ::SubmissionScore.none
