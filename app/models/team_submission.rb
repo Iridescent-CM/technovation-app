@@ -222,6 +222,10 @@ class TeamSubmission < ActiveRecord::Base
 
   alias_attribute :celebration_average_score, :average_unofficial_score
 
+  def random_id
+    SecureRandom.hex(4)
+  end
+
   def lowest_score_dropped?
     lowest_score_dropped_at != nil
   end
@@ -413,6 +417,7 @@ class TeamSubmission < ActiveRecord::Base
   def complete?
     not published_at.blank?
   end
+  alias :is_complete :complete?
 
   def published!
     update(published_at: Time.current)

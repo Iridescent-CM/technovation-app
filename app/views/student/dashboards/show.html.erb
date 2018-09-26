@@ -6,6 +6,7 @@
       current_account: AccountSerializer.new(current_account).serialized_json,
       regional_ambassador: RegionalAmbassadorSerializer.new(regional_ambassador).serialized_json,
       current_team: TeamSerializer.new(current_team).serialized_json,
+      current_submission: SubmissionSerializer.new(current_submission).serialized_json,
       parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
     } %>
   <app

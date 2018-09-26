@@ -3,6 +3,8 @@ export default {
 
   currentTeam: {},
 
+  currentSubmission: {},
+
   parentalConsent: {},
 
   submission: {},

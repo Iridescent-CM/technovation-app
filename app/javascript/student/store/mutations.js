@@ -6,6 +6,7 @@ export default {
       'regionalAmbassador',
       'currentAccount',
       'currentTeam',
+      'currentSubmission',
       'parentalConsent',
     ].forEach(key => {
       if (dataset[key])

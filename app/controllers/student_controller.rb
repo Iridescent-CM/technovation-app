@@ -4,6 +4,7 @@ class StudentController < ApplicationController
   layout "student"
   helper_method :current_student,
     :current_team,
+    :current_submission,
     :current_profile,
     :back_from_event_path
 
@@ -18,6 +19,10 @@ class StudentController < ApplicationController
 
   def current_team
     current_student.team
+  end
+
+  def current_submission
+    current_team.submission
   end
 
   private

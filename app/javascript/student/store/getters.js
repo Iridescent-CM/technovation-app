@@ -72,6 +72,6 @@ export default {
   },
 
   submissionComplete (state) {
-    return digStateAttributes(state, 'submission', 'isComplete')
+    return digStateAttributes(state, 'currentSubmission', 'isComplete')
   },
 }

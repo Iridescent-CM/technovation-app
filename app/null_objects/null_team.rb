@@ -1,14 +1,6 @@
 require "./app/null_objects/null_object"
 
 class NullTeam < NullObject
-  def id
-    0
-  end
-
-  def random_id
-    0
-  end
-
   def touch
     # noop
   end
