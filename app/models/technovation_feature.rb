@@ -54,7 +54,7 @@ class TechnovationFeature
     elsif feature.requires_onboarding?
       "You need to finish some required steps to continue."
     elsif feature.only_requires_action?
-      "This feature requires some more action on your part"
+      "This feature requires some more action on your part."
     else
       "[Error] This feature should be available. Please report this to the developers."
     end
@@ -69,7 +69,6 @@ class TechnovationFeature
 
     def initialize(profile)
       @profile = profile
-      #freeze
     end
 
     def to_s
@@ -163,6 +162,10 @@ class TechnovationFeature
   class JoinTeamFeature < Feature
     def gerundize
       "Joining a team"
+    end
+
+    def requires_onboarding?
+      !profile.can_join_a_team?
     end
   end
 

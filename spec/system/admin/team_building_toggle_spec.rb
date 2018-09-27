@@ -25,6 +25,7 @@ RSpec.describe "Admin season toggle effects", :js do
 
       click_button 'Build your team'
       click_button 'Find your team'
+
       expect(page).not_to have_link("Find a team")
       expect(page).not_to have_link("Create your team")
     end

@@ -50,22 +50,12 @@
       </div>
 
       <div slot="find-team">
-        <% if current_student.is_on_team? %>
-          You're on a team!
-          Your team is called <%= current_team.name %>.
-          You can
-          <%= link_to 'manage your team',
-            student_team_path(current_team) %>
-        <% else %>
-          <%= render "completion_steps/invitations",
-            invites: current_student.team_member_invites.pending %>
-
-          <%= render "completion_steps/join_requests",
-            requests: current_student.join_requests.pending %>
-        <% end %>
+        <%= render 'slots/student/join_team' %>
       </div>
 
       <div id="create-team" slot="create-team">
+        <h1 class="margin--none padding--none">Create a team</h1>
+
         <% if current_student.is_on_team? %>
           You're on a team!
           Your team is called <%= current_team.name %>.

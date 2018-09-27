@@ -51,6 +51,10 @@ class StudentProfile < ActiveRecord::Base
     as: :requestor,
     dependent: :destroy
 
+  has_many :pending_join_requests, -> { pending },
+    as: :requestor,
+    class_name: "JoinRequest"
+
   has_many :declined_join_requests, -> { declined },
     as: :requestor,
     class_name: "JoinRequest"
