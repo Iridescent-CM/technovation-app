@@ -128,7 +128,6 @@ describe("Registration::Components::ChooseProfile.vue", () => {
         expect(wrapper.vm.getAge()).toEqual(18)
         expect(wrapper.vm.getAgeByCutoff).toEqual(18)
         expect(wrapper.vm.profileOptions).toEqual(['mentor', 'student'])
-        expect(wrapper.vm.profileChoice).toEqual('student')
       })
 
       it('returns mentor and sets profile choice to mentor if age by cutoff > 18', () => {
