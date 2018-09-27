@@ -50,16 +50,14 @@
         <h4>Team divisions explained:</h4>
 
         <dl>
-          <dt class="color--secondary">Junior Division Teams</dt>
+          <dt class="color--secondary">Junior Division</dt>
           <dd>
-            <strong>All</strong> students on the team will be
-            <strong>younger than 15</strong> on {{ cutoffDay }}
+            Team members are between 10-14 years old as of {{ cutoffDay }}.
           </dd>
 
-          <dt class="color--secondary">Senior Division Teams</dt>
+          <dt class="color--secondary">Senior Division</dt>
           <dd>
-            <strong>At least one</strong> student on your team will be
-            <strong>15 or older</strong> on {{ cutoffDay }}
+            Team members are between 15-18 years old as of {{ cutoffDay }}.
           </dd>
         </dl>
       </div>
