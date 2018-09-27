@@ -74,7 +74,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Chicago", "Chicago, Illinois, United States", "Chicago, IL", "Chicago, IL, United States", "Chicago, IL, US", "US", "United States"].each do |loc|
+    ["Chicago, Illinois, US", "Chicago", "Chicago, Illinois, United States", "Chicago, IL", "Chicago, IL, United States", "Chicago, IL, US", "US", "United States"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 41.50196838,

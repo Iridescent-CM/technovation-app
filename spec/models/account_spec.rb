@@ -15,6 +15,18 @@ RSpec.describe Account do
     expect(account[:state_province]).to eq("BA")
   end
 
+  it "stores the short codes in the database" do
+    student = FactoryBot.create(
+      :student,
+      city: "Chicago",
+      state_province: "Illinois",
+      country: "United States"
+    )
+
+    expect(student.reload.account[:country]).to eq("US")
+    expect(student.account[:state_province]).to eq("IL")
+  end
+
   it "removes current certificates if the name is changed" do
     account = FactoryBot.create(:judge, :general_certificate).account
 
