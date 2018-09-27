@@ -48,7 +48,7 @@ RSpec.describe "Students creating a team", :js do
       click_button "Create this team"
 
       click_button "Location"
-      expect(page).to have_content("Los Angeles, CA, US")
+      expect(page).to have_content("Los Angeles, California, United States")
     end
   end
 end

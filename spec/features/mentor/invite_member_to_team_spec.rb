@@ -57,7 +57,7 @@ RSpec.feature "Invite a member to a team" do
     sign_in(invite.invitee)
 
     click_link "Open this invitation"
-    expect(page).to have_content("Chicago, IL, US")
+    expect(page).to have_content("Chicago, Illinois, United States")
 
     click_button "Accept invitation to #{mentor.team_names.first}"
     expect(current_path).to eq(student_dashboard_path)
@@ -71,7 +71,7 @@ RSpec.feature "Invite a member to a team" do
     sign_in(invite.invitee)
 
     click_link "Open this invitation"
-    expect(page).to have_content("Chicago, IL, US")
+    expect(page).to have_content("Chicago, Illinois, United States")
 
     click_button "Accept invitation to #{mentor.team_names.first}"
     expect(current_path).to eq(student_team_path(invite.team))

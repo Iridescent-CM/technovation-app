@@ -42,8 +42,8 @@ module ActiveGeocoded
   def primary_location
     [
       city,
-      state_code,
-      country_code,
+      state,
+      country,
     ].reject(&:blank?).join(', ')
   end
   alias :address_details :primary_location

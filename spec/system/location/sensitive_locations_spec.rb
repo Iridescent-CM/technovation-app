@@ -28,6 +28,6 @@ RSpec.describe "Saving a location in a geopolitically sensitive area", :js do
     expect(current_path).to eq(student_dashboard_path)
     visit student_profile_path
     click_button "Location"
-    expect(page).to have_content("Tel Aviv, IL-TA, IL")
+    expect(page).to have_content("Tel Aviv, IL-TA, Israel")
   end
 end

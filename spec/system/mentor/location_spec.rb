@@ -35,6 +35,6 @@ RSpec.describe "Mentors register with their location", :js do
     click_button "Next"
 
     visit mentor_profile_path(anchor: '!location')
-    expect(page).to have_content("Chicago, IL, US")
+    expect(page).to have_content("Chicago, Illinois, United States")
   end
 end
