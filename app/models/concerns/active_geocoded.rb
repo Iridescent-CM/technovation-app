@@ -6,6 +6,16 @@ module ActiveGeocoded
     reverse_geocoded_by :latitude, :longitude do |account, results|
       account.update_address_details_from_reverse_geocoding(results)
     end
+
+    before_validation -> {
+      if self[:country] && self[:country].length > 3
+        self.country = FriendlyCountry.new(self).as_short_code
+      end
+
+      if self[:state_province] && self[:state_province].length > 4
+        self.state_province = FriendlySubregion.(self, short_code: true)
+      end
+    }
   end
 
   def latitude

@@ -43,6 +43,7 @@ RSpec.describe LocationController do
       expect(json["city"]).to eq("Chicago")
       expect(json["state"]).to eq("Illinois")
       expect(json["country"]).to eq("United States")
+      expect(json["country_code"]).to eq("US")
     end
   end
 
@@ -101,6 +102,7 @@ RSpec.describe LocationController do
         expect(json[0]["city"]).to eq("Chicago")
         expect(json[0]["state"]).to eq("Illinois")
         expect(json[0]["country"]).to eq("United States")
+        expect(json[0]["country_code"]).to eq("US")
       end
 
       it "returns 300 for valid multi-result search data" do

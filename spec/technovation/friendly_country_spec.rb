@@ -25,4 +25,9 @@ RSpec.describe FriendlyCountry do
     object = OpenStruct.new(address_details: "US")
     expect(FriendlyCountry.(object, prefix: false)).to eq("United States")
   end
+
+  it "allows the caller to show only the prefix" do
+    object = OpenStruct.new(address_details: "United States")
+    expect(FriendlyCountry.(object, short_code: true)).to eq("US")
+  end
 end

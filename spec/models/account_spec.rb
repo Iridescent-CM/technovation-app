@@ -2,6 +2,19 @@ require "rails_helper"
 require "./lib/fill_pdfs"
 
 RSpec.describe Account do
+  it "formats the country as a short code before validating" do
+    account = Account.new(country: "United States")
+    account.valid?
+    expect(account[:country]).to eq("US")
+  end
+
+  it "formats states as short codes before validating" do
+    account = Account.new(city: "Salvador", state_province: "Bahia", country: "Brazil")
+    account.valid?
+    expect(account[:country]).to eq("BR")
+    expect(account[:state_province]).to eq("BA")
+  end
+
   it "removes current certificates if the name is changed" do
     account = FactoryBot.create(:judge, :general_certificate).account
 

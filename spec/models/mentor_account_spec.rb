@@ -58,6 +58,8 @@ RSpec.describe MentorProfile do
     mentor.background_check.destroy
     expect(mentor).not_to be_searchable
 
+    mentor.city = "Salvador"
+    mentor.state_province = "Bahia"
     mentor.country = "BR"
     mentor.valid?
     expect(mentor).to be_searchable

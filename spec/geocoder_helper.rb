@@ -74,7 +74,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Chicago", "Chicago, Illinois, United States", "Chicago, IL", "Chicago, IL, United States", "Chicago, IL, US", "US"].each do |loc|
+    ["Chicago", "Chicago, Illinois, United States", "Chicago, IL", "Chicago, IL, United States", "Chicago, IL, US", "US", "United States"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 41.50196838,
@@ -200,13 +200,13 @@ RSpec.configure do |config|
         'address'      => 'Salvador, Bahia, Brazil',
         'state'        => 'Bahia',
         'city'         => 'Salvador',
-        'state_code'   => 'BH',
+        'state_code'   => 'BA',
         'country'      => 'Brazil',
         'country_code' => 'BR',
       }]
     )
 
-    ["Najran", "Najran, Najran Province, Saudi Arabia", "Najran, Najran Province"].each do |loc|
+    ["Dhurma, Riyadh Province, SA", "Najran, Najran Province, SA", "Najran", "Najran, Najran Province, Saudi Arabia", "Najran, Najran Province"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           'latitude'     => 17.6004128,
@@ -221,7 +221,7 @@ RSpec.configure do |config|
       )
     end
 
-    ["Salvador, BH, BR", "Salvador, BH, Brazil", "Salvador, Bahia, Brazil", "Salvador, Bahia, BR"].each do |loc|
+    ["Salvador, BA, BR", "Salvador, BA, Brazil", "Salvador, Bahia, Brazil", "Salvador, Bahia, BR"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           "latitude"     => -12.7872335,
@@ -229,14 +229,14 @@ RSpec.configure do |config|
           'address'      => 'Salvador, Bahia, Brazil',
           'state'        => 'Bahia',
           'city'         => 'Salvador',
-          'state_code'   => 'BH',
+          'state_code'   => 'BA',
           'country'      => 'Brazil',
           'country_code' => 'BR',
         }]
       )
     end
 
-    ["Tel Aviv, Tel Aviv, IL", "Tel Aviv, Tel Aviv, Israel", [32.146611, 34.8519761]].each do |loc|
+    ["Tel Aviv, IL-TA, IL", "Tel Aviv, Tel Aviv, IL", "Tel Aviv, Tel Aviv, Israel", [32.146611, 34.8519761]].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           "latitude" => 32.146611,
