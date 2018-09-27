@@ -130,7 +130,6 @@ export default {
       }
 
       if (this.getAge() == 18 && this.getAgeByCutoff < 19) {
-        this.profileChoice = 'student'
         return ['mentor', 'student']
       }
 
