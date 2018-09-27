@@ -202,7 +202,10 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(s) { s.development_platform == "Thunkable" }
 
   validates :app_inventor_app_name,
-    format: { without: /\s+/ , message: "cannot have spaces" },
+    format: {
+      with: /\A\w+\z/ ,
+      message: "can only have letters, numbers, and underscores (\"_\")",
+    },
     allow_blank: true
 
   validates :app_inventor_gmail, email: true, allow_blank: true
