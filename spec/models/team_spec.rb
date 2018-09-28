@@ -188,13 +188,14 @@ RSpec.describe Team do
     expect(team.longitude).to eq(-87.64051818)
 
     TeamUpdating.execute(team, {
-      city: "Los Angeles",
-      state_province: "CA",
+      city: "Salvador",
+      state_province: "Bahia",
+      country: "Brazil"
     })
 
     team.reload
-    expect(team.latitude).to eq(34.052363)
-    expect(team.longitude).to eq(-118.256551)
+    expect(team.latitude).to eq(-12.7872335)
+    expect(team.longitude).to eq(-38.3067572)
   end
 
   it "reverse geocodes when coords change" do

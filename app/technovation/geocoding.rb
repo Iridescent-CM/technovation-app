@@ -36,6 +36,9 @@ class Geocoding
       geocode if !valid_coordinates? || (
                    (saved_change_to_city? || city_changed?) &&
                      !city_was.blank?
+                 ) || (
+                   (saved_change_to_country? || country_changed?) &&
+                     !country_was.blank?
                  )
 
       reverse_geocode if saved_change_to_latitude? ||

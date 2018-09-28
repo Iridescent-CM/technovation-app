@@ -34,6 +34,7 @@ module ActiveGeocoded
     coordinates.length == 2 &&
       coordinates.all? { |c| !c.nil? && String(c) != "0.0" }
   end
+  alias coordinates_valid? valid_coordinates?
 
   def valid_address?
     !city.blank? && !country_code.blank?
