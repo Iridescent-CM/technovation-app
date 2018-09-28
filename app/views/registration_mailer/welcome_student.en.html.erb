@@ -52,31 +52,6 @@
 
       <tr>
         <td class="content-block">
-          <strong>Join our Slack Community*</strong>
-
-          <p>
-            Use our student chat community on Slack to share ideas,
-            get help from others, and to notify our staff of any technical issues.
-          </p>
-
-          <p>
-            <%= link_to(
-              "Accept this invitation to join Technovation's student slack chat",
-              ENV.fetch("STUDENT_SLACK_SIGNUP_URL")
-            ) %>
-          </p>
-
-          <p>
-            * Please note that in our Terms of Service,
-            <strong>
-              anyone under the age of 13 is not permitted to use Slack.
-            </strong>
-          </p>
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
           <%= link_to "Key Dates", @timeline_url %><br />
           <strong>
             Write these dates on your calendar! All deadlines are firm.
@@ -85,7 +60,7 @@
           <ul>
             <li>
               <strong>
-                October 18, <%= @season_year - 1 %>:
+                October 1, <%= @season_year - 1 %>:
                 Registration Opens:
               </strong>
 
@@ -94,14 +69,14 @@
 
             <li>
               <strong>
-                January 10, <%= @season_year %>:
+                January 7, <%= @season_year %>:
                 Official start of <%= @season_year %> Season!
               </strong>
             </li>
 
             <li>
               <strong>
-                March 7, <%= @season_year %>:
+                March 20, <%= @season_year %>:
                 Team Registration Deadline
               </strong>
 

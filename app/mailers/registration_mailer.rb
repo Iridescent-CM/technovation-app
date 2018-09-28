@@ -42,7 +42,7 @@ class RegistrationMailer < ApplicationMailer
       "https://infograph.venngage.com/publish/02844b99-420b-4016-8c13-1426fc29fbe7"
 
     @timeline_url =
-      "https://infograph.venngage.com/publish/af15f1ad-c6a5-4dc2-b577-29d3c1951f12"
+      "https://infograph.venngage.com/publish/e02d29e0-28a3-4be2-b41f-3d57c475a1fe"
 
     @root_url = mentor_dashboard_url(mailer_token: account.mailer_token)
 
@@ -65,7 +65,7 @@ class RegistrationMailer < ApplicationMailer
     @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
     @safety_url = "http://iridescentlearning.org/internet-safety/"
     @timeline_url =
-      "https://infograph.venngage.com/publish/af15f1ad-c6a5-4dc2-b577-29d3c1951f12"
+      "https://infograph.venngage.com/publish/e02d29e0-28a3-4be2-b41f-3d57c475a1fe"
     @faq_url = "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation"
 
     I18n.with_locale(student.locale) do
