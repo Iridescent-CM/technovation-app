@@ -10,6 +10,7 @@
 //= require sweetalert2
 //= require jquery.sticky-kit.min
 //= require jquery.double-scroll
+//= require ready
 
 // ******** APP
 //
