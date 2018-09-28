@@ -25,6 +25,15 @@ RSpec.describe Account do
 
     expect(student.reload.account[:country]).to eq("US")
     expect(student.account[:state_province]).to eq("IL")
+
+    student = FactoryBot.create(
+      :student,
+      city: "Nablus",
+      state_province: nil,
+      country: "Palestine, State of"
+    )
+
+    expect(student.reload.account[:country]).to eq("PS")
   end
 
   it "removes current certificates if the name is changed" do

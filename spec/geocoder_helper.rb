@@ -206,6 +206,21 @@ RSpec.configure do |config|
       }]
     )
 
+    ["Nablus, , PS", "Nablus, Palestine, State of", "Nablus, , Palestine, State of", [32.22111, 35.25444]].each do |loc|
+      Geocoder::Lookup::Test.add_stub(
+        loc, [{
+          "latitude"     => 32.22111,
+          "longitude"    =>  35.25444,
+          'address'      => 'Nablus, State of Palestine',
+          'state'        => '',
+          'city'         => 'Nablus',
+          'state_code'   => '',
+          'country'      => 'Palestine, State of',
+          'country_code' => 'PS',
+        }]
+      )
+    end
+
     ["Dhurma, Riyadh Province, SA", "Najran, Najran Province, SA", "Najran", "Najran, Najran Province, Saudi Arabia", "Najran, Najran Province"].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
