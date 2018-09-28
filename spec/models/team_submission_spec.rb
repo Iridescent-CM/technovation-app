@@ -47,6 +47,7 @@ RSpec.describe TeamSubmission do
 
     submission.thunkable_project_url = "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
     expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4")
   end
 
   describe "#developed_on?(platform_name)" do
