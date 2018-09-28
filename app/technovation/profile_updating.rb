@@ -1,11 +1,12 @@
 class ProfileUpdating
   private
-  attr_reader :profile, :scope
+  attr_reader :profile, :account, :scope
 
   public
   def initialize(profile, scope = nil)
     @profile = profile
-    @scope = (scope || profile.account.scope_name).to_s.sub(/^\w+_r/, "r")
+    @account = profile.account
+    @scope = (scope || account.scope_name).to_s.sub(/^\w+_r/, "r")
   end
 
   def self.execute(profile, scope = nil, attrs)
@@ -24,13 +25,13 @@ class ProfileUpdating
   def perform_callbacks
     perform_email_changes_updates
     perform_avatar_changes_updates
-    Geocoding.perform(profile.account)
+    Geocoding.perform(account)
 
     send("perform_#{scope}_updates")
 
     profile.save
-    profile.account.save
-    profile.account.create_activity(key: "account.update")
+    account.save
+    account.create_activity(key: "account.update")
   end
 
   private
@@ -41,23 +42,18 @@ class ProfileUpdating
   end
 
   def perform_regional_ambassador_updates
-    if profile.timezone.blank?
-      profile.account.update_column(
-        :timezone,
-        Timezone.lookup(
-          profile.latitude,
-          profile.longitude
-        ).name
-      )
+    if account.timezone.blank? && account.valid_coordinates?
+      timezone_name = Timezone.lookup(*account.coordinates).name
+      account.update_column(:timezone, timezone_name)
     end
   end
 
   def perform_student_updates
     team = profile.team
 
-    if profile.account.saved_change_to_date_of_birth?
-      Casting.delegating(profile.account => DivisionChooser) do
-        profile.account.reconsider_division_with_save
+    if account.saved_change_to_date_of_birth?
+      Casting.delegating(account => DivisionChooser) do
+        account.reconsider_division_with_save
       end
 
       if team.present?
@@ -69,18 +65,16 @@ class ProfileUpdating
   end
 
   def perform_avatar_changes_updates
-    if profile.account.saved_change_to_profile_image?
-      profile.account.update_column(:icon_path, nil)
-    elsif profile.account.saved_change_to_icon_path?
-      profile.account.update_column(:profile_image, nil)
+    if account.saved_change_to_profile_image?
+      account.update_column(:icon_path, nil)
+    elsif account.saved_change_to_icon_path?
+      account.update_column(:profile_image, nil)
     end
   end
 
   def perform_email_changes_updates
-    Casting.delegating(profile.account => EmailUpdater) do
+    Casting.delegating(account => EmailUpdater) do
       # TODO: order of operations dependency
-      account = profile.account
-
       account.update_email_list_profile(scope)
 
       if account.admin_making_changes
