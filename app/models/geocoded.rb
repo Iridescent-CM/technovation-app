@@ -20,7 +20,7 @@ class Geocoded
   def set_city(geocoder_result, query)
     @city = geocoder_result.city
 
-    if @city.blank?
+    if @city.blank? && geocoder_result.respond_to?(:data)
       @city = geocoder_result.data.fetch("address") { {} }["adminDistrict2"]
     end
 
