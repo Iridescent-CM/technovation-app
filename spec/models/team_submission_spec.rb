@@ -31,18 +31,21 @@ RSpec.describe TeamSubmission do
     submission.thunkable_project_url = "https://thunkable.com/something"
     expect(submission).not_to be_valid
 
-    submission.thunkable_project_url = "https://anything.thunkable.com/not-copy/something"
+    submission.thunkable_project_url = "https://x.thunkable.com/not-copy/something"
     expect(submission).not_to be_valid
 
-    submission.thunkable_project_url = "http://anything-stuff_okay.thunkable.com/copy/abc123"
-    expect(submission).to be_valid
-    expect(submission.thunkable_project_url).to eq("https://anything-stuff_okay.thunkable.com/copy/abc123")
+    submission.thunkable_project_url = "https://not-an-x.thunkable.com/copy/abc123"
+    expect(submission).not_to be_valid
 
-    submission.thunkable_project_url = "anything-stuff_okay.thunkable.com/copy/abc123"
+    submission.thunkable_project_url = "http://x.thunkable.com/copy/abc123"
     expect(submission).to be_valid
-    expect(submission.thunkable_project_url).to eq("https://anything-stuff_okay.thunkable.com/copy/abc123")
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/abc123")
 
-    submission.thunkable_project_url = "https://anything-stuff_okey.thunkable.com/copy/abc123"
+    submission.thunkable_project_url = "x.thunkable.com/copy/abc123"
+    expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/abc123")
+
+    submission.thunkable_project_url = "https://x.thunkable.com/copy/abc123"
     expect(submission).to be_valid
   end
 
