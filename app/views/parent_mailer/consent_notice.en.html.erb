@@ -10,19 +10,36 @@
 
       <tr>
         <td class="content-block">
-          We are writing to let you know that your daughter, <strong><%= @student_name %></strong>, has registered for Technovation, a global mobile app, technology, and entrepreneurship program for girls. In order to participate, she needs your permission.
+          We are writing to let you know that your daughter,
+          <strong><%= @student_name %></strong>,
+          has registered for Technovation, a global mobile app, technology,
+          and entrepreneurship program for girls.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Please review the permission form at this link and sign electronically as soon as possible.
+          Technovation, a flagship program of non-profit Iridescent, is the
+          world’s largest global tech entrepreneurship competition for girls.
+          The program offers girls around the world the opportunity to learn the
+          necessary skills to emerge as tech entrepreneurs and leaders.
+          Every year, Technovation challenges 10 to 18 year old girls to build
+          a business plan and mobile app that will address a community problem.
+          In 2018, 20,000 girls participated from over 100 countries.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          If you can, please use the "Sign the Permission Form" link; <strong>do not</strong> reply to this email to give consent.
+          In order to participate, she needs your permission. Please review the
+          permission form at this link and sign electronically as soon as possible.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          If you can, please use the "Sign the Permission Form" link;
+          <strong>do not reply</strong> to this email to give consent.
         </td>
       </tr>
 
@@ -34,7 +51,16 @@
 
       <tr>
         <td class="content-block">
-          If you have any questions, or you cannot use the link above, reply to this email immediately, which is <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+          If you have any questions, or you cannot use the link above,
+          reply to this email immediately, which is <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Your daughter will not be able to participate in this program until we
+          have your permission. For more information on our program, please see
+          <%= link_to ENV.fetch("HOST_DOMAIN"), root_url, itemprop: "url" %>.
         </td>
       </tr>
 
