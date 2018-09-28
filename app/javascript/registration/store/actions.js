@@ -61,15 +61,11 @@ export default {
   },
 
   saveEmail ({ commit, state }, { email }) {
-    commit('email', email)
-
     axios.post('/registration/email', {
       email: {
         email,
         wizardToken: state.wizardToken,
       }
-    }).then(({ data: { data: { attributes }} }) => {
-      commit('email', attributes.email)
     }).catch(err => console.error(err))
   },
 
