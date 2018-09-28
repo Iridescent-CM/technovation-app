@@ -19,144 +19,64 @@
       <tr>
         <td class="content-block">
           Technovation is the world's largest technology global tech competition
-          and program offered by Iridescent. We are a community of 3,500 mentors
+          and program offered by Iridescent. We are a community of 6,000+ mentors
           from around the world. We maintain this community by using a free
           communication tool called Slack. You can connect with other mentors,
-          ask questions, and stay informed. It is also the best way to receive
-          help from the Technovation team.
+          ask questions, and stay informed.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Here is a list of channels and people that can help you.
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Joe @joemsak<br />
-          <strong>Software Developer</strong><br />
-          Ask about: Technovation's team and submission platform<br />
-          (https://<strong>my.</strong>technovationchallenge.org)<br />
-          Channel: #technical
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Alan @Alan Richey<br />
-          <strong>Software Developer</strong><br />
-          Ask about: Technovation's team and submission platform<br />
-          (https://<strong>my.</strong>technovationchallenge.org)<br />
-          Channel: #technical
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Ruby @ruby<br />
-          <strong>Designer & Developer</strong><br />
-          Ask about: Technovation's team and submission platform<br />
-          (https://<strong>my.</strong>technovationchallenge.org)<br />
-          Channel: #technical
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Katie @katie<br />
-          <strong>Partnerships, Manager</strong><br />
-          Ask about: Regional Ambassadors, fundraising<br />
-          Channel: #general
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Rusty @rusty<br />
-          <strong>Curriculum Developer</strong><br />
-          Ask about: Master Educators<br />
-          Channel: #general
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Alli @alli<br />
-          <strong>Curriculum Developer</strong><br />
-          Ask about: App Inventor, Girls curriculum<br />
-          Channel: #girlscurriculum, #appinventor
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Katy @katy_socialmedia<br />
-          <strong>Social Media Manager</strong><br />
-          Ask about: Social media, marketing<br />
-          Channel: #highlightoftheweek
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          Ophélie @ophelie<br />
-          <strong>Program Coordinator</strong><br />
-          Ask about: Student Ambassadors<br />
-          Channel: #general
-        </td>
-      </tr>
-
-      <tr>
-        <td class="content-block">
-          <strong>
-            So, let's get started! This is what you can do in less than 30 minutes.
-          </strong>
+          <strong>So, let's get started! This is what you can do in less than 30 minutes.</strong>
 
           <ol>
+            <li>
+              Finish your mentor training if you haven’t done so already!
+              You can access the training on
+              <%= link_to "your dashboard", mentor_dashboard_url, itemprop: "url" %>.
+            </li>
+
             <li>
               Accept your invitation to join our Slack community
               (it will be a separate email).
             </li>
 
             <li>
-              Review the mentor orientation (5 minutes)<br />
-              <%= link_to "Read the mentor orientation", @orientation_url %>
+              <%= link_to "Read the mentor orientation", @orientation_url, itemprop: "url" %>
+              (5 minutes)
+            </li>
+
+            <li>Review the important dates and timeline (2 minutes)</li>
+
+            <li>
+              Complete your profile A complete profile increases your chances of
+              finding a team. (2 minutes)
             </li>
 
             <li>
-              Review the important dates and timeline (2 minutes)<br />
-              <%= link_to "Review the season timeline", @timeline_url %>
+              <%= link_to "Sign the consent waiver", @consent_url, itemprop: "url" %>
             </li>
 
             <li>
-              Make sure your profile is complete.
-              A complete profile increases your chances of finding a team.
-              (5 minutes)<br />
-              <%= link_to "Complete your profile", @root_url %>
-            </li>
-
-            <li>
-              Sign the consent form (2 minutes)<br />
-              <%= link_to "Sign the consent waiver", @root_url %>
-            </li>
-
-            <li>
-              Bookmark the mentor ebook. It is your official guide of the season.
-              (1 minute)<br />
-              <%= link_to "Open the mentor ebook", @ebook_url %>
-            </li>
-
-            <li>
-              If you are a new mentor in the U.S., you will need to complete a
-              background check. Returning mentors are all set for 3 years.
-              (5 minutes)<br />
-              <%= link_to "Complete a background check", @root_url %>
+              If you are a new mentor in the U.S., you will need to
+              <%= link_to "complete a background check", @background_check_url, itemprop: "url" %>
+              (5 minutes).
+              <ul>
+                <li>Returning mentors are all set for 3 years.</li>
+                <li>
+                  In other countries and territories, we will randomly select
+                  mentors to provide references and legal certifications, and to
+                  submit to background checks where possible. If you are selected,
+                  we will contact you to complete this process. You must consent
+                  to this to be allowed and verified on our site.
+                </li>
+              </ul>
             </li>
           </ol>
         </td>
       </tr>
+
 
       <tr>
         <td class="content-block">
@@ -164,25 +84,13 @@
 
           <ul>
             <li>
-              Sustainable Development Goals are no longer a submission requirement.
-              However, the goals are still useful for teams to refer to as they
-              chose a problem to solve.
+              We welcomed 85 Student Ambassadors to the program! More details coming soon.
             </li>
 
             <li>
-              We have a new team member! Ophelie is the Technovation Coordinator.
-              One of her responsibilities is managing Student Ambassadors.
-              Her Slack handle is <strong>@ophelie</strong>
-            </li>
-
-            <li>
-              We welcomed 75 Student Ambassadors to the program!
-              More details coming soon.
-            </li>
-
-            <li>
-              We listened to your feedback and created a go-to guide.
-              Please <%= link_to "review the new ebook", @ebook_url %>.
+              Make sure to review the mentor training for this year which has
+              updated information for the 2019 season. You can access this from
+              your <%= link_to "mentor dashboard", mentor_dashboard_url, itemprop: "url" %>.
             </li>
           </ul>
         </td>
@@ -191,24 +99,24 @@
       <tr>
         <td class="content-block">
           Once again, welcome to our global community. We would like to leave you
-          with a final message from Madhavi, our Senior Director at
-          Technovation & Iridescent.
+          with a final message from Tara Chklovski, Founder and CEO Iridescent.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          “We hugely appreciate the passion, time and effort that mentors bring to
-          inspire and support Technovation participants.The life-long friendships
-          forged during Technovation are special for the girls and mentors.
-          Each mentor makes this learning journey special in his/her unique way.”
+          “There is no online network that can compete with this labor of love.
+          It's a movement that has taken time to swell, but is only going to grow,
+          because the connections between each one of us here today are for life.
+          This community here will help you fight for something larger than
+          yourself.”
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          <p>With kind regards,</p>
-          <p>The Technovation Staff</p>
+          <p>Regards,</p>
+          <p>Technovation Team</p>
         </td>
       </tr>
     </table>

@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Register as a mentor", :js do
   before do
+    ActionMailer::Base.deliveries.clear
+
     allow(SubscribeEmailListJob).to receive(:perform_later)
 
     set_signup_token("mentor@mentor.com")
@@ -38,6 +40,15 @@ RSpec.describe "Register as a mentor", :js do
       account_id: MentorProfile.last.account_id
     )
     expect(attempt).to be_present
+  end
+
+  it "sends the welcome email" do
+    mail = ActionMailer::Base.deliveries.last
+    expect(mail).to be_present, "no welcome email sent"
+    expect(mail.to).to eq(["mentor@mentor.com"])
+    expect(mail.subject).to eq(
+      I18n.t("registration_mailer.welcome_mentor.subject",
+       season_year: Season.current.year))
   end
 
   it "Email list subscribed" do

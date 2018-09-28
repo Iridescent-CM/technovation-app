@@ -51,6 +51,10 @@ class RegistrationMailer < ApplicationMailer
 
     @season_year = Season.current.year
 
+    @consent_url = new_consent_waiver_url(mailer_token: account.mailer_token)
+
+    @background_check_url = new_mentor_background_check_url(mailer_token: account.mailer_token)
+
     I18n.with_locale(account.locale) do
       mail to: account.email,
         subject: t("registration_mailer.welcome_mentor.subject",
