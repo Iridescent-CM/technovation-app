@@ -47,7 +47,7 @@ en:
 
     join_request:
       extra:
-        mentor: "Please take a minute to approve or decline the mentor request within the next week so that %{name} can reach out to another team if needed."
+        mentor: "Please take a minute to approve or decline the mentor request within the next two weeks so that %{name} can reach out to another team if needed."
         student: ""
       subject: "A %{role_name} has asked to join your team!"
 
