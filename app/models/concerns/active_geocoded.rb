@@ -8,14 +8,23 @@ module ActiveGeocoded
     end
 
     before_validation -> {
-      if self[:country] && self[:country].length > 3
-        self.country = FriendlyCountry.new(self).as_short_code
-      end
-
-      if self[:state_province] && self[:state_province].length > 4
-        self.state_province = FriendlySubregion.(self, short_code: true)
-      end
+      fix_state_country_formatting
     }
+  end
+
+  def fix_state_country_formatting
+    if self[:country] && self[:country].length > 3
+      self.country = FriendlyCountry.new(self).as_short_code
+    end
+
+    if self[:state_province] && self[:state_province].length > 4
+      self.state_province = FriendlySubregion.(self, short_code: true)
+    end
+  end
+
+  def fix_state_country_formatting_with_save
+    fix_state_country_formatting
+    save
   end
 
   def latitude
