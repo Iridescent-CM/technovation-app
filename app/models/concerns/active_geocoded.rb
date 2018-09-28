@@ -7,9 +7,7 @@ module ActiveGeocoded
       account.update_address_details_from_reverse_geocoding(results)
     end
 
-    before_validation -> {
-      fix_state_country_formatting
-    }
+    before_validation :fix_state_country_formatting
   end
 
   def fix_state_country_formatting
@@ -20,11 +18,41 @@ module ActiveGeocoded
     if self[:state_province] && self[:state_province].length > 4
       self.state_province = FriendlySubregion.(self, short_code: true)
     end
+
+    if self[:country_code] && self[:country_code].length > 3
+      self.country_code = FriendlyCountry.new(self).as_short_code
+    end
+
+    if self[:state_code] && self[:state_code].length > 3
+      self.state_code = FriendlySubregion.(self, short_code: true)
+    end
   end
 
   def fix_state_country_formatting_with_save
     fix_state_country_formatting
     save
+  end
+
+  def fix_state_country_formatting_with_save_without_callbacks
+    columns = {}
+
+    if self[:country] && self[:country].length > 3
+      columns[:country] = FriendlyCountry.new(self).as_short_code
+    end
+
+    if self[:state_province] && self[:state_province].length > 4
+      columns[:state_province] = FriendlySubregion.(self, short_code: true)
+    end
+
+    if self[:country_code] && self[:country_code].length > 3
+      columns[:country_code] = FriendlyCountry.new(self).as_short_code
+    end
+
+    if self[:state_code] && self[:state_code].length > 3
+      columns[:state_code] = FriendlySubregion.(self, short_code: true)
+    end
+
+    update_columns(columns)
   end
 
   def latitude
