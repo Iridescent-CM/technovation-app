@@ -59,6 +59,7 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def welcome_student(student)
+    @season_submission_deadline = Season.submission_deadline
     @season_year = Season.current.year
     @root_url = root_url(mailer_token: student.mailer_token)
     @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)

@@ -4,7 +4,7 @@
 
     <div class="notice info hint">
       Please keep these short!<br>
-      ex: "Submission Deadline: April 25th" or "Round One Judging Is Open!"
+      ex: "Submission Deadline: April 23rd" or "Round One Judging Is Open!"
     </div>
 
     <p>

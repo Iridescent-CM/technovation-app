@@ -9,7 +9,11 @@ class Season
   end
 
   def self.deadline
-    "April 25th"
+    "April 23rd"
+  end
+
+  def self.submission_deadline
+    "#{deadline}, #{current.year}"
   end
 
   def self.years
