@@ -125,8 +125,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_signup_enabled
-    SeasonToggles.signup_enabled? ||
-      redirect_to root_path, "Signup is not open right now"
+    SeasonToggles.registration_open? ||
+      redirect_to(root_path, alert: "Signup is not open right now")
   end
 
   def force_logout
