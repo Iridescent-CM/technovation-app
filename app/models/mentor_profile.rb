@@ -180,6 +180,14 @@ class MentorProfile < ActiveRecord::Base
     account.public_send(method_name, *args)
   end
 
+  def training_complete?
+    !!training_completed_at
+  end
+
+  def complete_training!
+    update(training_completed_at: Time.current)
+  end
+
   def onboarding_steps
     steps = []
 

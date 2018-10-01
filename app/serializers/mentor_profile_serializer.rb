@@ -8,6 +8,8 @@ class MentorProfileSerializer
 
   attribute(:is_onboarded, &:onboarded?)
 
+  attribute(:is_training_complete, &:training_complete?)
+
   attribute(:next_onboarding_step) do |mentor|
     case mentor.onboarding_steps.first
     when :consent_signed?
