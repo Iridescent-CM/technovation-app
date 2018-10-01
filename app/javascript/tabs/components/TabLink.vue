@@ -1,12 +1,12 @@
 <template>
   <router-link
     tag="li"
+    :id="id"
     :class="['tabs__menu-link'].concat(cssClasses)"
     active-class="tabs__menu-link--active"
     :to="to"
   >
     <button
-      role="button"
       :class="buttonClasses"
       v-tooltip="tooltipContent"
     >
@@ -40,6 +40,12 @@ export default {
   },
 
   props: {
+    id: {
+      required: false,
+      type: String,
+      default: "",
+    },
+
     disabledTooltip: {
       type: String,
       default: '',
