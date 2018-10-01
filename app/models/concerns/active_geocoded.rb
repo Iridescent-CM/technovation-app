@@ -10,19 +10,26 @@ module ActiveGeocoded
     before_validation :fix_state_country_formatting
   end
 
-  def detect_location_changes?(
-    (
-      (saved_change_to_city? || city_changed?) &&
-        !city_was.blank?
-    ) || (
-      respond_to?(:saved_change_to_country?) &&
-        (saved_change_to_country? || country_changed?) &&
-          !country_was.blank?
-    ) || (
-      respond_to?(:saved_change_to_country_code?) &&
-        (saved_change_to_country_code? || country_code_changed?) &&
-          !country_code_was.blank?
-    )
+  def detect_location_changes?
+    detect_city_changes? ||
+      detect_country_changes? ||
+        detect_country_code_changes?
+  end
+
+  def detect_city_changes?
+    (saved_change_to_city? || city_changed?) && !city_was.blank?
+  end
+
+  def detect_country_changes?
+    respond_to?(:saved_change_to_country?) &&
+      (saved_change_to_country? || country_changed?) &&
+        !country_was.blank?
+  end
+
+  def detect_country_code_changes?
+    respond_to?(:saved_change_to_country_code?) &&
+      (saved_change_to_country_code? || country_code_changed?) &&
+        !country_code_was.blank?
   end
 
   def fix_state_country_formatting
