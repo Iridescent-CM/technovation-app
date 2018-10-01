@@ -30,7 +30,7 @@ RSpec.describe RegionalAmbassador::ParticipantsController do
         allow_state_search: false,
         country: ["US"],
         state_province: ["IL"],
-        season: 2018,
+        season: Season.current.year,
         season_and_or: "match_any",
         column_names: ["city"],
       }).permit(
