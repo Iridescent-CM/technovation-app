@@ -1,6 +1,17 @@
 <template>
   <ul class="tabs__menu">
     <tab-link
+      :to="{ name: 'mentor-training' }"
+      id="mentor_training"
+      css-classes="tabs__menu-link--has-subtitles"
+      :condition-to-complete="isTrainingComplete"
+      :condition-to-enable="true"
+    >
+      Mentor training
+      <span>{{ trainingStatusLabel }}</span>
+    </tab-link>
+
+    <tab-link
       :to="{ name: 'consent-waiver' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="isConsentSigned"
@@ -66,6 +77,7 @@ export default {
 
   computed: {
     ...mapGetters([
+      'isTrainingComplete',
       'isBackgroundCheckClear',
       'isBackgroundCheckWaived',
       'isBioFilled',
@@ -75,6 +87,14 @@ export default {
       'backgroundCheckUpdatedAtEpoch',
       'canJoinTeams',
     ]),
+
+    trainingStatusLabel () {
+      if (this.isTrainingComplete) {
+        return 'You completed training!'
+      } else {
+        return 'Everything you need to know'
+      }
+    },
 
     bioLabel () {
       if (this.isBioFilled) {

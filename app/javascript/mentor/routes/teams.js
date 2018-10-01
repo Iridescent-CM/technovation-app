@@ -15,6 +15,15 @@ const mustBeOnboarded = (_to, _from, next) => {
 
 export default [
   {
+    path: '/mentor-training',
+    name: 'mentor-training',
+    component: TeamBuildingStep,
+    meta: {
+      browserTitle: "Complete the mentor training"
+    },
+  },
+
+  {
     path: '/consent-waiver',
     name: 'consent-waiver',
     component: TeamBuildingStep,

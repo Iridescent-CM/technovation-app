@@ -43,6 +43,10 @@ export default {
     return digStateAttributes(state, 'currentMentor', 'nextOnboardingStep')
   },
 
+  isTrainingComplete (state) {
+    return digStateAttributes(state, 'currentMentor', 'isTrainingComplete')
+  },
+
   isBioFilled (state) {
     return digStateAttributes(state, 'currentMentor', 'bio', bio => bio.length)
   },
