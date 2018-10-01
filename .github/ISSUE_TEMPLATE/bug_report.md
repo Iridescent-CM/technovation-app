@@ -35,4 +35,4 @@ If applicable, add screenshots to help explain your problem.
 Add any other context about the problem here.
 
 **Label**
-You MUST use the label menu on the right side to add 'Bug' as a label
+You MUST use the label menu to add 'bug' as a label
