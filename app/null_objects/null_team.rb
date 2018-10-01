@@ -9,6 +9,10 @@ class NullTeam < NullObject
     '::NullTeam'
   end
 
+  def team_photo_url
+    ""
+  end
+
   def has_mentor?
     false
   end
