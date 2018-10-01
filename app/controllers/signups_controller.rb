@@ -12,6 +12,10 @@ class SignupsController < ApplicationController
   end
 
   private
+  def require_signup_enabled
+    admin_permission? || super
+  end
+
   def signup_wizard_mode?
     !admin_permission_signup_attempt &&
       get_cookie(CookieNames::SIGNUP_WIZARD_MODE)
@@ -62,16 +66,20 @@ class SignupsController < ApplicationController
   end
 
   def admin_permission?
-    !!get_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
-    # TODO: check token validity
+    set_cookie(CookieNames::ADMIN_PERMISSION_TOKEN, params.fetch(:admin_permission_token) { false })
+    if token = get_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
+      admin_permission_signup_attempt
+    else
+      false
+    end
   end
 
   def admin_permission_signup_attempt
     return @admin_permission_signup_attempt if defined?(@admin_permission_signup_attempt)
 
-    if !params[:admin_permission_token].blank?
+    if token = get_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
       @admin_permission_signup_attempt = SignupAttempt.find_by(
-        admin_permission_token: params[:admin_permission_token]
+        admin_permission_token: token
       )
     else
       false
