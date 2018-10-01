@@ -33,14 +33,7 @@ class Geocoding
   private
   module GeocodingUpdater
     def apply_geocoding_changes(controller)
-      geocode if !valid_coordinates? || (
-                   (saved_change_to_city? || city_changed?) &&
-                     !city_was.blank?
-                 ) || (
-                   (saved_change_to_country? || country_changed?) &&
-                     !country_was.blank?
-                 )
-
+      geocode if !valid_coordinates? || detect_location_changes?
       reverse_geocode if saved_change_to_latitude? ||
                            saved_change_to_longitude? ||
                              latitude_changed? ||
