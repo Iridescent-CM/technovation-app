@@ -33,3 +33,6 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+**Label**
+You MUST use the label menu on the right side to add 'Bug' as a label
