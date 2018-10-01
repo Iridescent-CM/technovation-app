@@ -124,6 +124,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_signup_enabled
+    SeasonToggles.signup_enabled? ||
+      redirect_to root_path, "Signup is not open right now"
+  end
+
   def force_logout
     remove_cookie(CookieNames::AUTH_TOKEN)
     remove_cookie(CookieNames::SESSION_TOKEN)

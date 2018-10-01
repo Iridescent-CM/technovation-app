@@ -1,5 +1,5 @@
 class SignupsController < ApplicationController
-  before_action :require_unauthenticated
+  before_action :require_unauthenticated, :require_signup_enabled
 
   helper_method :admin_permission?, :signup_available?, :signup_wizard_mode?
 
