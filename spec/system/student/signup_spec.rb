@@ -23,7 +23,7 @@ RSpec.describe "Students signing up", :js do
       click_button "Next"
       click_button "Confirm"
 
-      fill_in_vue_select "Year", with: Season.current.year - 10
+      fill_in_vue_select "Year", with: Season.current.year - 11
       fill_in_vue_select "Month", with: "1"
       fill_in_vue_select "Day", with: "1"
       click_button "Next"
