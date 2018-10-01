@@ -168,25 +168,27 @@ export default {
     },
 
     validateEmailInput () {
-      this.saveEmail({ email: this.email })
+      const saveEmail = this.saveEmail({ email: this.email })
 
-      let url = "/public/email_validations/new?address="
-      url += encodeURIComponent(this.email)
+      saveEmail.then(() => {
+        let url = "/public/email_validations/new?address="
+        url += encodeURIComponent(this.email)
 
-      axios.get(url).then(({ data }) => {
-        const attributes = Object.assign({}, data.data).attributes
-        const resp = Object.assign({}, attributes)
+        axios.get(url).then(({ data }) => {
+          const attributes = Object.assign({}, data.data).attributes
+          const resp = Object.assign({}, attributes)
 
-        this.emailHasBeenChecked = true
-        this.emailNeedsValidation = false
+          this.emailHasBeenChecked = true
+          this.emailNeedsValidation = false
 
-        this.emailIsValid = resp.isValid
-        this.isDisposableAddress = resp.isDisposableAddress
-        this.didYouMean = resp.didYouMean
-        this.mailboxVerification = resp.mailboxVerification
-        this.emailIsTaken = resp.isTaken
-      }).catch(err => {
-        console.error(err)
+          this.emailIsValid = resp.isValid
+          this.isDisposableAddress = resp.isDisposableAddress
+          this.didYouMean = resp.didYouMean
+          this.mailboxVerification = resp.mailboxVerification
+          this.emailIsTaken = resp.isTaken
+        }).catch(err => {
+          console.error(err)
+        })
       })
     },
 

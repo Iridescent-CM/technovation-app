@@ -70,7 +70,13 @@ describe('EmailInput Vue component', () => {
 
   describe('#validateEmailInput()', () => {
     it('calls the validation service with the email', (done) => {
-      const defaultStore = mockStore.createMocks()
+      const defaultStore = mockStore.createMocks({
+        actions: {
+          saveEmail: jest.fn(() => {
+            return Promise.resolve()
+          }),
+        },
+      })
 
       const wrapper = shallowMount(
         EmailInput,
@@ -91,13 +97,13 @@ describe('EmailInput Vue component', () => {
         }
       )
 
-      wrapper.vm.email = 'joe@joesak.com'
+      wrapper.setData({ email: 'joe@joesak.com' })
+
+      axios.mockResponseOnce('get', {})
+
+      wrapper.vm.validateEmailInput()
 
       setImmediate(() => {
-        axios.mockResponseOnce('get', {})
-
-        wrapper.vm.validateEmailInput()
-
         expect(axios.get).toHaveBeenCalledWith(
           `/public/email_validations/new?address=${encodeURIComponent('joe@joesak.com')}`
         )
