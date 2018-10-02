@@ -49,7 +49,7 @@
       <h4>Newsletters and informational email</h4>
 
       <p>
-        You can unsubcribe from our <strong>newsletters</strong> about the
+        You can unsubscribe from our <strong>newsletters</strong> about the
         curriculum and program at any time. This is different from
         <strong>informational email</strong> about your account and team
         activity, which you will continue to receive.
