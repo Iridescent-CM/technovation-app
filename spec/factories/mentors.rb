@@ -20,6 +20,11 @@ FactoryBot.define do
       number_of_teams 0
     end
 
+    trait :past do
+      onboarded
+      seasons { [Season.current.year - 1] }
+    end
+
     trait :onboarded do
       not_onboarded false
     end
