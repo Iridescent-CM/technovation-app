@@ -51,7 +51,6 @@ jobs:
           COOKIES_SESSION_TOKEN: session_token_JUNE_2018
           COOKIES_SIGNUP_EMAIL: n-a
           MAILGUN_PRIVATE_KEY: n-a
-          NODE_ENV: n-a
           MENTOR_TRAINING_URL: https://google.com
           DATES_MENTOR_TRAINING_YEAR: 2019
           DATES_MENTOR_TRAINING_MONTH: 10
@@ -100,10 +99,6 @@ jobs:
           command: |
             bundle exec rails db:create
             bundle exec rails db:migrate
-
-      - run:
-          name: Precompile for test env
-          command: NODE_ENV=test bundle exec rails webpacker:compile
 
       - run:
           name: Parallel RSpec
