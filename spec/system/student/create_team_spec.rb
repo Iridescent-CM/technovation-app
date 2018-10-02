@@ -27,7 +27,7 @@ RSpec.describe "Students creating a team", :js do
       fill_in_vue_select "Day", with: "1"
       click_button "Next"
 
-      # Choose Profile: Student (auto)
+      # ChooseProfile.vue - student by default, due to age
       click_button "Next"
 
       fill_in "First name(s)", with: "Marge"
