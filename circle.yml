@@ -102,6 +102,10 @@ jobs:
             bundle exec rails db:migrate
 
       - run:
+          name: Precompile for test env
+          command: NODE_ENV=test bundle exec rails webpacker:compile
+
+      - run:
           name: Parallel RSpec
           command: bundle exec rspec --order rand
 
