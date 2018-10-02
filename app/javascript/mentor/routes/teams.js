@@ -2,7 +2,7 @@ import Vue from 'vue'
 import store from 'mentor/store'
 
 const TeamBuildingStep = Vue.component('team-building-step', {
-  template: `<div><slot :name="$route.name">add App.vue and TeamBuilding.vue slots for route named {{ $route.name }}</slot></div>`,
+  template: `<div><slot :name="$route.name">add mentor/dashboards/show, App.vue, and TeamBuilding.vue slots for route named {{ $route.name }}</slot></div>`,
 })
 
 const mustBeOnboarded = (_to, _from, next) => {
