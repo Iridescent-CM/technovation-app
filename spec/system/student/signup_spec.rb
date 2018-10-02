@@ -33,7 +33,7 @@ RSpec.describe "Students signing up", :js do
 
       fill_in "First name(s)", with: "Marge"
       fill_in "Last name(s)", with: "Bouvier"
-      fill_in "School Name", with: "Springfield Middle School"
+      fill_in "School name", with: "Springfield Middle School"
       click_button "Next"
 
       stub_mailgun_validation(valid: true, email: "margeyb@springfield.net")

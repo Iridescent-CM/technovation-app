@@ -53,7 +53,7 @@
       </p>
 
       <p v-show="profileChoice !== 'student'">
-        <label for="jobTitle">Job Title</label>
+        <label for="jobTitle">Job title</label>
         <input
           id="jobTitle"
           type="text"
@@ -239,9 +239,9 @@ export default {
 
     schoolCompanyNameLabel () {
       if (this.profileChoice === 'student') {
-        return 'School Name'
+        return 'School name'
       } else {
-        return 'School or Company Name'
+        return 'School or company name'
       }
     },
 
