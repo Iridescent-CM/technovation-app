@@ -17,6 +17,7 @@
         <router-view :key="$route.name" :profile-icons="profileIcons">
           <div slot="change-email"><slot name="change-email" /></div>
           <div slot="change-password"><slot name="change-password" /></div>
+          <div slot="mentor-training"><slot name="mentor-training" /></div>
           <div slot="bio"><slot name="bio" /></div>
           <div slot="consent-waiver"><slot name="consent-waiver" /></div>
           <div slot="background-check"><slot name="background-check" /></div>

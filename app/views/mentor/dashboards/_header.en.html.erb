@@ -1,0 +1,23 @@
+<div slot="ra-intro">
+  <%= render 'dashboards/ra_intro' %>
+</div>
+
+<% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+  <template slot="survey-links"><%= render 'program_survey' %></template>
+<% end %>
+
+<% if current_mentor.is_a_judge? %>
+  <template slot="judge-switch-link">
+    <%= link_to "Switch to Judge mode",
+      judge_dashboard_path,
+      data: { turbolinks: false } %>
+  </template>
+<% end %>
+
+<% if current_mentor.is_an_ambassador? %>
+  <template slot="ra-switch-link">
+    <%= link_to "Switch to RA mode",
+      regional_ambassador_dashboard_path,
+      data: { turbolinks: false } %>
+  </template>
+<% end %>

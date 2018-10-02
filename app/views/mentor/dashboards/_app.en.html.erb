@@ -1,0 +1,43 @@
+<div slot="change-email">
+  <%= render 'profiles/email' %>
+</div>
+
+<div slot="change-password">
+  <%= render 'profiles/password' %>
+</div>
+
+<div slot="mentor-training">
+  <%= render 'slots/mentor/training' %>
+</div>
+
+<div slot="bio">
+  <%= render 'slots/mentor/bio' %>
+</div>
+
+<div slot="consent-waiver">
+  <%= render 'completion_steps/consent_waiver', profile: current_mentor %>
+</div>
+
+<div slot="background-check">
+  <%= render 'completion_steps/background_check', profile: current_mentor %>
+</div>
+
+<div id="find-team" slot="find-team">
+  <%= render 'slots/mentor/join_team' %>
+</div>
+
+<div slot="create-team">
+  <%= render 'slots/mentor/create_team' %>
+</div>
+
+<div slot="submission">
+  <%= render 'slots/mentor/submissions' %>
+</div>
+
+<div slot="events">
+  <%= render 'slots/mentor/events' %>
+</div>
+
+<div slot="scores">
+  <%= render 'slots/mentor/scores' %>
+</div>

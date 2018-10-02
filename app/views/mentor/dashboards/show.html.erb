@@ -26,81 +26,15 @@
       ) %>"
     <% end %>
   >
-    <div slot="ra-intro">
-      <%= render 'dashboards/ra_intro' %>
-    </div>
-
-    <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-      <template slot="survey-links"><%= render 'program_survey' %></template>
-    <% end %>
-
-    <% if current_mentor.is_a_judge? %>
-      <template slot="judge-switch-link">
-        <%= link_to "Switch to Judge mode",
-         judge_dashboard_path,
-         data: { turbolinks: false } %>
-      </template>
-    <% end %>
-
-    <% if current_mentor.is_an_ambassador? %>
-      <template slot="ra-switch-link">
-        <%= link_to "Switch to RA mode",
-          regional_ambassador_dashboard_path,
-          data: { turbolinks: false } %>
-      </template>
-    <% end %>
+    <%= render 'header' %>
 
     <% if not current_mentor.email_confirmed? %>
       <%= render 'completion_steps/confirm_changed_email',
         profile: current_mentor %>
     <% elsif !current_session.authenticated? && current_mentor.needs_mentor_type? %>
-      <div class="grid grid--justify-space-around">
-        <div class="grid__col-8">
-          <div class="panel">
-            <%= render 'completion_steps/select_mentor_type' %>
-          </div>
-        </div>
-      </div>
+      <%= render 'select_mentor_type' %>
     <% else %>
-      <div slot="change-email">
-        <%= render 'profiles/email' %>
-      </div>
-
-      <div slot="change-password">
-        <%= render 'profiles/password' %>
-      </div>
-
-      <div slot="bio">
-        <%= render 'slots/mentor/bio' %>
-      </div>
-
-      <div slot="consent-waiver">
-        <%= render 'completion_steps/consent_waiver', profile: current_mentor %>
-      </div>
-
-      <div slot="background-check">
-        <%= render 'completion_steps/background_check', profile: current_mentor %>
-      </div>
-
-      <div id="find-team" slot="find-team">
-        <%= render 'slots/mentor/join_team' %>
-      </div>
-
-      <div slot="create-team">
-        <%= render 'slots/mentor/create_team' %>
-      </div>
-
-      <div slot="submission">
-        <%= render 'slots/mentor/submissions' %>
-      </div>
-
-      <div slot="events">
-        <%= render 'slots/mentor/events' %>
-      </div>
-
-      <div slot="scores">
-        <%= render 'slots/mentor/scores' %>
-      </div>
+      <%= render 'app' %>
     <% end %>
   </app>
 </div>

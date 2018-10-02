@@ -1,0 +1,22 @@
+<% verb = "Take" %>
+
+<h3 class="margin--none padding--none">Mentor training</h3>
+
+<% if current_mentor.training_complete? %>
+  <% verb = "Revisit" %>
+  <p>Thank you for completing the training!</p>
+  <p>You are welcome to re-visit the training site at any time.</p>
+<% elsif !current_mentor.training_required? %>
+  <p>
+    Training is not required because it was not available when you signed up.
+    However, we encourage you to complete the training to help you do your best!
+  </p>
+<% else %>
+  <p>Training is required.</p>
+<% end %>
+
+<p>
+  <%= link_to "#{verb} the training now",
+    ENV.fetch("MENTOR_TRAINING_URL"),
+    class: "button" %>
+</p>

@@ -180,6 +180,11 @@ class MentorProfile < ActiveRecord::Base
     account.public_send(method_name, *args)
   end
 
+  def training_required?
+    season_registered_at.to_date >= ImportantDates.mentor_training_required_since &&
+      !training_complete?
+  end
+
   def training_complete?
     !!training_completed_at
   end

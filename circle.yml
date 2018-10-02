@@ -51,6 +51,8 @@ jobs:
           COOKIES_SESSION_TOKEN: session_token_JUNE_2018
           COOKIES_SIGNUP_EMAIL: n-a
           MAILGUN_PRIVATE_KEY: n-a
+          NODE_ENV: n-a
+          MENTOR_TRAINING_URL: https://google.com
       - image: circleci/postgres:9.6-alpine-ram
 
     steps:
