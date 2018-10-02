@@ -17,7 +17,7 @@ class ParentalConsentsController < ApplicationController
 
   def edit
     if student.present? and not student.consent_signed?
-      @parental_consent = student.parental_consent
+      @parental_consent = student.parental_consent || student.create_parental_consent!
       @parental_consent.student_profile_consent_token = params.fetch(:token)
       @parental_consent.newsletter_opt_in = true
     elsif student.present? and student.consent_signed?
