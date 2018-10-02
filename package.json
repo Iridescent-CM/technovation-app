@@ -3,6 +3,7 @@
     "test": "jest"
   },
   "jest": {
+    "testURL": "http://localhost",
     "roots": [
       "spec/javascript"
     ],
