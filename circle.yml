@@ -53,6 +53,9 @@ jobs:
           MAILGUN_PRIVATE_KEY: n-a
           NODE_ENV: n-a
           MENTOR_TRAINING_URL: https://google.com
+          DATES_MENTOR_TRAINING_YEAR: 2019
+          DATES_MENTOR_TRAINING_MONTH: 10
+          DATES_MENTOR_TRAINING_DAY: 15
       - image: circleci/postgres:9.6-alpine-ram
 
     steps:
