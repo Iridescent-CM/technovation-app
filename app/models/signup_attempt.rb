@@ -72,10 +72,6 @@ class SignupAttempt < ActiveRecord::Base
     !!terms_agreed_at
   end
 
-  def profile_choice
-    self['profile_choice'] || ('student' if can_be_student?)
-  end
-
   def set_terms_agreed(bool)
     value = bool ? Time.current : nil
     self.terms_agreed_at = value

@@ -153,7 +153,9 @@ export default {
 
     handleSubmit () {
       if (!this.nextStepEnabled) return false
-      this.$router.push({ name: 'basic-profile' })
+      this.updateProfileChoice(this.profileChoice).then(() => {
+        this.$router.push({ name: 'basic-profile' })
+      })
     },
 
     navigateBack () {
