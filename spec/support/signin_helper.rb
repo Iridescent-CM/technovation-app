@@ -1,5 +1,6 @@
 module SigninHelper
   def sign_in(profile, *traits)
+    visit signout_path
     signin = case profile
              when Symbol
                FactoryBot.create(profile, *traits)
