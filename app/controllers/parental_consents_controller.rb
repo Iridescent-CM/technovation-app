@@ -16,11 +16,11 @@ class ParentalConsentsController < ApplicationController
   end
 
   def edit
-    if student.present? and not student.consent_signed?
+    if student.present? && !student.consent_signed?
       @parental_consent = student.parental_consent || student.create_parental_consent!
       @parental_consent.student_profile_consent_token = params.fetch(:token)
       @parental_consent.newsletter_opt_in = true
-    elsif student.present? and student.consent_signed?
+    elsif student.present? && student.consent_signed?
       redirect_to parental_consent_path(student.parental_consent),
         success: t("controllers.parental_consents.create.success")
     else
