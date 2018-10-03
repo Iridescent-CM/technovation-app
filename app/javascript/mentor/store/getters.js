@@ -59,6 +59,25 @@ export default {
     return digStateAttributes(state, 'backgroundCheck', 'isClear')
   },
 
+  getAge: (state) => (compareDate = new Date()) => {
+    const year = digStateAttributes(state, 'currentAccount', 'birthYear', age => parseInt(age))
+    const month = digStateAttributes(state, 'currentAccount', 'birthMonth', age => parseInt(age))
+    const day = digStateAttributes(state, 'currentAccount', 'birthDay', age => parseInt(age))
+
+    if (!year || !month || !day) return false
+
+    const compareYear = compareDate.getFullYear()
+    const compareMonth = compareDate.getMonth() + 1
+    const compareDay = compareDate.getDate()
+
+    const extraYear = (
+      compareMonth > month ||
+        (compareMonth === month && compareDay >= day)
+    ) ? 0 : 1
+
+    return compareYear - year - extraYear
+  },
+
   isBackgroundCheckWaived (state) {
     const isCountryUS = digStateAttributes(state, 'currentAccount', 'countryCode', code => code == 'US')
     const isAgeAppropriate = digStateAttributes(state, 'currentAccount', 'age', age => parseInt(age) >= 18)

@@ -1,6 +1,69 @@
+import cloneDeep from 'lodash/cloneDeep'
 import getters from 'mentor/store/getters'
 
 describe("mentor/store/getters.js", () => {
+  describe('getAge', () => {
+    const today = new Date()
+
+    const initialState = {
+      currentAccount: {
+        data: {
+          attributes: {
+            birthYear: today.getFullYear() - 18,
+            birthMonth: today.getMonth(),
+            birthDay: today.getDate(),
+          },
+        },
+      },
+    }
+
+    let mockState
+
+    beforeEach(() => {
+      mockState = cloneDeep(initialState)
+    })
+
+    it('returns false if currentAccount.birthYear is not present', () => {
+      delete mockState.currentAccount.data.attributes.birthYear
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge()).toBe(false)
+    })
+
+    it('returns false if currentAccount.birthMonth is not present', () => {
+      delete mockState.currentAccount.data.attributes.birthMonth
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge()).toBe(false)
+    })
+
+    it('returns false if currentAccount.birthDay is not present', () => {
+      delete mockState.currentAccount.data.attributes.birthDay
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge()).toBe(false)
+    })
+
+    it('returns numeric age if year, month, and day are present', () => {
+      expect(getters.getAge(mockState).call()).toEqual(18)
+    })
+
+    it('returns numeric age based on compareDate passed in', () => {
+      const twoYearsAgo = new Date(
+        today.getFullYear() - 2,
+        today.getMonth(),
+        today.getDay()
+      )
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge(twoYearsAgo)).toEqual(16)
+    })
+  })
+
   describe("isBackgroundCheckWaived", () => {
     it("is true when currentAccount.countryCode is not US", () => {
       const state = {
