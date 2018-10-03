@@ -111,6 +111,18 @@ export default {
       },
     },
   },
+
+  computed: {
+    location () {
+      return this.$store.getters['registration/getLocation']
+    },
+  },
+
+  watch: {
+    location (newLocation) {
+      this.$store.commit('authenticated/location', newLocation)
+    }
+  },
 }
 </script>
 
