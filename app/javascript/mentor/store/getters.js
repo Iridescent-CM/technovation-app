@@ -78,9 +78,9 @@ export default {
     return compareYear - year - extraYear
   },
 
-  isBackgroundCheckWaived (state) {
+  isBackgroundCheckWaived (state, getters) {
     const isCountryUS = digStateAttributes(state, 'currentAccount', 'countryCode', code => code == 'US')
-    const isAgeAppropriate = digStateAttributes(state, 'currentAccount', 'age', age => parseInt(age) >= 18)
+    const isAgeAppropriate = getters.getAge() >= 18
     return !isCountryUS || !isAgeAppropriate
   },
 
