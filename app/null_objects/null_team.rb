@@ -9,6 +9,10 @@ class NullTeam < NullObject
     '::NullTeam'
   end
 
+  def division_name
+    "non existent"
+  end
+
   def team_photo_url
     ""
   end
