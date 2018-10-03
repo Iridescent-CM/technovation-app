@@ -2,7 +2,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   queue_as :default
 
   def perform(record)
-    return false if record.seasons.include?(Season.current.year)
+    if record.seasons.include?(Season.current.year) &&
+        record.season_registered_at.to_date >= ImportantDates.registration_opens
+        return false
+    end
 
     update_season_data_with_resets(record)
 
