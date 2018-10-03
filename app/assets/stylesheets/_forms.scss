@@ -251,6 +251,10 @@ form[data-remote] {
 }
 
 .dz-success-mark {
-  background: $secondary;
+  background: $primary;
   border-radius: 100px;
+}
+
+.dz-error-message {
+  margin-top: 1em;
 }
