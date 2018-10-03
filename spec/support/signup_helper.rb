@@ -65,5 +65,7 @@ module SignupHelper
     fill_in "Email", with: "margeyb@springfield.net"
     fill_in "Password", with: "margeysecret1234"
     click_button "Next"
+
+    "#{profile_scope}_profile".camelize.constantize.last
   end
 end
