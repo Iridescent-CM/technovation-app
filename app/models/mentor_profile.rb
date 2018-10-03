@@ -181,10 +181,6 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def training_required?
-    check_season_registered_date && !training_complete?
-  end
-
-  def check_season_registered_date
     if !season_registered_at && seasons.include?(Season.current.year)
       account.update_column(:season_registered_at, Time.current)
     end
@@ -196,6 +192,10 @@ class MentorProfile < ActiveRecord::Base
     !!training_completed_at
   end
 
+  def training_complete_or_not_required?
+    training_complete? || !training_required?
+  end
+
   def complete_training!
     update(training_completed_at: Time.current)
   end
@@ -205,7 +205,7 @@ class MentorProfile < ActiveRecord::Base
 
     methods = [
       :email_confirmed?,
-      :training_complete?,
+      :training_complete_or_not_required?,
       :consent_signed?,
       :background_check_complete?,
       :bio_complete?,
@@ -358,7 +358,7 @@ class MentorProfile < ActiveRecord::Base
   def onboarded?
     account.present? &&
       account.email_confirmed? &&
-        training_complete? &&
+        training_complete_or_not_required? &&
           consent_signed? &&
             background_check_complete? &&
                 !bio.blank? &&

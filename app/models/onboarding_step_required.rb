@@ -18,7 +18,7 @@ class OnboardingStepRequired
     case step
     when :email_confirmed?
       "You need to confirm your new email address."
-    when :training_complete?
+    when :training_complete_or_not_required?
       "You must complete the mentor training"
     when :consent_signed?
       "You need to sign the consent waiver"
