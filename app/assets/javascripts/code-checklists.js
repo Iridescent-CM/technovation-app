@@ -4,18 +4,23 @@ $(document).on("ready turbolinks:load", function() {
   });
 });
 
-$(document).on("change", ".tc-form-group__item input",
+$(document).on("change", ".tc-form-group__item input, input.provide-preview",
   function(){
     var $group = $(this).closest(".tc-form-group");
+    var groupName = $group.data("groupName");
+    var $indicator = $(".indicator[data-name='" + groupName + "']");
+    var previousTotal = parseInt($indicator.find('.total').text());
+
     updateUIBasedOnPointsEarned({ group: $group });
 
-    var groupName = $group.data("groupName"),
-        $indicator = $(".indicator[data-name='" + groupName + "']");
+    var newTotal = parseInt($indicator.find('.total').text());
 
-    $indicator.addClass("notify");
-    setTimeout(function() {
-      $indicator.removeClass("notify");
-    }, 200);
+    if (previousTotal !== newTotal) {
+      $indicator.addClass("notify");
+      setTimeout(function() {
+        $indicator.removeClass("notify");
+      }, 200);
+    }
   }
 );
 
