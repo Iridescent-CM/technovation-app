@@ -11,6 +11,8 @@ module SignupHelper
   end
 
   def sign_up(profile_scope)
+    visit signout_path
+
     allow(CookiedCoordinates).to receive(:get).and_return(
       [41.50196838, -87.64051818]
     )
@@ -60,10 +62,11 @@ module SignupHelper
 
     click_button "Next"
 
-    stub_mailgun_validation(valid: true, email: "margeyb@springfield.net")
+    email = FactoryBot.attributes_for(:account)[:email]
+    stub_mailgun_validation(valid: true, email: email)
 
-    fill_in "Email", with: "margeyb@springfield.net"
-    fill_in "Password", with: "margeysecret1234"
+    fill_in "Email", with: email
+    fill_in "Password", with: "mysecret1234"
     click_button "Next"
 
     "#{profile_scope}_profile".camelize.constantize.last

@@ -17,7 +17,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def perform_not_needed?(record)
     if record.respond_to?(:season_registered_at)
       record.seasons.include?(Season.current.year) &&
-        record.season_registered_at.to_date >= ImportantDates.registration_opens
+        record.season_registered_at &&
+          record.season_registered_at.to_date >= ImportantDates.registration_opens
     else
       record.seasons.include?(Season.current.year)
     end

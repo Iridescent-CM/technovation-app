@@ -19,9 +19,12 @@ class MentorProfile < ActiveRecord::Base
     .includes(account: :background_check)
     .references(:accounts, :background_checks)
     .where(
-      "(accounts.country = 'US'
-        AND background_checks.status = ?)
-          OR accounts.country != 'US'",
+      "(training_completed_at IS NOT NULL OR " +
+        "date(accounts.season_registered_at) < ?) AND" +
+          "(accounts.country = 'US' AND " +
+            "background_checks.status = ?) OR " +
+              "accounts.country != 'US'",
+      ImportantDates.mentor_training_required_since,
       BackgroundCheck.statuses[:clear]
     )
     .where("accounts.email_confirmed_at IS NOT NULL")
@@ -185,7 +188,11 @@ class MentorProfile < ActiveRecord::Base
       account.update_column(:season_registered_at, Time.current)
     end
 
-    season_registered_at.to_date >= ImportantDates.mentor_training_required_since
+    if season_registered_at
+      season_registered_at.to_date >= ImportantDates.mentor_training_required_since
+    else
+      false
+    end
   end
 
   def training_complete?

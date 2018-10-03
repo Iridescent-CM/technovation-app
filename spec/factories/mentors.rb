@@ -27,9 +27,11 @@ FactoryBot.define do
 
     trait :onboarded do
       not_onboarded false
+      training_completed_at { Time.current }
     end
 
     trait :onboarding do
+      training_completed_at nil
     end
 
     trait :chicago do

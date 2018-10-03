@@ -112,6 +112,7 @@ RSpec.describe "A mentor completing their training", :js do
     end
 
     Timecop.freeze(ImportantDates.mentor_training_required_since) do
+      mentor.update_column(:training_completed_at, nil)
       sign_in(mentor)
 
       click_button "Mentor training"
