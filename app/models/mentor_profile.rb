@@ -181,8 +181,15 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def training_required?
-    season_registered_at.to_date >= ImportantDates.mentor_training_required_since &&
-      !training_complete?
+    check_season_registered_date && !training_complete?
+  end
+
+  def check_season_registered_date
+    if !season_registered_at && seasons.include?(Season.current.year)
+      account.update_column(:season_registered_at, Time.current)
+    end
+
+    season_registered_at.to_date >= ImportantDates.mentor_training_required_since
   end
 
   def training_complete?
@@ -198,6 +205,7 @@ class MentorProfile < ActiveRecord::Base
 
     methods = [
       :email_confirmed?,
+      :training_complete?,
       :consent_signed?,
       :background_check_complete?,
       :bio_complete?,
@@ -285,11 +293,10 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def can_join_a_team?
-    consent_signed? and
-      background_check_complete? and
-        bio_complete? and
-          SeasonToggles.team_building_enabled?
+    onboarded? &&
+            SeasonToggles.team_building_enabled?
   end
+  alias :can_create_a_team? :can_join_a_team?
 
   def background_check_complete?
     return true if not requires_background_check?
@@ -351,10 +358,11 @@ class MentorProfile < ActiveRecord::Base
   def onboarded?
     account.present? &&
       account.email_confirmed? &&
-        consent_signed? &&
-          background_check_complete? &&
-              !bio.blank? &&
-                !mentor_type.blank?
+        training_complete? &&
+          consent_signed? &&
+            background_check_complete? &&
+                !bio.blank? &&
+                  !mentor_type.blank?
   end
 
   def needs_mentor_type?

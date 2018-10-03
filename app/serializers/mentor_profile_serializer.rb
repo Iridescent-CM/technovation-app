@@ -12,6 +12,8 @@ class MentorProfileSerializer
 
   attribute(:next_onboarding_step) do |mentor|
     case mentor.onboarding_steps.first
+    when :training_complete?
+      "mentor-training"
     when :consent_signed?
       "consent-waiver"
     when :background_check_complete?

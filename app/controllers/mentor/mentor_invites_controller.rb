@@ -1,5 +1,7 @@
 module Mentor
   class MentorInvitesController < MentorController
+    before_action :require_onboarded
+
     def show
       if SeasonToggles.judging_enabled_or_between?
         return redirect_when_invites_are_disabled_by_judging

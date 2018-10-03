@@ -292,6 +292,7 @@ class StudentProfile < ActiveRecord::Base
     not is_on_team? and
       SeasonToggles.team_building_enabled?
   end
+  alias :can_create_a_team? :can_join_a_team?
 
   def team
     current_teams.first or ::NullTeam.new

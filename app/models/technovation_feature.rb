@@ -173,6 +173,10 @@ class TechnovationFeature
     def gerundize
       "Creating a team"
     end
+
+    def requires_onboarding?
+      !profile.can_create_a_team?
+    end
   end
 
   class TeamInvitesFeature < Feature

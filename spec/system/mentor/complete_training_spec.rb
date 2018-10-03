@@ -31,13 +31,36 @@ RSpec.describe "A mentor completing their training", :js do
 
   it "is required on and after the ImportantDates.mentor_training_required_since date" do
     Timecop.freeze(ImportantDates.mentor_training_required_since) do
-      sign_up(:mentor)
+      mentor = sign_up(:mentor)
+      mentor.update_column(:bio, "Something of sufficient length " * 10)
+      mentor.create_consent_waiver!(electronic_signature: "me")
+      mentor.create_background_check!(candidate_id: "TEST", report_id: "TEST", status: :clear)
+
+      visit mentor_dashboard_path
+
       click_button "Mentor training"
       expect(page).to have_content("Training is required.")
       expect(page).to have_link(
         "Take the training now",
         href: ENV.fetch("MENTOR_TRAINING_URL")
       )
+
+      expect(page).to have_css("button.disabled", text: "Find your team")
+      expect(page).to have_css("button.disabled", text: "Create your team")
+
+      click_button "Submit your project"
+      expect(page).to have_content("not available")
+      expect(page).to have_content("You must complete the mentor training")
+
+      visit new_mentor_team_search_path
+      expect(page).to have_content("need to complete some steps")
+
+      invite = FactoryBot.create(:mentor_invite, invitee_email: mentor.email)
+      visit mentor_mentor_invite_path(invite)
+      expect(page).to have_content("need to complete some steps")
+
+      visit new_mentor_join_request_path(invite.team)
+      expect(page).to have_content("need to complete some steps")
     end
   end
 
