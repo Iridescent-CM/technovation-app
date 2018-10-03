@@ -65,49 +65,39 @@ describe("mentor/store/getters.js", () => {
   })
 
   describe("isBackgroundCheckWaived", () => {
-    it("is true when currentAccount.countryCode is not US", () => {
-      const state = {
-        currentAccount: {
-          data: {
-            attributes: {
-              countryCode: "BR",
-              age: 18,
-            },
+    const mockState = {
+      currentAccount: {
+        data: {
+          attributes: {
+            countryCode: "BR",
           },
         },
-      }
+      },
+    }
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
+    const mockGetters = {
+      getAge: jest.fn(() => {
+        return 18
+      })
+    }
+
+    it('is true when currentAccount.countryCode is not US', () => {
+      expect(getters.isBackgroundCheckWaived(mockState, mockGetters)).toBe(true)
     })
 
-    it("is false when currentAccount.countryCode is US", () => {
-      const state = {
-        currentAccount: {
-          data: {
-            attributes: {
-              countryCode: "US",
-              age: 18,
-            },
-          },
-        },
-      }
+    it('is false when currentAccount.countryCode is US', () => {
+      mockState.currentAccount.data.attributes.countryCode = 'US'
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(false)
+      expect(getters.isBackgroundCheckWaived(mockState, mockGetters)).toBe(false)
     })
 
-    it("is true when currentAccount.age is under 18", () => {
-      const state = {
-        currentAccount: {
-          data: {
-            attributes: {
-              countryCode: "US",
-              age: "17",
-            },
-          },
-        },
-      }
+    it('is true when currentAccount.age is under 18', () => {
+      mockState.currentAccount.data.attributes.countryCode = 'US'
+      mockGetters.getAge = jest.fn(() => {
+        return 17
+      })
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
+      expect(getters.isBackgroundCheckWaived(mockState, mockGetters)).toBe(true)
     })
   })
 
