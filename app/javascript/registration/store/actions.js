@@ -102,25 +102,6 @@ export default {
     }).catch(err => console.error(err))
   },
 
-  updateLocation ({ commit, state }, attrs) {
-    const data = Object.assign({}, {
-      city: state.city,
-      state: state.state,
-      country: state.country,
-    }, attrs)
-
-    commit('location', data)
-
-    axios.post(`/${state.apiRoot}/location`, {
-      location: {
-        ...data,
-        token: state.token,
-      },
-    }).then(({ data: { data: { attributes }} }) => {
-      commit('location', attributes)
-    }).catch(err => console.error(err))
-  },
-
   updateBasicProfile ({ commit, state }, attrs) {
     const data = Object.assign({}, {
       firstName: state.firstName,

@@ -69,7 +69,7 @@ describe("mentor/store/getters.js", () => {
       currentAccount: {
         data: {
           attributes: {
-            countryCode: "BR",
+            country: "Brazil",
           },
         },
       },
@@ -86,13 +86,13 @@ describe("mentor/store/getters.js", () => {
     })
 
     it('is false when currentAccount.countryCode is US', () => {
-      mockState.currentAccount.data.attributes.countryCode = 'US'
+      mockState.currentAccount.data.attributes.country = 'United States'
 
       expect(getters.isBackgroundCheckWaived(mockState, mockGetters)).toBe(false)
     })
 
     it('is true when currentAccount.age is under 18', () => {
-      mockState.currentAccount.data.attributes.countryCode = 'US'
+      mockState.currentAccount.data.attributes.country = 'United States'
       mockGetters.getAge = jest.fn(() => {
         return 17
       })

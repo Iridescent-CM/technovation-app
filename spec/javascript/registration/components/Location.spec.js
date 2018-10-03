@@ -13,11 +13,7 @@ describe("Registration::Components::Location.vue", () => {
   let defaultWrapper
 
   beforeEach(() => {
-    const defaultStore = mockStore.createMocks({
-      actions: {
-        updateLocation: jest.fn(() => {})
-      },
-    })
+    const defaultStore = mockStore.createMocks()
 
     defaultWrapper = mount(
       LocationComponent,
