@@ -29,11 +29,6 @@ RSpec.describe "A mentor completing their training", :js do
         "However, we encourage you to complete the training to help you do your best!"
       )
 
-      expect(page).to have_link(
-        "Take the training now",
-        href: ENV.fetch("MENTOR_TRAINING_URL")
-      )
-
       expect(page).not_to have_css("button.disabled", text: "Find your team")
       expect(page).not_to have_css("button.disabled", text: "Create your team")
 
@@ -56,10 +51,6 @@ RSpec.describe "A mentor completing their training", :js do
         "Training is not required because it was not available when you signed up. " +
         "However, we encourage you to complete the training to help you do your best!"
       )
-      expect(page).to have_link(
-        "Take the training now",
-        href: ENV.fetch("MENTOR_TRAINING_URL")
-      )
 
       expect(page).not_to have_css("button.disabled", text: "Find your team")
       expect(page).not_to have_css("button.disabled", text: "Create your team")
@@ -77,13 +68,6 @@ RSpec.describe "A mentor completing their training", :js do
       mentor.create_background_check!(candidate_id: "TEST", report_id: "TEST", status: :clear)
 
       visit mentor_dashboard_path
-
-      click_button "Mentor training"
-      expect(page).to have_content("Training is required.")
-      expect(page).to have_link(
-        "Take the training now",
-        href: ENV.fetch("MENTOR_TRAINING_URL")
-      )
 
       expect(page).to have_css("button.disabled", text: "Find your team")
       expect(page).to have_css("button.disabled", text: "Create your team")
@@ -114,13 +98,6 @@ RSpec.describe "A mentor completing their training", :js do
     Timecop.freeze(ImportantDates.mentor_training_required_since) do
       mentor.update_column(:training_completed_at, nil)
       sign_in(mentor)
-
-      click_button "Mentor training"
-      expect(page).to have_content("Training is required.")
-      expect(page).to have_link(
-        "Take the training now",
-        href: ENV.fetch("MENTOR_TRAINING_URL")
-      )
 
       expect(page).to have_css("button.disabled", text: "Find your team")
       expect(page).to have_css("button.disabled", text: "Create your team")
