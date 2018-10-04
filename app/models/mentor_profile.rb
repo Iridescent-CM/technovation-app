@@ -123,6 +123,8 @@ class MentorProfile < ActiveRecord::Base
     through: :memberships,
     source: :team
 
+  has_many :team_submissions, through: :teams
+
   has_many :join_requests,
     as: :requestor,
     dependent: :destroy

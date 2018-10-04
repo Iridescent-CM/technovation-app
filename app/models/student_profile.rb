@@ -40,6 +40,8 @@ class StudentProfile < ActiveRecord::Base
     through: :memberships,
     source: :team
 
+  has_many :team_submissions, through: :teams
+
   has_many :mentor_invites,
     foreign_key: :inviter_id
 
