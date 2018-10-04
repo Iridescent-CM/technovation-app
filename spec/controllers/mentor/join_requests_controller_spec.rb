@@ -83,7 +83,7 @@ RSpec.describe Mentor::JoinRequestsController do
 
   describe "POST #show" do
     let(:team) { FactoryBot.create(:team, :with_mentor, members_count: 2) }
-    let(:student) { FactoryBot.create(:student, :onboarded) }
+    let(:student) { FactoryBot.create(:student) }
     let(:join_request) {
       FactoryBot.create(
         :join_request,
@@ -114,7 +114,7 @@ RSpec.describe Mentor::JoinRequestsController do
 
   describe "PUT #update" do
     let(:team) { FactoryBot.create(:team, :with_mentor, members_count: 2) }
-    let(:student) { FactoryBot.create(:student, :onboarded) }
+    let(:student) { FactoryBot.create(:student) }
     let(:join_request) {
       FactoryBot.create(
         :join_request,
