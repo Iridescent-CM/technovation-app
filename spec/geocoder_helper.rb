@@ -31,6 +31,7 @@ RSpec.configure do |config|
 
     [
       "Los Angeles",
+      "LA, CA, US",
       "Los Angeles, California, United States",
       "Los Angeles, United States",
       "Los Angeles, , US",
