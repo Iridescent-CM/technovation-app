@@ -2,12 +2,12 @@ import getters from 'mentor/store/getters'
 
 describe("mentor/store/getters.js", () => {
   describe("isBackgroundCheckWaived", () => {
-    it("is true when currentAccount.countryCode is not US", () => {
+    it("is true when currentAccount.country is not United States", () => {
       const state = {
         currentAccount: {
           data: {
             attributes: {
-              countryCode: "BR",
+              country: "Brazil",
               age: 18,
             },
           },
@@ -17,12 +17,12 @@ describe("mentor/store/getters.js", () => {
       expect(getters.isBackgroundCheckWaived(state)).toBe(true)
     })
 
-    it("is false when currentAccount.countryCode is US", () => {
+    it("is false when currentAccount.country is United States", () => {
       const state = {
         currentAccount: {
           data: {
             attributes: {
-              countryCode: "US",
+              country: "United States",
               age: 18,
             },
           },
@@ -37,7 +37,7 @@ describe("mentor/store/getters.js", () => {
         currentAccount: {
           data: {
             attributes: {
-              countryCode: "US",
+              country: "United States",
               age: "17",
             },
           },
