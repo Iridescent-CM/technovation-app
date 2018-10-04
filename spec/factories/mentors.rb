@@ -111,6 +111,8 @@ FactoryBot.define do
     end
 
     trait :on_team do
+      onboarded
+
       after(:create) do |m|
         team = FactoryBot.create(:team, members_count: 0)
         FactoryBot.create(
