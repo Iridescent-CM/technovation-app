@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Mentor updates a team" do
-  let!(:mentor) { FactoryBot.create(:mentor, :geocoded) }
+  let!(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) }
   let!(:team) { FactoryBot.create(:team) }
 
   before do

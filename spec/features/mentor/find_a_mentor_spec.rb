@@ -2,18 +2,19 @@ require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
   let!(:find_mentor) {
-    FactoryBot.create(:mentor, :geocoded, first_name: "Findme")
+    FactoryBot.create(:mentor, :onboarded, :geocoded, first_name: "Findme")
   } # City is Chicago
 
   before do
-    mentor = FactoryBot.create(:mentor, :geocoded) # City is Chicago
+    mentor = FactoryBot.create(:mentor, :onboarded, :geocoded) # City is Chicago
     sign_in(mentor)
   end
 
   scenario "only see current mentors" do
-    FactoryBot.create(:mentor, :geocoded)
+    FactoryBot.create(:mentor, :onboarded, :geocoded)
     past = FactoryBot.create(
       :mentor,
+      :onboarded,
       :geocoded,
       first_name: "Not me"
     )
@@ -30,6 +31,7 @@ RSpec.feature "Mentors find a team" do
   scenario "browse nearby mentors" do
     FactoryBot.create(
       :mentor,
+      :onboarded,
       :geocoded,
       first_name: "Faraway",
       city: "Los Angeles",
@@ -47,6 +49,7 @@ RSpec.feature "Mentors find a team" do
   scenario "search for a mentor by first name" do
     FactoryBot.create(
       :mentor,
+      :onboarded,
       :geocoded,
       first_name: "Faraway",
       last_name: "Mentor",
@@ -67,6 +70,7 @@ RSpec.feature "Mentors find a team" do
   scenario "search for a mentor by last name" do
     FactoryBot.create(
       :mentor,
+      :onboarded,
       :geocoded,
       first_name: "Faraway",
       last_name: "Mentor",
@@ -87,6 +91,7 @@ RSpec.feature "Mentors find a team" do
   scenario "search for a mentor by first and last name" do
     FactoryBot.create(
       :mentor,
+      :onboarded,
       :geocoded,
       first_name: "Traditional Mexican",
       last_name: "Family Name",

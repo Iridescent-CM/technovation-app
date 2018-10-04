@@ -54,8 +54,9 @@ RSpec.feature "Auto-login to the site with your mailer token" do
 
     scenario "#{scope} on invite review" do
       invite_type = scope == :student ? "team_member" : "mentor"
+      trait = scope == :mentor ? :onboarded : :onboarding
 
-      profile = FactoryBot.create(scope)
+      profile = FactoryBot.create(scope, trait)
 
       invite = FactoryBot.create(
         "#{invite_type}_invite",
