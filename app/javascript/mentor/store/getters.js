@@ -60,7 +60,7 @@ export default {
   },
 
   isBackgroundCheckWaived (state) {
-    const isCountryUS = digStateAttributes(state, 'currentAccount', 'countryCode', code => code == 'US')
+    const isCountryUS = digStateAttributes(state, 'currentAccount', 'country', code => code == 'United States')
     const isAgeAppropriate = digStateAttributes(state, 'currentAccount', 'age', age => parseInt(age) >= 18)
     return !isCountryUS || !isAgeAppropriate
   },
