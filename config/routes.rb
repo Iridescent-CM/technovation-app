@@ -31,10 +31,12 @@ Rails.application.routes.draw do
 
     resources :team_submissions
     resources :team_submission_sections, only: :show
+    resources :team_submission_video_link_reviews, only: [:new, :update]
     resources :team_submission_publications, only: :create
     resources :published_team_submissions, only: :show
     resource :honor_code_review, only: :show
     resource :published_submission_confirmation, only: :show
+
     resource :code_checklist, only: [:update, :show]
     resources :screenshots, only: [:index, :create, :update, :destroy]
     resource :honor_code, only: :show
@@ -92,12 +94,15 @@ Rails.application.routes.draw do
 
     resources :teams, except: [:index, :destroy]
     resources :team_memberships, only: :destroy
+
     resources :team_submissions
     resources :team_submission_sections, only: :show
+    resources :team_submission_video_link_reviews, only: [:new, :update]
     resources :team_submission_publications, only: :create
     resources :published_team_submissions, only: :show
     resource :honor_code_review, only: :show
     resource :published_submission_confirmation, only: :show
+
     resources :team_locations, only: :edit
     resources :pending_teammates, only: :index
     resource :honor_code, only: :show
