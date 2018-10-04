@@ -1,50 +1,103 @@
+import cloneDeep from 'lodash/cloneDeep'
 import getters from 'mentor/store/getters'
 
 describe("mentor/store/getters.js", () => {
+  describe('getAge', () => {
+    const today = new Date()
+
+    const initialState = {
+      currentAccount: {
+        data: {
+          attributes: {
+            birthYear: today.getFullYear() - 18,
+            birthMonth: today.getMonth(),
+            birthDay: today.getDate(),
+          },
+        },
+      },
+    }
+
+    let mockState
+
+    beforeEach(() => {
+      mockState = cloneDeep(initialState)
+    })
+
+    it('returns false if currentAccount.birthYear is not present', () => {
+      delete mockState.currentAccount.data.attributes.birthYear
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge()).toBe(false)
+    })
+
+    it('returns false if currentAccount.birthMonth is not present', () => {
+      delete mockState.currentAccount.data.attributes.birthMonth
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge()).toBe(false)
+    })
+
+    it('returns false if currentAccount.birthDay is not present', () => {
+      delete mockState.currentAccount.data.attributes.birthDay
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge()).toBe(false)
+    })
+
+    it('returns numeric age if year, month, and day are present', () => {
+      expect(getters.getAge(mockState).call()).toEqual(18)
+    })
+
+    it('returns numeric age based on compareDate passed in', () => {
+      const twoYearsAgo = new Date(
+        today.getFullYear() - 2,
+        today.getMonth(),
+        today.getDay()
+      )
+
+      const getAge = getters.getAge(mockState)
+
+      expect(getAge(twoYearsAgo)).toEqual(16)
+    })
+  })
+
   describe("isBackgroundCheckWaived", () => {
-    it("is true when currentAccount.countryCode is not US", () => {
-      const state = {
-        currentAccount: {
-          data: {
-            attributes: {
-              countryCode: "BR",
-              age: 18,
-            },
+    const mockState = {
+      currentAccount: {
+        data: {
+          attributes: {
+            country: "Brazil",
           },
         },
-      }
+      },
+    }
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
+    const mockGetters = {
+      getAge: jest.fn(() => {
+        return 18
+      })
+    }
+
+    it('is true when currentAccount.countryCode is not US', () => {
+      expect(getters.isBackgroundCheckWaived(mockState, mockGetters)).toBe(true)
     })
 
-    it("is false when currentAccount.countryCode is US", () => {
-      const state = {
-        currentAccount: {
-          data: {
-            attributes: {
-              countryCode: "US",
-              age: 18,
-            },
-          },
-        },
-      }
+    it('is false when currentAccount.countryCode is US', () => {
+      mockState.currentAccount.data.attributes.country = 'United States'
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(false)
+      expect(getters.isBackgroundCheckWaived(mockState, mockGetters)).toBe(false)
     })
 
-    it("is true when currentAccount.age is under 18", () => {
-      const state = {
-        currentAccount: {
-          data: {
-            attributes: {
-              countryCode: "US",
-              age: "17",
-            },
-          },
-        },
-      }
+    it('is true when currentAccount.age is under 18', () => {
+      mockState.currentAccount.data.attributes.country = 'United States'
+      mockGetters.getAge = jest.fn(() => {
+        return 17
+      })
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
+      expect(getters.isBackgroundCheckWaived(mockState, mockGetters)).toBe(true)
     })
   })
 
