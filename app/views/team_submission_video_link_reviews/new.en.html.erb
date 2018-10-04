@@ -1,0 +1,37 @@
+<div class="panel">
+  <h3 class="panel--heading">Review your <%= @method.to_s.humanize %></h3>
+
+  <%= form_with(
+    model: [current_scope, @team_submission],
+    url: send("#{current_scope}_team_submission_video_link_review_path", @team_submission),
+    local: true
+  ) do |f| %>
+    <%= hidden_field_tag :piece, @method %>
+    <%= hidden_field_tag :value, @review_value %>
+
+    <div class="field">
+      <%=raw @team_submission.embed_code(@method, @review_value) %>
+    </div>
+
+    <div class="flash flash--info">
+      Review the area above this message.
+      If there is any problem, if you do not see your video,
+      you should GO BACK and fix the <%= @method.to_s.humanize %>
+    </div>
+
+    <div class="actions">
+      <p>
+        <%= f.submit "Save", class: "button" %>
+        or
+        <%= link_to "go back",
+          [
+            :edit,
+            current_scope,
+            @team_submission,
+            piece: @method,
+            value: @review_value,
+          ] %>
+      </p>
+    </div>
+  <% end %>
+</div>
