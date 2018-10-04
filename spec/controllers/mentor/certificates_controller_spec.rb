@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Mentor::CertificatesController, type: :controller do
   describe "POST #create" do
     it "performs the background job for certificates" do
-      mentor = FactoryBot.create(:mentor, :on_team, :complete_submission)
+      mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
 
       sign_in(mentor)
 

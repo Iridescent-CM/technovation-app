@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Mentor::MentorSearchesController do
   describe "GET #new" do
     it "does not include mentors who don't want to connect" do
-      mentor = FactoryBot.create(:mentor, :geocoded)
+      mentor = FactoryBot.create(:mentor, :onboarded, :geocoded)
       find_mentor = FactoryBot.create(:mentor, :onboarded, :geocoded)
       no_find = FactoryBot.create(
         :mentor,

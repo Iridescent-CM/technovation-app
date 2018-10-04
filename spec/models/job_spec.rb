@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Job do
   it "stores a JSON payload" do
-    owner = FactoryBot.create(:mentor).account
+    owner = FactoryBot.create(:mentor, :onboarded).account
 
     job = Job.create!(
       owner: owner,

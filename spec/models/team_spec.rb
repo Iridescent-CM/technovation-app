@@ -321,7 +321,7 @@ RSpec.describe Team do
 
     team.team_member_invites.create!(
       invitee_email: "will@delete.com",
-      inviter: FactoryBot.create(:mentor),
+      inviter: FactoryBot.create(:mentor, :onboarded),
     )
 
     team.join_requests.create!(
@@ -340,7 +340,7 @@ RSpec.describe Team do
   describe ".unmatched(scope)" do
     it "lists teams without a mentor" do
       mentored = FactoryBot.create(:team)
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       TeamRosterManaging.add(mentored, mentor)
 
       expect {
@@ -354,7 +354,7 @@ RSpec.describe Team do
       FactoryBot.create(:team)
 
       unmatched = FactoryBot.create(:team)
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       TeamRosterManaging.add(unmatched, mentor)
 
       expect {
@@ -372,7 +372,7 @@ RSpec.describe Team do
       FactoryBot.create(:team)
 
       mentored = FactoryBot.create(:team)
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
 
       expect {
         TeamRosterManaging.add(mentored, mentor)
@@ -401,7 +401,7 @@ RSpec.describe Team do
 
       matched = FactoryBot.create(:team)
       matched.memberships.destroy_all
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
 
       expect {
         TeamRosterManaging.add(matched, mentor)
@@ -433,7 +433,7 @@ RSpec.describe Team do
     team = FactoryBot.create(:team) # student by default in factory
     expect(team).to be_has_students
 
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
     TeamRosterManaging.add(team, mentor)
     expect(team).to be_has_mentor
 

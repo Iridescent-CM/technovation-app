@@ -10,7 +10,7 @@ RSpec.describe Admin::TeamMembershipsController do
 
   describe "POST #create" do
     it "can add mentors" do
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
 
       post :create, params: {
         team_id: team.id,

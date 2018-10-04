@@ -5,7 +5,7 @@ RSpec.feature "Mentors view scores" do
 
   scenario "view QF scores" do
     team = FactoryBot.create(:team)
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     TeamRosterManaging.add(team, mentor)
 
@@ -29,7 +29,7 @@ RSpec.feature "Mentors view scores" do
 
   scenario "view SF scores" do
     team = FactoryBot.create(:team)
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     TeamRosterManaging.add(team, mentor)
 

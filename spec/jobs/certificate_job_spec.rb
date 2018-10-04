@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe CertificateJob do
   it "fills and attaches PDFs" do
-    mentor = FactoryBot.create(:mentor, :on_team, :complete_submission)
+    mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
     team = mentor.current_teams.last
 
     expect {
@@ -13,7 +13,7 @@ RSpec.describe CertificateJob do
   end
 
   it "tracks the job in the database" do
-    mentor = FactoryBot.create(:mentor, :on_team, :complete_submission)
+    mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
     job_id = nil
 
     expect {
@@ -26,7 +26,7 @@ RSpec.describe CertificateJob do
   end
 
   it "adds the certificale file url to the DB job payload" do
-    mentor = FactoryBot.create(:mentor, :on_team, :complete_submission)
+    mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
 
     job_id = CertificateJob.perform_later(mentor.account_id).job_id
     job = Job.find_by(job_id: job_id)

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Invite a member to a team" do
   before { SeasonToggles.team_building_enabled! }
 
-  let(:mentor) { FactoryBot.create(:mentor, :on_team) }
+  let(:mentor) { FactoryBot.create(:mentor, :onboarded, :on_team) }
 
   let!(:incomplete_student) {
     FactoryBot.create(

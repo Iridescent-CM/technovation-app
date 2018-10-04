@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Returning mentor" do
   scenario "asked to select their mentor_type" do
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
     mentor.update_column(:mentor_type, nil)
 
     sign_in(mentor)

@@ -7,7 +7,7 @@ RSpec.describe "GET /team_submission_pieces/:piece" do
   end
 
   it "redirects based on who signs in" do
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     allow_any_instance_of(ApplicationController).to receive(
       :current_account
@@ -40,7 +40,7 @@ RSpec.describe "GET /team_submission_pieces/:piece" do
       edit_student_team_submission_path(submission, piece: :app_name)
     )
 
-    mentor = FactoryBot.create(:mentor, :on_team)
+    mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
     submission = FactoryBot.create(
       :team_submission,
       team: mentor.teams.first,

@@ -4,7 +4,7 @@ RSpec.feature "Mentors edit submission development platform" do
   before do
     SeasonToggles.team_submissions_editable!
 
-    mentor = FactoryBot.create(:mentor, :on_team)
+    mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
     FactoryBot.create(:team_submission, team: mentor.teams.first)
 
     sign_in(mentor)

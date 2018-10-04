@@ -100,7 +100,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
   context "Viewing mentor profile as student" do
     let(:user) { FactoryBot.create(:student, :on_team) }
-    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
     let(:path) { student_mentor_path(mentor) }
     let(:action) { student_mentor_invites_path }
 
@@ -120,7 +120,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Mentor dashboard" do
-    let(:user) { FactoryBot.create(:mentor) }
+    let(:user) { FactoryBot.create(:mentor, :onboarded) }
     let(:path) { mentor_dashboard_path }
 
     before { sign_in(user) }
@@ -135,7 +135,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Mentor my teams page" do
-    let(:user) { FactoryBot.create(:mentor) }
+    let(:user) { FactoryBot.create(:mentor, :onboarded) }
     let(:path) { mentor_dashboard_path }
 
     before { sign_in(user) }
@@ -156,7 +156,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Viewing team as mentor" do
-    let(:user) { FactoryBot.create(:mentor) }
+    let(:user) { FactoryBot.create(:mentor, :onboarded) }
     let(:team) { FactoryBot.create(:team) }
     let(:path) { new_mentor_join_request_path(team_id: team.id) }
     let(:action) { mentor_join_requests_path(team_id: team.id) }
@@ -177,7 +177,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
   end
 
   context "Viewing current team as mentor" do
-    let(:user) { FactoryBot.create(:mentor) }
+    let(:user) { FactoryBot.create(:mentor, :onboarded) }
     let(:team) { FactoryBot.create(:team) }
     let(:path) { mentor_team_path(team) }
     let(:action) { mentor_team_member_invites_path }

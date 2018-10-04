@@ -8,7 +8,7 @@ RSpec.describe Mentor::MentorInvitesController do
   end
 
   describe "GET #show" do
-    let(:mentor) { FactoryBot.create(:mentor, :geocoded) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) }
     let!(:invite) { FactoryBot.create(:team_member_invite, invitee: mentor) }
 
     before do
@@ -58,7 +58,7 @@ RSpec.describe Mentor::MentorInvitesController do
   end
 
   describe "PUT #update" do
-    let(:mentor) { FactoryBot.create(:mentor, :geocoded) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) }
     let!(:invite) { FactoryBot.create(:team_member_invite, invitee: mentor) }
 
     before do
@@ -126,7 +126,7 @@ RSpec.describe Mentor::MentorInvitesController do
   end
 
   describe "PUT #destroy" do
-    let(:mentor) { FactoryBot.create(:mentor, :geocoded) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) }
     let!(:invite) { FactoryBot.create(:team_member_invite, invitee: mentor) }
 
     before do

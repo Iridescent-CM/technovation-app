@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Mentors switch to judging mode" do
   scenario "mentors with a judge profile can switch to judge mode" do
-    mentor = FactoryBot.create(:mentor, :has_judge_profile)
+    mentor = FactoryBot.create(:mentor, :onboarded, :has_judge_profile)
 
     sign_in(mentor)
 
@@ -16,7 +16,7 @@ RSpec.feature "Mentors switch to judging mode" do
   end
 
   scenario "mentors without a judge profile do not see a judge mode link" do
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     sign_in(mentor)
 
@@ -26,7 +26,7 @@ RSpec.feature "Mentors switch to judging mode" do
   end
 
   scenario "mentors without a judge profile cannot browse to judge profile" do
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     sign_in(mentor)
 

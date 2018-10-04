@@ -15,7 +15,7 @@ RSpec.describe "Students request to join a team",
 
   %i{mentor student}.each do |scope|
     it "#{scope} searches after their request is declined" do
-      user = FactoryBot.create(scope, :geocoded)
+      user = FactoryBot.create(scope, :onboarded, :geocoded)
       team = FactoryBot.create(:team, :geocoded)
 
       user.join_requests.create!(

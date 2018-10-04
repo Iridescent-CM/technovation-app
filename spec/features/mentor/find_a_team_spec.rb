@@ -6,7 +6,7 @@ RSpec.feature "Mentors find a team" do
   let!(:available_team) { FactoryBot.create(:team, :geocoded) }
     # Default is in Chicago
 
-  let(:mentor) { FactoryBot.create(:mentor, :geocoded) } # City is Chicago
+  let(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) } # City is Chicago
 
   before { sign_in(mentor) }
 

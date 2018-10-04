@@ -124,7 +124,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
   it "invite an RA who has an existing mentor account" do
     email = "ra@example.com"
-    mentor = FactoryBot.create(:mentor, email: email)
+    mentor = FactoryBot.create(:mentor, :onboarded, email: email)
     expect(mentor.account.reload.email).to eq(email)
 
     UserInvitation.create!(

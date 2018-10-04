@@ -5,7 +5,7 @@ RSpec.feature "Mentors leave their own team" do
 
   scenario "leave the team" do
     team = FactoryBot.create(:team)
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     TeamRosterManaging.add(team, mentor)
 

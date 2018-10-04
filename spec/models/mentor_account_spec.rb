@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe MentorProfile do
   describe "#team_region_division_names" do
     it "should include all teams" do
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       t1 = FactoryBot.create(:team,
                               city: "Los Angeles",
                               state_province: "CA")
@@ -27,7 +27,7 @@ RSpec.describe MentorProfile do
     end
 
     it "should not contain duplicates" do
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       t1 = FactoryBot.create(:team,
                               city: "Los Angeles",
                               state_province: "CA")
@@ -52,7 +52,7 @@ RSpec.describe MentorProfile do
   end
 
   it "changes searchability when country changes" do
-    mentor = FactoryBot.create(:mentor) # Default in US
+    mentor = FactoryBot.create(:mentor, :onboarded) # Default in US
 
     # Sanity
     mentor.background_check.destroy

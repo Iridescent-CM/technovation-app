@@ -4,7 +4,7 @@ RSpec.feature "Mentors and invitations" do
   scenario "A mentor accepts an invitation" do
     team = FactoryBot.create(:team)
 
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     invite = FactoryBot.create(
       :mentor_invite,

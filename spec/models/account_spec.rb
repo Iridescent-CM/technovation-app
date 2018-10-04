@@ -94,11 +94,11 @@ RSpec.describe Account do
 
   describe ".mentors_pending_invites" do
     it "only includes mentors with pending team invites" do
-      pending_mentor = FactoryBot.create(:mentor)
-      accepted_mentor = FactoryBot.create(:mentor)
-      declined_mentor = FactoryBot.create(:mentor)
+      pending_mentor = FactoryBot.create(:mentor, :onboarded)
+      accepted_mentor = FactoryBot.create(:mentor, :onboarded)
+      declined_mentor = FactoryBot.create(:mentor, :onboarded)
 
-      FactoryBot.create(:mentor)
+      FactoryBot.create(:mentor, :onboarded)
       FactoryBot.create(:student)
       FactoryBot.create(:judge)
       FactoryBot.create(:ambassador)
@@ -114,11 +114,11 @@ RSpec.describe Account do
 
   describe ".mentors_pending_requests" do
     it "only includes mentors with pending join requests" do
-      pending_mentor = FactoryBot.create(:mentor)
-      accepted_mentor = FactoryBot.create(:mentor)
-      declined_mentor = FactoryBot.create(:mentor)
+      pending_mentor = FactoryBot.create(:mentor, :onboarded)
+      accepted_mentor = FactoryBot.create(:mentor, :onboarded)
+      declined_mentor = FactoryBot.create(:mentor, :onboarded)
 
-      FactoryBot.create(:mentor)
+      FactoryBot.create(:mentor, :onboarded)
       FactoryBot.create(:student)
       FactoryBot.create(:judge)
       FactoryBot.create(:ambassador)
@@ -240,7 +240,7 @@ RSpec.describe Account do
   end
 
   it "re-cache team_region_division_names as account gets added to new teams" do
-    account = FactoryBot.create(:mentor).account
+    account = FactoryBot.create(:mentor, :onboarded).account
     expect(account.team_region_division_names).to be_empty
 
     account.teams << FactoryBot.create(:team)
@@ -259,8 +259,8 @@ RSpec.describe Account do
 
   describe ".inactive_mentors" do
     it "pulls mentors with no new activities since 3 weeks ago" do
-      active = FactoryBot.create(:mentor)
-      inactive = FactoryBot.create(:mentor)
+      active = FactoryBot.create(:mentor, :onboarded)
+      inactive = FactoryBot.create(:mentor, :onboarded)
 
       active.activities.destroy_all
       inactive.activities.destroy_all
@@ -299,10 +299,10 @@ RSpec.describe Account do
     end
 
     it "includes mentors with current teams" do
-      unmatched_mentor = FactoryBot.create(:mentor)
-      matched_mentor = FactoryBot.create(:mentor, :on_team)
+      unmatched_mentor = FactoryBot.create(:mentor, :onboarded)
+      matched_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
 
-      past_mentor = FactoryBot.create(:mentor, :on_team)
+      past_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
 
       past_mentor.teams.each do |team|
         team.update_column(:seasons, [Season.current.year - 1])
@@ -336,10 +336,10 @@ RSpec.describe Account do
     end
 
     it "includes mentors without current teams" do
-      unmatched_mentor = FactoryBot.create(:mentor)
-      matched_mentor = FactoryBot.create(:mentor, :on_team)
+      unmatched_mentor = FactoryBot.create(:mentor, :onboarded)
+      matched_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
 
-      past_mentor = FactoryBot.create(:mentor, :on_team)
+      past_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
 
       past_mentor.teams.each do |team|
         team.update_column(:seasons, [Season.current.year - 1])
@@ -352,7 +352,7 @@ RSpec.describe Account do
     end
 
     it "excludes mentors with past teams and current teams" do
-      mentor = FactoryBot.create(:mentor, :on_team)
+      mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
 
       past_team = FactoryBot.create(:team, members_count: 0)
       past_team.update_column(:seasons, [Season.current.year - 1])
@@ -372,7 +372,7 @@ RSpec.describe Account do
     end
 
     it "excludes students and mentors with current teams" do
-      mentor = FactoryBot.create(:mentor, :on_team)
+      mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
       student = FactoryBot.create(:student, :on_team)
 
       team = FactoryBot.create(:team, members_count: 0)
@@ -386,7 +386,7 @@ RSpec.describe Account do
   describe ".parental_consented" do
     it "returns students with current signed parental consents" do
       judge = FactoryBot.create(:judge)
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       ra = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)
@@ -413,7 +413,7 @@ RSpec.describe Account do
 
     it "returns students by season with signed parental consents" do
       judge = FactoryBot.create(:judge)
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       ra = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)
@@ -454,7 +454,7 @@ RSpec.describe Account do
   describe ".not_parental_consented" do
     it "returns current students without signed parental consents" do
       judge = FactoryBot.create(:judge)
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       ra = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)
@@ -491,7 +491,7 @@ RSpec.describe Account do
 
     it "returns students by season without signed parental consents" do
       judge = FactoryBot.create(:judge)
-      mentor = FactoryBot.create(:mentor)
+      mentor = FactoryBot.create(:mentor, :onboarded)
       ra = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)

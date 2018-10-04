@@ -31,7 +31,7 @@ RSpec.feature "RAs switch to mentor mode" do
   end
 
   scenario "a mentor without an RA profile cannot switch to RA mode" do
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
     sign_in(mentor)
     expect(page).not_to have_link("RA mode")
 

@@ -4,7 +4,7 @@ RSpec.feature "Mentor certificates" do
   before  { SeasonToggles.display_scores_on! }
 
   scenario "no certificates for no teams" do
-    mentor = FactoryBot.create(:mentor)
+    mentor = FactoryBot.create(:mentor, :onboarded)
 
     sign_in(mentor)
 

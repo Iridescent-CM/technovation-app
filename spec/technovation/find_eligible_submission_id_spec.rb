@@ -165,7 +165,7 @@ RSpec.describe FindEligibleSubmissionId do
     context "judge with team" do
       it "returns submission id from team in different region" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team, division: Division.senior)
         judge.teams << judges_team
@@ -181,7 +181,7 @@ RSpec.describe FindEligibleSubmissionId do
 
       it "returns submission id from team in different division" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team)
 
@@ -202,7 +202,7 @@ RSpec.describe FindEligibleSubmissionId do
 
       it "does not return submission id from judge's team" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team)
         judge.teams << judges_team
@@ -213,7 +213,7 @@ RSpec.describe FindEligibleSubmissionId do
 
       it "does not return submission id from team in same region and division" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team)
         judge.teams << judges_team
@@ -340,7 +340,7 @@ RSpec.describe FindEligibleSubmissionId do
     context "judge with team" do
       it "returns submission id from team in different region" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team, division: Division.senior)
         judge.teams << judges_team
@@ -359,7 +359,7 @@ RSpec.describe FindEligibleSubmissionId do
 
       it "returns submission id from team in different division" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team)
 
@@ -383,7 +383,7 @@ RSpec.describe FindEligibleSubmissionId do
 
       it "does not return submission id from judge's team" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team)
         judge.teams << judges_team
@@ -394,7 +394,7 @@ RSpec.describe FindEligibleSubmissionId do
 
       it "does not return submission id from team in same region and division" do
         judge = FactoryBot.create(:judge)
-        judge.account.mentor_profile = FactoryBot.create(:mentor)
+        judge.account.mentor_profile = FactoryBot.create(:mentor, :onboarded)
 
         judges_team = FactoryBot.create(:team)
         judge.teams << judges_team

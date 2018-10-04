@@ -23,7 +23,7 @@ RSpec.describe Student::JoinRequestsController do
 
   describe "POST #show" do
     let(:team) { FactoryBot.create(:team, members_count: 2) }
-    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
     let(:join_request) {
       FactoryBot.create(
         :join_request,
@@ -55,7 +55,7 @@ RSpec.describe Student::JoinRequestsController do
   describe "POST #create" do
     let(:team) { FactoryBot.create(:team) }
     let(:student) { FactoryBot.create(:student) }
-    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
 
     before do
       TeamRosterManaging.add(team, mentor)
@@ -107,7 +107,7 @@ RSpec.describe Student::JoinRequestsController do
 
   describe "PUT #update" do
     let(:team) { FactoryBot.create(:team, members_count: 2) }
-    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
     let(:join_request) {
       FactoryBot.create(
         :join_request,
