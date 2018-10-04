@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Auto-login to the site with your mailer token" do
   %i{student mentor}.each do |scope|
+    before { SeasonToggles.enable_team_building! }
+
     scenario "#{scope} on their dashboard" do
       profile = FactoryBot.create(scope)
 
