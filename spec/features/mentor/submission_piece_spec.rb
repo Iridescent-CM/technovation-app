@@ -4,7 +4,7 @@ RSpec.feature "Students edit submission pieces" do
   let!(:student) {
     FactoryBot.create(:onboarded_student, :senior, :on_team)
   }
-  let!(:mentor) { FactoryBot.create(:mentor) }
+  let!(:mentor) { FactoryBot.create(:mentor, :onboarded) }
   let!(:submission) {
     FactoryBot.create(:team_submission, team: student.team)
   }
