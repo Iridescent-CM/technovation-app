@@ -14,6 +14,7 @@ RSpec.feature "Searchability" do
 
     sign_in(mentor)
     visit mentor_dashboard_path
+    visit mentor_training_completion_path
     click_link "Sign Consent Waiver"
 
     fill_in "Type your name as a form of electronic signature",
@@ -34,6 +35,7 @@ RSpec.feature "Searchability" do
 
     sign_in(mentor)
     visit mentor_dashboard_path
+    visit mentor_training_completion_path
     click_link "Sign Consent Waiver"
 
     fill_in "Type your name as a form of electronic signature",
@@ -59,6 +61,7 @@ RSpec.feature "Searchability" do
 
     sign_in(mentor)
     visit mentor_dashboard_path
+    visit mentor_training_completion_path
     click_link "Submit Background Check"
 
     fill_in "Zipcode", with: 60622

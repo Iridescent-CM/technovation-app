@@ -76,7 +76,8 @@ RSpec.feature "Students edit submission pieces" do
     fill_in "Youtube, Vimeo, or Youku URL",
       with: "https://www.youtube.com/watch?v=#{video_id}"
 
-    click_button "Save this demo video link"
+    click_button "Next"
+    click_button "Save"
 
     within(".demo_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
@@ -103,7 +104,8 @@ RSpec.feature "Students edit submission pieces" do
     fill_in "Youtube, Vimeo, or Youku URL",
       with: "https://www.youtube.com/watch?v=#{video_id}"
 
-    click_button "Save this pitch video link"
+    click_button "Next"
+    click_button "Save"
 
     within(".pitch_video_link.complete") do
       expect(page).not_to have_link("Add your app's description")
