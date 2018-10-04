@@ -121,19 +121,11 @@ module TeamSubmissionController
     @team_submission = current_team.submission
 
     if team_submission_params[:screenshots]
-      team_submission_params[:screenshots].each_with_index do |id, i|
-        screenshot = @team_submission.screenshots.find(id)
-        screenshot.update(sort_position: i)
-      end
-
-      current_team.create_activity(
-        trackable: current_account,
-        key: "submission.update",
-        parameters: { piece: "screenshots" },
-        recipient: @team_submission,
-      )
-
-      render json: {}
+      handle_screenshots_update(@team_submission)
+    elsif team_submission_params[:pitch_video_link]
+      handle_video_link_review(@team_submission, :pitch_video_link)
+    elsif team_submission_params[:demo_video_link]
+      handle_video_link_review(@team_submission, :demo_video_link)
     elsif @team_submission.update(team_submission_params)
       if @team_submission.saved_change_to_app_name?
         @team_submission.reload
@@ -167,6 +159,29 @@ module TeamSubmissionController
   end
 
   private
+  def handle_screenshots_update(submission)
+    team_submission_params[:screenshots].each_with_index do |id, i|
+      screenshot = submission.screenshots.find(id)
+      screenshot.update(sort_position: i)
+    end
+
+    current_team.create_activity(
+      trackable: current_account,
+      key: "submission.update",
+      parameters: { piece: "screenshots" },
+      recipient: submission,
+    )
+
+    render json: {}
+  end
+
+  def handle_video_link_review(submission, method)
+    @team_submission = submission
+    @method = method
+    @review_value = team_submission_params[method]
+    render 'team_submission_video_link_reviews/new'
+  end
+
   def determine_layout
     if action_name == "new" ||
         action_name == "create" ||
