@@ -4,7 +4,7 @@ class AccountSerializer
 
   set_id :random_id
 
-  attributes :name, :email, :date_of_birth, :city, :state, :country, :state_code,
+  attributes :name, :email, :date_of_birth, :age, :city, :state, :country, :state_code,
     :country_code, :latitude, :longitude, :first_name, :last_name, :gender,
     :referred_by, :referred_by_other
 
