@@ -53,6 +53,7 @@ RSpec.feature "background checks" do
 
       sign_in(mentor)
 
+      visit mentor_training_completion_path
       click_link "Sign Consent Waiver"
       fill_in "consent_waiver_electronic_signature", with: "My sig"
       click_button "I agree"
