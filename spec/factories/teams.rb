@@ -68,7 +68,7 @@ FactoryBot.define do
 
     trait :with_mentor do
       after(:create) do |team, _|
-        TeamRosterManaging.add(team, FactoryBot.create(:mentor))
+        TeamRosterManaging.add(team, FactoryBot.create(:mentor, :onboarded))
       end
     end
 

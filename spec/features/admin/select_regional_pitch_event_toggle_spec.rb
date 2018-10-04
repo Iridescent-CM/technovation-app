@@ -29,7 +29,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   context "Mentor regional pitch event selection page" do
     let!(:rpe) { FactoryBot.create(:rpe, :junior, :chicago) }
 
-    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
     let(:sub) { FactoryBot.create(:submission, :junior, :chicago) }
     let(:path) { mentor_regional_pitch_events_team_list_path }
 
@@ -52,7 +52,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
   end
 
   context "Mentor dashboard" do
-    let(:user) { FactoryBot.create(:mentor) }
+    let(:user) { FactoryBot.create(:mentor, :onboarded) }
     let(:team) { FactoryBot.create(:team) }
     let(:sub) { FactoryBot.create(:submission, :junior) }
     let!(:rpe) { FactoryBot.create(:rpe) }

@@ -27,7 +27,7 @@ RSpec.feature "Admin / RA logging in as a user" do
 
     scenario "RA logging in as a mentor" do
       skip "Blocked for RAs"
-      mentor = FactoryBot.create(:mentor, :geocoded, :on_team)
+      mentor = FactoryBot.create(:mentor, :onboarded, :geocoded, :on_team)
 
       visit regional_ambassador_participant_path(mentor.account)
 
@@ -84,7 +84,7 @@ RSpec.feature "Admin / RA logging in as a user" do
     end
 
     scenario "Admin logging in as a mentor" do
-      mentor = FactoryBot.create(:mentor, :geocoded, :on_team)
+      mentor = FactoryBot.create(:mentor, :onboarded, :geocoded, :on_team)
 
       visit admin_participant_path(mentor.account)
 

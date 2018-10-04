@@ -5,7 +5,7 @@ RSpec.describe Mentor::TeamSubmissionsController do
     before { SeasonToggles.team_submissions_editable! }
 
     it "can handle sorting" do
-      mentor = FactoryBot.create(:mentor, :on_team)
+      mentor = FactoryBot.create(:mentor, :on_team, :onboarded)
       team_submission = FactoryBot.create(:submission, team: mentor.teams.first)
 
       screenshot1 = team_submission.screenshots.create!

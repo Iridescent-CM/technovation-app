@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Mentor::JoinRequestsController do
   describe "POST #new" do
     let(:team) { FactoryBot.create(:team, members_count: 2) }
-    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
 
     before do
       sign_in(mentor)
@@ -23,7 +23,7 @@ RSpec.describe Mentor::JoinRequestsController do
 
   describe "POST #create" do
     let(:team) { FactoryBot.create(:team, members_count: 2) }
-    let(:mentor) { FactoryBot.create(:mentor) }
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
 
     before do
       sign_in(mentor)
@@ -83,7 +83,7 @@ RSpec.describe Mentor::JoinRequestsController do
 
   describe "POST #show" do
     let(:team) { FactoryBot.create(:team, :with_mentor, members_count: 2) }
-    let(:student) { FactoryBot.create(:student) }
+    let(:student) { FactoryBot.create(:student, :onboarded) }
     let(:join_request) {
       FactoryBot.create(
         :join_request,
@@ -114,7 +114,7 @@ RSpec.describe Mentor::JoinRequestsController do
 
   describe "PUT #update" do
     let(:team) { FactoryBot.create(:team, :with_mentor, members_count: 2) }
-    let(:student) { FactoryBot.create(:student) }
+    let(:student) { FactoryBot.create(:student, :onboarded) }
     let(:join_request) {
       FactoryBot.create(
         :join_request,

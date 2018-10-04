@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Student::MentorSearchesController do
   describe "GET #new" do
     it "displays nearby mentors" do
-      mentor = FactoryBot.create(:mentor, :geocoded, :with_expertises)
+      mentor = FactoryBot.create(:mentor, :onboarded, :geocoded, :with_expertises)
       student = FactoryBot.create(:student, :geocoded, :on_team)
 
       sign_in(student)
@@ -14,7 +14,7 @@ RSpec.describe Student::MentorSearchesController do
     end
 
     it "does not display unsearchable mentors" do
-      mentor = FactoryBot.create(:mentor, :geocoded, :with_expertises)
+      mentor = FactoryBot.create(:mentor, :onboarded, :geocoded, :with_expertises)
       student = FactoryBot.create(:student, :geocoded, :on_team)
 
       mentor.account.reload

@@ -26,7 +26,7 @@ RSpec.feature "Toggling display of scores" do
   end
 
   context "Mentor dashboard" do
-    let(:user) { FactoryBot.create(:mentor, :has_qf_scores) }
+    let(:user) { FactoryBot.create(:mentor, :onboarded, :has_qf_scores) }
 
     before { sign_in(user) }
 

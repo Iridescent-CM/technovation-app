@@ -6,7 +6,12 @@ RSpec.describe TeamController do
       describe "PATCH #update" do
         it "geocodes teams on city/state/country changes" do
           team = FactoryBot.create(:team, :geocoded)
-          profile = FactoryBot.create(scope)
+
+          if scope == "mentor"
+            profile = FactoryBot.create(scope, :onboarded)
+          else
+            profile = FactoryBot.create(scope)
+          end
 
           unless scope == "admin"
             TeamRosterManaging.add(team, profile)
