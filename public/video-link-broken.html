@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Technovation</title>
+</head>
+<body>
+  <div class="main">
+    <div class="container">
+      <h1 class="flash flash--alert">
+        Your video link is broken. You should GO BACK and fix the link.
+      </h1>
+    </div>
+  </div>
+
+  <style>
+  @import "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700";
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    color: #333333;
+    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+  }
+
+  .container {
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  .main {
+    min-height: 80vh;
+    padding: 0 1rem;
+  }
+
+  .contact {
+    margin: 2rem 0;
+  }
+
+  h1 {
+    color: #7C324D;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+  }
+
+  a {
+    color: #28A880;
+  }
+
+
+/* line 1, /Users/joemsak/work/technovation-app/app/assets/stylesheets/_flashes.scss */
+#flash {
+  width: 100%;
+  margin: 0;
+}
+/* line 5, /Users/joemsak/work/technovation-app/app/assets/stylesheets/_flashes.scss */
+#flash.fixed {
+  position: fixed;
+  top: 1rem;
+  z-index: 1060;
+}
+/* line 11, /Users/joemsak/work/technovation-app/app/assets/stylesheets/_flashes.scss */
+#flash .flash, #flash .notice {
+  width: 80%;
+  display: none;
+  margin: 1rem auto;
+  display: block;
+  box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.3);
+}
+
+/* line 20, /Users/joemsak/work/technovation-app/app/assets/stylesheets/_flashes.scss */
+.flash, .notice {
+  position: relative;
+  padding: 1rem;
+  margin: 1rem;
+  background: #BDE5F8;
+  color: #00529B;
+}
+/* line 27, /Users/joemsak/work/technovation-app/app/assets/stylesheets/_flashes.scss */
+.flash.flash--success, .flash--success.notice, .notice.notice--success {
+  background: #DFF2BF;
+  color: #4F8A10;
+}
+/* line 32, /Users/joemsak/work/technovation-app/app/assets/stylesheets/_flashes.scss */
+.flash.flash--error, .flash--error.notice, .notice.notice--error, .notice.notice--alert, .flash.flash--alert, .flash--alert.notice {
+  background: #FFBABA;
+  color: #D8000C;
+}
+/* line 38, /Users/joemsak/work/technovation-app/app/assets/stylesheets/_flashes.scss */
+.flash .icon-close, .notice .icon-close {
+  color: black;
+  display: block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+  </style>
+</body>
+</html>
+

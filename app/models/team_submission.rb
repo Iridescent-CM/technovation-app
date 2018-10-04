@@ -515,14 +515,20 @@ class TeamSubmission < ActiveRecord::Base
     technical_checklist.present? and technical_checklist.completed?
   end
 
-  def embed_code(video_type)
+  def embed_code(video_type, value = nil)
     method = video_type.match(/_video_link$/) ?
       video_type :
       "#{video_type}_video_link"
 
+    send("#{method}=", value || send(method))
     id = video_id(method)
     root = video_url_root(method)
-    src = "#{root}#{id}?rel=0&cc_load_policy=1"
+
+    if id.blank? or root.blank?
+      src = "/video-link-broken.html"
+    else
+      src = "#{root}#{id}?rel=0&cc_load_policy=1"
+    end
 
     %{<iframe
         src="#{src}"
