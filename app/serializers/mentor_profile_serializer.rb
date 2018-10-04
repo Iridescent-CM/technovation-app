@@ -10,6 +10,10 @@ class MentorProfileSerializer
 
   attribute(:is_training_complete, &:training_complete?)
 
+  attribute(:requires_background_check, &:requires_background_check?)
+
+  attribute(:background_check_complete, &:background_check_complete?)
+
   attribute(:next_onboarding_step) do |mentor|
     case mentor.onboarding_steps.first
     when :consent_signed?
