@@ -4,25 +4,33 @@ $(document).on("ready turbolinks:load", function() {
   });
 });
 
-$(document).on("change", ".tc-form-group__item input, input.provide-preview",
-  function(){
-    var $group = $(this).closest(".tc-form-group");
-    var groupName = $group.data("groupName");
-    var $indicator = $(".indicator[data-name='" + groupName + "']");
-    var previousTotal = parseInt($indicator.find('.total').text());
+function codeChecklistUIChangeHandler(event) {
+  var $group = $(event.target).closest(".tc-form-group");
+  var groupName = $group.data("groupName");
+  var $indicator = $(".indicator[data-name='" + groupName + "']");
+  var previousTotal = parseInt($indicator.find('.total').text());
 
-    updateUIBasedOnPointsEarned({ group: $group });
+  updateUIBasedOnPointsEarned({ group: $group });
 
-    var newTotal = parseInt($indicator.find('.total').text());
+  var newTotal = parseInt($indicator.find('.total').text());
 
-    if (previousTotal !== newTotal) {
-      $indicator.addClass("notify");
-      setTimeout(function() {
-        $indicator.removeClass("notify");
-      }, 200);
-    }
+  if (previousTotal !== newTotal) {
+    $indicator.addClass("notify");
+    setTimeout(function() {
+      $indicator.removeClass("notify");
+    }, 200);
   }
-);
+}
+
+var keyupTimeout = null;
+
+$(document)
+  .on("change", ".tc-form-group__item input, input.provide-preview", codeChecklistUIChangeHandler)
+  .on("change", ".tc-form-group__item textarea", codeChecklistUIChangeHandler)
+  .on("keyup", ".tc-form-group__item textarea", function(event) {
+    clearTimeout(keyupTimeout);
+    keyupTimeout = setTimeout(codeChecklistUIChangeHandler, 250, event);
+  });
 
 function updateUIBasedOnPointsEarned(opts) {
   var $indicator = opts.indicator,
@@ -44,20 +52,16 @@ function updateUIBasedOnPointsEarned(opts) {
       pointsEach = parseInt($group.data("pointsEach"));
 
   $group.find("input").each(function() {
-    var $explanation = $(this)
-      .closest(".tc-form-group__item")
-      .find(".explanation");
+    toggleExplantationField(this);
 
-    if ($(this).prop("checked")) {
+    if (isCompletedCheckboxField(this)) {
       $(this).data("completed", true);
-      $explanation.show();
     } else if (isCompletedFileField(this)) {
       $(this).data("completed", true);
     } else if (isCompletedScreenshots(this)) {
       $(this).data("completed", true);
     } else {
       $(this).data("completed", false);
-      $explanation.hide();
     }
   });
 
@@ -112,5 +116,31 @@ function updateUIBasedOnPointsEarned(opts) {
     } else {
       return false;
     }
+  }
+
+  function toggleExplantationField(field) {
+    var $field = $(field);
+    var $explanation = $field
+      .closest(".tc-form-group__item")
+      .find(".explanation");
+
+    if ($field.prop("checked")) {
+      $explanation.show();
+    } else {
+      $explanation.hide();
+    }
+  }
+
+  function isCompletedCheckboxField(field) {
+    var $checkbox = $(field);
+    var $wrapper = $(field).closest('.tc-form-group__item');
+    var $textarea = $wrapper.find('textarea');
+
+    return Boolean(
+      $checkbox.length &&
+      $textarea.length &&
+      $checkbox.prop('checked') &&
+      $textarea.val()
+    );
   }
 }
