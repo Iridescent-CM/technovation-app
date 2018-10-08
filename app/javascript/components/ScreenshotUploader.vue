@@ -24,7 +24,7 @@
     <div v-if="uploadsHaveErrors" class="flash flash--alert">
       <span
         class="icon-close icon--red"
-        @click.prevent="uploadsHaveErrors = false"
+        @click.prevent="resetErrors"
       ></span>
       Sorry, you tried to upload an invalid file type.
     </div>
@@ -155,6 +155,10 @@ export default {
   },
 
   methods: {
+    resetErrors () {
+      this.uploadsHaveErrors = false
+    },
+
     loadScreenshots () {
       window.axios.get(`${this.screenshotsUrl}?team_id=${this.teamId}`)
         .then(({data}) => {
