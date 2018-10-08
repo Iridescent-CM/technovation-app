@@ -121,15 +121,8 @@ class ReturningStudentsDataAnalysis < DataAnalysis
       @students = StudentProfile.current.in_region(user)
     end
 
-    @new_students = @students.where(
-      "accounts.created_at > ?",
-      Date.new(Season.current.year - 1, 10, 18)
-    )
-
-    @returning_students = @students.where(
-      "accounts.created_at < ?",
-      Date.new(Season.current.year - 1, 10, 18)
-    )
+    @new_students = @students.where("array_length(accounts.seasons, 1) = 1")
+    @returning_students = @students.where("array_length(accounts.seasons, 1) > 1")
   end
 
   def totals
@@ -297,15 +290,8 @@ class ReturningMentorsDataAnalysis < DataAnalysis
         .in_region(user)
     end
 
-    @new_mentors = @mentors.where(
-      "accounts.created_at > ?",
-      Date.new(Season.current.year - 1, 10, 18)
-    )
-
-    @returning_mentors = @mentors.where(
-      "accounts.created_at < ?",
-      Date.new(Season.current.year - 1, 10, 18)
-    )
+    @new_mentors = @mentors.where('array_length(accounts.seasons, 1) = 1')
+    @returning_mentors = @mentors.where('array_length(accounts.seasons, 1) > 1')
   end
 
   def totals
