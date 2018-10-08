@@ -22,7 +22,10 @@
     </template>
 
     <div v-if="uploadsHaveErrors" class="flash flash--alert">
-      <span class="icon-close icon--red"></span>
+      <span
+        class="icon-close icon--red"
+        @click.prevent="uploadsHaveErrors = false"
+      ></span>
       Sorry, you tried to upload an invalid file type.
     </div>
 
