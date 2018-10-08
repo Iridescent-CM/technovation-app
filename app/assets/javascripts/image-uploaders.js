@@ -88,3 +88,35 @@ $(document).on("click", ".save-icon", function() {
     },
   });
 });
+
+$(document).on('change', '.source-code-uploader__file', function (event) {
+  var validFileUploaded = false;
+
+  var validFileTypes = [
+    'application/zip',
+    'application/vnd.android.package-archive', //apk
+  ];
+
+  var validFileExtensions = ['.aia', '.apk', '.zip'];
+
+  for (var i = 0; i < event.target.files.length; i += 1) {
+    var file = event.target.files[i];
+    var extension = file.name.slice(-4);
+
+    if (
+      validFileTypes.indexOf(file.type) !== -1 ||
+      validFileExtensions.indexOf(extension) !== -1
+    ) {
+      validFileUploaded = true;
+      break;
+    }
+  }
+
+  if (!validFileUploaded) {
+    $('.source-code-uploader__submit-button').prop('disabled', true);
+    $('.source-code-uploader__error').removeClass('hidden');
+  } else {
+    $('.source-code-uploader__submit-button').prop('disabled', false);
+    $('.source-code-uploader__error').addClass('hidden');
+  }
+});

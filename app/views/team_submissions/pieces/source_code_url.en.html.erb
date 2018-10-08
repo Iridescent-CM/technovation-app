@@ -31,7 +31,12 @@
 
     <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
       <%= f.label :file, "Upload your app's source code" %>
-      <%= f.file_field :file, accept: ".aia,.apk,.zip", class: 'source-code-uploader__file' %>
+      <%= f.file_field :file, class: 'source-code-uploader__file' %>
+
+      <div class="flash flash--alert source-code-uploader__error hidden">
+        Sorry, you tried to upload an invalid file type.
+      </div>
+
       <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
     <% end %>
 
