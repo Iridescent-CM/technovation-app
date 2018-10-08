@@ -23,9 +23,38 @@ RSpec.describe "Uploading source code to submissions", :js do
           TeamSubmission.last.update!(development_platform: "Swift or XCode")
         end
 
-        it "displays a file upload field to the #{scope}" do
-          click_link "Upload your source code"
-          expect(page).to have_css('input[type=file]')
+        context "and a valid file is uploaded" do
+          it "allows the form to be submitted without issue" do
+            click_link "Upload your source code"
+            expect(page).to have_css('input[type=file]')
+
+            ['aia', 'apk', 'zip'].each do |good_file|
+              attach_file(
+                "file",
+                File.absolute_path("./spec/support/uploads/example.#{good_file}"),
+                class: "source-code-uploader__file"
+              )
+
+              expect(page).to have_selector(".source-code-uploader__error", visible: false)
+              expect(page).to have_button("Upload", disabled: false)
+            end
+          end
+        end
+
+        context "and an invalid file is uploaded" do
+          it "allows the form to be submitted without issue" do
+            click_link "Upload your source code"
+            expect(page).to have_css('input[type=file]')
+
+            attach_file(
+              "file",
+              File.absolute_path("./spec/support/uploads/example.txt"),
+              class: "source-code-uploader__file"
+            )
+
+            expect(page).to have_selector(".source-code-uploader__error", visible: true)
+            expect(page).to have_button("Upload", disabled: true)
+          end
         end
       end
 
