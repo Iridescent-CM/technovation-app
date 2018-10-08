@@ -1,8 +1,14 @@
 <template>
   <div id="screenshot-uploader">
     <template v-if="maxFiles > 0">
-      <label class="label--wraps-file-input">
-        <input type="file" multiple @change="handleFileInput" />
+      <label>
+        <input
+          type="file"
+          multiple
+          @change="handleFileInput"
+          id="attach-screenshots"
+          style="display: none;"
+        />
 
         <span class="button button--small">
           + Add {{ prefix }} {{ maxFiles }} {{ object }}
