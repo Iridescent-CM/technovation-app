@@ -10,6 +10,8 @@ function codeChecklistUIChangeHandler(event) {
   var $indicator = $(".indicator[data-name='" + groupName + "']");
   var previousTotal = parseInt($indicator.find('.total').text());
 
+  lockdownCheckboxesBasedOnTotal($group);
+
   updateUIBasedOnPointsEarned({ group: $group });
 
   var newTotal = parseInt($indicator.find('.total').text());
@@ -31,6 +33,24 @@ $(document)
     clearTimeout(keyupTimeout);
     keyupTimeout = setTimeout(codeChecklistUIChangeHandler, 250, event);
   });
+
+function lockdownCheckboxesBasedOnTotal($group) {
+  var pointsPossible = parseInt($group.data('possible'), 10);
+  var pointsEach = parseInt($group.data('points-each'), 10);
+  var $checkboxes = $group.find('input[type="checkbox"]');
+
+  var $checkedBoxes = $checkboxes.filter(function () {
+    return $(this).prop('checked');
+  });
+
+  var $uncheckedBoxes = $checkboxes.filter(function () {
+    return !$(this).prop('checked');
+  });
+
+  if ($checkedBoxes.length * pointsEach >= pointsPossible) {
+    $uncheckedBoxes.prop('disabled', true);
+  }
+}
 
 function updateUIBasedOnPointsEarned(opts) {
   var $indicator = opts.indicator,
@@ -78,17 +98,8 @@ function updateUIBasedOnPointsEarned(opts) {
 
   if (totalPoints === pointsPossible) {
     $completionCheck.show();
-
-    $group
-      .find("[type=checkbox]")
-      .not(":checked")
-      .prop("disabled", true);
   } else {
     $completionCheck.hide();
-
-    $group
-      .find("[type=checkbox]")
-      .prop("disabled", false);
   }
 
   function isCompletedFileField(field) {
