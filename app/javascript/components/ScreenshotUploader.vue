@@ -1,8 +1,14 @@
 <template>
   <div id="screenshot-uploader">
     <template v-if="maxFiles > 0">
-      <label class="label--wraps-file-input">
-        <input type="file" multiple @change="handleFileInput" />
+      <label>
+        <input
+          type="file"
+          multiple
+          @change="handleFileInput"
+          id="attach-screenshots"
+          style="display: none;"
+        />
 
         <span class="button button--small">
           + Add {{ prefix }} {{ maxFiles }} {{ object }}
@@ -14,6 +20,14 @@
       You have uploaded the maximum of {{ maxAllowed }} screenshots.
       You need to remove some if you want to add others.
     </template>
+
+    <div v-if="uploadsHaveErrors" class="flash flash--alert">
+      <span
+        class="icon-close icon--red"
+        @click.prevent="resetErrors"
+      ></span>
+      Sorry, you tried to upload an invalid file type.
+    </div>
 
     <p v-if="screenshots.length > 1">
       Sort your screenshots in the order that you want
@@ -67,6 +81,7 @@ export default {
       maxAllowed: 6,
       screenshots: [],
       uploads: [],
+      uploadsHaveErrors: false,
     }
   },
 
@@ -140,6 +155,10 @@ export default {
   },
 
   methods: {
+    resetErrors () {
+      this.uploadsHaveErrors = false
+    },
+
     loadScreenshots () {
       window.axios.get(`${this.screenshotsUrl}?team_id=${this.teamId}`)
         .then(({data}) => {
@@ -174,7 +193,18 @@ export default {
     },
 
     handleFileInput (e) {
-      const keep = [].slice.call(e.target.files, 0, this.maxFiles)
+      this.uploadsHaveErrors = false
+
+      const keep = [].slice.call(e.target.files, 0, this.maxFiles).filter(i => {
+        return i.type.match(/image\/(?:jpe?g|gif|png)/)
+      })
+
+      const discard = [].slice.call(e.target.files, 0, this.maxFiles).filter(i => {
+        return !i.type.match(/image\/(?:jpe?g|gif|png)/)
+      })
+
+      if (discard.length)
+        this.uploadsHaveErrors = true
 
       keep.forEach((file) => {
         this.uploads.push(file)

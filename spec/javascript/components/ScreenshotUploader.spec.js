@@ -58,6 +58,7 @@ describe('ScreenshotUploader Vue component', () => {
         maxAllowed: 6,
         screenshots: [],
         uploads: [],
+        uploadsHaveErrors: false,
       })
     })
 
