@@ -21,6 +21,11 @@
       You need to remove some if you want to add others.
     </template>
 
+    <div v-if="uploadsHaveErrors" class="flash flash--alert">
+      <span class="icon-close icon--red"></span>
+      Sorry, you tried to upload an invalid file type.
+    </div>
+
     <p v-if="screenshots.length > 1">
       Sort your screenshots in the order that you want
       the judges to see them:
@@ -73,6 +78,7 @@ export default {
       maxAllowed: 6,
       screenshots: [],
       uploads: [],
+      uploadsHaveErrors: false,
     }
   },
 
@@ -180,7 +186,18 @@ export default {
     },
 
     handleFileInput (e) {
-      const keep = [].slice.call(e.target.files, 0, this.maxFiles)
+      this.uploadsHaveErrors = false
+
+      const keep = [].slice.call(e.target.files, 0, this.maxFiles).filter(i => {
+        return i.type.match(/image\/(?:jpe?g|gif|png)/)
+      })
+
+      const discard = [].slice.call(e.target.files, 0, this.maxFiles).filter(i => {
+        return !i.type.match(/image\/(?:jpe?g|gif|png)/)
+      })
+
+      if (discard.length)
+        this.uploadsHaveErrors = true
 
       keep.forEach((file) => {
         this.uploads.push(file)
