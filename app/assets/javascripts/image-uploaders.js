@@ -89,8 +89,8 @@ $(document).on("click", ".save-icon", function() {
   });
 });
 
-$(document).on('change', '.source-code-uploader__file', function (event) {
-  var validFileUploaded = false;
+function isValidSourceCodeFile () {
+  var fileInput = document.querySelector('.source-code-uploader__file');
 
   var validFileTypes = [
     'application/zip',
@@ -99,24 +99,34 @@ $(document).on('change', '.source-code-uploader__file', function (event) {
 
   var validFileExtensions = ['.aia', '.apk', '.zip'];
 
-  for (var i = 0; i < event.target.files.length; i += 1) {
-    var file = event.target.files[i];
+  for (var i = 0; i < fileInput.files.length; i += 1) {
+    var file = fileInput.files[i];
     var extension = file.name.slice(-4);
 
     if (
       validFileTypes.indexOf(file.type) !== -1 ||
       validFileExtensions.indexOf(extension) !== -1
     ) {
-      validFileUploaded = true;
-      break;
+      return true
     }
   }
 
-  if (!validFileUploaded) {
+  return false;
+}
+
+$(document).on('change', '.source-code-uploader__file', function (event) {
+  if (!isValidSourceCodeFile()) {
     $('.source-code-uploader__submit-button').prop('disabled', true);
     $('.source-code-uploader__error').removeClass('hidden');
   } else {
     $('.source-code-uploader__submit-button').prop('disabled', false);
     $('.source-code-uploader__error').addClass('hidden');
+  }
+});
+
+$(document).on('submit', '.source-code-uploader', function (event) {
+  if (!isValidSourceCodeFile()) {
+    event.preventDefault();
+    return false;
   }
 });
