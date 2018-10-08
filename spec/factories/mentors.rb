@@ -22,7 +22,9 @@ FactoryBot.define do
 
     trait :past do
       onboarded
-      seasons { [Season.current.year - 1] }
+      before(:create) do |mentor, _eval|
+        mentor.account.seasons = [Season.current.year - 1]
+      end
     end
 
     trait :onboarded do
