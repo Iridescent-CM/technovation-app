@@ -6,14 +6,10 @@ class AccountSerializer
 
   attributes :name, :email, :date_of_birth, :age, :city, :state, :country, :state_code,
     :country_code, :latitude, :longitude, :first_name, :last_name, :gender,
-    :referred_by, :referred_by_other
+    :referred_by, :referred_by_other, :avatar_url
 
   attribute(:api_root) do |account|
     "#{account.scope_name}"
-  end
-
-  attribute(:avatar_url) do |account|
-    account.profile_image.thumb.url
   end
 
   attribute(:birth_year) do |account|
