@@ -1,24 +1,25 @@
-<h3>Your Submission</h3>
-
-<% if SeasonToggles.team_submissions_editable? %>
-  <%= render 'team_submissions/menu',
-    submission: current_team.submission %>
-<% end %>
-
 <% if SeasonToggles.pitch_presentation_needed?(current_team) %>
   <%= render 'team_submissions/pieces/pitch_presentation',
     team: current_team,
     submission: current_team.submission %>
-<% end %>
-
-<% if !SeasonToggles.team_submissions_editable? && current_team.submission.complete? %>
+<% elsif !SeasonToggles.team_submissions_editable? && current_team.submission.complete? %>
   <p>
     <%= link_to 'View your finished submission',
       student_published_team_submission_path(current_team.submission),
       class: "button" %>
   </p>
-<% end %>
+<% elsif SeasonToggles.team_submissions_editable? &&
+        current_team.submission.only_needs_to_submit? %>
+  <p>You've done everything and you're ready to publish for the judges!</p>
 
-<% unless SeasonToggles.team_submissions_editable? %>
+  <p>
+    <%= link_to "Review and submit now!",
+      student_published_team_submission_path(current_team.submission),
+      class: "button" %>
+  </p>
+<% elsif SeasonToggles.team_submissions_editable? %>
+  <%= render 'team_submissions/menu',
+    submission: current_team.submission %>
+<% else %>
   Submissions are not editable at this time.
 <% end %>
