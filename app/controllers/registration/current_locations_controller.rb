@@ -24,9 +24,9 @@ module Registration
     def current_attempt
       if token = get_cookie(CookieNames::SIGNUP_TOKEN)
         @current_attempt ||= SignupAttempt.wizard.find_by(wizard_token: token)
-      else
-        ::NullSignupAttempt.new
       end
+
+      @current_attempt ||= ::NullSignupAttempt.new
     end
   end
 end
