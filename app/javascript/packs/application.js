@@ -21,6 +21,8 @@ import '../registration'
 
 import { urlHelpers } from 'utilities/utilities'
 
+import '../application/sticky-header'
+
 document.addEventListener('turbolinks:load', function () {
   const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn')
 
