@@ -366,10 +366,7 @@ class TopCountriesDataAnalysis < DataAnalysis
 
   def labels
     @top_students.keys.map do |country_code|
-      FriendlyCountry.(
-        OpenStruct.new(country: country_code),
-        prefix: false,
-      )
+      Carmen::Country.coded(country_code)
     end
   end
 
