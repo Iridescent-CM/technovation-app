@@ -147,6 +147,8 @@ h1.page-heading .ra-intro,
 }
 
 .header-container {
+  position: fixed;
+  width: 100%;
   z-index: $z-under-shade;
 }
 
