@@ -1,5 +1,22 @@
 <h3 class="reset">Team debugging</h3>
 
+<div class="panel submission">
+  <h6>Submission</h6>
+
+  <% if team.submission.present? %>
+    <p>
+      View this team's submission:
+
+      <%= link_to team.submission.app_name,
+        admin_team_submission_path(team.submission) %>
+    </p>
+
+    <%= submission_progress_bar(team.submission) %>
+  <% else %>
+    <p>This team has not started their submission</p>
+  <% end %>
+</div>
+
 <div class="panel">
   <p>
     <strong>Searchable to students?</strong>
