@@ -1,5 +1,5 @@
 class FriendlyCountry
-  def self.call(record, options = {})
+  def self.call(record, **options)
     return "" unless record.respond_to?(:address_details)
     return "" if record.address_details.nil? or record.address_details.strip == ""
 
@@ -8,6 +8,7 @@ class FriendlyCountry
     default_options = {
       prefix: true,
       short_code: false,
+      source: :address_details,
     }
 
     merged_options = default_options.merge(options)
@@ -17,7 +18,7 @@ class FriendlyCountry
     elsif merged_options[:prefix]
       friendly_country.with_prefix
     else
-      friendly_country.country_name
+      friendly_country.country_name(merged_options)
     end
   end
 
@@ -40,13 +41,16 @@ class FriendlyCountry
     end
   end
 
-  def country_name
-    result.country || record.address_details
+  def country_name(**options)
+    result(options).country || record.address_details
   end
 
   private
-  def result
-    if result = Geocoder.search(record.address_details).first
+  def result(**options)
+    if record.address_details.length <= 3 && options[:source] == :country_code
+      country = Carmen::Country.coded(record.address_details)
+      Geocoded.new(OpenStruct.new(country: country.name))
+    elsif result = Geocoder.search(record.address_details).first
       Geocoded.new(result)
     else
       record
