@@ -99,7 +99,7 @@ GEM
       activesupport (>= 3.0.0)
     airbrake (6.3.0)
       airbrake-ruby (~> 2.4)
-    airbrake-ruby (2.10.0)
+    airbrake-ruby (2.12.0)
     anbt-sql-formatter (0.0.6)
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
