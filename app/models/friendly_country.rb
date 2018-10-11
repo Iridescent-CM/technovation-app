@@ -46,7 +46,10 @@ class FriendlyCountry
 
   private
   def result
-    if result = Geocoder.search(record.address_details).first
+    if record.address_details.length <= 3
+      country = Carmen::Country.coded(record.address_details)
+      Geocoded.new(OpenStruct.new(country: country.name))
+    elsif result = Geocoder.search(record.address_details).first
       Geocoded.new(result)
     else
       record

@@ -49,7 +49,7 @@ module DataAnalyses
     end
 
     def labels
-      @top_students.keys.map do |country_code|
+      @top_countries.keys.map do |country_code|
         FriendlyCountry.(
           OpenStruct.new(address_details: country_code),
           prefix: false,
