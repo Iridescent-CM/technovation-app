@@ -47,7 +47,7 @@ class FriendlyCountry
 
   private
   def result(**options)
-    if record.address_details.length <= 3 && options[:source] == :country_code
+    if options[:source] == :country_code
       country = Carmen::Country.coded(record.address_details)
       Geocoded.new(OpenStruct.new(country: country.name))
     elsif result = Geocoder.search(record.address_details).first
