@@ -53,6 +53,7 @@ module DataAnalyses
         FriendlyCountry.(
           OpenStruct.new(address_details: country_code),
           prefix: false,
+          source: :country_code,
         )
       end
     end
