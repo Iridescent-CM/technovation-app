@@ -131,6 +131,12 @@ FactoryBot.define do
       end
     end
 
+    trait :submitted do
+      after(:create) do |mentor|
+        FactoryBot.create(:submission, team: mentor.teams.last)
+      end
+    end
+
     trait :has_qf_scores do
       on_team
       complete_submission

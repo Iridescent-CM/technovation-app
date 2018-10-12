@@ -49,6 +49,8 @@ function lockdownCheckboxesBasedOnTotal($group) {
 
   if ($checkedBoxes.length * pointsEach >= pointsPossible) {
     $uncheckedBoxes.prop('disabled', true);
+  } else {
+    $uncheckedBoxes.prop('disabled', false);
   }
 }
 
