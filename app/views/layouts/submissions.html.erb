@@ -38,15 +38,13 @@
     <%= yield :js %>
   </head>
 
-  <body class="col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="header-container col--sticky">
-        <%= yield :session_bar %>
+  <body>
+    <div class="header-container">
+      <%= yield :session_bar %>
 
-        <%= render 'application/navigation' %>
+      <%= render 'application/navigation' %>
 
-        <%= yield :subnav %>
-      </div>
+      <%= yield :subnav %>
     </div>
 
     <div class="main-container">
