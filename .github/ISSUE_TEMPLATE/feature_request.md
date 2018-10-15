@@ -17,4 +17,4 @@ A clear and concise description of any alternative solutions or features you've 
 Add any other context or screenshots about the feature request here.
 
 **Label**
-You MUST use the label menu to add 'Feature request' as a label
+You MUST use the label menu to add 'Feature request' and '0 - To Discuss' as a label
