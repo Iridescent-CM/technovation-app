@@ -36,3 +36,5 @@ Add any other context about the problem here.
 
 **Label**
 You MUST use the label menu to add 'bug' as a label
+
+(do *not* choose a bug priority label, devs will do that according to the Defect Priority matrix)
