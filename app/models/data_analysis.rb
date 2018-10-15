@@ -5,7 +5,7 @@ class DataAnalysis
 
   def self.for(user, analysis_type)
     if analysis_type.to_s == "onboarding_mentors" && !user.is_admin? && user.country != "US"
-      OnboardingInternationalMentorsDataAnalysis.new(user)
+      DataAnalyses::OnboardingInternationalMentorsDataAnalysis.new(user)
     else
       "DataAnalyses::#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
     end
