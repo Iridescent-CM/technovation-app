@@ -5,7 +5,7 @@ module StudentConversionController
     profile = StudentProfile.find(params.fetch(:student_profile_id))
     account = profile.account
 
-    CreateMentorProfile.(account)
+    CreateMentorProfile.(account, admin: true)
 
     redirect_to [current_scope, :participant, id: account.to_param],
       success: "#{account.name} is now a mentor"

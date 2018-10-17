@@ -604,11 +604,11 @@ class Account < ActiveRecord::Base
     icon_path.blank? ? super : icon_path
   end
 
-  def can_be_a_mentor?
+  def can_be_a_mentor?(**options)
     !mentor_profile.present? &&
       (judge_profile.present? ||
         regional_ambassador_profile.present? ||
-          (student_profile.present? && age >= MINIMUM_MENTOR_AGE))
+          (options[:admin] && student_profile.present? && age >= MINIMUM_MENTOR_AGE))
   end
 
   def can_be_a_judge?
