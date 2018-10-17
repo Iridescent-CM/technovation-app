@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  MINIMUM_MENTOR_AGE = 14
+
   JUDGE_BLOCKLISTED_ACCOUNT_IDS = [
     43662,
     29481,
@@ -602,14 +604,11 @@ class Account < ActiveRecord::Base
     icon_path.blank? ? super : icon_path
   end
 
-  def can_be_a_mentor?
-    judge_profile.present? ||
-      regional_ambassador_profile.present? ||
-        (student_profile.present? && age_by_cutoff > 17)
-  end
-
-  def is_not_a_mentor?
-    !mentor_profile.present?
+  def can_be_a_mentor?(**options)
+    !mentor_profile.present? &&
+      (judge_profile.present? ||
+        regional_ambassador_profile.present? ||
+          (options[:admin] && student_profile.present? && age >= MINIMUM_MENTOR_AGE))
   end
 
   def can_be_a_judge?
