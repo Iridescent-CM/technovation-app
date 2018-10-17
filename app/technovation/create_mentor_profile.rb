@@ -1,6 +1,6 @@
 module CreateMentorProfile
   def self.call(account)
-    if account.can_be_a_mentor? && account.is_not_a_mentor?
+    if account.is_not_a_mentor?
       create_mentor_profile(account)
       true
     else

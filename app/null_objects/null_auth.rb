@@ -2,7 +2,6 @@ class NullAuth < NullObject
   def id; "GUEST"; end
   def authenticated?; false; end
   def admin?; false; end
-  def can_be_a_mentor?; false; end
   def can_be_a_judge?; false; end
 
   def scope_name; 'application'; end

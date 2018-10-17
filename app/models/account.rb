@@ -602,12 +602,6 @@ class Account < ActiveRecord::Base
     icon_path.blank? ? super : icon_path
   end
 
-  def can_be_a_mentor?
-    judge_profile.present? ||
-      regional_ambassador_profile.present? ||
-        (student_profile.present? && age_by_cutoff > 17)
-  end
-
   def is_not_a_mentor?
     !mentor_profile.present?
   end
