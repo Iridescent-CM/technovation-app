@@ -11,6 +11,15 @@
   </p>
 
   <dl>
+    <dt>Mentor training</dt>
+    <dd class="mentor-training">
+      <% if profile.training_complete? %>
+        <%= web_icon("check-circle icon-green", text: "Complete") %>
+      <% else %>
+        <%= web_icon("exclamation-circle icon-red", text: "Incomplete") %>
+      <% end %>
+    </dd>
+
     <dt>Consent waiver</dt>
     <dd>
       <% if profile.consent_signed? %>
