@@ -23,5 +23,22 @@ RSpec.describe "Admins reviewing mentors" do
 
       expect(page).to have_css(".mentor-training", text: "Complete")
     end
+
+    it "displays not required for mentors who signed up before the training date" do
+      mentor = FactoryBot.create(:mentor, :onboarding)
+      mentor.account.update(
+        season_registered_at: ImportantDates.mentor_training_required_since - 1.day
+      )
+
+      sign_in(:admin)
+
+      click_link "Participants"
+
+      within("#account_#{mentor.account_id}") do
+        click_link "view"
+      end
+
+      expect(page).to have_css(".mentor-training", text: "Not required")
+    end
   end
 end

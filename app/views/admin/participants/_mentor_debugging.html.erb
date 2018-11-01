@@ -15,8 +15,10 @@
     <dd class="mentor-training">
       <% if profile.training_complete? %>
         <%= web_icon("check-circle icon-green", text: "Complete") %>
-      <% else %>
+      <% elsif profile.training_required? %>
         <%= web_icon("exclamation-circle icon-red", text: "Incomplete") %>
+      <% else %>
+        <%= web_icon("exclamation-circle", text: "Not required") %>
       <% end %>
     </dd>
 
