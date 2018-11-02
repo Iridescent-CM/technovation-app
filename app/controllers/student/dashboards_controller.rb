@@ -7,13 +7,17 @@ module Student
     def show
       @regional_events = available_regional_events
 
-      FillPdfs.(current_account, current_team) if SeasonToggles.display_scores?
+      if SeasonToggles.display_scores?
+        FillPdfs.(current_account, team: current_team)
+      end
     end
 
     private
     def available_regional_events
       if SeasonToggles.select_regional_pitch_event?
-        RegionalPitchEvent.available_to(current_team.submission)
+        RegionalPitchEvent.available_to(
+          current_team.submission
+        )
       else
         RegionalPitchEvent.none
       end

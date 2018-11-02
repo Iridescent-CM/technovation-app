@@ -48,7 +48,7 @@ RSpec.describe CertificateRecipient do
           season: 2018,
         )
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.needed_certificate_types).to be_empty
       end
@@ -79,7 +79,7 @@ RSpec.describe CertificateRecipient do
           override_certificate_type: nil,
         )
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.needed_certificate_types).to eq(["participation"])
       end
@@ -99,7 +99,7 @@ RSpec.describe CertificateRecipient do
             override_certificate_type: nil,
           )
 
-          recipient = CertificateRecipient.new(account, team)
+          recipient = CertificateRecipient.new(account, team: team)
 
           expect(recipient.needed_certificate_types).to be_empty
         end
@@ -132,7 +132,7 @@ RSpec.describe CertificateRecipient do
           override_certificate_type: nil,
         )
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.needed_certificate_types).to eq(["completion"])
       end
@@ -152,7 +152,7 @@ RSpec.describe CertificateRecipient do
             override_certificate_type: nil,
           )
 
-          recipient = CertificateRecipient.new(account, team)
+          recipient = CertificateRecipient.new(account, team: team)
 
           expect(recipient.needed_certificate_types).to be_empty
         end
@@ -187,7 +187,7 @@ RSpec.describe CertificateRecipient do
           override_certificate_type: nil,
         )
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.needed_certificate_types).to eq(["semifinalist"])
       end
@@ -207,7 +207,7 @@ RSpec.describe CertificateRecipient do
             override_certificate_type: nil,
           )
 
-          recipient = CertificateRecipient.new(account, team)
+          recipient = CertificateRecipient.new(account, team: team)
 
           expect(recipient.needed_certificate_types).to be_empty
         end
@@ -230,7 +230,7 @@ RSpec.describe CertificateRecipient do
 
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new, season: 2018)
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.certificate_types).to be_empty
       end
@@ -261,7 +261,7 @@ RSpec.describe CertificateRecipient do
           override_certificate_type: nil,
         )
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.certificate_types).to eq(["participation"])
       end
@@ -293,7 +293,7 @@ RSpec.describe CertificateRecipient do
           override_certificate_type: nil,
         )
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.certificate_types).to eq(["completion"])
       end
@@ -325,7 +325,7 @@ RSpec.describe CertificateRecipient do
           override_certificate_type: nil,
         )
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.certificate_types).to eq(["semifinalist"])
       end
@@ -346,7 +346,7 @@ RSpec.describe CertificateRecipient do
         )
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new, season: 2018)
 
-        recipient = CertificateRecipient.new(account, team)
+        recipient = CertificateRecipient.new(account, team: team)
 
         expect(recipient.certificates).to be_empty
       end

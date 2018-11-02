@@ -26,8 +26,8 @@ RSpec.describe Mentor::CertificatesController, type: :controller do
       other_team = FactoryBot.create(:team)
       TeamRosterManaging.add(other_team, mentor)
 
-      FillPdfs.(mentor.account, other_team)
-      FillPdfs.(mentor.account, team)
+      FillPdfs.(mentor.account, team: other_team)
+      FillPdfs.(mentor.account, team: team)
 
       sign_in(mentor)
 
