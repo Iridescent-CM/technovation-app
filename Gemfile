@@ -2,30 +2,30 @@ source 'https://rubygems.org'
 ruby "~> 2"
 
 gem 'rails', '~> 5.1'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
 gem 'bootsnap', '~> 1.3', require: false
 
-gem 'fast_jsonapi', "~> 1.3"
+gem 'fast_jsonapi', "~> 1.4"
 gem 'httparty', "~> 0.16"
 
 gem 'textacular',
   git: 'https://github.com/Iridescent-CM/textacular.git',
   branch: 'change-assemble-query'
 
-gem 'pdf-forms', '~> 1.1'
+gem 'pdf-forms', '~> 1.2'
 
-gem 'public_activity', "~> 1.5"
+gem 'public_activity', "~> 1.6"
 gem "paranoia", '~> 2.4'
-gem 'counter_culture', '~> 1.11'
+gem 'counter_culture', '~> 1.12'
 
 gem "autoprefixer-rails", "~> 6.7"
 gem 'uglifier', '~> 3.2'
 gem 'coffee-rails', "~> 4.2"
 
-gem 'turbolinks', "~> 5.1"
+gem 'turbolinks', "~> 5.2"
 gem 'jquery-rails', "~> 4.3"
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'lodash-rails', "~> 4.17"
@@ -67,14 +67,11 @@ gem 'newrelic_rpm', '~> 3.18'
 
 gem 'dalli', "~> 2.7"
 
-gem 'geocoder', '~> 1.4'
-gem 'timezone', '~> 1.2'
+gem 'geocoder', '~> 1.5'
+gem 'timezone', '~> 1.3'
 
-gem 'carrierwave',
-  git: 'https://github.com/carrierwaveuploader/carrierwave.git',
-  branch: :master
-
-gem "mini_magick", "~> 4.8"
+gem 'carrierwave', "~> 1.2"
+gem "mini_magick", "~> 4.9"
 gem "fog-aws", "~> 1.4"
 gem 'carrierwave_direct', "~> 0.0"
 
@@ -97,7 +94,7 @@ gem 'browser', "~> 2.5"
 gem 'loofah', '~> 2.2'
 
 group :development, :test do
-  gem 'dotenv-rails', "~> 2.4"
+  gem 'dotenv-rails', "~> 2.5"
 end
 
 group :development do
@@ -106,7 +103,7 @@ group :development do
   gem "letter_opener", "~> 1.6"
   gem 'listen', '~> 3.1'
   gem 'churn', "~> 1.0", require: false
-  gem 'web-console', '~> 3.6'
+  gem 'web-console', '~> 3.7'
   gem 'spring', "~> 2.0"
   gem 'spring-watcher-listen', '~> 2.0'
 end
@@ -121,7 +118,7 @@ group :test do
   gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
 
   gem 'capybara', '~> 2.18'
-  gem 'selenium-webdriver', "~> 3.13"
+  gem 'selenium-webdriver', "~> 3.141"
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper', "~> 1.2"
   gem 'rspec-rails', "~> 3.8"
@@ -142,7 +139,7 @@ group :production do
     branch: 'master'
 end
 
-gem 'factory_bot_rails', "~> 4.10"
+gem 'factory_bot_rails', "~> 4.11"
 
 group :legacy do
   # LEGACY MIGRATION
