@@ -423,7 +423,7 @@ GEM
       ruby_dep (~> 1.2)
     lodash-rails (4.17.10)
       railties (>= 3.1)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -449,7 +449,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (3.18.1.330)
     nio4r (2.3.1)
-    nokogiri (1.8.4)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     normalize-rails (4.1.1)
     ovirt-engine-sdk (4.2.4)
@@ -729,4 +729,4 @@ RUBY VERSION
    ruby 2.5.0p0
 
 BUNDLED WITH
-   1.16.3
+   1.17.1
