@@ -106,33 +106,33 @@ FactoryBot.define do
     end
 
     trait :chicago do
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
     end
 
     trait :los_angeles do
-      city "Los Angeles"
-      state_province "CA"
-      country "US"
+      city { "Los Angeles" }
+      state_province { "CA" }
+      country { "US" }
     end
 
     trait :brazil do
-      city "Salvador"
-      state_province "Bahia"
-      country "BR"
+      city { "Salvador" }
+      state_province { "Bahia" }
+      country { "BR" }
     end
 
     trait :najran do
-      city "Najran"
-      state_province "Najran Province"
-      country "Saudi Arabia"
+      city { "Najran" }
+      state_province { "Najran Province" }
+      country { "Saudi Arabia" }
     end
 
     trait :dhurma do
-      city "Dhurma"
-      state_province "Riyadh Province"
-      country "Saudi Arabia"
+      city { "Dhurma" }
+      state_province { "Riyadh Province" }
+      country { "Saudi Arabia" }
     end
 
     trait :geocoded do
@@ -169,11 +169,11 @@ FactoryBot.define do
     end
 
     trait :senior do |s|
-      date_of_birth Date.today - 15.years
+      date_of_birth { Date.today - 15.years }
     end
 
     trait :junior do |s|
-      date_of_birth Date.today - 14.years
+      date_of_birth { Date.today - 14.years }
     end
 
     trait :on_team do
@@ -187,18 +187,18 @@ FactoryBot.define do
 
     trait :onboarded do
       geocoded
-      not_onboarded false
+      not_onboarded { false }
     end
 
     trait :full_profile do
       geocoded
-      parent_guardian_email "example@example.com"
-      parent_guardian_name "Parenty McGee"
-      school_name "My school"
+      parent_guardian_email { "example@example.com" }
+      parent_guardian_name { "Parenty McGee" }
+      school_name { "My school" }
     end
 
     trait :onboarding do
-      not_onboarded true
+      not_onboarded { true }
     end
 
     factory :onboarded_student, traits: [:full_profile]

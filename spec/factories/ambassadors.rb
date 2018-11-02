@@ -9,35 +9,35 @@ FactoryBot.define do
     organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
     ambassador_since_year { Time.current.year }
-    bio "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
+    bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
 
     account
 
     transient do
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
       sequence(:email) { |n| "factory-ra-#{n}@example.com" }
-      password nil
-      first_name "RA"
+      password { nil }
+      first_name { "RA" }
     end
 
     trait :chicago do
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
     end
 
     trait :los_angeles do
-      city "Los Angeles"
-      state_province "CA"
-      country "US"
+      city { "Los Angeles" }
+      state_province { "CA" }
+      country { "US" }
     end
 
     trait :brazil do
-      city "Salvador"
-      state_province "Bahia"
-      country "BR"
+      city { "Salvador" }
+      state_province { "Bahia" }
+      country { "BR" }
     end
 
     trait :geocoded do
@@ -79,9 +79,9 @@ FactoryBot.define do
     end
 
     trait :brazil do
-      country "BR"
-      state_province "Bahia"
-      city "Salvador"
+      country { "BR" }
+      state_province { "Bahia" }
+      city { "Salvador" }
     end
 
     trait :has_judge_profile do

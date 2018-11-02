@@ -11,15 +11,15 @@ FactoryBot.define do
     sequence(:invitee_email) { |n| "invited-#{n}@factorygirl.com" }
 
     trait :pending do
-      status :pending
+      status { :pending }
     end
 
     trait :accepted do
-      status :accepted
+      status { :accepted }
     end
 
     trait :declined do
-      status :declined
+      status { :declined }
     end
   end
 end
