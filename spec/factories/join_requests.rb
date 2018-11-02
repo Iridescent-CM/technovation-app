@@ -4,18 +4,18 @@ FactoryBot.define do
     association(:team)
 
     trait :pending do
-      accepted_at nil
-      declined_at nil
+      accepted_at { nil }
+      declined_at { nil }
     end
 
     trait :accepted do
       accepted_at { Time.current }
-      declined_at nil
+      declined_at { nil }
     end
 
     trait :declined do
       declined_at { Time.current }
-      accepted_at nil
+      accepted_at { nil }
     end
   end
 end

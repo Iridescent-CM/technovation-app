@@ -5,19 +5,19 @@ FactoryBot.define do
     school_company_name { "FactoryBot" }
     job_title { "Engineer" }
     mentor_type { MentorProfile.mentor_types.keys.sample }
-    bio "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
+    bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
 
     transient do
-      first_name "Mentor"
-      last_name nil
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      first_name { "Mentor" }
+      last_name { nil }
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
       sequence(:email) { |n| "factory-mentor-#{n}@example.com" }
-      password nil
-      date_of_birth nil
-      not_onboarded false
-      number_of_teams 0
+      password { nil }
+      date_of_birth { nil }
+      not_onboarded { false }
+      number_of_teams { 0 }
     end
 
     trait :past do
@@ -28,30 +28,30 @@ FactoryBot.define do
     end
 
     trait :onboarded do
-      not_onboarded false
+      not_onboarded { false }
       training_completed_at { Time.current }
     end
 
     trait :onboarding do
-      training_completed_at nil
+      training_completed_at { nil }
     end
 
     trait :chicago do
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
     end
 
     trait :los_angeles do
-      city "Los Angeles"
-      state_province "CA"
-      country "US"
+      city { "Los Angeles" }
+      state_province { "CA" }
+      country { "US" }
     end
 
     trait :brazil do
-      city "Salvador"
-      state_province "Bahia"
-      country "BR"
+      city { "Salvador" }
+      state_province { "Bahia" }
+      country { "BR" }
     end
 
     trait :geocoded do

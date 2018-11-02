@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :team_submission, aliases: [:submission] do
-    integrity_affirmed true
+    integrity_affirmed { true }
 
     team
 
     transient do
-      number_of_scores 0
+      number_of_scores { 0 }
     end
 
     after(:create) do |submission, evaluator|
@@ -55,7 +55,7 @@ FactoryBot.define do
     end
 
     trait :semifinalist do
-      contest_rank :semifinalist
+      contest_rank { :semifinalist }
     end
 
     trait :brazil do
@@ -83,11 +83,11 @@ FactoryBot.define do
     end
 
     trait :complete do
-      app_name "Submission name"
-      app_description "Submission description"
-      pitch_video_link "http://example.com/pitch"
-      demo_video_link "http://example.com/demo"
-      development_platform "Swift or XCode"
+      app_name { "Submission name" }
+      app_description { "Submission description" }
+      pitch_video_link { "http://example.com/pitch" }
+      demo_video_link { "http://example.com/demo" }
+      development_platform { "Swift or XCode" }
 
       after(:create) do |sub|
         sub.update_column(:source_code,  "source_code.zip")

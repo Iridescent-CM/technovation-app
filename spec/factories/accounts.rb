@@ -8,11 +8,11 @@ FactoryBot.define do
     first_name { "Factory" }
     last_name { "Account" }
 
-    city "Chicago"
-    state_province "IL"
-    country "US"
+    city { "Chicago" }
+    state_province { "IL" }
+    country { "US" }
 
-    gender "Prefer not to say"
+    gender { "Prefer not to say" }
 
     seasons { [] }
 
@@ -25,21 +25,21 @@ FactoryBot.define do
     end
 
     trait :chicago do
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
     end
 
     trait :los_angeles do
-      city "Los Angeles"
-      state_province "CA"
-      country "US"
+      city { "Los Angeles" }
+      state_province { "CA" }
+      country { "US" }
     end
 
     trait :brazil do
-      city "Salvador"
-      state_province "Bahia"
-      country "BR"
+      city { "Salvador" }
+      state_province { "Bahia" }
+      country { "BR" }
     end
 
     after :create do |a|

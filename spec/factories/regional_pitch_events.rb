@@ -5,12 +5,12 @@ FactoryBot.define do
 
     ambassador
 
-    name "RPE"
+    name { "RPE" }
     starts_at { Date.current }
     ends_at { Date.current + 1.day }
-    city "City"
-    venue_address "123 Street St."
-    unofficial false
+    city { "City" }
+    venue_address { "123 Street St." }
+    unofficial { false }
 
     seasons { [Season.current.year] }
 
