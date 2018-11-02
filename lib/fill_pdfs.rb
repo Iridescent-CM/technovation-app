@@ -26,8 +26,10 @@ module FillPdfs
     ENV.fetch("LD_LIBRARY_PATH")
   end
 
-  def self.call(account, team = nil)
-    recipient = CertificateRecipient.new(account, team)
+  def self.call(account, **options)
+    team = options.fetch(:team) { ::NullTeam.new }
+    season = options.fetch(:season) { Season.current.year }
+    recipient = CertificateRecipient.new(account, team: team, season: season)
 
     recipient.needed_certificate_types.each do |certificate_type|
       generator_klass_name = "fill_pdfs/#{certificate_type}"
@@ -82,12 +84,15 @@ module FillPdfs
   def attach_uploaded_certificate_from_tmp_file_to_account
     file = File.new(tmp_output)
 
-    account.certificates.create!({
+    attrs = {
       file: file,
       season: season,
       cert_type: type.to_sym,
-      team: team,
-    })
+    }
+
+    attrs.merge!(team: team) if team.present?
+
+    account.certificates.create!(attrs)
   end
 
   def get_value(recipient, field_name)

@@ -1,9 +1,10 @@
 class BadgeRecipient
-  attr_reader :judge, :scores
+  attr_reader :judge, :scores, :season
 
-  def initialize(judge)
+  def initialize(judge, **options)
     @judge = judge
-    @scores = judge.current_completed_scores
+    @season = options.fetch(:season) { Season.current.year }
+    @scores = judge.completed_scores.by_season(season)
   end
 
   def icon_name
@@ -25,5 +26,9 @@ class BadgeRecipient
 
   def name
     icon_name.humanize.titleize
+  end
+
+  def valid?
+    not icon_name.blank?
   end
 end

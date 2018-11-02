@@ -105,6 +105,7 @@ FactoryBot.define do
 
     after(:create) do |judge, evaluator|
       ProfileCreating.execute(judge, FakeController.new)
+      judge.reload
 
       evaluator.number_of_scores.times do
         FactoryBot.create(
