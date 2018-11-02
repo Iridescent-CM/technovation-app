@@ -12,6 +12,7 @@ unless Rails.env.test?
 end
 
 CarrierWave.configure do |config|
+  config.fog_provider = 'fog/aws'
   config.fog_credentials = fog_credentials
   config.fog_directory = ENV.fetch("AWS_BUCKET_NAME")
   config.fog_public = true
