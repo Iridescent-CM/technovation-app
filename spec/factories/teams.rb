@@ -3,9 +3,9 @@ FactoryBot.define do
     sequence(:name) { |n| "FactoryBot #{n}!" }
     description { "Made with <3 by FactoryBot" }
     division { Division.none_assigned_yet }
-    city "Chicago"
-    state_province "IL"
-    country "US"
+    city { "Chicago" }
+    state_province { "IL" }
+    country { "US" }
 
     trait :submitted do
       association(:submission, :complete)
@@ -21,21 +21,21 @@ FactoryBot.define do
     end
 
     trait :los_angeles do
-      city "Los Angeles"
-      state_province "CA"
-      country "US"
+      city { "Los Angeles" }
+      state_province { "CA" }
+      country { "US" }
     end
 
     trait :chicago do
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
     end
 
     trait :brazil do
-      city "Salvador"
-      state_province "Bahia"
-      country "BR"
+      city { "Salvador" }
+      state_province { "Bahia" }
+      country { "BR" }
     end
 
     trait :junior do
@@ -79,7 +79,7 @@ FactoryBot.define do
     end
 
     transient do
-      members_count 1
+      members_count { 1 }
     end
 
     after(:create) do |team, evaluator|

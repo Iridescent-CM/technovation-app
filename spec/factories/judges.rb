@@ -7,14 +7,14 @@ FactoryBot.define do
 
     transient do
       sequence(:email) { |n| "factory-judge-#{n}@example.com" }
-      first_name "Judge"
-      onboarded false
-      virtual true
-      mentor false
-      city "Chicago"
-      state_province "IL"
-      country "US"
-      number_of_scores 0
+      first_name { "Judge" }
+      onboarded { false }
+      virtual { true }
+      mentor { false }
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
+      number_of_scores { 0 }
     end
 
     trait :attending_live_event do
@@ -35,7 +35,7 @@ FactoryBot.define do
     end
 
     trait :onboarded do
-      onboarded true
+      onboarded { true }
     end
 
     trait :virtual do
@@ -45,7 +45,7 @@ FactoryBot.define do
     end
 
     trait :not_live_event_eligible do
-      mentor true
+      mentor { true }
     end
 
     trait :geocoded do
@@ -55,15 +55,15 @@ FactoryBot.define do
     end
 
     trait :los_angeles do
-      city "Los Angeles"
-      state_province "CA"
-      country "US"
+      city { "Los Angeles" }
+      state_province { "CA" }
+      country { "US" }
     end
 
     trait :chicago do
-      city "Chicago"
-      state_province "IL"
-      country "US"
+      city { "Chicago" }
+      state_province { "IL" }
+      country { "US" }
     end
 
     before(:create) do |j, e|
