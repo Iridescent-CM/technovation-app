@@ -52,6 +52,6 @@ class CertificateJob < ActiveJob::Base
              nil
            end
 
-    FillPdfs.(account, team)
+    FillPdfs.(account, team: team)
   end
 end
