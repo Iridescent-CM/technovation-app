@@ -8,11 +8,11 @@ class CertificateRecipient
     :id, :mobile_app_name, :full_name,
     :team_name, :region, :team_id, :season
 
-  def initialize(account, team = ::NullTeam.new)
-    @team = team
-    @season = Season.current.year
+  def initialize(account, **options)
+    @team = options.fetch(:team) { ::NullTeam.new }
+    @season = options.fetch(:season) { Season.current.year }
 
-    unless team.nil?
+    if team.present?
       @season = team.season
       @team_id = team.id
       @mobile_app_name = team.submission.app_name
@@ -91,6 +91,10 @@ class CertificateRecipient
     else
       certificate_types.last
     end
+  end
+
+  def valid?
+    certificate_types.any?
   end
 
   private
