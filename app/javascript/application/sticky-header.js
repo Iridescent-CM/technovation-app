@@ -5,7 +5,12 @@
     // Make sure this isn't a sticky-kit header
     if (header !== null && !header.classList.contains('col--sticky')) {
       const content = document.querySelector('.main-container')
-      const headerHeight = parseInt(header.offsetHeight, 10)
+      const sessionBar = document.getElementById('session-bar')
+      let headerHeight = parseInt(header.offsetHeight, 10)
+
+      if (sessionBar !== null) {
+        headerHeight += parseInt(sessionBar.offsetHeight, 10)
+      }
 
       content.style.paddingTop = `${headerHeight}px`
     }
