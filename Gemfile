@@ -67,7 +67,7 @@ gem 'newrelic_rpm', '~> 3.18'
 
 gem 'dalli', "~> 2.7"
 
-gem 'geocoder', '~> 1.5'
+gem 'geocoder', '~> 1.4.9'
 gem 'timezone', '~> 1.3'
 
 gem 'carrierwave', "~> 1.2"
