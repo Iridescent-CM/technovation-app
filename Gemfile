@@ -71,7 +71,7 @@ gem 'geocoder', '~> 1.4.9'
 gem 'timezone', '~> 1.3'
 
 gem 'carrierwave', "~> 1.2"
-gem "mini_magick", "~> 4.9"
+gem "mini_magick", "4.8.0"
 gem "fog-aws", "~> 1.4"
 gem 'carrierwave_direct', "~> 0.0"
 
