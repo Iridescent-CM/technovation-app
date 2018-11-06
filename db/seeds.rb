@@ -35,10 +35,16 @@ else
 end
 
 if student and student.team.nil?
-  if (student_team = Team.create(name: "All Star Team",
+  if (
+    student_team = Team.create(name: "All Star Team",
                         description: "We are allstars",
                         seasons: [Season.current.year],
-                        division: Division.none_assigned_yet)).valid?
+                        division: Division.none_assigned_yet,
+                        city: "Chicago",
+                        state_province: "IL",
+                        country: "US",
+  )).valid?
+    Geocoding.perform(student_team).with_save
     TeamRosterManaging.add(student_team, student)
     puts "Added student to Team: #{student_team.name}"
     puts ""
@@ -147,10 +153,16 @@ else
 end
 
 if mentor
-  if (team = Team.create(name: "Fun Times Team",
-                         description: "We are fun times havers",
-                         division: Division.none_assigned_yet,
-                         seasons: [Season.current.year])).valid?
+  if (
+    team = Team.create(name: "Fun Times Team",
+                       description: "We are fun times havers",
+                       division: Division.none_assigned_yet,
+                       seasons: [Season.current.year],
+                       city: "Boulder",
+                       state_province: "CO",
+                       country: "US",
+  )).valid?
+    Geocoding.perform(team).with_save
     TeamRosterManaging.add(team, mentor)
     puts "Added mentor to Team: #{team.name}"
     puts ""
