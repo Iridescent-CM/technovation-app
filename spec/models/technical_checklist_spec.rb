@@ -15,6 +15,6 @@ RSpec.describe TechnicalChecklist do
                                    :completed,
                                    team_submission: sub)
 
-    expect(checklist.completed?).to be true
+    expect(checklist).to be_completed
   end
 end
