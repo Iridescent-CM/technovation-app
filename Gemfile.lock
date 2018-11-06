@@ -221,7 +221,7 @@ GEM
     formatador (0.2.5)
     friendly_id (5.2.4)
       activerecord (>= 4.0.0)
-    geocoder (1.5.0)
+    geocoder (1.4.9)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     has_secure_token (1.0.0)
@@ -512,7 +512,7 @@ DEPENDENCIES
   fog-aws (~> 1.4)
   font-awesome-rails (~> 4.7)
   friendly_id (~> 5.2)
-  geocoder (~> 1.5)
+  geocoder (~> 1.4.9)
   has_secure_token (~> 1.0)
   heroku-deflater!
   hiredis (~> 0.6)
