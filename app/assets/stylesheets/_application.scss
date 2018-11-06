@@ -152,6 +152,12 @@ h1.page-heading .ra-intro,
   z-index: $z-under-shade;
 }
 
+.header-container-spacer {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
 .col--sticky {
   &.is_stuck:not(.header-container) {
     margin: 92px 0 0;

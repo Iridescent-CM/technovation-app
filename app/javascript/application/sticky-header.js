@@ -4,15 +4,16 @@
 
     // Make sure this isn't a sticky-kit header
     if (header !== null && !header.classList.contains('col--sticky')) {
-      const content = document.querySelector('.main-container')
-      const sessionBar = document.getElementById('session-bar')
       let headerHeight = parseInt(header.offsetHeight, 10)
+      let spacer = document.querySelector('.header-container-spacer')
 
-      if (sessionBar !== null) {
-        headerHeight += parseInt(sessionBar.offsetHeight, 10)
+      if (!spacer) {
+        spacer = document.createElement('div')
+        spacer.classList.add('header-container-spacer')
+        header.parentNode.insertBefore(spacer, header.nextSibling)
       }
 
-      content.style.paddingTop = `${headerHeight}px`
+      spacer.style.height = `${headerHeight}px`
     }
   }
 
@@ -20,5 +21,17 @@
 
   document.addEventListener('turbolinks:load', function () {
     setStickyNav()
+
+    const header = document.querySelector('.header-container')
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(setStickyNav)
+
+    // Start observing the header for configured mutations
+    observer.observe(header, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
   });
 })()
