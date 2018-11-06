@@ -85,18 +85,10 @@
         </div>
       </div>
 
-      <div class="grid__col-6 grid__col--bleed-y">
+      <div class="grid__col-6 grid__col--bleed-y source-code">
         <h3>Code</h3>
 
-        <%= link_to web_icon(
-            "code",
-            text: "Download the source code",
-            remote: true,
-            size: 12,
-            color: "5ABF94",
-          ),
-          @team_submission.source_code_url,
-          target: :_blank %>
+        <%= link_to_submission_source_code(@team_submission) %>
       </div>
 
       <div class="grid__col-6 grid__col--bleed-y">
