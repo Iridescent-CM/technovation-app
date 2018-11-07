@@ -17,6 +17,8 @@ module Public
 
       if !!account
         MailgunResponse.new(email_taken_response)
+      elsif address.match(/@qq.com\z/)
+        MailgunResponse.new(bypassed_response)
       else
         MailgunResponse.new(get_mailgun_response(address))
       end
@@ -27,6 +29,14 @@ module Public
         is_valid: true,
         mailbox_verification: "true",
         is_taken: true,
+      }
+    end
+
+    def bypassed_response
+      {
+        is_valid: true,
+        mailbox_verification: "true",
+        is_taken: false,
       }
     end
 
