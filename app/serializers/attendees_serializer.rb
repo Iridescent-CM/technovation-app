@@ -1,8 +1,7 @@
 class AttendeesSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :id,
-    :name,
+  attributes :name,
     :scope,
     :status,
     :human_status,
