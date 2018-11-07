@@ -10,7 +10,7 @@ module RegionalAmbassador
         context: self,
       )
 
-      render json: AttendeesSerializer.new(possible_attendees).serialized_json
+      render json: AttendeesSerializer.new(possible_attendees, is_collection: true).serialized_json
     end
 
     private

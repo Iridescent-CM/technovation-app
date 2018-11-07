@@ -24,14 +24,16 @@
 
     const header = document.querySelector('.header-container')
 
-    // Create an observer instance linked to the callback function
-    const observer = new MutationObserver(setStickyNav)
+    if (header !== null) {
+      // Create an observer instance linked to the callback function
+      const observer = new MutationObserver(setStickyNav)
 
-    // Start observing the header for configured mutations
-    observer.observe(header, {
-      attributes: true,
-      childList: true,
-      subtree: true
-    });
+      // Start observing the header for configured mutations
+      observer.observe(header, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+    }
   });
 })()
