@@ -200,6 +200,9 @@
           return e.id === event.id;
         });
 
+        event.fetchTeamsUrlRoot = this.teamsListUrl;
+        event.fetchJudgesUrlRoot = this.judgesListUrl;
+
         if (idx !== -1) {
           this.events.splice(idx, 1, event);
         } else {
