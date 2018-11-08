@@ -5,6 +5,7 @@ import router from './routes'
 import store from './store'
 
 import App from './App'
+import CertificateButton from 'components/CertificateButton'
 
 Vue.use(Vue2Filters)
 
@@ -33,6 +34,7 @@ document.addEventListener('turbolinks:load', () => {
         router,
         components: {
           App,
+          CertificateButton,
         },
 
         mounted () {

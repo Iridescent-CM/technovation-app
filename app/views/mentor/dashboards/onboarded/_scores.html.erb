@@ -63,11 +63,9 @@
       <% end %>
     <% end %>
 
-    <p class="vue-enable-certificate-btn">
-      <certificate-button
-        :team-id="<%= team.id %>"
-        user-scope="mentor"
-      />
-    </p>
+    <certificate-button
+      :team-id="<%= team.id %>"
+      user-scope="mentor"
+    />
   </div>
 <% end %>
