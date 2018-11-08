@@ -206,6 +206,8 @@ export default function (event) {
 
           success (resp) {
             Array.from(resp.data || []).forEach(result => {
+              // Need to massage this data since serializers modify the JSON structure
+              result.attributes.id = result.id
               opts.event.resultReadyForList(result.attributes, opts.list)
             })
             resolve(resp)

@@ -175,6 +175,8 @@
 
           success: (json) => {
             Array.from(json.data || []).forEach(obj => {
+              // Need to massage this data since serializers modify the JSON structure
+              obj.attributes.id = obj.id
               const item = new Attendee(obj.attributes)
               let idx
 

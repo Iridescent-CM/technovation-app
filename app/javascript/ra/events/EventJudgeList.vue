@@ -207,7 +207,7 @@
       },
 
       hoverJudge (judge) {
-        Array.from(this.event.selectedJudges || []).forEach(j => jehovering = false)
+        Array.from(this.event.selectedJudges || []).forEach(j => j.hovering = false)
         judge.hovering = true
       },
 
