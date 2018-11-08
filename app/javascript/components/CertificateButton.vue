@@ -119,7 +119,7 @@ export default {
     },
 
     handleJobRequest (response) {
-      return new Promise((resolve, _reject) => {
+      return new Promise((resolve) => {
         if (Boolean(response.data.jobId)) {
           this.jobId = response.data.jobId
           this.state = 'generating'
