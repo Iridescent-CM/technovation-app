@@ -158,8 +158,8 @@
           altInput: true,
           altFormat: "l, F J",
           dateFormat: "Y-m-d",
-          minDate: "2018-05-01",
-          maxDate: "2018-05-20",
+          minDate: "2019-04-27",
+          maxDate: "2019-06-02",
         },
 
         timeOpts: {
