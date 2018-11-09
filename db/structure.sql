@@ -130,7 +130,11 @@ CREATE TABLE public.accounts (
     deleted_at timestamp without time zone,
     override_certificate_type integer,
     admin_status integer DEFAULT 0 NOT NULL,
-    admin_invitation_token character varying
+    admin_invitation_token character varying,
+    geocoding_city_was character varying,
+    geocoding_state_was character varying,
+    geocoding_country_was character varying,
+    geocoding_fixed_at timestamp without time zone
 );
 
 
@@ -3149,6 +3153,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180925143744'),
 ('20180925184416'),
 ('20180926192206'),
-('20181001181253');
+('20181001181253'),
+('20181108210955');
 
 
