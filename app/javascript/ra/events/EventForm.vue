@@ -90,7 +90,7 @@
             To
             <datetime-input
               v-model="eventEndTime"
-              :options="timeOpts"
+              :options="endDateInputOptions"
             />
           </label>
 
@@ -204,6 +204,27 @@
           }
         });
       },
+
+      endDateInputOptions () {
+        return Object.assign({}, this.timeOpts, {
+          onOpen: (_selectedDates, _dateStr, instance) => {
+            if (this.eventStartTime !== "") {
+              const startTime = this.createTimeFromString(this.eventStartTime);
+
+              let endTime = 0;
+              if (this.eventEndTime !== "") {
+                endTime = this.createTimeFromString(this.eventEndTime);
+              }
+
+              if (startTime > endTime) {
+                this.eventEndTime = this.eventStartTime;
+              }
+
+              instance.set('minTime', startTime);
+            }
+          },
+        });
+      }
     },
 
     watch: {
