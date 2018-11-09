@@ -78,15 +78,9 @@
         <div class="grid__col-6">
           <label>
             From
-            <input
+            <datetime-input
               v-model="eventStartTime"
-              :picker-options="{
-                start: '07:00',
-                step: '00:15',
-                end: '23:30',
-                format: 'HH:mm A',
-              }"
-              placeholder="Select start time"
+              :options="timeOpts"
             />
           </label>
 
@@ -94,16 +88,9 @@
 
           <label>
             To
-            <input
+            <datetime-input
               v-model="eventEndTime"
-              :picker-options="{
-                start: '07:00',
-                step: '00:15',
-                end: '23:30',
-                format: 'HH:mm A',
-                minTime: eventStartTime,
-              }"
-              placeholder="Select start time"
+              :options="timeOpts"
             />
           </label>
 
@@ -168,7 +155,7 @@
           dateFormat: "H:i",
           minuteIncrement: 15,
           minTime: "07:00",
-          maxTime: "22:00",
+          maxTime: "23:30",
         },
 
         httpMethod: "POST",
