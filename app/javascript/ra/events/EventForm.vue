@@ -80,7 +80,7 @@
             From
             <datetime-input
               v-model="eventStartTime"
-              :options="timeOpts"
+              :options="startDateInputOptions"
             />
           </label>
 
@@ -189,6 +189,20 @@
 
       time () {
         return this.event.time;
+      },
+
+      startDateInputOptions () {
+        return Object.assign({}, this.timeOpts, {
+          onClose: (_selectedDates, dateStr, instance) => {
+            if (this.eventEndTime !== "") {
+              const startTime = this.createTimeFromString(dateStr);
+              const endTime = this.createTimeFromString(this.eventEndTime);
+              if (startTime > endTime) {
+                this.eventEndTime = "";
+              }
+            }
+          }
+        });
       },
     },
 
@@ -318,6 +332,18 @@
           },
         });
       },
+
+      createTimeFromString(twentyFourHourTime) {
+        const newTime = new Date();
+        const timeParts = twentyFourHourTime.split(':');
+        newTime.setHours(
+          parseInt(timeParts[0], 10),
+          parseInt(timeParts[1], 10),
+          0
+        );
+        console.log('createTimeFromString called for', twentyFourHourTime, newTime);
+        return newTime;
+      }
     },
 
     components: {
