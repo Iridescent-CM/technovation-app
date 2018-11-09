@@ -252,3 +252,13 @@ form[data-remote] {
 .dz-error-message {
   margin-top: 1em;
 }
+
+.flatpickr-calendar.hasTime.noCalendar.arrowTop {
+  &:after {
+    border-bottom-color: #fff;
+  }
+
+  input:focus {
+    box-shadow: none;
+  }
+}
