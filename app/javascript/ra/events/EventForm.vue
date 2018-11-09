@@ -362,7 +362,6 @@
           parseInt(timeParts[1], 10),
           0
         );
-        console.log('createTimeFromString called for', twentyFourHourTime, newTime);
         return newTime;
       }
     },
