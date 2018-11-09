@@ -78,15 +78,9 @@
         <div class="grid__col-6">
           <label>
             From
-            <input
+            <datetime-input
               v-model="eventStartTime"
-              :picker-options="{
-                start: '07:00',
-                step: '00:15',
-                end: '23:30',
-                format: 'HH:mm A',
-              }"
-              placeholder="Select start time"
+              :options="startDateInputOptions"
             />
           </label>
 
@@ -94,16 +88,9 @@
 
           <label>
             To
-            <input
+            <datetime-input
               v-model="eventEndTime"
-              :picker-options="{
-                start: '07:00',
-                step: '00:15',
-                end: '23:30',
-                format: 'HH:mm A',
-                minTime: eventStartTime,
-              }"
-              placeholder="Select start time"
+              :options="endDateInputOptions"
             />
           </label>
 
@@ -168,7 +155,7 @@
           dateFormat: "H:i",
           minuteIncrement: 15,
           minTime: "07:00",
-          maxTime: "22:00",
+          maxTime: "23:30",
         },
 
         httpMethod: "POST",
@@ -203,6 +190,41 @@
       time () {
         return this.event.time;
       },
+
+      startDateInputOptions () {
+        return Object.assign({}, this.timeOpts, {
+          onClose: (_selectedDates, dateStr, instance) => {
+            if (this.eventEndTime !== "") {
+              const startTime = this.createTimeFromString(dateStr);
+              const endTime = this.createTimeFromString(this.eventEndTime);
+              if (startTime > endTime) {
+                this.eventEndTime = "";
+              }
+            }
+          }
+        });
+      },
+
+      endDateInputOptions () {
+        return Object.assign({}, this.timeOpts, {
+          onOpen: (_selectedDates, _dateStr, instance) => {
+            if (this.eventStartTime !== "") {
+              const startTime = this.createTimeFromString(this.eventStartTime);
+
+              let endTime = 0;
+              if (this.eventEndTime !== "") {
+                endTime = this.createTimeFromString(this.eventEndTime);
+              }
+
+              if (startTime > endTime) {
+                this.eventEndTime = this.eventStartTime;
+              }
+
+              instance.set('minTime', startTime);
+            }
+          },
+        });
+      }
     },
 
     watch: {
@@ -331,6 +353,17 @@
           },
         });
       },
+
+      createTimeFromString(twentyFourHourTime) {
+        const newTime = new Date();
+        const timeParts = twentyFourHourTime.split(':');
+        newTime.setHours(
+          parseInt(timeParts[0], 10),
+          parseInt(timeParts[1], 10),
+          0
+        );
+        return newTime;
+      }
     },
 
     components: {

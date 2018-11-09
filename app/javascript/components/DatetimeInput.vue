@@ -22,6 +22,10 @@
     props: ["value", "options"],
 
     watch: {
+      value (newValue) {
+        this.flatpickrValue = newValue;
+      },
+
       flatpickrValue () {
         this.$emit("input", this.flatpickrValue);
       },
