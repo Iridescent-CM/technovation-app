@@ -8,30 +8,39 @@ task fix_empty_states: :environment do
 
   accounts.find_each do |account|
     puts "===================================="
+    puts "Account##{account.id}"
+    puts "City: #{account.city}"
+    puts "Country: #{account.country}"
 
     city = account.city
     state = account.state
-    country = account.country
+    country_code = FriendlyCountry.new(account).as_short_code
 
     account.reverse_geocode
 
-    if state != account.state
-      puts "Account##{account.id} GEOCODING FIXED:"
-      puts "City from: `#{city}` to `#{account.city}`"
-      puts "State from: `#{state}` to `#{account.state}`"
-      puts "Country from: `#{country}` to `#{account.country}`"
+    new_state = account.state
+    new_country_code = FriendlyCountry.new(account).as_short_code
 
-      account.geocoding_fixed_at = Time.current
-      account.geocoding_city_was = city
-      account.geocoding_state_was = state
-      account.geocoding_country_was = country
-      account.save
+    if !new_state.blank?
+      if new_country_code == country_code
+        puts "----------- ??? -------------"
+        puts "STATE CHANGED"
+        puts "State became: `#{account.state}`"
+
+        account.city = city
+        account.geocoding_fixed_at = Time.current
+
+        puts "City is: #{account.city}"
+        puts "Country is: #{account.country}"
+        account.save
+      else
+        puts "*********** !!! ************"
+        puts "CHANGES TOO DRASTIC"
+        puts "Country would have gone from #{country_code} to #{new_country_code}"
+      end
     else
       puts "*********** !!! ************"
-      puts "Account##{account.id} had NO CHANGES:"
-      puts "City from: `#{city}` to `#{account.city}`"
-      puts "State from: `#{state}` to `#{account.state}`"
-      puts "Country from: `#{country}` to `#{account.country}`"
+      puts "STATE WAS STILL BLANK"
     end
   end
 
