@@ -7,7 +7,7 @@ module Registration
 
       account_attributes = {
         email: account_params.fetch(:email),
-        password: account_params.fetch(:email),
+        password: account_params.fetch(:password),
 
         date_of_birth: Date.new(
           attempt.birth_year,
