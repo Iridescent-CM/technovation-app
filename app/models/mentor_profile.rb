@@ -191,7 +191,8 @@ class MentorProfile < ActiveRecord::Base
     end
 
     if season_registered_at
-      season_registered_at.to_date >= ImportantDates.mentor_training_required_since
+      season_registered_at.to_date >=
+        ImportantDates.mentor_training_required_since.to_date
     else
       false
     end
