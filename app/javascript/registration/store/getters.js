@@ -60,15 +60,7 @@ export default {
   },
 
   getBirthdate (state) {
-    if (
-      state.birthMonth !== null &&
-      typeof state.birthMonth === 'object' &&
-      state.birthMonth.hasOwnProperty('value')
-    ) {
-      return [state.birthYear, state.birthMonth.value, state.birthDay].join('-')
-    } else {
-      return [state.birthYear, state.birthMonth, state.birthDay].join('-')
-    }
+    return [state.birthYear, state.birthMonth, state.birthDay].join('-')
   },
 
   getLocation (state) {
