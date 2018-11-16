@@ -11,6 +11,25 @@ RSpec.describe MentorProfile do
     end
   end
 
+  describe ".searchable" do
+    it "does not list mentors who have not completed training (and are required to)" do
+      mentor = FactoryBot.create(:mentor, :onboarded)
+      mentor.account.update(
+        season_registered_at: ImportantDates.mentor_training_required_since
+      )
+
+      expect(mentor.reload).to be_searchable
+      expect(MentorProfile.searchable).to include(mentor)
+
+      mentor.update(training_completed_at: nil)
+
+      expect(mentor.reload).not_to be_training_complete
+      expect(mentor).to be_training_required
+      expect(mentor).not_to be_searchable
+      expect(MentorProfile.searchable).not_to include(mentor)
+    end
+  end
+
   describe ".onboarded" do
     it "lists mentors who require training and have completed it" do
       mentor = FactoryBot.create(:mentor, :onboarded)
