@@ -87,8 +87,16 @@ export default {
 
   location (state, attributes) {
     state.city = attributes.city
-    state.state = attributes.state
     state.country = attributes.country
+
+    if (
+      typeof attributes.state === "object" &&
+      attributes.state.hasOwnProperty('name')
+    ) {
+      state.state = attributes.state.name
+    } else {
+      state.state = attributes.state
+    }
   },
 
   basicProfile (state, attributes) {
