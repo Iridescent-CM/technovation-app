@@ -90,6 +90,7 @@ export default {
     state.country = attributes.country
 
     if (
+      attributes.state !== null &&
       typeof attributes.state === "object" &&
       attributes.state.hasOwnProperty('name')
     ) {
