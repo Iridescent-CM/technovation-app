@@ -4,40 +4,36 @@ module Mentor
       if team_id = params.fetch(:team_id) { false }
         team = current_mentor.current_teams.find(team_id)
 
-        state = FriendlySubregion.(
-          OpenStruct.new(
-            state_province: team.state_province,
-            country: team.country
-          ),
+        state = FriendlySubregion.(team, prefix: false)
+        state_code = FriendlySubregion.(team, {
           prefix: false,
-        )
+          short_code: true
+        })
 
-        country = FriendlyCountry.new(team).country_name
+        friendly_country = FriendlyCountry.new(team)
 
         render json: {
           city: team.city,
           state: state,
-          state_code: team.state_province,
-          country: country,
-          country_code: team.country,
+          state_code: state_code,
+          country: friendly_country.country_name,
+          country_code: friendly_country.as_short_code,
         }
       else
-        state = FriendlySubregion.(
-          OpenStruct.new(
-            state_province: current_account.state_province,
-            country: current_account.country
-          ),
+        state = FriendlySubregion.(current_account, prefix: false)
+        state_code = FriendlySubregion.(current_account, {
           prefix: false,
-        )
+          short_code: true
+        })
 
-        country = FriendlyCountry.new(current_account).country_name
+        friendly_country = FriendlyCountry.new(current_account)
 
         render json: {
           city: current_account.city,
           state: state,
-          state_code: current_account.state_province,
-          country: country,
-          country_code: current_account.country,
+          state_code: state_code,
+          country: friendly_country.country_name,
+          country_code: friendly_country.as_short_code,
         }
       end
     end
