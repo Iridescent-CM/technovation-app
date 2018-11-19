@@ -7,22 +7,20 @@ module Admin
         record = Team.find(params.fetch(:team_id))
       end
 
-      state = FriendlySubregion.(
-        OpenStruct.new(
-          state_province: record.state_province,
-          country: record.country
-        ),
+      state = FriendlySubregion.(record, prefix: false)
+      state_code = FriendlySubregion.(record, {
         prefix: false,
-      )
+        short_code: true
+      })
 
-      country = FriendlyCountry.new(record).country_name
+      friendly_country = FriendlyCountry.new(record)
 
       render json: {
         city: record.city,
         state: state,
-        state_code: record.state_province,
-        country: country,
-        country_code: record.country_code,
+        state_code: state_code,
+        country: friendly_country.country_name,
+        country_code: friendly_country.as_short_code,
       }
     end
   end

@@ -1,22 +1,20 @@
 module Judge
   class CurrentLocationsController < JudgeController
     def show
-      state = FriendlySubregion.(
-        OpenStruct.new(
-          state_province: current_account.state_province,
-          country: current_account.country
-        ),
+      state = FriendlySubregion.(current_account, prefix: false)
+      state_code = FriendlySubregion.(current_account, {
         prefix: false,
-      )
+        short_code: true
+      })
 
-      country = FriendlyCountry.new(current_account).country_name
+      friendly_country = FriendlyCountry.new(current_account)
 
       render json: {
         city: current_account.city,
         state: state,
-        state_code: current_account.state_province,
-        country: country,
-        country_code: current_account.country_code,
+        state_code: state_code,
+        country: friendly_country.country_name,
+        country_code: friendly_country.as_short_code,
       }
     end
   end
