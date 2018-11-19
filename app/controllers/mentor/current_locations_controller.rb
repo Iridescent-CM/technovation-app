@@ -19,7 +19,7 @@ module Mentor
           state: state,
           state_code: team.state_province,
           country: country,
-          country_code: team.country,
+          country_code: team.country_code,
         }
       else
         state = FriendlySubregion.(
@@ -37,7 +37,7 @@ module Mentor
           state: state,
           state_code: current_account.state_province,
           country: country,
-          country_code: current_account.country,
+          country_code: current_account.country_code,
         }
       end
     end

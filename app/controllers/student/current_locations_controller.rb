@@ -14,7 +14,7 @@ module Student
         state: FriendlySubregion.(record, prefix: false),
         state_code: record.state_province,
         country: country,
-        country_code: record.country,
+        country_code: record.country_code,
       }
 
       render json: json
