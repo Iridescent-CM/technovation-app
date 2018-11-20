@@ -95,13 +95,15 @@
         <template v-if="countryConfirmed || country !== 'Israel'">
           <label for="location_country">Country / Territory</label>
 
-          <input
+          <vue-select
+            v-if="countries.length"
             ref="countryField"
-            type="text"
-            id="location_country"
-            autocomplete="country-name"
+            :select-on-tab="true"
+            input-id="location_country"
+            :options="countries"
             v-model="country"
           />
+          <p v-if="!countries.length">LOADING...</p>
         </template>
 
         <template v-else>
@@ -134,13 +136,15 @@
 
         <label for="location_state">State / Province {{ optionalStateLabel }}</label>
 
-        <input
-          type="text"
-          id="location_state"
-          autocomplete="address-level1"
-          :placeholder="optionalStatePlaceholder"
+        <vue-select
+          v-if="subregions.length"
+          ref="stateField"
+          :select-on-tab="true"
+          input-id="location_state"
+          :options="subregions"
           v-model="state"
         />
+        <p v-if="!subregions.length">LOADING...</p>
 
         <label for="location_city">City</label>
 
@@ -196,8 +200,13 @@
 <script>
 import LocationResult from '../models/LocationResult'
 import HttpStatusCodes from '../../constants/HttpStatusCodes'
+import VueSelect from '@vendorjs/vue-select'
 
 export default {
+  components: {
+    VueSelect,
+  },
+
   data () {
     return {
       city: "",
@@ -208,6 +217,8 @@ export default {
       savedLocation: null,
       searching: false,
       status: null,
+      countries: [],
+      subregions: [],
     }
   },
 
@@ -278,6 +289,10 @@ export default {
         this.country = data.country
       })
     }
+
+    window.axios.get('/public/countries').then(({ data }) => {
+      this.countries = data
+    })
   },
 
   computed: {
@@ -396,6 +411,13 @@ export default {
     },
 
     country (value) {
+      // Fetch the subregions for this country for the drop-down
+      const countryName = encodeURIComponent(value)
+      window.axios.get(`/public/countries?name=${countryName}`)
+        .then(({ data }) => {
+          this.subregions = data
+        })
+
       this.$emit('input', Object.assign({}, {
         city: this.city,
         state: this.state,
