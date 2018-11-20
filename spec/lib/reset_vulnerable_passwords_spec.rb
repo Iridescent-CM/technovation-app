@@ -9,6 +9,9 @@ RSpec.describe ResetVulnerablePasswords do
     ]
   }
 
+  let!(:admin) { FactoryBot.create(:admin) }
+  let!(:admin2) { FactoryBot.create(:admin) }
+
   let!(:student) {
     FactoryBot.create(
       :student,
@@ -146,6 +149,31 @@ RSpec.describe ResetVulnerablePasswords do
       }.and not_change {
         account.reload.auth_token
       }
+    end
+
+    it "emails a CSV report of the affected users to the admins" do
+      ActionMailer::Base.deliveries.clear
+
+      expect {
+        ResetVulnerablePasswords.perform!
+      }.to change {
+        Export.count
+      }.from(0).to(1)
+      .and change {
+        ActionMailer::Base.deliveries.count
+      }
+
+      expect(
+        ActionMailer::Base.deliveries.flat_map(&:to)
+      ).to match_array([admin.email, admin2.email])
+
+      expect(
+        ActionMailer::Base.deliveries.map(&:subject).uniq
+      ).to eq(["Password Reset CSV Export of Affected Users"])
+
+      ActionMailer::Base.deliveries.each do |mail|
+        expect(mail.body.encoded).to match(Export.last.file_url)
+      end
     end
   end
 end

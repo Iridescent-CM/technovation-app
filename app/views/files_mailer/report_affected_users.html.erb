@@ -1,0 +1,28 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Download your file"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hey <%= @first_name %>,
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Here is the link to the CSV of users whose passwords were scrambled today
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "Download Your File", @url, class: "btn-primary", role: "url" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Regards,<br />
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
