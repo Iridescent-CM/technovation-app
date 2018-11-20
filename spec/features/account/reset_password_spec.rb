@@ -6,8 +6,11 @@ RSpec.feature "Reset your forgotten password" do
 
     FactoryBot.create(
       scope,
-      email: "find@me.com",
-      password: "oldforgotten"
+      account: FactoryBot.create(
+        :account,
+        email: "find@me.com",
+        password: "oldforgotten"
+      )
     )
 
     SeasonToggles.enable_signup(scope)

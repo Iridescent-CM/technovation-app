@@ -10,8 +10,11 @@ RSpec.describe Admin::ParticipantsController do
     Timecop.freeze(Division.cutoff_date - 1.day) do
       student = FactoryBot.create(
         :student,
-        email: "student@testing.com",
-        date_of_birth: 13.years.ago
+        account: FactoryBot.create(
+          :account,
+          email: "student@testing.com",
+          date_of_birth: 13.years.ago
+        )
       )
       team = FactoryBot.create(:team)
       TeamRosterManaging.add(team, student)
@@ -31,7 +34,13 @@ RSpec.describe Admin::ParticipantsController do
 
   %w{student mentor judge regional_ambassador}.each do |scope|
     it "updates #{scope} newsletters with a change to the email address" do
-      profile = FactoryBot.create(scope, email: "old@oldtime.com")
+      profile = FactoryBot.create(
+        scope,
+        account: FactoryBot.create(
+          :account,
+          email: "old@oldtime.com"
+        )
+      )
 
       allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
 

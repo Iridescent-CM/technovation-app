@@ -2,7 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Tasks: rails import_scores" do
   it "imports QF scores from the given csv to ScoreSubmission" do
-    judge = FactoryBot.create(:judge, email: "my@judge.com")
+    judge = FactoryBot.create(
+      :judge,
+      account: FactoryBot.create(:account, email: "my@judge.com")
+    )
     team = FactoryBot.create(:team, name: "world")
     submission = FactoryBot.create(:team_submission,
                                     app_name: "hello",

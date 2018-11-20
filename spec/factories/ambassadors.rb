@@ -47,17 +47,13 @@ FactoryBot.define do
     end
 
     before(:create) do |r, e|
-      attrs = FactoryBot.attributes_for(:account)
-
-      attrs.merge(
+      {
         city: e.city,
         state_province: e.state_province,
         country: e.country,
-        email: e.email || attrs[:email],
-        password: e.password || attrs[:password],
         first_name: e.first_name,
         skip_existing_password: true,
-      ).each do |k, v|
+      }.each do |k, v|
         r.account.send("#{k}=", v)
       end
 

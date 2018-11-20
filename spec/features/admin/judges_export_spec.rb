@@ -14,8 +14,8 @@ RSpec.describe "/admin/judges", type: :request do
         },
       }
 
-      FactoryBot.create(:judge, :los_angeles, email: "only-me@me.com")
-      FactoryBot.create(:judge, email: "no_findy-email@judge.com")
+      FactoryBot.create(:judge, :los_angeles, account: FactoryBot.create(:account, email: "only-me@me.com"))
+      FactoryBot.create(:judge, account: FactoryBot.create(:account, email: "no_findy-email@judge.com"))
 
       url = "/admin/judges.json"
 

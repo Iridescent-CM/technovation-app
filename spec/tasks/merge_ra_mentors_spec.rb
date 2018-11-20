@@ -2,8 +2,16 @@ require "rails_helper"
 require "./lib/merge_ra_mentors"
 
 RSpec.describe MergeRAMentors do
-  let!(:mentor) { FactoryBot.create(:mentor, :onboarded, email: "mentor@ra.com") }
-  let!(:ra) { FactoryBot.create(:ambassador, email: "mentor+ra@ra.com") }
+  let!(:mentor) { FactoryBot.create(
+    :mentor,
+    :onboarded,
+    account: FactoryBot.create(:account, email: "mentor@ra.com")
+  ) }
+
+  let!(:ra) { FactoryBot.create(
+    :ambassador,
+    account: FactoryBot.create(:account, email: "mentor+ra@ra.com")
+  ) }
 
   before do
     ActionMailer::Base.deliveries.clear

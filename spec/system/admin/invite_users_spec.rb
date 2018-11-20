@@ -104,7 +104,10 @@ RSpec.describe "Admins invite users to signup", :js do
         email: email,
       )
 
-      profile = FactoryBot.create(scope, email: email)
+      profile = FactoryBot.create(
+        scope,
+        account: FactoryBot.create(:account, email: email)
+      )
 
       invite.update(
         account: profile.account,
@@ -124,7 +127,11 @@ RSpec.describe "Admins invite users to signup", :js do
 
   it "invite an RA who has an existing mentor account" do
     email = "ra@example.com"
-    mentor = FactoryBot.create(:mentor, :onboarded, email: email)
+    mentor = FactoryBot.create(
+      :mentor,
+      :onboarded,
+      account: FactoryBot.create(:account, email: email)
+    )
     expect(mentor.account.reload.email).to eq(email)
 
     UserInvitation.create!(
@@ -162,7 +169,10 @@ RSpec.describe "Admins invite users to signup", :js do
 
   it "invite an RA who has an existing judge account" do
     email = "ra@example.com"
-    judge = FactoryBot.create(:judge, email: email)
+    judge = FactoryBot.create(
+      :judge,
+      account: FactoryBot.create(:account, email: email)
+    )
     expect(judge.account.reload.email).to eq(email)
 
     UserInvitation.create!(

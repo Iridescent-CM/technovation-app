@@ -78,11 +78,8 @@ FactoryBot.define do
         j.survey_completed_without_save!
       end
 
-      act_attrs = FactoryBot.attributes_for(:account).merge(attrs)
-
-      act_attrs.merge(
+      attrs.merge(
         skip_existing_password: true,
-        email: e.email || act_attrs[:email],
         first_name: e.first_name,
       ).each do |k, v|
         j.account.send("#{k}=", v)
