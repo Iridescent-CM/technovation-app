@@ -20,7 +20,14 @@ RSpec.describe SigninsController do
     end
 
     it "is case-insenstive for email" do
-      FactoryBot.create(:student, email: "CapiTalLettERS@gmail.com")
+      FactoryBot.create(
+        :student,
+        account: FactoryBot.create(
+          :account,
+          email: "CapiTalLettERS@gmail.com"
+        )
+      )
+
 
       post :create, params: {
         account: {
@@ -33,7 +40,13 @@ RSpec.describe SigninsController do
     end
 
     it "ignores dots" do
-      FactoryBot.create(:student, email: "dots.ignored@gmail.com")
+      FactoryBot.create(
+        :student,
+        account: FactoryBot.create(
+          :account,
+          email: "dots.ignored@gmail.com"
+        )
+      )
 
       post :create, params: {
         account: {
@@ -48,8 +61,11 @@ RSpec.describe SigninsController do
     it "sends parent emails for past students registering again" do
       student = FactoryBot.create(
         :onboarded_student,
-        password: "secret1234",
-        parent_guardian_email: "parent2@parent2.com"
+        parent_guardian_email: "parent2@parent2.com",
+        account: FactoryBot.create(
+          :account,
+          password: "secret1234"
+        )
       )
 
       student.account.update(seasons: [Season.current.year - 1])

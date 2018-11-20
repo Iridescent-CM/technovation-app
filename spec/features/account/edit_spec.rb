@@ -4,8 +4,11 @@ RSpec.feature "Edit account spec" do
   before do
     sign_in(FactoryBot.create(
       :student,
-      email: "original@email.com",
-      password: "secret1234"
+      account: FactoryBot.create(
+        :account,
+        email: "original@email.com",
+        password: "secret1234"
+      )
     ))
     visit student_profile_path
   end

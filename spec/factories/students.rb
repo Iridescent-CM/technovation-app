@@ -159,8 +159,6 @@ FactoryBot.define do
         state_province: e.state_province,
         country: e.country,
         date_of_birth: e.date_of_birth,
-        email: e.email,
-        password: e.password,
       }.each do |k, v|
         s.account.send("#{k}=", v)
       end

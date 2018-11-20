@@ -12,28 +12,48 @@ RSpec.describe ResetVulnerablePasswords do
   let!(:student) {
     FactoryBot.create(
       :student,
-      account: FactoryBot.create(:account, created_at: dates.sample)
+      account: FactoryBot.create(
+        :account,
+        email: "email1@example.com",
+        password: "email1@example.com",
+        created_at: dates.sample
+      )
     )
   }
 
   let!(:mentor) {
     FactoryBot.create(
       :mentor,
-      account: FactoryBot.create(:account, created_at: dates.sample)
+      account: FactoryBot.create(
+        :account,
+        email: "email2@example.com",
+        password: "email2@example.com",
+        created_at: dates.sample
+      )
     )
   }
 
   let!(:judge) {
     FactoryBot.create(
       :judge,
-      account: FactoryBot.create(:account, created_at: dates.sample)
+      account: FactoryBot.create(
+        :account,
+        email: "email3@example.com",
+        password: "email3@example.com",
+        created_at: dates.sample
+      )
     )
   }
 
   let!(:ra) {
     FactoryBot.create(
       :ra,
-      account: FactoryBot.create(:account, created_at: dates.sample)
+      account: FactoryBot.create(
+        :account,
+        email: "email4@example.com",
+        password: "email4@example.com",
+        created_at: dates.sample
+      )
     )
   }
 

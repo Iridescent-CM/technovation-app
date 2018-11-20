@@ -2,7 +2,10 @@ require "rails_helper"
 
 RSpec.describe UserInvitation do
   it "validates the email against an existing user" do
-    FactoryBot.create(:student, email: " heLLo@world.com ")
+    FactoryBot.create(
+      :student,
+      account: FactoryBot.create(:account, email: " heLLo@world.com ")
+    )
 
     invite = UserInvitation.new(
       profile_type: :student,
@@ -77,7 +80,10 @@ RSpec.describe UserInvitation do
       event_ids: [event.id],
     )
 
-    judge = FactoryBot.create(:judge, email: "judge@judge.com")
+    judge = FactoryBot.create(
+      :judge,
+      account: FactoryBot.create(:account, email: "judge@judge.com")
+    )
 
     expect(invite.reload).to be_registered
     expect(invite.account).to eq(judge.account)
