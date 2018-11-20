@@ -102,6 +102,8 @@ RSpec.describe ResetVulnerablePasswords do
         profiles.sample,
         account: FactoryBot.create(
           :account,
+          email: "notme@notme.com",
+          password: "notme@notme.com",
           created_at: my_dates.sample
         )
       )
@@ -137,17 +139,16 @@ RSpec.describe ResetVulnerablePasswords do
     end
 
     it "does not affect admins" do
-      account = FactoryBot.create(
-        :admin,
-        account: FactoryBot.create(:account, created_at: dates.sample)
-      )
-
       expect {
         ResetVulnerablePasswords.perform!
       }.to not_change {
-        account.reload.password_digest
+        admin.reload.password_digest
       }.and not_change {
-        account.reload.auth_token
+        admin.reload.auth_token
+      }.and not_change {
+        admin2.reload.password_digest
+      }.and not_change {
+        admin2.reload.auth_token
       }
     end
 
