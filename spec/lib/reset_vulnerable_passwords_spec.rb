@@ -75,14 +75,41 @@ RSpec.describe ResetVulnerablePasswords do
         Time.new(2018, 11, 14),
       ]
 
-      account = FactoryBot.create(profiles.sample, created_at: my_dates.sample)
+      profile = FactoryBot.create(
+        profiles.sample,
+        account: FactoryBot.create(
+          :account,
+          created_at: my_dates.sample
+        )
+      )
 
       expect {
         ResetVulnerablePasswords.perform!
       }.to not_change {
-        account.reload.password_digest
+        profile.reload.password_digest
       }.and not_change {
-        account.reload.auth_token
+        profile.reload.auth_token
+      }
+    end
+
+    it "affects ONLY the timeframed accounts which have their email as their password" do
+      profiles = [:student, :judge, :mentor, :ra]
+
+      profile = FactoryBot.create(
+        profiles.sample,
+        account: FactoryBot.create(
+          :account,
+          password: "somethingelsenotemail!!",
+          created_at: dates.sample,
+        )
+      )
+
+      expect {
+        ResetVulnerablePasswords.perform!
+      }.to not_change {
+        profile.reload.password_digest
+      }.and not_change {
+        profile.reload.auth_token
       }
     end
 

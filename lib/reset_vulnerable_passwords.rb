@@ -5,9 +5,11 @@ class ResetVulnerablePasswords
     )
 
     accounts.find_each do |account|
-      account.skip_existing_password = true
-      account.password = SecureRandom.base58(48)
-      account.regenerate_auth_token
+      if account.authenticate(account.email)
+        account.skip_existing_password = true
+        account.password = SecureRandom.base58(48)
+        account.regenerate_auth_token
+      end
     end
   end
 end
