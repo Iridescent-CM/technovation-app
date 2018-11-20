@@ -5,14 +5,20 @@ module Public
       code = params.fetch(:code, nil)
 
       if name
-        countries = Carmen::Country.named(name).to_hash
+        countries_or_regions = Carmen::Country.named(name).subregions.map do |subregion|
+          subregion.name
+        end
       elsif code
-        countries = Carmen::Country.coded(code).to_hash
+        countries_or_regions = Carmen::Country.coded(code).subregions.map do |subregion|
+          subregion.name
+        end
       else
-        countries = Carmen::Country.all
+        countries_or_regions = Carmen::Country.all.map do |country|
+          country.name
+        end
       end
 
-      render :json => countries
+      render :json => countries_or_regions.sort
     end
   end
 end
