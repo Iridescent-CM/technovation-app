@@ -162,7 +162,7 @@ RSpec.describe ResetVulnerablePasswords do
       }.from(0).to(1)
       .and change {
         ActionMailer::Base.deliveries.count
-      }
+      }.from(0).to(2)
 
       expect(
         ActionMailer::Base.deliveries.flat_map(&:to)
