@@ -6,6 +6,7 @@ FactoryBot.define do
 
     transient do
       first_name { "Student" }
+      last_name { "FactoryBot" }
       city { "Chicago" }
       state_province { "IL" }
       country { "US" }
