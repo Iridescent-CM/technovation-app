@@ -61,19 +61,15 @@ FactoryBot.define do
     end
 
     before(:create) do |m, e|
-      attrs = FactoryBot.attributes_for(:account)
-
-      attrs.merge(
+      {
         skip_existing_password: true,
-        date_of_birth: e.date_of_birth || attrs[:date_of_birth],
+        date_of_birth: e.date_of_birth || 22.years.ago,
         city: e.city,
         state_province: e.state_province,
         country: e.country,
         first_name: e.first_name,
-        last_name: e.last_name || attrs[:last_name],
-        email: e.email || attrs[:email],
-        password: e.password || attrs[:password],
-      ).each do |k, v|
+        last_name: e.last_name || "FactoryBot",
+      }.each do |k, v|
         m.account.send("#{k}=", v)
       end
 

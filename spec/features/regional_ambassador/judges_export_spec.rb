@@ -14,9 +14,23 @@ RSpec.describe "/regional_ambassador/judges", type: :request do
         },
       }
 
-      FactoryBot.create(:judge, :los_angeles, email: "only-me@me.com")
-      FactoryBot.create(:judge, :los_angeles, email: "no_findy-email@judge.com")
-      FactoryBot.create(:judge, :chicago, email: "no_findy-region@judge.com")
+      FactoryBot.create(
+        :judge,
+        :los_angeles,
+        account: FactoryBot.create(:account, email: "only-me@me.com")
+      )
+
+      FactoryBot.create(
+        :judge,
+        :los_angeles,
+        account: FactoryBot.create(:account, email: "no_findy-email@judge.com")
+      )
+
+      FactoryBot.create(
+        :judge,
+        :chicago,
+        account: FactoryBot.create(:account, email: "no_findy-region@judge.com")
+      )
 
       url = "/regional_ambassador/judges.json"
 

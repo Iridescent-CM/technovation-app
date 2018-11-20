@@ -9,12 +9,16 @@ RSpec.feature "Invite a member to a team" do
     FactoryBot.create(
       :student,
       not_onboarded: true,
-      email: "incomplete@student.com"
+      account: FactoryBot.create(:account, email: "incomplete@student.com")
     )
   }
 
   let!(:complete_student) {
-    FactoryBot.create(:student, :geocoded, email: "complete@student.com")
+    FactoryBot.create(
+      :student,
+      :geocoded,
+      account: FactoryBot.create(:account, email: "complete@student.com")
+    )
   }
 
   before do

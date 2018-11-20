@@ -132,7 +132,10 @@ RSpec.describe StudentProfile do
   end
 
   it "at least wants parent/guardian email to look like an email" do
-    FactoryBot.create(:student, email: "noway@jose.com")
+    FactoryBot.create(
+      :student,
+      account: FactoryBot.create(:account, email: "noway@jose.com")
+    )
     profile = FactoryBot.build(
       :student_profile,
       parent_guardian_email: "nowayjose.com"
@@ -164,7 +167,10 @@ RSpec.describe StudentProfile do
   end
 
   it "doesn't allow a student email to be used as parent email" do
-    FactoryBot.create(:student, email: "noway@jose.com")
+    FactoryBot.create(
+      :student,
+      account: FactoryBot.create(:account, email: "noway@jose.com")
+    )
     profile = FactoryBot.build(
       :student_profile,
       parent_guardian_email: "noway@jose.com"

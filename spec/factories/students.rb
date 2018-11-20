@@ -6,12 +6,13 @@ FactoryBot.define do
 
     transient do
       first_name { "Student" }
+      last_name { "FactoryBot" }
       city { "Chicago" }
       state_province { "IL" }
       country { "US" }
       date_of_birth { Date.today - 14.years }
       sequence(:email) { |n| "factory-student-#{n}@example.com" }
-      password { nil }
+      password { "secret1234" }
       not_onboarded { false }
     end
 
@@ -150,18 +151,15 @@ FactoryBot.define do
         )
       end
 
-      attrs = FactoryBot.attributes_for(:account)
-
-      attrs.merge(
+      {
         skip_existing_password: true,
         first_name: e.first_name,
+        last_name: e.last_name,
         city: e.city,
         state_province: e.state_province,
         country: e.country,
         date_of_birth: e.date_of_birth,
-        email: e.email || attrs[:email],
-        password: e.password || attrs[:password],
-      ).each do |k, v|
+      }.each do |k, v|
         s.account.send("#{k}=", v)
       end
     end

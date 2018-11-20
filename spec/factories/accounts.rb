@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :account do
-    sequence(:email) { |n| "account#{n}@example.com" }
+    sequence(:email) { |n| "account-#{n}@example.com" }
     password { "secret1234" }
     email_confirmed_at { Time.current }
 
@@ -42,7 +42,7 @@ FactoryBot.define do
       country { "BR" }
     end
 
-    after :create do |a|
+    after(:create) do |a|
       if a.seasons.empty?
         RegisterToCurrentSeasonJob.perform_now(a)
       end
