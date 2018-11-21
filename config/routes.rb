@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
     resource :location_details, only: :show
     resource :current_location, only: :show
-    resource :location, only: [:update, :create]
+    resource :location, only: :create
 
     resources :cookies, only: :create
     resource :survey_reminder, only: :create
@@ -78,7 +78,7 @@ Rails.application.routes.draw do
 
     resource :location_details, only: :show
     resource :current_location, only: :show
-    resource :location, only: [:update, :create]
+    resource :location, only: :create
     resource :training_completion, only: :show
 
     resource :dashboard, only: :show
@@ -214,7 +214,7 @@ Rails.application.routes.draw do
 
     resource :location_details, only: :show
     resource :current_location, only: :show
-    resource :location, only: [:update, :create]
+    resource :location, only: :create
 
     resource :profile, only: [:show, :edit, :update]
 
@@ -248,7 +248,7 @@ Rails.application.routes.draw do
 
     resources :requests, only: [:index, :update]
     resource :current_location, only: :show
-    resource :location, only: [:update, :create]
+    resource :location, only: :create
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
@@ -313,7 +313,7 @@ Rails.application.routes.draw do
     resource :age, only: :create
     resource :profile_choice, only: :create
     resource :current_location, only: :show
-    resource :location, only: [:update, :create]
+    resource :location, only: :create
     resource :basic_profile, only: :create
     resource :email, only: :create
     resource :account, only: :create

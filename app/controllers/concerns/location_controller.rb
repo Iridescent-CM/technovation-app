@@ -11,16 +11,6 @@ module LocationController
     head 200
   end
 
-  def update
-    data, status = HandleGeocoderSearch.({
-      db_record: db_record,
-      query: location_params,
-      controller: self,
-    })
-
-    render json: data, status: status
-  end
-
   private
   def location_params
     params.require("#{current_scope}_location")
