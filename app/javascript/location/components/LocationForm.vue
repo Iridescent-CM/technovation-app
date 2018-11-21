@@ -7,132 +7,19 @@
       Confirm {{ subjectPossessive }} region
     </div>
 
-    <div
-      v-if="isNotFound"
-      class="flash flash--error"
-    >
-      We're sorry, but we cannot find a region with that information.
-    </div>
-
-    <div
-      v-if="suggestions.length"
-      class="flash"
-    >
-      We couldn't match exact results to the information that you gave us.<br />
-      Select a result below, or try the form fields again.
-    </div>
-
     <div class="panel__content suggestions">
-      <template v-if="savedLocation">
-        <p class="padding--t-r-l-none margin--t-r-l-none margin--b-large">
-          We have saved {{ subjectPossessive }} region as:
-        </p>
+      <div class="padding--t-medium">
+        <label for="location_country">Country / Territory</label>
 
-        <div ref="savedLocationTable">
-          <div class="Rtable Rtable--3cols">
-            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-              <h6 class="margin--none">City</h6>
-            </div>
-
-            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-              <h6 class="margin--none">State / Province</h6>
-            </div>
-
-            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-              <h6 class="margin--none">Country / Territory</h6>
-            </div>
-          </div>
-
-          <div class="Rtable Rtable--3cols" ref="savedLocationTableRow">
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ savedLocation.city || "(no city)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ savedLocation.state || "(no state/province)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ savedLocation.country || "(no country)" }}
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-if="suggestions.length">
-        <div ref="suggestionsTable">
-          <div class="Rtable Rtable--3cols">
-            <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
-            <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
-            <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
-          </div>
-
-          <div
-            class="Rtable Rtable--3cols suggestion"
-            v-for="suggestion in suggestions"
-            :key="suggestion.id"
-            @click="handleSuggestionClick(suggestion)"
-          >
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ suggestion.city || "(no city)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ suggestion.state || "(no state/province)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ suggestion.country || "(no country)" }}
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <div
-        v-show="!savedLocation"
-        class="padding--t-medium"
-      >
-        <template v-if="countryConfirmed || country !== 'Israel'">
-          <label for="location_country">Country / Territory</label>
-
-          <vue-select
-            v-if="countries.length"
-            ref="countryField"
-            :select-on-tab="true"
-            input-id="location_country"
-            :options="countries"
-            v-model="country"
-          />
-          <p v-if="!countries.length">LOADING...</p>
-        </template>
-
-        <template v-else>
-          <label>Please choose the correct terrritory:</label>
-
-          <p class="inline-checkbox">
-            <label>
-              <input
-                type="radio"
-                name="location_country"
-                value="Israel"
-                v-model="country"
-                @click="confirmCountry('Israel')"
-              /> Israel
-            </label>
-          </p>
-
-          <p class="inline-checkbox">
-            <label>
-              <input
-                type="radio"
-                name="location_country"
-                value="Palestine"
-                v-model="country"
-                @click="confirmCountry('Palestine')"
-              /> Palestine
-            </label>
-          </p>
-        </template>
+        <vue-select
+          v-if="countries.length"
+          ref="countryField"
+          :select-on-tab="true"
+          input-id="location_country"
+          :options="countries"
+          v-model="country"
+        />
+        <p v-if="!countries.length">LOADING...</p>
 
         <label for="location_state">State / Province {{ optionalStateLabel }}</label>
 
