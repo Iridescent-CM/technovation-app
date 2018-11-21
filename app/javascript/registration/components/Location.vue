@@ -2,10 +2,9 @@
   <location-form
     :wizard-token="wizardToken"
     :scope-name="apiRoot"
-    :handleBack="handleBack"
-    :handleConfirm="handleConfirm"
-    :showFinalCancel="false"
-    :showBackBtn="true"
+    :handle-back="handleBack"
+    :handle-confirm="handleConfirm"
+    :show-back-btn="true"
     v-model="locationData"
   ></location-form>
 </template>

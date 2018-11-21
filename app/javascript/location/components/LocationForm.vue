@@ -46,7 +46,7 @@
         <a
           href="#"
           class="color--danger font-size--small"
-          @click.prevent="resetAll"
+          @click.prevent="resetForm"
           v-if="formHasInput"
         >
           reset this form
@@ -63,21 +63,12 @@
         Back
       </a>
       <p class="padding--none margin--none">
-        <a
-          href="#"
-          class="color--secondary"
-          v-if="showCancel"
-          @click.prevent="handleCancel"
-        >
-          {{ cancelText }}
-        </a>
-        &nbsp;
         <button
           class="button"
           :disabled="searching"
           @click.prevent="handleSubmit"
         >
-          {{ submitText }}
+          Next
         </button>
       </p>
     </div>
@@ -99,11 +90,6 @@ export default {
       city: "",
       state: "",
       country: "",
-      countryConfirmed: null,
-      suggestions: [],
-      savedLocation: null,
-      searching: false,
-      status: null,
       countries: [],
       subregions: [],
     }
@@ -156,12 +142,6 @@ export default {
       required: false,
       default: () => history.back(),
     },
-
-    showFinalCancel: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
   },
 
   created () {
@@ -200,29 +180,6 @@ export default {
       return ''
     },
 
-    optionalStatePlaceholder () {
-      if (this.countryDetectedInStateOptionalList)
-        return "In your area, it's okay if this field is blank."
-
-      return ''
-    },
-
-    cancelText () {
-      if (this.savedLocation) {
-        return 'change region'
-      } else {
-        return 'cancel'
-      }
-    },
-
-    submitText () {
-      if (this.savedLocation) {
-        return 'Confirm'
-      } else {
-        return 'Next'
-      }
-    },
-
     subjectPossessive () {
       if (this.accountId) {
         return "this person's"
@@ -231,10 +188,6 @@ export default {
       } else {
         return 'your'
       }
-    },
-
-    isNotFound () {
-      return this.status === HttpStatusCodes.NOT_FOUND
     },
 
     formHasInput () {
@@ -265,22 +218,12 @@ export default {
       return params
     },
 
-    showCancel () {
-      return this.showFinalCancel || this.savedLocation
+    searching () {
+      return !this.countries.length || !this.subregions.length
     },
   },
 
   watch: {
-    status (newStatus) {
-      switch(newStatus) {
-        case HttpStatusCodes.NOT_FOUND:
-          console.warn('geocoding results not found')
-          this.$refs.countryField.focus()
-        default:
-          // no op
-      }
-    },
-
     city (value) {
       this.$emit('input', Object.assign({}, {
         city: value,
@@ -298,6 +241,10 @@ export default {
     },
 
     country (value) {
+      // Reset the subregions drop-down
+      this.subregions = []
+      this.state = ""
+
       // Fetch the subregions for this country for the drop-down
       const countryName = encodeURIComponent(value)
       window.axios.get(`/public/countries?name=${countryName}`)
@@ -315,114 +262,22 @@ export default {
 
   methods: {
     handleSubmit () {
-      if (this.savedLocation) {
-        window.axios.post(this.patchLocationEndpoint, this.params)
-          .then(() => {
-            this.handleConfirm()
-          }).catch(err => {
-            console.error(err)
-          })
-      } else if (!this.formHasInput) {
-        this.handleErrorResponse({ response: { status: 404 } })
-      } else {
-        this.resetMeta()
-        this.searching = true
-
-        window.axios.patch(this.patchLocationEndpoint, this.params)
-          .then(({ status, data }) => {
-            this.handleOKResponse(status, data)
-          }).catch(err => {
-            this.handleErrorResponse(err)
-          })
-      }
-    },
-
-    handleCancel () {
-      if (this.savedLocation) {
-        this.resetMeta()
-        this.$nextTick(() => {
-          this.$refs.countryField.focus()
+      window.axios.post(this.patchLocationEndpoint, this.params)
+        .then(() => {
+          this.handleConfirm()
+        }).catch(err => {
+          console.error(err)
         })
-      } else {
-        // for when we do showFinalCancel
-        history.back()
-      }
-    },
-
-    handleSuggestionClick (suggestion) {
-      this.city = suggestion.city
-      this.state = suggestion.state
-      this.confirmCountry(suggestion.country)
-      this.handleSubmit()
-    },
-
-    handleOKResponse (status, data) {
-      this.searching = false
-      this.status = status
-      this.savedLocation = new LocationResult(data.results[0])
-      this.city = this.savedLocation.city
-      this.state = this.savedLocation.state
-      this.confirmCountry(this.savedLocation.country)
-    },
-
-    handleErrorResponse (err) {
-      this.searching = false
-      this.status = err.response.status
-
-      if (this.status === HttpStatusCodes.MULTIPLE_CHOICES) {
-        this.suggestions = err.response.data.results.map(result => {
-          return new LocationResult(result)
-        })
-
-        const countrySensitivityList = ['Israel', 'Palestine, State of']
-
-        const countries = this.suggestions.map(l => l.country)
-        const matched = countries.filter(c => c === this.country)[0]
-
-        if (
-          this.countryConfirmed &&
-            matched && matched.length &&
-              countries.length === countrySensitivityList.length &&
-                countries.sort().every((value, index) => value === countrySensitivityList.sort()[index])
-        ) {
-          const result = {
-            id: Math.floor(Math.random()*16777215).toString(16),
-            city: this.city,
-            state: this.state,
-            country: matched,
-          }
-
-          this.suggestions = []
-          this.handleOKResponse(200, { results: [result] })
-        }
-      }
-    },
-
-    confirmCountry (country) {
-      this.country = country
-      this.countryConfirmed = true
-    },
-
-    resetAll () {
-      this.resetForm()
-      this.resetMeta()
-
-      this.$nextTick(() => {
-        this.$refs.countryField.focus()
-      })
     },
 
     resetForm () {
       this.city = ""
       this.state = ""
       this.country = ""
-    },
 
-    resetMeta () {
-      this.suggestions = []
-      this.savedLocation = null
-      this.status = null
-      this.searching = false
+      this.$nextTick(() => {
+        this.$refs.countryField.focus()
+      })
     },
 
     _getEndpoint (pathPart) {
