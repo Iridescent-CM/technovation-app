@@ -164,9 +164,9 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def time
-    [starts_at.in_time_zone(timezone).strftime("%-I:%M%P"),
+    [starts_at.in_time_zone(timezone).strftime("%-k:%M"),
      "-",
-     ends_at.in_time_zone(timezone).strftime("%-I:%M%P")].join(" ")
+     ends_at.in_time_zone(timezone).strftime("%-k:%M")].join(" ")
   end
 
   def live?
