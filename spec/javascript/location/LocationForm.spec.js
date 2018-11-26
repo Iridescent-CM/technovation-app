@@ -115,66 +115,222 @@ describe('location/components/LocationForm', () => {
     })
   })
 
-  describe('full integration suite for single result', () => {
-    const suggestionsResults = [
-      {
-        id: 'd7070f84',
-        state_code: 'MO',
-        state: 'Missouri',
-        latitude: 39.0997265,
-        longitude: -94.5785667,
-        city: 'Kansas City',
-        country_code: 'US',
-        country: 'United States'
-      },
-    ]
+  describe('optional label for the state/region selection field label', () => {
+    function mockAxiosForCountry(country) {
+      const countryName = encodeURIComponent(country)
 
-    let wrapper
-
-    beforeEach(() => {
       axios.get.mockClear()
-      axios.post.mockClear()
-      axios.patch.mockClear()
-    })
 
-    it('it makes a GET request to populate the initial location', () => {
-      axios.mockResponseOnce('get', {
-        city: 'Chicago',
-        state: 'IL',
-        country: 'US',
+      axios.get.mockImplementation((url) => {
+        if (url === '/student/current_location') {
+          return Promise.resolve({
+            data: {
+              country,
+              city: 'City',
+              state: '',
+            },
+            status: 200,
+          })
+        } else if (url === '/public/countries') {
+          return Promise.resolve({
+            data: countries,
+            status: 200,
+          })
+        } else if (url === `/public/countries?name=${countryName}`) {
+          return Promise.resolve({
+            data: [],
+            status: 200,
+          })
+        }
       })
+    }
 
-      expect(axios.get).not.toHaveBeenCalled()
+    it('displays for Hong Kong', (done) => {
+      mockAxiosForCountry('Hong Kong')
 
-      wrapper = shallowMount(LocationForm, {
-        localVue,
+      const wrapper = shallowMount(LocationForm, {
         propsData: {
-          teamId: 1,
           scopeName: 'student',
-          handleConfirm: jest.fn(() => {}),
         },
       })
 
-      expect(axios.get).toHaveBeenCalledWith('/student/current_location?team_id=1')
+      setImmediate(() => {
+        expect(wrapper.find('label[for="location_state"]').text()).toEqual('State / Province (Optional)')
+        done()
+      })
     })
 
-    it('saved the final saved location to the database via another XHR request', (done) => {
-      axios.mockResponseOnce('post', {})
+    it('displays for India', (done) => {
+      mockAxiosForCountry('India')
 
-      const handleConfirmSpy = jest.spyOn(wrapper.vm, 'handleConfirm')
-
-      expect(axios.post).not.toHaveBeenCalled()
-
-      wrapper.vm.handleSubmit()
-
-      expect(axios.post).toHaveBeenCalledWith(
-        wrapper.vm.patchLocationEndpoint,
-        wrapper.vm.params
-      )
+      const wrapper = shallowMount(LocationForm, {
+        propsData: {
+          scopeName: 'student',
+        },
+      })
 
       setImmediate(() => {
-        expect(handleConfirmSpy).toHaveBeenCalledTimes(1)
+        expect(wrapper.find('label[for="location_state"]').text()).toEqual('State / Province (Optional)')
         done()
+      })
+    })
+
+    it('displays for Palestine', (done) => {
+      mockAxiosForCountry('Palestine')
+
+      const wrapper = shallowMount(LocationForm, {
+        propsData: {
+          scopeName: 'student',
+        },
+      })
+
+      setImmediate(() => {
+        expect(wrapper.find('label[for="location_state"]').text()).toEqual('State / Province (Optional)')
+        done()
+      })
+    })
+
+    it('displays for Taiwan', (done) => {
+      mockAxiosForCountry('Taiwan')
+
+      const wrapper = shallowMount(LocationForm, {
+        propsData: {
+          scopeName: 'student',
+        },
+      })
+
+      setImmediate(() => {
+        expect(wrapper.find('label[for="location_state"]').text()).toEqual('State / Province (Optional)')
+        done()
+      })
+    })
+
+    it('is hidden for United States', (done) => {
+      mockAxiosForCountry('United States')
+
+      const wrapper = shallowMount(LocationForm, {
+        propsData: {
+          scopeName: 'student',
+        },
+      })
+
+      setImmediate(() => {
+        expect(wrapper.find('label[for="location_state"]').text()).toEqual('State / Province')
+        done()
+      })
+    })
+  })
+
+  describe('handleSubmit', () => {
+    const scopes = [
+      'admin',
+      'judge',
+      'mentor',
+      'registration',
+      'student',
+    ]
+
+    beforeEach(() => {
+      axios.post.mockClear()
+      axios.mockResponseOnce('post', {})
+    })
+
+    scopes.forEach((scope) => {
+      describe(`for ${scope} scope`, () => {
+        const accountId = 1
+        const teamId = 1
+
+        it(`sends a POST request to /${scope}/location by default`, (done) => {
+          const wrapper = shallowMount(LocationForm, {
+            propsData: {
+              scopeName: scope,
+              value: {
+                country: 'United States',
+                state: 'Illinois',
+                city: 'Chicago',
+              },
+              wizardToken: '1234567',
+            },
+          })
+
+          setImmediate(() => {
+            wrapper.vm.handleSubmit()
+            expect(axios.post).toHaveBeenCalledWith(
+              `/${scope}/location`,
+              {
+                [`${scope}_location`]: {
+                  city: 'Chicago',
+                  country: 'United States',
+                  state: 'Illinois',
+                  token: '1234567',
+                },
+              }
+            )
+            done()
+          })
+        })
+
+        it(`sends a POST request to /${scope}/location?account_id=${accountId} when account ID prop is present`, (done) => {
+          const wrapper = shallowMount(LocationForm, {
+            propsData: {
+              accountId,
+              scopeName: scope,
+              value: {
+                country: 'United States',
+                state: 'Illinois',
+                city: 'Chicago',
+              },
+              wizardToken: '1234567',
+            },
+          })
+
+          setImmediate(() => {
+            wrapper.vm.handleSubmit()
+            expect(axios.post).toHaveBeenCalledWith(
+              `/${scope}/location?account_id=${accountId}`,
+              {
+                [`${scope}_location`]: {
+                  city: 'Chicago',
+                  country: 'United States',
+                  state: 'Illinois',
+                  token: '1234567',
+                },
+              }
+            )
+            done()
+          })
+        })
+
+        it(`sends a POST request to /${scope}/location?team_id=${teamId} when account ID prop is present`, (done) => {
+          const wrapper = shallowMount(LocationForm, {
+            propsData: {
+              teamId,
+              scopeName: scope,
+              value: {
+                country: 'United States',
+                state: 'Illinois',
+                city: 'Chicago',
+              },
+              wizardToken: '1234567',
+            },
+          })
+
+          setImmediate(() => {
+            wrapper.vm.handleSubmit()
+            expect(axios.post).toHaveBeenCalledWith(
+              `/${scope}/location?team_id=${teamId}`,
+              {
+                [`${scope}_location`]: {
+                  city: 'Chicago',
+                  country: 'United States',
+                  state: 'Illinois',
+                  token: '1234567',
+                },
+              }
+            )
+            done()
+          })
+        })
       })
     })
   })

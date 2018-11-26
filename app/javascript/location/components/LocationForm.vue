@@ -144,6 +144,10 @@ export default {
   },
 
   created () {
+    window.axios.get('/public/countries').then(({ data }) => {
+      this.countries = data
+    })
+
     if (this.value) {
       this.city = this.value.city
       this.state = this.value.state
@@ -155,10 +159,6 @@ export default {
         this.country = data.country
       })
     }
-
-    window.axios.get('/public/countries').then(({ data }) => {
-      this.countries = data
-    })
   },
 
   computed: {
@@ -242,20 +242,27 @@ export default {
     country (value) {
       // Reset the subregions drop-down
       this.subregions = []
-      this.state = ""
 
-      // Fetch the subregions for this country for the drop-down
-      const countryName = encodeURIComponent(value)
-      window.axios.get(`/public/countries?name=${countryName}`)
-        .then(({ data }) => {
-          this.subregions = data
-        })
+      if (!value) {
+        this.state = ''
+      } else {
+        // Fetch the subregions for this country for the drop-down
+        const countryName = encodeURIComponent(value)
+        window.axios.get(`/public/countries?name=${countryName}`)
+          .then(({ data }) => {
+            this.subregions = data
 
-      this.$emit('input', Object.assign({}, {
-        city: this.city,
-        state: this.state,
-        country: value,
-      }))
+            if (!this.subregions.includes(this.state)) {
+              this.state = ''
+            }
+
+            this.$emit('input', Object.assign({}, {
+              city: this.city,
+              state: this.state,
+              country: value,
+            }))
+          })
+      }
     },
   },
 
