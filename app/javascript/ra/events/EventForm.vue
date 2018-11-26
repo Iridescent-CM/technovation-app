@@ -153,6 +153,7 @@
           enableTime: true,
           noCalendar: true,
           dateFormat: "H:i",
+          time_24hr: true,
           minuteIncrement: 15,
           minTime: "07:00",
           maxTime: "23:30",
