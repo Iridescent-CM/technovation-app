@@ -21,7 +21,7 @@
         />
         <p v-if="!countries.length">LOADING...</p>
 
-        <label for="location_state">State / Province {{ optionalStateLabel }}</label>
+        <label for="location_state">State / Province{{ optionalStateLabel }}</label>
 
         <vue-select
           v-if="subregions.length"
@@ -76,7 +76,6 @@
 </template>
 
 <script>
-import LocationResult from '../models/LocationResult'
 import HttpStatusCodes from '../../constants/HttpStatusCodes'
 import VueSelect from '@vendorjs/vue-select'
 
@@ -87,9 +86,9 @@ export default {
 
   data () {
     return {
-      city: "",
-      state: "",
-      country: "",
+      city: '',
+      state: '',
+      country: '',
       countries: [],
       subregions: [],
     }
@@ -175,7 +174,7 @@ export default {
 
     optionalStateLabel () {
       if (this.countryDetectedInStateOptionalList)
-        return '(Optional)'
+        return ' (Optional)'
 
       return ''
     },
@@ -271,13 +270,9 @@ export default {
     },
 
     resetForm () {
-      this.city = ""
-      this.state = ""
-      this.country = ""
-
-      this.$nextTick(() => {
-        this.$refs.countryField.focus()
-      })
+      this.city = ''
+      this.state = ''
+      this.country = ''
     },
 
     _getEndpoint (pathPart) {

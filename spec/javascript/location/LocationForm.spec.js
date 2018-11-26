@@ -1,46 +1,94 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import axios from 'axios'
 
-import LocationResult from 'location/models/LocationResult'
 import LocationForm from 'location/components/LocationForm'
 
-const localVue = createLocalVue()
-
 describe('location/components/LocationForm', () => {
+  const countries = [
+    'Canada',
+    'Hong Kong',
+    'India',
+    'Mexico',
+    'Palestine',
+    'Taiwan',
+    'United States',
+  ]
+
   beforeEach(() => {
     axios.get.mockClear()
+
+    axios.get.mockImplementation((url) => {
+      if (url === '/student/current_location') {
+        return Promise.resolve({
+          data: {
+            city: 'Chicago',
+            state: 'Illinois',
+            country: 'United States',
+          },
+          status: 200,
+        })
+      } else if (url === '/public/countries') {
+        return Promise.resolve({
+          data: countries,
+          status: 200,
+        })
+      } else if (url === '/public/countries?name=United%20States') {
+        return Promise.resolve({
+          data: [
+            'California',
+            'Illinois',
+            'Missouri',
+          ],
+          status: 200,
+        })
+      }
+
+      return Promise.resolve({
+        data: {},
+        status: 200,
+      })
+    })
   })
 
-  xit('fills in the user location data from the server', (done) => {
-    axios.mockResponseOnce('get', {
-      city: 'Chicago',
-      state: 'IL',
-      country: 'US',
-    })
-
-    const myWrapper = shallowMount(LocationForm, {
-      localVue,
+  it('fills in the user location data from the server', (done) => {
+    const wrapper = shallowMount(LocationForm, {
       propsData: {
         scopeName: 'student',
       },
     })
 
     setImmediate(() => {
+      // Should populate the current location via AJAX
       expect(axios.get).toHaveBeenCalledWith('/student/current_location')
 
-      expect(myWrapper.vm.city).toEqual('Chicago')
-      expect(myWrapper.vm.state).toEqual('IL')
-      expect(myWrapper.vm.country).toEqual('US')
+      expect(wrapper.vm.city).toEqual('Chicago')
+      expect(wrapper.vm.state).toEqual('Illinois')
+      expect(wrapper.vm.country).toEqual('United States')
 
-      expect(myWrapper.find('#location_city').element.value).toEqual('Chicago')
-      expect(myWrapper.find({ ref: 'stateField'}).$data.value).toEqual('IL')
+      expect(wrapper.find({ ref: 'cityField' }).element.value).toEqual('Chicago')
+      expect(wrapper.find({ ref: 'stateField' }).vm.value).toEqual('Illinois')
+      expect(wrapper.find({ ref: 'countryField' }).vm.value).toEqual('United States')
+
+      // Should populate the country drop-down
+      expect(axios.get).toHaveBeenCalledWith('/public/countries')
+
+      expect(wrapper.vm.countries).toEqual(countries)
+
+      // Populating the countries will trigger a watcher update that populates subregions
+      expect(axios.get).toHaveBeenCalledWith('/public/countries?name=United%20States')
+
+      expect(wrapper.vm.subregions).toEqual([
+        'California',
+        'Illinois',
+        'Missouri',
+      ])
+
       done()
     })
   })
 
   it('accepts an optional accountId prop for the current location request', (done) => {
     shallowMount(LocationForm, {
-      localVue,
       propsData: {
         accountId: 1,
         scopeName: 'admin',
@@ -55,7 +103,6 @@ describe('location/components/LocationForm', () => {
 
   it('accepts an optional teamId prop for the current location request', (done) => {
     shallowMount(LocationForm, {
-      localVue,
       propsData: {
         teamId: 1,
         scopeName: 'admin',
