@@ -34,6 +34,9 @@ describe("Registration::Components::Location.vue", () => {
             },
           },
         }),
+        stubs: {
+          'vue-select': true,
+        },
       }
     )
   })

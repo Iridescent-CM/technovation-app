@@ -7,31 +7,48 @@
       Confirm {{ subjectPossessive }} region
     </div>
 
-    <div class="panel__content suggestions">
+    <div
+      v-if="loading"
+      class="panel__content"
+    >
+      <div class="padding--t-b-large text-align--center">
+        <p><icon name="spinner" className="spin" /></p>
+        <p>Loading location form</p>
+      </div>
+    </div>
+
+    <div
+      v-else
+      class="panel__content"
+    >
       <div class="padding--t-medium">
         <label for="location_country">Country / Territory</label>
 
         <vue-select
-          v-if="countries.length"
           ref="countryField"
           :select-on-tab="true"
           input-id="location_country"
           :options="countries"
           v-model="country"
         />
-        <p v-if="!countries.length">LOADING...</p>
 
         <label for="location_state">State / Province{{ optionalStateLabel }}</label>
 
         <vue-select
-          v-if="subregions.length"
+          v-if="subregions.length && country"
           ref="stateField"
           :select-on-tab="true"
           input-id="location_state"
           :options="subregions"
           v-model="state"
         />
-        <p v-if="!subregions.length">LOADING...</p>
+        <p v-else-if="!country">
+          Please select a country first
+        </p>
+        <p v-else-if="!subregions.length">
+          <icon name="spinner" className="spin" size="14" />
+          Loading States / Provinces
+        </p>
 
         <label for="location_city">City</label>
 
@@ -65,7 +82,7 @@
       <p class="padding--none margin--none">
         <button
           class="button"
-          :disabled="searching"
+          :disabled="searching || loading"
           @click.prevent="handleSubmit"
         >
           Next
@@ -77,10 +94,12 @@
 
 <script>
 import HttpStatusCodes from '../../constants/HttpStatusCodes'
+import Icon from 'components/Icon'
 import VueSelect from '@vendorjs/vue-select'
 
 export default {
   components: {
+    Icon,
     VueSelect,
   },
 
@@ -90,6 +109,7 @@ export default {
       state: '',
       country: '',
       countries: [],
+      loading: true,
       subregions: [],
     }
   },
@@ -144,21 +164,29 @@ export default {
   },
 
   created () {
-    window.axios.get('/public/countries').then(({ data }) => {
+    const countriesInitialized = window.axios.get('/public/countries').then(({ data }) => {
       this.countries = data
     })
 
-    if (this.value) {
-      this.city = this.value.city
-      this.state = this.value.state
-      this.country = this.value.country
-    } else {
-      window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
-        this.city = data.city
-        this.state = data.state
-        this.country = data.country
-      })
-    }
+    const currentLocationInitialized = new Promise((resolve, reject) => {
+      if (this.value) {
+        this.city = this.value.city
+        this.state = this.value.state
+        this.country = this.value.country
+        resolve()
+      } else {
+        window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
+          this.city = data.city
+          this.state = data.state
+          this.country = data.country
+          resolve()
+        })
+      }
+    })
+
+    Promise.all([countriesInitialized, currentLocationInitialized]).then(() => {
+      this.loading = false
+    })
   },
 
   computed: {
