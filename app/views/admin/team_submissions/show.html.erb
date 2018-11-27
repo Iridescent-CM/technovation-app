@@ -8,7 +8,10 @@
 <div class="grid">
   <div class="grid__col-6">
     <div class="panel">
-      <h3><%= @team_submission.team_name %></h3>
+      <h3>
+        <%= link_to @team_submission.team_name,
+          admin_team_path(@team_submission.team) %>
+      </h3>
 
       <div class="grid">
         <div class="grid__col-6">
