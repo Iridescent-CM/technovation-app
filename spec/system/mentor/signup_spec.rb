@@ -12,12 +12,11 @@ RSpec.describe "Mentors signing up", :js do
       check "I agree"
       click_button "Next"
 
-      fill_in "State / Province", with: "California"
+      fill_in_vue_select "Country / Territory", with: "United States"
+      fill_in_vue_select "State / Province", with: "California"
       fill_in "City", with: "Los Angeles"
-      fill_in "Country", with: "United States"
 
       click_button "Next"
-      click_button "Confirm"
 
       fill_in_vue_select "Year", with: Season.current.year - 21
       fill_in_vue_select "Month", with: "1"
