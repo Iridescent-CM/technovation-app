@@ -10,6 +10,8 @@ RSpec.feature "Survey link formatting" do
       url += "&name=[name_value]"
       url += "&city=[city_value]"
       url += "&age=[age_value]"
+      url += "&school=[school_value]"
+      url += "&team=[team_value]"
 
       SeasonToggles.set_survey_link(
         scope,
@@ -17,9 +19,9 @@ RSpec.feature "Survey link formatting" do
         url,
       )
 
-      user = FactoryBot.create("onboarded_#{scope}", :geocoded)
-      account = user.account
-      sign_in(user)
+      profile = FactoryBot.create("onboarded_#{scope}", :geocoded)
+      account = profile.account
+      sign_in(profile)
 
       expected_url = "https://www.example.com/some/path"
       expected_url += "?email=#{account.email}"
@@ -28,6 +30,8 @@ RSpec.feature "Survey link formatting" do
       expected_url += "&name=#{account.full_name}"
       expected_url += "&city=#{account.city}"
       expected_url += "&age=#{account.age}"
+      expected_url += "&school=#{profile.school_company_name}"
+      expected_url += "&team=#{profile.team_names.join(", ")}"
 
       expect(page).to have_link("Short headline", href: expected_url)
     end

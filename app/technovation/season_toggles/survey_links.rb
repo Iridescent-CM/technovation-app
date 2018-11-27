@@ -68,6 +68,8 @@ class SeasonToggles
           formatted_url.sub!("[name_value]", account.full_name)
           formatted_url.sub!("[city_value]", account.city || "")
           formatted_url.sub!("[age_value]", account.age.to_s)
+          formatted_url.sub!("[school_value]", account.profile_school_company_name)
+          formatted_url.sub!("[team_value]", account.profile_team_names.join(", "))
           formatted_url
         end
       end
