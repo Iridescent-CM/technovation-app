@@ -13,6 +13,8 @@ RSpec.describe "Team locations", :js do
 
       click_link "Change this team's location"
 
+      page.find('#location_form_reset').click
+
       select_vue_select_option "#location_country", option: "United States"
       select_vue_select_option "#location_state", option: "California"
       page.find("#location_city").set("Los Angeles")

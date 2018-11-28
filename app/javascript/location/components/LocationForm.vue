@@ -63,6 +63,7 @@
         <a
           href="#"
           class="color--danger font-size--small"
+          id="location_form_reset"
           @click.prevent="resetForm"
           v-if="formHasInput"
         >
