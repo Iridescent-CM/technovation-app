@@ -81,6 +81,7 @@
       </a>
       <p class="padding--none margin--none">
         <button
+          id="location_submit_button"
           class="button"
           :disabled="searching || loading"
           @click.prevent="handleSubmit"
