@@ -2,9 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Students creating a team", :js do
   describe "default team location" do
-    it "lets you change the signup form default and sets the team to your change" do
-      stub_coordinates([41.50196838, -87.64051818])
-
+    it "sets the team to your location" do
       SeasonToggles.enable_signup(:student)
       SeasonToggles.enable_team_building!
 
@@ -14,13 +12,11 @@ RSpec.describe "Students creating a team", :js do
       check "I agree"
       click_button "Next"
 
-      expect(page.find('#location_city').value).to eq("Chicago")
-
-      fill_in "State / Province", with: "CA"
+      fill_in_vue_select "Country / Territory", with: "United States"
+      fill_in_vue_select "State / Province", with: "California"
       fill_in "City", with: "Los Angeles"
 
       click_button "Next"
-      click_button "Confirm"
 
       fill_in_vue_select "Year", with: Season.current.year - 11
       fill_in_vue_select "Month", with: "1"
