@@ -13,10 +13,6 @@ module SignupHelper
   def sign_up(profile_scope)
     visit signout_path
 
-    allow(CookiedCoordinates).to receive(:get).and_return(
-      [41.50196838, -87.64051818]
-    )
-
     SeasonToggles.enable_signup(profile_scope)
 
     visit root_path
@@ -25,10 +21,9 @@ module SignupHelper
     check "I agree"
     click_button "Next"
 
-    sleep 1
-    fill_in_vue_select "Country / Territory", with: "United States"
-    fill_in_vue_select "State / Province", with: "California"
-    fill_in "City", with: "Los Angeles"
+    select_vue_select_option "#location_country", option: "United States"
+    select_vue_select_option "#location_state", option: "California"
+    page.find("#location_city").set("Los Angeles")
 
     click_button "Next"
 

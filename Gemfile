@@ -118,6 +118,7 @@ group :test do
   gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
 
   gem 'capybara', '~> 2.18'
+  gem 'capybara-selenium'
   gem 'selenium-webdriver', "~> 3.141"
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper', "~> 1.2"

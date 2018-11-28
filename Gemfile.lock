@@ -118,6 +118,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (>= 2.0, < 4.0)
+    capybara-selenium (0.0.6)
+      capybara
+      selenium-webdriver
     carmen (1.1.1)
       activesupport (>= 3.0.0)
     carrierwave (1.2.3)
@@ -486,6 +489,7 @@ DEPENDENCIES
   bootsnap (~> 1.3)
   browser (~> 2.5)
   capybara (~> 2.18)
+  capybara-selenium
   carmen (~> 1.1)
   carrierwave (~> 1.2)
   carrierwave_direct (~> 0.0)

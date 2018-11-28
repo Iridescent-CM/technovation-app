@@ -25,6 +25,24 @@ Capybara.automatic_label_click = true
 require 'rake'
 Rails.application.load_tasks
 
+require "selenium/webdriver"
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w(headless disable-gpu) }
+  )
+
+  Capybara::Selenium::Driver.new app,
+    browser: :chrome,
+    desired_capabilities: capabilities
+end
+
+Capybara.javascript_driver = :headless_chrome
+
 RSpec.configure do |config|
   config.fail_fast = true
 
@@ -45,8 +63,6 @@ RSpec.configure do |config|
   config.include VueSelectInputHelper, type: :system
 
   config.include MailgunHelper, type: :system
-
-  config.include CoordinatesHelper, type: :system
 
   config.include AccountFormHelpers, type: :feature
   config.include AccountFormHelpers, type: :system

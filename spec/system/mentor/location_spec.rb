@@ -31,7 +31,7 @@ RSpec.describe "Mentors register with their location", :js do
 
     select_vue_select_option "#location_country", option: "United States"
     select_vue_select_option "#location_state", option: "Illinois"
-    fill_in "location_city", with: "Chicago"
+    fill_in "City", with: "Chicago"
 
     expect(page).to have_selector("#location_submit_button:enabled", wait: 10)
 

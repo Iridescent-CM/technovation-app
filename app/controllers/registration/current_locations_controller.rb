@@ -5,16 +5,6 @@ module Registration
 
       if current_attempt.valid_coordinates?
         geocoded = Geocoded.new(current_attempt)
-      elsif result = Geocoder.search(CookiedCoordinates.get(self)).first
-        geocoded = Geocoded.new(result)
-      else
-        StoreLocation.(
-          ip_address: request.remote_ip,
-          context: self,
-        )
-        if result = Geocoder.search(CookiedCoordinates.get(self)).first
-          geocoded = Geocoded.new(result)
-        end
       end
 
       render json: geocoded

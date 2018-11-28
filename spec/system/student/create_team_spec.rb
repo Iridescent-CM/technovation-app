@@ -12,11 +12,15 @@ RSpec.describe "Students creating a team", :js do
       check "I agree"
       click_button "Next"
 
-      fill_in_vue_select "Country / Territory", with: "United States"
-      fill_in_vue_select "State / Province", with: "California"
-      fill_in "City", with: "Los Angeles"
+      begin
+        fill_in_vue_select "Country / Territory", with: "United States"
+        fill_in_vue_select "State / Province", with: "California"
+        fill_in "City", with: "Los Angeles"
 
-      click_button "Next"
+        click_button "Next"
+      rescue
+        binding.irb
+      end
 
       fill_in_vue_select "Year", with: Season.current.year - 11
       fill_in_vue_select "Month", with: "1"
