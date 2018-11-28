@@ -117,11 +117,9 @@ group :test do
   gem 'rails-controller-testing', "~> 1.0"
   gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
 
-  gem 'capybara', '~> 2.18'
-  gem 'capybara-selenium'
-  gem 'selenium-webdriver', "~> 3.141"
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper', "~> 1.2"
+  gem "capybara", "~> 2.13"
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
   gem 'rspec-rails', "~> 3.8"
 
   # deprecated
