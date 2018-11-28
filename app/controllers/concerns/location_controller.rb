@@ -6,7 +6,7 @@ module LocationController
     db_record.state_province = location_params.fetch(:state)
     db_record.country = location_params.fetch(:country)
 
-    Geocoding.perform(db_record, self).with_save
+    Geocoding.perform(db_record).with_save
 
     head 200
   end
