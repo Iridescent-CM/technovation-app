@@ -29,9 +29,11 @@ RSpec.describe "Mentors register with their location", :js do
     click_button "Profile"
     click_button "Region"
 
+    # TODO - this cannot stand >:[
+    sleep 1
+    fill_in_vue_select "Country / Territory", with: "United States"
+    fill_in_vue_select "State / Province", with: "Illinois"
     fill_in "City", with: "Chicago"
-    fill_in "State / Province", with: "IL"
-    fill_in "Country / Territory", with: "United States"
     click_button "Next"
 
     visit mentor_profile_path(anchor: '!location')

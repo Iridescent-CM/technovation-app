@@ -11,6 +11,8 @@ RSpec.describe "Students signing up", :js do
       check "I agree"
       click_button "Next"
 
+      # TODO - this cannot stand >:[
+      sleep 1
       fill_in_vue_select "Country / Territory", with: "United States"
       fill_in_vue_select "State / Province", with: "California"
       fill_in "City", with: "Los Angeles"

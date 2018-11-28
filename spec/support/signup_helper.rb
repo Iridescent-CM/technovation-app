@@ -25,13 +25,12 @@ module SignupHelper
     check "I agree"
     click_button "Next"
 
-    expect(page.find('#location_city').value).to eq("Chicago")
-
-    fill_in "State / Province", with: "CA"
+    sleep 1
+    fill_in_vue_select "Country / Territory", with: "United States"
+    fill_in_vue_select "State / Province", with: "California"
     fill_in "City", with: "Los Angeles"
 
     click_button "Next"
-    click_button "Confirm"
 
     year = case profile_scope
            when :student
