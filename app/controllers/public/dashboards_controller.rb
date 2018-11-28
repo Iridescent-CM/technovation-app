@@ -1,7 +1,5 @@
 module Public
   class DashboardsController < ApplicationController
-    include LocationStorageController
-
     def show
       set_cookie(CookieNames::SIGNUP_WIZARD_MODE, true)
 
