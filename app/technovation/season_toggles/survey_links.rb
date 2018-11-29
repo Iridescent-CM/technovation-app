@@ -69,6 +69,7 @@ class SeasonToggles
           formatted_url.sub!("[city_value]", account.city || "")
           formatted_url.sub!("[age_value]", account.age.to_s)
           formatted_url.sub!("[school_value]", account.profile_school_company_name)
+          formatted_url.sub!("[company_value]", account.profile_school_company_name)
 
           team_replacement = if account.profile_teams.any?
             account.profile_team_names.join(", ")

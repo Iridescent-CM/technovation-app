@@ -11,6 +11,7 @@ RSpec.feature "Survey link formatting" do
       url += "&city=[city_value]"
       url += "&age=[age_value]"
       url += "&school=[school_value]"
+      url += "&company=[company_value]"
       url += "&team=[team_value]"
 
       SeasonToggles.set_survey_link(
@@ -31,6 +32,7 @@ RSpec.feature "Survey link formatting" do
       expected_url += "&city=#{account.city}"
       expected_url += "&age=#{account.age}"
       expected_url += "&school=#{account.profile_school_company_name}"
+      expected_url += "&company=#{account.profile_school_company_name}"
       expected_url += "&team="
 
       expect(page).to have_link("Short headline", href: expected_url)
@@ -47,6 +49,7 @@ RSpec.feature "Survey link formatting" do
       expected_url += "&city=#{account.city}"
       expected_url += "&age=#{account.age}"
       expected_url += "&school=#{account.profile_school_company_name}"
+      expected_url += "&company=#{account.profile_school_company_name}"
       expected_url += "&team=#{account.profile_team_names.join(", ")}"
 
       expect(page).to have_link("Short headline", href: expected_url)
