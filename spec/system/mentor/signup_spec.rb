@@ -41,7 +41,7 @@ RSpec.describe "Mentors signing up", :js do
 
       stub_mailgun_validation(valid: true, email: "margeyb@springfield.net")
 
-      fill_in "Email", with: "margeyb@springfield.net"
+      fill_in "Email Address", with: "margeyb@springfield.net"
       fill_in "Password", with: "margeysecret1234"
       click_button "Next"
 

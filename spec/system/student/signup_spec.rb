@@ -11,8 +11,8 @@ RSpec.describe "Students signing up", :js do
       check "I agree"
       click_button "Next"
 
-      fill_in_vue_select "Country / Territory", with: "United States"
-      fill_in_vue_select "State / Province", with: "California"
+      select_vue_select_option "#location_country", option: "United States"
+      select_vue_select_option "#location_state", option: "California"
       fill_in "City", with: "Los Angeles"
 
       click_button "Next"
@@ -32,7 +32,7 @@ RSpec.describe "Students signing up", :js do
 
       stub_mailgun_validation(valid: true, email: "margeyb@springfield.net")
 
-      fill_in "Email", with: "margeyb@springfield.net"
+      fill_in "Email Address", with: "margeyb@springfield.net"
       fill_in "Password", with: "margeysecret1234"
       click_button "Next"
 
