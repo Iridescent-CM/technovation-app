@@ -205,10 +205,38 @@ RSpec.describe Account do
   end
 
   it "calculates age compared to a particular date" do
-    account = FactoryBot.create(:account)
+    Timecop.freeze(Date.new(2017, 11, 29)) do
+      account = FactoryBot.create(:account)
 
-    account.date_of_birth = 15.years.ago + 3.months
-    expect(account.age(3.months.from_now)).to eq(15)
+      account.date_of_birth = 15.years.ago + 3.months
+      expect(account.age(3.months.from_now)).to eq(15)
+    end
+  end
+
+  it "calculates age correctly during leap years" do
+    account = FactoryBot.create(:account)
+    account.date_of_birth = Date.new(2001, 3, 1)
+
+    Timecop.freeze(Date.new(2016, 2, 29)) do
+      expect(account.age).to eq(14)
+    end
+
+    Timecop.freeze(Date.new(2016, 3, 1)) do
+      expect(account.age).to eq(15)
+    end
+  end
+
+  it "calculates age correctly for leap year birthdays" do
+    account = FactoryBot.create(:account)
+    account.date_of_birth = Date.new(2000, 2, 29)
+
+    Timecop.freeze(Date.new(2017, 2, 28)) do
+      expect(account.age).to eq(16)
+    end
+
+    Timecop.freeze(Date.new(2017, 3, 1)) do
+      expect(account.age).to eq(17)
+    end
   end
 
   it "does a somewhat normal email validation" do
