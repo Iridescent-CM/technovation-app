@@ -8,24 +8,21 @@ end
 
 require 'spec_helper'
 require 'rspec/rails'
-require 'capybara'
-
-ActiveRecord::Migration.maintain_test_schema!
-
-require 'vcr_helper'
 require "geocoder_helper"
+require 'rake'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
+ActiveRecord::Migration.maintain_test_schema!
 
 ::Timezone::Lookup.config(:test)
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
-Capybara.automatic_label_click = true
-
-require 'rake'
 Rails.application.load_tasks
 
 RSpec.configure do |config|
+  config.infer_spec_type_from_file_location!
+
   config.fail_fast = true
 
   config.include SigninHelper, type: :feature
@@ -46,8 +43,6 @@ RSpec.configure do |config|
 
   config.include MailgunHelper, type: :system
 
-  config.include CoordinatesHelper, type: :system
-
   config.include AccountFormHelpers, type: :feature
   config.include AccountFormHelpers, type: :system
 
@@ -55,7 +50,6 @@ RSpec.configure do |config|
   config.include WebMock::API
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
   config.use_transactional_fixtures = true

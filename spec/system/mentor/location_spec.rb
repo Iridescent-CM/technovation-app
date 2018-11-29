@@ -29,9 +29,12 @@ RSpec.describe "Mentors register with their location", :js do
     click_button "Profile"
     click_button "Region"
 
+    select_vue_select_option "#location_country", option: "United States"
+    select_vue_select_option "#location_state", option: "Illinois"
     fill_in "City", with: "Chicago"
-    fill_in "State / Province", with: "IL"
-    fill_in "Country / Territory", with: "United States"
+
+    expect(page).to have_selector("#location_submit_button:enabled", wait: 10)
+
     click_button "Next"
 
     visit mentor_profile_path(anchor: '!location')

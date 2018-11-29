@@ -1,19 +1,19 @@
 require "rails_helper"
 
-RSpec.feature "Public submission pages" do
-  scenario "past season" do
+RSpec.describe "Public submission pages" do
+  it "works for past seasons" do
     submission = FactoryBot.create(:submission, :past_season)
     visit app_path(submission)
     expect(page).to have_content(submission.team_name)
   end
 
-  scenario "current season" do
+  it "works for current seasons" do
     submission = FactoryBot.create(:submission)
     visit app_path(submission)
     expect(page).to have_content(submission.team_name)
   end
 
-  scenario "incomplete" do
+  it "works for incomplete submissions" do
     submission = FactoryBot.create(:submission, :incomplete)
     visit app_path(submission)
     expect(page).to have_content(submission.team_name)

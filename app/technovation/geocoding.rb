@@ -1,20 +1,19 @@
 class Geocoding
   private
-  attr_reader :model, :controller
+  attr_reader :model
 
   public
-  def initialize(model, controller)
+  def initialize(model)
     @model = model
-    @controller = controller
   end
 
-  def self.perform(model, controller = nil)
-    new(model, controller).perform
+  def self.perform(model)
+    new(model).perform
   end
 
   def perform
     Casting.delegating(model => GeocodingUpdater) do
-      model.apply_geocoding_changes(controller)
+      model.apply_geocoding_changes
     end
 
     self
@@ -32,17 +31,8 @@ class Geocoding
 
   private
   module GeocodingUpdater
-    def apply_geocoding_changes(controller)
+    def apply_geocoding_changes
       geocode if !valid_coordinates? || detect_location_changes?
-      reverse_geocode if valid_coordinates?
-
-      if controller
-        StoreLocation.(
-          coordinates: coordinates,
-          account: self,
-          context: controller,
-        )
-      end
     end
   end
 end

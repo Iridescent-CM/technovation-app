@@ -11,9 +11,13 @@ class TeamCreating
     TeamRosterManaging.add(team, profile)
 
     if !!profile && profile.valid_coordinates?
-      team.latitude = profile.latitude
-      team.longitude = profile.longitude
-      Geocoding.perform(team).with_save
+      team.update(
+        latitude: profile.latitude,
+        longitude: profile.longitude,
+        city: profile.city,
+        state_province: profile.state_province,
+        country: profile.country
+      )
 
       context.redirect_to [context.current_scope, team],
         success: I18n.t("controllers.teams.create.success")

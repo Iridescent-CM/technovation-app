@@ -13,10 +13,6 @@ module SignupHelper
   def sign_up(profile_scope)
     visit signout_path
 
-    allow(CookiedCoordinates).to receive(:get).and_return(
-      [41.50196838, -87.64051818]
-    )
-
     SeasonToggles.enable_signup(profile_scope)
 
     visit root_path
@@ -25,13 +21,11 @@ module SignupHelper
     check "I agree"
     click_button "Next"
 
-    expect(page.find('#location_city').value).to eq("Chicago")
-
-    fill_in "State / Province", with: "CA"
-    fill_in "City", with: "Los Angeles"
+    select_vue_select_option "#location_country", option: "United States"
+    select_vue_select_option "#location_state", option: "California"
+    page.find("#location_city").set("Los Angeles")
 
     click_button "Next"
-    click_button "Confirm"
 
     year = case profile_scope
            when :student
@@ -65,7 +59,7 @@ module SignupHelper
     email = FactoryBot.attributes_for(:account)[:email]
     stub_mailgun_validation(valid: true, email: email)
 
-    fill_in "Email", with: email
+    fill_in "Email Address", with: email
     fill_in "Password", with: "mysecret1234"
     click_button "Next"
 

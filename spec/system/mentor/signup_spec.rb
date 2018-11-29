@@ -12,12 +12,11 @@ RSpec.describe "Mentors signing up", :js do
       check "I agree"
       click_button "Next"
 
-      fill_in "State / Province", with: "California"
-      fill_in "City", with: "Los Angeles"
-      fill_in "Country", with: "United States"
+      select_vue_select_option "#location_country", option: "United States"
+      select_vue_select_option "#location_state", option: "California"
+      page.find("#location_city").set("Los Angeles")
 
       click_button "Next"
-      click_button "Confirm"
 
       fill_in_vue_select "Year", with: Season.current.year - 21
       fill_in_vue_select "Month", with: "1"
@@ -42,7 +41,7 @@ RSpec.describe "Mentors signing up", :js do
 
       stub_mailgun_validation(valid: true, email: "margeyb@springfield.net")
 
-      fill_in "Email", with: "margeyb@springfield.net"
+      fill_in "Email Address", with: "margeyb@springfield.net"
       fill_in "Password", with: "margeysecret1234"
       click_button "Next"
 

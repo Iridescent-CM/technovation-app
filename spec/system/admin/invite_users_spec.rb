@@ -182,10 +182,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     token = UserInvitation.last.admin_permission_token
 
-    visit regional_ambassador_signup_path(
-      admin_permission_token: token,
-      host: Capybara.app_host
-    )
+    visit regional_ambassador_signup_path(admin_permission_token: token)
 
     birthdate = Date.today - 25.years
 

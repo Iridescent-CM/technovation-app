@@ -2,8 +2,6 @@ require 'fill_pdfs'
 
 module Judge
   class DashboardsController < JudgeController
-    include LocationStorageController
-
     def show
       @regional_events = RegionalPitchEvent.available_to(current_judge)
       @score_in_progress = ScoreInProgress.new(current_judge)

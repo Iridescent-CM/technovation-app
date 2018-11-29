@@ -3,9 +3,6 @@ module ActiveGeocoded
 
   included do
     geocoded_by :address_details
-    reverse_geocoded_by :latitude, :longitude do |account, results|
-      account.update_address_details_from_reverse_geocoding(results)
-    end
 
     before_validation :fix_state_country_formatting
   end
@@ -137,24 +134,5 @@ module ActiveGeocoded
 
   def country_code=(code)
     super rescue self.country = code
-  end
-
-  def update_address_details_from_reverse_geocoding(results)
-    return false if results.none?
-
-    result = results.first
-
-    self.city = result.city
-    self.state_code = result.state_code
-
-    address_details = [
-      result.city,
-      result.state,
-      result.country,
-    ].reject(&:blank?).join(", ")
-
-    geo = OpenStruct.new(address_details: address_details)
-
-    self.country_code = FriendlyCountry.new(geo).country_code
   end
 end
