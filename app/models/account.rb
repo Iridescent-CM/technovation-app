@@ -505,6 +505,26 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def profile_team_names
+    if student_profile
+      student_profile.team_names
+    elsif mentor_profile
+      mentor_profile.team_names
+    else
+      []
+    end
+  end
+
+  def profile_teams
+    if student_profile && student_profile.team.present?
+      [student_profile.team]
+    elsif mentor_profile
+      mentor_profile.teams
+    else
+      []
+    end
+  end
+
   def profile_job_title
     if student_profile
       false
