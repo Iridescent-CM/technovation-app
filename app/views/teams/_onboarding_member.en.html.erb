@@ -1,3 +1,5 @@
+<% admin_ra ||= false %>
+
 <li class="grid">
   <div class="grid__col-2 grid__col--bleed-x">
     <%= image_tag onboarding_member.profile_image_url,
@@ -6,7 +8,7 @@
 
   <div class="grid__col-10">
     <h5 class="reset">
-      <% if onboarding_member.student_profile.present? %>
+      <% if admin_ra %>
         <%= link_to onboarding_member.full_name,
           [
             current_scope,
