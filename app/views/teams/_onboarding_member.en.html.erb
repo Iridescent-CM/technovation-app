@@ -1,3 +1,5 @@
+<% admin_ra ||= false %>
+
 <li class="grid">
   <div class="grid__col-2 grid__col--bleed-x">
     <%= image_tag onboarding_member.profile_image_url,
@@ -5,7 +7,22 @@
   </div>
 
   <div class="grid__col-10">
-    <h5 class="reset"><%= onboarding_member.full_name %></h5>
+    <h5 class="reset">
+      <% if admin_ra %>
+        <%= link_to onboarding_member.full_name,
+          [
+            current_scope,
+            :participant,
+            {
+              id: onboarding_member.account_id,
+              allow_out_of_region: true,
+            }
+          ] %>
+      <% else %>
+        <%= onboarding_member.full_name %>
+      <% end %>
+    </h5>
+
 
     <div class="help">
       <h6 class="reset">
