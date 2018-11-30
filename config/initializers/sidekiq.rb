@@ -5,7 +5,8 @@ Sidekiq.default_worker_options = {
 
 Sidekiq.configure_server do |config|
   if database_url = ENV['DATABASE_URL']
-    ActiveRecord::Base.establish_connection "#{database_url}?pool=25"
+    pool = ENV.fetch("SIDEKIQ_DB_POOL_SIZE") { 25 }
+    ActiveRecord::Base.establish_connection "#{database_url}?pool=#{pool}"
   end
 
   if ENV["PROFILE_SIDEKIQ"].present?
