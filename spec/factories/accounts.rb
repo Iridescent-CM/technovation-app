@@ -20,6 +20,10 @@ FactoryBot.define do
       seasons { [Season.current.year - (1..99).to_a.sample] }
     end
 
+    trait :returning do
+      seasons { [Season.current.year - 1, Season.current.year] }
+    end
+
     trait :mentor do
       mentor_profile
     end

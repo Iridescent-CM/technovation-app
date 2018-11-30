@@ -159,6 +159,10 @@ class AccountsGrid
     end
   end
 
+  column :returning, header: "Returning?" do |account|
+    account.returning?
+  end
+
   column :onboarded_judges do
     if judge_profile.present?
       judge_profile.onboarded? ? "yes" : "no"

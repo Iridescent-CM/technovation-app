@@ -556,4 +556,18 @@ RSpec.describe Account do
       expect(results).not_to include(unconsented_student.account)
     end
   end
+
+  describe ".returning?" do
+    it "returns true if an account has multiple seasons" do
+      returning_account = FactoryBot.create(:account, :returning)
+
+      expect(returning_account.returning?).to be true
+    end
+
+    it "returns false if an account does not have multiple seasons" do
+      new_account = FactoryBot.create(:account)
+
+      expect(new_account.returning?).to be false
+    end
+  end
 end
