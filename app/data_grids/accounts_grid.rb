@@ -160,7 +160,7 @@ class AccountsGrid
   end
 
   column :returning, header: "Returning?" do |account|
-    account.returning?
+    account.returning? ? "yes" : "no"
   end
 
   column :onboarded_judges do
