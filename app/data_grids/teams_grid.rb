@@ -35,6 +35,18 @@ class TeamsGrid
     mentors.collect(&:email).join(",")
   end
 
+  column :parent_emails, header: "Parent emails" do
+    students.collect(&:parent_guardian_email).join(",")
+  end
+
+  column :number_of_students, header: "Number of students" do
+    students.length
+  end
+
+  column :number_of_mentors, header: "Number of mentors" do
+    mentors.length
+  end
+
   column :city
 
   column :state_province, header: "State"
