@@ -4,7 +4,8 @@ task re_reverse_geocode: :environment do
 
   Account.find_each do |account|
     account.geocoded = account.address_details
-    account.reverse_geocode
+    # TODO - take another look? task is possibly outdated
+    #account.reverse_geocode
 
     puts "Reverse geocoding #{account.id} to #{account.address_details}"
 

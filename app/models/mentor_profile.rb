@@ -158,8 +158,6 @@ class MentorProfile < ActiveRecord::Base
 
   has_many :jobs, as: :owner
 
-  reverse_geocoded_by "accounts.latitude", "accounts.longitude"
-
   before_validation -> { enable_searchability }, on: :update
 
   after_save { current_teams.find_each(&:touch) }

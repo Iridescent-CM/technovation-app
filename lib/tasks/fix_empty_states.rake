@@ -16,7 +16,8 @@ task fix_empty_states: :environment do
     state = account.state
     country_code = FriendlyCountry.new(account).as_short_code
 
-    account.reverse_geocode
+    # TODO - take a closer look here? this task might be outdated now anyway
+    # account.reverse_geocode
 
     new_state = account.state
     new_country_code = FriendlyCountry.new(account).as_short_code
