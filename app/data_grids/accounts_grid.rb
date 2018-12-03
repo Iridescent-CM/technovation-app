@@ -297,6 +297,20 @@ class AccountsGrid
       send(value)
     end
 
+  filter :mentor_training,
+    :enum,
+    header: "Mentor training (mentors only)",
+    select: [
+      ['Training complete or not required', 'mentor_training_complete_or_not_required'],
+      ['Training required, and incomplete', 'mentor_training_required'],
+    ],
+    filter_group: "common",
+    if: ->(g) {
+      (%w{judge student regional_ambassador} & (g.scope_names || [])).empty?
+    } do |value|
+      send(value)
+    end
+
   filter :onboarded_judges,
     :enum,
     select: [
