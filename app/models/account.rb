@@ -840,17 +840,6 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def update_address_details_from_reverse_geocoding(results)
-    if geo = results.first
-      self.city = geo.city
-      self.state_province = geo.state_code
-      country = Country.find_country_by_name(geo.country_code) ||
-                  Country.find_country_by_alpha3(geo.country_code) ||
-                    Country.find_country_by_alpha2(geo.country_code)
-      self.country = country && country.alpha2
-    end
-  end
-
   def email_is_changing?
     !!will_save_change_to_email? and
       email_was.strip.downcase != email.strip.downcase

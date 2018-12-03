@@ -3,7 +3,8 @@ class RegeocodeTeamPrimaryLoations < ActiveRecord::Migration[4.2]
     Team.current.where("city IS NULL AND state_province IS NULL and country IS NULL").each do |team|
       next unless team.members.any?
 
-      team.reverse_geocode
+      # TODO - take another look? migration is super old
+      #team.reverse_geocode
 
       if team.city.blank?
         m = team.members.first

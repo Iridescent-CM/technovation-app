@@ -3,6 +3,9 @@ class MentorProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
+  # This is here because MentorProfile uses `.near` functionality
+  reverse_geocoded_by "accounts.latitude", "accounts.longitude"
+
   enum mentor_type: MENTOR_TYPE_OPTIONS
 
   scope :unmatched, -> {
@@ -157,8 +160,6 @@ class MentorProfile < ActiveRecord::Base
     source: :team
 
   has_many :jobs, as: :owner
-
-  reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
   before_validation -> { enable_searchability }, on: :update
 
