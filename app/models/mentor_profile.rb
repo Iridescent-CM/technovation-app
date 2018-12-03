@@ -3,6 +3,9 @@ class MentorProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
+  # This is here because MentorProfile uses `.near` functionality
+  geocoded_by "account.primary_location"
+
   enum mentor_type: MENTOR_TYPE_OPTIONS
 
   scope :unmatched, -> {
