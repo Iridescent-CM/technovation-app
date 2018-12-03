@@ -4,7 +4,7 @@ class MentorProfile < ActiveRecord::Base
   regioned_source Account
 
   # This is here because MentorProfile uses `.near` functionality
-  geocoded_by "account.primary_location"
+  reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
   enum mentor_type: MENTOR_TYPE_OPTIONS
 
