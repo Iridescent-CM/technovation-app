@@ -25,8 +25,6 @@ task dry_run_carmen: :environment do
       country = Carmen::Country.coded(account[:country])
 
       case account[:state_province]
-      when /madrid/i
-        state = country.subregions.named("Madrid", fuzzy: true)
       when /valencia/i
         state = country.subregions.named("Valencia", fuzzy: true)
       when /baba/i
@@ -34,7 +32,18 @@ task dry_run_carmen: :environment do
       when /cairo/i
         state = country.subregions.named(/hirah/i, regex: true)
       else
-        state = country.subregions.named(account[:state_province], fuzzy: true)
+        name = account[:state_province].sub("Región de ", "")
+        name = name.sub("Región del ", "")
+        name = name.sub("Región ", "")
+        name = name.sub("Departamento de ", "")
+        name = name.sub("Comunidad de ", "")
+        name = name.sub("Community of ", "")
+        name = name.sub("Gouvernorat de ", "")
+        name = name.sub(" Province", "")
+        name = name.sub(" County", "")
+        name = name.sub(" Governorate", "")
+
+        state = country.subregions.named(name, fuzzy: true)
       end
 
       account.state_province = state && state.code
