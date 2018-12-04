@@ -5,6 +5,7 @@ task dry_run_carmen: :environment do
       "ID",
       "Name",
       "Email",
+      "Country",
       "Old State",
       "New State",
     ]
@@ -16,6 +17,7 @@ task dry_run_carmen: :environment do
         account.id,
         account.name,
         account.email,
+        account[:country],
         account[:state_province],
       ]
 
@@ -27,6 +29,10 @@ task dry_run_carmen: :environment do
         state = country.subregions.named("Madrid", fuzzy: true)
       when /valencia/i
         state = country.subregions.named("Valencia", fuzzy: true)
+      when /baba/i
+        state = country.subregions.named(/beba/i, regex: true)
+      when /cairo/i
+        state = country.subregions.named(/hirah/i, regex: true)
       else
         state = country.subregions.named(account[:state_province], fuzzy: true)
       end
