@@ -21,7 +21,6 @@ task dry_run_carmen: :environment do
         account[:state_province],
       ]
 
-
       country = Carmen::Country.coded(account[:country])
 
       case account[:state_province]
