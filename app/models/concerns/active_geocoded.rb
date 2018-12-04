@@ -121,8 +121,9 @@ module ActiveGeocoded
 
   def country
     if valid_address?
-      me = OpenStruct.new(address_details: [city, state_code, country_code].join(", "))
-      FriendlyCountry.new(me).country_name
+      country = Carmen::Country.coded(country_code) ||
+        Carmen::Country.named(country_code)
+      country.to_s
     else
       super rescue country_code
     end

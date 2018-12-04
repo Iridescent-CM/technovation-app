@@ -29,31 +29,28 @@ class FriendlyCountry
   end
 
   def as_short_code
-    result.country_code
+    result.code
   end
   alias :country_code :as_short_code
 
   def with_prefix
-    if result.country_code
-      "#{result.country_code} - #{country_name}"
+    if result.code
+      "#{result.code} - #{country_name}"
     else
       country_name
     end
   end
 
   def country_name(**options)
-    result(options).country || record.address_details
+    result(options).name || record.address_details
   end
 
   private
   def result(**options)
     if options[:source] == :country_code
-      country = Carmen::Country.coded(record.address_details)
-      Geocoded.new(OpenStruct.new(country: country.name))
-    elsif result = Geocoder.search(record.address_details).first
-      Geocoded.new(result)
+      Carmen::Country.coded(record.address_details) || Carmen::Country.named(record.address_details)
     else
-      record
+      Carmen::Country.coded(record.country) || Carmen::Country.named(record.country)
     end
   end
 end
