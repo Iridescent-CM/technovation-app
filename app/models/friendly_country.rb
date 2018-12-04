@@ -29,11 +29,15 @@ class FriendlyCountry
   end
 
   def as_short_code
+    return record.address_details if result.nil?
+
     result.code
   end
   alias :country_code :as_short_code
 
   def with_prefix
+    return record.address_details if result.nil?
+
     if result.code
       "#{result.code} - #{country_name}"
     else
@@ -42,12 +46,14 @@ class FriendlyCountry
   end
 
   def country_name(**options)
+    return record.address_details if result.nil?
+
     result(options).name || record.address_details
   end
 
   private
   def result(**options)
-    if options[:source] == :country_code
+    if record.country.nil?
       Carmen::Country.coded(record.address_details) || Carmen::Country.named(record.address_details)
     else
       Carmen::Country.coded(record.country) || Carmen::Country.named(record.country)
