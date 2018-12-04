@@ -24,18 +24,12 @@ export default {
     LocationForm,
   },
 
-  created() {
-    this.debouncedLocationUpdate = debounce(newLocation => {
-      this.updateLocation(newLocation)
-    }, 500)
-  },
-
   computed: {
     ...mapState(['wizardToken', 'apiRoot']),
 
     locationData: {
       get() {
-        return this.$store.getters.getLocation
+        return this.$store.getters['registration/getLocation']
       },
 
       set(location) {
@@ -45,24 +39,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['updateLocation']),
-
     handleBack () {
       this.$router.push({ name: 'data-use' })
     },
 
     handleConfirm () {
       this.$router.push({ name: 'age' })
-    },
-  },
-
-  watch: {
-    locationData (newLocation, oldLocation) {
-      const locationChanged = Object.keys(newLocation).some((key) => {
-        return newLocation[key] !== oldLocation[key]
-      })
-
-      if (locationChanged) this.debouncedLocationUpdate(newLocation)
     },
   },
 }
