@@ -328,6 +328,30 @@ class AccountsGrid
       )
     end
 
+  filter :school_company_name,
+    :enum,
+    header: "School or company name (judges and mentors)",
+    select: ->(g) {
+      mentor_options = MentorProfile.select(:school_company_name).distinct
+        .map(&:school_company_name)
+
+      judge_options = JudgeProfile.select(:company_name).distinct
+        .map(&:company_name)
+
+      (mentor_options + judge_options).uniq.sort
+    },
+    filter_group: "common",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing...",
+    },
+    if: ->(g) {
+      (%w{student regional_ambassador} & (g.scope_names || [])).empty?
+    } do |value, scope, grid|
+      scope.left_outer_joins(:mentor_profile, :judge_profile)
+        .where("mentor_profiles.school_company_name IN (?) OR judge_profiles.company_name IN (?)", value, value)
+    end
+
   filter :name_email,
     header: "Name or Email",
     filter_group: "more-specific" do |value|
