@@ -12,4 +12,11 @@ module ImportantDates
     day = Integer(ENV.fetch("DATES_REGISTRATION_OPENS_DAY"))
     Time.zone.local(year, month, day)
   end
+
+  def self.quarterfinals_judging_begins
+    year = Integer(ENV.fetch("DATES_QUARTERFINALS_BEGINS_YEAR"))
+    month = Integer(ENV.fetch("DATES_QUARTERFINALS_BEGINS_MONTH"))
+    day = Integer(ENV.fetch("DATES_QUARTERFINALS_BEGINS_DAY"))
+    Time.zone.local(year, month, day)
+  end
 end
