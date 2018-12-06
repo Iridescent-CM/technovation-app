@@ -64,7 +64,8 @@
 
     <p>
       You can preview your event's submissions
-      beginning on May 1st, 2018.
+      beginning on
+      <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
     </p>
 
     <div class="step-actions">
@@ -92,6 +93,9 @@
       </strong>
     </p>
 
-    <p>Quarterfinals judging begins on May 1st, 2018.</p>
+    <p>
+      Quarterfinals judging begins on
+      <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
+    </p>
   <% end %>
 <% end %>
