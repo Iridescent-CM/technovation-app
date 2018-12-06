@@ -5,7 +5,7 @@
     <p>
       <a :href="submission.source_code_url" target="_blank">
         <icon name="code" color="ffffff" />
-        <span>Download the source code</span>
+        <span>{{ submission.source_code_url_label }}</span>
       </a>
     </p>
 
