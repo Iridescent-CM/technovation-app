@@ -25,6 +25,18 @@ class ProcessUploadJob < ActiveJob::Base
     case klass
     when "Account"
       record.icon_path = nil
+    when "TeamSubmission"
+      if method_name == "source_code"
+        submission = TeamSubmission.friendly.find(record_id)
+        account = Account.find(account_id)
+
+        submission.team.create_activity(
+          trackable: account,
+          key: "submission.update",
+          parameters: { piece: "source_code_url" },
+          recipient: submission,
+        )
+      end
     end
 
     record.save!
