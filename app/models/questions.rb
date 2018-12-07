@@ -42,6 +42,14 @@ class Questions
   end
 
   def as_json(*args, &block)
+    if submission.developed_on?("Thunkable")
+      source_code_url_label = "Open this project in Thunkable"
+      source_code_url = submission.thunkable_project_url
+    else
+      source_code_url_label = "Download the source code"
+      source_code_url = submission.source_code_url
+    end
+
     {
       score: {
         id: submission_score.id,
@@ -79,7 +87,8 @@ class Questions
         pitch_video_id: submission.video_id(:pitch),
         pitch_video_url: judge_embed_code_path(submission, piece: :pitch),
 
-        source_code_url: submission.source_code_url,
+        source_code_url_label: source_code_url_label,
+        source_code_url: source_code_url,
 
         business_plan_url: submission.business_plan_url,
         pitch_presentation_url: submission.pitch_presentation_url,
