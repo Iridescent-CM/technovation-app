@@ -18,7 +18,7 @@ module HumanizedActivity
     when "submission.create"
       "started their submission"
     when "submission.update"
-      "updated their #{params[:piece].humanize(capitalize: false)}"
+      "updated their #{params[:piece].humanize}"
     else
       key
     end
