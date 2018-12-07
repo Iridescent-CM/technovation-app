@@ -5,7 +5,7 @@ module TeamSubmissionVideoLinkReviewController
     submission = current_profile.team_submissions.current.friendly.find(video_link_params[:id])
     submission.update({ video_link_params[:piece] => video_link_params[:value] })
 
-    current_profile.team.create_activity(
+    submission.team.create_activity(
       trackable: current_profile.account,
       key: "submission.update",
       parameters: { piece: video_link_params[:piece] },
