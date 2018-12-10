@@ -127,6 +127,14 @@ module TeamSubmissionController
     elsif team_submission_params[:demo_video_link]
       handle_video_link_review(@team_submission, :demo_video_link)
     elsif @team_submission.update(team_submission_params)
+      if request.xhr? && team_submission_params[:pitch_presentation]
+        piece_name = "pitch_presentation"
+      elsif request.xhr? && team_submission_params[:business_plan]
+        piece_name = "business_plan"
+      else
+        piece_name = params.fetch(:piece, "")
+      end
+
       if @team_submission.saved_change_to_app_name?
         @team_submission.reload
       end

@@ -5,7 +5,8 @@ module Student
         current_team.submission.id,
         'TeamSubmission',
         'source_code',
-        params.fetch(:key)
+        params.fetch(:key),
+        current_profile.account.id
       )
 
       flash.now[:success] = t("controllers.teams.show.file_processing")
