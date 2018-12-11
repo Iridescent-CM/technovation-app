@@ -35,7 +35,7 @@ RSpec.describe Public::DashboardsController do
       sign_in(student)
       get :show
 
-      expect(Geocoder).to have_received(:search).twice
+      expect(Geocoder).to have_received(:search).once
 
       coordinates = controller.get_cookie(
         CookieNames::IP_GEOLOCATION

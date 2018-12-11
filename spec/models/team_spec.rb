@@ -198,25 +198,6 @@ RSpec.describe Team do
     expect(team.longitude).to eq(-38.3067572)
   end
 
-  it "reverse geocodes when coords change" do
-    team = FactoryBot.create(:team, :geocoded, :los_angeles)
-
-    # Sanity
-    expect(team.city).to eq("Los Angeles")
-    expect(team.state_province).to eq("CA")
-    expect(team.latitude).to eq(34.052363)
-    expect(team.longitude).to eq(-118.256551)
-
-    TeamUpdating.execute(team, {
-      latitude: 41.50196838,
-      longitude: -87.64051818,
-    })
-
-    team.reload
-    expect(team.city).to eq("Chicago")
-    expect(team.state_province).to eq("IL")
-  end
-
   it "removes associated RPEs when address info changes" do
     team = FactoryBot.create(:team)
     rpe = FactoryBot.create(:rpe)

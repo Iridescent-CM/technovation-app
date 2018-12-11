@@ -69,15 +69,11 @@ RSpec.describe LocationController do
     end
   end
 
-  %w{mentor student judge admin registration}.each do |scope|
+  %w{mentor student judge admin}.each do |scope|
     context "PATCH #{scope}/locations" do
       before do
-        if scope != 'registration'
-          @account = FactoryBot.create(scope).account
-          sign_in(@account)
-        else
-          @account = OpenStruct.new(id: '')
-        end
+        @account = FactoryBot.create(scope).account
+        sign_in(@account)
       end
 
       it "returns 404 for invalid search data" do
