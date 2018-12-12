@@ -103,38 +103,5 @@ require "rails_helper"
       expect(profile.reload.latitude).to eq(34.052363)
       expect(profile.reload.longitude).to eq(-118.256551)
     end
-
-    it "reverse geocodes when coords change" do
-      ProfileUpdating.execute(
-        profile,
-        account_attributes: {
-          id: profile.account_id,
-          city: "Los Angeles",
-          state_province: "CA",
-          country: "US",
-        }
-      )
-
-      # Sanity
-      profile.reload
-      expect(profile.city).to eq("Los Angeles")
-      expect(profile.state_province).to eq("CA")
-      expect(profile.latitude).to eq(34.052363)
-      expect(profile.longitude).to eq(-118.256551)
-
-      patch :update, params: {
-        "#{scope}_profile" => {
-          account_attributes: {
-            id: profile.account_id,
-            latitude: 41.50196838,
-            longitude: -87.64051818,
-          },
-        },
-      }
-
-      profile.reload
-      expect(profile.city).to eq("Chicago")
-      expect(profile.state_province).to eq("IL")
-    end
   end
 end

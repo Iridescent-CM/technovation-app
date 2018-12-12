@@ -294,6 +294,7 @@
 
           success: (resp) => {
             this.event.teamAssignmentsSaved();
+            EventBus.$emit("EventTeamList.saveAssignments");
           },
 
           error: (err) => {

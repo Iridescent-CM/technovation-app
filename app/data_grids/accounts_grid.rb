@@ -178,6 +178,12 @@ class AccountsGrid
     FriendlyCountry.(account)
   end
 
+  column :geolocation, header: "Geolocation", if: ->(g) {
+    g.admin
+  } do
+    "#{latitude},#{longitude}"
+  end
+
   column :referred_by do
     referred = referred_by
 
