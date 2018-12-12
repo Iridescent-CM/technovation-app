@@ -244,56 +244,6 @@ class Account < ActiveRecord::Base
     end
   }
 
-  def regional_ambassador
-    intnl_find_by = {
-      "accounts.country" => country_code
-    }
-
-    find_by = intnl_find_by.merge({
-      "accounts.state_province" => state_code
-    })
-
-    ra = RegionalAmbassadorProfile.not_staff
-      .approved
-      .joins(:current_account)
-      .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
-      .find_by(find_by) || ::NullRegionalAmbassador.new
-
-    if ra.present?
-      ra
-    elsif country != "US" and
-            not address_details.blank?
-
-      if account = Account.current
-        .joins(:approved_regional_ambassador_profile)
-        .where.not("accounts.email ILIKE ?", "%joesak%")
-        .where(
-          "regional_ambassador_profiles.intro_summary NOT IN ('')
-          AND regional_ambassador_profiles.intro_summary IS NOT NULL"
-        )
-        .where(intnl_find_by)
-        .near(
-          address_details,
-          SearchMentors::EARTH_CIRCUMFERENCE
-        )
-        .first
-
-        ra = account.regional_ambassador_profile
-      else
-        ra = ::NullRegionalAmbassador.new
-      end
-
-    elsif country != "US"
-      ra = RegionalAmbassadorProfile.not_staff
-        .approved
-        .joins(:current_account)
-        .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
-        .find_by(intnl_find_by) || ::NullRegionalAmbassador.new
-    else
-      ra
-    end
-  end
-
   def self.sort_column
     :first_name
   end
@@ -337,6 +287,20 @@ class Account < ActiveRecord::Base
   def assigned_teams
     (judge_profile and judge_profile.assigned_teams) or
       Team.none
+  end
+
+  def regional_ambassador
+    ra = find_regional_ambassador_by_state
+
+    unless ra.present?
+      ra = find_regional_ambassador_by_country
+    end
+
+    unless ra.present?
+      ra = ::NullRegionalAmbassador.new
+    end
+
+    ra
   end
 
   scope :not_staff, -> {
@@ -951,5 +915,50 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def find_regional_ambassador_by(query)
+    results = Account.current
+      .joins(:approved_regional_ambassador_profile)
+      .not_staff
+      .where(
+        "regional_ambassador_profiles.intro_summary NOT IN ('')
+        AND regional_ambassador_profiles.intro_summary IS NOT NULL"
+      )
+      .where(query)
+
+    if address_details.blank?
+      account = results.first
+    else
+      account = results
+        .near(
+          address_details,
+          SearchMentors::EARTH_CIRCUMFERENCE
+        )
+        .first
+    end
+
+    if account
+      account.regional_ambassador_profile
+    else
+      ::NullRegionalAmbassador.new
+    end
+  end
+
+  def find_regional_ambassador_by_state
+    find_regional_ambassador_by({
+      "accounts.country" => country_code,
+      "accounts.state_province" => state_code
+    })
+  end
+
+  def find_regional_ambassador_by_country
+    if country == "US"
+      ::NullRegionalAmbassador.new
+    else
+      find_regional_ambassador_by({
+        "accounts.country" => country_code
+      })
+    end
   end
 end

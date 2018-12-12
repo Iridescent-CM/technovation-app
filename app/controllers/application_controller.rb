@@ -53,14 +53,16 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def region_account
+    if current_session.authenticated?
+      current_session
+    else
+      current_account
+    end
+  end
+
   def regional_ambassador
     return @regional_ambassador if defined?(@regional_ambassador)
-
-    region_account = if current_session.authenticated?
-                       current_session
-                     else
-                       current_account
-                     end
 
     @regional_ambassador = region_account.regional_ambassador
   end
