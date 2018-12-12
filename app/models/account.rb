@@ -244,6 +244,56 @@ class Account < ActiveRecord::Base
     end
   }
 
+  def regional_ambassador
+    intnl_find_by = {
+      "accounts.country" => country_code
+    }
+
+    find_by = intnl_find_by.merge({
+      "accounts.state_province" => state_code
+    })
+
+    ra = RegionalAmbassadorProfile.not_staff
+      .approved
+      .joins(:current_account)
+      .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
+      .find_by(find_by) || ::NullRegionalAmbassador.new
+
+    if ra.present?
+      ra
+    elsif country != "US" and
+            not address_details.blank?
+
+      if account = Account.current
+        .joins(:approved_regional_ambassador_profile)
+        .where.not("accounts.email ILIKE ?", "%joesak%")
+        .where(
+          "regional_ambassador_profiles.intro_summary NOT IN ('')
+          AND regional_ambassador_profiles.intro_summary IS NOT NULL"
+        )
+        .where(intnl_find_by)
+        .near(
+          address_details,
+          SearchMentors::EARTH_CIRCUMFERENCE
+        )
+        .first
+
+        ra = account.regional_ambassador_profile
+      else
+        ra = ::NullRegionalAmbassador.new
+      end
+
+    elsif country != "US"
+      ra = RegionalAmbassadorProfile.not_staff
+        .approved
+        .joins(:current_account)
+        .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
+        .find_by(intnl_find_by) || ::NullRegionalAmbassador.new
+    else
+      ra
+    end
+  end
+
   def self.sort_column
     :first_name
   end
