@@ -86,10 +86,14 @@
   import debounce from "lodash/debounce"
 
   import Icon from "../../components/Icon";
-
   import Attendee from "./Attendee";
+  import EventBus from '../../components/EventBus';
 
   export default {
+    components: {
+      Icon,
+    },
+
     data () {
       return {
         query: "",
@@ -109,6 +113,12 @@
       "eventId"
     ],
 
+    created() {
+      EventBus.$on("EventTeamList.saveAssignments", () => {
+        this.fetchRemoteItems();
+      });
+    },
+
     computed: {
       filteredItems () {
         if (this.type == 'team') {
@@ -120,10 +130,6 @@
           return this.selectableItems
         }
       }
-    },
-
-    components: {
-      Icon,
     },
 
     watch: {
@@ -174,6 +180,9 @@
           },
 
           success: (json) => {
+            vm.$set(vm, 'items', []);
+            vm.$set(vm, 'selectableItems', []);
+
             Array.from(json.data || []).forEach(obj => {
               // Need to massage this data since serializers modify the JSON structure
               obj.attributes.id = obj.id
