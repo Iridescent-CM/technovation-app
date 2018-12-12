@@ -13,7 +13,8 @@ class TeamCreating
     if !!profile && profile.valid_coordinates?
       team.latitude = profile.latitude
       team.longitude = profile.longitude
-      Geocoding.perform(team).with_save
+      team.reverse_geocode
+      team.save
 
       context.redirect_to [context.current_scope, team],
         success: I18n.t("controllers.teams.create.success")

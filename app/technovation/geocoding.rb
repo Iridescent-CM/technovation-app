@@ -34,7 +34,6 @@ class Geocoding
   module GeocodingUpdater
     def apply_geocoding_changes(controller)
       geocode if !valid_coordinates? || detect_location_changes?
-      reverse_geocode if valid_coordinates?
 
       if controller
         StoreLocation.(

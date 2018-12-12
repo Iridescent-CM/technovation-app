@@ -81,7 +81,7 @@ module HandleGeocoderSearch
       status_code = :not_found
     end
 
-    return { results: [geocoded] }, status_code
+    return { results: [Geocoded.new(db_record)] }, status_code
   end
 
   def self.geocode_db_record(db_record, geocoded, controller)
