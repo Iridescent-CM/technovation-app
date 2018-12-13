@@ -7,6 +7,8 @@ module Registration
         wizard_token: custom_location_params[:token]
       )
 
+      Rails.logger.warn("Invalid address confirmed for SignupAttempt id:#{attempt.id}") if !attempt.valid_address?
+
       render json: SignupAttemptSerializer.new(attempt).serialized_json
     end
 

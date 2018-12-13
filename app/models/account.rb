@@ -290,14 +290,14 @@ class Account < ActiveRecord::Base
   end
 
   def regional_ambassador
-    ra = find_regional_ambassador_by_state
+    ra = ::NullRegionalAmbassador.new
 
-    unless ra.present?
-      ra = find_regional_ambassador_by_country
-    end
+    if valid_address?
+      ra = find_regional_ambassador_by_state
 
-    unless ra.present?
-      ra = ::NullRegionalAmbassador.new
+      unless ra.present?
+        ra = find_regional_ambassador_by_country
+      end
     end
 
     ra
