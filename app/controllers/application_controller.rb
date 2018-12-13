@@ -53,62 +53,18 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def region_account
+    if current_session.authenticated?
+      current_session
+    else
+      current_account
+    end
+  end
+
   def regional_ambassador
     return @regional_ambassador if defined?(@regional_ambassador)
 
-    region_account = if current_session.authenticated?
-                       current_session
-                     else
-                       current_account
-                     end
-
-    intnl_find_by = {
-      "accounts.country" => region_account.country_code
-    }
-
-    find_by = intnl_find_by.merge({
-      "accounts.state_province" => region_account.state_code
-    })
-
-    @regional_ambassador = RegionalAmbassadorProfile.not_staff
-      .approved
-      .joins(:current_account)
-      .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
-      .find_by(find_by) || ::NullRegionalAmbassador.new
-
-    if @regional_ambassador.present?
-      @regional_ambassador
-    elsif region_account.country != "US" and
-            not region_account.address_details.blank?
-
-      if account = Account.current
-        .joins(:approved_regional_ambassador_profile)
-        .where.not("accounts.email ILIKE ?", "%joesak%")
-        .where(
-          "regional_ambassador_profiles.intro_summary NOT IN ('')
-          AND regional_ambassador_profiles.intro_summary IS NOT NULL"
-        )
-        .where(intnl_find_by)
-        .near(
-          region_account.address_details,
-          SearchMentors::EARTH_CIRCUMFERENCE
-        )
-        .first
-
-        @regional_ambassador = account.regional_ambassador_profile
-      else
-        @regional_ambassador = ::NullRegionalAmbassador.new
-      end
-
-    elsif region_account.country != "US"
-      @regional_ambassador = RegionalAmbassadorProfile.not_staff
-        .approved
-        .joins(:current_account)
-        .where("intro_summary NOT IN ('') AND intro_summary IS NOT NULL")
-        .find_by(intnl_find_by) || ::NullRegionalAmbassador.new
-    else
-      @regional_ambassador
-    end
+    @regional_ambassador = region_account.regional_ambassador
   end
 
   def save_redirected_path

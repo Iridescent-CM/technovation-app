@@ -289,6 +289,20 @@ class Account < ActiveRecord::Base
       Team.none
   end
 
+  def regional_ambassador
+    ra = find_regional_ambassador_by_state
+
+    unless ra.present?
+      ra = find_regional_ambassador_by_country
+    end
+
+    unless ra.present?
+      ra = ::NullRegionalAmbassador.new
+    end
+
+    ra
+  end
+
   scope :not_staff, -> {
     where.not("accounts.email ILIKE ?", "%joesak%")
   }
@@ -901,5 +915,50 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def find_regional_ambassador_by(query)
+    results = Account.current
+      .joins(:approved_regional_ambassador_profile)
+      .not_staff
+      .where(
+        "regional_ambassador_profiles.intro_summary NOT IN ('')
+        AND regional_ambassador_profiles.intro_summary IS NOT NULL"
+      )
+      .where(query)
+
+    if address_details.blank?
+      account = results.first
+    else
+      account = results
+        .near(
+          address_details,
+          SearchMentors::EARTH_CIRCUMFERENCE
+        )
+        .first
+    end
+
+    if account
+      account.regional_ambassador_profile
+    else
+      ::NullRegionalAmbassador.new
+    end
+  end
+
+  def find_regional_ambassador_by_state
+    find_regional_ambassador_by({
+      "accounts.country" => country_code,
+      "accounts.state_province" => state_code
+    })
+  end
+
+  def find_regional_ambassador_by_country
+    if country == "US"
+      ::NullRegionalAmbassador.new
+    else
+      find_regional_ambassador_by({
+        "accounts.country" => country_code
+      })
+    end
   end
 end
