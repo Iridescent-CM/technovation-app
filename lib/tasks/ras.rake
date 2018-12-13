@@ -17,26 +17,31 @@ namespace :ras do
         RA\ City
       }
 
-      Account.current.joins(:student_profile).find_each do |account|
-        unless account.geocoded?
-          puts "#{account.email} not geocoded"
-        end
-        row = []
-        row << account.email
-        row << account.country
-        row << account.state_province
-        row << account.city
-        if account.regional_ambassador.present?
-          unless account.regional_ambassador.geocoded?
-            puts "RA #{account.regional_ambassador.email} not geocoded"
+      [
+        Account.current.joins(:student_profile),
+        Account.current.joins(:mentor_profile)
+      ].each do |query|
+        query.find_each do |account|
+          unless account.geocoded?
+            puts "#{account.email} not geocoded"
           end
-          row << account.regional_ambassador.account.email
-          row << account.regional_ambassador.account.country
-          row << account.regional_ambassador.account.state_province
-          row << account.regional_ambassador.account.city
-        end
+          row = []
+          row << account.email
+          row << account.country
+          row << account.state_province
+          row << account.city
+          if account.regional_ambassador.present?
+            unless account.regional_ambassador.geocoded?
+              puts "RA #{account.regional_ambassador.email} not geocoded"
+            end
+            row << account.regional_ambassador.account.email
+            row << account.regional_ambassador.account.country
+            row << account.regional_ambassador.account.state_province
+            row << account.regional_ambassador.account.city
+          end
 
-        csv << row
+          csv << row
+        end
       end
     end
 

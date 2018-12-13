@@ -33,6 +33,8 @@ class Geocoding
   private
   module GeocodingUpdater
     def apply_geocoding_changes(controller)
+      Rails.logger.warn("Geocoding #{self.class} id:#{self.id} with invalid address") if !valid_address?
+
       geocode if !valid_coordinates? || detect_location_changes?
 
       if controller
