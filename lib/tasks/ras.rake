@@ -7,20 +7,34 @@ namespace :ras do
 
     CSV.open(filename, 'wb') do |csv|
       csv << %w{
-        Id
-        Country
-        State/province
-        City
-        RA
+        User\ Email
+        User\ Country
+        User\ State/province
+        User\ City
+        RA\ Email
+        RA\ Country
+        RA\ State/province
+        RA\ City
       }
 
       Account.current.joins(:student_profile).find_each do |account|
+        unless account.geocoded?
+          puts "#{account.email} not geocoded"
+        end
         row = []
-        row << account.id
+        row << account.email
         row << account.country
-        row << account.state
+        row << account.state_province
         row << account.city
-        row << account.regional_ambassador.id
+        if account.regional_ambassador.present?
+          unless account.regional_ambassador.geocoded?
+            puts "RA #{account.regional_ambassador.email} not geocoded"
+          end
+          row << account.regional_ambassador.account.email
+          row << account.regional_ambassador.account.country
+          row << account.regional_ambassador.account.state_province
+          row << account.regional_ambassador.account.city
+        end
 
         csv << row
       end
