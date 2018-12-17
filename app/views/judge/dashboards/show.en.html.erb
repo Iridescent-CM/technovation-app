@@ -59,12 +59,8 @@
 
   <div class="grid__col-md-9">
     <div class="grid__cell">
-      <ul class="steps">
-        <%= render 'completion_steps/confirm_changed_email',
-          profile: current_judge %>
-      </ul>
-
-      <%= render 'judge/dashboards/onboarded/events' %>
+      <%= render 'completion_steps/confirm_changed_email',
+        profile: current_judge %>
 
       <% if current_judge.onboarding? %>
         <div class="panel panel--left">
@@ -75,6 +71,8 @@
         <%= render 'judge/dashboards/onboarded/scores' %>
         <%= render 'judge/dashboards/onboarded/certificates' %>
       <% end %>
+
+      <%= render 'judge/dashboards/onboarded/events' %>
     </div>
   </div>
 </div>
