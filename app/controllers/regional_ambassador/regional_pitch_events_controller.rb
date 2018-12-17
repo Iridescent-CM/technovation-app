@@ -132,7 +132,7 @@ module RegionalAmbassador
         .find(params[:id]).destroy
 
       redirect_to regional_ambassador_regional_pitch_events_url,
-        notice: 'Regional pitch event was successfully destroyed.'
+        notice: 'Regional pitch event was successfully deleted.'
     end
 
     private
