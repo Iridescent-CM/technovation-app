@@ -99,8 +99,8 @@
 
         <div class="grid__col-auto">
           <label>
-            Eventbrite URL
-            <input type="text" v-model="event.eventbrite_link" />
+            Event URL (Optional)
+            <input type="text" v-model="event.event_link" />
           </label>
 
           <p>
@@ -329,8 +329,8 @@
         form.append("regional_pitch_event[venue_address]",
           vm.event.venue_address);
 
-        form.append("regional_pitch_event[eventbrite_link]",
-          vm.event.eventbrite_link);
+        form.append("regional_pitch_event[event_link]",
+          vm.event.event_link);
 
         $.ajax({
           method: vm.httpMethod,

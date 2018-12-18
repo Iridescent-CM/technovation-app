@@ -80,10 +80,10 @@
                       <p><strong>Date / time:</strong> <%= event.date_time %></p>
                       <p><strong>Address:</strong> <%= event.venue_address %></p>
 
-                      <% if event.eventbrite_link %>
+                      <% if event.event_link %>
                         <p>
-                          <%= link_to event.eventbrite_link,
-                            event.eventbrite_link,
+                          <%= link_to event.event_link,
+                            event.event_link,
                             target: :_blank %>
                         </p>
                       <% end %>

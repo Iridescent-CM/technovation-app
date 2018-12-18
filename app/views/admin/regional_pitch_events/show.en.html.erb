@@ -47,7 +47,7 @@
         <div class="grid__col-auto">
           <dl>
             <dt>Ambassador:</dt>
-            
+
             <dd>
               <%= link_to @event.ambassador.name,
                 admin_participant_path(@event.ambassador.account) %>
@@ -83,10 +83,10 @@
 
             <dt>Eventbrite link:</dt>
 
-            <% if @event.eventbrite_link.blank? %>
+            <% unless @event.event_link.blank? %>
               <dd>
                 <%= link_to "#{@event.name}",
-                  @event.eventbrite_link,
+                  @event.event_link,
                   target: :_blank %>
               </dd>
             <% else %>

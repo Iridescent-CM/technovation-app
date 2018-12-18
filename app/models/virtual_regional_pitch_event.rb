@@ -21,7 +21,7 @@ class VirtualRegionalPitchEvent
   def id; "virtual"; end
   def city; "No city, judging happens online"; end
   def venue_address; "No address, judging happens online"; end
-  def eventbrite_link; end
+  def event_link; end
 
   def teams
     Team.not_attending_live_event

@@ -30,11 +30,11 @@
           <%= event.city %>
         </dd>
 
-        <% unless event.eventbrite_link.blank? %>
+        <% unless event.event_link.blank? %>
           <dt>Eventbrite link:</dt>
           <dd>
             <%= link_to "#{event.name}",
-              event.eventbrite_link,
+              event.event_link,
               target: :_blank %>
           </dd>
         <% end %>
