@@ -7,7 +7,12 @@
         :key="event.id"
       >
         <div class="grid grid--bleed">
-          <div class="grid__col-auto">
+          <div v-if="event.event_link" class="grid__col-auto">
+            <a :href="event.event_link" target="_blank">
+              {{ event.name }}
+            </a>
+          </div>
+          <div v-else class="grid__col-auto">
             {{ event.name }}
           </div>
 
