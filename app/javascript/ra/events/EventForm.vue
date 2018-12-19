@@ -72,7 +72,7 @@
               :options="dateOpts" />
           </label>
 
-          <errors :errors="eventErrors.eventDate"></errors>
+          <errors :errors="eventErrors.date"></errors>
         </div>
 
         <div class="grid__col-6">
@@ -124,6 +124,8 @@
   import EventBus from '../../components/EventBus';
 
   import Event from './Event';
+
+  import { isEmptyObject } from 'utilities/utilities';
 
   export default {
     name: "event-form",
@@ -265,12 +267,12 @@
       },
 
       eventDate () {
-        if (this.eventDate.length) {
+        if (this.eventDate.length && this.eventStartTime) {
           this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
+        }
+
+        if (this.eventDate.length && this.eventEndTime) {
           this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
-          this.eventErrors.eventDate = [];
-        } else {
-          this.eventErrors.eventDate = ["can't be blank"];
         }
       },
 
@@ -304,13 +306,20 @@
       },
 
       handleSubmit () {
-        var vm = this,
-            form = new FormData();
+        const vm = this;
+        const form = new FormData();
 
         vm.saving = true;
 
+        const isValid = this.validateInput();
+        if (!isValid) {
+          vm.saving = false;
+          return false;
+        }
+
         form.append("regional_pitch_event[name]", vm.event.name);
         form.append("regional_pitch_event[city]", vm.event.city);
+        form.append("regional_pitch_event[starts_at]", vm.event.starts_at);
         form.append("regional_pitch_event[ends_at]", vm.event.ends_at);
 
         Array.from(vm.event.division_ids || []).forEach(id => {
@@ -319,9 +328,6 @@
 
         form.append("regional_pitch_event[venue_address]",
           vm.event.venue_address);
-
-        form.append("regional_pitch_event[starts_at]",
-          vm.event.starts_at);
 
         form.append("regional_pitch_event[eventbrite_link]",
           vm.event.eventbrite_link);
@@ -353,6 +359,48 @@
             vm.saving = false;
           },
         });
+      },
+
+      /**
+       * We have to do front-end validation in addition to back-end validation
+       * here due to the fact that "date" doesn't exist on the model in Rails
+       */
+      validateInput() {
+        this.eventErrors = {};
+
+        if (!this.event.name) {
+          this.eventErrors.name = ["can't be blank"];
+        }
+
+        if (!this.event.city) {
+          this.eventErrors.city = ["can't be blank"];
+        }
+
+        if (!this.eventDate) {
+          this.eventErrors.date = ["can't be blank"];
+        }
+
+        if (!this.event.starts_at) {
+          this.eventErrors.starts_at = ["can't be blank"];
+        }
+
+        if (!this.event.ends_at) {
+          this.eventErrors.ends_at = ["can't be blank"];
+        }
+
+        if (!Array.from(this.event.division_ids || []).length) {
+          this.eventErrors.division_ids = ["can't be blank"];
+        }
+
+        if (!this.event.venue_address) {
+          this.eventErrors.venue_address = ["can't be blank"];
+        }
+
+        if (!isEmptyObject(this.eventErrors)) {
+          return false;
+        }
+
+        return true;
       },
 
       createTimeFromString(twentyFourHourTime) {
