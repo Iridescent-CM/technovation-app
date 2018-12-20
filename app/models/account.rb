@@ -155,22 +155,22 @@ class Account < ActiveRecord::Base
 
   scope :mentor_training_required, -> () {
     includes(:mentor_profile)
-      .references(:mentor_profile)
+      .references(:mentor_profiles)
       .where(
         "training_completed_at IS NULL AND " +
           "date(season_registered_at) >= ?",
         ImportantDates.mentor_training_required_since
-      ) 
+      )
   }
 
   scope :mentor_training_complete_or_not_required, -> () {
     includes(:mentor_profile)
-      .references(:mentor_profile)
+      .references(:mentor_profiles)
       .where(
         "training_completed_at IS NOT NULL OR " +
           "date(season_registered_at) < ?",
         ImportantDates.mentor_training_required_since
-      ) 
+      )
   }
 
   scope :live_event_eligible, ->(event) {
