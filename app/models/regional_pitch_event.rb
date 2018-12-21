@@ -134,7 +134,7 @@ class RegionalPitchEvent < ActiveRecord::Base
       tz: timezone,
       starts_at: starts_at,
       ends_at: ends_at,
-      eventbrite_link: eventbrite_link,
+      event_link: event_link,
       errors: {},
     }
   end

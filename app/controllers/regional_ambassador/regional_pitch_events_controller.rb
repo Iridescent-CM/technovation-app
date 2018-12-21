@@ -143,7 +143,7 @@ module RegionalAmbassador
         :ends_at,
         :city,
         :venue_address,
-        :eventbrite_link,
+        :event_link,
         division_ids: [],
       )
     end
