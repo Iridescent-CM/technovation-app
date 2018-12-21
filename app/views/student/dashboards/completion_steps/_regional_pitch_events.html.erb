@@ -1,4 +1,4 @@
-<h1 class="content-heading">Select a Regional Pitch Event</h1>
+<h1 class="content-heading">Select a Pitching Event</h1>
 
 <% if not current_team.submission.present? %>
   <p>
@@ -8,7 +8,7 @@
 
 <% elsif !current_team.live_event? && @regional_events.any? %>
   <p>
-    Attend a regional pitch event in your area to pitch
+    Attend a pitching event in your area to pitch
     your submisison to a live panel of judges!
   </p>
 
@@ -32,7 +32,7 @@
   </div>
 <% else %>
   <p>
-    There are no regional pitch events in your region.
+    There are no pitching events in your region.
     When you submit, your work will be judged online.
   </p>
 <% end %>
