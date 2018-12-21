@@ -24,6 +24,8 @@ import StickySidebar from 'directives/sticky-sidebar'
 import TeamMenu from 'mentor/menus/Team'
 
 export default {
+  name: 'team-building',
+
   directives: {
     'sticky-sidebar': StickySidebar,
   },

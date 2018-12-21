@@ -9,3 +9,9 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'scores',
+}
+</script>
