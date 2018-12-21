@@ -37,7 +37,7 @@
       :class="eventsTabLinkClasses"
       :to="{ name: 'events', meta: { active: eventsPagesActive } }"
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
-      :condition-to-enable="false"
+      :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
       Pitching Events
