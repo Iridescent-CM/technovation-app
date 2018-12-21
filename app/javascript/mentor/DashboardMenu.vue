@@ -33,16 +33,13 @@
     >Submit your project</tab-link>
 
     <tab-link
-      :class="judgingTabLinkClasses"
-      :to="{ name: 'events', meta: { active: judgingPagesActive } }"
+      :class="eventsTabLinkClasses"
+      :to="{ name: 'events', meta: { active: eventsPagesActive } }"
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
-      :condition-to-enable="false"
+      :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
-      Judging
-      <div slot="subnav" class="tabs-menu__child-menu" v-if="judgingPagesActive">
-        <judging-menu />
-      </div>
+      Pitching Events
     </tab-link>
 
 
@@ -66,7 +63,6 @@ const { mapGetters } = createNamespacedHelpers('authenticated')
 import TabLink from 'tabs/components/TabLink'
 
 import RegistrationMenu from 'registration/DashboardMenu'
-import JudgingMenu from './menus/Judging'
 import TeamMenu from './menus/Team'
 
 export default {
@@ -81,7 +77,6 @@ export default {
     TabLink,
     RegistrationMenu,
     TeamMenu,
-    JudgingMenu,
   },
 
   computed: {
@@ -117,9 +112,9 @@ export default {
       }
     },
 
-    judgingTabLinkClasses () {
+    eventsTabLinkClasses () {
       return {
-        'tabs__menu-link--active': this.judgingPagesActive,
+        'tabs__menu-link--active': this.eventsPagesActive,
       }
     },
 
@@ -133,8 +128,8 @@ export default {
       return this.subRouteIsActive('scores')
     },
 
-    judgingPagesActive () {
-      return this.subRouteIsActive('judging')
+    eventsPagesActive () {
+      return this.subRouteIsActive('events')
     },
 
     submissionPagesActive () {

@@ -1,4 +1,12 @@
 export default {
+  props: {
+    regionalPitchEventsEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+
   methods: {
     subRouteIsActive(parentRouteId) {
       const parentRoute = this.$router.options.routes.find((parentRoute) => {

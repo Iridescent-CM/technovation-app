@@ -11,25 +11,7 @@
 </template>
 
 <script>
-import StickySidebar from 'directives/sticky-sidebar'
-
 export default {
   name: 'submission',
-
-  directives: {
-    'sticky-sidebar': StickySidebar,
-  },
-
-  props: {
-    stickySidebarClasses: {
-      type: Array,
-      default () {
-        return []
-      },
-    },
-  },
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

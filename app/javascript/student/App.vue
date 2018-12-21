@@ -23,7 +23,7 @@
       </div>
 
       <div class="grid__col-3 grid__col--bleed">
-        <dashboard-menu />
+        <dashboard-menu :regional-pitch-events-enabled="regionalPitchEventsEnabled" />
       </div>
     </div>
   </div>
@@ -106,6 +106,12 @@ export default {
           profileIconStudent: '',
         }
       },
+    },
+
+    regionalPitchEventsEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 }

@@ -3,9 +3,9 @@ import VueRouter from 'vue-router'
 
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'student/components/TeamBuilding'
-import Submission from 'student/components/Submission'
-import Scores from 'student/components/Scores'
-import Judging from 'student/components/Judging'
+import Submission from 'dashboard/components/Submission'
+import Scores from 'dashboard/components/Scores'
+import Events from 'dashboard/components/Events'
 
 import store from '../store'
 
@@ -13,7 +13,6 @@ Vue.use(VueRouter)
 
 import { routes as registrationRoutes } from 'registration/routes'
 import teamRoutes from './teams'
-import judgingRoutes from './judging'
 
 const basicProfileRoute = registrationRoutes.find(
   route => route.name === 'basic-profile'
@@ -109,18 +108,13 @@ export const routes = [
     },
   },
   {
-    path: '/judging',
-    name: 'judging',
-    component: Judging,
-    props: {
-      stickySidebarClasses: ['grid__col-3'],
-      embedded: true,
-    },
+    path: '/events',
+    name: 'events',
+    component: Events,
     beforeEnter: loadOrRedirect,
-    children: judgingRoutes,
     meta: {
-      routeId: 'judging',
-      browserTitle: 'Part 4: Compete in the judging rounds',
+      routeId: 'events',
+      browserTitle: 'Part 4: Attend a pitching event',
     },
   },
   {
