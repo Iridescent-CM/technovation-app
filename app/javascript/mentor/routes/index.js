@@ -3,9 +3,9 @@ import VueRouter from 'vue-router'
 
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'mentor/components/TeamBuilding'
-import Submission from 'mentor/components/Submission'
-import Scores from 'mentor/components/Scores'
-import Judging from 'mentor/components/Judging'
+import Submission from 'dashboard/components/Submission'
+import Scores from 'dashboard/components/Scores'
+import Events from 'dashboard/components/Events'
 
 import store from '../store'
 
@@ -115,17 +115,13 @@ export const routes = [
     },
   },
   {
-    path: '/judging',
-    name: 'judging',
-    component: Judging,
-    props: {
-      stickySidebarClasses: ['grid__col-3'],
-      embedded: true,
-    },
+    path: '/events',
+    name: 'events',
+    component: Events,
     beforeEnter: loadOrRedirect,
     meta: {
-      routeId: 'judging',
-      browserTitle: 'Part 4: Compete in the judging rounds',
+      routeId: 'events',
+      browserTitle: 'Part 4: Attend a pitching event',
     },
   },
   {
