@@ -13,7 +13,6 @@ Vue.use(VueRouter)
 
 import { routes as registrationRoutes } from 'registration/routes'
 import teamRoutes from './teams'
-import judgingRoutes from './judging'
 
 const basicProfileRoute = registrationRoutes.find(
   route => route.name === 'basic-profile'
@@ -117,7 +116,6 @@ export const routes = [
       embedded: true,
     },
     beforeEnter: loadOrRedirect,
-    children: judgingRoutes,
     meta: {
       routeId: 'judging',
       browserTitle: 'Part 4: Compete in the judging rounds',
