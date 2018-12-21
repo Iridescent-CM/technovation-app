@@ -33,13 +33,13 @@
     >Submit your project</tab-link>
 
     <tab-link
-      :class="judgingTabLinkClasses"
-      :to="{ name: 'events', meta: { active: judgingPagesActive } }"
+      :class="eventsTabLinkClasses"
+      :to="{ name: 'events', meta: { active: eventsPagesActive } }"
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="false"
       :condition-to-complete="false"
     >
-      Judging
+      Pitching Events
     </tab-link>
 
 
@@ -112,9 +112,9 @@ export default {
       }
     },
 
-    judgingTabLinkClasses () {
+    eventsTabLinkClasses () {
       return {
-        'tabs__menu-link--active': this.judgingPagesActive,
+        'tabs__menu-link--active': this.eventsPagesActive,
       }
     },
 
@@ -128,8 +128,8 @@ export default {
       return this.subRouteIsActive('scores')
     },
 
-    judgingPagesActive () {
-      return this.subRouteIsActive('judging')
+    eventsPagesActive () {
+      return this.subRouteIsActive('events')
     },
 
     submissionPagesActive () {
