@@ -17,15 +17,9 @@
 <script>
 import StickySidebar from 'directives/sticky-sidebar'
 
-import JudgingMenu from 'student/menus/Judging'
-
 export default {
   directives: {
     'sticky-sidebar': StickySidebar,
-  },
-
-  components: {
-    JudgingMenu,
   },
 
   props: {
