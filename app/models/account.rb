@@ -890,6 +890,10 @@ class Account < ActiveRecord::Base
       email_was.strip.downcase != email.strip.downcase
   end
 
+  def returning?
+    seasons.length > 1
+  end
+
   private
   def self.survey_reminder_max_times
     2
