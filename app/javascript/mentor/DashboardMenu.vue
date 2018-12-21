@@ -40,9 +40,6 @@
       :condition-to-complete="false"
     >
       Judging
-      <div slot="subnav" class="tabs-menu__child-menu" v-if="judgingPagesActive">
-        <judging-menu />
-      </div>
     </tab-link>
 
 
@@ -66,7 +63,6 @@ const { mapGetters } = createNamespacedHelpers('authenticated')
 import TabLink from 'tabs/components/TabLink'
 
 import RegistrationMenu from 'registration/DashboardMenu'
-import JudgingMenu from './menus/Judging'
 import TeamMenu from './menus/Team'
 
 export default {
@@ -81,7 +77,6 @@ export default {
     TabLink,
     RegistrationMenu,
     TeamMenu,
-    JudgingMenu,
   },
 
   computed: {
