@@ -226,7 +226,7 @@ GEM
       activesupport (>= 4.2.0)
     has_secure_token (1.0.0)
       activerecord (>= 3.0)
-    hashdiff (0.3.7)
+    hashdiff (0.3.8)
     hashie (3.6.0)
     highline (2.0.0)
     hirb (0.7.3)
@@ -459,7 +459,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webmock (3.4.2)
+    webmock (3.5.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -556,7 +556,7 @@ DEPENDENCIES
   uglifier (~> 3.2)
   vcr (~> 3.0)
   web-console (~> 3.7)
-  webmock (~> 3.4)
+  webmock (~> 3.5)
   webpacker (~> 3.5)
   will_paginate (~> 3.1)
 
