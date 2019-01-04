@@ -149,6 +149,8 @@ Rails.application.routes.draw do
     resource :profile_details_confirmation, only: [:create, :update]
 
     resource :location_details, only: :show
+    resource :current_location, only: :show
+    resource :location, only: [:update, :create]
 
     resource :dashboard, only: :show
     resources :data_analyses, only: :show

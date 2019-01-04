@@ -3,7 +3,9 @@
 <% if current_ambassador.address_details.blank? %>
   <p>
     <%= link_to "Set your location",
-      regional_ambassador_location_details_path,
+      regional_ambassador_location_details_path(
+        return_to: regional_ambassador_profile_path(anchor: '!location')
+      ),
       class: "button" %>
   </p>
 <% else %>
