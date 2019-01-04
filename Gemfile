@@ -111,7 +111,7 @@ end
 group :test do
   gem 'timecop', "~> 0.9"
   gem 'vcr', "~> 3.0"
-  gem 'webmock', "~> 3.4"
+  gem 'webmock', "~> 3.5"
   gem 'sinatra', '~> 2.0'
 
   gem 'rails-controller-testing', "~> 1.0"
