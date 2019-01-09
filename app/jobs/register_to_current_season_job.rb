@@ -4,6 +4,22 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def perform(record)
     return false if perform_not_needed?(record)
 
+    if !record.valid_address? || !record.valid_coordinates
+      Airbrake.notify(
+        "RegisterToCurrentSeasonJob - Invalid record address or coordinates",
+        {
+          id: record.id,
+          city: record.city,
+          state_province: record.state_province,
+          country: record.country,
+          latitude: record.latitude,
+          longitude: record.longitude,
+          valid_address: record.valid_address?,
+          valid_coordinates: record.valid_coordinates?
+        }
+      )
+    end
+
     update_season_data_with_resets(record)
 
     prepare_student_for_current_season(record) if is_student?(record)
