@@ -4,7 +4,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def perform(record)
     return false if perform_not_needed?(record)
 
-    if !record.valid_address? || !record.valid_coordinates
+    if !record.valid_address? || !record.valid_coordinates?
       Airbrake.notify(
         "RegisterToCurrentSeasonJob - Invalid record address or coordinates",
         {
