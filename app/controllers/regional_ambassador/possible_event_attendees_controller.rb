@@ -8,6 +8,7 @@ module RegionalAmbassador
         query: params.fetch(:query),
         expand_search: expand_search?,
         context: self,
+        exclude_event_attendees: true,
       )
 
       render json: AttendeesSerializer.new(possible_attendees, is_collection: true).serialized_json

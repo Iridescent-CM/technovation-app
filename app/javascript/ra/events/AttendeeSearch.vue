@@ -114,7 +114,10 @@
     ],
 
     created() {
-      EventBus.$on("EventTeamList.saveAssignments", () => {
+      EventBus.$on([
+        "EventTeamList.saveAssignments",
+        "EventJudgeList.saveAssignments",
+      ], () => {
         this.fetchRemoteItems();
       });
     },

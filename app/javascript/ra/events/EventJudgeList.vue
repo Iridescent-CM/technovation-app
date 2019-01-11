@@ -298,6 +298,7 @@
 
           success: (resp) => {
             this.event.judgeAssignmentsSaved();
+            EventBus.$emit("EventJudgeList.saveAssignments");
             this.changesToSave = false;
           },
 
