@@ -51,11 +51,12 @@ class ExportEventAttendeesJob < ActiveJob::Base
   private
   def prepare_judge_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w{name email status explanation}
+      csv << %w{name email company status explanation}
       event.judge_list.each do |item|
         csv << [
           item.name,
           item.email,
+          item.company_name,
           item.status,
           item.status_explained,
         ]
@@ -65,7 +66,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_team_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w{team submission division percent\ complete, presentation}
+      csv << %w{team submission division percent\ complete presentation}
       event.teams.each do |item|
         csv << [
           item.name,
