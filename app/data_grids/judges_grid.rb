@@ -41,14 +41,6 @@ class JudgesGrid
     BadgeRecipient.new(account.judge_profile).name
   end
 
-  column :virtual_judge_committee do
-    if judge_profile.present?
-      judge_profile.join_virtual? ? "yes" : "NO"
-    else
-      "-"
-    end
-  end
-
   column :industry do
     if judge_profile.present?
       judge_profile.industry_text
