@@ -244,8 +244,10 @@
               processData: false,
 
               success: (resp) => {
+                if (!judge.recentlyAdded) {
+                  EventBus.$emit("EventJudgeList.removeJudge");
+                }
                 vm.event.removeJudge(judge);
-                EventBus.$emit("EventJudgeList.removeJudge");
               },
 
               error: (err) => {

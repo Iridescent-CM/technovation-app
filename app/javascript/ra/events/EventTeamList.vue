@@ -333,7 +333,7 @@
         "TeamSearch.deselected-event-" + this.event.id,
         (deselectedTeam) => {
           this.event.removeTeam(deselectedTeam);
-          this.$store.commit('removeTeam', deselectedTeam)
+          this.$store.commit('removeTeam', deselectedTeam);
         }
       );
 
