@@ -200,6 +200,10 @@ class JudgeProfile < ActiveRecord::Base
     assigned_teams.pluck(:name)
   end
 
+  def assigned_teams_for_event(event)
+    assigned_teams.where(:id => event.teams.pluck(:id))
+  end
+
   def selected_regional_pitch_event
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end
