@@ -245,7 +245,8 @@
 
               success: () => {
                 vm.event.removeTeam(team);
-                vm.$store.commit('removeTeam', team)
+                vm.$store.commit('removeTeam', team);
+                EventBus.$emit("EventTeamList.removeTeam");
               },
 
               error: (err) => {

@@ -245,6 +245,7 @@
 
               success: (resp) => {
                 vm.event.removeJudge(judge);
+                EventBus.$emit("EventJudgeList.removeJudge");
               },
 
               error: (err) => {
