@@ -7,7 +7,8 @@ class Attendees
     query: "",
     expand_search: false,
     ambassador: NullRegionalAmbassador.new,
-    event: NullEvent.new
+    event: NullEvent.new,
+    exclude_event_attendees: false
   )
     model = type.to_s.camelize.constantize
     table_name = model.table_name
@@ -46,20 +47,24 @@ class Attendees
     end
 
     if records.is_a?(Array)
-      new(
-        records
-          .sort { |a, b|
-            a.public_send(sort_column).downcase <=> b.public_send(sort_column).downcase
-          },
-        event,
-        context
-      )
+      records = records
+        .sort { |a, b|
+          a.public_send(sort_column).downcase <=> b.public_send(sort_column).downcase
+        }
+
+      if exclude_event_attendees
+        records = records.reject { |attendee| attendee.in_event?(event) }
+      end
+
+      new(records, event, context)
     else
-      new(
-        records.order("lower(unaccent(#{table_name}.#{sort_column}))"),
-        event,
-        context
-      )
+      records = records.order("lower(unaccent(#{table_name}.#{sort_column}))")
+
+      if exclude_event_attendees
+        records = records.to_a.reject { |attendee| attendee.in_event?(event) }
+      end
+
+      new(records, event, context)
     end
   end
 

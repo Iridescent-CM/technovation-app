@@ -244,6 +244,9 @@
               processData: false,
 
               success: (resp) => {
+                if (!judge.recentlyAdded) {
+                  EventBus.$emit("EventJudgeList.removeJudge");
+                }
                 vm.event.removeJudge(judge);
               },
 
@@ -298,6 +301,7 @@
 
           success: (resp) => {
             this.event.judgeAssignmentsSaved();
+            EventBus.$emit("EventJudgeList.saveAssignments");
             this.changesToSave = false;
           },
 

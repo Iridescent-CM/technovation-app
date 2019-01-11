@@ -245,7 +245,8 @@
 
               success: () => {
                 vm.event.removeTeam(team);
-                vm.$store.commit('removeTeam', team)
+                vm.$store.commit('removeTeam', team);
+                EventBus.$emit("EventTeamList.removeTeam");
               },
 
               error: (err) => {
@@ -332,7 +333,7 @@
         "TeamSearch.deselected-event-" + this.event.id,
         (deselectedTeam) => {
           this.event.removeTeam(deselectedTeam);
-          this.$store.commit('removeTeam', deselectedTeam)
+          this.$store.commit('removeTeam', deselectedTeam);
         }
       );
 
