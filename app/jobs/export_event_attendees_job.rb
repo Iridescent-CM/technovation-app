@@ -66,14 +66,19 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_team_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w{team submission division percent\ complete presentation}
+      csv << %w{team submission division percent\ complete presentation student\ emails mentor\ emails}
       event.teams.each do |item|
+        student_emails = item.students.to_a.map { |student| student.email }
+        mentor_emails = item.mentors.to_a.map { |mentor| mentor.email }
+
         csv << [
           item.name,
           item.submission.app_name,
           item.division_name,
           item.submission.percent_complete,
           item.submission.pitch_presentation_url,
+          student_emails.join(', '),
+          mentor_emails.join(', ')
         ]
       end
     end
