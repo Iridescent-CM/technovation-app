@@ -37,19 +37,22 @@
 
       <p>
         <label for="schoolName">{{ schoolCompanyNameLabel }}</label>
-        <input
-          v-if="profileChoice === 'student'"
-          id="schoolName"
-          type="text"
-          v-model="schoolCompanyName"
-        />
+        <template v-if="profileChoice === 'student'">
+          <input
+            id="schoolName"
+            type="text"
+            v-model="schoolCompanyName"
+          />
+        </template>
 
-        <autocomplete-input
-          v-else
-          id="schoolName"
-          v-model="schoolCompanyName"
-          url="/registration/top_companies"
-        />
+        <template v-else>
+          <autocomplete-input
+            id="schoolName"
+            v-model="schoolCompanyName"
+            url="/registration/top_companies"
+          />
+          <span>If your company is not part of the options, type the name of your company then press "Enter" or "Tab"</span>
+        </template>
       </p>
 
       <p v-show="profileChoice !== 'student'">
