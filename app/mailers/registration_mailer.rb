@@ -49,6 +49,10 @@ class RegistrationMailer < ApplicationMailer
     @ebook_url =
       "https://iridescentlearning.atavist.com/technovation-mentor-training"
 
+    @slack_url =
+      "https://join.slack.com/t/technovationmentors/shared_invite/" +
+      "enQtMzE1MzIwMjAxNzY2LTRjMjlmMzcwYTkzNDFmN2ViOWIwMjgzNjllZGVjMjRhNTBiZTExMDQ0ZGZhODE1NzUyN2ZiZDFlZDUwMzRmNjQ"
+
     @season_year = Season.current.year
 
     @consent_url = new_consent_waiver_url(mailer_token: account.mailer_token)
