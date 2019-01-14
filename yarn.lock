@@ -7177,7 +7177,7 @@ vue-router@^3.0.1:
 
 "vue-select@https://github.com/Iridescent-CM/vue-select.git#iridescent-customization-from-v2.5.1":
   version "2.5.1"
-  resolved "https://github.com/Iridescent-CM/vue-select.git#d1139cc687ed9e883f4e3e3ebfcd7b379d423637"
+  resolved "https://github.com/Iridescent-CM/vue-select.git#9629a8956712015ef4cace8431428e6967c78502"
 
 vue-style-loader@^3.0.0:
   version "3.1.2"
