@@ -42,7 +42,7 @@
     <div class="panel__content" v-else-if="!profileOptions.length">
       <div class="grid grid--justify-space-around">
         <div class="grid__col-12">
-          You must be at least 10 years old to sign up.
+          You must be at least 10 years old by World Pitch to sign up.
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@ export default {
     },
 
     profileOptions () {
-      if (this.getAge() < 10) {
+      if (this.getAgeByCutoff < 10) {
         this.profileChoice = null
         return []
       }
