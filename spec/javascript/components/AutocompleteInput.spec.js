@@ -1,6 +1,6 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import axios from 'axios'
-import VueSelect from '@vendorjs/vue-select'
+import VueSelect from 'vue-select'
 
 import AutocompleteInput from 'components/AutocompleteInput'
 

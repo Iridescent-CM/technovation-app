@@ -7175,9 +7175,9 @@ vue-router@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
 
-vue-select@^2.4.0:
+"vue-select@https://github.com/Iridescent-CM/vue-select.git#iridescent-customization-from-v2.5.1":
   version "2.5.1"
-  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-2.5.1.tgz#9886e7123150a52dc8dbfe3202d0387268835aaa"
+  resolved "https://github.com/Iridescent-CM/vue-select.git#d1139cc687ed9e883f4e3e3ebfcd7b379d423637"
 
 vue-style-loader@^3.0.0:
   version "3.1.2"

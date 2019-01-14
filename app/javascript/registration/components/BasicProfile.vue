@@ -135,7 +135,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import VueSelect from '@vendorjs/vue-select'
+import VueSelect from 'vue-select'
 
 import { debounce } from 'utilities/utilities'
 import AutocompleteInput from 'components/AutocompleteInput'

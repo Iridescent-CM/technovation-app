@@ -84,7 +84,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import VueSelect from '@vendorjs/vue-select'
+import VueSelect from 'vue-select'
 
 const { mapGetters, mapActions, mapState } = createNamespacedHelpers('registration')
 const { mapState: mapAuthState } = createNamespacedHelpers('authenticated')
