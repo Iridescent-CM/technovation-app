@@ -19,7 +19,7 @@ class AccountsGrid
 
   column :virtual_judge_committee do
     if judge_profile.present?
-      judge_profile.join_virtual? ? "yes" : "NO"
+      judge_profile.join_virtual? ? "Yes" : "No"
     else
       "-"
     end
@@ -135,7 +135,7 @@ class AccountsGrid
     if country_code == "US" and mentor_profile.present?
       background_check.present? ?
         background_check.status :
-        "not submitted"
+        "Not submitted"
     elsif mentor_profile.present?
       "-"
     else
@@ -153,19 +153,29 @@ class AccountsGrid
 
   column :consent_waiver do
     if mentor_profile.present?
-      consent_waiver.present? ? "signed" : "not signed"
+      consent_waiver.present? ? "Signed" : "Not signed"
+    else
+      "-"
+    end
+  end
+
+  column :mentor_training do
+    if mentor_profile.present? and mentor_profile.training_required?
+      mentor_profile.training_complete? ? "Yes" : "No"
+    elsif mentor_profile.present? and !mentor_profile.training_required?
+      "N/A"
     else
       "-"
     end
   end
 
   column :returning, header: "Returning?" do |account|
-    account.returning? ? "yes" : "no"
+    account.returning? ? "Yes" : "No"
   end
 
   column :onboarded_judges do
     if judge_profile.present?
-      judge_profile.onboarded? ? "yes" : "no"
+      judge_profile.onboarded? ? "Yes" : "No"
     else
       "-"
     end
