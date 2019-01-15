@@ -159,6 +159,16 @@ class AccountsGrid
     end
   end
 
+  column :mentor_training do
+    if mentor_profile.present? and mentor_profile.training_required?
+      mentor_profile.training_complete? ? "yes" : "no"
+    elsif mentor_profile.present? and !mentor_profile.training_required?
+      "N/A"
+    else
+      "-"
+    end
+  end
+
   column :returning, header: "Returning?" do |account|
     account.returning? ? "yes" : "no"
   end
