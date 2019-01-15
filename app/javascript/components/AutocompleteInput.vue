@@ -22,7 +22,7 @@
 
 <script>
 
-import VueSelect from '@vendorjs/vue-select'
+import VueSelect from 'vue-select'
 
 export default {
   name: 'autocomplete-input',
