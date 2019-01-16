@@ -258,77 +258,56 @@ class AccountsGrid
       scope.send(value)
     end
 
-  filter :parental_consent,
+  filter :onboarded_students,
     :enum,
-    header: "Parental consent (students only)",
     select: [
-      ['Has parental consent', 'parental_consented'],
-      ['No parental consent', 'not_parental_consented'],
+      ['Yes, fully onboarded', 'onboarded'],
+      ['No, still onboarding', 'onboarding'],
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{judge regional_ambassador mentor} & (g.scope_names || [])).empty?
+      (%w{judge mentor regional_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      scope.send(value, grid.season)
+      scope.where(
+        "student_profiles.id IS NOT NULL AND " +
+        "student_profiles.onboarded = ?",
+         value == 'onboarded' ? true : false
+      )
     end
 
-  filter :consent_waiver,
+  filter :onboarded_mentors,
     :enum,
-    header: "Consent waiver (mentors only)",
     select: [
-      ['Signed consent waiver', 'consent_signed'],
-      ['Has not signed', 'consent_not_signed'],
-    ],
-    filter_group: "common",
-    if: ->(g) {
-      (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
-    } do |value|
-      send(value)
-    end
-
-  filter :background_check,
-    :enum,
-    header: "Background check (mentors only)",
-    select: ->(g) {
-      if g.admin
-        [
-          ['Has not submitted (US only)', 'bg_check_unsubmitted'],
-          ['Has submitted, is waiting (US only)', 'bg_check_submitted'],
-          ['Clear (US only) or not required (International)', 'bg_check_clear'],
-          ['Consider (US only)', 'bg_check_consider'],
-          ['Suspended (US only)', 'bg_check_suspended'],
-        ]
-      else
-        [
-          ['Has not submitted', 'bg_check_unsubmitted'],
-          ['Has submitted, is waiting', 'bg_check_submitted'],
-          ['Clear', 'bg_check_clear'],
-          ['Consider', 'bg_check_consider'],
-          ['Suspended', 'bg_check_suspended'],
-        ]
-      end
-    },
-    filter_group: "common",
-    if: ->(g) {
-      g.country.empty? or
-        g.country[0] == "US" and
-          (%w{judge regional_ambassador student} & (g.scope_names || [])).empty?
-    } do |value|
-      send(value)
-    end
-
-  filter :mentor_training,
-    :enum,
-    header: "Mentor training (mentors only)",
-    select: [
-      ['Training complete or not required', 'mentor_training_complete_or_not_required'],
-      ['Training required, and incomplete', 'mentor_training_required'],
+      ['Yes, fully onboarded', 'onboarded'],
+      ['No, still onboarding', 'onboarding'],
     ],
     filter_group: "common",
     if: ->(g) {
       (%w{judge student regional_ambassador} & (g.scope_names || [])).empty?
-    } do |value|
-      send(value)
+    } do |value, scope, grid|
+      if value == "onboarded"
+        scope.includes(:background_check, :consent_waiver)
+          .references(:background_checks, :consent_waivers)
+          .where(
+            "email_confirmed_at IS NOT NULL AND " +
+            "mentor_profiles.bio IS NOT NULL AND " +
+            "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
+            "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
+            ImportantDates.mentor_training_required_since,
+            BackgroundCheck.statuses[:clear]
+          )
+      else
+        scope.includes(:background_check, :consent_waiver)
+          .references(:background_checks, :consent_waivers)
+          .where(
+            "email_confirmed_at IS NULL OR " +
+            "mentor_profiles.bio IS NULL OR " +
+            "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
+            "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
+            ImportantDates.mentor_training_required_since,
+            BackgroundCheck.statuses[:clear]
+          )
+      end
     end
 
   filter :onboarded_judges,
