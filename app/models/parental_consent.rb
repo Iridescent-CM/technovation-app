@@ -1,6 +1,7 @@
 class ParentalConsent < ActiveRecord::Base
   include Seasoned
 
+  # If these change, you will need to update dataclips
   enum status: %i{
     pending
     signed

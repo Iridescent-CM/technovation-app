@@ -3,6 +3,7 @@ class Division < ActiveRecord::Base
   CUTOFF_DAY = 1
   SENIOR_DIVISION_AGE = 15
 
+  # If these change, you will need to update dataclips
   enum name: [:senior, :junior, :none_assigned_yet]
 
   validates :name,
