@@ -10,7 +10,6 @@ module Judge
         :industry_other,
         :skills,
         :degree,
-        :join_virtual,
         :survey_completed,
       ]
     end

@@ -17,14 +17,6 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
-  column :virtual_judge_committee do
-    if judge_profile.present?
-      judge_profile.join_virtual? ? "Yes" : "No"
-    else
-      "-"
-    end
-  end
-
   column :judge_industry do
     if judge_profile.present?
       judge_profile.industry_text
