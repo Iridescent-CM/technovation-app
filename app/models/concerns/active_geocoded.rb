@@ -127,7 +127,8 @@ module ActiveGeocoded
       country = Carmen::Country.coded(country_code) ||
         Carmen::Country.named(country_code)
 
-      state_for_country = country.subregions.coded(state_code)
+      state_for_country = country.subregions.coded(state_code) ||
+        country.subregions.named(state_code)
 
       me = OpenStruct.new(address_details: [city, state_for_country, country].join(", "))
       FriendlyCountry.new(me).country_name
