@@ -33,7 +33,8 @@ export default {
   },
 
   getAgeByCutoff (_state, getters) {
-    return getters.getAge(new Date("2019-08-01"))
+    const time = new Date().toISOString().split('T')[1]
+    return getters.getAge(new Date(`2019-08-01T${time}`))
   },
 
   isLocationSet (state) {
