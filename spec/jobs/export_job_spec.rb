@@ -6,7 +6,7 @@ RSpec.describe ExportJob do
       ra = FactoryBot.create(
         :ambassador,
         city: "Salvador",
-        state_province: "BA",
+        state_province: "Bahia",
         country: "BR"
       )
 

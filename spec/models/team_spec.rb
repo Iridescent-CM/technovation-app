@@ -140,7 +140,7 @@ RSpec.describe Team do
     it "uses only country outside the US" do
       team = FactoryBot.create(:team,
                                 city: "Salvador",
-                                state_province: "BA",
+                                state_province: "Bahia",
                                 country: "BR")
       expect(team.region_division_name).to eq("BR,junior")
     end
@@ -189,7 +189,7 @@ RSpec.describe Team do
 
     TeamUpdating.execute(team, {
       city: "Salvador",
-      state_province: "BA",
+      state_province: "Bahia",
       country: "Brazil"
     })
 
@@ -220,7 +220,7 @@ RSpec.describe Team do
 
     TeamUpdating.execute(team, {
       city: "Salvador",
-      state_province: "BA",
+      state_province: "Bahia",
       country: "BR",
     })
 

@@ -34,7 +34,7 @@ FactoryBot.define do
 
     trait :brazil do
       city { "Salvador" }
-      state_province { "BA" }
+      state_province { "Bahia" }
       country { "BR" }
     end
 
