@@ -125,6 +125,7 @@ RSpec.configure do |config|
       "Dhurma, Riyadh Province",
       "Dhurma, Riyadh Province, Saudi Arabia",
       "Dhurma, Riyadh Province, SA",
+      "Dhurma, , Saudi Arabia",
       [24.6769697, 46.2431716],
     ].each do |loc|
       Geocoder::Lookup::Test.add_stub(
@@ -146,6 +147,7 @@ RSpec.configure do |config|
       "Najran",
       "Najran, Najran Province, Saudi Arabia",
       "Najran, Najran Province",
+      "Najran, , Saudi Arabia",
       [17.6004128, 44.2933307],
     ].each do |loc|
       Geocoder::Lookup::Test.add_stub(
@@ -198,7 +200,13 @@ RSpec.configure do |config|
       )
     end
 
-    ["Tel Aviv, IL-TA, IL", "Tel Aviv, Tel Aviv, IL", "Tel Aviv, Tel Aviv, Israel", [32.146611, 34.8519761]].each do |loc|
+    [
+      "Tel Aviv, IL-TA, IL",
+      "Tel Aviv, Tel Aviv, IL",
+      "Tel Aviv, Tel Aviv, Israel",
+      "Tel Aviv, , Israel",
+      [32.146611, 34.8519761]
+    ].each do |loc|
       Geocoder::Lookup::Test.add_stub(
         loc, [{
           "latitude" => 32.146611,
