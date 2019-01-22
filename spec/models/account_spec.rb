@@ -9,7 +9,7 @@ RSpec.describe Account do
   end
 
   it "formats states as short codes before validating" do
-    account = Account.new(city: "Salvador", state_province: "Bahia", country: "Brazil")
+    account = Account.new(city: "Salvador", state_province: "BA", country: "Brazil")
     account.valid?
     expect(account[:country]).to eq("BR")
     expect(account[:state_province]).to eq("BA")
@@ -188,7 +188,7 @@ RSpec.describe Account do
     it "doesn't need a BG check outside of the US" do
       account = FactoryBot.create(type,
                                    city: "Salvador",
-                                   state_province: "Bahia",
+                                   state_province: "BA",
                                    country: "BR")
       expect(account).to be_background_check_complete
     end

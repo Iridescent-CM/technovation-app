@@ -5,7 +5,7 @@ RSpec.feature "Searchability" do
     mentor = FactoryBot.create(
       :mentor,
       city: "Salvador",
-      state_province: "Bahia",
+      state_province: "BA",
       country: "BR",
       not_onboarded: true
     )
