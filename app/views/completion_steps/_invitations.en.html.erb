@@ -14,7 +14,7 @@
 
     <% invites.each do |invite| %>
       <%= content_tag :div, id: dom_id(invite) do %>
-        <div class="grid grid--bleed">
+        <div class="grid grid--bleed margin--t-large">
           <div class="grid__col-4">
             <div class="grid__cell">
               <%= image_tag invite.team.team_photo,

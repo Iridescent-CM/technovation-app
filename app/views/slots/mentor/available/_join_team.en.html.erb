@@ -1,6 +1,6 @@
 <%= render "completion_steps/invitations",
   hidden: current_mentor.onboarding?,
-  invites: current_mentor.team_member_invites.pending %>
+  invites: current_mentor.pending_mentor_invites %>
 
 <div class="margin--t-large border--t-thin padding--t-medium">
   <%= render "completion_steps/join_requests",
