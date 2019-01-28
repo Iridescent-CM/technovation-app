@@ -17,7 +17,7 @@ module Public
 
       if !!account
         MailgunResponse.new(email_taken_response)
-      elsif address.match(/@qq.com\z/)
+      elsif address.match(/@qq.com\z/) || address.match(/@alumno.fomento.edu\z/)
         MailgunResponse.new(bypassed_response)
       else
         MailgunResponse.new(get_mailgun_response(address))

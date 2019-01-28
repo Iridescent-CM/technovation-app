@@ -58,6 +58,19 @@ RSpec.describe Public::EmailValidationsController do
           expect(json['is_valid']).to be(true)
         end
       end
+
+      context "and it is a @alumno.fomento.edu email" do
+        let(:email) { URI.encode('yourname@alumno.fomento.edu') }
+        let(:json) { JSON.parse(response.body)['data']['attributes'] }
+
+        before do
+          get "/public/email_validations/new?address=#{email}"
+        end
+
+        it "always returns valid" do
+          expect(json['is_valid']).to be(true)
+        end
+      end
     end
   end
 end
