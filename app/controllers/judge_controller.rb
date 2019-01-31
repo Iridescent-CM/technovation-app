@@ -1,4 +1,6 @@
 class JudgeController < ApplicationController
+  before_action :create_judge_mentor_on_dashboard
+
   include Authenticated
 
   layout "judge"
@@ -30,6 +32,11 @@ class JudgeController < ApplicationController
 
   def current_profile
     current_judge
+  end
+
+  def create_judge_mentor_on_dashboard
+    # noop
+    # implemented on judge/dashboards controller
   end
 
   def back_from_event_path
