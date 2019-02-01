@@ -177,6 +177,10 @@
   padding-top: 0.5rem;
 }
 
+.padding--t-large {
+  padding-top: 1rem;
+}
+
 .padding--t-b-none {
   padding-top: 0;
   padding-bottom: 0;
@@ -218,6 +222,11 @@
   padding-bottom: 1rem;
 }
 
+.padding--r-l-t-large {
+  @extend .padding--t-large;
+  @extend .padding--r-l-large;
+}
+
 .padding--l-medium {
   padding-left: 0.5rem;
 }
@@ -238,6 +247,10 @@
 
 .text-align--center {
   text-align: center;
+}
+
+.text-align--left {
+  text-align: left !important;
 }
 
 .text-align--right {

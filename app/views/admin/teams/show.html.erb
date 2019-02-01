@@ -1,3 +1,7 @@
 <% provide :title, "Viewing team: #{@team.name}" %>
-<%= render 'teams/show', admin_ra: true, team: @team %>
+
+<div class="panel padding--none">
+  <%= render 'teams/show', admin_ra: true, team: @team %>
+</div>
+
 <%= render 'admin/teams/debugging', team: @team %>
