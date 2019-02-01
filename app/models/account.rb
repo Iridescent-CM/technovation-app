@@ -225,6 +225,7 @@ class Account < ActiveRecord::Base
          saved_change_to_latitude ||
            saved_change_to_city
 
+      # TODO - Move this out of here so that this logic fires whent the record is touched.
       if student_profile.present?
         student_profile.update_column(
           :onboarded,
