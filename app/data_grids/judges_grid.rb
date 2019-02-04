@@ -72,12 +72,15 @@ class JudgesGrid
   end
 
   column :age, order: "accounts.date_of_birth desc"
+
   column :city
-  column :state_province, header: "State"
+
+  column :state_province, header: "State" do
+    FriendlySubregion.(self, prefix: false)
+  end
+
   column :country do
-    if found_country = Carmen::Country.coded(country)
-      found_country.name
-    end
+    FriendlyCountry.new(self).country_name
   end
 
   column :referred_by do

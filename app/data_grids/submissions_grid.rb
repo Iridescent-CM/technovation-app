@@ -54,13 +54,14 @@ class SubmissionsGrid
     team.city
   end
 
-  column :state_province, header: "State"
+  column :state_province, header: "State" do
+    FriendlySubregion.(team, prefix: false)
+  end
 
   column :country do
-    if found_country = Carmen::Country.coded(country)
-      found_country.name
-    end
+    FriendlyCountry.new(team).country_name
   end
+
 
   column :complete? do
     complete? ? "yes" : "NO"

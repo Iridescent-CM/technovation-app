@@ -29,13 +29,15 @@ class EventsGrid
 
   column :time
 
-  column :country do
-    FriendlyCountry.(self)
-  end
-
   column :city
 
-  column :state_province, header: "State"
+  column :state_province, header: "State" do
+    FriendlySubregion.(self, prefix: false)
+  end
+
+  column :country do
+    Carmen::Country.coded(country) || Carmen::Country.named(country)
+  end
 
   column :judge_count do
     judge_list.size
