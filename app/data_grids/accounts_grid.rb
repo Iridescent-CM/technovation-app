@@ -177,11 +177,11 @@ class AccountsGrid
   column :city
 
   column :state_province, header: "State" do |account, _grid|
-    FriendlySubregion.(account)
+    FriendlySubregion.(account, prefix: false)
   end
 
   column :country do |account, _grid|
-    FriendlyCountry.(account)
+    FriendlyCountry.new(account).country_name
   end
 
   column :geolocation, header: "Geolocation", if: ->(g) {
