@@ -1,39 +1,39 @@
-<div id="vue-enable-student-app" class="hidden">
-  <%= content_tag :div,
-    nil,
-    id: "vue-data-registration",
-    data: {
-      current_account: AccountSerializer.new(current_account).serialized_json,
-      regional_ambassador: RegionalAmbassadorSerializer.new(regional_ambassador).serialized_json,
-      current_team: TeamSerializer.new(current_team).serialized_json,
-      current_submission: SubmissionSerializer.new(current_submission).serialized_json,
-      parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
-    } %>
-  <app
-    :profile-icons="{
-      profileIconStudent: '<%= asset_path('wizard-choose-profile__student-primary.svg') %>',
-      profileIconMentor: '<%= asset_path('wizard-choose-profile__mentor-secondary--female.svg') %>',
-      profileIconMentorMale: '<%= asset_path('wizard-choose-profile__mentor-secondary--male.svg') %>',
-    }"
-    :regional-pitch-events-enabled="<%= SeasonToggles.select_regional_pitch_event? %>"
-    <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-      survey-link-text="<%= SeasonToggles.survey_link(current_scope, "text") %>"
-      survey-link="<%= SeasonToggles.survey_link(
-        current_scope,
-        "url",
-        format_url: true,
-        account: current_account
-      ) %>"
-    <% end %>
-  >
-    <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-      <template slot="survey-links"><%= render 'program_survey' %></template>
-    <% end %>
+<% if not current_student.email_confirmed? %>
+  <%= render 'completion_steps/confirm_changed_email',
+    profile: current_student %>
+<% else %>
+  <div id="vue-enable-student-app" class="hidden">
+    <%= content_tag :div,
+      nil,
+      id: "vue-data-registration",
+      data: {
+        current_account: AccountSerializer.new(current_account).serialized_json,
+        regional_ambassador: RegionalAmbassadorSerializer.new(regional_ambassador).serialized_json,
+        current_team: TeamSerializer.new(current_team).serialized_json,
+        current_submission: SubmissionSerializer.new(current_submission).serialized_json,
+        parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
+      } %>
+    <app
+      :profile-icons="{
+        profileIconStudent: '<%= asset_path('wizard-choose-profile__student-primary.svg') %>',
+        profileIconMentor: '<%= asset_path('wizard-choose-profile__mentor-secondary--female.svg') %>',
+        profileIconMentorMale: '<%= asset_path('wizard-choose-profile__mentor-secondary--male.svg') %>',
+      }"
+      :regional-pitch-events-enabled="<%= SeasonToggles.select_regional_pitch_event? %>"
+      <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+        survey-link-text="<%= SeasonToggles.survey_link(current_scope, "text") %>"
+        survey-link="<%= SeasonToggles.survey_link(
+          current_scope,
+          "url",
+          format_url: true,
+          account: current_account
+        ) %>"
+      <% end %>
+    >
+      <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+        <template slot="survey-links"><%= render 'program_survey' %></template>
+      <% end %>
 
-    <% if not current_student.email_confirmed? %>
-      <%= render 'completion_steps/confirm_changed_email',
-        profile: current_student %>
-    <% else %>
       <div slot="ra-intro">
         <%= render 'dashboards/ra_intro' %>
       </div>
@@ -98,8 +98,8 @@
       <div slot="scores">
         <%= render 'slots/student/scores' %>
       </div>
-    <% end %>
-  </app>
+    </app>
 
-  <%= render 'program_survey_modal' %>
-</div>
+    <%= render 'program_survey_modal' %>
+  </div>
+<% end %>
