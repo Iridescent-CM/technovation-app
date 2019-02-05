@@ -49,3 +49,5 @@ export const urlHelpers = (() => {
 
   return publicMethods
 })()
+
+console.log(process.env.RAILS_ENV)
