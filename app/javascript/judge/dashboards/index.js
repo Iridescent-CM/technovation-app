@@ -6,6 +6,20 @@ import { router } from './scores/routes'
 import LiveEventNav from './scores/LiveEventNav'
 import VirtualNav from './scores/VirtualNav'
 
+import AirbrakeClient from 'airbrake-js';
+
+const airbrake = new AirbrakeClient({
+  projectId: 107438,
+  projectKey: '25c7abb3eb366a19a0743c5f04a9320e',
+})
+
+Vue.config.errorHandler = function (err, vm, info) {
+  airbrake.notify({
+    error: err,
+    params: { info: info },
+  })
+}
+
 document.addEventListener('turbolinks:load', () => {
   const dashEl = document.querySelector('#judge-dashboard-scores-app')
 
@@ -24,6 +38,17 @@ document.addEventListener('turbolinks:load', () => {
         $.get("/judge/scores.json", null, resp => {
           this.$store.commit('populateScores', resp)
         })
+          .fail((jqXHR, textStatus, errorThrown) => {
+            airbrake.notify({
+              error: errorThrown,
+              params: { jqXHR, textStatus, errorThrown },
+            });
+
+            displayFlashMessage(
+              'There was an issue fetching your scores. Please try refreshing the page.',
+              'error'
+            );
+          });
 
         if (this.$refs.disableAssigned && !window.location.hash) {
           this.$router.push({ name: 'finished-scores' })
@@ -31,6 +56,17 @@ document.addEventListener('turbolinks:load', () => {
           $.get("/judge/assigned_submissions.json", null, resp => {
             this.$store.commit('populateSubmissions', resp)
           })
+            .fail((jqXHR, textStatus, errorThrown) => {
+              airbrake.notify({
+                error: errorThrown,
+                params: { jqXHR, textStatus, errorThrown },
+              });
+
+              displayFlashMessage(
+                'There was an issue fetching your assigned submissions. Please try refreshing the page.',
+                'error'
+              );
+            });
         }
 
         if (this.$refs.deadline)
