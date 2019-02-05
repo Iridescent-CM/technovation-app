@@ -1,3 +1,5 @@
+import { airbrake } from 'utilities/utilities'
+
 export const setComment = (state, commentData) => {
   const originalComment = state.score.comments[commentData.sectionName]
   const comment = Object.assign({}, originalComment, commentData)
@@ -69,7 +71,12 @@ export const saveComment = (state, sectionName) => {
     success: resp => {
       // Verify the resp here
     },
-    error: err => (console.error(err)),
+    error: (jqXHR, textStatus, errorThrown) => {
+      airbrake.notify({
+        error: errorThrown,
+        params: { jqXHR, textStatus, errorThrown },
+      });
+    }
   })
 }
 
