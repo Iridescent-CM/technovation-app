@@ -7,6 +7,7 @@ environment.loaders.append('vue', vue)
 environment.config.merge(customConfig)
 
 const webpack = require('webpack')
+const dotenv = require('dotenv');
 
 environment.plugins.append(
   'CommonsChunkVendor',
@@ -31,5 +32,14 @@ environment.plugins.prepend(
   'MomentIgnoreLocales',
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 )
+
+// Pull in .env variables used by front-end
+const env = dotenv.config().parsed;
+environment.plugins.append(
+  'LoadEnvironmentVariables',
+  new webpack.DefinePlugin({
+    'process.env.AIRBRAKE_RAILS_ENV': JSON.stringify(env.AIRBRAKE_RAILS_ENV),
+  })
+);
 
 module.exports = environment
