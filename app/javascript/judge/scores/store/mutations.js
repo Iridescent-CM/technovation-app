@@ -100,9 +100,12 @@ export const updateScores = (state, qData) => {
       question.score = qData.score
     },
 
-    error: err => {
-      console.error(err)
-    },
+    error: (jqXHR, textStatus, errorThrown) => {
+      airbrake.notify({
+        error: errorThrown,
+        params: { jqXHR, textStatus, errorThrown },
+      });
+    }
   })
 }
 
