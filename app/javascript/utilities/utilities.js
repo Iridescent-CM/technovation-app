@@ -51,3 +51,4 @@ export const urlHelpers = (() => {
 })()
 
 console.log(process.env.RAILS_ENV)
+console.log(process.env.NODE_ENV)
