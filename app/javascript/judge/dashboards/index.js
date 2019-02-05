@@ -6,12 +6,7 @@ import { router } from './scores/routes'
 import LiveEventNav from './scores/LiveEventNav'
 import VirtualNav from './scores/VirtualNav'
 
-import AirbrakeClient from 'airbrake-js';
-
-const airbrake = new AirbrakeClient({
-  projectId: 107438,
-  projectKey: '25c7abb3eb366a19a0743c5f04a9320e',
-})
+import { airbrake } from 'utilities/utilities'
 
 Vue.config.errorHandler = function (err, vm, info) {
   airbrake.notify({

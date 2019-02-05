@@ -1,3 +1,11 @@
+import AirbrakeClient from 'airbrake-js';
+
+export const airbrake = new AirbrakeClient({
+  projectId: 107438,
+  projectKey: '25c7abb3eb366a19a0743c5f04a9320e',
+  environment: process.env.RAILS_ENV,
+})
+
 export const isEmptyObject = (object) => {
   return Object.keys(object).length === 0 && object.constructor === Object
 }
