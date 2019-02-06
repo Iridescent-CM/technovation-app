@@ -403,4 +403,40 @@ RSpec.describe TeamSubmission do
       end
     end
   end
+
+  describe "semifinals scores" do
+    before(:each) { SeasonToggles.set_judging_round(:sf) }
+    after(:each) { SeasonToggles.clear_judging_round }
+
+    let(:team) { FactoryBot.create(:team, :junior) }
+    let(:sub) { FactoryBot.create(:submission, :complete, team: team) }
+
+    it "averages scores" do
+      [3, 6].each do |score|
+        judge = FactoryBot.create(:judge_profile)
+        judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: score,
+          completed_at: Time.current,
+          round: :semifinals,
+        })
+      end
+
+      expect(sub.reload.semifinals_average_score).to eq(4.5)
+    end
+
+    it "computes ranges of scores" do
+      [3, 6, 10].each do |score|
+        judge = FactoryBot.create(:judge_profile)
+        judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: score,
+          completed_at: Time.current,
+          round: :semifinals,
+        })
+      end
+
+      expect(sub.reload.semifinals_score_range).to eq(7)
+    end
+  end
 end
