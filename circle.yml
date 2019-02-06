@@ -110,6 +110,10 @@ jobs:
           command: yarn test
 
       - run:
+          name: Compile Assets
+          command: bundle exec rake assets:precompile
+
+      - run:
           name: Database Setup
           command: |
             bundle exec rails db:create
