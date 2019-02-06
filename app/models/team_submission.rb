@@ -328,39 +328,39 @@ class TeamSubmission < ActiveRecord::Base
     update_semifinals_average_score
   end
 
-  def update_quarterfinals_average_score
+  def quarterfinals_official_scores
     if team.selected_regional_pitch_event.live? &&
-         team.selected_regional_pitch_event.unofficial?
-
-      official_scores = submission_scores.current.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.current.live.complete.quarterfinals
-
-    elsif team.selected_regional_pitch_event.live?
-
-      official_scores = submission_scores.current.live.complete.quarterfinals
-      unofficial_scores = submission_scores.current.virtual.complete.quarterfinals
-
+         team.selected_regional_pitch_event.official?
+      submission_scores.current.live.complete.quarterfinals
     else
-
-      official_scores = submission_scores.current.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.current.live.complete.quarterfinals
-
+      submission_scores.current.virtual.complete.quarterfinals
     end
+  end
 
-    if official_scores.any?
-      avg = (official_scores.inject(0.0) { |acc, s|
+  def quarterfinals_unofficial_scores
+    if team.selected_regional_pitch_event.live? &&
+         team.selected_regional_pitch_event.official?
+      submission_scores.current.virtual.complete.quarterfinals
+    else
+      submission_scores.current.live.complete.quarterfinals
+    end
+  end
+
+  def update_quarterfinals_average_score
+    if quarterfinals_official_scores.any?
+      avg = (quarterfinals_official_scores.inject(0.0) { |acc, s|
         acc + s.total
-      } / official_scores.count).round(2)
+      } / quarterfinals_official_scores.count).round(2)
 
       update_column(:quarterfinals_average_score, avg)
     else
       update_column(:quarterfinals_average_score, 0)
     end
 
-    if unofficial_scores.any?
-      avg = (unofficial_scores.inject(0.0) { |acc, s|
+    if quarterfinals_unofficial_scores.any?
+      avg = (quarterfinals_unofficial_scores.inject(0.0) { |acc, s|
         acc + s.total
-      } / unofficial_scores.count).round(2)
+      } / quarterfinals_unofficial_scores.count).round(2)
 
       update_column(:average_unofficial_score, avg)
     else
