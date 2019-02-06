@@ -67,6 +67,14 @@ class ScoredSubmissionsGrid
     str += "/#{submission.total_possible_score}"
   end
 
+  column :quarterfinals_range, order: :quarterfinals_score_range do |submission|
+    submission.quarterfinals_score_range
+  end
+
+  column :semifinals_range, order: :semifinals_score_range do |submission|
+    submission.semifinals_score_range
+  end
+
   column :view, mandatory: true, html: true do |submission, grid|
     html = link_to(
       web_icon('list-ul', size: 16, remote: true),
