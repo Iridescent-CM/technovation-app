@@ -323,9 +323,11 @@ class TeamSubmission < ActiveRecord::Base
     screenshots.reject(&:new_record?).count >= 2
   end
 
-  def update_average_scores
+  def update_score_summaries
     update_quarterfinals_average_score
+    update_quarterfinals_score_range
     update_semifinals_average_score
+    update_semifinals_score_range
   end
 
   def quarterfinals_official_scores
@@ -368,6 +370,14 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def update_quarterfinals_score_range
+    scores = quarterfinals_official_scores
+    if scores.any?
+      range = scores.max_by(&:total).total - scores.min_by(&:total).total
+      update_column(:quarterfinals_score_range, range)
+    end
+  end
+
   def update_semifinals_average_score
     scores = submission_scores.current.complete.semifinals
     if scores.any?
@@ -378,6 +388,14 @@ class TeamSubmission < ActiveRecord::Base
       update_column(:semifinals_average_score, avg)
     else
       update_column(:semifinals_average_score, 0)
+    end
+  end
+
+  def update_semifinals_score_range
+    scores = submission_scores.current.complete.semifinals
+    if scores.any?
+      range = scores.max_by(&:total).total - scores.min_by(&:total).total
+      update_column(:semifinals_score_range, range)
     end
   end
 

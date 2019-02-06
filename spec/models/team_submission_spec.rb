@@ -248,6 +248,31 @@ RSpec.describe TeamSubmission do
         expect(sub.reload.quarterfinals_average_score).to eq(5)
         expect(sub.reload.average_unofficial_score).to eq(3)
       end
+
+      it "computes range of official scores" do
+        [1, 6, 10].each do |score|
+          live_judge = FactoryBot.create(:judge_profile)
+          live_judge.regional_pitch_events << @rpe
+          live_judge.save
+
+          live_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        [11].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_score_range).to eq(9)
+      end
     end
 
     describe "for unoffical RPE" do
@@ -311,6 +336,31 @@ RSpec.describe TeamSubmission do
         expect(sub.reload.quarterfinals_average_score).to eq(3)
         expect(sub.reload.average_unofficial_score).to eq(5)
       end
+
+      it "computes range of official scores" do
+        [11].each do |score|
+          live_judge = FactoryBot.create(:judge_profile)
+          live_judge.regional_pitch_events << @rpe
+          live_judge.save
+
+          live_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        [1, 6, 10].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_score_range).to eq(9)
+      end
     end
 
     describe "for virtual team" do
@@ -337,6 +387,19 @@ RSpec.describe TeamSubmission do
 
         expect(sub.reload.quarterfinals_average_score).to eq(3)
         expect(sub.reload.average_unofficial_score).to eq(0)
+      end
+
+      it "computes range of official scores" do
+        [1, 6, 10].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_score_range).to eq(9)
       end
     end
   end

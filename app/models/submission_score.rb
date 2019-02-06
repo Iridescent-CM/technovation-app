@@ -12,7 +12,7 @@ class SubmissionScore < ActiveRecord::Base
   after_commit -> {
     return false if destroyed?
 
-    team_submission.update_average_scores
+    team_submission.update_score_summaries
 
     update_columns(
       completed_too_fast: detect_if_completed_too_fast,
