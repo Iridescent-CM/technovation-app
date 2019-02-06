@@ -170,7 +170,7 @@ export default {
 
         return word.split('').filter(char => {
           return char.match(/\w/)
-        }).length > 2
+        }).length
 
       }).length
     },
