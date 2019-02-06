@@ -98,7 +98,7 @@ describe('Question comments section', () => {
     const storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
 
     wrapper.vm.comment.isProfanityAnalyzed = true
-    wrapper.vm.comment.text = 'hello wo'
+    wrapper.vm.comment.text = 'hello'
 
     wrapper.vm.handleCommentChange()
 
