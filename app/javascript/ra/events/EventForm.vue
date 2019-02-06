@@ -27,8 +27,9 @@
 
           <label>
             <input
-              type="checkbox"
-              v-model="event.division_ids"
+              type="radio"
+              name="division"
+              v-model="eventDivision"
               :value="seniorDivisionId"
             />
             Senior division
@@ -36,8 +37,9 @@
 
           <label>
             <input
-              type="checkbox"
-              v-model="event.division_ids"
+              type="radio"
+              name="division"
+              v-model="eventDivision"
               :value="juniorDivisionId"
             />
             Junior division
@@ -173,6 +175,7 @@
         eventDate: "",
         eventStartTime: "",
         eventEndTime: "",
+        eventDivision: null,
       };
     },
 
@@ -234,6 +237,14 @@
       active (current) {
         if (current)
           EventBus.$emit("EventForm.active");
+      },
+
+      eventDivision (divisionId) {
+        if (!!divisionId) {
+          this.event.division_ids = [divisionId];
+        } else {
+          this.event.division_ids = [];
+        }
       },
 
       division_ids (ids) {
@@ -412,7 +423,7 @@
           0
         );
         return newTime;
-      }
+      },
     },
 
     components: {
@@ -428,6 +439,21 @@
         this.saveBtnTxt = "Save changes";
         this.event = new Event(event);
         this.event.url = event.url;
+
+        if (
+          this.event.division_ids.length === 1 &&
+          parseInt(this.event.division_ids[0], 10) === parseInt(this.seniorDivisionId, 10)
+        ) {
+          this.eventDivision = parseInt(this.seniorDivisionId, 10);
+        } else if (
+          this.event.division_ids.length === 1 &&
+          parseInt(this.event.division_ids[0], 10) === parseInt(this.juniorDivisionId, 10)
+        ) {
+          this.eventDivision = parseInt(this.juniorDivisionId, 10);
+        } else {
+          this.eventDivision = null;
+          this.event.division_ids = [];
+        }
       });
     },
   };
