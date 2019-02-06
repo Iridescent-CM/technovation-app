@@ -35,11 +35,13 @@ environment.plugins.prepend(
 
 // Pull in .env variables used by front-end
 const env = dotenv.config().parsed;
-environment.plugins.append(
-  'LoadEnvironmentVariables',
-  new webpack.DefinePlugin({
-    'process.env.AIRBRAKE_RAILS_ENV': JSON.stringify(env.AIRBRAKE_RAILS_ENV),
-  })
-);
+if (!!env && !!env.AIRBRAKE_RAILS_ENV) {
+  environment.plugins.append(
+    'LoadEnvironmentVariables',
+    new webpack.DefinePlugin({
+      'process.env.AIRBRAKE_RAILS_ENV': JSON.stringify(env.AIRBRAKE_RAILS_ENV),
+    })
+  );
+}
 
 module.exports = environment
