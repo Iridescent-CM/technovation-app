@@ -36,6 +36,11 @@ environment.plugins.prepend(
 // Pull in .env variables used by front-end
 const env = dotenv.config().parsed;
 
+console.log('dotenv.config()');
+console.log(dotenv.config());
+console.log('dotenv.config().parsed');
+console.log(dotenv.config().parsed);
+
 const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);
   return prev;
