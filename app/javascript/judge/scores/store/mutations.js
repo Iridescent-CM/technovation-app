@@ -128,6 +128,6 @@ function wordCount (text) {
   if (!text) text = ''
 
   return text.split(' ').filter(word => {
-    return word.split('').filter(char => char.match(/\w/)).length > 2
+    return word.split('').filter(char => char.match(/\w/)).length
   }).length
 }
