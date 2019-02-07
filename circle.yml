@@ -106,6 +106,10 @@ jobs:
           command: yarn install
 
       - run:
+          name: Run Webpack
+          command: NODE_ENV=test bundle exec rails webpacker:compile
+
+      - run:
           name: Javascript tests
           command: yarn test
 
