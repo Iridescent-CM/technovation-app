@@ -34,21 +34,18 @@ environment.plugins.prepend(
 )
 
 // Pull in .env variables used by front-end
-const env = dotenv.config().parsed;
+const dotenvFiles = [
+  '.env.local',
+  '.env',
+];
 
-console.log('dotenv.config()');
-console.log(dotenv.config());
-console.log('dotenv.config().parsed');
-console.log(dotenv.config().parsed);
+dotenvFiles.forEach((dotenvFile) => {
+  dotenv.config({ path: dotenvFile, silent: true })
+})
 
-const envKeys = Object.keys(env).reduce((prev, next) => {
-  prev[`process.env.${next}`] = JSON.stringify(env[next]);
-  return prev;
-}, {});
-
-environment.plugins.append(
+environment.plugins.prepend(
   'LoadEnvironmentVariables',
-  new webpack.DefinePlugin(envKeys)
-);
+  new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(process.env)))
+)
 
 module.exports = environment
