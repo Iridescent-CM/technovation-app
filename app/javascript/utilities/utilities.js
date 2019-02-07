@@ -11,6 +11,15 @@ export const airbrake = new AirbrakeClient({
   environment: airbrakeEnvironment,
 });
 
+console.log('process.env.AIRBRAKE_PROJECT_ID', process.env.AIRBRAKE_PROJECT_ID);
+console.log('process.env.AIRBRAKE_PROJECT_KEY', process.env.AIRBRAKE_PROJECT_KEY);
+console.log('process.env.AIRBRAKE_RAILS_ENV', process.env.AIRBRAKE_RAILS_ENV);
+
+airbrake.notify({
+  error: "Test error for #1945",
+  params: { environment: process.env.AIRBRAKE_RAILS_ENV },
+});
+
 export const isEmptyObject = (object) => {
   return Object.keys(object).length === 0 && object.constructor === Object
 }
