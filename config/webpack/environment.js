@@ -34,14 +34,7 @@ environment.plugins.prepend(
 )
 
 // Pull in .env variables used by front-end
-const dotenvFiles = [
-  '.env.local',
-  '.env',
-];
-
-dotenvFiles.forEach((dotenvFile) => {
-  dotenv.config({ path: dotenvFile, silent: true })
-})
+dotenv.config({ path: '.env', silent: true })
 
 environment.plugins.prepend(
   'LoadEnvironmentVariables',
