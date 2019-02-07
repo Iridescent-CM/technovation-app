@@ -323,48 +323,58 @@ class TeamSubmission < ActiveRecord::Base
     screenshots.reject(&:new_record?).count >= 2
   end
 
-  def update_average_scores
+  def update_score_summaries
     update_quarterfinals_average_score
+    update_quarterfinals_score_range
     update_semifinals_average_score
+    update_semifinals_score_range
+  end
+
+  def quarterfinals_official_scores
+    if team.selected_regional_pitch_event.live? &&
+         team.selected_regional_pitch_event.official?
+      submission_scores.current.live.complete.quarterfinals
+    else
+      submission_scores.current.virtual.complete.quarterfinals
+    end
+  end
+
+  def quarterfinals_unofficial_scores
+    if team.selected_regional_pitch_event.live? &&
+         team.selected_regional_pitch_event.official?
+      submission_scores.current.virtual.complete.quarterfinals
+    else
+      submission_scores.current.live.complete.quarterfinals
+    end
   end
 
   def update_quarterfinals_average_score
-    if team.selected_regional_pitch_event.live? &&
-         team.selected_regional_pitch_event.unofficial?
-
-      official_scores = submission_scores.current.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.current.live.complete.quarterfinals
-
-    elsif team.selected_regional_pitch_event.live?
-
-      official_scores = submission_scores.current.live.complete.quarterfinals
-      unofficial_scores = submission_scores.current.virtual.complete.quarterfinals
-
-    else
-
-      official_scores = submission_scores.current.virtual.complete.quarterfinals
-      unofficial_scores = submission_scores.current.live.complete.quarterfinals
-
-    end
-
-    if official_scores.any?
-      avg = (official_scores.inject(0.0) { |acc, s|
+    if quarterfinals_official_scores.any?
+      avg = (quarterfinals_official_scores.inject(0.0) { |acc, s|
         acc + s.total
-      } / official_scores.count).round(2)
+      } / quarterfinals_official_scores.count).round(2)
 
       update_column(:quarterfinals_average_score, avg)
     else
       update_column(:quarterfinals_average_score, 0)
     end
 
-    if unofficial_scores.any?
-      avg = (unofficial_scores.inject(0.0) { |acc, s|
+    if quarterfinals_unofficial_scores.any?
+      avg = (quarterfinals_unofficial_scores.inject(0.0) { |acc, s|
         acc + s.total
-      } / unofficial_scores.count).round(2)
+      } / quarterfinals_unofficial_scores.count).round(2)
 
       update_column(:average_unofficial_score, avg)
     else
       update_column(:average_unofficial_score, 0)
+    end
+  end
+
+  def update_quarterfinals_score_range
+    scores = quarterfinals_official_scores
+    if scores.any?
+      range = scores.max_by(&:total).total - scores.min_by(&:total).total
+      update_column(:quarterfinals_score_range, range)
     end
   end
 
@@ -378,6 +388,14 @@ class TeamSubmission < ActiveRecord::Base
       update_column(:semifinals_average_score, avg)
     else
       update_column(:semifinals_average_score, 0)
+    end
+  end
+
+  def update_semifinals_score_range
+    scores = submission_scores.current.complete.semifinals
+    if scores.any?
+      range = scores.max_by(&:total).total - scores.min_by(&:total).total
+      update_column(:semifinals_score_range, range)
     end
   end
 

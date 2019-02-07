@@ -178,48 +178,265 @@ RSpec.describe TeamSubmission do
     end
   end
 
-  it "only averages scores that count" do
-    SeasonToggles.set_judging_round(:qf)
+  describe "quarterfinals scores" do
+    before(:each) { SeasonToggles.set_judging_round(:qf) }
+    after(:each) { SeasonToggles.clear_judging_round }
 
-    team = FactoryBot.create(:team, :junior)
-    sub = FactoryBot.create(:submission, :complete, team: team)
+    let(:team) { FactoryBot.create(:team, :junior) }
+    let(:sub) { FactoryBot.create(:submission, :complete, team: team) }
+    let(:live_judge) { FactoryBot.create(:judge_profile) }
+    let(:virtual_judge) { FactoryBot.create(:judge_profile) }
 
-    live_judge = FactoryBot.create(:judge_profile)
-    virtual_judge = FactoryBot.create(:judge_profile)
+    describe "for offical RPE" do
+      before(:each) do
+        @rpe = FactoryBot.create(:event,
+          name: "RPE",
+          starts_at: Date.today,
+          ends_at: Date.today + 1.day,
+          division_ids: Division.senior.id,
+          city: "City",
+          venue_address: "123 Street St.",
+          unofficial: false,
+        )
 
+        team.regional_pitch_events << @rpe
+        team.save
 
-    rpe = FactoryBot.create(:event,
-      name: "RPE",
-      starts_at: Date.today,
-      ends_at: Date.today + 1.day,
-      division_ids: Division.senior.id,
-      city: "City",
-      venue_address: "123 Street St.",
-      unofficial: true,
-    )
+        live_judge.regional_pitch_events << @rpe
+        live_judge.save
+      end
 
-    team.regional_pitch_events << rpe
-    team.save
+      it "counts live scores as official" do
+        live_score = live_judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: 5,
+          completed_at: Time.current
+        })
 
-    live_judge.regional_pitch_events << rpe
-    live_judge.save
+        virtual_score = virtual_judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: 2,
+          completed_at: Time.current
+        })
 
-    live_judge.submission_scores.create!({
-      team_submission: sub,
-      evidence_of_problem: 5,
-      completed_at: Time.current
-    })
+        expect(sub.reload.quarterfinals_official_scores).to contain_exactly(live_score)
+        expect(sub.reload.quarterfinals_unofficial_scores).to contain_exactly(virtual_score)
+      end
 
-    virtual_judge.submission_scores.create!({
-      team_submission: sub,
-      evidence_of_problem: 2,
-      completed_at: Time.current
-    })
+      it "averages official and unofficial scores" do
+        [6, 4].each do |score|
+          live_judge = FactoryBot.create(:judge_profile)
+          live_judge.regional_pitch_events << @rpe
+          live_judge.save
 
-    expect(sub.reload.quarterfinals_average_score).to eq(2)
+          live_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
 
-    expect(sub.reload.average_unofficial_score).to eq(5)
+        [4, 2].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
 
-    SeasonToggles.clear_judging_round
+        expect(sub.reload.quarterfinals_average_score).to eq(5)
+        expect(sub.reload.average_unofficial_score).to eq(3)
+      end
+
+      it "computes range of official scores" do
+        [1, 6, 10].each do |score|
+          live_judge = FactoryBot.create(:judge_profile)
+          live_judge.regional_pitch_events << @rpe
+          live_judge.save
+
+          live_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        [11].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_score_range).to eq(9)
+      end
+    end
+
+    describe "for unoffical RPE" do
+      before(:each) do
+        @rpe = FactoryBot.create(:event,
+          name: "RPE",
+          starts_at: Date.today,
+          ends_at: Date.today + 1.day,
+          division_ids: Division.senior.id,
+          city: "City",
+          venue_address: "123 Street St.",
+          unofficial: true,
+        )
+
+        team.regional_pitch_events << @rpe
+        team.save
+
+        live_judge.regional_pitch_events << @rpe
+        live_judge.save
+      end
+
+      it "counts virtual scores as official" do
+        live_score = live_judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: 5,
+          completed_at: Time.current
+        })
+
+        virtual_score = virtual_judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: 2,
+          completed_at: Time.current
+        })
+
+        expect(sub.reload.quarterfinals_official_scores).to contain_exactly(virtual_score)
+        expect(sub.reload.quarterfinals_unofficial_scores).to contain_exactly(live_score)
+      end
+
+      it "averages official and unofficial scores" do
+        [6, 4].each do |score|
+          live_judge = FactoryBot.create(:judge_profile)
+          live_judge.regional_pitch_events << @rpe
+          live_judge.save
+
+          live_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        [4, 2].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_average_score).to eq(3)
+        expect(sub.reload.average_unofficial_score).to eq(5)
+      end
+
+      it "computes range of official scores" do
+        [11].each do |score|
+          live_judge = FactoryBot.create(:judge_profile)
+          live_judge.regional_pitch_events << @rpe
+          live_judge.save
+
+          live_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        [1, 6, 10].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_score_range).to eq(9)
+      end
+    end
+
+    describe "for virtual team" do
+      it "counts virtual scores as official" do
+        virtual_score = virtual_judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: 2,
+          completed_at: Time.current
+        })
+
+        expect(sub.reload.quarterfinals_official_scores).to contain_exactly(virtual_score)
+        expect(sub.reload.quarterfinals_unofficial_scores).to be_empty
+      end
+
+      it "averages official scores" do
+        [4, 2].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_average_score).to eq(3)
+        expect(sub.reload.average_unofficial_score).to eq(0)
+      end
+
+      it "computes range of official scores" do
+        [1, 6, 10].each do |score|
+          virtual_judge = FactoryBot.create(:judge_profile)
+          virtual_judge.submission_scores.create!({
+            team_submission: sub,
+            evidence_of_problem: score,
+            completed_at: Time.current
+          })
+        end
+
+        expect(sub.reload.quarterfinals_score_range).to eq(9)
+      end
+    end
+  end
+
+  describe "semifinals scores" do
+    before(:each) { SeasonToggles.set_judging_round(:sf) }
+    after(:each) { SeasonToggles.clear_judging_round }
+
+    let(:team) { FactoryBot.create(:team, :junior) }
+    let(:sub) { FactoryBot.create(:submission, :complete, team: team) }
+
+    it "averages scores" do
+      [3, 6].each do |score|
+        judge = FactoryBot.create(:judge_profile)
+        judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: score,
+          completed_at: Time.current,
+          round: :semifinals,
+        })
+      end
+
+      expect(sub.reload.semifinals_average_score).to eq(4.5)
+    end
+
+    it "computes ranges of scores" do
+      [3, 6, 10].each do |score|
+        judge = FactoryBot.create(:judge_profile)
+        judge.submission_scores.create!({
+          team_submission: sub,
+          evidence_of_problem: score,
+          completed_at: Time.current,
+          round: :semifinals,
+        })
+      end
+
+      expect(sub.reload.semifinals_score_range).to eq(7)
+    end
   end
 end

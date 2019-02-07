@@ -1539,7 +1539,9 @@ CREATE TABLE public.team_submissions (
     lowest_score_dropped_at timestamp without time zone,
     thunkable_account_email character varying,
     thunkable_project_url character varying,
-    source_code_external_url character varying
+    source_code_external_url character varying,
+    quarterfinals_score_range integer DEFAULT 0,
+    semifinals_score_range integer DEFAULT 0
 );
 
 
@@ -3173,6 +3175,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181108210955'),
 ('20181115163525'),
 ('20181218164555'),
-('20190111171657');
+('20190111171657'),
+('20190206213251'),
+('20190206213309');
 
 

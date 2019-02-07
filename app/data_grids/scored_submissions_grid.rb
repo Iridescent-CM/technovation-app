@@ -57,7 +57,7 @@ class ScoredSubmissionsGrid
     )
   end
 
-  column :querterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
+  column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
     str = submission.quarterfinals_average_score.to_s
     str += "/#{submission.total_possible_score}"
   end
@@ -65,6 +65,14 @@ class ScoredSubmissionsGrid
   column :semifinals_average, order: :semifinals_average_score, mandatory: true do |submission|
     str = submission.semifinals_average_score.to_s
     str += "/#{submission.total_possible_score}"
+  end
+
+  column :quarterfinals_range, order: :quarterfinals_score_range do |submission|
+    submission.quarterfinals_score_range
+  end
+
+  column :semifinals_range, order: :semifinals_score_range do |submission|
+    submission.semifinals_score_range
   end
 
   column :view, mandatory: true, html: true do |submission, grid|
