@@ -41,6 +41,7 @@
           <p>
             <router-link
               v-if="!!prevSection"
+              v-on:click.native="handleCommentChange"
               :to="{ name: prevSection }"
               class="button button--small btn-prev"
             >
@@ -54,6 +55,7 @@
             <span v-tooltip="nextDisabledMsg">
               <router-link
                 v-if="!!nextSection"
+                v-on:click.native="handleCommentChange"
                 :to="{ name: nextSection }"
                 :disabled="goingNextIsDisabled"
                 class="button button--small btn-next"
