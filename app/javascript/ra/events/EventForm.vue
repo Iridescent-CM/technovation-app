@@ -440,6 +440,11 @@
         this.event = new Event(event);
         this.event.url = event.url;
 
+        // TODO - This EventForm functionality only allows for a single division
+        // to be selected to satisfy #1950. On the back-end, we allow for more than
+        // one division to be selected for an event, so we are only limiting that
+        // on the front-end. Between seasons, we should modify the back-end to only
+        // allow one division for a given event.
         if (
           this.event.division_ids.length === 1 &&
           parseInt(this.event.division_ids[0], 10) === parseInt(this.seniorDivisionId, 10)
