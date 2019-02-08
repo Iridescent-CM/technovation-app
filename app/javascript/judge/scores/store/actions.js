@@ -19,9 +19,7 @@ export const validateScore = ({ commit, state }) => {
 
     if (state.team.division === 'junior' && section === 'entrepreneurship') {
       return true
-    } else if (comment.word_count < 40 ||
-                comment.bad_word_count > 0 ||
-                  parseFloat(comment.sentiment.negative) > 0.4) {
+    } else if (comment.word_count < 40) {
       sections.push(section)
     }
   })

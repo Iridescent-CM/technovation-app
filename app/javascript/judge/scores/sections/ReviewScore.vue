@@ -63,11 +63,23 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 import Icon from '../../../components/Icon'
 
 export default {
+  components: {
+    Icon,
+  },
+
+  created () {
+    this.validateScore()
+  },
+
+  methods: {
+    ...mapActions(['validateScore']),
+  },
+
   computed: {
     ...mapState(['team', 'score', 'submission', 'deadline']),
 
@@ -113,12 +125,8 @@ export default {
     },
   },
 
-  components: {
-    Icon,
-  },
-
-  mounted () {
-    this.$store.dispatch('validateScore')
+  watch: {
+    '$route': 'validateScore',
   },
 }
 </script>

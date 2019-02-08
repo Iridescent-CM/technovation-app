@@ -1,10 +1,6 @@
 <% provide :root_path, judge_dashboard_path %>
 <% provide :menu, render('judge/navigation/global_nav') %>
 
-<% content_for :js, javascript_include_tag(
-  "//algorithmia.com/v1/clients/js/algorithmia-0.2.0.js"
-) %>
-
 <% content_for :js,
   javascript_pack_tag("judge", data: { turbolinks_track: :reload }) %>
 

@@ -11,14 +11,6 @@ export const resetComment = (state, sectionName) => {
   const originalComment = state.score.comments[sectionName]
   const comment = Object.assign({}, originalComment, {
     text: '',
-    isProfanityAnalyzed: false,
-    isSentimentAnalyzed: false,
-    sentiment: {
-      negative: 0,
-      positive: 0,
-      neutral: 0,
-    },
-    bad_word_count: 0,
     word_count: 0,
   })
 
@@ -37,29 +29,8 @@ export const saveComment = (state, sectionName) => {
   )
 
   data.append(
-    `submission_score[${sectionName}_comment_positivity]`,
-    state.score.comments[sectionName].sentiment.positive
-  )
-
-  data.append(
-    `submission_score[${sectionName}_comment_negativity]`,
-    state.score.comments[sectionName].sentiment.negative
-  )
-
-  data.append(
-    `submission_score[${sectionName}_comment_neutrality]`,
-    state.score.comments[sectionName].sentiment.neutral
-  )
-
-  data.append(
     `submission_score[${sectionName}_comment_word_count]`,
     wordCount(state.score.comments[sectionName].text)
-
-  )
-
-  data.append(
-    `submission_score[${sectionName}_comment_bad_word_count]`,
-    state.score.comments[sectionName].bad_word_count
   )
 
   $.ajax({

@@ -329,13 +329,7 @@ class Questions
   def comment_data(score, section_name)
     {
       text: score["#{section_name}_comment"],
-      sentiment: {
-        positive: score["#{section_name}_comment_positivity"],
-        negative: score["#{section_name}_comment_negativity"],
-        neutral: score["#{section_name}_comment_neutrality"],
-      },
       word_count: score["#{section_name}_comment_word_count"],
-      bad_word_count: score["#{section_name}_comment_bad_word_count"],
     }
   end
 end

@@ -26,32 +26,8 @@
               {{ wordCount }}
               {{ wordCount | pluralize('word') }}
             </span>
-
-            <br />
-
-            <span :style="`font-size: ${fontSizeForBadWordCount}; color: ${colorForBadWordCount}`">
-              {{ badWordCount }}
-              {{ badWordCount | pluralize('prohibited word') }}
-            </span>
           </p>
         </div>
-      </div>
-
-      <div class="comment-sentiment">
-        <div
-          v-tooltip.top-center="sentimentTooltip('positive')"
-          :style="`width: ${sentimentPercentage('positive')}`"
-        ></div>
-
-        <div
-          v-tooltip.top-center="sentimentTooltip('neutral')"
-          :style="`width: ${sentimentPercentage('neutral')}`"
-        ></div>
-
-        <div
-          v-tooltip.top-center="sentimentTooltip('negative')"
-          :style="`width: ${sentimentPercentage('negative')}`"
-        ></div>
       </div>
 
       <textarea ref="commentText" :value="comment.text" @input="updateCommentText" />
@@ -65,6 +41,7 @@
           <p>
             <router-link
               v-if="!!prevSection"
+              v-on:click.native="handleCommentChange"
               :to="{ name: prevSection }"
               class="button button--small btn-prev"
             >
@@ -78,6 +55,7 @@
             <span v-tooltip="nextDisabledMsg">
               <router-link
                 v-if="!!nextSection"
+                v-on:click.native="handleCommentChange"
                 :to="{ name: nextSection }"
                 :disabled="goingNextIsDisabled"
                 class="button button--small btn-next"
@@ -104,7 +82,6 @@ export default {
 
   data () {
     return {
-      detectedProfanity: {},
       commentInitiated: false,
     }
   },
@@ -134,14 +111,6 @@ export default {
       return this.$store.getters.comment(this.section)
     },
 
-    commentIsSentimentAnalyzed () {
-      return this.comment.isSentimentAnalyzed
-    },
-
-    commentIsProfanityAnalyzed () {
-      return this.comment.isProfanityAnalyzed
-    },
-
     commentText () {
       return this.comment.text
     },
@@ -156,9 +125,7 @@ export default {
     },
 
     goingNextIsDisabled () {
-      return this.wordCount < 40 ||
-               this.badWordCount > 0 ||
-                 this.comment.sentiment.negative > 0.2
+      return this.wordCount < 40
     },
 
     wordCount () {
@@ -175,12 +142,6 @@ export default {
       }).length
     },
 
-    badWordCount () {
-      return Object.keys(this.detectedProfanity).reduce((acc, key) => {
-        return acc += this.detectedProfanity[key]
-      }, 0)
-    },
-
     colorForWordCount () {
       if (this.wordCount >= 40) {
         return 'darkgreen'
@@ -190,22 +151,6 @@ export default {
         return 'darkyellow'
       } else {
         return 'darkred'
-      }
-    },
-
-    colorForBadWordCount () {
-      if (this.badWordCount < 1) {
-        return 'darkgreen'
-      } else {
-        return 'darkred'
-      }
-    },
-
-    fontSizeForBadWordCount () {
-      if (this.badWordCount < 1) {
-        return 'inherit'
-      } else {
-        return '1.3rem'
       }
     },
 
@@ -223,22 +168,6 @@ export default {
 
     prevBtnTxt () {
       return capitalize(this.prevSection)
-    },
-
-    shouldRunSentimentAnalysis () {
-      return (
-        this.wordCount > 19 &&
-          (this.wordCount % 5 === 0 ||
-            !this.commentIsSentimentAnalyzed)
-      )
-    },
-
-    shouldRunProfanityAnalysis () {
-      return (
-        this.wordCount > 0 &&
-          (this.wordCount % 2 === 0 ||
-            !this.commentIsProfanityAnalyzed)
-      )
     },
   },
 
@@ -266,86 +195,18 @@ export default {
 
       this.$store.commit('setComment', comment)
 
-      const positiveSentiment = parseFloat(comment.sentiment.positive)
-      const neutralSentiment = parseFloat(comment.sentiment.neutral)
-      const negativeSentiment = parseFloat(comment.sentiment.negative)
-
-      if (!!positiveSentiment || !!neutralSentiment || !!negativeSentiment) {
-        this.$store.commit('setComment', {
-          sectionName: this.section,
-          isSentimentAnalyzed: true,
-        })
-      }
-
       this.commentInitiated = true
-    },
-
-    sentimentTooltip (slant) {
-      return 'Your comment seems ' +
-             this.sentimentPercentage(slant) + ' ' +
-             slant
-    },
-
-    sentimentPercentage (slant) {
-      return `${Math.round(parseFloat(this.comment.sentiment[slant]) * 100)}%`
     },
 
     handleCommentChange () {
       if (this.commentInitiated) {
         if (this.commentText.length) {
-          this.runSentimentAnalysis().then(() => {
-            this.runProfanityAnalysis().then(() => {
-              this.saveComment()
-            })
-          })
+          this.saveComment()
         } else {
           this.$store.commit('resetComment', this.section)
           this.saveComment()
         }
       }
-    },
-
-    runSentimentAnalysis () {
-      return new Promise((resolve, reject) => {
-        if (this.shouldRunSentimentAnalysis) {
-          Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-            .algo("nlp/SocialSentimentAnalysis/0.1.4")
-            .pipe({ sentence: this.commentText })
-            .then(resp => {
-              this.$store.commit('setComment', {
-                sectionName: this.section,
-                sentiment: resp.result[0],
-                isSentimentAnalyzed: true,
-              })
-              resolve()
-            })
-        } else {
-          resolve()
-        }
-      })
-    },
-
-    runProfanityAnalysis () {
-      return new Promise((resolve, reject) => {
-        if (this.shouldRunProfanityAnalysis) {
-          Algorithmia.client("sim7BOgNHD5RnLXe/ql+KUc0O0r1")
-            .algo("nlp/ProfanityDetection/1.0.0")
-            .pipe([this.commentText, ['suck', 'sucks'], false])
-            .then(resp => {
-              this.detectedProfanity = resp.result
-
-              this.$store.commit('setComment', {
-                sectionName: this.section,
-                bad_word_count: this.badWordCount,
-                isProfanityAnalyzed: true,
-              })
-
-              resolve()
-            })
-        } else {
-          resolve()
-        }
-      })
     },
 
     updateCommentText (e) {
@@ -401,32 +262,5 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     margin: 0.5rem 0;
-  }
-
-  .word-count__note {
-    font-weight: normal;
-  }
-
-  .comment-sentiment {
-    display: flex;
-
-    color: white;
-    font-weight: bold;
-    font-size: 0.9rem;
-
-    div {
-      transition: width 1s ease-in-out;
-      overflow: hidden;
-      background: IndianRed;
-      padding: 0.5rem 0;
-
-      &:first-child {
-        background: MediumSeaGreen;
-      }
-
-      &:nth-child(2) {
-        background: SteelBlue;
-      }
-    }
   }
 </style>

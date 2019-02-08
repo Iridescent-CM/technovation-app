@@ -33,16 +33,7 @@ export const anyCommentsInvalid = state => {
     return state.score.comments[section].word_count < 40
   })
 
-  const anyBadWords = commentsToCount.some((section) => {
-    return state.score.comments[section].bad_word_count > 0
-  })
-
-  const anyExcessiveNegativity = commentsToCount.some((section) => {
-    return parseFloat(state.score.comments[section].sentiment.negative) > 0.4
-  })
-
-  return notEnoughComments || anyCommentsTooShort ||
-            anyBadWords || anyExcessiveNegativity
+  return notEnoughComments || anyCommentsTooShort
 }
 
 export const comment = (state) => (sectionName) => {
