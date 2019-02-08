@@ -108,6 +108,18 @@ class SeasonToggles
         quarterfinals_judging? or semifinals_judging?
       end
 
+      def judging_enabled_for?(judge)
+        if quarterfinals_judging?
+          if LiveEventJudgingEnabled.(judge)
+            Time.current <= live_judge_qf_deadline
+          else
+            Time.current <= virtual_judge_qf_deadline
+          end
+        else
+          semifinals_judging?
+        end
+      end
+
       def quarterfinals_judging?
         VALID_QF_JUDGING_ROUNDS.include?(judging_round)
       end
