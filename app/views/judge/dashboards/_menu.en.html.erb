@@ -1,5 +1,5 @@
 <ul class="tabs__menu">
-  <% if SeasonToggles.judging_enabled? %>
+  <% if SeasonToggles.judging_enabled_for?(current_judge) %>
     <% if quarterfinals? and current_judge.selected_regional_pitch_event.live? %>
       <li class="tabs__menu-link">
         <button
