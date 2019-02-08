@@ -57,6 +57,9 @@ RSpec.describe TeamSubmission do
       submission.development_platform = "Swift or XCode"
       expect(submission.developed_on?("Swift or XCode")).to be true
 
+      submission.development_platform = "Thunkable Classic"
+      expect(submission.developed_on?("Thunkable Classic")).to be true
+
       submission.development_platform = "Thunkable"
       expect(submission.developed_on?("Thunkable")).to be true
     end
