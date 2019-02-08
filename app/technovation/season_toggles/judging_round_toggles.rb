@@ -7,12 +7,6 @@ class SeasonToggles
       base.extend ClassMethods
     end
 
-    SEMIFINALS_START_MONTH = 6
-    SEMIFINALS_START_DAY = 1
-    LIVE_JUDGE_QUARTERFINAL_DEADLINE_MONTH = 5
-    LIVE_JUDGE_QUARTERFINAL_DEADLINE_DAY = 22
-    VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_MONTH = 5
-    VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_DAY = 20
     VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}
     VALID_SF_JUDGING_ROUNDS = %w{sf semi_finals semifinals}
     VALID_JUDGING_ROUNDS = VALID_QF_JUDGING_ROUNDS +
@@ -21,33 +15,15 @@ class SeasonToggles
 
     module ClassMethods
       def sf_opening_date
-        Date.new(
-          Season.current.year,
-          SEMIFINALS_START_MONTH,
-          SEMIFINALS_START_DAY
-        )
+        ImportantDates.semifinals_judging_begins
       end
 
       def live_judge_qf_deadline
-        DateTime.new(
-          Season.current.year,
-          LIVE_JUDGE_QUARTERFINAL_DEADLINE_MONTH,
-          LIVE_JUDGE_QUARTERFINAL_DEADLINE_DAY,
-          0,
-          0,
-          0
-        )
+        ImportantDates.live_quarterfinals_judging_ends
       end
 
       def virtual_judge_qf_deadline
-        DateTime.new(
-          Season.current.year,
-          VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_MONTH,
-          VIRTUAL_JUDGE_QUARTERFINAL_DEADLINE_DAY,
-          0,
-          0,
-          0
-        )
+        ImportantDates.virtual_quarterfinals_judging_ends
       end
 
       def judging_round=(value)
@@ -71,10 +47,10 @@ class SeasonToggles
 
       def current_round_deadline(judge)
         if LiveEventJudgingEnabled.(judge)
-          (ImportantDates.quarterfinals_judging_ends + 2.days)
+          ImportantDates.live_quarterfinals_judging_ends
             .strftime("%B %-d (US/Pacific time)").html_safe
         elsif quarterfinals?
-          ImportantDates.quarterfinals_judging_ends
+          ImportantDates.virtual_quarterfinals_judging_ends
             .strftime("%B %-d (US/Pacific time)").html_safe
         elsif semifinals?
           ImportantDates.semifinals_judging_ends
