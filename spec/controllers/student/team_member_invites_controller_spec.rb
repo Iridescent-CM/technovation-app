@@ -110,14 +110,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     end
 
     it "shows a friendly message if accepting, but the current date is between judging rounds" do
-      semifinals_start_date = DateTime.new(
-        Season.current.year,
-        SeasonToggles::JudgingRoundToggles::SEMIFINALS_START_MONTH,
-        SeasonToggles::JudgingRoundToggles::SEMIFINALS_START_DAY,
-        0,
-        0,
-        0
-      )
+      semifinals_start_date = ImportantDates.semifinals_judging_begins
 
       date_between_rounds = semifinals_start_date - 1
 
