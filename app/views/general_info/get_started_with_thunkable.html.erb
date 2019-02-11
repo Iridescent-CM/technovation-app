@@ -1,0 +1,59 @@
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-12 grid__col-md-10">
+    <div class="panel">
+      <h3>Getting started with Thunkable</h3>
+
+      <p>
+        If you are using Thunkable to build your project, follow these instructions
+        to get started using it to build your app! Here's a video to help you get
+        started setting up Thunkable.
+      </p>
+
+      <div class="grid">
+        <div class="grid__col-md-8">
+          <div class="responsive-video">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/qOCADZbknNE"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <p>You can get a year of Thunkable PRO by following these steps:</p>
+
+      <p>
+        <ol>
+          <li>
+            Go to
+            <a href="https://x.thunkable.com/event/5bc11dbb1c9d440000725286" target="_blank">
+              https://x.thunkable.com/event/5bc11dbb1c9d440000725286
+            </a>
+          </li>
+          <li>Log in with your gmail account. If you don’t have one, you should make one now.</li>
+          <li>
+            Type in the code in this picture:
+            <br>
+            <%= image_tag @thunkable_promo_image %>
+          </li>
+        </ol>
+      </p>
+
+      <p>
+        This code will give you a free trial of Thunkable PRO. Thunkable PRO allows
+        you to create private projects, that way you can keep your apps secret
+        during the Technovation Challenge. If you decide not to purchase Thunkable
+        PRO, no worries, just please note that your apps will become public after
+        the competition.
+      </p>
+
+      <p class="padding--t-large">
+        <%= link_to "Go Back", :back, class: "button" %>
+      </p>
+    </div>
+  </div>
+</div>
