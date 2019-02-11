@@ -4,10 +4,7 @@ module Admin
 
     helper_method :grid_params
 
-    use_datagrid(
-      with: ScoredSubmissionsGrid,
-      to_csv: ScoresGrid
-    )
+    use_datagrid with: ScoredSubmissionsGrid
 
     before_action -> {
       unless request.xhr?
@@ -42,20 +39,14 @@ module Admin
         round = current_round
       end
 
-      if request.xhr?
-        {
-          round: round
-        }
-      else
-        grid.merge({
-          admin: true,
-          country: Array(params[:scored_submissions_grid][:country]),
-          state_province: Array(params[:scored_submissions_grid][:state_province]),
-          current_account: current_account,
-          round: round,
-          column_names: detect_extra_columns(grid),
-        })
-      end
+      grid.merge({
+        admin: true,
+        country: Array(params[:scored_submissions_grid][:country]),
+        state_province: Array(params[:scored_submissions_grid][:state_province]),
+        current_account: current_account,
+        round: round,
+        column_names: detect_extra_columns(grid),
+      })
     end
   end
 end
