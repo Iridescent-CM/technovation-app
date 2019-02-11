@@ -29,7 +29,7 @@ RSpec.describe Judge::ScoreCompletionsController do
         team.regional_pitch_events << rpe
         team.save
 
-        now = ImportantDates.virtual_quarterfinals_judging_ends - 1.days
+        now = ImportantDates.live_quarterfinals_judging_ends - 1.days
         judge = FactoryBot.create(:judge, :onboarded)
 
         judge.regional_pitch_events << rpe
@@ -73,7 +73,7 @@ RSpec.describe Judge::ScoreCompletionsController do
         team.regional_pitch_events << rpe
         team.save
 
-        now = ImportantDates.virtual_quarterfinals_judging_ends + 1.days
+        now = ImportantDates.live_quarterfinals_judging_ends + 1.days
         judge = FactoryBot.create(:judge, :onboarded)
 
         judge.regional_pitch_events << rpe
@@ -90,7 +90,7 @@ RSpec.describe Judge::ScoreCompletionsController do
             id: score.id
           }
 
-          expect(score.reload).to be_complete
+          expect(score.reload).not_to be_complete
         }
       end
 
