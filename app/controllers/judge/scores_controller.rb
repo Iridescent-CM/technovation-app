@@ -37,31 +37,39 @@ module Judge
     def new
       respond_to do |f|
         f.html {
-          unless SeasonToggles.judging_enabled?
+          unless SeasonToggles.judging_enabled_for?(current_judge)
             redirect_to root_path, alert: "Judging is not open right now"
           end
         }
 
         f.json {
-          if submission_id = FindEligibleSubmissionId.(
-               current_judge,
-               {
-                 score_id: params[:score_id],
-                 team_submission_id: params[:team_submission_id],
-               }
-             )
-
-            submission = TeamSubmission.find(submission_id)
-
-            questions = Questions.new(current_judge, submission)
-
-            render json: questions
-          else
+          unless SeasonToggles.judging_enabled_for?(current_judge)
             render json: {
-              msg: "There are no more eligible submissions " +
-                   "for you to judge now. This is not an error. " +
-                   "Thank you for your contribution!",
+              msg: "Judging is not open right now"
             }, status: 404
+          else
+
+            if submission_id = FindEligibleSubmissionId.(
+                 current_judge,
+                 {
+                   score_id: params[:score_id],
+                   team_submission_id: params[:team_submission_id],
+                 }
+               )
+
+              submission = TeamSubmission.find(submission_id)
+
+              questions = Questions.new(current_judge, submission)
+
+              render json: questions
+            else
+              render json: {
+                msg: "There are no more eligible submissions " +
+                     "for you to judge now. This is not an error. " +
+                     "Thank you for your contribution!",
+              }, status: 404
+            end
+
           end
         }
       end
@@ -77,12 +85,18 @@ module Judge
     end
 
     def update
-      score = current_judge.submission_scores.find(params[:id])
-
-      if score.update(score_params)
-        render json: ScoreSerializer.new(score.reload).serialized_json
+      unless SeasonToggles.judging_enabled_for?(current_judge)
+        render json: {
+          msg: "Judging is not open right now"
+        }, status: 404
       else
-        render json: score.errors
+        score = current_judge.submission_scores.find(params[:id])
+
+        if score.update(score_params)
+          render json: ScoreSerializer.new(score.reload).serialized_json
+        else
+          render json: score.errors
+        end
       end
     end
 
