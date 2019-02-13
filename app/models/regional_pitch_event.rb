@@ -135,6 +135,7 @@ class RegionalPitchEvent < ActiveRecord::Base
       starts_at: starts_at,
       ends_at: ends_at,
       event_link: event_link,
+      capacity: capacity,
       errors: {},
     }
   end
