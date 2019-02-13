@@ -59,7 +59,7 @@
 
           <label class="padding--t-medium" v-if="showCapacity">
             Capacity
-            <integer-input input-name="capacity" v-model="eventCapacity" />
+            <integer-input input-name="capacity" v-model="event.capacity" />
           </label>
 
           <errors :errors="eventErrors.capacity"></errors>
@@ -201,7 +201,6 @@
         eventStartTime: "",
         eventEndTime: "",
         eventDivision: null,
-        eventCapacity: null,
 
         showCapacity: false,
       };
@@ -322,10 +321,6 @@
       eventEndTime () {
         this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
       },
-
-      eventCapacity () {
-        this.event.capacity = this.eventCapacity;
-      },
     },
 
     methods: {
@@ -344,7 +339,6 @@
         this.eventStartTime = "";
         this.eventEndTime = "";
         this.showCapacity = false;
-        this.eventCapacity = null;
         this.eventErrors = {};
         this.saving = false;
         EventBus.$emit("EventForm.reset");
