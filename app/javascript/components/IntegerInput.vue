@@ -82,8 +82,11 @@
         this.recalculateValue (newValue);
       },
 
-      value (newValue) {
-        this.numericValue = newValue;
+      value: {
+        immediate: true,
+        handler(newValue) {
+          this.numericValue = newValue;
+        },
       },
     },
   }
