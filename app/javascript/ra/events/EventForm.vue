@@ -22,7 +22,7 @@
           <errors :errors="eventErrors.name"></errors>
         </div>
 
-        <div class="grid__col-sm-6">
+        <div class="grid__col-sm-3">
           <h6>Hosting divisions:</h6>
 
           <label>
@@ -46,6 +46,23 @@
           </label>
 
           <errors :errors="eventErrors.division_ids"></errors>
+        </div>
+
+        <div class="grid__col-sm-3">
+          <label>
+            <input
+              type="checkbox"
+              v-model="showCapacity"
+            />
+            Set a capacity
+          </label>
+
+          <label class="padding--t-medium" v-if="showCapacity">
+            Capacity
+            <integer-input input-name="capacity" v-model="eventCapacity" />
+          </label>
+
+          <errors :errors="eventErrors.capacity"></errors>
         </div>
 
         <div class="grid__col-sm-6">
@@ -99,7 +116,7 @@
           <errors :errors="eventErrors.ends_at"></errors>
         </div>
 
-        <div class="grid__col-auto">
+        <div class="grid__col-12">
           <label>
             Event URL (Optional)
             <input type="text" v-model="event.event_link" />
@@ -124,6 +141,7 @@
   import DatetimeInput from "../../components/DatetimeInput";
   import Errors from '../../components/Errors';
   import EventBus from '../../components/EventBus';
+  import IntegerInput from 'components/IntegerInput';
 
   import Event from './Event';
 
@@ -131,6 +149,13 @@
 
   export default {
     name: "event-form",
+
+    components: {
+      App,
+      Errors,
+      DatetimeInput,
+      IntegerInput,
+    },
 
     props: [
       "postUrl",
@@ -176,6 +201,9 @@
         eventStartTime: "",
         eventEndTime: "",
         eventDivision: null,
+        eventCapacity: null,
+
+        showCapacity: false,
       };
     },
 
@@ -294,6 +322,10 @@
       eventEndTime () {
         this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
       },
+
+      eventCapacity () {
+        this.event.capacity = this.eventCapacity;
+      },
     },
 
     methods: {
@@ -311,6 +343,8 @@
         this.eventDate = "";
         this.eventStartTime = "";
         this.eventEndTime = "";
+        this.showCapacity = false;
+        this.eventCapacity = null;
         this.eventErrors = {};
         this.saving = false;
         EventBus.$emit("EventForm.reset");
@@ -342,6 +376,10 @@
 
         form.append("regional_pitch_event[event_link]",
           vm.event.event_link);
+
+        if (this.showCapacity && Boolean(vm.event.capacity)) {
+          form.append("regional_pitch_event[capacity]", vm.event.capacity);
+        }
 
         $.ajax({
           method: vm.httpMethod,
@@ -407,6 +445,10 @@
           this.eventErrors.venue_address = ["can't be blank"];
         }
 
+        if (this.showCapacity && !this.event.capacity) {
+          this.eventErrors.capacity = ["can't be blank or zero"];
+        }
+
         if (!isEmptyObject(this.eventErrors)) {
           return false;
         }
@@ -426,12 +468,6 @@
       },
     },
 
-    components: {
-      App,
-      Errors,
-      DatetimeInput,
-    },
-
     mounted () {
       EventBus.$on("EventsTable.editEvent", (event) => {
         this.httpMethod = "PATCH";
@@ -439,6 +475,7 @@
         this.saveBtnTxt = "Save changes";
         this.event = new Event(event);
         this.event.url = event.url;
+        this.showCapacity = Boolean(this.event.capacity);
 
         // TODO - This EventForm functionality only allows for a single division
         // to be selected to satisfy #1950. On the back-end, we allow for more than
