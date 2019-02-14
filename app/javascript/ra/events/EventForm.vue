@@ -22,7 +22,7 @@
           <errors :errors="eventErrors.name"></errors>
         </div>
 
-        <div class="grid__col-sm-3">
+        <div class="grid__col-sm-6">
           <h6>Hosting divisions:</h6>
 
           <label>
@@ -46,23 +46,6 @@
           </label>
 
           <errors :errors="eventErrors.division_ids"></errors>
-        </div>
-
-        <div class="grid__col-sm-3">
-          <label>
-            <input
-              type="checkbox"
-              v-model="showCapacity"
-            />
-            Set a capacity
-          </label>
-
-          <label class="padding--t-medium" v-if="showCapacity">
-            Capacity
-            <integer-input input-name="capacity" v-model="event.capacity" />
-          </label>
-
-          <errors :errors="eventErrors.capacity"></errors>
         </div>
 
         <div class="grid__col-sm-6">
@@ -114,6 +97,23 @@
           </label>
 
           <errors :errors="eventErrors.ends_at"></errors>
+        </div>
+
+        <div class="grid__col-sm-6">
+          <label>
+            <input
+              type="checkbox"
+              v-model="showCapacity"
+            />
+            Set a cap on the number of teams that can attend
+          </label>
+
+          <label class="padding--t-medium" v-if="showCapacity">
+            Capacity
+            <integer-input input-name="capacity" v-model="event.capacity" />
+          </label>
+
+          <errors :errors="eventErrors.capacity"></errors>
         </div>
 
         <div class="grid__col-12">
