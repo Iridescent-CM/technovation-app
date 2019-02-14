@@ -18,7 +18,7 @@
     <template v-else>
       <judge-search
         :event-bus-id="`event-${event.id}`"
-        :event-id="event.id"
+        :event="event"
       ></judge-search>
 
       <div class="grid__col-12">
