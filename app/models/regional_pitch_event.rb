@@ -178,6 +178,14 @@ class RegionalPitchEvent < ActiveRecord::Base
     false
   end
 
+  def at_team_capacity?
+    if (capacity.nil? || capacity.to_i == 0)
+      false
+    else
+      teams.length.to_i >= capacity.to_i
+    end
+  end
+
   def name_with_friendly_country_prefix
     "#{FriendlyCountry.(ambassador.account)} - #{name}"
   end
