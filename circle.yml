@@ -14,7 +14,7 @@ jobs:
           PDFTK_PATH: /usr/bin/pdftk
           AIRBRAKE_PROJECT_ID: n-a
           AIRBRAKE_PROJECT_KEY: n-a
-          AIRBRAKE_RAILS_ENV: n-a
+          AIRBRAKE_RAILS_ENV: test
           NEW_RELIC_LICENSE_KEY: n-a
           GOOGLE_MAPS_API_KEY: n-a
           GOOGLE_PLACES_API_KEY: n-a
