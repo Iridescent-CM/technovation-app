@@ -56,6 +56,7 @@
                   <td
                     class="light-opacity"
                     v-show="!item.selected"
+                    v-tooltip="selectionDisabledTooltip"
                   >
                     <icon name="check-circle-o" />
                   </td>
@@ -143,7 +144,15 @@
         } else {
           return this.selectableItems
         }
-      }
+      },
+
+      selectionDisabledTooltip () {
+        if (this.eventNotAtCapacity()) {
+          return false;
+        }
+
+        return 'You have reached the maximum number of teams for this event';
+      },
     },
 
     watch: {
@@ -168,9 +177,15 @@
       toggleSelection (item) {
         if (item.selected) {
           this.handleDeselection(item);
-        } else {
+        } else if (this.eventNotAtCapacity()) {
           this.handleSelection(item);
         }
+      },
+
+      eventNotAtCapacity() {
+        return !this.event.capacity ||
+          (Boolean(this.event.capacity) &&
+            this.event.capacity > this.event.selectedTeams.length);
       },
 
       fetchRemoteItems (opts) {

@@ -346,11 +346,11 @@
     }
 
     .z-index-penultimate {
-      z-index: 999998;
+      z-index: 9998;
     }
 
     .z-index-max {
-      z-index: 999999;
+      z-index: 9999;
     }
 
     .border-radius-small {
