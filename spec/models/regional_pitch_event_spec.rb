@@ -34,7 +34,7 @@ RSpec.describe RegionalPitchEvent do
     expect(rpe.reload.teams).to be_empty
   end
 
-  it "removes teams when trying to add and event is at team capacity" do
+  it "prevents teams from being added to event when event is at team capacity" do
     team = FactoryBot.create(:team, :junior)
     rpe = FactoryBot.create(:event, :junior, :junior_at_team_capacity)
 
