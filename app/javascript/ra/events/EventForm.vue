@@ -373,6 +373,8 @@
 
         if (this.showCapacity && Boolean(vm.event.capacity)) {
           form.append("regional_pitch_event[capacity]", vm.event.capacity);
+        } else {
+          form.append("regional_pitch_event[capacity]", null);
         }
 
         $.ajax({
