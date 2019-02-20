@@ -5,7 +5,7 @@
     search-placeholder="Search by name or email"
     :handleSelection="handleSelection"
     :handleDeselection="handleDeselection"
-    :event-id="eventId"
+    :event="event"
   >
     <template slot="table-headers">
       <th>Name</th>
@@ -43,7 +43,7 @@
       AttendeeSearch,
     },
 
-    props: ["eventBusId", "eventId"],
+    props: ["eventBusId", "event"],
 
     methods: {
       handleSelection (item) {

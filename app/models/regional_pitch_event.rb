@@ -135,6 +135,7 @@ class RegionalPitchEvent < ActiveRecord::Base
       starts_at: starts_at,
       ends_at: ends_at,
       event_link: event_link,
+      capacity: capacity,
       errors: {},
     }
   end
@@ -175,6 +176,14 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def virtual?
     false
+  end
+
+  def at_team_capacity?
+    if (capacity.nil? || capacity.to_i == 0)
+      false
+    else
+      teams.length.to_i >= capacity.to_i
+    end
   end
 
   def name_with_friendly_country_prefix

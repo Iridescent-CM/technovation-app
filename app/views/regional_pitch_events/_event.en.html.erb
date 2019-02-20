@@ -1,5 +1,14 @@
 <div class="panel">
   <div class="grid">
+    <% if event.at_team_capacity? and
+      not current_team.attending_event?(event) %>
+        <div class="grid__col-12">
+          <div class="flash flash-info margin--none">
+            This event is currently full.
+          </div>
+        </div>
+    <% end %>
+
     <div class="grid__col-auto">
       <h3><%= event.name %></h3>
 
@@ -57,7 +66,8 @@
 
       <% if current_scope != "judge" and
               not current_team.attending_event?(event) and
-                SeasonToggles.select_regional_pitch_event? %>
+                SeasonToggles.select_regional_pitch_event? and
+                  not event.at_team_capacity? %>
         <p>
           <%= link_to "Select this event",
             [
