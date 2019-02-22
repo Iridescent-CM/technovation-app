@@ -48,8 +48,8 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   has_and_belongs_to_many :teams,
     -> { joins(:team_submissions) },
-    before_add: :update_teams_count,
-    before_remove: :update_teams_count
+    after_add: :update_teams_count,
+    after_remove: :update_teams_count
 
   has_many :team_submissions, through: :teams
 
