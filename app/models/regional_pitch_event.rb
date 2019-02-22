@@ -190,17 +190,8 @@ class RegionalPitchEvent < ActiveRecord::Base
     "#{FriendlyCountry.(ambassador.account)} - #{name}"
   end
 
-  def update_teams_count
+  def update_teams_count(team = nil)
     update_attributes(teams_count: teams.count)
-  end
-
-  private
-  def inc_teams_count(team)
-    RegionalPitchEvent.increment_counter('teams_count', id)
-  end
-
-  def dec_teams_count(team)
-    RegionalPitchEvent.decrement_counter('teams_count', id)
   end
 end
 
