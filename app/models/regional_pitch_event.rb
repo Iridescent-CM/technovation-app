@@ -48,8 +48,8 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   has_and_belongs_to_many :teams,
     -> { joins(:team_submissions) },
-    before_add: :inc_teams_count,
-    before_remove: :dec_teams_count
+    before_add: :update_teams_count,
+    before_remove: :update_teams_count
 
   has_many :team_submissions, through: :teams
 
@@ -188,6 +188,10 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def name_with_friendly_country_prefix
     "#{FriendlyCountry.(ambassador.account)} - #{name}"
+  end
+
+  def update_teams_count
+    update_attributes(teams_count: teams.count)
   end
 
   private
