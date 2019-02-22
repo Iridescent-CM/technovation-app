@@ -8,6 +8,10 @@ RSpec.feature "Admins viewing past judge certificates" do
 
     click_link "Participants"
 
+    while has_no_selector?("#account_#{judge.account_id}") do
+      find(".next_page").click
+    end
+
     within("#account_#{judge.account_id}") do
       click_link "view"
     end
@@ -28,6 +32,10 @@ RSpec.feature "Admins viewing past judge certificates" do
 
     click_link "Participants"
 
+    while has_no_selector?("#account_#{judge.account_id}") do
+      find(".next_page").click
+    end
+
     within("#account_#{judge.account_id}") do
       click_link "view"
     end
@@ -47,6 +55,10 @@ RSpec.feature "Admins viewing past judge certificates" do
       sign_in(:admin)
 
       click_link "Participants"
+
+      while has_no_selector?("#account_#{judge.account_id}") do
+        find(".next_page").click
+      end
 
       within("#account_#{judge.account_id}") do
         click_link "view"
@@ -80,6 +92,10 @@ RSpec.feature "Admins viewing past judge certificates" do
 
         click_link "Participants"
 
+        while has_no_selector?("#account_#{judge.account_id}") do
+          find(".next_page").click
+        end
+
         within("#account_#{judge.account_id}") do
           click_link "view"
         end
@@ -112,6 +128,10 @@ RSpec.feature "Admins viewing past judge certificates" do
 
       click_link "Participants"
 
+      while has_no_selector?("#account_#{judge.account_id}") do
+        find(".next_page").click
+      end
+
       within("#account_#{judge.account_id}") do
         click_link "view"
       end
@@ -142,6 +162,10 @@ RSpec.feature "Admins viewing past judge certificates" do
       sign_in(:admin)
 
       click_link "Participants"
+
+      while has_no_selector?("#account_#{judge.account_id}") do
+        find(".next_page").click
+      end
 
       within("#account_#{judge.account_id}") do
         click_link "view"
@@ -176,6 +200,10 @@ RSpec.feature "Admins viewing past judge certificates" do
 
       click_link "Participants"
 
+      while has_no_selector?("#account_#{judge.account_id}") do
+        find(".next_page").click
+      end
+
       within("#account_#{judge.account_id}") do
         click_link "view"
       end
@@ -208,6 +236,10 @@ RSpec.feature "Admins viewing past judge certificates" do
       sign_in(:admin)
 
       click_link "Participants"
+
+      while has_no_selector?("#account_#{judge.account_id}") do
+        find(".next_page").click
+      end
 
       within("#account_#{judge.account_id}") do
         click_link "view"
