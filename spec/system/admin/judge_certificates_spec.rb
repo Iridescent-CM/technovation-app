@@ -8,11 +8,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
     click_link "Participants"
 
-    while has_no_selector?("#account_#{judge.account_id}") do
-      find(".next_page").click
-    end
-
-    within("#account_#{judge.account_id}") do
+    within_results_page_with("#account_#{judge.account_id}") do
       click_link "view"
     end
 
@@ -32,11 +28,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
     click_link "Participants"
 
-    while has_no_selector?("#account_#{judge.account_id}") do
-      find(".next_page").click
-    end
-
-    within("#account_#{judge.account_id}") do
+    within_results_page_with("#account_#{judge.account_id}") do
       click_link "view"
     end
 
@@ -56,11 +48,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
       click_link "Participants"
 
-      while has_no_selector?("#account_#{judge.account_id}") do
-        find(".next_page").click
-      end
-
-      within("#account_#{judge.account_id}") do
+      within_results_page_with("#account_#{judge.account_id}") do
         click_link "view"
       end
     }.to change {
@@ -92,11 +80,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
         click_link "Participants"
 
-        while has_no_selector?("#account_#{judge.account_id}") do
-          find(".next_page").click
-        end
-
-        within("#account_#{judge.account_id}") do
+        within_results_page_with("#account_#{judge.account_id}") do
           click_link "view"
         end
       }.to change {
@@ -128,11 +112,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
       click_link "Participants"
 
-      while has_no_selector?("#account_#{judge.account_id}") do
-        find(".next_page").click
-      end
-
-      within("#account_#{judge.account_id}") do
+      within_results_page_with("#account_#{judge.account_id}") do
         click_link "view"
       end
     }.to change {
@@ -163,11 +143,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
       click_link "Participants"
 
-      while has_no_selector?("#account_#{judge.account_id}") do
-        find(".next_page").click
-      end
-
-      within("#account_#{judge.account_id}") do
+      within_results_page_with("#account_#{judge.account_id}") do
         click_link "view"
       end
     }.to change {
@@ -200,11 +176,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
       click_link "Participants"
 
-      while has_no_selector?("#account_#{judge.account_id}") do
-        find(".next_page").click
-      end
-
-      within("#account_#{judge.account_id}") do
+      within_results_page_with("#account_#{judge.account_id}") do
         click_link "view"
       end
     }.to change {
@@ -237,11 +209,7 @@ RSpec.feature "Admins viewing past judge certificates" do
 
       click_link "Participants"
 
-      while has_no_selector?("#account_#{judge.account_id}") do
-        find(".next_page").click
-      end
-
-      within("#account_#{judge.account_id}") do
+      within_results_page_with("#account_#{judge.account_id}") do
         click_link "view"
       end
     }.to change {
