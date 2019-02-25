@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include CookiesHelper
+  include ForceLocation
 
   protect_from_forgery with: :exception
 
