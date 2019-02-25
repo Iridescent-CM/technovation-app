@@ -75,6 +75,15 @@ class ScoredSubmissionsGrid
     submission.semifinals_score_range
   end
 
+  column :quarterfinals_official_judging do |submission|
+    if submission.team.selected_regional_pitch_event.live? &&
+         submission.team.selected_regional_pitch_event.official?
+      "live"
+    else
+      "virtual"
+    end
+  end
+
   column :view, mandatory: true, html: true do |submission, grid|
     html = link_to(
       web_icon('list-ul', size: 16, remote: true),
