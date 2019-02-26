@@ -9,14 +9,17 @@ module RegionalAmbassador
 
         if not scored_submissions_grid[:by_event].blank?
           scope.page(params[:page])
-        else
+        elsif SeasonToggles.display_scores?
           scope.in_region(user).page(params[:page])
+        else
+          scope.live.in_region(user).page(params[:page])
         end
       },
 
       csv_scope: "->(scope, user, params) { " +
           "if not params[:by_event].blank?; scope; " +
-          "else; scope.in_region(user); end " +
+          "elsif SeasonToggles.display_scores?; scope.in_region(user); " +
+          "else; scope.live.in_region(user); end " +
         "}"
 
     def show
@@ -26,9 +29,9 @@ module RegionalAmbassador
 
     private
     def grid_params
-      round = SeasonToggles.current_judging_round(full_name: true).to_s
-
-      if round === 'off'
+      if SeasonToggles.display_scores?
+        round = params[:scored_submissions_grid].fetch(:round) { 'quarterfinals' }
+      else
         round = 'quarterfinals'
       end
 
@@ -44,7 +47,7 @@ module RegionalAmbassador
           end
         ),
         current_account: current_account,
-        round: params.fetch(:round) { round },
+        round: round,
       )
 
       grid.merge(
