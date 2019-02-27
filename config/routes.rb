@@ -322,6 +322,8 @@ Rails.application.routes.draw do
     resources :expertises, only: :index
   end
 
+  get "/account_data/data_use_terms/edit", to: "data_use_terms#edit"
+
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
 
