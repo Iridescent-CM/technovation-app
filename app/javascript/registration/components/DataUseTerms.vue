@@ -1,5 +1,6 @@
 <template>
   <form
+    ref="dataUseTermsForm"
     @submit.prevent="handleSubmit"
     class="panel panel--contains-bottom-bar panel--contains-top-bar"
   >
@@ -95,10 +96,11 @@
 
     <div class="panel__bottom-bar">
       <button
+        ref="dataUseTermsSubmitButton"
+        type="submit"
         class="button"
         :disabled="!termsAgreed"
-        @click="handleSubmit"
-      >Next</button>
+      >{{ submitButtonText }}</button>
     </div>
   </form>
 </template>
@@ -110,6 +112,21 @@ const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registrati
 
 export default {
   name: 'data-use-terms',
+
+  props: {
+    handleSubmit: {
+      type: Function,
+      default: function () {
+        if (!this.termsAgreed) return false
+        this.$router.push({ name: 'location' })
+      },
+    },
+
+    submitButtonText: {
+      type: String,
+      default: 'Next',
+    },
+  },
 
   computed: {
     ...mapState(['isLocked']),
@@ -127,11 +144,6 @@ export default {
 
   methods: {
     ...mapActions(['updateTermsAgreed']),
-
-    handleSubmit () {
-      if (!this.termsAgreed) return false
-      this.$router.push({ name: 'location' })
-    },
   },
 }
 </script>
