@@ -48,8 +48,12 @@ class AccountSerializer
     account.profile_expertise_ids
   end
 
-  attribute(:terms_agreed) do |_account|
-    true
+  attribute(:terms_agreed) do |account|
+    if account.signup_attempt && account.signup_attempt.terms_agreed?
+      true
+    else
+      false
+    end
   end
 
   attribute(:has_saved_parental_info) do |account|
