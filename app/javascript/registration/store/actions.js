@@ -40,7 +40,7 @@ export default {
     commit('basicProfile', account)
     commit('email', account.email)
 
-    commit('termsAgreed', true)
+    commit('termsAgreed', account.termsAgreed)
     commit('isReady', true)
     commit('isLocked', true)
     commit('apiMethod', 'patch')
