@@ -29,13 +29,15 @@ module RegionalAmbassador
 
     private
     def grid_params
+      grid = params[:scored_submissions_grid] ||= {}
+
       if SeasonToggles.display_scores?
-        round = params[:scored_submissions_grid].fetch(:round) { 'quarterfinals' }
+        round = grid.fetch(:round) { 'quarterfinals' }
       else
         round = 'quarterfinals'
       end
 
-      grid = (params[:scored_submissions_grid] ||= {}).merge(
+      grid.merge(
         admin: false,
         allow_state_search: current_ambassador.country_code != "US",
         country: [current_ambassador.country_code],
@@ -48,9 +50,6 @@ module RegionalAmbassador
         ),
         current_account: current_account,
         round: round,
-      )
-
-      grid.merge(
         column_names: detect_extra_columns(grid),
       )
     end

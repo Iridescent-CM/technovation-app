@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Regional Ambassador views scores" do
   before do
+    SeasonToggles.display_scores_on!
     ra = FactoryBot.create(:regional_ambassador, :approved)
     sign_in(ra)
   end
@@ -25,7 +26,9 @@ RSpec.feature "Regional Ambassador views scores" do
     FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     click_link "Scores"
-    find('a.view-details').click
+    within_results_page_with("#team_submission_#{submission.id}") do
+      find('a.view-details').click
+    end
 
     expect(page).to have_content("earned 2 points")
   end
@@ -48,8 +51,10 @@ RSpec.feature "Regional Ambassador views scores" do
       team_submission: submission
     )
 
-    visit regional_ambassador_scores_path(round: :semifinals)
-    find('a.view-details').click
+    visit regional_ambassador_scores_path(scored_submissions_grid: { round: :semifinals })
+    within_results_page_with("#team_submission_#{submission.id}") do
+      find('a.view-details').click
+    end
 
     expect(page).to have_content("earned 2 points")
   end
