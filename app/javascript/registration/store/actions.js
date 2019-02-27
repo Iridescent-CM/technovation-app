@@ -52,6 +52,7 @@ export default {
     axios.post('/registration/terms_agreement', {
       termsAgreed,
       wizardToken: state.wizardToken,
+      email: state.email,
     }).then(({ data: { data: { attributes } } }) => {
       commit('wizardToken', attributes.wizardToken)
       commit('termsAgreed', attributes.termsAgreed)
