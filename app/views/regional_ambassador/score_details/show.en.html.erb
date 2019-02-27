@@ -8,9 +8,11 @@
     <dt>Event:</dt>
     <dd><%= @submission.team.event.name %></dd>
 
-    <% if @submission.semifinalist? %>
-      <dt>Semifinals average:</dt>
-      <dd><%= @submission.semifinals_average_score %></dd>
+    <% if current_account.is_admin? or SeasonToggles.display_scores? %>
+      <% if @submission.semifinalist? %>
+        <dt>Semifinals average:</dt>
+        <dd><%= @submission.semifinals_average_score %></dd>
+      <% end %>
     <% end %>
 
     <dt>Quarterfinals average:</dt>
@@ -32,17 +34,21 @@
     for their code checklist.
   </p>
 
-  <%= render 'regional_ambassador/score_details/scores_table',
-    scores: @submission.scores,
-    round: :semifinals,
-    status: :complete
-  %>
+  <% if current_account.is_admin? or SeasonToggles.display_scores? %>
 
-  <%= render 'regional_ambassador/score_details/scores_table',
-    scores: @submission.scores,
-    round: :semifinals,
-    status: :incomplete
-  %>
+    <%= render 'regional_ambassador/score_details/scores_table',
+      scores: @submission.scores,
+      round: :semifinals,
+      status: :complete
+    %>
+
+    <%= render 'regional_ambassador/score_details/scores_table',
+      scores: @submission.scores,
+      round: :semifinals,
+      status: :incomplete
+    %>
+
+  <% end %>
 
   <%= render 'regional_ambassador/score_details/scores_table',
     scores: @submission.scores,
