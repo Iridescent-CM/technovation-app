@@ -137,7 +137,7 @@ export default {
       },
 
       set (value) {
-        if (!isLocked) {
+        if (!this.isLocked) {
           this.updateTermsAgreed({ termsAgreed: value });
         }
       },
