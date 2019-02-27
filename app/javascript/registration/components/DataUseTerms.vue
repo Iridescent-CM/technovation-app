@@ -137,8 +137,10 @@ export default {
       },
 
       set (value) {
-        this.updateTermsAgreed({ termsAgreed: value })
-      }
+        if (!isLocked) {
+          this.updateTermsAgreed({ termsAgreed: value });
+        }
+      },
     },
   },
 
