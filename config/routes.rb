@@ -323,6 +323,7 @@ Rails.application.routes.draw do
   end
 
   get "/account_data/data_use_terms/edit", to: "data_use_terms#edit"
+  post "/account_data/data_use_terms/edit", to: "data_use_terms#update"
 
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]

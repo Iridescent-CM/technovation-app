@@ -848,6 +848,12 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def set_terms_agreed(bool)
+    value = bool ? Time.current : nil
+    self.terms_agreed_at = value
+    self.save
+  end
+
   def teams
     if student_profile
       student_profile.teams
