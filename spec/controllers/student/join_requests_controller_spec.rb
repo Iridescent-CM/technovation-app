@@ -58,9 +58,14 @@ RSpec.describe Student::JoinRequestsController do
     let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
 
     before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
       TeamRosterManaging.add(team, mentor)
       sign_in(student)
       request.env["HTTP_REFERER"] = "/somewhere"
+    end
+
+    after do
+      Timecop.return
     end
 
     before(:each) do
@@ -117,8 +122,13 @@ RSpec.describe Student::JoinRequestsController do
     }
 
     before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
       sign_in(team.students.sample)
       request.env["HTTP_REFERER"] = "/somewhere"
+    end
+
+    after do
+      Timecop.return
     end
 
     context "accepting the request" do

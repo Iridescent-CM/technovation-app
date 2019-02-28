@@ -26,8 +26,13 @@ RSpec.describe Mentor::JoinRequestsController do
     let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
 
     before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
       sign_in(mentor)
       post :create, params: { team_id: team.id }
+    end
+
+    after do
+      Timecop.return
     end
 
     before(:each) do
