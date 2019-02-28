@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import state from '../registration/store/state'
-import getters from '../registration/store/getters'
-import mutations from '../registration/store/mutations'
+import state from 'registration/store/state'
+import getters from 'registration/store/getters'
+import mutations from 'registration/store/mutations'
 import actions from './actions'
 
 Vue.use(Vuex)

@@ -4,7 +4,7 @@ class DataUseTermsController < ApplicationController
   end
 
   def update
-    account = Account.find_by(email: terms_agreement_params[:terms_agreed])
+    account = Account.find_by(email: terms_agreement_params[:email])
 
     account.set_terms_agreed(terms_agreement_params[:terms_agreed])
 
@@ -13,6 +13,6 @@ class DataUseTermsController < ApplicationController
 
   private
   def terms_agreement_params
-    params.require(:terms_agreement).permit(:terms_agreed, :email)
+    params.permit(:terms_agreed, :email)
   end
 end
