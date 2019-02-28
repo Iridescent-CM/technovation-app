@@ -1,15 +1,9 @@
 module Registration
   class TermsAgreementsController < RegistrationController
     def create
-      account = Account.find_by(email: terms_agreement_params[:email])
-
-      if account.nil?
-        attempt = SignupAttempt.wizard.find_or_initialize_by(
-          wizard_token: terms_agreement_params[:wizard_token]
-        )
-      else
-        attempt = account.signup_attempt
-      end
+      attempt = SignupAttempt.wizard.find_or_initialize_by(
+        wizard_token: terms_agreement_params[:wizard_token]
+      )
 
       attempt.set_terms_agreed(terms_agreement_params[:terms_agreed])
 
@@ -33,7 +27,7 @@ module Registration
 
     private
     def terms_agreement_params
-      params.require(:terms_agreement).permit(:terms_agreed, :wizard_token, :email)
+      params.require(:terms_agreement).permit(:terms_agreed, :wizard_token)
     end
   end
 end
