@@ -134,7 +134,8 @@ CREATE TABLE public.accounts (
     geocoding_city_was character varying,
     geocoding_state_was character varying,
     geocoding_country_was character varying,
-    geocoding_fixed_at timestamp without time zone
+    geocoding_fixed_at timestamp without time zone,
+    terms_agreed_at timestamp without time zone
 );
 
 
@@ -3143,6 +3144,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190206213251'),
 ('20190206213309'),
 ('20190207223128'),
-('20190213212436');
+('20190213212436'),
+('20190228185145');
 
 

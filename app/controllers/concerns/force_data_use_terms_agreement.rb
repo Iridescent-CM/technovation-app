@@ -22,7 +22,7 @@ module ForceDataUseTermsAgreement
   end
 
   def no_data_agreement
-    !current_account.signup_attempt.terms_agreed?
+    !current_account.terms_agreed?
   end
 
   def not_on_data_agreement_form
