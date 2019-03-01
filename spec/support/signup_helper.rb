@@ -25,6 +25,10 @@ module SignupHelper
     check "I agree"
     click_button "Next"
 
+    expect(page).to have_selector('#location_city', visible: true)
+    expect(page).to have_selector('#location_state', visible: true)
+    expect(page).to have_selector('#location_country', visible: true)
+
     expect(page.find('#location_city').value).to eq("Chicago")
 
     fill_in "State / Province", with: "CA"
