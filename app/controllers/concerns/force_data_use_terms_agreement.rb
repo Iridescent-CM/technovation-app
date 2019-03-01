@@ -28,11 +28,15 @@ module ForceDataUseTermsAgreement
   def not_on_data_agreement_form
     return false if request.xhr?
 
-    original_request_path = Rails.application.routes.recognize_path(request.original_fullpath)
-    data_agreement_form_path = Rails.application.routes.recognize_path(
-      account_data_data_use_terms_edit_path
-    )
+    begin
+      original_request_path = Rails.application.routes.recognize_path(request.original_fullpath)
+      data_agreement_form_path = Rails.application.routes.recognize_path(
+        account_data_data_use_terms_edit_path
+      )
 
-    original_request_path != data_agreement_form_path
+      original_request_path != data_agreement_form_path
+    rescue ActionController::RoutingError
+      return false
+    end
   end
 end

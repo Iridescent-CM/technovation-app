@@ -83,9 +83,10 @@
       <p>Thank you for helping us keep our students safe.</p>
 
       <div class="padding--t-b-large text-align--right">
-        <label class="margin--none">
+        <label for="data_use_terms_checkbox" class="margin--none">
           <input
             type="checkbox"
+            id="data_use_terms_checkbox"
             v-model="termsAgreed"
             :disabled="isLocked"
           />
@@ -98,6 +99,7 @@
       <button
         ref="dataUseTermsSubmitButton"
         type="submit"
+        id="data_use_terms_submit"
         class="button"
         :disabled="!termsAgreed"
       >{{ submitButtonText }}</button>
