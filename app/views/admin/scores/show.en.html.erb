@@ -6,7 +6,8 @@
   <header class="admin-score-header">
     <h3>
       <span>Team</span>
-      <%= link_to @score.team_name,
+      <%= link_to_if current_scope == "mentor",
+        @score.team_name,
         [
           current_scope,
           @score.team
