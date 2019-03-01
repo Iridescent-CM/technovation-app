@@ -1,3 +1,8 @@
+import Vue from 'vue'
+import TurbolinksAdapter from 'vue-turbolinks'
+
+Vue.use(TurbolinksAdapter)
+
 import '../application/sticky-header';
 
 import { urlHelpers } from 'utilities/utilities';
