@@ -29,33 +29,37 @@ RSpec.feature "Students find a team" do
   end
 
   scenario "request to join a team" do
-    within (".navigation") { click_link "Find a team" }
-    click_link "Ask to join"
-    click_button "Ask to join #{available_team.name}"
+    Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day) do
+      within (".navigation") { click_link "Find a team" }
+      click_link "Ask to join"
+      click_button "Ask to join #{available_team.name}"
 
-    join_request = JoinRequest.last
+      join_request = JoinRequest.last
 
-    expect(current_path).to eq(student_dashboard_path)
-    expect(page).to have_content(join_request.team_name)
-    expect(page).to have_content("You have asked to join")
+      expect(current_path).to eq(student_dashboard_path)
+      expect(page).to have_content(join_request.team_name)
+      expect(page).to have_content("You have asked to join")
+    end
   end
 
   scenario "onboarded student sees pending requests" do
-    sign_out
+    Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day) do
+      sign_out
 
-    onboarded = FactoryBot.create(:student, :geocoded)
+      onboarded = FactoryBot.create(:student, :geocoded)
 
-    sign_in(onboarded)
+      sign_in(onboarded)
 
-    within(".navigation") { click_link "Find a team" }
+      within(".navigation") { click_link "Find a team" }
 
-    click_link "Ask to join"
-    click_button "Ask to join #{available_team.name}"
+      click_link "Ask to join"
+      click_button "Ask to join #{available_team.name}"
 
-    join_request = JoinRequest.last
+      join_request = JoinRequest.last
 
-    expect(current_path).to eq(student_dashboard_path)
-    expect(page).to have_content(join_request.team_name)
-    expect(page).to have_content("You have asked to join")
+      expect(current_path).to eq(student_dashboard_path)
+      expect(page).to have_content(join_request.team_name)
+      expect(page).to have_content("You have asked to join")
+    end
   end
 end

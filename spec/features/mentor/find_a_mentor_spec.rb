@@ -6,8 +6,13 @@ RSpec.feature "Mentors find a team" do
   } # City is Chicago
 
   before do
+    Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
     mentor = FactoryBot.create(:mentor, :onboarded, :geocoded) # City is Chicago
     sign_in(mentor)
+  end
+
+  after do
+    Timecop.return
   end
 
   scenario "only see current mentors" do
