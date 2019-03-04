@@ -1,19 +1,19 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-import state from 'registration/store/state'
-import getters from 'registration/store/getters'
-import mutations from 'registration/store/mutations'
-import actions from './actions'
+import state from 'registration/store/state';
+import getters from 'registration/store/getters';
+import mutations from 'registration/store/mutations';
+import actions from './actions';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export const storeModule = {
   state,
   getters,
   mutations,
   actions,
-}
+};
 
 export default new Vuex.Store({
   modules: {
@@ -28,4 +28,4 @@ export default new Vuex.Store({
       ...storeModule,
     },
   },
-})
+});

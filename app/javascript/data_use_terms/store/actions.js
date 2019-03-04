@@ -8,8 +8,8 @@ export default Object.assign({}, actions, {
       termsAgreed,
       email: state.email,
     }).then(({ data: { data: { attributes } } }) => {
-      commit('termsAgreed', attributes.termsAgreed)
-      commit('termsAgreedDate', attributes.termsAgreedDate)
-    }).catch(err => console.error(err))
+      commit('termsAgreed', attributes.termsAgreed);
+      commit('termsAgreedDate', attributes.termsAgreedDate);
+    }).catch(err => console.error(err));
   },
 });
