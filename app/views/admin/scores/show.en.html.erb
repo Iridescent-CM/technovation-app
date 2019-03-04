@@ -4,7 +4,16 @@
 
 <div class="panel">
   <header class="admin-score-header">
-    <h3><span>Team</span> <%= @score.team_name %></h3>
+    <h3>
+      <span>Team</span>
+      <%= link_to_if current_scope == "mentor",
+        @score.team_name,
+        [
+          current_scope,
+          @score.team
+        ]
+      %>
+    </h3>
 
     <h3>
       <span>Submission</span>
