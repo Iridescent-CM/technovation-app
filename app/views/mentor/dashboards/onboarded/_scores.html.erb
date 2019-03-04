@@ -7,7 +7,12 @@
     <%= image_tag team.team_photo_url, class: "team-photo" %>
 
     <h3><span>Team</span> <%= link_to team.name, [:mentor, team] %></h3>
-    <h3><span>Submission</span> <%= team.submission.app_name %></h3>
+    <h3>
+      <span>Submission</span>
+      <%= link_to team.submission.app_name,
+        mentor_published_team_submission_path(team.submission)
+      %>
+    </h3>
 
     <% if all_scores.empty? %>
       <% if !team.submission.complete? || !team.submission.present? %>
