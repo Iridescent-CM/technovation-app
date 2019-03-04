@@ -12,10 +12,27 @@ module DataAnalyses
           .in_region(user)
       end
 
-      @cleared_mentors = @mentors.bg_check_clear.consent_signed
-      @signed_consent_mentors = @mentors.bg_check_submitted.consent_signed
-      @cleared_bg_check_mentors = @mentors.bg_check_clear.consent_not_signed
-      @neither_mentors = @mentors.bg_check_unsubmitted.consent_not_signed
+      #FIXME: these queries were cribbed from the datagrid, but should be shared somehow
+      @onboarded = @mentors.includes(:background_check, :consent_waiver)
+        .references(:background_checks, :consent_waivers)
+        .where(
+          "email_confirmed_at IS NOT NULL AND " +
+          "mentor_profiles.bio IS NOT NULL AND " +
+          "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
+          "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
+          ImportantDates.mentor_training_required_since,
+          BackgroundCheck.statuses[:clear]
+        )
+      @not_onboarded = @mentors.includes(:background_check, :consent_waiver)
+        .references(:background_checks, :consent_waivers)
+        .where(
+          "email_confirmed_at IS NULL OR " +
+          "mentor_profiles.bio IS NULL OR " +
+          "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
+          "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
+          ImportantDates.mentor_training_required_since,
+          BackgroundCheck.statuses[:clear]
+        )
     end
 
     def totals
@@ -26,19 +43,15 @@ module DataAnalyses
 
     def labels
       [
-        "Signed consent & cleared a background check, if required – #{show_percentage(@cleared_mentors, @mentors)}",
-        "Only signed consent – #{show_percentage(@signed_consent_mentors, @mentors)}",
-        "Only cleared bg check, if required – #{show_percentage(@cleared_bg_check_mentors, @mentors)}",
-        "Have done neither – #{show_percentage(@neither_mentors, @mentors)}",
+        "Fully onboarded - #{show_percentage(@onboarded, @mentors)}",
+        "Not fully onboarded - #{show_percentage(@not_onboarded, @mentors)}",
       ]
     end
 
     def data
       [
-        @cleared_mentors.count,
-        @signed_consent_mentors.count,
-        @cleared_bg_check_mentors.count,
-        @neither_mentors.count,
+        @onboarded.count,
+        @not_onboarded.count,
       ]
     end
 
@@ -47,32 +60,14 @@ module DataAnalyses
         url_helper.public_send("#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["mentor"],
-            background_check: "bg_check_clear",
-            consent_waiver: "consent_signed",
+            onboarded_mentors: :onboarded,
           }
         ),
 
         url_helper.public_send("#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["mentor"],
-            background_check: "bg_check_submitted",
-            consent_waiver: "consent_signed",
-          }
-        ),
-
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            background_check: "bg_check_clear",
-            consent_waiver: "consent_not_signed",
-          }
-        ),
-
-        url_helper.public_send("#{user.scope_name}_participants_path",
-          accounts_grid: {
-            scope_names: ["mentor"],
-            background_check: "bg_check_unsubmitted",
-            consent_waiver: "consent_not_signed",
+            onboarded_mentors: :onboarding,
           }
         ),
       ]

@@ -21,22 +21,16 @@ describe('Admin Dashboard - MentorSection component', () => {
       mentors: '402',
     },
     labels: [
-      'Signed consent & cleared a background check, if required – (50%)',
-      'Only signed consent – (0%)',
-      'Only cleared bg check, if required – (50%)',
-      'Have done neither – (0%)',
+      'Fully onboarded - (75%)',
+      'Not fully onboarded - (25%)',
     ],
     data: [
       1,
       0,
-      1,
-      0,
     ],
     urls: [
-      '/signed/cleared/',
-      '/signed/',
-      '/cleared/',
-      '/not/signed/not/cleared',
+      '/fully/onboarded/',
+      '/not/fully/onboarded/',
     ],
   }
 
@@ -86,21 +80,6 @@ describe('Admin Dashboard - MentorSection component', () => {
 
   it('extends the DashboardSection component', () => {
     expect(MentorsSection.extends).toEqual(DashboardSection)
-  })
-
-  describe('props', () => {
-
-    describe('international', () => {
-
-      it('is a boolean with a default value of false', () => {
-        expect(MentorsSection.props.international).toEqual({
-          type: Boolean,
-          default: false,
-        })
-      })
-
-    })
-
   })
 
   describe('computed properties', () => {
@@ -191,7 +170,7 @@ describe('Admin Dashboard - MentorSection component', () => {
       const returningChart = charts.at(1)
 
       expect(onboardingChart.find('h6').text())
-        .toEqual('Background check / consent waivers')
+        .toEqual('Onboarding')
       expect(onboardingChart.find(PieChart).exists()).toBe(true)
 
       expect(returningChart.find('h6').text())
@@ -211,20 +190,6 @@ describe('Admin Dashboard - MentorSection component', () => {
       })
 
       expect(wrapper.find('h3 span').exists()).toBe(false)
-    })
-
-    it('changes the label of the onboarding chart if international changes', () => {
-      const onboardingChart = wrapper.findAll('.tabs__tab-content').at(0)
-
-      wrapper.setProps({ international: false })
-
-      expect(onboardingChart.find('h6').text())
-        .toEqual('Background check / consent waivers')
-
-      wrapper.setProps({ international: true })
-
-      expect(onboardingChart.find('h6').text())
-        .toEqual('Consent waivers')
     })
 
   })

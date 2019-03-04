@@ -13,7 +13,6 @@
 
 <div id="ra-admin-mentors-section">
   <mentors-section
-    :international="<%= current_ambassador.country != "US" %>"
     :chart-endpoints="{
       onboarding_mentors: '<%= regional_ambassador_data_analysis_path(:onboarding_mentors) %>',
       returning_mentors: '<%= regional_ambassador_data_analysis_path(:returning_mentors) %>',

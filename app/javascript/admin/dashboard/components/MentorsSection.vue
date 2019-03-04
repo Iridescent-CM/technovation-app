@@ -8,8 +8,7 @@
     </h3>
 
     <div class="tabs__tab-content">
-      <h6 v-if="international">Consent waivers</h6>
-      <h6 v-else>Background check / consent waivers</h6>
+      <h6>Onboarding</h6>
 
       <pie-chart
         :url="onboardingMentorsEndpoint"
@@ -41,13 +40,6 @@ export default {
   name: 'mentors-section',
 
   extends: DashboardSection,
-
-  props: {
-    international: {
-      type: Boolean,
-      default: false,
-    }
-  },
 
   computed: {
     onboardingMentorsEndpoint () {

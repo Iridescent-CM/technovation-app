@@ -4,11 +4,7 @@ class DataAnalysis
   attr_reader :user
 
   def self.for(user, analysis_type)
-    if analysis_type.to_s == "onboarding_mentors" && !user.is_admin? && user.country != "US"
-      DataAnalyses::OnboardingInternationalMentorsDataAnalysis.new(user)
-    else
-      "DataAnalyses::#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
-    end
+    "DataAnalyses::#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
   end
 
   def initialize(user)
