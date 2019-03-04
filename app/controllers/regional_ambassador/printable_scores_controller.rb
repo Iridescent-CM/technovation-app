@@ -10,7 +10,7 @@ module RegionalAmbassador
 
       judges = @event.judges
       scores = @event.team_submissions
-                 .flat_map(&:complete_submission_scores)
+                 .flat_map(&:scores)
 
       if judges.any? { |j| j.assigned_teams.any? }
         @groups = {}
@@ -23,8 +23,8 @@ module RegionalAmbassador
             j.id != judge.id && j.assigned_teams == judge.assigned_teams
           end
 
-          @groups[idx] = judge.submission_scores.complete
-          @groups[idx] += others_with_same_teams.flat_map { |j| j.submission_scores.complete }
+          @groups[idx] = judge.submission_scores
+          @groups[idx] += others_with_same_teams.flat_map { |j| j.submission_scores }
 
           included << judge.id
           included += others_with_same_teams.map(&:id)
