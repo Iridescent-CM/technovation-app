@@ -68,10 +68,10 @@ RSpec.feature "RA prints event scores" do
     visit regional_ambassador_printable_score_path(event)
 
     expect(page).to have_content("#{judge_a.name}\n#{team_a.name}")
-    expect(page).not_to have_content("#{judge_b.name}\n#{team_a.name}")
+    expect(page).to have_content("#{judge_b.name}\n#{team_a.name}")
 
-    expect(page).to have_css(".page", count: 8)
-    expect(page).to have_css(".page-comments", count: 4)
+    expect(page).to have_css(".page", count: 10)
+    expect(page).to have_css(".page-comments", count: 5)
     expect(page).to have_css(".cover-page", count: 4)
     expect(page).to have_css(".cover-page--blank", count: 2)
   end
