@@ -842,7 +842,7 @@ class Account < ActiveRecord::Base
   end
 
   def populate_terms_agreed_from_signup_attempt
-    if self.signup_attempt && self.signup_attempt.terms_agreed? && !self.terms_agreed?
+    if !self.terms_agreed? && self.signup_attempt && self.signup_attempt.terms_agreed?
       self.terms_agreed_at = self.signup_attempt.terms_agreed_at
       self.save
     end

@@ -16,32 +16,6 @@ RSpec.feature "Student creates a team" do
     expect(Team.last.city).to eq(student.city)
   end
 
-  ###
-  # The following has been deprecated by ActiveSupport::Concern ForceLocation
-  ###
-  # scenario "Location is a requirement when it " +
-  #          "hasn't been set on the student" do
-  #   SeasonToggles.team_building_enabled!
-
-  #   student = FactoryBot.create(
-  #     :student,
-  #     city: nil,
-  #     state_province: nil,
-  #     country: nil,
-  #     not_onboarded: true,
-  #   )
-
-  #   sign_in(student)
-
-  #   within(".navigation") { click_link "Create your team" }
-  #   fill_in "Name", with: "Awesomest Saucesests"
-  #   click_button I18n.t("views.application.create",
-  #                       thing: I18n.t("models.team.class_name"))
-
-  #   team = Team.last
-  #   expect(current_path).to eq(edit_student_team_location_path(team))
-  # end
-
   scenario "Re-using a past team name" do
     SeasonToggles.team_building_enabled!
 

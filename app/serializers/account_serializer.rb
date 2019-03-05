@@ -49,11 +49,7 @@ class AccountSerializer
   end
 
   attribute(:terms_agreed) do |account|
-    if account.terms_agreed?
-      true
-    else
-      false
-    end
+    account.terms_agreed?
   end
 
   attribute(:has_saved_parental_info) do |account|
