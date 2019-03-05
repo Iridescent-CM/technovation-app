@@ -7,9 +7,11 @@ module ForceLocation
 
   private
   def require_location
+    return if request.xhr?
+
     return if current_scope == "admin" || current_scope == "regional_ambassador"
 
-    if logged_in_and_has_profile && invalid_location && not_on_location_form
+    if logged_in_and_has_profile && !valid_location && !on_location_form
       redirect_to send(
         "#{current_scope}_location_details_path",
         return_to: send("#{current_scope}_dashboard_path")
@@ -24,22 +26,16 @@ module ForceLocation
         !!current_account.send("#{current_scope}_profile")
   end
 
-  def invalid_location
-    !current_account.valid_address? || !current_account.valid_coordinates?
+  def valid_location
+    current_account.valid_address? && current_account.valid_coordinates?
   end
 
-  def not_on_location_form
-    return false if request.xhr?
+  def on_location_form
+    original_request_path = Rails.application.routes.recognize_path(request.original_fullpath)
+    location_form_path = Rails.application.routes.recognize_path(
+      send("#{current_scope}_location_details_path")
+    )
 
-    begin
-      original_request_path = Rails.application.routes.recognize_path(request.original_fullpath)
-      location_form_path = Rails.application.routes.recognize_path(
-        send("#{current_scope}_location_details_path")
-      )
-
-      original_request_path != location_form_path
-    rescue ActionController::RoutingError
-      return false
-    end
+    original_request_path == location_form_path
   end
 end
