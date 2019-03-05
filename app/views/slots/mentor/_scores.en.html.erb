@@ -1,7 +1,7 @@
 <h1>Scores & Certificates</h1>
 
 <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
-  <div class="grid__col-sm-9 grid__col--bleed-y">
+  <div class="grid__col-sm-12 grid__col--bleed-y">
     <% if current_mentor.current_teams.any? %>
       <%= render 'mentor/dashboards/onboarded/scores' %>
     <% else %>
