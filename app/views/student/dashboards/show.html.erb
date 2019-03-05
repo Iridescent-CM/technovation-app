@@ -20,6 +20,7 @@
         profileIconMentorMale: '<%= asset_path('wizard-choose-profile__mentor-secondary--male.svg') %>',
       }"
       :regional-pitch-events-enabled="<%= SeasonToggles.select_regional_pitch_event? %>"
+      :scores-and-certificates-enabled="<%= SeasonToggles.display_scores? %>"
       <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
         survey-link-text="<%= SeasonToggles.survey_link(current_scope, "text") %>"
         survey-link="<%= SeasonToggles.survey_link(

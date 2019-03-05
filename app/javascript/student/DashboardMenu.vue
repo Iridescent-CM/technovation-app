@@ -48,7 +48,7 @@
       :class="scoresTabLinkClasses"
       :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
-      :condition-to-enable="false"
+      :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
     >Scores & Feedback</tab-link>
   </ul>
