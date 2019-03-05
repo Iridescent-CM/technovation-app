@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include CookiesHelper
-  include ForceDataUseTermsAgreement
+  include ForceTermsAgreement
   include ForceLocation
 
   protect_from_forgery with: :exception

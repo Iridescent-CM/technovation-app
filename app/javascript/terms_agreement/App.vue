@@ -33,9 +33,9 @@ export default {
 
   methods: {
     handleSubmit () {
-      const updateEndpoint = '/account_data/data_use_terms/edit';
+      const updateEndpoint = '/terms_agreement';
 
-      axios.post(updateEndpoint, {
+      axios.patch(updateEndpoint, {
         termsAgreed: this.termsAgreed,
         email: this.email,
       })

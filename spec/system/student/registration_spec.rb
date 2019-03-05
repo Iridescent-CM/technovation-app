@@ -17,11 +17,11 @@ RSpec.describe "Register as a student", :js do
     click_button "Create Your Account"
 
     # Data agreement missing - redirect to data use terms agreement page
-    expect(current_path).to eq(account_data_data_use_terms_edit_path)
+    expect(current_path).to eq(edit_terms_agreement_path)
 
-    expect(page).to have_selector('#data_use_terms_checkbox', visible: true)
+    expect(page).to have_selector('#terms_agreement_checkbox', visible: true)
 
-    check "data_use_terms_checkbox"
+    check "terms_agreement_checkbox"
 
     click_button "Submit"
 

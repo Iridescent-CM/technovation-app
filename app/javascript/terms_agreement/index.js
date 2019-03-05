@@ -8,7 +8,7 @@ import App from './App';
 Vue.use(Vue2Filters);
 
 document.addEventListener('turbolinks:load', () => {
-  const wizardElem = document.querySelector('#vue-enable-data-use-terms-app');
+  const wizardElem = document.querySelector('#vue-enable-terms-agreement-app');
 
   if (wizardElem) {
     const rootElem = document.getElementById('vue-data-account-information');

@@ -11,7 +11,7 @@ import AutocompleteInput from 'components/AutocompleteInput';
 import CertificateButton from 'components/CertificateButton';
 import LocationForm from '../location/components/LocationForm';
 
-import '../data_use_terms';
+import '../terms_agreement';
 
 document.addEventListener('turbolinks:load', function () {
   const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn');

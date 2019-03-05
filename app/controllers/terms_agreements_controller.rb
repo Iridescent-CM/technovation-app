@@ -1,4 +1,4 @@
-class DataUseTermsController < ApplicationController
+class TermsAgreementsController < ApplicationController
   def edit
     render :edit
   end

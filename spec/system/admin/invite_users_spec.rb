@@ -87,12 +87,12 @@ RSpec.describe "Admins invite users to signup", :js do
 
       if scope != :regional_ambassador
         expect(page).to have_current_path(
-          account_data_data_use_terms_edit_path, ignore_query: true
+          edit_terms_agreement_path, ignore_query: true
         )
 
-        expect(page).to have_selector('#data_use_terms_checkbox', visible: true)
+        expect(page).to have_selector('#terms_agreement_checkbox', visible: true)
 
-        check "data_use_terms_checkbox"
+        check "terms_agreement_checkbox"
 
         click_button "Submit"
 
