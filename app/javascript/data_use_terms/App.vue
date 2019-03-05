@@ -12,6 +12,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 
+import { airbrake } from 'utilities/utilities'
 import DataUseTerms from 'registration/components/DataUseTerms';
 
 const { mapState } = createNamespacedHelpers('registration');
@@ -25,13 +26,32 @@ export default {
 
   computed: {
     ...mapState([
-      'isReady',
+      'termsAgreed',
+      'email'
     ]),
   },
 
   methods: {
     handleSubmit () {
-      window.location.href = '/';
+      const updateEndpoint = '/account_data/data_use_terms/edit';
+
+      axios.post(updateEndpoint, {
+        termsAgreed: this.termsAgreed,
+        email: this.email,
+      })
+        .catch((error) => {
+          airbrake.notify({
+            error,
+            params: {
+              url: updateEndpoint,
+              termsAgreed: this.termsAgreed,
+              email: this.email,
+            },
+          });
+        })
+        .then(() => {
+          window.location.href = '/';
+        });
     },
   },
 }
