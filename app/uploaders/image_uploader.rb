@@ -13,6 +13,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # CarrierWaveDirect::Uploader puts raw uploaded files in this directory on S3 as a first step
   def store_dir
-    "unprocessed_uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    if model.nil?
+      "unprocessed_uploads"
+    else
+      "unprocessed_uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    end
   end
 end
