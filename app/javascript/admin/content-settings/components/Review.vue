@@ -213,7 +213,9 @@ export default {
       judgingRound: {
         off: 'Off',
         qf: 'Quarterfinals',
+        between: 'Between rounds',
         sf: 'Semifinals',
+        finished: 'Finished',
       }
     }
   },

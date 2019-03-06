@@ -1,7 +1,7 @@
 module Judge
   class ScoreCompletionsController < JudgeController
     def create
-      if SeasonToggles.judging_enabled_for?(current_judge)
+      if SeasonToggles.judging_enabled?
         score = current_judge.submission_scores.find(params.fetch(:id))
         score.complete!
         redirect_to judge_finished_score_path(score),

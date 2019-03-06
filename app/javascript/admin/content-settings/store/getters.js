@@ -1,5 +1,5 @@
 const judgingEnabled = (state) => {
-  return state.judging_round !== 'off'
+  return state.judging_round !== 'off' && state.judging_round !== 'finished'
 }
 
 export default {
