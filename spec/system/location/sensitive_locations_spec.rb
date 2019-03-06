@@ -23,7 +23,10 @@ RSpec.describe "Saving a location in a geopolitically sensitive area", :js do
   end
 
   it "saves the changes in the database" do
-    page.find(".suggestion", text: "Israel").click
+    within(".suggestions") do
+      find(".suggestion", text: "Israel").click
+    end
+
     click_button "Confirm"
     expect(current_path).to eq(student_dashboard_path)
     visit student_profile_path

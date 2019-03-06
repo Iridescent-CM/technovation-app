@@ -1,15 +1,21 @@
 <%= f.fields_for :account do |a| %>
   <%= a.input :gender,
     label: t('models.account.gender'),
-    collection: Account.genders.keys %>
+    collection: Account.genders.keys,
+    input_html: { class: "margin--b-large" } %>
 <% end %>
 
 <%= f.input :company_name, {
+  label: "School or company name",
   as: :autocomplete,
   input_html: {
     url: registration_top_companies_path,
     no_options_text: "Please begin typing to select your company from a list or add your own"
   }
 } %>
+<p class="hint">
+  If your school or company is not part of the options,
+  type the name of your company then press "Enter" or "Tab"
+</p>
 
 <%= f.input :job_title %>
