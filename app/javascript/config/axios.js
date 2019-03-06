@@ -9,6 +9,9 @@ window.axios = applyConverters(axios.create())
 document.addEventListener('turbolinks:load', () => {
   const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
 
+  // Set all axios request to go through as XHR
+  window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
   if (csrfTokenMetaTag) {
     window.axios.interceptors.request.use(function (config) {
       if (config.url && config.url.match(/^\//)) {
