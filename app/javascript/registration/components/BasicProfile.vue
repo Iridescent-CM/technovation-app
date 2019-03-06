@@ -51,7 +51,10 @@
             v-model="schoolCompanyName"
             url="/registration/top_companies"
           />
-          <span>If your company is not part of the options, type the name of your company then press "Enter" or "Tab"</span>
+          <p class="hint">
+            If your company is not part of the options,
+            type the name of your company then press "Enter" or "Tab"
+          </p>
         </template>
       </p>
 
