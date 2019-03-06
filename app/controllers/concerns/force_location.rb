@@ -7,7 +7,7 @@ module ForceLocation
 
   private
   def require_location
-    return if request.xhr?
+    return if ajax_request
 
     return if current_scope == "admin" || current_scope == "regional_ambassador"
 
@@ -31,11 +31,19 @@ module ForceLocation
   end
 
   def on_location_form
-    original_request_path = Rails.application.routes.recognize_path(request.original_fullpath)
+    original_request_path = Rails.application.routes.recognize_path(
+      request.fullpath,
+      method: request.method
+    )
+
     location_form_path = Rails.application.routes.recognize_path(
       send("#{current_scope}_location_details_path")
     )
 
     original_request_path == location_form_path
+  end
+
+  def ajax_request
+    request.xhr? || request.xml_http_request?
   end
 end
