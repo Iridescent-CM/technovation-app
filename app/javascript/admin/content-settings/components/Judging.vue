@@ -21,12 +21,30 @@
     </p>
     <p class="inline-radio">
       <input
+        id="season_toggles_judging_round_between"
+        type="radio"
+        value="between"
+        v-model="$store.state.judging_round"
+      >
+      <label for="season_toggles_judging_round_between">Between rounds</label>
+    </p>
+    <p class="inline-radio">
+      <input
         id="season_toggles_judging_round_sf"
         type="radio"
         value="sf"
         v-model="$store.state.judging_round"
       >
       <label for="season_toggles_judging_round_sf">Semifinals</label>
+    </p>
+    <p class="inline-radio">
+      <input
+        id="season_toggles_judging_round_finished"
+        type="radio"
+        value="finished"
+        v-model="$store.state.judging_round"
+      >
+      <label for="season_toggles_judging_round_finished">Finished</label>
     </p>
     <div v-if="judgingEnabled" class="notice info hint">
       <icon name="exclamation-circle" :size="16" color="00529B" />

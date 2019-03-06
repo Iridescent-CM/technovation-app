@@ -1,4 +1,4 @@
-<% if current_judge.onboarded? and SeasonToggles.judging_enabled_for?(current_judge) %>
+<% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
   <div id="judge-dashboard-scores-app">
     <% if CanStartNewScore.(current_judge) %>
       <div class="panel">

@@ -109,23 +109,19 @@ RSpec.describe Student::TeamMemberInvitesController do
       expect(invite.reload).to be_pending
     end
 
-    it "shows a friendly message if accepting, but the current date is between judging rounds" do
-      semifinals_start_date = ImportantDates.semifinals_judging_begins
+    it "shows a friendly message if accepting, but is between judging rounds" do
+      SeasonToggles.judging_round = :between
 
-      date_between_rounds = semifinals_start_date - 1
+      put :update, params: {
+        id: invite.invite_token,
+        team_member_invite: { status: :accepted }
+      }
 
-      Timecop.freeze(date_between_rounds) do
-        put :update, params: {
-          id: invite.invite_token,
-          team_member_invite: { status: :accepted }
-        }
-
-        expect(response).to redirect_to student_dashboard_path
-        expect(flash[:alert]).to eq(
-          "Sorry, but team invitations are currently disabled because judging has already begun."
-        )
-        expect(invite.reload).to be_pending
-      end
+      expect(response).to redirect_to student_dashboard_path
+      expect(flash[:alert]).to eq(
+        "Sorry, but team invitations are currently disabled because judging has already begun."
+      )
+      expect(invite.reload).to be_pending
     end
   end
 end

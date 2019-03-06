@@ -37,13 +37,13 @@ module Judge
     def new
       respond_to do |f|
         f.html {
-          unless SeasonToggles.judging_enabled_for?(current_judge)
+          unless SeasonToggles.judging_enabled?
             redirect_to root_path, alert: "Judging is not open right now"
           end
         }
 
         f.json {
-          unless SeasonToggles.judging_enabled_for?(current_judge)
+          unless SeasonToggles.judging_enabled?
             render json: {
               msg: "Judging is not open right now"
             }, status: 404
@@ -85,7 +85,7 @@ module Judge
     end
 
     def update
-      unless SeasonToggles.judging_enabled_for?(current_judge)
+      unless SeasonToggles.judging_enabled?
         render json: {
           msg: "Judging is not open right now"
         }, status: 404

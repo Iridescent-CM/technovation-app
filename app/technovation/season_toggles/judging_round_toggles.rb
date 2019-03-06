@@ -11,21 +11,9 @@ class SeasonToggles
     VALID_SF_JUDGING_ROUNDS = %w{sf semi_finals semifinals}
     VALID_JUDGING_ROUNDS = VALID_QF_JUDGING_ROUNDS +
                            VALID_SF_JUDGING_ROUNDS +
-                           %w{off}
+                           %w{off between finished}
 
     module ClassMethods
-      def sf_opening_date
-        ImportantDates.semifinals_judging_begins
-      end
-
-      def live_judge_qf_deadline
-        ImportantDates.live_quarterfinals_judging_ends
-      end
-
-      def virtual_judge_qf_deadline
-        ImportantDates.virtual_quarterfinals_judging_ends
-      end
-
       def judging_round=(value)
         store.set(:judging_round, with_judging_round_validation(value))
       end
@@ -60,32 +48,25 @@ class SeasonToggles
         end
       end
 
-      def between_rounds?(judge)
-        if judge && LiveEventJudgingEnabled.(judge)
-          Time.current > live_judge_qf_deadline &&
-            Time.current < sf_opening_date
-        else
-          Time.current > virtual_judge_qf_deadline &&
-            Time.current < sf_opening_date
-        end
+      def judging_off?
+        judging_round == "off"
+      end
+      alias :before_judging? :judging_off?
+
+      def between_rounds?
+        judging_round == "between"
       end
 
       def judging_enabled_or_between?
-        judging_enabled? || between_rounds?(nil)
+        judging_enabled? || between_rounds?
       end
 
-      def quarterfinals_or_earlier?(judge)
-        return true if quarterfinals?
-
-        if LiveEventJudgingEnabled.(judge)
-          Time.current <= live_judge_qf_deadline
-        else
-          Time.current <= virtual_judge_qf_deadline
-        end
+      def quarterfinals_or_earlier?
+        return true if quarterfinals? || before_judging?
       end
 
       def pitch_presentation_needed?(team)
-        Time.current <= live_judge_qf_deadline &&
+        quarterfinals_or_earlier? &&
           !team_submissions_editable? &&
             team.live_event?
       end
@@ -104,18 +85,6 @@ class SeasonToggles
 
       def judging_enabled?
         quarterfinals_judging? or semifinals_judging?
-      end
-
-      def judging_enabled_for?(judge)
-        if quarterfinals_judging?
-          if LiveEventJudgingEnabled.(judge)
-            Time.current <= live_judge_qf_deadline
-          else
-            Time.current <= virtual_judge_qf_deadline
-          end
-        else
-          semifinals_judging?
-        end
       end
 
       def quarterfinals_judging?
