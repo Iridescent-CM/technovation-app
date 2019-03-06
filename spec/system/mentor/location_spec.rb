@@ -23,6 +23,31 @@ RSpec.describe "Mentors register with their location", :js do
     end
 
     click_button "Create Your Account"
+
+    expect(page).to have_current_path(
+      edit_terms_agreement_path, ignore_query: true
+    )
+
+    expect(page).to have_selector('#terms_agreement_checkbox', visible: true)
+
+    check "terms_agreement_checkbox"
+
+    click_button "Submit"
+
+    expect(page).to have_current_path(
+      mentor_location_details_path, ignore_query: true
+    )
+
+    expect(page).to have_selector('#location_city', visible: true)
+    expect(page).to have_selector('#location_state', visible: true)
+    expect(page).to have_selector('#location_country', visible: true)
+
+    fill_in "State / Province", with: "California"
+    fill_in "City", with: "Los Angeles"
+    fill_in "Country", with: "United States"
+
+    click_button "Next"
+    click_button "Confirm"
   end
 
   it "saves location details" do

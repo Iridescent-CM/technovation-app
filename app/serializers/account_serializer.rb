@@ -48,8 +48,8 @@ class AccountSerializer
     account.profile_expertise_ids
   end
 
-  attribute(:terms_agreed) do |_account|
-    true
+  attribute(:terms_agreed) do |account|
+    account.terms_agreed?
   end
 
   attribute(:has_saved_parental_info) do |account|
@@ -58,12 +58,10 @@ class AccountSerializer
   end
 
   attribute(:terms_agreed_date) do |account|
-    if account.signup_attempt && account.signup_attempt.terms_agreed?
-      account.signup_attempt.terms_agreed_at.strftime("%b %e, %Y")
-    elsif account.signup_attempt
+    if account.terms_agreed?
+      account.terms_agreed_at.strftime("%b %e, %Y")
+    else account.signup_attempt
       "never"
-    else
-      account.created_at.strftime("%b %e, %Y")
     end
   end
 
