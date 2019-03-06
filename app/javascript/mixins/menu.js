@@ -5,6 +5,12 @@ export default {
       required: false,
       default: false,
     },
+
+    scoresAndCertificatesEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   methods: {
