@@ -144,6 +144,7 @@ module RegionalAmbassador
         :city,
         :venue_address,
         :event_link,
+        :capacity,
         division_ids: [],
       )
     end

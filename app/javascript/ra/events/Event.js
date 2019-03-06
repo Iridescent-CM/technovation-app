@@ -21,6 +21,8 @@ export default function (event) {
   this.starts_at = event.starts_at || "";
   this.ends_at = event.ends_at || "";
 
+  this.capacity = event.capacity || null;
+
   this.errors = event.errors || {};
 
   this.url = event.url;

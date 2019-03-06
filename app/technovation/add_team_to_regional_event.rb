@@ -1,18 +1,23 @@
 class AddTeamToRegionalEvent
   def self.call(event, team)
-    if event.divisions.include?(team.division)
-      InvalidateExistingJudgeData.(team)
-
-      event.teams << team
-
-      SendPitchEventRSVPNotifications.perform_later(
-        team.id,
-        joining_event_id: event.id
-      )
-    else
+    if event.divisions.exclude?(team.division)
       raise IncompatibleDivisionError,
         "This team is not in the correct division for this event"
     end
+
+    if event.at_team_capacity?
+      raise EventAtTeamCapacityError,
+        "This team cannot attend the event as it is currently full"
+    end
+
+    InvalidateExistingJudgeData.(team)
+
+    event.teams << team
+
+    SendPitchEventRSVPNotifications.perform_later(
+      team.id,
+      joining_event_id: event.id
+    )
   end
 
   class RemoveIncompatibleDivisionTeams
@@ -30,4 +35,5 @@ class AddTeamToRegionalEvent
   end
 
   class IncompatibleDivisionError < StandardError; end
+  class EventAtTeamCapacityError < StandardError; end
 end

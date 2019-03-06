@@ -14,6 +14,7 @@ jobs:
           PDFTK_PATH: /usr/bin/pdftk
           AIRBRAKE_PROJECT_ID: n-a
           AIRBRAKE_PROJECT_KEY: n-a
+          AIRBRAKE_RAILS_ENV: test
           NEW_RELIC_LICENSE_KEY: n-a
           GOOGLE_MAPS_API_KEY: n-a
           GOOGLE_PLACES_API_KEY: n-a
@@ -78,7 +79,8 @@ jobs:
           DATES_SEMIFINALS_ENDS_DAY: 17
           DATES_CERTIFICATES_AVAILABLE_YEAR: 2019
           DATES_CERTIFICATES_AVAILABLE_MONTH: 6
-          DATES_CERTIFICATES_AVAILABLE_DAY: 20 
+          DATES_CERTIFICATES_AVAILABLE_DAY: 20
+          THUNKABLE_PROMO_IMAGE: n-a
       - image: circleci/postgres:9.6-alpine-ram
 
     steps:

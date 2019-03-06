@@ -44,10 +44,15 @@ RSpec.describe "Students request to join a team",
       # Default Chicago
 
     before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       visit new_student_join_request_path(team_id: team.id)
       click_button "Ask to join #{team.name}"
+    end
+
+    after do
+      Timecop.return
     end
 
     it "students not on a team request to join an available team" do

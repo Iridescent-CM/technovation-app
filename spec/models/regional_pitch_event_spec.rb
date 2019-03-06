@@ -34,6 +34,17 @@ RSpec.describe RegionalPitchEvent do
     expect(rpe.reload.teams).to be_empty
   end
 
+  it "prevents teams from being added to event when event is at team capacity" do
+    team = FactoryBot.create(:team, :junior)
+    rpe = FactoryBot.create(:event, :junior, :junior_at_team_capacity)
+
+    expect {
+      AddTeamToRegionalEvent.(rpe, team)
+    }.to raise_error(AddTeamToRegionalEvent::EventAtTeamCapacityError)
+
+    expect(rpe.teams.length).to eq(1)
+  end
+
   it "updates quarterfinals submission average scores if unofficial is toggled" do
     SeasonToggles.set_judging_round(:qf)
 

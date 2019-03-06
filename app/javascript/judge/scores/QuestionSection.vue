@@ -26,6 +26,10 @@
               {{ wordCount }}
               {{ wordCount | pluralize('word') }}
             </span>
+
+            <br>
+
+            <span class="font-weight--300">Please write at least 40 words</span>
           </p>
         </div>
       </div>
@@ -33,10 +37,6 @@
       <textarea ref="commentText" :value="comment.text" @input="updateCommentText" />
 
       <div class="grid grid--bleed grid--justify-space-between">
-        <div class="grid__col-12">
-          <small>(please write at least 40 words, with less than 20% negativity)</small>
-        </div>
-
         <div class="grid__col-6 nav-btns--left">
           <p>
             <router-link
@@ -262,5 +262,9 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     margin: 0.5rem 0;
+  }
+
+  .font-weight--300 {
+    font-weight: 300;
   }
 </style>

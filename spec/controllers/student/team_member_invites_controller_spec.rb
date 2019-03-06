@@ -57,7 +57,12 @@ RSpec.describe Student::TeamMemberInvitesController do
     let!(:invite) { FactoryBot.create(:team_member_invite, invitee: student) }
 
     before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
       sign_in(student)
+    end
+
+    after do
+      Timecop.return
     end
 
     it "accepts the team member invite" do

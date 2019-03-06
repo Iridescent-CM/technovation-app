@@ -9,7 +9,7 @@ RSpec.describe "Admins reviewing mentors" do
       sign_in(:admin)
       click_link "Participants"
 
-      within("#account_#{untrained.account_id}") do
+      within_results_page_with("#account_#{untrained.account_id}") do
         click_link "view"
       end
 
@@ -17,7 +17,7 @@ RSpec.describe "Admins reviewing mentors" do
 
       click_link "Participants"
 
-      within("#account_#{trained.account_id}") do
+      within_results_page_with("#account_#{trained.account_id}") do
         click_link "view"
       end
 
@@ -34,7 +34,7 @@ RSpec.describe "Admins reviewing mentors" do
 
       click_link "Participants"
 
-      within("#account_#{mentor.account_id}") do
+      within_results_page_with("#account_#{mentor.account_id}") do
         click_link "view"
       end
 

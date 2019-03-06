@@ -35,5 +35,17 @@ FactoryBot.define do
     trait :junior do
       division_ids { [Division.junior.id] }
     end
+
+    trait :junior_at_team_capacity do
+      capacity { 1 }
+
+      transient do
+        teams_count { 1 }
+      end
+
+      after(:create) do |event, evaluator|
+        event.teams = create_list(:team, evaluator.teams_count, :junior)
+      end
+    end
   end
 end

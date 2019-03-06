@@ -52,6 +52,9 @@ RSpec.configure do |config|
   config.include AccountFormHelpers, type: :feature
   config.include AccountFormHelpers, type: :system
 
+  config.include DatagridHelpers, type: :feature
+  config.include DatagridHelpers, type: :system
+
   config.include JudgingHelper
   config.include WebMock::API
 

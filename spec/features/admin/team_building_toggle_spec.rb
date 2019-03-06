@@ -60,7 +60,14 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     let(:path) { new_student_join_request_path(team_id: team.id) }
     let(:action) { student_join_requests_path(team_id: team.id) }
 
-    before { sign_in(user) }
+    before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
+      sign_in(user)
+    end
+
+    after do
+      Timecop.return
+    end
 
     scenario "Toggle on" do
       toggle_on
@@ -81,7 +88,14 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     let(:path) { student_team_path(team) }
     let(:action) { student_team_member_invites_path }
 
-    before { sign_in(user) }
+    before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
+      sign_in(user)
+    end
+
+    after do
+      Timecop.return
+    end
 
     scenario "Toggle on" do
       toggle_on
@@ -161,7 +175,14 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     let(:path) { new_mentor_join_request_path(team_id: team.id) }
     let(:action) { mentor_join_requests_path(team_id: team.id) }
 
-    before { sign_in(user) }
+    before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
+      sign_in(user)
+    end
+
+    after do
+      Timecop.return
+    end
 
     scenario "Toggle on" do
       toggle_on
@@ -182,10 +203,15 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     let(:path) { mentor_team_path(team) }
     let(:action) { mentor_team_member_invites_path }
 
-    before {
+    before do
+      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
       TeamRosterManaging.add(team, user)
       sign_in(user)
-    }
+    end
+
+    after do
+      Timecop.return
+    end
 
     scenario "Toggle on" do
       toggle_on

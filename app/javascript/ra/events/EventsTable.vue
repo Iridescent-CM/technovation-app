@@ -7,29 +7,40 @@
         :key="event.id"
       >
         <div class="grid grid--bleed">
-          <div v-if="event.event_link" class="grid__col-auto">
-            <a :href="event.event_link" target="_blank">
-              {{ event.name }}
-            </a>
-          </div>
-          <div v-else class="grid__col-auto">
-            {{ event.name }}
+          <div class="grid__col-12">
+            <h5>
+              <template v-if="event.event_link">
+                <a :href="event.event_link" target="_blank">
+                  {{ event.name }}
+                </a>
+              </template>
+              <template v-else>
+                {{ event.name }}
+              </template>
+            </h5>
           </div>
 
           <div class="grid__col-auto">
-            <small>Divisions:</small>
+            <small>Divisions</small>
             {{ event.division_names }}
           </div>
 
           <div class="grid__col-auto">
-            {{ event.day }} <small>{{ event.date }}</small>
+            <small>Date</small>
+            {{ `${event.day}, ${event.date}` }}
           </div>
 
           <div class="grid__col-auto">
-            {{ event.time }} <small>Timezone: {{ event.tz }}</small>
+            <small>Time</small>
+            {{ `${event.time} (${event.tz})` }}
           </div>
 
-          <div class="grid__col-3">
+          <div class="grid__col-auto text-align--right">
+            <small>Team Capacity</small>
+            {{ teamCapacityText(event) }}
+          </div>
+
+          <div class="grid__col-3 text-align--right">
             <div class="grid__cell">
               <template v-if="managingAttendanceEnabled">
                 <icon
@@ -197,6 +208,14 @@
           }
         });
       },
+
+      teamCapacityText (event) {
+        if (!event.capacity) {
+          return "Unlimited";
+        }
+
+        return event.capacity;
+      },
     },
 
     mounted () {
@@ -327,11 +346,11 @@
     }
 
     .z-index-penultimate {
-      z-index: 999998;
+      z-index: 9998;
     }
 
     .z-index-max {
-      z-index: 999999;
+      z-index: 9999;
     }
 
     .border-radius-small {

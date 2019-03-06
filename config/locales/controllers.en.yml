@@ -146,6 +146,7 @@ en:
         create:
           success: "You're attending a Live Regional Pitch Event!"
           success_pitch_needed: "Great! You need to attach your pitch presentation to your submission"
+          event_full: "Sorry, but you cannot attend this event as it is full"
         destroy:
           success: "You removed your team from that live Regional Pitch Event"
 

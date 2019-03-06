@@ -48,8 +48,8 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   has_and_belongs_to_many :teams,
     -> { joins(:team_submissions) },
-    before_add: :inc_teams_count,
-    before_remove: :dec_teams_count
+    after_add: :update_teams_count,
+    after_remove: :update_teams_count
 
   has_many :team_submissions, through: :teams
 
@@ -135,6 +135,7 @@ class RegionalPitchEvent < ActiveRecord::Base
       starts_at: starts_at,
       ends_at: ends_at,
       event_link: event_link,
+      capacity: capacity,
       errors: {},
     }
   end
@@ -177,17 +178,20 @@ class RegionalPitchEvent < ActiveRecord::Base
     false
   end
 
+  def at_team_capacity?
+    if (capacity.nil? || capacity.to_i == 0)
+      false
+    else
+      teams.length.to_i >= capacity.to_i
+    end
+  end
+
   def name_with_friendly_country_prefix
     "#{FriendlyCountry.(ambassador.account)} - #{name}"
   end
 
-  private
-  def inc_teams_count(team)
-    RegionalPitchEvent.increment_counter('teams_count', id)
-  end
-
-  def dec_teams_count(team)
-    RegionalPitchEvent.decrement_counter('teams_count', id)
+  def update_teams_count(team = nil)
+    update_attributes(teams_count: teams.count)
   end
 end
 

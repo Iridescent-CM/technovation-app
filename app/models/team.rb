@@ -243,8 +243,14 @@ class Team < ActiveRecord::Base
 
   has_and_belongs_to_many :events, -> { current },
     class_name: "RegionalPitchEvent",
-    after_add: ->(team, event) { team.submission.touch },
-    after_remove: ->(team, event) { team.submission.touch }
+    after_add: ->(team, event) {
+      team.submission.touch
+      event.update_teams_count
+    },
+    after_remove: ->(team, event) {
+      team.submission.touch
+      event.update_teams_count
+    }
 
   has_and_belongs_to_many :current_official_events, -> { current.official },
     class_name: "RegionalPitchEvent",

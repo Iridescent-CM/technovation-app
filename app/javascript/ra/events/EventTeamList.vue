@@ -18,7 +18,7 @@
     <template v-else>
       <team-search
         :event-bus-id="`event-${event.id}`"
-        :event-id="event.id"
+        :event="event"
       ></team-search>
 
       <div class="grid__col-12">

@@ -58,6 +58,7 @@ class TeamSubmission < ActiveRecord::Base
       # Renamed from 'App Inventor 2' in Sept 2018
 
     "Thunkable" => 6,
+    "Thunkable Classic" => 7,
     "Java or Android Studio" => 2,
     "Swift or XCode" => 1,
     "Other" => 5,
