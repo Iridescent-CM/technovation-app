@@ -4,6 +4,7 @@ class NullAuth < NullObject
   def admin?; false; end
   def can_be_a_mentor?(*); false; end
   def can_be_a_judge?; false; end
+  def terms_agreed?; false; end
 
   def scope_name; 'application'; end
   def team; nil; end

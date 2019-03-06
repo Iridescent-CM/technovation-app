@@ -322,6 +322,8 @@ Rails.application.routes.draw do
     resources :expertises, only: :index
   end
 
+  resource :terms_agreement, only: [:edit, :update]
+
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
 

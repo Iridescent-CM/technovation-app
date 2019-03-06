@@ -16,6 +16,8 @@ FactoryBot.define do
 
     seasons { [] }
 
+    terms_agreed_at { 15.days.ago }
+
     trait :past do
       seasons { [Season.current.year - (1..99).to_a.sample] }
     end
@@ -44,6 +46,16 @@ FactoryBot.define do
       city { "Salvador" }
       state_province { "Bahia" }
       country { "BR" }
+    end
+
+    trait :no_terms_agreement do
+      terms_agreed_at { nil }
+    end
+
+    trait :no_location do
+      city { nil }
+      state_province { nil }
+      country { nil }
     end
 
     after(:create) do |a|
