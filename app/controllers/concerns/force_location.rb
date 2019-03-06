@@ -7,7 +7,7 @@ module ForceLocation
 
   private
   def require_location
-    return if ajax_request
+    return if request.xhr?
 
     return if current_scope == "admin" || current_scope == "regional_ambassador"
 
@@ -41,9 +41,5 @@ module ForceLocation
     )
 
     original_request_path == location_form_path
-  end
-
-  def ajax_request
-    request.xhr? || request.xml_http_request?
   end
 end

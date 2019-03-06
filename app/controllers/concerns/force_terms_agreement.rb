@@ -7,7 +7,7 @@ module ForceTermsAgreement
 
   private
   def require_terms_agreement
-    return if ajax_request
+    return if request.xhr?
 
     return if current_scope == "admin" || current_scope == "regional_ambassador"
 
@@ -34,9 +34,5 @@ module ForceTermsAgreement
     )
 
     original_request_path == data_agreement_form_path
-  end
-
-  def ajax_request
-    request.xhr? || request.xml_http_request?
   end
 end
