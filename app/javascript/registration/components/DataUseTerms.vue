@@ -1,5 +1,6 @@
 <template>
   <form
+    ref="dataUseTermsForm"
     @submit.prevent="handleSubmit"
     class="panel panel--contains-bottom-bar panel--contains-top-bar"
   >
@@ -82,9 +83,10 @@
       <p>Thank you for helping us keep our students safe.</p>
 
       <div class="padding--t-b-large text-align--right">
-        <label class="margin--none">
+        <label for="terms_agreement_checkbox" class="margin--none">
           <input
             type="checkbox"
+            id="terms_agreement_checkbox"
             v-model="termsAgreed"
             :disabled="isLocked"
           />
@@ -95,10 +97,12 @@
 
     <div class="panel__bottom-bar">
       <button
+        ref="dataUseTermsSubmitButton"
+        type="submit"
+        id="terms_agreement_submit"
         class="button"
         :disabled="!termsAgreed"
-        @click="handleSubmit"
-      >Next</button>
+      >{{ submitButtonText }}</button>
     </div>
   </form>
 </template>
@@ -111,6 +115,21 @@ const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registrati
 export default {
   name: 'data-use-terms',
 
+  props: {
+    handleSubmit: {
+      type: Function,
+      default: function () {
+        if (!this.termsAgreed) return false
+        this.$router.push({ name: 'location' })
+      },
+    },
+
+    submitButtonText: {
+      type: String,
+      default: 'Next',
+    },
+  },
+
   computed: {
     ...mapState(['isLocked']),
 
@@ -120,18 +139,15 @@ export default {
       },
 
       set (value) {
-        this.updateTermsAgreed({ termsAgreed: value })
-      }
+        if (!this.isLocked) {
+          this.updateTermsAgreed({ termsAgreed: value });
+        }
+      },
     },
   },
 
   methods: {
     ...mapActions(['updateTermsAgreed']),
-
-    handleSubmit () {
-      if (!this.termsAgreed) return false
-      this.$router.push({ name: 'location' })
-    },
   },
 }
 </script>

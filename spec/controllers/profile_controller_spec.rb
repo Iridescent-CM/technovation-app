@@ -82,7 +82,15 @@ require "rails_helper"
       }
 
       expect(profile.reload.account).not_to be_valid_coordinates
-      expect(response).to render_template("location_details/show")
+
+      if scope == "regional_ambassador"
+        expect(response).to render_template("location_details/show")
+      else
+        expect(response).to redirect_to send(
+          "#{scope}_location_details_path",
+          return_to: send("#{scope}_dashboard_path")
+        )
+      end
     end
 
     it "geocodes when #{scope} address info changes" do

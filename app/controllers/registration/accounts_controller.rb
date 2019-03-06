@@ -28,6 +28,8 @@ module Registration
 
         referred_by: attempt.referred_by,
         referred_by_other: attempt.referred_by_other,
+
+        terms_agreed_at: attempt.terms_agreed_at,
       }
 
       profile_name = "#{attempt.profile_choice}_profile"
