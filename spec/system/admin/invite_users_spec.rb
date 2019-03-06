@@ -71,7 +71,7 @@ RSpec.describe "Admins invite users to signup", :js do
         select "Parent", from: "I am a..."
       when :judge
         select_gender(:random)
-        fill_in_vue_select "Company name", with: "John Hughes High"
+        fill_in_vue_select "School or company name", with: "John Hughes High"
         fill_in "Job title", with: "Janitor / Man of the Year"
       when :regional_ambassador
         select_gender(:random)
@@ -109,6 +109,9 @@ RSpec.describe "Admins invite users to signup", :js do
         fill_in "Country", with: "United States"
 
         click_button "Next"
+
+        expect(page).to have_selector(:button, text: "Confirm", visible: true)
+
         click_button "Confirm"
       end
 
