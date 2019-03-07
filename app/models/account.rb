@@ -221,8 +221,7 @@ class Account < ActiveRecord::Base
   }
 
   scope :onboarded_mentors, -> {
-    includes(:mentor_profile)
-    .references(:mentor_profiles)
+    joins(:mentor_profile)
     .includes(:background_check, :consent_waiver)
     .references(:background_checks, :consent_waivers)
     .where("mentor_profiles.id IS NOT NULL")
@@ -239,11 +238,10 @@ class Account < ActiveRecord::Base
   }
 
   scope :onboarding_mentors, -> {
-    includes(:mentor_profile)
+    joins(:mentor_profile)
     .references(:mentor_profiles)
     .includes(:background_check, :consent_waiver)
     .references(:background_checks, :consent_waivers)
-    .where("mentor_profiles.id IS NOT NULL")
     .where(
       "email_confirmed_at IS NULL OR " +
       "mentor_profiles.bio IS NULL OR mentor_profiles.bio = '' OR " +

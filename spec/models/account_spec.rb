@@ -573,8 +573,9 @@ RSpec.describe Account do
 
   describe ".onboarded_mentors" do
     it "includes onboarded mentor" do
-      mentor = FactoryBot.create(:mentor, :onboarded).account
-      expect(Account.onboarded_mentors).to include(mentor)
+      profile = FactoryBot.create(:mentor, :onboarded)
+      expect(Account.onboarded_mentors).to include(profile.account)
+      expect(profile.reload).to be_onboarded
     end
 
     it "excludes not a mentor" do
@@ -583,11 +584,10 @@ RSpec.describe Account do
     end
 
     it "excludes unconfirmed email" do
-      mentor = FactoryBot.create(:mentor, :onboarded).account
-      mentor.email_confirmed_at = nil
-      mentor.save
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.account.update_column(:email_confirmed_at, nil)
 
-      expect(Account.onboarded_mentors).not_to include(mentor)
+      expect(Account.onboarded_mentors).not_to include(profile.account)
     end
 
     it "excludes incomplete bio" do
@@ -617,9 +617,10 @@ RSpec.describe Account do
       profile.account.update_column(:season_registered_at, ImportantDates.mentor_training_required_since - 1.day)
 
       expect(Account.onboarded_mentors).to include(profile.account)
+      expect(profile.reload).to be_onboarded
     end
 
-    it "excludes US without background check" do
+    it "excludes US without clear background check" do
       profile = FactoryBot.create(:mentor, :onboarded)
       profile.account.background_check.destroy!
 
@@ -631,6 +632,7 @@ RSpec.describe Account do
 
       expect(profile.account.background_check).to be_instance_of(NullBackgroundCheck)
       expect(Account.onboarded_mentors).to include(profile.account)
+      expect(profile.reload).to be_onboarded
     end
 
     it "excludes consent not signed" do
@@ -639,8 +641,10 @@ RSpec.describe Account do
 
       expect(Account.onboarded_mentors).not_to include(profile.account)
 
-      profile.consent_waiver.destroy!
+      profile.void_consent_waivers.destroy_all
+      profile.reload
 
+      expect(profile.consent_waiver).to be_instance_of(NullConsentWaiver)
       expect(Account.onboarded_mentors).not_to include(profile.account)
     end
 
@@ -654,8 +658,8 @@ RSpec.describe Account do
 
   describe ".onboarding_mentors" do
     it "excludes onboarded mentor" do
-      mentor = FactoryBot.create(:mentor, :onboarded).account
-      expect(Account.onboarding_mentors).not_to include(mentor)
+      profile = FactoryBot.create(:mentor, :onboarded)
+      expect(Account.onboarding_mentors).not_to include(profile.account)
     end
 
     it "excludes not a mentor" do
@@ -664,11 +668,11 @@ RSpec.describe Account do
     end
 
     it "includes unconfirmed email" do
-      mentor = FactoryBot.create(:mentor, :onboarded).account
-      mentor.email_confirmed_at = nil
-      mentor.save
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.account.update_column(:email_confirmed_at, nil)
 
-      expect(Account.onboarding_mentors).to include(mentor)
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
     end
 
     it "includes incomplete bio" do
@@ -677,11 +681,13 @@ RSpec.describe Account do
       profile.save
 
       expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
 
       profile.bio = ""
       profile.save
 
       expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
     end
 
     it "includes incomplete training" do
@@ -690,6 +696,7 @@ RSpec.describe Account do
       profile.save
 
       expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
     end
 
     it "excludes training not required" do
@@ -700,11 +707,17 @@ RSpec.describe Account do
       expect(Account.onboarding_mentors).not_to include(profile.account)
     end
 
-    it "includes US without background check" do
+    it "includes US without clear background check" do
       profile = FactoryBot.create(:mentor, :onboarded)
+      profile.account.background_check.update_column(:status, :pending)
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+
       profile.account.background_check.destroy!
 
       expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
     end
 
     it "excludes international without background check" do
@@ -719,10 +732,14 @@ RSpec.describe Account do
       profile.consent_waiver.void!
 
       expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
 
-      profile.consent_waiver.destroy!
+      profile.void_consent_waivers.destroy_all
+      profile.reload
 
+      expect(profile.consent_waiver).to be_instance_of(NullConsentWaiver)
       expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
     end
 
     it "includes type not set" do
@@ -730,6 +747,7 @@ RSpec.describe Account do
       profile.update_column(:mentor_type, nil)
 
       expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
     end
   end
 end
