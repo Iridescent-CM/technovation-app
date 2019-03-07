@@ -1,0 +1,9 @@
+<div id="vue-enable-terms-agreement-app" class="hidden">
+  <%= content_tag :div,
+    nil,
+    id: "vue-data-account-information",
+    data: {
+      current_account: AccountSerializer.new(current_account).serialized_json,
+    } %>
+  <app></app>
+</div>

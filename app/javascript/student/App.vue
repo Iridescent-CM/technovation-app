@@ -23,7 +23,10 @@
       </div>
 
       <div class="grid__col-3 grid__col--bleed">
-        <dashboard-menu :regional-pitch-events-enabled="regionalPitchEventsEnabled" />
+        <dashboard-menu
+          :regional-pitch-events-enabled="regionalPitchEventsEnabled"
+          :scores-and-certificates-enabled="scoresAndCertificatesEnabled"
+        />
       </div>
     </div>
   </div>
@@ -109,6 +112,12 @@ export default {
     },
 
     regionalPitchEventsEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+
+    scoresAndCertificatesEnabled: {
       type: Boolean,
       required: false,
       default: false,
