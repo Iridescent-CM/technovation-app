@@ -229,6 +229,8 @@ class Account < ActiveRecord::Base
     .where(
       "email_confirmed_at IS NOT NULL AND " +
       "mentor_profiles.bio <> '' AND " +
+      "mentor_profiles.mentor_type IS NOT NULL AND " +
+      "(consent_waivers.id IS NOT NULL AND consent_waivers.voided_at IS NULL) AND " +
       "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
       "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
       ImportantDates.mentor_training_required_since,
@@ -245,6 +247,8 @@ class Account < ActiveRecord::Base
     .where(
       "email_confirmed_at IS NULL OR " +
       "mentor_profiles.bio IS NULL OR mentor_profiles.bio = '' OR " +
+      "mentor_profiles.mentor_type IS NULL OR " +
+      "(consent_waivers.id IS NULL OR consent_waivers.voided_at IS NOT NULL) OR " +
       "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
       "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
       ImportantDates.mentor_training_required_since,

@@ -632,6 +632,24 @@ RSpec.describe Account do
       expect(profile.account.background_check).to be_instance_of(NullBackgroundCheck)
       expect(Account.onboarded_mentors).to include(profile.account)
     end
+
+    it "excludes consent not signed" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.consent_waiver.void!
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+
+      profile.consent_waiver.destroy!
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
+
+    it "excludes type not set" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.update_column(:mentor_type, nil)
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
   end
 
   describe ".onboarding_mentors" do
@@ -694,6 +712,24 @@ RSpec.describe Account do
 
       expect(profile.account.background_check).to be_instance_of(NullBackgroundCheck)
       expect(Account.onboarding_mentors).not_to include(profile.account)
+    end
+
+    it "includes consent not signed" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.consent_waiver.void!
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+
+      profile.consent_waiver.destroy!
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+    end
+
+    it "includes type not set" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.update_column(:mentor_type, nil)
+
+      expect(Account.onboarding_mentors).to include(profile.account)
     end
   end
 end
