@@ -46,15 +46,15 @@
         </template>
 
         <template v-else>
+          <p class="hint hint_above">
+            If your company is not part of the options,
+            type the name of your company then press "Enter" or "Tab"
+          </p>
           <autocomplete-input
             id="schoolName"
             v-model="schoolCompanyName"
             url="/registration/top_companies"
           />
-          <p class="hint">
-            If your company is not part of the options,
-            type the name of your company then press "Enter" or "Tab"
-          </p>
         </template>
       </p>
 
@@ -415,7 +415,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-p {
+p:not(.hint) {
   margin: 0 0 2rem;
 }
 
