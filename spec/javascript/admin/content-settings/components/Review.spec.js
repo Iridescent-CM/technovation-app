@@ -40,7 +40,9 @@ describe('Admin Content & Settings - Review component', () => {
       judgingRound: {
         off: 'Off',
         qf: 'Quarterfinals',
+        between: 'Between rounds',
         sf: 'Semifinals',
+        finished: 'Finished',
       }
     })
   })
