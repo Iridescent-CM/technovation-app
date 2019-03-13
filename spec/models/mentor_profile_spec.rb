@@ -30,36 +30,6 @@ RSpec.describe MentorProfile do
     end
   end
 
-  describe ".onboarded" do
-    it "lists mentors who require training and have completed it" do
-      mentor = FactoryBot.create(:mentor, :onboarded)
-      mentor.account.update_column(:season_registered_at, ImportantDates.mentor_training_required_since)
-      expect(MentorProfile.onboarded).to include(mentor)
-
-      mentor.update_column(:training_completed_at, Time.current)
-      expect(MentorProfile.onboarded).to include(mentor)
-    end
-
-    it "does not list mentors who require training and have not completed it" do
-      mentor = FactoryBot.create(:mentor, :onboarded)
-      mentor.account.update_column(:season_registered_at, ImportantDates.mentor_training_required_since)
-      expect(MentorProfile.onboarded).to include(mentor)
-
-      mentor.update_column(:training_completed_at, nil)
-      expect(MentorProfile.onboarded).not_to include(mentor)
-    end
-
-    it "lists mentors who do not require training and have not completed it" do
-      mentor = FactoryBot.create(:mentor, :onboarded)
-      mentor.account.update_column(:season_registered_at, ImportantDates.mentor_training_required_since)
-      expect(MentorProfile.onboarded).to include(mentor)
-
-      mentor.update_column(:training_completed_at, nil)
-      mentor.account.update_column(:season_registered_at, ImportantDates.mentor_training_required_since - 1.day)
-      expect(MentorProfile.onboarded).to include(mentor)
-    end
-  end
-
   describe ".unmatched" do
     it "lists mentors without a team" do
       FactoryBot.create(:mentor, :on_team)

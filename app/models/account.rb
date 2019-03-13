@@ -220,6 +220,40 @@ class Account < ActiveRecord::Base
     )
   }
 
+  scope :onboarded_mentors, -> {
+    joins(:mentor_profile)
+    .includes(:background_check, :consent_waiver)
+    .references(:background_checks, :consent_waivers)
+    .where("mentor_profiles.id IS NOT NULL")
+    .where(
+      "email_confirmed_at IS NOT NULL AND " +
+      "mentor_profiles.bio <> '' AND " +
+      "mentor_profiles.mentor_type IS NOT NULL AND " +
+      "(consent_waivers.id IS NOT NULL AND consent_waivers.voided_at IS NULL) AND " +
+      "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
+      "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
+      ImportantDates.mentor_training_required_since,
+      BackgroundCheck.statuses[:clear]
+    )
+  }
+
+  scope :onboarding_mentors, -> {
+    joins(:mentor_profile)
+    .references(:mentor_profiles)
+    .includes(:background_check, :consent_waiver)
+    .references(:background_checks, :consent_waivers)
+    .where(
+      "email_confirmed_at IS NULL OR " +
+      "mentor_profiles.bio IS NULL OR mentor_profiles.bio = '' OR " +
+      "mentor_profiles.mentor_type IS NULL OR " +
+      "(consent_waivers.id IS NULL OR consent_waivers.voided_at IS NOT NULL) OR " +
+      "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
+      "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
+      ImportantDates.mentor_training_required_since,
+      BackgroundCheck.statuses[:clear]
+    )
+  }
+
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
          saved_change_to_latitude ||
