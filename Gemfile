@@ -120,7 +120,7 @@ group :test do
   gem 'capybara', '~> 2.18'
   gem 'selenium-webdriver', "~> 3.141"
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper', "~> 1.2"
+  gem 'chromedriver-helper', "~> 2.1"
   gem 'rspec-rails', "~> 3.8"
 
   # deprecated
