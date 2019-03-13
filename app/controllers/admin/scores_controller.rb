@@ -8,7 +8,7 @@ module Admin
 
     before_action -> {
       unless request.xhr?
-        @scores = SubmissionScore.current.public_send(grid_params[:round])
+        @round = grid_params[:round]
       end
     }, only: :index
 
