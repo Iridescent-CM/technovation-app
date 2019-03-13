@@ -23,8 +23,11 @@ module RegionalAmbassador
             j.id != judge.id && j.assigned_teams == judge.assigned_teams
           end
 
-          @groups[idx] = judge.submission_scores
-          @groups[idx] += others_with_same_teams.flat_map { |j| j.submission_scores }
+          event_submission_ids = @event.team_submissions.flat_map(&:id)
+          @groups[idx] = judge.submission_scores.where(team_submission_id: event_submission_ids)
+          @groups[idx] += others_with_same_teams.flat_map { |j|
+            j.submission_scores.where(team_submission_id: event_submission_ids)
+          }
 
           included << judge.id
           included += others_with_same_teams.map(&:id)
