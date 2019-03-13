@@ -570,4 +570,184 @@ RSpec.describe Account do
       expect(new_account.returning?).to be false
     end
   end
+
+  describe ".onboarded_mentors" do
+    it "includes onboarded mentor" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      expect(Account.onboarded_mentors).to include(profile.account)
+      expect(profile.reload).to be_onboarded
+    end
+
+    it "excludes not a mentor" do
+      student = FactoryBot.create(:student, :onboarded).account
+      expect(Account.onboarded_mentors).not_to include(student)
+    end
+
+    it "excludes unconfirmed email" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.account.update_column(:email_confirmed_at, nil)
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
+
+    it "excludes incomplete bio" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.bio = nil
+      profile.save
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+
+      profile.bio = ""
+      profile.save
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
+
+    it "excludes incomplete training" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.training_completed_at = nil
+      profile.save
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
+
+    it "includes training not required" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.update_column(:training_completed_at, nil)
+      profile.account.update_column(:season_registered_at, ImportantDates.mentor_training_required_since - 1.day)
+
+      expect(Account.onboarded_mentors).to include(profile.account)
+      expect(profile.reload).to be_onboarded
+    end
+
+    it "excludes US without clear background check" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.account.background_check.destroy!
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
+
+    it "includes international without background check" do
+      profile = FactoryBot.create(:mentor, :onboarded, :brazil)
+
+      expect(profile.account.background_check).to be_instance_of(NullBackgroundCheck)
+      expect(Account.onboarded_mentors).to include(profile.account)
+      expect(profile.reload).to be_onboarded
+    end
+
+    it "excludes consent not signed" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.consent_waiver.void!
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+
+      profile.void_consent_waivers.destroy_all
+      profile.reload
+
+      expect(profile.consent_waiver).to be_instance_of(NullConsentWaiver)
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
+
+    it "excludes type not set" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.update_column(:mentor_type, nil)
+
+      expect(Account.onboarded_mentors).not_to include(profile.account)
+    end
+  end
+
+  describe ".onboarding_mentors" do
+    it "excludes onboarded mentor" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      expect(Account.onboarding_mentors).not_to include(profile.account)
+    end
+
+    it "excludes not a mentor" do
+      student = FactoryBot.create(:student, :onboarded).account
+      expect(Account.onboarding_mentors).not_to include(student)
+    end
+
+    it "includes unconfirmed email" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.account.update_column(:email_confirmed_at, nil)
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+    end
+
+    it "includes incomplete bio" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.bio = nil
+      profile.save
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+
+      profile.bio = ""
+      profile.save
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+    end
+
+    it "includes incomplete training" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.training_completed_at = nil
+      profile.save
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+    end
+
+    it "excludes training not required" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.update_column(:training_completed_at, nil)
+      profile.account.update_column(:season_registered_at, ImportantDates.mentor_training_required_since - 1.day)
+
+      expect(Account.onboarding_mentors).not_to include(profile.account)
+    end
+
+    it "includes US without clear background check" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.account.background_check.update_column(:status, :pending)
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+
+      profile.account.background_check.destroy!
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+    end
+
+    it "excludes international without background check" do
+      profile = FactoryBot.create(:mentor, :onboarded, :brazil)
+
+      expect(profile.account.background_check).to be_instance_of(NullBackgroundCheck)
+      expect(Account.onboarding_mentors).not_to include(profile.account)
+    end
+
+    it "includes consent not signed" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.consent_waiver.void!
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+
+      profile.void_consent_waivers.destroy_all
+      profile.reload
+
+      expect(profile.consent_waiver).to be_instance_of(NullConsentWaiver)
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+    end
+
+    it "includes type not set" do
+      profile = FactoryBot.create(:mentor, :onboarded)
+      profile.update_column(:mentor_type, nil)
+
+      expect(Account.onboarding_mentors).to include(profile.account)
+      expect(profile.reload).not_to be_onboarded
+    end
+  end
 end

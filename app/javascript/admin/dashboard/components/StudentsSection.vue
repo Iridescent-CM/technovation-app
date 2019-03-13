@@ -8,11 +8,11 @@
     </h3>
 
     <div class="tabs__tab-content">
-      <h6>Parental permission</h6>
+      <h6>Onboarding</h6>
 
       <pie-chart
-        :url="permittedStudentsEndpoint"
-        :chart-data="permittedStudentsChartData"
+        :url="onboardingStudentsEndpoint"
+        :chart-data="onboardingStudentsChartData"
         @pieChartInitialized="addChartDataToCache"
       />
     </div>
@@ -42,12 +42,12 @@ export default {
   extends: DashboardSection,
 
   computed: {
-    permittedStudentsEndpoint () {
-      return this.$store.getters.getChartEndpoint('permitted_students')
+    onboardingStudentsEndpoint () {
+      return this.$store.getters.getChartEndpoint('onboarding_students')
     },
 
-    permittedStudentsChartData () {
-      return this.$store.getters.getCachedChartData('permitted_students')
+    onboardingStudentsChartData () {
+      return this.$store.getters.getCachedChartData('onboarding_students')
     },
 
     returningStudentsEndpoint () {

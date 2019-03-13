@@ -16,21 +16,21 @@ describe('Admin Dashboard - StudentsSection component', () => {
 
   let wrapper
 
-  const permittedStudents = {
+  const onboardingStudents = {
     totals: {
       students: '854',
     },
     labels: [
-      'With parental permission – (75%)',
-      'Without parental permission – (25%)'
+      'Fully onboarded – (75%)',
+      'Not fully onboarded – (25%)'
     ],
     data: [
       3,
       1,
     ],
     urls: [
-      '/with/parental/permission',
-      '/without/parental/permission',
+      '/fully/onboarded',
+      '/not/fully/onboarded',
     ]
   }
 
@@ -51,11 +51,11 @@ describe('Admin Dashboard - StudentsSection component', () => {
   beforeEach(() => {
     const initialState = Object.assign({}, state, {
       chartEndpoints: {
-        'permitted_students': '/permitted/students',
+        'onboarding_students': '/onboarding/students',
         'returning_students': '/returning/students',
       },
       cachedStates: {
-        '/permitted/students': permittedStudents,
+        '/onboarding/students': onboardingStudents,
         '/returning/students': returningStudents,
       },
     })
@@ -71,7 +71,7 @@ describe('Admin Dashboard - StudentsSection component', () => {
       }
     )
 
-    wrapper.vm.totals = permittedStudents.totals
+    wrapper.vm.totals = onboardingStudents.totals
   })
 
   it('has a name attribute', () => {
@@ -84,20 +84,20 @@ describe('Admin Dashboard - StudentsSection component', () => {
 
   describe('computed properties', () => {
 
-    describe('permittedStudentsEndpoint', () => {
+    describe('onboardingStudentsEndpoint', () => {
 
-      it('returns an AJAX endpoint for the permitted students chart', () => {
-        expect(wrapper.vm.permittedStudentsEndpoint)
-          .toEqual('/permitted/students')
+      it('returns an AJAX endpoint for the onboarding students chart', () => {
+        expect(wrapper.vm.onboardingStudentsEndpoint)
+          .toEqual('/onboarding/students')
       })
 
     })
 
-    describe('permittedStudentsChartData', () => {
+    describe('onboardingStudentsChartData', () => {
 
-      it('returns the cached chart data for the permitted students chart', () => {
-        expect(wrapper.vm.permittedStudentsChartData)
-          .toEqual(permittedStudents)
+      it('returns the cached chart data for the onboarding students chart', () => {
+        expect(wrapper.vm.onboardingStudentsChartData)
+          .toEqual(onboardingStudents)
 
         const initialState = Object.assign({}, state, {
           cachedStates: {},
@@ -114,7 +114,7 @@ describe('Admin Dashboard - StudentsSection component', () => {
           }
         )
 
-        expect(wrapper.vm.permittedStudentsChartData)
+        expect(wrapper.vm.onboardingStudentsChartData)
           .toEqual({})
       })
 
@@ -170,7 +170,7 @@ describe('Admin Dashboard - StudentsSection component', () => {
       const returningChart = charts.at(1)
 
       expect(onboardingChart.find('h6').text())
-        .toEqual('Parental permission')
+        .toEqual('Onboarding')
       expect(onboardingChart.find(PieChart).exists()).toBe(true)
 
       expect(returningChart.find('h6').text())

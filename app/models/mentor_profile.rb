@@ -14,22 +14,6 @@ class MentorProfile < ActiveRecord::Base
       .where("teams.id IS NULL")
   }
 
-  scope :onboarded, -> {
-    joins(account: :consent_waiver)
-    .includes(account: :background_check)
-    .references(:accounts, :background_checks)
-    .where(
-      "(training_completed_at IS NOT NULL OR " +
-        "date(accounts.season_registered_at) < ?) AND" +
-          "(accounts.country = 'US' AND " +
-            "background_checks.status = ?) OR " +
-              "accounts.country != 'US'",
-      ImportantDates.mentor_training_required_since,
-      BackgroundCheck.statuses[:clear]
-    )
-    .where("accounts.email_confirmed_at IS NOT NULL")
-  }
-
   scope :by_expertise_ids, ->(ids) {
     joins(:mentor_profile_expertises)
     .preload(:mentor_profile_expertises)
