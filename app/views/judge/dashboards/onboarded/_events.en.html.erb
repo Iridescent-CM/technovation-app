@@ -96,7 +96,9 @@
 
       <p>
         Quarterfinals judging begins on
-        <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
+        <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d") %>
+        and ends on
+        <%= ImportantDates.virtual_quarterfinals_judging_ends.strftime("%B %-d, %Y") %>.
       </p>
     <% end %>
   <% end %>
