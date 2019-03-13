@@ -18,7 +18,7 @@ describe('Admin Dashboard - AdminDashboard component', () => {
   let wrapper
 
   const chartEndpoints = {
-    permitted_students: '/permitted/students/',
+    onboarding_students: '/onboarding/students/',
     returning_students: '/returning/students/',
     onboarding_mentors: '/onboarding/mentors/',
     returning_mentors: '/returning/mentors/',
