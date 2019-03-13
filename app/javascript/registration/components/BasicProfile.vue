@@ -46,7 +46,7 @@
         </template>
 
         <template v-else>
-          <p class="hint hint_above">
+          <p class="hint hint--above">
             If your company is not part of the options,
             type the name of your company then press "Enter" or "Tab"
           </p>

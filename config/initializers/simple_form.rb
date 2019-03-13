@@ -62,7 +62,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
 
     b.use :label
-    b.use :hint,  wrap_with: { tag: :div, class: [:hint, :hint_above] }
+    b.use :hint,  wrap_with: { tag: :div, class: [:hint, 'hint--above'] }
     b.use :error, wrap_with: { tag: :span, class: :error }
     b.use :input
   end
