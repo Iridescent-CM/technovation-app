@@ -136,7 +136,7 @@ class AccountsGrid
   end
 
   column :parental_consent do |account, grid|
-    if account.student_profile.present?
+    if account.student_profile.present? and account.parental_consent(grid.season).present?
       account.parental_consent(grid.season).status
     else
       "-"
