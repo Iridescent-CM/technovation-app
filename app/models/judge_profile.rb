@@ -189,11 +189,7 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def live_event?
-    selected_regional_pitch_event.live?
-  end
-
-  def event
-    selected_regional_pitch_event
+    regional_pitch_events.any? { |e| e.live? }
   end
 
   def assigned_team_names
@@ -206,10 +202,6 @@ class JudgeProfile < ActiveRecord::Base
 
   def selected_regional_pitch_event
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
-  end
-
-  def selected_regional_pitch_event_name
-    selected_regional_pitch_event.name
   end
 
   def authenticated?

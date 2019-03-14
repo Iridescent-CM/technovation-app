@@ -14,66 +14,67 @@
       <p>
         <% if current_judge.onboarding? %>
           Please finish your onboarding steps above, so
-          that you will be able to judge at
-          <%= current_judge.event.name %>.
+          that you will be able to judge at your events.
         <% else %>
-          You will be judging teams at <%= current_judge.event.name %>.
+          You will be judging teams at the following events.
         <% end %>
       </p>
 
       <p>
-        If you want to change events or leave this event,
-        please contact your Regional Ambassador
+        If you want to change events or leave an event,
+        please contact your Regional Ambassador.
       </p>
 
-      <div class="grid">
-        <div class="grid__col-auto grid__col--bleed-x">
-          <dl>
-            <dt><%= current_judge.event.name %></dt>
-            <dd>
-              <%= current_judge.event.starts_at
-                .in_time_zone(current_judge.event.timezone)
-                .strftime("%A, %B %e") %>
+      <% current_judge.events.each do |event| %>
+        <div class="grid">
+          <div class="grid__col-auto grid__col--bleed-x">
+            <dl>
+              <dt><%= event.name %></dt>
+              <dd>
+                <%= event.starts_at
+                  .in_time_zone(event.timezone)
+                  .strftime("%A, %B %e") %>
 
-              <br />
+                <br />
 
-              <%= current_judge.event.starts_at
-                .in_time_zone(current_judge.event.timezone)
-                .strftime("%-I:%M%P") %>
+                <%= event.starts_at
+                  .in_time_zone(event.timezone)
+                  .strftime("%-I:%M%P") %>
 
-              &ndash;
+                &ndash;
 
-              <%= current_judge.event.ends_at
-                .in_time_zone(current_judge.event.timezone)
-                .strftime("%-I:%M%P %Z") %>
-            </dd>
-          </dl>
+                <%= event.ends_at
+                  .in_time_zone(event.timezone)
+                  .strftime("%-I:%M%P %Z") %>
+              </dd>
+            </dl>
+          </div>
+
+          <div class="grid__col-auto grid__col--bleed-x">
+            <h6>Regional Ambassador</h6>
+
+            <dl>
+              <dt>Name</dt>
+              <dd><%= event.ambassador.name  %></dd>
+
+              <dt>Email</dt>
+              <dd><%= mail_to event.ambassador.email %></dd>
+            </dl>
+          </div>
         </div>
 
-        <div class="grid__col-auto grid__col--bleed-x">
-          <h6>Regional Ambassador</h6>
+        <p>
+          You can preview your event's submissions
+          beginning on
+          <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
+        </p>
 
-          <dl>
-            <dt>Name</dt>
-            <dd><%= current_judge.event.ambassador.name  %></dd>
-
-            <dt>Email</dt>
-            <dd><%= mail_to current_judge.event.ambassador.email %></dd>
-          </dl>
+        <div class="step-actions margin--b-xlarge">
+          <%= link_to 'View details',
+            [current_scope, event],
+            class: "button" %>
         </div>
-      </div>
-
-      <p>
-        You can preview your event's submissions
-        beginning on
-        <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
-      </p>
-
-      <div class="step-actions">
-        <%= link_to 'View details',
-          [current_scope, current_judge.event],
-          class: "button" %>
-      </div>
+      <% end %>
     <% else %>
       <h1 class="content-heading">Online Judging</h1>
 
