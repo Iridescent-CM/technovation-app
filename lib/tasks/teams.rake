@@ -137,4 +137,37 @@ namespace :teams do
 
     puts "Data exported to #{filename}"
   end
+
+  desc "Remove paper prototype and flowchart/pseudocode image uploads from technical checklists"
+  task remove_technical_checklist_image_uploads: :environment do
+    TeamSubmission.by_season(Season.current.year).includes(:technical_checklist).find_each do |submission|
+      if submission.technical_checklist.present?
+        puts "Removing uploads for submission #{submission.id} (technical_checklist #{submission.technical_checklist.id})..."
+
+        removed_value = false
+
+        if submission.technical_checklist.paper_prototype.present?
+          print "Removing #{submission.technical_checklist.paper_prototype}... "
+          submission.technical_checklist.remove_paper_prototype!
+          removed_value = true
+          puts "Removed!"
+        end
+
+        if submission.technical_checklist.event_flow_chart.present?
+          print "Removing #{submission.technical_checklist.event_flow_chart}... "
+          submission.technical_checklist.remove_event_flow_chart!
+          removed_value = true
+          puts "Removed!"
+        end
+
+        if removed_value
+          submission.technical_checklist.save!
+        else
+          puts "Nothing to remove"
+        end
+
+        puts "----------------------------------------------------"
+      end
+    end
+  end
 end
