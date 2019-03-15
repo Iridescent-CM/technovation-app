@@ -1,7 +1,7 @@
 <div class="panel panel--left">
-  <% if SeasonToggles.between_rounds?(current_judge) %>
+  <% if SeasonToggles.between_rounds? %>
     <%= render 'judge/dashboards/onboarded/between_rounds' %>
-  <% elsif SeasonToggles.quarterfinals_or_earlier?(current_judge) %>
+  <% elsif SeasonToggles.quarterfinals_or_earlier? %>
     <div class="flags">
       <span class="flag flag-events">
         Judging

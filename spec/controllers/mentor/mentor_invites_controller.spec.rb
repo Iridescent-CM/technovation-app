@@ -30,23 +30,19 @@ RSpec.describe Mentor::MentorInvitesController do
       expect(invite.reload).to be_pending
     end
 
-    it "redirects to dashboard and shows a friendly message if date is between judging rounds" do
-      semifinals_start_date = ImportantDates.semifinals_judging_begins
+    it "redirects to dashboard and shows a friendly message if between judging rounds" do
+      SeasonToggles.judging_round = :between
 
-      date_between_rounds = semifinals_start_date - 1
+      get :show, params: {
+        id: invite.invite_token,
+        team_member_invite: { status: :pending }
+      }
 
-      Timecop.freeze(date_between_rounds) do
-        get :show, params: {
-          id: invite.invite_token,
-          team_member_invite: { status: :pending }
-        }
-
-        expect(response).to redirect_to mentor_dashboard_path
-        expect(flash[:alert]).to eq(
-          "Sorry, but accepting invites is currently disabled because judging has already begun."
-        )
-        expect(invite.reload).to be_pending
-      end
+      expect(response).to redirect_to mentor_dashboard_path
+      expect(flash[:alert]).to eq(
+        "Sorry, but accepting invites is currently disabled because judging has already begun."
+      )
+      expect(invite.reload).to be_pending
     end
   end
 
@@ -91,23 +87,19 @@ RSpec.describe Mentor::MentorInvitesController do
       expect(invite.reload).to be_pending
     end
 
-    it "shows a friendly message if accepting, but the current date is between judging rounds" do
-      semifinals_start_date = ImportantDates.semifinals_judging_begins
+    it "shows a friendly message if accepting, but between judging rounds" do
+      SeasonToggles.judging_round = :between
 
-      date_between_rounds = semifinals_start_date - 1
+      put :update, params: {
+        id: invite.invite_token,
+        team_member_invite: { status: :accepted }
+      }
 
-      Timecop.freeze(date_between_rounds) do
-        put :update, params: {
-          id: invite.invite_token,
-          team_member_invite: { status: :accepted }
-        }
-
-        expect(response).to redirect_to mentor_dashboard_path
-        expect(flash[:alert]).to eq(
-          "Sorry, but accepting invites is currently disabled because judging has already begun."
-        )
-        expect(invite.reload).to be_pending
-      end
+      expect(response).to redirect_to mentor_dashboard_path
+      expect(flash[:alert]).to eq(
+        "Sorry, but accepting invites is currently disabled because judging has already begun."
+      )
+      expect(invite.reload).to be_pending
     end
   end
 
@@ -133,22 +125,18 @@ RSpec.describe Mentor::MentorInvitesController do
       expect(invite.reload).to be_pending
     end
 
-    it "shows a friendly message if deleting, but the current date is between judging rounds" do
-      semifinals_start_date = ImportantDates.semifinals_judging_begins
+    it "shows a friendly message if deleting, but between judging rounds" do
+      SeasonToggles.judging_round = :between
 
-      date_between_rounds = semifinals_start_date - 1
+      put :destroy, params: {
+        id: invite.invite_token
+      }
 
-      Timecop.freeze(date_between_rounds) do
-        put :destroy, params: {
-          id: invite.invite_token
-        }
-
-        expect(response).to redirect_to mentor_dashboard_path
-        expect(flash[:alert]).to eq(
-          "Sorry, but accepting invites is currently disabled because judging has already begun."
-        )
-        expect(invite.reload).to be_pending
-      end
+      expect(response).to redirect_to mentor_dashboard_path
+      expect(flash[:alert]).to eq(
+        "Sorry, but accepting invites is currently disabled because judging has already begun."
+      )
+      expect(invite.reload).to be_pending
     end
   end
 end
