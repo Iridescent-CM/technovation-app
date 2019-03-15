@@ -200,10 +200,6 @@ class JudgeProfile < ActiveRecord::Base
     assigned_teams.where(:id => event.teams.pluck(:id))
   end
 
-  def selected_regional_pitch_event
-    regional_pitch_events.last or VirtualRegionalPitchEvent.new
-  end
-
   def authenticated?
     true
   end
