@@ -106,7 +106,6 @@
     },
 
     props: {
-      type: String,
       addBtnText: String,
       searchPlaceholder: String,
       handleSelection: {
@@ -120,7 +119,11 @@
       event: {
         type: Object,
         required: true,
-      }
+      },
+      type: {
+        type: String,
+        required: true,
+      },
     },
 
     created() {
@@ -147,7 +150,7 @@
       },
 
       selectionDisabledTooltip () {
-        if (this.eventNotAtCapacity()) {
+        if (!this.eventAtCapacity()) {
           return false;
         }
 
@@ -177,15 +180,18 @@
       toggleSelection (item) {
         if (item.selected) {
           this.handleDeselection(item);
-        } else if (this.eventNotAtCapacity()) {
+        } else if (!this.eventAtCapacity()) {
           this.handleSelection(item);
         }
       },
 
-      eventNotAtCapacity() {
-        return !this.event.capacity ||
-          (Boolean(this.event.capacity) &&
-            this.event.capacity > this.event.selectedTeams.length);
+      eventAtCapacity() {
+        if (this.type !== 'team') {
+          return false;
+        }
+
+        return Boolean(this.event.capacity) &&
+          this.event.selectedTeams.length >= this.event.capacity;
       },
 
       fetchRemoteItems (opts) {
