@@ -401,4 +401,66 @@ RSpec.describe SubmissionScore do
       reset_judging_round
     end
   end
+
+  describe ".event_name" do
+    it "has live event name" do
+      team = FactoryBot.create(:team)
+      team_submission = FactoryBot.create(
+        :team_submission,
+        :complete,
+        team: team
+      )
+      judge_profile = FactoryBot.create(:judge_profile)
+      rpe = FactoryBot.create(:event,
+        name: "My RPE",
+        starts_at: Date.today,
+        ends_at: Date.today + 1.day,
+        division_ids: Division.senior.id,
+      )
+
+      judge_profile.regional_pitch_events << rpe
+      team.regional_pitch_events << rpe
+
+      score = SubmissionScore.create!(
+        judge_profile_id: judge_profile.id,
+        team_submission_id: team_submission.id,
+      )
+
+      expect(score.event_name).to eq("My RPE")
+    end
+
+    it "has virtual event name" do
+      score = FactoryBot.create(:score)
+
+      expect(score.event_name).to eq("Online Judging")
+    end
+  end
+
+  describe ".event_official_status" do
+    it "has official live event status" do
+      rpe = FactoryBot.create(:rpe, unofficial: false)
+      score = FactoryBot.create(:score)
+
+      score.judge_profile.regional_pitch_events << rpe
+      score.team.regional_pitch_events << rpe
+
+      expect(score.event_official_status).to eq("official")
+    end
+
+    it "has unofficial live event status" do
+      rpe = FactoryBot.create(:rpe, unofficial: true)
+      score = FactoryBot.create(:score)
+
+      score.judge_profile.regional_pitch_events << rpe
+      score.team.regional_pitch_events << rpe
+
+      expect(score.event_official_status).to eq("unofficial")
+    end
+
+    it "has virtual status" do
+      score = FactoryBot.create(:score)
+
+      expect(score.event_official_status).to eq("virtual")
+    end
+  end
 end

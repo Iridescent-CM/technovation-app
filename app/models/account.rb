@@ -296,7 +296,8 @@ class Account < ActiveRecord::Base
   end
 
   def virtual_event?
-    judge_profile.present? && judge_profile.event.virtual?
+    #FIXME: this method doesn't feel right at all
+    judge_profile.present? && judge_profile.regional_pitch_events.any? { |e| e.virtual? }
   end
 
   def reset_location!
