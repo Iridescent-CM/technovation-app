@@ -56,23 +56,6 @@ class ScoresGrid
     team_submission.semifinals_average_score
   end
 
-  column :quarterfinals_range, order: :quarterfinals_score_range do
-    team_submission.quarterfinals_score_range
-  end
-
-  column :semifinals_range, order: :semifinals_score_range do
-    team_submission.semifinals_score_range
-  end
-
-  column :quarterfinals_official_judging do
-    if team.selected_regional_pitch_event.live? &&
-         team.selected_regional_pitch_event.official?
-      "live"
-    else
-      "virtual"
-    end
-  end
-
   column :complete do
     complete? ? "yes" : "no"
   end
