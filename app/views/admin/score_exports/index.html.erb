@@ -1,0 +1,9 @@
+<% provide :title, "Admin Data • Score exports" %>
+
+<h1>Season <%= Season.current.year %> Scores</h1>
+
+<%= render 'datagrid/datagrid',
+  grid: @scores_grid,
+  form_url: admin_score_exports_path,
+  model_name: "score",
+  scope: :admin %>

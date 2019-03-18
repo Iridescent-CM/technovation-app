@@ -5,7 +5,14 @@ class ScoresGrid
 
   self.batch_size = 10
 
-  filter :round
+  filter :round,
+  :enum,
+  select: -> { [
+    ['Quarterfinals', 'quarterfinals'],
+    ['Semifinals', 'semifinals'],
+  ] } do |value, scope, grid|
+    scope.public_send(value)
+  end
 
   scope do
     SubmissionScore.current
