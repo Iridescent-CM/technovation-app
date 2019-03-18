@@ -6,7 +6,6 @@ class JudgeController < ApplicationController
   layout "judge"
   helper_method :current_judge,
     :current_profile,
-    :assigned_teams,
     :current_round,
     :quarterfinals?,
     :back_from_event_path
@@ -41,14 +40,6 @@ class JudgeController < ApplicationController
 
   def back_from_event_path
     judge_dashboard_path
-  end
-
-  def assigned_teams(judge)
-    if judge.assigned_teams.empty?
-      judge.selected_regional_pitch_event.teams
-    else
-      judge.assigned_teams
-    end
   end
 
   def current_round
