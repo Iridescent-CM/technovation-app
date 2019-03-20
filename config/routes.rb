@@ -292,6 +292,8 @@ Rails.application.routes.draw do
     resources :score_details, only: :show
     resources :submission_score_restorations, only: :update
 
+    resources :score_exports, only: [:index]
+
     resource :paper_parental_consent, only: :create
 
     resources :export_downloads, only: :update
