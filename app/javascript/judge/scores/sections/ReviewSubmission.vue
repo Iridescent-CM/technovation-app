@@ -11,8 +11,8 @@
 
     <team-info />
 
-    <div class="grid__col-9 grid__col--bleed-y submission-review">
-      <h1>{{ submission.name }}</h1>
+    <div class="grid__col-9 grid__col--bleed-y">
+      <h1 class="border--b-thin-primary">{{ submission.name }}</h1>
 
       <div class="app-description" v-html="submission.description"></div>
 
@@ -84,10 +84,6 @@ export default {
 
   .app-description p {
     margin: 1rem 0;
-  }
-
-  .submission-review h1 {
-    border-bottom: 1px solid #5ABF94;
   }
 
   .scent--strong {

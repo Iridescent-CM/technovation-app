@@ -7,7 +7,9 @@
     <team-info />
 
     <div class="grid__col-9 grid__col--bleed-y">
-      <h1>{{ submission.name }}</h1>
+      <h1 class="border--b-thin-primary">{{ submission.name }}</h1>
+
+      <div class="app-description" v-html="submission.description"></div>
 
       <screenshots />
 
