@@ -69,6 +69,47 @@ RSpec.describe FindEligibleSubmissionId do
       expect(FindEligibleSubmissionId.(judge3)).to be_nil
     end
 
+    it "selects submission with no scores over pending scores" do
+      sub_a = FactoryBot.create(:submission, :complete)
+      sub_b = FactoryBot.create(:submission, :complete)
+
+      FactoryBot.create(:score, :incomplete,
+        team_submission: sub_b
+      )
+
+      judge = FactoryBot.create(:judge)
+
+      expect(FindEligibleSubmissionId.(judge)).to eq(sub_a.id)
+    end
+
+    it "spreads pending scores evenly" do
+      sub_a = FactoryBot.create(:submission, :complete)
+      sub_b = FactoryBot.create(:submission, :complete)
+
+      10.times do
+        id = FindEligibleSubmissionId.(FactoryBot.create(:judge))
+        picked = [sub_a, sub_b].select { |sub| sub.id == id }.first
+        FactoryBot.create(:score, :incomplete,
+          team_submission: picked
+        )
+      end
+
+      expect(sub_a.submission_scores.incomplete.count).to eq(5)
+      expect(sub_b.submission_scores.incomplete.count).to eq(5)
+    end
+
+    it "does not count pending scores in max score calculation" do
+      sub = FactoryBot.create(:submission, :complete)
+
+      11.times do
+        FactoryBot.create(:score, :incomplete,
+          team_submission: sub
+        )
+      end
+
+      expect(FindEligibleSubmissionId.(FactoryBot.create(:judge))).to eq(sub.id)
+    end
+
     it "does not reselect previously judged submission" do
       team = FactoryBot.create(:team)
       sub = FactoryBot.create(:submission, :complete, team: team)
