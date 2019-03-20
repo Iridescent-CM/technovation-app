@@ -1,42 +1,54 @@
 <template>
-  <div class="grid grid--justify-space-around">
-    <div class="grid__col-6 grid__col--bleed-x">
-      <div class="panel">
-        <h1>Review your score</h1>
+  <div class="grid">
+    <div class="grid__col-12 grid__col--bleed-y">
+      <h2>Review score</h2>
+    </div>
 
-        <router-link
-          :to="{ name: name }"
-          v-tooltip.top-center="`Make changes to your ${name} score`"
-          v-for="name in sectionNames"
-          :key="name"
-          class="grid grid--bleed row"
-        >
-          <div class="grid__col-11">
-            <p>
-              <icon
-                v-if="problemInSection(name)"
-                :alt="`Problem indicated in ${name}`"
-                :title="`Problem indicated in ${name}`"
-                name="exclamation-triangle"
-                color="903D54"
-                size="18"
-              />
-              {{ name | capitalize }}
-            </p>
-          </div>
+    <team-info />
 
-          <div class="grid__col-1">
-            {{ sectionPointsTotal(name) }}
-          </div>
-        </router-link>
+    <div class="grid__col-9 grid__col--bleed-y">
+      <h1 class="border--b-thin-primary">{{ submission.name }}</h1>
 
-        <div class="grid grid--bleed row row--bottom">
-          <div class="grid__col-11">
-            Final total score
-          </div>
+      <div class="app-description" v-html="submission.description"></div>
 
-          <div class="grid__col-1">
-            {{ totalScore }}
+      <div class="grid grid--justify-space-around">
+        <div class="grid__col-9 panel">
+          <h1>Review your score</h1>
+
+          <router-link
+            :to="{ name: name }"
+            v-tooltip.top-center="`Make changes to your ${name} score`"
+            v-for="name in sectionNames"
+            :key="name"
+            class="grid grid--bleed row"
+          >
+            <div class="grid__col-11">
+              <p>
+                <icon
+                  v-if="problemInSection(name)"
+                  :alt="`Problem indicated in ${name}`"
+                  :title="`Problem indicated in ${name}`"
+                  name="exclamation-triangle"
+                  color="903D54"
+                  size="18"
+                />
+                {{ name | capitalize }}
+              </p>
+            </div>
+
+            <div class="grid__col-1">
+              {{ sectionPointsTotal(name) }}
+            </div>
+          </router-link>
+
+          <div class="grid grid--bleed row row--bottom">
+            <div class="grid__col-11">
+              Final total score
+            </div>
+
+            <div class="grid__col-1">
+              {{ totalScore }}
+            </div>
           </div>
         </div>
       </div>
@@ -67,9 +79,12 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 
 import Icon from '../../../components/Icon'
 
+import TeamInfo from '../TeamInfo'
+
 export default {
   components: {
     Icon,
+    TeamInfo,
   },
 
   created () {
