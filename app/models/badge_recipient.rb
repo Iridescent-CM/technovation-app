@@ -1,3 +1,5 @@
+require "./app/constants/badge_levels"
+
 class BadgeRecipient
   attr_reader :judge, :scores, :season
 
