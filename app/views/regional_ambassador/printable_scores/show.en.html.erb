@@ -14,7 +14,7 @@
         <h1>Teams</h1>
 
         <ul>
-          <% scores.flat_map(&:team).uniq.each do |team| %>
+          <% @event.teams.each do |team| %>
             <li><%= team.name %></li>
           <% end %>
         </ul>
@@ -24,7 +24,7 @@
         <h1>Judges</h1>
 
         <ul>
-          <% scores.flat_map(&:judge_profile).uniq.each do |judge| %>
+          <% @event.judges.each do |judge| %>
             <li><%= judge.name %></li>
           <% end %>
         </ul>

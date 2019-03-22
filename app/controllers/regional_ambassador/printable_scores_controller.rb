@@ -9,8 +9,11 @@ module RegionalAmbassador
       ).find(params[:id])
 
       judges = @event.judges
+      judge_ids = judges.map { |judge| judge.id }
+
       scores = @event.team_submissions
-                 .flat_map(&:scores)
+                .flat_map(&:scores)
+                .reject { |score| !judge_ids.include?(score.judge_profile_id) }
 
       if judges.any? { |j| j.assigned_teams_for_event(@event).any? }
         @groups = {}
