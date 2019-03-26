@@ -1,7 +1,8 @@
 <div class="panel">
   <div class="grid">
-    <% if event.at_team_capacity? and
-      not current_team.attending_event?(event) %>
+    <% if current_scope != "judge" and
+          event.at_team_capacity? and
+            not current_team.attending_event?(event) %>
         <div class="grid__col-12">
           <div class="flash flash-info margin--none">
             This event is currently full.
