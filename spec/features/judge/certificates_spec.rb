@@ -1,4 +1,5 @@
 require "rails_helper"
+require "fill_pdfs"
 
 RSpec.feature "Judge certificates" do
   scenario "no link available when viewing scores is turned off" do
@@ -6,6 +7,7 @@ RSpec.feature "Judge certificates" do
 
     judge = FactoryBot.create(:judge, :general_certificate)
 
+    FillPdfs.(judge.account)
     sign_in(judge)
 
     expect(page).not_to have_css("#judge-certificate")
@@ -17,6 +19,7 @@ RSpec.feature "Judge certificates" do
 
     judge = FactoryBot.create(:judge)
 
+    FillPdfs.(judge.account)
     sign_in(judge)
 
     expect(page).not_to have_css("#judge-certificate")
@@ -33,6 +36,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:off)
     SeasonToggles.display_scores_on!
 
+    FillPdfs.(judge.account)
     sign_in(judge)
 
     expect(page).not_to have_css("#judge-certificate")
@@ -78,7 +82,7 @@ RSpec.feature "Judge certificates" do
       SeasonToggles.display_scores_on!
 
       expect {
-        sign_in(judge)
+        FillPdfs.(judge.account)
       }.to change {
         judge.current_general_judge_certificates.count
       }.from(0).to(1).and not_change {
@@ -89,6 +93,7 @@ RSpec.feature "Judge certificates" do
         judge.current_judge_advisor_certificates.count
       }
 
+      sign_in(judge)
       expect(page).to have_css("#judge-certificate")
       expect(page).to have_link(
         "View your certificate",
@@ -106,7 +111,7 @@ RSpec.feature "Judge certificates" do
       SeasonToggles.display_scores_on!
 
       expect {
-        sign_in(judge)
+        FillPdfs.(judge.account)
       }.to change {
         judge.current_certified_judge_certificates.count
       }.from(0).to(1).and not_change {
@@ -117,6 +122,7 @@ RSpec.feature "Judge certificates" do
         judge.current_judge_advisor_certificates.count
       }
 
+      sign_in(judge)
       expect(page).to have_css("#judge-certificate")
       expect(page).to have_link(
         "View your certificate",
@@ -134,7 +140,7 @@ RSpec.feature "Judge certificates" do
       SeasonToggles.display_scores_on!
 
       expect {
-        sign_in(judge)
+        FillPdfs.(judge.account)
       }.to change {
         judge.current_head_judge_certificates.count
       }.from(0).to(1)
@@ -144,6 +150,7 @@ RSpec.feature "Judge certificates" do
         judge.current_general_judge_certificates.count
       }
 
+      sign_in(judge)
       expect(page).to have_css("#judge-certificate")
       expect(page).to have_link(
         "View your certificate",
@@ -161,7 +168,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.display_scores_on!
 
     expect {
-      sign_in(judge)
+      FillPdfs.(judge.account)
     }.to change {
       judge.current_judge_advisor_certificates.count
     }.from(0).to(1)
@@ -173,6 +180,7 @@ RSpec.feature "Judge certificates" do
       judge.current_general_judge_certificates.count
     }
 
+    sign_in(judge)
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
@@ -189,7 +197,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.display_scores_on!
 
     expect {
-      sign_in(judge)
+      FillPdfs.(judge.account)
     }.to change {
       judge.current_head_judge_certificates.count
     }.from(0).to(1)
@@ -201,6 +209,7 @@ RSpec.feature "Judge certificates" do
       judge.current_general_judge_certificates.count
     }
 
+    sign_in(judge)
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
@@ -217,7 +226,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.display_scores_on!
 
     expect {
-      sign_in(judge)
+      FillPdfs.(judge.account)
     }.to change {
       judge.current_judge_advisor_certificates.count
     }.from(0).to(1)
@@ -229,6 +238,7 @@ RSpec.feature "Judge certificates" do
       judge.current_general_judge_certificates.count
     }
 
+    sign_in(judge)
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",

@@ -1,4 +1,5 @@
 require "rails_helper"
+require "fill_pdfs"
 
 RSpec.feature "Student certificates" do
   before { SeasonToggles.display_scores_on! }
@@ -8,11 +9,12 @@ RSpec.feature "Student certificates" do
 
     scenario "receive a semifinalist certificate" do
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.to change {
         student.certificates.current.semifinalist.count
       }.from(0).to(1)
 
+      sign_in(student)
       click_link("View your scores and certificate")
 
       expect(page).to have_link(
@@ -23,7 +25,7 @@ RSpec.feature "Student certificates" do
 
     scenario "no completion certificate is generated" do
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.not_to change {
         student.certificates.current.completion.count
       }
@@ -31,7 +33,7 @@ RSpec.feature "Student certificates" do
 
     scenario "no participation certificate is generated" do
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.not_to change {
         student.certificates.current.participation.count
       }
@@ -45,11 +47,12 @@ RSpec.feature "Student certificates" do
 
     scenario "receive a completion certificate" do
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.to change {
         student.certificates.current.completion.count
       }.from(0).to(1)
 
+      sign_in(student)
       click_link("View your scores and certificate")
 
       expect(page).to have_link(
@@ -60,7 +63,7 @@ RSpec.feature "Student certificates" do
 
     scenario "no participation certificate is generated" do
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.not_to change {
         student.certificates.current.participation.count
       }
@@ -72,10 +75,12 @@ RSpec.feature "Student certificates" do
       student = FactoryBot.create(:student, :incomplete_submission)
 
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.not_to change {
         student.certificates.count
       }
+
+      sign_in(student)
 
       expect(page).not_to have_link("View your scores and certificate")
     end
@@ -86,11 +91,12 @@ RSpec.feature "Student certificates" do
 
     scenario "a participation certificate is generated" do
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.to change {
         student.certificates.current.participation.count
       }.from(0).to(1)
 
+      sign_in(student)
       click_link( "View your certificate")
 
       expect(page).to have_link(
@@ -101,10 +107,12 @@ RSpec.feature "Student certificates" do
 
     scenario "no completion certificate is generated" do
       expect {
-        sign_in(student)
+        FillPdfs.(student.account, team: student.team)
       }.not_to change {
         student.certificates.current.completion.count
       }
+
+      sign_in(student)
 
       expect(page).not_to have_link("View your scores and certificate")
     end

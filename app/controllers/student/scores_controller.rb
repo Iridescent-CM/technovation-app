@@ -14,8 +14,11 @@ module Student
         end
       end
 
-      certificate_recipient = CertificateRecipient.new(current_account, team: current_team)
-      @certificates = certificate_recipient.certificates
+      @certificates = Certificate.none
+
+      if SeasonToggles.display_scores?
+        @certificates = current_account.certificates.current
+      end
 
       render template: 'student/scores/index'
     end

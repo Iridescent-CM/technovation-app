@@ -6,10 +6,6 @@ module Student
 
     def show
       @regional_events = available_regional_events
-
-      if SeasonToggles.display_scores?
-        FillPdfs.(current_account, team: current_team)
-      end
     end
 
     private
