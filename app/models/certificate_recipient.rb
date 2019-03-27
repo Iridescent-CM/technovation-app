@@ -97,6 +97,27 @@ class CertificateRecipient
     certificate_types.any?
   end
 
+  def judge_certificate_level(season = Season.current.year)
+    return "" if !account.judge_profile.present?
+
+    scores = account.judge_profile.completed_scores.by_season(season)
+
+    if !!account.override_certificate_type
+      CERTIFICATE_TYPES[account.override_certificate_type].humanize.titleize
+    elsif scores.any? && scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+      "General Judge"
+    elsif scores.any? && scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+      "Certified Judge"
+    elsif scores.count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
+            (judge.events.any? || scores.count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+      "Head Judge"
+    elsif scores.count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
+      "Judge Advisor"
+    else
+      ""
+    end
+  end
+
   private
   def needs_completion_certificate?
     !account.completion_certificates.by_season(season).any?

@@ -38,7 +38,7 @@ class JudgesGrid
   end
 
   column :judge_rank do |account, grid|
-    BadgeRecipient.new(account.judge_profile).name
+    CertificateRecipient.new(account).judge_certificate_level
   end
 
   column :industry do
