@@ -164,11 +164,6 @@
             target: :_blank %>
         </div>
       <% end %>
-
-      <% @badge_recipients.each do |recipient| %>
-        <%= image_tag "tc-#{recipient.icon_name}-icon.svg", class: 'grid__cell-img' %>
-        <h1><%= recipient.season %> <%= recipient.name %></h1>
-      <% end %>
     <% end %>
 
     <% if @account.mentor_profile || @account.student_profile %>
