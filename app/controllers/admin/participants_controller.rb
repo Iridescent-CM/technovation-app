@@ -15,18 +15,15 @@ module Admin
       @season_flag = SeasonFlag.new(@account)
       @certificate_recipient = CertificateRecipient.new(@account)
 
-      @badge_recipients = []
       @certificate_recipients = []
 
       if @account.judge_profile
         @account.seasons.each do |season|
           FillPdfs.(@account, season: season)
 
-          badge = BadgeRecipient.new(@account.judge_profile, season: season)
           cert = CertificateRecipient.new(@account, season: season)
 
           @certificate_recipients.push(cert) if cert.valid?
-          @badge_recipients.push(badge) if badge.valid?
         end
       end
     end
