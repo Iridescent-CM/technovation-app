@@ -72,9 +72,9 @@ RSpec.describe Account do
       account.current_general_judge_certificates.count
     }
 
-    badge_recipient = BadgeRecipient.new(account.judge_profile)
-    expect(badge_recipient.icon_name).to eq("judge-advisor")
-    expect(badge_recipient.name).to eq("Judge Advisor")
+    certificate_recipient = CertificateRecipient.new(account)
+
+    expect(certificate_recipient.judge_certificate_level).to eq("Judge Advisor")
   end
 
   it "validates email uniqueness with dots" do
