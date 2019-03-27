@@ -108,25 +108,6 @@
             profile: @account.judge_profile,
             scores: @scores.semifinals %>
         </div>
-
-        <div class="grid__col-12 grid__col--bleed">
-          <h3 class="heading--reset">Judge Level / Certificate</h3>
-
-          <%= select_tag("account[override_certificate_type]",
-            options_from_collection_for_select(
-              CERTIFICATE_TYPES,
-              "to_s", "humanize",
-              @certificate_recipient.string_certificate_type,
-            ),
-            include_blank: true,
-            data: {
-              remote_select: true,
-              url: admin_certificate_overrides_path(account_id: @account.id),
-              model_name: "account",
-              field_name: "override_certificate_type",
-            }
-          ) %>
-        </div>
       </div>
     <% end %>
 
@@ -155,15 +136,6 @@
     <% if @account.judge_profile %>
       <%= render 'admin/participants/judge_debugging',
         profile: @account.judge_profile %>
-
-      <% @certificate_recipients.each do |recipient| %>
-        <div class="judge-certificate" class="grid panel">
-          <%= link_to "View #{recipient.season} certificate",
-            recipient.certificate_url,
-            class: "button button--margin-top-lg",
-            target: :_blank %>
-        </div>
-      <% end %>
 
       <% @badge_recipients.each do |recipient| %>
         <%= image_tag "tc-#{recipient.icon_name}-icon.svg", class: 'grid__cell-img' %>

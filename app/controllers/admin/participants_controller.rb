@@ -11,10 +11,8 @@ module Admin
       @teams = Team.current
       @scores = submission_score(@account)
       @season_flag = SeasonFlag.new(@account)
-      @certificate_recipient = CertificateRecipient.new(@account)
 
       @badge_recipients = []
-      @certificate_recipients = []
 
       if @account.judge_profile
         @account.seasons.each do |season|

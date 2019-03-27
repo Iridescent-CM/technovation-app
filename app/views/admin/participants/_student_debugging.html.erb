@@ -96,24 +96,3 @@
       class: "button" %>
   </div>
 <% end %>
-
-<h4 class="margin--none padding--none">Certificates</h4>
-
-<div class="panel panel--left debugging">
-  <% if profile.teams.empty? %>
-    This person has no teams, past or present, so no certificates are available.
-  <% end %>
-
-  <% profile.teams.each do |team| %>
-    For <%= team.seasons.first %> team <strong><%= team.name %></strong>:
-
-    <div class="vue-enable-certificate-btn">
-      <certificate-button
-        :team-id="<%= team.id %>"
-        :profile-id="<%= profile.id %>"
-        profile-type="StudentProfile"
-        user-scope="admin"
-      />
-    </div>
-  <% end %>
-</div>
