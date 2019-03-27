@@ -1,6 +1,6 @@
 <% if DisplayCertificates.for(current_judge) %>
   <div id="judge-certificate" class="grid panel">
-    <div class="grid__col-6 grid__col--bleed-y">
+    <div class="grid__col-12 grid__col--bleed-y">
       <h2>Thank you!</h2>
 
       <p>Thank you for being a judge this season!</p>
@@ -14,12 +14,6 @@
         @certificate_file_url,
         class: "button button--margin-top-lg",
         target: :_blank %>
-    </div>
-
-    <div class="grid__col-6 grid__col--bleed-y">
-      <%= image_tag "tc-#{@badge_recipient.icon_name}-icon.svg", class: 'grid__cell-img' %>
-
-      <h1><%= @badge_recipient.name %></h1>
     </div>
   </div>
 <% elsif SeasonToggles.display_scores? %>
