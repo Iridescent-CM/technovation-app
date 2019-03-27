@@ -1,5 +1,3 @@
-require 'fill_pdfs'
-
 module Admin
   class ParticipantsController < AdminController
     include DatagridController
@@ -20,12 +18,8 @@ module Admin
 
       if @account.judge_profile
         @account.seasons.each do |season|
-          FillPdfs.(@account, season: season)
-
           badge = BadgeRecipient.new(@account.judge_profile, season: season)
-          cert = CertificateRecipient.new(@account, season: season)
 
-          @certificate_recipients.push(cert) if cert.valid?
           @badge_recipients.push(badge) if badge.valid?
         end
       end
