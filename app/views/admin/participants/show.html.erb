@@ -136,10 +136,6 @@
     <% if @account.judge_profile %>
       <%= render 'admin/participants/judge_debugging',
         profile: @account.judge_profile %>
-
-      <% @badge_recipients.each do |recipient| %>
-        <%= image_tag "tc-#{recipient.icon_name}-icon.svg", class: 'grid__cell-img' %>
-        <h1><%= recipient.season %> <%= recipient.name %></h1>
       <% end %>
     <% end %>
 

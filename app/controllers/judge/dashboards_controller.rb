@@ -9,7 +9,6 @@ module Judge
       if SeasonToggles.display_scores?
         certificate = current_account.current_judge_certificates.last
         @certificate_file_url = certificate && certificate.file_url
-        @badge_recipient = BadgeRecipient.new(current_judge)
       end
     end
 

@@ -11,16 +11,6 @@ module Admin
       @teams = Team.current
       @scores = submission_score(@account)
       @season_flag = SeasonFlag.new(@account)
-
-      @badge_recipients = []
-
-      if @account.judge_profile
-        @account.seasons.each do |season|
-          badge = BadgeRecipient.new(@account.judge_profile, season: season)
-
-          @badge_recipients.push(badge) if badge.valid?
-        end
-      end
     end
 
     def edit
