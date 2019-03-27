@@ -1,5 +1,3 @@
-require 'fill_pdfs'
-
 module Mentor
   class DashboardsController < MentorController
     include LocationStorageController

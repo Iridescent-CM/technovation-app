@@ -11,4 +11,8 @@ class Certificate < ApplicationRecord
   scope :judge_types, -> {
     where(cert_type: CERTIFICATE_TYPES.select { |t| t.include?('judge') })
   }
+
+  scope :for_team, -> (team) {
+    where(team: team)
+  }
 end

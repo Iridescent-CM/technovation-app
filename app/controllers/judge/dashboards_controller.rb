@@ -1,5 +1,3 @@
-require 'fill_pdfs'
-
 module Judge
   class DashboardsController < JudgeController
     include LocationStorageController

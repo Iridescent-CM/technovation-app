@@ -68,9 +68,13 @@
       <% end %>
     <% end %>
 
-    <certificate-button
-      :team-id="<%= team.id %>"
-      user-scope="mentor"
-    />
+    <div class="certificate-button">
+      <% current_account.current_appreciation_certificates.for_team(team).each do |certificate| %>
+        <%= link_to "Open your certificate",
+          certificate.file_url,
+          target: "_blank",
+          class: "button button--reward" %>
+      <% end %>
+    </div>
   </div>
 <% end %>
