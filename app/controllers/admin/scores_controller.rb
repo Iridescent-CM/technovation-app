@@ -33,10 +33,10 @@ module Admin
 
       if not passed_round.blank?
         round = passed_round
-      elsif current_round === 'off'
+      elsif ['semifinals', 'finished'].include?(current_round)
+        round = 'semifinals'
+      else
         round = 'quarterfinals'
-      elsif passed_round.blank?
-        round = current_round
       end
 
       grid.merge({
