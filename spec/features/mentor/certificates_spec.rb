@@ -1,4 +1,5 @@
 require "rails_helper"
+require "fill_pdfs"
 
 RSpec.feature "Mentor certificates" do
   before  { SeasonToggles.display_scores_on! }
@@ -17,8 +18,7 @@ RSpec.feature "Mentor certificates" do
 
     expect(page).to have_content(
       "You can see this year's finalists at " +
-      "technovationchallenge.org/season-results"
-    )
+      "technovationchallenge.org/season-results")
 
     expect(page).to have_content(
       "The #{Season.next.year} season will open in the Fall."
@@ -38,5 +38,25 @@ RSpec.feature "Mentor certificates" do
       "technovationchallenge.org/season-results",
       href: ENV.fetch("FINALISTS_URL")
     )
+  end
+
+  scenario "appreciation certificate per team" do
+    mentor = FactoryBot.create(:mentor, :onboarded)
+    team_a = FactoryBot.create(:team)
+    team_b = FactoryBot.create(:team)
+
+    TeamRosterManaging.add(team_a, mentor)
+    TeamRosterManaging.add(team_b, mentor)
+
+    expect {
+      FillPdfs.(mentor.account, team: team_a)
+      FillPdfs.(mentor.account, team: team_b)
+    }.to change {
+      mentor.certificates.current.mentor_appreciation.count
+    }.from(0).to(2)
+
+    sign_in(mentor)
+
+    expect(page).to have_link("Open your certificate", count: 2)
   end
 end
