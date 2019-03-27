@@ -10,10 +10,12 @@
         supporting teams around the world.
       </p>
 
-      <%= link_to 'View your certificate',
-        @certificate_file_url,
-        class: "button button--margin-top-lg",
-        target: :_blank %>
+      <span class="margin--t-xlarge text-align--center">
+        <%= link_to 'View your certificate',
+          @certificate_file_url,
+          class: "button",
+          target: :_blank %>
+      </span>
     </div>
   </div>
 <% elsif SeasonToggles.display_scores? %>
