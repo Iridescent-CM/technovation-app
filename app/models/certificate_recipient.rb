@@ -50,11 +50,7 @@ class CertificateRecipient
   end
 
   def gets_certificate?(certificate_type)
-    if !!account.override_certificate_type
-      String(certificate_type) === String(CERTIFICATE_TYPES[account.override_certificate_type])
-    else
-      send("gets_#{certificate_type}_certificate?")
-    end
+    send("gets_#{certificate_type}_certificate?")
   end
 
   def needs_certificate?(certificate_type)
@@ -78,19 +74,11 @@ class CertificateRecipient
   end
 
   def certificate_type
-    if !!account.override_certificate_type
-      account.override_certificate_type
-    else
-      CERTIFICATE_TYPES.find_index(certificate_types.last)
-    end
+    CERTIFICATE_TYPES.find_index(certificate_types.last)
   end
 
   def string_certificate_type
-    if !!account.override_certificate_type
-      CERTIFICATE_TYPES[account.override_certificate_type]
-    else
-      certificate_types.last
-    end
+    certificate_types.last
   end
 
   def valid?
@@ -102,9 +90,7 @@ class CertificateRecipient
 
     scores = account.judge_profile.completed_scores.by_season(season)
 
-    if !!account.override_certificate_type
-      CERTIFICATE_TYPES[account.override_certificate_type].humanize.titleize
-    elsif scores.any? && scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+    if scores.any? && scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
       "General Judge"
     elsif scores.any? && scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
       "Certified Judge"

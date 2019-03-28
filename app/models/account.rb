@@ -7,7 +7,6 @@ class Account < ActiveRecord::Base
     46986,
   ]
 
-  enum override_certificate_types: CERTIFICATE_TYPES
   enum admin_status: %w{
     not_admin
     temporary_password

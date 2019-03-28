@@ -102,19 +102,6 @@ RSpec.describe RegisterToCurrentSeasonJob do
     }
   end
 
-  it "clears any overriding certificate type" do
-    judge = FactoryBot.create(:judge)
-
-    judge.account.update(
-      seasons: [],
-      override_certificate_type: Account.override_certificate_types[:head_judge],
-    )
-
-    RegisterToCurrentSeasonJob.perform_now(judge.account)
-
-    expect(judge.override_certificate_type).to be_nil
-  end
-
   it "updates the season registered at datetime" do
     student = FactoryBot.create(:student)
 
