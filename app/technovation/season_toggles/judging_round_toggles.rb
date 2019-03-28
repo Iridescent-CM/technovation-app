@@ -107,6 +107,10 @@ class SeasonToggles
           )
         end
       end
+
+      def judging_finished?
+        judging_round == "finished"
+      end
     end
   end
 end
