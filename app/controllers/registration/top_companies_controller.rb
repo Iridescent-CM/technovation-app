@@ -13,6 +13,7 @@ module Registration
         Microsoft
         Accenture
         Bank\ of\ America
+        Cisco\ Customer\ Experience\ (CX)
       }
 
       render json: {
