@@ -27,7 +27,6 @@ module Admin
     def grid_params
       grid = params[:scored_submissions_grid] ||= {}
 
-      round = 'quarterfinals'
       current_round = SeasonToggles.current_judging_round(full_name: true).to_s
       passed_round = params[:scored_submissions_grid].fetch(:round) { "" }
 
