@@ -15,6 +15,10 @@ class CertificatesGrid
     cert_type.humanize.titleize
   end
 
+  column :recipient_name do
+    account.full_name
+  end
+
   column :email do
     account.email
   end
