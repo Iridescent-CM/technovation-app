@@ -10,16 +10,15 @@ module Admin
     def grid_params
       grid = params[:scores_grid] ||= {}
 
-      round = 'quarterfinals'
       current_round = SeasonToggles.current_judging_round(full_name: true).to_s
       passed_round = params[:scores_grid].fetch(:round) { "" }
 
       if not passed_round.blank?
         round = passed_round
-      elsif current_round === 'off'
+      elsif ['semifinals', 'finished'].include?(current_round)
+        round = 'semifinals'
+      else
         round = 'quarterfinals'
-      elsif passed_round.blank?
-        round = current_round
       end
 
       grid.merge({
