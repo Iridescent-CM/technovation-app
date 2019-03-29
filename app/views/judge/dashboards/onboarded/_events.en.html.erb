@@ -1,5 +1,27 @@
 <div class="panel panel--left">
-  <% if SeasonToggles.between_rounds? %>
+  <% if SeasonToggles.judging_finished? %>
+    <div class="flags">
+      <span class="flag flag-registration">
+        Season close
+      </span>
+    </div>
+
+    <h1>Thank You</h1>
+
+    <p>
+      Thank you for your help scoring and giving valuable feedback to
+      Technovation teams.
+    </p>
+
+    <p>
+      Your judging certificate will be available
+      <%= ImportantDates.certificates_available.strftime("%B %e") %>.
+    </p>
+
+    <p>
+      Thank you again for helping girls lead the change. See you next season!
+    </p>
+  <% elsif SeasonToggles.between_rounds? %>
     <%= render 'judge/dashboards/onboarded/between_rounds' %>
   <% elsif SeasonToggles.quarterfinals_or_earlier? %>
     <div class="flags">

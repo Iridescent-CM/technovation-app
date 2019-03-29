@@ -72,7 +72,9 @@
         <%= render 'judge/dashboards/onboarded/certificates' %>
       <% end %>
 
-      <%= render 'judge/dashboards/onboarded/events' %>
+      <% if !SeasonToggles.display_scores? %>
+        <%= render 'judge/dashboards/onboarded/events' %>
+      <% end %>
     </div>
   </div>
 </div>
