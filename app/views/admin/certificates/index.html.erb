@@ -1,0 +1,7 @@
+<% provide :title, "Admin Data • Certificates" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @certificates_grid,
+  form_url: admin_certificates_path,
+  model_name: "certificate",
+  scope: :admin %>
