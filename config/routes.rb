@@ -295,6 +295,8 @@ Rails.application.routes.draw do
     resources :export_downloads, only: :update
 
     resource :season_schedule_settings, only: [:edit, :update]
+
+    resources :certificates, only: :index
   end
 
   namespace :public do
