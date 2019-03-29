@@ -7,7 +7,7 @@
       <ul>
         <% @certificates.each do |certificate| %>
           <li>
-            <%= link_to "#{certificate.cert_type.humanize.titleize} Certificate",
+            <%= link_to certificate.description,
               certificate.file_url,
               :target => "_blank" %>
           </li>
