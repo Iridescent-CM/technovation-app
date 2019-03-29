@@ -15,4 +15,14 @@ class Certificate < ApplicationRecord
   scope :for_team, -> (team) {
     where(team: team)
   }
+
+  def description
+    title = cert_type.humanize.titleize
+
+    if team.present?
+      "#{title} Certificate for #{team.name}"
+    else
+      "#{title} Certificate"
+    end
+  end
 end
