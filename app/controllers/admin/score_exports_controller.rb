@@ -11,7 +11,7 @@ module Admin
       grid = params[:scores_grid] ||= {}
 
       current_round = SeasonToggles.current_judging_round(full_name: true).to_s
-      passed_round = params[:scored_submissions_grid].fetch(:round) { "" }
+      passed_round = params[:scores_grid].fetch(:round) { "" }
 
       if not passed_round.blank?
         round = passed_round
