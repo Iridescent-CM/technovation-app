@@ -1,5 +1,3 @@
-require 'fill_pdfs'
-
 module Judge
   class DashboardsController < JudgeController
     include LocationStorageController
@@ -9,9 +7,8 @@ module Judge
       @score_in_progress = ScoreInProgress.new(current_judge)
 
       if SeasonToggles.display_scores?
-        FillPdfs.(current_account)
-        recipient = CertificateRecipient.new(current_account)
-        @certificate_file_url = recipient.certificate_url
+        certificate = current_account.current_judge_certificates.last
+        @certificate_file_url = certificate && certificate.file_url
       end
     end
 

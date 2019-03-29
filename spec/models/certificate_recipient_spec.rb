@@ -20,7 +20,6 @@ RSpec.describe CertificateRecipient do
           judge_profile: judge_profile,
           mentor_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account)
@@ -38,7 +37,6 @@ RSpec.describe CertificateRecipient do
           judge_profile: NullProfile.new,
           mentor_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
         team = double(
           :Team,
@@ -76,7 +74,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team: team)
@@ -96,7 +93,6 @@ RSpec.describe CertificateRecipient do
             mentor_profile: NullProfile.new,
             judge_profile: NullProfile.new,
             student_profile: NullProfile.new,
-            override_certificate_type: nil,
           )
 
           recipient = CertificateRecipient.new(account, team: team)
@@ -129,7 +125,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team: team)
@@ -149,7 +144,6 @@ RSpec.describe CertificateRecipient do
             mentor_profile: NullProfile.new,
             judge_profile: NullProfile.new,
             student_profile: NullProfile.new,
-            override_certificate_type: nil,
           )
 
           recipient = CertificateRecipient.new(account, team: team)
@@ -184,7 +178,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: student_profile,
-          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team: team)
@@ -204,7 +197,6 @@ RSpec.describe CertificateRecipient do
             mentor_profile: NullProfile.new,
             judge_profile: NullProfile.new,
             student_profile: NullProfile.new,
-            override_certificate_type: nil,
           )
 
           recipient = CertificateRecipient.new(account, team: team)
@@ -225,7 +217,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
 
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new, season: 2018)
@@ -258,7 +249,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team: team)
@@ -290,7 +280,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team: team)
@@ -322,7 +311,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: double(:StudentProfile, :present? => true),
-          override_certificate_type: nil,
         )
 
         recipient = CertificateRecipient.new(account, team: team)
@@ -342,7 +330,6 @@ RSpec.describe CertificateRecipient do
           mentor_profile: NullProfile.new,
           judge_profile: NullProfile.new,
           student_profile: NullProfile.new,
-          override_certificate_type: nil,
         )
         team = double(:Team, id: 2, name: "Team name", submission: NullTeamSubmission.new, season: 2018)
 

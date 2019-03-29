@@ -8,24 +8,11 @@ import '../application/sticky-header';
 import { urlHelpers } from 'utilities/utilities';
 
 import AutocompleteInput from 'components/AutocompleteInput';
-import CertificateButton from 'components/CertificateButton';
 import LocationForm from '../location/components/LocationForm';
 
 import '../terms_agreement';
 
 document.addEventListener('turbolinks:load', function () {
-  const buttonElems = document.querySelectorAll('.vue-enable-certificate-btn');
-
-  for (let i = 0; i < buttonElems.length; i += 1) {
-    new Vue({
-      el: buttonElems[i],
-
-      components: {
-        CertificateButton,
-      },
-    });
-  }
-
   const locationFormElems = document.querySelectorAll('.vue-enable-location-form');
 
   for (let i = 0; i < locationFormElems.length; i += 1) {

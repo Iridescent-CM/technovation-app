@@ -1,5 +1,3 @@
-require 'fill_pdfs'
-
 module Admin
   class ParticipantsController < AdminController
     include DatagridController
@@ -13,19 +11,6 @@ module Admin
       @teams = Team.current
       @scores = submission_score(@account)
       @season_flag = SeasonFlag.new(@account)
-      @certificate_recipient = CertificateRecipient.new(@account)
-
-      @certificate_recipients = []
-
-      if @account.judge_profile
-        @account.seasons.each do |season|
-          FillPdfs.(@account, season: season)
-
-          cert = CertificateRecipient.new(@account, season: season)
-
-          @certificate_recipients.push(cert) if cert.valid?
-        end
-      end
     end
 
     def edit

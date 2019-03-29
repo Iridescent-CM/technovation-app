@@ -56,27 +56,6 @@ RSpec.describe Account do
     }.from(1).to(0)
   end
 
-  it "can override the earned certificate type" do
-    account = FactoryBot.create(:judge, :general_certificate).account
-
-    account.update(
-      override_certificate_type: Account.override_certificate_types["judge_advisor"],
-    )
-
-    expect {
-      FillPdfs.(account.reload)
-    }.to change {
-      account.current_judge_advisor_certificates.count
-    }.from(0).to(1)
-    .and not_change {
-      account.current_general_judge_certificates.count
-    }
-
-    certificate_recipient = CertificateRecipient.new(account)
-
-    expect(certificate_recipient.judge_certificate_level).to eq("Judge Advisor")
-  end
-
   it "validates email uniqueness with dots" do
     FactoryBot.create(:account, email: "remove.dots@gmail.com")
     account = FactoryBot.build(:account, email: "removedots@gmail.com")

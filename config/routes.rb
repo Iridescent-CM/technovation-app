@@ -54,8 +54,6 @@ Rails.application.routes.draw do
     resources :regional_pitch_events, only: [:show, :index]
     resources :scores, only: :index
 
-    resources :certificates, only: :create
-
     resources :image_process_jobs, only: :create
     resources :job_statuses, only: :show
 
@@ -107,8 +105,6 @@ Rails.application.routes.draw do
     resources :pending_teammates, only: :index
     resource :honor_code, only: :show
     resources :embed_codes, only: :show
-
-    resources :certificates, only: :create
 
     resource :code_checklist, only: [:update, :show]
     resources :screenshots, only: [:index, :create, :update, :destroy]
@@ -299,9 +295,6 @@ Rails.application.routes.draw do
     resources :export_downloads, only: :update
 
     resource :season_schedule_settings, only: [:edit, :update]
-
-    resource :certificate_overrides, only: :create
-    resource :certificates, only: :create
   end
 
   namespace :public do

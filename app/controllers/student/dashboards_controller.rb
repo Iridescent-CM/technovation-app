@@ -1,15 +1,9 @@
-require 'fill_pdfs'
-
 module Student
   class DashboardsController < StudentController
     include LocationStorageController
 
     def show
       @regional_events = available_regional_events
-
-      if SeasonToggles.display_scores?
-        FillPdfs.(current_account, team: current_team)
-      end
     end
 
     private

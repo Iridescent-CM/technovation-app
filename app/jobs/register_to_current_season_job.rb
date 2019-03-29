@@ -47,12 +47,6 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       })
     end
 
-    if record.respond_to?(:override_certificate_type)
-      update_data = update_data.merge({
-        override_certificate_type: nil,
-      })
-    end
-
     record.update_columns(update_data)
   end
 
