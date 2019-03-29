@@ -11,6 +11,7 @@ module Admin
       @teams = Team.current
       @scores = submission_score(@account)
       @season_flag = SeasonFlag.new(@account)
+      @certificates = @account.current_certificates
     end
 
     def edit

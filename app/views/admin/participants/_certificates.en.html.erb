@@ -1,0 +1,20 @@
+<h4 class="reset"><%= Season.current.year %> Certificates</h4>
+
+<div class="panel">
+  <% if @certificates.any? %>
+    <p>Certificates that are currently generated for this user:</p>
+    <p>
+      <ul>
+        <% @certificates.each do |certificate| %>
+          <li>
+            <%= link_to certificate.description,
+              certificate.file_url,
+              :target => "_blank" %>
+          </li>
+        <% end %>
+      </ul>
+    </p>
+  <% else %>
+    <p>There are no certificates for this user for <%= Season.current.year %>.</p>
+  <% end %>
+</div>
