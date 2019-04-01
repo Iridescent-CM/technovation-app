@@ -1,6 +1,21 @@
 require "rails_helper"
+require "fill_pdfs"
 
 RSpec.describe DetermineCertificates do
+  it "detects existing certificates" do
+    student = FactoryBot.create(:student, :half_complete_submission)
+
+    expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
+    expect(DetermineCertificates.new(student.account).needed).to contain_exactly(
+      CertificateRecipient.new(:participation, student.account, team: student.team)
+    )
+
+    FillPdfs.(student.account)
+
+    expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
+    expect(DetermineCertificates.new(student.account).needed).to be_empty
+  end
+
   context "for student" do
     it "awards participation" do
       student = FactoryBot.create(:student, :half_complete_submission)
