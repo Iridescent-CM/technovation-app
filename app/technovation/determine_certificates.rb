@@ -1,157 +1,168 @@
 require "./app/constants/badge_levels"
 
-module DetermineCertificates
+class DetermineCertificates
+  private
+  attr_reader :account
 
-  class << self
-    def call(account, options = {})
-      needed = []
+  public
+  def initialize(account, options = {})
+    @account = account
+  end
 
-      eligible_certificate_types(account).each do |certificate_type|
-        needed += needed_recipients(certificate_type, account)
-      end
+  def eligible_types
+    CERTIFICATE_TYPES.select do |certificate_type|
+      gets_certificate?(certificate_type)
+    end
+  end
 
-      return needed
+  def needed
+    needed = []
+
+    eligible_types.each do |certificate_type|
+      needed += needed_recipients(certificate_type)
     end
 
-    private
-    def season
-      Season.current.year
-    end
+    return needed
+  end
 
-    def eligible_certificate_types(account)
-      CERTIFICATE_TYPES.select do |certificate_type|
-        gets_certificate?(certificate_type, account)
-      end
-    end
+  private
+  def season
+    Season.current.year
+  end
 
-    def gets_certificate?(certificate_type, account)
-      send("gets_#{certificate_type}_certificate?", account)
+  def eligible_certificate_types
+    CERTIFICATE_TYPES.select do |certificate_type|
+      gets_certificate?(certificate_type, @account)
     end
+  end
 
-    def needed_recipients(certificate_type, account)
-      send("needed_#{certificate_type}_recipients", account)
-    end
+  def gets_certificate?(certificate_type)
+    send("gets_#{certificate_type}_certificate?")
+  end
 
-    def gets_completion_certificate?(account)
-      return false if !account.student_profile.present?
+  def needed_recipients(certificate_type)
+    send("needed_#{certificate_type}_recipients")
+  end
 
-      team = account.student_profile.team
-      return !team.nil? &&
-        team.submission.complete? &&
-          team.submission.quarterfinalist?
-    end
+  def gets_completion_certificate?
+    return false if !@account.student_profile.present?
 
-    def needed_completion_recipients(account)
-      if account.completion_certificates.by_season(season).for_team(account.student_profile.team).any?
-        []
-      else
-        [CertificateRecipient.new(:completion, account, team: account.student_profile.team)]
-      end
-    end
-    
-    def gets_participation_certificate?(account)
-      return false if !account.student_profile.present?
+    team = @account.student_profile.team
+    return !team.nil? &&
+      team.submission.complete? &&
+        team.submission.quarterfinalist?
+  end
 
-      team = account.student_profile.team
-      return !team.nil? && team.submission.qualifies_for_participation?
+  def needed_completion_recipients
+    if @account.completion_certificates.by_season(season).for_team(@account.student_profile.team).any?
+      []
+    else
+      [CertificateRecipient.new(:completion, @account, team: @account.student_profile.team)]
     end
+  end
+  
+  def gets_participation_certificate?
+    return false if !@account.student_profile.present?
 
-    def needed_participation_recipients(account)
-      if account.participation_certificates.by_season(season).for_team(account.student_profile.team).any?
-        []
-      else
-        [CertificateRecipient.new(:participation, account, team: account.student_profile.team)]
-      end
-    end
-    
-    def gets_semifinalist_certificate?(account)
-      return false if !account.student_profile.present?
+    team = @account.student_profile.team
+    return !team.nil? && team.submission.qualifies_for_participation?
+  end
 
-      team = account.student_profile.team
-      return !team.nil? && team.submission.semifinalist?
+  def needed_participation_recipients
+    if @account.participation_certificates.by_season(season).for_team(@account.student_profile.team).any?
+      []
+    else
+      [CertificateRecipient.new(:participation, @account, team: @account.student_profile.team)]
     end
+  end
+  
+  def gets_semifinalist_certificate?
+    return false if !@account.student_profile.present?
 
-    def needed_semifinalist_recipients(account)
-      if account.semifinalist_certificates.by_season(season).for_team(account.student_profile.team).any?
-        []
-      else
-        [CertificateRecipient.new(:semifinalist, account, team: account.student_profile.team)]
-      end
-    end
-    
-    def gets_mentor_appreciation_certificate?(account)
-      account.mentor_profile.present? &&
-        account.mentor_profile.teams.by_season(season).any?
-    end
+    team = @account.student_profile.team
+    return !team.nil? && team.submission.semifinalist?
+  end
 
-    def needed_mentor_appreciation_recipients(account)
-      account.mentor_profile.teams.by_season(season).select { |team|
-        !account.appreciation_certificates.by_season(season).for_team(team).any?
-      }.map { |team|
-        CertificateRecipient.new(:mentor_appreciation, account, team: team)
-      }
+  def needed_semifinalist_recipients
+    if @account.semifinalist_certificates.by_season(season).for_team(@account.student_profile.team).any?
+      []
+    else
+      [CertificateRecipient.new(:semifinalist, @account, team: @account.student_profile.team)]
     end
+  end
+  
+  def gets_mentor_appreciation_certificate?
+    @account.mentor_profile.present? &&
+      @account.mentor_profile.teams.by_season(season).any?
+  end
 
-    def gets_general_judge_certificate?(account)
-      account.judge_profile.present? &&
-        !account.judge_profile.events.any? &&
-          account.judge_profile.completed_scores.by_season(season).any? &&
-            account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
-    end
+  def needed_mentor_appreciation_recipients
+    @account.mentor_profile.teams.by_season(season).select { |team|
+      !@account.appreciation_certificates.by_season(season).for_team(team).any?
+    }.map { |team|
+      CertificateRecipient.new(:mentor_appreciation, @account, team: team)
+    }
+  end
 
-    def needed_general_judge_recipients(account)
-      if account.general_judge_certificates.by_season(season).any?
-        []
-      else
-        [CertificateRecipient.new(:general_judge, account)]
-      end
-    end
+  def gets_general_judge_certificate?
+    @account.judge_profile.present? &&
+      !@account.judge_profile.events.any? &&
+        @account.judge_profile.completed_scores.by_season(season).any? &&
+          @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+  end
 
-    def gets_certified_judge_certificate?(account)
-      account.judge_profile.present? &&
-        !account.judge_profile.events.any? &&
-          account.judge_profile.completed_scores.by_season(season).any? &&
-            account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+  def needed_general_judge_recipients
+    if @account.general_judge_certificates.by_season(season).any?
+      []
+    else
+      [CertificateRecipient.new(:general_judge, @account)]
     end
+  end
 
-    def needed_certified_judge_recipients(account)
-      if account.certified_judge_certificates.by_season(season).any?
-        []
-      else
-        [CertificateRecipient.new(:certified_judge, account)]
-      end
-    end
+  def gets_certified_judge_certificate?
+    @account.judge_profile.present? &&
+      !@account.judge_profile.events.any? &&
+        @account.judge_profile.completed_scores.by_season(season).any? &&
+          @account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+  end
 
-    def gets_head_judge_certificate?(account)
-      account.judge_profile.present? &&
-        account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
-          (account.judge_profile.events.any? ||
-            account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+  def needed_certified_judge_recipients
+    if @account.certified_judge_certificates.by_season(season).any?
+      []
+    else
+      [CertificateRecipient.new(:certified_judge, @account)]
     end
+  end
 
-    def needed_head_judge_recipients(account)
-      if account.head_judge_certificates.by_season(season).any?
-        []
-      else
-        [CertificateRecipient.new(:head_judge, account)]
-      end
-    end
+  def gets_head_judge_certificate?
+    @account.judge_profile.present? &&
+      @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
+        (@account.judge_profile.events.any? ||
+          @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+  end
 
-    def gets_judge_advisor_certificate?(account)
-      account.judge_profile.present? &&
-        account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
+  def needed_head_judge_recipients
+    if @account.head_judge_certificates.by_season(season).any?
+      []
+    else
+      [CertificateRecipient.new(:head_judge, @account)]
     end
+  end
 
-    def needed_judge_advisor_recipients(account)
-      if account.judge_advisor_certificates.by_season(season).any?
-        []
-      else
-        [CertificateRecipient.new(:judge_advisor, account)]
-      end
-    end
+  def gets_judge_advisor_certificate?
+    @account.judge_profile.present? &&
+      @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
+  end
 
-    def gets_rpe_winner_certificate?(account)
-      false # handled off platform
+  def needed_judge_advisor_recipients
+    if @account.judge_advisor_certificates.by_season(season).any?
+      []
+    else
+      [CertificateRecipient.new(:judge_advisor, @account)]
     end
+  end
+
+  def gets_rpe_winner_certificate?
+    false # handled off platform
   end
 end

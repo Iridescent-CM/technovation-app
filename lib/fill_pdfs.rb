@@ -29,7 +29,7 @@ module FillPdfs
   def self.call(account, **options)
     season = options.fetch(:season) { Season.current.year }
 
-    DetermineCertificates.(account).each do |recipient|
+    DetermineCertificates.new(account).needed.each do |recipient|
       certificate_type = recipient.certificate_type
 
       generator_klass_name = "fill_pdfs/#{certificate_type}"
