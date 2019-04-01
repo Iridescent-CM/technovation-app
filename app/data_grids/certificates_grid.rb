@@ -30,12 +30,11 @@ class CertificatesGrid
   column :view, html: true do |certificate|
     link_to(
       web_icon('file-pdf-o', size: 16, remote: true),
-      certificate.file_url,
+      admin_certificate_path(certificate),
       {
         class: "view-details",
-        "v-tooltip" => "'Open certificate'",
-        data: { turbolinks: false },
-        target: :_blank,
+        "v-tooltip" => "'View certificate'",
+        data: { turbolinks: false }
       }
     )
   end

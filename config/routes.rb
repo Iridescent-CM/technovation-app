@@ -296,7 +296,7 @@ Rails.application.routes.draw do
 
     resource :season_schedule_settings, only: [:edit, :update]
 
-    resources :certificates, only: :index
+    resources :certificates, only: [:index, :show, :destroy]
   end
 
   namespace :public do

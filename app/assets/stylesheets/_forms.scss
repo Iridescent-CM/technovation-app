@@ -283,3 +283,9 @@ form[data-remote] {
     color: rgba(72, 72, 72, .1);
   }
 }
+
+.admin-actions-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}

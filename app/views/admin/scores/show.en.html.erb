@@ -67,7 +67,7 @@
   </div>
 
   <% @score.awaiting_review(current_account) do %>
-    <div class="admin-score-actions">
+    <div class="admin-actions-buttons">
       <%= button_to "Approve this score",
         admin_score_approvals_path(id: @score.id),
         method: "post",
