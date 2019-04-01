@@ -27,11 +27,11 @@ module FillPdfs
   end
 
   def self.call(account, **options)
-    team = options.fetch(:team) { ::NullTeam.new }
     season = options.fetch(:season) { Season.current.year }
-    recipient = CertificateRecipient.new(account, team: team, season: season)
 
-    recipient.needed_certificate_types.each do |certificate_type|
+    DetermineCertificates.(account).each do |recipient|
+      certificate_type = recipient.certificate_type
+
       generator_klass_name = "fill_pdfs/#{certificate_type}"
       generator_klass = generator_klass_name.camelize.safe_constantize
 

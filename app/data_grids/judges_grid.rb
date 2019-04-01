@@ -38,7 +38,22 @@ class JudgesGrid
   end
 
   column :judge_rank do |account, grid|
-    CertificateRecipient.new(account).judge_certificate_level
+    return "" if !account.judge_profile.present?
+
+    scores = account.judge_profile.completed_scores.by_season(season)
+
+    if scores.any? && scores.count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+      "General Judge"
+    elsif scores.any? && scores.count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+      "Certified Judge"
+    elsif scores.count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
+            (judge.events.any? || scores.count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+      "Head Judge"
+    elsif scores.count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
+      "Judge Advisor"
+    else
+      ""
+    end
   end
 
   column :industry do

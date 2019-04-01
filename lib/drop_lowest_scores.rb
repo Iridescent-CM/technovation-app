@@ -21,9 +21,6 @@ module DropLowestScores
       logger.info "SF Average: #{submission.semifinals_average_score}"
       logger.info submission.semifinals_complete_submission_scores.map(&:total).sort
 
-      account = minimum_score.judge_profile.account
-      certificate_recipient = CertificateRecipient.new(account)
-
       logger.warn "DROP lowest score"
       logger.info minimum_score.total
 
@@ -31,9 +28,6 @@ module DropLowestScores
       minimum_score.destroy
 
       logger.info "Updated SF Average: #{submission.reload.semifinals_average_score}"
-
-      certificate_recipient = CertificateRecipient.new(account.reload)
-      logger.info "Reloaded judge certificate - #{certificate_recipient.string_certificate_type} - Judge Account##{account.id}"
     end
   end
 end

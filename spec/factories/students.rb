@@ -34,17 +34,6 @@ FactoryBot.define do
       end
     end
 
-    trait :has_current_completion_certificate do
-      quarterfinalist
-
-      after(:create) do |student|
-        FactoryBot.create(:certificate,
-          cert_type: :completion,
-          account: student.account
-        )
-      end
-    end
-
     trait :incomplete_submission do
       onboarded
       on_team
