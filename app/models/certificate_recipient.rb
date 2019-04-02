@@ -40,6 +40,14 @@ class CertificateRecipient
     mobile_app_name
   end
 
+  def certificates
+    @account.certificates.by_season(@season).public_send(@certificate_type).for_team(@team)
+  end
+
+  def certificate_issued?
+    certificates.any?
+  end
+
   def ==(o)
     o.class == self.class && o.state == self.state
   end

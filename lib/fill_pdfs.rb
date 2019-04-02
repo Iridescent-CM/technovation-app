@@ -30,19 +30,23 @@ module FillPdfs
     season = options.fetch(:season) { Season.current.year }
 
     DetermineCertificates.new(account).needed.each do |recipient|
-      certificate_type = recipient.certificate_type
-
-      generator_klass_name = "fill_pdfs/#{certificate_type}"
-      generator_klass = generator_klass_name.camelize.safe_constantize
-
-      generator = if !!generator_klass
-                    generator_klass.new(recipient, certificate_type)
-                  else
-                    GenericPDFFiller.new(recipient, certificate_type)
-                  end
-
-      generator.generate_certificate
+      fill(recipient)
     end
+  end
+
+  def self.fill(recipient)
+    certificate_type = recipient.certificate_type
+
+    generator_klass_name = "fill_pdfs/#{certificate_type}"
+    generator_klass = generator_klass_name.camelize.safe_constantize
+
+    generator = if !!generator_klass
+                  generator_klass.new(recipient, certificate_type)
+                else
+                  GenericPDFFiller.new(recipient, certificate_type)
+                end
+
+    generator.generate_certificate
   end
 
   attr_reader :recipient, :account, :team, :type, :season
