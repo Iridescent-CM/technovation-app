@@ -5,8 +5,10 @@ RSpec.describe CertificateJob do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
     team = mentor.current_teams.last
 
+    cr = CertificateRecipient.new(:mentor_appreciation, mentor.account, team: team)
+
     expect {
-      CertificateJob.perform_later(mentor.account_id, team.id)
+      CertificateJob.perform_later(cr.state)
     }.to change {
       mentor.current_appreciation_certificates.count
     }.from(0).to(1)
@@ -16,8 +18,10 @@ RSpec.describe CertificateJob do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
     job_id = nil
 
+    cr = CertificateRecipient.new(:mentor_appreciation, mentor.account)
+
     expect {
-      job_id = CertificateJob.perform_later(mentor.account_id).job_id
+      job_id = CertificateJob.perform_later(cr.state).job_id
     }.to change {
       Job.count
     }.from(0).to(1)
@@ -28,7 +32,9 @@ RSpec.describe CertificateJob do
   it "adds the certificale file url to the DB job payload" do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
 
-    job_id = CertificateJob.perform_later(mentor.account_id).job_id
+    cr = CertificateRecipient.new(:mentor_appreciation, mentor.account)
+
+    job_id = CertificateJob.perform_later(cr.state).job_id
     job = Job.find_by(job_id: job_id)
 
     expect(job.payload).to eq({

@@ -40,16 +40,39 @@ class CertificateRecipient
     mobile_app_name
   end
 
+  def certificates
+    @account.certificates.by_season(@season).public_send(@certificate_type).for_team(@team)
+  end
+
+  def certificate_issued?
+    certificates.any?
+  end
+
   def ==(o)
     o.class == self.class && o.state == self.state
   end
 
   def state
     return [
-      @certificate_type,
+      @certificate_type.to_s,
       @account.id,
-      @team.id,
+      @team.nil? ? nil : @team.id,
       @season
     ]
   end
+
+  def self.from_state(state)
+    certificate_type, account_id, team_id, season = state
+
+    certificate_type = certificate_type.to_sym
+    account = Account.find(account_id)
+    if team_id
+      team = Team.find(team_id)
+    else
+      team = nil
+    end
+
+    new(certificate_type, account, team: team, season: season)
+  end
+
 end

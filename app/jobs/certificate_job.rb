@@ -4,8 +4,8 @@ class CertificateJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    account_id = job.arguments.first
-    owner = Account.find(account_id)
+    recipient = CertificateRecipient.from_state(job.arguments.first)
+    owner = recipient.account
 
     Job.create!(
       job_id: job.job_id,
@@ -16,19 +16,11 @@ class CertificateJob < ActiveJob::Base
 
   after_perform do |job|
     if db_job = Job.find_by(job_id: job.job_id)
-      options = job.arguments.last
+      recipient = CertificateRecipient.from_state(job.arguments.first)
 
-      if options.is_a?(Hash)
-        cert = if options[:past_allowed]
-          db_job.owner.certificates.last
-        else
-          db_job.owner.current_certificates.last
-        end
-      else
-        cert = db_job.owner.current_certificates.last
-      end
-
-      if cert
+      if recipient.certificate_issued?
+        #FIXME: using .last here is still a bit risky
+        cert = recipient.certificates.last
         db_job.update_columns(
           status: "complete",
           payload: {
@@ -43,15 +35,7 @@ class CertificateJob < ActiveJob::Base
     end
   end
 
-  def perform(account_id, team_id = nil, **options)
-    account = Account.find(account_id)
-
-    team = if team_id
-             Team.find(team_id)
-           else
-             nil
-           end
-
-    FillPdfs.(account, team: team)
+  def perform(certificate_recipient_state)
+    FillPdfs.fill(CertificateRecipient.from_state(certificate_recipient_state))
   end
 end
