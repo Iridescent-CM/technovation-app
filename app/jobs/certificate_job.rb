@@ -4,8 +4,8 @@ class CertificateJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    account_id = job.arguments.second
-    owner = Account.find(account_id)
+    recipient = CertificateRecipient.from_state(job.arguments.first)
+    owner = recipient.account
 
     Job.create!(
       job_id: job.job_id,
