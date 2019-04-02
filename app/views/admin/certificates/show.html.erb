@@ -1,0 +1,38 @@
+<% provide :title, "Viewing #{@account.name} - #{@certificate.description}" %>
+
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <div class="panel">
+      <h3>
+        <%= link_to(
+          @account.name,
+          admin_participant_path(@account)
+        ) %>
+      </h3>
+
+      <h4><%= @certificate.description %></h4>
+
+      <p>
+        You can view or delete this <%= @certificate.season %>
+        certificate for <%= @account.name %> below.
+      </p>
+
+      <div class="admin-actions-buttons">
+        <%= link_to "View this certificate",
+          @certificate.file_url,
+          class: "button",
+          :target => "_blank"
+        %>
+
+        <%= button_to "Delete this certificate",
+          admin_certificate_path(@certificate),
+          method: "delete",
+          class: "button button--danger",
+          data: {
+            confirm: "You are about to DELETE this certificate",
+          }
+        %>
+      </div>
+    </div>
+  </div>
+</div>
