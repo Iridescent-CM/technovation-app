@@ -20,15 +20,7 @@ def job_for(account)
   puts "\t#{certificates.needed.count} certificate(s) needed"
 
   certificates.needed.each do |recipient|
-    type = recipient.certificate_type.to_s
-    account_id = recipient.account.id
-    team_id = if recipient.team
-                recipient.team.id
-              else
-                nil
-              end
-
-    CertificateJob.perform_later(type, account_id, team_id)
+    CertificateJob.perform_later(recipient.state)
   end
 end
 

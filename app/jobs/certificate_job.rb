@@ -16,16 +16,7 @@ class CertificateJob < ActiveJob::Base
 
   after_perform do |job|
     if db_job = Job.find_by(job_id: job.job_id)
-      certificate_type = job.arguments[0]
-      account = Account.find(job.arguments[1])
-
-      team = if job.arguments[2]
-               Team.find(job.arguments[2])
-             else
-               nil
-             end
-
-      recipient = CertificateRecipient.new(certificate_type, account, team: team)
+      recipient = CertificateRecipient.from_state(job.arguments.first)
 
       if recipient.certificate_issued?
         #FIXME: using .last here is still a bit risky
@@ -44,15 +35,7 @@ class CertificateJob < ActiveJob::Base
     end
   end
 
-  def perform(certificate_type, account_id, team_id = nil, **options)
-    account = Account.find(account_id)
-
-    team = if team_id
-             Team.find(team_id)
-           else
-             nil
-           end
-
-    FillPdfs.fill(CertificateRecipient.new(certificate_type, account, team: team))
+  def perform(certificate_recipient_state)
+    FillPdfs.fill(CertificateRecipient.from_state(certificate_recipient_state))
   end
 end

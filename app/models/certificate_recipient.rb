@@ -60,4 +60,13 @@ class CertificateRecipient
       @season
     ]
   end
+
+  def self.from_state(state)
+    certificate_type, account_id, team_id, season = state
+    account = Account.find(account_id)
+    team = Team.find(team_id)
+
+    new(certificate_type, account, team: team, season: season)
+  end
+
 end
