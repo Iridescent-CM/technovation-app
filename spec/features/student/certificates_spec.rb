@@ -9,7 +9,7 @@ RSpec.feature "Student certificates" do
 
     scenario "receive a semifinalist certificate" do
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.to change {
         student.certificates.current.semifinalist.count
       }.from(0).to(1)
@@ -25,7 +25,7 @@ RSpec.feature "Student certificates" do
 
     scenario "no completion certificate is generated" do
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.not_to change {
         student.certificates.current.completion.count
       }
@@ -33,7 +33,7 @@ RSpec.feature "Student certificates" do
 
     scenario "no participation certificate is generated" do
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.not_to change {
         student.certificates.current.participation.count
       }
@@ -47,7 +47,7 @@ RSpec.feature "Student certificates" do
 
     scenario "receive a completion certificate" do
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.to change {
         student.certificates.current.completion.count
       }.from(0).to(1)
@@ -63,7 +63,7 @@ RSpec.feature "Student certificates" do
 
     scenario "no participation certificate is generated" do
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.not_to change {
         student.certificates.current.participation.count
       }
@@ -75,7 +75,7 @@ RSpec.feature "Student certificates" do
       student = FactoryBot.create(:student, :incomplete_submission)
 
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.not_to change {
         student.certificates.count
       }
@@ -91,7 +91,7 @@ RSpec.feature "Student certificates" do
 
     scenario "a participation certificate is generated" do
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.to change {
         student.certificates.current.participation.count
       }.from(0).to(1)
@@ -107,7 +107,7 @@ RSpec.feature "Student certificates" do
 
     scenario "no completion certificate is generated" do
       expect {
-        FillPdfs.(student.account, team: student.team)
+        FillPdfs.(student.account)
       }.not_to change {
         student.certificates.current.completion.count
       }

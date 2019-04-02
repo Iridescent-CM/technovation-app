@@ -3,10 +3,15 @@ require "fill_pdfs"
 
 RSpec.describe FillPdfs do
   it "does not run twice for accounts with current certs of the detected type" do
-    student = FactoryBot.create(:student, :quarterfinalist, :has_current_completion_certificate)
+    student = FactoryBot.create(:student, :quarterfinalist)
+    FactoryBot.create(:certificate,
+      cert_type: :completion,
+      account: student.account,
+      team: student.team
+    )
 
     expect {
-      FillPdfs.(student.account, team: student.team)
+      FillPdfs.(student.account)
     }.not_to change {
       student.certificates.current.completion.count
     }

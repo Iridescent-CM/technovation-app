@@ -1,0 +1,158 @@
+require "rails_helper"
+require "fill_pdfs"
+
+RSpec.describe DetermineCertificates do
+  it "detects existing certificates" do
+    student = FactoryBot.create(:student, :half_complete_submission)
+
+    expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
+    expect(DetermineCertificates.new(student.account).needed).to contain_exactly(
+      CertificateRecipient.new(:participation, student.account, team: student.team)
+    )
+
+    FillPdfs.(student.account)
+
+    expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
+    expect(DetermineCertificates.new(student.account).needed).to be_empty
+  end
+
+  context "for student" do
+    it "awards participation" do
+      student = FactoryBot.create(:student, :half_complete_submission)
+
+      expect(DetermineCertificates.new(student.account).needed).to contain_exactly(
+        CertificateRecipient.new(:participation, student.account, team: student.team)
+      )
+    end
+
+    it "awards completion" do
+      student = FactoryBot.create(:student, :quarterfinalist)
+
+      expect(DetermineCertificates.new(student.account).needed).to contain_exactly(
+        CertificateRecipient.new(:completion, student.account, team: student.team)
+      )
+    end
+
+    it "awards semifinalist" do
+      student = FactoryBot.create(:student, :semifinalist)
+
+      expect(DetermineCertificates.new(student.account).needed).to contain_exactly(
+        CertificateRecipient.new(:semifinalist, student.account, team: student.team)
+      )
+    end
+
+    it "awards nothing" do
+      student = FactoryBot.create(:student)
+
+      expect(DetermineCertificates.new(student.account).needed).to be_empty
+
+      student = FactoryBot.create(:student, :incomplete_submission)
+
+      expect(DetermineCertificates.new(student.account).needed).to be_empty
+    end
+  end
+
+  context "for mentor" do
+    it "awards mentor appreciation" do
+      mentor = FactoryBot.create(:mentor, number_of_teams: 1)
+
+      expect(DetermineCertificates.new(mentor.account).needed).to contain_exactly(
+        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: mentor.current_teams.first)
+      )
+    end
+
+    it "awards many mentor appreciations" do
+      mentor = FactoryBot.create(:mentor, number_of_teams: 5)
+
+      expected = mentor.current_teams.map do |team|
+        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: team)
+      end
+      expect(DetermineCertificates.new(mentor.account).needed).to match_array(expected)
+    end
+
+    it "awards nothing" do
+      mentor = FactoryBot.create(:mentor)
+
+      expect(DetermineCertificates.new(mentor.account).needed).to be_empty
+    end
+  end
+
+  context "for mentor/judge" do
+    it "awards mentor and judge certificates" do
+      user = FactoryBot.create(:mentor, :has_judge_profile, number_of_teams: 1)
+      5.times do
+        FactoryBot.create(:score, :complete, judge_profile: user.account.judge_profile)
+      end
+
+      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w{mentor_appreciation certified_judge})
+    end
+  end
+
+  context "for judge" do
+    it "awards general judge" do
+      judge = FactoryBot.create(:judge)
+
+      1.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:general_judge, judge.account)
+      )
+    end
+
+    it "awards certified judge by count" do
+      judge = FactoryBot.create(:judge)
+
+      5.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:certified_judge, judge.account)
+      )
+    end
+
+    it "awards head judge by count" do
+      judge = FactoryBot.create(:judge)
+
+      6.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:head_judge, judge.account)
+      )
+    end
+
+    it "awards head judge by event" do
+      judge = FactoryBot.create(:judge, :attending_live_event)
+
+      1.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:head_judge, judge.account)
+      )
+    end
+
+    it "awards judge advisor" do
+      judge = FactoryBot.create(:judge)
+
+      11.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:judge_advisor, judge.account)
+      )
+    end
+
+    it "awards nothing" do
+      judge = FactoryBot.create(:judge)
+
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
+    end
+  end
+end

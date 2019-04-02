@@ -38,7 +38,15 @@ class JudgesGrid
   end
 
   column :judge_rank do |account, grid|
-    CertificateRecipient.new(account).judge_certificate_level
+    rank = DetermineCertificates.new(account).eligible_types.select { |type|
+      type.include?("judge")
+    }.first
+
+    if rank
+      rank.humanize.titleize
+    else
+      ""
+    end
   end
 
   column :industry do

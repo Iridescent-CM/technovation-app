@@ -49,8 +49,7 @@ RSpec.feature "Mentor certificates" do
     TeamRosterManaging.add(team_b, mentor)
 
     expect {
-      FillPdfs.(mentor.account, team: team_a)
-      FillPdfs.(mentor.account, team: team_b)
+      FillPdfs.(mentor.account)
     }.to change {
       mentor.certificates.current.mentor_appreciation.count
     }.from(0).to(2)
