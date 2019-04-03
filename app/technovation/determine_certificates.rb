@@ -108,14 +108,6 @@ class DetermineCertificates
     false # Only valid for seasons before 2019
   end
 
-  def needed_general_judge_recipients
-    if @account.certificates.judge_types.by_season(season).any?
-      []
-    else
-      [CertificateRecipient.new(:general_judge, @account)]
-    end
-  end
-
   def gets_certified_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.events.any? &&

@@ -9,7 +9,6 @@ STUDENT_CERTIFICATE_TYPES = %w{
 }
 
 JUDGE_CERTIFICATE_TYPES = %w{
-  general_judge
   certified_judge
   head_judge
   judge_advisor
