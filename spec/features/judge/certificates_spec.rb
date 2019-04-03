@@ -83,9 +83,9 @@ RSpec.feature "Judge certificates" do
 
       expect {
         FillPdfs.(judge.account)
-      }.to change {
+      }.to not_change {
         judge.current_general_judge_certificates.count
-      }.from(0).to(1).and not_change {
+      }.and not_change {
         judge.current_certified_judge_certificates.count
       }.and not_change {
         judge.current_head_judge_certificates.count
@@ -94,11 +94,8 @@ RSpec.feature "Judge certificates" do
       }
 
       sign_in(judge)
-      expect(page).to have_css("#judge-certificate")
-      expect(page).to have_link(
-        "View your certificate",
-        href: judge.current_general_judge_certificates.last.file_url
-      )
+      expect(page).not_to have_css("#judge-certificate")
+      expect(page).not_to have_link("View your certificate")
     end
   end
 

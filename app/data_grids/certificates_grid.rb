@@ -52,9 +52,9 @@ class CertificatesGrid
   filter :type,
     :enum,
     header: "Certificate type",
-    select: CERTIFICATE_TYPES.map { |t|
-      [t.humanize.titleize, t]
-    },
+    select: Certificate.select(:cert_type).distinct.map { |o|
+      [o.cert_type.humanize.titleize, o.cert_type]
+    }.sort,
     filter_group: "selections" do |value|
       public_send(value)
     end
