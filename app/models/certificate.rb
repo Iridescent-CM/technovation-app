@@ -9,7 +9,15 @@ class Certificate < ApplicationRecord
   mount_uploader :file, FileProcessor
 
   scope :judge_types, -> {
-    where(cert_type: CERTIFICATE_TYPES.select { |t| t.include?('judge') })
+    where(cert_type: JUDGE_CERTIFICATE_TYPES)
+  }
+
+  scope :student_types, -> {
+    where(cert_type: STUDENT_CERTIFICATE_TYPES)
+  }
+
+  scope :mentor_types, -> {
+    where(cert_type: MENTOR_CERTIFICATE_TYPES)
   }
 
   scope :for_team, -> (team) {

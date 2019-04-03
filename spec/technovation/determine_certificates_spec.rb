@@ -2,20 +2,6 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.describe DetermineCertificates do
-  it "detects existing certificates" do
-    student = FactoryBot.create(:student, :half_complete_submission)
-
-    expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
-    expect(DetermineCertificates.new(student.account).needed).to contain_exactly(
-      CertificateRecipient.new(:participation, student.account, team: student.team)
-    )
-
-    FillPdfs.(student.account)
-
-    expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
-    expect(DetermineCertificates.new(student.account).needed).to be_empty
-  end
-
   context "for student" do
     it "awards participation" do
       student = FactoryBot.create(:student, :half_complete_submission)
@@ -48,6 +34,28 @@ RSpec.describe DetermineCertificates do
 
       student = FactoryBot.create(:student, :incomplete_submission)
 
+      expect(DetermineCertificates.new(student.account).needed).to be_empty
+    end
+
+    it "awards nothing if equivalent certificate exists" do
+      student = FactoryBot.create(:student, :half_complete_submission)
+
+      FillPdfs.(student.account)
+
+      expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
+      expect(DetermineCertificates.new(student.account).needed).to be_empty
+    end
+
+    it "awards nothing if other student type certificate exists" do
+      student = FactoryBot.create(:student, :half_complete_submission)
+
+      FactoryBot.create(:certificate,
+        account: student.account,
+        team: student.team,
+        cert_type: :completion
+      )
+
+      expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
       expect(DetermineCertificates.new(student.account).needed).to be_empty
     end
   end
@@ -149,6 +157,25 @@ RSpec.describe DetermineCertificates do
 
     it "awards nothing" do
       judge = FactoryBot.create(:judge)
+
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
+    end
+
+    it "awards nothing if judge type certificate already present" do
+      judge = FactoryBot.create(:judge)
+
+      5.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:certified_judge, judge.account)
+      )
+
+      FactoryBot.create(:certificate,
+        account: judge.account,
+        cert_type: :head_judge
+      )
 
       expect(DetermineCertificates.new(judge.account).needed).to be_empty
     end

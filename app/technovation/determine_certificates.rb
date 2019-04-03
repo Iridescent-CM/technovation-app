@@ -54,7 +54,7 @@ class DetermineCertificates
   end
 
   def needed_completion_recipients
-    if @account.completion_certificates.by_season(season).for_team(@account.student_profile.team).any?
+    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
       []
     else
       [CertificateRecipient.new(:completion, @account, team: @account.student_profile.team)]
@@ -69,7 +69,7 @@ class DetermineCertificates
   end
 
   def needed_participation_recipients
-    if @account.participation_certificates.by_season(season).for_team(@account.student_profile.team).any?
+    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
       []
     else
       [CertificateRecipient.new(:participation, @account, team: @account.student_profile.team)]
@@ -84,7 +84,7 @@ class DetermineCertificates
   end
 
   def needed_semifinalist_recipients
-    if @account.semifinalist_certificates.by_season(season).for_team(@account.student_profile.team).any?
+    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
       []
     else
       [CertificateRecipient.new(:semifinalist, @account, team: @account.student_profile.team)]
@@ -108,14 +108,6 @@ class DetermineCertificates
     false # Only valid for seasons before 2019
   end
 
-  def needed_general_judge_recipients
-    if @account.general_judge_certificates.by_season(season).any?
-      []
-    else
-      [CertificateRecipient.new(:general_judge, @account)]
-    end
-  end
-
   def gets_certified_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.events.any? &&
@@ -124,7 +116,7 @@ class DetermineCertificates
   end
 
   def needed_certified_judge_recipients
-    if @account.certified_judge_certificates.by_season(season).any?
+    if @account.certificates.judge_types.by_season(season).any?
       []
     else
       [CertificateRecipient.new(:certified_judge, @account)]
@@ -139,7 +131,7 @@ class DetermineCertificates
   end
 
   def needed_head_judge_recipients
-    if @account.head_judge_certificates.by_season(season).any?
+    if @account.certificates.judge_types.by_season(season).any?
       []
     else
       [CertificateRecipient.new(:head_judge, @account)]
@@ -152,7 +144,7 @@ class DetermineCertificates
   end
 
   def needed_judge_advisor_recipients
-    if @account.judge_advisor_certificates.by_season(season).any?
+    if @account.certificates.judge_types.by_season(season).any?
       []
     else
       [CertificateRecipient.new(:judge_advisor, @account)]

@@ -48,6 +48,16 @@ class CertificateRecipient
     certificates.any?
   end
 
+  def description
+    title = @certificate_type.to_s.humanize.titleize
+
+    if @team.present?
+      "#{title} Certificate for #{@team.name}"
+    else
+      "#{title} Certificate"
+    end
+  end
+
   def ==(o)
     o.class == self.class && o.state == self.state
   end
