@@ -12,6 +12,14 @@ class Certificate < ApplicationRecord
     where(cert_type: CERTIFICATE_TYPES.select { |t| t.include?('judge') })
   }
 
+  scope :student_types, -> {
+    where(cert_type: [:participation, :completion, :semifinalist])
+  }
+
+  scope :mentor_types, -> {
+    where(cert_type: :mentor_appreciation)
+  }
+
   scope :for_team, -> (team) {
     where(team: team)
   }

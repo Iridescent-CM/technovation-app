@@ -182,7 +182,8 @@
       </div>
     <% end %>
 
-    <%= render 'admin/participants/certificates' %>
+    <%= render 'admin/participants/certificates',
+        account: @account %>
 
     <div class="panel">
       <%= link_to(
