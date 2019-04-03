@@ -93,7 +93,7 @@ namespace :teams do
     puts "Data exported to #{filename}"
   end
 
-  desc "List all current season technical checlists"
+  desc "List all current season technical checklists"
   task technical_checklist_dump: :environment do
     puts "Exporting data..."
 

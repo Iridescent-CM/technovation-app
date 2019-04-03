@@ -144,6 +144,13 @@ class SubmissionScore < ActiveRecord::Base
   scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
   scope :incomplete, -> { where("submission_scores.completed_at IS NULL") }
 
+  scope :complete_with_dropped, -> {
+    with_deleted.where(
+      "submission_scores.completed_at IS NOT NULL " +
+      "AND (submission_scores.deleted_at IS NULL OR submission_scores.dropped_at IS NOT NULL)"
+    )
+  }
+
   scope :completed_too_fast, -> { where(completed_too_fast: true) }
   scope :completed_too_fast_repeat_offense, -> {
     where(completed_too_fast_repeat_offense: true)
@@ -279,6 +286,10 @@ class SubmissionScore < ActiveRecord::Base
 
   def complete!
     update(completed_at: Time.current)
+  end
+
+  def drop_score!
+    update(dropped_at: Time.current)
   end
 
   def approved?

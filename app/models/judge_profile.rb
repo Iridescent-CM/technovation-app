@@ -82,7 +82,7 @@ class JudgeProfile < ActiveRecord::Base
   has_many :current_complete_scores, -> { current.complete },
    class_name: "SubmissionScore"
 
-  has_many :completed_scores, -> { complete },
+  has_many :completed_scores, -> { complete_with_dropped },
    class_name: "SubmissionScore"
 
   has_many :current_completed_scores, -> { current.complete },
