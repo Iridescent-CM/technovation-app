@@ -7,8 +7,6 @@ RSpec.describe DropLowestScores do
     lowest_score = double(
       :Score,
       total: 45,
-      destroy: true,
-      save: true,
       :drop_score! => true,
       judge_profile: NullProfile.new
     )
@@ -30,7 +28,7 @@ RSpec.describe DropLowestScores do
 
     allow(submission).to receive(:reload).and_return(submission)
 
-    expect(lowest_score).to receive(:destroy)
+    expect(lowest_score).to receive(:drop_score!)
     DropLowestScores.(submission)
   end
 

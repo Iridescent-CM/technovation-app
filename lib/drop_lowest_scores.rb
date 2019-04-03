@@ -29,8 +29,6 @@ module DropLowestScores
 
       submission.lowest_score_dropped!
       minimum_score.drop_score!
-      minimum_score.save
-      minimum_score.destroy
 
       logger.info "Updated SF Average: #{submission.reload.semifinals_average_score}"
     end

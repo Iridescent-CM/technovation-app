@@ -290,6 +290,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def drop_score!
     update(dropped_at: Time.current)
+    self.destroy
   end
 
   def approved?
