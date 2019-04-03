@@ -1,25 +1,111 @@
 <h4 class="reset"><%= Season.current.year %> Certificates</h4>
 
 <div class="panel">
-  <% if @certificates.any? || @needed_certificates.any? %>
-    <dl>
-      <% @certificates.each do |certificate| %>
-        <dt><%= certificate.description %></dt>
-        <dd>
-          <%= web_icon("check-circle icon-green") %>
-          <%= link_to "See certificate",
-            admin_certificate_path(certificate),
-            :target => "_blank" %>
-        </dd>
+  <h5 class="reset">Current certificates:</h5>
+  <div class="grid">
+    <div class="grid__col-12">
+      <% if @certificates.any? || @needed_certificates.any? %>
+        <dl>
+          <% @certificates.each do |certificate| %>
+            <dt><%= certificate.description %></dt>
+            <dd>
+              <%= web_icon("check-circle icon-green") %>
+              <%= link_to "See certificate",
+                admin_certificate_path(certificate),
+                :target => "_blank" %>
+            </dd>
+          <% end %>
+          <% @needed_certificates.each do |recipient| %>
+            <dt><%= recipient.description %></dt>
+            <dd>
+              <%= web_icon("check-circle", text: "Will be generated") %>
+            </dd>
+          <% end %>
+        </dl>
+      <% else %>
+        <p>No <%= Season.current.year %> certificates found and no certificates to generate for <%= account.first_name %>.</p>
       <% end %>
-      <% @needed_certificates.each do |recipient| %>
-        <dt><%= recipient.description %></dt>
-        <dd>
-          <%= web_icon("check-circle", text: "Will be generated") %>
-        </dd>
-      <% end %>
-    </dl>
-  <% else %>
-    <p>There are no generated certificates for this user for <%= Season.current.year %>.</p>
-  <% end %>
+    </div>
+  </div>
+
+  <h5 class="reset">Manually award certificates:</h5>
+
+  <div class="grid">
+    <% if account.student_profile.present? %>
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %> 
+        <%= hidden_field_tag :account_id, account.id %>
+
+        <h6 class="reset">Student certificate</h6>
+        <p>
+          <%= select_tag :certificate_type,
+              options_for_select(STUDENT_CERTIFICATE_TYPES.map { |t|
+                [t.humanize.titleize, t]
+              }),
+              prompt: "Select type",
+              required: true,
+              class: "chosen" %>
+        </p>
+        <p>
+          <%= select_tag :team_id,
+              options_from_collection_for_select(account.current_teams, "id", "name"),
+              prompt: "Select team",
+              required: true,
+              class: "chosen" %>
+        </p>
+        <p>
+          <%= submit_tag 'Award', class: "button" %>
+        </p>
+      <% end %>  
+      <div class="grid__col-1"></div>
+    <% end %>
+
+    <% if account.mentor_profile.present? %>
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %> 
+        <%= hidden_field_tag :account_id, account.id %>
+
+        <h6 class="reset">Mentor certificate</h6>
+        <p>
+          <%= select_tag :certificate_type,
+              options_for_select(MENTOR_CERTIFICATE_TYPES.map { |t|
+                [t.humanize.titleize, t]
+              }),
+              prompt: "Select type",
+              required: true,
+              class: "chosen" %>
+        </p>
+        <p>
+          <%= select_tag :team_id,
+              options_from_collection_for_select(account.current_teams, "id", "name"),
+              prompt: "Select team",
+              required: true,
+              class: "chosen" %>
+        </p>
+        <p>
+          <%= submit_tag 'Award', class: "button" %>
+        </p>
+      <% end %>  
+      <div class="grid__col-1"></div>
+    <% end %>
+
+    <% if account.judge_profile.present? %>
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %> 
+        <%= hidden_field_tag :account_id, account.id %>
+
+        <h6 class="reset">Judge certificate</h6>
+        <p>
+          <%= select_tag :certificate_type,
+              options_for_select(JUDGE_CERTIFICATE_TYPES.map { |t|
+                [t.humanize.titleize, t]
+              }),
+              prompt: "Select type",
+              required: true,
+              class: "chosen" %>
+        </p>
+        <p>
+          <%= submit_tag 'Award', class: "button" %>
+        </p>
+      <% end %>  
+      <div class="grid__col-1"></div>
+    <% end %>
+  </div>
 </div>
