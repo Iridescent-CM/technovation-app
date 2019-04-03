@@ -13,6 +13,9 @@ module DropLowestScores
     if submission.lowest_score_dropped?
       logger.info "SKIP already dropped score for Submission##{submission.id}"
       return false
+    elsif !submission.semifinals_complete_submission_scores.any?
+      logger.info "SKIP no semifinals scores available for Submission##{submission.id}"
+      return false
     else
       minimum_score = submission.semifinals_complete_submission_scores.min_by(&:total)
 
@@ -25,7 +28,7 @@ module DropLowestScores
       logger.info minimum_score.total
 
       submission.lowest_score_dropped!
-      minimum_score.destroy
+      minimum_score.drop_score!
 
       logger.info "Updated SF Average: #{submission.reload.semifinals_average_score}"
     end

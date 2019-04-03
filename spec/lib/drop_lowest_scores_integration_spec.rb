@@ -20,4 +20,20 @@ RSpec.describe DropLowestScores do
       submission.semifinals_complete_submission_scores.count
     }
   end
+
+  it "ignores submissions with no complete scores" do
+    SeasonToggles.set_judging_round(:sf)
+
+    submission = FactoryBot.create(:submission, :complete)
+
+    expect(submission.scores.length).to be(0)
+
+    expect {
+      DropLowestScores.(submission)
+    }.not_to change {
+      submission.semifinals_complete_submission_scores.count
+    }
+
+    expect(DropLowestScores.(submission)).to be false
+  end
 end

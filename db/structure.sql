@@ -1413,7 +1413,8 @@ CREATE TABLE public.submission_scores (
     completed_too_fast boolean DEFAULT false,
     completed_too_fast_repeat_offense boolean DEFAULT false,
     seems_too_low boolean DEFAULT false,
-    approved_at timestamp without time zone
+    approved_at timestamp without time zone,
+    dropped_at timestamp without time zone
 );
 
 
@@ -3162,6 +3163,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190207223128'),
 ('20190213212436'),
 ('20190228185145'),
-('20190328190221');
+('20190328190221'),
+('20190403154655');
 
 
