@@ -60,7 +60,7 @@ class DetermineCertificates
       [CertificateRecipient.new(:completion, @account, team: @account.student_profile.team)]
     end
   end
-  
+
   def gets_participation_certificate?
     return false if !@account.student_profile.present?
 
@@ -75,7 +75,7 @@ class DetermineCertificates
       [CertificateRecipient.new(:participation, @account, team: @account.student_profile.team)]
     end
   end
-  
+
   def gets_semifinalist_certificate?
     return false if !@account.student_profile.present?
 
@@ -90,7 +90,7 @@ class DetermineCertificates
       [CertificateRecipient.new(:semifinalist, @account, team: @account.student_profile.team)]
     end
   end
-  
+
   def gets_mentor_appreciation_certificate?
     @account.mentor_profile.present? &&
       @account.mentor_profile.teams.by_season(season).any?
@@ -105,10 +105,7 @@ class DetermineCertificates
   end
 
   def gets_general_judge_certificate?
-    @account.judge_profile.present? &&
-      !@account.judge_profile.events.any? &&
-        @account.judge_profile.completed_scores.by_season(season).any? &&
-          @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_GENERAL_JUDGE
+    false # Only valid for seasons before 2019
   end
 
   def needed_general_judge_recipients

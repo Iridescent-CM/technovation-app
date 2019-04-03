@@ -34,6 +34,16 @@ FactoryBot.define do
       end
     end
 
+    trait :certified_certificate do
+      onboarded
+
+      after(:create) do |judge, _evaluator|
+        5.times do
+          FactoryBot.create(:score, :complete, judge_profile: judge)
+        end
+      end
+    end
+
     trait :onboarded do
       onboarded { true }
     end

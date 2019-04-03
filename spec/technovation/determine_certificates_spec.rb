@@ -89,16 +89,14 @@ RSpec.describe DetermineCertificates do
   end
 
   context "for judge" do
-    it "awards general judge" do
+    it "awards nothing for less than 4 scores" do
       judge = FactoryBot.create(:judge)
 
-      1.times do
+      4.times do
         FactoryBot.create(:score, :complete, judge_profile: judge)
       end
 
-      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:general_judge, judge.account)
-      )
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
     end
 
     it "awards certified judge by count" do

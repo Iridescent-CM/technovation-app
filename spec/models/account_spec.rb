@@ -37,14 +37,14 @@ RSpec.describe Account do
   end
 
   it "removes current certificates if the name is changed" do
-    account = FactoryBot.create(:judge, :general_certificate).account
+    account = FactoryBot.create(:judge, :certified_certificate).account
 
     FillPdfs.(account)
 
     expect {
       account.update(first_name: "Change")
     }.to change {
-      account.reload.current_general_judge_certificates.count
+      account.reload.current_certified_judge_certificates.count
     }.from(1).to(0)
 
     FillPdfs.(account)
@@ -52,7 +52,7 @@ RSpec.describe Account do
     expect {
       account.update(last_name: "Change!!!")
     }.to change {
-      account.reload.current_general_judge_certificates.count
+      account.reload.current_certified_judge_certificates.count
     }.from(1).to(0)
   end
 
