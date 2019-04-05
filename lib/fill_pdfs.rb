@@ -100,10 +100,12 @@ module FillPdfs
   end
 
   def get_value(recipient, field_name)
-    if ["fullText", "Description.Page 1", 'description 1', 'description 2'].include?(field_name)
+    if ["fullText", "Full Text", "Description.Page 1", 'description 1', 'description 2'].include?(field_name)
       full_text
-    elsif ["fullName", "Firstname Lastname.Page 1"].include?(field_name)
+    elsif ["fullName", "FullName", "Full Name", "Firstname Lastname.Page 1"].include?(field_name)
       recipient.full_name
+    elsif ["teamName", "TeamName", "Team Name"].include?(field_name)
+      recipient.team_name
     else
       recipient.public_send(field_name)
     end
