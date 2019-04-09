@@ -32,14 +32,14 @@
 
   <div class="grid">
     <% if account.student_profile.present? %>
-      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %> 
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %>
         <%= hidden_field_tag :account_id, account.id %>
 
         <h6 class="reset">Student certificate</h6>
         <p>
           <%= select_tag :certificate_type,
-              options_for_select(STUDENT_CERTIFICATE_TYPES.map { |t|
-                [t.humanize.titleize, t]
+              options_for_select(STUDENT_CERTIFICATE_TYPES.select { |t|
+                [t.to_s.humanize.titleize, t]
               }),
               prompt: "Select type",
               required: true,
@@ -55,19 +55,19 @@
         <p>
           <%= submit_tag 'Award', class: "button" %>
         </p>
-      <% end %>  
+      <% end %>
       <div class="grid__col-1"></div>
     <% end %>
 
     <% if account.mentor_profile.present? %>
-      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %> 
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %>
         <%= hidden_field_tag :account_id, account.id %>
 
         <h6 class="reset">Mentor certificate</h6>
         <p>
           <%= select_tag :certificate_type,
-              options_for_select(MENTOR_CERTIFICATE_TYPES.map { |t|
-                [t.humanize.titleize, t]
+              options_for_select(MENTOR_CERTIFICATE_TYPES.select { |t|
+                [t.to_s.humanize.titleize, t]
               }),
               prompt: "Select type",
               required: true,
@@ -83,19 +83,19 @@
         <p>
           <%= submit_tag 'Award', class: "button" %>
         </p>
-      <% end %>  
+      <% end %>
       <div class="grid__col-1"></div>
     <% end %>
 
     <% if account.judge_profile.present? %>
-      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %> 
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %>
         <%= hidden_field_tag :account_id, account.id %>
 
         <h6 class="reset">Judge certificate</h6>
         <p>
           <%= select_tag :certificate_type,
-              options_for_select(JUDGE_CERTIFICATE_TYPES.map { |t|
-                [t.humanize.titleize, t]
+              options_for_select(JUDGE_CERTIFICATE_TYPES.select { |t|
+                [t.to_s.humanize.titleize, t]
               }),
               prompt: "Select type",
               required: true,
@@ -104,7 +104,7 @@
         <p>
           <%= submit_tag 'Award', class: "button" %>
         </p>
-      <% end %>  
+      <% end %>
       <div class="grid__col-1"></div>
     <% end %>
   </div>

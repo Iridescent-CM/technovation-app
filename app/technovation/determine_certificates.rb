@@ -18,7 +18,7 @@ class DetermineCertificates
   def needed
     needed = []
 
-    eligible_types.each do |certificate_type|
+    eligible_types.select do |certificate_type|
       needed += needed_recipients(certificate_type)
     end
 
