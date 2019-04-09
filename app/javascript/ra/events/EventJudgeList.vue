@@ -264,10 +264,12 @@
         var form = new FormData();
 
         Array.from(this.event.selectedJudges || []).forEach((judge, idx) => {
-          form.append(
-            `event_assignment[invites][${idx}][]id`,
-            judge.id
-          )
+          if (judge.persisted) {
+            form.append(
+              `event_assignment[invites][${idx}][]id`,
+              judge.id
+            )
+          }
 
           form.append(
             `event_assignment[invites][${idx}][]scope`,
