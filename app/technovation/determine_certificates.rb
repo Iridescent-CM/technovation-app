@@ -10,9 +10,11 @@ class DetermineCertificates
   end
 
   def eligible_types
-    CERTIFICATE_TYPES.select do |certificate_type|
+    types = CERTIFICATE_TYPES.select do |certificate_type|
       gets_certificate?(certificate_type)
     end
+
+    types.keys.map { |type| type.to_s }
   end
 
   def needed
@@ -31,9 +33,11 @@ class DetermineCertificates
   end
 
   def eligible_certificate_types
-    CERTIFICATE_TYPES.select do |certificate_type|
+    types = CERTIFICATE_TYPES.select do |certificate_type|
       gets_certificate?(certificate_type, @account)
     end
+
+    types.keys.map { |type| type.to_s }
   end
 
   def gets_certificate?(certificate_type)
