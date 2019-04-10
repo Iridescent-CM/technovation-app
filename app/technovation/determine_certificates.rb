@@ -10,11 +10,11 @@ class DetermineCertificates
   end
 
   def eligible_types
-    types = CERTIFICATE_TYPES.select do |certificate_type|
+    types = CERTIFICATE_TYPES.keys.select do |certificate_type|
       gets_certificate?(certificate_type)
     end
 
-    types.keys.map { |type| type.to_s }
+    types.map(&:to_s)
   end
 
   def needed
@@ -30,14 +30,6 @@ class DetermineCertificates
   private
   def season
     Season.current.year
-  end
-
-  def eligible_certificate_types
-    types = CERTIFICATE_TYPES.select do |certificate_type|
-      gets_certificate?(certificate_type, @account)
-    end
-
-    types.keys.map { |type| type.to_s }
   end
 
   def gets_certificate?(certificate_type)
