@@ -83,4 +83,8 @@ class Attendee
       record.email
     end
   end
+
+  def persisted?
+    record.persisted?
+  end
 end
