@@ -50,22 +50,28 @@ class Attendees
       records = records
         .sort { |a, b|
           a.public_send(sort_column).downcase <=> b.public_send(sort_column).downcase
-        }
-
-      if exclude_event_attendees
-        records = records.reject { |attendee| attendee.in_event?(event) }
-      end
-
-      new(records, event, context)
+        }.to_a
     else
-      records = records.order("lower(unaccent(#{table_name}.#{sort_column}))")
-
-      if exclude_event_attendees
-        records = records.to_a.reject { |attendee| attendee.in_event?(event) }
-      end
-
-      new(records, event, context)
+      records = records.order("lower(unaccent(#{table_name}.#{sort_column}))").to_a
     end
+
+    if exclude_event_attendees
+      records = records.reject { |attendee| attendee.in_event?(event) }
+    end
+
+    if type.to_s === "account" and not query.blank? and
+      !records.select { |attendee| attendee.email == query }.any?
+          invite = UserInvitation.new(
+            profile_type: :judge,
+            email: query,
+          )
+
+          if invite.valid?
+            records.unshift(invite)
+          end
+    end
+
+    new(records, event, context)
   end
 
   attr_reader :event, :context

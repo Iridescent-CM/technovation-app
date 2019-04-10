@@ -135,6 +135,10 @@
       ], () => {
         this.fetchRemoteItems();
       });
+
+      this.debouncedFetchRemoteItems = debounce(() => {
+        this.fetchRemoteItems({ expandSearch: 1 });
+      }, 300);
     },
 
     computed: {
@@ -160,14 +164,9 @@
 
     watch: {
       query (val) {
-        this.selectableItems = Array.from(this.items || [])
-                                    .filter(item => item.matchesQuery(val))
-
-        if (val.length >= 3 && !this.selectableItems.length)
-          debounce(
-            this.fetchRemoteItems.bind(this, { expandSearch: 1 }),
-            300
-          )();
+        if (val.length >= 3) {
+          this.debouncedFetchRemoteItems();
+        }
       },
 
       searching (current) {
