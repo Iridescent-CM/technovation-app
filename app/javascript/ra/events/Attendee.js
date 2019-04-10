@@ -1,7 +1,8 @@
 import escapeRegExp from "escape-string-regexp";
 
 export default function Attendee (json) {
-  this.id = parseInt(json.id);
+  this.persisted = json['persisted?'];
+  this.id = json.id;
   this.scope = json.scope;
   this.name = json.name;
   this.links = json.links;

@@ -8,14 +8,14 @@ test('resultReadyForList ignores double entry', () => {
   event.resultReadyForList(teamResp, event.selectedTeams)
   event.resultReadyForList(teamResp, event.selectedTeams)
 
-  expect(event.selectedTeams.map((team) => team.id)).toEqual([1])
+  expect(event.selectedTeams.map((team) => team.id)).toEqual(["1"])
 })
 
 test('resultReadyForList appends assignments', () => {
   let event = new Event({ id: 1 })
 
-  const teamResp = { id: "1", assignments: { judge_ids: [1, 2] } }
-  const judgeResp = { id: "2", assignments: { team_ids: [1] } }
+  const teamResp = { id: "1", assignments: { judge_ids: ["1", "2"] } }
+  const judgeResp = { id: "2", assignments: { team_ids: ["1"] } }
 
   event.resultReadyForList(teamResp, event.selectedTeams)
   event.resultReadyForList(judgeResp, event.selectedJudges)
@@ -23,8 +23,8 @@ test('resultReadyForList appends assignments', () => {
   const team = event.selectedTeams[0]
   const judge = event.selectedJudges[0]
 
-  expect(team.assignedJudges.map((judge) => judge.id)).toEqual([2])
-  expect(judge.assignedTeams.map((team) => team.id)).toEqual([1])
+  expect(team.assignedJudges.map((judge) => judge.id)).toEqual(["2"])
+  expect(judge.assignedTeams.map((team) => team.id)).toEqual(["1"])
 })
 
 test('addTeam adds new teams', () => {
@@ -36,7 +36,7 @@ test('addTeam adds new teams', () => {
   const team2 = new Attendee({ id: "2" })
   event.addTeam(team2)
 
-  expect(event.selectedTeams.map((team) => team.id)).toEqual([1, 2])
+  expect(event.selectedTeams.map((team) => team.id)).toEqual(["1", "2"])
 })
 
 test('addTeam ignores already added teams', () => {
@@ -46,7 +46,7 @@ test('addTeam ignores already added teams', () => {
   event.addTeam(team)
   event.addTeam(team)
 
-  expect(event.selectedTeams.map((team) => team.id)).toEqual([1])
+  expect(event.selectedTeams.map((team) => team.id)).toEqual(["1"])
 })
 
 test('removeTeam removes specified team', () => {
@@ -59,7 +59,7 @@ test('removeTeam removes specified team', () => {
   event.addTeam(keep)
 
   event.removeTeam(remove)
-  expect(event.selectedTeams.map((team) => team.id)).toEqual([2])
+  expect(event.selectedTeams.map((team) => team.id)).toEqual(["2"])
 })
 
 test('addTeam/removeTeam notifies teams of the action', () => {

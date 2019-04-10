@@ -11,5 +11,6 @@ class AttendeesSerializer
     :assignments,
     :division,
     :submission,
-    :email
+    :email,
+    :persisted?
 end

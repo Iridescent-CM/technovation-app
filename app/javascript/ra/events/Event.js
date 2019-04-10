@@ -120,12 +120,12 @@ export default function (event) {
 
   this.findTeam = (id) => {
     return Array.from(this.selectedTeams || [])
-      .find(team => team.id === parseInt(id))
+      .find(team => team.id === id)
   }
 
   this.findJudge = (id) => {
     return Array.from(this.selectedJudges || [])
-      .find(judge => judge.id === parseInt(id))
+      .find(judge => judge.id === id)
   }
 
   this.fetchTeams = (opts) => {
