@@ -41,7 +41,7 @@ class DetermineCertificates
   end
 
   def gets_completion_certificate?
-    return false if !@account.student_profile.present?
+    return false if !@account.student?
 
     team = @account.student_profile.team
     return !team.nil? &&
@@ -58,7 +58,7 @@ class DetermineCertificates
   end
 
   def gets_participation_certificate?
-    return false if !@account.student_profile.present?
+    return false if !@account.student?
 
     team = @account.student_profile.team
     return !team.nil? && team.submission.qualifies_for_participation?
@@ -73,7 +73,7 @@ class DetermineCertificates
   end
 
   def gets_semifinalist_certificate?
-    return false if !@account.student_profile.present?
+    return false if !@account.student?
 
     team = @account.student_profile.team
     return !team.nil? && team.submission.semifinalist?

@@ -948,6 +948,11 @@ class Account < ActiveRecord::Base
     seasons.length > 1
   end
 
+  def student?
+    student_profile.present? and
+      !(mentor_profile.present? or judge_profile.present?)
+  end
+
   private
   def self.survey_reminder_max_times
     2
