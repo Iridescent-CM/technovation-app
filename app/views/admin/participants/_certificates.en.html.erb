@@ -38,8 +38,8 @@
         <h6 class="reset">Student certificate</h6>
         <p>
           <%= select_tag :certificate_type,
-              options_for_select(STUDENT_CERTIFICATE_TYPES.transform_keys { |t|
-                t.to_s.humanize.titleize
+              options_for_select(STUDENT_CERTIFICATE_TYPES.keys.map { |t|
+                [t.to_s.humanize.titleize, t]
               }),
               prompt: "Select type",
               required: true,
@@ -66,8 +66,8 @@
         <h6 class="reset">Mentor certificate</h6>
         <p>
           <%= select_tag :certificate_type,
-              options_for_select(MENTOR_CERTIFICATE_TYPES.transform_keys { |t|
-                t.to_s.humanize.titleize
+              options_for_select(MENTOR_CERTIFICATE_TYPES.keys.map { |t|
+                [t.to_s.humanize.titleize, t]
               }),
               prompt: "Select type",
               required: true,
@@ -94,8 +94,8 @@
         <h6 class="reset">Judge certificate</h6>
         <p>
           <%= select_tag :certificate_type,
-              options_for_select(JUDGE_CERTIFICATE_TYPES.transform_keys { |t|
-                t.to_s.humanize.titleize
+              options_for_select(JUDGE_CERTIFICATE_TYPES.keys.map { |t|
+                [t.to_s.humanize.titleize, t]
               }),
               prompt: "Select type",
               required: true,
