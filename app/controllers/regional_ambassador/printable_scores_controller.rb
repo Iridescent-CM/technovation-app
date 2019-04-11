@@ -9,37 +9,40 @@ module RegionalAmbassador
       ).find(params[:id])
 
       judges = @event.judges
+      teams = @event.teams.to_a
       judge_ids = judges.map { |judge| judge.id }
 
-      scores = @event.team_submissions
+      @scores = @event.team_submissions
                 .flat_map(&:scores)
                 .reject { |score| !judge_ids.include?(score.judge_profile_id) }
 
       if judges.any? { |j| j.assigned_teams_for_event(@event).any? }
-        @groups = {}
-        included = []
+        @groups = []
 
         judges.each.with_index do |judge, idx|
-          next if included.include?(judge.id)
+          assigned_teams_for_event = judge.assigned_teams_for_event(@event).to_a
 
-          others_with_same_teams = judges.select do |j|
-            j.id != judge.id && j.assigned_teams_for_event(@event) == judge.assigned_teams_for_event(@event)
+          if assigned_teams_for_event.any?
+            index = @groups.find_index { |group| group.teams == assigned_teams_for_event }
+
+            if index.nil?
+              @groups.push({ judges: [judge], teams: assigned_teams_for_event })
+            else
+              @groups[index].judges.push(judge)
+            end
+          else
+            index = @groups.find_index { |group| group.teams == teams }
+
+            if index.nil?
+              @groups.push({ judges: [judge], teams: teams })
+            else
+              @groups[index].judges.push(judge)
+            end
           end
-
-          event_submission_ids = @event.team_submissions.flat_map(&:id)
-          @groups[idx] = judge.submission_scores.where(team_submission_id: event_submission_ids)
-          @groups[idx] += others_with_same_teams.flat_map { |j|
-            j.submission_scores.where(team_submission_id: event_submission_ids)
-          }
-
-          included << judge.id
-          included += others_with_same_teams.map(&:id)
         end
       else
-        @groups = { 0 => scores.sort_by(&:judge_name) }
+        @groups = [{ judges: judges, teams: teams }]
       end
-
-      @groups = @groups.reject { |i, s| s.empty? }
     end
   end
 end
