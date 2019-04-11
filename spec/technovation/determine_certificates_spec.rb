@@ -83,6 +83,14 @@ RSpec.describe DetermineCertificates do
 
       expect(DetermineCertificates.new(mentor.account).needed).to be_empty
     end
+
+    it "does not award student certs for past student" do
+      mentor = FactoryBot.create(:mentor, number_of_teams: 1)
+      FactoryBot.create(:student, :quarterfinalist, account: mentor.account)
+
+      expect(DetermineCertificates.new(mentor.account).eligible_types).to include("mentor_appreciation")
+      expect(DetermineCertificates.new(mentor.account).eligible_types).not_to include(*STUDENT_CERTIFICATE_TYPES.keys.map(&:to_s))
+    end
   end
 
   context "for mentor/judge" do
