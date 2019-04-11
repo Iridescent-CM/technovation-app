@@ -23,20 +23,20 @@ module RegionalAmbassador
           assigned_teams_for_event = judge.assigned_teams_for_event(@event).to_a
 
           if assigned_teams_for_event.any?
-            index = @groups.find_index { |group| group.teams == assigned_teams_for_event }
+            index = @groups.find_index { |group| group[:teams] == assigned_teams_for_event }
 
             if index.nil?
               @groups.push({ judges: [judge], teams: assigned_teams_for_event })
             else
-              @groups[index].judges.push(judge)
+              @groups[index][:judges].push(judge)
             end
           else
-            index = @groups.find_index { |group| group.teams == teams }
+            index = @groups.find_index { |group| group[:teams] == teams }
 
             if index.nil?
               @groups.push({ judges: [judge], teams: teams })
             else
-              @groups[index].judges.push(judge)
+              @groups[index][:judges].push(judge)
             end
           end
         end
