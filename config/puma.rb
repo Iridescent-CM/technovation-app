@@ -45,3 +45,10 @@ workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# start Barnes for Heroku ruby language metrics
+before_fork do
+  if Rails.env.production?
+    Barnes.start
+  end
+end
