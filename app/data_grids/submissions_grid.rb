@@ -86,6 +86,14 @@ class SubmissionsGrid
     team.mentors.count
   end
 
+  column :student_names do
+    team.students.map(&:name).to_sentence
+  end
+
+  column :mentor_names do
+    team.mentors.map(&:name).to_sentence
+  end
+
   filter :team_name do |value, scope, grid|
     scope.where("teams.name ilike ?", "#{value}%")
   end
