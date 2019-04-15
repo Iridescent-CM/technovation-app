@@ -106,8 +106,8 @@ h4 {
   }
 
   .page {
-    page-break-before: always;
-    page-break-after: always;
+    page-break-before: unset;
+    page-break-after: avoid;
     page-break-inside: avoid;
   }
 
@@ -118,11 +118,15 @@ h4 {
       margin-bottom: 5rem;
     }
   }
+
+  .page-comments {
+    page-break-after: always;
+  }
 }
 
 .cover-page {
-  page-break-before: always;
-  page-break-after: always;
+  page-break-before: unset;
+  page-break-after: avoid;
   page-break-inside: avoid;
   height: 100%;
   display: flex;
