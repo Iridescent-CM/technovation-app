@@ -5,7 +5,7 @@
   </button>
 </div>
 
-<% @groups.each do |group_idx, scores| %>
+<% @groups.each do |group| %>
   <div class="cover-page">
     <div class="cover-page-content">
       <h1><%= @event.name %></h1>
@@ -14,7 +14,7 @@
         <h1>Teams</h1>
 
         <ul>
-          <% scores.flat_map(&:team).uniq.each do |team| %>
+          <% group[:teams].each do |team| %>
             <li><%= team.name %></li>
           <% end %>
         </ul>
@@ -24,7 +24,7 @@
         <h1>Judges</h1>
 
         <ul>
-          <% scores.flat_map(&:judge_profile).uniq.each do |judge| %>
+          <% group[:judges].each do |judge| %>
             <li><%= judge.name %></li>
           <% end %>
         </ul>
@@ -36,225 +36,230 @@
     This page has been intentionally left blank.
   </div>
 
-  <% scores.each do |score| %>
-    <div class="page <%= score.team.division_name %>">
-      <header>
-        <h3><%= score.judge_name %></h3>
-        <h4><%= score.team_name %></h4>
-
-        <table>
-          <tr>
-            <td>Ideation</td>
-            <td><%= score.ideation_total %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>Technical</td>
-            <td><%= score.technical_total %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>Pitch</td>
-            <td><%= score.pitch_total %></td>
-            <td></td>
-          </tr>
-
-          <% if score.team.senior? %>
-            <tr>
-              <td>Entrepreneurship</td>
-              <td><%= score.entrepreneurship_total %></td>
-              <td></td>
-            </tr>
-          <% end %>
-
-          <tr>
-            <td>Overall</td>
-            <td><%= score.overall_impression_total %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <th scope="row">Final:</th>
-            <td><%= score.total %></td>
-            <td></td>
-          </tr>
-        </table>
-      </header>
-
-      <div class="sections">
-        <h3>Ideation</h3>
-
-        <table>
-          <tr>
-            <td>The team clearly shows how their app idea aligns with a problem in their community.</td>
-            <td><%= score.sdg_alignment %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The team provides evidence of the problem they are solving through facts and statistics.</td>
-            <td><%= score.evidence_of_problem %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The team addresses the problem well.</td>
-            <td><%= score.problem_addressed %></td>
-            <td></td>
-          </tr>
-        </table>
-
-        <h3>Technical</h3>
-
-        <table>
-          <tr>
-            <td>The app appears to be fully functional and has no noticeable bugs.</td>
-            <td><%= score.app_functional %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The app is easy to use and the features are well thought out.</td>
-            <td><%= score.demo_video %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>
-              The team automatically earned
-              <%= pluralize(score.total_technical_checklist, "points") %>
-              from their code checklist
-            </td>
-            <td><%= score.total_technical_checklist %></td>
-            <td><%= score.total_technical_checklist %></td>
-          </tr>
-        </table>
-
-        <h3>Pitch</h3>
-
-        <table>
-          <tr>
-            <td>The team clearly states the problem they are solving.</td>
-            <td><%= score.problem_clearly_communicated %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The team’s pitch has a storyline and is well thought out.</td>
-            <td><%= score.compelling_argument %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The pitch is specific and to the point.</td>
-            <td><%= score.passion_energy %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The team presents a convincing argument to support their solution.</td>
-            <td><%= score.pitch_specific %></td>
-            <td></td>
-          </tr>
-        </table>
-
-        <% if score.team.senior? %>
-          <h3>Entrepreneurship</h3>
+  <% group[:judges].each do |judge| %>
+    <% group[:teams].each do |team| %>
+      <% unless score = @scores.find { |score| score.judge_profile_id == judge.id && score.team == team }
+        score = SubmissionScore.new(judge_profile: judge, team_submission: team.submission)
+      end %>
+      <div class="page <%= team.division_name %>">
+        <header>
+          <h3><%= judge.name %></h3>
+          <h4><%= team.name %></h4>
 
           <table>
             <tr>
-              <td>The team has a strategy to bring the app to market.</td>
-              <td><%= score.business_plan_short_term %></td>
+              <td>Ideation</td>
+              <td><%= score.ideation_total %></td>
               <td></td>
             </tr>
 
             <tr>
-              <td>
-                The team has research on how they will sustain their business.
-                The goals are explained and realistic.
-              </td>
-              <td><%= score.business_plan_long_term %></td>
+              <td>Technical</td>
+              <td><%= score.technical_total %></td>
               <td></td>
             </tr>
 
             <tr>
-              <td>
-                The team’s research shows they have looked for
-                competitors and ways to stand out from them.
-              </td>
-              <td><%= score.market_research %></td>
+              <td>Pitch</td>
+              <td><%= score.pitch_total %></td>
+              <td></td>
+            </tr>
+
+            <% if team.senior? %>
+              <tr>
+                <td>Entrepreneurship</td>
+                <td><%= score.entrepreneurship_total %></td>
+                <td></td>
+              </tr>
+            <% end %>
+
+            <tr>
+              <td>Overall</td>
+              <td><%= score.overall_impression_total %></td>
               <td></td>
             </tr>
 
             <tr>
-              <td>The team’s business has an identity through branding and visuals.</td>
-              <td><%= score.viable_business_model %></td>
+              <th scope="row">Final:</th>
+              <td><%= score.total %></td>
               <td></td>
             </tr>
           </table>
+        </header>
+
+        <div class="sections">
+          <h3>Ideation</h3>
+
+          <table>
+            <tr>
+              <td>The team clearly shows how their app idea aligns with a problem in their community.</td>
+              <td><%= score.sdg_alignment %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The team provides evidence of the problem they are solving through facts and statistics.</td>
+              <td><%= score.evidence_of_problem %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The team addresses the problem well.</td>
+              <td><%= score.problem_addressed %></td>
+              <td></td>
+            </tr>
+          </table>
+
+          <h3>Technical</h3>
+
+          <table>
+            <tr>
+              <td>The app appears to be fully functional and has no noticeable bugs.</td>
+              <td><%= score.app_functional %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The app is easy to use and the features are well thought out.</td>
+              <td><%= score.demo_video %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>
+                The team automatically earned
+                <%= pluralize(score.total_technical_checklist, "points") %>
+                from their code checklist
+              </td>
+              <td><%= score.total_technical_checklist %></td>
+              <td><%= score.total_technical_checklist %></td>
+            </tr>
+          </table>
+
+          <h3>Pitch</h3>
+
+          <table>
+            <tr>
+              <td>The team clearly states the problem they are solving.</td>
+              <td><%= score.problem_clearly_communicated %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The team’s pitch has a storyline and is well thought out.</td>
+              <td><%= score.compelling_argument %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The pitch is specific and to the point.</td>
+              <td><%= score.passion_energy %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The team presents a convincing argument to support their solution.</td>
+              <td><%= score.pitch_specific %></td>
+              <td></td>
+            </tr>
+          </table>
+
+          <% if team.senior? %>
+            <h3>Entrepreneurship</h3>
+
+            <table>
+              <tr>
+                <td>The team has a strategy to bring the app to market.</td>
+                <td><%= score.business_plan_short_term %></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>
+                  The team has research on how they will sustain their business.
+                  The goals are explained and realistic.
+                </td>
+                <td><%= score.business_plan_long_term %></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>
+                  The team’s research shows they have looked for
+                  competitors and ways to stand out from them.
+                </td>
+                <td><%= score.market_research %></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>The team’s business has an identity through branding and visuals.</td>
+                <td><%= score.viable_business_model %></td>
+                <td></td>
+              </tr>
+            </table>
+          <% end %>
+
+          <h3>Overall Impression</h3>
+
+          <table>
+            <tr>
+              <td>You are convinced the app can succeed.</td>
+              <td><%= score.business_plan_feasible %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The submission stands out from others.</td>
+              <td><%= score.solution_stands_out %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Each component of the team submission is well thought out.</td>
+              <td><%= score.submission_thought_out %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>
+                The team’s strong dedication and work ethic is clear,
+                even if the submission is not complete.
+              </td>
+              <td><%= score.cohesive_story %></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>The way the team approaches and solves the problem is unique.</td>
+              <td><%= score.solution_originality %></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="page <%= team.division_name %> page-comments">
+        <h2>Comments given for <%= team.name %> by <%= judge.name %></h2>
+        <h3>(they may be shortened to fit the page)</h3>
+
+        <h3>Ideation</h3>
+        <%= simple_format(truncate(score.ideation_comment, length: 500)) %>
+
+        <h3>Technical</h3>
+        <%= simple_format(truncate(score.technical_comment, length: 500)) %>
+
+        <h3>Pitch</h3>
+        <%= simple_format(truncate(score.pitch_comment, length: 500)) %>
+
+        <% if team.senior? %>
+          <h3>Entrepreneurship</h3>
+          <%= simple_format(truncate(score.entrepreneurship_comment, length: 500)) %>
         <% end %>
 
         <h3>Overall Impression</h3>
-
-        <table>
-          <tr>
-            <td>You are convinced the app can succeed.</td>
-            <td><%= score.business_plan_feasible %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The submission stands out from others.</td>
-            <td><%= score.solution_stands_out %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>Each component of the team submission is well thought out.</td>
-            <td><%= score.submission_thought_out %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>
-              The team’s strong dedication and work ethic is clear,
-              even if the submission is not complete.
-            </td>
-            <td><%= score.cohesive_story %></td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>The way the team approaches and solves the problem is unique.</td>
-            <td><%= score.solution_originality %></td>
-            <td></td>
-          </tr>
-        </table>
+        <%= simple_format(truncate(score.overall_comment, length: 500)) %>
       </div>
-    </div>
-
-    <div class="page <%= score.team.division_name %> page-comments">
-      <h2>Comments given for <%= score.team_name %> by <%= score.judge_name %></h2>
-      <h3>(they may be shortened to fit the page)</h3>
-
-      <h3>Ideation</h3>
-      <%= simple_format(truncate(score.ideation_comment, length: 500)) %>
-
-      <h3>Technical</h3>
-      <%= simple_format(truncate(score.technical_comment, length: 500)) %>
-
-      <h3>Pitch</h3>
-      <%= simple_format(truncate(score.pitch_comment, length: 500)) %>
-
-      <% if score.team.senior? %>
-        <h3>Entrepreneurship</h3>
-        <%= simple_format(truncate(score.entrepreneurship_comment, length: 500)) %>
-      <% end %>
-
-      <h3>Overall Impression</h3>
-      <%= simple_format(truncate(score.overall_comment, length: 500)) %>
-    </div>
+    <% end %>
   <% end %>
 <% end %>

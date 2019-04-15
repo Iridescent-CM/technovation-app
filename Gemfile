@@ -6,6 +6,8 @@ gem 'puma', '~> 3.12'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 
+gem 'barnes', '~> 0.0.7'
+
 gem 'bootsnap', '~> 1.3', require: false
 
 gem 'fast_jsonapi', "~> 1.4"
@@ -132,7 +134,6 @@ group :production, :development do
 end
 
 group :production do
-  gem 'barnes'
   gem 'hiredis', "~> 0.6"
   gem "rack-timeout", "~> 0.5"
   gem 'heroku-deflater',
