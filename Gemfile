@@ -132,6 +132,7 @@ group :production, :development do
 end
 
 group :production do
+  gem 'barnes'
   gem 'hiredis', "~> 0.6"
   gem "rack-timeout", "~> 0.5"
   gem 'heroku-deflater',
