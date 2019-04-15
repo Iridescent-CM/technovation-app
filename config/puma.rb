@@ -1,3 +1,5 @@
+require 'barnes'
+
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
@@ -48,7 +50,8 @@ plugin :tmp_restart
 
 # start Barnes for Heroku ruby language metrics
 before_fork do
-  if Rails.env.production?
+  env = ENV.fetch("RAILS_ENV") { "development" }
+  if env == "production"
     Barnes.start
   end
 end
