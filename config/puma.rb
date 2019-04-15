@@ -48,7 +48,8 @@ plugin :tmp_restart
 
 # start Barnes for Heroku ruby language metrics
 before_fork do
-  if Rails.env.production?
+  env = ENV.fetch("RAILS_ENV") { "development" }
+  if env == "production"
     Barnes.start
   end
 end
