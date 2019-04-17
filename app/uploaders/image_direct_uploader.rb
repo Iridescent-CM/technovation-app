@@ -1,7 +1,8 @@
-class ImageUploader < CarrierWave::Uploader::Base
+class ImageDirectUploader < CarrierWave::Uploader::Base
+  include CarrierWaveDirect::Uploader
 
-  # Choose what kind of storage to use for this uploader:
-  storage :fog
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
@@ -12,6 +13,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # CarrierWaveDirect::Uploader puts raw uploaded files in this directory on S3 as a first step
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "unprocessed_uploads"
   end
 end

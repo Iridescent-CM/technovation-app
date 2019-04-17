@@ -16,7 +16,7 @@ module PhotoUploadConfirmationController
 
     @unprocessed_photo_url = url
 
-    @uploader = ImageUploader.new
+    @uploader = ImageDirectUploader.new
     @uploader.success_action_redirect = upload.redirect_url
 
     @size = upload.size

@@ -16,7 +16,7 @@ module ProfileImageUploadConfirmationController
     @size = "300x300"
     @heading = "Upload a profile photo"
 
-    @uploader = ImageUploader.new
+    @uploader = ImageDirectUploader.new
     @uploader.success_action_redirect = send(
       "#{current_scope}_profile_image_upload_confirmation_url"
     )

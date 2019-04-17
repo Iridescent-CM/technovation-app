@@ -13,7 +13,7 @@ module TeamController
 
     if @team.current?
       @team_member_invite = TeamMemberInvite.new(team_id: @team.id)
-      @uploader = ImageUploader.new
+      @uploader = ImageDirectUploader.new
       @uploader.success_action_redirect = send(
         "#{current_scope}_team_photo_upload_confirmation_url",
         team_id: @team.id,

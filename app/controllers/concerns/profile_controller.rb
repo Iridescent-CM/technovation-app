@@ -5,7 +5,7 @@ module ProfileController
     helper_method :profile, :edit_profile_path
 
     before_action -> {
-      @uploader = ImageUploader.new
+      @uploader = ImageDirectUploader.new
       @uploader.success_action_redirect = send(
         "#{profile.class.name.underscore}_image_upload_confirmation_url"
       )
