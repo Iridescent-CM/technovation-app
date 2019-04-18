@@ -97,7 +97,7 @@ module TeamSubmissionController
       @code_checklist = @team_submission.build_code_checklist
     end
 
-    @uploader = ImageUploader.new
+    @uploader = ImageDirectUploader.new
     @uploader.success_action_redirect = send(
       "#{current_scope}_team_photo_upload_confirmation_url",
       team_id: @team.id,
