@@ -16,7 +16,8 @@ CarrierWave.configure do |config|
   config.fog_credentials = fog_credentials
   config.fog_directory = ENV.fetch("AWS_BUCKET_NAME")
   config.fog_public = true
-  config.fog_attributes = { 'Cache-Control'=>'max-age=315576000' }
+  # content at a particular S3 url can change, so don't cache and rely on etags
+  config.fog_attributes = { cache_control: 'max-age=0' }
   config.max_file_size = 500.megabytes
 end
 

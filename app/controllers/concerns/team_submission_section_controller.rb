@@ -9,7 +9,7 @@ module TeamSubmissionSectionController
     @team_submission = current_team.submission
     @team = current_team
 
-    @uploader = ImageUploader.new
+    @uploader = ImageDirectUploader.new
     @uploader.success_action_redirect = send(
       "#{current_scope}_team_photo_upload_confirmation_url",
       team_id: @team.id,
