@@ -173,6 +173,14 @@ class AccountsGrid
     end
   end
 
+  column :virtual_or_live do
+    if judge_profile.present?
+      judge_profile.live_event? ? "Live" : "Virtual"
+    else
+      "-"
+    end
+  end
+
   column :age, order: "accounts.date_of_birth desc"
   column :city
 
@@ -260,7 +268,9 @@ class AccountsGrid
     if: ->(g) {
       (%w{judge mentor regional_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      scope.where(
+      scope.includes(:student_profile)
+        .references(:student_profiles)
+        .where(
         "student_profiles.id IS NOT NULL AND " +
         "student_profiles.onboarded = ?",
          value == 'onboarded' ? true : false
@@ -290,11 +300,31 @@ class AccountsGrid
     if: ->(g) {
       (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      scope.where(
-        "judge_profiles.id IS NOT NULL AND " +
+      scope.includes(:judge_profile)
+        .references(:judge_profiles)
+        .where("judge_profiles.id IS NOT NULL")
+        .where(
         "judge_profiles.onboarded = ?",
          value == 'onboarded' ? true : false
       )
+    end
+
+  filter :virtual_or_live,
+    :enum,
+    select: [
+      ['Virtual judges', 'virtual'],
+      ['Live event judges', 'live'],
+    ],
+    filter_group: "common",
+    if: ->(g) {
+      (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
+    } do |value, scope, grid|
+      is_is_not = value === "virtual" ? "IS" : "IS NOT"
+
+      scope.includes(judge_profile: :events)
+        .references(:judge_profiles, :regional_pitch_events)
+        .where("judge_profiles.id IS NOT NULL")
+        .where("regional_pitch_events.id #{is_is_not} NULL")
     end
 
   filter :school_company_name,

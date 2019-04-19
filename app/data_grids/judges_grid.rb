@@ -152,6 +152,16 @@ class JudgesGrid
       where("regional_pitch_events.id = ?", value)
   end
 
+  filter :season,
+    :enum,
+    select: (2015..Season.current.year).to_a.reverse,
+    html: {
+      class: "and-or-field",
+    },
+    multiple: true do |value, scope, grid|
+      scope.by_season(value)
+  end
+
   filter :virtual_or_live,
     :enum,
     select: [
