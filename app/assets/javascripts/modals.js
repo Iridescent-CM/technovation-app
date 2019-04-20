@@ -42,7 +42,7 @@ $(document).on("click", "[data-opens-modal]", function(e) {
   function makeClonedImageUploaderUnique(modal) {
     $("a, button").blur();
 
-    const $form = $(modal).find(".new_image_uploader");
+    const $form = $(modal).find(".new_image_direct_uploader");
 
     if ($form.length > 0) {
       const $label = $form.find("label"),
