@@ -23,7 +23,7 @@ RSpec.describe Attendees do
 
     it "finds live event eligible judges" do
       judge = FactoryBot.create(:judge, :live_event_eligible)
-      FactoryBot.create(:judge, :not_live_event_eligible)
+      FactoryBot.create(:regional_ambassador, :has_judge_profile)
 
       results = Attendees.for(
         type: "account",
