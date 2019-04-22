@@ -178,7 +178,8 @@ class Account < ActiveRecord::Base
       .left_outer_joins(:mentor_profile, :regional_ambassador_profile)
       .where(
         "judge_profiles.id IS NOT NULL AND " +
-        "mentor_profiles.id IS NULL AND " +
+        # temporary fix, see: https://github.com/Iridescent-CM/technovation-app/issues/2111
+        # "mentor_profiles.id IS NULL AND " +
         "regional_ambassador_profiles.id IS NULL"
       )
   }
