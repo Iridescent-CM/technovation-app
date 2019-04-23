@@ -52,6 +52,8 @@ module Admin
         :business_plan_cache,
         :development_platform_other,
         :source_code_cache,
+        :thunkable_project_url,
+        :thunkable_account_email
       )
     end
   end
