@@ -136,6 +136,20 @@
           <% end %>
         </dd>
 
+        <% if @team_submission.thunkable? %>
+          <dt>Thunkable Account Email:</dt>
+
+          <dd>
+            <%= @team_submission.thunkable_account_email %>
+          </dd>
+
+          <dt>Thunkable Project URL:</dt>
+
+          <dd class="overflow-wrap--break-word">
+            <%= link_to nil, @team_submission.thunkable_project_url, :target => "_blank" %>
+          </dd>
+        <% end %>
+
         <dt>Screenshots</dt>
         <dd>
           <% if @team_submission.screenshots.any? %>
