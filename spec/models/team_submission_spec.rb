@@ -41,14 +41,6 @@ RSpec.describe TeamSubmission do
     expect(submission).to be_valid
     expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/abc123")
 
-    submission.thunkable_project_url = "http://x.thunkable.com/projects/abc123"
-    expect(submission).to be_valid
-    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projects/abc123")
-
-    submission.thunkable_project_url = "http://x.thunkable.com/projects/abc123/more/segments"
-    expect(submission).to be_valid
-    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projects/abc123/more/segments")
-
     submission.thunkable_project_url = "x.thunkable.com/copy/abc123"
     expect(submission).to be_valid
     expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/abc123")
