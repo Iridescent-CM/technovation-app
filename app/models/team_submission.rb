@@ -514,6 +514,10 @@ class TeamSubmission < ActiveRecord::Base
   end
   alias :app_inventor_2? :app_inventor?
 
+  def thunkable?
+    send("Thunkable?")
+  end
+
   %i{
     source_code
     business_plan
