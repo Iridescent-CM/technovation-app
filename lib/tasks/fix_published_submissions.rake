@@ -1,15 +1,39 @@
 desc "Ensure all submissions publishable are published"
 task fix_submissions: :environment do
+  puts "### STUDENTS"
   StudentProfile.current.onboarding.find_each do |student|
-    student.update(onboarded: student.can_be_marked_onboarded?)
+    if student.onboarded != student.can_be_marked_onboarded?
+      puts "#{student.id} #{student.email}"
+      puts "\tonboarded?: #{yesno student.onboarded} -> #{yesno student.can_be_marked_onboarded?}"
+      result = student.update(onboarded: student.can_be_marked_onboarded?)
+      puts "\tupdated? #{yesno result}"
+    end
   end
 
+  puts "\n### TEAMS"
   Team.current.find_each do |team|
-    team.update(
-      has_students: team.students.any?,
-      all_students_onboarded: team.students.any? && team.students.all?(&:onboarded?)
-    )
+    has_students = team.students.any?
+    all_onboarded = team.students.any? && team.students.all?(&:onboarded?)
+    if team.has_students != has_students or
+        team.all_students_onboarded != all_onboarded
+      puts "#{team.id} #{team.name}"
+      puts "\thas students?: #{yesno team.has_students} -> #{yesno has_students}"
+      puts "\tall onboarded?: #{yesno team.all_students_onboarded} -> #{yesno all_onboarded}"
+      result = team.update(
+        has_students: has_students,
+        all_students_onboarded: all_onboarded
+      )
+      puts "\tupdated? #{yesno result}"
+    end
   end
 
-  TeamSubmission.current.select(&:only_needs_to_submit?).each(&:published!)
+  puts "\n### PUBLISHING"
+  TeamSubmission.current.select(&:only_needs_to_submit?).each do |sub|
+    puts "Publishing #{sub.app_name} by #{sub.team_name}"
+    sub.published!
+  end
+end
+
+def yesno(bool)
+  bool ? 'Yes' : 'No'
 end
