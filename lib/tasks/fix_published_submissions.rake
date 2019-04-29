@@ -34,6 +34,20 @@ task fix_submissions: :environment do
   end
 end
 
+task recalc_completeness: :environment do
+  TeamSubmission.current.find_each do |sub|
+    old = sub.percent_complete
+    sub.touch
+    change = "SAME"
+    if old < sub.percent_complete
+      change = "BETTER"
+    elsif old > sub.percent_complete
+      change = "WORSE"
+    end
+    puts "#{change} #{sub.app_name} #{old} -> #{sub.percent_complete}"
+  end
+end
+
 def yesno(bool)
   bool ? 'Yes' : 'No'
 end
