@@ -81,7 +81,6 @@ module FindEligibleSubmissionId
           "complete_#{current_round}_official_submission_scores_count " +
            "< #{SCORE_COUNT_LIMIT}"
         )
-        .select { |s| !judge_conflicts.include?(s.team.region_division_name) }
         .sort { |a, b|
           a_complete = a.public_send(
             "complete_#{current_round}_official_submission_scores_count"
@@ -94,7 +93,7 @@ module FindEligibleSubmissionId
           [weighted(a), a_complete] <=> [weighted(b), b_complete]
         }
 
-      sub = candidates.first
+      sub = candidates.find { |s| !judge_conflicts.include?(s.team.region_division_name) }
       sub && sub.id
     end
 
@@ -111,14 +110,19 @@ module FindEligibleSubmissionId
     end
 
     def current_round
-      case SeasonToggles.judging_round
-      when "qf"
-        :quarterfinals
-      when "sf"
-        :semifinals
-      else
-        raise "Judging is not enabled"
+      # cached locally so we're not slamming redis, not sure if caching internally
+      # to SeasonToggles makes better sense or not
+      unless @current_round
+        @current_round = case SeasonToggles.judging_round
+                         when "qf"
+                           :quarterfinals
+                         when "sf"
+                           :semifinals
+                         else
+                           raise "Judging is not enabled"
+                         end
       end
+      @current_round
     end
 
     def rank_for_current_round
