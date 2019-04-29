@@ -34,9 +34,7 @@ class TeamSubmission < ActiveRecord::Base
     on: :create
 
   after_commit -> {
-    columns = {
-      percent_complete: calculate_percent_complete,
-    }
+    columns = {}
 
     if RequiredFields.new(self).any?(&:blank?)
       columns[:published_at] = nil
@@ -45,6 +43,8 @@ class TeamSubmission < ActiveRecord::Base
     if source_code_external_url.blank?
       columns[:source_code_external_url] = copy_possible_thunkable_url
     end
+
+    columns[:percent_complete] = calculate_percent_complete
 
     update_columns(columns)
 
