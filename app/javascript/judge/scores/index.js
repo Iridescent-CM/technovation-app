@@ -45,7 +45,12 @@ document.addEventListener('turbolinks:load', () => {
           method: "GET",
           url: url,
           success: json => {
-            this.$store.commit('setStateFromJSON', json)
+            if (!json.submission) {
+              this.notice = "Error encountered while finding a submission. Please try again or contact support.";
+            }
+            else {
+              this.$store.commit('setStateFromJSON', json)
+            }
           },
           error: (xhr, ajaxOptions, thrownError) => {
             this.notice = xhr.responseJSON.msg
