@@ -50,6 +50,8 @@ module FindEligibleSubmissionId
     end
 
     def random_eligible_id(judge)
+      round = current_round
+
       scored_submissions = judge.submission_scores.pluck(
         :team_submission_id
       )
@@ -75,54 +77,49 @@ module FindEligibleSubmissionId
           teams: { id: official_rpe_team_ids }
         )
         .where(
-          "complete_#{current_round}_official_submission_scores_count " +
+          "complete_#{round}_official_submission_scores_count " +
           "IS NULL OR " +
 
-          "complete_#{current_round}_official_submission_scores_count " +
+          "complete_#{round}_official_submission_scores_count " +
            "< #{SCORE_COUNT_LIMIT}"
         )
         .sort { |a, b|
           a_complete = a.public_send(
-            "complete_#{current_round}_official_submission_scores_count"
+            "complete_#{round}_official_submission_scores_count"
           ) || 0
 
           b_complete = b.public_send(
-            "complete_#{current_round}_official_submission_scores_count"
+            "complete_#{round}_official_submission_scores_count"
           ) || 0
 
-          [weighted(a), a_complete] <=> [weighted(b), b_complete]
+          [weighted(a, round), a_complete] <=> [weighted(b, round), b_complete]
         }
 
       sub = candidates.find { |s| !judge_conflicts.include?(s.team.region_division_name) }
       sub && sub.id
     end
 
-    def weighted(sub)
+    def weighted(sub, round)
       pending = sub.public_send(
-        "pending_#{current_round}_official_submission_scores_count"
+        "pending_#{round}_official_submission_scores_count"
       ) || 0
 
       complete = sub.public_send(
-        "complete_#{current_round}_official_submission_scores_count"
+        "complete_#{round}_official_submission_scores_count"
       ) || 0
 
       pending + 2 * complete
     end
 
     def current_round
-      # cached locally so we're not slamming redis, not sure if caching internally
-      # to SeasonToggles makes better sense or not
-      unless @current_round
-        @current_round = case SeasonToggles.judging_round
-                         when "qf"
-                           :quarterfinals
-                         when "sf"
-                           :semifinals
-                         else
-                           raise "Judging is not enabled"
-                         end
+      case SeasonToggles.judging_round
+      when "qf"
+        :quarterfinals
+      when "sf"
+        :semifinals
+      else
+        raise "Judging is not enabled"
       end
-      @current_round
     end
 
     def rank_for_current_round
