@@ -178,7 +178,7 @@ export default function (event) {
     let attendee = new Attendee(result)
 
     Array.from(result.assignments.judge_ids || []).forEach(id => {
-      const idx = Array.from(this.selectedJudge || []).findIndex(j => j.id === id)
+      const idx = Array.from(this.selectedJudges || []).findIndex(j => j.id === id)
       if (idx !== -1)
         attendee.assignedJudgeFoundInEvent(this.selectedJudges[idx])
     })
