@@ -90,6 +90,39 @@
 
       <div slot="submission">
         <%= render 'slots/student/submissions' %>
+
+        <% if SeasonToggles.submissions_disabled? and
+                SeasonToggles.quarterfinals_or_earlier? and
+                  current_team.live_event? %>
+          <div class="progress">
+            <div class="progress__section">
+              <h1>
+                <%= link_to "Regional events",
+                  [
+                    current_scope,
+                    current_submission,
+                    :section,
+                    section: :pitch_presentation,
+                  ] %>
+              </h1>
+
+              <ol class="list--reset">
+                <li>
+                  <small>
+                    only if attending a live, regional event:
+                  </small>
+
+                  <%= link_to submission_progress_web_icon(
+                    current_submission,
+                    :pitch_presentation,
+                    "Presentation slides"
+                  ),
+                  [current_scope, current_submission, piece: :pitch_presentation] %>
+                </li>
+              </ol>
+            </div>
+          </div>
+        <% end %>
       </div>
 
       <div slot="events">

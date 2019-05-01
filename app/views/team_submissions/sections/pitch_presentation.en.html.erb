@@ -1,11 +1,13 @@
 <% provide :title, "Submission: Regional events" %>
 
-<% provide :back_link_txt, "Business" %>
-<% provide :back_link, send(
-  "#{current_scope}_team_submission_section_path",
-  @team_submission,
-  section: :business
-) %>
+<% if SeasonToggles.team_submissions_editable? %>
+  <% provide :back_link_txt, "Business" %>
+  <% provide :back_link, send(
+    "#{current_scope}_team_submission_section_path",
+    @team_submission,
+    section: :business
+  ) %>
+<% end %>
 
 <div
   id="<%= dom_id(@team_submission) %>_pitch_presentation"
