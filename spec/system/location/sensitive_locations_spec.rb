@@ -14,7 +14,7 @@ RSpec.describe "Saving a location in a geopolitically sensitive area", :js do
     click_button "Next"
   end
 
-  it "prompts the user with a choice when Israel is the country" do
+  xit "prompts the user with a choice when Israel is the country" do
     within(".suggestions") do
       expect(page).to have_css(".suggestion", count: 2)
       expect(page).to have_content("Israel")
@@ -22,7 +22,7 @@ RSpec.describe "Saving a location in a geopolitically sensitive area", :js do
     end
   end
 
-  it "saves the changes in the database" do
+  xit "saves the changes in the database" do
     within(".suggestions") do
       find(".suggestion", text: "Israel").click
     end
