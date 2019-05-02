@@ -30,7 +30,7 @@ task fix_submissions: :environment do
   puts "\n### PUBLISHING"
   TeamSubmission.current.select(&:only_needs_to_submit?).each do |sub|
     puts "Publishing #{sub.app_name} by #{sub.team_name}"
-    sub.published!
+    sub.publish!
   end
 end
 
