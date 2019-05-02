@@ -45,7 +45,7 @@ module TeamSubmissionController
   end
 
   def edit
-    unless SeasonToggles.team_submissions_editable?
+    unless SeasonToggles.team_submissions_editable? or piece_name == 'pitch_presentation'
       redirect_to send("#{current_scope}_dashboard_path") and return
     end
 
@@ -111,10 +111,11 @@ module TeamSubmissionController
       back: request.fullpath
     )
 
-    SeasonToggles.team_submissions(
-      open:   -> { render piece_or_full_edit },
-      closed: -> { notify_on_dashboard }
-    )
+    if SeasonToggles.team_submissions_editable? or piece_name == 'pitch_presentation'
+      render piece_or_full_edit
+    else
+      notify_on_dashboard
+    end
   end
 
   def update
