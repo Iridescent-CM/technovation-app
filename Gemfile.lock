@@ -532,7 +532,7 @@ DEPENDENCIES
   listen (~> 3.1)
   lodash-rails (~> 4.17)
   loofah (~> 2.2)
-  mailgun-ruby
+  mailgun-ruby (~> 1.1)
   mini_magick (= 4.8.0)
   newrelic_rpm (~> 3.18)
   nokogiri (~> 1.8)
