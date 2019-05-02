@@ -6,6 +6,10 @@ module TeamSubmissionSectionController
   end
 
   def show
+    unless SeasonToggles.team_submissions_editable? or section_name == 'pitch_presentation'
+      redirect_to send("#{current_scope}_dashboard_path") and return
+    end
+
     @team_submission = current_team.submission
     @team = current_team
 

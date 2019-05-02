@@ -1,168 +1,170 @@
 <% embedded ||= false %>
 
 <div class="progress">
-  <div class="progress__section">
-    <h1>
-      <%= link_to "Start",
-        [current_scope, submission, :section, section: :start] %>
-    </h1>
+  <% if SeasonToggles.team_submissions_editable? %>
+    <div class="progress__section">
+      <h1>
+        <%= link_to "Start",
+          [current_scope, submission, :section, section: :start] %>
+      </h1>
 
-    <ol class="list--reset">
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :honor_code,
-          "Honor code"
-        ),
-        [
-          current_scope,
-          :honor_code,
-          team_submission_id: submission.id,
-        ] %>
-      </li>
+      <ol class="list--reset">
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :honor_code,
+            "Honor code"
+          ),
+          [
+            current_scope,
+            :honor_code,
+            team_submission_id: submission.id,
+          ] %>
+        </li>
 
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :team_photo,
-          "Team photo"
-        ),
-        [current_scope, current_team] %>
-      </li>
-    </ol>
-  </div>
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :team_photo,
+            "Team photo"
+          ),
+          [current_scope, current_team] %>
+        </li>
+      </ol>
+    </div>
 
-  <div class="progress__section">
-    <h1>
-      <%= link_to "Ideation",
-        [current_scope, submission, :section, section: :ideation] %>
-    </h1>
+    <div class="progress__section">
+      <h1>
+        <%= link_to "Ideation",
+          [current_scope, submission, :section, section: :ideation] %>
+      </h1>
 
-    <ol class="list--reset">
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :app_name,
-          "Your app's name"
-        ),
-        [current_scope, submission, piece: :app_name] %>
-      </li>
+      <ol class="list--reset">
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :app_name,
+            "Your app's name"
+          ),
+          [current_scope, submission, piece: :app_name] %>
+        </li>
 
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :app_description,
-          "A description of your app"
-        ),
-        [current_scope, submission, piece: :app_description] %>
-      </li>
-    </ol>
-  </div>
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :app_description,
+            "A description of your app"
+          ),
+          [current_scope, submission, piece: :app_description] %>
+        </li>
+      </ol>
+    </div>
 
-  <div class="progress__section">
-    <h1>
-      <%= link_to "Pitch",
-        [current_scope, submission, :section, section: :pitch] %>
-    </h1>
+    <div class="progress__section">
+      <h1>
+        <%= link_to "Pitch",
+          [current_scope, submission, :section, section: :pitch] %>
+      </h1>
 
-    <ol class="list--reset">
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :demo_video,
-          "Demo video"
-        ),
-        [current_scope, submission, piece: :demo_video_link] %>
-      </li>
+      <ol class="list--reset">
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :demo_video,
+            "Demo video"
+          ),
+          [current_scope, submission, piece: :demo_video_link] %>
+        </li>
 
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :pitch_video,
-          "Pitch video"
-        ),
-        [current_scope, submission, piece: :pitch_video_link] %>
-      </li>
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :pitch_video,
+            "Pitch video"
+          ),
+          [current_scope, submission, piece: :pitch_video_link] %>
+        </li>
 
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :screenshots,
-          "2 or more screenshots"
-        ),
-        [current_scope, submission, piece: :screenshots],
-        data: { turbolinks: false } %>
-      </li>
-    </ol>
-  </div>
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :screenshots,
+            "2 or more screenshots"
+          ),
+          [current_scope, submission, piece: :screenshots],
+          data: { turbolinks: false } %>
+        </li>
+      </ol>
+    </div>
 
-  <div class="progress__section">
-    <h1>
-      <%= link_to "Code",
-        [current_scope, submission, :section, section: :code] %>
-    </h1>
+    <div class="progress__section">
+      <h1>
+        <%= link_to "Code",
+          [current_scope, submission, :section, section: :code] %>
+      </h1>
 
-    <ol class="list--reset">
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :development_platform,
-          "Development platform"
-        ),
-        [current_scope, submission, piece: :development_platform] %>
-      </li>
+      <ol class="list--reset">
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :development_platform,
+            "Development platform"
+          ),
+          [current_scope, submission, piece: :development_platform] %>
+        </li>
 
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :source_code_url,
-          "Upload your source code"
-        ),
-        [current_scope, submission, piece: :source_code_url] %>
-      </li>
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :source_code_url,
+            "Upload your source code"
+          ),
+          [current_scope, submission, piece: :source_code_url] %>
+        </li>
 
-      <li>
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :code_checklist,
-          submission.code_checklist_points > 0 ?
-            "Code checklist* (#{submission.code_checklist_points}/10)" :
-              "Code checklist*"
-        ),
-        [current_scope, submission, piece: :code_checklist] %>
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :code_checklist,
+            submission.code_checklist_points > 0 ?
+              "Code checklist* (#{submission.code_checklist_points}/10)" :
+                "Code checklist*"
+          ),
+          [current_scope, submission, piece: :code_checklist] %>
 
-        <% unless embedded %>
+          <% unless embedded %>
+            <small>
+              * The checklist does not have to be complete;<br />
+              &nbsp;&nbsp;
+              However, you may not change it after the deadline.
+            </small>
+          <% end %>
+        </li>
+      </ol>
+    </div>
+
+    <div class="progress__section">
+      <h1>
+        <%= link_to "Business",
+          [current_scope, submission, :section, section: :business] %>
+      </h1>
+
+      <ol class="list--reset">
+        <li>
           <small>
-            * The checklist does not have to be complete;<br />
-            &nbsp;&nbsp;
-            However, you may not change it after the deadline.
+            senior division teams only:
           </small>
-        <% end %>
-      </li>
-    </ol>
-  </div>
 
-  <div class="progress__section">
-    <h1>
-      <%= link_to "Business",
-        [current_scope, submission, :section, section: :business] %>
-    </h1>
-
-    <ol class="list--reset">
-      <li>
-        <small>
-          senior division teams only:
-        </small>
-
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :business_plan,
-          "Your business plan"
-        ),
-        [current_scope, submission, piece: :business_plan] %>
-      </li>
-    </ol>
-  </div>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :business_plan,
+            "Your business plan"
+          ),
+          [current_scope, submission, piece: :business_plan] %>
+        </li>
+      </ol>
+    </div>
+  <% end %>
 
   <div class="progress__section">
     <h1>
