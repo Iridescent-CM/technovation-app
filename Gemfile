@@ -131,7 +131,6 @@ end
 
 group :production, :development do
   gem 'premailer-rails', "~> 1.10"
-  gem 'mailgun-ruby', '~> 1.1'
 end
 
 group :production do
