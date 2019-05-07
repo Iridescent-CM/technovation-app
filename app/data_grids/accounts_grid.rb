@@ -41,6 +41,14 @@ class AccountsGrid
     end
   end
 
+  column :suspended, if: ->(g) { g.admin } do
+    if judge_profile.present? && judge_profile.suspended?
+      "Yes"
+    else
+      "No"
+    end
+  end
+
   column :parent_guardian_name do
     if student_profile.present?
       student_profile.parent_guardian_name
@@ -304,9 +312,26 @@ class AccountsGrid
         .references(:judge_profiles)
         .where("judge_profiles.id IS NOT NULL")
         .where(
-        "judge_profiles.onboarded = ?",
-         value == 'onboarded' ? true : false
-      )
+          "judge_profiles.onboarded = ?",
+           value == 'onboarded' ? true : false
+        )
+    end
+
+  filter :suspended_judges,
+    :enum,
+    select: [
+      ['Yes, suspended', 'suspended'],
+      ['No, not suspended', 'active'],
+    ],
+    filter_group: "common",
+    if: ->(g) {
+      g.admin &&
+        (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
+    } do |value, scope, grid|
+      scope.includes(:judge_profile)
+        .references(:judge_profiles)
+        .where("judge_profiles.id IS NOT NULL")
+        .where("judge_profiles.suspended = ?", value == 'suspended')
     end
 
   filter :virtual_or_live,

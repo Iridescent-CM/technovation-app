@@ -43,10 +43,15 @@ module Judge
         }
 
         f.json {
-          unless SeasonToggles.judging_enabled?
+          if !SeasonToggles.judging_enabled?
             render json: {
               msg: "Judging is not open right now"
             }, status: 404
+          elsif current_judge.suspended?
+            render json: {
+              msg: "Your judge account has been suspended. If you have any questions " +
+                   "about your account, please email support@technovationchallenge.org."
+            }, status: 403
           else
 
             if submission_id = FindEligibleSubmissionId.(
@@ -85,10 +90,15 @@ module Judge
     end
 
     def update
-      unless SeasonToggles.judging_enabled?
+      if !SeasonToggles.judging_enabled?
         render json: {
           msg: "Judging is not open right now"
         }, status: 404
+      elsif current_judge.suspended?
+        render json: {
+          msg: "Your judge account has been suspended. If you have any questions " +
+               "about your account, please email support@technovationchallenge.org."
+        }, status: 403
       else
         score = current_judge.submission_scores.find(params[:id])
 

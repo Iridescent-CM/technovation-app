@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base
   MINIMUM_MENTOR_AGE = 14
 
+  # Deprecated in favor of JudgeProfile.suspended flag
   JUDGE_BLOCKLISTED_ACCOUNT_IDS = [
     43662,
     29481,
