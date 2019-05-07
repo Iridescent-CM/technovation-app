@@ -62,6 +62,32 @@ RSpec.describe Judge::ScoresController do
       end
     end
 
+    context "suspended judge" do
+      before { set_judging_round(:QF) }
+      after { reset_judging_round }
+
+      it "prevents score" do
+        team = FactoryBot.create(:team)
+
+        submission = FactoryBot.create(
+          :submission,
+          :complete,
+          contest_rank: :quarterfinalist,
+          team: team
+        )
+
+        judge = FactoryBot.create(:judge, :onboarded, suspended: true)
+
+        sign_in(judge)
+
+        request.accept = "application/json"
+        get :new
+
+        expect(response.status).to eq(403)
+        expect(judge.scores.current_round.count).to eq(0)
+      end
+    end
+
     %w{off between finished}.each do |round|
       context round.titleize do
         it "prevents score" do
@@ -111,7 +137,7 @@ RSpec.describe Judge::ScoresController do
 
           request.accept = "application/json"
           patch :update, params: {
-            id: score.id, 
+            id: score.id,
             submission_score: {
               pitch_specific: 2
             }
@@ -157,13 +183,94 @@ RSpec.describe Judge::ScoresController do
 
           request.accept = "application/json"
           patch :update, params: {
-            id: score.id, 
+            id: score.id,
             submission_score: {
               pitch_specific: 2
             }
           }
 
           expect(response.status).to eq(404)
+          expect(score.reload.total).to eq(0)
+        end
+      end
+
+      context "suspended judge" do
+        before { set_judging_round(:QF) }
+        after { reset_judging_round }
+
+        it "prevents virtual score edits" do
+          team = FactoryBot.create(:team)
+
+          submission = FactoryBot.create(
+            :submission,
+            :complete,
+            contest_rank: :quarterfinalist,
+            team: team
+          )
+
+          judge = FactoryBot.create(:judge, :onboarded, suspended: true)
+
+          score = judge.submission_scores.create!({
+            team_submission: submission
+          })
+
+          sign_in(judge)
+
+          request.accept = "application/json"
+          patch :update, params: {
+            id: score.id,
+            submission_score: {
+              pitch_specific: 2
+            }
+          }
+
+          expect(response.status).to eq(403)
+          expect(score.reload.total).to eq(0)
+        end
+
+        it "prevents live score edits" do
+          team = FactoryBot.create(:team)
+
+          submission = FactoryBot.create(
+            :submission,
+            :complete,
+            contest_rank: :quarterfinalist,
+            team: team
+          )
+
+          rpe = FactoryBot.create(:event,
+            name: "RPE",
+            starts_at: Date.today,
+            ends_at: Date.today + 1.day,
+            division_ids: Division.senior.id,
+            city: "City",
+            venue_address: "123 Street St.",
+            unofficial: false,
+          )
+
+          team.regional_pitch_events << rpe
+          team.save
+
+          judge = FactoryBot.create(:judge, :onboarded, suspended: true)
+
+          judge.regional_pitch_events << rpe
+          judge.save
+
+          score = judge.submission_scores.create!({
+            team_submission: submission
+          })
+
+          sign_in(judge)
+
+          request.accept = "application/json"
+          patch :update, params: {
+            id: score.id,
+            submission_score: {
+              pitch_specific: 2
+            }
+          }
+
+          expect(response.status).to eq(403)
           expect(score.reload.total).to eq(0)
         end
       end

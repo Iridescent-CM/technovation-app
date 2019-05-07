@@ -5,6 +5,18 @@
   </p>
 
   <dl>
+    <dt>Suspended?</dt>
+    <dd>
+      <% if profile.suspended? %>
+        <%= web_icon(
+          "exclamation-circle icon-red",
+          text: "This judge has been suspended!"
+        ) %>
+      <% else %>
+        <%= web_icon("check-circle icon-green", text: "No, not suspended") %>
+      <% end %>
+    </dd>
+
     <dt>Consent signed?</dt>
     <dd>
       <% if profile.consent_signed? %>
