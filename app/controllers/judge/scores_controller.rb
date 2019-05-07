@@ -1,6 +1,8 @@
 module Judge
   class ScoresController < JudgeController
     before_action :require_onboarded
+    before_action :require_judging_enabled, only: [:new, :update]
+    before_action :reject_suspended_judge, only: [:new, :update]
 
     def index
       scope = current_judge.submission_scores
@@ -36,45 +38,28 @@ module Judge
 
     def new
       respond_to do |f|
-        f.html {
-          unless SeasonToggles.judging_enabled?
-            redirect_to root_path, alert: "Judging is not open right now"
-          end
-        }
+        f.html
 
         f.json {
-          if !SeasonToggles.judging_enabled?
-            render json: {
-              msg: "Judging is not open right now"
-            }, status: 404
-          elsif current_judge.suspended?
-            render json: {
-              msg: "Your judge account has been suspended. If you have any questions " +
-                   "about your account, please email support@technovationchallenge.org."
-            }, status: 403
+          if submission_id = FindEligibleSubmissionId.(
+               current_judge,
+               {
+                 score_id: params[:score_id],
+                 team_submission_id: params[:team_submission_id],
+               }
+             )
+
+            submission = TeamSubmission.find(submission_id)
+
+            questions = Questions.new(current_judge, submission)
+
+            render json: questions
           else
-
-            if submission_id = FindEligibleSubmissionId.(
-                 current_judge,
-                 {
-                   score_id: params[:score_id],
-                   team_submission_id: params[:team_submission_id],
-                 }
-               )
-
-              submission = TeamSubmission.find(submission_id)
-
-              questions = Questions.new(current_judge, submission)
-
-              render json: questions
-            else
-              render json: {
-                msg: "There are no more eligible submissions " +
-                     "for you to judge now. This is not an error. " +
-                     "Thank you for your contribution!",
-              }, status: 404
-            end
-
+            render json: {
+              msg: "There are no more eligible submissions " +
+                   "for you to judge now. This is not an error. " +
+                   "Thank you for your contribution!",
+            }, status: 404
           end
         }
       end
@@ -90,27 +75,49 @@ module Judge
     end
 
     def update
-      if !SeasonToggles.judging_enabled?
-        render json: {
-          msg: "Judging is not open right now"
-        }, status: 404
-      elsif current_judge.suspended?
-        render json: {
-          msg: "Your judge account has been suspended. If you have any questions " +
-               "about your account, please email support@technovationchallenge.org."
-        }, status: 403
-      else
-        score = current_judge.submission_scores.find(params[:id])
+      score = current_judge.submission_scores.find(params[:id])
 
-        if score.update(score_params)
-          render json: ScoreSerializer.new(score.reload).serialized_json
-        else
-          render json: score.errors
-        end
+      if score.update(score_params)
+        render json: ScoreSerializer.new(score.reload).serialized_json
+      else
+        render json: score.errors
       end
     end
 
     private
+    def require_judging_enabled
+      respond_to do |f|
+        f.html {
+          unless SeasonToggles.judging_enabled?
+            redirect_to root_path, alert: "Judging is not open right now"
+          end
+        }
+
+        f.json {
+          unless SeasonToggles.judging_enabled?
+            render json: {
+              msg: "Judging is not open right now"
+            }, status: 404
+          end
+        }
+      end
+    end
+
+    def reject_suspended_judge
+      respond_to do |f|
+        f.html
+
+        f.json {
+          if current_judge.suspended?
+            render json: {
+              msg: "Your judge account has been suspended. If you have any questions " +
+                   "about your account, please email support@technovationchallenge.org."
+            }, status: 403
+          end
+        }
+      end
+    end
+
     def score_params
       params.require(:submission_score).permit(
         :sdg_alignment,
