@@ -41,7 +41,7 @@ class AccountsGrid
     end
   end
 
-  column :suspended do
+  column :suspended, if: ->(g) { g.admin } do
     if judge_profile.present? && judge_profile.suspended?
       "Yes"
     else
@@ -324,7 +324,10 @@ class AccountsGrid
       ['No, not suspended', 'active'],
     ],
     filter_group: "common",
-    if: ->(g) { g.admin } do |value, scope, grid|
+    if: ->(g) {
+      g.admin &&
+        (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
+    } do |value, scope, grid|
       scope.includes(:judge_profile)
         .references(:judge_profiles)
         .where("judge_profiles.id IS NOT NULL")
