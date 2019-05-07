@@ -106,20 +106,26 @@
                   ] %>
               </h1>
 
-              <ol class="list--reset">
-                <li>
-                  <small>
-                    only if attending a live, regional event:
-                  </small>
+              <div class="margin--b-large">
+                <ol class="list--reset">
+                  <li>
+                    <small>
+                      Your team is attending a live, regional event:
+                    </small>
 
-                  <%= link_to submission_progress_web_icon(
-                    current_submission,
-                    :pitch_presentation,
-                    "Presentation slides"
-                  ),
-                  [current_scope, current_submission, piece: :pitch_presentation] %>
-                </li>
-              </ol>
+                    <%= link_to submission_progress_web_icon(
+                      current_submission,
+                      :pitch_presentation,
+                      "Edit presentation slides"
+                    ),
+                    [current_scope, current_submission, piece: :pitch_presentation] %>
+                  </li>
+                </ol>
+              </div>
+
+              <%= render 'regional_pitch_events/event',
+                event: current_team.selected_regional_pitch_event %>
+
             </div>
           </div>
         <% end %>
