@@ -50,7 +50,7 @@ namespace :scores do
       event\ status
       judge\ email
       live\ judge?
-      judge\ deleted?
+      judge\ account\ deleted?
       judge/team\ virtual\ mismatch?
       event\ mismatch?
     }.to_csv
@@ -70,17 +70,18 @@ namespace :scores do
       team = score.team
       sub = score.team_submission
       team_rpe = team.selected_regional_pitch_event
-      judge = score.judge_profile
+      judge_profile = JudgeProfile.with_deleted.find(score.judge_profile_id)
+      judge_account = Account.with_deleted.find(judge_profile.account_id)
 
-      virtual_mismatch = if team_rpe.virtual? && judge.live_event?
+      virtual_mismatch = if team_rpe.virtual? && judge_profile.live_event?
           "yes"
-        elsif team_rpe.official? && !judge.live_event?
+        elsif team_rpe.official? && !judge_profile.live_event?
           "yes"
         else
           "no"
         end
 
-      event_mismatch = if judge.regional_pitch_events.include?(team_rpe)
+      event_mismatch = if judge_profile.regional_pitch_events.include?(team_rpe)
           "no"
         else
           "yes"
@@ -98,9 +99,9 @@ namespace :scores do
         sub.app_name,
         team_rpe.name,
         score.event_official_status,
-        judge.account.email,
-        judge.live_event? ? 'yes' : 'no',
-        judge.account.deleted_at.nil? ? 'no' : 'yes',
+        judge_account.email,
+        judge_profile.live_event? ? 'yes' : 'no',
+        judge_account.deleted_at.nil? ? 'no' : 'yes',
         virtual_mismatch,
         event_mismatch
       ].to_csv
