@@ -32,6 +32,51 @@
 
 <div slot="submission">
   <%= render 'slots/mentor/submissions' %>
+
+  <% if SeasonToggles.submissions_disabled? and
+          SeasonToggles.quarterfinals_or_earlier? %>
+    <% rpe_teams = current_mentor.teams.select { |t| t.live_event? } %>
+    <% if rpe_teams.any? %>
+      <h1 class="margin--t-xlarge">Regional Events</h1>
+      <% rpe_teams.each do |team| %>
+        <div class="progress margin--t-large margin--b-xlarge">
+          <div class="progress__section">
+            <h2 class="reset">
+              <%= link_to team.name,
+                [
+                  current_scope,
+                  team.submission,
+                  :section,
+                  section: :pitch_presentation,
+                ] %>
+            </h2>
+
+            <div class="margin--b-large">
+              <ol class="list--reset">
+                <li>
+                  <small>
+                    Your team is attending a live, regional event:
+                  </small>
+
+                  <%= link_to submission_progress_web_icon(
+                    team.submission,
+                    :pitch_presentation,
+                    "Edit presentation slides"
+                  ),
+                  [current_scope, team.submission, piece: :pitch_presentation] %>
+                </li>
+              </ol>
+            </div>
+
+            <%= render 'regional_pitch_events/event',
+              event: team.selected_regional_pitch_event,
+              current_team: team %>
+
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>
 
 <div slot="events">
