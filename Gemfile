@@ -66,6 +66,7 @@ gem 'createsend', '~> 4.1'
 
 gem 'airbrake', '~> 6.3'
 gem 'newrelic_rpm', '~> 3.18'
+gem 'scout_apm', '~> 2.4'
 
 gem 'dalli', "~> 2.7"
 
