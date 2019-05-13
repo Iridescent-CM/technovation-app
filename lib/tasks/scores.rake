@@ -75,7 +75,7 @@ namespace :scores do
 
       virtual_mismatch = if team_rpe.virtual? && judge_profile.live_event?
           "yes"
-        elsif team_rpe.official? && !judge_profile.live_event?
+        elsif team_rpe.live? && team_rpe.official? && !judge_profile.live_event?
           "yes"
         else
           "no"
