@@ -14,6 +14,15 @@ class ScoresGrid
     scope.public_send(value)
   end
 
+  filter :deleted,
+  :enum,
+  select: -> { [
+    ['Include deleted scores', 'with_deleted'],
+    ['Only show deleted scores', 'only_deleted'],
+  ] } do |value, scope, grid|
+    scope.public_send(value)
+  end
+
   scope do
     SubmissionScore.current
       .includes({ team_submission: :team }, :judge_profile)
@@ -84,5 +93,9 @@ class ScoresGrid
 
   column :judge_account_id, header: :judge_account_id do
     judge_profile.account_id
+  end
+
+  column :deleted do
+    deleted? ? "yes" : "no"
   end
 end
