@@ -81,7 +81,9 @@ namespace :scores do
           "no"
         end
 
-      event_mismatch = if judge_profile.regional_pitch_events.include?(team_rpe)
+      event_mismatch = if team_rpe.virtual? and !judge_profile.live_event?
+          "no"
+        elsif judge_profile.regional_pitch_events.include?(team_rpe)
           "no"
         else
           "yes"
