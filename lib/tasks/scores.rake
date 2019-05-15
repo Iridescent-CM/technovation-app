@@ -44,6 +44,8 @@ namespace :scores do
       deleted\ after
       deleted\ after\ in\ minutes
       approved?
+      team\ deleted?
+      submission\ deleted?
       team\ name
       app\ name
       team\ event\ name
@@ -67,8 +69,8 @@ namespace :scores do
         else "about #{(distance_in_minutes / 1440.0).round} days"
       end
 
-      team = score.team
-      sub = score.team_submission
+      sub = TeamSubmission.with_deleted.find(score.team_submission_id)
+      team = Team.with_deleted.find(sub.team_id)
       team_rpe = team.selected_regional_pitch_event
       judge_profile = JudgeProfile.with_deleted.find(score.judge_profile_id)
       judge_account = Account.with_deleted.find(judge_profile.account_id)
@@ -89,6 +91,12 @@ namespace :scores do
           "yes"
         end
 
+      event_official_status = if sub.deleted_at.nil? && team.deleted_at.nil?
+        score.event_official_status
+      else
+        "-"
+      end
+
       puts [
         score.id,
         score.complete? ? 'yes' : 'no',
@@ -97,10 +105,12 @@ namespace :scores do
         distance_in_words,
         distance_in_minutes,
         score.approved? ? 'yes' : 'no',
+        team.deleted_at.nil? ? 'no' : 'yes',
+        sub.deleted_at.nil? ? 'no' : 'yes',
         sub.team_name,
         sub.app_name,
         team_rpe.name,
-        score.event_official_status,
+        event_official_status,
         judge_account.email,
         judge_profile.live_event? ? 'yes' : 'no',
         judge_account.deleted_at.nil? ? 'no' : 'yes',
