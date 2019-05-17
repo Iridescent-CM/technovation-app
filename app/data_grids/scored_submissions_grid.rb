@@ -31,6 +31,14 @@ class ScoredSubmissionsGrid
     team_division_name
   end
 
+  column :country do
+    FriendlyCountry.new(team).country_name
+  end
+
+  column :state_province, header: "State" do
+    FriendlySubregion.(team, prefix: false)
+  end
+
   column :team_name, mandatory: true, html: false
   column :team_name, mandatory: true, html: true do |submission|
     link_to submission.team_name,
