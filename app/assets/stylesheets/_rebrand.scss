@@ -1,0 +1,40 @@
+.rebrand__page-head {
+  background-color: white;
+  background-image: url("circles-bkg-left.png"), url("circles-bkg-right.png");
+  background-size: contain, contain;
+  background-position: left bottom, right top;
+  background-repeat: no-repeat, no-repeat;
+
+  text-align: center;
+
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.rebrand__banner {
+  &, * {
+    color: white;
+  }
+  a, a:hover {
+    color: white;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  background-color: #00B738;
+
+  text-align: center;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin-bottom: 2em;
+}
+
+.rebrand__logo {
+  display: block;
+  background: image-url("tg-logo-white.svg") no-repeat;
+  width: 193px;
+  height: 44px;
+  margin: 0.5rem 1rem;
+}

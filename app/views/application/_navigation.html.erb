@@ -9,7 +9,7 @@
   <div class="grid__col-9 grid__col-sm-3">
     <%= link_to "Technovation",
       content_for?(:root_path) ? yield(:root_path) : root_path,
-      class: "logo",
+      class: ENV.fetch("ENABLE_REBRAND", false) ? "rebrand__logo" : "logo",
       data: { turbolinks: false } %>
   </div>
 

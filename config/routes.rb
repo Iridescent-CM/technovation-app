@@ -344,6 +344,7 @@ Rails.application.routes.draw do
   resources :geolocation_results, only: :index
 
   get '/general_info/get_started_with_thunkable', to: 'thunkable_promo#show'
+  get '/evolving', to: 'rebrand#index'
 
   get 'login', to: 'signins#new', as: :login
   get 'signin', to: 'signins#new', as: :signin
