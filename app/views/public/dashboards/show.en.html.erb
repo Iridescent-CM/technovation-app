@@ -1,3 +1,12 @@
+<% if ENV.fetch("ENABLE_REBRAND", false) %>
+  <div class="rebrand__banner">
+    <h3>Technovation is now Technovation Girls.</h3>
+    <p>
+      <%= link_to "Read more about our exciting transition here >",
+        :evolving %>
+  </div>
+<% end %>
+
 <% if SeasonToggles.registration_open? %>
   <div class="grid grid--justify-space-around margin--t-xxlarge">
     <div class="grid__col-12 grid__col-md-10">
