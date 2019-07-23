@@ -1,14 +1,11 @@
-.rebrand__page-head {
-  background-color: white;
-  background-image: url("circles-bkg-left.png"), url("circles-bkg-right.png");
-  background-size: contain, contain;
-  background-position: left bottom, right top;
-  background-repeat: no-repeat, no-repeat;
+@import 'https://fonts.googleapis.com/css?family=Poppins:400,700|Rubik+Mono+One';
 
-  text-align: center;
-
-  padding-top: 2em;
-  padding-bottom: 2em;
+.rebrand__logo {
+  display: block;
+  background: image-url("tg-logo-white.svg") no-repeat;
+  width: 193px;
+  height: 44px;
+  margin: 0.5rem 1rem;
 }
 
 .rebrand__banner {
@@ -22,7 +19,11 @@
     text-decoration: underline;
   }
 
-  background-color: #00B738;
+  background-color: #3FAF2A;
+  background-image: url("rebrand-banner-bkg.png");
+  background-size: contain;
+  background-position: right top;
+  background-repeat: no-repeat;
 
   text-align: center;
 
@@ -31,10 +32,41 @@
   margin-bottom: 2em;
 }
 
-.rebrand__logo {
-  display: block;
-  background: image-url("tg-logo-white.svg") no-repeat;
-  width: 193px;
-  height: 44px;
-  margin: 0.5rem 1rem;
+.rebrand {
+  font-family: 'Poppins', sans-serif;
+
+  .rebrand__page-head {
+    background-color: white;
+    background-image: url("circles-bkg-left.png"), url("circles-bkg-right.png");
+    background-size: contain, contain;
+    background-position: left bottom, right top;
+    background-repeat: no-repeat, no-repeat;
+
+    &, * {
+      font-family: 'Rubik Mono One', sans-serif;
+      color: #0076CF;
+    }
+    text-align: center;
+
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+
+  strong {
+    font-weight: bold;
+
+    &.callout {
+      color: #0076CF;
+    }
+  }
+
+  .button {
+    background-color: #1d1349;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: none;
+    border-radius: 5px;
+    padding: 15px 30px;
+  }
 }
