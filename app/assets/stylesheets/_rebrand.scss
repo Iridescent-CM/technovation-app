@@ -20,7 +20,7 @@
   }
 
   background-color: #3FAF2A;
-  background-image: url("rebrand-banner-bkg.png");
+  background-image: image-url("rebrand-banner-bkg.png");
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
@@ -37,7 +37,7 @@
 
   .rebrand__page-head {
     background-color: white;
-    background-image: url("circles-bkg-left.png"), url("circles-bkg-right.png");
+    background-image: image-url("circles-bkg-left.png"), image-url("circles-bkg-right.png");
     background-size: contain, contain;
     background-position: left bottom, right top;
     background-repeat: no-repeat, no-repeat;
