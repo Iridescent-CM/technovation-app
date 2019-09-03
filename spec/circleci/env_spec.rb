@@ -33,6 +33,7 @@ if !!defined?(Dotenv)
     JUDGE_TRAINING_READY
     CONVERT_MENTORS
     NODE_ENV
+    GOOGLE_ANALYTICS_ID
   }
 
   RSpec.describe "Circle CI config" do
