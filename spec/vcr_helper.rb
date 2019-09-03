@@ -11,4 +11,5 @@ VCR.configure do |config|
     uri = URI(request.uri)
     LOCALHOSTS.include?(uri.host) and uri.port != 9200
   end
+  config.ignore_hosts 'chromedriver.storage.googleapis.com'
 end
