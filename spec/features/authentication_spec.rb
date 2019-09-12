@@ -1,6 +1,13 @@
 require "rails_helper"
 
 RSpec.feature "Authentication" do
+
+  def reload_cookie_names
+    # daily server restart causes reload IRL, here we have to force re-evaluation of constants
+    Object.send(:remove_const, 'CookieNames')
+    load 'cookie_names.rb'
+  end
+
   { judge: %i{regional_ambassador student admin},
     student: %i{mentor regional_ambassador judge admin},
     mentor: %i{regional_ambassador student admin},
@@ -31,6 +38,26 @@ RSpec.feature "Authentication" do
 
       expect(page).to have_current_path(signin_path)
       expect(page).to have_css(".flash", text: "You must be signed in as #{scope.indefinitize.humanize.downcase} to go there!")
+    end
+
+    scenario "A logged in #{scope} tries to visit a path after the season changes" do
+      Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
+        reload_cookie_names
+
+        account = FactoryBot.create(scope)
+
+        sign_in(account)
+        visit send("#{scope}_dashboard_path")
+
+        expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+      end
+
+      Timecop.freeze(ImportantDates.new_season_switch) do
+        reload_cookie_names
+
+        visit send("#{scope}_dashboard_path")
+        expect(page).to have_current_path(signin_path)
+      end
     end
   end
 end
