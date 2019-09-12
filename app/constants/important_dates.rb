@@ -1,4 +1,11 @@
 module ImportantDates
+  def self.new_season_switch
+    year = Time.current.year
+    month = Integer(ENV.fetch("DATES_NEW_SEASON_START_MONTH"))
+    day = Integer(ENV.fetch("DATES_NEW_SEASON_START_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
   def self.mentor_training_required_since
     year = Integer(ENV.fetch("DATES_MENTOR_TRAINING_YEAR"))
     month = Integer(ENV.fetch("DATES_MENTOR_TRAINING_MONTH"))

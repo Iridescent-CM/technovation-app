@@ -1,6 +1,6 @@
 class Season
-  START_MONTH = 10
-  START_DAY = 1
+  START_MONTH = ImportantDates.new_season_switch.month
+  START_DAY = ImportantDates.new_season_switch.day
 
   attr_accessor :year
 
