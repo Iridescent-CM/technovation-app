@@ -67,12 +67,6 @@ export default {
         },
 
         {
-          heading: 'Project Workbook',
-          url: 'https://bit.ly/2z7xwP9',
-          text: 'Open the Student Project Workbook',
-        },
-
-        {
           heading: 'Submission Guide',
           url: 'https://www.technovationchallenge.org/submission-guidelines/',
           text: 'Read the Submission Guidelines',
