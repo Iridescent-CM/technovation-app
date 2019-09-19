@@ -9,11 +9,12 @@ class Season
   end
 
   def self.deadline
-    "April 23rd"
+    day = ImportantDates.submission_deadline.day.ordinalize
+    ImportantDates.submission_deadline.strftime("%B #{day}")
   end
 
   def self.submission_deadline
-    "#{deadline}, #{current.year}"
+    "#{deadline}, #{ImportantDates.submission_deadline.year}"
   end
 
   def self.years
