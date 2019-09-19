@@ -1,55 +1,50 @@
-<h3 class="reset">RA Resource Page</h3>
+<h3 class="reset">Resources</h3>
 
-<p>
-  <%= link_to "See our complete resources for you",
-    "http://technovationchallenge.org/ra-resources/",
-    target: "_blank" %>
-</p>
+<ul>
+  <li>
+    <%= link_to "Curriculum",
+      "https://www.technovationchallenge.org/curriculum-intro/registered",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "RA Resource Page",
+      "http://technovationchallenge.org/ra-resources/",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "RA Handbook",
+      "https://iridescentlearning.atavist.com/technovation-ra-handbook",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Parental Consent PDF",
+      ENV.fetch("PARENT_CONSENT_PDF"),
+      target: "_blank" %>
+  </li>
+</ul>
 
-<h3 class="reset">RA Handbook</h3>
-
-<p>
-  <%= link_to "Read the RA Handbook",
-    "https://iridescentlearning.atavist.com/technovation-ra-handbook",
-    target: "_blank" %>
-</p>
 
 <h3 class="reset">FAQ & Rules</h3>
 
-<p>
-  <%= link_to "See the FAQ & Rules",
-    "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation",
-    target: "_blank" %>
-</p>
-
-<h3 class="reset">Curriculum</h3>
-
-<p>
-  <%= link_to "Open the Technovation Curriculum",
-    "https://www.technovationchallenge.org/curriculum-intro/registered",
-    target: "_blank" %>
-</p>
-
-<h3 class="reset">Parental Consent PDF</h3>
-
-<p>
-  <%= link_to "Download the PDF",
-    ENV.fetch("PARENT_CONSENT_PDF"),
-    target: "_blank" %>
-</p>
-
-<h3 class="reset">Submission Guide</h3>
-
-<p>
-  <%= link_to "Read the Submission Guidelines",
-    "https://www.technovationchallenge.org/submission-guidelines/",
-    target: "_blank" %>
-</p>
-
-<h3 class="reset">Judging Rubric</h3>
-
-<p>
-  <%= link_to "See the Judging Rubric",
-    "https://www.technovationchallenge.org/judging-rubric/",
-    target: "_blank" %>
-</p>
+<ul>
+  <li>
+    <%= link_to "How do teams submit?",
+      "https://iridescentsupport.zendesk.com/hc/en-us/sections/115000630314-Submission",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Submission Guidelines",
+      "https://www.technovationchallenge.org/submission-guidelines/",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "How will team's app be judged?",
+      "https://iridescentsupport.zendesk.com/hc/en-us/sections/115000250428-Judging-Pitching-and-Results",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Judging Rubric",
+      "https://www.technovationchallenge.org/judging-rubric/",
+      target: "_blank" %>
+  </li>
+</ul>
