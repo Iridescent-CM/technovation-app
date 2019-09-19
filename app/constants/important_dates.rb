@@ -20,6 +20,13 @@ module ImportantDates
     Time.zone.local(year, month, day)
   end
 
+  def self.submission_deadline
+    year = Time.current.year
+    month = Integer(ENV.fetch("DATES_SUBMISSION_DEADLINE_MONTH"))
+    day = Integer(ENV.fetch("DATES_SUBMISSION_DEADLINE_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
   def self.quarterfinals_judging_begins
     year = Integer(ENV.fetch("DATES_QUARTERFINALS_BEGINS_YEAR"))
     month = Integer(ENV.fetch("DATES_QUARTERFINALS_BEGINS_MONTH"))
