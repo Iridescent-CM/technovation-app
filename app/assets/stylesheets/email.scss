@@ -148,8 +148,8 @@ a {
 .btn-primary {
   text-decoration: none;
   color: white !important;
-  background-color: #5ABF94;
-  border: solid #5ABF94;
+  background-color: #43B02A;
+  border: solid #43B02A;
   border-width: 10px 20px;
   line-height: 2em;
   /* 2em * 14px = 28px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
@@ -217,15 +217,15 @@ a {
   background-color: #68B90F;
 }
 .header-block {
-  background-color: #903D54;
-  background-image: image-url("header-background.png");
+  background-color: #43B02A;
+  background-image: image-url("header-background-email.png");
   background-repeat: no-repeat;
 
   span {
     display: block;
     height: 36px;
     width: 158px;
-    background: image-url("tc-logo-white-tm.png") no-repeat top / 158px 36px;
+    background: image-url("tg-logo-white.svg") no-repeat top / 158px 36px;
   }
 }
 
