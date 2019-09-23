@@ -13,6 +13,8 @@ export default {
   birthMonth: null,
   birthDay: null,
 
+  cutoff: new Date(2020, 7, 1),
+
   profileChoice: null,
 
   city: null,
