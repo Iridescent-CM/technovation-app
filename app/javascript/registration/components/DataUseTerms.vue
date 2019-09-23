@@ -9,7 +9,7 @@
     </div>
 
     <div class="panel__content">
-      <h3>How Technovation uses your data</h3>
+      <h3>How Technovation Girls uses your data</h3>
 
       <p>
         Please take a moment to read this before signing up.
@@ -24,7 +24,7 @@
 
       <hr />
 
-      <p>Technovation is owned by a non-profit organization called Iridescent.</p>
+      <p>Technovation Girls is owned by a non-profit organization called Technovation.</p>
 
       <h4>No advertising</h4>
 
@@ -37,7 +37,7 @@
 
       <p>
         We will only use your data to help guide you through the
-        Technovation program, and to learn how we can make the program
+        Technovation Girls program, and to learn how we can make the program
         better and easier for everyone.
       </p>
 

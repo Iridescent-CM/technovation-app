@@ -160,7 +160,7 @@ export default {
     },
 
     cutoffDay () {
-      return "August 1, 2019"
+      return "August 1, 2020"
     },
 
     divisionExplanation () {
