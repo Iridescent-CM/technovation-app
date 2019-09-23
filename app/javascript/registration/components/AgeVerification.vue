@@ -95,7 +95,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['months', 'birthMonth']),
+    ...mapState(['months', 'birthMonth', 'cutoff']),
 
     ...mapAuthState(['currentAccount']),
 
@@ -160,7 +160,11 @@ export default {
     },
 
     cutoffDay () {
-      return "August 1, 2020"
+      return this.cutoff.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
     },
 
     divisionExplanation () {
