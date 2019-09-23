@@ -21,7 +21,7 @@ module ImportantDates
   end
 
   def self.submission_deadline
-    year = Time.current.year
+    year = Integer(ENV.fetch("DATES_SUBMISSION_DEADLINE_YEAR"))
     month = Integer(ENV.fetch("DATES_SUBMISSION_DEADLINE_MONTH"))
     day = Integer(ENV.fetch("DATES_SUBMISSION_DEADLINE_DAY"))
     Time.zone.local(year, month, day)
