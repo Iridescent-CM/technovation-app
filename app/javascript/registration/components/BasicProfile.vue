@@ -37,25 +37,11 @@
 
       <p>
         <label for="schoolName">{{ schoolCompanyNameLabel }}</label>
-        <template v-if="profileChoice === 'student'">
-          <input
-            id="schoolName"
-            type="text"
-            v-model="schoolCompanyName"
-          />
-        </template>
-
-        <template v-else>
-          <p class="hint hint--above">
-            If your company is not part of the options,
-            type the name of your company then press "Enter" or "Tab"
-          </p>
-          <autocomplete-input
-            id="schoolName"
-            v-model="schoolCompanyName"
-            url="/registration/top_companies"
-          />
-        </template>
+        <input
+          id="schoolName"
+          type="text"
+          v-model="schoolCompanyName"
+        />
       </p>
 
       <p v-show="profileChoice !== 'student'">
@@ -144,7 +130,6 @@ import { createNamespacedHelpers } from 'vuex'
 import VueSelect from 'vue-select'
 
 import { debounce } from 'utilities/utilities'
-import AutocompleteInput from 'components/AutocompleteInput'
 
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 
@@ -152,7 +137,6 @@ export default {
   name: 'basic-profile',
 
   components: {
-    AutocompleteInput,
     VueSelect,
   },
 
