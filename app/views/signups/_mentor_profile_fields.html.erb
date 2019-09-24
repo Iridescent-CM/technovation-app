@@ -4,17 +4,8 @@
     collection: Account.genders.keys %>
 <% end %>
 
-<%= f.input :school_company_name, {
-  wrapper: :hint_above_field,
-  as: :autocomplete,
-  label: t('models.mentor_profile.school_company_name'),
-  hint: 'If your school or company is not part of the options, ' +
-        'type the name of your company then press "Enter" or "Tab"',
-  input_html: {
-    url: registration_top_companies_path,
-    no_options_text: "Please begin typing to select your school/company from a list or add your own"
-  }
-} %>
+<%= f.input :school_company_name,
+  label: t('models.mentor_profile.school_company_name') %>
 
 <%= f.input :job_title %>
 
