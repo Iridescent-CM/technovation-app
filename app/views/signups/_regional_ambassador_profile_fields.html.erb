@@ -5,15 +5,7 @@
 <% end %>
 
 <%= f.input :organization_company_name,
-  wrapper: :hint_above_field,
-  as: :autocomplete,
-  label: t("models.regional_ambassador_profile.organization_company_name"),
-  hint: 'If your organization or company is not part of the options, ' +
-        'type the name of your company then press "Enter" or "Tab"',
-  input_html: {
-    url: registration_top_companies_path,
-    no_options_text: "Please begin typing to select your company from a list or add your own"
-  } %>
+  label: t("models.regional_ambassador_profile.organization_company_name") %>
 
 <%= f.input :job_title,
   label: t("models.regional_ambassador_profile.job_title") %>

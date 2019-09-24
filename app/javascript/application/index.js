@@ -7,7 +7,6 @@ import '../application/sticky-header';
 
 import { urlHelpers } from 'utilities/utilities';
 
-import AutocompleteInput from 'components/AutocompleteInput';
 import LocationForm from '../location/components/LocationForm';
 
 import '../terms_agreement';
@@ -32,18 +31,6 @@ document.addEventListener('turbolinks:load', function () {
             window.history.back();
           }
         },
-      },
-    });
-  }
-
-  const autocompleteInputs = document.querySelectorAll('.vue-enable-autocomplete-input');
-
-  for (let i = 0; i < autocompleteInputs.length; i += 1) {
-    new Vue({
-      el: autocompleteInputs[i],
-
-      components: {
-        AutocompleteInput,
       },
     });
   }
