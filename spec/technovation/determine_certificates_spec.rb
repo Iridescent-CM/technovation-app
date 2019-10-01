@@ -38,8 +38,6 @@ RSpec.describe DetermineCertificates do
     end
 
     it "awards nothing if equivalent certificate exists" do
-      pending("Failing until pdf templates updated for 2020")
-
       student = FactoryBot.create(:student, :half_complete_submission)
 
       FillPdfs.(student.account)
