@@ -72,13 +72,13 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def prepare_mentor_for_current_season(record)
     notify_airbrake_on_invalid_location(record)
 
-    subscribe_to_newsletter(record, :mentor, with_location: true)
+    subscribe_to_newsletter(record, :mentor)
   end
 
   def prepare_judge_for_current_season(record)
     notify_airbrake_on_invalid_location(record)
 
-    subscribe_to_newsletter(record, :judge, with_location: true)
+    subscribe_to_newsletter(record, :judge)
   end
 
   def record_registration_activity(record)
@@ -91,16 +91,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     end
   end
 
-  def subscribe_to_newsletter(record, list_scope, options = {})
-    args = [
-      record.email,
-      record.full_name,
-      "#{list_scope.to_s.upcase}_LIST_ID",
-    ]
-
-    args.push(location_data(record)) if options[:with_location]
-
-    SubscribeEmailListJob.perform_later(*args)
+  def subscribe_to_newsletter(record, list_scope)
+    SubscribeProfileToEmailList.perform_later(record.id, list_scope.to_s)
   end
 
   def location_data(record)

@@ -1,17 +1,14 @@
 class UpdateEmailListJob < ActiveJob::Base
   queue_as :default
 
-  def perform(email_was, email, name, list_env_key, custom_fields = [])
-    return if Rails.env.development? or Rails.env.test?
-
+  def perform(email_was, email, list_scope, merge_fields = {})
     email_was = email if email_was.blank?
-    auth = { api_key: ENV.fetch('CAMPAIGN_MONITOR_API_KEY') }
 
     begin
-      subscriber = CreateSend::Subscriber.new(auth, ENV.fetch(list_env_key), email_was)
-      subscriber.update(email.strip, name, custom_fields, false)
-    rescue CreateSend::BadRequest => br
-      Rails.logger.error("[UPDATE EMAIL LIST ERROR] #{email} - #{br.message}")
+      list = Mailchimp::MailingList.new(list_scope)
+      list.update(email_was, email, merge_fields)
+    rescue Mailchimp::APIRequestError => e
+      Rails.logger.error("[UPDATE EMAIL LIST ERROR] #{email} - #{e.message}")
     end
   end
 end

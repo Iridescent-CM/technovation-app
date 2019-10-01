@@ -1,22 +1,12 @@
 class SubscribeEmailListJob < ActiveJob::Base
   queue_as :default
 
-  def perform(email, name, list_env_key, custom_fields = [])
-    return if Rails.env.development? or Rails.env.test?
-
-    auth = { api_key: ENV.fetch('CAMPAIGN_MONITOR_API_KEY') }
-
+  def perform(email, list_scope, merge_fields = {})
     begin
-      CreateSend::Subscriber.add(
-        auth,
-        ENV.fetch(list_env_key),
-        email,
-        name,
-        custom_fields,
-        true
-      )
-    rescue CreateSend::BadRequest => br
-      p "Error: #{br}"
+      list = Mailchimp::MailingList.new(list_scope)
+      list.subscribe(email, merge_fields)
+    rescue Mailchimp::APIRequestError => e
+      p "Error: #{e}"
     end
   end
 end

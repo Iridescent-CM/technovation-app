@@ -1,15 +1,10 @@
 class DeleteAccountJob < ActiveJob::Base
   queue_as :default
 
-  def perform(list_id, email)
-    auth = { api_key: ENV.fetch('CAMPAIGN_MONITOR_API_KEY') }
-
+  def perform(list_scope, email)
     begin
-      CreateSend::Subscriber.new(
-        auth,
-        ENV.fetch(list_id),
-        email
-      ).delete
+      list = Mailchimp::MailingList.new(list_scope)
+      list.delete(email)
     rescue => e
       Rails.logger.error(
         "ERROR UNSUBSCRIBING: #{e.message}"

@@ -65,8 +65,10 @@ class ParentalConsent < ActiveRecord::Base
     if newsletter_opt_in?
       SubscribeEmailListJob.perform_later(
         student_profile.parent_guardian_email,
-        student_profile.parent_guardian_name,
-        "PARENT_LIST_ID"
+        :parent.to_s,
+        {
+          NAME: student_profile.parent_guardian_name
+        }
       )
     end
 

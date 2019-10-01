@@ -63,7 +63,6 @@ Airbrake.add_filter do |notice|
    Net::SMTPFatalError
    ActionController::InvalidAuthenticityToken
    ActiveRecord::RecordInvalid
-   CreateSend::BadRequest
    Net::SMTPSyntaxError
    SignalException
    ActionController::UnknownFormat

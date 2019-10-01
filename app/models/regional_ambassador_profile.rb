@@ -137,16 +137,17 @@ class RegionalAmbassadorProfile < ActiveRecord::Base
   def after_status_changed
     if approved?
       SubscribeEmailListJob.perform_later(
-        account.email, account.full_name, "REGIONAL_AMBASSADOR_LIST_ID"
+        account.email,
+        :regional_ambassador.to_s,
+        {
+          FNAME: account.first_name,
+          LNAME: account.last_name
+        }
       )
     else
       begin
-        auth = { api_key: ENV.fetch("CAMPAIGN_MONITOR_API_KEY") }
-        CreateSend::Subscriber.new(
-          auth,
-          ENV.fetch("REGIONAL_AMBASSADOR_LIST_ID"),
-          account.email
-        ).delete
+        list = Mailchimp::MailingList.new(:regional_ambassador)
+        list.delete(account.email)
       rescue
         false
       end

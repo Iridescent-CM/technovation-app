@@ -21,6 +21,7 @@ jobs:
           HOST_DOMAIN: localhost:3000
           AWS_BUCKET_NAME: technovation-attachments-test
           CAMPAIGN_MONITOR_API_KEY: n-a
+          MAILCHIMP_API_KEY: n-a
           STUDENT_LIST_ID: n-a
           MENTOR_LIST_ID: n-a
           JUDGE_LIST_ID: n-a
