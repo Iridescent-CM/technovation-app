@@ -156,7 +156,7 @@ RSpec.feature "Judge certificates" do
     end
   end
 
-  scenario "judge with 10 or more completed current scores" do
+  scenario "judge with 11 or more completed current scores" do
     SeasonToggles.set_judging_round(:sf)
 
     judge = FactoryBot.create(:judge, :onboarded, number_of_scores: 11)
