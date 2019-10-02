@@ -55,7 +55,7 @@ RSpec.describe Admin::ParticipantsController do
         .with(
           profile.account_id,
           "old@oldtime.com",
-          "#{scope.upcase}_LIST_ID",
+          scope.upcase,
         )
     end
 
@@ -76,7 +76,7 @@ RSpec.describe Admin::ParticipantsController do
         .with(
           profile.account_id,
           profile.account.email,
-          "#{scope.upcase}_LIST_ID",
+          scope.upcase,
         )
     end
 
@@ -96,7 +96,7 @@ RSpec.describe Admin::ParticipantsController do
         .with(
           profile.account_id,
           profile.account.email,
-          "#{scope.upcase}_LIST_ID",
+          scope.upcase,
         )
     end
 
@@ -116,7 +116,7 @@ RSpec.describe Admin::ParticipantsController do
         .with(
           profile.account_id,
           profile.account.email,
-          "#{scope.upcase}_LIST_ID",
+          scope.upcase,
         )
     end
   end
