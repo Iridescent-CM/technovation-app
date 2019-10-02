@@ -28,7 +28,7 @@ require "rails_helper"
         .with(
           profile.account_id,
           profile.account.email,
-          "#{scope.upcase}_LIST_ID"
+          scope.upcase
         )
     end
 
@@ -43,7 +43,7 @@ require "rails_helper"
       }
 
       expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, "#{scope.upcase}_LIST_ID")
+        .with(profile.account_id, profile.account.email, scope.upcase)
     end
 
     it "updates #{scope} newsletters with changes to last name" do
@@ -57,7 +57,7 @@ require "rails_helper"
       }
 
       expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, "#{scope.upcase}_LIST_ID")
+        .with(profile.account_id, profile.account.email, scope.upcase)
     end
 
     it "errors out when #{scope} country is blank" do
