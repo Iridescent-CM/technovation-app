@@ -95,7 +95,7 @@ class ProfileUpdating
         UpdateProfileOnEmailListJob.perform_later(
           id,
           email_before_last_save,
-          "#{scope.sub(/^\w+_regional/, "regional").upcase}_LIST_ID"
+          scope.sub(/^\w+_regional/, "regional").upcase
         )
       end
     end
