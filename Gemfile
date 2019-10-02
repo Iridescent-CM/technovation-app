@@ -62,8 +62,6 @@ gem 'bcrypt', '~> 3.1'
 
 gem 'sidekiq', '~> 4.2'
 
-gem 'createsend', '~> 4.1'
-
 gem 'airbrake', '~> 6.3'
 gem 'newrelic_rpm', '~> 3.18'
 gem 'scout_apm', '~> 2.4'

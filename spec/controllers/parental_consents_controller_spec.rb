@@ -76,9 +76,7 @@ RSpec.describe ParentalConsentsController do
         ).merge(newsletter_opt_in: "0") }
 
       expect(SubscribeEmailListJob).not_to have_received(:perform_later)
-        .with("parenty4@parent.com",
-              "parenty4",
-              "PARENT_LIST_ID")
+        .with(any_args)
     end
 
     it "allows parents to opt in to the newsletter" do
@@ -100,8 +98,8 @@ RSpec.describe ParentalConsentsController do
         .at_least(:once)
         .with(
           "parenty@parent.com",
-          "parenty",
-          "PARENT_LIST_ID"
+          "parent",
+          { NAME: "parenty" }
         )
     end
 

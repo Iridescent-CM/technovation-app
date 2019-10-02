@@ -393,8 +393,10 @@ class StudentProfile < ActiveRecord::Base
       UpdateEmailListJob.perform_later(
         parent_guardian_email_before_last_save,
         parent_guardian_email,
-        parent_guardian_name,
-        "PARENT_LIST_ID"
+        :parent.to_s,
+        {
+          NAME: parent_guardian_name
+        }
       )
 
     end
