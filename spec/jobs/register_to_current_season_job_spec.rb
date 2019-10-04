@@ -14,6 +14,23 @@ RSpec.describe RegisterToCurrentSeasonJob do
 
       RegisterToCurrentSeasonJob.perform_now(profile.account)
     end
+
+    it "resets #{scope} onboarded status if necessary" do
+      profile = nil
+
+      Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
+        profile = FactoryBot.create(scope, :onboarded)
+      end
+
+      expect {
+        Timecop.freeze(ImportantDates.new_season_switch + 1.day) do
+          ConsentWaiver.nonvoid.find_each(&:void!) # see lib/tasks/reset_consents.rake
+          RegisterToCurrentSeasonJob.perform_now(profile.account)
+        end
+      }.to change {
+        profile.reload.onboarded?
+      }.from(true).to(false)
+    end
   end
 
   it "welcomes students" do

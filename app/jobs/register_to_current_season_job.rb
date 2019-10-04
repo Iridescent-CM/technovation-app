@@ -67,18 +67,24 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
         !profile.parent_guardian_email.blank?
       ParentMailer.consent_notice(profile.id).deliver_later
     end
+    
+    profile.save # fire commit hooks, if needed
   end
 
   def prepare_mentor_for_current_season(record)
     notify_airbrake_on_invalid_location(record)
 
     subscribe_to_newsletter(record, :mentor)
+
+    record.mentor_profile.save # fire commit hooks, if needed
   end
 
   def prepare_judge_for_current_season(record)
     notify_airbrake_on_invalid_location(record)
 
     subscribe_to_newsletter(record, :judge)
+
+    record.judge_profile.save # fire commit hooks, if needed
   end
 
   def record_registration_activity(record)
