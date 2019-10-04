@@ -15,10 +15,7 @@ RSpec.feature "Off-season splash page" do
     SeasonToggles.disable_signups!
     visit root_path
     expect(page).not_to have_css("#registration-landing")
-    expect(page).to have_content(
-      "Registration for Technovation " +
-      Season.next.year.to_s +
-      " will open on October 1."
-    )
+    expect(page).to have_content("Registration for Technovation")
+    expect(page).to have_content("will open on")
   end
 end
