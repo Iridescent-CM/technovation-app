@@ -85,6 +85,38 @@ RSpec.describe RegisterToCurrentSeasonJob do
     RegisterToCurrentSeasonJob.perform_now(student.reload.account)
   end
 
+  it "resets mentor training" do
+    profile = nil
+
+    Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
+      profile = FactoryBot.create(:mentor, :onboarded)
+    end
+
+    expect {
+      Timecop.freeze(ImportantDates.new_season_switch + 1.day) do
+        RegisterToCurrentSeasonJob.perform_now(profile.account)
+      end
+    }.to change {
+      profile.reload.training_complete?
+    }.from(true).to(false)
+  end
+
+  it "resets judge training" do
+    profile = nil
+
+    Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
+      profile = FactoryBot.create(:judge, :onboarded)
+    end
+
+    expect {
+      Timecop.freeze(ImportantDates.new_season_switch + 1.day) do
+        RegisterToCurrentSeasonJob.perform_now(profile.account)
+      end
+    }.to change {
+      profile.reload.training_completed?
+    }.from(true).to(false)
+  end
+
   it "records activity" do
     student = FactoryBot.create(:student)
 
