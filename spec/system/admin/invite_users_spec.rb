@@ -115,7 +115,7 @@ RSpec.describe "Admins invite users to signup", :js do
         click_button "Confirm"
       end
 
-      expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+      expect(page).to have_current_path(send("#{scope}_location_details_path"), ignore_query: true)
 
       invite = UserInvitation.last
       expect(invite).to be_registered
@@ -191,7 +191,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     click_button "Create Your Account"
 
-    expect(current_path).to eq(regional_ambassador_dashboard_path)
+    expect(current_path).to eq(regional_ambassador_location_details_path)
 
     invite = UserInvitation.last
     expect(invite.account.mentor_profile).to eq(mentor)
@@ -237,7 +237,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     click_button "Create Your Account"
 
-    expect(current_path).to eq(regional_ambassador_dashboard_path)
+    expect(current_path).to eq(regional_ambassador_location_details_path)
 
     invite = UserInvitation.last
     expect(invite.account.reload.judge_profile).to eq(judge)
