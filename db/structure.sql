@@ -5,6 +5,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -2366,13 +2367,6 @@ CREATE INDEX index_accounts_on_division_id ON public.accounts USING btree (divis
 
 
 --
--- Name: index_accounts_on_email; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_accounts_on_email ON public.accounts USING btree (email) WHERE (deleted_at IS NOT NULL);
-
-
---
 -- Name: index_accounts_on_mailer_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3149,6 +3143,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190228185145'),
 ('20190328190221'),
 ('20190403154655'),
-('20190506212403');
+('20190506212403'),
+('20191008152233');
 
 
