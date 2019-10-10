@@ -8,7 +8,7 @@ en:
       team_required: "You need to be on a team to access that page"
       unauthenticated: "You must be signed in as %{profile} to go there!"
       unauthorized: "You don't have permission to go there!"
-      invalid_location: "You have been brought to this page because your location is missing. After you enter your location, you will be brought back to your dashboard. Thank you!"
+      invalid_location: "Please enter your location to access your dashboard. Thank you!"
       no_data_agreement_on_file: "You have been brought to this page because you must agree to the data use terms before participating in Technovation. After you agree to these terms, you will be brought back to your dashboard. Thank you!"
 
     accounts:
