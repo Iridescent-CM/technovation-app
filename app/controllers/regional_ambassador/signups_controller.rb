@@ -12,6 +12,7 @@ module RegionalAmbassador
         SignIn.(invite.account, self, permanent: true)
       elsif !!invite_token
         setup_valid_profile_from_invitation(:regional_ambassador, invite_token)
+        flash.now[:success] = "Thank you for confirming your email address."
         @profile.ambassador_since_year = "I'm new!"
       else
         redirect_to root_path
