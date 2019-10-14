@@ -177,7 +177,7 @@ export default {
       // making it reverse, highest number on top
       const endYear = new Date().getFullYear() - 110
 
-      let startYear = endYear + 100
+      let startYear = endYear + 101
       let years = []
 
       while (startYear >= endYear) {
