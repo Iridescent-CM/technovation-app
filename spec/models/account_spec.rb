@@ -71,6 +71,14 @@ RSpec.describe Account do
     expect(account).to be_valid
   end
 
+  it "enforces email uniqueness at database level" do
+    FactoryBot.create(:account, email: "email@gmail.com")
+    account = FactoryBot.build(:account, email: "email@gmail.com")
+    expect {
+      account.save(validate: false)
+    }.to raise_error
+  end
+
   describe ".mentors_pending_invites" do
     it "only includes mentors with pending team invites" do
       pending_mentor = FactoryBot.create(:mentor, :onboarded)
