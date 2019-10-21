@@ -17,6 +17,14 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :mentor_type do
+    if mentor_profile.present?
+      mentor_profile.mentor_type
+    else
+      "-"
+    end
+  end
+
   column :judge_industry do
     if judge_profile.present?
       judge_profile.industry_text
@@ -350,6 +358,19 @@ class AccountsGrid
         .references(:judge_profiles, :regional_pitch_events)
         .where("judge_profiles.id IS NOT NULL")
         .where("regional_pitch_events.id #{is_is_not} NULL")
+    end
+
+  filter :mentor_type,
+    :enum,
+    select: MENTOR_TYPE_OPTIONS,
+    filter_group: "common",
+    if: ->(g) {
+      scopes = g.scope_names || []
+      %w{student judge regional_ambassador}.all? { |scope| scopes.exclude?(scope) }
+    } do |value, scope, grid|
+      scope.includes(:mentor_profile)
+        .references(:mentor_profiles)
+        .where(mentor_profiles: { mentor_type: value })
     end
 
   filter :school_company_name,
