@@ -82,6 +82,17 @@ RSpec.describe Mentor::JoinRequestsController do
       expect(mails[0..1]).not_to eq(mails[2..3])
     end
 
+    it "resends the correct email on second join attempt" do
+      sign_in(mentor)
+      post :create, params: { team_id: team.id }
+
+      mails = ActionMailer::Base.deliveries.last(4).map do |mail|
+        { to: mail.to, subject: mail.subject }
+      end
+
+      expect(mails[0..1]).to eq(mails[2..3])
+    end
+
     it "redirects and displays alert if judging is enabled or between rounds" do
       SeasonToggles.judging_round = :qf
 
