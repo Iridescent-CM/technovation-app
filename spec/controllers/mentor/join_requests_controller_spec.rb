@@ -74,6 +74,14 @@ RSpec.describe Mentor::JoinRequestsController do
       expect(bodies.sample.to_s).to include("href=\"#{url}")
     end
 
+    it "doesn't double-send email" do
+      mails = ActionMailer::Base.deliveries.last(4).map do |mail|
+        { to: mail.to, subject: mail.subject }
+      end
+
+      expect(mails[0..1]).not_to eq(mails[2..3])
+    end
+
     it "redirects and displays alert if judging is enabled or between rounds" do
       SeasonToggles.judging_round = :qf
 
