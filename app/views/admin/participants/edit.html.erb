@@ -42,9 +42,16 @@
         <p>
           <%= m.label :mentor_type %>
 
+          <% if f.object.mentor_profile.errors[:mentor_type].present? %>
+            <div class="field_with_errors">
+              <span class="error"><%= f.object.mentor_profile.errors[:mentor_type].to_sentence %></span>
+            </div>
+          <% end %>
+
           <%= m.select :mentor_type,
             MentorProfile.mentor_types.keys,
-            prompt: "Choose one..." %>
+            prompt: "Choose one...",
+            selected: f.object.mentor_profile.mentor_type %>
         </p>
       <% end %>
     <% end %>
