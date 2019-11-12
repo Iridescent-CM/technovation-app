@@ -62,9 +62,24 @@ class SubmissionsGrid
     FriendlyCountry.new(team).country_name
   end
 
-
   column :complete? do
-    complete? ? "yes" : "NO"
+    complete? ? "yes" : "no"
+  end
+
+  column :required_fields do |submission|
+    RequiredFields.new(submission).all?(&:complete?) ? "Complete" : "Incomplete"
+  end
+
+  column :team_qualified? do
+    team.qualified? ? "yes" : "no"
+  end
+
+  column :submitted? do
+    published? ? "yes" : "no"
+  end
+
+  column :only_needs_to_submit? do
+    only_needs_to_submit? ? "yes" : "no"
   end
 
   column :progress,
@@ -128,12 +143,12 @@ class SubmissionsGrid
       public_send(value)
   end
 
-  filter :complete,
+  filter :submitted,
     :enum,
     filter_group: "more-specific",
     select: [
-      ["Complete submissions", "complete"],
-      ["Incomplete submissions", "incomplete"],
+      ["Yes, submitted", "complete"],
+      ["No, unsubmitted", "incomplete"],
     ] do |value|
       send(value)
     end

@@ -36,8 +36,8 @@ class TeamSubmission < ActiveRecord::Base
   after_commit -> {
     columns = {}
 
-    if RequiredFields.new(self).any?(&:blank?)
-      columns[:published_at] = nil
+    if RequiredFields.new(self).any?(&:blank?) && published?
+      Rails.logger.warn("Published submission id=#{id} is missing required fields.")
     end
 
     if source_code_external_url.blank?
@@ -269,7 +269,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def only_needs_to_submit?
-    !complete? &&
+    !published? &&
       team.qualified? &&
         RequiredFields.new(self).all?(&:complete?)
   end

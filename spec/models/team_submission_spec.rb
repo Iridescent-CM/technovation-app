@@ -72,7 +72,7 @@ RSpec.describe TeamSubmission do
     score = FactoryBot.create(:score, team_submission: submission)
 
     expect {
-      submission.app_name = nil
+      submission.published_at = nil
       submission.save
     }
       .to change { submission.scores.current_round.count }
