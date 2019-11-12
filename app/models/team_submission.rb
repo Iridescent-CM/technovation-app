@@ -543,9 +543,10 @@ class TeamSubmission < ActiveRecord::Base
       video_type :
       "#{video_type}_video_link"
 
-    send("#{method}=", value || send(method))
-    id = video_id(method)
-    root = video_url_root(method)
+    value = value || send(method)
+
+    id = determine_video_id(value)
+    root = determine_video_url_root(value)
 
     if id.blank? or root.blank?
       src = "/video-link-broken.html"
@@ -567,16 +568,7 @@ class TeamSubmission < ActiveRecord::Base
       video_type :
       "#{video_type}_video_link"
 
-    case send(method)
-    when /youtu/
-      send(method)[/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/, 1] || ""
-    when /vimeo/
-      send(method)[/\/(\d+)$/, 1] || ""
-    when /youku/
-      send(method)[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1] || ""
-    else
-      send(method) || ""
-    end
+    determine_video_id(send(method))
   end
 
   def video_url_root(video_type)
@@ -584,14 +576,7 @@ class TeamSubmission < ActiveRecord::Base
       video_type :
       "#{video_type}_video_link"
 
-    case send(method)
-    when /youtu/
-      "https://www.youtube.com/embed/"
-    when /vimeo/
-      "https://player.vimeo.com/video/"
-    when /youku/
-      "https://player.youku.com/embed/"
-    end
+    determine_video_url_root(send(method))
   end
 
   def total_technical_checklist
@@ -664,6 +649,30 @@ class TeamSubmission < ActiveRecord::Base
   def copy_possible_thunkable_url
     if developed_on?("Thunkable") && !saved_change_to_source_code_external_url
       thunkable_project_url
+    end
+  end
+
+  def determine_video_id(url)
+    case url
+    when /youtu/
+      url[/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/, 1] || ""
+    when /vimeo/
+      url[/\/(\d+)$/, 1] || ""
+    when /youku/
+      url[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1] || ""
+    else
+      url || ""
+    end
+  end
+
+  def determine_video_url_root(url)
+    case url
+    when /youtu/
+      "https://www.youtube.com/embed/"
+    when /vimeo/
+      "https://player.vimeo.com/video/"
+    when /youku/
+      "https://player.youku.com/embed/"
     end
   end
 end
