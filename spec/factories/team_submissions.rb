@@ -92,7 +92,6 @@ FactoryBot.define do
       app_name { "Submission name" }
       app_description { "Submission description" }
       pitch_video_link { "http://example.com/pitch" }
-      demo_video_link { "http://example.com/demo" }
       development_platform { "Swift or XCode" }
 
       after(:create) do |sub|
