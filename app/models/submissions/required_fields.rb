@@ -10,7 +10,6 @@ class RequiredFields
       app_name
       app_description
       development_platform_text
-      demo_video_link
       pitch_video_link
       source_code_url
     ).map do |field|
