@@ -119,34 +119,34 @@ RSpec.describe TeamSubmission do
       expect(submission.percent_complete).to eq(0)
     end
 
-    it "returns 14 for one junior team item completed" do
+    it "returns 17 for one junior team item completed" do
       submission = FactoryBot.create(:submission, :junior)
       submission.update(app_name: "Something")
-      expect(submission.percent_complete).to eq(14)
+      expect(submission.percent_complete).to eq(17)
     end
 
-    it "returns 13 for one senior team item completed" do
+    it "returns 14 for one senior team item completed" do
       submission = FactoryBot.create(:submission, :senior)
       submission.update(app_name: "Something")
-      expect(submission.reload.percent_complete).to eq(13)
+      expect(submission.reload.percent_complete).to eq(14)
     end
 
-    it "returns 86 percent for all of the junior items completed" do
+    it "returns 83 percent for all of the junior items completed" do
       submission = FactoryBot.create(:submission, :junior, :complete)
 
       submission.update_column(:source_code, "something.zip")
       submission.update_column(:published_at, nil)
       submission.touch
-      expect(submission.reload.percent_complete).to eq(86)
+      expect(submission.reload.percent_complete).to eq(83)
     end
 
-    it "returns 88 percent for all of the senior items completed" do
+    it "returns 86 percent for all of the senior items completed" do
       submission = FactoryBot.create(:submission, :senior, :complete)
 
       submission.update_column(:source_code, "something.zip")
       submission.update_column(:published_at, nil)
       submission.touch
-      expect(submission.reload.percent_complete).to eq(88)
+      expect(submission.reload.percent_complete).to eq(86)
     end
 
     it "returns 100 percent for all items completed and published" do
