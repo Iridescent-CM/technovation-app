@@ -19,7 +19,7 @@
 
       <question-section
         title="Pitch (20 points)"
-        referTo="demo video and pitch video."
+        referTo="pitch video."
         prevSection="technical"
         section="pitch"
         :nextSection="nextSection"

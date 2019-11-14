@@ -20,7 +20,7 @@
 
       <question-section
         title="Technical (20 points)"
-        referTo="source code, screenshots, and demo video."
+        referTo="source code, and screenshots."
         prevSection="ideation"
         section="technical"
         nextSection="pitch"

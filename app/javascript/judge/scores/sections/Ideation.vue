@@ -17,7 +17,7 @@
 
       <question-section
         title="Ideation (15 points)"
-        referTo="app name and description, pitch video, and demo video."
+        referTo="app name and description, and pitch video."
         section="ideation"
         nextSection="technical"
       >
