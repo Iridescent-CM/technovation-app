@@ -21,7 +21,7 @@
 
         <question-section
           title="Entrepreneurship (20 points)"
-          referTo="business plan, demo video, and pitch video."
+          referTo="business plan and pitch video."
           prevSection="pitch"
           section="entrepreneurship"
           nextSection="overall"
