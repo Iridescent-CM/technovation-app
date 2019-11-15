@@ -62,18 +62,6 @@
           <% end %>
         </dd>
 
-      <dt>Demo Video:</dt>
-
-      <dd>
-        <% if @team_submission.demo_video_link %>
-          <%= link_to @team_submission.demo_video_link,
-              @team_submission.demo_video_link,
-              target: :_blank %>
-        <% else %>
-          -
-        <% end %>
-      </dd>
-
         <% if @team_submission.team.live_event? %>
           <dt>Pitch Presentation</dt>
           <dd>

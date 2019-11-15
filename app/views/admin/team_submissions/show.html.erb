@@ -80,18 +80,6 @@
         <% end %>
       </p>
 
-      <p>
-        Demo Video:
-
-        <% if @team_submission.demo_video_link %>
-          <%= link_to @team_submission.demo_video_link,
-            @team_submission.demo_video_link,
-            target: :_blank %>
-        <% else %>
-          <span>blank</span>
-        <% end %>
-      </p>
-
       <% if @team_submission.senior_division? %>
         <h5>Entrepreneurship</h5>
 
