@@ -17,7 +17,6 @@ class SubmissionsGrid
 
   column :app_name
   column :app_description
-  column :demo_video_link
   column :pitch_video_link
 
   column :screenshots do
