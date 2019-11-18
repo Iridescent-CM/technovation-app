@@ -24,15 +24,6 @@ GIT
       rails
 
 GIT
-  remote: https://github.com/elsurudo/simple_form.git
-  revision: a1faca93ed39c0f54055890578307bdbade3de0b
-  branch: rails-5.1.0
-  specs:
-    simple_form (3.4.0)
-      actionpack (> 4, < 5.2)
-      activemodel (> 4, < 5.2)
-
-GIT
   remote: https://github.com/romanbsd/heroku-deflater.git
   revision: f4d5b4cc2440027fd8bd7b279768d0f6ff344fdb
   branch: master
@@ -413,6 +404,9 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
+    simple_form (5.0.1)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     sinatra (2.0.4)
       mustermann (~> 1.0)
       rack (~> 2.0)
@@ -545,7 +539,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   scout_apm (~> 2.4)
   sidekiq (~> 4.2)
-  simple_form!
+  simple_form (~> 5.0)
   sinatra (~> 2.0)
   spring (~> 2.0)
   spring-watcher-listen (~> 2.0)
