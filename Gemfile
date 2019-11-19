@@ -128,9 +128,7 @@ end
 group :production do
   gem 'hiredis', "~> 0.6"
   gem "rack-timeout", "~> 0.5"
-  gem 'heroku-deflater',
-    git: 'https://github.com/romanbsd/heroku-deflater.git',
-    branch: 'master'
+  gem 'heroku-deflater', "~> 0.6"
 end
 
 gem 'factory_bot_rails', "~> 4.11"
