@@ -6,14 +6,6 @@ GIT
     city-state (0.0.13)
       rubyzip (~> 1.1)
 
-GIT
-  remote: https://github.com/romanbsd/heroku-deflater.git
-  revision: f4d5b4cc2440027fd8bd7b279768d0f6ff344fdb
-  branch: master
-  specs:
-    heroku-deflater (0.6.3)
-      rack (>= 1.4.5)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -198,6 +190,8 @@ GEM
     has_secure_token (1.0.0)
       activerecord (>= 3.0)
     hashdiff (0.3.8)
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
     highline (2.0.0)
     hirb (0.7.3)
     hiredis (0.6.1)
@@ -495,7 +489,7 @@ DEPENDENCIES
   friendly_id (~> 5.2)
   geocoder (~> 1.4.9)
   has_secure_token (~> 1.0)
-  heroku-deflater!
+  heroku-deflater (~> 0.6)
   hiredis (~> 0.6)
   httparty (~> 0.16)
   i18n-tasks (~> 0.9)
