@@ -12,7 +12,11 @@
       </div>
     <% end %>
 
-    <p class="hint">File types allowed: *.doc, *.docx, *.pdf</p>
+    <p class="hint">
+      Submit your 5 page business plan.
+      <strong>If you can, submit a PDF file.</strong>
+      We also accept .doc and .docx files.
+    </p>
 
     <%= form_with model: [current_scope, @team_submission],
       multipart: true,
