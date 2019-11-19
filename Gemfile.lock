@@ -7,15 +7,6 @@ GIT
       rubyzip (~> 1.1)
 
 GIT
-  remote: https://github.com/arvindvyas/Country-State-Select.git
-  revision: df934e2b345cc962c77aeb50184c4874f975cb61
-  branch: master
-  specs:
-    country_state_select (3.0.2)
-      city-state
-      rails
-
-GIT
   remote: https://github.com/romanbsd/heroku-deflater.git
   revision: f4d5b4cc2440027fd8bd7b279768d0f6ff344fdb
   branch: master
@@ -145,6 +136,9 @@ GEM
     countries (1.2.5)
       currencies (~> 0.4.2)
       i18n_data (~> 0.7.0)
+    country_state_select (3.0.5)
+      city-state
+      rails
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
@@ -487,7 +481,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   counter_culture (~> 1.12)
   countries (~> 1.2)
-  country_state_select!
+  country_state_select (~> 3.0)
   dalli (~> 2.7)
   datagrid (~> 1.5)
   dotenv-rails (~> 2.5)

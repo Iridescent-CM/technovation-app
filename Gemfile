@@ -45,9 +45,7 @@ gem 'will_paginate', '~> 3.1'
 gem 'datagrid', "~> 1.5"
 
 gem 'simple_form', '~> 5.0'
-gem 'country_state_select',
-  git: 'https://github.com/arvindvyas/Country-State-Select.git',
-  branch: 'master'
+gem 'country_state_select', '~> 3.0'
 
 gem 'nokogiri', "~> 1.8"
 
