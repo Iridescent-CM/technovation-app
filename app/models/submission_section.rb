@@ -11,7 +11,7 @@ class SubmissionSection
   SECTION_GROUPS = {
     0 => %w{honor_code team_photo},
     1 => %w{app_name app_description},
-    2 => %w{demo_video_link pitch_video_link screenshots},
+    2 => %w{pitch_video_link screenshots},
     3 => %w{development_platform source_code source_code_url code_checklist},
     4 => %w{business_plan},
     5 => %w{pitch_presentation},

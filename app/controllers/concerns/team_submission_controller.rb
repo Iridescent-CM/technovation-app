@@ -125,8 +125,6 @@ module TeamSubmissionController
       handle_screenshots_update(@team_submission)
     elsif team_submission_params[:pitch_video_link]
       handle_video_link_review(@team_submission, :pitch_video_link)
-    elsif team_submission_params[:demo_video_link]
-      handle_video_link_review(@team_submission, :demo_video_link)
     elsif @team_submission.update(team_submission_params)
       if request.xhr? && team_submission_params[:pitch_presentation]
         piece_name = "pitch_presentation"
@@ -245,7 +243,6 @@ module TeamSubmissionController
         :pitch_presentation,
         :app_description,
         :app_name,
-        :demo_video_link,
         :pitch_video_link,
         :development_platform_other,
         :development_platform,

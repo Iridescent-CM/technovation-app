@@ -127,7 +127,6 @@ module Judge
         :ideation_comment_word_count,
 
         :app_functional,
-        :demo_video,
         :technical_comment,
         :technical_comment_word_count,
 
