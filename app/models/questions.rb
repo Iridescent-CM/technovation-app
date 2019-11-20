@@ -168,12 +168,12 @@ class Questions
 
       Question.new(
         section: 'technical',
-        field: :demo_video,
+        field: :demo,
         idx: 2,
         text: "The app is easy to use and the " +
               "features are well thought out.",
         worth: 5,
-        score: submission_score.demo_video,
+        score: submission_score.demo,
       ),
 
       Question.new(

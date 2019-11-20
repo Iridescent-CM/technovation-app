@@ -1366,7 +1366,7 @@ CREATE TABLE public.submission_scores (
     evidence_of_problem integer DEFAULT 0,
     problem_addressed integer DEFAULT 0,
     app_functional integer DEFAULT 0,
-    demo_video integer DEFAULT 0,
+    demo integer DEFAULT 0,
     business_plan_short_term integer DEFAULT 0,
     business_plan_long_term integer DEFAULT 0,
     market_research integer DEFAULT 0,
@@ -3155,6 +3155,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190506212403'),
 ('20191008152233'),
 ('20191014194309'),
-('20191120151220');
+('20191120151220'),
+('20191120151819');
 
 

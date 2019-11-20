@@ -341,7 +341,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def technical_total
     app_functional +
-      demo_video +
+      demo +
         total_technical_checklist
   end
 

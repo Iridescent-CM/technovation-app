@@ -102,7 +102,7 @@ RSpec.describe SubmissionScore do
       problem_addressed: 4,
       app_functional: 2,
 
-      demo_video: 0,
+      demo: 0,
       business_plan_short_term: 5,
       business_plan_long_term: 5,
       market_research: 3,
