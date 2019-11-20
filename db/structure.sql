@@ -10,20 +10,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
 -- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -1380,7 +1366,7 @@ CREATE TABLE public.submission_scores (
     evidence_of_problem integer DEFAULT 0,
     problem_addressed integer DEFAULT 0,
     app_functional integer DEFAULT 0,
-    demo_video integer DEFAULT 0,
+    demo integer DEFAULT 0,
     business_plan_short_term integer DEFAULT 0,
     business_plan_long_term integer DEFAULT 0,
     market_research integer DEFAULT 0,
@@ -1492,7 +1478,6 @@ CREATE TABLE public.team_submissions (
     source_code character varying,
     app_description text,
     app_name character varying,
-    demo_video_link character varying,
     pitch_video_link character varying,
     development_platform_other character varying,
     development_platform integer,
@@ -3169,6 +3154,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190403154655'),
 ('20190506212403'),
 ('20191008152233'),
-('20191014194309');
+('20191014194309'),
+('20191120151220'),
+('20191120151819');
 
 
