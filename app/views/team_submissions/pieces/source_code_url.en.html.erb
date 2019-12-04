@@ -27,11 +27,11 @@
          embedded: true,
       } %>
   <% else %>
-    <p class="hint">File types allowed: *.zip, *.aia, or *.apk</p>
+    <p class="hint">File types allowed: *.zip or *.aiak</p>
 
     <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
       <%= f.label :file, "Upload your app's source code" %>
-      <%= f.file_field :file, accept: ".aia,.apk,.zip", class: 'source-code-uploader__file' %>
+      <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
 
       <div class="flash flash--alert source-code-uploader__error hidden">
         Sorry, you tried to upload an invalid file type.
@@ -41,9 +41,9 @@
     <% end %>
 
     <p class="grid__cell--padding-sm-y">
-      Get some help making your source code in the
-      <%= link_to("code planning curriculum unit.",
-                  "http://technovationchallenge.org/curriculum/code-6/",
+      Help for submitting your source code is
+      <%= link_to("here.",
+                  "https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-",
                   target: "_blank") %>
     </p>
   <% end %>

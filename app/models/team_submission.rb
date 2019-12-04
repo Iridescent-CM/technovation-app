@@ -61,18 +61,18 @@ class TeamSubmission < ActiveRecord::Base
     "Thunkable Classic" => 7,
     "Java or Android Studio" => 2,
     "Swift or XCode" => 1,
-    "Other" => 5,
 
     # LEGACY SUPPORT
     # DO NOT USE THESE ENUMS
     # IN FORM ELEMENTS
+    "Other" => 5,
     "C++" => 3,
     "PhoneGap/Apache Cordova" => 4,
   }
 
   def self.development_platform_keys
     development_platforms.reject { |_key, value|
-     [3, 4].include?(value)
+     [3, 4, 5].include?(value)
     }.keys
   end
 
