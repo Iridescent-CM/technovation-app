@@ -61,16 +61,13 @@ export const totalPossible = state => {
 
   return questions.reduce((acc, q) => {
     return acc += q.worth
-  }, 0) + 10 // + code checklist
+  }, 0)
 }
 
 export const sectionPointsPossible = (state, getters) => (section) => {
   let possible = getters.sectionQuestions(section).reduce((acc, q) => {
     return acc += q.worth
   }, 0)
-
-  if (section === 'technical') possible += 10 // + code checklist
-
   return possible
 }
 
