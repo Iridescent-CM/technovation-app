@@ -325,12 +325,8 @@ class SubmissionScore < ActiveRecord::Base
     public_send("#{section_name}_comment")
   end
 
-  def raw_technical_total
-    technical_total - total_technical_checklist
-  end
-
   def raw_total
-    total - total_technical_checklist
+    total
   end
 
   def ideation_total
@@ -341,8 +337,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def technical_total
     app_functional +
-      demo +
-        total_technical_checklist
+      demo
   end
 
   def total_technical_checklist
@@ -385,9 +380,9 @@ class SubmissionScore < ActiveRecord::Base
   def total_possible
     case team_submission.team_division_name
     when "junior"
-      80
+      70
     when "senior"
-      100
+      90
     else
       0
     end
