@@ -137,71 +137,14 @@ RSpec.describe SubmissionScore do
       judge_profile: judge_profile,
     })
 
-    expect(subscore.total_possible).to eq(100)
+    expect(subscore.total_possible).to eq(90)
 
     team.division = Division.junior
     team.save!
 
     team_submission.reload
 
-    expect(subscore.total_possible).to eq(80)
-  end
-
-  it "includes tech checklist verification in the score" do
-    team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(
-      team_id: team.id,
-      integrity_affirmed: true
-    )
-    judge_profile = FactoryBot.create(:judge_profile)
-
-    team_submission.create_technical_checklist!({
-      used_canvas: true,
-      used_canvas_explanation: "hello",
-
-      used_lists: true,
-      used_lists_explanation: "hello",
-    })
-
-    subscore = SubmissionScore.create!({
-      team_submission: team_submission,
-      judge_profile: judge_profile,
-    })
-
-    expect(subscore.total).to eq(3)
-  end
-
-  it "includes screenshots count as part of tech checklist score" do
-    team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(
-      team_id: team.id,
-      integrity_affirmed: true
-    )
-    judge_profile = FactoryBot.create(:judge_profile)
-
-    team_submission.create_technical_checklist!({
-      used_canvas: true,
-      used_canvas_explanation: "hello",
-
-      used_lists: true,
-      used_lists_explanation: "hello",
-    })
-
-    # 1/2 screenshots, not enough for points
-    team_submission.screenshots.create!
-
-    subscore = SubmissionScore.create!({
-      team_submission: team_submission,
-      judge_profile: judge_profile,
-    })
-
-    expect(subscore.total).to eq(3)
-
-    # 2/2 screenshots
-    # but not other process stuff
-    team_submission.screenshots.create!
-
-    expect(subscore.total).to eq(3)
+    expect(subscore.total_possible).to eq(70)
   end
 
   [:quarterfinals, :semifinals].each do |judging_round|

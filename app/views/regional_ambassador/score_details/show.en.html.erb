@@ -18,7 +18,7 @@
     <dt>Quarterfinals average:</dt>
     <dd>
       <%= @submission.quarterfinals_average_score %> /
-      <%= @submission.senior_division? ? 100 : 80 %>
+      <%= @submission.total_possible_score %>
     </dd>
 
     <% if @submission.submission_scores.unofficial.any? %>
