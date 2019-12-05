@@ -264,7 +264,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def total_possible_score
-    senior_division? ? 90 : 70
+    SubmissionScore.total_possible_for(team_division_name)
   end
 
   def only_needs_to_submit?
