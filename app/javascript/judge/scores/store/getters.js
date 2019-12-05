@@ -78,9 +78,6 @@ export const sectionPointsTotal = (state) => (section) => {
 
   let total = sectionQuestions.reduce((acc, q) => { return acc += q.score }, 0)
 
-  if (section === 'technical')
-    total += state.submission.total_checklist_points
-
   return total
 }
 
