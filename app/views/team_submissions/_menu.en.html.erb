@@ -112,25 +112,6 @@
           ),
           [current_scope, submission, piece: :source_code_url] %>
         </li>
-
-        <li>
-          <%= link_to submission_progress_web_icon(
-            submission,
-            :code_checklist,
-            submission.code_checklist_points > 0 ?
-              "Code checklist* (#{submission.code_checklist_points}/10)" :
-                "Code checklist*"
-          ),
-          [current_scope, submission, piece: :code_checklist] %>
-
-          <% unless embedded %>
-            <small>
-              * The checklist does not have to be complete;<br />
-              &nbsp;&nbsp;
-              However, you may not change it after the deadline.
-            </small>
-          <% end %>
-        </li>
       </ol>
     </div>
 
