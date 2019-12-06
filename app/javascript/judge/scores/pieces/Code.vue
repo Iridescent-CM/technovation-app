@@ -8,19 +8,6 @@
         <span>{{ submission.source_code_url_label }}</span>
       </a>
     </p>
-
-    <h4>Code Checklist</h4>
-
-    <p>
-      {{ team.name }} automatically earned
-
-      <strong>
-        {{ submission.total_checklist_points }}
-        {{ submission.total_checklist_points | pluralize('point') }}
-      </strong>
-
-      for their code checklist.
-    </p>
   </div>
 </template>
 
@@ -29,7 +16,7 @@ import { mapState } from 'vuex'
 import Icon from '../../../components/Icon'
 
 export default {
-  computed: mapState(['team', 'submission']),
+  computed: mapState(['submission']),
 
   components: {
     Icon,

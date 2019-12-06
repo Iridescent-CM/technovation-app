@@ -25,13 +25,6 @@
         section="technical"
         nextSection="pitch"
       >
-        <li class="score-question">
-          {{ team.name }} automatically earned
-          {{ submission.total_checklist_points }}
-          {{ submission.total_checklist_points | pluralize('point') }}
-          for their code checklist.
-        </li>
-
         <p slot="comment-tips">
           This section is not about how complex the app is,
           but how well the app solves the problem and meets
@@ -54,7 +47,7 @@ import QuestionSection from '../QuestionSection'
 import { mapState } from 'vuex'
 
 export default {
-  computed: mapState(['team', 'submission']),
+  computed: mapState(['submission']),
 
   components: {
     QuestionSection,
