@@ -53,26 +53,3 @@
     </p>
   <% end %>
 <% end %>
-
-<%= render 'team_submissions/pieces/piece',
-  submission: @team_submission,
-  title: "Code checklist",
-  scope: current_scope,
-  attribute: :code_checklist,
-  cta_when_empty: "Confirm your code checklist",
-  cta_when_filled: "Make changes to your code checklist" do %>
-  <p>
-    Your team will earn
-    <strong>
-      <%= @team_submission.code_checklist_points %>
-      out of 10 possible points
-    </strong>
-    for your code checklist
-  </p>
-
-  <p class="scent">
-    * <strong>The code checklist does not have to be complete.</strong>
-    However, you will not be able change it after
-    <%= Season.deadline %>.
-  </p>
-<% end %>

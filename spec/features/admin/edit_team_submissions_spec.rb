@@ -45,27 +45,6 @@ RSpec.feature "Toggling editable team submissions" do
           )
         end
       end
-
-      scenario "edit technical checklist" do
-        create_authenticated_user_on_team(:mentor, submission: true)
-
-        within("#find-team") do
-          click_link("Edit this team's submission")
-        end
-
-        click_link "Code"
-        click_link "Confirm your code checklist"
-
-        check "technical_checklist[used_strings]"
-        fill_in "technical_checklist[used_strings_explanation]",
-          with: "My explanation"
-
-        click_button "Save checklist"
-
-        tc = TechnicalChecklist.last
-        expect(tc.used_strings).to be true
-        expect(tc.used_strings_explanation).to eq("My explanation")
-      end
     end
 
     context "with editing off" do
@@ -107,16 +86,6 @@ RSpec.feature "Toggling editable team submissions" do
 
         visit mentor_dashboard_path
         expect(page).not_to have_link("Start a submission now")
-      end
-
-      scenario "try to edit technical checklist" do
-        create_authenticated_user_on_team(:mentor, submission: true)
-
-        visit mentor_team_submission_path(team.reload.submission)
-        expect(page).not_to have_link("Confirm your code checklist")
-
-        visit edit_mentor_team_submission_path(team.submission, piece: :code_checklist)
-        expect(current_path).to eq(mentor_dashboard_path)
       end
     end
   end
