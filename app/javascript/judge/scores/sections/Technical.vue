@@ -19,7 +19,7 @@
       </div>
 
       <question-section
-        title="Technical (20 points)"
+        title="Technical (10 points)"
         referTo="source code, and screenshots."
         prevSection="ideation"
         section="technical"
