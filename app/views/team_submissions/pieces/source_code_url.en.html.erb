@@ -27,7 +27,7 @@
          embedded: true,
       } %>
   <% else %>
-    <p class="hint">File types allowed: *.zip or *.aiak</p>
+    <p class="hint">File types allowed: *.zip or *.aia</p>
 
     <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
       <%= f.label :file, "Upload your app's source code" %>
