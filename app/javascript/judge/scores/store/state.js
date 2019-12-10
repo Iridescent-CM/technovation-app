@@ -32,13 +32,6 @@ export default {
     name: '',
     description: '',
     development_platform: '',
-    code_checklist: {
-      technical: [],
-      database: [],
-      mobile: [],
-      process: [],
-    },
-    total_checklist_points: 0,
     deadline: '',
   },
 }
