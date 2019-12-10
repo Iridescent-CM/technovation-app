@@ -40,10 +40,6 @@ export const comment = (state) => (sectionName) => {
   return state.score.comments[sectionName]
 }
 
-export const checklistPoints = state => {
-  return state.submission.total_checklist_points
-}
-
 export const totalScore = state => {
   const questions = state.team.division === 'junior' ?
     state.questions.filter(q => q.section !== 'entrepreneurship') :
@@ -51,7 +47,7 @@ export const totalScore = state => {
 
   return questions.reduce((acc, q) => {
     return acc += q.score
-  }, 0) + state.submission.total_checklist_points
+  }, 0)
 }
 
 export const totalPossible = state => {
