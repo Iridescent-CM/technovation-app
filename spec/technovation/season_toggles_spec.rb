@@ -169,6 +169,21 @@ RSpec.describe SeasonToggles do
       end
     end
 
+    describe ".survey_link" do
+      it "formats url with user id" do
+        SeasonToggles.public_send("#{scope}_survey_link=", {
+          text: "Hello World",
+          long_desc: "Longer description for modal content",
+          url: "https://example.com?uid=[uid_value]",
+        })
+
+        account = FactoryBot.create(:student).account
+
+        expect(SeasonToggles.survey_link(scope, "url", format_url: true, account: account))
+          .to eq("https://example.com?uid=#{account.id}")
+      end
+    end
+
     describe ".survey_link_available?" do
       it "returns true if the text and url are present" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
