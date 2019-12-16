@@ -5,7 +5,7 @@ gem 'rails', '~> 5.1.0'
 # from GitHub security alert
 gem "actionview", ">= 5.1.6.2"
 
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 3.12.2'
 gem 'pg', '~> 0.21'
 gem 'casting', '~> 0.7'
 

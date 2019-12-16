@@ -298,7 +298,7 @@ GEM
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
     public_suffix (3.0.3)
-    puma (3.12.0)
+    puma (3.12.2)
     rack (2.0.7)
     rack-protection (2.0.4)
       rack
@@ -518,7 +518,7 @@ DEPENDENCIES
   pp_sql (~> 0.2)
   premailer-rails (~> 1.10)
   public_activity (~> 1.6)
-  puma (~> 3.12)
+  puma (~> 3.12.2)
   rack-rewrite (~> 1.5)
   rack-timeout (~> 0.5)
   rails (~> 5.1.0)
