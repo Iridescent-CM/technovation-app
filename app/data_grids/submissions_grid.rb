@@ -23,10 +23,6 @@ class SubmissionsGrid
     screenshots.count
   end
 
-  column :code_checklist do
-    total_technical_checklist
-  end
-
   column :development_platform_text
   column :app_inventor_app_name
   column :app_inventor_gmail

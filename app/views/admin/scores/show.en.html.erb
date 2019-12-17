@@ -49,17 +49,6 @@
             <td><%= @score.total_for_question(question) %></td>
           </tr>
         <% end %>
-
-        <% if section.to_sym === :technical %>
-          <tr>
-            <td>
-              The team automatically earned
-              <%= pluralize(@score.total_technical_checklist, "points") %>
-              from their code checklist
-            </td>
-            <td><%= @score.total_technical_checklist %></td>
-          </tr>
-        <% end %>
       </table>
 
       <%= simple_format @score.comment_for_section(section) %>
