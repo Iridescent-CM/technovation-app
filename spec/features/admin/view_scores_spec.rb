@@ -6,10 +6,6 @@ RSpec.feature "Admins view scores" do
       :submission,
       :junior,
       :complete,
-      technical_checklist_attributes: {
-        used_camera: true,
-        used_camera_explanation: "We did it...",
-      }
     )
 
     FactoryBot.create(
@@ -25,7 +21,7 @@ RSpec.feature "Admins view scores" do
     visit admin_scores_path
     find("a.view-details").click
 
-    expect(page).to have_content("earned 2 points")
+    expect(page).to have_content("View score")
   end
 
   scenario "view SF scores" do
@@ -34,10 +30,6 @@ RSpec.feature "Admins view scores" do
       :junior,
       :complete,
       :semifinalist,
-      technical_checklist_attributes: {
-        used_camera: true,
-        used_camera_explanation: "We did it...",
-      }
     )
 
     FactoryBot.create(
@@ -54,6 +46,6 @@ RSpec.feature "Admins view scores" do
     visit admin_scores_path
     find("a.view-details").click
 
-    expect(page).to have_content("earned 2 points")
+    expect(page).to have_content("View score")
   end
 end

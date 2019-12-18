@@ -27,13 +27,6 @@
     <% end %>
   </dl>
 
-  <p>
-    <%= @submission.team_name %>
-    earned
-    <%= pluralize @submission.code_checklist_points, 'point' %>
-    for their code checklist.
-  </p>
-
   <% if current_account.is_admin? or SeasonToggles.display_scores? %>
 
     <%= render 'regional_ambassador/score_details/scores_table',

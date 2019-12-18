@@ -22,10 +22,6 @@ RSpec.feature "Regional Ambassador views scores" do
       submission = FactoryBot.create(
         :submission,
         :complete,
-        technical_checklist_attributes: {
-          used_camera: true,
-          used_camera_explanation: "We did it...",
-        }
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -35,7 +31,7 @@ RSpec.feature "Regional Ambassador views scores" do
         find('a.view-details').click
       end
 
-      expect(page).to have_content("earned 2 points")
+      expect(page).to have_content("View score")
     end
 
     scenario "can view SF scores" do
@@ -43,10 +39,6 @@ RSpec.feature "Regional Ambassador views scores" do
         :submission,
         :complete,
         :semifinalist,
-        technical_checklist_attributes: {
-          used_camera: true,
-          used_camera_explanation: "We did it...",
-        }
       )
 
       FactoryBot.create(
@@ -61,7 +53,7 @@ RSpec.feature "Regional Ambassador views scores" do
         find('a.view-details').click
       end
 
-      expect(page).to have_content("earned 2 points")
+      expect(page).to have_content("View score")
     end
 
     scenario "can see SF columns and data" do
@@ -69,10 +61,6 @@ RSpec.feature "Regional Ambassador views scores" do
         :submission,
         :complete,
         :semifinalist,
-        technical_checklist_attributes: {
-          used_camera: true,
-          used_camera_explanation: "We did it...",
-        }
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -105,10 +93,6 @@ RSpec.feature "Regional Ambassador views scores" do
       submission = FactoryBot.create(
         :submission,
         :complete,
-        technical_checklist_attributes: {
-          used_camera: true,
-          used_camera_explanation: "We did it...",
-        }
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -122,17 +106,13 @@ RSpec.feature "Regional Ambassador views scores" do
         find('a.view-details').click
       end
 
-      expect(page).to have_content("earned 2 points")
+      expect(page).to have_content("View score")
     end
 
     scenario "can not view virtual QF scores" do
       submission = FactoryBot.create(
         :submission,
         :complete,
-        technical_checklist_attributes: {
-          used_camera: true,
-          used_camera_explanation: "We did it...",
-        }
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -147,10 +127,6 @@ RSpec.feature "Regional Ambassador views scores" do
         :submission,
         :complete,
         :semifinalist,
-        technical_checklist_attributes: {
-          used_camera: true,
-          used_camera_explanation: "We did it...",
-        }
       )
 
       rpe = FactoryBot.create(:rpe)

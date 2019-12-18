@@ -15,16 +15,6 @@
     <%= JudgingRubricScores::Explain.(score.demo) %>
   </dd>
 
-  <dt>
-    Technical Checklist
-  </dt>
-  <dd>
-    <%= score.team_submission_team_name %>
-    earned
-    <%= pluralize(score.total_technical_checklist, 'point') %>
-    from their technical checklist.
-  </dd>
-
   <dt>Comment:</dt>
   <dd><%= simple_format score.technical_comment %></dd>
 </dl>
