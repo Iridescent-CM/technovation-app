@@ -31,7 +31,7 @@ RSpec.feature "Regional Ambassador views scores" do
         find('a.view-details').click
       end
 
-      expect(page.status_code).to be(200)
+      expect(page).to have_content("View score")
     end
 
     scenario "can view SF scores" do
@@ -53,7 +53,7 @@ RSpec.feature "Regional Ambassador views scores" do
         find('a.view-details').click
       end
 
-      expect(page.status_code).to be(200)
+      expect(page).to have_content("View score")
     end
 
     scenario "can see SF columns and data" do
@@ -106,7 +106,7 @@ RSpec.feature "Regional Ambassador views scores" do
         find('a.view-details').click
       end
 
-      expect(page.status_code).to be(200)
+      expect(page).to have_content("View score")
     end
 
     scenario "can not view virtual QF scores" do

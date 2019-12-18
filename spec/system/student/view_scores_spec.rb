@@ -34,7 +34,7 @@ RSpec.describe "Students view scores", :js do
       execute_script("arguments[0].style.display = 'block'", el)
     end
 
-    expect(page.status_code).to be(200)
+    expect(page).to have_content("Scores Explained")
   end
 
   it "view SF scores" do
@@ -61,54 +61,6 @@ RSpec.describe "Students view scores", :js do
       execute_script("arguments[0].style.display = 'block'", el)
     end
 
-    expect(page.status_code).to be(200)
-  end
-
-  it "view QF scores" do
-    submission = FactoryBot.create(
-      :submission,
-      :complete,
-    )
-
-    FactoryBot.create(:submission_score, :complete, team_submission: submission)
-
-    sign_in(submission.team.students.sample)
-    click_button "Scores & Feedback"
-    click_link "View your scores and certificate"
-
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
-    accordions = page.all(:css, '.ui-accordion-content', visible: false)
-    accordions.each do |el|
-      execute_script("arguments[0].style.display = 'block'", el)
-    end
-
-    expect(page.status_code).to be(200)
-  end
-
-  it "view SF scores" do
-    submission = FactoryBot.create(
-      :submission,
-      :complete,
-      :semifinalist,
-    )
-
-    FactoryBot.create(
-      :score,
-      :complete,
-      round: :semifinals,
-      team_submission: submission
-    )
-
-    sign_in(submission.team.students.sample)
-    click_button "Scores & Feedback"
-    click_link "View your scores and certificate"
-
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
-    accordions = page.all(:css, '.ui-accordion-content', visible: false)
-    accordions.each do |el|
-      execute_script("arguments[0].style.display = 'block'", el)
-    end
-
-    expect(page.status_code).to be(200)
+    expect(page).to have_content("Scores Explained")
   end
 end

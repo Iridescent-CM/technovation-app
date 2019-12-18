@@ -20,7 +20,7 @@ RSpec.feature "Mentors view scores" do
     sign_in(mentor)
     click_link("View details")
 
-    expect(page.status_code).to be(200)
+    expect(page).to have_title("Review Score")
   end
 
   scenario "view SF scores" do
@@ -46,6 +46,6 @@ RSpec.feature "Mentors view scores" do
     sign_in(mentor)
     click_link("View details")
 
-    expect(page.status_code).to be(200)
+    expect(page).to have_title("Review Score")
   end
 end
