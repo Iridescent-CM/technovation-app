@@ -9,7 +9,6 @@
 //= require toggling-select
 //= require submissions
 //= require dropzones
-//= require code-checklists
 
 document.addEventListener("turbolinks:load", function() {
   $("#background_check_candidate_ssn").mask("999-99-9999?");

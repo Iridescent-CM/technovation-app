@@ -22,10 +22,6 @@ class NullTeamSubmission < NullObject
     0
   end
 
-  def technical_checklist_started?
-    false
-  end
-
   def status
     'incomplete'
   end
@@ -41,10 +37,6 @@ class NullTeamSubmission < NullObject
 
   def scores
     ::SubmissionScore.none
-  end
-
-  def technical_checklist
-    ::NullTechnicalChecklist.new
   end
 
   def touch

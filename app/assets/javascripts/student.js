@@ -8,7 +8,6 @@
 //= require char-counter
 //= require submissions
 //= require dropzones
-//= require code-checklists
 
 document.addEventListener('turbolinks:load', function () {
   $( ".accordion" ).accordion({

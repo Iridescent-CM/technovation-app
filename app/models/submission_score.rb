@@ -351,14 +351,6 @@ class SubmissionScore < ActiveRecord::Base
       demo
   end
 
-  def total_technical_checklist
-    team_submission.total_technical_checklist
-  end
-
-  def total_code_checklist
-    total_technical_checklist
-  end
-
   def entrepreneurship_total
     return 0 if junior_team_division?
 

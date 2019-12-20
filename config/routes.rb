@@ -37,7 +37,6 @@ Rails.application.routes.draw do
     resource :honor_code_review, only: :show
     resource :published_submission_confirmation, only: :show
 
-    resource :code_checklist, only: [:update, :show]
     resources :screenshots, only: [:index, :create, :update, :destroy]
     resource :honor_code, only: :show
     resources :embed_codes, only: :show
@@ -106,7 +105,6 @@ Rails.application.routes.draw do
     resource :honor_code, only: :show
     resources :embed_codes, only: :show
 
-    resource :code_checklist, only: [:update, :show]
     resources :screenshots, only: [:index, :create, :update, :destroy]
 
     resource :team_photo_upload_confirmation, only: :show
