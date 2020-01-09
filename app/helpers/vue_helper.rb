@@ -1,5 +1,9 @@
 module VueHelper
   def escape_single_quotes(str)
-    str.sub("'", "\\\\'")
+    if str.blank?
+      str
+    else
+      str.sub("'", "\\\\'")
+    end
   end
 end
