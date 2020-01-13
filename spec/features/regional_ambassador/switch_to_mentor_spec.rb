@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.feature "RAs switch to mentor mode" do
+
+  before do
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(true)
+  end
+
   scenario "an RA switches to mentor mode with a mentor profile" do
     ra = FactoryBot.create(:regional_ambassador, :approved)
     CreateMentorProfile.(ra)
@@ -59,6 +65,19 @@ RSpec.feature "RAs switch to mentor mode" do
     sign_in(regional_ambassador)
 
     expect(regional_ambassador.is_a_judge?).to be_falsey
+
+    expect(page).not_to have_link("Switch to Judge mode")
+  end
+
+  scenario "RAs do not see a judge mode link on their mentor dashboard" do
+    regional_ambassador = FactoryBot.create(:regional_ambassador, :approved, :has_judge_profile)
+
+    sign_in(regional_ambassador)
+
+    expect(regional_ambassador.is_a_judge?).to be_truthy
+
+    click_link "Mentor Mode"
+    expect(current_path).to eq(mentor_dashboard_path)
 
     expect(page).not_to have_link("Switch to Judge mode")
   end

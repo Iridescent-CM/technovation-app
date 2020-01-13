@@ -7,11 +7,13 @@
 <% end %>
 
 <% if ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false) %>
-  <template slot="judge-switch-link">
-    <%= link_to "Switch to Judge mode",
-      judge_dashboard_path,
-      data: { turbolinks: false } %>
-  </template>
+  <% unless current_mentor.is_an_ambassador? %>
+    <template slot="judge-switch-link">
+      <%= link_to "Switch to Judge mode",
+        judge_dashboard_path,
+        data: { turbolinks: false } %>
+    </template>
+  <% end %>
 <% end %>
 
 <% if current_mentor.is_an_ambassador? %>
