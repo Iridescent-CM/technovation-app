@@ -5,6 +5,7 @@ RSpec.feature "RAs switch to mentor mode" do
   before do
     allow(ENV).to receive(:fetch).and_call_original
     allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(true)
+    allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(true)
   end
 
   scenario "an RA switches to mentor mode with a mentor profile" do
@@ -66,7 +67,7 @@ RSpec.feature "RAs switch to mentor mode" do
 
     expect(regional_ambassador.is_a_judge?).to be_falsey
 
-    expect(page).not_to have_link("Switch to Judge mode")
+    expect(page).not_to have_link("Judge Mode")
   end
 
   scenario "RAs do not see a judge mode link on their mentor dashboard" do
@@ -91,5 +92,35 @@ RSpec.feature "RAs switch to mentor mode" do
 
     expect(current_path).to eq(regional_ambassador_dashboard_path)
     expect(page).to have_content("You don't have permission to go there!")
+  end
+end
+
+RSpec.feature "Config prevents RA switch to judge mode" do
+
+  before do
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
+  end
+
+  scenario "RAs with a judge profile do not see judge mode link" do
+    regional_ambassador = FactoryBot.create(:regional_ambassador, :approved, :has_judge_profile)
+
+    sign_in(regional_ambassador)
+
+    expect(regional_ambassador.is_a_judge?).to be_truthy
+    expect(current_path).to eq(regional_ambassador_dashboard_path)
+
+    expect(page).not_to have_link("Judge Mode")
+  end
+
+  scenario "RAs without a judge profile do not see a judge mode link" do
+    regional_ambassador = FactoryBot.create(:regional_ambassador, :approved)
+
+    sign_in(regional_ambassador)
+
+    expect(regional_ambassador.is_a_judge?).to be_falsey
+    expect(current_path).to eq(regional_ambassador_dashboard_path)
+
+    expect(page).not_to have_link("Judge Mode")
   end
 end

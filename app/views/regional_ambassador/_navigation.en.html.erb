@@ -51,7 +51,8 @@
     mentor_dashboard_path,
     data: { turbolinks: false } %>
 
-  <% if current_ambassador.is_a_judge? %>
+  <% if current_ambassador.is_a_judge? and
+       ENV.fetch("ENABLE_RA_SWITCH_TO_JUDGE", false) %>
     <%= link_to "Judge Mode",
       judge_dashboard_path,
       data: { turbolinks: false } %>
