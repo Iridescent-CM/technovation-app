@@ -2,12 +2,6 @@ require "rails_helper"
 
 RSpec.feature "RAs switch to mentor mode" do
 
-  before do
-    allow(ENV).to receive(:fetch).and_call_original
-    allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(true)
-    allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(true)
-  end
-
   scenario "an RA switches to mentor mode with a mentor profile" do
     ra = FactoryBot.create(:regional_ambassador, :approved)
     CreateMentorProfile.(ra)
