@@ -6,14 +6,13 @@
   <template slot="survey-links"><%= render 'program_survey' %></template>
 <% end %>
 
-<% if ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false) %>
-  <% unless current_mentor.is_an_ambassador? %>
-    <template slot="judge-switch-link">
-      <%= link_to "Switch to Judge mode",
-        judge_dashboard_path,
-        data: { turbolinks: false } %>
-    </template>
-  <% end %>
+<% if (ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false) && ! current_mentor.is_an_ambassador?) ||
+    (ENV.fetch("ENABLE_RA_SWITCH_TO_JUDGE", false) && current_mentor.is_an_ambassador? && current_mentor.is_a_judge?) %>
+  <template slot="judge-switch-link">
+    <%= link_to "Switch to Judge mode",
+      judge_dashboard_path,
+      data: { turbolinks: false } %>
+  </template>
 <% end %>
 
 <% if current_mentor.is_an_ambassador? %>
