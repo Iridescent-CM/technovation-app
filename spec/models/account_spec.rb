@@ -737,4 +737,49 @@ RSpec.describe Account do
       expect(profile.reload).not_to be_onboarded
     end
   end
+
+  describe "#can_switch_to_judge?" do
+    describe "when config is off" do
+      before do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
+      end
+
+      it "allows noone" do
+        expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:regional_ambassador).can_switch_to_judge?).to be false
+      end
+    end
+
+    describe "when mentor config is on" do
+      before do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(true)
+        allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
+      end
+
+      it "allows only mentors" do
+        expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be true
+        expect(FactoryBot.create(:regional_ambassador).can_switch_to_judge?).to be false
+      end
+    end
+
+    describe "when RA config is on" do
+      before do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(true)
+      end
+
+      it "allows RAs with judge profiles" do
+        expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:regional_ambassador).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:regional_ambassador, :has_judge_profile).can_switch_to_judge?).to be true
+      end
+    end
+  end
 end
