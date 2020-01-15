@@ -746,7 +746,7 @@ RSpec.describe Account do
         allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
-      it "allows noone" do
+      it "allows no one" do
         expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
         expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be false
         expect(FactoryBot.create(:regional_ambassador).can_switch_to_judge?).to be false
