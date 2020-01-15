@@ -6,7 +6,7 @@
   <template slot="survey-links"><%= render 'program_survey' %></template>
 <% end %>
 
-<% if ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false) %>
+<% if current_mentor.can_switch_to_judge? %>
   <template slot="judge-switch-link">
     <%= link_to "Switch to Judge mode",
       judge_dashboard_path,

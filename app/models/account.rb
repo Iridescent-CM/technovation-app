@@ -719,6 +719,10 @@ class Account < ActiveRecord::Base
     not judge_profile.present?
   end
 
+  def is_a_mentor?
+    mentor_profile.present?
+  end
+
   def is_an_ambassador?
     regional_ambassador_profile.present?
   end
@@ -726,6 +730,16 @@ class Account < ActiveRecord::Base
 
   def is_admin?
     admin_profile.present?
+  end
+
+  def can_switch_to_judge?
+    if is_an_ambassador?
+      !!ENV.fetch("ENABLE_RA_SWITCH_TO_JUDGE", false) && is_a_judge?
+    elsif is_a_mentor?
+      !!ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false)
+    else
+      false
+    end
   end
 
   def email_confirmed!
