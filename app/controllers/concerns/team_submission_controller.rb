@@ -69,12 +69,6 @@ module TeamSubmissionController
       back: request.fullpath
     )
 
-    if @team_submission.code_checklist.present?
-      @code_checklist = @team_submission.code_checklist
-    else
-      @code_checklist = @team_submission.build_code_checklist
-    end
-
     if @team_submission.present?
       begin
         render "team_submissions/pieces/#{piece_name}"
@@ -90,12 +84,6 @@ module TeamSubmissionController
   def show
     @team_submission = TeamSubmission.friendly.find(params[:id])
     @team = @team_submission.team
-
-    @code_checklist = @team_submission.code_checklist
-
-    unless @code_checklist.present?
-      @code_checklist = @team_submission.build_code_checklist
-    end
 
     @uploader = ImageDirectUploader.new
     @uploader.success_action_redirect = send(
@@ -191,8 +179,7 @@ module TeamSubmissionController
 
   def determine_layout
     if action_name == "new" ||
-        action_name == "create" ||
-          piece_name == "code_checklist"
+        action_name == "create"
       "application"
     else
       "submissions"

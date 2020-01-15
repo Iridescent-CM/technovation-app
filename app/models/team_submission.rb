@@ -118,14 +118,6 @@ class TeamSubmission < ActiveRecord::Base
     after_remove: Proc.new { |ts, _| ts.touch }
   accepts_nested_attributes_for :screenshots
 
-  has_one :technical_checklist, dependent: :destroy
-  accepts_nested_attributes_for :technical_checklist
-
-  has_one :code_checklist,
-    class_name: "TechnicalChecklist",
-    dependent: :destroy
-  accepts_nested_attributes_for :code_checklist
-
   has_many :submission_scores,
     -> { current },
     dependent: :destroy
@@ -315,10 +307,6 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def code_checklist_complete?
-    technical_checklist_completed?
-  end
-
   def screenshots_complete?
     screenshots.reject(&:new_record?).count >= 2
   end
@@ -405,18 +393,6 @@ class TeamSubmission < ActiveRecord::Base
     else
       'incomplete'
     end
-  end
-
-  def technical_checklist
-    super || ::NullTechnicalChecklist.new
-  end
-
-  def code_checklist
-    technical_checklist
-  end
-
-  def code_checklist_points
-    total_technical_checklist
   end
 
   def app_name
@@ -528,15 +504,6 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def technical_checklist_started?
-    technical_checklist.present? and
-      technical_checklist.attributes.values.any? { |v| not v.blank? }
-  end
-
-  def technical_checklist_completed?
-    technical_checklist.present? and technical_checklist.completed?
-  end
-
   def embed_code(video_type, value = nil)
     method = video_type.match(/_video_link$/) ?
       video_type :
@@ -578,51 +545,6 @@ class TeamSubmission < ActiveRecord::Base
     determine_video_url_root(send(method))
   end
 
-  def total_technical_checklist
-    if technical_checklist.present?
-      total_technical_coding +
-        total_technical_db +
-          total_technical_mobile +
-            total_technical_process
-    else
-      0
-    end
-  end
-
-  def total_technical_coding
-    calculate_technical_total(
-      technical_checklist.technical_components,
-      points_each: 1,
-      points_max:  4
-    )
-  end
-
-  def total_technical_db
-    calculate_technical_total(
-      technical_checklist.database_components,
-      points_each: 1,
-      points_max: 1
-    )
-  end
-
-  def total_technical_mobile
-    calculate_technical_total(
-      technical_checklist.mobile_components,
-      points_each: 2,
-      points_max: 2
-    )
-  end
-
-  def total_technical_process
-    if technical_checklist.pics_of_process.all? { |a|
-        technical_checklist.send(a).present?
-      } and screenshots_complete?
-      3
-    else
-      0
-    end
-  end
-
   private
   def team_name_and_app_name
     "#{app_name} by #{team_name}"
@@ -630,19 +552,6 @@ class TeamSubmission < ActiveRecord::Base
 
   def should_generate_new_friendly_id?
     super || team_name_and_app_name.parameterize != slug
-  end
-
-  def calculate_technical_total(components, options)
-    components.reduce(0) do |sum, aspect|
-      if sum == options[:points_max]
-        sum
-      elsif technical_checklist.send(aspect) and
-          not technical_checklist.send("#{aspect}_explanation").blank?
-        sum += options[:points_each]
-      else
-        sum
-      end
-    end
   end
 
   def copy_possible_thunkable_url

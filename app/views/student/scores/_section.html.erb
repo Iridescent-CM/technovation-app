@@ -8,18 +8,6 @@
     </tr>
   <% end %>
 
-  <% if String(section) === 'technical' %>
-    <tr>
-      <td>
-        Your team earned
-        <%= pluralize(score.total_code_checklist, 'point') %>
-        for your code checklist.
-      </td>
-
-      <td><%= score.total_code_checklist %></td>
-    </tr>
-  <% end %>
-
   <tr>
     <td class="empty"></td>
     <td><%= score.total_for_section(section) %></td>
