@@ -39,8 +39,6 @@ module StudentHelper
                 if RequiredField.for(submission, :source_code_url).complete?
                   :complete
                 end
-              when :code_checklist
-                :complete if submission.code_checklist_complete?
               when :business_plan
                 if submission.junior_division?
                   :not_required

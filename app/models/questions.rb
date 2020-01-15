@@ -89,23 +89,6 @@ class Questions
 
         business_plan_url: submission.business_plan_url,
         pitch_presentation_url: submission.pitch_presentation_url,
-
-        total_checklist_points: submission.total_technical_checklist,
-
-        code_checklist: {
-          technical: submission.code_checklist.technical.map { |item|
-            { label: item.label, explanation: item.explanation }
-          },
-          database: submission.code_checklist.database.map { |item|
-            { label: item.label, explanation: item.explanation }
-          },
-          mobile: submission.code_checklist.mobile.map { |item|
-            { label: item.label, explanation: item.explanation }
-          },
-          process: submission.code_checklist.process.map { |item|
-            { label: item.label, display: item.display }
-          }
-        },
       },
 
       team: {

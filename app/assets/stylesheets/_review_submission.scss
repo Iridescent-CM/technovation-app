@@ -10,16 +10,6 @@
   text-align: center;
 }
 
-.code_checklist-header {
-  margin: 1rem 0 0;
-  border-bottom: 2px solid $secondary;
-  text-align: left;
-
-  + dl {
-    margin-top: 1rem;
-  }
-}
-
 .submission-sidebar {
   .panel {
     font-size: 1rem;

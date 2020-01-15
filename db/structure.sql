@@ -1583,74 +1583,6 @@ ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
 
 
 --
--- Name: technical_checklists; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.technical_checklists (
-    id integer NOT NULL,
-    used_strings boolean,
-    used_strings_explanation character varying,
-    used_numbers boolean,
-    used_numbers_explanation character varying,
-    used_variables boolean,
-    used_variables_explanation character varying,
-    used_lists boolean,
-    used_lists_explanation character varying,
-    used_booleans boolean,
-    used_booleans_explanation character varying,
-    used_loops boolean,
-    used_loops_explanation character varying,
-    used_conditionals boolean,
-    used_conditionals_explanation character varying,
-    used_local_db boolean,
-    used_local_db_explanation character varying,
-    used_external_db boolean,
-    used_external_db_explanation character varying,
-    used_location_sensor boolean,
-    used_location_sensor_explanation character varying,
-    used_camera boolean,
-    used_camera_explanation character varying,
-    used_accelerometer boolean,
-    used_accelerometer_explanation character varying,
-    used_sms_phone boolean,
-    used_sms_phone_explanation character varying,
-    used_sound boolean,
-    used_sound_explanation character varying,
-    used_sharing boolean,
-    used_sharing_explanation character varying,
-    paper_prototype character varying,
-    team_submission_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    event_flow_chart character varying,
-    used_clock boolean,
-    used_clock_explanation character varying,
-    used_canvas boolean,
-    used_canvas_explanation character varying
-);
-
-
---
--- Name: technical_checklists_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.technical_checklists_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: technical_checklists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.technical_checklists_id_seq OWNED BY public.technical_checklists.id;
-
-
---
 -- Name: unconfirmed_email_addresses; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1976,13 +1908,6 @@ ALTER TABLE ONLY public.team_submissions ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_id_seq'::regclass);
-
-
---
--- Name: technical_checklists id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technical_checklists ALTER COLUMN id SET DEFAULT nextval('public.technical_checklists_id_seq'::regclass);
 
 
 --
@@ -2312,14 +2237,6 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- Name: technical_checklists technical_checklists_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technical_checklists
-    ADD CONSTRAINT technical_checklists_pkey PRIMARY KEY (id);
-
-
---
 -- Name: unconfirmed_email_addresses unconfirmed_email_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2637,13 +2554,6 @@ CREATE INDEX index_teams_on_legacy_id ON public.teams USING btree (legacy_id);
 
 
 --
--- Name: index_technical_checklists_on_team_submission_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_technical_checklists_on_team_submission_id ON public.technical_checklists USING btree (team_submission_id);
-
-
---
 -- Name: index_unconfirmed_email_addresses_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2765,14 +2675,6 @@ ALTER TABLE ONLY public.regional_pitch_events_teams
 
 ALTER TABLE ONLY public.divisions_regional_pitch_events
     ADD CONSTRAINT fk_rails_285ce9b10b FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
-
-
---
--- Name: technical_checklists fk_rails_306da78d6d; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.technical_checklists
-    ADD CONSTRAINT fk_rails_306da78d6d FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
 
 
 --
@@ -3156,6 +3058,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191008152233'),
 ('20191014194309'),
 ('20191120151220'),
-('20191120151819');
+('20191120151819'),
+('20191220170611');
 
 
