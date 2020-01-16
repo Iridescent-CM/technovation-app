@@ -21,36 +21,4 @@ class ScoreSerializer
   attribute :submission_url do |score|
     Rails.application.routes.url_helpers.app_path(score.team_submission)
   end
-
-  # attribute :ideation do |score|
-  #   {
-  #     sdg_alignment: score.sdg_alignment,
-  #     todo: "TODO: add more stuff!"
-  #     comment: {
-  #       text: "Add more properties!"
-  #     }
-  #   }
-  # end
-
-  # attribute :technical do |score|
-  #   {
-  #     todo: "TODO: add more stuff!"
-  #     comment: {
-  #       text: "Add more properties!"
-  #     }
-  #   }
-  # end
-
-  # attribute :entrepreneurship do |score|
-  #   if score.team_submission.junior?
-  #     {}
-  #   else
-  #     {
-  #       todo: "TODO: add more stuff!"
-  #       comment: {
-  #         text: "Add more properties!"
-  #       }
-  #     }
-  #   end
-  # end
 end

@@ -11,7 +11,7 @@ RSpec.describe "Tasks: rails import_scores" do
                                     app_name: "hello",
                                     team: team)
 
-    headers = %w{team_submission_id evidence_of_problem}
+    headers = %w{team_submission_id ideation_1}
     rows = [%w{hello-by-world 4}]
 
     CSV.open("./tmp/test.csv", "wb") do |csv|
@@ -26,7 +26,7 @@ RSpec.describe "Tasks: rails import_scores" do
     Rake::Task['import_scores'].invoke
 
     score = submission.submission_scores.semifinals.complete.first
-    expect(score.evidence_of_problem).to eq(4)
+    expect(score.ideation_1).to eq(4)
     expect(score.judge_profile).to eq(judge)
   end
 end

@@ -14,7 +14,7 @@ FactoryBot.define do
           :score,
           :complete,
           team_submission: submission,
-          sdg_alignment: Array(1..5).sample,
+          ideation_1: Array(1..5).sample,
           round: SeasonToggles.judging_round(full_name: true),
         )
       end

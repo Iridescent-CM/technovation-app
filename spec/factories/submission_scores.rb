@@ -49,12 +49,23 @@ FactoryBot.define do
       association(:team_submission, factory: [:team_submission, :complete, :chicago])
     end
 
-    trait :minimum_total do
-      sdg_alignment { 5 }
-      evidence_of_problem { 5 }
-      problem_addressed { 5 }
-      app_functional { 5 }
-      business_plan_short_term { 5 }
+    trait :minimum_auto_approved_total do
+      ideation_1 { 1 }
+      ideation_2 { 1 }
+      ideation_3 { 1 }
+      ideation_4 { 1 }
+      technical_1 { 1 }
+      technical_2 { 1 }
+      technical_3 { 1 }
+      technical_4 { 1 }
+      pitch_1 { 1 }
+      pitch_2 { 1 }
+      entrepreneurship_1 { 1 }
+      entrepreneurship_2 { 1 }
+      entrepreneurship_3 { 1 }
+      entrepreneurship_4 { 1 }
+      overall_1 { 5 }
+      overall_2 { 5 }
     end
   end
 end

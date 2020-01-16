@@ -111,178 +111,157 @@ class Questions
     [
       Question.new(
         section: 'ideation',
-        field: :sdg_alignment,
+        field: :ideation_1,
         idx: 1,
-        text: "The team clearly shows how " +
-              "their app idea aligns " +
-              "with a problem in their community.",
+        text: "Team has chosen an important problem and uses statistics, " +
+              "facts and personal stories to demonstrate its impact on them " +
+              "and/or their community.",
         worth: 5,
-        score: submission_score.sdg_alignment,
+        score: submission_score.ideation_1,
       ),
 
       Question.new(
         section: 'ideation',
-        field: :evidence_of_problem,
+        field: :ideation_2,
         idx: 2,
-        text: "The team provides evidence of the problem they are " +
-              "solving through facts and statistics.",
+        text: "To ensure positive impact of solution, team has completed " +
+              "user research and adapted their idea based on community feedback.",
         worth: 5,
-        score: submission_score.evidence_of_problem,
+        score: submission_score.ideation_2,
       ),
 
       Question.new(
         section: 'ideation',
-        field: :problem_addressed,
+        field: :ideation_3,
         idx: 3,
-        text: "The team addresses the problem well.",
+        text: "Team presents a fundamentally new solution or use of mobile app technology.",
         worth: 5,
-        score: submission_score.problem_addressed,
+        score: submission_score.ideation_3,
+      ),
+
+      Question.new(
+        section: 'ideation',
+        field: :ideation_4,
+        idx: 4,
+        text: "Team's app or idea was improved or changed in response to competitor research.",
+        worth: 5,
+        score: submission_score.ideation_4,
       ),
 
       Question.new(
         section: 'technical',
-        field: :app_functional,
+        field: :technical_1,
         idx: 1,
-        text: "The app appears to be fully functional " +
-              "and has no noticeable bugs.",
+        text: "App is fully functional and has no noticeable bugs.",
         worth: 5,
-        score: submission_score.app_functional,
+        score: submission_score.technical_1,
       ),
 
       Question.new(
         section: 'technical',
-        field: :demo,
+        field: :technical_2,
         idx: 2,
-        text: "The app is easy to use and the " +
-              "features are well thought out.",
+        text: "Team provides examples of how they developed app for a target audience " +
+              "and shows evidence of testing and refinement.",
         worth: 5,
-        score: submission_score.demo,
+        score: submission_score.technical_2,
       ),
 
       Question.new(
-        section: 'pitch',
-        field: :problem_clearly_communicated,
-        idx: 1,
-        text: "The team clearly states the " +
-              "problem they are solving.",
-        worth: 5,
-        score: submission_score.problem_clearly_communicated,
-      ),
-
-      Question.new(
-        section: 'pitch',
-        field: :compelling_argument,
-        idx: 2,
-        text: "The team presents a convincing argument " +
-              "to support their solution.",
-        worth: 5,
-        score: submission_score.compelling_argument,
-      ),
-
-      Question.new(
-        section: 'pitch',
-        field: :passion_energy,
+        section: 'technical',
+        field: :technical_3,
         idx: 3,
-        text: "The team’s pitch has a storyline " +
-              "and is well thought out.",
+        text: "All team members appear to have contributed to coding.",
         worth: 5,
-        score: submission_score.passion_energy,
+        score: submission_score.technical_3,
+      ),
+
+      Question.new(
+        section: 'technical',
+        field: :technical_4,
+        idx: 4,
+        text: "Code includes advanced functions such as using a database with APIs " +
+              "and/or app uses more than 1 sensor, phone function, or different " +
+              "technology (like AI, VR or hardware).",
+        worth: 5,
+        score: submission_score.technical_4,
       ),
 
       Question.new(
         section: 'pitch',
-        field: :pitch_specific,
-        idx: 4,
-        text: "The pitch is specific and to the point.",
-        worth: 5,
-        score: submission_score.pitch_specific,
-      ),
-
-      Question.new(
-        section: 'entrepreneurship',
-        field: :viable_business_model,
+        field: :pitch_1,
         idx: 1,
-        text: "The team has a strategy to bring the app to market.",
+        text: "This is an urgent problem and I believe this team has an effective solution.",
         worth: 5,
-        score: submission_score.viable_business_model,
+        score: submission_score.pitch_1,
       ),
 
       Question.new(
-        section: 'entrepreneurship',
-        field: :market_research,
+        section: 'pitch',
+        field: :pitch_2,
         idx: 2,
-        text: "The team’s research shows they have looked for " +
-              "competitors and ways to stand out from them.",
+        text: "I believe the team learned from challenges and each girl persevered " +
+              "to learn new skills.",
         worth: 5,
-        score: submission_score.market_research,
+        score: submission_score.pitch_2,
       ),
 
       Question.new(
         section: 'entrepreneurship',
-        field: :business_plan_long_term,
-        idx: 3,
-        text: "The team has research on how they will sustain their " +
-              "business. The goals are explained and realistic.",
-        worth: 5,
-        score: submission_score.business_plan_long_term,
-      ),
-
-      Question.new(
-        section: 'entrepreneurship',
-        field: :business_plan_short_term,
-        idx: 4,
-        text: "The team’s business has an identity " +
-              "through branding and visuals.",
-        worth: 5,
-        score: submission_score.business_plan_short_term,
-      ),
-
-      Question.new(
-        section: 'overall',
-        field: :business_plan_feasible,
+        field: :entrepreneurship_1,
         idx: 1,
-        text: "You are convinced the app can succeed.",
+        text: "Team has clear goals and plan to reach target users. They've " +
+              "integrated feedback from initial marketing attempts into this plan.",
         worth: 5,
-        score: submission_score.business_plan_feasible,
+        score: submission_score.entrepreneurship_1,
       ),
 
       Question.new(
-        section: 'overall',
-        field: :submission_thought_out,
+        section: 'entrepreneurship',
+        field: :entrepreneurship_2,
         idx: 2,
-        text: "Each component of the team submission " +
-              "is well thought out.",
+        text: "Team has a financial plan supported by budgets and research for " +
+              "starting and sustaining the business.",
         worth: 5,
-        score: submission_score.submission_thought_out,
+        score: submission_score.entrepreneurship_2,
       ),
 
       Question.new(
-        section: 'overall',
-        field: :cohesive_story,
+        section: 'entrepreneurship',
+        field: :entrepreneurship_3,
         idx: 3,
-        text: "The team’s strong dedication and work ethic is clear, " +
-              "even if the submission is not complete.",
+        text: "Business plan includes logical company, product or service descriptions, " +
+              "market analysis, and graphics.",
         worth: 5,
-        score: submission_score.cohesive_story,
+        score: submission_score.entrepreneurship_3,
       ),
 
       Question.new(
-        section: 'overall',
-        field: :solution_originality,
+        section: 'entrepreneurship',
+        field: :entrepreneurship_4,
         idx: 4,
-        text: "The way the team approaches and solves " +
-              "the problem is unique.",
+        text: "Branding is clear and amplifies the team’s purpose.",
         worth: 5,
-        score: submission_score.solution_originality,
+        score: submission_score.entrepreneurship_4,
       ),
 
       Question.new(
         section: 'overall',
-        field: :solution_stands_out,
-        idx: 5,
-        text: "The submission stands out from others.",
+        field: :overall_1,
+        idx: 1,
+        text: "I believe this team will continue working to make their ideas a reality.",
         worth: 5,
-        score: submission_score.solution_stands_out,
+        score: submission_score.overall_1,
+      ),
+
+      Question.new(
+        section: 'overall',
+        field: :overall_2,
+        idx: 2,
+        text: "This solution will positively impact our world! The idea is well thought out " +
+              "and the app is developed.",
+        worth: 5,
+        score: submission_score.overall_2,
       ),
     ]
   end

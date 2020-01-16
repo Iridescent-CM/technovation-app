@@ -64,13 +64,13 @@ RSpec.describe RegionalPitchEvent do
 
     live_judge.submission_scores.create!({
       team_submission: sub,
-      evidence_of_problem: 5,
+      ideation_2: 5,
       completed_at: Time.current
     })
 
     virtual_judge.submission_scores.create!({
       team_submission: sub,
-      evidence_of_problem: 2,
+      ideation_2: 2,
       completed_at: Time.current
     })
 
@@ -100,7 +100,7 @@ RSpec.describe RegionalPitchEvent do
 
     virtual_judge.submission_scores.create!({
       team_submission: sub,
-      evidence_of_problem: 2,
+      ideation_2: 2,
       completed_at: Time.current,
       round: SeasonToggles.current_judging_round(full_name: true)
     })
