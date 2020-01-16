@@ -3,7 +3,7 @@
     <div :class="solo ? 'grid__col-md-6' : 'grid__col-12'">
       <h3>{{ title }}</h3>
 
-      <p class="refer-to">Refer to the {{ referTo }}</p>
+      <slot name="section-summary" />
 
       <score-entry :questions="questions">
         <slot />
@@ -173,7 +173,6 @@ export default {
 
   props: [
     'title',
-    'referTo',
     'nextSection',
     'prevSection',
     'section',
@@ -239,7 +238,7 @@ export default {
     background: white;
   }
 
-  .refer-to {
+  .help-text {
     font-size: 0.9rem;
     font-style: italic;
     margin: 0;

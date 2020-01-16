@@ -19,11 +19,16 @@
 
       <question-section
         title="Pitch (20 points)"
-        referTo="pitch video."
         prevSection="technical"
         section="pitch"
         :nextSection="nextSection"
       >
+        <p slot="section-summary" class="help-text">
+          To assess how well a team presented (or pitched) their idea to you, please
+          refer to all submission elements and the
+          <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Pitch.png">rubric</a>.
+        </p>
+
         <p slot="comment-tips">
           English may not be the native language for the students.
           Focus on how well the team did at telling the story of their

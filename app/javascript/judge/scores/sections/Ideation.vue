@@ -17,10 +17,15 @@
 
       <question-section
         title="Ideation (15 points)"
-        referTo="app name and description, and pitch video."
         section="ideation"
         nextSection="technical"
       >
+        <p slot="section-summary" class="help-text">
+          To determine if the team has built a solution that will positively impact them
+          and their community, refer to all submission materials and the
+          <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Ideation.png">rubric</a>.
+        </p>
+
         <p slot="comment-tips">
           Be sensitive to cultural differences and
           focus on how well the team identified the problem
