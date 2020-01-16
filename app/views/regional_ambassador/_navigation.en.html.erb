@@ -51,7 +51,7 @@
     mentor_dashboard_path,
     data: { turbolinks: false } %>
 
-  <% if current_ambassador.is_a_judge? %>
+  <% if current_ambassador.can_switch_to_judge? %>
     <%= link_to "Judge Mode",
       judge_dashboard_path,
       data: { turbolinks: false } %>
