@@ -21,6 +21,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
 Capybara.automatic_label_click = true
+Capybara.javascript_driver = :selenium_chrome_headless
 
 require 'rake'
 Rails.application.load_tasks
