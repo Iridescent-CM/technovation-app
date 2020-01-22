@@ -212,13 +212,13 @@ RSpec.describe TeamSubmission do
       it "counts live scores as official" do
         live_score = live_judge.submission_scores.create!({
           team_submission: sub,
-          evidence_of_problem: 5,
+          ideation_1: 5,
           completed_at: Time.current
         })
 
         virtual_score = virtual_judge.submission_scores.create!({
           team_submission: sub,
-          evidence_of_problem: 2,
+          ideation_1: 2,
           completed_at: Time.current
         })
 
@@ -234,7 +234,7 @@ RSpec.describe TeamSubmission do
 
           live_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -243,7 +243,7 @@ RSpec.describe TeamSubmission do
           virtual_judge = FactoryBot.create(:judge_profile)
           virtual_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -260,7 +260,7 @@ RSpec.describe TeamSubmission do
 
           live_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -269,7 +269,7 @@ RSpec.describe TeamSubmission do
           virtual_judge = FactoryBot.create(:judge_profile)
           virtual_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -300,13 +300,13 @@ RSpec.describe TeamSubmission do
       it "counts virtual scores as official" do
         live_score = live_judge.submission_scores.create!({
           team_submission: sub,
-          evidence_of_problem: 5,
+          ideation_1: 5,
           completed_at: Time.current
         })
 
         virtual_score = virtual_judge.submission_scores.create!({
           team_submission: sub,
-          evidence_of_problem: 2,
+          ideation_1: 2,
           completed_at: Time.current
         })
 
@@ -322,7 +322,7 @@ RSpec.describe TeamSubmission do
 
           live_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -331,7 +331,7 @@ RSpec.describe TeamSubmission do
           virtual_judge = FactoryBot.create(:judge_profile)
           virtual_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -348,7 +348,7 @@ RSpec.describe TeamSubmission do
 
           live_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -357,7 +357,7 @@ RSpec.describe TeamSubmission do
           virtual_judge = FactoryBot.create(:judge_profile)
           virtual_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -370,7 +370,7 @@ RSpec.describe TeamSubmission do
       it "counts virtual scores as official" do
         virtual_score = virtual_judge.submission_scores.create!({
           team_submission: sub,
-          evidence_of_problem: 2,
+          ideation_1: 2,
           completed_at: Time.current
         })
 
@@ -383,7 +383,7 @@ RSpec.describe TeamSubmission do
           virtual_judge = FactoryBot.create(:judge_profile)
           virtual_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -397,7 +397,7 @@ RSpec.describe TeamSubmission do
           virtual_judge = FactoryBot.create(:judge_profile)
           virtual_judge.submission_scores.create!({
             team_submission: sub,
-            evidence_of_problem: score,
+            ideation_1: score,
             completed_at: Time.current
           })
         end
@@ -419,7 +419,7 @@ RSpec.describe TeamSubmission do
         judge = FactoryBot.create(:judge_profile)
         judge.submission_scores.create!({
           team_submission: sub,
-          evidence_of_problem: score,
+          ideation_1: score,
           completed_at: Time.current,
           round: :semifinals,
         })
@@ -433,7 +433,7 @@ RSpec.describe TeamSubmission do
         judge = FactoryBot.create(:judge_profile)
         judge.submission_scores.create!({
           team_submission: sub,
-          evidence_of_problem: score,
+          ideation_1: score,
           completed_at: Time.current,
           round: :semifinals,
         })

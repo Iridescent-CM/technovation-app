@@ -1362,24 +1362,6 @@ CREATE TABLE public.submission_scores (
     id integer NOT NULL,
     team_submission_id integer,
     judge_profile_id integer,
-    sdg_alignment integer DEFAULT 0,
-    evidence_of_problem integer DEFAULT 0,
-    problem_addressed integer DEFAULT 0,
-    app_functional integer DEFAULT 0,
-    demo integer DEFAULT 0,
-    business_plan_short_term integer DEFAULT 0,
-    business_plan_long_term integer DEFAULT 0,
-    market_research integer DEFAULT 0,
-    viable_business_model integer DEFAULT 0,
-    problem_clearly_communicated integer DEFAULT 0,
-    compelling_argument integer DEFAULT 0,
-    passion_energy integer DEFAULT 0,
-    pitch_specific integer DEFAULT 0,
-    business_plan_feasible integer DEFAULT 0,
-    submission_thought_out integer DEFAULT 0,
-    cohesive_story integer DEFAULT 0,
-    solution_originality integer DEFAULT 0,
-    solution_stands_out integer DEFAULT 0,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     ideation_comment text,
@@ -1402,7 +1384,23 @@ CREATE TABLE public.submission_scores (
     completed_too_fast_repeat_offense boolean DEFAULT false,
     seems_too_low boolean DEFAULT false,
     approved_at timestamp without time zone,
-    dropped_at timestamp without time zone
+    dropped_at timestamp without time zone,
+    ideation_1 integer DEFAULT 0,
+    ideation_2 integer DEFAULT 0,
+    ideation_3 integer DEFAULT 0,
+    ideation_4 integer DEFAULT 0,
+    technical_1 integer DEFAULT 0,
+    technical_2 integer DEFAULT 0,
+    technical_3 integer DEFAULT 0,
+    technical_4 integer DEFAULT 0,
+    pitch_1 integer DEFAULT 0,
+    pitch_2 integer DEFAULT 0,
+    entrepreneurship_1 integer DEFAULT 0,
+    entrepreneurship_2 integer DEFAULT 0,
+    entrepreneurship_3 integer DEFAULT 0,
+    entrepreneurship_4 integer DEFAULT 0,
+    overall_1 integer DEFAULT 0,
+    overall_2 integer DEFAULT 0
 );
 
 
@@ -3059,6 +3057,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191014194309'),
 ('20191120151220'),
 ('20191120151819'),
-('20191220170611');
+('20191220170611'),
+('20200115211026');
 
 

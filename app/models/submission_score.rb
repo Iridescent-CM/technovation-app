@@ -232,9 +232,9 @@ class SubmissionScore < ActiveRecord::Base
   def self.total_possible_for(division)
     case division
     when "junior"
-      70
+      60
     when "senior"
-      90
+      80
     else
       0
     end
@@ -341,38 +341,36 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def ideation_total
-    sdg_alignment +
-      evidence_of_problem +
-        problem_addressed
+    ideation_1 +
+      ideation_2 +
+        ideation_3 +
+          ideation_4
   end
 
   def technical_total
-    app_functional +
-      demo
+    technical_1 +
+      technical_2 +
+        technical_3 +
+          technical_4
   end
 
   def entrepreneurship_total
     return 0 if junior_team_division?
 
-    business_plan_short_term +
-      business_plan_long_term +
-        market_research +
-          viable_business_model
+    entrepreneurship_1 +
+      entrepreneurship_2 +
+        entrepreneurship_3 +
+          entrepreneurship_4
   end
 
   def pitch_total
-    problem_clearly_communicated +
-      compelling_argument +
-        passion_energy +
-          pitch_specific
+    pitch_1 +
+      pitch_2
   end
 
   def overall_impression_total
-    business_plan_feasible +
-      submission_thought_out +
-        cohesive_story +
-          solution_originality +
-            solution_stands_out
+    overall_1 +
+      overall_2
   end
 
   def overall_total

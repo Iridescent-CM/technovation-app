@@ -13,12 +13,17 @@
 
       <question-section
         title="Overall Impression (25 points)"
-        referTo="entire submission."
         prevSection="entrepreneurship"
         section="overall"
         nextSection="review-score"
         nextSectionTitle="Review score"
       >
+        <p slot="section-summary" class="help-text">
+          To give your overall feedback to a team and help them understand how to continue
+          learning, please refer to all submission elements and the
+          <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Overall-Impression.png">rubric</a>.
+        </p>
+
         <p slot="comment-tips">
           Considering the native language and ages of the team,
           how does this submission stand out for you? How well

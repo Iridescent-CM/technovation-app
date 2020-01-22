@@ -98,30 +98,70 @@ RSpec.describe SubmissionScore do
       team_submission: team_submission,
       judge_profile: judge_profile,
 
-      evidence_of_problem: 5,
-      problem_addressed: 4,
-      app_functional: 2,
+      ideation_1: 5,
+      ideation_2: 2,
+      ideation_3: 1,
+      ideation_4: 3,
 
-      demo: 0,
-      business_plan_short_term: 5,
-      business_plan_long_term: 5,
-      market_research: 3,
+      technical_1: 4,
+      technical_2: 3,
+      technical_3: 3,
+      technical_4: 2,
 
-      viable_business_model: 4,
-      problem_clearly_communicated: 2,
-      compelling_argument: 1,
-      passion_energy: 5,
+      pitch_1: 3,
+      pitch_2: 5,
 
-      pitch_specific: 5,
-      business_plan_feasible: 4,
-      submission_thought_out: 4,
+      entrepreneurship_1: 5,
+      entrepreneurship_2: 4,
+      entrepreneurship_3: 5,
+      entrepreneurship_4: 3,
 
-      cohesive_story: 4,
-      solution_originality: 3,
-      solution_stands_out: 5,
+      overall_1: 3,
+      overall_2: 2,
     })
 
-    expect(subscore.total).to eq(61)
+    expect(subscore.total).to eq(53)
+  end
+
+  it "calculates section totals" do
+    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
+    judge_profile = FactoryBot.create(:judge_profile)
+
+    subscore = SubmissionScore.create!({
+      team_submission: team_submission,
+      judge_profile: judge_profile,
+
+      ideation_1: 5,
+      ideation_2: 2,
+      ideation_3: 1,
+      ideation_4: 3,
+
+      technical_1: 4,
+      technical_2: 3,
+      technical_3: 3,
+      technical_4: 2,
+
+      pitch_1: 3,
+      pitch_2: 5,
+
+      entrepreneurship_1: 5,
+      entrepreneurship_2: 4,
+      entrepreneurship_3: 5,
+      entrepreneurship_4: 3,
+
+      overall_1: 3,
+      overall_2: 2,
+    })
+
+    expect(subscore.ideation_total).to eq(11)
+    expect(subscore.technical_total).to eq(12)
+    expect(subscore.pitch_total).to eq(8)
+    expect(subscore.entrepreneurship_total).to eq(17)
+    expect(subscore.overall_total).to eq(5)
   end
 
   it "calculates total possible score based on division" do
@@ -137,14 +177,14 @@ RSpec.describe SubmissionScore do
       judge_profile: judge_profile,
     })
 
-    expect(subscore.total_possible).to eq(90)
+    expect(subscore.total_possible).to eq(80)
 
     team.division = Division.junior
     team.save!
 
     team_submission.reload
 
-    expect(subscore.total_possible).to eq(70)
+    expect(subscore.total_possible).to eq(60)
   end
 
   [:quarterfinals, :semifinals].each do |judging_round|
@@ -160,7 +200,7 @@ RSpec.describe SubmissionScore do
         sub = SubmissionScore.create!(
           judge_profile_id: judge_profile.id,
           team_submission_id: team_submission.id,
-          evidence_of_problem: 5,
+          ideation_1: 5,
           round: round,
         )
 
@@ -169,7 +209,7 @@ RSpec.describe SubmissionScore do
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to eq(5)
 
-        sub.update_attributes(evidence_of_problem: 4)
+        sub.update_attributes(ideation_1: 4)
         expect(
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to eq(4)
@@ -179,7 +219,7 @@ RSpec.describe SubmissionScore do
         sub2 = SubmissionScore.create!(
           judge_profile_id: judge_profile2.id,
           team_submission_id: team_submission.id,
-          evidence_of_problem: 2,
+          ideation_1: 2,
           round: round,
         )
 
@@ -197,7 +237,7 @@ RSpec.describe SubmissionScore do
         SubmissionScore.create!(
           judge_profile_id: judge_profile.id,
           team_submission_id: team_submission.id,
-          evidence_of_problem: 5,
+          ideation_1: 5,
           round: round,
         )
         expect(

@@ -1,10 +1,10 @@
 import flatMap from 'lodash/flatMap'
 
 export const anyScoresEmpty = state => {
-  let expectedScoreLength = 14
+  let expectedScoreLength = 12
 
   if (state.team.division === 'senior')
-    expectedScoreLength = 18
+    expectedScoreLength = 16
 
   const scores = flatMap(state.questions, 'score')
 

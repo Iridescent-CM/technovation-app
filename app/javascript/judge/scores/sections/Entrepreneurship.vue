@@ -21,11 +21,16 @@
 
         <question-section
           title="Entrepreneurship (20 points)"
-          referTo="business plan and pitch video."
           prevSection="pitch"
           section="entrepreneurship"
           nextSection="overall"
         >
+          <p slot="section-summary" class="help-text">
+            To judge how well a team has planned their business, please refer to all submission
+            elements, particularly the business plan, and the
+            <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Entrepreneurship.png">rubric</a>.
+          </p>
+
           <p slot="comment-tips">
             How well the team did in developing a business.
             Like the technical section, entrepreneurship is not

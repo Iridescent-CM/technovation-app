@@ -20,11 +20,16 @@
 
       <question-section
         title="Technical (10 points)"
-        referTo="source code, and screenshots."
         prevSection="ideation"
         section="technical"
         nextSection="pitch"
       >
+        <p slot="section-summary" class="help-text">
+          To determine the quality of the team's solution (app), please refer to
+          all submission elements, test the source code and see the
+          <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Technical.png">rubric</a>.
+        </p>
+
         <p slot="comment-tips">
           This section is not about how complex the app is,
           but how well the app solves the problem and meets

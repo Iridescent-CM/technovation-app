@@ -233,6 +233,7 @@ if (ra = RegionalAmbassadorProfile.create(
     job_title: "Software Engineer",
     bio: "I am passionate about tech and empowering girls",
   )).valid?
+  Geocoding.perform(ra.account).with_save
   ra.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))
   puts "Created approved RA: #{ra.email} with password #{ra.email}"
   puts ""

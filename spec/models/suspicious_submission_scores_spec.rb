@@ -12,9 +12,9 @@ RSpec.describe SuspiciousSubmissionScores do
   describe "when same judge completes 2 scores too fast" do
     it "includes those scores" do
       judge  = FactoryBot.create(:judge)
-      score = FactoryBot.create(:score, :minimum_total, judge_profile: judge)
-      score2 = FactoryBot.create(:score, :minimum_total, judge_profile: judge)
-      score3 = FactoryBot.create(:score, :minimum_total, judge_profile: judge)
+      score = FactoryBot.create(:score, :minimum_auto_approved_total, judge_profile: judge)
+      score2 = FactoryBot.create(:score, :minimum_auto_approved_total, judge_profile: judge)
+      score3 = FactoryBot.create(:score, :minimum_auto_approved_total, judge_profile: judge)
 
       score.complete!
       expect(score).to be_completed_too_fast
@@ -53,33 +53,71 @@ RSpec.describe SuspiciousSubmissionScores do
       end
 
       senior_min_score.update({
-        sdg_alignment: 5,
-        evidence_of_problem: 5,
-        problem_addressed: 5,
-        app_functional: 5,
-        business_plan_short_term: 5,
+        ideation_1: 1,
+        ideation_2: 1,
+        ideation_3: 1,
+        ideation_4: 1,
+        technical_1: 1,
+        technical_2: 1,
+        technical_3: 1,
+        technical_4: 1,
+        pitch_1: 1,
+        pitch_2: 1,
+        entrepreneurship_1: 1,
+        entrepreneurship_2: 1,
+        entrepreneurship_3: 1,
+        entrepreneurship_4: 1,
+        overall_1: 4,
+        overall_2: 5,
       })
 
       junior_min_score.update({
-        sdg_alignment: 5,
-        evidence_of_problem: 5,
-        problem_addressed: 5,
-        app_functional: 5,
+        ideation_1: 1,
+        ideation_2: 1,
+        ideation_3: 1,
+        ideation_4: 1,
+        technical_1: 1,
+        technical_2: 1,
+        technical_3: 1,
+        technical_4: 1,
+        pitch_1: 1,
+        pitch_2: 1,
+        overall_1: 4,
+        overall_2: 5,
       })
 
       senior_low_score.update({
-        sdg_alignment: 5,
-        evidence_of_problem: 5,
-        problem_addressed: 5,
-        app_functional: 5,
-        business_plan_short_term: 2,
+        ideation_1: 1,
+        ideation_2: 1,
+        ideation_3: 1,
+        ideation_4: 1,
+        technical_1: 1,
+        technical_2: 1,
+        technical_3: 1,
+        technical_4: 1,
+        pitch_1: 1,
+        pitch_2: 1,
+        entrepreneurship_1: 1,
+        entrepreneurship_2: 1,
+        entrepreneurship_3: 1,
+        entrepreneurship_4: 1,
+        overall_1: 3,
+        overall_2: 5,
       })
 
       junior_low_score.update({
-        sdg_alignment: 5,
-        evidence_of_problem: 5,
-        problem_addressed: 5,
-        app_functional: 3,
+        ideation_1: 1,
+        ideation_2: 1,
+        ideation_3: 1,
+        ideation_4: 1,
+        technical_1: 1,
+        technical_2: 1,
+        technical_3: 1,
+        technical_4: 1,
+        pitch_1: 1,
+        pitch_2: 1,
+        overall_1: 3,
+        overall_2: 5,
       })
 
       SubmissionScore.find_each(&:complete!)
