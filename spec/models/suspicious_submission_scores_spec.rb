@@ -67,8 +67,8 @@ RSpec.describe SuspiciousSubmissionScores do
         entrepreneurship_2: 1,
         entrepreneurship_3: 1,
         entrepreneurship_4: 1,
-        overall_1: 4,
-        overall_2: 5,
+        overall_1: 1,
+        overall_2: 4,
       })
 
       junior_min_score.update({
@@ -82,8 +82,8 @@ RSpec.describe SuspiciousSubmissionScores do
         technical_4: 1,
         pitch_1: 1,
         pitch_2: 1,
-        overall_1: 4,
-        overall_2: 5,
+        overall_1: 1,
+        overall_2: 3,
       })
 
       senior_low_score.update({
@@ -101,8 +101,8 @@ RSpec.describe SuspiciousSubmissionScores do
         entrepreneurship_2: 1,
         entrepreneurship_3: 1,
         entrepreneurship_4: 1,
-        overall_1: 3,
-        overall_2: 5,
+        overall_1: 1,
+        overall_2: 3,
       })
 
       junior_low_score.update({
@@ -116,8 +116,8 @@ RSpec.describe SuspiciousSubmissionScores do
         technical_4: 1,
         pitch_1: 1,
         pitch_2: 1,
-        overall_1: 3,
-        overall_2: 5,
+        overall_1: 1,
+        overall_2: 2,
       })
 
       SubmissionScore.find_each(&:complete!)
