@@ -123,6 +123,47 @@ RSpec.describe SubmissionScore do
     expect(subscore.total).to eq(53)
   end
 
+  it "calculates section totals" do
+    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team_submission = TeamSubmission.create!(
+      team_id: team.id,
+      integrity_affirmed: true
+    )
+    judge_profile = FactoryBot.create(:judge_profile)
+
+    subscore = SubmissionScore.create!({
+      team_submission: team_submission,
+      judge_profile: judge_profile,
+
+      ideation_1: 5,
+      ideation_2: 2,
+      ideation_3: 1,
+      ideation_4: 3,
+
+      technical_1: 4,
+      technical_2: 3,
+      technical_3: 3,
+      technical_4: 2,
+
+      pitch_1: 3,
+      pitch_2: 5,
+
+      entrepreneurship_1: 5,
+      entrepreneurship_2: 4,
+      entrepreneurship_3: 5,
+      entrepreneurship_4: 3,
+
+      overall_1: 3,
+      overall_2: 2,
+    })
+
+    expect(subscore.ideation_total).to eq(11)
+    expect(subscore.technical_total).to eq(12)
+    expect(subscore.pitch_total).to eq(8)
+    expect(subscore.entrepreneurship_total).to eq(17)
+    expect(subscore.overall_total).to eq(5)
+  end
+
   it "calculates total possible score based on division" do
     team = Team.create!(name: "A", description: "B", division: Division.senior)
     team_submission = TeamSubmission.create!(
