@@ -6,8 +6,8 @@ class SubmissionScore < ActiveRecord::Base
   include Regioned
   regioned_source Team, through: :team_submission
 
-  SENIOR_LOW_SCORE_THRESHOLD = 23
-  JUNIOR_LOW_SCORE_THRESHOLD = 19
+  SENIOR_LOW_SCORE_THRESHOLD = 19
+  JUNIOR_LOW_SCORE_THRESHOLD = 14
 
   after_commit -> {
     return false if destroyed?
