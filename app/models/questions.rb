@@ -171,7 +171,7 @@ class Questions
         section: 'technical',
         field: :technical_3,
         idx: 3,
-        text: "All team members appear to have contributed to coding.",
+        text: "All team members appear to have gained technical knowledge and contributed to coding.",
         worth: 5,
         score: submission_score.technical_3,
       ),
@@ -191,7 +191,8 @@ class Questions
         section: 'pitch',
         field: :pitch_1,
         idx: 1,
-        text: "This is an urgent problem and I believe this team has an effective solution.",
+        text: "The pitch makes me believe that this is an urgent problem and that the " +
+              "team has an effective solution.",
         worth: 5,
         score: submission_score.pitch_1,
       ),
@@ -200,8 +201,8 @@ class Questions
         section: 'pitch',
         field: :pitch_2,
         idx: 2,
-        text: "I believe the team learned from challenges and each girl persevered " +
-              "to learn new skills.",
+        text: "The pitch makes me believe that the team learned from challenges and " +
+              "each girl persevered to learn new skills.",
         worth: 5,
         score: submission_score.pitch_2,
       ),
