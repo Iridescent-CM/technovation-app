@@ -27,7 +27,7 @@
           <p slot="section-summary" class="help-text">
             To judge how well a team has planned their business, please refer to all submission
             elements, particularly the business plan, and the
-            <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Entrepreneurship.png">rubric</a>.
+            <a target="_blank" href="https://technovationchallenge.org/wp-content/uploads/2019/10/Entrepreneurship.png">rubric</a>.
           </p>
 
           <p slot="comment-tips">
