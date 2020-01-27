@@ -20,7 +20,7 @@
         <p slot="section-summary" class="help-text">
           To give your overall feedback to a team and help them understand how to continue
           learning, please refer to all submission elements and the
-          <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Overall-Impression.png">rubric</a>.
+          <a target="_blank" href="https://technovationchallenge.org/wp-content/uploads/2019/10/Overall-Impression.png">rubric</a>.
         </p>
 
         <p slot="comment-tips">

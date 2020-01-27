@@ -25,7 +25,7 @@
         <p slot="section-summary" class="help-text">
           To assess how well a team presented (or pitched) their idea to you, please
           refer to all submission elements and the
-          <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Pitch.png">rubric</a>.
+          <a target="_blank" href="https://technovationchallenge.org/wp-content/uploads/2019/10/Pitch.png">rubric</a>.
         </p>
 
         <p slot="comment-tips">

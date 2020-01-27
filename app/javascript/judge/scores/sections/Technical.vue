@@ -26,7 +26,7 @@
         <p slot="section-summary" class="help-text">
           To determine the quality of the team's solution (app), please refer to
           all submission elements, test the source code and see the
-          <a href="https://technovationchallenge.org/wp-content/uploads/2019/10/Technical.png">rubric</a>.
+          <a target="_blank" href="https://technovationchallenge.org/wp-content/uploads/2019/10/Technical.png">rubric</a>.
         </p>
 
         <p slot="comment-tips">
