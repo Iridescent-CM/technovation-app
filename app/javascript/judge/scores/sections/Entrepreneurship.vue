@@ -20,7 +20,6 @@
         </div>
 
         <question-section
-          title="Entrepreneurship (20 points)"
           prevSection="pitch"
           section="entrepreneurship"
           nextSection="overall"

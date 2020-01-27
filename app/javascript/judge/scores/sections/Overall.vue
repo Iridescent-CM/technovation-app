@@ -12,7 +12,6 @@
       <div class="app-description" v-html="submission.description"></div>
 
       <question-section
-        title="Overall Impression (25 points)"
         prevSection="entrepreneurship"
         section="overall"
         nextSection="review-score"
