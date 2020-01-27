@@ -107,6 +107,11 @@ export default {
     ...mapState(['submission']),
     ...mapGetters(['sectionQuestions']),
 
+    title () {
+      var section = this.$store.getters.section(this.section)
+      return section.title + ' (' + section.pointsPossible + ' points)'
+    },
+
     comment () {
       return this.$store.getters.comment(this.section)
     },
@@ -172,7 +177,6 @@ export default {
   },
 
   props: [
-    'title',
     'nextSection',
     'prevSection',
     'section',

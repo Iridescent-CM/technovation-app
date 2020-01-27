@@ -18,7 +18,6 @@
       </div>
 
       <question-section
-        title="Pitch (20 points)"
         prevSection="technical"
         section="pitch"
         :nextSection="nextSection"

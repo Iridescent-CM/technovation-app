@@ -60,6 +60,53 @@ export const totalPossible = state => {
   }, 0)
 }
 
+export const sections = (state, getters) => {
+  let sections = [
+    {
+      name: 'ideation',
+      title: 'Ideation',
+      pointsTotal: getters.sectionPointsTotal('ideation'),
+      pointsPossible: getters.sectionPointsPossible('ideation'),
+    },
+
+    {
+      name: 'technical',
+      title: 'Technical',
+      pointsTotal: getters.sectionPointsTotal('technical'),
+      pointsPossible: getters.sectionPointsPossible('technical'),
+    },
+
+    {
+      name: 'pitch',
+      title: 'Pitch',
+      pointsTotal: getters.sectionPointsTotal('pitch'),
+      pointsPossible: getters.sectionPointsPossible('pitch'),
+    },
+  ]
+
+  if (state.team.division === 'senior') {
+    sections.push({
+      name: 'entrepreneurship',
+      title: 'Entrepreneurship',
+      pointsTotal: getters.sectionPointsTotal('entrepreneurship'),
+      pointsPossible: getters.sectionPointsPossible('entrepreneurship'),
+    })
+  }
+
+  sections.push({
+    name: 'overall',
+    title: 'Overall Impression',
+    pointsTotal: getters.sectionPointsTotal('overall'),
+    pointsPossible: getters.sectionPointsPossible('overall'),
+  })
+
+  return sections
+}
+
+export const section = (state, getters) => (name) => {
+  return getters.sections.filter(section => section.name === name)[0]
+}
+
 export const sectionPointsPossible = (state, getters) => (section) => {
   let possible = getters.sectionQuestions(section).reduce((acc, q) => {
     return acc += q.worth

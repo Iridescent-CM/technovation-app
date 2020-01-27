@@ -77,46 +77,7 @@ export default {
     },
 
     sections () {
-      let sections = [
-        {
-          name: 'ideation',
-          title: 'Ideation',
-          pointsTotal: this.pointsTotal('ideation'),
-          pointsPossible: this.pointsPossible('ideation'),
-        },
-
-        {
-          name: 'technical',
-          title: 'Technical',
-          pointsTotal: this.pointsTotal('technical'),
-          pointsPossible: this.pointsPossible('technical'),
-        },
-
-        {
-          name: 'pitch',
-          title: 'Pitch',
-          pointsTotal: this.pointsTotal('pitch'),
-          pointsPossible: this.pointsPossible('pitch'),
-        },
-      ]
-
-      if (this.team.division === 'senior') {
-        sections.push({
-          name: 'entrepreneurship',
-          title: 'Entrepreneurship',
-          pointsTotal: this.pointsTotal('entrepreneurship'),
-          pointsPossible: this.pointsPossible('entrepreneurship'),
-        })
-      }
-
-      sections.push({
-        name: 'overall',
-        title: 'Overall Impression',
-        pointsTotal: this.pointsTotal('overall'),
-        pointsPossible: this.pointsPossible('overall'),
-      })
-
-      return sections
+      return this.$store.getters.sections
     },
 
     totalScore () {
@@ -125,16 +86,6 @@ export default {
 
     totalPossible () {
       return this.$store.getters.totalPossible
-    },
-  },
-
-  methods: {
-    pointsPossible (section) {
-      return this.$store.getters.sectionPointsPossible(section)
-    },
-
-    pointsTotal (section) {
-      return this.$store.getters.sectionPointsTotal(section)
     },
   },
 }

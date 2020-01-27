@@ -27,8 +27,9 @@ describe('Question comments section', () => {
       state: initialState,
       getters: {
         sectionQuestions: jest.fn(() => () => {}),
-      },
-      mutations: {
+        sectionPointsTotal: jest.fn(() => () => 10),
+        sectionPointsPossible: jest.fn(() => () => 10),
+      }, mutations: {
         saveComment: jest.fn(() => {}),
       },
     })

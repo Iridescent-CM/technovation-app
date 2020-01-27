@@ -16,7 +16,6 @@
       </div>
 
       <question-section
-        title="Ideation (15 points)"
         section="ideation"
         nextSection="technical"
       >

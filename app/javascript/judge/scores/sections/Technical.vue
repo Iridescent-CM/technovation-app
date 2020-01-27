@@ -19,7 +19,6 @@
       </div>
 
       <question-section
-        title="Technical (10 points)"
         prevSection="ideation"
         section="technical"
         nextSection="pitch"
