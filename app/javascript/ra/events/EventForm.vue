@@ -174,8 +174,8 @@
           altInput: true,
           altFormat: "l, F J",
           dateFormat: "Y-m-d",
-          minDate: "2019-04-27",
-          maxDate: "2019-06-02",
+          minDate: this.minDate(),
+          maxDate: this.maxDate(),
         },
 
         timeOpts: {
@@ -461,6 +461,18 @@
           0
         );
         return newTime;
+      },
+
+      minDate() {
+        return process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_YEAR + '-' +
+          process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_MONTH + '-' +
+          process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_DAY
+      },
+
+      maxDate() {
+        return process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_YEAR + '-' +
+          process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_MONTH + '-' +
+          process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_DAY
       },
     },
 
