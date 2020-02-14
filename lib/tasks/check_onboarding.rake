@@ -1,3 +1,12 @@
+task onboard_missed_students!: :environment do
+  StudentProfile.current.onboarding.find_each do |student|
+    if student.can_be_marked_onboarded?
+      puts "Student##{student.id} should be onboarded"
+      student.touch
+    end
+  end
+end
+
 task check_onboarding: :environment do
   logger = Logger.new("tmp/check_onboarding.log")
 
