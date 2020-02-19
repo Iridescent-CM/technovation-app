@@ -1,11 +1,9 @@
-class ThunkablePromoController < ApplicationController
+class ThunkableController < ApplicationController
   before_action :unauthenticated!, if: -> {
     not current_account.authenticated?
   }
 
   def show
-    @thunkable_promo_image = ENV.fetch("THUNKABLE_PROMO_IMAGE")
-
     render "general_info/get_started_with_thunkable"
   end
 
