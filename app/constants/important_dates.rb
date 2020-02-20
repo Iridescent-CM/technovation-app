@@ -20,6 +20,13 @@ module ImportantDates
     Time.zone.local(year, month, day)
   end
 
+  def self.rpe_officiality_finalized
+    year = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_YEAR"))
+    month = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_MONTH"))
+    day = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
   def self.submission_deadline
     year = Integer(ENV.fetch("DATES_SUBMISSION_DEADLINE_YEAR"))
     month = Integer(ENV.fetch("DATES_SUBMISSION_DEADLINE_MONTH"))
