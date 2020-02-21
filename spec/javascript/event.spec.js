@@ -1,22 +1,6 @@
 import Event from 'ra/events/Event'
 import Attendee from 'ra/events/Attendee'
 
-test('shows pending officiality before finalization', () => {
-  let unofficial = new Event({ officiality_finalized: false, official: false})
-  let official = new Event({ officiality_finalized: false, official: true})
-
-  expect(unofficial.officiality).toEqual("pending")
-  expect(official.officiality).toEqual("pending")
-})
-
-test('shows officiality after finalization', () => {
-  let unofficial = new Event({ officiality_finalized: true, official: false})
-  let official = new Event({ officiality_finalized: true, official: true})
-
-  expect(unofficial.officiality).toEqual("unofficial")
-  expect(official.officiality).toEqual("official")
-})
-
 test('resultReadyForList ignores double entry', () => {
   let event = new Event({ id: 1 })
 

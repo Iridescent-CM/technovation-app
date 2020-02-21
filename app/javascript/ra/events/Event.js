@@ -23,11 +23,7 @@ export default function (event) {
 
   this.capacity = event.capacity || null;
 
-  if (event.officiality_finalized) {
-    this.officiality = event.official ? "official" : "unofficial";
-  } else {
-    this.officiality = "pending";
-  }
+  this.officiality = event.officiality
 
   this.errors = event.errors || {};
 

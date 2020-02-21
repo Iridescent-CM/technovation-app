@@ -1,24 +1,28 @@
 require "rails_helper"
 
 RSpec.describe RegionalPitchEvent do
-  describe ".officiality_finalized?" do
+  describe ".officiality" do
     let(:finalization_date) { ImportantDates.rpe_officiality_finalized }
+    let(:official_rpe) { FactoryBot.create(:rpe, unofficial: false) }
+    let(:unofficial_rpe) { FactoryBot.create(:rpe, unofficial: true) }
 
-    it "returns false before or on finalization date" do
+    it "is pending before or on finalization date" do
       [
         finalization_date - 1.day,
         finalization_date,
         finalization_date + 23.hours,
       ].each do |date|
         Timecop.freeze(date) do
-          expect(RegionalPitchEvent.officiality_finalized?).to be false
+          expect(official_rpe.officiality).to be :pending
+          expect(unofficial_rpe.officiality).to be :pending
         end
       end
     end
 
-    it "returns true after finalization date" do
+    it "is appropriate status after finalization date" do
       Timecop.freeze(finalization_date + 1.day) do
-        expect(RegionalPitchEvent.officiality_finalized?).to be true
+        expect(official_rpe.officiality).to be :official
+        expect(unofficial_rpe.officiality).to be :unofficial
       end
     end
   end
@@ -28,8 +32,7 @@ RSpec.describe RegionalPitchEvent do
     let(:json) { rpe.to_list_json }
 
     it "includes attributes" do
-      expect(json[:official]).to eq(rpe.official?)
-      expect(json[:officiality_finalized]).to eq(RegionalPitchEvent.officiality_finalized?)
+      expect(json[:officiality]).to eq(rpe.officiality)
     end
   end
 
