@@ -41,6 +41,8 @@ module ProfileController
       else
         render "passwords/edit"
       end
+    elsif profile.errors["account.email"].any?
+      render 'email_addresses/edit'
     elsif profile.errors["account.city"].any? or
             profile.errors["account.state_province"].any? or
               profile.errors["account.country"].any?
