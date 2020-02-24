@@ -104,6 +104,14 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   end
 
+  def officiality
+    if Time.zone.today > ImportantDates.rpe_officiality_finalized
+      official? ? :official : :unofficial
+    else
+      :pending
+    end
+  end
+
   def official?
     not unofficial?
   end
@@ -136,6 +144,7 @@ class RegionalPitchEvent < ActiveRecord::Base
       ends_at: ends_at,
       event_link: event_link,
       capacity: capacity,
+      officiality: officiality,
       errors: {},
     }
   end

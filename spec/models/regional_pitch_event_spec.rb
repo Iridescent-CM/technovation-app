@@ -1,6 +1,41 @@
 require "rails_helper"
 
 RSpec.describe RegionalPitchEvent do
+  describe ".officiality" do
+    let(:finalization_date) { ImportantDates.rpe_officiality_finalized }
+    let(:official_rpe) { FactoryBot.create(:rpe, unofficial: false) }
+    let(:unofficial_rpe) { FactoryBot.create(:rpe, unofficial: true) }
+
+    it "is pending before or on finalization date" do
+      [
+        finalization_date - 1.day,
+        finalization_date,
+        finalization_date + 23.hours,
+      ].each do |date|
+        Timecop.freeze(date) do
+          expect(official_rpe.officiality).to be :pending
+          expect(unofficial_rpe.officiality).to be :pending
+        end
+      end
+    end
+
+    it "is appropriate status after finalization date" do
+      Timecop.freeze(finalization_date + 1.day) do
+        expect(official_rpe.officiality).to be :official
+        expect(unofficial_rpe.officiality).to be :unofficial
+      end
+    end
+  end
+
+  describe "#to_list_json" do
+    let(:rpe) { FactoryBot.create(:rpe) }
+    let(:json) { rpe.to_list_json }
+
+    it "includes attributes" do
+      expect(json[:officiality]).to eq(rpe.officiality)
+    end
+  end
+
   describe "regioning" do
     it "works with primary region searches" do
       ra = FactoryBot.create(:ambassador, :chicago)

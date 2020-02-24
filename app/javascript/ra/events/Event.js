@@ -23,6 +23,8 @@ export default function (event) {
 
   this.capacity = event.capacity || null;
 
+  this.officiality = event.officiality
+
   this.errors = event.errors || {};
 
   this.url = event.url;

@@ -35,6 +35,11 @@
             {{ `${event.time} (${event.tz})` }}
           </div>
 
+          <div class="grid__col-auto">
+            <small>Status</small>
+            {{ event.officiality }}
+          </div>
+
           <div class="grid__col-auto text-align--right">
             <small>Team Capacity</small>
             {{ teamCapacityText(event) }}
