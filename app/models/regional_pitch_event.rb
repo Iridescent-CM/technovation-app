@@ -105,7 +105,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def officiality
-    if Time.zone.today > ImportantDates.rpe_officiality_finalized
+    if Time.zone.now >= ImportantDates.rpe_officiality_finalized
       official? ? :official : :unofficial
     else
       :pending

@@ -6,11 +6,10 @@ RSpec.describe RegionalPitchEvent do
     let(:official_rpe) { FactoryBot.create(:rpe, unofficial: false) }
     let(:unofficial_rpe) { FactoryBot.create(:rpe, unofficial: true) }
 
-    it "is pending before or on finalization date" do
+    it "is pending before finalization date" do
       [
         finalization_date - 1.day,
-        finalization_date,
-        finalization_date + 23.hours,
+        finalization_date - 1.minute,
       ].each do |date|
         Timecop.freeze(date) do
           expect(official_rpe.officiality).to be :pending
@@ -19,10 +18,24 @@ RSpec.describe RegionalPitchEvent do
       end
     end
 
-    it "is appropriate status after finalization date" do
-      Timecop.freeze(finalization_date + 1.day) do
-        expect(official_rpe.officiality).to be :official
-        expect(unofficial_rpe.officiality).to be :unofficial
+    it "is appropriate status on or after finalization date" do
+      [
+        finalization_date,
+        finalization_date + 1.day,
+      ].each do |date|
+        Timecop.freeze(date) do
+          expect(official_rpe.officiality).to be :official
+          expect(unofficial_rpe.officiality).to be :unofficial
+        end
+      end
+    end
+
+    it "is independent of timezone" do
+      Timecop.freeze(finalization_date) do
+        west = Time.use_zone('Alaska') { official_rpe.officiality }
+        east = Time.use_zone('Tokyo') { official_rpe.officiality }
+
+        expect(west).to eq(east)
       end
     end
   end
