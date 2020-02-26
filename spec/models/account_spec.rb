@@ -2,6 +2,36 @@ require "rails_helper"
 require "./lib/fill_pdfs"
 
 RSpec.describe Account do
+  context "validations" do
+    describe "student email address validations" do
+      let!(:student_account) { FactoryBot.build_stubbed(:account, email: student_email_address) }
+      let!(:student_profile) { FactoryBot.build_stubbed(:student_profile,
+        account: student_account,
+        parent_guardian_email: parent_guardian_email_address
+      ) }
+
+      context "when the student's email address matches the parent/guardian's email address" do
+        let(:student_email_address) { "rose@example.com" }
+        let(:parent_guardian_email_address) { "rose@example.com" }
+
+        it "is not valid and adds an error to the email attribute" do
+          expect(student_account).not_to be_valid
+          expect(student_account.errors[:email]).to include "cannot be the same as parent/guardian email address"
+        end
+      end
+
+      context "when the student's email address is different than the parent/guardian's email address" do
+        let(:student_email_address) { "crocus@example.com" }
+        let(:parent_guardian_email_address) { "iris@example.com" }
+
+        it "is valid and does not add an error to the email attribute" do
+          expect(student_account).to be_valid
+          expect(student_account.errors[:email]).to be_blank
+        end
+      end
+    end
+  end
+
   it "formats the country as a short code before validating" do
     account = Account.new(country: "United States")
     account.valid?
