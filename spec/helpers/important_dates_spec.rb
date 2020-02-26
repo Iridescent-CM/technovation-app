@@ -2,9 +2,9 @@ require "rails_helper"
 
 RSpec.describe ImportantDates do
   describe ".rpe_officiality_finalized" do
-    it "is 12:01 am of the configured date" do
-      expect(ImportantDates.rpe_officiality_finalized.hour).to eq(0)
-      expect(ImportantDates.rpe_officiality_finalized.min).to eq(1)
+    it "is 11:59 pm of the configured date" do
+      expect(ImportantDates.rpe_officiality_finalized.hour).to eq(23)
+      expect(ImportantDates.rpe_officiality_finalized.min).to eq(59)
     end
 
     it "is the application configured time zone regardless of user time zone" do
