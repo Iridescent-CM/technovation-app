@@ -24,7 +24,7 @@ module ImportantDates
     year = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_YEAR"))
     month = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_MONTH"))
     day = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_DAY"))
-    Time.zone.local(year, month, day)
+    Time.find_zone(Rails.configuration.time_zone).local(year, month, day, 23, 59)
   end
 
   def self.submission_deadline

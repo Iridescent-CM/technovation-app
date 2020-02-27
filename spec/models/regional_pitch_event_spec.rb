@@ -2,27 +2,48 @@ require "rails_helper"
 
 RSpec.describe RegionalPitchEvent do
   describe ".officiality" do
-    let(:finalization_date) { ImportantDates.rpe_officiality_finalized }
+    let(:finalization_point) { ImportantDates.rpe_officiality_finalized }
     let(:official_rpe) { FactoryBot.create(:rpe, unofficial: false) }
     let(:unofficial_rpe) { FactoryBot.create(:rpe, unofficial: true) }
 
-    it "is pending before or on finalization date" do
+    it "is pending before finalization point" do
       [
-        finalization_date - 1.day,
-        finalization_date,
-        finalization_date + 23.hours,
-      ].each do |date|
-        Timecop.freeze(date) do
+        finalization_point - 1.day,
+        finalization_point - 1.minute,
+      ].each do |point|
+        Timecop.freeze(point) do
           expect(official_rpe.officiality).to be :pending
           expect(unofficial_rpe.officiality).to be :pending
         end
       end
     end
 
-    it "is appropriate status after finalization date" do
-      Timecop.freeze(finalization_date + 1.day) do
-        expect(official_rpe.officiality).to be :official
-        expect(unofficial_rpe.officiality).to be :unofficial
+    it "is appropriate status on or after finalization point" do
+      [
+        finalization_point,
+        finalization_point + 1.minute,
+        finalization_point + 1.day,
+      ].each do |point|
+        Timecop.freeze(point) do
+          expect(official_rpe.officiality).to be :official
+          expect(unofficial_rpe.officiality).to be :unofficial
+        end
+      end
+    end
+
+    it "is independent of user time zone" do
+      Timecop.freeze(finalization_point) do
+        west_zone = Time.find_zone('International Date Line West')
+        app_zone = Time.zone
+        east_zone = Time.find_zone('Samoa')
+
+        expect(west_zone).to be < app_zone
+        expect(app_zone).to be < east_zone
+
+        west = Time.use_zone('International Date Line West') { official_rpe.officiality }
+        east = Time.use_zone('Samoa') { official_rpe.officiality }
+
+        expect(west).to eq(east)
       end
     end
   end
