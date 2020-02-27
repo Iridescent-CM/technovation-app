@@ -21,6 +21,8 @@ en:
       models:
         account:
           attributes:
+            email:
+              matches_parent_guardian_email: "cannot be the same as parent/guardian email address"
             existing_password:
               blank: "is required to change your email address or password"
               invalid: "is incorrect"

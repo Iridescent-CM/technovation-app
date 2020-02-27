@@ -34,6 +34,8 @@ module ProfileController
             success: t('controllers.accounts.update.success')
         }
       end
+    elsif profile.errors["parent_guardian_email"].any?
+      render "student/parental_consent_notices/new"
     elsif profile.errors["account.password"].any? or
       profile.errors["account.existing_password"].any?
       if profile.account.email_changed?
@@ -41,6 +43,8 @@ module ProfileController
       else
         render "passwords/edit"
       end
+    elsif profile.errors["account.email"].any?
+      render 'email_addresses/edit'
     elsif profile.errors["account.city"].any? or
             profile.errors["account.state_province"].any? or
               profile.errors["account.country"].any?

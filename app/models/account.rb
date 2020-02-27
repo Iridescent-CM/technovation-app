@@ -16,6 +16,8 @@ class Account < ActiveRecord::Base
 
   acts_as_paranoid
 
+  include ActiveModel::Validations
+
   include Seasoned
 
   include Regioned
@@ -548,6 +550,8 @@ class Account < ActiveRecord::Base
       email.gsub(".", "")
     ])
   }
+
+  validates_with StudentEmailValidator
 
   def self.find_with_token(token)
     find_by(auth_token: token) || ::NullAuth.new
