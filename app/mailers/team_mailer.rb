@@ -63,7 +63,7 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
-        subject: "#{@team.name} has joined the regional pitch event: #{@event.name}"
+        subject: "#{@team.name} has joined a Technovation Girls event: #{@event.name}"
     end
   end
 
