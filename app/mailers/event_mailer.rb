@@ -45,7 +45,7 @@ class EventMailer < ApplicationMailer
       invite_klass_name
     ) ?
       "You are invited to judge a Technovation Girls event" :
-      "Your team is invited to compete in a Technovation Girls event"
+      "Your team is invited to attend a Technovation Girls event"
 
     I18n.with_locale(@invite.locale) do
       mail to: @invite.email,
