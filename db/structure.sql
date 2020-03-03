@@ -1044,7 +1044,7 @@ CREATE TABLE public.regional_pitch_events (
     venue_address character varying,
     event_link character varying,
     name character varying,
-    unofficial boolean DEFAULT false,
+    unofficial boolean DEFAULT true,
     seasons text[] DEFAULT '{}'::text[],
     teams_count integer DEFAULT 0,
     capacity integer
@@ -3058,6 +3058,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191120151220'),
 ('20191120151819'),
 ('20191220170611'),
-('20200115211026');
+('20200115211026'),
+('20200303221521');
 
 
