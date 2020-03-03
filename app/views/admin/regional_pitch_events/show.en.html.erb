@@ -95,6 +95,25 @@
           </dl>
         </div>
       </div>
+
+      <hr />
+
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <dl>
+            <dt>Created at</dt>
+
+            <dd>
+              <%= @event.created_at.strftime("%Y-%m-%d %H:%M %Z") %>
+            </dd>
+
+            <dt>Updated at</dt>
+
+            <dd>
+              <%= @event.updated_at.strftime("%Y-%m-%d %H:%M %Z") %>
+            </dd>
+        </div>
+      </div>
     </div>
 
     <p>

@@ -49,6 +49,14 @@ class EventsGrid
     link_to "view", admin_event_path(event)
   end
 
+  column :created_at do
+    created_at.strftime("%Y-%m-%d %H:%M %Z")
+  end
+
+  column :updated_at, header: "Last updated at" do
+    updated_at.strftime("%Y-%m-%d %H:%M %Z")
+  end
+
   filter :ambassador_name do |value|
     names = value.split(" ")
     first_name = names.first
