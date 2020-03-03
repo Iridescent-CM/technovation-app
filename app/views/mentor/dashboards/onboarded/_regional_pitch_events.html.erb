@@ -5,7 +5,9 @@
   pitch to a live panel of judges!
 </p>
 
-<div class="step-actions">
+<%= render 'regional_pitch_events/dashboard_disclaimer' %>
+
+<div class="step-actions margin--t-large">
   <%= link_to 'Select Events',
     mentor_regional_pitch_events_team_list_path,
     class: "button" %>
