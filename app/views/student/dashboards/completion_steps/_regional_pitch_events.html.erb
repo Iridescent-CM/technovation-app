@@ -12,7 +12,9 @@
     your submisison to a live panel of judges!
   </p>
 
-  <div class="step-actions">
+  <%= render 'regional_pitch_events/dashboard_disclaimer' %>
+
+  <div class="step-actions margin--t-large">
     <%= link_to 'Select an Event',
         student_regional_pitch_events_path,
         class: "button" %>
@@ -25,7 +27,9 @@
     different event please contact your regional ambassador.
   </p>
 
-  <div class="step-actions">
+  <%= render 'regional_pitch_events/dashboard_disclaimer' %>
+
+  <div class="step-actions margin--t-large">
     <%= link_to 'View full details',
       [current_scope, current_team.selected_regional_pitch_event],
       class: "button" %>
