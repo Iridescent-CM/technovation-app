@@ -44,8 +44,8 @@ class EventMailer < ApplicationMailer
     subject = %w(Account JudgeProfile UserInvitation).include?(
       invite_klass_name
     ) ?
-      "You are invited to judge a Technovation event" :
-      "Your team is invited to compete in a Technovation event"
+      "You are invited to judge a Technovation Girls event" :
+      "Your team is invited to attend a Technovation Girls event"
 
     I18n.with_locale(@invite.locale) do
       mail to: @invite.email,
