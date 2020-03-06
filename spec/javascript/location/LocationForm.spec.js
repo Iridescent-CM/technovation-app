@@ -105,8 +105,10 @@ describe('location/components/LocationForm', () => {
       expect(suggestions.length).toEqual(3)
     })
 
-    it('is not visible if there are no suggestions present', () => {
+    it('is not visible if there are no suggestions present', async () => {
       wrapper.setData({ suggestions: [] })
+
+      await wrapper.vm.$nextTick()
 
       const suggestionsTable = wrapper.find({ ref: 'suggestionsTable' })
 
@@ -209,8 +211,10 @@ describe('location/components/LocationForm', () => {
       expect(savedLocationText).toContain('United States')
     })
 
-    it('is not visible if there is no saved location', () => {
+    it('is not visible if there is no saved location', async () => {
       wrapper.setData({ savedLocation: null })
+
+      await wrapper.vm.$nextTick()
 
       const savedLocationTable = wrapper.find({ ref: 'savedLocationTable' })
 

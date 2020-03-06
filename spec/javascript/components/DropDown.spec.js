@@ -1,4 +1,4 @@
-import { TransitionStub, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 
 import DropDown from 'components/DropDown'
 import Icon from 'components/Icon'
@@ -25,9 +25,6 @@ describe('DropDown Vue component', () => {
             </ul>
           </div>
         `,
-      },
-      stubs: {
-        transition: TransitionStub,
       },
     })
   })
@@ -128,7 +125,7 @@ describe('DropDown Vue component', () => {
       expect(wrapper.classes('drop-down')).toBe(true)
     })
 
-    it('contains a link that toggles the drop down open and closed', (done) => {
+    it('contains a link that toggles the drop down open and closed', async () => {
       const toggleCollapseSpy = spyOn(wrapper.vm, 'toggleCollapse')
         .and.callThrough()
       const toggleLink = wrapper.find('a')
@@ -141,27 +138,25 @@ describe('DropDown Vue component', () => {
       expect(toggleCollapseSpy).not.toHaveBeenCalled()
 
       toggleLink.element.click()
+      await wrapper.vm.$nextTick()
 
-      wrapper.vm.$nextTick(() => {
-        expect(dropDownContent.isVisible()).toBe(true)
-        expect(toggleCollapseSpy).toHaveBeenCalledTimes(1)
+      expect(dropDownContent.isVisible()).toBe(true)
+      expect(toggleCollapseSpy).toHaveBeenCalledTimes(1)
 
-        toggleLink.element.click()
+      toggleLink.element.click()
+      await wrapper.vm.$nextTick()
 
-        wrapper.vm.$nextTick(() => {
-          expect(dropDownContent.isVisible()).toBe(false)
-          expect(toggleCollapseSpy).toHaveBeenCalledTimes(2)
-          done()
-        })
-      })
+      expect(dropDownContent.isVisible()).toBe(false)
+      expect(toggleCollapseSpy).toHaveBeenCalledTimes(2)
     })
 
-    it('contains a caret icon which changes based on expanded/collpased state', () => {
+    it('contains a caret icon which changes based on expanded/collpased state', async () => {
       const caretIcon = wrapper.find(Icon)
 
       expect(caretIcon.exists()).toBe(true)
 
       wrapper.setData({ expanded: true })
+      await wrapper.vm.$nextTick()
 
       expect(caretIcon.props('title')).toEqual('Collapse')
       expect(caretIcon.props('name')).toEqual('caret-up')
@@ -169,6 +164,7 @@ describe('DropDown Vue component', () => {
       expect(caretIcon.props('size')).toEqual(12)
 
       wrapper.setData({ expanded: false })
+      await wrapper.vm.$nextTick()
 
       expect(caretIcon.props('title')).toEqual('Expand')
       expect(caretIcon.props('name')).toEqual('caret-down')
@@ -176,7 +172,7 @@ describe('DropDown Vue component', () => {
       expect(caretIcon.props('size')).toEqual(12)
     })
 
-    it('uses the v-click-outside directive to collapse the drop down', (done) => {
+    it('uses the v-click-outside directive to collapse the drop down', async () => {
       const dropDownContent = wrapper.find('.drop-down__content')
 
       const divNode = document.createElement('div')
@@ -185,19 +181,17 @@ describe('DropDown Vue component', () => {
       document.body.appendChild(divNode)
 
       wrapper.setData({ expanded: true })
+      await wrapper.vm.$nextTick()
 
       expect(dropDownContent.exists()).toBe(true)
       expect(dropDownContent.isVisible()).toBe(true)
 
       divNode.click()
+      await wrapper.vm.$nextTick()
 
-      wrapper.vm.$nextTick(() => {
-        expect(dropDownContent.isVisible()).toBe(false)
+      expect(dropDownContent.isVisible()).toBe(false)
 
-        divNode.remove()
-
-        done()
-      })
+      divNode.remove()
     })
   })
 })

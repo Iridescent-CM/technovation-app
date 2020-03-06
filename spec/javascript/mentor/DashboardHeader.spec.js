@@ -43,10 +43,12 @@ describe("mentor/DashboardHeader.vue", () => {
     expect(dropDown.vm.label).toEqual("More Information")
   })
 
-  it("displays the currentAccount's name", () => {
+  it("displays the currentAccount's name", async () => {
     defaultWrapper.vm.$store.commit('authenticated/htmlDataset', {
       currentAccount: '{"data":{"attributes":{"name":"Saul Goodman"}}}'
     })
+
+    await defaultWrapper.vm.$nextTick()
 
     expect(defaultWrapper.find(
       '.dashboard-notices .grid__col-sm-6:nth-child(2)'
@@ -54,7 +56,7 @@ describe("mentor/DashboardHeader.vue", () => {
   })
 
   describe("when the RA has not provided an intro", () => {
-    it("displays the default left header", () => {
+    it("displays the default left header", async () => {
       defaultWrapper.setProps({
         defaultTitle: "Mentor Dashboard",
         resourceLinks: [
@@ -65,6 +67,8 @@ describe("mentor/DashboardHeader.vue", () => {
           }
         ]
       })
+
+      await defaultWrapper.vm.$nextTick()
 
       expect(defaultWrapper.find(
         '.dashboard-notices .grid__col-sm-6:first-child'
