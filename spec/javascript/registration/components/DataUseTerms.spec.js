@@ -58,8 +58,10 @@ describe("Registration::Components::DataUseTerms.vue", () => {
     });
 
     describe('submitButtonText', () => {
-      it('sets the text on the "Next" button accoring to the prop value', () => {
+      it('sets the text on the "Next" button according to the prop value', async () => {
         defaultWrapper.setProps({ submitButtonText: 'Submit' });
+
+        await defaultWrapper.vm.$nextTick()
 
         const submitButtonText = defaultWrapper
           .find({ ref: 'dataUseTermsSubmitButton' }).text();

@@ -59,19 +59,16 @@ describe('Question comments section', () => {
     })
   })
 
-  test('saves comments after changes', (done) => {
+  test('saves comments after changes', async() => {
     const storeCommitSpy = jest.spyOn(wrapper.vm.$store, 'commit')
 
     wrapper.vm.comment.text = 'hello'
+    await wrapper.vm.$nextTick()
 
-    wrapper.vm.$nextTick(() => {
-      wrapper.vm.handleCommentChange()
+    wrapper.vm.handleCommentChange()
+    await wrapper.vm.$nextTick()
 
-      setImmediate(() => {
-        expect(storeCommitSpy).toHaveBeenLastCalledWith('saveComment', 'ideation')
-        done()
-      })
-    })
+    expect(storeCommitSpy).toHaveBeenLastCalledWith('saveComment', 'ideation')
   })
 
   test('debouncedCommentWatcher calls handleCommentChange', () => {
@@ -98,21 +95,16 @@ describe('Question comments section', () => {
     expect(handleCommentChangeSpy).toHaveBeenCalled()
   })
 
-  test('it resets the word count when the text is deleted', (done) => {
-    wrapper.vm.$nextTick(() => {
-      wrapper.vm.comment.text = 'hello beautiful world'
+  test('it resets the word count when the text is deleted', async() => {
+    wrapper.vm.comment.text = 'hello beautiful world'
+    await wrapper.vm.$nextTick()
 
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.comment.word_count).toEqual(3)
+    expect(wrapper.vm.comment.word_count).toEqual(3)
 
-        wrapper.vm.comment.text = ''
+    wrapper.vm.comment.text = ''
+    await wrapper.vm.$nextTick()
 
-        wrapper.vm.$nextTick(() => {
-          expect(wrapper.vm.comment.word_count).toEqual(0)
-          done()
-        })
-      })
-    })
+    expect(wrapper.vm.comment.word_count).toEqual(0)
   })
 
   test('textarea should update comment text in store on change', (done) => {

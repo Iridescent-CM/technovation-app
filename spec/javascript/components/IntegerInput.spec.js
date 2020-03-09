@@ -44,20 +44,24 @@ describe('IntegerInput Vue component', () => {
     });
   });
 
-  it('sets numericValue based on the value prop passed in', () => {
+  it('sets numericValue based on the value prop passed in', async () => {
     const valueProps = [ 33, 99, 2808 ];
 
-    valueProps.forEach((value) => {
+    valueProps.forEach(async (value) => {
       wrapper.setProps({ value });
+
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.numericValue).toEqual(value);
     });
   });
 
-  it('sets the input name according to the input-name prop', () => {
+  it('sets the input name according to the input-name prop', async () => {
     const inputName = 'this-is-a-test-input';
 
     wrapper.setProps({ inputName });
+
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.find('input').attributes().name).toEqual(inputName);
   })
@@ -141,7 +145,7 @@ describe('IntegerInput Vue component', () => {
         expect(wrapper.vm.numericValue).toEqual(expectedValue);
       });
 
-      it('does not change numericValue if value passed is not a number', () => {
+      it('does not change numericValue if value passed is not a number', async () => {
         const minimum = 0;
         const maximum = 99;
         const expectedValue = 34;
@@ -151,6 +155,8 @@ describe('IntegerInput Vue component', () => {
           maximum,
           value: expectedValue,
         });
+
+        await wrapper.vm.$nextTick()
 
         wrapper.vm.recalculateValue('test');
 

@@ -178,16 +178,20 @@ describe('Admin Dashboard - StudentsSection component', () => {
       expect(returningChart.find(PieChart).exists()).toBe(true)
     })
 
-    it('hides the students count label if the students total is not found', () => {
+    it('hides the students count label if the students total is not found', async () => {
       wrapper.vm.totals = {}
+
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.find('h3 span').exists()).toBe(false)
     })
 
-    it('hides the students count label if the hideTotal prop is true', () => {
+    it('hides the students count label if the hideTotal prop is true', async () => {
       wrapper.setProps({
         hideTotal: true,
       })
+
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.find('h3 span').exists()).toBe(false)
     })

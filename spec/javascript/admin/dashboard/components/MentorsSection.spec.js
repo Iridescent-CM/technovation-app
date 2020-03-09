@@ -178,16 +178,20 @@ describe('Admin Dashboard - MentorSection component', () => {
       expect(returningChart.find(PieChart).exists()).toBe(true)
     })
 
-    it('hides the mentors count label if the mentors total is not found', () => {
+    it('hides the mentors count label if the mentors total is not found', async () => {
       wrapper.vm.totals = {}
+
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.find('h3 span').exists()).toBe(false)
     })
 
-    it('hides the mentors count label if the hideTotal prop is true', () => {
+    it('hides the mentors count label if the hideTotal prop is true', async () => {
       wrapper.setProps({
         hideTotal: true,
       })
+
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.find('h3 span').exists()).toBe(false)
     })

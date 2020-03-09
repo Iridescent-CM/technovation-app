@@ -53,9 +53,11 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('student signup field', () => {
 
-        it('displays "yes" if enabled', () => {
+        it('displays "yes" if enabled', async () => {
           wrapper.vm.$store.state.student_signup = 1
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'signupFieldStudents' })
             .find('.on').exists()
@@ -66,9 +68,11 @@ describe('Admin Content & Settings - Review component', () => {
           expect(no).toBe(false)
         })
 
-        it('displays "no" if not enabled', () => {
+        it('displays "no" if not enabled', async () => {
           wrapper.vm.$store.state.student_signup = 0
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'signupFieldStudents' })
             .find('.on').exists()
@@ -83,9 +87,11 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('mentor signup field', () => {
 
-        it('displays "yes" if enabled', () => {
+        it('displays "yes" if enabled', async () => {
           wrapper.vm.$store.state.mentor_signup = 1
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'signupFieldMentors' })
             .find('.on').exists()
@@ -96,9 +102,11 @@ describe('Admin Content & Settings - Review component', () => {
           expect(no).toBe(false)
         })
 
-        it('displays "no" if not enabled', () => {
+        it('displays "no" if not enabled', async () => {
           wrapper.vm.$store.state.mentor_signup = 0
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'signupFieldMentors' })
             .find('.on').exists()
@@ -117,8 +125,10 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('students field', () => {
 
-        it('displays a notice if no input available', () => {
+        it('displays a notice if no input available', async () => {
           wrapper.vm.$store.state.student_dashboard_text = ''
+
+          await wrapper.vm.$nextTick()
 
           const notice = wrapper.find({ ref: 'noticeFieldHintStudents' })
           const input = wrapper.find({ ref: 'noticeFieldLabelStudents' })
@@ -127,23 +137,27 @@ describe('Admin Content & Settings - Review component', () => {
           expect(input.exists()).toBe(false)
         })
 
-        it('displays the input if available', () => {
+        it('displays the input if available', async () => {
           wrapper.vm.$store.state
             .student_dashboard_text = 'Hello world, this is a test.'
 
-            const notice = wrapper.find({ ref: 'noticeFieldHintStudents' })
-            const input = wrapper.find({ ref: 'noticeFieldLabelStudents' })
+          await wrapper.vm.$nextTick()
 
-            expect(notice.exists()).toBe(false)
-            expect(input.text()).toBe('Hello world, this is a test.')
+          const notice = wrapper.find({ ref: 'noticeFieldHintStudents' })
+          const input = wrapper.find({ ref: 'noticeFieldLabelStudents' })
+
+          expect(notice.exists()).toBe(false)
+          expect(input.text()).toBe('Hello world, this is a test.')
         })
 
       })
 
       describe('mentors field', () => {
 
-        it('displays a notice if no input available', () => {
+        it('displays a notice if no input available', async () => {
           wrapper.vm.$store.state.mentor_dashboard_text = ''
+
+          await wrapper.vm.$nextTick()
 
           const notice = wrapper.find({ ref: 'noticeFieldHintMentors' })
           const input = wrapper.find({ ref: 'noticeFieldLabelMentors' })
@@ -152,23 +166,27 @@ describe('Admin Content & Settings - Review component', () => {
           expect(input.exists()).toBe(false)
         })
 
-        it('displays the input if available', () => {
+        it('displays the input if available', async () => {
           wrapper.vm.$store.state
             .mentor_dashboard_text = 'Hello world, this is a test.'
 
-            const notice = wrapper.find({ ref: 'noticeFieldHintMentors' })
-            const input = wrapper.find({ ref: 'noticeFieldLabelMentors' })
+          await wrapper.vm.$nextTick()
 
-            expect(notice.exists()).toBe(false)
-            expect(input.text()).toBe('Hello world, this is a test.')
+          const notice = wrapper.find({ ref: 'noticeFieldHintMentors' })
+          const input = wrapper.find({ ref: 'noticeFieldLabelMentors' })
+
+          expect(notice.exists()).toBe(false)
+          expect(input.text()).toBe('Hello world, this is a test.')
         })
 
       })
 
       describe('judges field', () => {
 
-        it('displays a notice if no input available', () => {
+        it('displays a notice if no input available', async () => {
           wrapper.vm.$store.state.judge_dashboard_text = ''
+
+          await wrapper.vm.$nextTick()
 
           const notice = wrapper.find({ ref: 'noticeFieldHintJudges' })
           const input = wrapper.find({ ref: 'noticeFieldLabelJudges' })
@@ -177,23 +195,27 @@ describe('Admin Content & Settings - Review component', () => {
           expect(input.exists()).toBe(false)
         })
 
-        it('displays the input if available', () => {
+        it('displays the input if available', async () => {
           wrapper.vm.$store.state
             .judge_dashboard_text = 'Hello world, this is a test.'
 
-            const notice = wrapper.find({ ref: 'noticeFieldHintJudges' })
-            const input = wrapper.find({ ref: 'noticeFieldLabelJudges' })
+          await wrapper.vm.$nextTick()
 
-            expect(notice.exists()).toBe(false)
-            expect(input.text()).toBe('Hello world, this is a test.')
+          const notice = wrapper.find({ ref: 'noticeFieldHintJudges' })
+          const input = wrapper.find({ ref: 'noticeFieldLabelJudges' })
+
+          expect(notice.exists()).toBe(false)
+          expect(input.text()).toBe('Hello world, this is a test.')
         })
 
       })
 
       describe('RA field', () => {
 
-        it('displays a notice if no input available', () => {
+        it('displays a notice if no input available', async () => {
           wrapper.vm.$store.state.regional_ambassador_dashboard_text = ''
+
+          await wrapper.vm.$nextTick()
 
           const notice = wrapper
             .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
@@ -204,17 +226,19 @@ describe('Admin Content & Settings - Review component', () => {
           expect(input.exists()).toBe(false)
         })
 
-        it('displays the input if available', () => {
+        it('displays the input if available', async () => {
           wrapper.vm.$store.state
             .regional_ambassador_dashboard_text = 'Hello world, this is a test.'
 
-            const notice = wrapper
-              .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
-            const input = wrapper
-              .find({ ref: 'noticeFieldLabelRegionalAmbassadors' })
+          await wrapper.vm.$nextTick()
 
-            expect(notice.exists()).toBe(false)
-            expect(input.text()).toBe('Hello world, this is a test.')
+          const notice = wrapper
+            .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
+          const input = wrapper
+            .find({ ref: 'noticeFieldLabelRegionalAmbassadors' })
+
+          expect(notice.exists()).toBe(false)
+          expect(input.text()).toBe('Hello world, this is a test.')
         })
 
       })
@@ -240,8 +264,10 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('students field', () => {
 
-        it('displays a notice if text or URL input is not available', () => {
+        it('displays a notice if text or URL input is not available', async () => {
           wrapper.vm.$store.state.student_survey_link.text = ''
+
+          await wrapper.vm.$nextTick()
 
           let notice = wrapper.find({ ref: 'surveyFieldTextUrlHintStudents' })
           let text = wrapper.find({ ref: 'surveyFieldTextStudents' })
@@ -254,6 +280,8 @@ describe('Admin Content & Settings - Review component', () => {
           wrapper.vm.$store.state.student_survey_link
             .text = 'Student Link'
           wrapper.vm.$store.state.student_survey_link.url = ''
+
+          await wrapper.vm.$nextTick()
 
           notice = wrapper.find({ ref: 'surveyFieldTextUrlHintStudents' })
           text = wrapper.find({ ref: 'surveyFieldTextStudents' })
@@ -274,8 +302,10 @@ describe('Admin Content & Settings - Review component', () => {
           expect(url.exists()).toBe(true)
         })
 
-        it('displays a notice if long description is not available', () => {
+        it('displays a notice if long description is not available', async () => {
           wrapper.vm.$store.state.student_survey_link.long_desc = ''
+
+          await wrapper.vm.$nextTick()
 
           const notice = wrapper.find({ ref: 'surveyFieldDescHintStudents' })
           const description = wrapper.find({ ref: 'surveyFieldDescStudents' })
@@ -296,8 +326,10 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('mentors field', () => {
 
-        it('displays a notice if text or URL input is not available', () => {
+        it('displays a notice if text or URL input is not available', async () => {
           wrapper.vm.$store.state.mentor_survey_link.text = ''
+
+          await wrapper.vm.$nextTick()
 
           let notice = wrapper.find({ ref: 'surveyFieldTextUrlHintMentors' })
           let text = wrapper.find({ ref: 'surveyFieldTextMentors' })
@@ -310,6 +342,8 @@ describe('Admin Content & Settings - Review component', () => {
           wrapper.vm.$store.state.mentor_survey_link
             .text = 'Student Link'
           wrapper.vm.$store.state.mentor_survey_link.url = ''
+
+          await wrapper.vm.$nextTick()
 
           notice = wrapper.find({ ref: 'surveyFieldTextUrlHintMentors' })
           text = wrapper.find({ ref: 'surveyFieldTextMentors' })
@@ -330,8 +364,10 @@ describe('Admin Content & Settings - Review component', () => {
           expect(url.exists()).toBe(true)
         })
 
-        it('displays a notice if long description is not available', () => {
+        it('displays a notice if long description is not available', async () => {
           wrapper.vm.$store.state.mentor_survey_link.long_desc = ''
+
+          await wrapper.vm.$nextTick()
 
           const notice = wrapper.find({ ref: 'surveyFieldDescHintMentors' })
           const description = wrapper.find({ ref: 'surveyFieldDescMentors' })
@@ -356,9 +392,11 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('team building enabled field', () => {
 
-        it('displays "yes" if enabled', () => {
+        it('displays "yes" if enabled', async () => {
           wrapper.vm.$store.state.team_building_enabled = 1
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'teamBuildingEnabledField' })
             .find('.on').exists()
@@ -369,9 +407,11 @@ describe('Admin Content & Settings - Review component', () => {
           expect(no).toBe(false)
         })
 
-        it('displays "no" if not enabled', () => {
+        it('displays "no" if not enabled', async () => {
           wrapper.vm.$store.state.team_building_enabled = 0
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'teamBuildingEnabledField' })
             .find('.on').exists()
@@ -386,9 +426,11 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('team submissions editable field', () => {
 
-        it('displays "yes" if enabled', () => {
+        it('displays "yes" if enabled', async () => {
           wrapper.vm.$store.state.team_submissions_editable = 1
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'teamSubmissionsEditableField' })
             .find('.on').exists()
@@ -399,9 +441,11 @@ describe('Admin Content & Settings - Review component', () => {
           expect(no).toBe(false)
         })
 
-        it('displays "no" if not enabled', () => {
+        it('displays "no" if not enabled', async () => {
           wrapper.vm.$store.state.team_submissions_editable = 0
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'teamSubmissionsEditableField' })
             .find('.on').exists()
@@ -420,9 +464,11 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('select regional pitch event field', () => {
 
-        it('displays "yes" if enabled', () => {
+        it('displays "yes" if enabled', async () => {
           wrapper.vm.$store.state.select_regional_pitch_event = 1
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'selectRegionalPitchEventField' })
             .find('.on').exists()
@@ -433,9 +479,11 @@ describe('Admin Content & Settings - Review component', () => {
           expect(no).toBe(false)
         })
 
-        it('displays "no" if not enabled', () => {
+        it('displays "no" if not enabled', async () => {
           wrapper.vm.$store.state.select_regional_pitch_event = 0
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'selectRegionalPitchEventField' })
             .find('.on').exists()
@@ -454,8 +502,10 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('judging round field', () => {
 
-        it('displays the selected judging round', () => {
+        it('displays the selected judging round', async () => {
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           let round = wrapper.find({ ref: 'judgingRoundField' }).text()
 
@@ -463,11 +513,15 @@ describe('Admin Content & Settings - Review component', () => {
 
           wrapper.vm.$store.state.judging_round = 'qf'
 
+          await wrapper.vm.$nextTick()
+
           round = wrapper.find({ ref: 'judgingRoundField' }).text()
 
           expect(round).toBe('Quarterfinals')
 
           wrapper.vm.$store.state.judging_round = 'sf'
+
+          await wrapper.vm.$nextTick()
 
           round = wrapper.find({ ref: 'judgingRoundField' }).text()
 
@@ -482,9 +536,11 @@ describe('Admin Content & Settings - Review component', () => {
 
       describe('scores and certificates accessible field', () => {
 
-        it('displays "yes" if enabled', () => {
+        it('displays "yes" if enabled', async () => {
           wrapper.vm.$store.state.display_scores = 1
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'displayScoresField' })
             .find('.on').exists()
@@ -495,9 +551,11 @@ describe('Admin Content & Settings - Review component', () => {
           expect(no).toBe(false)
         })
 
-        it('displays "no" if not enabled', () => {
+        it('displays "no" if not enabled', async () => {
           wrapper.vm.$store.state.display_scores = 0
           wrapper.vm.$store.state.judging_round = 'off'
+
+          await wrapper.vm.$nextTick()
 
           const yes = wrapper.find({ ref: 'displayScoresField' })
             .find('.on').exists()

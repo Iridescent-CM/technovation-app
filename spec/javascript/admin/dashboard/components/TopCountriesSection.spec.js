@@ -119,16 +119,20 @@ describe('Admin Dashboard - TopCountriesSection component', () => {
       expect(wrapper.find(BarChart).exists()).toBe(true)
     })
 
-    it('hides the top countries count label if the top countries total is not found', () => {
+    it('hides the top countries count label if the top countries total is not found', async () => {
       wrapper.vm.totals = {}
+
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.find('h3 span').exists()).toBe(false)
     })
 
-    it('hides the top countries count label if the hideTotal prop is true', () => {
+    it('hides the top countries count label if the hideTotal prop is true', async () => {
       wrapper.setProps({
         hideTotal: true,
       })
+
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.find('h3 span').exists()).toBe(false)
     })
