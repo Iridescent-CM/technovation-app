@@ -5,7 +5,7 @@ RSpec.feature "Judges switch to mentor mode" do
   context "config ON" do
     before do
       allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(true)
+      allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(true)
     end
 
     scenario "judges can switch to mentor profile" do
@@ -27,7 +27,7 @@ RSpec.feature "Judges switch to mentor mode" do
   context "config OFF" do
     before do
       allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(false)
+      allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
     end
 
     scenario "judges do not see mentor mode link" do

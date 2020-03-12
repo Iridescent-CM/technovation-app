@@ -740,7 +740,7 @@ class Account < ActiveRecord::Base
     if is_an_ambassador?
       !!ENV.fetch("ENABLE_RA_SWITCH_TO_JUDGE", false) && is_a_judge?
     elsif is_a_mentor?
-      !!ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false)
+      !!ENV.fetch("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", false)
     else
       false
     end
@@ -750,7 +750,7 @@ class Account < ActiveRecord::Base
     if is_an_ambassador?
       true
     elsif is_a_judge?
-      !!ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false)
+      !!ENV.fetch("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", false)
     else
       false
     end

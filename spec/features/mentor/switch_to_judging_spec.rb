@@ -4,7 +4,7 @@ RSpec.feature "Mentors switch to judging mode" do
   
   before do
     allow(ENV).to receive(:fetch).and_call_original
-    allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(true)
+    allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(true)
   end
 
   scenario "mentors with a judge profile can switch to judge mode" do

@@ -772,7 +772,7 @@ RSpec.describe Account do
     describe "when config is off" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
         allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
@@ -786,7 +786,7 @@ RSpec.describe Account do
     describe "when mentor config is on" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(1)
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(1)
         allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
@@ -800,7 +800,7 @@ RSpec.describe Account do
     describe "when RA config is on" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
         allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(1)
       end
 
@@ -817,7 +817,7 @@ RSpec.describe Account do
     describe "when config is off" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
       end
 
       it "allows RAs" do
@@ -830,7 +830,7 @@ RSpec.describe Account do
     describe "when mentor config is on" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(1)
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(1)
       end
 
       it "allows judges and RAs" do
