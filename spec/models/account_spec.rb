@@ -812,4 +812,32 @@ RSpec.describe Account do
       end
     end
   end
+
+  describe "#can_switch_to_mentor?" do
+    describe "when config is off" do
+      before do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(false)
+      end
+
+      it "allows RAs" do
+        expect(FactoryBot.create(:student).can_switch_to_mentor?).to be false
+        expect(FactoryBot.create(:judge).can_switch_to_mentor?).to be false
+        expect(FactoryBot.create(:regional_ambassador).can_switch_to_mentor?).to be true
+      end
+    end
+
+    describe "when mentor config is on" do
+      before do
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_TO_JUDGE", any_args).and_return(1)
+      end
+
+      it "allows judges and RAs" do
+        expect(FactoryBot.create(:student).can_switch_to_mentor?).to be false
+        expect(FactoryBot.create(:judge).can_switch_to_mentor?).to be true
+        expect(FactoryBot.create(:regional_ambassador).can_switch_to_mentor?).to be true
+      end
+    end
+  end
 end

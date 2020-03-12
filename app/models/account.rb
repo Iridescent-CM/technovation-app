@@ -746,6 +746,16 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def can_switch_to_mentor?
+    if is_an_ambassador?
+      true
+    elsif is_a_judge?
+      !!ENV.fetch("ENABLE_SWITCH_TO_JUDGE", false)
+    else
+      false
+    end
+  end
+
   def email_confirmed!
     update(email_confirmed_at: Time.current)
   end

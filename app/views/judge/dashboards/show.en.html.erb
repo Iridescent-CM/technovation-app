@@ -4,9 +4,11 @@
       <h1 class="page-heading">
         Judge Dashboard
 
-        <small>
-          <%= link_to "Switch to Mentor mode", mentor_dashboard_path %>
-        </small>
+        <% if current_judge.can_switch_to_mentor? %>
+          <small>
+            <%= link_to "Switch to Mentor mode", mentor_dashboard_path %>
+          </small>
+        <% end %>
 
         <% if current_judge.is_an_ambassador? %>
           <small>
