@@ -159,11 +159,11 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def suspend!
-    update(suspended: true)
+    update!(suspended: true)
   end
 
   def unsuspend!
-    update(suspended: false)
+    update!(suspended: false)
   end
 
   def complete_training!
