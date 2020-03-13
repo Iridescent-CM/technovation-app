@@ -428,4 +428,8 @@ class SubmissionScore < ActiveRecord::Base
       block.call
     end
   end
+
+  def pending_approval?
+    complete? && !approved?
+  end
 end

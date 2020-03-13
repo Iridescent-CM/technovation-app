@@ -446,4 +446,52 @@ RSpec.describe SubmissionScore do
       expect(score.event_official_status).to eq("virtual")
     end
   end
+
+  describe "#pending_approval?" do
+    let(:score_submission) {
+      FactoryBot.build_stubbed(:score,
+       completed_at: completed_at,
+       approved_at: approved_at)
+    }
+
+    context "when the score submission is complete" do
+      let(:completed_at) { Time.current }
+
+      context "when the score submission is not approved" do
+        let(:approved_at) { nil }
+
+        it "returns true" do
+          expect(score_submission.pending_approval?).to be true
+        end
+      end
+
+      context "when the score submission is approved" do
+        let(:approved_at) { Time.current }
+
+        it "returns false" do
+          expect(score_submission.pending_approval?).to be false
+        end
+      end
+    end
+
+    context "when the score submission is not complete" do
+      let(:completed_at) { nil }
+
+      context "when the score submission is not approved" do
+        let(:approved_at) { nil }
+
+        it "returns false" do
+          expect(score_submission.pending_approval?).to be false
+        end
+      end
+
+      context "when the score submission is approved" do
+        let(:approved_at) { Time.current }
+
+        it "returns false" do
+          expect(score_submission.pending_approval?).to be false
+        end
+      end
+    end
+  end
 end
