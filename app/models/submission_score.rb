@@ -423,12 +423,6 @@ class SubmissionScore < ActiveRecord::Base
     !detect_if_too_fast_repeat_offense && !detect_if_raw_total_seems_too_low
   end
 
-  def awaiting_review(account, &block)
-    if account.admin? and complete? and not approved?
-      block.call
-    end
-  end
-
   def pending_approval?
     complete? && !approved?
   end

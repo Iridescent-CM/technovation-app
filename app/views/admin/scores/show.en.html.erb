@@ -55,26 +55,7 @@
     <% end %>
   </div>
 
-  <% @score.awaiting_review(current_account) do %>
-    <div class="admin-actions-buttons">
-      <%= button_to "Approve this score",
-        admin_score_approvals_path(id: @score.id),
-        method: "post",
-        class: "button",
-        data: {
-          confirm: "You are about to APPROVE this score",
-          positive: "true",
-        }
-      %>
+  <%= render partial: "admin/scores/score_controls",
+    locals: { score: @score, current_account: current_account } %>
 
-      <%= button_to "Delete this score",
-        admin_score_path(@score),
-        method: "delete",
-        class: "button button--danger",
-        data: {
-          confirm: "You are about to DELETE this score",
-        }
-      %>
-    </div>
-  <% end %>
 </div>
