@@ -9,24 +9,20 @@ class SubmissionScore < ActiveRecord::Base
   SENIOR_LOW_SCORE_THRESHOLD = 19
   JUNIOR_LOW_SCORE_THRESHOLD = 14
 
+  after_commit :update_team_score_summaries
+
   after_commit -> {
-    return false if destroyed?
-
-    team_submission.update_score_summaries
-
     update_columns(
       completed_too_fast: detect_if_completed_too_fast,
       completed_too_fast_repeat_offense: detect_if_too_fast_repeat_offense,
       seems_too_low: detect_if_raw_total_seems_too_low,
       approved_at: can_automatically_approve? ? Time.current : nil,
     )
-  }, if: :complete?
+  }, on: [:create, :update], if: :complete?
 
   after_commit -> {
-    return false if destroyed?
-
     update_column(:official, official?)
-  }
+  }, on: [:create, :update]
 
   before_create -> {
     self.seasons = [Season.current.year]
@@ -425,5 +421,11 @@ class SubmissionScore < ActiveRecord::Base
 
   def pending_approval?
     complete? && !approved?
+  end
+
+  private
+
+  def update_team_score_summaries
+    team_submission.update_score_summaries
   end
 end
