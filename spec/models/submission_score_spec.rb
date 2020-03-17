@@ -244,6 +244,78 @@ RSpec.describe SubmissionScore do
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to be_zero
       end
+
+      describe "deleting a score" do
+        let(:team_submission) { FactoryBot.create(:team_submission) }
+        let(:judge_judy) { FactoryBot.create(:judge_profile) }
+
+        let!(:high_score_submission_from_random_judge) {
+          SubmissionScore.create!(
+            judge_profile_id: FactoryBot.create(:judge_profile).id,
+            team_submission_id: team_submission.id,
+            ideation_1: 10,
+            round: round,
+           completed_at: Time.current)
+        }
+        let!(:low_score_submission_from_random_judge) {
+          SubmissionScore.create!(
+            judge_profile_id: FactoryBot.create(:judge_profile).id,
+            team_submission_id: team_submission.id,
+            ideation_1: 5,
+            round: round,
+            completed_at: Time.current)
+        }
+        let!(:bad_score_submission_from_judge_judy) {
+          SubmissionScore.create!(
+            judge_profile_id: judge_judy.id,
+            team_submission_id: team_submission.id,
+            ideation_1: 20,
+            round: round,
+            completed_at: Time.current)
+        }
+        let!(:another_score_submission_from_judge_judy_for_another_team) {
+          SubmissionScore.create!(
+            judge_profile_id: judge_judy.id,
+            team_submission_id: FactoryBot.create(:team_submission).id,
+            ideation_1: 15,
+            round: round,
+            completed_at: Time.current)
+        }
+
+        context "when judge judy's bad score sumission is deleted" do
+          before do
+            bad_score_submission_from_judge_judy.destroy
+            team_submission.reload
+          end
+
+          it "updates the team's total number of completed scores" do
+            expect(team_submission.
+              public_send("complete_#{judging_round}_submission_scores_count")).to eq(2)
+          end
+
+          it "updates the team's total number of offical completed scores" do
+            expect(team_submission.
+              public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(2)
+          end
+
+          it "recalculates the team's average score" do
+            expect(team_submission.
+              public_send("#{judging_round}_average_score")).to eq(7.5)
+          end
+
+          it "recalculates the team's score range (high score minus the low score)" do
+            expect(team_submission.
+              public_send("#{judging_round}_score_range")).to eq(5)
+          end
+
+          it "updates judy's total number of scored submissions" do
+            judge_judy.reload
+
+            expect(judge_judy.
+              public_send("#{judging_round}_scores_count")).to eq(1)
+          end
+        end
+      end
     end
   end
 
@@ -444,6 +516,54 @@ RSpec.describe SubmissionScore do
       score = FactoryBot.create(:score)
 
       expect(score.event_official_status).to eq("virtual")
+    end
+  end
+
+  describe "#pending_approval?" do
+    let(:score_submission) {
+      FactoryBot.build_stubbed(:score,
+       completed_at: completed_at,
+       approved_at: approved_at)
+    }
+
+    context "when the score submission is complete" do
+      let(:completed_at) { Time.current }
+
+      context "when the score submission is not approved" do
+        let(:approved_at) { nil }
+
+        it "returns true" do
+          expect(score_submission.pending_approval?).to be true
+        end
+      end
+
+      context "when the score submission is approved" do
+        let(:approved_at) { Time.current }
+
+        it "returns false" do
+          expect(score_submission.pending_approval?).to be false
+        end
+      end
+    end
+
+    context "when the score submission is incomplete" do
+      let(:completed_at) { nil }
+
+      context "when the score submission is not approved" do
+        let(:approved_at) { nil }
+
+        it "returns false" do
+          expect(score_submission.pending_approval?).to be false
+        end
+      end
+
+      context "when the score submission is approved" do
+        let(:approved_at) { Time.current }
+
+        it "returns false" do
+          expect(score_submission.pending_approval?).to be false
+        end
+      end
     end
   end
 end
