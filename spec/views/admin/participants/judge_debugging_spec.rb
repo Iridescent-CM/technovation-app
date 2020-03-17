@@ -13,8 +13,13 @@ RSpec.describe "admin/participants/judge_debugging", type: :view do
     )
   }
 
+  let(:current_profiles_account) {
+    FactoryBot.build_stubbed(:account)
+  }
   let(:current_profile) {
-    FactoryBot.create(:judge).judge_profile
+    FactoryBot.build_stubbed(:judge,
+      account: current_profiles_account
+    ).judge_profile
   }
 
   context "as an admin" do
