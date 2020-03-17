@@ -84,7 +84,7 @@
       admin_judge_unsuspend_path(profile),
       class: "button danger",
       data: {
-        method: :put,
+        method: :patch,
         confirm: "You are about to ENABLE this suspended judge"
       }
     ) %>
@@ -94,7 +94,7 @@
       admin_judge_suspend_path(profile),
       class: "button danger",
       data: {
-        method: :put,
+        method: :patch,
         confirm: "You are about to SUSPEND this judge"
       }
     ) %>

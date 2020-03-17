@@ -281,10 +281,8 @@ Rails.application.routes.draw do
     resources :suspicious_scores, only: :index
     resources :score_approvals, only: :create
     resources :judges, only: :index do
-      put 'suspend'
-      patch 'suspend'
-      put 'unsuspend'
-      patch 'unsuspend'
+      patch :suspend
+      patch :unsuspend
     end
     resources :contest_rank_changes, only: :create
 
