@@ -4,6 +4,20 @@ module Admin
 
     use_datagrid with: JudgesGrid
 
+    def suspend
+      judge = JudgeProfile.find(params[:judge_id])
+      judge.suspend!
+      redirect_back fallback_location: admin_participant_path(judge.account),
+        success: "This judge has been suspended."
+    end
+
+    def unsuspend
+      judge = JudgeProfile.find(params[:judge_id])
+      judge.unsuspend!
+      redirect_back fallback_location: admin_participant_path(judge.account),
+        success: "This judge is no longer suspended."
+    end
+
     private
     def grid_params
       params[:judges_grid] ||= {}

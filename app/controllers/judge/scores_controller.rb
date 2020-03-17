@@ -110,8 +110,9 @@ module Judge
         f.json {
           if current_judge.suspended?
             render json: {
-              msg: "Your judge account has been suspended. If you have any questions " +
-                   "about your account, please email support@technovationchallenge.org."
+              msg: 'Your account has been suspended, please visit our ' +
+                   '<a target="_blank" href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360036011914-Rules-for-Judges">FAQs</a> ' +
+                   'to learn more about our monitoring process.'
             }, status: 403
           end
         }

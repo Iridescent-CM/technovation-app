@@ -3,6 +3,12 @@
   margin: 0 0 1rem;
   font-weight: 700;
 
+  a {
+    color: $info-txt;
+    font-weight: inherit;
+    text-decoration: underline;
+  }
+
   &.notice--top {
     margin: 0;
     padding: 0.5rem;

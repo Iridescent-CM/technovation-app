@@ -6,9 +6,9 @@
 
   <div
     v-if="notice.length"
+    v-html="notice"
     class="notice notice--info"
   >
-    {{ notice }}
   </div>
 
   <template v-else>

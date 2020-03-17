@@ -69,6 +69,38 @@
   </dl>
 </div>
 
+<h4 class="reset">Judge suspension</h4>
+
+<div class="panel">
+  <p class="hint">
+    Suspending a judge does not mean that their scores will be deleted, but
+    they will not be able to create new ones. Please note any changes you make
+    here in the appropriate tracking sheet.
+  </p>
+
+  <% if profile.suspended? %>
+    <%= link_to(
+      "Enable this judge",
+      admin_judge_unsuspend_path(profile),
+      class: "button danger",
+      data: {
+        method: :patch,
+        confirm: "You are about to ENABLE this suspended judge"
+      }
+    ) %>
+  <% else %>
+    <%= link_to(
+      "Suspend this judge",
+      admin_judge_suspend_path(profile),
+      class: "button danger",
+      data: {
+        method: :patch,
+        confirm: "You are about to SUSPEND this judge"
+      }
+    ) %>
+  <% end %>
+</div>
+
 <% unless profile.mentor_profile.present? %>
   <h4 class="reset">Environment information</h4>
 

@@ -280,7 +280,10 @@ Rails.application.routes.draw do
     resources :scores, only: [:index, :show, :destroy]
     resources :suspicious_scores, only: :index
     resources :score_approvals, only: :create
-    resources :judges, only: :index
+    resources :judges, only: :index do
+      patch :suspend
+      patch :unsuspend
+    end
     resources :contest_rank_changes, only: :create
 
     resources :score_details, only: :show
