@@ -98,4 +98,15 @@ class ScoresGrid
   column :deleted do
     deleted? ? "yes" : "no"
   end
+
+  column :view, html: true do |submission_score|
+    link_to(
+      web_icon("list-ul", size: 16, remote: true),
+      [current_scope, :score, id: submission_score.id],
+      {
+        class: "view-details",
+        data: { turbolinks: false }
+      }
+    )
+  end
 end

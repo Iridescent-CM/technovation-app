@@ -9,16 +9,30 @@ RSpec.describe "admin/scores/score_controls", type: :view do
   let(:current_account) { instance_double(Account,
     admin?: current_account_admin) }
   let(:score_submission) { instance_double(SubmissionScore, id: 1,
-    pending_approval?: score_submission_pending_approval) }
+    pending_approval?: score_submission_pending_approval,
+    deleted?: score_submission_deleted) }
 
   let(:current_account_admin) { false }
+  let(:score_submission_deleted) { false }
   let(:score_submission_pending_approval) { false }
 
   context "as an admin" do
     let(:current_account_admin) { true }
 
-    it "renders a button to delete the score" do
-      expect(rendered).to have_button("Delete this score")
+    context "when the score is deleted" do
+      let(:score_submission_deleted) { true }
+
+      it "renders a button to restore the score" do
+        expect(rendered).to have_button("Restore this score")
+      end
+    end
+
+    context "when the score is not deleted" do
+      let(:score_submission_deleted) { false }
+
+      it "renders a button to delete the score" do
+        expect(rendered).to have_button("Delete this score")
+      end
     end
 
     context "when the score is pending approval" do

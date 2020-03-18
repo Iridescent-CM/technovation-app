@@ -245,7 +245,7 @@ RSpec.describe SubmissionScore do
         ).to be_zero
       end
 
-      describe "deleting a score" do
+      context "deleting and restoring a score" do
         let(:team_submission) { FactoryBot.create(:team_submission) }
         let(:judge_judy) { FactoryBot.create(:judge_profile) }
 
@@ -255,7 +255,7 @@ RSpec.describe SubmissionScore do
             team_submission_id: team_submission.id,
             ideation_1: 10,
             round: round,
-           completed_at: Time.current)
+            completed_at: Time.current)
         }
         let!(:low_score_submission_from_random_judge) {
           SubmissionScore.create!(
@@ -282,37 +282,78 @@ RSpec.describe SubmissionScore do
             completed_at: Time.current)
         }
 
-        context "when judge judy's bad score sumission is deleted" do
-          before do
-            bad_score_submission_from_judge_judy.destroy
-            team_submission.reload
+        describe "deleting a score" do
+          context "when judge judy's bad score sumission is deleted" do
+            before do
+              bad_score_submission_from_judge_judy.destroy
+
+              team_submission.reload
+            end
+
+            it "updates the team's total number of completed scores" do
+              expect(team_submission.
+                public_send("complete_#{judging_round}_submission_scores_count")).to eq(2)
+            end
+
+            it "updates the team's total number of offical completed scores" do
+              expect(team_submission.
+                public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(2)
+            end
+
+            it "recalculates the team's average score" do
+              expect(team_submission.
+                public_send("#{judging_round}_average_score")).to eq(7.5)
+            end
+
+            it "recalculates the team's score range (high score minus the low score)" do
+              expect(team_submission.
+                public_send("#{judging_round}_score_range")).to eq(5)
+            end
+
+            it "updates judy's total number of scored submissions" do
+              judge_judy.reload
+
+              expect(judge_judy.
+                public_send("#{judging_round}_scores_count")).to eq(1)
+            end
           end
+        end
 
-          it "updates the team's total number of completed scores" do
-            expect(team_submission.
-              public_send("complete_#{judging_round}_submission_scores_count")).to eq(2)
-          end
+        describe "restoring a score" do
+          context "when judge judy's bad score sumission is deleted and then restored" do
+            before do
+              bad_score_submission_from_judge_judy.destroy
+              bad_score_submission_from_judge_judy.restore
 
-          it "updates the team's total number of offical completed scores" do
-            expect(team_submission.
-              public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(2)
-          end
+              team_submission.reload
+            end
 
-          it "recalculates the team's average score" do
-            expect(team_submission.
-              public_send("#{judging_round}_average_score")).to eq(7.5)
-          end
+            it "updates the team's total number of completed scores" do
+              expect(team_submission.
+                public_send("complete_#{judging_round}_submission_scores_count")).to eq(3)
+            end
 
-          it "recalculates the team's score range (high score minus the low score)" do
-            expect(team_submission.
-              public_send("#{judging_round}_score_range")).to eq(5)
-          end
+            it "updates the team's total number of offical completed scores" do
+              expect(team_submission.
+                public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(3)
+            end
 
-          it "updates judy's total number of scored submissions" do
-            judge_judy.reload
+            it "recalculates the team's average score" do
+              expect(team_submission.
+                public_send("#{judging_round}_average_score")).to eq(11.67)
+            end
 
-            expect(judge_judy.
-              public_send("#{judging_round}_scores_count")).to eq(1)
+            it "recalculates the team's score range (high score minus the low score)" do
+              expect(team_submission.
+                public_send("#{judging_round}_score_range")).to eq(15)
+            end
+
+            it "updates judy's total number of scored submissions" do
+              judge_judy.reload
+
+              expect(judge_judy.
+                public_send("#{judging_round}_scores_count")).to eq(2)
+            end
           end
         end
       end
