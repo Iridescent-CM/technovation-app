@@ -57,7 +57,6 @@ gem 'nokogiri', "~> 1.8"
 
 gem 'friendly_id', "~> 5.2"
 
-gem 'has_secure_token', "~> 1.0"
 gem 'bcrypt', '~> 3.1'
 
 gem 'sidekiq', '~> 4.2'
