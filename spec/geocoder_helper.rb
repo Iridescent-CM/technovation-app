@@ -40,7 +40,7 @@ RSpec.configure do |config|
       "Los Angeles, CA, US",
       "Los Angeles, CA, United States",
       "Los Angeles, California, US",
-      [BigDecimal.new('34.052363'), BigDecimal.new('-118.256551')],
+      [BigDecimal('34.052363'), BigDecimal('-118.256551')],
       [34.052363, -118.256551],
     ].each do |loc|
       Geocoder::Lookup::Test.add_stub(
@@ -102,7 +102,7 @@ RSpec.configure do |config|
       "Chicago, IL, US",
       "US",
       "United States",
-      [BigDecimal.new('41.50196838'), BigDecimal.new('-87.64051818')],
+      [BigDecimal('41.50196838'), BigDecimal('-87.64051818')],
       [41.50196838, -87.64051818],
       [41.501968, -87.640518],
     ].each do |loc|
