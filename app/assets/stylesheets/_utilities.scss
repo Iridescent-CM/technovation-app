@@ -6,6 +6,10 @@
   background-color: rgba(200, 200, 200, 0.4);
 }
 
+.background-color--subtle-red {
+  background-color: #fed7d7;
+}
+
 .background-color--white {
   background-color: white;
 }
@@ -84,6 +88,10 @@
 
 .height--100-percent {
   height: 100%;
+}
+
+.width--100-percent {
+  width: 100%;
 }
 
 .hover--opacity-75:not(.opacity--100) {
