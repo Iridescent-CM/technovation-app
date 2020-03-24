@@ -19,35 +19,71 @@ RSpec.describe "admin/scores/score_controls", type: :view do
   context "as an admin" do
     let(:current_account_admin) { true }
 
-    context "when the score is deleted" do
-      let(:score_submission_deleted) { true }
+    context "when a score is pending approval and not deleted" do
+      let(:score_submission_pending_approval) { true }
+      let(:score_submission_deleted) { false }
 
-      it "renders a button to restore the score" do
-        expect(rendered).to have_button("Restore this score")
+      it "renders a button to approve the score" do
+        expect(rendered).to have_button("Approve this score")
+      end
+
+      it "renders a button to delete the score" do
+        expect(rendered).to have_button("Delete this score")
+      end
+
+      it "does not render a button to restore the score" do
+        expect(rendered).not_to have_button("Restore this score")
       end
     end
 
-    context "when the score is not deleted" do
+    context "when a score is offcial/approved and is not deleted" do
+      let(:score_submission_pending_approval) { false }
       let(:score_submission_deleted) { false }
 
       it "renders a button to delete the score" do
         expect(rendered).to have_button("Delete this score")
       end
-    end
-
-    context "when the score is pending approval" do
-      let(:score_submission_pending_approval) { true }
-
-      it "renders a button to approve the score" do
-        expect(rendered).to have_button("Approve this score")
-      end
-    end
-
-    context "when the score is not pending approval" do
-      let(:score_submission_pending_approval) { false }
 
       it "does not render a button to approve the score" do
         expect(rendered).not_to have_button("Approve this score")
+      end
+
+      it "does not render a button to restore the score" do
+        expect(rendered).not_to have_button("Restore this score")
+      end
+    end
+
+    context "when a score is pending approval and deleted" do
+      let(:score_submission_pending_approval) { true }
+      let(:score_submission_deleted) { true }
+
+      it "renders a button to restore the score" do
+        expect(rendered).to have_button("Restore this score")
+      end
+
+      it "does not render a button to approve the score" do
+        expect(rendered).not_to have_button("Approve this score")
+      end
+
+      it "does not render a button to delete the score" do
+        expect(rendered).not_to have_button("Delete this score")
+      end
+    end
+
+    context "when a score is official/approved and deleted" do
+      let(:score_submission_pending_approval) { false }
+      let(:score_submission_deleted) { true }
+
+      it "renders a button to restore the score" do
+        expect(rendered).to have_button("Restore this score")
+      end
+
+      it "does not render a button to approve the score" do
+        expect(rendered).not_to have_button("Approve this score")
+      end
+
+      it "does not render a button to delete the score" do
+        expect(rendered).not_to have_button("Delete this score")
       end
     end
   end

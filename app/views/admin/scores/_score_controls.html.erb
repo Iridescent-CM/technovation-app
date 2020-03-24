@@ -1,6 +1,13 @@
 <% if current_account.admin? %>
   <div class="admin-actions-buttons">
-    <% if score.pending_approval? %>
+  <% if score.deleted? %>
+    <%= button_to "Restore this score",
+      admin_score_restore_path(score),
+      method: :patch,
+      class: "button",
+      data: { confirm: "You are about to RESTORE this score" }
+    %>
+    <% elsif score.pending_approval? %>
       <%= button_to "Approve this score",
         admin_score_approvals_path(id: score.id),
         method: :post,
@@ -10,13 +17,6 @@
           positive: "true",
         }
       %>
-  <% elsif score.deleted? %>
-    <%= button_to "Restore this score",
-      admin_score_restore_path(score),
-      method: :patch,
-      class: "button",
-      data: { confirm: "You are about to RESTORE this score" }
-    %>
   <% end %>
 
   <% if !score.deleted? %>
