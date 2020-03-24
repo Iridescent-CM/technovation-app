@@ -277,7 +277,10 @@ Rails.application.routes.draw do
       controller: :regional_pitch_event_participations,
       only: :destroy
 
-    resources :scores, only: [:index, :show, :destroy]
+    resources :scores, only: [:index, :show, :destroy] do
+      patch :restore
+    end
+
     resources :suspicious_scores, only: :index
     resources :score_approvals, only: :create
     resources :judges, only: :index do

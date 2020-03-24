@@ -13,7 +13,7 @@ module Admin
     }, only: :index
 
     def show
-      @score = SubmissionScore.find(params.fetch(:id))
+      @score = SubmissionScore.with_deleted.find(params.fetch(:id))
     end
 
     def destroy
@@ -21,6 +21,14 @@ module Admin
       score.destroy
       redirect_to admin_scores_path,
         success: "You deleted a score by #{score.judge_name}"
+    end
+
+    def restore
+      score = SubmissionScore.with_deleted.find(params.fetch(:score_id))
+      score.restore
+
+      redirect_back fallback_location: admin_scores_path,
+        success: "This score has been restored"
     end
 
     private
