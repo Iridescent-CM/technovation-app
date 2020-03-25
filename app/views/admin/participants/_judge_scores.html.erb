@@ -1,23 +1,25 @@
 <% if scores.any? %>
-  <table>
+  <table class="width--100-percent">
     <th>
       <tr>
         <td>Team Name</td>
         <td>Submission Name</td>
         <td>Score</td>
-        <td>Details </td>
+        <td>Deleted</td>
+        <td>Details</td>
       </tr>
     </th>
     <tbody>
       <% scores.each do |score| %>
-        <tr>
+        <tr class="<%= score.deleted? ? "background-color--subtle-red" : "" %>">
           <td><%= score.team_name %></td>
           <td>
             <%= link_to score.team_submission_app_name,
                         admin_team_submission_path(score.team_submission_id),
                         class: "cta-link" %>
           </td>
-          <td> <%= score.total %> / <%= score.total_possible %> </td>
+          <td><%= score.total %> / <%= score.total_possible %></td>
+          <td class="deleted-info"><%= score.deleted? ? "yes" : "no" %></td>
           <td>
             <%= link_to 'View',
                         admin_score_path(score),
