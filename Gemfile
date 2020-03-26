@@ -118,7 +118,7 @@ group :test do
   gem 'rails-controller-testing', "~> 1.0"
   gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
 
-  gem 'capybara', '~> 2.18'
+  gem 'capybara', '~> 3.31'
   gem 'webdrivers', '~> 4.0'
   gem 'rspec-rails', "~> 3.8"
 
