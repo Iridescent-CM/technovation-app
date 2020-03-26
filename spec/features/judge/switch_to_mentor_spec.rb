@@ -16,13 +16,13 @@ RSpec.feature "Judges switch to mentor mode", :js do
       expect(judge.is_a_mentor?).to be_falsey
 
       click_link "Switch to Mentor mode"
-      expect(page).to have_link "Switch to Judge mode" # wait for turbolinks
+      expect(page).to have_link "Switch to Judge mode"
 
       expect(current_path).to eq(mentor_dashboard_path)
       expect(judge.reload.is_a_mentor?).to be_truthy
 
       click_link "Switch to Judge mode"
-      expect(page).to have_link "Switch to Mentor mode" # wait for turbolinks
+      expect(page).to have_link "Switch to Mentor mode"
 
       expect(current_path).to eq(judge_dashboard_path)
     end
