@@ -29,7 +29,7 @@
 
             <br>
 
-            <span class="font-weight--300">Please write at least 40 words</span>
+            <span class="font-weight--300">Please write at least {{ minWordCount }} words</span>
           </p>
         </div>
       </div>
@@ -130,7 +130,11 @@ export default {
     },
 
     goingNextIsDisabled () {
-      return this.wordCount < 40
+      return this.wordCount < this.minWordCount
+    },
+
+    minWordCount() {
+      return (this.section == 'overall') ? 40 : 20
     },
 
     wordCount () {
@@ -148,12 +152,12 @@ export default {
     },
 
     colorForWordCount () {
-      if (this.wordCount >= 40) {
+      if (this.wordCount >= this.minWordCount) {
         return 'darkgreen'
-      } else if (this.wordCount >= 30) {
+      } else if (this.wordCount >= (66 / 100) * this.minWordCount) {
+        return 'goldenrod'
+      } else if (this.wordCount >= (33 / 100) * this.minWordCount) {
         return 'orange'
-      } else if (this.wordCount >= 20) {
-        return 'darkyellow'
       } else {
         return 'darkred'
       }
