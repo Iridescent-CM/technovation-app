@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Set survey links and link text" do
+RSpec.feature "Set survey links and link text", :js do
   %w{student mentor}.each do |scope|
     context "#{scope} survey link is configured" do
       let(:user) { FactoryBot.create(scope) }
@@ -18,8 +18,8 @@ RSpec.feature "Set survey links and link text" do
 
         expect(current_path).to eq(public_send("#{scope}_dashboard_path"))
         expect(page).to have_link("link text", href: "google.com", count: 2)
-        expect(page).to have_css(".modal")
-        within(".modal") do
+        expect(page).to have_css(".swal2-modal")
+        within(".swal2-modal") do
           expect(page).to have_link("link text", href: "google.com")
         end
       end
@@ -32,7 +32,7 @@ RSpec.feature "Set survey links and link text" do
 
         expect(current_path).to eq(public_send("#{scope}_dashboard_path"))
         expect(page).to have_link("link text", href: "google.com", count: 1)
-        expect(page).not_to have_css(".modal")
+        expect(page).not_to have_css(".swal2-modal")
       end
     end
   end
