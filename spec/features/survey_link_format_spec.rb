@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Survey link formatting" do
+RSpec.feature "Survey link formatting", :js do
   %i{mentor student}.each do |scope|
     scenario "custom variables for #{scope}s are filled in dynamically" do
       url = "https://www.example.com/some/path"
