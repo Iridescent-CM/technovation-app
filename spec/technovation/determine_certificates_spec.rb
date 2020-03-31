@@ -127,6 +127,18 @@ RSpec.describe DetermineCertificates do
       )
     end
 
+    it "does not award a certificate to a qualified judge who is suspended" do
+      judge = FactoryBot.create(:judge)
+
+      5.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      judge.suspend!
+
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
+    end
+
     it "awards head judge by count" do
       judge = FactoryBot.create(:judge)
 
@@ -137,6 +149,18 @@ RSpec.describe DetermineCertificates do
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
         CertificateRecipient.new(:head_judge, judge.account)
       )
+    end
+
+    it "does not award a certificate to a qualified head judge who is suspended" do
+      judge = FactoryBot.create(:judge)
+
+      6.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      judge.suspend!
+
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
     end
 
     it "awards head judge by event" do
@@ -151,6 +175,18 @@ RSpec.describe DetermineCertificates do
       )
     end
 
+    it "does not award a certificate to a qualified head judge who is suspended that attended a live event" do
+      judge = FactoryBot.create(:judge, :attending_live_event)
+
+      1.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      judge.suspend!
+
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
+    end
+
     it "awards judge advisor" do
       judge = FactoryBot.create(:judge)
 
@@ -161,6 +197,18 @@ RSpec.describe DetermineCertificates do
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
         CertificateRecipient.new(:judge_advisor, judge.account)
       )
+    end
+
+    it "does not award a certificate to a qualified judge advisor who is suspended" do
+      judge = FactoryBot.create(:judge)
+
+      11.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      judge.suspend!
+
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
     end
 
     it "awards nothing" do
