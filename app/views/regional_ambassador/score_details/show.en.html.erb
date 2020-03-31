@@ -27,33 +27,35 @@
     <% end %>
   </dl>
 
+  <% scores = current_account.admin? ? @submission.scores_including_deleted : @submission.scores %>
+
   <% if current_account.is_admin? or SeasonToggles.display_scores? %>
 
+    <h5>Complete Semifinals scores</h5>
     <%= render 'regional_ambassador/score_details/scores_table',
-      scores: @submission.scores,
-      round: :semifinals,
-      status: :complete
-    %>
+      scores: scores.semifinals.complete,
+      current_account: current_account,
+      current_scope: current_scope %>
 
+    <h5>Incomplete Semifinals scores</h5>
     <%= render 'regional_ambassador/score_details/scores_table',
-      scores: @submission.scores,
-      round: :semifinals,
-      status: :incomplete
-    %>
+      scores: scores.semifinals.incomplete,
+      current_account: current_account,
+      current_scope: current_scope %>
 
   <% end %>
 
+  <h5>Complete Quarterfinal scores</h5>
   <%= render 'regional_ambassador/score_details/scores_table',
-    scores: @submission.scores,
-    round: :quarterfinals,
-    status: :complete
-  %>
+    scores: scores.quarterfinals.complete,
+    current_account: current_account,
+    current_scope: current_scope %>
 
+  <h5>Incomplete Quarterfinal scores</h5>
   <%= render 'regional_ambassador/score_details/scores_table',
-    scores: @submission.scores,
-    round: :quarterfinals,
-    status: :incomplete
-  %>
+    scores: scores.quarterfinals.incomplete,
+    current_account: current_account,
+    current_scope: current_scope %>
 
   <p>
     <%= link_to 'Back to scores',

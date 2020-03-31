@@ -1,21 +1,18 @@
-<%
-  status = String(status)
-  round = String(round)
-%>
-
-<h5><%= status.titlecase %> <%= round.titlecase %> scores</h5>
-
-<% if scores.public_send(round).public_send(status).any? %>
-  <table>
+<% if scores.present? %>
+  <table class="width--70-percent">
     <tbody>
-      <% scores.public_send(round).public_send(status).each do |score| %>
-        <tr>
-          <td style="width: 100px;"><%= score.total %> / <%= score.total_possible %></td>
-          <td style="width: 200px;">
+      <% scores.each do |score| %>
+        <tr class="<%= (current_account.admin? && score.deleted?) ? "background-color--subtle-red" : "" %>">
+          <td><%= score.total %> / <%= score.total_possible %></td>
+          <td>
             <%= link_to score.judge_name,
               [current_scope, :participant, id: score.judge_profile.account_id] %>
           </td>
-          <td style="width: 100px;"><%= score.official? ? "official" : "unofficial" %></td>
+          <td class="official-info"><%= score.official? ? "official" : "unofficial" %></td>
+
+          <% if current_account.admin? %>
+            <td class="deleted-info"><%= score.deleted? ? "deleted" : "" %></td>
+          <% end %>
 
           <td>
             <%= link_to 'View score',
@@ -27,5 +24,5 @@
     </tbody>
   </table>
 <% else %>
-  — No <%= status %> <%= round %> scores —
+  — No scores —
 <% end %>

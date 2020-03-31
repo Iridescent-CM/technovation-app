@@ -126,6 +126,10 @@ class TeamSubmission < ActiveRecord::Base
     -> { current },
     class_name: "SubmissionScore"
 
+  has_many :scores_including_deleted,
+    -> { with_deleted },
+    class_name: "SubmissionScore"
+
   has_many :complete_submission_scores,
     -> { current.complete },
     class_name: "SubmissionScore"
