@@ -25,6 +25,14 @@ class AccountsGrid
     end
   end
 
+  column :mentor_expertise do
+    if mentor_profile.present?
+      mentor_profile.expertise_names.join(",")
+    else
+      "-"
+    end
+  end
+
   column :judge_industry do
     if judge_profile.present?
       judge_profile.industry_text
