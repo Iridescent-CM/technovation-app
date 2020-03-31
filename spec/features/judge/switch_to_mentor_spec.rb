@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Judges switch to mentor mode" do
+RSpec.feature "Judges switch to mentor mode", :js do
 
   context "config ON" do
     before do
@@ -16,10 +16,14 @@ RSpec.feature "Judges switch to mentor mode" do
       expect(judge.is_a_mentor?).to be_falsey
 
       click_link "Switch to Mentor mode"
+      expect(page).to have_link "Switch to Judge mode"
+
       expect(current_path).to eq(mentor_dashboard_path)
       expect(judge.reload.is_a_mentor?).to be_truthy
 
       click_link "Switch to Judge mode"
+      expect(page).to have_link "Switch to Mentor mode"
+
       expect(current_path).to eq(judge_dashboard_path)
     end
   end

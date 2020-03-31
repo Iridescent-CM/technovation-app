@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "RAs switch to mentor mode" do
+RSpec.feature "RAs switch to mentor mode", :js do
 
   scenario "an RA switches to mentor mode with a mentor profile" do
     ra = FactoryBot.create(:regional_ambassador, :approved)
@@ -8,6 +8,7 @@ RSpec.feature "RAs switch to mentor mode" do
 
     sign_in(ra)
     click_link "Mentor Mode"
+    expect(page).to have_link("Switch to RA mode")
 
     expect(current_path).to eq(mentor_dashboard_path)
   end
@@ -17,6 +18,7 @@ RSpec.feature "RAs switch to mentor mode" do
 
     sign_in(ra)
     click_link "Mentor Mode"
+    expect(page).to have_link("Switch to RA mode")
 
     expect(current_path).to eq(mentor_dashboard_path)
   end
