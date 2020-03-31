@@ -17,7 +17,7 @@ RSpec.describe "Tasks: submissions namespace" do
 
     let!(:complete) { FactoryBot.create(:submission, :complete) }
     let!(:incomplete) { FactoryBot.create(:submission, :half_complete) }
-    let!(:incomplete_but_published) {
+    let!(:incomplete_but_submitted) {
       sub = FactoryBot.create(:submission, :half_complete)
       sub.publish!
       sub
@@ -29,10 +29,10 @@ RSpec.describe "Tasks: submissions namespace" do
       sub
     }
 
-    it "lists current submitted but incomplete app" do
+    it "lists current submitted (aka published) but incomplete app" do
       task.invoke
 
-      expect(output.string).to include("#{incomplete_but_published.id}: #{incomplete_but_published.friendly_id}")
+      expect(output.string).to include("#{incomplete_but_submitted.id}: #{incomplete_but_submitted.friendly_id}")
       expect(output.string).not_to include("#{complete.id}: #{complete.friendly_id}")
       expect(output.string).not_to include("#{incomplete.id}: #{incomplete.friendly_id}")
     end
