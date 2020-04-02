@@ -17,7 +17,7 @@ RSpec.describe "Register as a mentor", :js do
 
     select_gender(:random)
 
-    fill_in_vue_select "School or company name", with: "John Hughes High"
+    fill_in "School or company name", with: "John Hughes High"
     fill_in "Job title", with: "Janitor / Man of the Year"
 
     MentorProfile.mentor_types.keys.shuffle.each do |mentor_type|

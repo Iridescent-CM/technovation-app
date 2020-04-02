@@ -21,7 +21,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
 Capybara.automatic_label_click = true
-Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
 
 require 'rake'
 Rails.application.load_tasks
@@ -70,7 +70,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
+    driven_by ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
   end
 
   config.before(:each, js: true) do
