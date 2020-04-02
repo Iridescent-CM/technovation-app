@@ -2,6 +2,15 @@ require "rails_helper"
 
 feature "starting scores", js: true do
 
+  before(:all) do
+    @wait_time = Capybara.default_max_wait_time 
+    Capybara.default_max_wait_time = 10
+  end
+
+  after(:all) do
+    Capybara.default_max_wait_time = @wait_time
+  end
+
   context "as an RPE judge" do
     before do
       SeasonToggles.judging_round = :qf
