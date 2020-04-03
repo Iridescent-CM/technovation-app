@@ -93,7 +93,7 @@ RSpec.describe "Uploading source code to submissions", :js do
 
         click_button "Save"
 
-        within(".development_platform.complete", wait: 10) do
+        within(".development_platform.complete") do
           expect(page).to have_content "Thunkable"
           expect(page).to have_link "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
         end

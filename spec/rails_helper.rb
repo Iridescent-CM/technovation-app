@@ -76,4 +76,10 @@ RSpec.configure do |config|
   config.before(:each, js: true) do
     Capybara.page.driver.browser.manage.window.resize_to(1200, 1200)
   end
+
+  config.after(:each, js: :true) do |example|
+    if example.exception
+      STDERR.puts page.driver.browser.manage.logs.get(:browser)
+    end
+  end
 end
