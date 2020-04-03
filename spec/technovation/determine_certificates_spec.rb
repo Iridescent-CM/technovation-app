@@ -115,6 +115,30 @@ RSpec.describe DetermineCertificates do
       expect(DetermineCertificates.new(judge.account).needed).to be_empty
     end
 
+    it "counts dropped scores" do
+      judge = FactoryBot.create(:judge)
+
+      5.times do
+        score = FactoryBot.create(:score, :complete, judge_profile: judge)
+        score.drop_score!
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:certified_judge, judge.account)
+      )
+    end
+
+    it "ignores deleted scores" do
+      judge = FactoryBot.create(:judge)
+
+      5.times do
+        score = FactoryBot.create(:score, :complete, judge_profile: judge)
+        score.destroy
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to be_empty
+    end
+
     it "awards certified judge by count" do
       judge = FactoryBot.create(:judge)
 
