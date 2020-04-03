@@ -107,6 +107,84 @@ describe('Question comments section', () => {
     expect(wrapper.vm.comment.word_count).toEqual(0)
   })
 
+  describe('minWordCount()', () => {
+    it('returns 20 for the ideation section', () => {
+      wrapper.setProps({ section: 'ideation' })
+
+      expect(wrapper.vm.minWordCount).toEqual(20)
+    })
+
+    it('returns 20 for the technical section', () => {
+      wrapper.setProps({ section: 'technical' })
+
+      expect(wrapper.vm.minWordCount).toEqual(20)
+    })
+
+    it('returns 20 for the pitch section', () => {
+      wrapper.setProps({ section: 'pitch' })
+
+      expect(wrapper.vm.minWordCount).toEqual(20)
+    })
+
+    it('returns 20 for the entrepreneurship section (which only applies for the senior division)', () => {
+      storeMocks = mockStore.createMocks({
+        state: { team: { division: 'senior' }}
+      })
+
+      wrapper = shallowMount(
+        QuestionSection, {
+          store: storeMocks.store,
+          localVue,
+          propsData: {
+            section: 'entrepreneurship'
+          }
+        }
+      )
+
+      expect(wrapper.vm.minWordCount).toEqual(20)
+    })
+
+    it('returns 40 for the overall section', () => {
+      wrapper.setProps({ section: 'overall' })
+
+      expect(wrapper.vm.minWordCount).toEqual(40)
+    })
+  })
+
+  describe('colorForWordCount()', () => {
+    describe('when the minimum word count (for the comments section) is 20', () => {
+      beforeEach(() => {
+        wrapper.setProps({ section: 'pitch' })
+      })
+
+      it('returns "darkred" when no words have been entered', () => {
+        wrapper.vm.comment.text = ''
+
+        expect(wrapper.vm.colorForWordCount).toEqual('darkred')
+      })
+
+      it('returns "orange" when 1/3 of the mimumum word count has been entered', () => {
+        wrapper.vm.comment.text = 'one two three four five six seven'
+
+        expect(wrapper.vm.colorForWordCount).toEqual('orange')
+      })
+
+      it('returns "goldenrod" when 2/3 of the minimum word count has been entered', () => {
+        wrapper.vm.comment.text = `one two three four five six seven eight nine ten
+          eleven twelve thirteen fourteen`
+
+        expect(wrapper.vm.colorForWordCount).toEqual('goldenrod')
+      })
+
+      it('returns "darkgreen" when the miniumum word count has been met', () => {
+        wrapper.vm.comment.text = `one two three four five six seven eight nine ten
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty`
+
+        expect(wrapper.vm.colorForWordCount).toEqual('darkgreen')
+      })
+    })
+  })
+
   test('textarea should update comment text in store on change', (done) => {
     wrapper = shallowMount(
       QuestionSection, {
