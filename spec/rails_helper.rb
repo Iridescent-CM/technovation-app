@@ -79,7 +79,13 @@ RSpec.configure do |config|
 
   config.after(:each, js: :true) do |example|
     if example.exception
-      STDERR.puts page.driver.browser.manage.logs.get(:browser)
+      save_and_open_screenshot if ENV.fetch("OPEN_SCREENSHOT_ON_FAILURE", false)
+      save_and_open_page if ENV.fetch("OPEN_PAGE_ON_FAILURE", false)
+      begin
+        STDERR.puts page.driver.browser.manage.logs.get(:browser)
+      rescue
+        # not all drivers support browser logs, just keep quiet here
+      end
     end
   end
 end
