@@ -26,6 +26,10 @@ FactoryBot.define do
       completed_at { nil }
     end
 
+    trait :approved do
+      approved_at { Time.current }
+    end
+
     trait :senior do
       association(:team_submission, factory: [:team_submission, :complete, :senior])
     end

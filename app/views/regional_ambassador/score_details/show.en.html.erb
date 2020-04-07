@@ -32,30 +32,30 @@
   <% if current_account.is_admin? or SeasonToggles.display_scores? %>
 
     <h5>Complete Semifinals scores</h5>
-    <%= render 'regional_ambassador/score_details/scores_table',
-      scores: scores.semifinals.complete,
-      current_account: current_account,
-      current_scope: current_scope %>
+    <div id="complete-semifinal-scores">
+      <%= render 'regional_ambassador/score_details/scores_table',
+        scores: scores.semifinals.complete %>
+    </div>
 
     <h5>Incomplete Semifinals scores</h5>
-    <%= render 'regional_ambassador/score_details/scores_table',
-      scores: scores.semifinals.incomplete,
-      current_account: current_account,
-      current_scope: current_scope %>
+    <div id="incomplete-semifinal-scores">
+      <%= render 'regional_ambassador/score_details/scores_table',
+        scores: scores.semifinals.incomplete %>
+    </div>
 
   <% end %>
 
   <h5>Complete Quarterfinal scores</h5>
-  <%= render 'regional_ambassador/score_details/scores_table',
-    scores: scores.quarterfinals.complete,
-    current_account: current_account,
-    current_scope: current_scope %>
+  <div id="complete-quarterfinal-scores">
+    <%= render 'regional_ambassador/score_details/scores_table',
+      scores: scores.quarterfinals.complete %>
+  </div>
 
   <h5>Incomplete Quarterfinal scores</h5>
-  <%= render 'regional_ambassador/score_details/scores_table',
-    scores: scores.quarterfinals.incomplete,
-    current_account: current_account,
-    current_scope: current_scope %>
+  <div id="incomplete-quarterfinal-scores">
+    <%= render 'regional_ambassador/score_details/scores_table',
+      scores: scores.quarterfinals.incomplete %>
+  </div>
 
   <p>
     <%= link_to 'Back to scores',
