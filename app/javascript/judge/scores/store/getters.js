@@ -30,7 +30,9 @@ export const anyCommentsInvalid = state => {
   const notEnoughComments = actualCount < expectedCount
 
   const anyCommentsTooShort = commentsToCount.some((section) => {
-    return state.score.comments[section].word_count < 40
+    const minWordCount = (section == 'overall') ? 40 : 20
+
+    return state.score.comments[section].word_count < minWordCount
   })
 
   return notEnoughComments || anyCommentsTooShort

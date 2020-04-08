@@ -16,10 +16,11 @@ export const validateScore = ({ commit, state }) => {
 
   Object.keys(state.score.comments).forEach((section) => {
     const comment = state.score.comments[section]
+    const minWordCount = (section == 'overall') ? 40 : 20
 
     if (state.team.division === 'junior' && section === 'entrepreneurship') {
       return true
-    } else if (comment.word_count < 40) {
+    } else if (comment.word_count < minWordCount) {
       sections.push(section)
     }
   })
