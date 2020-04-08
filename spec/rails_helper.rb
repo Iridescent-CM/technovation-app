@@ -21,7 +21,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
 Capybara.automatic_label_click = true
-Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
 
 require 'rake'
 Rails.application.load_tasks
@@ -70,6 +70,22 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
+    driven_by ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
+  end
+
+  config.before(:each, js: true) do
+    Capybara.page.driver.browser.manage.window.resize_to(1200, 1200)
+  end
+
+  config.after(:each, js: :true) do |example|
+    if example.exception
+      save_and_open_screenshot if ENV.fetch("OPEN_SCREENSHOT_ON_FAILURE", false)
+      save_and_open_page if ENV.fetch("OPEN_PAGE_ON_FAILURE", false)
+      begin
+        STDERR.puts page.driver.browser.manage.logs.get(:browser)
+      rescue
+        # not all drivers support browser logs, just keep quiet here
+      end
+    end
   end
 end
