@@ -1,10 +1,8 @@
-<% if ENV.fetch("ENABLE_REBRAND", false) %>
+<% if ENV.fetch("ENABLE_HOMEPAGE_BANNER", false) %>
   <div class="rebrand__banner">
-    <h3>Technovation is now Technovation Girls.</h3>
-    <p>
-      <%= link_to "Read more about our exciting transition here >",
-        :evolving,
-        data: { turbolinks: false } %>
+    <h3>Important: Required Virtual Participation & COVID-19 Updates</h3>
+    <p>Please read our message about the impact of the coronavirus on the 2020 Technovation Girls season.</p>
+    <p><%= link_to "Learn more.", "https://www.technovation.org/covid-19/" %></p>
   </div>
 <% end %>
 
