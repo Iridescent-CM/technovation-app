@@ -27,33 +27,35 @@
     <% end %>
   </dl>
 
+  <% scores = current_account.admin? ? @submission.scores_including_deleted : @submission.scores %>
+
   <% if current_account.is_admin? or SeasonToggles.display_scores? %>
 
-    <%= render 'regional_ambassador/score_details/scores_table',
-      scores: @submission.scores,
-      round: :semifinals,
-      status: :complete
-    %>
+    <h5>Complete Semifinals scores</h5>
+    <div id="complete-semifinal-scores">
+      <%= render 'regional_ambassador/score_details/scores_table',
+        scores: scores.semifinals.complete %>
+    </div>
 
-    <%= render 'regional_ambassador/score_details/scores_table',
-      scores: @submission.scores,
-      round: :semifinals,
-      status: :incomplete
-    %>
+    <h5>Incomplete Semifinals scores</h5>
+    <div id="incomplete-semifinal-scores">
+      <%= render 'regional_ambassador/score_details/scores_table',
+        scores: scores.semifinals.incomplete %>
+    </div>
 
   <% end %>
 
-  <%= render 'regional_ambassador/score_details/scores_table',
-    scores: @submission.scores,
-    round: :quarterfinals,
-    status: :complete
-  %>
+  <h5>Complete Quarterfinal scores</h5>
+  <div id="complete-quarterfinal-scores">
+    <%= render 'regional_ambassador/score_details/scores_table',
+      scores: scores.quarterfinals.complete %>
+  </div>
 
-  <%= render 'regional_ambassador/score_details/scores_table',
-    scores: @submission.scores,
-    round: :quarterfinals,
-    status: :incomplete
-  %>
+  <h5>Incomplete Quarterfinal scores</h5>
+  <div id="incomplete-quarterfinal-scores">
+    <%= render 'regional_ambassador/score_details/scores_table',
+      scores: scores.quarterfinals.incomplete %>
+  </div>
 
   <p>
     <%= link_to 'Back to scores',
