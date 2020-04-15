@@ -27,7 +27,7 @@ require 'rake'
 Rails.application.load_tasks
 
 RSpec.configure do |config|
-  config.fail_fast = true
+  config.fail_fast = ENV.fetch("RSPEC_FAIL_FAST", true)
   config.example_status_persistence_file_path = './tmp/spec/examples.txt'
 
   config.include SigninHelper, type: :feature
