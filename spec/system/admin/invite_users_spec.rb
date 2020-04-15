@@ -66,16 +66,16 @@ RSpec.describe "Admins invite users to signup", :js do
         fill_in "School name", with: "John Hughes High"
       when :mentor
         select_gender(:random)
-        fill_in_vue_select "School or company name", with: "John Hughes High"
+        fill_in "School or company name", with: "John Hughes High"
         fill_in "Job title", with: "Janitor / Man of the Year"
         select "Parent", from: "I am a..."
       when :judge
         select_gender(:random)
-        fill_in_vue_select "School or company name", with: "John Hughes High"
+        fill_in "School or company name", with: "John Hughes High"
         fill_in "Job title", with: "Janitor / Man of the Year"
       when :regional_ambassador
         select_gender(:random)
-        fill_in_vue_select "Organization/company name", with: "John Hughes High"
+        fill_in "Organization/company name", with: "John Hughes High"
         fill_in "Job title", with: "Janitor / Man of the Year"
         fill_in "Tell us about yourself",
           with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
@@ -113,15 +113,16 @@ RSpec.describe "Admins invite users to signup", :js do
         expect(page).to have_selector(:button, text: "Confirm", visible: true)
 
         click_button "Confirm"
-      end
 
-      expect(page).to have_current_path(send("#{scope}_location_details_path"), ignore_query: true)
+        expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+      end
 
       invite = UserInvitation.last
       expect(invite).to be_registered
       expect(invite.account).to eq(Account.last)
 
       if scope == :regional_ambassador
+        expect(page).to have_current_path(send("#{scope}_location_details_path"), ignore_query: true)
         expect(RegionalAmbassadorProfile.last).to be_approved
       end
     end
@@ -182,7 +183,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     select_gender(:random)
 
-    fill_in_vue_select "Organization/company name", with: "John Hughes High"
+    fill_in "Organization/company name", with: "John Hughes High"
     fill_in "Job title", with: "Janitor / Man of the Year"
     fill_in "Tell us about yourself",
       with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
@@ -226,7 +227,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     select_gender(:random)
 
-    fill_in_vue_select "Organization/company name", with: "John Hughes High"
+    fill_in "Organization/company name", with: "John Hughes High"
     fill_in "Job title", with: "Janitor / Man of the Year"
     fill_in "Tell us about yourself",
       with: "Lorem ipsum dolor sit amet, " +
