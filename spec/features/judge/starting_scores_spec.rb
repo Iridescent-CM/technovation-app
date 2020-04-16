@@ -3,8 +3,8 @@ require "rails_helper"
 feature "starting scores", js: true do
 
   before(:all) do
-    @wait_time = Capybara.default_max_wait_time 
-    Capybara.default_max_wait_time = 10
+    @wait_time = Capybara.default_max_wait_time
+    Capybara.default_max_wait_time = 15
   end
 
   after(:all) do
@@ -184,6 +184,7 @@ feature "starting scores", js: true do
   end
 
   def and_starts_a_new_score
+    expect(page).to have_content "Start a new score"
     click_link "Start a new score"
   end
 
