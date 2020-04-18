@@ -21,13 +21,14 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
 Capybara.automatic_label_click = true
+Capybara.default_max_wait_time = 5
 Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
 
 require 'rake'
 Rails.application.load_tasks
 
 RSpec.configure do |config|
-  config.fail_fast = true
+  config.fail_fast = ENV.fetch("RSPEC_FAIL_FAST", true)
   config.example_status_persistence_file_path = './tmp/spec/examples.txt'
 
   config.include SigninHelper, type: :feature

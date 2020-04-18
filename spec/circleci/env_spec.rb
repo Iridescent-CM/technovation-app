@@ -34,6 +34,10 @@ if !!defined?(Dotenv)
     CONVERT_MENTORS
     NODE_ENV
     GOOGLE_ANALYTICS_ID
+    JAVASCRIPT_DRIVER
+    OPEN_PAGE_ON_FAILURE
+    OPEN_SCREENSHOT_ON_FAILURE
+    RSPEC_FAIL_FAST
   }
 
   RSpec.describe "Circle CI config" do

@@ -27,7 +27,7 @@ RSpec.describe "Judges sign up at special link", :js do
     fill_in "Last name", with: "McJudgeface"
     select_chosen_date 20.years.ago, from: "Date of birth"
     select_gender(:random)
-    fill_in_vue_select "School or company name", with: "testing"
+    fill_in "School or company name", with: "testing"
     fill_in "Job title", with: "test"
     fill_in "Create a password", with: "secret1234"
 

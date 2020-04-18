@@ -91,6 +91,8 @@ RSpec.describe "Uploading source code to submissions", :js do
         fill_in "What is the shareable URL of your Thunkable project?",
           with: "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
 
+        sleep 1
+
         click_button "Save"
 
         within(".development_platform.complete") do

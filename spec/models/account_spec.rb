@@ -106,7 +106,7 @@ RSpec.describe Account do
     account = FactoryBot.build(:account, email: "email@gmail.com")
     expect {
       account.save(validate: false)
-    }.to raise_error
+    }.to raise_error(ActiveRecord::RecordNotUnique)
   end
 
   describe ".mentors_pending_invites" do
