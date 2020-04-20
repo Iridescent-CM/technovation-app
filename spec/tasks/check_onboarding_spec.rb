@@ -1,6 +1,16 @@
 require "rails_helper"
 
 RSpec.describe "Tasks: rails onboard_missed_students!" do
+  let(:output) { StringIO.new }
+
+  before(:each) do
+    $stdout = output
+  end
+
+  after(:each) do
+    $stdout = STDOUT
+  end
+
   it "marks onboarding students as onboarded where appropriate" do
     students = FactoryBot.create_list(:student, 3, :onboarded)
     students.each do |student|
