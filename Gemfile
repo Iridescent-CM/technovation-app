@@ -93,9 +93,7 @@ gem 'browser', "~> 2.5"
 
 gem 'loofah', '~> 2.2'
 
-group :development, :test do
-  gem 'dotenv-rails', "~> 2.5"
-end
+gem 'dotenv-rails', "~> 2.5"
 
 group :development do
   gem 'pp_sql', "~> 0.2", require: false
