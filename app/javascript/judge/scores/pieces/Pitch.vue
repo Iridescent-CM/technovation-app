@@ -44,16 +44,17 @@ export default {
 
 <style scoped>
   h4 {
-    margin: 0 0 1rem;
+    margin: 1rem 0 0;
   }
 
   a {
     display: flex;
+    margin: 0 0 2rem;
   }
 
   img,
   span {
     align-self: center;
-    margin-right: 1rem;
+    margin-right: 0.5rem;
   }
 </style>
