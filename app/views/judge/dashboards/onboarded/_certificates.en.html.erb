@@ -1,27 +1,29 @@
-<% if DisplayCertificates.for(current_judge) %>
-  <div id="judge-certificate" class="panel panel--left">
-    <div class="flags">
-      <span class="flag flag-registration">
-        Season close
+<% if SeasonToggles.display_scores? %>
+  <% if current_judge.judge_certificates.present? && !current_judge.suspended? %>
+    <div id="judge-certificate" class="panel panel--left">
+      <div class="flags">
+        <span class="flag flag-registration">
+          Season close
+        </span>
+      </div>
+
+      <h1>Thank You</h1>
+
+      <p>Thank you for being a judge this season!</p>
+
+      <p>
+        We appreciate your thoughtful feedback and the time you spent
+        supporting teams around the world.
+      </p>
+
+      <span class="display--block margin--t-xlarge text-align--center">
+        <%= link_to 'View your certificate',
+          @certificate_file_url,
+          class: "button",
+          target: :_blank %>
       </span>
     </div>
-
-    <h1>Thank You</h1>
-
-    <p>Thank you for being a judge this season!</p>
-
-    <p>
-      We appreciate your thoughtful feedback and the time you spent
-      supporting teams around the world.
-    </p>
-
-    <span class="display--block margin--t-xlarge text-align--center">
-      <%= link_to 'View your certificate',
-        @certificate_file_url,
-        class: "button",
-        target: :_blank %>
-    </span>
-  </div>
-<% elsif SeasonToggles.display_scores? %>
-  <%= render 'dashboards/no_certificates' %>
+  <% else %>
+    <%= render 'dashboards/no_certificates' %>
+  <% end %>
 <% end %>
