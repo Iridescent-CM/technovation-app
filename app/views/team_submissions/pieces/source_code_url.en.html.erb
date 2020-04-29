@@ -18,6 +18,13 @@
         <%= f.text_field :source_code_external_url %>
       </p>
 
+      <p>
+        Please ensure that you have read over
+        <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360046965014-Using-Thunkable-BEFORE-YOU-SUBMIT-please-do-this-" target="_blank">these instructions</a>
+        on submitting Thunkable projects. They go over important details to ensure
+        that judges are able to view your Thunkable submission.
+      </p>
+
       <%= f.submit "Save", class: "button" %>
     <% end %>
   <% elsif @team_submission.development_platform.blank? %>
