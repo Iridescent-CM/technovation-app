@@ -1,5 +1,7 @@
 <% provide :title, "Sign in" %>
 
+<%= render 'public/dashboards/homepage_banner' if ENV.fetch("ENABLE_HOMEPAGE_BANNER", false) %>
+
 <div class="grid grid--justify-space-around">
   <div class="panel grid__col-sm-8 grid__col-md-5">
     <h2><%= t('views.signins.new.title') %></h2>
