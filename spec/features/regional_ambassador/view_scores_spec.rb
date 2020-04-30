@@ -152,4 +152,30 @@ RSpec.feature "Regional Ambassador views scores" do
       expect(page).not_to have_content("Semifinals average")
     end
   end
+
+  scenario "RA lacks admin-only extra columns" do
+    submission = FactoryBot.create(
+      :submission,
+      :junior,
+      :complete,
+    )
+
+    FactoryBot.create(
+      :submission_score,
+      :complete,
+      team_submission: submission
+    )
+
+    SeasonToggles.judging_round = :qf
+
+    visit regional_ambassador_scores_path
+
+    expect(page).not_to have_select(
+      "More columns",
+      with_options: [
+        "Team ID",
+        "Submission ID"
+      ]
+    )
+  end
 end
