@@ -123,6 +123,14 @@ class ScoredSubmissionsGrid
     end
   end
 
+  column :team_id, header: 'Team ID', if: ->(g) { g.admin } do |submission|
+    submission.team.id
+  end
+
+  column :submission_id, header: 'Submission ID', if: ->(g) { g.admin } do |submission|
+    submission.id
+  end
+
   filter :round,
   :enum,
   select: -> { [
