@@ -76,21 +76,13 @@ module FillPdfs
     PdfForms::Pdf.new(pathname, FillPdfs.pdftk_wrapper)
   end
 
-  def skip_enabled?
-    ENV.fetch("DO_NOT_FILL_CERTIFICATES", false)
-  end
-
   def fill_form
-    if !Rails.env.production? && skip_enabled?
-      FileUtils.cp(pathname, tmp_output)
-    else
-      FillPdfs.pdftk_wrapper.fill_form(
-        pathname,
-        tmp_output,
-        field_values,
-        flatten: true
-      )
-    end
+    FillPdfs.pdftk_wrapper.fill_form(
+      pathname,
+      tmp_output,
+      field_values,
+      flatten: true
+    )
   end
 
   def attach_uploaded_certificate_from_tmp_file_to_account
