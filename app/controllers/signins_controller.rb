@@ -23,7 +23,7 @@ class SigninsController < ApplicationController
   def destroy
     remove_cookie(CookieNames::AUTH_TOKEN)
     remove_cookie(CookieNames::SESSION_TOKEN)
-    redirect_to root_path, success: t('controllers.signins.destroy.success')
+    redirect_to login_path, success: t('controllers.signins.destroy.success')
   end
 
   private
