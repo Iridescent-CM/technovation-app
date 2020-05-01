@@ -47,7 +47,6 @@ RSpec.describe "Mentors signing up", :js do
       click_button "Next"
 
       click_link "Logout"
-      click_link "Sign in"
 
       fill_in "Email", with: "margeyb@springfield.net"
       fill_in "Password", with: "margeysecret1234"
