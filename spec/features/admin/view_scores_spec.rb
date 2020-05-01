@@ -48,4 +48,32 @@ RSpec.feature "Admins view scores" do
 
     expect(page).to have_content("View score")
   end
+
+  scenario "Admin has admin-only extra columns" do
+    submission = FactoryBot.create(
+      :submission,
+      :junior,
+      :complete,
+    )
+
+    FactoryBot.create(
+      :submission_score,
+      :complete,
+      team_submission: submission
+    )
+
+    SeasonToggles.judging_round = :qf
+    admin = FactoryBot.create(:admin)
+    sign_in(admin)
+
+    visit admin_scores_path
+
+    expect(page).to have_select(
+      "More columns",
+      with_options: [
+        "Team ID",
+        "Submission ID"
+      ]
+    )
+  end
 end
