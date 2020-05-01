@@ -72,6 +72,38 @@ RSpec.feature "Judge certificates" do
     )
   end
 
+  scenario "judge who is suspended - it doesn't display the certificate's page" do
+    SeasonToggles.set_judging_round(:sf)
+
+    judge = FactoryBot.create(:judge, :onboarded, number_of_scores: 10)
+
+    SeasonToggles.set_judging_round(:off)
+    SeasonToggles.display_scores_on!
+
+    FillPdfs.(judge.account)
+    judge.suspend!
+
+    sign_in(judge)
+    expect(page).not_to have_css("#judge-certificate")
+    expect(page).not_to have_link("View your certificate")
+  end
+
+  scenario "judge who doesn't have a certificate - it doesn't display the certficate's page" do
+    SeasonToggles.set_judging_round(:sf)
+
+    judge = FactoryBot.create(:judge, :onboarded, number_of_scores: 10)
+
+    SeasonToggles.set_judging_round(:off)
+    SeasonToggles.display_scores_on!
+
+    FillPdfs.(judge.account)
+    judge.account.judge_certificates.destroy_all
+
+    sign_in(judge)
+    expect(page).not_to have_css("#judge-certificate")
+    expect(page).not_to have_link("View your certificate")
+  end
+
   Array(1..4).each do |n|
     scenario "judge with #{n} completed current scores" do
       SeasonToggles.set_judging_round(:sf)
