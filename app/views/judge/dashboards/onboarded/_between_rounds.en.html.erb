@@ -1,64 +1,54 @@
 <h3>You finished quarterfinals! <span>Four days early!</span></h3>
 
 <p>
-  If you had time to judge, we sincerely thank you for helping us support almost
-  2,000 teams in 57 countries. Thank you for your compassion in your feedback to
-  the teams, the hours spent supporting them, and for creating our first judge
-  community on Slack.
+  If you had the time to judge this round, we sincerely thank you for
+  supporting teams across 20+ countries this season. We appreciate you
+  volunteering your time to give insightful and compassionate feedback
+  on the hard work of Technovation’s young change makers.
 </p>
-
 
 <div class="grid">
   <div class="grid__col-6">
     <h4>What happens next?</h4>
 
     <p>
-      <strong>If you scored 5 submissions or more</strong>, you will receive your accolades after
-      <%= ImportantDates.certificates_available.strftime("%B %-d") %>.
+      <strong>If you scored 5 submissions or more</strong>, you will be invited
+      to judge in our semifinal round starting on
+      <%= ImportantDates.semifinals_judging_begins.to_date.to_s(:short_ordinal) %>.
     </p>
 
     <p>
-      <strong>
-        If you advanced to Head Judge or Judge Advisor,
-      </strong>
-      you will be able to judge in the Semifinals starting on
-      <%= ImportantDates.semifinals_judging_begins.strftime("%B %-d") %>.
-      You will receive an email to let you know when submissions are
-      ready for review.
+      <strong>Semifinals will take place from
+      <%= ImportantDates.semifinals_judging_begins.to_date.to_s(:short_ordinal) %> -
+      <%= ImportantDates.semifinals_judging_ends.to_date.to_s(:short_ordinal) %>
+      </strong>, the number of scores you finish will determine what judge certificate you receive.
     </p>
 
     <p>
-      <strong>In the Semifinals</strong>, you will help select 12 out of
-      hundreds of teams for the World Pitch Summit in August <%= Season.current.year %>.
-    </p>
-
-    <p>
-      <strong>At World Pitch</strong>, the finalist teams will pitch their ideas
-      to leading experts and enjoy a week of workshops with Silicon Valley companies.
+      Your scores from the semifinal round will <strong>determine the top 10 teams</strong>
+      that will be finalists in our World Summit event in August of 2020!
     </p>
   </div>
 
   <div class="grid__col-6">
     <h4>Judge Levels</h4>
+    <p>
+      <strong>
+        Login after
+        <%= ImportantDates.certificates_available.to_date.to_s(:short_ordinal) %>
+        to view and download your certificate
+      </strong>
+    </p>
 
     <dl>
-      <dt>Certified Technovation Judge</dt>
-      <dd>
-        Review 5 submissions
-        <p>Will receive a Certificate</p>
-      </dd>
+      <dt class="font-weight--unset">5 submissions:</dt>
+      <dd>Certified Technovation Judge</dd>
 
-      <dt>Head Technovation Judge</dt>
-      <dd>
-        Review 6—10 submissions
-        <p>Will receive a Certificate, invited to judge in Semifinals</p>
-      </dd>
+      <dt class="font-weight--unset">5-10 submissions:</dt>
+      <dd>Head Judge</dd>
 
-      <dt>Technovation Judge Advisor</dt>
-      <dd>
-        Review 11+ submissions
-        <p>Will receive a Certificate, invited to judge in Semifinals, listed as Judge Advisor on our website</p>
-      </dd>
+      <dt class="font-weight--unset">11+ submissions:</dt>
+      <dd>Judge Advisor</dd>
     </dl>
   </div>
 </div>
