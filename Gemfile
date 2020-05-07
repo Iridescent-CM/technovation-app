@@ -132,6 +132,7 @@ group :production do
   gem 'hiredis', "~> 0.6"
   gem "rack-timeout", "~> 0.5"
   gem 'heroku-deflater', "~> 0.6"
+  gem 'rails_autoscale_agent'
 end
 
 gem 'factory_bot_rails', "~> 4.11"
