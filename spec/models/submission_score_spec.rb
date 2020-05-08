@@ -355,6 +355,19 @@ RSpec.describe SubmissionScore do
                 public_send("#{judging_round}_scores_count")).to eq(2)
             end
           end
+
+          context "when judge judy's bad score sumission is dropped and then restored" do
+            before do
+              bad_score_submission_from_judge_judy.drop_score!
+              bad_score_submission_from_judge_judy.restore
+
+              team_submission.reload
+            end
+
+            it "resets the dropped status" do
+              expect(bad_score_submission_from_judge_judy).not_to be_dropped
+            end
+          end
         end
       end
     end
