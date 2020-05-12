@@ -177,7 +177,7 @@ class SubmissionScore < ActiveRecord::Base
   scope :judge_not_deleted, -> {
     includes(:judge_profile)
       .references(:judge_profiles)
-      .where("judge_profiles.id IS NOT NULL")
+      .where("judge_profiles.id IS NOT NULL AND judge_profiles.deleted_at IS NULL")
   }
 
   validates :team_submission_id, presence: true
