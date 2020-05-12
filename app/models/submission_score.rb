@@ -174,6 +174,12 @@ class SubmissionScore < ActiveRecord::Base
     end
   }
 
+  scope :judge_not_deleted, -> {
+    includes(:judge_profile)
+      .references(:judge_profiles)
+      .where("judge_profiles.id IS NOT NULL")
+  }
+
   validates :team_submission_id, presence: true
   validates :judge_profile_id, presence: true
 

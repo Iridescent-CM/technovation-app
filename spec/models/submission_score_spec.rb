@@ -607,4 +607,24 @@ RSpec.describe SubmissionScore do
       end
     end
   end
+
+  describe ".judge_not_deleted" do
+    let(:score_with_deleted_judge) {
+      score = FactoryBot.create(:score)
+      score.judge_profile.account.destroy
+      score
+    }
+
+    let(:score_with_judge) {
+      FactoryBot.create(:score)
+    }
+
+    it "filters scores where the judge has been deleted" do
+      expect(SubmissionScore.judge_not_deleted).not_to include(score_with_deleted_judge)
+    end
+
+    it "includes scores with judges" do
+      expect(SubmissionScore.judge_not_deleted).to include(score_with_judge)
+    end
+  end
 end
