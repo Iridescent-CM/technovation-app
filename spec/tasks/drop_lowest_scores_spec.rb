@@ -14,7 +14,7 @@ RSpec.describe "drop_lowest_scores" do
   let(:task) { Rake::Task['drop_lowest_scores'] }
   after(:each) { task.reenable }
 
-  let(:task_args) { [round, minimum_score_threshold, dry_run].map(&:to_s) }
+  let(:task_args) { [round, minimum_score_count, dry_run].map(&:to_s) }
 
   let!(:quarterfinalist_submission_1) {
     submission = FactoryBot.create(
@@ -69,9 +69,9 @@ RSpec.describe "drop_lowest_scores" do
     submission
   }
 
-  context "run for quarterfinals, threshold 1" do
+  context "run for quarterfinals, count 1" do
     let(:round) { 'qf' }
-    let(:minimum_score_threshold) { 1 }
+    let(:minimum_score_count) { 1 }
 
     context "dry run on" do 
       let(:dry_run) { nil }
@@ -120,9 +120,9 @@ RSpec.describe "drop_lowest_scores" do
     end
   end
 
-  context "run for quarterfinals, threshold 4" do
+  context "run for quarterfinals, count 4" do
     let(:round) { 'qf' }
-    let(:minimum_score_threshold) { 4 }
+    let(:minimum_score_count) { 4 }
 
     context "dry run on" do
       let(:dry_run) { nil }
@@ -155,12 +155,12 @@ RSpec.describe "drop_lowest_scores" do
     end
   end
 
-  context "run a second time for quarterfinals, threshold 1" do
+  context "run a second time for quarterfinals, count 1" do
     let(:round) { 'qf' }
-    let(:minimum_score_threshold) { 1 }
+    let(:minimum_score_count) { 1 }
 
     before(:each) {
-      task.invoke(round, minimum_score_threshold, 'run')
+      task.invoke(round, minimum_score_count, 'run')
       task.reenable
       output.rewind
 
@@ -196,9 +196,9 @@ RSpec.describe "drop_lowest_scores" do
     end
   end
 
-  context "run for semifinals, threshold 1" do
+  context "run for semifinals, count 1" do
     let(:round) { 'sf' }
-    let(:minimum_score_threshold) { 1 }
+    let(:minimum_score_count) { 1 }
 
     context "dry run on" do 
       let(:dry_run) { nil }
