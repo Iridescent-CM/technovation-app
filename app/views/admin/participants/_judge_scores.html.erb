@@ -5,7 +5,7 @@
         <td>Team Name</td>
         <td>Submission Name</td>
         <td>Score</td>
-        <td>Deleted?</td>
+        <td>Deleted</td>
         <td>Details</td>
       </tr>
     </th>
@@ -19,17 +19,7 @@
                         class: "cta-link" %>
           </td>
           <td><%= score.total %> / <%= score.total_possible %></td>
-          <td class="deleted-info">
-            <%=
-              if score.deleted?
-                if score.dropped?
-                  "dropped"
-                else
-                  "deleted"
-                end
-              end
-            %>
-          </td>
+          <td class="deleted-info"><%= score.deleted? ? "yes" : "no" %></td>
           <td>
             <%= link_to 'View',
                         admin_score_path(score),

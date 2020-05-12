@@ -7,25 +7,19 @@ RSpec.describe "regional_ambassador/score_details/scores_table", type: :view do
   end
 
   let(:scores) { [score_submission] }
-  let(:score_submission) {
-    instance_double(
-      SubmissionScore,
-      id: 1,
-      team_submission_id: 22,
-      team_name: "Dream Team",
-      team_submission_app_name: "Dreamy App",
-      judge_name: "Judge Dredd",
-      judge_profile: double("judge_profile", account_id: 333),
-      total: 75,
-      total_possible: 80,
-      official?: score_submission_offical,
-      deleted?: score_submission_deleted,
-      dropped?: score_submission_dropped
-    )
-  }
+  let(:score_submission) { instance_double(SubmissionScore,
+    id: 1,
+    team_submission_id: 22,
+    team_name: "Dream Team",
+    team_submission_app_name: "Dreamy App",
+    judge_name: "Judge Dredd",
+    judge_profile: double("judge_profile", account_id: 333),
+    total: 75,
+    total_possible: 80,
+    official?: score_submission_offical,
+    deleted?: score_submission_deleted) }
   let(:score_submission_offical) { false }
   let(:score_submission_deleted) { false }
-  let(:score_submission_dropped) { false }
 
   let(:current_account) { instance_double(Account,
     admin?: current_account_admin) }
@@ -84,23 +78,6 @@ RSpec.describe "regional_ambassador/score_details/scores_table", type: :view do
       it "displays 'deleted'" do
         within ".deleted-info" do
           expect(rendered).to have_content("deleted")
-        end
-      end
-
-      it "displays the row in a subtle red color" do
-        within "tr" do
-          expect(rendered).to have_css(".background-color--subtle-red")
-        end
-      end
-    end
-
-    context "when a score is marked as dropped" do
-      let(:score_submission_deleted) { true }
-      let(:score_submission_dropped) { true }
-
-      it "displays 'dropped'" do
-        within ".deleted-info" do
-          expect(rendered).to have_content("dropped")
         end
       end
 

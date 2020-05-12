@@ -11,17 +11,7 @@
           <td class="official-info"><%= score.official? ? "official" : "unofficial" %></td>
 
           <% if current_account.admin? %>
-            <td class="deleted-info">
-              <%=
-                if score.deleted?
-                  if score.dropped?
-                    "dropped"
-                  else
-                    "deleted"
-                  end
-                end
-              %>
-            </td>
+            <td class="deleted-info"><%= score.deleted? ? "deleted" : "" %></td>
           <% end %>
 
           <td>

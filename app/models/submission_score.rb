@@ -30,10 +30,6 @@ class SubmissionScore < ActiveRecord::Base
       "live" : "virtual"
   }
 
-  after_restore -> {
-    update_column(:dropped_at, nil)
-  }
-
   enum round: %w{
     quarterfinals
     semifinals
@@ -149,10 +145,6 @@ class SubmissionScore < ActiveRecord::Base
       "submission_scores.completed_at IS NOT NULL " +
       "AND (submission_scores.deleted_at IS NULL OR submission_scores.dropped_at IS NOT NULL)"
     )
-  }
-
-  scope :dropped, -> {
-    with_deleted.where("submission_scores.dropped_at IS NOT NULL")
   }
 
   scope :completed_too_fast, -> { where(completed_too_fast: true) }
@@ -306,10 +298,6 @@ class SubmissionScore < ActiveRecord::Base
   def drop_score!
     update(dropped_at: Time.current)
     self.destroy
-  end
-
-  def dropped?
-    !!dropped_at
   end
 
   def approved?
