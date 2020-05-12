@@ -35,13 +35,14 @@ RSpec.describe LowScoreDropping do
         )
       }
       let(:dropper) {
-        LowScoreDropping.new(submission, {
+        LowScoreDropping.new(
+          submission,
           round: round,
-          minimum_score_threshold: minimum_score_threshold
-        })
+          minimum_score_count: minimum_score_count
+        )
       }
       let(:round) { current_round }
-      let(:minimum_score_threshold) { 1 }
+      let(:minimum_score_count) { 1 }
 
       it "detects when a score has already been dropped" do
         low_score.drop_score!
@@ -49,8 +50,8 @@ RSpec.describe LowScoreDropping do
         expect(dropper).to be_already_dropped
       end
 
-      context "with a higher score threshold" do
-        let(:minimum_score_threshold) { 4 }
+      context "with a higher score count" do
+        let(:minimum_score_count) { 4 }
 
         it "doesn't have enough scores" do
           expect(dropper).not_to have_enough_scores
@@ -109,16 +110,18 @@ RSpec.describe LowScoreDropping do
       )
     }
     let(:qf_dropper) {
-      LowScoreDropping.new(submission, {
+      LowScoreDropping.new(
+        submission,
         round: :quarterfinals,
-        minimum_score_threshold: 1
-      })
+        minimum_score_count: 1
+      )
     }
     let(:sf_dropper) {
-      LowScoreDropping.new(submission, {
+      LowScoreDropping.new(
+        submission,
         round: :semifinals,
-        minimum_score_threshold: 1
-      })
+        minimum_score_count: 1
+      )
     }
 
     it "allows score to be dropped from each round" do

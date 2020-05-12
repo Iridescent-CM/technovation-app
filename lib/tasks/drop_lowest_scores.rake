@@ -1,7 +1,7 @@
 VALID_QF_PHRASING = ["qf", "qfs", "quarterfinals", ":qf", ":qfs", ":quarterfinals"]
 VALID_SF_PHRASING = ["sf", "sfs", "semifinals", ":sf", ":sfs", ":semifinals"]
 
-desc "Drop the lowest current scores on submissions for a specified round and minimum score threshold, pass 'run' as the dry_run argument to turn dry run mode OFF."
+desc "Drop the lowest current scores on submissions for a specified round and minimum score count, pass 'run' as the dry_run argument to turn dry run mode OFF."
 task :drop_lowest_scores, [:round, :minimum_score_count, :dry_run] => :environment do |t, args|
 
   raise "Provide the judging round [qf or sf] as an argument" unless args[:round]
@@ -30,10 +30,8 @@ task :drop_lowest_scores, [:round, :minimum_score_count, :dry_run] => :environme
   .find_each do |submission|
     dropper = LowScoreDropping.new(
       submission,
-      {
-        round: round,
-        minimum_score_threshold: minimum_score_count
-      }
+      round: round,
+      minimum_score_count: minimum_score_count
     )
 
     if dropper.already_dropped?
