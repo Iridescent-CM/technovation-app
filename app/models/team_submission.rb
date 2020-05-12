@@ -246,6 +246,14 @@ class TeamSubmission < ActiveRecord::Base
     SecureRandom.hex(4)
   end
 
+  def lowest_score_dropped?
+    lowest_score_dropped_at != nil
+  end
+
+  def lowest_score_dropped!
+    update_column(:lowest_score_dropped_at, Time.current)
+  end
+
   def qualifies_for_participation?
     percent_complete < 100 &&
       percent_complete >= PARTICIPATION_MINIMUM_PERCENT
