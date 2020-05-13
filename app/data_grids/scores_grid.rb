@@ -23,6 +23,14 @@ class ScoresGrid
     scope.public_send(value)
   end
 
+  filter :dropped,
+  :enum,
+  select: -> { [
+    ['Only show dropped scores', 'dropped'],
+  ] } do |value, scope, grid|
+    scope.public_send(value)
+  end
+
   scope do
     SubmissionScore.current.judge_not_deleted
       .includes({ team_submission: :team })
@@ -97,6 +105,10 @@ class ScoresGrid
 
   column :deleted do
     deleted? ? "yes" : "no"
+  end
+
+  column :dropped do
+    dropped? ? "yes" : "no"
   end
 
   column :view, html: true do |submission_score|
