@@ -32,9 +32,9 @@ class ScoresGrid
   end
 
   scope do
-    SubmissionScore.current
-      .includes({ team_submission: :team }, :judge_profile)
-      .references(:teams, :team_submissions, :judge_profiles)
+    SubmissionScore.current.judge_not_deleted
+      .includes({ team_submission: :team })
+      .references(:teams, :team_submissions)
   end
 
   column :round
