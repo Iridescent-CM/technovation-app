@@ -8,14 +8,11 @@ RSpec.feature "Admin exporting a CSV", js: true do
     before {
       sign_in(admin)
       visit admin_participants_path
+      click_link "Export current results to CSV"
+      click_button "Export now"
     }
 
     scenario "sees a confirmation dialog" do
-      expect(page).to have_content("1 account found")
-
-      click_link "Export current results to CSV"
-      click_button "Export now"
-
       within("#queued-jobs") do
         expect(page).to have_content("Your file is ready!")
         expect(page).to have_link("Download")
@@ -24,8 +21,6 @@ RSpec.feature "Admin exporting a CSV", js: true do
     end
 
     scenario "clears the confirmation dialog" do
-      click_link "Export current results to CSV"
-      click_button "Export now"
       within("#queued-jobs") do
         click_link "I no longer need this file"
       end
