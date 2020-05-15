@@ -8,7 +8,7 @@ RSpec.feature "Admin updates contest rank", js: true do
     when_they_are_marked_as_a_semifinalist
 
     then_a_confirmation_shows
-    and_the_change_is_persisted
+    and_the_new_rank_is_remembered
   end
 
   scenario "setting a finalist" do
@@ -18,7 +18,7 @@ RSpec.feature "Admin updates contest rank", js: true do
     when_they_are_marked_as_a_finalist
 
     then_a_confirmation_shows
-    and_the_change_is_persisted
+    and_the_new_rank_is_remembered
   end
 
   def given_there_is_a_scored_quarterfinalist_team
@@ -81,7 +81,10 @@ RSpec.feature "Admin updates contest rank", js: true do
     end
   end
 
-  def and_the_change_is_persisted
-    expect(@submission.reload.contest_rank).to eq(@new_rank)
+  def and_the_new_rank_is_remembered
+    visit current_path
+    within("#team_submission_#{@submission.id}") do
+      expect(page).to have_select "contest_rank", selected: @new_rank
+    end
   end
 end
