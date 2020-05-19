@@ -301,6 +301,8 @@ Rails.application.routes.draw do
     resource :season_schedule_settings, only: [:edit, :update]
 
     resources :certificates, only: [:index, :show, :create, :destroy]
+
+    get '/semifinalist_snippet', to: 'semifinalist_snippet#show'
   end
 
   namespace :public do
