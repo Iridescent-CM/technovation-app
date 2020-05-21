@@ -178,7 +178,7 @@ RSpec.describe StudentProfile do
 
     expect(profile).not_to be_valid
     expect(profile.errors[:parent_guardian_email]).to include(
-      "cannot match another student's email"
+      "cannot match your (or any other student's) email"
     )
   end
 
