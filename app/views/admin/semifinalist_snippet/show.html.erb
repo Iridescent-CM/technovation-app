@@ -1,16 +1,27 @@
 Copy and paste the following snippet for a semifinalist blog post:
 ---
 
-<div class="container">
+<%
+  [
+    { title: "Senior Division", columns: @senior_columns, id: "senior" },
+    { title: "Junior Division", columns: @junior_columns, id: "junior" }
+  ].each do |section|
+%>
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-6 left">
-      <h2>Senior Division</h2>
-      <% @senior_columns.each do |column| %>
-        <table>
+    <div class="col-12">
+      <h2 id="<%= section[:id] %>"><%= section[:title] %></h2>
+    </div>
+    <% section[:columns].each do |column| %>
+      <div class="col-12 col-sm-12 col-md-6">
+        <table class="table">
           <tbody>
             <% column.each do |entry| %>
-              <tr class="country">
-                <td><%= entry[:country] %></td>
+              <tr
+                id="<%= entry[:country].downcase %>"
+                class="country"
+                style="background-color: #43b02a; color: white; font-weight: bold;"
+              >
+                <td><%= entry[:friendly_name] %></td>
                 <td></td>
               </tr>
               <% entry[:submissions].each do |sub| %>
@@ -22,31 +33,7 @@ Copy and paste the following snippet for a semifinalist blog post:
             <% end %>
           </tbody>
         </table>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-12 col-sm-12 col-md-6 left">
-      <h2>Junior Division</h2>
-      <% @junior_columns.each do |column| %>
-        <table>
-          <% column.each do |entry| %>
-            <tr>
-              <td><%= entry[:country] %></td>
-              <td></td>
-            </tr>
-            <% entry[:submissions].each do |sub| %>
-              <tr>
-                <td><%= sub.team.name %></td>
-                <td><%= sub.app_name %></td>
-              </tr>
-            <% end %>
-          <% end %>
-        </table>
-      <% end %>
-    </div>
-  </div>
-</div>
+<% end %>
