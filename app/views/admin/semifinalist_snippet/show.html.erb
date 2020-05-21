@@ -21,8 +21,7 @@ Copy and paste the following snippet for a semifinalist blog post:
                 class="country"
                 style="background-color: #43b02a; color: white; font-weight: bold;"
               >
-                <td><%= entry[:friendly_name] %></td>
-                <td></td>
+                <td colspan="2"><%= entry[:friendly_name] %></td>
               </tr>
               <% entry[:submissions].each do |sub| %>
                 <tr class="semifinalist">
