@@ -64,16 +64,14 @@ RSpec.feature "getting the semifinalist blog post snippet" do
 
     it "groups submissions by division then country" do
       within "#senior" do
-        expect(page).to have_css("#us")
-        within "#us" do
+        within "#senior-us" do
           expect(page).to have_text("United States")
           expect(page).to have_text(senior_submission.name)
         end
       end
 
       within "#junior" do
-        expect(page).to have_css("#br")
-        within "#br" do
+        within "#junior-br" do
           expect(page).to have_text("Brazil")
           expect(page).to have_text(junior_submission.name)
         end
@@ -154,10 +152,10 @@ RSpec.feature "getting the semifinalist blog post snippet" do
     end
 
     it "sorts submissions within a country by team name, alphabetically" do
-      within "#br .semifinalist:first-child" do
+      within "#junior-br .semifinalist:first-child" do
         expect(page).to have_content("Team ABC")
       end
-      within "#br .semifinalist:last-child" do
+      within "#junior-br .semifinalist:last-child" do
         expect(page).to have_content("Team XYZ")
       end
     end

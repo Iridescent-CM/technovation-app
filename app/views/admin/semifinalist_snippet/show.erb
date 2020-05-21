@@ -10,13 +10,13 @@ Copy and paste the following snippet for a semifinalist blog post:
     section_id = section[:id]
 %>
   <div id="<%= section_id %>" class="row">
-    <div id="<%= "#{section_id}-header" %>" class="col-12">
+    <div id="<%= [section_id, "header"].join("-") %>" class="col-12">
       <h2><%= section[:title] %></h2>
     </div>
     <% section[:columns].each_with_index do |column, idx| %>
-      <div id="<%= "#{section_id}-col-#{idx + 1}" %>" class="col-12 col-sm-12 col-md-6">
+      <div id="<%= [section_id, "col", idx + 1].join("-") %>" class="col-12 col-sm-12 col-md-6">
         <% column.each do |entry| %>
-          <table id="<%= entry[:country].downcase %>" class="table">
+          <table id="<%= [section_id, entry[:country].downcase].join("-") %>" class="table">
             <thead>
               <tr
                 class="country"
