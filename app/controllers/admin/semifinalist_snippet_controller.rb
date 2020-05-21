@@ -1,5 +1,7 @@
 module Admin
   class SemifinalistSnippetController < AdminController
+    layout false
+
     def show
       senior_submissions = TeamSubmission
         .current
@@ -13,7 +15,7 @@ module Admin
         .filter { |sub| sub.junior_division? }
       @junior_columns = split_into_columns(junior_submissions)
 
-      render content_type: "text/plain", layout: false
+      respond_to :html, :text
     end
 
     private

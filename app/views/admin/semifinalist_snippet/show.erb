@@ -6,32 +6,35 @@ Copy and paste the following snippet for a semifinalist blog post:
     { title: "Senior Division", columns: @senior_columns, id: "senior" },
     { title: "Junior Division", columns: @junior_columns, id: "junior" }
   ].each do |section|
+
+    id = section[:id]
 %>
-  <div class="row">
-    <div class="col-12">
-      <h2 id="<%= section[:id] %>"><%= section[:title] %></h2>
+  <div id="<%= id %>" class="row">
+    <div id="<%= "#{id}-header" %>" class="col-12">
+      <h2><%= section[:title] %></h2>
     </div>
-    <% section[:columns].each do |column| %>
-      <div class="col-12 col-sm-12 col-md-6">
-        <table class="table">
-          <tbody>
-            <% column.each do |entry| %>
+    <% section[:columns].each_with_index do |column, idx| %>
+      <div id="<%= "#{id}-col-#{idx + 1}" %>" class="col-12 col-sm-12 col-md-6">
+        <% column.each do |entry| %>
+          <table id="<%= entry[:country].downcase %>" class="table">
+            <thead>
               <tr
-                id="<%= entry[:country].downcase %>"
                 class="country"
                 style="background-color: #43b02a; color: white; font-weight: bold;"
               >
                 <td colspan="2"><%= entry[:friendly_name] %></td>
               </tr>
+            </thead>
+            <tbody>
               <% entry[:submissions].each do |sub| %>
                 <tr class="semifinalist">
                   <td><%= sub.team.name %></td>
                   <td><%= sub.app_name %></td>
                 </tr>
               <% end %>
-            <% end %>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        <% end %>
       </div>
     <% end %>
   </div>
