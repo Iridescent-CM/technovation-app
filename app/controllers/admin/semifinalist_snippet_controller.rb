@@ -44,13 +44,13 @@ module Admin
         subs_in_left_column = 0
 
         entries = group_by_country(subs).map do |country_code, submissions|
-          entry_for(country_code, submissions)
+          Entry.new(country_code, submissions)
         end
 
-        entries.sort_by { |entry| entry[:friendly_name] }.each do |entry|
+        entries.sort.each do |entry|
           if subs_in_left_column < (total_subs / 2)
             left_col << entry
-            subs_in_left_column = subs_in_left_column + entry[:submissions].count
+            subs_in_left_column = subs_in_left_column + entry.submissions.count
           else
             right_col << entry
           end
@@ -62,11 +62,9 @@ module Admin
       def build_toc(subs)
         countries = group_by_country(subs).keys
         entries = countries.map do |country_code|
-          entry_for(country_code)
+          Entry.new(country_code)
         end
-        entries.sort_by do |entry|
-          entry[:friendly_name]
-        end
+        entries.sort
       end
 
       def group_by_country(submissions)
@@ -75,19 +73,24 @@ module Admin
           .map { |k, v| [k.nil? ? '' : k, v] }
           .to_h
       end
+    end
 
-      def entry_for(country_code, submissions=[])
-        friendly_name = FriendlyCountry.(
+    class Entry
+
+      attr_reader :friendly_name, :country_code, :submissions
+
+      def initialize(country_code, submissions = [])
+        @friendly_name = FriendlyCountry.(
           OpenStruct.new(address_details: country_code),
           prefix: false,
           source: :country_code,
         )
+        @country_code = country_code
+        @submissions = submissions.sort_by { |sub| sub.team_name.downcase }
+      end
 
-        {
-          country_code: country_code,
-          friendly_name: friendly_name,
-          submissions: submissions.sort_by { |sub| sub.team_name.downcase }
-        }
+      def <=>(other)
+        friendly_name <=> other.friendly_name
       end
     end
   end

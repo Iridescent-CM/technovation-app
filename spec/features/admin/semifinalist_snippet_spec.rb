@@ -8,7 +8,6 @@ RSpec.feature "getting the semifinalist blog post snippet" do
       sign_in admin
       visit admin_semifinalist_snippet_path(format: :text)
 
-      expect(page).to have_content("Copy and paste the following")
       expect(page.response_headers["Content-Type"]).to include("text/plain")
     end
 
@@ -17,7 +16,6 @@ RSpec.feature "getting the semifinalist blog post snippet" do
       sign_in admin
       visit admin_semifinalist_snippet_path
 
-      expect(page).to have_content("Copy and paste the following")
       expect(page.response_headers["Content-Type"]).to include("text/html")
     end
   end

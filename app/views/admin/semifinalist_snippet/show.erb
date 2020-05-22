@@ -10,10 +10,10 @@
     <div id="<%= section.id_for("header") %>" class="col-12">
       <h2><%= title %></h2>
       <ul class="nav">
-        <% section.toc.each do |country| %>
+        <% section.toc.each do |entry| %>
           <li class="nav-item">
-            <a href="#<%= section.id_for(country[:country_code]) %>" class="nav-link">
-              <%= country[:friendly_name] %>
+            <a href="#<%= section.id_for(entry.country_code) %>" class="nav-link">
+              <%= entry.friendly_name %>
             </a>
           </li>
         <% end %>
@@ -22,17 +22,17 @@
     <% section.columns.each_with_index do |column, idx| %>
       <div id="<%= section.id_for("col", idx + 1) %>" class="col-12 col-sm-12 col-md-6">
         <% column.each do |entry| %>
-          <table id="<%= section.id_for(entry[:country_code]) %>" class="table">
+          <table id="<%= section.id_for(entry.country_code) %>" class="table">
             <thead>
               <tr
                 class="country"
                 style="background-color: #43b02a; color: white; font-weight: bold;"
               >
-                <td colspan="2"><%= entry[:friendly_name] %></td>
+                <td colspan="2"><%= entry.friendly_name %></td>
               </tr>
             </thead>
             <tbody>
-              <% entry[:submissions].each do |sub| %>
+              <% entry.submissions.each do |sub| %>
                 <tr class="semifinalist">
                   <td><%= sub.team.name %></td>
                   <td><%= sub.app_name %></td>
