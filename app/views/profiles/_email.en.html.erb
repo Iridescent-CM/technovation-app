@@ -19,27 +19,14 @@
   to confirm your new email address and restore full access to this site.
 </p>
 
-<%= form_with model: current_profile, local: true do |f| %>
-  <%= f.fields_for :account, include_id: false do |a| %>
-    <%= a.label :existing_password, "Current password" %>
-    <%= a.password_field :existing_password,
+<%= simple_form_for current_profile, local: true do |f| %>
+  <%= f.simple_fields_for :account, include_id: false do |a| %>
+    <%= a.input :existing_password,
+      label: "Current password",
       id: "existing_password_field_email",
       placeholder: "Enter your password first" %>
 
-    <% unless a.object.errors[:existing_password].empty? %>
-      <div class="field_with_errors">
-        <span class="error"><%= a.object.errors[:existing_password][0] %></span>
-      </div>
-    <% end %>
-
-    <%= a.label :email %>
-    <%= a.email_field :email %>
-
-    <% unless a.object.errors[:email].empty? %>
-      <div class="field_with_errors">
-        <span class="error"><%= a.object.errors[:email].to_sentence %></span>
-      </div>
-    <% end %>
+    <%= a.input :email %>
   <% end %>
 
   <p>
