@@ -147,7 +147,7 @@ RSpec.feature "getting the semifinalist blog post snippet" do
         expect(page).to have_content("Saudi Arabia")
       end
       within "#junior-col-2 > *:last-child" do
-        expect(page).to have_content("United State")
+        expect(page).to have_content("United States")
       end
     end
 
