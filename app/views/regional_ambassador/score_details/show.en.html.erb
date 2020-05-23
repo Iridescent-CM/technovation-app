@@ -57,10 +57,12 @@
       scores: scores.quarterfinals.incomplete %>
   </div>
 
-  <p>
+  <p class="margin--b-xlarge">
     <%= link_to 'Back to scores',
       [current_scope, :scores],
       data: { turbolinks: false },
       class: "button button--small" %>
   </p>
+
+  <%= render "admin/team_submissions/judge_assignment", current_account: @current_account, submission: @submission %>
 </div>

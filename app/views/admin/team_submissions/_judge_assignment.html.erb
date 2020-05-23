@@ -1,0 +1,11 @@
+<% if current_account.admin? && SeasonToggles.judging_enabled? %>
+  <div class="panel">
+    <h5 class="margin--t-none margin--b-medium">Assign Judge to Submission</h5>
+
+    <%= form_with url: admin_team_submission_judge_assignments_path(submission), local: true do %>
+      <%= email_field_tag :email, nil, placeholder: "Judge email" %>
+
+      <%= submit_tag "Assign Judge", class: "button" %>
+    <% end %>
+  </div>
+<% end %>
