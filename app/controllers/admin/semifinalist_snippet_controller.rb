@@ -6,13 +6,13 @@ module Admin
       senior_submissions = TeamSubmission
         .current
         .semifinalist
-        .filter { |sub| sub.senior_division? }
+        .select { |sub| sub.senior_division? }
       @senior_section = Section.new("senior", senior_submissions)
 
       junior_submissions = TeamSubmission
         .current
         .semifinalist
-        .filter { |sub| sub.junior_division? }
+        .select { |sub| sub.junior_division? }
       @junior_section = Section.new("junior", junior_submissions)
 
       respond_to :html, :text
