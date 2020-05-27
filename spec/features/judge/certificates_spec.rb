@@ -43,22 +43,24 @@ RSpec.feature "Judge certificates" do
     expect(page).not_to have_link("View your certificate")
 
     expect(page).to have_content(
-      "Thank you for your participation in the #{Season.current.year} " +
-      "Technovation season."
+      "Thank you for participating in this season of Technovation Girls."
     )
 
     expect(page).to have_content(
-      "You can see this year's finalists at " +
-      "technovationchallenge.org/season-results"
+      "You can see this year's finalists here."
+    )
+
+    expect(page).to have_link(
+      "here",
+      href: ENV.fetch("FINALISTS_URL")
     )
 
     expect(page).to have_content(
-      "The #{Season.next.year} season will open in the Fall."
+      "The next season will open in the Fall of #{Season.current.year}."
     )
 
     expect(page).to have_content(
-      "Stay informed about important dates and updates. " +
-      "Sign up for our newsletter."
+      "Stay informed about important dates and updates. Sign up for our newsletter."
     )
 
     expect(page).to have_link(
@@ -66,9 +68,17 @@ RSpec.feature "Judge certificates" do
       href: ENV.fetch("NEWSLETTER_URL")
     )
 
+    expect(page).to have_content(
+      "Questions or feedback about staying involved with Technovation, reach out to volunteer@technovation.org."
+    )
+
+    expect(page).to have_content(
+      "Make sure to visit Technovation's blog for program updates and announcements."
+    )
+
     expect(page).to have_link(
-      "technovationchallenge.org/season-results",
-      href: ENV.fetch("FINALISTS_URL")
+      "Technovation's blog",
+      href: "https://www.technovation.org/blog/"
     )
   end
 
