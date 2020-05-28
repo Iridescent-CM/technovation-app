@@ -261,7 +261,9 @@ Rails.application.routes.draw do
     resources :profile_locations, only: :edit
 
     resources :teams, except: :destroy
-    resources :team_submissions, except: :destroy
+    resources :team_submissions, except: :destroy do
+      resource :judge_assignments, only: :create
+    end
     resources :team_memberships, only: [:destroy, :create]
     resources :team_locations, only: :edit
     resources :team_submission_certificates, only: :update
