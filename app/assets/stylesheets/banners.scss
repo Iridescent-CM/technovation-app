@@ -1,0 +1,23 @@
+.banner--homepage {
+  &, * {
+    color: white;
+  }
+  a, a:hover {
+    color: white;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  background-color: #61AC41;;
+  background-image: image-url("banner-homepage-bkg.png");
+  background-size: contain;
+  background-position: right top;
+  background-repeat: no-repeat;
+
+  text-align: center;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin-bottom: 2em;
+}
