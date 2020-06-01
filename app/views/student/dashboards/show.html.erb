@@ -89,7 +89,10 @@
       </div>
 
       <div slot="submission">
-        <%= render 'slots/student/submissions' %>
+        <%= render "slots/student/submissions" %>
+        <%= render "student/dashboards/view_submission_link",
+          current_team: current_team,
+          current_student: current_student %>
 
         <% if SeasonToggles.submissions_disabled? and
                 SeasonToggles.quarterfinals_or_earlier? and
