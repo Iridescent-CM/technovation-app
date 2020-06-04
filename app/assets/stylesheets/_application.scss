@@ -24,6 +24,7 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
 @import "navigation";
 @import "flashes";
 @import "notices";
+@import "banners";
 @import "pagination";
 
 // components
@@ -32,7 +33,6 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
 @import "img";
 @import "tabs";
 @import "screenshots";
-@import "rebrand";
 
 // font
 @import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700';
