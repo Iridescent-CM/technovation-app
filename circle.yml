@@ -4,9 +4,7 @@ jobs:
   build:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
-      # - image: circleci/ruby:latest-node-browsers
-      # pin image id due to canvas build problems
-      - image: circleci/ruby@sha256:7b5eede6785426c86fd08328a2b98b54b7bf67cdbd7d579c9b792e11f6bea8ed
+      - image: circleci/ruby:2.6.4
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
