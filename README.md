@@ -25,7 +25,7 @@ Install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-Install asdf, ruby 2.5.1, nodejs <latest-version>
+Install asdf, ruby 2.6.4, nodejs <latest-version>
 
 ```
 brew install asdf
@@ -33,7 +33,7 @@ brew install asdf
 asdf plugin-add ruby
 asdf plugin-add nodejs
 
-asdf install ruby 2.5.1
+asdf install ruby 2.6.4
 asdf install nodejs <latest-version>
 ```
 
@@ -102,10 +102,10 @@ cd technovation-app
 mv <PATH-TO-.ENV-FILE> .
 ```
 
-Switch to ruby 2.5.1 (this creates the `.tool-versions` file and you won't have to do it again)
+Switch to ruby 2.6.4 (this creates the `.tool-versions` file and you won't have to do it again)
 Switch to nodejs <latest-version>
 ```
-asdf local ruby 2.5.1
+asdf local ruby 2.6.4
 asdf local nodejs <latest-version>
 ```
 
