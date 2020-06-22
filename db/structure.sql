@@ -1503,7 +1503,6 @@ CREATE TABLE public.team_submissions (
     published_at timestamp without time zone,
     business_plan character varying,
     pitch_presentation character varying,
-    lowest_score_dropped_at timestamp without time zone,
     thunkable_account_email character varying,
     thunkable_project_url character varying,
     source_code_external_url character varying,
@@ -3059,6 +3058,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191120151819'),
 ('20191220170611'),
 ('20200115211026'),
-('20200303221521');
+('20200303221521'),
+('20200508185107');
 
 
