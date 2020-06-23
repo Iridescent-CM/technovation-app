@@ -27,6 +27,9 @@
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     }
   },
+  "engines": {
+    "node": "10.x"
+  },
   "dependencies": {
     "@rails/webpacker": "^3.6.0",
     "airbrake-js": "^1.1.0",
