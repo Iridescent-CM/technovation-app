@@ -35,15 +35,21 @@ const loadOrRedirect = (to, from, next) => {
   }
 }
 
-const getRootComponent = () => {
-  if (anyCurrentTeams()) {
+export const getRootComponent = () => {
+  if (canDisplayScores()) {
+    return Scores
+  } else if (anyCurrentTeams()) {
     return Submission
   } else {
     return TeamBuilding
   }
 }
 
-const getRootRoute = () => {
+export const getRootRoute = () => {
+  if (canDisplayScores()) {
+    return { name: 'scores' }
+  }
+
   if (anyCurrentTeams()) {
     return { name: 'submission' }
   }
@@ -61,6 +67,10 @@ const anyCurrentTeams = () => {
 
 const isOnboarded = () => {
   return store.getters['authenticated/isOnboarded']
+}
+
+const canDisplayScores = () => {
+  return store.getters['authenticated/canDisplayScores']
 }
 
 export const routes = [

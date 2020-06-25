@@ -76,4 +76,8 @@ export default {
   consentWaiverSignedAtEpoch (state) {
     return digStateAttributes(state, 'consentWaiver', 'signedAtEpoch')
   },
+
+  canDisplayScores (state) {
+    return state.settings.canDisplayScores
+  },
 }

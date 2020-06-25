@@ -7,7 +7,8 @@ export default {
       'currentAccount',
       'currentMentor',
       'consentWaiver',
-      'backgroundCheck'
+      'backgroundCheck',
+      'settings',
     ].forEach(key => {
       if (dataset[key])
         Vue.set(state, key, JSON.parse(dataset[key]))

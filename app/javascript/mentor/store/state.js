@@ -9,5 +9,7 @@ export default {
 
   backgroundCheck: {},
 
+  settings: {},
+
   submission: {},
 }
