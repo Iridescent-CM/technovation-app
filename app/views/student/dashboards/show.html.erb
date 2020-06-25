@@ -12,6 +12,7 @@
         current_team: TeamSerializer.new(current_team).serialized_json,
         current_submission: SubmissionSerializer.new(current_submission).serialized_json,
         parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
+        settings: { canDisplayScores: SeasonToggles.display_scores? }.to_json
       } %>
     <app
       :profile-icons="{

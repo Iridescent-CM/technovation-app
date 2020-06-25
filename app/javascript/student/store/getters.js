@@ -74,4 +74,8 @@ export default {
   submissionComplete (state) {
     return digStateAttributes(state, 'currentSubmission', 'isComplete')
   },
+
+  canDisplayScores (state) {
+    return state.settings.canDisplayScores
+  },
 }

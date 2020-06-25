@@ -8,6 +8,7 @@ export default {
       'currentTeam',
       'currentSubmission',
       'parentalConsent',
+      'settings',
     ].forEach(key => {
       if (dataset[key])
         Vue.set(state, key, JSON.parse(dataset[key]))

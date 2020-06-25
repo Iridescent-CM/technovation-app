@@ -36,7 +36,9 @@ const loadOrRedirect = (to, from, next) => {
 }
 
 export const getRootComponent = () => {
-  if (isOnTeam() && hasParentalConsent()) {
+  if (canDisplayScores()) {
+    return Scores
+  } else if (isOnTeam() && hasParentalConsent()) {
     return Submission
   } else {
     return TeamBuilding
@@ -44,7 +46,9 @@ export const getRootComponent = () => {
 }
 
 export const getRootRoute = () => {
-  if (isOnTeam() && hasParentalConsent()) {
+  if (canDisplayScores()) {
+    return { name: 'scores' }
+  } else if (isOnTeam() && hasParentalConsent()) {
     return { name: 'submission' }
   } else {
     return { name: 'parental-consent' }
@@ -57,6 +61,10 @@ const isOnTeam = () => {
 
 const hasParentalConsent = () => {
   return store.getters['authenticated/hasParentalConsent']
+}
+
+const canDisplayScores = () => {
+  return store.getters['authenticated/canDisplayScores']
 }
 
 export const routes = [
