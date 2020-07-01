@@ -49,7 +49,7 @@
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
-    >Scores & Feedback</tab-link>
+    >Scores & Certificates</tab-link>
   </ul>
 </template>
 

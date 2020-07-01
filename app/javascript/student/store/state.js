@@ -7,5 +7,7 @@ export default {
 
   parentalConsent: {},
 
+  settings: {},
+
   submission: {},
 }

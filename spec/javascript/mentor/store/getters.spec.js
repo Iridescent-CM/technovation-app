@@ -101,4 +101,18 @@ describe("mentor/store/getters.js", () => {
       expect(getters.isOnboarded(state)).toBeTruthy()
     })
   })
+
+  describe("canDisplayScores", () => {
+    it("returns true when the display_scores setting is enabled", () => {
+      const state = { settings: { canDisplayScores: true } }
+
+      expect(getters.canDisplayScores(state)).toBe(true)
+    })
+
+    it("returns false when the display_scores setting is disabled", () => {
+      const state = { settings: { canDisplayScores: false } }
+
+      expect(getters.canDisplayScores(state)).toBe(false)
+    })
+  })
 })

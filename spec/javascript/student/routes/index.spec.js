@@ -3,6 +3,22 @@ import store from 'student/store'
 
 describe("student/routes/index.js", () => {
   describe("#getRootRoute()", () => {
+    it("returns 'scores' if the display_scores setting is enabled", () => {
+      store.commit("authenticated/htmlDataset", {
+        settings: '{"canDisplayScores": true}',
+      })
+
+      expect(getRootRoute()).toEqual({ name: "scores" })
+    })
+
+    it("does not returns 'scores' if the display_scores setting is disabled", () => {
+      store.commit("authenticated/htmlDataset", {
+        settings: '{"canDisplayScores": false}',
+      })
+
+      expect(getRootRoute()).not.toEqual({ name: "scores" })
+    })
+
     it("returns parental consent if the student is not on a team or has no permission", () => {
       store.commit('authenticated/htmlDataset', {
         currentTeam:'{"data":{"id":"0","attributes":{}}}',
@@ -23,6 +39,22 @@ describe("student/routes/index.js", () => {
   })
 
   describe("#getRootComponent()", () => {
+    it("returns 'scores' if the display_scores setting is enabled", () => {
+      store.commit("authenticated/htmlDataset", {
+        settings: '{"canDisplayScores": true}',
+      })
+
+      expect(getRootRoute()).toEqual({ name: "scores" })
+    })
+
+    it("does not returns 'scores' if the display_scores setting is disabled", () => {
+      store.commit("authenticated/htmlDataset", {
+        settings: '{"canDisplayScores": false}',
+      })
+
+      expect(getRootRoute()).not.toEqual({ name: "scores" })
+    })
+
     it("returns TeamBuilding if the student is not on a team or has no permission", () => {
       store.commit('authenticated/htmlDataset', {
         currentTeam:'{"data":{"id":"0","attributes":{}}}',
