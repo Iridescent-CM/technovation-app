@@ -3,6 +3,7 @@ require "fill_pdfs"
 
 RSpec.feature "Mentor certificates" do
   before  { SeasonToggles.display_scores_on! }
+  before { allow(Season).to receive(:current).and_return(Season.new(2020)) }
 
   scenario "no certificates for no teams" do
     mentor = FactoryBot.create(:mentor, :onboarded)

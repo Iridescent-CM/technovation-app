@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe CertificateJob do
+  before {
+    allow(Season).to receive(:current).and_return(Season.new(2020))
+  }
+
   it "fills and attaches PDFs" do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
     team = mentor.current_teams.last
