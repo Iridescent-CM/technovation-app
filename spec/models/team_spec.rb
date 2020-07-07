@@ -234,7 +234,7 @@ RSpec.describe Team do
     team.reload
 
     old_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
-    young_student = FactoryBot.create(:student, date_of_birth: 14.years.ago)
+    young_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
 
     TeamRosterManaging.add(team, [old_student, young_student])
     expect(team.reload).to be_senior
