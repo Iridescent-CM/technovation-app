@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "Students find a team" do
+  let(:today) { ImportantDates.quarterfinals_judging_begins - 1.day }
+  let(:current_season) { Season.new(today.year) }
+
+  before { allow(Season).to receive(:current).and_return(current_season) }
   before { SeasonToggles.team_building_enabled! }
 
   let!(:available_team) { FactoryBot.create(:team, :geocoded) }
@@ -29,7 +33,7 @@ RSpec.feature "Students find a team" do
   end
 
   scenario "request to join a team" do
-    Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day) do
+    Timecop.freeze(today) do
       within (".navigation") { click_link "Find a team" }
       click_link "Ask to join"
       click_button "Ask to join #{available_team.name}"
@@ -43,7 +47,7 @@ RSpec.feature "Students find a team" do
   end
 
   scenario "onboarded student sees pending requests" do
-    Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day) do
+    Timecop.freeze(today) do
       sign_out
 
       onboarded = FactoryBot.create(:student, :geocoded)
