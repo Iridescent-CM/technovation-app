@@ -2,6 +2,10 @@ require "rails_helper"
 require "./lib/fill_pdfs"
 
 RSpec.describe Account do
+  before {
+    allow(Season).to receive(:current).and_return(Season.new(2020))
+  }
+
   context "validations" do
     describe "student email address validations" do
       let!(:student_account) { FactoryBot.build_stubbed(:account, email: student_email_address) }
