@@ -2,6 +2,8 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.describe DetermineCertificates do
+  before { allow(Season).to receive(:current).and_return(Season.new(2020)) }
+
   context "for student" do
     it "awards participation" do
       student = FactoryBot.create(:student, :half_complete_submission)
