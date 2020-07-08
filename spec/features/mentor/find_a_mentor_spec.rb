@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
-  let(:today) { ImportantDates.quarterfinals_judging_begins - 1.day }
-  let(:current_season) { Season.new(today.year) }
+  let(:day_before_qfs) { ImportantDates.quarterfinals_judging_begins - 1.day }
+  let(:current_season) { Season.new(day_before_qfs.year) }
 
   before do
     allow(Season).to receive(:current).and_return(current_season)
-    Timecop.freeze(today)
+    Timecop.freeze(day_before_qfs)
 
     mentor = FactoryBot.create(:mentor, :onboarded, :geocoded) # City is Chicago
     sign_in(mentor)

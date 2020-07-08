@@ -37,8 +37,8 @@ RSpec.describe "Students request to join a team",
   end
 
   context "a valid student requestor" do
-    let(:today) { ImportantDates.quarterfinals_judging_begins - 1.day }
-    let(:current_season) { Season.new(today.year) }
+    let(:day_before_qfs) { ImportantDates.quarterfinals_judging_begins - 1.day }
+    let(:current_season) { Season.new(day_before_qfs.year) }
 
     before { allow(Season).to receive(:current).and_return(current_season) }
 
@@ -49,7 +49,7 @@ RSpec.describe "Students request to join a team",
       # Default Chicago
 
     before do
-      Timecop.freeze(today)
+      Timecop.freeze(day_before_qfs)
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       visit new_student_join_request_path(team_id: team.id)
