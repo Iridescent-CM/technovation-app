@@ -2,7 +2,8 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.describe DetermineCertificates do
-  before { allow(Season).to receive(:current).and_return(Season.new(2020)) }
+  let(:season_with_templates) { Season.new(2020) }
+  before { allow(Season).to receive(:current).and_return(season_with_templates) }
 
   context "for student" do
     it "awards participation" do

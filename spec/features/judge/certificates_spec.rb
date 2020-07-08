@@ -2,8 +2,10 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.feature "Judge certificates" do
+  let(:season_with_templates) { Season.new(2020) }
+
   before {
-    allow(Season).to receive(:current).and_return(Season.new(2020))
+    allow(Season).to receive(:current).and_return(season_with_templates)
   }
 
   scenario "no link available when viewing scores is turned off" do

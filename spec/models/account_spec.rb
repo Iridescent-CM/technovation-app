@@ -2,8 +2,9 @@ require "rails_helper"
 require "./lib/fill_pdfs"
 
 RSpec.describe Account do
+  let(:season_with_templates) { Season.new(2020) }
   before {
-    allow(Season).to receive(:current).and_return(Season.new(2020))
+    allow(Season).to receive(:current).and_return(season_with_templates)
   }
 
   context "validations" do

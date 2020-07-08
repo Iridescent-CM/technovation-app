@@ -3,7 +3,8 @@ require "fill_pdfs"
 
 RSpec.feature "Student certificates" do
   before { SeasonToggles.display_scores_on! }
-  before { allow(Season).to receive(:current).and_return(Season.new(2020)) }
+  let(:season_with_templates) { Season.new(2020) }
+  before { allow(Season).to receive(:current).and_return(season_with_templates) }
 
   context "virtual semifinalist students" do
     let(:student) { FactoryBot.create(:student, :virtual, :semifinalist) }
