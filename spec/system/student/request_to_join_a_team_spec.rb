@@ -37,6 +37,11 @@ RSpec.describe "Students request to join a team",
   end
 
   context "a valid student requestor" do
+    let(:today) { ImportantDates.quarterfinals_judging_begins - 1.day }
+    let(:current_season) { Season.new(today.year) }
+
+    before { allow(Season).to receive(:current).and_return(current_season) }
+
     let!(:team) { FactoryBot.create(:team, :with_mentor) }
       # Default is in Chicago
 
@@ -44,7 +49,7 @@ RSpec.describe "Students request to join a team",
       # Default Chicago
 
     before do
-      Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
+      Timecop.freeze(today)
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       visit new_student_join_request_path(team_id: team.id)
