@@ -4,9 +4,9 @@ require "fill_pdfs"
 RSpec.feature "Judge certificates" do
   let(:season_with_templates) { Season.new(2020) }
 
-  before {
+  before do
     allow(Season).to receive(:current).and_return(season_with_templates)
-  }
+  end
 
   scenario "no link available when viewing scores is turned off" do
     SeasonToggles.display_scores_off!

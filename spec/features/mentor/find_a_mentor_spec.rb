@@ -12,9 +12,9 @@ RSpec.feature "Mentors find a team" do
     sign_in(mentor)
   end
 
-  let!(:find_mentor) {
-    FactoryBot.create(:mentor, :onboarded, :geocoded, first_name: "Findme")
-  } # City is Chicago
+  let!(:find_mentor) do
+    FactoryBot.create(:mentor, :onboarded, :geocoded, first_name: "Findme") # City is Chicago
+  end
 
   after do
     Timecop.return
