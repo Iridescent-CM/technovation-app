@@ -2,7 +2,7 @@ require "rails_helper"
 require "./lib/fill_pdfs"
 
 RSpec.describe Account do
-  let(:season_with_templates) { Season.new(2020) }
+  let(:season_with_templates) { instance_double(Season, year: 2020) }
   before do
     allow(Season).to receive(:current).and_return(season_with_templates)
   end
