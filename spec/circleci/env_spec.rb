@@ -38,6 +38,7 @@ if !!defined?(Dotenv)
     OPEN_PAGE_ON_FAILURE
     OPEN_SCREENSHOT_ON_FAILURE
     RSPEC_FAIL_FAST
+    DO_NOT_FILL_CERTIFICATES
   }
 
   RSpec.describe "Circle CI config" do

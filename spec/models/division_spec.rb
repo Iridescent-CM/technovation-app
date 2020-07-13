@@ -7,7 +7,7 @@ RSpec.describe Division do
         student = FactoryBot.create(
           :student,
           :on_team,
-          date_of_birth: 14.years.ago
+          date_of_birth: 13.years.ago
         )
         expect(Division.for(student.team)).to eq(Division.junior)
       end
@@ -28,7 +28,7 @@ RSpec.describe Division do
       Timecop.freeze(Division.cutoff_date - 1.day) do
         team = FactoryBot.create(:team)
         older_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
-        younger_student = FactoryBot.create(:student, date_of_birth: 14.years.ago)
+        younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
 
         TeamRosterManaging.add(team, [older_student, younger_student])
 

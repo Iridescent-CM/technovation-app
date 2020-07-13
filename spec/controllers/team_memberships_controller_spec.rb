@@ -15,7 +15,7 @@ RSpec.describe "Team Memberships Controllers" do
         )
         younger_student = FactoryBot.create(
           :student,
-          date_of_birth: 14.years.ago
+          date_of_birth: 13.years.ago
         )
 
         TeamRosterManaging.add(team, [younger_student, older_student])
@@ -43,7 +43,7 @@ RSpec.describe "Team Memberships Controllers" do
           )
           younger_student = FactoryBot.create(
             :student,
-            date_of_birth: 14.years.ago
+            date_of_birth: 13.years.ago
           )
 
           TeamRosterManaging.add(team, [younger_student, older_student])

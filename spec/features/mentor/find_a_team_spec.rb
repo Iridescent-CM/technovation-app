@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "Mentors find a team" do
+  let(:day_before_qfs) { ImportantDates.quarterfinals_judging_begins - 1.day }
+  let(:current_season) { Season.new(day_before_qfs.year) }
+
+  before { allow(Season).to receive(:current).and_return(current_season) }
   before { SeasonToggles.team_building_enabled! }
 
   let!(:available_team) { FactoryBot.create(:team, :geocoded) }
@@ -112,7 +116,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join a team" do
-    Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day) do
+    Timecop.freeze(day_before_qfs) do
       within('#find-team') { click_link "Find a team" }
 
       click_link "Ask to join"
@@ -130,7 +134,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   scenario "request to join the same team again, even if you deleted an earlier request" do
-    Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day) do
+    Timecop.freeze(day_before_qfs) do
       join_request = JoinRequest.create!({
         requestor: mentor,
         team: available_team,
