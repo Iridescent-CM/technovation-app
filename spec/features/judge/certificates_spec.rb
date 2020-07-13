@@ -2,6 +2,12 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.feature "Judge certificates" do
+  let(:season_with_templates) { instance_double(Season, year: 2020) }
+
+  before do
+    allow(Season).to receive(:current).and_return(season_with_templates)
+  end
+
   scenario "no link available when viewing scores is turned off" do
     SeasonToggles.display_scores_off!
 
