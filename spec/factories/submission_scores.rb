@@ -30,6 +30,36 @@ FactoryBot.define do
       approved_at { Time.current }
     end
 
+    trait :score_too_low do
+      after :create do |score|
+        score.update_columns(seems_too_low: true,
+                             completed_too_fast: false,
+                             completed_too_fast_repeat_offense: false,
+                             approved_at: nil,
+                             completed_at: Time.now)
+      end
+    end
+
+    trait :score_completed_too_fast_by_repeat_offender do
+      after :create do |score|
+        score.update_columns(seems_too_low: false,
+                             completed_too_fast: true,
+                             completed_too_fast_repeat_offense: true,
+                             approved_at: nil,
+                             completed_at: Time.now)
+      end
+    end
+
+    trait :score_too_low_and_completed_too_fast_by_repeat_offender do
+      after :create do |score|
+        score.update_columns(seems_too_low: true,
+                             completed_too_fast: true,
+                             completed_too_fast_repeat_offense: true,
+                             approved_at: nil,
+                             completed_at: Time.now)
+      end
+    end
+
     trait :senior do
       association(:team_submission, factory: [:team_submission, :complete, :senior])
     end
