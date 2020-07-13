@@ -10,21 +10,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
   context "Checkbox controls" do
     scenario "Unchecking all boxes" do
-      click_button "Registration"
-      uncheck "Students"
-      uncheck "Mentors"
-      uncheck "Judges"
-      uncheck "Regional Ambassadors"
-
-      click_button "Teams & Submissions"
-      uncheck "Forming teams allowed"
-      uncheck "Team submissions are editable"
-
-      click_button "Events"
-      uncheck "Selecting regional pitch events allowed"
-
-      click_button "Scores & Certificates"
-      uncheck "Scores & Certificates Accessible"
+      uncheck_all_toggles
 
       click_button "Review"
       click_button "Save these settings"
@@ -43,21 +29,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
     end
 
     scenario "Checking all boxes" do
-      click_button "Registration"
-      check "Students"
-      check "Mentors"
-      check "Judges"
-      check "Regional Ambassadors"
-
-      click_button "Teams & Submissions"
-      check "Forming teams allowed"
-      check "Team submissions are editable"
-
-      click_button "Events"
-      check "Selecting regional pitch events allowed"
-
-      click_button "Scores & Certificates"
-      check "Scores & Certificates Accessible"
+      check_all_toggles
 
       click_button "Review"
       click_button "Save these settings"
@@ -206,5 +178,169 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
       expect(SeasonToggles.judging_round).to eq("finished")
     end
+  end
+
+  context "Judging round constraints" do
+    ["Quarterfinals", "Between rounds", "Semifinals"].each do |round|
+      scenario "Setting #{round.downcase} turns off other season toggles" do
+        check_all_toggles
+
+        click_button "Judging"
+        choose round
+
+        click_button "Review"
+        click_button "Save these settings"
+
+        expect(SeasonToggles.student_signup?).to be false
+        expect(SeasonToggles.mentor_signup?).to be false
+        expect(SeasonToggles.judge_signup?).to be false
+        expect(SeasonToggles.regional_ambassador_signup?).to be false
+        expect(SeasonToggles.team_building_enabled?).to be false
+        expect(SeasonToggles.team_submissions_editable?).to be false
+        expect(SeasonToggles.select_regional_pitch_event?).to be false
+        expect(SeasonToggles.display_scores?).to be false
+      end
+
+      scenario "Setting #{round.downcase} shows constraint alerts" do
+        check_all_toggles
+
+        click_button "Judging"
+        choose round
+
+        expect(page).to have_content("Enabling judging has affected other season features.")
+
+        click_button "Registration"
+        expect(page).to have_content("When judging is enabled", count: 4)
+
+        click_button "Teams & Submissions"
+        expect(page).to have_content("When judging is enabled", count: 2)
+
+        click_button "Events"
+        expect(page).to have_content("When judging is enabled", count: 1)
+
+        click_button "Scores & Certificates"
+        expect(page).to have_content("When judging is enabled", count: 1)
+      end
+
+      scenario "Setting #{round.downcase} disables and unchecks other toggle checkboxes" do
+        check_all_toggles
+
+        click_button "Judging"
+        choose round
+
+        click_button "Registration"
+        expect(page).to have_unchecked_field("Students", disabled: true)
+        expect(page).to have_unchecked_field("Mentors", disabled: true)
+        expect(page).to have_unchecked_field("Judges", disabled: true)
+        expect(page).to have_unchecked_field("Regional Ambassadors", disabled: true)
+
+        click_button "Teams & Submissions"
+        expect(page).to have_unchecked_field("Forming teams allowed", disabled: true)
+        expect(page).to have_unchecked_field("Team submissions are editable", disabled: true)
+
+        click_button "Events"
+        expect(page).to have_unchecked_field("Selecting regional pitch events allowed", disabled: true)
+
+        click_button "Scores & Certificates"
+        expect(page).to have_unchecked_field("Scores & Certificates Accessible", disabled: true)
+      end
+    end
+
+    ["Off", "Finished"].each do |round|
+      scenario "Setting #{round.downcase} does not turn off other season toggles" do
+        check_all_toggles
+
+        click_button "Judging"
+        choose round
+
+        click_button "Review"
+        click_button "Save these settings"
+
+        expect(SeasonToggles.student_signup?).to be true
+        expect(SeasonToggles.mentor_signup?).to be true
+        expect(SeasonToggles.judge_signup?).to be true
+        expect(SeasonToggles.regional_ambassador_signup?).to be true
+        expect(SeasonToggles.team_building_enabled?).to be true
+        expect(SeasonToggles.team_submissions_editable?).to be true
+        expect(SeasonToggles.select_regional_pitch_event?).to be true
+        expect(SeasonToggles.display_scores?).to be true
+      end
+
+      scenario "Setting #{round.downcase} hides constraint alerts" do
+        click_button "Judging"
+        choose round
+
+        expect(page).not_to have_content("Enabling judging has affected other season features.")
+
+        click_button "Registration"
+        expect(page).not_to have_content("When judging is enabled")
+
+        click_button "Teams & Submissions"
+        expect(page).not_to have_content("When judging is enabled")
+
+        click_button "Events"
+        expect(page).not_to have_content("When judging is enabled")
+
+        click_button "Scores & Certificates"
+        expect(page).not_to have_content("When judging is enabled")
+      end
+
+      scenario "Setting #{round.downcase} enables other toggle checkboxes" do
+        click_button "Judging"
+        choose round
+
+        click_button "Registration"
+        expect(page).to have_field("Students", disabled: false)
+        expect(page).to have_field("Mentors", disabled: false)
+        expect(page).to have_field("Judges", disabled: false)
+        expect(page).to have_field("Regional Ambassadors", disabled: false)
+
+        click_button "Teams & Submissions"
+        expect(page).to have_field("Forming teams allowed", disabled: false)
+        expect(page).to have_field("Team submissions are editable", disabled: false)
+
+        click_button "Events"
+        expect(page).to have_field("Selecting regional pitch events allowed", disabled: false)
+
+        click_button "Scores & Certificates"
+        expect(page).to have_field("Scores & Certificates Accessible", disabled: false)
+      end
+    end
+  end
+
+  def uncheck_all_toggles
+    click_button "Registration"
+    uncheck "Students"
+    uncheck "Mentors"
+    uncheck "Judges"
+    uncheck "Regional Ambassadors"
+
+    click_button "Teams & Submissions"
+    uncheck "Forming teams allowed"
+    uncheck "Team submissions are editable"
+
+    click_button "Events"
+    uncheck "Selecting regional pitch events allowed"
+
+    click_button "Scores & Certificates"
+    uncheck "Scores & Certificates Accessible"
+  end
+
+  def check_all_toggles
+    click_button "Registration"
+    check "Students"
+    check "Mentors"
+    check "Judges"
+    check "Regional Ambassadors"
+
+    click_button "Teams & Submissions"
+    check "Forming teams allowed"
+    check "Team submissions are editable"
+
+    click_button "Events"
+    check "Selecting regional pitch events allowed"
+
+    click_button "Scores & Certificates"
+    check "Scores & Certificates Accessible"
   end
 end
