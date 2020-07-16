@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Regional Ambassador views scores" do
+RSpec.feature "Chapter Ambassador views scores" do
   before do
     ra = FactoryBot.create(:regional_ambassador, :approved)
     sign_in(ra)

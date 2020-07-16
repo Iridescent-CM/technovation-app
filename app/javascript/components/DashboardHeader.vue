@@ -12,7 +12,7 @@
           {{ regionalProgramName }}
 
           <small>
-            <drop-down label="Meet your Regional Ambassador">
+            <drop-down label="Meet your Chapter Ambassador">
               <slot name="ra-intro" />
             </drop-down>
           </small>

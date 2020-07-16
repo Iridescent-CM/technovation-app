@@ -43,7 +43,7 @@
 
         <div ref="signupFieldAmbassadors" class="review-label">
           <p>
-            Regional Ambassadors
+            Chapter Ambassadors
             <strong
               :class="{
                 on: formData.regional_ambassador_signup,
@@ -204,7 +204,7 @@ export default {
         student_dashboard_text: 'Students',
         mentor_dashboard_text: 'Mentors',
         judge_dashboard_text: 'Judges',
-        regional_ambassador_dashboard_text: 'Regional Ambassadors',
+        regional_ambassador_dashboard_text: 'Chapter Ambassadors',
       },
       surveysFields: {
         student_survey_link: 'Students',

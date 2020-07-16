@@ -23,7 +23,7 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
-        subject: "Your RA has removed #{@team.name} " +
+        subject: "Your Chapter Ambassador has removed #{@team.name} " +
                  "from the regional pitch event: #{@event.name}"
     end
   end
@@ -39,7 +39,7 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
-        subject: "Your RA has added #{@team.name} to the regional pitch event: #{@event.name}"
+        subject: "Your Chapter Ambassador has added #{@team.name} to the regional pitch event: #{@event.name}"
     end
   end
 

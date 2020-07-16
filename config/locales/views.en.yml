@@ -41,9 +41,9 @@ en:
       or: "or"
       survey: "Take our survey"
       privacy_policy: "Privacy Policy"
-      ra_mode: "RA mode"
+      ra_mode: "Chapter Ambassador mode"
       resources: "Resources"
-      regional_ambassador_dashboard: "Regional Ambassador"
+      regional_ambassador_dashboard: "Chapter Ambassador"
       review: "review"
       review_now: "Review now"
       save: "Save"
@@ -255,7 +255,7 @@ en:
           disabled:
             judge: "Judge registration will open in March %{year}"
             mentor: "Mentor registration for %{year} is closed."
-            regional_ambassador: "Regional Ambassador registration for %{year} is closed."
+            regional_ambassador: "Chapter Ambassador registration for %{year} is closed."
             student: "Student registration for %{year} is closed."
           judge: "Use your expertise to rate Technovation apps and provide feedback to teams."
           mentor: "Guide teams as they identify a problem in their community and help them build a real smartphone app to address it."
@@ -264,7 +264,7 @@ en:
         scopes:
           judge: "Judge"
           mentor: "Mentor"
-          regional_ambassador: "Regional Ambassador"
+          regional_ambassador: "Chapter Ambassador"
           student: "Student"
         section_headers:
           account_details: "Account details"
@@ -274,12 +274,12 @@ en:
         signup_link:
           judge: "I am a Judge"
           mentor: "I am a Mentor"
-          regional_ambassador: "Confirm your Regional Ambassador account"
+          regional_ambassador: "Confirm your Chapter Ambassador account"
           student: "I am a Student"
         title:
           judge: "Sign up as a"
           mentor: "Sign up as a"
-          regional_ambassador: "Confirm your Regional Ambassador account"
+          regional_ambassador: "Confirm your Chapter Ambassador account"
           student: "Sign up as a"
 
     student:

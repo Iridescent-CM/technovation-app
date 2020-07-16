@@ -1,5 +1,5 @@
 namespace :ras do
-  desc "List all current season regional ambassador assignments"
+  desc "List all current season chapter ambassador assignments"
   task ra_data_dump: :environment do
     puts "Exporting data..."
 

@@ -54,7 +54,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       fill_in "Students", with: ""
       fill_in "Mentors", with: ""
       fill_in "Judges", with: ""
-      fill_in "Regional ambassadors", with: ""
+      fill_in "Chapter ambassadors", with: ""
 
       click_button "Review"
       click_button "Save these settings"
@@ -70,7 +70,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       fill_in "Students", with: "Student notice"
       fill_in "Mentors", with: "Mentor notice"
       fill_in "Judges", with: "Judge notice"
-      fill_in "Regional ambassadors", with: "Regional ambassador notice"
+      fill_in "Chapter ambassadors", with: "Chapter ambassador notice"
 
       click_button "Review"
       click_button "Save these settings"
@@ -78,7 +78,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       expect(SeasonToggles.dashboard_text(:student)).to eq("Student notice")
       expect(SeasonToggles.dashboard_text(:mentor)).to eq("Mentor notice")
       expect(SeasonToggles.dashboard_text(:judge)).to eq("Judge notice")
-      expect(SeasonToggles.dashboard_text(:regional_ambassador)).to eq("Regional ambassador notice")
+      expect(SeasonToggles.dashboard_text(:regional_ambassador)).to eq("Chapter ambassador notice")
     end
   end
 
@@ -232,7 +232,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         expect(page).to have_unchecked_field("Students", disabled: true)
         expect(page).to have_unchecked_field("Mentors", disabled: true)
         expect(page).to have_unchecked_field("Judges", disabled: true)
-        expect(page).to have_unchecked_field("Regional Ambassadors", disabled: true)
+        expect(page).to have_unchecked_field("Chapter Ambassadors", disabled: true)
 
         click_button "Teams & Submissions"
         expect(page).to have_unchecked_field("Forming teams allowed", disabled: true)
@@ -293,7 +293,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         expect(page).to have_field("Students", disabled: false)
         expect(page).to have_field("Mentors", disabled: false)
         expect(page).to have_field("Judges", disabled: false)
-        expect(page).to have_field("Regional Ambassadors", disabled: false)
+        expect(page).to have_field("Chapter Ambassadors", disabled: false)
 
         click_button "Teams & Submissions"
         expect(page).to have_field("Forming teams allowed", disabled: false)
@@ -313,7 +313,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
     uncheck "Students"
     uncheck "Mentors"
     uncheck "Judges"
-    uncheck "Regional Ambassadors"
+    uncheck "Chapter Ambassadors"
 
     click_button "Teams & Submissions"
     uncheck "Forming teams allowed"
@@ -331,7 +331,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
     check "Students"
     check "Mentors"
     check "Judges"
-    check "Regional Ambassadors"
+    check "Chapter Ambassadors"
 
     click_button "Teams & Submissions"
     check "Forming teams allowed"
