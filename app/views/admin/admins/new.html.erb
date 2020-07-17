@@ -6,17 +6,17 @@
   <%= render 'errors', record: @admin %>
 
   <p>
-    <%= f.label :first_name %>
+    <%= f.label :first_name, for: :account_first_name %>
     <%= f.text_field :first_name, id: :account_first_name %>
   </p>
 
   <p>
-    <%= f.label :last_name %>
+    <%= f.label :last_name, for: :account_last_name %>
     <%= f.text_field :last_name, id: :account_last_name %>
   </p>
 
   <p>
-    <%= f.label :email %>
+    <%= f.label :email, for: :account_email %>
     <%= f.email_field :email, id: :account_email %>
   </p>
 

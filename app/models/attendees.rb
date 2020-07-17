@@ -52,7 +52,7 @@ class Attendees
           a.public_send(sort_column).downcase <=> b.public_send(sort_column).downcase
         }.to_a
     else
-      records = records.order("lower(unaccent(#{table_name}.#{sort_column}))").to_a
+      records = records.order(Arel.sql("lower(unaccent(#{table_name}.#{sort_column}))")).to_a
     end
 
     if exclude_event_attendees

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby "2.6.4"
 
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.2.0'
 # from GitHub security alert
 gem "actionview", ">= 5.1.6.2"
 
@@ -16,10 +16,7 @@ gem 'bootsnap', '~> 1.3', require: false
 gem 'fast_jsonapi', "~> 1.4"
 gem 'httparty', "~> 0.16"
 
-# Patch applied: https://github.com/Iridescent-CM/textacular/commit/99cf5ef6cff0129b75bed261c6dd8e765f04a0c8
-gem 'textacular',
-  git: 'https://github.com/Iridescent-CM/textacular.git',
-  branch: 'change-assemble-query'
+gem 'textacular', '~> 5.1'
 
 gem 'pdf-forms', '~> 1.2'
 

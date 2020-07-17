@@ -24,7 +24,7 @@
       class: "dropzone" do |f| %>
 
       <div class="fallback">
-        <%= f.label :business_plan, "Upload your team's business plan" %>
+        <%= f.label :business_plan, "Upload your team's business plan", for: :team_submission_business_plan %>
         <%= f.file_field :business_plan, id: "team_submission_business_plan" %>
         <%= f.hidden_field :business_plan_cache %>
         <%= f.submit "Upload", class: "button" %>

@@ -45,7 +45,7 @@
               <%= link_to mentor_team_path(team),
                 class: "my-stuff__img my-stuff__img-team",
                 style: "left: #{30 * i}px;" do %>
-                <%= image_tag team.team_photo,
+                <%= image_tag team.team_photo.url,
                   title: team.name,
                   width: 100,
                   height: 100 %>
