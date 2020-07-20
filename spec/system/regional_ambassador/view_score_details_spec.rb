@@ -49,7 +49,7 @@ RSpec.describe "viewing score details page" do
         live_regional_pitch_event.teams << team
       end
 
-      context "when the regional ambassador views the main scores page" do
+      context "when the chapter ambassador views the main scores page" do
         before do
           sign_in(regional_ambassador)
 
@@ -137,7 +137,7 @@ RSpec.describe "viewing score details page" do
     end
 
     context "when the team has not attended an RPE" do
-      context "when the regional ambassador views the main scores page" do
+      context "when the chapter ambassador views the main scores page" do
         before do
           sign_in(regional_ambassador)
 
@@ -158,7 +158,7 @@ RSpec.describe "viewing score details page" do
       SeasonToggles.display_scores_on!
     end
 
-    context "when the regional ambassador views the main scores page" do
+    context "when the chapter ambassador views the main scores page" do
       before do
         sign_in(regional_ambassador)
 

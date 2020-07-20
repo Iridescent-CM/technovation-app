@@ -7,11 +7,11 @@ en:
 
   ambassador_mailer:
     approved:
-      message: "Hey there, good news! Your Regional Ambassador account has been approved!"
+      message: "Hey there, good news! Your Chapter Ambassador account has been approved!"
       next_steps: "For now, there isn't anything for you to do. We are rolling out new RA features soon, and you will get an email when we have updates."
-      subject: "Regional Ambassador Approved Request Follow-up"
+      subject: "Chapter Ambassador Approved Request Follow-up"
     declined:
-      subject: "Regional Ambassador Request Follow-up"
+      subject: "Chapter Ambassador Request Follow-up"
 
   files_mailer:
     export_ready:

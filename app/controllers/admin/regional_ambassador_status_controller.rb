@@ -4,7 +4,7 @@ module Admin
       @regional_ambassador_profile = RegionalAmbassadorProfile.find(params[:id])
       @regional_ambassador_profile.update(regional_ambassador_status_params)
       redirect_to admin_participant_path(@regional_ambassador_profile.account),
-        success: "You set this RA to #{@regional_ambassador_profile.status}"
+        success: "You set this Chapter Ambassador to #{@regional_ambassador_profile.status}"
     end
 
     private

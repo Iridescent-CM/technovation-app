@@ -31,7 +31,7 @@ describe('Admin Content & Settings - Review component', () => {
         student_dashboard_text: 'Students',
         mentor_dashboard_text: 'Mentors',
         judge_dashboard_text: 'Judges',
-        regional_ambassador_dashboard_text: 'Regional Ambassadors',
+        regional_ambassador_dashboard_text: 'Chapter Ambassadors',
       },
       surveysFields: {
         student_survey_link: 'Students',
@@ -218,9 +218,9 @@ describe('Admin Content & Settings - Review component', () => {
           await wrapper.vm.$nextTick()
 
           const notice = wrapper
-            .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
+            .find({ ref: 'noticeFieldHintChapterAmbassadors' })
           const input = wrapper
-            .find({ ref: 'noticeFieldLabelRegionalAmbassadors' })
+            .find({ ref: 'noticeFieldLabelChapterAmbassadors' })
 
           expect(notice.exists()).toBe(true)
           expect(input.exists()).toBe(false)
@@ -233,9 +233,9 @@ describe('Admin Content & Settings - Review component', () => {
           await wrapper.vm.$nextTick()
 
           const notice = wrapper
-            .find({ ref: 'noticeFieldHintRegionalAmbassadors' })
+            .find({ ref: 'noticeFieldHintChapterAmbassadors' })
           const input = wrapper
-            .find({ ref: 'noticeFieldLabelRegionalAmbassadors' })
+            .find({ ref: 'noticeFieldLabelChapterAmbassadors' })
 
           expect(notice.exists()).toBe(false)
           expect(input.text()).toBe('Hello world, this is a test.')

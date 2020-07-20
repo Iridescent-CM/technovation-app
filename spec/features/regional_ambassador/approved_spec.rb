@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Approved regional ambassadors" do
+RSpec.feature "Approved chapter ambassadors" do
   scenario "updating their dashboard blurb" do
     ambassador = FactoryBot.create(:regional_ambassador, :approved)
 

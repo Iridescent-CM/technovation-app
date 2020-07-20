@@ -35,7 +35,7 @@
     </p>
 
     <p>
-      <label for="season_toggles_regional_ambassador_dashboard_text">Regional ambassadors</label>
+      <label for="season_toggles_regional_ambassador_dashboard_text">Chapter ambassadors</label>
       <input
         id="season_toggles_regional_ambassador_dashboard_text"
         type="text"

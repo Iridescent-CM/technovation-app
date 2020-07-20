@@ -151,7 +151,7 @@ Seeded users:
   * username: judge@judge.com
   * password: judge@judge.com
 
-* Regional Ambassador
+* Chapter Ambassador
   * username: ra@ra.com
   * password: ra@ra.com
 

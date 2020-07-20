@@ -169,7 +169,7 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_content(
-      "In the spring, Regional Ambassadors will invite teams " +
+      "In the spring, Chapter Ambassadors will invite teams " +
       "to pitch at a live event."
     )
 
@@ -179,7 +179,7 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_content(
-      "Contact your Regional Ambassador for the due date."
+      "Contact your Chapter Ambassador for the due date."
     )
 
     expect(page).to have_content(
