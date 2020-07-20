@@ -463,7 +463,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionview (>= 5.1.6.2)
   active_record_query_trace (~> 1.5)
   airbrake (~> 6.3)
   autoprefixer-rails (~> 6.7)
