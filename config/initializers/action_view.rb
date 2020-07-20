@@ -21,3 +21,9 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
 
   html.html_safe
 end
+
+module TechnovationApp
+  module FormErrorProc
+    NullType = Struct.new(:value)
+  end
+end
