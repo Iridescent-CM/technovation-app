@@ -43,7 +43,7 @@ document.addEventListener('turbolinks:load', () => {
   }
 
   /**
-   * Regional Ambassador Dashboards
+   * Chapter Ambassador Dashboards
    */
   const studentsSectionElement = document.getElementById('ra-admin-students-section')
 

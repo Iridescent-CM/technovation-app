@@ -447,7 +447,7 @@ class AccountsGrid
       ['Students', 'student'],
       ['Mentors', 'mentor'],
       ['Judges', 'judge'],
-      ['Regional Ambassadors', 'regional_ambassador'],
+      ['Chapter Ambassadors', 'regional_ambassador'],
     ],
     filter_group: "more-specific",
     html: {

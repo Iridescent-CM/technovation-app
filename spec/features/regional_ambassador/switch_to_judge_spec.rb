@@ -28,7 +28,7 @@ feature "RAs switch to judge mode from RA dashboard", :js do
       expect(page).to have_text("Judge Dashboard")
       expect(current_path).to eq(judge_dashboard_path)
 
-      click_link "Switch to RA mode"
+      click_link "Switch to Chapter Ambassador mode"
       expect(page).to have_text("Technovation Ambassador")
       expect(current_path).to eq(regional_ambassador_dashboard_path)
     end
@@ -36,7 +36,7 @@ feature "RAs switch to judge mode from RA dashboard", :js do
     scenario "a judge without an RA profile cannot switch to RA mode" do
       judge = FactoryBot.create(:judge, :onboarded)
       sign_in(judge)
-      expect(page).not_to have_link("Switch to RA mode")
+      expect(page).not_to have_link("Switch to Chapter Ambassador mode")
 
       visit regional_ambassador_dashboard_path
       expect(current_path).to eq(judge_dashboard_path)
@@ -109,7 +109,7 @@ feature "RAs switch to judge mode through mentor dashboard", :js do
       expect(regional_ambassador.is_a_judge?).to be_truthy
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to RA mode")
+      expect(page).to have_link("Switch to Chapter Ambassador mode")
       expect(current_path).to eq(mentor_dashboard_path)
 
       click_link "Switch to Judge mode"
@@ -125,7 +125,7 @@ feature "RAs switch to judge mode through mentor dashboard", :js do
       expect(regional_ambassador.is_a_judge?).to be_falsey
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to RA mode")
+      expect(page).to have_link("Switch to Chapter Ambassador mode")
       expect(current_path).to eq(mentor_dashboard_path)
 
       expect(page).not_to have_link("Switch to Judge mode")
@@ -146,7 +146,7 @@ feature "RAs switch to judge mode through mentor dashboard", :js do
       expect(regional_ambassador.is_a_judge?).to be_truthy
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to RA mode")
+      expect(page).to have_link("Switch to Chapter Ambassador mode")
       expect(current_path).to eq(mentor_dashboard_path)
 
       expect(page).not_to have_link("Switch to Judge mode")
@@ -160,7 +160,7 @@ feature "RAs switch to judge mode through mentor dashboard", :js do
       expect(regional_ambassador.is_a_judge?).to be_falsey
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to RA mode")
+      expect(page).to have_link("Switch to Chapter Ambassador mode")
       expect(current_path).to eq(mentor_dashboard_path)
 
       expect(page).not_to have_link("Switch to Judge mode")

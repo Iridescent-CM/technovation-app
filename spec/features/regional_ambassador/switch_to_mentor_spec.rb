@@ -8,7 +8,7 @@ RSpec.feature "RAs switch to mentor mode", :js do
 
     sign_in(ra)
     click_link "Mentor Mode"
-    expect(page).to have_link("Switch to RA mode")
+    expect(page).to have_link("Switch to Chapter Ambassador mode")
 
     expect(current_path).to eq(mentor_dashboard_path)
   end
@@ -18,7 +18,7 @@ RSpec.feature "RAs switch to mentor mode", :js do
 
     sign_in(ra)
     click_link "Mentor Mode"
-    expect(page).to have_link("Switch to RA mode")
+    expect(page).to have_link("Switch to Chapter Ambassador mode")
 
     expect(current_path).to eq(mentor_dashboard_path)
   end
@@ -28,7 +28,7 @@ RSpec.feature "RAs switch to mentor mode", :js do
 
     sign_in(ra)
     click_link "Mentor Mode"
-    click_link "RA mode"
+    click_link "Chapter Ambassador mode"
 
     expect(current_path).to eq(regional_ambassador_dashboard_path)
   end
@@ -36,7 +36,7 @@ RSpec.feature "RAs switch to mentor mode", :js do
   scenario "a mentor without an RA profile cannot switch to RA mode" do
     mentor = FactoryBot.create(:mentor, :onboarded)
     sign_in(mentor)
-    expect(page).not_to have_link("RA mode")
+    expect(page).not_to have_link("Chapter Ambassador mode")
 
     visit regional_ambassador_dashboard_path
     expect(current_path).to eq(mentor_dashboard_path)
