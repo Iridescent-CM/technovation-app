@@ -17,11 +17,11 @@
         student_signup: <%= SeasonToggles.signup_enabled?('student') %>,
         mentor_signup: <%= SeasonToggles.signup_enabled?('mentor') %>,
         judge_signup: <%= SeasonToggles.signup_enabled?('judge') %>,
-        regional_ambassador_signup: <%= SeasonToggles.signup_enabled?('regional_ambassador') %>,
+        chapter_ambassador_signup: <%= SeasonToggles.signup_enabled?('chapter_ambassador') %>,
         student_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('student')) %>',
         mentor_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('mentor')) %>',
         judge_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('judge')) %>',
-        regional_ambassador_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('regional_ambassador')) %>',
+        chapter_ambassador_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('chapter_ambassador')) %>',
         student_survey_link: {
           text: '<%= escape_single_quotes(SeasonToggles.survey_link('student', :text)) %>',
           url: '<%= escape_single_quotes(SeasonToggles.survey_link('student', :url)) %>',

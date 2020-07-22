@@ -1,5 +1,5 @@
-import Event from 'ra/events/Event'
-import Attendee from 'ra/events/Attendee'
+import Event from 'chapter_ambassador/events/Event'
+import Attendee from 'chapter_ambassador/events/Attendee'
 
 test('resultReadyForList ignores double entry', () => {
   let event = new Event({ id: 1 })

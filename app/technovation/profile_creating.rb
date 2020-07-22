@@ -6,7 +6,7 @@ class ProfileCreating
   def initialize(profile, controller, scope = nil)
     @profile = profile
     @scope = (scope || profile.account.scope_name)
-               .to_s.sub(/^\w+_reg/, "reg")
+               .to_s.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")
     @controller = controller
   end
 
@@ -16,7 +16,7 @@ class ProfileCreating
 
   def execute
     icon_path = case scope.to_sym
-                when :regional_ambassador
+                when :chapter_ambassador
                   ""
                 else
                   ActionController::Base.helpers.asset_path(

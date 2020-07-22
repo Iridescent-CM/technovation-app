@@ -1,11 +1,11 @@
-<% admin_ra ||= false %>
+<% admin_chapter_ambassador ||= false %>
 
 <% if team.mentors.any? %>
   <ul class="reset">
     <%= render partial: "teams/member",
       collection: team.mentors,
       locals: {
-        admin_ra: admin_ra,
+        admin_chapter_ambassador: admin_chapter_ambassador,
       } %>
   </ul>
 <% else %>
@@ -19,7 +19,7 @@
 <div class="grid grid--bleed">
   <div class="grid__col-auto">
     <% if SeasonToggles.team_building_enabled? %>
-      <% unless admin_ra %>
+      <% unless admin_chapter_ambassador %>
         <p>
           You can add as many mentors as your team needs!
         </p>
@@ -53,7 +53,7 @@
   </div>
 </div>
 
-<% unless admin_ra %>
+<% unless admin_chapter_ambassador %>
   <%= render "teams/pending_invites",
     invites: team.pending_mentor_invites %>
 

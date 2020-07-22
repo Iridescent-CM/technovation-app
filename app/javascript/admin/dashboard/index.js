@@ -45,7 +45,7 @@ document.addEventListener('turbolinks:load', () => {
   /**
    * Chapter Ambassador Dashboards
    */
-  const studentsSectionElement = document.getElementById('ra-admin-students-section')
+  const studentsSectionElement = document.getElementById('chapter-ambassador-admin-students-section')
 
   if (studentsSectionElement) {
     new Vue({
@@ -57,7 +57,7 @@ document.addEventListener('turbolinks:load', () => {
     })
   }
 
-  const mentorsSectionElement = document.getElementById('ra-admin-mentors-section')
+  const mentorsSectionElement = document.getElementById('chapter-ambassador-admin-mentors-section')
 
   if (mentorsSectionElement) {
     new Vue({

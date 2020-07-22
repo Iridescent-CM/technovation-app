@@ -4,7 +4,7 @@
       default-title="Student Dashboard"
       :resource-links="resourceLinks"
     >
-      <div slot="ra-intro"><slot name="ra-intro" /></div>
+      <div slot="chapter-ambassador-intro"><slot name="chapter-ambassador-intro" /></div>
     </dashboard-header>
 
     <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">

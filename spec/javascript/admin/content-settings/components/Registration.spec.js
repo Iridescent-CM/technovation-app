@@ -34,7 +34,7 @@ describe('Admin Content & Settings - Registration component', () => {
           student: 'Students',
           mentor: 'Mentors',
           judge: 'Judges',
-          regional_ambassador: 'Chapter Ambassadors',
+          chapter_ambassador: 'Chapter Ambassadors',
         },
       })
     })

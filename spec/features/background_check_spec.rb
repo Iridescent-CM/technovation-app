@@ -15,10 +15,10 @@ RSpec.feature "background checks" do
     expect(mentor.reload.background_check).to be_present
   end
 
-  scenario "Complete an RA background check", :vcr do
-    ra = FactoryBot.create(:regional_ambassador, :approved, :geocoded)
-    ra.background_check.destroy
-    sign_in(ra)
+  scenario "Complete a chapter ambassador background check", :vcr do
+    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :geocoded)
+    chapter_ambassador.background_check.destroy
+    sign_in(chapter_ambassador)
     click_link "Submit Background Check"
 
     fill_in "Zipcode", with: 60622
@@ -26,7 +26,7 @@ RSpec.feature "background checks" do
     fill_in "Driver license state", with: "CA"
     click_button "Submit"
 
-    expect(ra.reload.background_check).to be_present
+    expect(chapter_ambassador.reload.background_check).to be_present
   end
 
   [16, 17].each do |age|

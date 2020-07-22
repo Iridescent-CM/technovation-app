@@ -81,7 +81,7 @@
 <% end %>
 
 <% if (current_account.is_admin? && profile.age >= 14) ||
-        (current_account.is_ra? && profile.age >= 18) %>
+        (current_account.is_chapter_ambassador? && profile.age >= 18) %>
   <div class="panel">
     <%= link_to "Convert to a mentor",
       [

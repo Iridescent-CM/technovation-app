@@ -11,9 +11,9 @@ RSpec.describe ConsentWaiversController do
 
   describe "GET #new" do
     it "assigns the account to the consent" do
-      regional_ambassador = FactoryBot.create(:regional_ambassador)
-      get :new, params: { token: regional_ambassador.account.consent_token }
-      expect(assigns[:consent_waiver].account_consent_token).to eq(regional_ambassador.account.consent_token)
+      chapter_ambassador = FactoryBot.create(:chapter_ambassador)
+      get :new, params: { token: chapter_ambassador.account.consent_token }
+      expect(assigns[:consent_waiver].account_consent_token).to eq(chapter_ambassador.account.consent_token)
     end
   end
 end

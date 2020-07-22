@@ -24,7 +24,7 @@ es-MX:
             existing_password:
               invalid: "es necesario cambiar tu correo electrónico o tu contraseña"
 
-        regional_ambassador_account:
+        chapter_ambassador_account:
           attributes:
             existing_password:
               invalid: "es necesario para cambiar tu correo electrónico o tu contraseña"

@@ -122,7 +122,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
               student_dashboard_text: 'Student dashboard text',
               mentor_dashboard_text: 'Mentor dashboard text',
               judge_dashboard_text: 'Judge dashboard text',
-              regional_ambassador_dashboard_text: 'RA dashboard text',
+              chapter_ambassador_dashboard_text: 'Chapter ambassador dashboard text',
               student_survey_link: {
                 text: 'Student Link',
                 url: 'http://google.com',
@@ -150,11 +150,11 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         student_signup: 1,
         mentor_signup: 0,
         judge_signup: 0,
-        regional_ambassador_signup: 0,
+        chapter_ambassador_signup: 0,
         student_dashboard_text: 'Student dashboard text',
         mentor_dashboard_text: 'Mentor dashboard text',
         judge_dashboard_text: 'Judge dashboard text',
-        regional_ambassador_dashboard_text: 'RA dashboard text',
+        chapter_ambassador_dashboard_text: 'Chapter ambassador dashboard text',
         student_survey_link: {
           text: 'Student Link',
           url: 'http://google.com',
@@ -186,7 +186,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           student_dashboard_text: 'Student',
           mentor_dashboard_text: 'Mentor',
           judge_dashboard_text: 'Judge',
-          regional_ambassador_dashboard_text: 'RA',
+          chapter_ambassador_dashboard_text: 'Chapter Ambassador',
           student_survey_link: {
             text: 'Student Link',
             url: 'http://google.com',
@@ -215,7 +215,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         expect(inputs[4].outerHTML)
           .toEqual('<input type="hidden" name="season_toggles[judge_dashboard_text]" value="Judge">')
         expect(inputs[5].outerHTML)
-          .toEqual('<input type="hidden" name="season_toggles[regional_ambassador_dashboard_text]" value="RA">')
+          .toEqual('<input type="hidden" name="season_toggles[chapter_ambassador_dashboard_text]" value="Chapter Ambassador">')
         expect(inputs[6].outerHTML)
           .toEqual('<input type="hidden" name="season_toggles[student_survey_link][text]" value="Student Link">')
         expect(inputs[7].outerHTML)
@@ -248,11 +248,11 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
                 student_signup: 1,
                 mentor_signup: 0,
                 judge_signup: 0,
-                regional_ambassador_signup: 0,
+                chapter_ambassador_signup: 0,
                 student_dashboard_text: 'Student',
                 mentor_dashboard_text: 'Mentor',
                 judge_dashboard_text: 'Judge',
-                regional_ambassador_dashboard_text: 'RA',
+                chapter_ambassador_dashboard_text: 'Chapter Ambassador',
                 student_survey_link: {
                   text: 'Student Link',
                   url: 'http://google.com',
@@ -287,11 +287,11 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           student_signup: true,
           mentor_signup: false,
           judge_signup: false,
-          regional_ambassador_signup: false,
+          chapter_ambassador_signup: false,
           student_dashboard_text: 'Student',
           mentor_dashboard_text: 'Mentor',
           judge_dashboard_text: 'Judge',
-          regional_ambassador_dashboard_text: 'RA',
+          chapter_ambassador_dashboard_text: 'Chapter Ambassador',
           student_survey_link: {
             text: 'Student Link',
             url: 'http://google.com',

@@ -8,7 +8,7 @@ class NotifyAmbassadorOfJudgeJoinedEventJob < ActiveJob::Base
 
     judge = JudgeProfile.find(judge_id)
 
-    if options[:ra_added]
+    if options[:chapter_ambassador_added]
       AmbassadorMailer.confirm_judge_added(
         event.ambassador.account,
         event,

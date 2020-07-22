@@ -89,9 +89,9 @@ RSpec.describe TeamSubmission do
       chi_team = FactoryBot.create(:team, :chicago)
       chi = FactoryBot.create(:submission, team: chi_team)
 
-      ra = FactoryBot.create(:ambassador, :chicago)
+      chapter_ambassador = FactoryBot.create(:ambassador, :chicago)
 
-      expect(TeamSubmission.in_region(ra)).to contain_exactly(chi)
+      expect(TeamSubmission.in_region(chapter_ambassador)).to contain_exactly(chi)
     end
 
     it "works with secondary region searches" do
@@ -104,12 +104,12 @@ RSpec.describe TeamSubmission do
       chi_team = FactoryBot.create(:team, :chicago)
       chi = FactoryBot.create(:submission, team: chi_team)
 
-      ra = FactoryBot.create(
+      chapter_ambassador = FactoryBot.create(
         :ambassador,
         :chicago,
         secondary_regions: ["CA, US"])
 
-      expect(TeamSubmission.in_region(ra)).to contain_exactly(chi, la)
+      expect(TeamSubmission.in_region(chapter_ambassador)).to contain_exactly(chi, la)
     end
   end
 

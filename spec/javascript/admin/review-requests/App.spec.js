@@ -60,7 +60,7 @@ describe('admin/review-requests/App.vue', () => {
           type: "request",
           attributes: {
             requestor_avatar: "https://placekitten.com/g/100/100",
-            requestor_name: "RA Ambassador",
+            requestor_name: "chapter ambassador Ambassador",
             requestor_meta: {
               regions: [
                 "Ontario, CA",

@@ -13,16 +13,16 @@ export default {
       student_signup: Boolean(!judgingRoundEnabled && state.student_signup),
       mentor_signup: Boolean(!judgingRoundEnabled && state.mentor_signup),
       judge_signup: Boolean(!judgingRoundEnabled && state.judge_signup),
-      regional_ambassador_signup: Boolean(
-        !judgingRoundEnabled && state.regional_ambassador_signup
+      chapter_ambassador_signup: Boolean(
+        !judgingRoundEnabled && state.chapter_ambassador_signup
       ),
 
       // Notices
       student_dashboard_text: state.student_dashboard_text,
       mentor_dashboard_text: state.mentor_dashboard_text,
       judge_dashboard_text: state.judge_dashboard_text,
-      regional_ambassador_dashboard_text: state
-        .regional_ambassador_dashboard_text,
+      chapter_ambassador_dashboard_text: state
+        .chapter_ambassador_dashboard_text,
 
       // Surveys
       student_survey_link: {

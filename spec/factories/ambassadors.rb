@@ -1,10 +1,9 @@
 FactoryBot.define do
-  factory :regional_ambassador_profile, aliases: [
+  factory :chapter_ambassador_profile, aliases: [
     :ambassador,
-    :regional_ambassador,
+    :chapter_ambassador,
     :ambassador_account,
-    :regional_ambassador_account,
-    :ra,
+    :chapter_ambassador_account,
   ] do
     organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
@@ -17,9 +16,9 @@ FactoryBot.define do
       city { "Chicago" }
       state_province { "IL" }
       country { "US" }
-      sequence(:email) { |n| "factory-ra-#{n}@example.com" }
+      sequence(:email) { |n| "factory-chapter-ambassador-#{n}@example.com" }
       password { nil }
-      first_name { "RA" }
+      first_name { "Chapter Ambassador" }
     end
 
     trait :chicago do

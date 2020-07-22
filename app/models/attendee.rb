@@ -28,7 +28,7 @@ class Attendee
 
     if record.ambassador_route_key
       base_links[:self] = context.send(
-        "regional_ambassador_#{record.ambassador_route_key}_path",
+        "chapter_ambassador_#{record.ambassador_route_key}_path",
         record,
         { allow_out_of_region: true },
       )
@@ -37,7 +37,7 @@ class Attendee
     if record.respond_to?(:submission)
       base_links = base_links.merge({
         submission: context.send(
-          "regional_ambassador_team_submission_path",
+          "chapter_ambassador_team_submission_path",
           record.submission,
           { allow_out_of_region: true },
         ),

@@ -47,7 +47,7 @@ export default {
         student: 'Students',
         mentor: 'Mentors',
         judge: 'Judges',
-        regional_ambassador: 'Chapter Ambassadors',
+        chapter_ambassador: 'Chapter Ambassadors',
       },
     }
   },

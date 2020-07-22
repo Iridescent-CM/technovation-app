@@ -66,7 +66,7 @@
 
         <div class="grid__col-4">
           <%= render(
-            "admin/participants/#{@account.scope_name.sub(/^\w+_r/, "r")}_profile",
+            "admin/participants/#{@account.scope_name.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")}_profile",
             profile: @account.public_send("#{@account.scope_name}_profile")
           ) %>
 
@@ -75,14 +75,14 @@
             class: "button secondary small" %>
         </div>
 
-        <% if @account.regional_ambassador_profile || @account.mentor_profile %>
+        <% if @account.chapter_ambassador_profile || @account.mentor_profile %>
           <div class="grid__col-12 grid__col--bleed-y">
             <dl>
               <dt><%= t('models.profile.bio') %></dt>
 
               <dd>
                 <%= simple_format (
-                  @account.regional_ambassador_profile || @account.mentor_profile
+                  @account.chapter_ambassador_profile || @account.mentor_profile
                 ).bio %>
               </dd>
             </dl>
@@ -123,9 +123,9 @@
         profile: @account.student_profile %>
     <% end %>
 
-    <% if @account.regional_ambassador_profile %>
-      <%= render 'admin/participants/ra_debugging',
-        profile: @account.regional_ambassador_profile %>
+    <% if @account.chapter_ambassador_profile %>
+      <%= render 'admin/participants/chapter_ambassador_debugging',
+        profile: @account.chapter_ambassador_profile %>
     <% end %>
 
     <% if @account.mentor_profile %>

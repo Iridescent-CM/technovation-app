@@ -5,9 +5,9 @@ RSpec.describe SubmissionScore do
     it "works with primary region searches" do
       FactoryBot.create(:submission_score, :los_angeles)
       chi = FactoryBot.create(:submission_score, :chicago)
-      ra = FactoryBot.create(:ambassador, :chicago)
+      chapter_ambassador = FactoryBot.create(:ambassador, :chicago)
 
-      expect(SubmissionScore.in_region(ra)).to contain_exactly(chi)
+      expect(SubmissionScore.in_region(chapter_ambassador)).to contain_exactly(chi)
     end
 
     it "works with secondary region searches" do
@@ -15,12 +15,12 @@ RSpec.describe SubmissionScore do
       la = FactoryBot.create(:submission_score, :los_angeles)
       chi = FactoryBot.create(:submission_score, :chicago)
 
-      ra = FactoryBot.create(
+      chapter_ambassador = FactoryBot.create(
         :ambassador,
         :chicago,
         secondary_regions: ["CA, US"])
 
-      expect(SubmissionScore.in_region(ra)).to contain_exactly(chi, la)
+      expect(SubmissionScore.in_region(chapter_ambassador)).to contain_exactly(chi, la)
     end
   end
 

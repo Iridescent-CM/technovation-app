@@ -1,0 +1,16 @@
+<% provide :title, "Chapter Ambassador Data • Participants" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @accounts_grid,
+  form_url: chapter_ambassador_participants_path,
+  model_name: "account",
+  scope: :chapter_ambassador do %>
+
+  <p class="float-right">
+    <%= link_to 'Find a missing participant',
+      new_chapter_ambassador_missing_participant_search_path,
+      data: { turbolinks: false },
+      class: "button small subnav--help-link" %>
+  </p>
+
+<% end %>

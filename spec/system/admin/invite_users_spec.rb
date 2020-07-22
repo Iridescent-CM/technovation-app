@@ -5,7 +5,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
   before { sign_in(admin) }
 
-  %i{judge regional_ambassador mentor student}.each do |scope|
+  %i{judge chapter_ambassador mentor student}.each do |scope|
     it "Inviting a user with profile type #{scope}" do
       email = "#{scope}@example.com"
 
@@ -73,7 +73,7 @@ RSpec.describe "Admins invite users to signup", :js do
         select_gender(:random)
         fill_in "School or company name", with: "John Hughes High"
         fill_in "Job title", with: "Janitor / Man of the Year"
-      when :regional_ambassador
+      when :chapter_ambassador
         select_gender(:random)
         fill_in "Organization/company name", with: "John Hughes High"
         fill_in "Job title", with: "Janitor / Man of the Year"
@@ -85,7 +85,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
       click_button "Create Your Account"
 
-      if scope != :regional_ambassador
+      if scope != :chapter_ambassador
         expect(page).to have_current_path(
           edit_terms_agreement_path, ignore_query: true
         )
@@ -121,9 +121,9 @@ RSpec.describe "Admins invite users to signup", :js do
       expect(invite).to be_registered
       expect(invite.account).to eq(Account.last)
 
-      if scope == :regional_ambassador
+      if scope == :chapter_ambassador
         expect(page).to have_current_path(send("#{scope}_location_details_path"), ignore_query: true)
-        expect(RegionalAmbassadorProfile.last).to be_approved
+        expect(ChapterAmbassadorProfile.last).to be_approved
       end
     end
 
@@ -156,8 +156,8 @@ RSpec.describe "Admins invite users to signup", :js do
     end
   end
 
-  it "invite an RA who has an existing mentor account" do
-    email = "ra@example.com"
+  it "invite a chapter ambassador who has an existing mentor account" do
+    email = "chapter_ambassador@example.com"
     mentor = FactoryBot.create(
       :mentor,
       :onboarded,
@@ -166,13 +166,13 @@ RSpec.describe "Admins invite users to signup", :js do
     expect(mentor.account.reload.email).to eq(email)
 
     UserInvitation.create!(
-      profile_type: "regional_ambassador",
+      profile_type: "chapter_ambassador",
       email: email,
     )
 
     token = UserInvitation.last.admin_permission_token
 
-    visit regional_ambassador_signup_path(admin_permission_token: token)
+    visit chapter_ambassador_signup_path(admin_permission_token: token)
 
     birthdate = Date.today - 25.years
 
@@ -192,14 +192,14 @@ RSpec.describe "Admins invite users to signup", :js do
 
     click_button "Create Your Account"
 
-    expect(current_path).to eq(regional_ambassador_location_details_path)
+    expect(current_path).to eq(chapter_ambassador_location_details_path)
 
     invite = UserInvitation.last
     expect(invite.account.mentor_profile).to eq(mentor)
   end
 
-  it "invite an RA who has an existing judge account" do
-    email = "ra@example.com"
+  it "invite a chapter ambassador who has an existing judge account" do
+    email = "chapter_ambassador@example.com"
     judge = FactoryBot.create(
       :judge,
       account: FactoryBot.create(:account, email: email)
@@ -207,13 +207,13 @@ RSpec.describe "Admins invite users to signup", :js do
     expect(judge.account.reload.email).to eq(email)
 
     UserInvitation.create!(
-      profile_type: "regional_ambassador",
+      profile_type: "chapter_ambassador",
       email: email,
     )
 
     token = UserInvitation.last.admin_permission_token
 
-    visit regional_ambassador_signup_path(
+    visit chapter_ambassador_signup_path(
       admin_permission_token: token,
       host: Capybara.app_host
     )
@@ -238,7 +238,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
     click_button "Create Your Account"
 
-    expect(current_path).to eq(regional_ambassador_location_details_path)
+    expect(current_path).to eq(chapter_ambassador_location_details_path)
 
     invite = UserInvitation.last
     expect(invite.account.reload.judge_profile).to eq(judge)

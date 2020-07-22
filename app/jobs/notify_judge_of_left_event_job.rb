@@ -8,7 +8,7 @@ class NotifyJudgeOfLeftEventJob < ActiveJob::Base
 
     judge = JudgeProfile.find(judge_id)
 
-    if options[:ra_removed]
+    if options[:chapter_ambassador_removed]
       JudgeMailer.notify_removed_event(judge, event).deliver_now
     else
       JudgeMailer.confirm_left_event(judge, event).deliver_now

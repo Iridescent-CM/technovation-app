@@ -38,12 +38,12 @@ class Account < ActiveRecord::Base
   has_one :student_profile, dependent: :destroy
   has_one :mentor_profile, dependent: :destroy
   has_one :judge_profile, dependent: :destroy
-  has_one :regional_ambassador_profile, dependent: :destroy
+  has_one :chapter_ambassador_profile, dependent: :destroy
 
-  RegionalAmbassadorProfile.statuses.keys.each do |status|
-    has_one "#{status}_regional_ambassador_profile".to_sym,
+  ChapterAmbassadorProfile.statuses.keys.each do |status|
+    has_one "#{status}_chapter_ambassador_profile".to_sym,
       -> { send(status) },
-      class_name: "RegionalAmbassadorProfile",
+      class_name: "ChapterAmbassadorProfile",
       dependent: :destroy
   end
 
@@ -178,12 +178,12 @@ class Account < ActiveRecord::Base
   scope :live_event_eligible, ->(event) {
     includes(:judge_profile)
       .references(:judge_profiles)
-      .left_outer_joins(:mentor_profile, :regional_ambassador_profile)
+      .left_outer_joins(:mentor_profile, :chapter_ambassador_profile)
       .where(
         "judge_profiles.id IS NOT NULL AND " +
         # temporary fix, see: https://github.com/Iridescent-CM/technovation-app/issues/2111
         # "mentor_profiles.id IS NULL AND " +
-        "regional_ambassador_profiles.id IS NULL"
+        "chapter_ambassador_profiles.id IS NULL"
       )
   }
 
@@ -330,18 +330,18 @@ class Account < ActiveRecord::Base
       Team.none
   end
 
-  def regional_ambassador
-    ra = ::NullRegionalAmbassador.new
+  def chapter_ambassador
+    chapter_ambassador = ::NullChapterAmbassador.new
 
     if valid_address?
-      ra = find_regional_ambassador_by_state
+      chapter_ambassador = find_chapter_ambassador_by_state
 
-      unless ra.present?
-        ra = find_regional_ambassador_by_country
+      unless chapter_ambassador.present?
+        chapter_ambassador = find_chapter_ambassador_by_country
       end
     end
 
-    ra
+    chapter_ambassador
   end
 
   scope :not_staff, -> {
@@ -391,8 +391,8 @@ class Account < ActiveRecord::Base
       .joins(student_profile: :current_teams).pluck(:id)
 
 
-    left_outer_joins(:judge_profile, :regional_ambassador_profile)
-      .where("judge_profiles.id IS NULL AND regional_ambassador_profiles.id IS NULL")
+    left_outer_joins(:judge_profile, :chapter_ambassador_profile)
+      .where("judge_profiles.id IS NULL AND chapter_ambassador_profiles.id IS NULL")
       .where.not(id: mentor_ids + student_ids)
   }
 
@@ -571,8 +571,8 @@ class Account < ActiveRecord::Base
   def profile_school_company_name
     if student_profile
       student_profile.school_name
-    elsif regional_ambassador_profile
-      regional_ambassador_profile.organization_company_name
+    elsif chapter_ambassador_profile
+      chapter_ambassador_profile.organization_company_name
     elsif mentor_profile
       mentor_profile.school_company_name
     elsif judge_profile
@@ -605,8 +605,8 @@ class Account < ActiveRecord::Base
   def profile_job_title
     if student_profile
       false
-    elsif regional_ambassador_profile
-      regional_ambassador_profile.job_title
+    elsif chapter_ambassador_profile
+      chapter_ambassador_profile.job_title
     elsif mentor_profile
       mentor_profile.job_title
     elsif judge_profile
@@ -635,8 +635,8 @@ class Account < ActiveRecord::Base
   def events
     judge_profile && judge_profile.events ||
 
-      regional_ambassador_profile &&
-        regional_ambassador_profile.regional_pitch_events
+      chapter_ambassador_profile &&
+        chapter_ambassador_profile.regional_pitch_events
   end
 
   def in_event?(event)
@@ -704,14 +704,14 @@ class Account < ActiveRecord::Base
   def can_be_a_mentor?(**options)
     !mentor_profile.present? &&
       (judge_profile.present? ||
-        regional_ambassador_profile.present? ||
+        chapter_ambassador_profile.present? ||
           (options[:admin] && student_profile.present? && age >= MINIMUM_MENTOR_AGE))
   end
 
   def can_be_a_judge?
     not student_profile.present? and
       not JUDGE_BLOCKLISTED_ACCOUNT_IDS.include?(id) and
-        regional_ambassador_profile.present? or
+        chapter_ambassador_profile.present? or
           mentor_profile.present?
   end
 
@@ -728,9 +728,9 @@ class Account < ActiveRecord::Base
   end
 
   def is_an_ambassador?
-    regional_ambassador_profile.present?
+    chapter_ambassador_profile.present?
   end
-  alias :is_ra? :is_an_ambassador?
+  alias :is_chapter_ambassador? :is_an_ambassador?
 
   def is_admin?
     admin_profile.present?
@@ -738,7 +738,7 @@ class Account < ActiveRecord::Base
 
   def can_switch_to_judge?
     if is_an_ambassador?
-      !!ENV.fetch("ENABLE_RA_SWITCH_TO_JUDGE", false) && is_a_judge?
+      !!ENV.fetch("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", false) && is_a_judge?
     elsif is_a_mentor?
       !!ENV.fetch("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", false)
     else
@@ -769,8 +769,8 @@ class Account < ActiveRecord::Base
       student_profile.valid?
     elsif mentor_profile
       mentor_profile.valid?
-    elsif regional_ambassador_profile
-      regional_ambassador_profile.valid?
+    elsif chapter_ambassador_profile
+      chapter_ambassador_profile.valid?
     elsif judge_profile
       judge_profile.valid?
     end
@@ -808,8 +808,8 @@ class Account < ActiveRecord::Base
       judge_profile.company_name
     elsif mentor_profile
       mentor_profile.school_company_name
-    elsif regional_ambassador_profile
-      regional_ambassador_profile.organization_company_name
+    elsif chapter_ambassador_profile
+      chapter_ambassador_profile.organization_company_name
     end
   end
 
@@ -862,9 +862,9 @@ class Account < ActiveRecord::Base
     # TODO: this doesn't work well for accounts with multiple scopes
     if module_name and module_name === "judge"
       "judge"
-    elsif regional_ambassador_profile.present? and
-            regional_ambassador_profile.approved?
-      "regional_ambassador"
+    elsif chapter_ambassador_profile.present? and
+            chapter_ambassador_profile.approved?
+      "chapter_ambassador"
     elsif mentor_profile.present?
       "mentor"
     elsif student_profile.present?
@@ -873,8 +873,8 @@ class Account < ActiveRecord::Base
       "judge"
     elsif admin_profile.present?
       "admin"
-    elsif regional_ambassador_profile.present?
-      "#{regional_ambassador_profile.status}_regional_ambassador"
+    elsif chapter_ambassador_profile.present?
+      "#{chapter_ambassador_profile.status}_chapter_ambassador"
     else
       "public"
     end
@@ -1010,13 +1010,13 @@ class Account < ActiveRecord::Base
     !student_profile.present?
   end
 
-  def find_regional_ambassador_by(query)
+  def find_chapter_ambassador_by(query)
     results = Account.current
-      .joins(:approved_regional_ambassador_profile)
+      .joins(:approved_chapter_ambassador_profile)
       .not_staff
       .where(
-        "regional_ambassador_profiles.intro_summary NOT IN ('')
-        AND regional_ambassador_profiles.intro_summary IS NOT NULL"
+        "chapter_ambassador_profiles.intro_summary NOT IN ('')
+        AND chapter_ambassador_profiles.intro_summary IS NOT NULL"
       )
       .where(query)
 
@@ -1032,24 +1032,24 @@ class Account < ActiveRecord::Base
     end
 
     if account
-      account.regional_ambassador_profile
+      account.chapter_ambassador_profile
     else
-      ::NullRegionalAmbassador.new
+      ::NullChapterAmbassador.new
     end
   end
 
-  def find_regional_ambassador_by_state
-    find_regional_ambassador_by({
+  def find_chapter_ambassador_by_state
+    find_chapter_ambassador_by({
       "accounts.country" => country_code,
       "accounts.state_province" => state_code
     })
   end
 
-  def find_regional_ambassador_by_country
+  def find_chapter_ambassador_by_country
     if country == "US"
-      ::NullRegionalAmbassador.new
+      ::NullChapterAmbassador.new
     else
-      find_regional_ambassador_by({
+      find_chapter_ambassador_by({
         "accounts.country" => country_code
       })
     end

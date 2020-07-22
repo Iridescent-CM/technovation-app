@@ -6,7 +6,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    ambassador = RegionalAmbassadorProfile.find(job.arguments.first)
+    ambassador = ChapterAmbassadorProfile.find(job.arguments.first)
 
     db_job = Job.create!(
       owner: ambassador,
@@ -18,7 +18,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
   end
 
   after_perform do |job|
-    ambassador = RegionalAmbassadorProfile.find(job.arguments.first)
+    ambassador = ChapterAmbassadorProfile.find(job.arguments.first)
 
     db_job = Job.find_by(job_id: job.job_id)
     db_job.update_column(:status, "complete")
@@ -27,7 +27,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
   end
 
   def perform(ambassador_id, event_id, context_klass_name, list_type)
-    ambassador = RegionalAmbassadorProfile.find(ambassador_id)
+    ambassador = ChapterAmbassadorProfile.find(ambassador_id)
     event = RegionalPitchEvent.find(event_id)
 
     filepath = "./tmp/#{event.name.parameterize}-#{list_type}.csv"

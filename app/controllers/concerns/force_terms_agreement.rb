@@ -9,7 +9,7 @@ module ForceTermsAgreement
   def require_terms_agreement
     return if request.xhr?
 
-    return if current_scope == "admin" || current_scope == "regional_ambassador"
+    return if current_scope == "admin" || current_scope == "chapter_ambassador"
 
     if logged_in_and_has_profile && !current_account.terms_agreed? && !on_data_agreement_form
       redirect_to edit_terms_agreement_path,

@@ -48,13 +48,13 @@ RSpec.describe ResetVulnerablePasswords do
     )
   }
 
-  let!(:ra) {
+  let!(:chapter_ambassador) {
     FactoryBot.create(
-      :ra,
+      :chapter_ambassador,
       account: FactoryBot.create(
         :account,
-        email: "ra@example.com",
-        password: "ra@example.com",
+        email: "chapter_ambassador@example.com",
+        password: "chapter_ambassador@example.com",
         created_at: dates.sample
       )
     )
@@ -71,7 +71,7 @@ RSpec.describe ResetVulnerablePasswords do
       }.and change {
         judge.reload.password_digest
       }.and change {
-        ra.reload.password_digest
+        chapter_ambassador.reload.password_digest
       }
     end
 
@@ -85,13 +85,13 @@ RSpec.describe ResetVulnerablePasswords do
       }.and change {
         judge.reload.auth_token
       }.and change {
-        ra.reload.auth_token
+        chapter_ambassador.reload.auth_token
       }
     end
 
 
     it "affects ONLY accounts signed up between Oct 1 2018 and Nov 13, 2018" do
-      profiles = [:student, :judge, :mentor, :ra]
+      profiles = [:student, :judge, :mentor, :chapter_ambassador]
 
       my_dates = [
         Time.new(2018, 9, 30),
@@ -118,7 +118,7 @@ RSpec.describe ResetVulnerablePasswords do
     end
 
     it "affects ONLY the timeframed accounts which have their email as their password" do
-      profiles = [:student, :judge, :mentor, :ra]
+      profiles = [:student, :judge, :mentor, :chapter_ambassador]
 
       profile = FactoryBot.create(
         profiles.sample,

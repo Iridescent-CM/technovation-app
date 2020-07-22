@@ -5,11 +5,11 @@
       :resource-links="resourceLinks"
     >
       <div slot="right-sidebar">
-        <small><slot name="ra-switch-link" /></small>
+        <small><slot name="chapter-ambassador-switch-link" /></small>
         <small><slot name="judge-switch-link" /></small>
       </div>
 
-      <div slot="ra-intro"><slot name="ra-intro" /></div>
+      <div slot="chapter-ambassador-intro"><slot name="chapter-ambassador-intro" /></div>
     </dashboard-header>
 
     <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">

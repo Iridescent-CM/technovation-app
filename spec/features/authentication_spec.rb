@@ -8,10 +8,10 @@ RSpec.feature "Authentication" do
     load 'cookie_names.rb'
   end
 
-  { judge: %i{regional_ambassador student admin},
-    student: %i{mentor regional_ambassador judge admin},
-    mentor: %i{regional_ambassador student admin},
-    regional_ambassador: %i{student admin} }.each do |scope, not_scopes|
+  { judge: %i{chapter_ambassador student admin},
+    student: %i{mentor chapter_ambassador judge admin},
+    mentor: %i{chapter_ambassador student admin},
+    chapter_ambassador: %i{student admin} }.each do |scope, not_scopes|
 
     not_scopes.each do |not_scope|
       scenario "A #{scope} tries to visit a #{not_scope} path" do
@@ -32,7 +32,7 @@ RSpec.feature "Authentication" do
     end
   end
 
-  %i{mentor student judge regional_ambassador admin}.each do |scope|
+  %i{mentor student judge chapter_ambassador admin}.each do |scope|
     scenario "A logged out user tries to visit a #{scope} path" do
       visit send("#{scope}_dashboard_path")
 

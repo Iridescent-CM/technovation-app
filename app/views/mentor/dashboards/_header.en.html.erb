@@ -1,5 +1,5 @@
-<div slot="ra-intro">
-  <%= render 'dashboards/ra_intro' %>
+<div slot="chapter-ambassador-intro">
+  <%= render 'dashboards/chapter_ambassador_intro' %>
 </div>
 
 <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
@@ -15,9 +15,9 @@
 <% end %>
 
 <% if current_mentor.is_an_ambassador? %>
-  <template slot="ra-switch-link">
+  <template slot="chapter-ambassador-switch-link">
     <%= link_to "Switch to Chapter Ambassador mode",
-      regional_ambassador_dashboard_path,
+      chapter_ambassador_dashboard_path,
       data: { turbolinks: false } %>
   </template>
 <% end %>

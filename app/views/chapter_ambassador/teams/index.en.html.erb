@@ -1,0 +1,7 @@
+<% provide :title, "Chapter Ambassador Data • Teams" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @teams_grid,
+  form_url: chapter_ambassador_teams_path,
+  model_name: "team",
+  scope: :chapter_ambassador %>

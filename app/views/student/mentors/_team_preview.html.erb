@@ -1,12 +1,12 @@
 <%
   # TODO: come on...
   admin ||= false
-  ra ||= false
+  chapter_ambassador ||= false
 
   profile_path_name = :mentor
   profile_id = :id
 
-  if admin or ra
+  if admin or chapter_ambassador
     profile_path_name = :participant
     profile_id = :account_id
   end

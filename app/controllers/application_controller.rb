@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     :current_profile_type,
     :current_session,
     :get_cookie,
-    :regional_ambassador
+    :chapter_ambassador
 
   rescue_from "ActionController::ParameterMissing" do |e|
     if e.message.include?("token")
@@ -63,10 +63,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def regional_ambassador
-    return @regional_ambassador if defined?(@regional_ambassador)
+  def chapter_ambassador
+    return @chapter_ambassador if defined?(@chapter_ambassador)
 
-    @regional_ambassador = region_account.regional_ambassador
+    @chapter_ambassador = region_account.chapter_ambassador
   end
 
   def save_redirected_path
@@ -96,8 +96,8 @@ class ApplicationController < ActionController::Base
     email = SignupAttempt.find_by!(signup_token: token).email
 
     if account = Account.find_by(email: email) and
-        account.regional_ambassador_profile.present?
-      @regional_ambassador_profile = account.regional_ambassador_profile
+        account.chapter_ambassador_profile.present?
+      @chapter_ambassador_profile = account.chapter_ambassador_profile
     else
       @profile = instance_variable_set(
         "@#{scope}_profile",

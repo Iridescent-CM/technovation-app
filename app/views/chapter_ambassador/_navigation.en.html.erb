@@ -1,0 +1,59 @@
+<h6>Technovation Ambassador</h6>
+
+<nav>
+  <%= link_to "Dashboard", chapter_ambassador_dashboard_path %>
+
+  <% if current_ambassador.onboarded? %>
+    <%= link_to "Events",
+      chapter_ambassador_events_path,
+      data: { turbolinks: false },
+      class: al(chapter_ambassador_events_path) %>
+
+    <%= link_to "Scores",
+      chapter_ambassador_scores_path,
+      data: { turbolinks: false },
+      class: al(chapter_ambassador_scores_path) %>
+
+    <%= link_to "Judges",
+      chapter_ambassador_judges_path,
+      data: { turbolinks: false },
+      class: al(chapter_ambassador_judges_path) %>
+
+    <%= link_to "Participants",
+      chapter_ambassador_participants_path,
+      data: { turbolinks: false },
+      class: al(chapter_ambassador_participants_path) %>
+
+    <%= link_to "Teams",
+      chapter_ambassador_teams_path,
+      data: { turbolinks: false },
+      class: al(chapter_ambassador_teams_path) %>
+
+    <%= link_to "Submissions",
+      chapter_ambassador_team_submissions_path,
+      data: { turbolinks: false },
+      class: al(chapter_ambassador_team_submissions_path) %>
+
+    <%= link_to "Activity",
+      chapter_ambassador_activities_path,
+      class: al(chapter_ambassador_activities_path) %>
+  <% end %>
+
+  <%= link_to "My Account",
+    chapter_ambassador_profile_path,
+    class: al(chapter_ambassador_profile_path) %>
+
+  <%= link_to "Logout", logout_path, data: { method: :delete } %>
+
+  <hr />
+
+  <%= link_to "Mentor Mode",
+    mentor_dashboard_path,
+    data: { turbolinks: false } %>
+
+  <% if current_ambassador.can_switch_to_judge? %>
+    <%= link_to "Judge Mode",
+      judge_dashboard_path,
+      data: { turbolinks: false } %>
+  <% end %>
+</nav>

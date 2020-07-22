@@ -95,23 +95,23 @@ class AccountsGrid
 
   column :company_name, order: ->(scope) {
     scope.includes(
-      :regional_ambassador_profile,
+      :chapter_ambassador_profile,
       :mentor_profile,
       :judge_profile,
     ).references(
-      :regional_ambassador_profiles,
+      :chapter_ambassador_profiles,
       :mentor_profiles,
       :judge_profiles,
     ).order(
-      "regional_ambassador_profiles.organization_company_name, " +
+      "chapter_ambassador_profiles.organization_company_name, " +
       "mentor_profiles.school_company_name, " +
       "judge_profiles.company_name"
     )
   } do
     if student_profile.present?
       "-"
-    elsif regional_ambassador_profile.present?
-      regional_ambassador_profile.organization_company_name
+    elsif chapter_ambassador_profile.present?
+      chapter_ambassador_profile.organization_company_name
     elsif mentor_profile.present?
       mentor_profile.school_company_name
     elsif judge_profile.present?
@@ -277,7 +277,7 @@ class AccountsGrid
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{judge regional_ambassador} & (g.scope_names || [])).empty?
+      (%w{judge chapter_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.send(value)
     end
@@ -290,7 +290,7 @@ class AccountsGrid
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{judge mentor regional_ambassador} & (g.scope_names || [])).empty?
+      (%w{judge mentor chapter_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.includes(:student_profile)
         .references(:student_profiles)
@@ -309,7 +309,7 @@ class AccountsGrid
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{judge student regional_ambassador} & (g.scope_names || [])).empty?
+      (%w{judge student chapter_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.send("#{value}_mentors")
     end
@@ -322,7 +322,7 @@ class AccountsGrid
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
+      (%w{student mentor chapter_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.includes(:judge_profile)
         .references(:judge_profiles)
@@ -342,7 +342,7 @@ class AccountsGrid
     filter_group: "common",
     if: ->(g) {
       g.admin &&
-        (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
+        (%w{student mentor chapter_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.includes(:judge_profile)
         .references(:judge_profiles)
@@ -358,7 +358,7 @@ class AccountsGrid
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{student mentor regional_ambassador} & (g.scope_names || [])).empty?
+      (%w{student mentor chapter_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       is_is_not = value === "virtual" ? "IS" : "IS NOT"
 
@@ -374,7 +374,7 @@ class AccountsGrid
     filter_group: "common",
     if: ->(g) {
       scopes = g.scope_names || []
-      %w{student judge regional_ambassador}.all? { |scope| scopes.exclude?(scope) }
+      %w{student judge chapter_ambassador}.all? { |scope| scopes.exclude?(scope) }
     } do |value, scope, grid|
       scope.includes(:mentor_profile)
         .references(:mentor_profiles)
@@ -399,7 +399,7 @@ class AccountsGrid
       placeholder: "Select or start typing...",
     },
     if: ->(g) {
-      (%w{student regional_ambassador} & (g.scope_names || [])).empty?
+      (%w{student chapter_ambassador} & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.left_outer_joins(:mentor_profile, :judge_profile)
         .where("mentor_profiles.school_company_name IN (?) OR judge_profiles.company_name IN (?)", value, value)
@@ -447,7 +447,7 @@ class AccountsGrid
       ['Students', 'student'],
       ['Mentors', 'mentor'],
       ['Judges', 'judge'],
-      ['Chapter Ambassadors', 'regional_ambassador'],
+      ['Chapter Ambassadors', 'chapter_ambassador'],
     ],
     filter_group: "more-specific",
     html: {
@@ -457,9 +457,9 @@ class AccountsGrid
       clauses = values.flatten.map do |v|
         sql_str = "#{v}_profiles.id IS NOT NULL"
 
-        if v == "regional_ambassador"
-          sql_str += " AND regional_ambassador_profiles.status = #{
-            RegionalAmbassadorProfile.statuses[:approved]
+        if v == "chapter_ambassador"
+          sql_str += " AND chapter_ambassador_profiles.status = #{
+            ChapterAmbassadorProfile.statuses[:approved]
           }"
         end
 

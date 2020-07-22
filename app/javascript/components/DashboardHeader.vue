@@ -1,10 +1,10 @@
 <template>
   <div class="grid dashboard-notices">
     <div class="grid__col-sm-6 grid__col--bleed-y">
-      <div v-if="regionalAmbassadorHasProvidedIntro" class="grid__cell">
+      <div v-if="chapterAmbassadorHasProvidedIntro" class="grid__cell">
         <h1 class="page-heading">
           <img
-            :src="regionalAmbassadorAvatarUrl"
+            :src="chapterAmbassadorAvatarUrl"
             class="profile-image"
             width="40"
             height="40"
@@ -13,7 +13,7 @@
 
           <small>
             <drop-down label="Meet your Chapter Ambassador">
-              <slot name="ra-intro" />
+              <slot name="chapter-ambassador-intro" />
             </drop-down>
           </small>
         </h1>
@@ -98,8 +98,8 @@ export default {
       'currentAccountName',
       'currentAccountAvatarUrl',
       'regionalProgramName',
-      'regionalAmbassadorAvatarUrl',
-      'regionalAmbassadorHasProvidedIntro',
+      'chapterAmbassadorAvatarUrl',
+      'chapterAmbassadorHasProvidedIntro',
     ]),
 
     surveyLink () {

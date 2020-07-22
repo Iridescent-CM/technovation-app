@@ -18,13 +18,13 @@ RSpec.describe UserInvitation do
     )
   end
 
-  it "validates the email against an existing RA" do
-    ra = FactoryBot.create(:regional_ambassador)
-    ra.account.create_mentor_profile!(FactoryBot.attributes_for(:mentor))
+  it "validates the email against an existing chapter ambassador" do
+    chapter_ambassador = FactoryBot.create(:chapter_ambassador)
+    chapter_ambassador.account.create_mentor_profile!(FactoryBot.attributes_for(:mentor))
 
     invite = UserInvitation.new(
-      profile_type: :regional_ambassador,
-      email: ra.email
+      profile_type: :chapter_ambassador,
+      email: chapter_ambassador.email
     )
 
     expect(invite).not_to be_valid
@@ -49,22 +49,22 @@ RSpec.describe UserInvitation do
     end
   end
 
-  it "allows an existing mentor to be moved for an RA" do
+  it "allows an existing mentor to be moved for a chapter ambassador" do
     mentor = FactoryBot.create(:mentor, :onboarded)
 
     invite = UserInvitation.new(
-      profile_type: :regional_ambassador,
+      profile_type: :chapter_ambassador,
       email: mentor.email,
     )
 
     expect(invite).to be_valid
   end
 
-  it "allows an existing judge to be moved for an RA" do
+  it "allows an existing judge to be moved for a chapter ambassador" do
     judge = FactoryBot.create(:judge)
 
     invite = UserInvitation.new(
-      profile_type: :regional_ambassador,
+      profile_type: :chapter_ambassador,
       email: judge.email,
     )
 
