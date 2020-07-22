@@ -9,7 +9,8 @@
 
     <div class="field">
       <%= f.label :app_description,
-        "Describe your app in only a few sentences or less" %>
+        "Describe your app in only a few sentences or less",
+        for: :team_submission_app_description %>
 
       <%= f.text_area :app_description,
         id: :team_submission_app_description,

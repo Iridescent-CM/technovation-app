@@ -10,16 +10,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :profile_type %>
+    <%= f.label :profile_type, for: :user_invitation_profile_type %>
     <%= f.select :profile_type,
       UserInvitation.profile_types.keys.map { |k| [k.titleize, k] },
       {},
-      id: "user_invitation_profile_type" %>
+      id: :user_invitation_profile_type %>
   </div>
 
   <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email, id: "user_invitation_email" %>
+    <%= f.label :email, for: :user_invitation_email %>
+    <%= f.email_field :email, id: :user_invitation_email %>
   </div>
 
   <div class="actions">

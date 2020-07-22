@@ -8,7 +8,7 @@
     <%= hidden_field_tag :piece, piece_name %>
 
     <div class="field">
-      <%= f.label :pitch_video_link, "Youtube, Vimeo, or Youku URL" %>
+      <%= f.label :pitch_video_link, "Youtube, Vimeo, or Youku URL", for: :team_submission_pitch_video_link %>
       <%= f.text_field :pitch_video_link,
         id: :team_submission_pitch_video_link,
         value: params[:value] || @team_submission.send(piece_name) %>

@@ -20,7 +20,8 @@
 
     <div class="field">
       <%= f.label :development_platform,
-        "Which development platform did your team use?" %>
+        "Which development platform did your team use?",
+        for: :team_submission_development_platform %>
 
       <%= f.select :development_platform,
         TeamSubmission.development_platform_keys,
@@ -41,14 +42,16 @@
       </p>
 
       <%= f.label :app_inventor_app_name,
-        "What is your App Inventor Project Name?" %>
+        "What is your App Inventor Project Name?",
+        for: :team_submission_app_inventor_app_name %>
 
       <%= f.text_field :app_inventor_app_name,
         id: :team_submission_app_inventor_app_name %>
 
       <%= f.label :app_inventor_gmail,
         "What is the gmail address of the App Inventor " +
-        "account that your team is using?" %>
+        "account that your team is using?",
+        for: :team_submission_app_inventor_gmail %>
 
       <%= f.text_field :app_inventor_gmail,
         id: :team_submission_app_inventor_gmail %>
@@ -65,13 +68,15 @@
       </p>
 
       <%= f.label :thunkable_account_email,
-        "What is the email address of your team's Thunkable account?" %>
+        "What is the email address of your team's Thunkable account?",
+        for: :team_submission_thunkable_account_email %>
 
       <%= f.text_field :thunkable_account_email,
         id: :team_submission_thunkable_account_email %>
 
       <%= f.label :thunkable_project_url,
-       "What is the shareable URL of your Thunkable project?" %>
+        "What is the shareable URL of your Thunkable project?",
+        for: :team_submission_thunkable_project_url %>
 
       <%= f.text_field :thunkable_project_url,
         id: :team_submission_thunkable_project_url %>
