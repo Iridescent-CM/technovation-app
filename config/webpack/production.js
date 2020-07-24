@@ -1,5 +1,5 @@
-const environment = require('./environment')
+process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
-environment.plugins.get("UglifyJs").options.uglifyOptions.ecma = 5
+const environment = require('./environment')
 
 module.exports = environment.toWebpackConfig()

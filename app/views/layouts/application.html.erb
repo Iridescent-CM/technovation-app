@@ -17,7 +17,7 @@
 
     <%= render 'favicons' %>
 
-    <%= stylesheet_pack_tag "vendor" %>
+    <%# stylesheet_pack_tag "vendor" %>
 
     <%= stylesheet_link_tag determine_manifest %>
 
@@ -28,8 +28,8 @@
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
 
-    <%= javascript_pack_tag "manifest" %>
-    <%= javascript_pack_tag "vendor" %>
+    <%# javascript_pack_tag "manifest" %>
+    <%# javascript_pack_tag "vendor" %>
     <%= javascript_pack_tag "application" %>
 
     <%= yield :js %>

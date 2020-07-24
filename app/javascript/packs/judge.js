@@ -1,4 +1,6 @@
-import "babel-polyfill"
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+// import "babel-polyfill"
 import Vue from 'vue'
 
 import VueRouter from 'vue-router'

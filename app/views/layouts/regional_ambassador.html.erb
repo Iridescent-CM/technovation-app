@@ -17,7 +17,7 @@
 
     <%= stylesheet_link_tag 'regional_ambassador', media: 'all' %>
 
-    <%= stylesheet_pack_tag "vendor" %>
+    <%# stylesheet_pack_tag "vendor" %>
     <%= stylesheet_pack_tag("application", data: { turbolinks_track: :reload }) %>
     <%= stylesheet_pack_tag("ra", data: { turbolinks_track: :reload }) %>
 
@@ -29,8 +29,8 @@
     <%= javascript_include_tag 'regional_ambassador',
       'data-turbolinks-track' => true %>
 
-    <%= javascript_pack_tag "manifest" %>
-    <%= javascript_pack_tag "vendor" %>
+    <%# javascript_pack_tag "manifest" %>
+    <%# javascript_pack_tag "vendor" %>
     <%= javascript_pack_tag("application", data: { turbolinks_track: :reload }) %>
     <%= javascript_pack_tag("ra", data: { turbolinks_track: :reload }) %>
 
