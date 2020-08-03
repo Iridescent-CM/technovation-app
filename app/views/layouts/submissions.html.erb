@@ -25,10 +25,7 @@
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
 
-    <%# javascript_pack_tag "manifest" %>
-    <%# javascript_pack_tag "vendor" %>
-    <%= javascript_pack_tag "application" %>
-    <%= javascript_pack_tag("submissions") %>
+    <%= javascript_packs_with_chunks_tag "application", "submissions" %>
 
     <%= yield :js %>
   </head>

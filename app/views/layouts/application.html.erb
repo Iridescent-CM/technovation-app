@@ -17,20 +17,16 @@
 
     <%= render 'favicons' %>
 
-    <%# stylesheet_pack_tag "vendor" %>
-
     <%= stylesheet_link_tag determine_manifest %>
 
-    <%= stylesheet_pack_tag "application" %>
+    <%= stylesheet_packs_with_chunks_tag "application" %>
 
     <%= yield :css %>
 
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
 
-    <%# javascript_pack_tag "manifest" %>
-    <%# javascript_pack_tag "vendor" %>
-    <%= javascript_pack_tag "application" %>
+    <%= javascript_packs_with_chunks_tag "application" %>
 
     <%= yield :js %>
   </head>
