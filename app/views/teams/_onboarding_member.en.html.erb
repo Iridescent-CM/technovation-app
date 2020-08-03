@@ -1,4 +1,4 @@
-<% admin_ra ||= false %>
+<% admin_chapter_ambassador ||= false %>
 
 <li class="grid">
   <div class="grid__col-2 grid__col--bleed-x">
@@ -8,7 +8,7 @@
 
   <div class="grid__col-10">
     <h5 class="reset">
-      <% if admin_ra %>
+      <% if admin_chapter_ambassador %>
         <%= link_to onboarding_member.full_name,
           [
             current_scope,

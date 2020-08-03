@@ -31,7 +31,7 @@ describe('Admin Content & Settings - Notices component', () => {
       student: 'Student notice text here.',
       mentor: 'Mentor notice text here.',
       judge: 'Judge notice text here.',
-      regional_ambassador: 'RA notice text here.',
+      chapter_ambassador: 'Chapter ambassador notice text here.',
     }
 
     beforeEach(() => {
@@ -44,7 +44,7 @@ describe('Admin Content & Settings - Notices component', () => {
               student_dashboard_text: scopes.student,
               mentor_dashboard_text: scopes.mentor,
               judge_dashboard_text: scopes.judge,
-              regional_ambassador_dashboard_text: scopes.regional_ambassador,
+              chapter_ambassador_dashboard_text: scopes.chapter_ambassador,
             },
           }).store,
         }

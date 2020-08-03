@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe Attendees do
   describe ".for" do
-    let(:ra) { FactoryBot.create(:ambassador) }
-    let(:event) { FactoryBot.create(:event, :senior, ambassador: ra) }
+    let(:chapter_ambassador) { FactoryBot.create(:ambassador) }
+    let(:event) { FactoryBot.create(:event, :senior, ambassador: chapter_ambassador) }
 
     it "finds live event eligible teams" do
       team = FactoryBot.create(:team, :senior, :live_event_eligible)
@@ -13,7 +13,7 @@ RSpec.describe Attendees do
       results = Attendees.for(
         type: "team",
         context: FakeController.new,
-        ambassador: ra,
+        ambassador: chapter_ambassador,
         event: event,
       )
 
@@ -23,12 +23,12 @@ RSpec.describe Attendees do
 
     it "finds live event eligible judges" do
       judge = FactoryBot.create(:judge, :live_event_eligible)
-      FactoryBot.create(:regional_ambassador, :has_judge_profile)
+      FactoryBot.create(:chapter_ambassador, :has_judge_profile)
 
       results = Attendees.for(
         type: "account",
         context: FakeController.new,
-        ambassador: ra,
+        ambassador: chapter_ambassador,
         event: event,
       )
 
@@ -46,7 +46,7 @@ RSpec.describe Attendees do
         type: "account",
         query: "invi",
         context: FakeController.new,
-        ambassador: ra,
+        ambassador: chapter_ambassador,
         event: event,
       )
 
@@ -59,7 +59,7 @@ RSpec.describe Attendees do
         type: "account",
         query: "invite@me.com",
         context: FakeController.new,
-        ambassador: ra,
+        ambassador: chapter_ambassador,
         event: event,
       )
 

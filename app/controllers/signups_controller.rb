@@ -54,8 +54,8 @@ class SignupsController < ApplicationController
 
     if attempt &&
         attempt.account.present? &&
-          attempt.account.regional_ambassador_profile.present?
-      redirect_to regional_ambassador_signup_path
+          attempt.account.chapter_ambassador_profile.present?
+      redirect_to chapter_ambassador_signup_path
     elsif not !!get_cookie(CookieNames::SIGNUP_TOKEN)
       redirect_to root_path
     end

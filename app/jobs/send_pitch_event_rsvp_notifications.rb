@@ -2,59 +2,59 @@ class SendPitchEventRSVPNotifications < ActiveJob::Base
   queue_as :default
 
   def perform(participant_id, event_ids = {})
-    if event_ids[:ra_removed_participant_from]
+    if event_ids[:chapter_ambassador_removed_participant_from]
       NotifyAmbassadorOfTeamLeftEventJob.perform_now(
-        event_ids[:ra_removed_participant_from],
+        event_ids[:chapter_ambassador_removed_participant_from],
         participant_id,
-        ra_removed: true
+        chapter_ambassador_removed: true
       )
 
       NotifyTeamMembersOfLeftEventJob.perform_now(
-        event_ids[:ra_removed_participant_from],
+        event_ids[:chapter_ambassador_removed_participant_from],
         participant_id,
-        ra_removed: true
+        chapter_ambassador_removed: true
       )
     end
 
-    if event_ids[:ra_removed_judge_from]
+    if event_ids[:chapter_ambassador_removed_judge_from]
       NotifyAmbassadorOfJudgeLeftEventJob.perform_now(
-        event_ids[:ra_removed_judge_from],
+        event_ids[:chapter_ambassador_removed_judge_from],
         participant_id,
-        ra_removed: true
+        chapter_ambassador_removed: true
       )
 
       NotifyJudgeOfLeftEventJob.perform_now(
-        event_ids[:ra_removed_judge_from],
+        event_ids[:chapter_ambassador_removed_judge_from],
         participant_id,
-        ra_removed: true
+        chapter_ambassador_removed: true
       )
     end
 
-    if event_ids[:ra_added_participant_to]
+    if event_ids[:chapter_ambassador_added_participant_to]
       NotifyAmbassadorOfTeamJoinedEventJob.perform_now(
-        event_ids[:ra_added_participant_to],
+        event_ids[:chapter_ambassador_added_participant_to],
         participant_id,
-        ra_added: true
+        chapter_ambassador_added: true
       )
 
       NotifyTeamMembersOfJoinedEventJob.perform_now(
-        event_ids[:ra_added_participant_to],
+        event_ids[:chapter_ambassador_added_participant_to],
         participant_id,
-        ra_added: true
+        chapter_ambassador_added: true
       )
     end
 
-    if event_ids[:ra_added_judge_to]
+    if event_ids[:chapter_ambassador_added_judge_to]
       NotifyAmbassadorOfJudgeJoinedEventJob.perform_now(
-        event_ids[:ra_added_judge_to],
+        event_ids[:chapter_ambassador_added_judge_to],
         participant_id,
-        ra_added: true
+        chapter_ambassador_added: true
       )
 
       NotifyJudgeOfJoinedEventJob.perform_now(
-        event_ids[:ra_added_judge_to],
+        event_ids[:chapter_ambassador_added_judge_to],
         participant_id,
-        ra_added: true
+        chapter_ambassador_added: true
       )
     end
 

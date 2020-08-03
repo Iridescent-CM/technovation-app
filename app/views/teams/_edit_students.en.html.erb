@@ -1,10 +1,10 @@
-<% admin_ra ||= false %>
+<% admin_chapter_ambassador ||= false %>
 
 <ul class="reset">
   <%= render partial: "teams/member",
     collection: team.students.onboarded,
     locals: {
-      admin_ra: admin_ra,
+      admin_chapter_ambassador: admin_chapter_ambassador,
     } %>
 </ul>
 
@@ -23,12 +23,12 @@
       collection: team.students.onboarding,
       locals: {
         team: team,
-        admin_ra: admin_ra,
+        admin_chapter_ambassador: admin_chapter_ambassador,
       } %>
   </ul>
 <% end %>
 
-<% unless admin_ra %>
+<% unless admin_chapter_ambassador %>
   <%= render "teams/pending_invites",
     preview_method: :invitee_email,
     invites: team.pending_student_invites %>
@@ -41,7 +41,7 @@
 <div class="grid grid--bleed">
   <div class="grid__col-auto">
     <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
-      <% if !admin_ra && team.current? && team.spot_available? %>
+      <% if !admin_chapter_ambassador && team.current? && team.spot_available? %>
         <%= render "team_member_invites/form" %>
 
         <%= form_with model: team,

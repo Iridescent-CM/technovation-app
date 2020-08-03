@@ -55,7 +55,7 @@ describe("mentor/DashboardHeader.vue", () => {
     ).text()).toContain("Saul Goodman")
   })
 
-  describe("when the RA has not provided an intro", () => {
+  describe("when the chapter ambassador has not provided an intro", () => {
     it("displays the default left header", async () => {
       defaultWrapper.setProps({
         defaultTitle: "Mentor Dashboard",
@@ -80,14 +80,14 @@ describe("mentor/DashboardHeader.vue", () => {
     })
   })
 
-  describe("when the RA has provided an intro ", () => {
+  describe("when the chapter ambassador has provided an intro ", () => {
     beforeEach(() => {
       defaultWrapper.vm.$store.commit('authenticated/htmlDataset', {
-        regionalAmbassador: '{"data":{"attributes":{"name":"Jean Weiss","programName":"Technovation[MN]","hasProvidedIntro":true}}}'
+        chapterAmbassador: '{"data":{"attributes":{"name":"Jean Weiss","programName":"Technovation[MN]","hasProvidedIntro":true}}}'
       })
     })
 
-    it("displays the RA intro header", () => {
+    it("displays the chapter ambassador intro header", () => {
       const text = defaultWrapper.find(
         '.dashboard-notices .grid__col-sm-6:first-child'
       ).text()

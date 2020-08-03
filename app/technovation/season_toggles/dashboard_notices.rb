@@ -5,7 +5,7 @@ class SeasonToggles
     end
 
     module ClassMethods
-      %w{mentor student judge regional_ambassador}.each do |scope|
+      %w{mentor student judge chapter_ambassador}.each do |scope|
         define_method("#{scope}_dashboard_text=") do |text|
           store.set("#{scope}_dashboard_text", text)
         end

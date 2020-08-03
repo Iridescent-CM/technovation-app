@@ -32,7 +32,7 @@ RSpec.describe Admin::ParticipantsController do
     end
   end
 
-  %w{student mentor judge regional_ambassador}.each do |scope|
+  %w{student mentor judge chapter_ambassador}.each do |scope|
     it "updates #{scope} newsletters with a change to the email address" do
       profile = FactoryBot.create(
         scope,

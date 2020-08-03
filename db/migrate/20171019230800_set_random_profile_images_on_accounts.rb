@@ -1,7 +1,8 @@
 class SetRandomProfileImagesOnAccounts < ActiveRecord::Migration[5.1]
   def up
-    Account.left_outer_joins(:regional_ambassador_profile).where(
-      "regional_ambassador_profiles.id IS NULL AND profile_image IS NULL"
+    Account.
+      joins("left outer join regional_ambassador_profiles on regional_ambassador_profiles.account_id = accounts.id").
+      where("regional_ambassador_profiles.id IS NULL AND profile_image IS NULL"
     ).find_each do |a|
       a.update_column(
         :icon_path,

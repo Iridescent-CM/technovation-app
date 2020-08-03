@@ -1,6 +1,6 @@
 class UserInvitation < ApplicationRecord
   enum profile_type: %i{
-    regional_ambassador
+    chapter_ambassador
     judge
     mentor
     student
@@ -16,11 +16,11 @@ class UserInvitation < ApplicationRecord
   validates :email, uniqueness: true, email: true
 
   validate ->(invitation) {
-    if inviting_existing_ra_to_be_an_ra?
+    if inviting_existing_chapter_ambassador_to_be_a_chapter_ambassador?
       errors.add(:email, :taken_by_account)
-    elsif inviting_existing_mentor_to_be_an_ra?
+    elsif inviting_existing_mentor_to_be_a_chapter_ambassador?
       true
-    elsif inviting_existing_judge_to_be_an_ra?
+    elsif inviting_existing_judge_to_be_a_chapter_ambassador?
       true
     elsif inviting_existing_account?
       errors.add(:email, :taken_by_account)
@@ -49,11 +49,11 @@ class UserInvitation < ApplicationRecord
 
   after_commit -> {
     if account = Account.left_outer_joins(
-                   :regional_ambassador_profile
+                   :chapter_ambassador_profile
                  )
                  .includes(:judge_profile, :mentor_profile)
                  .where(
-                   "regional_ambassador_profiles.id " +
+                   "chapter_ambassador_profiles.id " +
                    "IS NULL"
                  )
                  .find_by(
@@ -178,23 +178,23 @@ class UserInvitation < ApplicationRecord
   end
 
   private
-  def inviting_existing_ra_to_be_an_ra?
-    profile_type.to_s == "regional_ambassador" and
-      Account.left_outer_joins(:regional_ambassador_profile)
-        .where("regional_ambassador_profiles.id IS NOT NULL")
+  def inviting_existing_chapter_ambassador_to_be_a_chapter_ambassador?
+    profile_type.to_s == "chapter_ambassador" and
+      Account.left_outer_joins(:chapter_ambassador_profile)
+        .where("chapter_ambassador_profiles.id IS NOT NULL")
         .where("lower(trim(both ' ' from email)) = ?", email)
         .exists?
   end
 
-  def inviting_existing_mentor_to_be_an_ra?
-    profile_type.to_s == "regional_ambassador" and
+  def inviting_existing_mentor_to_be_a_chapter_ambassador?
+    profile_type.to_s == "chapter_ambassador" and
       Account.joins(:mentor_profile)
         .where("lower(trim(both ' ' from email)) = ?", email)
         .exists?
   end
 
-  def inviting_existing_judge_to_be_an_ra?
-    profile_type.to_s == "regional_ambassador" and
+  def inviting_existing_judge_to_be_a_chapter_ambassador?
+    profile_type.to_s == "chapter_ambassador" and
       Account.joins(:judge_profile)
         .where("lower(trim(both ' ' from email)) = ?", email)
         .exists?

@@ -1,32 +1,32 @@
 require "rails_helper"
-require "./lib/invite_ra"
+require "./lib/invite_chapter_ambassador"
 
-RSpec.feature "Invited RAs confirm their details" do
+RSpec.feature "Invited chapter ambassadors confirm their details" do
   let(:attempt) {
-    InviteRA.(
+    InviteChapterAmbassador.(
       FactoryBot.attributes_for(:account).merge(
         FactoryBot.attributes_for(:ambassador)
       )
     )
   }
 
-  scenario "RAs must enter a new password" do
+  scenario "Chapter ambassadors must enter a new password" do
     visit signup_path(admin_permission_token: attempt.admin_permission_token)
 
     click_button "Create Your Account"
 
-    expect(current_path).not_to eq(regional_ambassador_dashboard_path)
+    expect(current_path).not_to eq(chapter_ambassador_dashboard_path)
     expect(page).to have_css(".password + .error")
 
     fill_in "Create a password", with: "short"
     click_button "Create Your Account"
 
-    expect(current_path).not_to eq(regional_ambassador_dashboard_path)
+    expect(current_path).not_to eq(chapter_ambassador_dashboard_path)
     expect(page).to have_css(".password + .error")
 
     fill_in "Create a password", with: "nottooshort"
     click_button "Create Your Account"
 
-    expect(current_path).to eq(regional_ambassador_dashboard_path)
+    expect(current_path).to eq(chapter_ambassador_dashboard_path)
   end
 end

@@ -71,7 +71,7 @@ task seed_test_judges: :environment do
     division_ids: Division.pluck(:id),
     city: "Chicago",
     venue_address: "100 N. LaSalle",
-    ambassador: RegionalAmbassadorProfile.all.sample,
+    ambassador: ChapterAmbassadorProfile.all.sample,
   )
 
   live_judge.events << event

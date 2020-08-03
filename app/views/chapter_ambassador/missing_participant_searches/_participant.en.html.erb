@@ -1,0 +1,39 @@
+<hr />
+
+<h6>We found a result!</h6>
+
+<div class="grid">
+  <div class="grid__col-4">
+    <%= image_tag account.profile_image_url, class: "grid__cell-img" %>
+  </div>
+
+  <div class="grid__col-auto">
+    <dl>
+      <dt>Name:</dt>
+      <dd><%= account.full_name %></dd>
+
+      <dt>Profile type:</dt>
+      <dd><%= account.scope_name %></dd>
+
+      <dt>Email:</dt>
+      <dd><%= account.email %></dd>
+
+      <dt>Location:</dt>
+      <dd>
+        <% if account.address_details.blank? %>
+          No information filled in
+        <% else %>
+          <%= account.address_details %>
+        <% end %>
+
+        <p>
+          <%= link_to "Fix this person's location",
+            edit_chapter_ambassador_missing_participant_location_path(account),
+            class: "button secondary small" %>
+        </p>
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr />

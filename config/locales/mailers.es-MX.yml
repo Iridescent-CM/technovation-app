@@ -7,11 +7,11 @@ es-MX:
 
   ambassador_mailer:
     approved:
-      message: "Hola, ¡Buenas noticias! ¡Tu cuenta de Embajador Regional ha sido aprobada!"
-      next_steps: "Por ahora, no hay nada que tengas que hacer. Estamos lanzando nuevas características para Embajadores Regionales y recibirás un correo electrónico cuando tengamos actualizaciones."
-      subject: "Seguimiento de solicitud aprobada para ser Embajador Regional"
+      message: "Hola, ¡Buenas noticias! ¡Tu cuenta de Chapter Ambassador ha sido aprobada!"
+      next_steps: "Por ahora, no hay nada que tengas que hacer. Estamos lanzando nuevas características para Chapter Ambassador y recibirás un correo electrónico cuando tengamos actualizaciones."
+      subject: "Seguimiento de solicitud aprobada para ser Chapter Ambassador"
     declined:
-      subject: "Seguimiento de solicitud para ser Embajador Regional"
+      subject: "Seguimiento de solicitud para ser Chapter Ambassador"
 
   files_mailer:
     export_ready:

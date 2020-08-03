@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Reset your forgotten password" do
   before do
-    scope = %i{mentor student regional_ambassador}.sample
+    scope = %i{mentor student chapter_ambassador}.sample
 
     FactoryBot.create(
       scope,
@@ -115,7 +115,7 @@ RSpec.feature "Reset your forgotten password" do
     fill_in "Password", with: "greatnewsecret"
     click_button "Sign in"
     expect(current_path).to eq(
-      send("#{account.scope_name.sub(/^\w+_r/, "r")}_dashboard_path")
+      send("#{account.scope_name.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")}_dashboard_path")
     )
     expect(account.reload.password_reset_token).to be_blank
     expect(account.reload.password_reset_token_sent_at).to be_blank

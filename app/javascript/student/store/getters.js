@@ -9,26 +9,26 @@ export default {
     return digStateAttributes(state, 'currentAccount', 'avatarUrl')
   },
 
-  regionalAmbassadorName (state) {
-    return digStateAttributes(state, 'regionalAmbassador', 'name')
+  chapterAmbassadorName (state) {
+    return digStateAttributes(state, 'chapterAmbassador', 'name')
   },
 
   regionalProgramName (state) {
-    const programName = digStateAttributes(state, 'regionalAmbassador', 'programName')
+    const programName = digStateAttributes(state, 'chapterAmbassador', 'programName')
 
     if (!programName) {
-      return digStateAttributes(state, 'regionalAmbassador', 'name')
+      return digStateAttributes(state, 'chapterAmbassador', 'name')
     } else {
       return programName
     }
   },
 
-  regionalAmbassadorAvatarUrl (state) {
-    return digStateAttributes(state, 'regionalAmbassador', 'avatarUrl')
+  chapterAmbassadorAvatarUrl (state) {
+    return digStateAttributes(state, 'chapterAmbassador', 'avatarUrl')
   },
 
-  regionalAmbassadorHasProvidedIntro (state) {
-    return digStateAttributes(state, 'regionalAmbassador', 'hasProvidedIntro')
+  chapterAmbassadorHasProvidedIntro (state) {
+    return digStateAttributes(state, 'chapterAmbassador', 'hasProvidedIntro')
   },
 
   hasParentalConsent (state) {

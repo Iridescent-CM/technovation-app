@@ -8,7 +8,7 @@ class NotifyTeamMembersOfJoinedEventJob < ActiveJob::Base
     return unless event.live?
 
     team.members.each do |member|
-      if options[:ra_added]
+      if options[:chapter_ambassador_added]
         TeamMailer.notify_added_event(team, member, event).deliver_now
       else
         TeamMailer.confirm_joined_event(team, member, event).deliver_now

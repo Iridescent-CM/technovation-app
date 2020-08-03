@@ -10,11 +10,11 @@ module CreateMentorProfile
 
   private
   def self.setup_attributes(account)
-    if account.regional_ambassador_profile.present?
+    if account.chapter_ambassador_profile.present?
       {
-        school_company_name: account.regional_ambassador_profile
+        school_company_name: account.chapter_ambassador_profile
           .organization_company_name,
-        job_title: account.regional_ambassador_profile.job_title,
+        job_title: account.chapter_ambassador_profile.job_title,
         mentor_type: "Industry professional",
       }
     elsif account.judge_profile.present?

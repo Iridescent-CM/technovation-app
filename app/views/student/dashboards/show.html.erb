@@ -8,7 +8,7 @@
       id: "vue-data-registration",
       data: {
         current_account: AccountSerializer.new(current_account).serialized_json,
-        regional_ambassador: RegionalAmbassadorSerializer.new(regional_ambassador).serialized_json,
+        chapter_ambassador: ChapterAmbassadorSerializer.new(chapter_ambassador).serialized_json,
         current_team: TeamSerializer.new(current_team).serialized_json,
         current_submission: SubmissionSerializer.new(current_submission).serialized_json,
         parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
@@ -36,8 +36,8 @@
         <template slot="survey-links"><%= render 'program_survey' %></template>
       <% end %>
 
-      <div slot="ra-intro">
-        <%= render 'dashboards/ra_intro' %>
+      <div slot="chapter-ambassador-intro">
+        <%= render 'dashboards/chapter_ambassador_intro' %>
       </div>
 
       <div slot="change-email">

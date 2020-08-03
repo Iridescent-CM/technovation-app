@@ -67,12 +67,12 @@
             editing: editing,
             account: account.public_send("#{account.scope_name}_profile") %>
 
-          <% if account.regional_ambassador_profile || account.mentor_profile %>
+          <% if account.chapter_ambassador_profile || account.mentor_profile %>
             <dt><%= t('models.profile.bio') %></dt>
 
             <dd>
               <%= simple_format (
-                account.regional_ambassador_profile || account.mentor_profile
+                account.chapter_ambassador_profile || account.mentor_profile
               ).bio %>
             </dd>
           <% end %>

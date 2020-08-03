@@ -35,7 +35,7 @@ RSpec.describe "admin/participants/judge_debugging", type: :view do
     end
   end
 
-  context "as an RA" do
+  context "as a chapter ambassador" do
     let(:current_account_admin) { false }
 
     it "does not show judge suspended status" do

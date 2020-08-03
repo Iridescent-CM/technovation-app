@@ -31,7 +31,7 @@ describe('Admin Content & Settings - Review component', () => {
         student_dashboard_text: 'Students',
         mentor_dashboard_text: 'Mentors',
         judge_dashboard_text: 'Judges',
-        regional_ambassador_dashboard_text: 'Chapter Ambassadors',
+        chapter_ambassador_dashboard_text: 'Chapter Ambassadors',
       },
       surveysFields: {
         student_survey_link: 'Students',
@@ -210,10 +210,10 @@ describe('Admin Content & Settings - Review component', () => {
 
       })
 
-      describe('RA field', () => {
+      describe('chapter ambassador field', () => {
 
         it('displays a notice if no input available', async () => {
-          wrapper.vm.$store.state.regional_ambassador_dashboard_text = ''
+          wrapper.vm.$store.state.chapter_ambassador_dashboard_text = ''
 
           await wrapper.vm.$nextTick()
 
@@ -228,7 +228,7 @@ describe('Admin Content & Settings - Review component', () => {
 
         it('displays the input if available', async () => {
           wrapper.vm.$store.state
-            .regional_ambassador_dashboard_text = 'Hello world, this is a test.'
+            .chapter_ambassador_dashboard_text = 'Hello world, this is a test.'
 
           await wrapper.vm.$nextTick()
 

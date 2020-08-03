@@ -8,7 +8,7 @@ class NotifyAmbassadorOfJudgeLeftEventJob < ActiveJob::Base
 
     judge = JudgeProfile.find(judge_id)
 
-    if options[:ra_removed]
+    if options[:chapter_ambassador_removed]
       AmbassadorMailer.confirm_judge_removed(
         event.ambassador.account,
         event,

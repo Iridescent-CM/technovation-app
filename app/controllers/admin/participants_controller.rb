@@ -89,7 +89,7 @@ module Admin
         mentor_profile: {},
         student_profile: {},
         judge_profile: {},
-        regional_ambassador_profile: {},
+        chapter_ambassador_profile: {},
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true

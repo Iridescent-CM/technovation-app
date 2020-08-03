@@ -133,10 +133,10 @@ Rails.application.routes.draw do
     resources :scores, only: :show
   end
 
-  get "pending_regional_ambassador/dashboard",
-    to: "regional_ambassador/dashboards#show"
+  get "pending_chapter_ambassador/dashboard",
+    to: "chapter_ambassador/dashboards#show"
 
-  namespace :regional_ambassador do
+  namespace :chapter_ambassador do
     get :signup, to: 'signups#new'
     post :profiles, to: "signups#create"
 
@@ -256,7 +256,7 @@ Rails.application.routes.draw do
     resources :student_conversions, only: :create
     resources :mentor_to_judge_conversions, only: :create
 
-    resources :regional_ambassador_status, only: :update
+    resources :chapter_ambassador_status, only: :update
 
     resources :profile_locations, only: :edit
 
@@ -376,4 +376,310 @@ Rails.application.routes.draw do
   resources :apps, only: :show
 
   root to: "public/dashboards#show"
+
+  get "pending_regional_ambassador/dashboard",
+    to: redirect("chapter_ambassador/dashboard", status: 301)
+
+  get "regional_ambassador/signup",
+    to: redirect("chapter_ambassador/signups", status: 301)
+
+  post "/regional_ambassador/profiles",
+    to: redirect("chapter_ambassador/signups", status: 308)
+
+  patch "/regional_ambassador/profile_details_confirmation",
+    to: redirect("chapter_ambassador/profile_details_confirmation", status: 308)
+
+  put "/regional_ambassador/profile_details_confirmation",
+    to: redirect("chapter_ambassador/profile_details_confirmation", status: 308)
+
+  post "/regional_ambassador/profile_details_confirmation",
+    to: redirect("chapter_ambassador/profile_details_confirmation", status: 308)
+
+  get "/regional_ambassador/location_details",
+    to: redirect("chapter_ambassador/location_details", status: 301)
+
+  get "/regional_ambassador/current_location",
+    to: redirect("chapter_ambassador/current_location", status: 301)
+
+  patch "/regional_ambassador/location",
+    to: redirect("chapter_ambassador/location", status: 308)
+
+  put "/regional_ambassador/location",
+    to: redirect("chapter_ambassador/location", status: 308)
+
+  post "/regional_ambassador/location",
+    to: redirect("chapter_ambassador/location", status: 308)
+
+  get "/regional_ambassador/dashboard",
+    to: redirect("chapter_ambassador/dashboard", status: 301)
+
+  get "/regional_ambassador/data_analyses/:id",
+    to: redirect("chapter_ambassador/data_analyses/%{id}", status: 301)
+
+  get "/regional_ambassador/profile/edit",
+    to: redirect("chapter_ambassador/profiles/edit", status: 301)
+
+  get "/regional_ambassador/profile",
+    to: redirect("chapter_ambassador/profile", status: 301)
+
+  patch "/regional_ambassador/profile",
+    to: redirect("chapter_ambassador/profile", status: 308)
+
+  put "/regional_ambassador/profile",
+    to: redirect("chapter_ambassador/profile", status: 308)
+
+  get "/regional_ambassador/introduction/edit",
+    to: redirect("chapter_ambassador/introduction/edit", status: 301)
+
+  patch "/regional_ambassador/introduction",
+     to: redirect("chapter_ambassador/introduction", status: 308)
+
+  put "/regional_ambassador/introduction",
+     to: redirect("chapter_ambassador/introduction", status: 308)
+
+  get "/regional_ambassador/job_statuses/:id",
+    to: redirect("chapter_ambassador/job_statuses/%{id}", status: 301)
+
+  post "/regional_ambassador/saved_searches",
+    to: redirect("chapter_ambassador/saved_searches", status: 308)
+
+  get "/regional_ambassador/saved_searches/:id",
+    to: redirect("chapter_ambassador/saved_searches/%{id}", status: 301)
+
+  patch "/regional_ambassador/saved_searches/:id",
+    to: redirect("chapter_ambassador/saved_searches/%{id}", status: 308)
+
+  put "/regional_ambassador/saved_searches/:id",
+    to: redirect("chapter_ambassador/saved_searches/%{id}", status: 308)
+
+  delete "/regional_ambassador/saved_searches/:id",
+    to: redirect("chapter_ambassador/saved_searches/%{id}", status: 308)
+
+  get "/regional_ambassador/accounts/:id",
+    to: redirect("chapter_ambassador/participants/%{id}", status: 301)
+
+  get "/regional_ambassador/participants",
+    to: redirect("chapter_ambassador/participants", status: 301)
+
+  get "/regional_ambassador/participants/:id/edit",
+    to: redirect("chapter_ambassador/participants/%{id}/edit", status: 301)
+
+  get "/regional_ambassador/participants/:id",
+    to: redirect("chapter_ambassador/participants/%{id}", status: 301)
+
+  patch "/regional_ambassador/participants/:id",
+    to: redirect("chapter_ambassador/participants/%{id}", status: 308)
+
+  put "/regional_ambassador/participants/:id",
+    to: redirect("chapter_ambassador/participants/%{id}", status: 308)
+
+  get "/regional_ambassador/participant_sessions/:id",
+    to: redirect("chapter_ambassador/participant_sessions/%{id}", status: 301)
+
+  delete "/regional_ambassador/participant_sessions/:id",
+    to: redirect("chapter_ambassador/participant_sessions/%{id}", status: 308)
+
+  post "/regional_ambassador/student_conversions",
+    to: redirect("chapter_ambassador/student_conversions", status: 308)
+
+  post "/regional_ambassador/mentor_to_judge_conversions",
+    to: redirect("chapter_ambassador/mentor_to_judge_conversions", status: 308)
+
+  get "/regional_ambassador/missing_participant_search/new",
+    to: redirect("chapter_ambassador/missing_participant_searches/new", status: 301)
+
+  get "/regional_ambassador/missing_participant_search",
+    to: redirect("chapter_ambassador/missing_participant_search", status: 301)
+
+  post "/regional_ambassador/missing_participant_search",
+    to: redirect("chapter_ambassador/missing_participant_search", status: 308)
+
+  get "/regional_ambassador/missing_participant_locations/:id/edit",
+    to: redirect("chapter_ambassador/missing_participant_locations/%{id}/edit", status: 301)
+
+  patch "/regional_ambassador/missing_participant_locations/:id",
+    to: redirect("chapter_ambassador/missing_participant_locations/%{id}", status: 308)
+
+  put "/regional_ambassador/missing_participant_locations/:id",
+    to: redirect("chapter_ambassador/missing_participant_locations/%{id}", status: 308)
+
+  get "/regional_ambassador/teams",
+    to: redirect("chapter_ambassador/teams", status: 301)
+
+  get "/regional_ambassador/teams/:id",
+    to: redirect("chapter_ambassador/teams/%{id}", status: 301)
+
+  get "/regional_ambassador/team_submissions",
+    to: redirect("chapter_ambassador/team_submissions", status: 301)
+
+  get "/regional_ambassador/team_submissions/:id",
+    to: redirect("chapter_ambassador/team_submissions/%{id}", status: 301)
+
+  post "/regional_ambassador/team_memberships",
+    to: redirect("chapter_ambassador/team_memberships", status: 308)
+
+  delete "/regional_ambassador/team_memberships/:id",
+    to: redirect("chapter_ambassador/team_memberships/%{id}", status: 308)
+
+  get "/regional_ambassador/activities",
+    to: redirect("chapter_ambassador/activities", status: 301)
+
+  patch "/regional_ambassador/export_downloads/:id",
+    to: redirect("chapter_ambassador/export_downloads/%{id}", status: 308)
+
+  put "/regional_ambassador/export_downloads/:id",
+    to: redirect("chapter_ambassador/export_downloads/%{id}", status: 308)
+
+  get "/regional_ambassador/profile_image_upload_confirmation",
+    to: redirect("chapter_ambassador/profile_image_upload_confirmation", status: 301)
+
+  post "/regional_ambassador/background_checks",
+    to: redirect("chapter_ambassador/background_checks", status: 308)
+
+  get "/regional_ambassador/background_checks/new",
+    to: redirect("chapter_ambassador/background_checks/new", status: 301)
+
+  get "/regional_ambassador/background_checks/:id",
+    to: redirect("chapter_ambassador/background_checks/%{id}", status: 301)
+
+  get "/regional_ambassador/events",
+    to: redirect("chapter_ambassador/regional_pitch_events", status: 301)
+
+  post "/regional_ambassador/events",
+    to: redirect("chapter_ambassador/regional_pitch_events", status: 308)
+
+  get "/regional_ambassador/events/new",
+    to: redirect("chapter_ambassador/regional_pitch_events/new", status: 301)
+
+  get "/regional_ambassador/events/:id/edit",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}/edit", status: 301)
+
+  get "/regional_ambassador/events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 301)
+
+  patch "/regional_ambassador/events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 308)
+
+  put "/regional_ambassador/events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 308)
+
+  delete "/regional_ambassador/events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 308)
+
+  get "/regional_ambassador/regional_pitch_events",
+    to: redirect("chapter_ambassador/regional_pitch_events", status: 301)
+
+  post "/regional_ambassador/regional_pitch_events",
+    to: redirect("chapter_ambassador/regional_pitch_events", status: 308)
+
+  get "/regional_ambassador/regional_pitch_events/new",
+    to: redirect("chapter_ambassador/regional_pitch_events/new", status: 301)
+
+  get "/regional_ambassador/regional_pitch_events/:id/edit",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}/edit", status: 301)
+
+  get "/regional_ambassador/regional_pitch_events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 301)
+
+  patch "/regional_ambassador/regional_pitch_events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 308)
+
+  put "/regional_ambassador/regional_pitch_events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 308)
+
+  delete "/regional_ambassador/regional_pitch_events/:id",
+    to: redirect("chapter_ambassador/regional_pitch_events/%{id}", status: 308)
+
+  get "/regional_ambassador/printable_scores/:id",
+    to: redirect("chapter_ambassador/printable_scores/%{id}", status: 301)
+
+  post "/regional_ambassador/event_team_list_exports",
+    to: redirect("chapter_ambassador/event_team_list_exports", status: 308)
+
+  post "/regional_ambassador/event_judge_list_exports",
+    to: redirect("chapter_ambassador/event_judge_list_exports", status: 308)
+
+  delete "/regional_ambassador/judge_assignments",
+    to: redirect("chapter_ambassador/judge_assignments", status: 308)
+
+  post "/regional_ambassador/judge_assignments",
+    to: redirect("chapter_ambassador/judge_assignments", status: 308)
+
+  post "/regional_ambassador/event_assignments",
+    to: redirect("chapter_ambassador/event_assignments", status: 308)
+
+  delete "/regional_ambassador/event_assignments",
+    to: redirect("chapter_ambassador/event_assignments", status: 308)
+
+  get "/regional_ambassador/possible_event_attendees",
+    to: redirect("chapter_ambassador/possible_event_attendees", status: 301)
+
+  get "/regional_ambassador/judge_list",
+    to: redirect("chapter_ambassador/judge_list", status: 301)
+
+  get "/regional_ambassador/team_list",
+    to: redirect("chapter_ambassador/team_list", status: 301)
+
+  get "/regional_ambassador/scores",
+    to: redirect("chapter_ambassador/scores", status: 301)
+
+  get "/regional_ambassador/scores/:id",
+    to: redirect("chapter_ambassador/scores/%{id}", status: 301)
+
+  get "/regional_ambassador/score_details/:id",
+    to: redirect("chapter_ambassador/score_details/%{id}", status: 301)
+
+  get "/regional_ambassador/judges",
+    to: redirect("chapter_ambassador/judges", status: 301)
+
+  get "/regional_ambassador/messages",
+    to: redirect("chapter_ambassador/messages", status: 301)
+
+  post "/regional_ambassador/messages",
+    to: redirect("chapter_ambassador/messages", status: 308)
+
+  get "/regional_ambassador/messages/new",
+    to: redirect("chapter_ambassador/messages/new", status: 301)
+
+  get "/regional_ambassador/messages/:id/edit",
+    to: redirect("chapter_ambassador/messages/%{id}/edit", status: 301)
+
+  get "/regional_ambassador/messages/:id",
+    to: redirect("chapter_ambassador/messages/%{id}", status: 301)
+
+  patch "/regional_ambassador/messages/:id",
+    to: redirect("chapter_ambassador/messages/%{id}", status: 308)
+
+  put "/regional_ambassador/messages/:id",
+    to: redirect("chapter_ambassador/messages/%{id}", status: 308)
+
+  delete "/regional_ambassador/messages/:id",
+    to: redirect("chapter_ambassador/messages/%{id}", status: 308)
+
+  get "/regional_ambassador/multi_messages",
+    to: redirect("chapter_ambassador/multi_messages", status: 301)
+
+  post "/regional_ambassador/multi_messages",
+    to: redirect("chapter_ambassador/multi_messages", status: 308)
+
+  get "/regional_ambassador/multi_messages/new",
+    to: redirect("chapter_ambassador/multi_messages/new", status: 301)
+
+  get "/regional_ambassador/multi_messages/:id/edit",
+    to: redirect("chapter_ambassador/multi_messages/%{id}/edit", status: 301)
+
+  get "/regional_ambassador/multi_messages/:id",
+    to: redirect("chapter_ambassador/multi_messages/%{id}", status: 301)
+
+  patch "/regional_ambassador/multi_messages/:id",
+    to: redirect("chapter_ambassador/multi_messages/%{id}", status: 308)
+
+  put "/regional_ambassador/multi_messages/:id",
+    to: redirect("chapter_ambassador/multi_messages/%{id}", status: 308)
+
+  delete "/regional_ambassador/multi_messages/:id",
+    to: redirect("chapter_ambassador/multi_messages/%{id}", status: 308)
+
+  post "/regional_ambassador/message_deliveries",
+    to: redirect("chapter_ambassador/message_deliveries", status: 308)
 end

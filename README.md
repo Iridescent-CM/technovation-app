@@ -152,8 +152,8 @@ Seeded users:
   * password: judge@judge.com
 
 * Chapter Ambassador
-  * username: ra@ra.com
-  * password: ra@ra.com
+  * username: chapter-ambassador@chapter-ambassador.com
+  * password: chapter-ambassador@chapter-ambassador.com
 
 * Admin
   * username: admin@admin.com

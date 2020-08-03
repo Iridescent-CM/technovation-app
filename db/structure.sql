@@ -318,6 +318,46 @@ ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 
 --
+-- Name: chapter_ambassador_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_ambassador_profiles (
+    id integer NOT NULL,
+    organization_company_name character varying NOT NULL,
+    ambassador_since_year character varying NOT NULL,
+    job_title character varying NOT NULL,
+    account_id integer NOT NULL,
+    status integer DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    bio text,
+    intro_summary text,
+    secondary_regions character varying[] DEFAULT '{}'::character varying[],
+    program_name character varying
+);
+
+
+--
+-- Name: chapter_ambassador_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_ambassador_profiles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_ambassador_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_ambassador_profiles_id_seq OWNED BY public.chapter_ambassador_profiles.id;
+
+
+--
 -- Name: consent_waivers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -955,52 +995,12 @@ ALTER SEQUENCE public.pitch_presentations_id_seq OWNED BY public.pitch_presentat
 
 
 --
--- Name: regional_ambassador_profiles; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.regional_ambassador_profiles (
-    id integer NOT NULL,
-    organization_company_name character varying NOT NULL,
-    ambassador_since_year character varying NOT NULL,
-    job_title character varying NOT NULL,
-    account_id integer NOT NULL,
-    status integer DEFAULT 0 NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    bio text,
-    intro_summary text,
-    secondary_regions character varying[] DEFAULT '{}'::character varying[],
-    program_name character varying
-);
-
-
---
--- Name: regional_ambassador_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.regional_ambassador_profiles_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: regional_ambassador_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.regional_ambassador_profiles_id_seq OWNED BY public.regional_ambassador_profiles.id;
-
-
---
 -- Name: regional_links; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.regional_links (
     id bigint NOT NULL,
-    regional_ambassador_profile_id bigint,
+    chapter_ambassador_profile_id bigint,
     name integer,
     value character varying,
     created_at timestamp without time zone NOT NULL,
@@ -1036,7 +1036,7 @@ CREATE TABLE public.regional_pitch_events (
     id integer NOT NULL,
     starts_at timestamp without time zone NOT NULL,
     ends_at timestamp without time zone NOT NULL,
-    regional_ambassador_profile_id integer,
+    chapter_ambassador_profile_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     division_id integer,
@@ -1691,6 +1691,13 @@ ALTER TABLE ONLY public.certificates ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: chapter_ambassador_profiles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_ambassador_profiles ALTER COLUMN id SET DEFAULT nextval('public.chapter_ambassador_profiles_id_seq'::regclass);
+
+
+--
 -- Name: consent_waivers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1807,13 +1814,6 @@ ALTER TABLE ONLY public.parental_consents ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.pitch_presentations ALTER COLUMN id SET DEFAULT nextval('public.pitch_presentations_id_seq'::regclass);
-
-
---
--- Name: regional_ambassador_profiles id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.regional_ambassador_profiles ALTER COLUMN id SET DEFAULT nextval('public.regional_ambassador_profiles_id_seq'::regclass);
 
 
 --
@@ -1978,6 +1978,14 @@ ALTER TABLE ONLY public.certificates
 
 
 --
+-- Name: chapter_ambassador_profiles chapter_ambassador_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_ambassador_profiles
+    ADD CONSTRAINT chapter_ambassador_profiles_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: consent_waivers consent_waivers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2111,14 +2119,6 @@ ALTER TABLE ONLY public.parental_consents
 
 ALTER TABLE ONLY public.pitch_presentations
     ADD CONSTRAINT pitch_presentations_pkey PRIMARY KEY (id);
-
-
---
--- Name: regional_ambassador_profiles regional_ambassador_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.regional_ambassador_profiles
-    ADD CONSTRAINT regional_ambassador_profiles_pkey PRIMARY KEY (id);
 
 
 --
@@ -2369,6 +2369,13 @@ CREATE INDEX index_certificates_on_team_id ON public.certificates USING btree (t
 
 
 --
+-- Name: index_chapter_ambassador_profiles_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambassador_profiles USING btree (status);
+
+
+--
 -- Name: index_consent_waivers_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2467,17 +2474,10 @@ CREATE INDEX index_parental_consents_on_student_profile_id ON public.parental_co
 
 
 --
--- Name: index_regional_ambassador_profiles_on_status; Type: INDEX; Schema: public; Owner: -
+-- Name: index_regional_links_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_regional_ambassador_profiles_on_status ON public.regional_ambassador_profiles USING btree (status);
-
-
---
--- Name: index_regional_links_on_regional_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_regional_links_on_regional_ambassador_profile_id ON public.regional_links USING btree (regional_ambassador_profile_id);
+CREATE INDEX index_regional_links_on_chapter_ambassador_profile_id ON public.regional_links USING btree (chapter_ambassador_profile_id);
 
 
 --
@@ -2610,7 +2610,7 @@ CREATE UNIQUE INDEX uniq_admins_accounts ON public.admin_profiles USING btree (a
 -- Name: uniq_ambassadors_accounts; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX uniq_ambassadors_accounts ON public.regional_ambassador_profiles USING btree (account_id);
+CREATE UNIQUE INDEX uniq_ambassadors_accounts ON public.chapter_ambassador_profiles USING btree (account_id);
 
 
 --
@@ -2815,7 +2815,7 @@ ALTER TABLE ONLY public.submission_scores
 --
 
 ALTER TABLE ONLY public.regional_links
-    ADD CONSTRAINT fk_rails_b88e121da0 FOREIGN KEY (regional_ambassador_profile_id) REFERENCES public.regional_ambassador_profiles(id);
+    ADD CONSTRAINT fk_rails_b88e121da0 FOREIGN KEY (chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
 
 
 --
@@ -3057,6 +3057,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191220170611'),
 ('20200115211026'),
 ('20200303221521'),
-('20200508185107');
+('20200508185107'),
+('20200720223724'),
+('20200720234612'),
+('20200722212401');
 
 

@@ -1,0 +1,129 @@
+<% provide :title, "Viewing #{@account.scope_name.titleize}" %>
+
+<% provide :subnav, render('chapter_ambassador/participants/sub_menu') %>
+
+<div class="panel">
+  <%= render "participant_flags/season", flag: @season_flag %>
+
+  <div class="grid">
+    <div class="grid__col-4">
+      <% if params[:review_before] || params[:back] %>
+        <div class="grid__cell">
+          <%= link_to params[:back] ||= :back,
+            class: "button secondary" do %>
+            <span class="back-btn"></span>
+            <%= params[:back_title] ||= "Search results" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= image_tag @account.profile_image_url,
+        class: "thumbnail-lg grid__cell-img" %>
+
+      <h3 class="reset" style="margin-top: 1rem;">
+        <%= @account.full_name %>
+      </h3>
+
+      <h5 class="reset">
+        <%= @account.scope_name.titleize %> Profile
+      </h5>
+    </div>
+
+    <div class="grid__col-4">
+      <dl class="profile-info">
+        <dt><%= t('models.account.full_name') %></dt>
+        <dd><%= @account.full_name %></dd>
+
+        <dt><%= t('models.account.email') %></dt>
+        <dd><%= mail_to @account.email %></dd>
+
+        <dt><%= t('models.account.age') %></dt>
+        <dd><%= @account.age %></dd>
+
+        <dt>Seasons</dt>
+        <dd><%= @account.seasons.to_sentence %></dd>
+
+        <% unless @account.student_profile.present? %>
+          <dt><%= t('models.account.gender') %></dt>
+          <dd><%= @account.gender %></dd>
+        <% end %>
+
+        <dt><%= t('models.account.address') %></dt>
+        <dd>
+          <%= @account.address_details %>
+        </dd>
+      </dl>
+    </div>
+
+    <div class="grid__col-4">
+      <%= render(
+        "admin/participants/#{@account.scope_name.sub(/^\w+_r/, "r")}_profile",
+        profile: @account.public_send("#{@account.scope_name}_profile")
+      ) %>
+    </div>
+
+    <% if @account.chapter_ambassador_profile or
+            @account.mentor_profile %>
+      <div class="grid__col-auto">
+        <dl>
+          <dt><%= t('models.profile.bio') %></dt>
+
+          <dd>
+            <%= simple_format (
+              @account.chapter_ambassador_profile ||
+                @account.mentor_profile
+            ).bio %>
+          </dd>
+        </dl>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<h3 class="reset">Profile debugging</h3>
+
+<% if @account.student_profile %>
+  <%= render 'admin/participants/student_debugging',
+    profile: @account.student_profile %>
+<% end %>
+
+<% if @account.chapter_ambassador_profile %>
+  <%= render 'admin/participants/chapter_ambassador_debugging',
+    profile: @account.chapter_ambassador_profile %>
+<% end %>
+
+<% if @account.mentor_profile %>
+  <%= render 'admin/participants/mentor_debugging',
+    profile: @account.mentor_profile %>
+<% end %>
+
+<% if @account.judge_profile %>
+  <%= render 'admin/participants/judge_debugging',
+    profile: @account.judge_profile %>
+<% end %>
+
+<div class="panel">
+  <% if @account.mentor_profile || @account.student_profile %>
+    <h6>
+      <%= t("views.student.mentors.show.teams",
+            name: @account.first_name) %>
+    </h6>
+
+    <% if @account.current_teams.any? %>
+      <ul class="reset">
+        <%= render partial: 'student/mentors/team_preview',
+          collection: @account.current_teams,
+          locals: {
+            chapter_ambassador: true,
+            profile: @account.mentor_profile ||
+                        @account.student_profile
+          } %>
+      </ul>
+    <% else %>
+      <p>
+        <%= t("views.student.mentors.show.no_teams",
+              name: @account.first_name) %>
+      </p>
+    <% end %>
+  <% end %>
+</div>

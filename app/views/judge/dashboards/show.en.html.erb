@@ -13,7 +13,7 @@
         <% if current_judge.is_an_ambassador? %>
           <small>
             <%= link_to "Switch to Chapter Ambassador mode",
-              regional_ambassador_dashboard_path,
+              chapter_ambassador_dashboard_path,
               data: { turbolinks: false } %>
           </small>
         <% end %>

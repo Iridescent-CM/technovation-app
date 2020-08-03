@@ -3,7 +3,7 @@ module ApplicationHelper
     student
     mentor
     judge
-    regional_ambassador
+    chapter_ambassador
   }
 
   def safe_time_ago_in_words(time, postfix = nil)

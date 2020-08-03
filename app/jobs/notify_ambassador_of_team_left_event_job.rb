@@ -8,7 +8,7 @@ class NotifyAmbassadorOfTeamLeftEventJob < ActiveJob::Base
 
     team = Team.find(team_id)
 
-    if options[:ra_removed]
+    if options[:chapter_ambassador_removed]
       AmbassadorMailer.confirm_team_removed(
         event.ambassador.account,
         event,

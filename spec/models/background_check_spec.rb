@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe BackgroundCheck do
   describe "#clear!" do
-    %i{mentor regional_ambassador}.each do |scope|
+    %i{mentor chapter_ambassador}.each do |scope|
       it "emails the #{scope}" do
         account = FactoryBot.create(scope, :geocoded)
 

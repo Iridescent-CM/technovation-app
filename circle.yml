@@ -14,6 +14,8 @@ jobs:
           BING_MAPS_API_KEY: n-a
           BONSAI_URL: localhost:9200
           CAMPAIGN_MONITOR_API_KEY: n-a
+          CHAPTER_AMBASSADOR_LIST_ID: n-a
+          CHAPTER_AMBASSADOR_SLACK_URL: n-a
           COOKIES_ADMIN_PERMISSION_TOKEN: admin_permission_token_JUNE_2018
           COOKIES_AUTH_TOKEN: auth_token_JUNE_2018
           COOKIES_GLOBAL_INVITATION_TOKEN: global_invitation_token_JUNE_2018
@@ -90,9 +92,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: root
           RAILS_ENV: test
-          RA_SLACK_URL: n-a
           REDIS_URL: redis://127.0.0.1:6379/0
-          REGIONAL_AMBASSADOR_LIST_ID: n-a
           SEARCH_INDEX_TIMING: realtime
           STUDENT_LIST_ID: n-a
           STUDENT_SLACK_SIGNUP_URL: n-a

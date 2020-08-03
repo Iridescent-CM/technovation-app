@@ -1,6 +1,6 @@
 require "rails_helper"
 
-%w{student mentor judge regional_ambassador}.each do |scope|
+%w{student mentor judge chapter_ambassador}.each do |scope|
   klass = "#{scope.camelize}::ProfilesController".safe_constantize
 
   RSpec.describe klass do

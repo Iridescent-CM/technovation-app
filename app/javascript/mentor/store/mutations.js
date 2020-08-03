@@ -3,7 +3,7 @@ import Vue from 'vue'
 export default {
   htmlDataset (state, dataset) {
     [
-      'regionalAmbassador',
+      'chapterAmbassador',
       'currentAccount',
       'currentMentor',
       'consentWaiver',

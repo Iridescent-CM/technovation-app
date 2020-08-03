@@ -1,11 +1,11 @@
-<% admin_ra ||= false %>
+<% admin_chapter_ambassador ||= false %>
 
 <div class="grid tabs tabs--vertical">
   <div class="grid__col-sm-3">
     <%= render 'teams/intro',
       hidden_on: %w{xs xxs},
       modal_id: "team_photo_desktop",
-      admin_ra: admin_ra,
+      admin_chapter_ambassador: admin_chapter_ambassador,
       team: team %>
 
     <%= render 'teams/edit_menu' %>
@@ -20,19 +20,19 @@
 
     <div class="tabs__tab-content" id="students">
       <%= render 'teams/edit_students',
-        admin_ra: admin_ra,
+        admin_chapter_ambassador: admin_chapter_ambassador,
         team: team %>
     </div>
 
     <div class="tabs__tab-content" id="mentors">
       <%= render "teams/mentor_list",
-        admin_ra: admin_ra,
+        admin_chapter_ambassador: admin_chapter_ambassador,
         team: team %>
     </div>
 
     <div class="tabs__tab-content hidden-md hidden-lg hidden-sm" id="photo">
       <%= render 'teams/intro',
-        admin_ra: admin_ra,
+        admin_chapter_ambassador: admin_chapter_ambassador,
         modal_id: "team_photo_mobile",
         team: team %>
     </div>

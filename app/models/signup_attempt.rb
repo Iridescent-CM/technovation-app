@@ -18,7 +18,7 @@ class SignupAttempt < ActiveRecord::Base
     student
     mentor
     judge
-    regional_ambassador
+    chapter_ambassador
   }
 
   enum referred_by: REFERRED_BY_OPTIONS

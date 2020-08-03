@@ -20,7 +20,7 @@ module Judge
 
     def create_judge_mentor_on_dashboard
       return if current_session.authenticated?
-        # RA/Admin Logged in as someone else
+        # Chapter ambassador/Admin Logged in as someone else
 
       return if !current_account.authenticated?
 
