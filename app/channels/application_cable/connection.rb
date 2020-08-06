@@ -6,7 +6,7 @@ module ApplicationCable
     def connect
       self.current_user = find_verified_user
       self.current_profile = current_user.admin_profile ||
-        current_user.regional_ambassador_profile
+        current_user.chapter_ambassador_profile
       logger.add_tags 'ActionCable', "Account##{current_user.id}"
     end
 

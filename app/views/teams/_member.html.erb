@@ -1,6 +1,6 @@
 <%
-  admin_ra ||= false
-  link_opts = admin_ra ?
+  admin_chapter_ambassador ||= false
+  link_opts = admin_chapter_ambassador ?
     {
       member_id: member.id,
       member_type: member.class.name,
@@ -15,7 +15,7 @@
   </div>
 
   <div class="grid__col-9">
-    <% if admin_ra %>
+    <% if admin_chapter_ambassador %>
       <h5 class="reset">
         <%= link_to member.full_name,
           [
@@ -32,7 +32,7 @@
 
     <p class="reset"><%= mail_to member.email %></p>
 
-    <% if CanRemoveTeamMember.(current_account, member, admin_ra) %>
+    <% if CanRemoveTeamMember.(current_account, member, admin_chapter_ambassador) %>
       <%= link_to "remove this member",
         [current_scope, @team, :membership, link_opts],
         data: {

@@ -220,13 +220,13 @@ es-MX:
             judge: "El registro del jurado estará abierto en marzo 2017"
           judge: "Utiliza tu experiencia para calificar las apps de Technovation y dar retroalimentación a los equipos."
           mentor: "Ayuda a los equipos mientras identifican problemas en su comunidad y ayudalos a construir una app para resolverlo."
-          regional_ambassador: "Registrate ahora para tener la oportunidad de construir y coordinar el programa de Technovation en tu localidad."
+          chapter_ambassador: "Registrate ahora para tener la oportunidad de construir y coordinar el programa de Technovation en tu localidad."
           student: "Arma tu equipo, conecta con tus mentores y construyan una app!"
         role_choice: "Yo soy ..."
         roles:
           judge: "Jurado"
           mentor: "Mentor"
-          regional_ambassador: "Embasador Regional"
+          chapter_ambassador: "Chapter Ambassador"
           student: "Estudiante"
         section_headers:
           account_details: "Detalles de la cuenta"
@@ -236,12 +236,12 @@ es-MX:
         signup_link:
           judge: "Registarme como juez"
           mentor: "Registrarme como mentor"
-          regional_ambassador: "Registrarme como embasador regional"
+          chapter_ambassador: "Registrarme como chapter ambassador"
           student: "Registrarme como estudiante"
         title:
           judge: "Registrarme como"
           mentor: "Registrarme como"
-          regional_ambassador: "Registrarme como"
+          chapter_ambassador: "Registrarme como"
           student: "Registrarme como"
 
     student:

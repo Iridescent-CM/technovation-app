@@ -22,7 +22,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @judge_name = judge.full_name
-    @event_url = regional_ambassador_regional_pitch_event_url(event)
+    @event_url = chapter_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
@@ -34,7 +34,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @judge_name = judge.full_name
-    @event_url = regional_ambassador_regional_pitch_event_url(event)
+    @event_url = chapter_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
@@ -46,7 +46,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @team_name = team.name
-    @event_url = regional_ambassador_regional_pitch_event_url(event)
+    @event_url = chapter_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
@@ -58,7 +58,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @team_name = team.name
-    @event_url = regional_ambassador_regional_pitch_event_url(event)
+    @event_url = chapter_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
@@ -70,7 +70,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @team_name = team.name
-    @event_url = regional_ambassador_regional_pitch_event_url(event)
+    @event_url = chapter_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
@@ -82,7 +82,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @judge_name = judge.full_name
-    @event_url = regional_ambassador_regional_pitch_event_url(event)
+    @event_url = chapter_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
@@ -94,7 +94,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @team_name = team.name
-    @event_url = regional_ambassador_regional_pitch_events_url
+    @event_url = chapter_ambassador_regional_pitch_events_url
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
@@ -106,7 +106,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @judge_name = judge.full_name
-    @event_url = regional_ambassador_regional_pitch_event_url(event)
+    @event_url = chapter_ambassador_regional_pitch_event_url(event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,

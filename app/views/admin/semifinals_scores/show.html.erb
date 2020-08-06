@@ -23,14 +23,14 @@
     No completed scores are available for this submission.
   </p>
 <% else %>
-  <div id="ra-scores-detail" class="flex-row tabs tabs--vertical">
+  <div id="chapter-ambassador-scores-detail" class="flex-row tabs tabs--vertical">
     <ul class="flex-col-md-3 tabs__menu">
       <% @scores.each do |score| %>
         <li class="tabs__menu-link">
           <button
             role="button"
             class="tabs__menu-button"
-            data-tab-id="ra-scores-score-<%= score.id %>">
+            data-tab-id="chapter-ambassador-scores-score-<%= score.id %>">
             <%= score.judge_profile.full_name %><br />
             <small style="color: #999; font-style: italic;">
               Scored <%= score.total %> / <%= score.total_possible %>
@@ -42,33 +42,33 @@
 
     <div class="tabs__content flex-col-md-9">
       <% @scores.each do |score| %>
-        <div class="tabs__tab-content" id="ra-scores-score-<%= score.id %>">
-          <%= render 'regional_ambassador/scores/detail_summary',
+        <div class="tabs__tab-content" id="chapter-ambassador-scores-score-<%= score.id %>">
+          <%= render 'chapter_ambassador/scores/detail_summary',
             score: score,
             team: @team %>
 
           <h3>Breakdown</h3>
 
           <div class="score-section" id="score-section-ideation">
-            <%= render 'regional_ambassador/scores/detail/ideation', score: score %>
+            <%= render 'chapter_ambassador/scores/detail/ideation', score: score %>
           </div>
 
           <div class="score-section" id="score-section-technical">
-            <%= render 'regional_ambassador/scores/detail/technical', score: score %>
+            <%= render 'chapter_ambassador/scores/detail/technical', score: score %>
           </div>
 
           <% if @team.division.senior? %>
             <div class="score-section" id="score-section-entrepreneurship">
-              <%= render 'regional_ambassador/scores/detail/entrepreneurship', score: score %>
+              <%= render 'chapter_ambassador/scores/detail/entrepreneurship', score: score %>
             </div>
           <% end %>
 
           <div class="score-section" id="score-section-pitch">
-            <%= render 'regional_ambassador/scores/detail/pitch', score: score %>
+            <%= render 'chapter_ambassador/scores/detail/pitch', score: score %>
           </div>
 
           <div class="score-section" id="score-section-overall">
-            <%= render 'regional_ambassador/scores/detail/overall', score: score %>
+            <%= render 'chapter_ambassador/scores/detail/overall', score: score %>
           </div>
         </div>
       <% end %>

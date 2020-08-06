@@ -1,4 +1,4 @@
-import Attendee from 'ra/events/Attendee'
+import Attendee from 'chapter_ambassador/events/Attendee'
 
 test('assignedTeamFoundInEvent adds teams to assignedTeams list', () => {
   const team = new Attendee({ id: 1 })

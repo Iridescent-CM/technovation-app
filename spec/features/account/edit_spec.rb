@@ -59,7 +59,7 @@ RSpec.feature "Edit account spec" do
     expect(page).to have_content("New School")
   end
 
-  %i{mentor regional_ambassador}.each do |scope|
+  %i{mentor chapter_ambassador}.each do |scope|
     scenario "edit #{scope} bio" do
       sign_out
       profile = FactoryBot.create(scope)

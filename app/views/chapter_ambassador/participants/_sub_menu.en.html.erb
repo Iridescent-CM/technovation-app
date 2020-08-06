@@ -1,0 +1,37 @@
+<div class="menu horizontal subnav">
+  <%= link_to 'Find a missing participant',
+    new_chapter_ambassador_missing_participant_search_path,
+    data: { turbolinks: false },
+    class: "button small subnav--help-link" %>
+
+  <%= link_to 'Students',
+    chapter_ambassador_participants_path(
+      accounts_grid: { scope_names: [:student] }
+    ),
+    data: { turbolinks: false },
+    class: al(["scope=student", "accounts_grid[scope_names][]=student"]) %>
+
+  <%= link_to 'Mentors',
+    chapter_ambassador_participants_path(
+      accounts_grid: { scope_names: [:mentor] }
+    ),
+    data: { turbolinks: false },
+    class: al(["scope=mentor", "accounts_grid[scope_names][]=mentor"]) %>
+
+  <%= link_to 'Judges',
+    chapter_ambassador_participants_path(
+      accounts_grid: { scope_names: [:judge] }
+    ),
+    data: { turbolinks: false },
+    class: al(["scope=judge", "accounts_grid[scope_names][]=judge"]) %>
+
+  <%= link_to 'Chapter Ambassadors',
+    chapter_ambassador_participants_path(
+      accounts_grid: { scope_names: [:chapter_ambassador] }
+    ),
+    data: { turbolinks: false },
+    class: al([
+      "scope=chapter_ambassador",
+      "accounts_grid[scope_names][]=chapter_ambassador",
+    ]) %>
+</div>

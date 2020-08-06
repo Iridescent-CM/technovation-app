@@ -1,0 +1,70 @@
+<% provide :title, "Chapter Ambassador Data • Events" %>
+
+<div class="panel panel--left">
+  <h1>Regional Pitch Events</h1>
+
+  <div id="app">
+    <events-table
+      fetch-url="<%= chapter_ambassador_regional_pitch_events_path(
+        format: :json
+      ) %>"
+
+      manage-attendees="<%= ENV.fetch("MANAGE_EVENTS") { false } %>"
+
+      save-assignments-url="<%=
+        chapter_ambassador_event_assignments_path(
+          format: :json
+        )
+      %>"
+
+      judges-list-url="<%= chapter_ambassador_judge_list_path(
+        format: :json
+      ) %>"
+
+      teams-list-url="<%= chapter_ambassador_team_list_path(
+        format: :json
+      ) %>"
+    ></events-table>
+
+    <event-form
+      post-url="<%= chapter_ambassador_regional_pitch_events_path(
+        format: :json
+      ) %>"
+      junior-division-id="<%= Division.junior.id %>"
+      senior-division-id="<%= Division.senior.id %>"
+      junior-division-name="<%= Division.junior.name %>"
+      senior-division-name="<%= Division.senior.name %>"
+    ></event-form>
+  </div>
+</div>
+
+<% if invitation_token.present? %>
+  <div class="panel">
+    <h6 class="heading--reset">
+      You may give this URL to new judges which
+      enables them to sign up:
+    </h6>
+
+    <p><%= judge_signup_url(invitation: invitation_token) %></p>
+
+
+    <h6 class="heading--reset">Or, alternatively:</h6>
+
+    <p>
+      You can also invite new people by entering their email
+      while searching for judges to add to your event.
+      <strong>The system has broad rules for valid emails,
+        so pay close to attention to what you select.</strong>
+      It's normal that you may see one or two versions of
+      the email in the results list.
+    </p>
+
+    <h6 class="heading--reset">Reminder:</h6>
+
+    <p>
+      Existing mentors should use <em>Switch to judge mode</em>
+      from their dashboards to get started as a judge.
+      <strong>Mentors on teams can only be virtual judges.</strong>
+    </p>
+  </div>
+<% end %>

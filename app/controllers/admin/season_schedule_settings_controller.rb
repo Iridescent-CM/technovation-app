@@ -22,11 +22,11 @@ module Admin
     end
 
     def signup_scopes
-      %w{student mentor judge regional_ambassador}.map { |s| "#{s}_signup" }
+      %w{student mentor judge chapter_ambassador}.map { |s| "#{s}_signup" }
     end
 
     def dashboard_text_scopes
-      %w{student mentor judge regional_ambassador}.map { |s| "#{s}_dashboard_text" }
+      %w{student mentor judge chapter_ambassador}.map { |s| "#{s}_dashboard_text" }
     end
   end
 end

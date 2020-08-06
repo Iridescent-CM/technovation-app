@@ -1,6 +1,6 @@
 <% provide :title, "Review Score" %>
 <% is_privileged = current_account.admin? ||
-                     current_account.regional_ambassador_profile.present? %>
+                     current_account.chapter_ambassador_profile.present? %>
 
 <div class="panel">
   <header class="admin-score-header">

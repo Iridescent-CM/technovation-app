@@ -1,8 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 
-import AttendeeSearch from 'ra/events/AttendeeSearch';
+import AttendeeSearch from 'chapter_ambassador/events/AttendeeSearch';
 
-import Event from 'ra/events/Event';
+import Event from 'chapter_ambassador/events/Event';
 
 test('performs remote search when filteredItems is empty', () => {
   const wrapper = shallowMount(AttendeeSearch, {

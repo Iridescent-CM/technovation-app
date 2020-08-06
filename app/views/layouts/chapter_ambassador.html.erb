@@ -1,0 +1,70 @@
+<% if current_session.authenticated? %>
+  <% provide :session_bar, render("layouts/session_bar") %>
+<% end %>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'meta' %>
+
+    <title>
+      <%= content_for?(:title) ?
+        "#{yield(:title)} • #{t("views.application.site_title")}" :
+        t("views.application.site_title_default") %>
+    </title>
+
+    <%= render 'favicons' %>
+
+    <%= stylesheet_link_tag 'chapter_ambassador', media: 'all' %>
+
+    <%= stylesheet_packs_with_chunks_tag("application", "chapter_ambassador", data: { turbolinks_track: :reload }) %>
+
+    <%= yield :css %>
+
+    <%= csrf_meta_tags %>
+
+
+    <%= javascript_include_tag 'chapter_ambassador',
+      'data-turbolinks-track' => true %>
+
+    <%= javascript_packs_with_chunks_tag("application", "chapter_ambassador", data: { turbolinks_track: :reload }) %>
+
+    <%= yield :js %>
+  </head>
+
+  <body>
+    <%= yield :session_bar %>
+
+    <div class="grid">
+      <div class="grid__col-10">
+        <%= render 'flash_messages' %>
+
+        <%= yield %>
+      </div>
+
+      <div class="grid__col-2 col--sticky-parent">
+        <div class="col--sticky-spacer">
+          <div class="col--sticky">
+            <%= render 'chapter_ambassador/navigation' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= render 'application/footer' %>
+
+    <%= render 'application/queued_jobs' %>
+
+    <% if ENV.fetch("GOOGLE_ANALYTICS_ID", nil).present? %>
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '<%= ENV.fetch("GOOGLE_ANALYTICS_ID") %>', 'auto');
+        ga('send', 'pageview');
+      </script>
+    <% end %>
+  </body>
+</html>

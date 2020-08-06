@@ -38,7 +38,7 @@ database 'technovation-app_development' do
     anonymize('bio') { |_| "Sanitized bio" }
   end
 
-  table 'regional_ambassador_profiles' do
+  table 'chapter_ambassador_profiles' do
     primary_key 'id' # composite key is also supported
     anonymize('bio') { |_| "Sanitized bio" }
   end

@@ -207,17 +207,17 @@ if (mentor = MentorProfile.create(
   puts ""
 end
 
-if (ra = RegionalAmbassadorProfile.create(
+if (chapter_ambassador = ChapterAmbassadorProfile.create(
     account_attributes: {
-      email: "ra@ra.com",
+      email: "chapter-ambassador@chapter-ambassador.com",
       email_confirmed_at: Time.current,
-      password: "ra@ra.com",
+      password: "chapter-ambassador@chapter-ambassador.com",
       background_check_attributes: {
         candidate_id: "SEEDED!",
         report_id: "SEEDED!",
         status: "clear",
       },
-      first_name: "RA",
+      first_name: "Chapter",
       last_name: "Ambassador",
       date_of_birth: Date.today - 34.years,
       gender: "Prefer not to say",
@@ -227,15 +227,15 @@ if (ra = RegionalAmbassadorProfile.create(
       timezone: "US/Central",
       seasons: [Season.current.year],
     },
-    status: RegionalAmbassadorProfile.statuses[:approved],
+    status: ChapterAmbassadorProfile.statuses[:approved],
     organization_company_name: "Iridescent",
     ambassador_since_year: "I'm new!",
     job_title: "Software Engineer",
     bio: "I am passionate about tech and empowering girls",
   )).valid?
-  Geocoding.perform(ra.account).with_save
-  ra.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))
-  puts "Created approved RA: #{ra.email} with password #{ra.email}"
+  Geocoding.perform(chapter_ambassador.account).with_save
+  chapter_ambassador.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))
+  puts "Created approved chapter ambassador: #{chapter_ambassador.email} with password #{chapter_ambassador.email}"
   puts ""
   puts "============================================================="
   puts ""

@@ -18,7 +18,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       expect(SeasonToggles.student_signup?).to be false
       expect(SeasonToggles.mentor_signup?).to be false
       expect(SeasonToggles.judge_signup?).to be false
-      expect(SeasonToggles.regional_ambassador_signup?).to be false
+      expect(SeasonToggles.chapter_ambassador_signup?).to be false
 
       expect(SeasonToggles.team_building_enabled?).to be false
       expect(SeasonToggles.team_submissions_editable?).to be false
@@ -37,7 +37,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       expect(SeasonToggles.student_signup?).to be true
       expect(SeasonToggles.mentor_signup?).to be true
       expect(SeasonToggles.judge_signup?).to be true
-      expect(SeasonToggles.regional_ambassador_signup?).to be true
+      expect(SeasonToggles.chapter_ambassador_signup?).to be true
 
       expect(SeasonToggles.team_building_enabled?).to be true
       expect(SeasonToggles.team_submissions_editable?).to be true
@@ -62,7 +62,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       expect(SeasonToggles.dashboard_text(:student)).to be_empty
       expect(SeasonToggles.dashboard_text(:mentor)).to be_empty
       expect(SeasonToggles.dashboard_text(:judge)).to be_empty
-      expect(SeasonToggles.dashboard_text(:regional_ambassador)).to be_empty
+      expect(SeasonToggles.dashboard_text(:chapter_ambassador)).to be_empty
     end
 
     scenario "Setting notices" do
@@ -78,7 +78,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       expect(SeasonToggles.dashboard_text(:student)).to eq("Student notice")
       expect(SeasonToggles.dashboard_text(:mentor)).to eq("Mentor notice")
       expect(SeasonToggles.dashboard_text(:judge)).to eq("Judge notice")
-      expect(SeasonToggles.dashboard_text(:regional_ambassador)).to eq("Chapter ambassador notice")
+      expect(SeasonToggles.dashboard_text(:chapter_ambassador)).to eq("Chapter ambassador notice")
     end
   end
 
@@ -194,7 +194,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         expect(SeasonToggles.student_signup?).to be false
         expect(SeasonToggles.mentor_signup?).to be false
         expect(SeasonToggles.judge_signup?).to be false
-        expect(SeasonToggles.regional_ambassador_signup?).to be false
+        expect(SeasonToggles.chapter_ambassador_signup?).to be false
         expect(SeasonToggles.team_building_enabled?).to be false
         expect(SeasonToggles.team_submissions_editable?).to be false
         expect(SeasonToggles.select_regional_pitch_event?).to be false
@@ -259,7 +259,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         expect(SeasonToggles.student_signup?).to be true
         expect(SeasonToggles.mentor_signup?).to be true
         expect(SeasonToggles.judge_signup?).to be true
-        expect(SeasonToggles.regional_ambassador_signup?).to be true
+        expect(SeasonToggles.chapter_ambassador_signup?).to be true
         expect(SeasonToggles.team_building_enabled?).to be true
         expect(SeasonToggles.team_submissions_editable?).to be true
         expect(SeasonToggles.select_regional_pitch_event?).to be true

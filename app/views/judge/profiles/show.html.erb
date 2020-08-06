@@ -11,7 +11,7 @@
 
       <%= render 'image_upload',
         choose_from_defaults: (
-          not current_account.regional_ambassador_profile.present?
+          not current_account.chapter_ambassador_profile.present?
         ),
         current_image_path: current_judge.profile_image_url,
         modal_id: "image_upload_desktop",
@@ -33,7 +33,7 @@
 
       <%= render 'image_upload',
         choose_from_defaults: (
-          not current_account.regional_ambassador_profile.present?
+          not current_account.chapter_ambassador_profile.present?
         ),
         current_image_path: current_judge.profile_image_url,
         image_id: "profile-image-xs",

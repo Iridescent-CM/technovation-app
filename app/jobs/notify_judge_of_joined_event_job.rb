@@ -7,7 +7,7 @@ class NotifyJudgeOfJoinedEventJob < ActiveJob::Base
 
     return unless event.live?
 
-    if options[:ra_added]
+    if options[:chapter_ambassador_added]
       JudgeMailer.notify_added_event(judge, event).deliver_now
     else
       JudgeMailer.confirm_joined_event(judge, event).deliver_now

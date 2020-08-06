@@ -158,9 +158,9 @@ RSpec.describe Account do
     it "works with primary region searches" do
       FactoryBot.create(:account, :los_angeles)
       chi = FactoryBot.create(:account, :chicago)
-      ra = FactoryBot.create(:ambassador, :chicago)
+      chapter_ambassador = FactoryBot.create(:ambassador, :chicago)
 
-      expect(Account.in_region(ra)).to contain_exactly(chi, ra.account)
+      expect(Account.in_region(chapter_ambassador)).to contain_exactly(chi, chapter_ambassador.account)
     end
 
     it "works with secondary region searches" do
@@ -168,13 +168,13 @@ RSpec.describe Account do
       la = FactoryBot.create(:account, :los_angeles)
       chi = FactoryBot.create(:account, :chicago)
 
-      ra = FactoryBot.create(
+      chapter_ambassador = FactoryBot.create(
         :ambassador,
         :chicago,
         secondary_regions: ["CA, US"])
 
-      expect(Account.in_region(ra))
-        .to contain_exactly(chi, la, ra.account)
+      expect(Account.in_region(chapter_ambassador))
+        .to contain_exactly(chi, la, chapter_ambassador.account)
     end
   end
 
@@ -184,7 +184,7 @@ RSpec.describe Account do
   end
 
   it "returns a NullTeams for accounts that can't be on teams" do
-    %w{judge regional_ambassador}.each do |type|
+    %w{judge chapter_ambassador}.each do |type|
       profile = FactoryBot.create(type)
       expect(profile.account.teams.current).to eq(Team.none)
     end
@@ -206,7 +206,7 @@ RSpec.describe Account do
     ])
   end
 
-  %i{mentor regional_ambassador}.each do |type|
+  %i{mentor chapter_ambassador}.each do |type|
     it "doesn't need a BG check outside of the US" do
       account = FactoryBot.create(type,
                                    city: "Salvador",
@@ -437,7 +437,7 @@ RSpec.describe Account do
     it "returns students with current signed parental consents" do
       judge = FactoryBot.create(:judge)
       mentor = FactoryBot.create(:mentor, :onboarded)
-      ra = FactoryBot.create(:ambassador)
+      chapter_ambassador = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)
 
@@ -455,7 +455,7 @@ RSpec.describe Account do
 
       expect(Account.parental_consented).not_to include(judge.account)
       expect(Account.parental_consented).not_to include(mentor.account)
-      expect(Account.parental_consented).not_to include(ra.account)
+      expect(Account.parental_consented).not_to include(chapter_ambassador.account)
 
       expect(Account.parental_consented).not_to include(past_consented_student.account)
       expect(Account.parental_consented).not_to include(unconsented_student.account)
@@ -464,7 +464,7 @@ RSpec.describe Account do
     it "returns students by season with signed parental consents" do
       judge = FactoryBot.create(:judge)
       mentor = FactoryBot.create(:mentor, :onboarded)
-      ra = FactoryBot.create(:ambassador)
+      chapter_ambassador = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)
 
@@ -493,7 +493,7 @@ RSpec.describe Account do
 
       expect(results).not_to include(judge.account)
       expect(results).not_to include(mentor.account)
-      expect(results).not_to include(ra.account)
+      expect(results).not_to include(chapter_ambassador.account)
 
       expect(results).not_to include(consented_student.account)
       expect(results).not_to include(unconsented_student.account)
@@ -505,7 +505,7 @@ RSpec.describe Account do
     it "returns current students without signed parental consents" do
       judge = FactoryBot.create(:judge)
       mentor = FactoryBot.create(:mentor, :onboarded)
-      ra = FactoryBot.create(:ambassador)
+      chapter_ambassador = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)
 
@@ -530,7 +530,7 @@ RSpec.describe Account do
 
       expect(results).not_to include(judge.account)
       expect(results).not_to include(mentor.account)
-      expect(results).not_to include(ra.account)
+      expect(results).not_to include(chapter_ambassador.account)
 
       expect(results).not_to include(consented_student.account)
       expect(results).not_to include(past_consented_student.account)
@@ -542,7 +542,7 @@ RSpec.describe Account do
     it "returns students by season without signed parental consents" do
       judge = FactoryBot.create(:judge)
       mentor = FactoryBot.create(:mentor, :onboarded)
-      ra = FactoryBot.create(:ambassador)
+      chapter_ambassador = FactoryBot.create(:ambassador)
 
       unconsented_student = FactoryBot.create(:onboarding_student)
 
@@ -572,7 +572,7 @@ RSpec.describe Account do
 
       expect(results).not_to include(judge.account)
       expect(results).not_to include(mentor.account)
-      expect(results).not_to include(ra.account)
+      expect(results).not_to include(chapter_ambassador.account)
 
       expect(results).not_to include(past_consented_student.account)
       expect(results).not_to include(unconsented_student.account)
@@ -778,13 +778,13 @@ RSpec.describe Account do
       before do
         allow(ENV).to receive(:fetch).and_call_original
         allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
-        allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
       it "allows no one" do
         expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
         expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be false
-        expect(FactoryBot.create(:regional_ambassador).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:chapter_ambassador).can_switch_to_judge?).to be false
       end
     end
 
@@ -792,28 +792,28 @@ RSpec.describe Account do
       before do
         allow(ENV).to receive(:fetch).and_call_original
         allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(1)
-        allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
       it "allows only mentors" do
         expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
         expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be true
-        expect(FactoryBot.create(:regional_ambassador).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:chapter_ambassador).can_switch_to_judge?).to be false
       end
     end
 
-    describe "when RA config is on" do
+    describe "when chapter ambassador config is on" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
         allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
-        allow(ENV).to receive(:fetch).with("ENABLE_RA_SWITCH_TO_JUDGE", any_args).and_return(1)
+        allow(ENV).to receive(:fetch).with("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", any_args).and_return(1)
       end
 
-      it "allows RAs with judge profiles" do
+      it "allows chapter ambassadors with judge profiles" do
         expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
         expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be false
-        expect(FactoryBot.create(:regional_ambassador).can_switch_to_judge?).to be false
-        expect(FactoryBot.create(:regional_ambassador, :has_judge_profile).can_switch_to_judge?).to be true
+        expect(FactoryBot.create(:chapter_ambassador).can_switch_to_judge?).to be false
+        expect(FactoryBot.create(:chapter_ambassador, :has_judge_profile).can_switch_to_judge?).to be true
       end
     end
   end
@@ -825,10 +825,10 @@ RSpec.describe Account do
         allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
       end
 
-      it "allows RAs" do
+      it "allows chapter ambassadors" do
         expect(FactoryBot.create(:student).can_switch_to_mentor?).to be false
         expect(FactoryBot.create(:judge).can_switch_to_mentor?).to be false
-        expect(FactoryBot.create(:regional_ambassador).can_switch_to_mentor?).to be true
+        expect(FactoryBot.create(:chapter_ambassador).can_switch_to_mentor?).to be true
       end
     end
 
@@ -838,10 +838,10 @@ RSpec.describe Account do
         allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(1)
       end
 
-      it "allows judges and RAs" do
+      it "allows judges and chapter ambassadors" do
         expect(FactoryBot.create(:student).can_switch_to_mentor?).to be false
         expect(FactoryBot.create(:judge).can_switch_to_mentor?).to be true
-        expect(FactoryBot.create(:regional_ambassador).can_switch_to_mentor?).to be true
+        expect(FactoryBot.create(:chapter_ambassador).can_switch_to_mentor?).to be true
       end
     end
   end

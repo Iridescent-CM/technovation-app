@@ -15,6 +15,6 @@ class NullAuth < NullObject
   def admin_profile; ::NullProfile.new; end
   def judge_profile; ::NullProfile.new; end
   def mentor_profile; ::NullProfile.new; end
-  def regional_ambassador_profile; ::NullProfile.new; end
+  def chapter_ambassador_profile; ::NullProfile.new; end
   def student_profile; ::NullProfile.new; end
 end

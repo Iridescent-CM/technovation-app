@@ -7,7 +7,7 @@ class SeasonToggles
       student
       mentor
       judge
-      regional_ambassador
+      chapter_ambassador
     }
 
     def self.included(base)

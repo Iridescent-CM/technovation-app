@@ -6,7 +6,7 @@ class Attendees
     context:,
     query: "",
     expand_search: false,
-    ambassador: NullRegionalAmbassador.new,
+    ambassador: NullChapterAmbassador.new,
     event: NullEvent.new,
     exclude_event_attendees: false
   )

@@ -6,7 +6,7 @@ class ProfileUpdating
   def initialize(profile, scope = nil)
     @profile = profile
     @account = profile.account
-    @scope = (scope || account.scope_name).to_s.sub(/^\w+_r/, "r")
+    @scope = (scope || account.scope_name).to_s.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")
   end
 
   def self.execute(profile, scope = nil, attrs)
@@ -41,7 +41,7 @@ class ProfileUpdating
   def perform_judge_updates
   end
 
-  def perform_regional_ambassador_updates
+  def perform_chapter_ambassador_updates
     if account.timezone.blank? && account.valid_coordinates?
       timezone_name = Timezone.lookup(*account.coordinates).name
       account.update_column(:timezone, timezone_name)
@@ -95,7 +95,7 @@ class ProfileUpdating
         UpdateProfileOnEmailListJob.perform_later(
           id,
           email_before_last_save,
-          scope.sub(/^\w+_regional/, "regional").upcase
+          scope.sub(/^\w+_chapter_ambassador/, "chapter_ambassador").upcase
         )
       end
     end

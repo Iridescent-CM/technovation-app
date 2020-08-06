@@ -1,0 +1,54 @@
+<% chapter_ambassador_dashboard ||= false %>
+
+<%= simple_form_for current_ambassador,
+  url: chapter_ambassador_introduction_path do |f| %>
+
+  <%= f.input :program_name, label: "Program name" %>
+
+  <%= f.input :intro_summary,
+    label: "Short summary",
+    as: :text,
+    input_html: {
+      rows: 3,
+    } %>
+
+  <%= content_tag :p,
+    data: {
+      keep_count_of: "#chapter_ambassador_profile_intro_summary",
+      down_from: 280,
+    } do %>
+    <span><%= (f.object.intro_summary || "").length %></span>
+
+    <span>
+      <%= "character".pluralize((f.object.intro_summary || "").length) %>
+    </span>
+  <% end %>
+
+  <p class="hint">
+    Give your participants a short introduction to your regional program.
+    Use up to 280 characters, or about the length of a tweet.
+  </p>
+
+  <h6>Add links to your regional program sites</h6>
+
+  <div id="regional_links">
+    <%= f.simple_fields_for :regional_links do |r| %>
+      <%= render "chapter_ambassador/introductions/regional_link_fields", f: r %>
+    <% end %>
+
+    <div class="links">
+      <%= link_to_add_association "+ Add another link", f,
+        :regional_links,
+        partial: "chapter_ambassador/introductions/regional_link_fields",
+        class: "button secondary small" %>
+    </div>
+  </div>
+
+  <p>
+    <%= f.submit "Save", class: "button" %>
+    <% unless chapter_ambassador_dashboard %>
+      or
+      <%= link_to 'cancel', chapter_ambassador_dashboard_path %>
+    <% end %>
+  </p>
+<% end %>

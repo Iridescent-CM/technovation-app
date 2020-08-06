@@ -46,11 +46,11 @@
             Chapter Ambassadors
             <strong
               :class="{
-                on: formData.regional_ambassador_signup,
-                off: !formData.regional_ambassador_signup
+                on: formData.chapter_ambassador_signup,
+                off: !formData.chapter_ambassador_signup
               }"
             >
-              {{ formData.regional_ambassador_signup ? 'yes' : 'no' }}
+              {{ formData.chapter_ambassador_signup ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
@@ -204,7 +204,7 @@ export default {
         student_dashboard_text: 'Students',
         mentor_dashboard_text: 'Mentors',
         judge_dashboard_text: 'Judges',
-        regional_ambassador_dashboard_text: 'Chapter Ambassadors',
+        chapter_ambassador_dashboard_text: 'Chapter Ambassadors',
       },
       surveysFields: {
         student_survey_link: 'Students',

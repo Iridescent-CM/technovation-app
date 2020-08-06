@@ -10,11 +10,11 @@ module CreateJudgeProfile
 
   private
   def self.create_judge_profile(account)
-    attrs = if account.regional_ambassador_profile.present?
+    attrs = if account.chapter_ambassador_profile.present?
               {
-                company_name: account.regional_ambassador_profile
+                company_name: account.chapter_ambassador_profile
                   .organization_company_name,
-                job_title: account.regional_ambassador_profile.job_title,
+                job_title: account.chapter_ambassador_profile.job_title,
               }
             elsif account.mentor_profile.present?
               {

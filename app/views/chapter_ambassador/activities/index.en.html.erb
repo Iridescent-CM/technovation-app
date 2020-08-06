@@ -1,0 +1,7 @@
+<% provide :title, "Chapter Ambassador Data • Activity" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @activities_grid,
+  form_url: chapter_ambassador_activities_path,
+  model_name: "activity",
+  scope: :chapter_ambassador %>

@@ -1,0 +1,21 @@
+<h3 class="reset">
+  <%= current_ambassador.region_name %>
+  <%= Season.current.year %>
+  recruitment performance
+</h3>
+
+<p>
+  <%= link_to "View all participants in your region",
+    chapter_ambassador_participants_path %>
+</p>
+
+<hr />
+
+<div id="chapter-ambassador-admin-mentors-section">
+  <mentors-section
+    :chart-endpoints="{
+      onboarding_mentors: '<%= chapter_ambassador_data_analysis_path(:onboarding_mentors) %>',
+      returning_mentors: '<%= chapter_ambassador_data_analysis_path(:returning_mentors) %>',
+    }"
+  />
+</div>

@@ -42,7 +42,7 @@
           <dd><%= profile.address_details %></dd>
 
           <% if editing and
-                  not profile.class.name.underscore.sub("_profile", "") == "regional_ambassador" %>
+                  not profile.class.name.underscore.sub("_profile", "") == "chapter_ambassador" %>
             <%= link_to t('views.accounts.show.edit_location'),
               [profile.class.name.underscore.sub("_profile", ""), :location_details] %>
           <% end %>

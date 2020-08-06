@@ -1,0 +1,7 @@
+<% provide :title, "Chapter Ambassador Data • Judges" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @judges_grid,
+  form_url: chapter_ambassador_judges_path,
+  model_name: "judge",
+  scope: :chapter_ambassador %>

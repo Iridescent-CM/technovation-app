@@ -28,8 +28,8 @@ class RegionalPitchEvent < ActiveRecord::Base
   }
 
   belongs_to :ambassador,
-    class_name: "RegionalAmbassadorProfile",
-    foreign_key: :regional_ambassador_profile_id
+    class_name: "ChapterAmbassadorProfile",
+    foreign_key: :chapter_ambassador_profile_id
 
   has_and_belongs_to_many :divisions
 
@@ -74,20 +74,20 @@ class RegionalPitchEvent < ActiveRecord::Base
     to: :ambassador,
     prefix: true
 
-  scope :visible_to, ->(admin_ra) {
-    if admin_ra.admin?
+  scope :visible_to, ->(admin_chapter_ambassador) {
+    if admin_chapter_ambassador.admin?
       unscoped
-    elsif admin_ra.country_code == "US"
+    elsif admin_chapter_ambassador.country_code == "US"
       joins(ambassador: :account)
         .where(
           "accounts.country = 'US' AND accounts.state_province = ?",
-          admin_ra.state_province
+          admin_chapter_ambassador.state_province
         )
     else
       joins(ambassador: :account)
         .where(
           "accounts.country = ?",
-          admin_ra.country_code
+          admin_chapter_ambassador.country_code
         )
     end
   }

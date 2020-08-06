@@ -8,7 +8,7 @@ en:
   ambassador_mailer:
     approved:
       message: "Hey there, good news! Your Chapter Ambassador account has been approved!"
-      next_steps: "For now, there isn't anything for you to do. We are rolling out new RA features soon, and you will get an email when we have updates."
+      next_steps: "For now, there isn't anything for you to do. We are rolling out new Chapter Ambassador features soon, and you will get an email when we have updates."
       subject: "Chapter Ambassador Approved Request Follow-up"
     declined:
       subject: "Chapter Ambassador Request Follow-up"

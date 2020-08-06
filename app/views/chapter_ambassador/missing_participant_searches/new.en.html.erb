@@ -1,0 +1,60 @@
+<% provide :title, "Find Missing Participants" %>
+
+<% provide :subnav, render('chapter_ambassador/participants/sub_menu') %>
+
+<div class="grid grid--bleed grid--justify-space-around">
+  <div class="grid__col-8">
+    <div class="panel">
+      <h3 class="content-heading">Find a missing participant</h3>
+
+      <p>
+        Find a participant that you are sure should appear in your region,
+        but does not.
+      </p>
+
+      <h5>Some tips:</h5>
+
+      <ul class="bleed-y">
+        <li>
+          In most cases, they haven't filled in their location yet
+        </li>
+
+        <li>
+          They may not have filled in their location correctly
+        </li>
+
+        <li>
+          If it's a person returning from a previous season, make sure they have
+          logged in recently, otherwise they won't appear in this season's data
+        </li>
+
+        <li>
+          They may be using a different email address;
+          be sure to ask them for any email they may be using to log in
+        </li>
+
+        <li>
+          <strong>
+            You must spell their name and/or email correctly
+            in order to get a match
+          </strong>
+        </li>
+      </ul>
+
+      <%= form_with model: @missing_participant_search,
+        url: chapter_ambassador_missing_participant_search_path,
+        local: true do |f| %>
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name %>
+
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name %>
+
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+
+        <%= f.submit "Search", class: "button" %>
+      <% end %>
+    </div>
+  </div>
+</div>

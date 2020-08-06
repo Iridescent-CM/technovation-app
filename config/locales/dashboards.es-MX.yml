@@ -26,12 +26,12 @@ es-MX:
           pending_team_requests: "Solicitudes de equipo enviadas"
         title: "Panel de configuración"
 
-    regional_ambassador:
+    chapter_ambassador:
       dashboards:
         show:
           approved_message: "¡Bienvenido! Tu cuenta ha sido revisada por nuestros colaboradores y ha sido aprobada. Próximamente recibirás noticias sobre las novedades que tendremos para ti."
-          pending_message: "Gracias por registrarte como Embajador Regional. Los colaboradores de Technovation van a revisar tu cuenta para asegurarse de que tu información ha sido ingresada correctamente. Una vez que haya sido confirmada, tendrás acceso a los datos de los estudiantes dentro de tu región."
-          declined_message: "Gracias por tu interés en registrarte como Embajador Regional. Desafortunadamente tu solicitud ha sido rechazada en esta ocasión."
+          pending_message: "Gracias por registrarte como Chapter Ambassador. Los colaboradores de Technovation van a revisar tu cuenta para asegurarse de que tu información ha sido ingresada correctamente. Una vez que haya sido confirmada, tendrás acceso a los datos de los estudiantes dentro de tu región."
+          declined_message: "Gracias por tu interés en registrarte como Chapter Ambassador. Desafortunadamente tu solicitud ha sido rechazada en esta ocasión."
 
     student:
       dashboards:

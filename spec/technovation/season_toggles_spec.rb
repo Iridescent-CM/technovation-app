@@ -333,7 +333,7 @@ RSpec.describe SeasonToggles do
     end
   end
 
-  %i(student mentor judge regional_ambassador).each do |scope|
+  %i(student mentor judge chapter_ambassador).each do |scope|
     describe ".#{scope}_signup=" do
       context "valid input" do
         it "allows a collection of 'boolean' words and booleans" do

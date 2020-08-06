@@ -59,12 +59,12 @@ RSpec.describe RegionalPitchEvent do
 
   describe "regioning" do
     it "works with primary region searches" do
-      ra = FactoryBot.create(:ambassador, :chicago)
+      chapter_ambassador = FactoryBot.create(:ambassador, :chicago)
 
       chi = FactoryBot.create(:event, :chicago)
       FactoryBot.create(:event, :los_angeles)
 
-      expect(RegionalPitchEvent.in_region(ra)).to contain_exactly(chi)
+      expect(RegionalPitchEvent.in_region(chapter_ambassador)).to contain_exactly(chi)
     end
 
     it "works with secondary region searches" do
@@ -72,10 +72,10 @@ RSpec.describe RegionalPitchEvent do
 
       la = FactoryBot.create(:event, :los_angeles)
       chi = FactoryBot.create(:event, :chicago)
-      ra = FactoryBot.create(:ambassador, :chicago,
+      chapter_ambassador = FactoryBot.create(:ambassador, :chicago,
         secondary_regions: ["CA, US"])
 
-      expect(RegionalPitchEvent.in_region(ra)).to contain_exactly(chi, la)
+      expect(RegionalPitchEvent.in_region(chapter_ambassador)).to contain_exactly(chi, la)
     end
   end
 

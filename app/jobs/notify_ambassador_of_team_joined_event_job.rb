@@ -8,7 +8,7 @@ class NotifyAmbassadorOfTeamJoinedEventJob < ActiveJob::Base
 
     team = Team.find(team_id)
 
-    if options[:ra_added]
+    if options[:chapter_ambassador_added]
       AmbassadorMailer.confirm_team_added(
         event.ambassador.account,
         event,

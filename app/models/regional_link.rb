@@ -12,7 +12,7 @@ class RegionalLink < ApplicationRecord
     whatsapp_group
   }
 
-  belongs_to :regional_ambassador_profile
+  belongs_to :chapter_ambassador_profile
 
   before_save -> {
     unless name == "email"
