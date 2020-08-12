@@ -12,7 +12,6 @@ jobs:
           AIRBRAKE_RAILS_ENV: test
           AWS_BUCKET_NAME: technovation-attachments-test
           BING_MAPS_API_KEY: n-a
-          BONSAI_URL: localhost:9200
           CAMPAIGN_MONITOR_API_KEY: n-a
           CHAPTER_AMBASSADOR_LIST_ID: n-a
           CHAPTER_AMBASSADOR_SLACK_URL: n-a
@@ -83,7 +82,6 @@ jobs:
           MAILGUN_PRIVATE_KEY: n-a
           MENTOR_LIST_ID: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a
-          MENTOR_TRAINING_URL: https://google.com
           NEWSLETTER_URL: "https://some/other/url"
           NEW_RELIC_LICENSE_KEY: n-a
           PARENT_CONSENT_PDF: n-a
@@ -93,9 +91,7 @@ jobs:
           PGUSER: root
           RAILS_ENV: test
           REDIS_URL: redis://127.0.0.1:6379/0
-          SEARCH_INDEX_TIMING: realtime
           STUDENT_LIST_ID: n-a
-          STUDENT_SLACK_SIGNUP_URL: n-a
           THUNKABLE_PROMO_IMAGE: n-a
       - image: circleci/postgres:9.6-alpine-ram
 
