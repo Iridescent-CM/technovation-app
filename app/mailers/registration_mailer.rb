@@ -52,6 +52,9 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def welcome_student(student)
+    @registration_opens = ImportantDates.registration_opens.strftime("%B %Y")
+    @official_start_of_season = ImportantDates.official_start_of_season.strftime("%B %d, %Y")
+    @team_registration_deadline = ImportantDates.team_registration_deadline.strftime("%B %d, %Y")
     @season_submission_deadline = Season.submission_deadline
     @season_year = Season.current.year
     @root_url = root_url(mailer_token: student.mailer_token)
