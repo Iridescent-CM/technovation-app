@@ -42,6 +42,7 @@ module Admin
         :app_name,
         :app_description,
         :pitch_video_link,
+        :demo_video_link,
         :business_plan,
         :development_platform,
         :app_inventor_app_name,

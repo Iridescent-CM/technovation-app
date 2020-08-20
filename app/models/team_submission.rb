@@ -229,6 +229,7 @@ class TeamSubmission < ActiveRecord::Base
   %i{
     app_name
     app_description
+    demo_video_link
     pitch_video_link
     development_platform
     source_code_url
