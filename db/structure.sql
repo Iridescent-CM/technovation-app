@@ -1469,7 +1469,8 @@ CREATE TABLE public.team_submissions (
     thunkable_project_url character varying,
     source_code_external_url character varying,
     quarterfinals_score_range integer DEFAULT 0,
-    semifinals_score_range integer DEFAULT 0
+    semifinals_score_range integer DEFAULT 0,
+    demo_video_link character varying
 );
 
 
@@ -3013,6 +3014,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200903161022'),
 ('20200914131700'),
 ('20200928215117'),
-('20201014203947');
+('20201014203947'),
+('20201109234926');
 
 
