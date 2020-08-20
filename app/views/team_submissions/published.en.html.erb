@@ -37,6 +37,30 @@
 
         <p>
           <%= link_to web_icon(
+            "play-circle-o",
+            text: "Watch the demo video"
+          ),
+          "#",
+          data: {
+            opens_modal: "video-modal-" +
+            @team_submission.video_id(:demo),
+            modal_fetch: send(
+              "#{current_scope}_embed_code_path",
+              @team_submission,
+              piece: :demo,
+            ),
+          } %>
+        </p>
+
+        <div
+          class="modal"
+          id="video-modal-<%= @team_submission.video_id(:demo) %>"
+        >
+           <div class="modal-content"></div>
+        </div>
+
+        <p>
+          <%= link_to web_icon(
               "play-circle-o",
               text: "Watch the pitch video"
 

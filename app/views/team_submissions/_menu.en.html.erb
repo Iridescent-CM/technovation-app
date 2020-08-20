@@ -70,6 +70,15 @@
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
+            :demo_video,
+            "Demo video"
+          ),
+          [current_scope, submission, piece: :demo_video_link] %>
+        </li>
+
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
             :pitch_video,
             "Pitch video"
           ),
