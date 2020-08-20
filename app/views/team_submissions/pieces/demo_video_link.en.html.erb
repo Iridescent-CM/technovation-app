@@ -1,0 +1,43 @@
+<div class="panel">
+  <h3 class="panel--heading">
+    Demo video
+  </h3>
+
+  <%= form_with(
+    model: [current_scope, @team_submission],
+    local: true
+  ) do |f| %>
+    <%= hidden_field_tag :piece, piece_name %>
+
+    <div class="field">
+      <%= f.label :demo_video_link, "Youtube, Vimeo, or Youku URL", for: :team_submission_demo_video_link %>
+      <%= f.text_field :demo_video_link,
+        id: :team_submission_demo_video_link,
+        value: params[:value] || @team_submission.send(piece_name) %>
+    </div>
+
+    <div class="actions">
+      <p>
+        <%= f.submit "Next", class: "button" %>
+        or
+        <%= link_to "cancel",
+          [
+            current_scope,
+            @team_submission,
+            :section,
+            section: @submission_section,
+          ] %>
+      </p>
+    </div>
+  <% end %>
+
+  <p class="grid__cell--padding-sm-y">
+    Get some help making your demo video in the
+
+    <%= link_to(
+      "demo video curriculum unit.",
+      "http://technovationchallenge.org/curriculum/pitch-2/",
+      target: "_blank"
+    ) %>
+  </p>
+</div>
