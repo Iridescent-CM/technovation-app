@@ -1,44 +1,12 @@
 const { environment } = require('@rails/webpacker')
-const customConfig = require('./custom')
+const { VueLoaderPlugin } = require('vue-loader')
 const vue = require('./loaders/vue')
 
-environment.loaders.append('vue', vue)
-
+const customConfig = require('./custom')
 environment.config.merge(customConfig)
 
-const webpack = require('webpack')
-const dotenv = require('dotenv');
+environment.splitChunks()
 
-environment.plugins.append(
-  'CommonsChunkVendor',
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: (module) => {
-      // this assumes your vendor imports exist in the node_modules directory
-      return module.context && module.context.indexOf('node_modules') !== -1
-    }
-  })
-)
-
-environment.plugins.append(
-  'CommonsChunkManifest',
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'manifest',
-    minChunks: Infinity
-  })
-)
-
-environment.plugins.prepend(
-  'MomentIgnoreLocales',
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-)
-
-// Pull in .env variables used by front-end
-dotenv.config({ path: '.env', silent: true })
-
-environment.plugins.prepend(
-  'LoadEnvironmentVariables',
-  new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(process.env)))
-)
-
+environment.plugins.prepend('VueLoaderPlugin', new VueLoaderPlugin())
+environment.loaders.prepend('vue', vue)
 module.exports = environment

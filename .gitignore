@@ -36,3 +36,10 @@ yarn-error.log*
 check-scores-for-zero.rb
 stats.json
 latest.dump
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
