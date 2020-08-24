@@ -31,7 +31,7 @@ gem 'jquery-rails', "~> 4.3"
 gem 'jquery-ui-rails', '~> 6.0'
 gem 'lodash-rails', "~> 4.17"
 gem 'dropzonejs-rails', "~> 0.8"
-gem 'webpacker', '~> 3.5'
+gem 'webpacker', '~> 5.x'
 
 gem "cocoon", "~> 1.2"
 

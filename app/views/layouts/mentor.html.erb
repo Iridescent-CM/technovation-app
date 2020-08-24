@@ -2,11 +2,11 @@
 <% provide :menu, render('mentor/navigation/global_nav') %>
 
 <% content_for :css do %>
-  <%= stylesheet_pack_tag("mentor", data: { turbolinks_track: :reload }) %>
+  <%= stylesheet_packs_with_chunks_tag("mentor", data: { turbolinks_track: :reload }) %>
 <% end %>
 
 <% content_for :js do %>
-  <%= javascript_pack_tag("mentor", defer: :defer, data: { turbolinks_track: :reload }) %>
+  <%= javascript_packs_with_chunks_tag("mentor", defer: :defer, data: { turbolinks_track: :reload }) %>
 <% end %>
 
 <%= render template: "layouts/application" %>

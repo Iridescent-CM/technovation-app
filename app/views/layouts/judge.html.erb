@@ -2,9 +2,9 @@
 <% provide :menu, render('judge/navigation/global_nav') %>
 
 <% content_for :js,
-  javascript_pack_tag("judge", data: { turbolinks_track: :reload }) %>
+  javascript_packs_with_chunks_tag("judge", data: { turbolinks_track: :reload }) %>
 
 <% provide :css,
-  stylesheet_pack_tag("judge", data: { turbolinks_track: :reload }) %>
+  stylesheet_packs_with_chunks_tag("judge", data: { turbolinks_track: :reload }) %>
 
 <%= render template: "layouts/application" %>

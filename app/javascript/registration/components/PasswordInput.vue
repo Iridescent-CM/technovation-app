@@ -3,6 +3,7 @@
     <label for="password">Password</label>
 
     <Password
+      id="password"
       autocomplete="new-password"
       placeholder="Use at least 8 characters"
       v-model="password"
