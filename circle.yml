@@ -93,7 +93,7 @@ jobs:
           REDIS_URL: redis://127.0.0.1:6379/0
           STUDENT_LIST_ID: n-a
           THUNKABLE_PROMO_IMAGE: n-a
-      - image: circleci/postgres:9.6-alpine-ram
+      - image: circleci/postgres:12-alpine-ram
 
     steps:
       - checkout
