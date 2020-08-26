@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        color: #333;
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 300;
+        line-height: 1.2;
+        padding: 2em;
+      }
+
+      table {
+        width: 100%;
+      }
+      td {
+        padding-top: 0.75em;
+      }
+      td:first-child {
+        text-align: right;
+        padding-right: 2em;
+        width: 200px;
+      }
+      td:last-child {
+        border-bottom: 1px solid black;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+
+    </style>
+  </head>
+  <body>
+    <%= render 'parental_consents/consent' %>
+    <table>
+      <tr>
+        <td>Participant's Name:</td><td><%= current_student.name %></td>
+      </tr>
+      <tr>
+        <td>Parent's Name:</td><td><%= current_student.parent_guardian_name %></td>
+      </tr>
+      <tr>
+        <td>Date:</td><td> </td>
+      </tr>
+      <tr>
+        <td>Signature:</td><td> </td>
+      </tr>
+    </table>
+  </body>
+</html>

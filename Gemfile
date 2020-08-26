@@ -90,6 +90,8 @@ gem 'loofah', '~> 2.2'
 
 gem 'dotenv-rails', "~> 2.5"
 
+gem 'pdfkit'
+
 group :development do
   gem 'pp_sql', "~> 0.2", require: false
   gem 'active_record_query_trace', "~> 1.5"

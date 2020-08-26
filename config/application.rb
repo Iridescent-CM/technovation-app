@@ -52,6 +52,9 @@ module TechnovationApp
       r301 '/users/sign_in', '/signin'
     end
 
+    require "pdfkit"
+    config.middleware.use PDFKit::Middleware, {}, :only => %r[^/student/downloadable_parental_consent]
+
     config.active_record.schema_format = :sql
   end
 end
