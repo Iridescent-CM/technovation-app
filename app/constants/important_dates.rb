@@ -6,6 +6,13 @@ module ImportantDates
     Time.zone.local(year, month, day)
   end
 
+  def self.official_start_of_season
+    year = Integer(ENV.fetch("DATES_OFFICIAL_START_OF_SEASON_YEAR"))
+    month = Integer(ENV.fetch("DATES_OFFICIAL_START_OF_SEASON_MONTH"))
+    day = Integer(ENV.fetch("DATES_OFFICIAL_START_OF_SEASON_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
   def self.mentor_training_required_since
     year = Integer(ENV.fetch("DATES_MENTOR_TRAINING_YEAR"))
     month = Integer(ENV.fetch("DATES_MENTOR_TRAINING_MONTH"))
@@ -17,6 +24,13 @@ module ImportantDates
     year = Integer(ENV.fetch("DATES_REGISTRATION_OPENS_YEAR"))
     month = Integer(ENV.fetch("DATES_REGISTRATION_OPENS_MONTH"))
     day = Integer(ENV.fetch("DATES_REGISTRATION_OPENS_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
+  def self.team_registration_deadline
+    year = Integer(ENV.fetch("DATES_TEAM_REGISTRATION_DEADLINE_YEAR"))
+    month = Integer(ENV.fetch("DATES_TEAM_REGISTRATION_DEADLINE_MONTH"))
+    day = Integer(ENV.fetch("DATES_TEAM_REGISTRATION_DEADLINE_DAY"))
     Time.zone.local(year, month, day)
   end
 
