@@ -5,7 +5,7 @@
 <ol>
   <li>
     <%= link_to "Download the permission form",
-      ENV.fetch("PARENT_CONSENT_PDF"),
+      student_downloadable_parental_consent_path(format: :pdf),
       target: :_blank %>
   </li>
 
