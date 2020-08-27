@@ -53,7 +53,10 @@ module TechnovationApp
     end
 
     require "pdfkit"
-    config.middleware.use PDFKit::Middleware, {header_right: '[page]/[toPage]'}, :only => %r[^/student/downloadable_parental_consent]
+    config.middleware.use PDFKit::Middleware,
+      {header_right: '[page]/[toPage]'},
+      :disposition => 'inline; filename="Technovation Parent Consent Form.pdf"',
+      :only => %r[^/student/downloadable_parental_consent]
 
     config.active_record.schema_format = :sql
   end
