@@ -90,7 +90,7 @@ gem 'loofah', '~> 2.2'
 
 gem 'dotenv-rails', "~> 2.5"
 
-gem 'pdfkit'
+gem 'pdfkit', '0.8.4.3.2'
 
 group :development do
   gem 'pp_sql', "~> 0.2", require: false
@@ -123,6 +123,10 @@ end
 
 group :production, :development do
   gem 'premailer-rails', "~> 1.10"
+end
+
+group :staging, :production do
+  gem 'wkhtmltopdf-heroku', '2.12.5.0'
 end
 
 group :production do

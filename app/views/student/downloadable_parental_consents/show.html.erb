@@ -11,6 +11,21 @@
         padding: 2em;
       }
 
+      img.logo {
+        width: 300px;
+        margin-right: 1em;
+        float: right;
+      }
+
+      .content {
+        clear: both;
+      }
+
+      h6 {
+        font-size: 1em;
+        margin-bottom: 0;
+      }
+
       table {
         width: 100%;
       }
@@ -31,7 +46,15 @@
     </style>
   </head>
   <body>
-    <%= render 'parental_consents/consent' %>
+    <%= image_tag(
+      "tg-logo-color.png",
+      class: "logo"
+    ) %>
+
+    <div class="content">
+      <%= render 'parental_consents/consent' %>
+    </div>
+
     <table>
       <tr>
         <td>Participant's Name:</td><td><%= current_student.name %></td>
