@@ -9,6 +9,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.3)
     actioncable (5.2.4.3)
       actionpack (= 5.2.4.3)
       nio4r (~> 2.0)
@@ -53,6 +54,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    afm (0.2.2)
     after_commit_action (1.1.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -193,6 +195,7 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashdiff (1.0.0)
+    hashery (2.1.2)
     heroku-deflater (0.6.3)
       rack (>= 1.4.5)
     highline (2.0.3)
@@ -279,6 +282,12 @@ GEM
     pdf-forms (1.2.0)
       cliver (~> 0.3.2)
       safe_shell (>= 1.0.3, < 2.0)
+    pdf-reader (2.4.0)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.1)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     pdfkit (0.8.4.3.2)
     pg (0.21.0)
     pp_sql (0.2.10)
@@ -367,6 +376,7 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
+    ruby-rc4 (0.1.5)
     ruby2_keywords (0.0.2)
     ruby_parser (3.14.1)
       sexp_processor (~> 4.9)
@@ -425,6 +435,7 @@ GEM
     tilt (2.0.10)
     timecop (0.9.1)
     timezone (1.3.6)
+    ttfunk (1.6.2.1)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -459,6 +470,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     will_paginate (3.2.1)
+    wkhtmltopdf-binary-edge (0.12.5.1)
     wkhtmltopdf-heroku (2.12.5.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -519,6 +531,7 @@ DEPENDENCIES
   normalize-rails (~> 4.1)
   paranoia (~> 2.4)
   pdf-forms (~> 1.2)
+  pdf-reader (~> 2.4)
   pdfkit (= 0.8.4.3.2)
   pg (~> 0.21)
   pp_sql (~> 0.2)
@@ -550,6 +563,7 @@ DEPENDENCIES
   webmock (~> 3.5)
   webpacker (~> 5.x)
   will_paginate (~> 3.1)
+  wkhtmltopdf-binary-edge (~> 0.12.5.1)
   wkhtmltopdf-heroku (= 2.12.5.0)
 
 RUBY VERSION

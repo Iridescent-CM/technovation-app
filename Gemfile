@@ -117,8 +117,14 @@ group :test do
   gem 'webdrivers', '~> 4.0'
   gem 'rspec-rails', "~> 3.8"
 
+  gem 'pdf-reader', '~> 2.4'
+
   # deprecated
   gem 'font-awesome-rails', "~> 4.7"
+end
+
+group :development, :test do
+  gem 'wkhtmltopdf-binary-edge', '~> 0.12.5.1'
 end
 
 group :production, :development do
