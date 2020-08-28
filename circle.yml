@@ -122,7 +122,7 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+          command: bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
 
       - run: sudo apt-get update; sudo apt-get install postgresql-client-11
 
