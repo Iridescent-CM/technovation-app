@@ -129,7 +129,7 @@ group :production, :development do
 end
 
 group :staging, :production do
-  gem 'wkhtmltopdf-heroku', '2.12.5.0'
+  # gem 'wkhtmltopdf-heroku', '2.12.5.0'
 end
 
 group :production do
