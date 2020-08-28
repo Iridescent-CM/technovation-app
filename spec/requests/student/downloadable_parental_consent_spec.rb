@@ -22,6 +22,12 @@ RSpec.describe Student::DownloadableParentalConsentsController do
       @pdf_text = reader.pages.collect { |page| page.text }.join(" ")
     end
 
+    after(:each) do |example|
+      if example.exception
+        puts response.body
+      end
+    end
+
     context "when no parent data has been provided" do
       let(:parent_guardian_name) { nil }
       let(:parent_guardian_email_address) { nil }
