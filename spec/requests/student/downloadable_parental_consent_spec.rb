@@ -15,6 +15,8 @@ RSpec.describe Student::DownloadableParentalConsentsController do
       sign_in student_profile
       get student_downloadable_parental_consent_path(format: :pdf)
 
+      expect(response.content_type).to eq("application/pdf")
+
       io = StringIO.new(response.body)
       reader = PDF::Reader.new(io)
       @pdf_text = reader.pages.collect { |page| page.text }.join(" ")

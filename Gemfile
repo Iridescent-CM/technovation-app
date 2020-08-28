@@ -102,6 +102,7 @@ group :development do
   gem 'spring', "~> 2.0"
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'mailgun-ruby', '~> 1.1'
+  gem 'wkhtmltopdf-binary-edge', '~> 0.12.5.1'
 end
 
 group :test do
@@ -121,10 +122,6 @@ group :test do
 
   # deprecated
   gem 'font-awesome-rails', "~> 4.7"
-end
-
-group :development, :test do
-  gem 'wkhtmltopdf-binary-edge', '~> 0.12.5.1'
 end
 
 group :production, :development do
