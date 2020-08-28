@@ -115,6 +115,8 @@ jobs:
 
       - run: sudo apt-get install pdftk
 
+      - run: sudo apt-get install xvfb libfontconfig wkhtmltopdf
+
       # Needed to polyfill canvas elements for testing in Jest (NodeJs environment)
       - run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
