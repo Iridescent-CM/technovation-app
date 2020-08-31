@@ -99,7 +99,7 @@ jobs:
           REDIS_URL: redis://127.0.0.1:6379/0
           STUDENT_LIST_ID: n-a
           THUNKABLE_PROMO_IMAGE: n-a
-          WKHTMLTOPDF_PATH: /usr/bin/wkhtmltopdf
+          WKHTMLTOPDF_PATH: /usr/local/bin/wkhtmltopdf
       - image: circleci/postgres:11-alpine-ram
 
     steps:
