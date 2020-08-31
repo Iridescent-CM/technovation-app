@@ -44,9 +44,6 @@ module TechnovationApp
       g.factory_bot dir: 'spec/factories'
     end
 
-    require "#{Rails.root}/lib/cloud_flare_middleware"
-    config.middleware.insert_before(0, Rack::CloudFlareMiddleware)
-
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       r301 '/users/sign_up', '/signup'
       r301 '/users/sign_in', '/signin'
