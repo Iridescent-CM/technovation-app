@@ -116,7 +116,11 @@ jobs:
 
       - run: sudo apt-get install pdftk
 
-      - run: sudo apt-get install xvfb libfontconfig libjpeg-dev wkhtmltopdf
+      - run:
+        name: Install wkhtmltopdf
+        command: |
+          wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.debo
+          sudo apt install ./wkhtmltox_0.12.5-1.stretch_amd64.deb
 
       # Needed to polyfill canvas elements for testing in Jest (NodeJs environment)
       - run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
