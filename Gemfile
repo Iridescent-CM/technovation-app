@@ -102,7 +102,6 @@ group :development do
   gem 'spring', "~> 2.0"
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'mailgun-ruby', '~> 1.1'
-  #gem 'wkhtmltopdf-binary-edge', '~> 0.12.5.1'
 end
 
 group :test do
@@ -129,7 +128,7 @@ group :production, :development do
 end
 
 group :staging, :production do
-  # gem 'wkhtmltopdf-heroku', '2.12.5.0'
+  gem 'wkhtmltopdf-heroku', '2.12.5.0'
 end
 
 group :production do
