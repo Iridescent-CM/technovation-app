@@ -46,8 +46,6 @@ export default {
       checkboxes: {
         student: 'Students',
         mentor: 'Mentors',
-        judge: 'Judges',
-        chapter_ambassador: 'Chapter Ambassadors',
       },
     }
   },
