@@ -99,6 +99,7 @@ jobs:
           REDIS_URL: redis://127.0.0.1:6379/0
           STUDENT_LIST_ID: n-a
           THUNKABLE_PROMO_IMAGE: n-a
+          WKHTMLTOPDF_PATH: /usr/local/bin/wkhtmltopdf
       - image: circleci/postgres:11-alpine-ram
 
     steps:
@@ -115,12 +116,18 @@ jobs:
 
       - run: sudo apt-get install pdftk
 
+      - run:
+          name: Install wkhtmltopdf
+          command: |
+            wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb
+            sudo apt install ./wkhtmltox_0.12.5-1.stretch_amd64.deb
+
       # Needed to polyfill canvas elements for testing in Jest (NodeJs environment)
       - run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run:
           name: Install dependencies
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+          command: bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
 
       - run: sudo apt-get update; sudo apt-get install postgresql-client-11
 
