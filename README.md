@@ -89,6 +89,9 @@ Install pdftk
 
 [https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
 
+Install wkhtmltopdf
+
+[Install as appropriate](https://github.com/pdfkit/pdfkit/wiki/Installing-WKHTMLTOPDF) for your environment, and make sure to set `WKHTMLTOPDF_PATH` in your .env file to point to the tool.
 ### Install the rails application
 
 ```

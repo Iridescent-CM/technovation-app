@@ -90,6 +90,8 @@ gem 'loofah', '~> 2.2'
 
 gem 'dotenv-rails', "~> 2.5"
 
+gem 'pdfkit', '0.8.4.3.2'
+
 group :development do
   gem 'pp_sql', "~> 0.2", require: false
   gem 'active_record_query_trace', "~> 1.5"
@@ -115,12 +117,18 @@ group :test do
   gem 'webdrivers', '~> 4.0'
   gem 'rspec-rails', "~> 3.8"
 
+  gem 'pdf-reader', '~> 2.4'
+
   # deprecated
   gem 'font-awesome-rails', "~> 4.7"
 end
 
 group :production, :development do
   gem 'premailer-rails', "~> 1.10"
+end
+
+group :staging, :production do
+  gem 'wkhtmltopdf-heroku', '2.12.5.0'
 end
 
 group :production do
