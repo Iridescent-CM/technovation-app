@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        color: #333;
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 300;
+        line-height: 1.2;
+        padding: 2em;
+      }
+
+      img.logo {
+        width: 300px;
+        margin-right: 1em;
+        float: right;
+      }
+
+      .content {
+        clear: both;
+      }
+
+      h6 {
+        font-size: 1em;
+        margin-bottom: 0;
+      }
+
+      table {
+        width: 100%;
+      }
+      td {
+        padding-top: 0.75em;
+      }
+      td:first-child {
+        text-align: right;
+        padding-right: 2em;
+        width: 200px;
+      }
+      td:last-child {
+        border-bottom: 1px solid black;
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+
+    </style>
+  </head>
+  <body>
+    <%= image_tag(
+      "tg-logo-color.png",
+      class: "logo"
+    ) %>
+
+    <div class="content">
+      <%= render 'parental_consents/consent' %>
+    </div>
+
+    <table>
+      <tr>
+        <td>Participant's Name:</td><td><%= current_student.name %></td>
+      </tr>
+      <tr>
+        <td>Participant's Email:</td><td><%= current_student.email %></td>
+      </tr>
+      <tr>
+        <td>Parent's Name:</td><td><%= current_student.parent_guardian_name %></td>
+      </tr>
+      <tr>
+        <td>Date:</td><td> </td>
+      </tr>
+      <tr>
+        <td>Signature:</td><td> </td>
+      </tr>
+    </table>
+  </body>
+</html>
