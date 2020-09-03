@@ -162,4 +162,34 @@ RSpec.describe RegisterToCurrentSeasonJob do
       student.season_registered_at
     }
   end
+
+  context "students who are now mentors" do
+    let(:account) { FactoryBot.create(:account) }
+    let!(:student) { FactoryBot.create(:student, account: account) }
+    let!(:mentor) { FactoryBot.create(:mentor, account: account) }
+    let(:welcome_student_email) { double("welcome student email") }
+    let(:parental_consent_notice_email) { double("parental consent notice email") }
+
+    before do
+      allow(RegistrationMailer).to receive(:welcome_student)
+        .with(account)
+        .and_return(welcome_student_email)
+
+      allow(ParentMailer).to receive(:consent_notice)
+        .with(student.id)
+        .and_return(parental_consent_notice_email)
+    end
+
+    it "does not send a student welcome email" do
+      expect(welcome_student_email).not_to receive(:deliver_later)
+
+      RegisterToCurrentSeasonJob.perform_now(account)
+    end
+
+    it "does not send a parental consent notice email" do
+      expect(parental_consent_notice_email).not_to receive(:deliver_later)
+
+      RegisterToCurrentSeasonJob.perform_now(account)
+    end
+  end
 end
