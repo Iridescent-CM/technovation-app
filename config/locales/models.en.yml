@@ -46,8 +46,6 @@ en:
       bio: "Bio"
 
     chapter_ambassador_profile:
-      ambassador_since_year: "In which year did you become a chapter ambassador?"
-      ambassador_since_year_option_new: "I'm new!"
       bio:
         signup_label: "Tell us about yourself"
       job_title: "Job title"

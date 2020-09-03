@@ -41,8 +41,6 @@ es-MX:
       bio: "Biografía"
 
     chapter_ambassador_profile:
-      ambassador_since_year: "¿En qué año te convertiste en chapter ambassador?"
-      ambassador_since_year_option_new: "¡Soy nuevo!"
       bio:
         signup_label: "Cuéntanos más sobre ti"
       job_title: "Profesión"

@@ -44,7 +44,6 @@ module ChapterAmbassador
       params.require(:chapter_ambassador_profile).permit(
         :id,
         :organization_company_name,
-        :ambassador_since_year,
         :job_title,
         :bio,
         account_attributes: [
