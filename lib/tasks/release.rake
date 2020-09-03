@@ -22,7 +22,7 @@ task :release do
 
   releasing.run_command("git checkout qa")
   releasing.run_command("git push --tags")
-  releasing.run_command("git push origin #{releasing.stable_branch} master production")
+  releasing.run_command("git push origin #{releasing.stable_branch} master production qa")
 
   # prevent Rake from running the `updating_version_part` ARG as another task
   exit
