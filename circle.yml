@@ -143,7 +143,7 @@ jobs:
 
       - run:
           name: Javascript tests
-          command: yarn test
+          command: yarn test --maxWorkers=1
 
       - run:
           name: Database Setup
