@@ -12,24 +12,6 @@ module DatagridController
         .for_param_root(param_root)
 
       @saved_search = current_profile.saved_searches.build
-
-      if param_root == "accounts_grid" and
-          params[:accounts_grid].present? and
-            params[:accounts_grid][:name_email].nil?
-
-        params[:accounts_grid][:name_email] =
-          params[:accounts_grid].delete(:name) || ""
-
-        params[:accounts_grid][:name_email] +=
-          " #{params[:accounts_grid].delete(:email)}"
-
-      elsif param_root == "accounts_grid" and
-              params[:accounts_grid].present?
-
-        params[:accounts_grid].delete(:name)
-        params[:accounts_grid].delete(:email)
-
-      end
     }, only: :index
   end
 
