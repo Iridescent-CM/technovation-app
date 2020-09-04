@@ -8,7 +8,7 @@ RSpec.feature "Approved chapter ambassadors" do
 
     expect(current_path).to eq(chapter_ambassador_dashboard_path)
 
-    expect(page).to have_content("Promote your program to your region")
+    expect(page).to have_content("Promote your program to your area")
 
     fill_in "Short summary", with: "Something that is 280 characters or less"
 

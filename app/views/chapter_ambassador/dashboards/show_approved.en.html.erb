@@ -32,7 +32,7 @@
             <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
 
             <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your regional program introduction to access this section</p>
+              <p>Please fill in your local program introduction to access this section</p>
             <% else %>
               <%= render "chapter_ambassador/dashboards/students" %>
             <% end %>
@@ -42,7 +42,7 @@
             <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
 
             <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your regional program introduction to access this section</p>
+              <p>Please fill in your local program introduction to access this section</p>
             <% else %>
               <%= render "chapter_ambassador/dashboards/mentors" %>
             <% end %>
@@ -50,7 +50,7 @@
 
           <div class="tabs__tab-content" id="inactivity">
             <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your regional program introduction to access this section</p>
+              <p>Please fill in your local program introduction to access this section</p>
             <% else %>
               <%= render "chapter_ambassador/dashboards/inactivity" %>
             <% end %>
@@ -58,7 +58,7 @@
 
           <div class="tabs__tab-content" id="recent-activity">
             <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your regional program introduction to access this section</p>
+              <p>Please fill in your local program introduction to access this section</p>
             <% else %>
               <%= render 'chapter_ambassador/dashboards/activity_feed' %>
             <% end %>
@@ -66,7 +66,7 @@
 
           <div class="tabs__tab-content" id="chapter-ambassador-info">
             <% if current_ambassador.needs_intro_prompt? %>
-              <h4>Promote your program to your region</h4>
+              <h4>Promote your program to your area</h4>
               <%= render "chapter_ambassador/introductions/form", chapter_ambassador_dashboard: true %>
             <% else %>
               <%= render "dashboards/chapter_ambassador_intro", chapter_ambassador_dashboard: true %>
