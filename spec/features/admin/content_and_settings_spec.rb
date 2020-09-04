@@ -17,8 +17,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
       expect(SeasonToggles.student_signup?).to be false
       expect(SeasonToggles.mentor_signup?).to be false
-      expect(SeasonToggles.judge_signup?).to be false
-      expect(SeasonToggles.chapter_ambassador_signup?).to be false
 
       expect(SeasonToggles.team_building_enabled?).to be false
       expect(SeasonToggles.team_submissions_editable?).to be false
@@ -36,8 +34,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
       expect(SeasonToggles.student_signup?).to be true
       expect(SeasonToggles.mentor_signup?).to be true
-      expect(SeasonToggles.judge_signup?).to be true
-      expect(SeasonToggles.chapter_ambassador_signup?).to be true
 
       expect(SeasonToggles.team_building_enabled?).to be true
       expect(SeasonToggles.team_submissions_editable?).to be true
@@ -193,8 +189,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
         expect(SeasonToggles.student_signup?).to be false
         expect(SeasonToggles.mentor_signup?).to be false
-        expect(SeasonToggles.judge_signup?).to be false
-        expect(SeasonToggles.chapter_ambassador_signup?).to be false
         expect(SeasonToggles.team_building_enabled?).to be false
         expect(SeasonToggles.team_submissions_editable?).to be false
         expect(SeasonToggles.select_regional_pitch_event?).to be false
@@ -210,7 +204,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         expect(page).to have_content("Enabling judging has affected other season features.")
 
         click_button "Registration"
-        expect(page).to have_content("When judging is enabled", count: 4)
+        expect(page).to have_content("When judging is enabled", count: 2)
 
         click_button "Teams & Submissions"
         expect(page).to have_content("When judging is enabled", count: 2)
@@ -231,8 +225,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         click_button "Registration"
         expect(page).to have_unchecked_field("Students", disabled: true)
         expect(page).to have_unchecked_field("Mentors", disabled: true)
-        expect(page).to have_unchecked_field("Judges", disabled: true)
-        expect(page).to have_unchecked_field("Chapter Ambassadors", disabled: true)
 
         click_button "Teams & Submissions"
         expect(page).to have_unchecked_field("Forming teams allowed", disabled: true)
@@ -258,8 +250,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
         expect(SeasonToggles.student_signup?).to be true
         expect(SeasonToggles.mentor_signup?).to be true
-        expect(SeasonToggles.judge_signup?).to be true
-        expect(SeasonToggles.chapter_ambassador_signup?).to be true
         expect(SeasonToggles.team_building_enabled?).to be true
         expect(SeasonToggles.team_submissions_editable?).to be true
         expect(SeasonToggles.select_regional_pitch_event?).to be true
@@ -292,8 +282,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         click_button "Registration"
         expect(page).to have_field("Students", disabled: false)
         expect(page).to have_field("Mentors", disabled: false)
-        expect(page).to have_field("Judges", disabled: false)
-        expect(page).to have_field("Chapter Ambassadors", disabled: false)
 
         click_button "Teams & Submissions"
         expect(page).to have_field("Forming teams allowed", disabled: false)
@@ -312,8 +300,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
     click_button "Registration"
     uncheck "Students"
     uncheck "Mentors"
-    uncheck "Judges"
-    uncheck "Chapter Ambassadors"
 
     click_button "Teams & Submissions"
     uncheck "Forming teams allowed"
@@ -330,8 +316,6 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
     click_button "Registration"
     check "Students"
     check "Mentors"
-    check "Judges"
-    check "Chapter Ambassadors"
 
     click_button "Teams & Submissions"
     check "Forming teams allowed"

@@ -26,34 +26,6 @@
             </strong>
           </p>
         </div>
-
-        <div ref="signupFieldJudges" class="review-label">
-          <p>
-            Judges
-            <strong
-              :class="{
-                on: formData.judge_signup,
-                off: !formData.judge_signup
-              }"
-            >
-              {{ formData.judge_signup ? 'yes' : 'no' }}
-            </strong>
-          </p>
-        </div>
-
-        <div ref="signupFieldAmbassadors" class="review-label">
-          <p>
-            Chapter Ambassadors
-            <strong
-              :class="{
-                on: formData.chapter_ambassador_signup,
-                off: !formData.chapter_ambassador_signup
-              }"
-            >
-              {{ formData.chapter_ambassador_signup ? 'yes' : 'no' }}
-            </strong>
-          </p>
-        </div>
       </div>
 
       <div class="review-panel">

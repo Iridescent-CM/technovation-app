@@ -16,8 +16,6 @@
       :saved-form-data="{
         student_signup: <%= SeasonToggles.signup_enabled?('student') %>,
         mentor_signup: <%= SeasonToggles.signup_enabled?('mentor') %>,
-        judge_signup: <%= SeasonToggles.signup_enabled?('judge') %>,
-        chapter_ambassador_signup: <%= SeasonToggles.signup_enabled?('chapter_ambassador') %>,
         student_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('student')) %>',
         mentor_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('mentor')) %>',
         judge_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('judge')) %>',
