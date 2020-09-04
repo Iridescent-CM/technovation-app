@@ -136,6 +136,7 @@ group :production do
   gem "rack-timeout", "~> 0.5"
   gem 'heroku-deflater', "~> 0.6"
   gem 'rails_autoscale_agent'
+  gem 'cloudflare-rails', "~> 0.6"
 end
 
 gem 'factory_bot_rails', "~> 4.11"
