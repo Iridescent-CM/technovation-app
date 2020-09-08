@@ -6,7 +6,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
     update_season_data_with_resets(record)
 
-    prepare_student_for_current_season(record) if is_student?(record)
+    if is_student?(record) && !is_mentor?(record)
+      prepare_student_for_current_season(record)
+    end
+
     prepare_mentor_for_current_season(record)  if is_mentor?(record)
     prepare_judge_for_current_season(record)   if is_judge?(record)
 
@@ -62,7 +65,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
         !profile.parent_guardian_email.blank?
       ParentMailer.consent_notice(profile.id).deliver_later
     end
-    
+
     profile.save # fire commit hooks, if needed
   end
 
