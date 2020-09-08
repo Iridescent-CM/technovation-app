@@ -13,7 +13,6 @@ module ChapterAmbassador
       elsif !!invite_token
         setup_valid_profile_from_invitation(:chapter_ambassador, invite_token)
         flash.now[:success] = "Thank you for confirming your email address."
-        @profile.ambassador_since_year = "I'm new!"
       else
         redirect_to root_path
       end
@@ -34,7 +33,6 @@ module ChapterAmbassador
     private
     def chapter_ambassador_profile_params
       params.require(:chapter_ambassador_profile).permit(
-        :ambassador_since_year,
         :organization_company_name,
         :bio,
         :job_title,

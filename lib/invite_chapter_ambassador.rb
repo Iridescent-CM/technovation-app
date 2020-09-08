@@ -74,7 +74,6 @@ module InviteChapterAmbassador
       organization_company_name: attrs[:organization_company_name],
       job_title: attrs[:job_title],
       bio: attrs[:bio],
-      ambassador_since_year: "I'm new!",
       status: :approved,
     )
 

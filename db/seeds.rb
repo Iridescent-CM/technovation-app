@@ -229,7 +229,6 @@ if (chapter_ambassador = ChapterAmbassadorProfile.create(
     },
     status: ChapterAmbassadorProfile.statuses[:approved],
     organization_company_name: "Iridescent",
-    ambassador_since_year: "I'm new!",
     job_title: "Software Engineer",
     bio: "I am passionate about tech and empowering girls",
   )).valid?

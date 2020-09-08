@@ -6,7 +6,6 @@ module ChapterAmbassador
       [
         :organization_company_name,
         :job_title,
-        :ambassador_since_year,
         :bio,
       ]
     end

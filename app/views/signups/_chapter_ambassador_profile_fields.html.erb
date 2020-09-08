@@ -10,9 +10,4 @@
 <%= f.input :job_title,
   label: t("models.chapter_ambassador_profile.job_title") %>
 
-<%= f.input :ambassador_since_year,
-  collection: [t("models.chapter_ambassador_profile.ambassador_since_year_option_new")] +
-                (2009..Time.current.year).to_a.reverse,
-  label: t("models.chapter_ambassador_profile.ambassador_since_year") %>
-
 <%= f.input :bio, label: t("models.chapter_ambassador_profile.bio.signup_label") %>
