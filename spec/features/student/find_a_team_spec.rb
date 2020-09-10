@@ -35,7 +35,7 @@ RSpec.feature "Students find a team" do
   scenario "request to join a team" do
     Timecop.freeze(day_before_qfs) do
       within (".navigation") { click_link "Find a team" }
-      click_link "Ask to join"
+      click_link "View more details"
       click_button "Ask to join #{available_team.name}"
 
       join_request = JoinRequest.last
@@ -56,7 +56,7 @@ RSpec.feature "Students find a team" do
 
       within(".navigation") { click_link "Find a team" }
 
-      click_link "Ask to join"
+      click_link "View more details"
       click_button "Ask to join #{available_team.name}"
 
       join_request = JoinRequest.last

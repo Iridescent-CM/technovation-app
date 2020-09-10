@@ -18,7 +18,7 @@
       <% if current_profile.teams_that_declined.include?(result) %>
         You asked to join <%= result.name %>, and they declined.
       <% else %>
-        <%= link_to "Ask to join this team",
+        <%= link_to "View more details",
           [:new, current_scope, :join_request, { team_id: result.id }],
           class: 'button' %>
       <% end %>
