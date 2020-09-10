@@ -2,5 +2,37 @@
   <%= t("views.mentors.show.already_requested", name: mentor.first_name) %>
 </p>
 
-<%= link_to t("views.mentors.show.manage_team"),
-  student_team_path(team, anchor: 'mentors') %>
+<% if !SeasonToggles.judging_enabled_or_between? %>
+  <p class="buttons">
+    <%= link_to t("views.application.approved"),
+      [
+        current_scope,
+        @mentor_request,
+        join_request: { status: :approved },
+      ],
+
+      class: "button small",
+
+      data: {
+        method: :put,
+        confirm: t("views.application.confirm_approved",
+                  name: @mentor_request.requestor_first_name),
+        positive: true,
+      } %>
+
+    <%= link_to t("views.application.declined"),
+      [
+        current_scope,
+        @mentor_request,
+        join_request: { status: :declined },
+      ],
+
+      class: "button small danger",
+
+      data: {
+        method: :put,
+        confirm: t("views.application.confirm_declined",
+                  name: @mentor_request.requestor_first_name),
+      } %>
+  </p>
+<% end %>
