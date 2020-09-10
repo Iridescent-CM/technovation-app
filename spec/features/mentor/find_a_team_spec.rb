@@ -119,7 +119,7 @@ RSpec.feature "Mentors find a team" do
     Timecop.freeze(day_before_qfs) do
       within('#find-team') { click_link "Find a team" }
 
-      click_link "Ask to join"
+      click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"
 
       join_request = JoinRequest.last
@@ -144,7 +144,7 @@ RSpec.feature "Mentors find a team" do
 
       within('#find-team') { click_link "Find a team" }
 
-      click_link "Ask to join"
+      click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"
 
       expect(current_path).to eq(mentor_join_request_path(join_request))
