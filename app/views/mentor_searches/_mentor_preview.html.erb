@@ -43,7 +43,7 @@
 
   <div class="search-result-foot grid--justify-center grid__cell-footer">
     <% if current_scope == "mentor" %>
-      <%= link_to "Connect with #{mentor_preview.first_name}",
+      <%= link_to "View more details",
         mentor_mentor_path(mentor_preview, review_before: true),
         class: 'button' %>
     <% else %>

@@ -121,7 +121,7 @@ RSpec.feature "Mentors find a team" do
 
   scenario "visit the mentor page" do
     click_link "Connect with mentors"
-    click_link "Connect with #{find_mentor.first_name}"
+    click_link "View more details"
 
     expect(page).to have_css(
       "a[href=\"mailto:#{find_mentor.email}\"]",
