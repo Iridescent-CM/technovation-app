@@ -1143,45 +1143,6 @@ ALTER SEQUENCE public.regions_id_seq OWNED BY public.regions.id;
 
 
 --
--- Name: requests; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.requests (
-    id bigint NOT NULL,
-    requestor_id integer NOT NULL,
-    requestor_type character varying NOT NULL,
-    target_id integer NOT NULL,
-    target_type character varying NOT NULL,
-    request_type integer NOT NULL,
-    request_status integer DEFAULT 0 NOT NULL,
-    requestor_meta json,
-    requestor_message text,
-    status_updated_at timestamp without time zone NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.requests_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.requests_id_seq OWNED BY public.requests.id;
-
-
---
 -- Name: saved_searches; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1844,13 +1805,6 @@ ALTER TABLE ONLY public.regions ALTER COLUMN id SET DEFAULT nextval('public.regi
 
 
 --
--- Name: requests id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.requests ALTER COLUMN id SET DEFAULT nextval('public.requests_id_seq'::regclass);
-
-
---
 -- Name: saved_searches id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2150,14 +2104,6 @@ ALTER TABLE ONLY public.regional_pitch_events_user_invitations
 
 ALTER TABLE ONLY public.regions
     ADD CONSTRAINT regions_pkey PRIMARY KEY (id);
-
-
---
--- Name: requests requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.requests
-    ADD CONSTRAINT requests_pkey PRIMARY KEY (id);
 
 
 --
@@ -3036,6 +2982,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180925143744'),
 ('20180925184416'),
 ('20180926192206'),
+('20180927235304'),
+('20180927235305'),
 ('20181001181253'),
 ('20181108210955'),
 ('20181115163525'),
@@ -3060,6 +3008,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200720223724'),
 ('20200720234612'),
 ('20200722212401'),
-('20200903161022');
+('20200903161022'),
+('20200914131700');
 
 
