@@ -4,9 +4,9 @@
   font-size: 0.9rem;
 
   .tooltip-inner {
-    background: black;
+    background: #333;
     color: white;
-    border-radius: 16px;
+    border-radius: 4px;
     padding: 5px 10px 4px;
   }
 
@@ -16,7 +16,7 @@
     border-style: solid;
     position: absolute;
     margin: 5px;
-    border-color: black;
+    border-color: #333;
     z-index: 1;
   }
 
