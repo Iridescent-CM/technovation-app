@@ -17,4 +17,3 @@ Vue.use(Vue2Filters)
 
 import '../admin/dashboard'
 import '../chapter_ambassador/events'
-import '../datagrids/scores'

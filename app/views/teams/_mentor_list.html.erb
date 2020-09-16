@@ -55,6 +55,7 @@
 
 <% unless admin_chapter_ambassador %>
   <%= render "teams/pending_invites",
+    team: team,
     invites: team.pending_mentor_invites %>
 
   <%= render 'teams/pending_requests',
