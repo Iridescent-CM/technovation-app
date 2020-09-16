@@ -22,7 +22,13 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
     )
   }
 
+  beforeAll(() => {
+    console.error = jest.fn(() => {})
+  })
+
   beforeEach(() => {
+    axios.mockResponseOnce("get", { data: { attributes: {} } })
+
     wrapper = shallowMount(
       AdminContentSettings,
       {
@@ -46,6 +52,20 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
     expect(AdminContentSettings.name).toEqual('admin-content-settings')
   })
 
+  it('starts out loading', () => {
+    const myUncreatedWrapper = shallowMount(
+      AdminContentSettings, {
+        store: mockStore.createMocks().store,
+        localVue,
+        created () {
+          // no op 'stub' for this test
+        },
+      }
+    )
+
+    expect(myUncreatedWrapper.find('.loading').text()).toEqual('Loading...')
+  })
+
   describe('props', () => {
 
     it('contains the correct props', () => {
@@ -54,59 +74,40 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
           type: String,
           required: true,
         },
-
-        savedFormData: {
-          type: Object,
-          default: expect.any(Function)
-        }
       })
-    })
-
-    describe('formData', () => {
-
-      it('returns an empty object by default', () => {
-        expect(AdminContentSettings.props.savedFormData.default()).toEqual({})
-      })
-
     })
 
   })
 
   describe('created hook', () => {
 
-    it('calls the mapped mutations in order to store the cancel URL and form data state', () => {
-      const setFormData = jest.fn(() => {})
-
-      expect(setFormData.mock.calls.length).toBe(0)
-
-      wrapper = shallowMount(
-        AdminContentSettings,
-        {
-          localVue,
-          store: mockStore
-            .createMocks({
-              mutations: {
-                setFormData,
-              },
-            })
-            .store,
-          stubs: {
-            RouterLink: RouterLinkStub,
-            'router-view': true,
-          },
-          propsData: {
-            cancelButtonUrl: '/admin/dashboard',
-          },
-          computed: {
-            currentRoute: jest.fn(() => { return 'not-review' })
-          },
+    it('initializes settings state from remote data', (done) => {
+      axios.mockResponseOnce("get", {
+        data: {
+          attributes: {
+            student_signup: 1,
+            student_dashboard_text: 'Student dashboard text',
+            mentor_dashboard_text: 'Mentor dashboard text',
+            judge_dashboard_text: 'Judge dashboard text',
+            chapter_ambassador_dashboard_text: 'Chapter ambassador dashboard text',
+            student_survey_link: {
+              text: 'Student Link',
+              url: 'http://google.com',
+              long_desc: 'This is a long description for student link',
+            },
+            mentor_survey_link: {
+              text: 'Mentor Link',
+              url: 'http://bing.com',
+              long_desc: 'This is a long description for mentor link',
+            },
+            team_building_enabled: 1,
+            select_regional_pitch_event: 0,
+            judging_round: 'qf',
+            display_scores: 1,
+          }
         }
-      )
+      })
 
-      expect(setFormData.mock.calls.length).toBe(1)
-    })
-
-    it('applies the cancel button URL and form data props to the state', () => {
       wrapper = shallowMount(
         AdminContentSettings,
         {
@@ -117,27 +118,6 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
             'router-view': true,
           },
           propsData: {
-            savedFormData: {
-              student_signup: 1,
-              student_dashboard_text: 'Student dashboard text',
-              mentor_dashboard_text: 'Mentor dashboard text',
-              judge_dashboard_text: 'Judge dashboard text',
-              chapter_ambassador_dashboard_text: 'Chapter ambassador dashboard text',
-              student_survey_link: {
-                text: 'Student Link',
-                url: 'http://google.com',
-                long_desc: 'This is a long description for student link',
-              },
-              mentor_survey_link: {
-                text: 'Mentor Link',
-                url: 'http://bing.com',
-                long_desc: 'This is a long description for mentor link',
-              },
-              team_building_enabled: 1,
-              select_regional_pitch_event: 0,
-              judging_round: 'qf',
-              display_scores: 1,
-            },
             cancelButtonUrl: '/admin/dashboard',
           },
           computed: {
@@ -146,30 +126,34 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         }
       )
 
-      expect(wrapper.vm.$store.state).toEqual({
-        student_signup: 1,
-        mentor_signup: 0,
-        judge_signup: 0,
-        chapter_ambassador_signup: 0,
-        student_dashboard_text: 'Student dashboard text',
-        mentor_dashboard_text: 'Mentor dashboard text',
-        judge_dashboard_text: 'Judge dashboard text',
-        chapter_ambassador_dashboard_text: 'Chapter ambassador dashboard text',
-        student_survey_link: {
-          text: 'Student Link',
-          url: 'http://google.com',
-          long_desc: 'This is a long description for student link',
-        },
-        mentor_survey_link: {
-          text: 'Mentor Link',
-          url: 'http://bing.com',
-          long_desc: 'This is a long description for mentor link',
-        },
-        team_building_enabled: 1,
-        team_submissions_editable: 0,
-        select_regional_pitch_event: 0,
-        judging_round: 'qf',
-        display_scores: 1,
+      setImmediate(() => {
+        expect(wrapper.vm.isLoading).toBe(false)
+        expect(wrapper.vm.$store.state).toEqual({
+          student_signup: 1,
+          mentor_signup: 0,
+          judge_signup: 0,
+          chapter_ambassador_signup: 0,
+          student_dashboard_text: 'Student dashboard text',
+          mentor_dashboard_text: 'Mentor dashboard text',
+          judge_dashboard_text: 'Judge dashboard text',
+          chapter_ambassador_dashboard_text: 'Chapter ambassador dashboard text',
+          student_survey_link: {
+            text: 'Student Link',
+            url: 'http://google.com',
+            long_desc: 'This is a long description for student link',
+          },
+          mentor_survey_link: {
+            text: 'Mentor Link',
+            url: 'http://bing.com',
+            long_desc: 'This is a long description for mentor link',
+          },
+          team_building_enabled: 1,
+          team_submissions_editable: 0,
+          select_regional_pitch_event: 0,
+          judging_round: 'qf',
+          display_scores: 1,
+        })
+        done()
       })
     })
 
@@ -370,7 +354,7 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
       expect(cancelButtonAttributes.href).toBe('/admin/dashboard')
     })
 
-    it('displays warning icons on router links if judging is enabled', () => {
+    it('displays warning icons on router links if judging is enabled', (done) => {
       wrapper = shallowMount(
         AdminContentSettings,
         {
@@ -382,6 +366,11 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
                   return true
                 },
               },
+              actions: {
+                init: () => {
+                  return Promise.resolve({})
+                }
+              }
             })
             .store,
           stubs: {
@@ -397,33 +386,39 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         }
       )
 
-      expect(wrapper.vm.judgingEnabled).toBe(true)
+      setImmediate(() => {
+        expect(wrapper.vm.judgingEnabled).toBe(true)
+        expect(wrapper.vm.isLoading).toBe(false)
+        expect(wrapper.vm.hasError).toBe(false)
 
-      const registrationLink = wrapper.find({ ref: 'registrationLink' })
-      assertIconProps(registrationLink.find(Icon))
+        const registrationLink = wrapper.find({ ref: 'registrationLink' })
+        assertIconProps(registrationLink.find(Icon))
 
-      const noticesLink = wrapper.find({ ref: 'noticesLink' })
-      expect(noticesLink.find(Icon).exists()).toBe(false)
+        const noticesLink = wrapper.find({ ref: 'noticesLink' })
+        expect(noticesLink.find(Icon).exists()).toBe(false)
 
-      const surveysLink = wrapper.find({ ref: 'surveysLink' })
-      expect(surveysLink.find(Icon).exists()).toBe(false)
+        const surveysLink = wrapper.find({ ref: 'surveysLink' })
+        expect(surveysLink.find(Icon).exists()).toBe(false)
 
-      const teamsAndSubmissionsLink = wrapper
-        .find({ ref: 'teamsAndSubmissionsLink' })
-      assertIconProps(teamsAndSubmissionsLink.find(Icon))
+        const teamsAndSubmissionsLink = wrapper
+          .find({ ref: 'teamsAndSubmissionsLink' })
+        assertIconProps(teamsAndSubmissionsLink.find(Icon))
 
-      const eventsLink = wrapper.find({ ref: 'eventsLink' })
-      assertIconProps(eventsLink.find(Icon))
+        const eventsLink = wrapper.find({ ref: 'eventsLink' })
+        assertIconProps(eventsLink.find(Icon))
 
-      const judgingLink = wrapper.find({ ref: 'judgingLink' })
-      expect(judgingLink.find(Icon).exists()).toBe(false)
+        const judgingLink = wrapper.find({ ref: 'judgingLink' })
+        expect(judgingLink.find(Icon).exists()).toBe(false)
 
-      const scoresAndCertificatesLink = wrapper
-        .find({ ref: 'scoresAndCertificatesLink' })
-      assertIconProps(scoresAndCertificatesLink.find(Icon))
+        const scoresAndCertificatesLink = wrapper
+          .find({ ref: 'scoresAndCertificatesLink' })
+        assertIconProps(scoresAndCertificatesLink.find(Icon))
+
+        done()
+      })
     })
 
-    it('displays save button if on review page; review router link otherwise', () => {
+    it('displays save button if on review page', (done) => {
       const properties = {
         localVue,
         store: mockStore
@@ -433,6 +428,11 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
                 return true
               },
             },
+            actions: {
+              init: () => {
+                return Promise.resolve({})
+              }
+            }
           })
           .store,
         stubs: {
@@ -453,11 +453,42 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         })
       )
 
-      let reviewLink = wrapper.find({ ref: 'reviewLink' })
-      let submitButton = wrapper.find({ ref: 'submitButton' })
+      setImmediate(() => {
+        let reviewLink = wrapper.find({ ref: 'reviewLink' })
+        let submitButton = wrapper.find({ ref: 'submitButton' })
 
-      expect(reviewLink.exists()).toBe(true)
-      expect(submitButton.exists()).toBe(false)
+        expect(reviewLink.exists()).toBe(true)
+        expect(submitButton.exists()).toBe(false)
+
+        done()
+      })
+    })
+
+    it('displays review router link otherwise', (done) => {
+      const properties = {
+        localVue,
+        store: mockStore
+          .createMocks({
+            getters: {
+              judgingEnabled: () => {
+                return true
+              },
+            },
+            actions: {
+              init: () => {
+                return Promise.resolve({})
+              }
+            }
+          })
+          .store,
+        stubs: {
+          RouterLink: RouterLinkStub,
+          'router-view': true,
+        },
+        propsData: {
+          cancelButtonUrl: '/admin/dashboard',
+        },
+      }
 
       wrapper = shallowMount(
         AdminContentSettings,
@@ -468,11 +499,15 @@ describe('Admin Content & Settings - AdminContentSettings component', () => {
         })
       )
 
-      reviewLink = wrapper.find({ ref: 'reviewLink' })
-      submitButton = wrapper.find({ ref: 'submitButton' })
+      setImmediate(() => {
+        let reviewLink = wrapper.find({ ref: 'reviewLink' })
+        let submitButton = wrapper.find({ ref: 'submitButton' })
 
-      expect(reviewLink.exists()).toBe(false)
-      expect(submitButton.exists()).toBe(true)
+        expect(reviewLink.exists()).toBe(false)
+        expect(submitButton.exists()).toBe(true)
+
+        done()
+      })
     })
   })
 
