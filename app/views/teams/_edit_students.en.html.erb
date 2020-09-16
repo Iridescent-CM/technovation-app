@@ -30,6 +30,7 @@
 
 <% unless admin_chapter_ambassador %>
   <%= render "teams/pending_invites",
+    team: team,
     preview_method: :invitee_email,
     invites: team.pending_student_invites %>
 

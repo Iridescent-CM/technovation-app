@@ -19,7 +19,7 @@
         <% invites.each do |invite| %>
           <li class="row">
             <% if invite.invitee %>
-              <%= render 'invites/registered_invitee', invite: invite %>
+              <%= render 'invites/registered_invitee', invite: invite, team: team %>
             <% else %>
               <%= render 'invites/unregistered_invitee', invite: invite %>
             <% end %>
