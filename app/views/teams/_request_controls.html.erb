@@ -1,0 +1,34 @@
+<% if !SeasonToggles.judging_enabled_or_between? %>
+  <p class="buttons">
+    <%= link_to t("views.application.approved"),
+      [
+        current_scope,
+        join_request,
+        join_request: { status: :approved },
+      ],
+
+      class: "button small",
+
+      data: {
+        method: :put,
+        confirm: t("views.application.confirm_approved",
+                  name: join_request.requestor_first_name),
+        positive: true,
+      } %>
+
+    <%= link_to t("views.application.declined"),
+      [
+        current_scope,
+        join_request,
+        join_request: { status: :declined },
+      ],
+
+      class: "button small danger",
+
+      data: {
+        method: :put,
+        confirm: t("views.application.confirm_declined",
+                  name: join_request.requestor_first_name),
+      } %>
+  </p>
+<% end %>

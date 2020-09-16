@@ -2,5 +2,4 @@
   <%= t("views.mentors.show.already_requested", name: mentor.first_name) %>
 </p>
 
-<%= link_to t("views.mentors.show.manage_team"),
-  student_team_path(team, anchor: 'mentors') %>
+<%= render "teams/request_controls", join_request: @mentor_request %>
