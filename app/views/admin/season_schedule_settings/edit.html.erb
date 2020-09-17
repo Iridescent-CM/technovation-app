@@ -13,29 +13,6 @@
 
     <admin-content-settings
       cancel-button-url="<%= admin_dashboard_path %>"
-      :saved-form-data="{
-        student_signup: <%= SeasonToggles.signup_enabled?('student') %>,
-        mentor_signup: <%= SeasonToggles.signup_enabled?('mentor') %>,
-        student_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('student')) %>',
-        mentor_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('mentor')) %>',
-        judge_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('judge')) %>',
-        chapter_ambassador_dashboard_text: '<%= escape_single_quotes(SeasonToggles.dashboard_text('chapter_ambassador')) %>',
-        student_survey_link: {
-          text: '<%= escape_single_quotes(SeasonToggles.survey_link('student', :text)) %>',
-          url: '<%= escape_single_quotes(SeasonToggles.survey_link('student', :url)) %>',
-          long_desc: '<%= escape_single_quotes(SeasonToggles.survey_link('student', :long_desc)) %>',
-        },
-        mentor_survey_link: {
-          text: '<%= escape_single_quotes(SeasonToggles.survey_link('mentor', :text)) %>',
-          url: '<%= escape_single_quotes(SeasonToggles.survey_link('mentor', :url)) %>',
-          long_desc: '<%= escape_single_quotes(SeasonToggles.survey_link('mentor', :long_desc)) %>',
-        },
-        team_building_enabled: <%= SeasonToggles.team_building_enabled? %>,
-        team_submissions_editable: <%= SeasonToggles.team_submissions_editable? %>,
-        select_regional_pitch_event: <%= SeasonToggles.select_regional_pitch_event? %>,
-        judging_round: '<%= escape_single_quotes(SeasonToggles.judging_round.to_s) %>',
-        display_scores: <%= SeasonToggles.display_scores? %>,
-      }"
     />
 
   <% end %>

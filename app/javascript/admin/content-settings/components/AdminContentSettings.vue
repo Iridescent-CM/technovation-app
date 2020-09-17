@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <div v-if="isLoading" class="loading">
+    Loading...
+  </div>
+
+  <div v-else-if="hasError" class="error">
+    Error. Please let the dev team know.
+  </div>
+
+  <div v-else>
     <div class="tabs tabs--vertical grid" id="admin-content-settings">
       <ul class="tabs__menu grid__col-md-3">
         <router-link
@@ -157,17 +165,23 @@ export default {
       type: String,
       required: true,
     },
-
-    savedFormData: {
-      type: Object,
-      default () {
-        return {}
-      },
-    }
   },
 
   created () {
-    this.setFormData(this.savedFormData)
+    this.$store.dispatch("init").then(() => {
+      this.isLoading = false
+    }).catch((err) => {
+      console.error(err)
+      this.isLoading = false
+      this.hasError = true
+    })
+  },
+
+  data () {
+    return {
+      isLoading: true,
+      hasError: false
+    }
   },
 
   computed: {
@@ -182,10 +196,6 @@ export default {
   },
 
   methods: {
-    ...mapMutations([
-      'setFormData',
-    ]),
-
     saveSettings () {
       this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData)
       document.getElementById('season_schedule').submit()
@@ -209,6 +219,7 @@ export default {
         if (inputValue !== null && typeof inputValue === 'object') {
           markup += this.buildFormInputsMarkup(inputValue, inputName)
         } else {
+          inputValue = String(inputValue).replace(/"/g, '&quot;')
           markup += `
             <input
               type="hidden"
