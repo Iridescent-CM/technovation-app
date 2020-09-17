@@ -53,7 +53,7 @@
     </p>
 
     <p class="margin--t-large">
-      <a href="https://docs.google.com/document/d/1bFN0yf2M0RrpdxBaq4tudNfhcvGetifY3v1gnHvkV20/" class="small">View judging document</a>
+      <a href="https://docs.google.com/document/d/1bFN0yf2M0RrpdxBaq4tudNfhcvGetifY3v1gnHvkV20/" class="small" target="_blank">View judging document</a>
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint">
