@@ -300,7 +300,7 @@ Rails.application.routes.draw do
 
     resources :export_downloads, only: :update
 
-    resource :season_schedule_settings, only: [:edit, :update]
+    resource :season_schedule_settings, only: [:show, :edit, :update]
 
     resources :certificates, only: [:index, :show, :create, :destroy]
 
