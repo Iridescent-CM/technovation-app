@@ -29,6 +29,8 @@ module Student
 
         h[:country] = current_account.country
         h[:location] = current_account.address_details
+
+        h[:scope] = current_scope
       end
     end
   end
