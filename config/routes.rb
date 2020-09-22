@@ -304,6 +304,8 @@ Rails.application.routes.draw do
 
     resources :certificates, only: [:index, :show, :create, :destroy]
 
+    resource :environment, only: :show
+
     get '/semifinalist_snippet', to: 'semifinalist_snippet#show'
   end
 

@@ -1,0 +1,58 @@
+<h1>Environment</h1>
+<h3>
+  Platform configuration that has been set behind the scenes
+</h3>
+
+<h4>Important Dates</h4>
+<table class="datagrid margin--b-large">
+  <thead>
+    <tr>
+      <th>Important date</th>
+      <th>Current setting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @important_dates.each do |date, value| %>
+      <tr>
+        <td><%= date %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h4>Feature toggles</h4>
+<table class="datagrid margin--b-large">
+  <thead>
+    <tr>
+      <th>Feature toggle</th>
+      <th>Setting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @enables.each do |flag, value| %>
+      <tr>
+        <td><%= flag %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h4>Mailchimp integration</h4>
+<table class="datagrid">
+  <thead>
+    <tr>
+      <th>Profile type</th>
+      <th>Mailchimp list ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @mailing_list_keys.each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

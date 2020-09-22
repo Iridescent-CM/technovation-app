@@ -57,6 +57,10 @@
       "/sidekiq",
       target: :_blank,
       data: { turbolinks: false } %>
+
+    <%= link_to "Environment",
+      admin_environment_path,
+      class: al(admin_environment_path) %>
   <% end %>
 
   <hr />
