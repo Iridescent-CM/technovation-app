@@ -1,6 +1,6 @@
 <%= simple_form_for [current_scope, @team] do |f| %>
   <div class="fields-edit">
-    <%= f.input :name %>
+    <%= f.input :name, label: "Team name" %>
 
     <% if f.object.persisted? %>
       <%= f.input :description, label: t("models.team.description") %>
