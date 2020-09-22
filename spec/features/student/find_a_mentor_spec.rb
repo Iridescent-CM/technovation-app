@@ -29,14 +29,14 @@ RSpec.feature "Students invite mentors to join their team" do
   end
 
   scenario "Invite an available mentor" do
-    click_link "Ask"
+    click_link "View more details"
     click_button "Ask #{mentor.first_name}"
     expect(page).to have_content("Your team invite was sent!")
   end
 
   scenario "Find a mentor on your team" do
     TeamRosterManaging.add(student.team, mentor)
-    click_link "Ask"
+    click_link "View more details"
     expect(page).to have_content("#{mentor.first_name} is a mentor on your team.")
   end
 
@@ -45,13 +45,13 @@ RSpec.feature "Students invite mentors to join their team" do
       invitee_email: mentor.email,
       inviter: student
     )
-    click_link "Ask"
+    click_link "View more details"
     expect(page).to have_content("Your team has invited #{mentor.first_name}")
   end
 
   scenario "Find a mentor who already requested" do
     mentor.join_requests.create!(team: student.team)
-    click_link "Ask"
+    click_link "View more details"
     expect(page).to have_content(
       "#{mentor.first_name} has asked to mentor your team"
     )
