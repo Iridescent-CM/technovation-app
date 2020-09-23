@@ -1,6 +1,4 @@
 class Division < ActiveRecord::Base
-  CUTOFF_MONTH = 8
-  CUTOFF_DAY = 1
   SENIOR_DIVISION_AGE = 15
 
   # If these change, you will need to update dataclips
@@ -48,16 +46,7 @@ class Division < ActiveRecord::Base
   end
 
   def self.cutoff_date
-    Date.new(cutoff_year, CUTOFF_MONTH, CUTOFF_DAY)
-  end
-
-  def self.cutoff_year
-    if Date.today.month >= CUTOFF_MONTH &&
-        Date.today.month < Season::START_MONTH
-      Season.current.year + 1
-    else
-      Season.current.year
-    end
+    ImportantDates.division_cutoff
   end
 
   def self.division_by_team_ages(team)
