@@ -10,7 +10,7 @@ FactoryBot.define do
       city { "Chicago" }
       state_province { "IL" }
       country { "US" }
-      date_of_birth { Date.today - 12.years }
+      date_of_birth { Division.cutoff_date - (Division::SENIOR_DIVISION_AGE - 1).years }
       sequence(:email) { |n| "factory-student-#{n}@example.com" }
       password { "secret1234" }
       not_onboarded { false }
@@ -158,11 +158,11 @@ FactoryBot.define do
     end
 
     trait :senior do |s|
-      date_of_birth { Date.today - 16.years }
+      date_of_birth { Division.cutoff_date - Division::SENIOR_DIVISION_AGE.years }
     end
 
     trait :junior do |s|
-      date_of_birth { Date.today - 12.years }
+      date_of_birth { Division.cutoff_date - (Division::SENIOR_DIVISION_AGE - 1).years }
     end
 
     trait :on_team do
