@@ -158,7 +158,7 @@ FactoryBot.define do
     end
 
     trait :senior do |s|
-      date_of_birth { Date.today - 15.years }
+      date_of_birth { Date.today - 16.years }
     end
 
     trait :junior do |s|
