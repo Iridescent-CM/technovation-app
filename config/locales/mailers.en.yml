@@ -37,10 +37,10 @@ en:
     invite_member:
       greeting:
         mentor: "You are invited to be a mentor for a Technovation team — %{name}."
-        student: "You've been invited join Technovation as a member of %{name}."
+        student: "You've been invited to join Technovation as a member of %{name}."
       intro:
         existing_profile: "You can review and accept or decline your invitation here:"
-        no_profile: "Before you can join the team, you'll need to register for Technovation — it's free and it won't take long. You can register at the link below:"
+        no_profile: "We hope you decide to join team %{name}! To do so, you'll first need to register for Technovation - it's free and it won't take long. You can register at the link below:"
       subject: "You're invited to join a Technovation team!"
     invite_mentor:
       subject: "You're invited to be a mentor for a Technovation team!"

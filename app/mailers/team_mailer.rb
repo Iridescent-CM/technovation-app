@@ -78,10 +78,6 @@ class TeamMailer < ApplicationMailer
     else
       invite_new_student(invite)
     end
-
-    I18n.with_locale(invite.inviter.locale) do
-      mail to: invite.invitee_email, template_name: :invite_member
-    end
   end
 
   def invite_mentor(invite)
@@ -184,6 +180,10 @@ class TeamMailer < ApplicationMailer
     )
     @intro = I18n.translate("team_mailer.invite_member.intro.existing_profile")
     @link_text = "Review this invitation"
+
+    I18n.with_locale(invite.inviter.locale) do
+      mail to: invite.invitee_email, template_name: :invite_member
+    end
   end
 
   def invite_new_student(invite)
@@ -195,8 +195,15 @@ class TeamMailer < ApplicationMailer
 
     if token = attempt.activation_token
       @url = student_signup_url(token: token)
-      @intro = I18n.translate("team_mailer.invite_member.intro.no_profile")
+      @intro = I18n.translate(
+        "team_mailer.invite_member.intro.no_profile",
+        name: invite.team_name
+      )
       @link_text = "Signup to join this team"
+
+      I18n.with_locale(invite.inviter.locale) do
+        mail to: invite.invitee_email, template_name: :invite_new_student
+      end
     else
       raise TokenNotPresent, "Signup Attempt ID: #{attempt.id}"
     end
