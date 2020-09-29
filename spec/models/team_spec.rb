@@ -4,6 +4,11 @@ RSpec.describe Team do
   before { Timecop.travel(Division.cutoff_date - 1.day) }
   after { Timecop.return }
 
+  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
+  let(:junior_division_age) { Division::SENIOR_DIVISION_AGE - 1 }
+  let(:junior_dob) { Division.cutoff_date - junior_division_age.years }
+  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+
   it "is not qualified to compete while pending students exist" do
     team = FactoryBot.create(:team)
     expect(team).to be_qualified
@@ -50,10 +55,10 @@ RSpec.describe Team do
 
   it "assigns to the B division if all students are in Division B" do
     team = FactoryBot.create(:team)
-    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
+    younger_student = FactoryBot.create(:student, date_of_birth: junior_dob)
     older_student = FactoryBot.create(
       :student,
-      date_of_birth: Division.cutoff_date - 15.years
+      date_of_birth: senior_dob
     )
 
     TeamRosterManaging.add(team, [older_student, younger_student])
@@ -63,15 +68,15 @@ RSpec.describe Team do
 
   it "assigns to the correct division if a student updates their birthdate" do
     team = FactoryBot.create(:team)
-    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryBot.create(:student, date_of_birth: 14.years.ago)
+    younger_student = FactoryBot.create(:student, date_of_birth: junior_dob)
+    older_student = FactoryBot.create(:student, date_of_birth: senior_dob)
 
     TeamRosterManaging.add(team, [older_student, younger_student])
 
     ProfileUpdating.execute(older_student, {
       account_attributes: {
         id: older_student.account_id,
-        date_of_birth: 13.years.ago,
+        date_of_birth: junior_dob
       },
     })
 
@@ -80,8 +85,8 @@ RSpec.describe Team do
 
   it "reconsiders division when a student leaves the team" do
     team = FactoryBot.create(:team)
-    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
+    younger_student = FactoryBot.create(:student, date_of_birth: junior_dob)
+    older_student = FactoryBot.create(:student, date_of_birth: senior_dob)
 
     TeamRosterManaging.add(team, [older_student, younger_student])
     expect(team.reload.division).to eq(Division.senior)
@@ -92,8 +97,8 @@ RSpec.describe Team do
 
   it "reconsiders division when a student joins the team" do
     team = FactoryBot.create(:team)
-    younger_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
-    older_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
+    younger_student = FactoryBot.create(:student, date_of_birth: junior_dob)
+    older_student = FactoryBot.create(:student, date_of_birth: senior_dob)
 
     TeamRosterManaging.add(team, younger_student)
     expect(team.reload.division).to eq(Division.junior)
@@ -164,7 +169,7 @@ RSpec.describe Team do
       profile_updating.update({
         account_attributes: {
           id: member.account_id,
-          date_of_birth: Date.today - 15.years,
+          date_of_birth: senior_dob
         },
       })
 
@@ -233,8 +238,8 @@ RSpec.describe Team do
     submission = FactoryBot.create(:submission, team: team)
     team.reload
 
-    old_student = FactoryBot.create(:student, date_of_birth: 15.years.ago)
-    young_student = FactoryBot.create(:student, date_of_birth: 13.years.ago)
+    old_student = FactoryBot.create(:student, date_of_birth: senior_dob)
+    young_student = FactoryBot.create(:student, date_of_birth: junior_dob)
 
     TeamRosterManaging.add(team, [old_student, young_student])
     expect(team.reload).to be_senior
