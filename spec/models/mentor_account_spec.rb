@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe MentorProfile do
+  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
+  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+
   describe "#team_region_division_names" do
     it "should include all teams" do
       mentor = FactoryBot.create(:mentor, :onboarded)
@@ -12,7 +15,7 @@ RSpec.describe MentorProfile do
 
       ProfileUpdating.execute(student, account_attributes: {
         id: student.account_id,
-        date_of_birth: 15.years.ago,
+        date_of_birth: senior_dob,
       })
 
       TeamRosterManaging.add(t1, mentor)
@@ -43,7 +46,7 @@ RSpec.describe MentorProfile do
 
         ProfileUpdating.execute(student, account_attributes: {
           id: student.account_id,
-          date_of_birth: 15.years.ago,
+          date_of_birth: senior_dob,
         })
       end
 

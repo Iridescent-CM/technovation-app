@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Student team submissions" do
+  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
+  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+
   before { SeasonToggles.team_submissions_editable! }
 
   scenario "Be on a team to see submission link" do
@@ -131,7 +134,7 @@ RSpec.feature "Student team submissions" do
     student = mentor.teams.first.students.first
     ProfileUpdating.execute(student, :student, account_attributes: {
       id: student.account_id,
-      date_of_birth: 15.years.ago,
+      date_of_birth: senior_dob,
     })
 
     visit mentor_dashboard_path
