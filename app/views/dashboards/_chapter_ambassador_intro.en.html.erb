@@ -2,7 +2,8 @@
 
 <% if chapter_ambassador.provided_intro? %>
   <% if chapter_ambassador_dashboard %>
-    <h5 class="reset">Introduce yourself to your area</h5>
+    <h4 class="reset">Introduce yourself to your area</h4>
+    <p class="help">This is what participants in your area will see</p>
   <% else %>
     <div class="chapter-ambassador-intro">
       <%= image_tag chapter_ambassador.profile_image_url,
