@@ -1,4 +1,11 @@
 module ImportantDates
+  def self.division_cutoff
+    year = Integer(ENV.fetch("DATES_DIVISION_CUTOFF_YEAR"))
+    month = Integer(ENV.fetch("DATES_DIVISION_CUTOFF_MONTH"))
+    day = Integer(ENV.fetch("DATES_DIVISION_CUTOFF_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
   def self.new_season_switch
     year = Time.current.year
     month = Integer(ENV.fetch("DATES_NEW_SEASON_START_MONTH"))
