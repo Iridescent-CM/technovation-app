@@ -195,10 +195,7 @@ class TeamMailer < ApplicationMailer
 
     if token = attempt.activation_token
       @url = student_signup_url(token: token)
-      @intro = I18n.translate(
-        "team_mailer.invite_member.intro.no_profile",
-        name: invite.team_name
-      )
+      @team_name = invite.team_name
       @link_text = "Signup to join this team"
 
       I18n.with_locale(invite.inviter.locale) do
