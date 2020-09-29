@@ -13,7 +13,11 @@ export default {
   birthMonth: null,
   birthDay: null,
 
-  cutoff: new Date(2020, 7, 1),
+  cutoff: new Date(
+    process.env.DATES_DIVISION_CUTOFF_YEAR,
+    process.env.DATES_DIVISION_CUTOFF_MONTH - 1,
+    process.env.DATES_DIVISION_CUTOFF_DAY
+  ),
 
   profileChoice: null,
 

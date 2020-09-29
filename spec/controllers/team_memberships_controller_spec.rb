@@ -4,6 +4,11 @@ RSpec.describe "Team Memberships Controllers" do
   before { Timecop.travel(Division.cutoff_date - 1.day) }
   after { Timecop.return }
 
+  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
+  let(:junior_division_age) { Division::SENIOR_DIVISION_AGE - 1 }
+  let(:junior_dob) { Division.cutoff_date - junior_division_age.years }
+  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+
   describe Student::TeamMembershipsController do
     describe "DELETE #destroy" do
       it "reconsiders divisions" do
@@ -11,11 +16,11 @@ RSpec.describe "Team Memberships Controllers" do
 
         older_student = FactoryBot.create(
           :student,
-          date_of_birth: 15.years.ago
+          date_of_birth: senior_dob
         )
         younger_student = FactoryBot.create(
           :student,
-          date_of_birth: 13.years.ago
+          date_of_birth: junior_dob
         )
 
         TeamRosterManaging.add(team, [younger_student, older_student])
@@ -39,11 +44,11 @@ RSpec.describe "Team Memberships Controllers" do
 
           older_student = FactoryBot.create(
             :student,
-            date_of_birth: 15.years.ago
+            date_of_birth: senior_dob
           )
           younger_student = FactoryBot.create(
             :student,
-            date_of_birth: 13.years.ago
+            date_of_birth: junior_dob
           )
 
           TeamRosterManaging.add(team, [younger_student, older_student])
