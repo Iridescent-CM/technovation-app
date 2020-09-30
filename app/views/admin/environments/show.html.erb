@@ -14,13 +14,15 @@
     <tr>
       <th>Important date</th>
       <th>Current setting</th>
+      <th>Day of week</th>
     </tr>
   </thead>
   <tbody>
-    <% @important_dates.each do |date, value| %>
+    <% @important_dates.each do |name, date, day_of_week| %>
       <tr>
+        <td><%= name %></td>
         <td><%= date %></td>
-        <td><%= value %></td>
+        <td><%= day_of_week %></td>
       </tr>
     <% end %>
   </tbody>

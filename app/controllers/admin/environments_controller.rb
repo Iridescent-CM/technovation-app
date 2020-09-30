@@ -3,10 +3,11 @@ module Admin
 
     def show
       @important_dates = ImportantDates.methods(false).collect { |method_name|
-        [method_name.to_s.titleize, ImportantDates.send(method_name)]
+        date = ImportantDates.send(method_name)
+        [method_name.to_s.titleize, date, date.strftime('%A')]
       }.sort { |a, b|
         a[1] <=> b[1]
-      }.to_h
+      }
 
       @enables = ENV.keys.filter { |key|
         key.upcase.starts_with? "ENABLE_"
