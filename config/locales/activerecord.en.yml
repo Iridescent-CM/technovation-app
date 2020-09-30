@@ -50,7 +50,7 @@ en:
               already_on_team: "is already on a team."
               already_requested_to_join: "has already requested to join your team. Review the request on your team page."
               invalid: "does not appear to be an email address"
-              is_not_a_student: "is not a student."
+              is_not_a_student: "This email is associated with a non-student account."
               taken: "has already been invited by your team."
 
         user_invitation:
