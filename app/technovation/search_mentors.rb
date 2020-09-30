@@ -16,8 +16,8 @@ module SearchMentors
       mentors = mentors.by_expertise_ids(filter.expertise_ids)
     end
 
-    if filter.gender_identities.any?
-      mentors = mentors.by_gender_identities(filter.gender_identities)
+    if filter.female_only
+      mentors = mentors.by_gender_identities([Account.genders["Female"]])
     end
 
     if filter.needs_team

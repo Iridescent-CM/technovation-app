@@ -1,0 +1,19 @@
+<p class="reset">
+  <%= f.radio_button :female_only,
+    1,
+    checked: params[:female_only] == "1",
+    id: :female_only_1,
+    class: "toggle-based-search "%>
+
+  <%= f.label :female_only_1, "Female" %>
+</p>
+
+<p class="reset">
+  <%= f.radio_button :female_only,
+    0,
+    checked: params[:female_only] == "0",
+    id: :female_only_0,
+    class: "toggle-based-search "%>
+
+  <%= f.label :female_only_0, "No preference" %>
+</p>
