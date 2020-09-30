@@ -39,7 +39,11 @@ module Student
         redirect_to student_team_path(team),
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
       elsif
-        current_student.join_requests.find_or_create_by!(team: team)
+        if join_request = current_student.join_requests.find_by(team: team)
+          join_request.pending!
+        else
+          join_request = current_student.join_requests.create!(team: team)
+        end
 
         redirect_to student_dashboard_path,
           success: t(
