@@ -77,7 +77,7 @@ module Mentor
     end
 
     def destroy
-      join_request = JoinRequest.find_by(review_token: params.fetch(:id))
+      join_request = current_mentor.join_requests.find_by(review_token: params.fetch(:id))
       join_request.deleted!
 
       redirect_to mentor_dashboard_path(anchor: "/find-team"),

@@ -79,7 +79,7 @@ module Student
     end
 
     def destroy
-      join_request = JoinRequest.find_by(review_token: params.fetch(:id))
+      join_request = current_student.join_requests.find_by(review_token: params.fetch(:id))
       join_request.deleted!
 
       redirect_to student_dashboard_path(anchor: "/find-team"),
