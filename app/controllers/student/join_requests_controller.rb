@@ -74,6 +74,17 @@ module Student
       end
     end
 
+    def destroy
+      join_request = JoinRequest.find_by(review_token: params.fetch(:id))
+      join_request.deleted!
+
+      redirect_to student_dashboard_path(anchor: "/find-team"),
+        success: t(
+          "controllers.student.join_requests.destroy.success",
+          name: join_request.team_name
+        )
+    end
+
     private
     def join_request_params
       params.require(:join_request).permit(:status)

@@ -26,7 +26,21 @@
               <%= join_request.team_name %><br />
               Division:
               <%= join_request.team_division_name.humanize %><br />
-              <%= join_request.team_primary_location %>
+              <%= join_request.team_primary_location %><br />
+              <%= link_to "Cancel my request to join this team",
+                [
+                  current_scope,
+                  :join_request,
+                  {
+                    id: join_request.review_token
+                  }
+                ],
+                data: {
+                  method: :delete,
+                  confirm: t("controllers.student.join_requests.destroy.confirm")
+                },
+                class: "danger small"
+              %>
             </p>
           </div>
         </div>

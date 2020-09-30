@@ -61,7 +61,7 @@ Rails.application.routes.draw do
 
     resources :team_member_invites, except: [:edit, :index]
     resources :mentor_invites, only: [:create, :destroy]
-    resources :join_requests, only: [:new, :show, :create, :update]
+    resources :join_requests, only: [:new, :show, :create, :update, :destroy]
 
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]
