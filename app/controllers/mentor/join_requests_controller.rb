@@ -76,6 +76,17 @@ module Mentor
       end
     end
 
+    def destroy
+      join_request = JoinRequest.find_by(review_token: params.fetch(:id))
+      join_request.deleted!
+
+      redirect_to mentor_dashboard_path(anchor: "/find-team"),
+        success: t(
+          "controllers.mentor.join_requests.destroy.success",
+          name: join_request.team_name
+        )
+    end
+
     private
     def reviewer_is_requestor?(join_request)
       current_mentor.authenticated? and current_mentor == join_request.requestor

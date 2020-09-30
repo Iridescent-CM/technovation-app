@@ -77,6 +77,9 @@ en:
           success: "You have requested to be a mentor for %{name}"
         update:
           success: "%{name} was %{status}"
+        destroy:
+          confirm: "Are you sure you want to cancel this request?"
+          success: "You have cancelled your request to join %{name}"
 
     parental_consents:
       create:
