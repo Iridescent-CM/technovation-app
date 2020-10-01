@@ -1,5 +1,9 @@
 module Admin
   class SeasonScheduleSettingsController < AdminController
+    def show
+      render json: SeasonTogglesSerializer.new(SeasonToggles).serialized_json
+    end
+
     def update
       SeasonToggles.configure(season_toggle_params)
       redirect_to edit_admin_season_schedule_settings_path,

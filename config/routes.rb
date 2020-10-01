@@ -243,7 +243,6 @@ Rails.application.routes.draw do
 
     resources :job_statuses, only: :show
 
-    resources :requests, only: [:index, :update]
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
 
@@ -301,7 +300,7 @@ Rails.application.routes.draw do
 
     resources :export_downloads, only: :update
 
-    resource :season_schedule_settings, only: [:edit, :update]
+    resource :season_schedule_settings, only: [:show, :edit, :update]
 
     resources :certificates, only: [:index, :show, :create, :destroy]
 

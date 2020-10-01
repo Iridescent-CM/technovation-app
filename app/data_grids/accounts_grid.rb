@@ -405,7 +405,21 @@ class AccountsGrid
         .where("mentor_profiles.school_company_name IN (?) OR judge_profiles.company_name IN (?)", value, value)
     end
 
+  filter :name_email,
+    header: "Name or Email",
+    filter_group: "more-specific" do |value|
+      names = value.strip.downcase.split(' ').map { |n|
+        I18n.transliterate(n).gsub("'", "''")
+      }
+      fuzzy_search({
+        first_name: names.first,
+        last_name: names.last || names.first,
+        email: names.first,
+      }, false) # false enables OR search
+    end
+
   filter :first_name,
+    header: "First name (exact spelling)",
     filter_group: "more-specific" do |value|
       basic_search({
         first_name: value
@@ -413,6 +427,7 @@ class AccountsGrid
     end
 
   filter :last_name,
+    header: "Last name (exact spelling)",
     filter_group: "more-specific" do |value|
       basic_search({
         last_name: value
@@ -420,6 +435,7 @@ class AccountsGrid
     end
 
   filter :email,
+    header: "Email (exact spelling)",
     filter_group: "more-specific" do |value|
       basic_search({
         email: value
@@ -427,6 +443,7 @@ class AccountsGrid
     end
 
   filter :parent_or_guardian_name,
+    header: "Parent or guardian name (exact spelling)",
     filter_group: "more-specific" do |value, scope|
       scope.includes(:student_profile)
         .references(:student_profiles)
@@ -438,6 +455,7 @@ class AccountsGrid
     end
 
   filter :parent_or_guardian_email,
+    header: "Parent or guardian email (exact spelling)",
     filter_group: "more-specific" do |value, scope|
       scope.includes(:student_profile)
         .references(:student_profiles)

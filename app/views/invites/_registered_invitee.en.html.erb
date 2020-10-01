@@ -9,7 +9,18 @@
       <strong><%= invite.invitee_first_name %></strong><br />
 
       <%= link_to "view profile",
-        [current_scope, invite.invitee_scope_name, { id: invite.invitee_id }] %><br />
+        send(
+          "#{current_scope}_#{invite.invitee_scope_name}_path",
+          invite.invitee_id,
+          back_title: "Back to your team",
+          back: send(
+            "#{current_scope}_team_path",
+            team,
+            anchor: invite.invitee_scope_name.pluralize
+          )
+        ) %>
+
+      <br />
 
       <%= link_to "delete this invitation",
         [current_scope, invite],
