@@ -95,7 +95,7 @@ RSpec.describe Student::JoinRequestsController do
         post :create, params: { team_id: team.id }
       }.to change { JoinRequest.count }.by(1)
 
-      expect(response).to redirect_to(student_dashboard_path)
+      expect(response).to redirect_to(student_dashboard_path(anchor: '/find-team'))
     end
 
     it "redirects and displays alert if judging is enabled or between rounds" do
