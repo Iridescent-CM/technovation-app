@@ -282,8 +282,6 @@ class Account < ActiveRecord::Base
     end
   }
 
-  after_initialize :populate_terms_agreed_from_signup_attempt
-
   def self.sort_column
     :first_name
   end
@@ -903,13 +901,6 @@ class Account < ActiveRecord::Base
 
   def terms_agreed?
     !!terms_agreed_at
-  end
-
-  def populate_terms_agreed_from_signup_attempt
-    if !self.terms_agreed? && self.signup_attempt && self.signup_attempt.terms_agreed?
-      self.terms_agreed_at = self.signup_attempt.terms_agreed_at
-      self.save
-    end
   end
 
   def set_terms_agreed(bool)

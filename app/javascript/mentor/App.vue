@@ -63,6 +63,12 @@ export default {
         },
 
         {
+          heading: 'Mentor Resources',
+          url: 'https://technovationchallenge.org/mentor-resources/',
+          text: 'Learn more about mentoring',
+        },
+
+        {
           heading: 'Help us improve!',
           url: this.surveyLink,
           text: this.surveyLinkText,

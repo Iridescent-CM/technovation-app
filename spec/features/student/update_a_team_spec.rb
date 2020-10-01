@@ -17,7 +17,7 @@ RSpec.feature "Student updates a team" do
     sign_in(student)
 
     visit edit_student_team_path(team)
-    fill_in "Name", with: "Awesomest Saucesests"
+    fill_in "Team name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.save")
 
     expect(page).to have_content("Your team has been updated")
@@ -30,7 +30,7 @@ RSpec.feature "Student updates a team" do
     sign_in(student)
 
     visit edit_student_team_path(team)
-    fill_in "Name", with: "Awesomest Saucesests"
+    fill_in "Team name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.save")
 
     expect(page).to have_content("has already been taken")

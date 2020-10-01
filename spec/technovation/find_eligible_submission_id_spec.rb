@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe FindEligibleSubmissionId do
+  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
+  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+
   context "quarterfinals" do
     before { set_judging_round("QF") }
     after { reset_judging_round }
@@ -229,7 +232,7 @@ RSpec.describe FindEligibleSubmissionId do
         judges_team.students.each do |s|
           ProfileUpdating.execute(s, account_attributes: {
               id: s.account_id,
-              date_of_birth: 15.years.ago,
+              date_of_birth: senior_dob
           })
         end
 
@@ -407,7 +410,7 @@ RSpec.describe FindEligibleSubmissionId do
         judges_team.students.each do |s|
           ProfileUpdating.execute(s, account_attributes: {
               id: s.account_id,
-              date_of_birth: 15.years.ago,
+              date_of_birth: senior_dob
           })
         end
 

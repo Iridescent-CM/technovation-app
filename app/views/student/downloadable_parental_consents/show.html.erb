@@ -26,23 +26,23 @@
         margin-bottom: 0;
       }
 
-      table {
-        width: 100%;
-      }
-      td {
-        padding-top: 0.75em;
-      }
-      td:first-child {
-        text-align: right;
-        padding-right: 2em;
-        width: 200px;
-      }
-      td:last-child {
-        border-bottom: 1px solid black;
-        padding-left: 1em;
-        padding-right: 1em;
+      label {
+        display: block;
+        margin-top: 2.5em;
+        font-size: 1rem;
+        font-weight: bold;
       }
 
+      input {
+        background: none;
+        border: 0;
+        border-bottom: 1px solid #b5b5b5;
+        display: block;
+        font-size: 1rem;
+        margin-top: .75rem;
+        padding: 0 0 3px 0;
+        width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -55,22 +55,19 @@
       <%= render 'parental_consents/consent' %>
     </div>
 
-    <table>
-      <tr>
-        <td>Participant's Name:</td><td><%= current_student.name %></td>
-      </tr>
-      <tr>
-        <td>Participant's Email:</td><td><%= current_student.email %></td>
-      </tr>
-      <tr>
-        <td>Parent's Name:</td><td><%= current_student.parent_guardian_name %></td>
-      </tr>
-      <tr>
-        <td>Date:</td><td> </td>
-      </tr>
-      <tr>
-        <td>Signature:</td><td> </td>
-      </tr>
-    </table>
+    <label>Participant’s Name, EXACTLY as it appears on participant’s Technovation Girls’ profile:</label>
+    <%= text_field_tag nil, current_student.name %>
+
+    <label>Participant Email address, EXACTLY as it appears on participant’s Technovation Girls’ profile:</label>
+    <%= text_field_tag nil, current_student.email %>
+
+    <label>Parent’s Name, EXACTLY as it appears on child’s Technovation Girls’ profile:</label>
+    <%= text_field_tag nil, current_student.parent_guardian_name %>
+
+    <label>Date:</label>
+    <%= text_field_tag nil, nil %>
+
+    <label>Signature:</label>
+    <%= text_field_tag nil, nil %>
   </body>
 </html>

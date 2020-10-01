@@ -41,7 +41,7 @@ module Student
       elsif
         current_student.join_requests.find_or_create_by!(team: team)
 
-        redirect_to student_dashboard_path,
+        redirect_to student_dashboard_path(anchor: "/find-team"),
           success: t(
             "controllers.student.join_requests.create.success",
             name: team.name

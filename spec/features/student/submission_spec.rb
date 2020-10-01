@@ -4,6 +4,9 @@ RSpec.feature "Student team submissions" do
 
   before { SeasonToggles.team_submissions_editable! }
 
+  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
+  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+
   scenario "Be on a team to see submission link" do
     student = FactoryBot.create(:student)
     team_student = FactoryBot.create(:student, :on_team, :geocoded)
@@ -123,7 +126,7 @@ RSpec.feature "Student team submissions" do
 
     ProfileUpdating.execute(student, :student, account_attributes: {
       id: student.account_id,
-      date_of_birth: 15.years.ago,
+      date_of_birth: senior_dob,
     })
 
     click_link "My team's submission"
