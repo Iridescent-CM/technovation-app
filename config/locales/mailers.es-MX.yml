@@ -39,7 +39,6 @@ es-MX:
       intro:
         complete_profile: "Puedes revisar y aceptar o rechazar tu invitación aquí:"
         incomplete_profile: "Deberás completar tu perfil antes de revisar esta invitación."
-        no_profile: "Antes de que puedas unirte al equipo, deberás registrarte en Technovation, es gratis y no tomará mucho tiempo. Puedes registrarte en el siguiente enlace:"
       subject: "¡Estás invitado a unirte a un equipo de Technovation!"
     invite_mentor:
       subject: "¡Estás invitado a ser mentor para un equipo de Technovation!"

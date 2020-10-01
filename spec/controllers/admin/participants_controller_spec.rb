@@ -6,6 +6,11 @@ RSpec.describe Admin::ParticipantsController do
     sign_in(admin)
   end
 
+  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
+  let(:junior_division_age) { Division::SENIOR_DIVISION_AGE - 1 }
+  let(:junior_dob) { Division.cutoff_date - junior_division_age.years }
+  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+
   it "reconsiders student's team division on dob change" do
     Timecop.freeze(Division.cutoff_date - 1.day) do
       student = FactoryBot.create(
@@ -13,7 +18,7 @@ RSpec.describe Admin::ParticipantsController do
         account: FactoryBot.create(
           :account,
           email: "student@testing.com",
-          date_of_birth: 13.years.ago
+          date_of_birth: junior_dob,
         )
       )
       team = FactoryBot.create(:team)
@@ -24,7 +29,7 @@ RSpec.describe Admin::ParticipantsController do
       patch :update, params: {
         id: student.account_id,
         account: {
-          date_of_birth: 15.years.ago,
+          date_of_birth: senior_dob,
         },
       }
 
