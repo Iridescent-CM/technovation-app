@@ -14,6 +14,13 @@
         they sent will be marked as deleted. That could be why
         you can no longer see this request.
       </p>
+
+      <p class="margin--t-xlarge">
+        <%= link_to "Manage my team",
+          [current_scope, @join_request.team],
+          class: "button"
+        %>
+      </p>
     </div>
   </div>
 </div>

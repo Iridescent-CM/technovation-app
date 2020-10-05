@@ -39,7 +39,11 @@ module Student
         redirect_to student_team_path(team),
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
       elsif
-        current_student.join_requests.find_or_create_by!(team: team)
+        if join_request = current_student.join_requests.find_by(team: team)
+          join_request.pending!
+        else
+          join_request = current_student.join_requests.create!(team: team)
+        end
 
         redirect_to student_dashboard_path(anchor: "/find-team"),
           success: t(
@@ -72,6 +76,17 @@ module Student
                   name: join_request.requestor_first_name,
                   status: status)
       end
+    end
+
+    def destroy
+      join_request = current_student.join_requests.find_by(review_token: params.fetch(:id))
+      join_request.deleted!
+
+      redirect_to student_dashboard_path(anchor: "/find-team"),
+        success: t(
+          "controllers.student.join_requests.destroy.success",
+          name: join_request.team_name
+        )
     end
 
     private

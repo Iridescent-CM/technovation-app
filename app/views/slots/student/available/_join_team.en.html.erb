@@ -5,40 +5,56 @@
 
 <h3 class="margin--t-large">Ask to join a team</h3>
 
-<% if current_student.pending_join_requests.any? %>
-  <p>You have asked to join a team!</p>
+<div id="join-requests">
+  <% if current_student.join_requests.pending.any? %>
+    <p>You have asked to join a team!</p>
 
-  <% current_student.pending_join_requests.each do |join_request| %>
-    <%= content_tag :div,
-      class: "join_request",
-      id: dom_id(join_request) do %>
-      <div class="grid grid--bleed">
-        <div class="grid__col-4">
-          <div class="grid__cell">
-            <%= image_tag join_request.team_team_photo_url,
-              class: 'thumbnail-md grid__cell-img' %>
+    <% current_student.join_requests.pending.each do |join_request| %>
+      <%= content_tag :div,
+        class: "join_request",
+        id: dom_id(join_request) do %>
+        <div class="grid grid--bleed">
+          <div class="grid__col-4">
+            <div class="grid__cell">
+              <%= image_tag join_request.team_team_photo_url,
+                class: 'thumbnail-md grid__cell-img' %>
+            </div>
+          </div>
+
+          <div class="grid__col-8">
+            <div class="grid__cell">
+              <p>
+                <%= join_request.team_name %><br />
+                Division:
+                <%= join_request.team_division_name.humanize %><br />
+                <%= join_request.team_primary_location %><br />
+                <%= link_to "Cancel my request to join this team",
+                  [
+                    current_scope,
+                    :join_request,
+                    {
+                      id: join_request.review_token
+                    }
+                  ],
+                  data: {
+                    method: :delete,
+                    confirm: t("controllers.student.join_requests.destroy.confirm")
+                  },
+                  class: "danger small"
+                %>
+              </p>
+            </div>
           </div>
         </div>
-
-        <div class="grid__col-8">
-          <div class="grid__cell">
-            <p>
-              <%= join_request.team_name %><br />
-              Division:
-              <%= join_request.team_division_name.humanize %><br />
-              <%= join_request.team_primary_location %>
-            </p>
-          </div>
-        </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
-<% else %>
-  <p>Use our team search to find a team and ask to join them!</p>
+  <% else %>
+    <p>Use our team search to find a team and ask to join them!</p>
 
-  <%= link_to(
-    t("views.profile_requirements.create_join_team.links.join.text"),
-    [:new, current_scope, :team_search],
-    class: "button"
-  ) %>
-<% end %>
+    <%= link_to(
+      t("views.profile_requirements.create_join_team.links.join.text"),
+      [:new, current_scope, :team_search],
+      class: "button"
+    ) %>
+  <% end %>
+</div>

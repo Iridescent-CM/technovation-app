@@ -114,42 +114,4 @@ RSpec.feature "Mentors find a team" do
       text: senior_team.name
     )
   end
-
-  scenario "request to join a team" do
-    Timecop.freeze(day_before_qfs) do
-      within('#find-team') { click_link "Find a team" }
-
-      click_link "View more details"
-      click_button "Ask to be a mentor for #{available_team.name}"
-
-      join_request = JoinRequest.last
-
-      expect(current_path).to eq(mentor_join_request_path(join_request))
-      expect(page).to have_content(join_request.team_name)
-      expect(page).to have_content(
-        "You have requested to be a mentor for #{available_team.name}"
-      )
-      expect(page).to have_content("You have requested to join this team")
-    end
-  end
-
-  scenario "request to join the same team again, even if you deleted an earlier request" do
-    Timecop.freeze(day_before_qfs) do
-      join_request = JoinRequest.create!({
-        requestor: mentor,
-        team: available_team,
-      })
-
-      join_request.deleted!
-
-      within('#find-team') { click_link "Find a team" }
-
-      click_link "View more details"
-      click_button "Ask to be a mentor for #{available_team.name}"
-
-      expect(current_path).to eq(mentor_join_request_path(join_request))
-      expect(page).to have_content("You have requested to join this team")
-      expect(page).to have_content(join_request.team_name)
-    end
-  end
 end
