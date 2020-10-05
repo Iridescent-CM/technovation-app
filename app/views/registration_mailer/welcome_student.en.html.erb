@@ -43,7 +43,10 @@
 
           Technovation Girls is a learning experience. By participating in this program,
           you agree to only submit your team's work from this season to the competition.
-          If you are found breaking this rule or plagiarizing, your team will not be eligible
+          **Exception: Due to COVID-19, participants from the 2019-2020 season are able to re-submit
+          their apps from 2020 in a more complete form this season. This only applies for this
+          season and apps from 2020.**
+          If you are found breaking competition rules or plagiarizing, your team will not be eligible
           to participate.
         </td>
       </tr>
@@ -77,7 +80,7 @@
             <li>
               <strong>
                 <%= @team_registration_deadline %>:
-                Team Registration Deadline
+                Last Day to register as a student or a mentor
               </strong>
 
               All members of your team must have
@@ -91,7 +94,8 @@
               </strong>
 
                All parts of your project must be submitted on
-              <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
+               <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
+               (submissions open in <%= @season_submissions_open_month %>)
             </li>
           </ol>
         </td>
@@ -110,13 +114,16 @@
         <td class="content-block">
           When you are ready, you can get started on the Technovation Girls curriculum
           by <%= link_to "logging back into your account", @dashboard_url %>
-          on <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
+          or checking out the
+          <%= link_to "curriculum page",
+            'https://technovationchallenge.org/curriculum-intro/registered/new/'
+          %>.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Enjor the journey,
+          Enjoy the journey,
           <br/>
           The Technovation Team
         </td>
