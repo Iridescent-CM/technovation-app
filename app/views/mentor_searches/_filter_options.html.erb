@@ -19,18 +19,7 @@
 
     <h3>Gender Identity</h3>
 
-    <%= collection_check_boxes :search_filter, :gender_identities,
-      @gender_identities, :second, :first do |b| %>
-      <p>
-        <%= b.check_box(
-          id: "gender_#{b.value}",
-          class: "toggle-based-search",
-          checked: gender_identity_params.include?(b.value),
-        ) %>
-
-        <%= b.label text: b.text, for: "gender_#{b.value}" %>
-      </p>
-    <% end %>
+    <%= render 'searches/toggle_gender_identity_preference', account: account, f: f %>
 
     <h3>Expertise</h3>
 

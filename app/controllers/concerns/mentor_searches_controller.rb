@@ -1,19 +1,10 @@
 module MentorSearchesController
   extend ActiveSupport::Concern
 
-  included do
-    helper_method :gender_identity_params
-  end
-
   def new
     @search_filter = SearchFilter.new(search_params)
 
     @expertises = Expertise.all
-
-    @gender_identities = {
-      "Female" => Account.genders['Female'],
-      "Male" => Account.genders['Male']
-    }
 
     @mentors = SearchMentors.(@search_filter)
       .paginate(page: search_params[:page])
@@ -26,10 +17,10 @@ module MentorSearchesController
       :page,
       :nearby,
       :needs_team,
+      :female_only,
       :virtual_only,
       :text,
       search_filter: {
-        gender_identities: [],
         expertise_ids: []
       },
     ).tap do |h|
@@ -41,19 +32,17 @@ module MentorSearchesController
         params[:needs_team] = h[:needs_team] = "-1"
       end
 
+      if h[:female_only].blank?
+        params[:female_only] = h[:female_only] = "0"
+      end
+
       if h[:virtual_only].blank?
         params[:virtual_only] = h[:virtual_only] = false
       end
 
       params[:search_filter] ||=
         h[:search_filter] ||=
-          { gender_identities: [], expertise_ids: [] }
-
-      if h[:search_filter][:gender_identities].blank?
-        params[:search_filter][:gender_identities] =
-          h[:search_filter][:gender_identities] =
-            Account.genders.values
-      end
+          { expertise_ids: [] }
 
       if h[:search_filter][:expertise_ids].blank?
         params[:search_filter][:expertise_ids] =
@@ -68,11 +57,5 @@ module MentorSearchesController
       h[:location] = current_account.address_details
       h[:coordinates] = current_account.coordinates
     end
-  end
-
-  def gender_identity_params
-    params[:search_filter][:gender_identities]
-      .reject(&:blank?)
-      .map(&:to_i)
   end
 end
