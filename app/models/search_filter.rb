@@ -7,10 +7,6 @@ class SearchFilter < Struct.new(:filter_options)
     from_search_filter(:expertise_ids)
   end
 
-  def gender_identities
-    from_search_filter(:gender_identities)
-  end
-
   def nearby
     filter_options.fetch(:nearby) { nil }
   end
@@ -45,6 +41,10 @@ class SearchFilter < Struct.new(:filter_options)
 
   def needs_team
     filter_options.fetch(:needs_team) { "0" } == "1"
+  end
+
+  def female_only
+    filter_options.fetch(:female_only) { "0" } == "1"
   end
 
   def on_team
