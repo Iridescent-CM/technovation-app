@@ -240,7 +240,7 @@ en:
     signups:
       form:
         create_account: "Create Your Account"
-        choose_expertises: "Choose expertise(s)"
+        skills_and_interests_html: "Skills &amp; Interests"
         confirm_password: 'Confirm password'
         resend_email: "Re-Send Email"
         signing_up_email: "Your email address: %{email}"

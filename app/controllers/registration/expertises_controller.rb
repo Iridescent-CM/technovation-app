@@ -1,7 +1,7 @@
 module Registration
   class ExpertisesController < RegistrationController
     def index
-      expertises = Expertise.all
+      expertises = Expertise.all.order(:order)
 
       render json: {
         attributes: expertises,
