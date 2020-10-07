@@ -63,7 +63,7 @@
         />
       </p>
 
-      <h4 v-show="profileChoice !== 'student'">Choose expertise(s)</h4>
+      <h4 v-show="profileChoice !== 'student'">Skills &amp; Interests</h4>
       <p v-show="profileChoice !== 'student'">
         <span v-for="expertise in expertiseOptions" :key="expertise.value">
           <label :for="`mentor_profile_expertise_ids_${expertise.value}`">

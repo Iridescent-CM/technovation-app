@@ -205,7 +205,7 @@ es-MX:
 
     signups:
       form:
-        choose_expertises: "Elegir campo(s) en los que se tiene experiencia"
+        skills_and_interests_html: "Elegir campo(s) en los que se tiene experiencia"
         confirm_password: 'Confirmar contraseña'
         required_fields: "Favor de contestar todos los campos. ¡Gracias! "
         signing_up_email: "Tu correo electrónico: %{email}"

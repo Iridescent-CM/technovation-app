@@ -169,7 +169,7 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - "82:74:4e:8f:30:ea:41:b1:fb:35:0a:85:ce:eb:85:af"
+            - "32:c4:d8:7f:60:e0:56:7d:e9:ee:f5:04:e1:9c:2d:4e"
 
       - deploy:
           name: Deploy QA to Heroku

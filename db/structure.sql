@@ -440,7 +440,8 @@ CREATE TABLE public.expertises (
     id integer NOT NULL,
     name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    "order" integer
 );
 
 
@@ -3009,6 +3010,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200720234612'),
 ('20200722212401'),
 ('20200903161022'),
-('20200914131700');
+('20200914131700'),
+('20200928215117');
 
 

@@ -294,4 +294,23 @@ if (admin = AdminProfile.create(
   }
 )).valid?
   puts "Created Admin: #{admin.email}"
+  puts ""
+  puts "============================================================="
+  puts ""
+
+  [{name: "Coding", order: 10},
+   {name: "Experience with Java", order: 20},
+   {name: "Experience with Swift", order: 30},
+   {name: "Business or Entrepreneurship", order: 40},
+   {name: "Project Management", order: 50},
+   {name: "Marketing", order: 60},
+   {name: "Design", order: 70}].each do |expertise|
+
+     Expertise.create(expertise)
+
+     puts "Created mentor expertise: #{expertise[:name]}"
+     puts ""
+     puts "============================================================="
+     puts ""
+  end
 end
