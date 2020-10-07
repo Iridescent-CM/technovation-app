@@ -13,7 +13,6 @@ jobs:
           AWS_BUCKET_NAME: technovation-attachments-test
           BING_MAPS_API_KEY: n-a
           CAMPAIGN_MONITOR_API_KEY: n-a
-          CHAPTER_AMBASSADOR_LIST_ID: n-a
           CHAPTER_AMBASSADOR_SLACK_URL: n-a
           COOKIES_ADMIN_PERMISSION_TOKEN: admin_permission_token_JUNE_2018
           COOKIES_AUTH_TOKEN: auth_token_JUNE_2018
@@ -84,23 +83,20 @@ jobs:
           GOOGLE_TIMEZONE_API_KEY: n-a
           HELP_EMAIL: help@technovationchallenge.org
           HOST_DOMAIN: localhost:3000
-          JUDGE_LIST_ID: n-a
           JUDGE_SLACK_SIGNUP_URL: n-a
           JUDGE_TRAINING_URL: n-a
           MAILCHIMP_API_KEY: n-a
+          MAILCHIMP_LIST_ID: n-a
           MAILGUN_PRIVATE_KEY: n-a
-          MENTOR_LIST_ID: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a
           NEWSLETTER_URL: "https://some/other/url"
           NEW_RELIC_LICENSE_KEY: n-a
           PARENT_CONSENT_PDF: n-a
-          PARENT_LIST_ID: n-a
           PDFTK_PATH: /usr/bin/pdftk
           PGHOST: 127.0.0.1
           PGUSER: root
           RAILS_ENV: test
           REDIS_URL: redis://127.0.0.1:6379/0
-          STUDENT_LIST_ID: n-a
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/local/bin/wkhtmltopdf
       - image: circleci/postgres:11-alpine-ram

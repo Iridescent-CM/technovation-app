@@ -7,18 +7,20 @@ module Mailchimp
 
     def initialize(list_scope)
       @enabled = ENV.fetch("ENABLE_MAILING_LISTS", false)
-      @list_id = ENV.fetch("#{list_scope.to_s.upcase}_LIST_ID")
+      @list_id = ENV.fetch("MAILCHIMP_LIST_ID")
+      @list_scope = list_scope
     end
 
     def subscribe(email, merge_fields = {})
-      wrap("subscribe user to list #{@list_id}") do 
+      wrap("subscribe user to list #{@list_id}") do
         self.class.post(
           "/#{@list_id}/members",
           {
             body: JSON.generate({
               email_address: email,
               status: "subscribed",
-              merge_fields: merge_fields
+              merge_fields: merge_fields,
+              tags: [@list_scope.to_s]
             })
           }
         )

@@ -56,6 +56,7 @@ class RegistrationMailer < ApplicationMailer
     @official_start_of_season = ImportantDates.official_start_of_season.strftime("%B %d, %Y")
     @team_registration_deadline = ImportantDates.team_registration_deadline.strftime("%B %d, %Y")
     @season_submission_deadline = Season.submission_deadline
+    @season_submissions_open_month = ImportantDates.official_start_of_season.strftime("%B")
     @season_year = Season.current.year
     @root_url = root_url(mailer_token: student.mailer_token)
     @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
