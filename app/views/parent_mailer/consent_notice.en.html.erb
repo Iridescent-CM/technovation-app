@@ -54,8 +54,10 @@
 
       <tr>
         <td class="content-block">
-          If you have any questions, or you cannot use the link above,
-          reply to this email immediately, which is <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+          If you cannot use the button above, your daughter can resend this email or
+          download the form from her
+          <%= link_to "dashboard", @dashboard_url, itemprop: "url" %>.
+          If you still have questions, email us at <%= mail_to ENV.fetch("HELP_EMAIL") %> immediately.
         </td>
       </tr>
 
