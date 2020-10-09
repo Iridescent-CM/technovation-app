@@ -40,7 +40,7 @@ class RegistrationMailer < ApplicationMailer
 
     @season_year = Season.current.year
 
-    @consent_url = new_consent_waiver_url(mailer_token: account.mailer_token)
+    @consent_url = new_consent_waiver_url(token: account.consent_token)
 
     @background_check_url = new_mentor_background_check_url(mailer_token: account.mailer_token)
 
