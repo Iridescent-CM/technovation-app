@@ -1,4 +1,4 @@
-class ConsentWaiversController < ApplicationController
+module ConsentWaiverController
   def show
     @consent_waiver = ConsentWaiver.find(params.fetch(:id))
   end

@@ -22,7 +22,7 @@ RSpec.feature "Mentor receives welcome email", js: true do
       sign_in mentor
     end
 
-    scenario "signing the consent waiver" do
+    scenario "successfully signing the consent waiver" do
       current_email.click_link 'Sign the consent waiver'
       expect(page).to have_content("Technovation Volunteer Agreement")
 
@@ -33,10 +33,11 @@ RSpec.feature "Mentor receives welcome email", js: true do
     end
   end
 
-  context "not logged in" do
-    scenario "signing the consent waiver" do
+  context "logged out" do
+    scenario "the consent waiver link logs you in" do
       current_email.click_link 'Sign the consent waiver'
       expect(page).to have_content("Technovation Volunteer Agreement")
+      expect(page).to have_content("LOGOUT")
     end
   end
 end

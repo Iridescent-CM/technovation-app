@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Consent waivers" do
   scenario "invalid token" do
     [{ }, { token: "bad" }].each do |bad_token_params|
-      visit new_consent_waiver_path(bad_token_params)
+      visit new_mentor_consent_waiver_path(bad_token_params)
       expect(current_path).to eq(public_dashboard_path)
       expect(page).to have_content("Sorry, that consent token was invalid.")
     end
