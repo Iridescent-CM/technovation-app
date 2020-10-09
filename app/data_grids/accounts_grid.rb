@@ -168,7 +168,7 @@ class AccountsGrid
   end
 
   column :consent_waiver do
-    if mentor_profile.present?
+    if mentor_profile.present? || judge_profile.present?
       consent_waiver.present? ? "Signed" : "Not signed"
     else
       "-"
