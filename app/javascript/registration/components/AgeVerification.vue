@@ -39,7 +39,7 @@
           <dt>Your age today</dt>
           <dd>You are <strong>{{ age }}</strong> years old.</dd>
 
-          <dt class="margin--t-xlarge">Your age during World Pitch</dt>
+          <dt class="margin--t-xlarge">Your age during World Summit</dt>
           <dd>
             You will be <strong>{{ getAgeByCutoff }}</strong> on {{ cutoffDay }}.
           </dd>
