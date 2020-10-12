@@ -42,7 +42,7 @@
     <div class="panel__content" v-else-if="!profileOptions.length">
       <div class="grid grid--justify-space-around">
         <div class="grid__col-12">
-          <p>You must be at least 10 years old by World Pitch to sign up.</p>
+          <p>You must be at least 10 years old by World Summit to sign up.</p>
           <p>
             Although you cannot take part in our competition, you can use our
             <a href="https://technovationchallenge.org/curriculum-intro/registered/new/">curriculum</a>
