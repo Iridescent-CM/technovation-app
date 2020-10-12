@@ -3,15 +3,6 @@ require "rails_helper"
 RSpec.feature "Mentor receives welcome email", js: true do
   let(:mentor) { FactoryBot.create(:mentor) }
 
-  background do
-    Rails.application.configure do
-      config.action_mailer.default_url_options = {
-        host: Capybara.current_session.server.host,
-        port: Capybara.current_session.server.port
-      }
-    end
-  end
-
   background(:each) do
     clear_emails
     open_email(mentor.email)
