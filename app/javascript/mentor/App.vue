@@ -58,7 +58,7 @@ export default {
       resourceLinks: [
         {
           heading: 'Curriculum',
-          url: 'https://www.technovationchallenge.org/curriculum-intro/registered',
+          url: 'https://www.technovationchallenge.org/curriculum-intro/registered/new/',
           text: 'Open the Technovation Curriculum',
         },
 
