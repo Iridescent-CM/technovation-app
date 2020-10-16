@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <p v-show="isGenderRequired">
+      <p class="section" v-show="isGenderRequired">
         <label for="gender">Gender identity</label>
         <vue-select
           :select-on-tab="true"
@@ -35,7 +35,7 @@
         />
       </p>
 
-      <p>
+      <p class="section">
         <label for="schoolName">{{ schoolCompanyNameLabel }}</label>
         <input
           id="schoolName"
@@ -44,43 +44,68 @@
         />
       </p>
 
-      <p v-show="profileChoice !== 'student'">
-        <label for="jobTitle">Job title</label>
-        <input
-          id="jobTitle"
-          type="text"
-          v-model="jobTitle"
-        />
-      </p>
+      <div v-show="profileChoice == 'mentor'">
+        <p class="section">
+          <label for="jobTitle">Job title</label>
+          <input
+            id="jobTitle"
+            type="text"
+            v-model="jobTitle"
+          />
+        </p>
 
-      <p v-show="profileChoice !== 'student'">
-        <label for="mentorType">As a mentor, you may call me a(n)...</label>
-        <vue-select
-          :select-on-tab="true"
-          input-id="mentorType"
-          :options="mentorTypeOptions"
-          v-model="mentorType"
-        />
-      </p>
+        <p class="section">
+          <label for="mentorType">As a mentor, you may call me a(n)...</label>
+          <vue-select
+            :select-on-tab="true"
+            input-id="mentorType"
+            :options="mentorTypeOptions"
+            v-model="mentorType"
+          />
+        </p>
 
-      <h4 v-show="profileChoice !== 'student'">Skills &amp; Interests</h4>
-      <p v-show="profileChoice !== 'student'">
-        <span v-for="expertise in expertiseOptions" :key="expertise.value">
-          <label :for="`mentor_profile_expertise_ids_${expertise.value}`">
-            <span class="inline-checkbox">
-              <input
-                type="checkbox"
-                :value="expertise.value"
-                :id="`mentor_profile_expertise_ids_${expertise.value}`"
-                v-model="expertises"
-              >
-            </span>
-            {{ expertise.label }}
+        <h4>Skills &amp; Interests</h4>
+        <p class="section">
+          <span v-for="expertise in expertiseOptions" :key="expertise.value">
+            <label :for="`mentor_profile_expertise_ids_${expertise.value}`">
+              <span class="inline-checkbox">
+                <input
+                  type="checkbox"
+                  :value="expertise.value"
+                  :id="`mentor_profile_expertise_ids_${expertise.value}`"
+                  v-model="expertises"
+                >
+              </span>
+              {{ expertise.label }}
+            </label>
+          </span>
+        </p>
+
+        <div class="section">
+          <h4>Set your personal summary</h4>
+          <p>
+            Add a description of yourself to your profile to help students get to know
+            you. You can change this later.
+          </p>
+          <label for="bio">
+            Tell the students about yourself
           </label>
-        </span>
-      </p>
+          <textarea
+            id="bio"
+            v-model="bio"
+          >
+          </textarea>
+          <p class="word-count">
+            {{ bio.length }}
+            {{ bio.length | pluralize('character') }}
+          </p>
+          <p class="hint">
+            Please provide at least 100 characters, or about 15 words
+          </p>
+        </div>
+      </div>
 
-      <p>
+      <p class="section">
         <label for="referredBy">How did you hear about Technovation? (optional)</label>
         <vue-select
           :select-on-tab="true"
@@ -305,6 +330,16 @@ export default {
       },
     },
 
+    bio: {
+      get () {
+        return this.$store.state.registration.bio
+      },
+
+      set (value) {
+        this.handleDataChanges('registration/bio', value)
+      },
+    },
+
     referredBy: {
       get () {
         return this.$store.state.registration.referredBy
@@ -355,6 +390,10 @@ export default {
       this.debouncedProfileUpdate({ expertiseIds: value })
     },
 
+    bio (value) {
+      this.debouncedProfileUpdate({ bio: value })
+    },
+
     referredBy (value) {
       this.debouncedProfileUpdate({ referredBy: value })
     },
@@ -399,7 +438,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-p:not(.hint) {
+.section {
   margin: 0 0 2rem;
 }
 

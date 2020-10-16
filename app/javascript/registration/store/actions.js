@@ -130,6 +130,7 @@ export default {
       jobTitle: state.jobTitle,
       mentorType: state.mentorType,
       expertiseIds: state.expertiseIds,
+      bio: state.bio,
       referredBy: state.referredBy,
       referredByOther: state.referredByOther,
     }, attrs)

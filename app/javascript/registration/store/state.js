@@ -33,6 +33,7 @@ export default {
   jobTitle: null,
   mentorType: null,
   expertiseIds: [],
+  bio: null,
 
   referredBy: null,
   referredByOther: null,
