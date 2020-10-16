@@ -62,6 +62,7 @@ module SignupHelper
       fill_in_vue_select "School or company name", with: "Springfield Nuclear Power Plant"
       fill_in "Job title", with: "Safety Supervisor"
       fill_in_vue_select "As a mentor, you may call me a(n)...", with: "Parent"
+      fill_in "Tell the students about yourself", with: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa."
     end
 
     click_button "Next"
