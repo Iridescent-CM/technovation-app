@@ -103,6 +103,9 @@ jobs:
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/local/bin/wkhtmltopdf
       - image: circleci/postgres:11-alpine-ram
+        auth:
+          username: technovationdocker
+          password: $DOCKERHUB_PASSWORD
 
     steps:
       - checkout
