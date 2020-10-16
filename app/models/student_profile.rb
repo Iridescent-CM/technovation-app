@@ -186,6 +186,9 @@ class StudentProfile < ActiveRecord::Base
   def expertise_ids=(*)
     false
   end
+  def bio=(*)
+    false
+  end
 
   def has_saved_parental_info?
     persisted? &&
