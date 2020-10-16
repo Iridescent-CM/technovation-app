@@ -332,7 +332,7 @@ export default {
 
     bio: {
       get () {
-        return this.$store.state.registration.bio
+        return this.$store.state.registration.bio || ""
       },
 
       set (value) {
