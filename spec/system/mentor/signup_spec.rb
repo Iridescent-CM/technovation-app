@@ -35,6 +35,7 @@ RSpec.describe "Mentors signing up", :js do
 
       fill_in_vue_select "As a mentor, you may call me a(n)...",
         with: "Industry professional"
+      fill_in "Tell the students about yourself", with: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa."
 
       check expertise.name
 
