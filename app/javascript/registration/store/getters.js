@@ -56,7 +56,8 @@ export default {
                       state.jobTitle &&
                         state.mentorType &&
                           state.genderIdentity &&
-                            state.bio.length >= 100)
+                            state.bio &&
+                              state.bio.length >= 100)
     }
   },
 
