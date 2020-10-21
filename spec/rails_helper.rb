@@ -23,6 +23,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 Capybara.automatic_label_click = true
 Capybara.default_max_wait_time = 5
 Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
+Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT", 31337)
 
 require 'rake'
 Rails.application.load_tasks

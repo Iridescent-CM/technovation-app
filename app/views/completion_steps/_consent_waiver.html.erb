@@ -10,7 +10,10 @@
   <div class="step-actions">
     <%= link_to(
       t("views.profile_requirements.consent_waiver.links.view.text"),
-      new_consent_waiver_path(token: profile.account.consent_token),
+      send(
+        "new_#{current_scope}_consent_waiver_path",
+        { token: profile.account.consent_token }
+      ),
     ) %>
   </div>
 <% end %>

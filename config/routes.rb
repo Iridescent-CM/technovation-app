@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
     resource :training_completion, only: :show
+    resources :consent_waivers, only: [:new, :create, :show]
 
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
@@ -336,8 +337,6 @@ Rails.application.routes.draw do
   get "/parental_consents/new", to: "parental_consents#new"
   resource :parental_consent, only: [:new, :edit]
   resources :parental_consents, only: [:show, :update]
-
-  resources :consent_waivers, only: [:new, :create, :show]
 
   resources :teams, only: :show
   resources :team_submission_pieces, only: :show
