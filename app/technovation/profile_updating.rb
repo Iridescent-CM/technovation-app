@@ -75,7 +75,7 @@ class ProfileUpdating
   def perform_email_changes_updates
     Casting.delegating(account => EmailUpdater) do
       # TODO: order of operations dependency
-      account.update_email_list_profile(scope)
+      account.update_email_list
 
       if account.admin_making_changes
         account.confirm_changed_email!
@@ -90,12 +90,11 @@ class ProfileUpdating
   end
 
   module EmailUpdater
-    def update_email_list_profile(scope)
+    def update_email_list
       if email_list_changes_made?
-        UpdateProfileOnEmailListJob.perform_later(
-          id,
-          email_before_last_save,
-          scope.sub(/^\w+_chapter_ambassador/, "chapter_ambassador").upcase
+        UpdateAccountOnEmailListJob.perform_later(
+          account_id: id,
+          currently_subscribed_as: email_before_last_save
         )
       end
     end
