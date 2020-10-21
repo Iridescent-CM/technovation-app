@@ -63,13 +63,7 @@ class ParentalConsent < ActiveRecord::Base
 
   def after_signed_parent_actions
     if newsletter_opt_in?
-      SubscribeEmailListJob.perform_later(
-        student_profile.parent_guardian_email,
-        :parent.to_s,
-        {
-          NAME: student_profile.parent_guardian_name
-        }
-      )
+      SubscribeParentToEmailListJob.perform_later(student_profile_id: student_profile.id)
     end
 
     ParentMailer.confirm_consent_finished(id).deliver_later
