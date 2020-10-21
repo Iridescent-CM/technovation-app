@@ -39,7 +39,7 @@
   <% else %>
     <li>
       <%= link_to "Sign the consent form",
-        new_consent_waiver_path(
+        new_judge_consent_waiver_path(
           token: current_judge.account.consent_token
         ) %>
     </li>
