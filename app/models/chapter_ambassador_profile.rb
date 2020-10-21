@@ -140,12 +140,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
         profile_type: "chapter ambassador"
       )
     else
-      begin
-        list = Mailchimp::MailingList.new(:chapter_ambassador)
-        list.delete(account.email)
-      rescue
-        false
-      end
+      DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
     end
   end
 end
