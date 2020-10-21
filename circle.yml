@@ -5,6 +5,9 @@ jobs:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
       - image: circleci/ruby:2.6.4-node-browsers
+        auth:
+          username: technovationdocker
+          password: $DOCKERHUB_PASSWORD
         environment:
           ADMIN_EMAIL: info@technovationchallenge.org
           AIRBRAKE_PROJECT_ID: n-a
@@ -100,6 +103,9 @@ jobs:
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/local/bin/wkhtmltopdf
       - image: circleci/postgres:11-alpine-ram
+        auth:
+          username: technovationdocker
+          password: $DOCKERHUB_PASSWORD
 
     steps:
       - checkout
