@@ -97,8 +97,11 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     end
   end
 
-  def subscribe_to_newsletter(record, list_scope)
-    SubscribeProfileToEmailList.perform_later(record.id, list_scope.to_s)
+  def subscribe_to_newsletter(record, profile_type)
+    SubscribeAccountToEmailListJob.perform_later(
+      account_id: record.id,
+      profile_type: profile_type.to_s
+    )
   end
 
   def location_data(record)

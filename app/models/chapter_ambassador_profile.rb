@@ -135,13 +135,9 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   private
   def after_status_changed
     if approved?
-      SubscribeEmailListJob.perform_later(
-        account.email,
-        :chapter_ambassador.to_s,
-        {
-          FNAME: account.first_name,
-          LNAME: account.last_name
-        }
+      SubscribeAccountToEmailListJob.perform_later(
+        account_id: account.id,
+        profile_type: "chapter ambassador"
       )
     else
       begin

@@ -117,11 +117,10 @@ RSpec.describe Admin::ParticipantsController do
         },
       }
 
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
         .with(
-          profile.account_id,
-          profile.account.email,
-          scope.upcase,
+          account_id: profile.account_id,
+          currently_subscribed_as: profile.account.email
         )
     end
   end
