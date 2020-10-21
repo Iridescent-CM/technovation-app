@@ -39,6 +39,7 @@ module Registration
           job_title: attempt.job_title,
           mentor_type: attempt.mentor_type,
           expertise_ids: attempt.expertise_ids,
+          bio: attempt.bio,
           account_attributes: account_attributes,
         }
       )

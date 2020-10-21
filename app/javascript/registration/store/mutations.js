@@ -108,6 +108,7 @@ export default {
     state.jobTitle = attributes.jobTitle
     state.mentorType = attributes.mentorType
     expertiseIds(state, attributes.expertiseIds)
+    state.bio = attributes.bio
     state.referredBy = attributes.referredBy
     state.referredByOther = attributes.referredByOther
   },
@@ -134,6 +135,10 @@ export default {
 
   mentorType (state, value) {
     state.mentorType = value
+  },
+
+  bio (state, value) {
+    state.bio = value
   },
 
   referredBy (state, value) {
