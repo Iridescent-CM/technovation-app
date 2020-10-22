@@ -1,9 +1,8 @@
 <% if requests.any? %>
-  <hr />
 
   <div class="grid grid--bleed">
     <div class="grid__col-auto">
-      <h3 class="reset">Requests from others</h3>
+      <h4 class="reset">Requests from others</h4>
 
       <% if SeasonToggles.judging_enabled_or_between? %>
         <p class="hint">
