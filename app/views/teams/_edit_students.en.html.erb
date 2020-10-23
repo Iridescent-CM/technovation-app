@@ -41,18 +41,36 @@
   <div class="margin--t-large margin--b-large">
     <h2>Do you want more teammates?</h2>
 
-    <%= form_with model: team,
-      data: { submit_on_change: true },
-      url: [current_scope, team, { format: :json }],
-      method: :patch do |f| %>
-
-      <p>
-        <%= f.check_box :accepting_student_requests,
-          id: :team_accepting_student_requests %>
-
-        <%= f.label :accepting_student_requests,
-          "Allow other students to find our team and request to join us" %>
+    <% if !SeasonToggles.team_building_enabled? || SeasonToggles.judging_enabled_or_between? %>
+      <p class="notice">
+        Team building is not enabled at this time, so your team cannot add students.
       </p>
+    <% elsif !team.spot_available? %>
+      <p class="notice">
+        You cannot invite more students while you have a combined total
+        of five members, invitations, and/or join requests.
+      </p>
+    <% elsif !team.current? %>
+      <p class="notice">
+        <%= t("views.teams.show.past_team") %>
+      </p>
+    <% end %>
+
+    <% if SeasonToggles.team_building_enabled? &&
+         !SeasonToggles.judging_enabled_or_between? %>
+      <%= form_with model: team,
+        data: { submit_on_change: true },
+        url: [current_scope, team, { format: :json }],
+        method: :patch do |f| %>
+
+        <p>
+          <%= f.check_box :accepting_student_requests,
+            id: :team_accepting_student_requests %>
+
+          <%= f.label :accepting_student_requests,
+            "Allow other students to find our team and request to join us" %>
+        </p>
+      <% end %>
     <% end %>
 
     <p>
@@ -69,21 +87,11 @@
       preview_method: :invitee_email,
       invites: team.pending_student_invites %>
 
-    <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
-      <% if team.current? && team.spot_available? %>
-        <%= render "team_member_invites/form" %>
-      <% elsif !team.spot_available? %>
-        <p class="hint">
-          You cannot invite more students while you have a combined total
-          of five members, invitations, and/or join requests.
-        </p>
-      <% elsif !team.current? %>
-        <%= t("views.teams.show.past_team") %>
-      <% end %>
-    <% else %>
-      <p class="hint">
-        Team building is not enabled at this time, so your team cannot invite students.
-      </p>
+    <% if SeasonToggles.team_building_enabled? &&
+         !SeasonToggles.judging_enabled_or_between? &&
+         team.current? &&
+         team.spot_available? %>
+      <%= render "team_member_invites/form" %>
     <% end %>
   </div>
 
