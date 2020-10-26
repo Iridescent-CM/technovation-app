@@ -90,6 +90,7 @@ class MentorProfile < ActiveRecord::Base
     dependent: :destroy
 
   has_many :expertises,
+    -> { distinct },
     through: :mentor_profile_expertises
 
   has_many :memberships,

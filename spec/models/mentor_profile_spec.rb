@@ -112,4 +112,14 @@ RSpec.describe MentorProfile do
       ).to eq([intl_mentor])
     end
   end
+
+  describe "expertise" do
+    it "prevent duplicates" do
+      mentor = FactoryBot.create(:mentor)
+      expertise = FactoryBot.create(:expertise)
+      mentor.update(expertise_ids: [expertise.id, expertise.id])
+
+      expect(mentor.expertises.count).to eq(1)
+    end
+  end
 end
