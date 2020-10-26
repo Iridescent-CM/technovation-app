@@ -67,7 +67,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty4"
       )
 
-      allow(SubscribeEmailListJob).to receive(:perform_later)
+      allow(SubscribeParentToEmailListJob).to receive(:perform_later)
 
       patch :update, params: { id: student.parental_consent.id,
         parental_consent: FactoryBot.attributes_for(
@@ -75,7 +75,7 @@ RSpec.describe ParentalConsentsController do
           student_profile_consent_token: student.consent_token
         ).merge(newsletter_opt_in: "0") }
 
-      expect(SubscribeEmailListJob).not_to have_received(:perform_later)
+      expect(SubscribeParentToEmailListJob).not_to have_received(:perform_later)
         .with(any_args)
     end
 
@@ -86,7 +86,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty"
       )
 
-      allow(SubscribeEmailListJob).to receive(:perform_later)
+      allow(SubscribeParentToEmailListJob).to receive(:perform_later)
 
       patch :update, params: { id: student.parental_consent.id,
         parental_consent: FactoryBot.attributes_for(
@@ -94,13 +94,9 @@ RSpec.describe ParentalConsentsController do
           student_profile_consent_token: student.consent_token
         ).merge(newsletter_opt_in: "1") }
 
-      expect(SubscribeEmailListJob).to have_received(:perform_later)
+      expect(SubscribeParentToEmailListJob).to have_received(:perform_later)
         .at_least(:once)
-        .with(
-          "parenty@parent.com",
-          "parent",
-          { NAME: "parenty" }
-        )
+        .with(student_profile_id: student.id)
     end
 
     it "shows the existing parental consent if a repeat visit is made" do

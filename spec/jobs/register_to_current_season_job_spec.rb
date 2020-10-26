@@ -7,9 +7,9 @@ RSpec.describe RegisterToCurrentSeasonJob do
 
       profile.account.update(seasons: [])
 
-      expect(SubscribeProfileToEmailList).to receive(:perform_later).with(
-        profile.account.id,
-        scope
+      expect(SubscribeAccountToEmailListJob).to receive(:perform_later).with(
+        account_id: profile.account.id,
+        profile_type: scope
       )
 
       RegisterToCurrentSeasonJob.perform_now(profile.account)

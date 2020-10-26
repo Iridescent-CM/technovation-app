@@ -210,13 +210,18 @@ RSpec.describe StudentProfile do
     expect(profile.reload.parental_consent).to be_pending
   end
 
-  it "re-subscribes new email addresses" do
-    profile = FactoryBot.create(:student_profile)
+  it "updates the email list when the parent/guardian's email address is changed" do
+    student_profile = FactoryBot.create(
+      :student_profile,
+      parent_guardian_email: "old@parent-email.com"
+    )
 
-    expect(UpdateEmailListJob).to receive(:perform_later)
-      .with(profile.parent_guardian_email, "new@parent-email.com",
-            "parent", { NAME: profile.parent_guardian_name })
+    expect(UpdateParentOnEmailListJob).to receive(:perform_later)
+      .with(
+        student_profile_id: student_profile.id,
+        currently_subscribed_as: student_profile.parent_guardian_email
+      )
 
-    profile.update_attributes(parent_guardian_email: "new@parent-email.com")
+    student_profile.update(parent_guardian_email: "new@parent-email.com")
   end
 end

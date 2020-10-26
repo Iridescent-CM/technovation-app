@@ -393,15 +393,10 @@ class StudentProfile < ActiveRecord::Base
          saved_change_to_parent_guardian_email? and
            parent_guardian_email.present?
 
-      UpdateEmailListJob.perform_later(
-        parent_guardian_email_before_last_save,
-        parent_guardian_email,
-        :parent.to_s,
-        {
-          NAME: parent_guardian_name
-        }
+      UpdateParentOnEmailListJob.perform_later(
+        student_profile_id: id,
+        currently_subscribed_as: parent_guardian_email_before_last_save
       )
-
     end
   end
 end

@@ -4,7 +4,7 @@ RSpec.describe "Register as a mentor", :js do
   before do
     ActionMailer::Base.deliveries.clear
 
-    allow(SubscribeEmailListJob).to receive(:perform_now)
+    allow(SubscribeAccountToEmailListJob).to receive(:perform_later)
 
     set_signup_token("mentor@mentor.com")
 
@@ -79,15 +79,7 @@ RSpec.describe "Register as a mentor", :js do
   end
 
   it "Email list subscribed" do
-    expect(SubscribeEmailListJob).to have_received(:perform_now)
-      .with(
-        "mentor@mentor.com",
-        "mentor",
-        {
-          NAME: "Mentor McGee",
-          FNAME: "Mentor",
-          LNAME: "McGee"
-        }
-      )
+    expect(SubscribeAccountToEmailListJob).to have_received(:perform_later)
+      .with(account_id: MentorProfile.last.account.id, profile_type: "mentor")
   end
 end
