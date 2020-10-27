@@ -48,6 +48,12 @@ export default {
     return {
       resourceLinks: [
         {
+          heading: 'How to use this website',
+          url: 'https://youtu.be/KoWkYNXTr2w',
+          text: 'Watch a video tutorial'
+        },
+
+        {
           heading: 'Safety information',
           url: 'https://iridescentlearning.org/internet-safety/',
           text: 'Internet Safety Training',
