@@ -1,5 +1,19 @@
 <template>
   <div id="surveys">
+    <h4> Pop-up resets</h4>
+
+    <div class="margin--b-xlarge">
+      <button
+         class="button secondary"
+         @click.prevent="resetPopups('student')"
+      >Reset student pop-ups</button>
+
+      <button
+         class="button secondary"
+         @click.prevent="resetPopups('mentor')"
+      >Reset mentor pop-ups</button>
+    </div>
+
     <h4>Survey Links</h4>
 
     <div class="notice info hint">
@@ -70,6 +84,45 @@
 <script>
 export default {
   name: 'surveys-section',
+
+  methods: {
+    resetPopups (scope) {
+      this.confirmReset(scope)
+      .then(() => {
+        window.axios.post('/admin/survey_popup_resets', {
+          scope: scope
+        })
+        .then(() => {
+          displayFlashMessage(`Survey pop-ups reset for all ${scope}s`)
+        })
+        .catch(err => {
+          displayFlashMessage('Something went wong', 'error')
+        })
+      })
+      .catch(() => {}) // action cancelled
+    },
+
+    confirmReset (scope) {
+      return new Promise((resolve, reject) => {
+        swal({
+          html: `You are about to RESET survey pop-ups for ALL ${scope.toUpperCase()}S`,
+          cancelButtonText: "No, go back",
+          confirmButtonText: "Yes, do it",
+          confirmButtonColor: "#5ABF94",
+          showCancelButton: true,
+          reverseButtons: true,
+          focusCancel: true,
+        }).then(function(result) {
+          if (result.value) {
+            resolve()
+          }
+          else {
+            reject()
+          }
+        })
+      })
+    }
+  }
 }
 </script>
 
