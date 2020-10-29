@@ -115,14 +115,13 @@ class ProfileUpdating
 
     private
     def email_list_changes_made?
-      saved_change_to_city? or
-        saved_change_to_state_province? or
-          saved_change_to_country? or
-
-      saved_change_to_first_name? or
-        saved_change_to_last_name? or
-
-      saved_change_to_email?
+      [:city,
+       :state_province,
+       :country,
+       :first_name,
+       :last_name,
+       :email,
+       :date_of_birth].any? { |attr| saved_change_to_attribute?(attr) }
     end
   end
 end
