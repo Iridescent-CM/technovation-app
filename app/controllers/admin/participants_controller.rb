@@ -46,7 +46,7 @@ module Admin
     def destroy
       account = Account.find(params[:id])
 
-      DeleteAccountJob.perform_later(account.scope_name, account.email)
+      DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
       account.destroy
 
       redirect_to admin_participants_path,

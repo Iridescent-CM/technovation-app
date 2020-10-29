@@ -38,7 +38,7 @@ RSpec.describe Admin::ParticipantsController do
   end
 
   %w{student mentor judge chapter_ambassador}.each do |scope|
-    it "updates #{scope} newsletters with a change to the email address" do
+    it "updates the email list when the email address on the account is changed" do
       profile = FactoryBot.create(
         scope,
         account: FactoryBot.create(
@@ -47,7 +47,7 @@ RSpec.describe Admin::ParticipantsController do
         )
       )
 
-      allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
+      allow(UpdateAccountOnEmailListJob).to receive(:perform_later)
 
       patch :update, params: {
         id: profile.account_id,
@@ -56,39 +56,17 @@ RSpec.describe Admin::ParticipantsController do
         },
       }
 
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
         .with(
-          profile.account_id,
-          "old@oldtime.com",
-          scope.upcase,
+          account_id: profile.account_id,
+          currently_subscribed_as: "old@oldtime.com"
         )
     end
 
-    it "updates newsletters with a change to the address" do
+    it "updates the email list when the first name on the account is changed" do
       profile = FactoryBot.create(scope)
 
-      allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
-
-      patch :update, params: {
-        id: profile.account_id,
-        account: {
-          city: "Los Angeles",
-          state_province: "CA",
-        },
-      }
-
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(
-          profile.account_id,
-          profile.account.email,
-          scope.upcase,
-        )
-    end
-
-    it "updates #{scope} newsletters with changes to first name" do
-      profile = FactoryBot.create(scope)
-
-      allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
+      allow(UpdateAccountOnEmailListJob).to receive(:perform_later)
 
       patch :update, params: {
         id: profile.account_id,
@@ -97,18 +75,17 @@ RSpec.describe Admin::ParticipantsController do
         },
       }
 
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
         .with(
-          profile.account_id,
-          profile.account.email,
-          scope.upcase,
+          account_id: profile.account_id,
+          currently_subscribed_as: profile.account.email
         )
     end
 
-    it "updates #{scope} newsletters with changes to last name" do
+    it "updates the email list when the last name on the account is changed" do
       profile = FactoryBot.create(scope)
 
-      allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
+      allow(UpdateAccountOnEmailListJob).to receive(:perform_later)
 
       patch :update, params: {
         id: profile.account_id,
@@ -117,11 +94,10 @@ RSpec.describe Admin::ParticipantsController do
         },
       }
 
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
         .with(
-          profile.account_id,
-          profile.account.email,
-          scope.upcase,
+          account_id: profile.account_id,
+          currently_subscribed_as: profile.account.email
         )
     end
   end

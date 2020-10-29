@@ -92,6 +92,8 @@ gem 'dotenv-rails', "~> 2.5"
 
 gem 'pdfkit', '0.8.4.3.2'
 
+gem 'gibbon', '~> 3.3.0'
+
 group :development do
   gem 'pp_sql', "~> 0.2", require: false
   gem 'active_record_query_trace', "~> 1.5"

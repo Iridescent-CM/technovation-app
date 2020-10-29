@@ -10,7 +10,7 @@ require "rails_helper"
 
     before do
       sign_in(profile)
-      allow(UpdateProfileOnEmailListJob).to receive(:perform_later)
+      allow(UpdateAccountOnEmailListJob).to receive(:perform_later)
     end
 
     it "updates newsletters with a change to the #{scope} address" do
@@ -24,11 +24,10 @@ require "rails_helper"
         },
       }
 
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
         .with(
-          profile.account_id,
-          profile.account.email,
-          scope.upcase
+          account_id: profile.account_id,
+          currently_subscribed_as: profile.account.email
         )
     end
 
@@ -42,8 +41,11 @@ require "rails_helper"
         },
       }
 
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, scope.upcase)
+      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
+        .with(
+          account_id: profile.account_id,
+          currently_subscribed_as: profile.account.email
+        )
     end
 
     it "updates #{scope} newsletters with changes to last name" do
@@ -56,8 +58,11 @@ require "rails_helper"
         },
       }
 
-      expect(UpdateProfileOnEmailListJob).to have_received(:perform_later)
-        .with(profile.account_id, profile.account.email, scope.upcase)
+      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
+        .with(
+          account_id: profile.account_id,
+          currently_subscribed_as: profile.account.email
+        )
     end
 
     it "errors out when #{scope} country is blank" do
