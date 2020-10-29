@@ -45,9 +45,5 @@ qa:
   <<: *default_settings
   app_name: Technovation (QA)
 
-staging:
-  <<: *default_settings
-  app_name: Technovation (Staging)
-
 production:
   <<: *default_settings
