@@ -1,5 +1,13 @@
 <% admin_chapter_ambassador ||= false %>
 
+<h2 class="text-align--left">Students</h2>
+<p>
+  Your team can have up to five students.
+  <br />
+  You cannot invite more students while you have a combined total
+  of five members, invitations, and/or join requests.
+</p>
+
 <ul class="reset">
   <%= render partial: "teams/member",
     collection: team.students.onboarded,
@@ -9,72 +17,87 @@
 </ul>
 
 <% if team.students.onboarding.any? %>
-  <hr />
+  <div class="margin--t-large">
+    <h3 class="reset">Pending students</h3>
 
-  <h3 class="reset">Pending students</h3>
+    <p class="hint">
+      These students are listed on your team,
+      but are not yet eligible to compete.
+    </p>
 
-  <p class="hint">
-    These students are listed on your team,
-    but are not yet eligible to compete.
-  </p>
-
-  <ul class="reset onboarding_students">
-    <%= render partial: "teams/onboarding_member",
-      collection: team.students.onboarding,
-      locals: {
-        team: team,
-        admin_chapter_ambassador: admin_chapter_ambassador,
-      } %>
-  </ul>
+    <ul class="reset onboarding_students">
+      <%= render partial: "teams/onboarding_member",
+        collection: team.students.onboarding,
+        locals: {
+          team: team,
+          admin_chapter_ambassador: admin_chapter_ambassador,
+        } %>
+    </ul>
+  </div>
 <% end %>
 
 <% unless admin_chapter_ambassador %>
-  <%= render "teams/pending_invites",
-    team: team,
-    preview_method: :invitee_email,
-    invites: team.pending_student_invites %>
+  <hr />
+  <div class="margin--t-large margin--b-large">
+    <h2>Do you want more teammates?</h2>
 
-  <%= render "teams/pending_requests",
-    team: team,
-    requests: team.pending_student_join_requests %>
-<% end %>
-
-<div class="grid grid--bleed">
-  <div class="grid__col-auto">
-    <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
-      <% if !admin_chapter_ambassador && team.current? && team.spot_available? %>
-        <%= render "team_member_invites/form" %>
-
-        <%= form_with model: team,
-          data: { submit_on_change: true },
-          url: [current_scope, team, { format: :json }],
-          method: :patch do |f| %>
-
-          <p>
-            <%= f.check_box :accepting_student_requests,
-              id: :team_accepting_student_requests %>
-
-            <%= f.label :accepting_student_requests,
-              "Allow other students to find our team and request to join us" %>
-          </p>
-        <% end %>
-      <% elsif not team.current? %>
-        <%= t("views.teams.show.past_team") %>
-      <% else %>
-        <p>
-          Your team can have up to five students.
-        </p>
-
-        <p class="hint">
-          You cannot invite more students while you have
-          a combined total of five members, invitations,
-          and/or join requests.
-        </p>
-      <% end %>
-    <% else %>
-      <p class="hint">
+    <% if !SeasonToggles.team_building_enabled? || SeasonToggles.judging_enabled_or_between? %>
+      <p class="notice">
         Team building is not enabled at this time, so your team cannot add students.
       </p>
+    <% elsif !team.spot_available? %>
+      <p class="notice">
+        You cannot invite more students while you have a combined total
+        of five members, invitations, and/or join requests.
+      </p>
+    <% elsif !team.current? %>
+      <p class="notice">
+        <%= t("views.teams.show.past_team") %>
+      </p>
+    <% end %>
+
+    <% if SeasonToggles.team_building_enabled? &&
+         !SeasonToggles.judging_enabled_or_between? %>
+      <%= form_with model: team,
+        data: { submit_on_change: true },
+        url: [current_scope, team, { format: :json }],
+        method: :patch do |f| %>
+
+        <p>
+          <%= f.check_box :accepting_student_requests,
+            id: :team_accepting_student_requests %>
+
+          <%= f.label :accepting_student_requests,
+            "Allow other students to find our team and request to join us" %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <p>
+      If you're looking to add a mentor to your team,
+      <%= link_to 'go here', public_send("#{current_scope}_team_path", team, anchor: "!mentors") %>
+    </p>
+  </div>
+
+  <hr />
+  <h3 class="reset">Invitations and requests</h3>
+  <div class="margin--b-large">
+    <%= render "teams/pending_invites",
+      team: team,
+      preview_method: :invitee_email,
+      invites: team.pending_student_invites %>
+
+    <% if SeasonToggles.team_building_enabled? &&
+         !SeasonToggles.judging_enabled_or_between? &&
+         team.current? &&
+         team.spot_available? %>
+      <%= render "team_member_invites/form" %>
     <% end %>
   </div>
-</div>
+
+  <div class="margin--t-xlarge">
+    <%= render "teams/pending_requests",
+      team: team,
+      requests: team.pending_student_join_requests %>
+  </div>
+<% end %>
