@@ -1,87 +1,96 @@
 module Mailchimp
   class MailingList
-    include HTTParty
 
-    base_uri "https://#{ENV.fetch('MAILCHIMP_API_KEY').last(3)}.api.mailchimp.com/3.0/lists"
-    basic_auth "any", ENV.fetch('MAILCHIMP_API_KEY')
+    def initialize(
+      client_constructor: Gibbon::Request,
+      api_key: ENV.fetch("MAILCHIMP_API_KEY"),
+      list_id: ENV.fetch("MAILCHIMP_LIST_ID"),
+      enabled: ENV.fetch("ENABLE_MAILCHIMP", false),
+      logger: Rails.logger
+    )
 
-    def initialize(list_scope)
-      @enabled = ENV.fetch("ENABLE_MAILING_LISTS", false)
-      @list_id = ENV.fetch("MAILCHIMP_LIST_ID")
-      @list_scope = list_scope
+      @list = client_constructor.new({api_key: api_key}).lists(list_id)
+      @list_id = list_id
+      @enabled = enabled
+      @logger = logger
     end
 
-    def subscribe(email, merge_fields = {})
-      wrap("subscribe user to list #{@list_id}") do
-        self.class.post(
-          "/#{@list_id}/members",
-          {
-            body: JSON.generate({
-              email_address: email,
-              status: "subscribed",
-              merge_fields: merge_fields,
-              tags: [@list_scope.to_s]
-            })
-          }
+    def subscribe(account:, profile_type: "")
+      handle("subscribe #{account.email} to list: #{list_id}") do
+        list.members.create(
+          body: body_for(account, profile_type, {status: "subscribed"})
         )
       end
     end
 
-    def update(email_was, email, merge_fields = {})
-      wrap("update user on list #{@list_id}") do
-        self.class.patch(
-          "/#{@list_id}/members/#{hash(email_was)}",
-          {
-            body: JSON.generate({
-              email_address: email,
-              merge_fields: merge_fields
-            })
-          }
+    def update(account:, currently_subscribed_as: "")
+      if currently_subscribed_as.blank?
+        currently_subscribed_as = account.email
+      end
+
+      handle("update #{currently_subscribed_as} on list: #{list_id}") do
+        list.members(subscriber_hash(currently_subscribed_as)).update(
+          body: body_for(account)
         )
       end
     end
 
-    def delete(email)
-      wrap("delete user from list #{@list_id}") do
-        self.class.delete("/#{@list_id}/members/#{hash(email)}")
+    def delete(email_address:)
+      handle("delete #{email_address} from list: #{list_id}") do
+        list.members(subscriber_hash(email_address)).delete
       end
     end
 
     private
 
-    def hash(email)
-      Digest::MD5.hexdigest(email.downcase)
-    end
+    attr_reader :list, :list_id, :enabled, :logger
 
-    def wrap(msg)
-      if @enabled
-        response = yield
-        handle_response(response)
+    def handle(message, &block)
+      if enabled
+        begin
+          block.call
+        rescue Gibbon::MailChimpError => e
+          logger.error("[MAILCHIMP ERROR] #{e.message}")
+        end
       else
-        Rails.logger.info "[ENABLE_MAILING_LISTS=#{@enabled}]: #{msg}"
+        logger.info "[MAILCHIMP DISABLED] Trying to #{message}"
       end
     end
 
-    def handle_response(response)
-      case response.code
-      when 400...500
-        raise APIRequestError.new(response)
-      when 500...600
-        raise APIServerError.new(response)
+    def body_for(account, profile_type="", additonal_options={})
+      {
+        email_address: account.email,
+        merge_fields: {
+          BIRTHYEAR: account.date_of_birth&.year || "",
+          COUNTRY: account.country.to_s,
+          FNAME: account.first_name.to_s,
+          LNAME: account.last_name.to_s,
+          NAME: account.full_name.to_s
+        }
+      }.merge(location_for(account))
+       .merge(tags_for(profile_type))
+       .merge(additonal_options)
+    end
+
+    def location_for(account)
+      if account.latitude.present? && account.longitude.present?
+        {
+          location: {
+            latitude: account.latitude,
+            longitude: account.longitude
+          }
+        }
       else
-        response.parsed_response
+        {}
       end
     end
-  end
 
-  class APIError < StandardError
-    attr_reader :response
+    def tags_for(profile_type)
+      profile_type.present? ? {tags: [profile_type]} : {}
+    end
 
-    def initalize(response)
-      @response = response
-      super(response)
+    def subscriber_hash(email_address)
+      Digest::MD5.hexdigest(email_address.downcase)
     end
   end
-  class APIRequestError < APIError; end
-  class APIServerError < APIError; end
 end
