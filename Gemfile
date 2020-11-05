@@ -130,16 +130,13 @@ group :production, :development do
   gem 'premailer-rails', "~> 1.10"
 end
 
-group :staging, :production do
-  gem 'wkhtmltopdf-heroku', '2.12.5.0'
-end
-
 group :production do
   gem 'hiredis', "~> 0.6"
   gem "rack-timeout", "~> 0.5"
   gem 'heroku-deflater', "~> 0.6"
   gem 'rails_autoscale_agent'
   gem 'cloudflare-rails', "~> 0.6"
+  gem 'wkhtmltopdf-heroku', '2.12.5.0'
 end
 
 gem 'factory_bot_rails', "~> 4.11"
