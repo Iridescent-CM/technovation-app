@@ -10,11 +10,12 @@
 %>
 
 <li id="<%= dom_id(member) %>" class="grid">
-  <div class="grid__col-3 grid__col--bleed-x">
-    <%= image_tag member.profile_image_url, class: "grid__cell-img" %>
+  <div class="grid__col-2 grid__col--bleed-x">
+    <%= image_tag member.profile_image_url,
+      class: "thumbnail-sm grid__cell-img" %>
   </div>
 
-  <div class="grid__col-9">
+  <div class="grid__col-10">
     <% if admin_chapter_ambassador %>
       <h5 class="reset">
         <%= link_to member.full_name,
