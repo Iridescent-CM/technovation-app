@@ -55,7 +55,7 @@ RSpec.describe "Parental consent", :js do
 
     expect(current_path).to eq(parental_consent_path(student.parental_consent))
     expect(page).to have_content(
-      "#{student.full_name} has been consented by #{student.parental_consent_electronic_signature} on #{student.parental_consent_signed_at.strftime("%-d %B, %Y")}"
+      "#{student.full_name} received parental consent from #{student.parental_consent_electronic_signature} on #{student.parental_consent_signed_at.strftime("%-d %B, %Y")}"
     )
   end
 

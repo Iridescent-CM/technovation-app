@@ -138,7 +138,7 @@ en:
       new:
         submit: "I agree"
       show:
-        signed: "%{student_name} has been consented by %{parent_name} on %{date}"
+        signed: "%{student_name} received parental consent from %{parent_name} on %{date}"
 
     passwords:
       new:
