@@ -81,6 +81,9 @@ class Questions
           }
         },
 
+        demo_video_id: submission.video_id(:demo),
+        demo_video_url: judge_embed_code_path(submission, piece: :demo),
+
         pitch_video_id: submission.video_id(:pitch),
         pitch_video_url: judge_embed_code_path(submission, piece: :pitch),
 

@@ -16,6 +16,34 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
+  title: "Demo video",
+  scope: current_scope,
+  attribute: :demo_video_link,
+  cta_when_empty: "Add the demo video link",
+  cta_when_filled: "Change the demo video link" do %>
+
+  <%= link_to web_icon("play-circle-o", text: "Watch the demo video"),
+    "#",
+    class: "button button--small",
+    data: {
+      opens_modal: "video-modal-#{@team_submission.video_id(:demo)}",
+      modal_fetch: send(
+        "#{current_scope}_embed_code_path",
+        @team_submission,
+        piece: :demo,
+      ),
+    } %>
+
+  <div
+    class="modal"
+    id="video-modal-<%= @team_submission.video_id(:demo) %>"
+  >
+    <div class="modal-content"></div>
+  </div>
+<% end %>
+
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
   title: "Pitch video",
   scope: current_scope,
   attribute: :pitch_video_link,

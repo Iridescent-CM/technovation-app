@@ -1,9 +1,9 @@
 <template>
   <div :class="solo ? 'grid__col-12' : 'grid__col-6'">
-    <h4>Pitch</h4>
 
     <div class="grid grid--bleed">
       <div :class="solo ? 'grid__col-6' : 'grid__col-12'">
+        <h4>Pitch</h4>
         <p>
           <a
             href="#"
@@ -22,6 +22,28 @@
           <div class="modal-content"></div>
         </div>
       </div>
+
+      <div :class="solo ? 'grid__col-6' : 'grid__col-12'">
+        <h4>Demo Video</h4>
+        <p>
+          <a
+            href="#"
+            :data-opens-modal="`video-modal-${submission.demo_video_id}`"
+            :data-modal-fetch="submission.demo_video_url"
+          >
+            <icon name="film" color="e6e6e5" />
+            <span>Watch the demo video</span>
+          </a>
+        </p>
+
+        <div
+          class="modal"
+          :id="`video-modal-${submission.demo_video_id}`"
+        >
+          <div class="modal-content"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
