@@ -84,7 +84,7 @@ jobs:
           GOOGLE_MAPS_API_KEY: n-a
           GOOGLE_PLACES_API_KEY: n-a
           GOOGLE_TIMEZONE_API_KEY: n-a
-          HELP_EMAIL: help@technovationchallenge.org
+          HELP_EMAIL: support@technovation.org
           HOST_DOMAIN: localhost:31337
           JUDGE_SLACK_SIGNUP_URL: n-a
           JUDGE_TRAINING_URL: n-a
