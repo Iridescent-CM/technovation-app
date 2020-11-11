@@ -26,7 +26,7 @@
 
           <p>
             Complete as much of the score as you can and
-            <a :href="mailToHelp">email us</a>.
+            <a :href="emailSupport">email us</a>.
             If the team is able to fix the issue,
             we will email you back and you will be able
             to update the score.
@@ -58,12 +58,10 @@ export default {
       'deadline',
     ]),
 
-    mailToHelp () {
-      return 'mailto:help@technovationchallenge.org?subject=' +
-             'Errors while judging submission ' +
-             '"' + this.submission.name + '"' +
-             ' by ' +
-             this.team.name
+    emailSupport() {
+      const subject = `Errors while judging submission "${this.submission.name}" by ${this.team.name}`
+
+      return `mailto:${process.env.HELP_EMAIL}?subject=${subject}`
     },
   },
 
