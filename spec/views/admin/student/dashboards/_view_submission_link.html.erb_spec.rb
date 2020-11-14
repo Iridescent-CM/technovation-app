@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "student/dashboards/view_submission_link", type: :view do
+RSpec.describe "student/dashboards/_view_submission_link.html.erb", type: :view do
   before do
     allow(StudentSubmissionLinkGuard).to receive(:new).with(team: team, student: student).and_return(submission_link_guard)
 
