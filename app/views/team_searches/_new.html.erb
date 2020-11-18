@@ -21,7 +21,7 @@
     <h3>Available Teams</h3>
 
     <div class="grid">
-      <%= render partial: "team_searches/result", collection: teams %>
+      <%= render partial: "team_searches/result", collection: teams, as: :team %>
 
       <% if teams.empty? %>
         <div class="grid__col-auto grid__col--bleed">

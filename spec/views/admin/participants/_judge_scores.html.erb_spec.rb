@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/participants/judge_scores", type: :view do
+RSpec.describe "admin/participants/_judge_scores.html.erb", type: :view do
   before do
     render partial: "admin/participants/judge_scores", locals: { scores: scores }
   end

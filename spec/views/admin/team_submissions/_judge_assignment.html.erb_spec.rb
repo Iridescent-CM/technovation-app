@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/team_submissions/judge_assignment", type: :view do
+RSpec.describe "admin/team_submissions/_judge_assignment.html.erb", type: :view do
   before do
     SeasonToggles.set_judging_round(judging_round)
 

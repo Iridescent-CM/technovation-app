@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "admin/scores/score_controls", type: :view do
+RSpec.describe "admin/scores/_score_controls.html.erb", type: :view do
   before do
     render partial: "admin/scores/score_controls",
       locals: { current_account: current_account, score: score_submission }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "chapter_ambassador/score_details/scores_table", type: :view do
+RSpec.describe "chapter_ambassador/score_details/_scores_table.html.erb", type: :view do
   before do
     render partial: "chapter_ambassador/score_details/scores_table",
       locals: { scores: scores, current_account: current_account, current_scope: current_scope }

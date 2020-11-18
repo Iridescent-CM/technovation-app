@@ -1,25 +1,31 @@
 <div class="grid__col-sm-4 grid__col--bleed search-result">
   <div class="search-result-head">
-    <%= image_tag result.team_photo_url, class: "grid__cell-img" %>
+    <%= image_tag team.team_photo_url, class: "grid__cell-img" %>
 
-    <h3><%= result.name %></h3>
+    <h3><%= team.name %></h3>
 
-    <p><%= result.primary_location %></p>
+    <p><%= team.primary_location %></p>
 
     <div class="badges">
       <span class="badge badge-success">
-        <%= t("views.application.division") %>: <%= result.division.name.humanize %>
+        <%= t("views.application.division") %>: <%= team.division.name.humanize %>
       </span>
     </div>
   </div>
 
   <div class="search-result-foot grid--justify-center grid__cell-footer">
     <p>
-      <% if current_profile.teams_that_declined.include?(result) %>
-        You asked to join <%= result.name %>, and they declined.
+      <% if current_profile.teams_that_declined.include?(team) %>
+        You asked to join <%= team.name %>, and they declined.
+      <% elsif !team.spot_available? %>
+        This team is currently full.
+
+        <span class="cursor--not-allowed">
+          <%= link_to "View more details", "#", class: "button disabled" %>
+        </span>
       <% else %>
         <%= link_to "View more details",
-          [:new, current_scope, :join_request, { team_id: result.id }],
+          [:new, current_scope, :join_request, { team_id: team.id }],
           class: 'button' %>
       <% end %>
     </p>
