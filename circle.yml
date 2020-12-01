@@ -122,10 +122,17 @@ jobs:
             - v1-node-packages-cache-{{ checksum "yarn.lock" }}
             - v1-node-packages-cache-
 
-      # Bundle install dependencies
-      - run: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+      - run:
+          name: Install common dependencies
+          command: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 
-      - run: sudo apt-get install pdftk
+      - run:
+          name: Install PostgreSQL
+          command: sudo apt-get install postgresql-client-11
+
+      - run:
+          name: Install pdftk
+          command: sudo apt-get install pdftk
 
       - run:
           name: Install wkhtmltopdf
@@ -133,14 +140,13 @@ jobs:
             wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb
             sudo apt install ./wkhtmltox_0.12.5-1.stretch_amd64.deb
 
-      # Needed to polyfill canvas elements for testing in Jest (NodeJs environment)
-      - run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+      - run:
+          name: Install Jest dependencies
+          command: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run:
           name: Install gems
           command: bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
-
-      - run: sudo apt-get update; sudo apt-get install postgresql-client-11
 
       - save_cache:
           name: Cache gems
