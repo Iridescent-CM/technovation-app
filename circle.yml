@@ -116,6 +116,12 @@ jobs:
             - v1-gem-cache-{{ checksum "Gemfile.lock" }}
             - v1-gem-cache-
 
+      - restore_cache:
+          name: Restore cached node packages
+          keys:
+            - v1-node-packages-cache-{{ checksum "yarn.lock" }}
+            - v1-node-packages-cache-
+
       # Bundle install dependencies
       - run: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 
@@ -143,8 +149,14 @@ jobs:
             - vendor/bundle
 
       - run:
-          name: Install JS dependencies
-          command: yarn install
+          name: Install node packages
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+
+      - save_cache:
+          name: Cache node packages
+          key: v1-node-packages-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
       - run:
           name: Javascript tests
