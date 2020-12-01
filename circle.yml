@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   build:
-    working_directory: ~/circleci-demo-ruby-rails
+    working_directory: ~/technovation-girls
     docker:
       - image: circleci/ruby:2.6.4-node-browsers
         auth:
@@ -165,17 +165,17 @@ jobs:
             - ~/.cache/yarn
 
       - run:
-          name: Javascript tests
-          command: yarn test --maxWorkers=1
-
-      - run:
-          name: Database Setup
+          name: Setup database
           command: |
             bundle exec rails db:create
             bundle exec rails db:migrate
 
       - run:
-          name: Parallel RSpec
+          name: Run Javascript tests
+          command: yarn test --maxWorkers=1
+
+      - run:
+          name: Run RSpec tests
           command: bundle exec rspec --order rand
 
       - store_artifacts:
