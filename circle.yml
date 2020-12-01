@@ -110,11 +110,11 @@ jobs:
     steps:
       - checkout
 
-      # Restore bundle cache
       - restore_cache:
+          name: Restore cached gems
           keys:
-            - rails-demo-{{ checksum "Gemfile.lock" }}
-            - rails-demo-
+            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
+            - v1-gem-cache-
 
       # Bundle install dependencies
       - run: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
@@ -131,14 +131,14 @@ jobs:
       - run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run:
-          name: Install dependencies
+          name: Install gems
           command: bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
 
       - run: sudo apt-get update; sudo apt-get install postgresql-client-11
 
-      # Store bundle cache
       - save_cache:
-          key: rails-demo-{{ checksum "Gemfile.lock" }}
+          name: Cache gems
+          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
