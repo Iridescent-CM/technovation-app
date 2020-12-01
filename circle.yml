@@ -178,14 +178,8 @@ jobs:
           name: Parallel RSpec
           command: bundle exec rspec --order rand
 
-
-      # Save artifacts
       - store_artifacts:
           path: tmp/screenshots
-
-      - run:
-          name: Run setup script
-          command: bash .circleci/setup-heroku.sh
 
       - add_ssh_keys:
           fingerprints:
@@ -212,11 +206,6 @@ general:
       - master
 
 deployment:
-  beta:
-    branch: ra-ui
-    heroku:
-      appname: tc-2018
-
   qa:
     branch: qa
     heroku:
