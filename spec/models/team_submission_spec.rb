@@ -114,48 +114,68 @@ RSpec.describe TeamSubmission do
   end
 
   describe "#percent_complete" do
-    it "returns 0 for nothing completed" do
-      submission = FactoryBot.create(:submission, :junior)
-      expect(submission.percent_complete).to eq(0)
+    context "when a junior team is submitting" do
+      it "returns 0% when no items have been completed" do
+        junior_submission = FactoryBot.create(:submission, :junior)
+
+        expect(junior_submission.percent_complete).to eq(0)
+      end
+
+      it "returns 14% when one item has been completed" do
+        junior_submission = FactoryBot.create(:submission, :junior)
+
+        junior_submission.update(app_name: "An amazing app")
+
+        expect(junior_submission.percent_complete).to eq(14)
+      end
+
+      it "returns 86% when all items have been completed but it hasn't been published yet" do
+        junior_submission = FactoryBot.create(:submission, :junior, :complete)
+
+        junior_submission.update(published_at: nil)
+
+        expect(junior_submission.percent_complete).to eq(86)
+      end
+
+      it "returns 100% when all items have bene completed and it has been published" do
+        junior_submission = FactoryBot.create(:submission, :junior, :complete)
+
+        junior_submission.publish!
+
+        expect(junior_submission.percent_complete).to eq(100)
+      end
     end
 
-    it "returns 17 for one junior team item completed" do
-      submission = FactoryBot.create(:submission, :junior)
-      submission.update(app_name: "Something")
-      expect(submission.percent_complete).to eq(17)
-    end
+    context "when a senior team is submitting" do
+      it "returns 0% when no items have been completed" do
+        senior_submission = FactoryBot.create(:submission, :senior)
 
-    it "returns 14 for one senior team item completed" do
-      submission = FactoryBot.create(:submission, :senior)
-      submission.update(app_name: "Something")
-      expect(submission.reload.percent_complete).to eq(14)
-    end
+        expect(senior_submission.percent_complete).to eq(0)
+      end
 
-    it "returns 83 percent for all of the junior items completed" do
-      submission = FactoryBot.create(:submission, :junior, :complete)
+      it "returns 13% when one item has been completed" do
+        senior_submission = FactoryBot.create(:submission, :senior)
 
-      submission.update_column(:source_code, "something.zip")
-      submission.update_column(:published_at, nil)
-      submission.touch
-      expect(submission.reload.percent_complete).to eq(83)
-    end
+        senior_submission.update(app_name: "Fantastico Magnifico")
 
-    it "returns 86 percent for all of the senior items completed" do
-      submission = FactoryBot.create(:submission, :senior, :complete)
+        expect(senior_submission.percent_complete).to eq(13)
+      end
 
-      submission.update_column(:source_code, "something.zip")
-      submission.update_column(:published_at, nil)
-      submission.touch
-      expect(submission.reload.percent_complete).to eq(86)
-    end
+      it "returns 88% when all items have been completed but it hasn't been published yet" do
+        senior_submission = FactoryBot.create(:submission, :senior, :complete)
 
-    it "returns 100 percent for all items completed and published" do
-      submission = FactoryBot.create(:submission, :senior, :complete)
+        senior_submission.update(published_at: nil)
 
-      submission.update_column(:source_code, "something.zip")
-      submission.touch
-      submission.publish!
-      expect(submission.reload.percent_complete).to eq(100)
+        expect(senior_submission.percent_complete).to eq(88)
+      end
+
+      it "returns 100% when all items have bene completed and it has been published" do
+        senior_submission = FactoryBot.create(:submission, :senior, :complete)
+
+        senior_submission.publish!
+
+        expect(senior_submission.percent_complete).to eq(100)
+      end
     end
   end
 

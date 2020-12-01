@@ -27,7 +27,7 @@ RSpec.feature "admin team submissions" do
         href: admin_team_path(submission.team)
       )
 
-      expect(page).to have_content("14% completed")
+      expect(page).to have_content("13% completed")
     end
   end
 
