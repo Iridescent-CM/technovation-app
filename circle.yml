@@ -181,6 +181,10 @@ jobs:
       - store_artifacts:
           path: tmp/screenshots
 
+      - run:
+          name: Run setup script
+          command: bash .circleci/setup-heroku.sh
+
       - add_ssh_keys:
           fingerprints:
             - "32:c4:d8:7f:60:e0:56:7d:e9:ee:f5:04:e1:9c:2d:4e"
