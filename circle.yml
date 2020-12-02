@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   build:
-    working_directory: ~/circleci-demo-ruby-rails
+    working_directory: ~/technovation-girls
     docker:
       - image: circleci/ruby:2.6.4-node-browsers
         auth:
@@ -110,16 +110,29 @@ jobs:
     steps:
       - checkout
 
-      # Restore bundle cache
       - restore_cache:
+          name: Restore cached gems
           keys:
-            - rails-demo-{{ checksum "Gemfile.lock" }}
-            - rails-demo-
+            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
+            - v1-gem-cache-
 
-      # Bundle install dependencies
-      - run: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+      - restore_cache:
+          name: Restore cached node packages
+          keys:
+            - v1-node-packages-cache-{{ checksum "yarn.lock" }}
+            - v1-node-packages-cache-
 
-      - run: sudo apt-get install pdftk
+      - run:
+          name: Install common dependencies
+          command: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+
+      - run:
+          name: Install PostgreSQL
+          command: sudo apt-get install postgresql-client-11
+
+      - run:
+          name: Install pdftk
+          command: sudo apt-get install pdftk
 
       - run:
           name: Install wkhtmltopdf
@@ -127,47 +140,46 @@ jobs:
             wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb
             sudo apt install ./wkhtmltox_0.12.5-1.stretch_amd64.deb
 
-      # Needed to polyfill canvas elements for testing in Jest (NodeJs environment)
-      - run: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+      - run:
+          name: Install Jest dependencies
+          command: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run:
-          name: Install dependencies
+          name: Install gems
           command: bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
 
-      - run: sudo apt-get update; sudo apt-get install postgresql-client-11
-
-      # Store bundle cache
       - save_cache:
-          key: rails-demo-{{ checksum "Gemfile.lock" }}
+          name: Cache gems
+          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
       - run:
-          name: Install JS dependencies
-          command: yarn install
+          name: Install node packages
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+
+      - save_cache:
+          name: Cache node packages
+          key: v1-node-packages-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
       - run:
-          name: Javascript tests
-          command: yarn test --maxWorkers=1
-
-      - run:
-          name: Database Setup
+          name: Setup database
           command: |
             bundle exec rails db:create
             bundle exec rails db:migrate
 
       - run:
-          name: Parallel RSpec
-          command: bundle exec rspec --order rand
-
-
-      # Save artifacts
-      - store_artifacts:
-          path: tmp/screenshots
+          name: Run Javascript tests
+          command: yarn test --maxWorkers=1
 
       - run:
-          name: Run setup script
-          command: bash .circleci/setup-heroku.sh
+          name: Run RSpec tests
+          command: bundle exec rspec --order rand
+
+      - store_artifacts:
+          path: tmp/screenshots
 
       - add_ssh_keys:
           fingerprints:
@@ -194,11 +206,6 @@ general:
       - master
 
 deployment:
-  beta:
-    branch: ra-ui
-    heroku:
-      appname: tc-2018
-
   qa:
     branch: qa
     heroku:
