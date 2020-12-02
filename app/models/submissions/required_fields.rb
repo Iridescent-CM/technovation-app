@@ -11,6 +11,7 @@ class RequiredFields
       app_description
       development_platform_text
       pitch_video_link
+      demo_video_link
       source_code_url
     ).map do |field|
       RequiredField.for(submission, field)
