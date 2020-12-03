@@ -26,6 +26,15 @@
     </tab-link>
 
     <tab-link
+      :class="curriculumTabLinkClasses"
+      :to="{ name: 'curriculum', meta: { active: curriculumPagesActive } }"
+      :condition-to-enable="true"
+      :condition-to-complete="submissionComplete"
+    >
+      Learn from the Curriculum
+    </tab-link>
+
+    <tab-link
       :class="submissionTabLinkClasses"
       :to="{ name: 'submission', meta: { active: submissionPagesActive } }"
       :disabled-tooltip="submissionDisabledTooltipMessage"
@@ -95,6 +104,12 @@ export default {
       }
     },
 
+    curriculumTabLinkClasses () {
+      return {
+        'tabs__menu-link--active': this.curriculumPagesActive,
+      }
+    },
+
     submissionTabLinkClasses () {
       return {
         'tabs__menu-link--active': this.submissionPagesActive,
@@ -127,6 +142,10 @@ export default {
 
     teamPagesActive () {
       return this.subRouteIsActive('team')
+    },
+
+    curriculumPagesActive () {
+      return this.subRouteIsActive('curriculum')
     },
 
     registrationPagesActive () {

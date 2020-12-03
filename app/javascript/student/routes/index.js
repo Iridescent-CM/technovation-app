@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'student/components/TeamBuilding'
 import Submission from 'dashboard/components/Submission'
+import Curriculum from 'dashboard/components/Curriculum'
 import Scores from 'dashboard/components/Scores'
 import Events from 'dashboard/components/Events'
 
@@ -113,6 +114,19 @@ export const routes = [
     meta: {
       routeId: 'submission',
       browserTitle: 'Submit your Project',
+    },
+  },
+  {
+    path: '/curriculum',
+    name: 'curriculum',
+    component: Curriculum,
+    props: {
+      stickySidebarClasses: ['grid__col-3'],
+    },
+    beforeEnter: loadOrRedirect,
+    meta: {
+      routeId: 'curriculum',
+      browserTitle: 'Learn from the Curriculum',
     },
   },
   {
