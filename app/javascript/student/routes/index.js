@@ -84,7 +84,7 @@ export const routes = [
     children: teamRoutes,
     meta: {
       routeId: 'team',
-      browserTitle: 'Part 2: Team building',
+      browserTitle: 'Build your Team',
     },
   },
   {
@@ -99,7 +99,7 @@ export const routes = [
     children: registrationRoutes,
     meta: {
       routeId: 'registration',
-      browserTitle: 'Part 1: Registration',
+      browserTitle: 'Registration',
     },
   },
   {
@@ -112,7 +112,7 @@ export const routes = [
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'submission',
-      browserTitle: 'Part 3: Submit your project',
+      browserTitle: 'Submit your Project',
     },
   },
   {
@@ -122,7 +122,7 @@ export const routes = [
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'events',
-      browserTitle: 'Part 4: Attend a pitching event',
+      browserTitle: 'Find a Pitch Event',
     },
   },
   {
@@ -135,7 +135,7 @@ export const routes = [
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'scores',
-      browserTitle: 'Part 5: Read scores & feedback',
+      browserTitle: 'View Scores & Feedback',
     },
   },
   {

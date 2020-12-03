@@ -7,7 +7,7 @@
       :condition-to-enable="true"
       :condition-to-complete="true"
     >
-      Profile
+      Complete your Profile
       <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">
         <registration-menu />
       </div>
@@ -19,7 +19,7 @@
       :condition-to-enable="true"
       :condition-to-complete="hasParentalConsent && isOnTeam"
     >
-      Build your team
+      Build your Team
       <div slot="subnav" class="tabs-menu__child-menu" v-if="teamPagesActive">
         <team-menu />
       </div>
@@ -31,7 +31,7 @@
       :disabled-tooltip="submissionDisabledTooltipMessage"
       :condition-to-enable="hasParentalConsent && isOnTeam"
       :condition-to-complete="submissionComplete"
-    >Submit your project</tab-link>
+    >Submit your Project</tab-link>
 
     <tab-link
       :class="eventsTabLinkClasses"
@@ -40,7 +40,7 @@
       :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
-      Pitching Events
+      Find a Pitch Event
     </tab-link>
 
 
@@ -50,7 +50,7 @@
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
-    >Scores & Certificates</tab-link>
+    >View Scores & Feedback</tab-link>
   </ul>
 </template>
 
