@@ -187,12 +187,24 @@
 
     <div class="panel">
       <%= link_to(
-        "Delete #{@account.name} from Technovation",
+        "Remove #{@account.name} from Technovation Girls",
         admin_participant_path(@account),
         class: "button danger",
         data: {
           method: :delete,
-          confirm: "ALERT! You are about to DELETE #{@account.name}!",
+          confirm: "You are about to remove #{@account.name} from Technovation Girls!",
+        }
+      ) %>
+
+      <br><br>
+
+      <%= link_to(
+        "PERMANENTLY DELETE #{@account.name} from Technovation Girls",
+        admin_participant_permanently_delete_path(@account),
+        class: "button danger peril",
+        data: {
+          method: :delete,
+          confirm: "You are about to PERMANENTLY DELETE #{@account.name} from Technovation Girls!",
         }
       ) %>
     </div>

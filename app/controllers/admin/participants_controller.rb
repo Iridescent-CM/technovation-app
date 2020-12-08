@@ -50,7 +50,17 @@ module Admin
       account.destroy
 
       redirect_to admin_participants_path,
-        success: "#{account.name} was deleted"
+        success: "#{account.name} was removed from Technovation Girls"
+    end
+
+    def permanently_delete
+      account = Account.find(params[:participant_id])
+
+      DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
+      account.really_destroy!
+
+      redirect_to admin_participants_path,
+        success: "#{account.name} was permanently deleted from Technovation Girls"
     end
 
     private

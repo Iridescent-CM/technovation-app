@@ -249,7 +249,10 @@ Rails.application.routes.draw do
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
-    resources :participants
+    resources :participants do
+      delete "permanently_delete"
+    end
+
     resources :participant_sessions, only: [:show, :destroy]
     resources :user_invitations, only: [:new, :create, :index]
     resources :user_invitation_emails, only: :create

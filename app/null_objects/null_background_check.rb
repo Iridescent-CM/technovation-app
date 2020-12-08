@@ -7,4 +7,5 @@ class NullBackgroundCheck < NullObject
   def pending?; false; end
   def consider?; false; end
   def suspended?; false; end
+  def paranoid?; false; end
 end
