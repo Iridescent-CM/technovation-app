@@ -13,15 +13,16 @@
           <%= render "team_submissions/honor_code" %>
 
           <p class="scent--strong">
-            You are representing your entire team by checking the box below.<br />
-            Every single team member agrees to the statement above.
+            By checking the box below, you confirm that each team member
+            has read and agreed to the statements above.
           </p>
 
           <%= f.check_box :integrity_affirmed,
             id: :team_submission_integrity_affirmed %>
 
           <%= f.label :integrity_affirmed,
-            "Our team agrees to abide by this honor code" %>
+            "OUR TEAM AGREES TO ABIDE BY THIS HONOR CODE",
+            for: :team_submission_integrity_affirmed %>
         </div>
 
         <div class="actions">
