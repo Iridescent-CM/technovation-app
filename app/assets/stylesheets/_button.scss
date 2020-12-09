@@ -90,6 +90,11 @@
     &:active {
       box-shadow:0;
     }
+
+    &.peril {
+      background: darken($alert-txt, 35);
+      box-shadow: 0 2px 0 darken($alert-txt, 35);
+    }
   }
 
   &.button--remove-bg {
