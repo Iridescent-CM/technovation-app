@@ -23,7 +23,7 @@ class OnboardingStepRequired
     when :consent_signed?
       "You need to sign the consent waiver"
     when :parental_consent_signed?
-      "You need permission from your parent or guardian"
+      "<a href='dashboard#/parental-consent'>You need permission from your parent or guardian</a>"
     when :background_check_complete?
       "You must pass a background check"
     when :bio_complete?
