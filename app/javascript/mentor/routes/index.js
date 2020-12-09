@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'mentor/components/TeamBuilding'
 import Submission from 'dashboard/components/Submission'
+import Curriculum from 'dashboard/components/Curriculum'
 import Scores from 'dashboard/components/Scores'
 import Events from 'dashboard/components/Events'
 
@@ -93,7 +94,7 @@ export const routes = [
     children: teamRoutes,
     meta: {
       routeId: 'team',
-      browserTitle: 'Part 2: Team building',
+      browserTitle: 'Build your Team',
     },
   },
   {
@@ -108,7 +109,7 @@ export const routes = [
     children: registrationRoutes,
     meta: {
       routeId: 'registration',
-      browserTitle: 'Part 1: Registration',
+      browserTitle: 'Registration',
     },
   },
   {
@@ -121,7 +122,20 @@ export const routes = [
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'submission',
-      browserTitle: 'Part 3: Submit your project',
+      browserTitle: 'Submit your Project',
+    },
+  },
+  {
+    path: '/curriculum',
+    name: 'curriculum',
+    component: Curriculum,
+    props: {
+      stickySidebarClasses: ['grid__col-3'],
+    },
+    beforeEnter: loadOrRedirect,
+    meta: {
+      routeId: 'curriculum',
+      browserTitle: 'Learn from the Curriculum',
     },
   },
   {
@@ -131,7 +145,7 @@ export const routes = [
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'events',
-      browserTitle: 'Part 4: Attend a pitching event',
+      browserTitle: 'Find a Pitch Event',
     },
   },
   {
@@ -144,7 +158,7 @@ export const routes = [
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'scores',
-      browserTitle: 'Part 5: Read scores & feedback',
+      browserTitle: 'View Scores & Feedback',
     },
   },
   {

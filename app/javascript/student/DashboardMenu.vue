@@ -7,7 +7,7 @@
       :condition-to-enable="true"
       :condition-to-complete="true"
     >
-      Profile
+      Complete your Profile
       <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">
         <registration-menu />
       </div>
@@ -19,10 +19,19 @@
       :condition-to-enable="true"
       :condition-to-complete="hasParentalConsent && isOnTeam"
     >
-      Build your team
+      Build your Team
       <div slot="subnav" class="tabs-menu__child-menu" v-if="teamPagesActive">
         <team-menu />
       </div>
+    </tab-link>
+
+    <tab-link
+      :class="curriculumTabLinkClasses"
+      :to="{ name: 'curriculum', meta: { active: curriculumPagesActive } }"
+      :condition-to-enable="true"
+      :condition-to-complete="submissionComplete"
+    >
+      Learn from the Curriculum
     </tab-link>
 
     <tab-link
@@ -31,7 +40,7 @@
       :disabled-tooltip="submissionDisabledTooltipMessage"
       :condition-to-enable="hasParentalConsent && isOnTeam"
       :condition-to-complete="submissionComplete"
-    >Submit your project</tab-link>
+    >Submit your Project</tab-link>
 
     <tab-link
       :class="eventsTabLinkClasses"
@@ -40,7 +49,7 @@
       :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
-      Pitching Events
+      Find a Pitch Event
     </tab-link>
 
 
@@ -50,7 +59,7 @@
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
-    >Scores & Certificates</tab-link>
+    >View Scores & Feedback</tab-link>
   </ul>
 </template>
 
@@ -95,6 +104,12 @@ export default {
       }
     },
 
+    curriculumTabLinkClasses () {
+      return {
+        'tabs__menu-link--active': this.curriculumPagesActive,
+      }
+    },
+
     submissionTabLinkClasses () {
       return {
         'tabs__menu-link--active': this.submissionPagesActive,
@@ -127,6 +142,10 @@ export default {
 
     teamPagesActive () {
       return this.subRouteIsActive('team')
+    },
+
+    curriculumPagesActive () {
+      return this.subRouteIsActive('curriculum')
     },
 
     registrationPagesActive () {

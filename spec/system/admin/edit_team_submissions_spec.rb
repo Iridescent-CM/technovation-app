@@ -23,7 +23,7 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "try to edit an existing submission" do
       create_authenticated_user_on_team(:student, submission: true)
 
-      click_button "Submit your project"
+      click_button "Submit your Project"
 
       expect(page).to have_content(
         "Submitting your project is not available right now.\n" +
@@ -45,7 +45,7 @@ RSpec.describe "Toggling editable team submissions", :js do
       set_editable_team_submissions(false)
       create_authenticated_user_on_team(:student, submission: false)
 
-      click_button "Submit your project"
+      click_button "Submit your Project"
 
       expect(page).to have_content(
         "Submitting your project is not available right now.\n" +
@@ -66,7 +66,7 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "begin and edit a submission" do
       create_authenticated_user_on_team(:student, submission: false)
 
-      click_button "Submit your project"
+      click_button "Submit your Project"
 
       within("#your-submission") { click_link "Begin your submission" }
       check "team_submission[integrity_affirmed]"
@@ -75,7 +75,7 @@ RSpec.describe "Toggling editable team submissions", :js do
       expect(page).to have_css('.button', text: "Set your app's name")
 
       visit student_dashboard_path
-      click_button "Submit your project"
+      click_button "Submit your Project"
 
       within("#your-submission") do
         expect(page).not_to have_content(

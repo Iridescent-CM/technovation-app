@@ -8,7 +8,7 @@ RSpec.describe "A mentor completing their training", :js do
     )
 
     visit mentor_training_completion_path
-    click_button "Build your team"
+    click_button "Build your Team"
     expect(page).to have_xpath(
       '//*[@id="mentor_training"]/button/img[contains(@src, "check-circle")]'
     )
@@ -32,7 +32,7 @@ RSpec.describe "A mentor completing their training", :js do
       expect(page).not_to have_css("button.disabled", text: "Find your team")
       expect(page).not_to have_css("button.disabled", text: "Create your team")
 
-      click_button "Submit your project"
+      click_button "Submit your Project"
       expect(page).not_to have_content("You must complete the mentor training")
     end
   end
@@ -55,7 +55,7 @@ RSpec.describe "A mentor completing their training", :js do
       expect(page).not_to have_css("button.disabled", text: "Find your team")
       expect(page).not_to have_css("button.disabled", text: "Create your team")
 
-      click_button "Submit your project"
+      click_button "Submit your Project"
       expect(page).not_to have_content("You must complete the mentor training")
     end
   end
@@ -72,7 +72,7 @@ RSpec.describe "A mentor completing their training", :js do
       expect(page).to have_css("button.disabled", text: "Find your team")
       expect(page).to have_css("button.disabled", text: "Create your team")
 
-      click_button "Submit your project"
+      click_button "Submit your Project"
       expect(page).to have_content("not available")
       expect(page).to have_content("You must complete the mentor training")
 
@@ -102,7 +102,7 @@ RSpec.describe "A mentor completing their training", :js do
       expect(page).to have_css("button.disabled", text: "Find your team")
       expect(page).to have_css("button.disabled", text: "Create your team")
 
-      click_button "Submit your project"
+      click_button "Submit your Project"
       expect(page).to have_content("not available")
       expect(page).to have_content("You must complete the mentor training")
     end
