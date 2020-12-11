@@ -23,13 +23,13 @@
             </li>
 
             <li>
-              <a href="https://technovationchallenge.org/curriculum/judging-rubric/">
+              <a href="https://technovationchallenge.org/curriculum/judging-rubric/" target="_blank">
                 Judging Rubric
               </a>
             </li>
 
             <li>
-              <a href="https://technovationchallenge.org/wp-content/uploads/2020/09/Technovation-Girls-2021-Season-Timeline-Key-Dates-Infographic.pdf">
+              <a href="https://technovationchallenge.org/wp-content/uploads/2020/09/Technovation-Girls-2021-Season-Timeline-Key-Dates-Infographic.pdf" target="_blank">
                 Suggested Milestones
               </a>
             </li>
