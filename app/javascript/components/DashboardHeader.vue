@@ -45,7 +45,7 @@
           <slot name="right-sidebar" />
 
           <small>
-            <drop-down label="More Information">
+            <drop-down label="Helpful Links">
               <h6
                 v-for="link in resourceLinks"
                 v-if="link.text.length && link.url.length"
