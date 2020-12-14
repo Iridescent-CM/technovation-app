@@ -38,9 +38,9 @@ describe("student/DashboardHeader.vue", () => {
   })
 
   it("contains the resources drop-down", () => {
-    const dropDown = defaultWrapper.find(DropDown)
+    const dropDown = defaultWrapper.findComponent(DropDown)
     expect(dropDown.exists()).toBe(true)
-    expect(dropDown.vm.label).toEqual("More Information")
+    expect(dropDown.vm.label).toEqual("Helpful Links")
   })
 
   it("displays the currentAccount's name", async () => {

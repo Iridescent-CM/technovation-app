@@ -48,40 +48,40 @@ export default {
     return {
       resourceLinks: [
         {
-          heading: 'How to use this website',
+          heading: 'Using Your Dashboard',
           url: 'https://youtu.be/KoWkYNXTr2w',
-          text: 'Watch a video tutorial'
+          text: 'Watch this Video Guide'
         },
 
         {
-          heading: 'Safety information',
+          heading: 'Safety Information',
           url: 'https://iridescentlearning.org/internet-safety/',
-          text: 'Internet Safety Training',
+          text: 'Stay Safe Online',
         },
 
         {
-          heading: 'Curriculum',
+          heading: 'Curriculum Lessons',
           url: 'https://www.technovationchallenge.org/curriculum-intro/registered/new/',
-          text: 'Open the Technovation Curriculum',
-        },
-
-        {
-          heading: 'Help us improve!',
-          url: this.surveyLink,
-          text: this.surveyLinkText,
-          isSurveyLink: true,
+          text: 'Start your Learning Journey',
         },
 
         {
           heading: 'Submission Guide',
           url: 'https://www.technovationchallenge.org/submission-guidelines/',
-          text: 'Read the Submission Guidelines',
+          text: 'Check what your team needs to complete',
         },
 
         {
-          heading: 'Judging Rubric',
+          heading: 'Competition Judging Rubric',
           url: 'https://www.technovationchallenge.org/judging-rubric/',
-          text: 'Read the Judging Rubric',
+          text: 'See how to earn points',
+        },
+
+        {
+          heading: 'Help Technovation Improve!',
+          url: this.surveyLink,
+          text: this.surveyLinkText,
+          isSurveyLink: true,
         },
       ],
     }
