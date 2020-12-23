@@ -17,7 +17,7 @@
     <p>
       <% if current_profile.teams_that_declined.include?(team) %>
         You asked to join <%= team.name %>, and they declined.
-      <% elsif !team.spot_available? %>
+      <% elsif current_scope == "student" && !team.spot_available? %>
         This team is currently full.
 
         <span class="cursor--not-allowed">

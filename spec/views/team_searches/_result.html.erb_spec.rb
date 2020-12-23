@@ -52,15 +52,27 @@ RSpec.describe "team_searches/_result.html.erb", type: :view do
     end
   end
 
-  context "when there are no available spots left on the team" do
+  context "when there are no more available spots left on the team" do
     let(:spot_available_on_team) { false }
 
-    it "displays a 'team is full' message" do
-      expect(rendered).to include("This team is currently full")
+    context "when the current scope/profile is a student" do
+      let(:current_scope) { "student" }
+
+      it "displays a 'team is full' message" do
+        expect(rendered).to include("This team is currently full")
+      end
+
+      it "disables the 'View more details' button" do
+        expect(rendered).to have_link("View more details", class: "button disabled")
+      end
     end
 
-    it "disables the 'View more details' button" do
-      expect(rendered).to have_link("View more details", class: "button disabled")
+    context "when the current scope/profile is a mentor" do
+      let(:current_scope) { "mentor" }
+
+      it "displays a 'View more details' button" do
+        expect(rendered).to have_link("View more details", class: "button")
+      end
     end
   end
 end
