@@ -57,7 +57,7 @@ export default {
     return {
       resourceLinks: [
         {
-          heading: 'Curriculum',
+          heading: 'Curriculum Lessons',
           url: 'https://www.technovationchallenge.org/curriculum-intro/registered/new/',
           text: 'Open the Technovation Curriculum',
         },
@@ -69,7 +69,19 @@ export default {
         },
 
         {
-          heading: 'Help us improve!',
+          heading: 'Safety Information',
+          url: 'https://www.technovation.org/safety/',
+          text: 'Stay Safe Online',
+        },
+
+        {
+          heading: 'Mentor Guide',
+          url: 'https://docs.google.com/document/d/1rqd8DB4e-JqPRIG-yrdqPT_8zECbyXnoR9njo7FwZ6Y/edit#heading=h.kxoc4txdn9x',
+          text: 'Read our Tips and Strategies',
+        },
+
+        {
+          heading: 'Help Technovation Improve!',
           url: this.surveyLink,
           text: this.surveyLinkText,
           isSurveyLink: true,
@@ -82,7 +94,7 @@ export default {
         },
 
         {
-          heading: 'Judging Rubric',
+          heading: 'Competition Judging Rubric',
           url: 'https://www.technovationchallenge.org/judging-rubric/',
           text: 'Read the Judging Rubric',
         },
