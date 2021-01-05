@@ -73,19 +73,66 @@
       </div>
 
       <div slot="find-mentor">
-        <% if current_team.pending_mentor_join_request_ids.any? or
-            current_team.pending_mentor_invite_ids.any? %>
-          <%= render "student/dashboards/completion_steps/incoming_join_requests",
-            requests: current_team.pending_mentor_join_requests %>
+        <h2 class="content-heading">Mentor Status</h3>
 
-          <%= render "student/dashboards/completion_steps/outgoing_team_invites",
-            invites: current_team.pending_mentor_invites %>
-        <% elsif current_student.team.mentors.any? %>
-          Your team has a mentor! You can have more than one.
-          <%= link_to 'Manage your mentors',
-            student_team_path(current_team, anchor: '!mentors') %>
+        <% if current_student.team.mentors.any? %>
+          <p>Your team has <%= pluralize(current_student.team.mentors.count, "mentor") %>. You can have more than one.</p>
         <% else %>
-          <%= render "student/dashboards/completion_steps/find_a_mentor" %>
+          <p>Your team does not have a Mentor. 91% of teams that complete the program have at least one mentor on their team.</p>
+        <% end %>
+
+        <hr class="margin--t-xlarge">
+
+        <h3>Find a Mentor to invite to your team</h2>
+        <% if current_team.present? %>
+          <%= link_to "Search for a Mentor to invite", new_student_mentor_search_path, class: "button" %>
+        <% else %>
+          <p>When you are on a team, you will be able to search for mentors.</p>
+        <% end %>
+
+        <h5 class="margin--t-xlarge">Your Mentor Invitations</h5>
+
+        <% if current_team.pending_mentor_invite_ids.any? %>
+          <p>
+            Your team is awaiting a response from
+            <%= pluralize(current_team.pending_mentor_invites.count, "mentor invite") %>
+          </p>
+
+          <%= link_to "Manage your invites", student_team_path(current_team, anchor: "!mentors"), class: "button" %>
+        <% else %>
+          <p>Your team has no open invites to a mentor</p>
+        <% end %>
+
+        <hr class="margin--t-xlarge">
+        <h2>Decide if Mentors (who ask) can join your team</h2>
+
+        <% if current_team.present? %>
+          <%= form_with model: current_team,
+            data: { submit_on_change: true },
+            url: [current_scope, current_team, { format: :json }],
+            method: :patch do |f| %>
+
+            <p>
+              <%= f.check_box :accepting_mentor_requests,
+                id: :team_accepting_mentor_requests %>
+
+              <%= f.label :accepting_mentor_requests,
+                "Make your team appear in search results",
+                for: :team_accepting_mentor_requests %>
+            </p>
+          <% end %>
+        <% end %>
+
+        <% if current_team.pending_mentor_join_request_ids.any? %>
+          <h5 class="margin--t-xlarge margin--b-none">Respond to Mentor requests to join your team</h5>
+
+          <p>
+            You have
+            <%= pluralize(current_team.pending_mentor_join_requests.count, "mentor request") %>
+            waiting for you and your team members
+          </p>
+
+          <%= link_to "Manage your invites", student_team_path(current_team, anchor: "!mentors"), class: "button" %>
         <% end %>
       </div>
 

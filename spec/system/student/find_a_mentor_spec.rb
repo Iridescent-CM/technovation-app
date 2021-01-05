@@ -14,11 +14,9 @@ RSpec.describe "Students invite mentors to join their team", :js do
     click_button "Build your Team"
     click_button "Add a mentor to your team"
 
-    within(".step-actions") do
-      expect(page).not_to have_link("Search for mentors")
-      expect(page).to have_content(
-        "When you are on a team, you will be able to search for mentors"
-      )
-    end
+    expect(page).not_to have_link("Search for a Mentor")
+    expect(page).to have_content(
+      "When you are on a team, you will be able to search for mentors"
+    )
   end
 end
