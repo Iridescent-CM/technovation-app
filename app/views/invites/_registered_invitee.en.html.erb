@@ -6,7 +6,11 @@
 
   <div class="grid__col-10 grid__col--bleed-y">
     <div class="grid__cell">
-      <strong><%= invite.invitee_first_name %></strong><br />
+      <strong>
+        <%= invite.invitee_first_name %>
+        <%= invite.invitee_last_name %>
+      </strong>
+      <br>
 
       <%= link_to "view profile",
         send(
@@ -20,7 +24,7 @@
           )
         ) %>
 
-      <br />
+      <br>
 
       <%= link_to "delete this invitation",
         [current_scope, invite],

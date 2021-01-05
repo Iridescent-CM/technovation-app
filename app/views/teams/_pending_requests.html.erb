@@ -25,8 +25,8 @@
 
               <div class="grid__col-10 grid__col--bleed-y">
                 <div class="grid__cell">
-                  <strong><%= join_request.requestor_first_name %></strong><br />
-                  <small><%= join_request.requestor_scope_name %></small><br />
+                  <strong><%= join_request.requestor_full_name %></strong><br>
+                  <small><%= join_request.requestor_scope_name %></small><br>
 
                   <%= link_to "view profile",
                     send(
