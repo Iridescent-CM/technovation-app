@@ -1,4 +1,11 @@
 <% admin_chapter_ambassador ||= false %>
+<% student_viewing_page = !admin_chapter_ambassador %>
+
+<h2>Mentors</h2>
+
+<% if student_viewing_page %>
+  <p>You can add as many mentors as your team needs.</p>
+<% end %>
 
 <% if team.mentors.any? %>
   <ul class="reset">
@@ -16,21 +23,11 @@
   </div>
 <% end %>
 
-<div class="grid grid--bleed">
-  <div class="grid__col-auto">
-    <% if SeasonToggles.team_building_enabled? %>
-      <% unless admin_chapter_ambassador %>
-        <p>
-          You can add as many mentors as your team needs!
-        </p>
-
-        <p>
-          <%= link_to(
-            "Add a mentor",
-            send("new_#{current_scope}_mentor_search_path"),
-            class: "button secondary"
-          ) %>
-        </p>
+  <div class="margin--t-large margin--b-large">
+    <% if student_viewing_page %>
+      <% if SeasonToggles.team_building_enabled? %>
+        <hr>
+        <h2>Do you want more mentors?</h2>
 
         <%= form_with model: team,
           data: { submit_on_change: true },
@@ -41,24 +38,35 @@
               id: :team_accepting_mentor_requests %>
 
             <%= f.label :accepting_mentor_requests,
-              "Allow other mentors to find our team and request to join us" %>
+              "Allow mentors to find our team and request to join us", for: :team_accepting_mentor_requests %>
           </p>
         <% end %>
+
+        <br>
+        <p>
+          If you're looking to add a student to your team,
+          <%= link_to "go here", public_send("#{current_scope}_team_path", team, anchor: "!students") %>.
+        </p>
+
+        <hr>
+        <h3 class="margin--t-large margin--b-none">Invitations and requests</h3>
+      <% else %>
+        <p>
+          Team building is not enabled at this time, so your team cannot add mentors.
+        </p>
       <% end %>
-    <% else %>
-      <p>
-        Team building is not enabled at this time, so your team cannot add mentors.
-      </p>
     <% end %>
-  </div>
 </div>
 
-<% unless admin_chapter_ambassador %>
+<% if student_viewing_page && SeasonToggles.team_building_enabled? %>
   <%= render "teams/pending_invites",
     team: team,
     invites: team.pending_mentor_invites %>
 
-  <%= render 'teams/pending_requests',
+    <%= link_to "Search for a mentor to invite", new_student_mentor_search_path, class: "button" %>
+    <br><br><br>
+
+  <%= render "teams/pending_requests",
     team: team,
     requests: team.pending_mentor_join_requests %>
 <% end %>

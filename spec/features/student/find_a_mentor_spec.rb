@@ -9,7 +9,7 @@ RSpec.feature "Students invite mentors to join their team" do
   before do
     sign_in(student)
     visit student_team_path(student.team)
-    click_link "Add a mentor"
+    click_link "Search for a mentor to invite"
   end
 
   scenario "only see current mentors" do

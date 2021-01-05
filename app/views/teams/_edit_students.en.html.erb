@@ -65,11 +65,13 @@
             id: :team_accepting_student_requests %>
 
           <%= f.label :accepting_student_requests,
-            "Allow other students to find our team and request to join us" %>
+            "Allow other students to find our team and request to join us",
+            for: :team_accepting_student_requests %>
         </p>
       <% end %>
     <% end %>
 
+    <br>
     <p>
       If you're looking to add a mentor to your team,
       <%= link_to 'go here', public_send("#{current_scope}_team_path", team, anchor: "!mentors") %>.
@@ -77,7 +79,7 @@
   </div>
 
   <hr />
-  <h3 class="reset">Invitations and requests</h3>
+  <h3 class="margin--t-large margin--b-none">Invitations and requests</h3>
   <div class="margin--b-large">
     <%= render "teams/pending_invites",
       team: team,
