@@ -44,13 +44,13 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     scenario "Toggle on" do
       toggle_on
       visit path
-      expect(page).to have_link("Add a mentor")
+      expect(page).to have_link("Search for a mentor to invite")
     end
 
     scenario "Toggle off" do
       toggle_off
       visit path
-      expect(page).not_to have_link("Add a mentor")
+      expect(page).not_to have_link("Search for a mentor to invite")
     end
   end
 
@@ -101,14 +101,14 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
       toggle_on
       visit path
       expect(page).to have_css("form[action='#{action}']")
-      expect(page).to have_link("Add a mentor")
+      expect(page).to have_link("Search for a mentor to invite")
     end
 
     scenario "Toggle off" do
       toggle_off
       visit path
       expect(page).not_to have_css("form[action='#{action}']")
-      expect(page).not_to have_link("Add a mentor")
+      expect(page).not_to have_link("Search for a mentor to invite")
     end
   end
 
