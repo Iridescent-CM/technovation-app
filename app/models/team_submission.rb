@@ -501,20 +501,13 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def embed_code(video_type, value = nil)
-    method = video_type.match(/_video_link$/) ?
-      video_type :
-      "#{video_type}_video_link"
+  def embed_code(video_type, video = nil)
+    video_url = VideoUrl.new(video || video_link_for(video_type))
 
-    value = value || send(method)
-
-    id = determine_video_id(value)
-    root = determine_video_url_root(value)
-
-    if id.blank? or root.blank?
-      src = "/video-link-broken.html"
+    if video_url.valid?
+      src = "#{video_url.root}#{video_url.video_id}?rel=0&cc_load_policy=1"
     else
-      src = "#{root}#{id}?rel=0&cc_load_policy=1"
+      src = "/video-link-broken.html"
     end
 
     %{<iframe
@@ -527,19 +520,11 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def video_id(video_type)
-    method = video_type.match(/_video_link$/) ?
-      video_type :
-      "#{video_type}_video_link"
-
-    determine_video_id(send(method))
+    VideoUrl.new(video_link_for(video_type)).video_id
   end
 
   def video_url_root(video_type)
-    method = video_type.match(/_video_link$/) ?
-      video_type :
-      "#{video_type}_video_link"
-
-    determine_video_url_root(send(method))
+    VideoUrl.new(video_link_for(video_type)).root
   end
 
   private
@@ -557,27 +542,12 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
-  def determine_video_id(url)
-    case url
-    when /youtu/
-      url[/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/, 1] || ""
-    when /vimeo/
-      url[/\/(\d+)$/, 1] || ""
-    when /youku/
-      url[/\/v_show\/id_(\w+)(?:==)?(?:\.html.+)?$/, 1] || ""
-    else
-      url || ""
-    end
-  end
-
-  def determine_video_url_root(url)
-    case url
-    when /youtu/
-      "https://www.youtube.com/embed/"
-    when /vimeo/
-      "https://player.vimeo.com/video/"
-    when /youku/
-      "https://player.youku.com/embed/"
+  def video_link_for(video_type)
+    case video_type
+    when "demo_video_link", "demo", :demo
+      demo_video_link
+    when "pitch_video_link", "pitch", :pitch
+      pitch_video_link
     end
   end
 end

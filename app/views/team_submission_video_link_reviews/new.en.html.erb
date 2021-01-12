@@ -28,7 +28,10 @@
 
     <div class="actions">
       <p>
-        <%= f.submit "Save", class: "button" %>
+        <%= f.submit "Save",
+          class: VideoUrl.new(@review_value).valid? ? "button" : "button disabled"
+        %>
+
         or
         <%= link_to "go back",
           [

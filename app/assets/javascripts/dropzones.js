@@ -30,7 +30,7 @@ Dropzone.options.teamSubmissionBusinessPlanDropzone = $.extend(
   defaultSubmissionDropzoneOptions,
   {
     paramName: "team_submission[business_plan]",
-    acceptedFiles: ".doc,.docx,.pdf",
+    acceptedFiles: ".pdf",
   }
 );
 
