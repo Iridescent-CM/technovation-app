@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Uploading screenshots to submissions", :js do
+RSpec.describe "Uploading images to submissions", :js do
   before { SeasonToggles.team_submissions_editable! }
 
   it "does not allow invalid file types" do

@@ -17,7 +17,7 @@
     </template>
 
     <template v-else>
-      You have uploaded the maximum of {{ maxAllowed }} screenshots.
+      You have uploaded the maximum of {{ maxAllowed }} images.
       You need to remove some if you want to add others.
     </template>
 
@@ -30,7 +30,7 @@
     </div>
 
     <p v-if="screenshots.length > 1">
-      Sort your screenshots in the order that you want
+      Sort your images in the order that you want
       the judges to see them:
     </p>
 
@@ -146,7 +146,7 @@ export default {
     },
 
     object () {
-      return this.maxFiles > 1 ? "screenshots" : "screenshot"
+      return this.maxFiles > 1 ? "images" : "image"
     },
 
     prefix () {
@@ -168,7 +168,7 @@ export default {
 
     removeScreenshot (screenshot) {
       swal({
-        text: "Are you sure you want to delete the screenshot?",
+        text: "Are you sure you want to delete the image?",
         cancelButtonText: "No, go back",
         confirmButtonText: "Yes, delete it",
         confirmButtonColor: "#D8000C",
