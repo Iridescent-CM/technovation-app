@@ -42,6 +42,7 @@
     "escape-string-regexp": "^4.0.0",
     "flatpickr": "^4.2.4",
     "lodash": "^4.17.19",
+    "node-notifier": "8.0.1",
     "sweetalert2": "^7.24.4",
     "url-search-params": "^0.10.0",
     "v-tooltip": "^2.0.2",
