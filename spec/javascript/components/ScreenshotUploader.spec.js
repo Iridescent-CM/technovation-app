@@ -186,7 +186,7 @@ describe('ScreenshotUploader Vue component', () => {
 
       it('returns "screenshots" if more than one file upload remains', () => {
         expect(wrapper.vm.maxFiles).toBeGreaterThan(1)
-        expect(wrapper.vm.object).toEqual('screenshots')
+        expect(wrapper.vm.object).toEqual('images')
       })
 
       it('returns "screenshot" if only one file upload remains', () => {
@@ -203,7 +203,7 @@ describe('ScreenshotUploader Vue component', () => {
           },
         })
 
-        expect(wrapper.vm.object).toEqual('screenshot')
+        expect(wrapper.vm.object).toEqual('image')
       })
 
     })
@@ -256,7 +256,7 @@ describe('ScreenshotUploader Vue component', () => {
         wrapper.vm.removeScreenshot(screenshot)
 
         expect(swal).toHaveBeenCalledWith({
-          text: 'Are you sure you want to delete the screenshot?',
+          text: 'Are you sure you want to delete the image?',
           cancelButtonText: 'No, go back',
           confirmButtonText: 'Yes, delete it',
           confirmButtonColor: '#D8000C',

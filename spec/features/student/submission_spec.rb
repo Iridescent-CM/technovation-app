@@ -106,7 +106,7 @@ RSpec.feature "Student team submissions" do
     click_link "Pitch"
 
     expect(page).to have_link(
-      "Upload screenshots of your app",
+      "Upload images of your app",
       href: edit_student_team_submission_path(
         submission,
         piece: :screenshots

@@ -72,12 +72,12 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
-  title: "Screenshots",
+  title: "Images",
   scope: current_scope,
   attribute: :screenshots,
   link_options: { data: { turbolinks: false } },
-  cta_when_empty: "Upload screenshots of your app",
-  cta_when_filled: "Make changes to your screenshots" do %>
+  cta_when_empty: "Upload images of your app",
+  cta_when_filled: "Make changes to your images" do %>
   <div class="submission-pieces__screenshots">
     <% @team_submission.screenshots.each do |screenshot| %>
       <div class="submission-pieces__screenshot">
