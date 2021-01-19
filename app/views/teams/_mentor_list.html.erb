@@ -1,9 +1,9 @@
 <% admin_chapter_ambassador ||= false %>
-<% student_viewing_page = !admin_chapter_ambassador %>
+<% student_or_mentor_viewing_page = !admin_chapter_ambassador %>
 
 <h2>Mentors</h2>
 
-<% if student_viewing_page %>
+<% if student_or_mentor_viewing_page %>
   <p>You can add as many mentors as your team needs.</p>
 <% end %>
 
@@ -24,7 +24,7 @@
 <% end %>
 
   <div class="margin--t-large margin--b-large">
-    <% if student_viewing_page %>
+    <% if student_or_mentor_viewing_page %>
       <hr>
       <h2>Do you want more mentors?</h2>
 
@@ -57,14 +57,18 @@
     <% end %>
 </div>
 
-<% if student_viewing_page && SeasonToggles.team_building_enabled? %>
+<% if student_or_mentor_viewing_page && SeasonToggles.team_building_enabled? %>
   <h3 class="margin--t-large margin--b-none">Invitations and requests</h3>
 
   <%= render "teams/pending_invites",
     team: team,
     invites: team.pending_mentor_invites %>
 
-    <%= link_to "Search for a mentor to invite", new_student_mentor_search_path, class: "button" %>
+  <%= link_to(
+    "Search for a mentor to invite",
+    send("new_#{current_scope}_mentor_search_path"),
+    class: "button"
+  ) %>
     <br><br><br>
 
   <%= render "teams/pending_requests",
