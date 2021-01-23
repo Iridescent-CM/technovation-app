@@ -4,6 +4,13 @@ class TeamSubmission < ActiveRecord::Base
   MAX_SCREENSHOTS_ALLOWED = 6
   PARTICIPATION_MINIMUM_PERCENT = 50
 
+  ACTIVE_DEVELOPMENT_PLATFORMS = {
+    "App Inventor" => 0,
+    "Thunkable" => 6,
+    "Java or Android Studio" => 2,
+    "Swift or XCode" => 1
+  }
+
   include Seasoned
 
   include Regioned
