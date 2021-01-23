@@ -11,6 +11,13 @@ class TeamSubmission < ActiveRecord::Base
     "Swift or XCode" => 1
   }
 
+  INACTIVE_DEVELOPMENT_PLATFORMS = {
+    "C++" => 3,
+    "PhoneGap/Apache Cordova" => 4,
+    "Other" => 5,
+    "Thunkable Classic" => 7
+  }
+
   include Seasoned
 
   include Regioned
