@@ -67,22 +67,8 @@ class TeamSubmission < ActiveRecord::Base
     end
   }, on: :update
 
-  enum development_platform: {
-    "App Inventor" => 0,
-      # Renamed from 'App Inventor 2' in Sept 2018
-
-    "Thunkable" => 6,
-    "Thunkable Classic" => 7,
-    "Java or Android Studio" => 2,
-    "Swift or XCode" => 1,
-
-    # LEGACY SUPPORT
-    # DO NOT USE THESE ENUMS
-    # IN FORM ELEMENTS
-    "Other" => 5,
-    "C++" => 3,
-    "PhoneGap/Apache Cordova" => 4,
-  }
+  enum development_platform: ACTIVE_DEVELOPMENT_PLATFORMS
+    .merge(INACTIVE_DEVELOPMENT_PLATFORMS)
 
   def self.development_platform_keys
     development_platforms.reject { |_key, value|
