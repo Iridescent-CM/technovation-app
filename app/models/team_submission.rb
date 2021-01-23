@@ -71,9 +71,7 @@ class TeamSubmission < ActiveRecord::Base
     .merge(INACTIVE_DEVELOPMENT_PLATFORMS)
 
   def self.development_platform_keys
-    development_platforms.reject { |_key, value|
-     [3, 4, 5].include?(value)
-    }.keys
+    ACTIVE_DEVELOPMENT_PLATFORMS.keys
   end
 
   def developed_on?(platform_name)
