@@ -4,19 +4,24 @@ class TeamSubmission < ActiveRecord::Base
   MAX_SCREENSHOTS_ALLOWED = 6
   PARTICIPATION_MINIMUM_PERCENT = 50
 
-  ACTIVE_DEVELOPMENT_PLATFORMS = {
+  ACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
     "App Inventor" => 0,
     "Thunkable" => 6,
     "Java or Android Studio" => 2,
     "Swift or XCode" => 1
   }
 
-  INACTIVE_DEVELOPMENT_PLATFORMS = {
+  INACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
     "C++" => 3,
     "PhoneGap/Apache Cordova" => 4,
     "Other" => 5,
     "Thunkable Classic" => 7
   }
+
+  ALL_DEVELOPMENT_PLATFORMS_ENUM = ACTIVE_DEVELOPMENT_PLATFORMS_ENUM
+    .merge(INACTIVE_DEVELOPMENT_PLATFORMS_ENUM)
+
+  DEVELOPMENT_PLATFORMS = ACTIVE_DEVELOPMENT_PLATFORMS_ENUM.keys
 
   include Seasoned
 
@@ -62,28 +67,23 @@ class TeamSubmission < ActiveRecord::Base
 
     update_columns(columns)
 
-    if not published?
+    unless published?
       submission_scores.current_round.destroy_all
     end
   }, on: :update
 
-  enum development_platform: ACTIVE_DEVELOPMENT_PLATFORMS
-    .merge(INACTIVE_DEVELOPMENT_PLATFORMS)
-
-  def self.development_platform_keys
-    ACTIVE_DEVELOPMENT_PLATFORMS.keys
-  end
+  enum development_platform: ALL_DEVELOPMENT_PLATFORMS_ENUM
 
   def developed_on?(platform_name)
     development_platform == platform_name
   end
 
-  enum contest_rank: %w{
+  enum contest_rank: %w[
     quarterfinalist
     semifinalist
     finalist
     winner
-  }
+  ]
 
   attr_accessor :step
 
@@ -98,22 +98,22 @@ class TeamSubmission < ActiveRecord::Base
     }
   end
 
-  scope :complete, -> { where('published_at IS NOT NULL') }
-  scope :incomplete, -> { where('published_at IS NULL') }
+  scope :complete, -> { where("published_at IS NOT NULL") }
+  scope :incomplete, -> { where("published_at IS NULL") }
 
   scope :live, -> { complete.joins(team: :current_official_events) }
 
   scope :virtual, -> {
     complete
-    .left_outer_joins(team: :current_official_events)
-    .where("regional_pitch_events.id IS NULL")
+      .left_outer_joins(team: :current_official_events)
+      .where("regional_pitch_events.id IS NULL")
   }
 
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
     dependent: :destroy,
-    after_add: Proc.new { |ts, _| ts.touch },
-    after_remove: Proc.new { |ts, _| ts.touch }
+    after_add: proc { |ts, _| ts.touch },
+    after_remove: proc { |ts, _| ts.touch }
   accepts_nested_attributes_for :screenshots
 
   has_many :submission_scores,
@@ -187,19 +187,19 @@ class TeamSubmission < ActiveRecord::Base
   }
 
   validates :app_inventor_app_name,
-            :app_inventor_gmail,
+    :app_inventor_gmail,
     presence: true,
     if: ->(s) { s.development_platform == "App Inventor" }
 
   validates :thunkable_account_email,
-            :thunkable_project_url,
+    :thunkable_project_url,
     presence: true,
     if: ->(s) { s.development_platform == "Thunkable" }
 
   validates :app_inventor_app_name,
     format: {
-      with: /\A\w+\z/ ,
-      message: "can only have letters, numbers, and underscores (\"_\")",
+      with: /\A\w+\z/,
+      message: "can only have letters, numbers, and underscores (\"_\")"
     },
     allow_blank: true
 
@@ -209,14 +209,14 @@ class TeamSubmission < ActiveRecord::Base
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
   delegate :name,
-           :division_name,
-           :photo,
-           :primary_location,
-           :city,
-           :state_province,
-           :country,
-           :country_code,
-           :ages,
+    :division_name,
+    :photo,
+    :primary_location,
+    :city,
+    :state_province,
+    :country,
+    :country_code,
+    :ages,
     to: :team,
     prefix: true
 
@@ -224,7 +224,7 @@ class TeamSubmission < ActiveRecord::Base
     friendly.find(*args)
   end
 
-  %i{
+  %i[
     app_name
     app_description
     demo_video_link
@@ -233,9 +233,9 @@ class TeamSubmission < ActiveRecord::Base
     source_code_url
     business_plan_url
     pitch_presentation_url
-  }.each do |piece|
+  ].each do |piece|
     define_method("#{piece}_complete?") do
-      not public_send(piece).blank?
+      !public_send(piece).blank?
     end
   end
 
@@ -257,7 +257,7 @@ class TeamSubmission < ActiveRecord::Base
   def only_needs_to_submit?
     !published? &&
       team.qualified? &&
-        RequiredFields.new(self).all?(&:complete?)
+      RequiredFields.new(self).all?(&:complete?)
   end
 
   def team_photo_uploaded?
@@ -315,7 +315,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def quarterfinals_official_scores
     if team.selected_regional_pitch_event.live? &&
-         team.selected_regional_pitch_event.official?
+        team.selected_regional_pitch_event.official?
       submission_scores.current.live.complete.quarterfinals
     else
       submission_scores.current.virtual.complete.quarterfinals
@@ -324,7 +324,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def quarterfinals_unofficial_scores
     if team.selected_regional_pitch_event.live? &&
-         team.selected_regional_pitch_event.official?
+        team.selected_regional_pitch_event.official?
       submission_scores.current.virtual.complete.quarterfinals
     else
       submission_scores.current.live.complete.quarterfinals
@@ -384,9 +384,9 @@ class TeamSubmission < ActiveRecord::Base
 
   def status
     if complete?
-      'complete'
+      "complete"
     else
-      'incomplete'
+      "incomplete"
     end
   end
 
@@ -473,7 +473,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def development_platform_text
     if development_platform == "Other"
-      ["Other", "-", development_platform_other].join(' ')
+      ["Other", "-", development_platform_other].join(" ")
     else
       development_platform
     end
@@ -482,17 +482,17 @@ class TeamSubmission < ActiveRecord::Base
   def app_inventor?
     send("App Inventor?")
   end
-  alias :app_inventor_2? :app_inventor?
+  alias app_inventor_2? app_inventor?
 
   def thunkable?
     send("Thunkable?")
   end
 
-  %i{
+  %i[
     source_code
     business_plan
     pitch_presentation
-  }.each do |piece|
+  ].each do |piece|
     define_method("#{piece}_filename") do
       url = send("#{piece}_url")
       File.basename(url)
@@ -526,6 +526,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   private
+
   def team_name_and_app_name
     "#{app_name} by #{team_name}"
   end

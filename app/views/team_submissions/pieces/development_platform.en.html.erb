@@ -24,7 +24,7 @@
         for: :team_submission_development_platform %>
 
       <%= f.select :development_platform,
-        TeamSubmission.development_platform_keys,
+        TeamSubmission::DEVELOPMENT_PLATFORMS,
         { include_blank: true },
         data: {
           toggles: {
