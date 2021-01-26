@@ -48,7 +48,7 @@ gem 'datagrid', "~> 1.5"
 gem 'simple_form', '~> 5.0'
 gem 'country_state_select', '~> 3.0'
 
-gem 'nokogiri', "~> 1.8"
+gem 'nokogiri', "~> 1.11.0"
 
 gem 'friendly_id', "~> 5.2"
 
@@ -62,7 +62,7 @@ gem 'scout_apm', '~> 2.4'
 
 gem 'dalli', "~> 2.7"
 
-gem 'geocoder', '~> 1.4.9'
+gem 'geocoder', '~> 1.6.0'
 gem 'timezone', '~> 1.3'
 
 gem 'carrierwave', "~> 1.2"
