@@ -50,6 +50,54 @@ RSpec.describe TeamSubmission do
     expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4")
   end
 
+  describe "ACTIVE_DEVELOPMENT_PLATFORMS_ENUM" do
+    it "returns a list of active development platforms (in Rails enum format)" do
+      expect(TeamSubmission::ACTIVE_DEVELOPMENT_PLATFORMS_ENUM).to eq({
+        "App Inventor" => 0,
+        "Thunkable" => 6,
+        "Java or Android Studio" => 2,
+        "Swift or XCode" => 1
+      })
+    end
+  end
+
+  describe "INACTIVE_DEVELOPMENT_PLATFORMS_ENUM" do
+    it "returns a list of inactive development platforms (in Rails enum format)" do
+      expect(TeamSubmission::INACTIVE_DEVELOPMENT_PLATFORMS_ENUM).to eq({
+        "C++" => 3,
+        "PhoneGap/Apache Cordova" => 4,
+        "Other" => 5,
+        "Thunkable Classic" => 7
+      })
+    end
+  end
+
+  describe "ALL_DEVELOPMENT_PLATFORMS_ENUM" do
+    it "returns a list of all (active and invactive) development platforms (in Rails enum format)" do
+      expect(TeamSubmission::ALL_DEVELOPMENT_PLATFORMS_ENUM).to eq({
+        "App Inventor" => 0,
+        "Thunkable" => 6,
+        "Java or Android Studio" => 2,
+        "Swift or XCode" => 1,
+        "C++" => 3,
+        "PhoneGap/Apache Cordova" => 4,
+        "Other" => 5,
+        "Thunkable Classic" => 7
+      })
+    end
+  end
+
+  describe "DEVELOPMENT_PLATFORMS" do
+    it "returns a list of (active) development platforms" do
+      expect(TeamSubmission::DEVELOPMENT_PLATFORMS).to eq([
+        "App Inventor",
+        "Thunkable",
+        "Java or Android Studio",
+        "Swift or XCode"
+      ])
+    end
+  end
+
   describe "#developed_on?(platform_name)" do
     it "matches exact names" do
       submission = FactoryBot.create(:submission, :complete)
@@ -69,7 +117,7 @@ RSpec.describe TeamSubmission do
     SeasonToggles.set_judging_round(:qf)
 
     submission = FactoryBot.create(:submission, :complete)
-    score = FactoryBot.create(:score, team_submission: submission)
+    FactoryBot.create(:score, team_submission: submission)
 
     expect {
       submission.published_at = nil
@@ -107,7 +155,8 @@ RSpec.describe TeamSubmission do
       chapter_ambassador = FactoryBot.create(
         :ambassador,
         :chicago,
-        secondary_regions: ["CA, US"])
+        secondary_regions: ["CA, US"]
+      )
 
       expect(TeamSubmission.in_region(chapter_ambassador)).to contain_exactly(chi, la)
     end
@@ -219,8 +268,7 @@ RSpec.describe TeamSubmission do
           division_ids: Division.senior.id,
           city: "City",
           venue_address: "123 Street St.",
-          unofficial: false,
-        )
+          unofficial: false)
 
         team.regional_pitch_events << @rpe
         team.save
@@ -307,8 +355,7 @@ RSpec.describe TeamSubmission do
           division_ids: Division.senior.id,
           city: "City",
           venue_address: "123 Street St.",
-          unofficial: true,
-        )
+          unofficial: true)
 
         team.regional_pitch_events << @rpe
         team.save
@@ -441,7 +488,7 @@ RSpec.describe TeamSubmission do
           team_submission: sub,
           ideation_1: score,
           completed_at: Time.current,
-          round: :semifinals,
+          round: :semifinals
         })
       end
 
@@ -455,7 +502,7 @@ RSpec.describe TeamSubmission do
           team_submission: sub,
           ideation_1: score,
           completed_at: Time.current,
-          round: :semifinals,
+          round: :semifinals
         })
       end
 
