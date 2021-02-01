@@ -820,7 +820,8 @@ CREATE TABLE public.mentor_profiles (
     connect_with_mentors boolean DEFAULT true NOT NULL,
     user_invitation_id bigint,
     mentor_type integer,
-    training_completed_at timestamp without time zone
+    training_completed_at timestamp without time zone,
+    former_student boolean DEFAULT false
 );
 
 
@@ -3024,6 +3025,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200928215117'),
 ('20201014203947'),
 ('20201109234926'),
-('20210128191135');
+('20210128191135'),
+('20210201224232');
 
 
