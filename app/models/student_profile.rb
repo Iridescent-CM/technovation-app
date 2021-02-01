@@ -1,6 +1,8 @@
 class StudentProfile < ActiveRecord::Base
   attr_accessor :used_global_invitation
 
+  acts_as_paranoid
+
   include Regioned
   regioned_source Account
 
