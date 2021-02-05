@@ -71,7 +71,7 @@ module StoreLocation
     end
 
     def first_geocoded_result
-      @geocoded_results ||= geocoder.search(source)
+      @geocoded_results ||= Geocoder.search(source, lookup: :google)
 
       @first_geocoded_result ||= @geocoded_results.first ||
         ::NullGeocodedResult.new

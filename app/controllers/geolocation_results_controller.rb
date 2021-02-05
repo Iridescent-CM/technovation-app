@@ -7,7 +7,7 @@ class GeolocationResultsController < ApplicationController
     state = ""
     country = ""
 
-    if geocoded = Geocoder.search(query).first ||
+    if geocoded = Geocoder.search(query, lookup: :google).first ||
                     Geocoder.search(query, lookup: :bing).first
       city = geocoded.city
       state = geocoded.state_code

@@ -50,7 +50,7 @@ class FriendlyCountry
     if options[:source] == :country_code
       country = Carmen::Country.coded(record.address_details)
       Geocoded.new(OpenStruct.new(country: country.name))
-    elsif result = Geocoder.search(record.address_details).first
+    elsif result = Geocoder.search(record.address_details, lookup: :google).first
       Geocoded.new(result)
     else
       record
