@@ -229,7 +229,7 @@ describe('location/components/LocationForm', () => {
   describe('methods', () => {
     describe('handleSuggestionClick', () => {
       let wrapper
-      let handleSubmitSpy
+      let saveLocationSpy
       const suggestion = {
         id: 1,
         city: 'Kansas City',
@@ -238,7 +238,7 @@ describe('location/components/LocationForm', () => {
       }
 
       beforeEach(() => {
-        handleSubmitSpy = jest.fn(() => {})
+        saveLocationSpy = jest.fn(() => {})
 
         wrapper = shallowMount(LocationForm, {
           localVue,
@@ -247,7 +247,7 @@ describe('location/components/LocationForm', () => {
             scopeName: 'admin',
           },
           methods: {
-            handleSubmit: handleSubmitSpy,
+            saveLocation: saveLocationSpy,
           },
         })
       })
@@ -261,12 +261,12 @@ describe('location/components/LocationForm', () => {
         expect(wrapper.vm.countryConfirmed).toBe(true)
       })
 
-      it('calls handleSubmit', () => {
-        expect(handleSubmitSpy).not.toHaveBeenCalled()
+      it('calls saveLocation', () => {
+        expect(saveLocationSpy).not.toHaveBeenCalled()
 
         wrapper.vm.handleSuggestionClick(suggestion)
 
-        expect(handleSubmitSpy).toHaveBeenCalledTimes(1)
+        expect(saveLocationSpy).toHaveBeenCalledTimes(1)
       })
     })
   })
