@@ -407,12 +407,7 @@ export default {
   methods: {
     handleSubmit () {
       if (this.savedLocation) {
-        window.axios.post(this.patchLocationEndpoint, this.params)
-          .then(() => {
-            this.handleConfirm()
-          }).catch(err => {
-            console.error(err)
-          })
+        this.saveLocation()
       } else if (!this.formHasInput) {
         this.handleErrorResponse({ response: { status: 404 } })
       } else {
@@ -428,6 +423,15 @@ export default {
       }
     },
 
+    saveLocation () {
+      window.axios.post(this.patchLocationEndpoint, this.params)
+        .then(() => {
+          this.handleConfirm()
+        }).catch(err => {
+          console.error(err)
+        })
+    },
+
     handleCancel () {
       if (this.savedLocation) {
         this.resetMeta()
@@ -441,10 +445,11 @@ export default {
     },
 
     handleSuggestionClick (suggestion) {
+      this.searching = true
       this.city = suggestion.city
       this.state = suggestion.state
       this.confirmCountry(suggestion.country)
-      this.handleSubmit()
+      this.saveLocation()
     },
 
     handleOKResponse (status, data) {
