@@ -18,7 +18,7 @@ RSpec.describe SubmissionToJudgeValidator do
     end
 
     it "returns a success message" do
-      expect(validator_result.message).to eq({ success: "#{judge.account.email} can be assigned a submission" })
+      expect(validator_result.message).to eq({success: "#{judge.account.email} can be assigned a submission"})
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.describe SubmissionToJudgeValidator do
     end
 
     it "returns a failure message" do
-      expect(validator_result.message).to eq({ error: "This is not a judge account"})
+      expect(validator_result.message).to eq({error: "This is not a judge account"})
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe SubmissionToJudgeValidator do
     end
 
     it "returns a failure message" do
-      expect(validator_result.message).to eq({ error: "#{judge.account.email} is suspended"})
+      expect(validator_result.message).to eq({error: "#{judge.account.email} is suspended"})
     end
   end
 
@@ -57,7 +57,7 @@ RSpec.describe SubmissionToJudgeValidator do
     end
 
     it "returns a failure message" do
-      expect(validator_result.message).to eq({ error: "#{judge.account.email} already has a score in progress"})
+      expect(validator_result.message).to eq({error: "#{judge.account.email} already has a score in progress"})
     end
   end
 end

@@ -1,13 +1,14 @@
 require "rails_helper"
 
-RSpec.describe SubmissionToJudgeAssignor do
-  let(:submission_to_judge_assignor) {
-    SubmissionToJudgeAssignor.new(submission: submission,
-                                  judge: judge,
-                                  validator: submission_to_judge_validator,
-                                  score_questions: score_questions) }
+RSpec.describe SubmissionToJudgeAssigner do
+  let(:submission_to_judge_assignor) do
+    SubmissionToJudgeAssigner.new(submission: submission,
+                              judge: judge,
+                              validator: submission_to_judge_validator,
+                              score_questions: score_questions)
+  end
 
-  let(:submission)  { instance_double(TeamSubmission) }
+  let(:submission) { instance_double(TeamSubmission) }
   let(:judge) { instance_double(JudgeProfile, account: account) }
   let(:account) { instance_double(Account, email: "judgejudy@abcjudges.com") }
   let(:submission_to_judge_validator) { class_double(SubmissionToJudgeValidator) }
@@ -19,9 +20,11 @@ RSpec.describe SubmissionToJudgeAssignor do
     allow(score_questions).to receive(:new).with(judge, submission)
   end
 
-  let(:validator_result) { double("validator_result",
-                                  success?: validator_success,
-                                  message: validator_message) }
+  let(:validator_result) do
+    double("validator_result",
+      success?: validator_success,
+      message: validator_message)
+  end
   let(:validator_success) { false }
   let(:validator_message) { nil }
 
@@ -36,7 +39,8 @@ RSpec.describe SubmissionToJudgeAssignor do
 
     it "returns a success message" do
       expect(assignor_result.message).to eq({
-        success: "This submission was successfully assigned to #{judge.account.email}" })
+        success: "This submission was successfully assigned to #{judge.account.email}"
+      })
     end
   end
 
