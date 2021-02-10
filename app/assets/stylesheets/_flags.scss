@@ -7,6 +7,14 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.flag--former-student {
+  position: absolute;
+  top: 3rem;
+  right: -0.25rem;
+  z-index: $z-under-menu;
+  -webkit-font-smoothing: antialiased;
+}
+
 .flag {
   display: block;
   margin: 0 0 0.5rem;
