@@ -1,4 +1,20 @@
 class AddAllOnboardedToTeams < ActiveRecord::Migration[5.1]
+  class Team < ActiveRecord::Base
+    include Seasoned
+
+    has_many :memberships, dependent: :destroy
+
+    has_many :students, -> { order("memberships.created_at") },
+      through: :memberships,
+      source: :member,
+      source_type: "StudentProfile"
+  end
+
+  class StudentProfile < ActiveRecord::Base
+    has_many :teams,
+      through: :memberships
+  end
+
   def up
     add_column :teams, :all_students_onboarded, :boolean, default: false
 
