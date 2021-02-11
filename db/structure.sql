@@ -820,7 +820,8 @@ CREATE TABLE public.mentor_profiles (
     connect_with_mentors boolean DEFAULT true NOT NULL,
     user_invitation_id bigint,
     mentor_type integer,
-    training_completed_at timestamp without time zone
+    training_completed_at timestamp without time zone,
+    former_student boolean DEFAULT false
 );
 
 
@@ -1292,7 +1293,8 @@ CREATE TABLE public.student_profiles (
     school_name character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    onboarded boolean DEFAULT false
+    onboarded boolean DEFAULT false,
+    deleted_at timestamp without time zone
 );
 
 
@@ -2457,6 +2459,13 @@ CREATE INDEX index_signup_attempts_on_status ON public.signup_attempts USING btr
 
 
 --
+-- Name: index_student_profiles_on_deleted_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_student_profiles_on_deleted_at ON public.student_profiles USING btree (deleted_at);
+
+
+--
 -- Name: index_submission_scores_on_completed_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3015,6 +3024,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200914131700'),
 ('20200928215117'),
 ('20201014203947'),
-('20201109234926');
+('20201109234926'),
+('20210128191135'),
+('20210201224232');
 
 

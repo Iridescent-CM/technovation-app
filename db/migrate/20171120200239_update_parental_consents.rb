@@ -1,4 +1,15 @@
 class UpdateParentalConsents < ActiveRecord::Migration[5.1]
+  class StudentProfile < ActiveRecord::Base
+    belongs_to :account
+
+    belongs_to :current_account, -> { current },
+      foreign_key: :account_id,
+      class_name: "Account",
+      required: false
+
+    has_many :parental_consents, dependent: :destroy
+  end
+
   def up
     consented_count = StudentProfile.joins(:current_account).left_outer_joins(:parental_consents).where("parental_consents.id IS NOT NULL").count
     unconsented_count = StudentProfile.joins(:current_account).left_outer_joins(:parental_consents).where("parental_consents.id IS NULL").count

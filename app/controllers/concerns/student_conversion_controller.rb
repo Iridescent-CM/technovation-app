@@ -2,12 +2,10 @@ module StudentConversionController
   extend ActiveSupport::Concern
 
   def create
-    profile = StudentProfile.find(params.fetch(:student_profile_id))
-    account = profile.account
-
-    CreateMentorProfile.(account, admin: true)
+    account = StudentProfile.find(params.fetch(:student_profile_id)).account
+    student_converter_result = StudentToMentorConverter.new(account: account).call
 
     redirect_to [current_scope, :participant, id: account.to_param],
-      success: "#{account.name} is now a mentor"
+      flash: student_converter_result.message
   end
 end

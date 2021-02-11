@@ -5,6 +5,12 @@
     <div class="panel panel--with-flags">
       <%= render "participant_flags/season", flag: @season_flag %>
 
+      <% if @account&.mentor_profile&.former_student? %>
+        <div class="flag flag--former-student flag-season--past">
+          Former student
+        </div>
+      <% end %>
+
       <div class="grid">
         <div class="grid__col-4">
           <% if params[:review_before] || params[:back] %>
