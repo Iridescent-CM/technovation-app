@@ -28,13 +28,13 @@ module Admin
       ) || {}
 
       profile_params[:account_attributes] = {
-        id: params.fetch(:id),
+        id: params.fetch(:id)
       }.merge(account_params)
 
       if ProfileUpdating.execute(
-          profile,
-          @account.scope_name,
-          profile_params
+        profile,
+        @account.scope_name,
+        profile_params
       )
         redirect_to admin_participant_path(@account),
           success: "You updated #{@account.full_name}'s account"
@@ -57,6 +57,8 @@ module Admin
       account = Account.find(params[:participant_id])
 
       DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
+      ConsentWaiver.find_by(account_id: account.id).delete
+
       account.really_destroy!
 
       redirect_to admin_participants_path,
@@ -64,6 +66,7 @@ module Admin
     end
 
     private
+
     def grid_params
       grid = (params[:accounts_grid] ||= {}).merge(
         admin: true,
@@ -71,11 +74,11 @@ module Admin
         state_province: Array(params[:accounts_grid][:state_province]),
         season: params[:accounts_grid][:season] || Season.current.year,
         season_and_or: params[:accounts_grid][:season_and_or] ||
-                         "match_any",
+                         "match_any"
       )
 
       grid.merge(
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
 
@@ -99,7 +102,7 @@ module Admin
         mentor_profile: {},
         student_profile: {},
         judge_profile: {},
-        chapter_ambassador_profile: {},
+        chapter_ambassador_profile: {}
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true
@@ -107,8 +110,8 @@ module Admin
     end
 
     def parental_consent_pending?
-      if @account.present? and @account.student_profile.present?
-        if not @account.parental_consent.present?
+      if @account.present? && @account.student_profile.present?
+        if !@account.parental_consent.present?
           @account.student_profile.create_parental_consent!
           @account.reload
         end
@@ -126,6 +129,5 @@ module Admin
         SubmissionScore.none
       end
     end
-
   end
 end
