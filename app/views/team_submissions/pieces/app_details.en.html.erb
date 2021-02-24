@@ -33,10 +33,21 @@
         <%= f.text_area :ai_description,
           id: :team_submission_ai_description,
           data: {
-            word_count: false,
+            word_count: true,
             word_count_limit: 100,
+            word_count_details_container: "ai-word-count"
           },
           rows: 5 %>
+
+        <p id="ai-word-count" class="scent word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
       </div>
     </div>
 
@@ -62,10 +73,21 @@
         <%= f.text_area :climate_change_description,
           id: :team_submission_climate_change_description,
           data: {
-            word_count: false,
+            word_count: true,
             word_count_limit: 100,
+            word_count_details_container: "climate-change-word-count"
           },
           rows: 5 %>
+
+        <p id="climate-change-word-count" class="scent word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
       </div>
     </div>
 
@@ -91,10 +113,21 @@
         <%= f.text_area :game_description,
           id: :team_submission_game_description,
           data: {
-            word_count: false,
+            word_count: true,
             word_count_limit: 100,
+            word_count_details_container: "game-word-count"
           },
           rows: 5 %>
+
+        <p id="game-word-count" class="scent word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
       </div>
     </div>
 

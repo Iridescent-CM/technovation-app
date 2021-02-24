@@ -93,7 +93,13 @@ function executeWordCounting($el) {
   }
 
   function updateWordCounter($el, wordCount) {
-    var $total = $(".word-count__total");
+    let wordCountDetailsContainer = $el.data().wordCountDetailsContainer;
+
+    if (wordCountDetailsContainer) {
+      var $total = $("#" + wordCountDetailsContainer + " .word-count__total");
+    } else {
+      var $total = $(".word-count__total");
+    }
 
     $total
       .text(wordCount)
