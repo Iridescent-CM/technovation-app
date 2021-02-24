@@ -260,6 +260,10 @@ class TeamSubmission < ActiveRecord::Base
       RequiredFields.new(self).all?(&:complete?)
   end
 
+  def app_details
+    !ai.nil? && !climate_change.nil? && !game.nil?
+  end
+
   def team_photo_uploaded?
     team.team_photo_url !~ /placeholders/
   end

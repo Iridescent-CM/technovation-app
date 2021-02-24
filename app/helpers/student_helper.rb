@@ -29,6 +29,8 @@ module StudentHelper
                 end
               when :app_description
                 :complete unless submission.app_description.blank?
+              when :app_details
+                :complete if submission.app_details.present?
               when :pitch_video
                 :complete unless submission.pitch_video_link.blank?
               when :demo_video

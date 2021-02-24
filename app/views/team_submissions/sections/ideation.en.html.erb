@@ -29,5 +29,47 @@
   attribute: :app_description,
   cta_when_empty: "Add your app's description",
   cta_when_filled: "Change your app's description" do %>
+
   <%= simple_format(@team_submission.app_description) %>
+<% end %>
+
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
+  title: "Additional Information",
+  scope: current_scope,
+  attribute: :app_details,
+  cta_when_empty: "Add details about your app",
+  cta_when_filled: "Update details about your app" do %>
+
+  <dl>
+  <dt>Does your app use artificial inteligence?</dt>
+  <% if @team_submission.ai? %>
+    <dd>
+      Yes
+      <%= simple_format(@team_submission.ai_description) %>
+    </dd>
+  <% else %>
+    <dd>No</dd>
+  <% end %>
+
+  <dt>Does your app help solve climate change?</dt>
+  <% if @team_submission.climate_change? %>
+    <dd>
+      Yes
+      <%= simple_format(@team_submission.climate_change_description) %>
+    </dd>
+  <% else %>
+    <dd>No</dd>
+  <% end %>
+
+  <dt>Is your app a game?</dt>
+  <% if @team_submission.game? %>
+    <dd>
+      Yes
+      <%= simple_format(@team_submission.game_description) %>
+    </dd>
+  <% else %>
+    <dd>No</dd>
+  <% end %>
+  </dl>
 <% end %>

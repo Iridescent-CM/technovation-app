@@ -66,6 +66,10 @@
   font-size: 0.8rem;
 }
 
+.font-size--slightly-larger {
+  font-size: 1.25rem;
+}
+
 .font-smoothing--antialiased {
   -webkit-font-smoothing: antialiased;
 }
@@ -96,6 +100,10 @@
 
 .height--100-percent {
   height: 100%;
+}
+
+.width--20-percent {
+  width: 20%;
 }
 
 .width--70-percent {
