@@ -1,0 +1,37 @@
+<dl>
+  <dt>Does your app use artificial inteligence?</dt>
+  <dd>
+    <% if team_submission.ai == true %>
+      Yes
+      <%= simple_format(team_submission.ai_description) %>
+    <% elsif team_submission.ai == false %>
+      No
+    <% elsif team_submission.ai == nil %>
+      -
+    <% end %>
+  </dd>
+
+  <dt>Does your app help solve climate change?</dt>
+  <dd>
+    <% if team_submission.climate_change == true %>
+      Yes
+      <%= simple_format(team_submission.climate_change_description) %>
+    <% elsif team_submission.climate_change == false %>
+      No
+    <% elsif team_submission.climate_change == nil %>
+      -
+    <% end %>
+  </dd>
+
+  <dt>Is your app a game?</dt>
+  <dd>
+    <% if team_submission.game == true %>
+      Yes
+      <% simple_format(team_submission.game_description) %>
+    <% elsif team_submission.game == false %>
+      No
+    <% elsif team_submission.game == nil %>
+      -
+    <% end %>
+  </dd>
+</dl>

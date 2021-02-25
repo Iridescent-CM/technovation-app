@@ -20,6 +20,8 @@
 
     <%= simple_format @team_submission.app_description %>
 
+    <%= render "team_submissions/app_details", team_submission: @team_submission %>
+
     <div class="submission-pieces__screenshots">
       <% @team_submission.screenshots.each do |screenshot| %>
         <div class="submission-pieces__screenshot img-modal">
