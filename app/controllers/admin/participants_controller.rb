@@ -57,7 +57,7 @@ module Admin
       account = Account.find(params[:participant_id])
 
       DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
-      ConsentWaiver.find_by(account_id: account.id).delete
+      ConsentWaiver.find_by(account_id: account.id)&.delete
 
       account.really_destroy!
 

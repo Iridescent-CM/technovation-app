@@ -108,13 +108,23 @@
       </thead>
 
       <tbody>
-        <% team.join_requests.each do |j| %>
+        <% team.join_requests.each do |join_request| %>
           <tr>
-            <td><%= j.id %></td>
-            <td><%= j.requestor_scope_name %></td>
-            <td><%= j.requestor_account_id %></td>
-            <td><%= j.requestor_full_name %></td>
-            <td><%= j.status %></td>
+            <td><%= join_request.requestor_id %></td>
+
+            <% if join_request.requestor_type == "StudentProfile" && join_request.requestor_scope_name.blank? %>
+              <% student_profile = StudentProfile.with_deleted.find(join_request.requestor_id) %>
+
+              <td><%= student_profile.scope_name %></td>
+              <td><%= student_profile.account_id %></td>
+              <td><%= student_profile.full_name %></td>
+            <% else %>
+              <td><%= join_request.requestor_scope_name %></td>
+              <td><%= join_request.requestor_account_id %></td>
+              <td><%= join_request.requestor_full_name %></td>
+            <% end %>
+
+            <td><%= join_request.status %></td>
           </tr>
         <% end %>
       </tbody>

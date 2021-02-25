@@ -14,6 +14,7 @@ where student_profiles.account_id = mentor_profiles.account_id
   accounts.each do |account|
     account = Account.find(account.account_id)
 
+    account.mentor_profile.update_attributes({former_student: true})
     account.student_profile&.delete
 
     puts "Student profile deleted for account id: #{account.id}"
