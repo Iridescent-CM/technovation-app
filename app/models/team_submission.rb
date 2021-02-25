@@ -267,7 +267,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def app_details
-    !ai.nil? && !climate_change.nil? && !game.nil?
+    !ai.nil? || !climate_change.nil? || !game.nil?
   end
 
   def team_photo_uploaded?
