@@ -27,6 +27,7 @@ class JoinRequest < ActiveRecord::Base
            :account_id,
            :mailer_token,
     to: :requestor,
+    allow_nil: true,
     prefix: true
 
   has_secure_token :review_token
