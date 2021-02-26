@@ -6,6 +6,7 @@ class StudentToMentorConverter
   def call
     if account.student_profile.present?
       create_mentor_profile
+      delete_pending_join_requests
       delete_student_profile
 
       Result.new(success?: true, message: {success: "#{account.name} has been successfully converted to a mentor"})
@@ -29,6 +30,10 @@ class StudentToMentorConverter
       mentor_type: "Past Technovation student",
       former_student: true
     })
+  end
+
+  def delete_pending_join_requests
+    account.student_profile&.join_requests&.pending&.delete_all
   end
 
   def delete_student_profile

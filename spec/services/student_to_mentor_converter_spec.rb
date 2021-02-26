@@ -11,6 +11,7 @@ describe StudentToMentorConverter do
     allow(account).to receive(:create_mentor_profile!)
     allow(account).to receive(:student_profile).and_return(student_profile)
     allow(student_profile).to receive(:delete)
+    allow(student_profile).to receive_message_chain(:join_requests, :pending, :delete_all)
   end
 
   it "creates a mentor profile (that's marked as being a former student)" do
@@ -21,6 +22,12 @@ describe StudentToMentorConverter do
         job_title: "Technovation Alumnus",
         school_company_name: student_profile.school_name
       })
+
+    student_to_mentor_converter.call
+  end
+
+  it "deletes any pending join requests" do
+    expect(student_profile).to receive_message_chain(:join_requests, :pending, :delete_all)
 
     student_to_mentor_converter.call
   end
