@@ -57,6 +57,15 @@
           ),
           [current_scope, submission, piece: :app_description] %>
         </li>
+
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :app_details,
+            "Additional information"
+          ),
+          [current_scope, submission, piece: :app_details] %>
+        </li>
       </ol>
     </div>
 

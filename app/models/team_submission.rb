@@ -49,6 +49,12 @@ class TeamSubmission < ActiveRecord::Base
     end
   }
 
+  before_commit -> {
+    self.ai_description = "" if ai.blank?
+    self.climate_change_description = "" if climate_change.blank?
+    self.game_description = "" if game.blank?
+  }
+
   after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) },
     on: :create
 
@@ -258,6 +264,10 @@ class TeamSubmission < ActiveRecord::Base
     !published? &&
       team.qualified? &&
       RequiredFields.new(self).all?(&:complete?)
+  end
+
+  def app_details
+    !ai.nil? || !climate_change.nil? || !game.nil?
   end
 
   def team_photo_uploaded?

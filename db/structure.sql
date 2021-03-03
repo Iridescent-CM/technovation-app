@@ -1472,7 +1472,13 @@ CREATE TABLE public.team_submissions (
     source_code_external_url character varying,
     quarterfinals_score_range integer DEFAULT 0,
     semifinals_score_range integer DEFAULT 0,
-    demo_video_link character varying
+    demo_video_link character varying,
+    ai boolean,
+    ai_description character varying,
+    climate_change boolean,
+    climate_change_description character varying,
+    game boolean,
+    game_description character varying
 );
 
 
@@ -3026,6 +3032,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201014203947'),
 ('20201109234926'),
 ('20210128191135'),
-('20210201224232');
+('20210201224232'),
+('20210222231733');
 
 

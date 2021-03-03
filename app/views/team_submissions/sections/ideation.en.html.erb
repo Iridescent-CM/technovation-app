@@ -29,5 +29,18 @@
   attribute: :app_description,
   cta_when_empty: "Add your app's description",
   cta_when_filled: "Change your app's description" do %>
+
   <%= simple_format(@team_submission.app_description) %>
+<% end %>
+
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
+  title: "Additional Information",
+  scope: current_scope,
+  attribute: :app_details,
+  cta_when_empty: "Add details about your app",
+  cta_when_filled: "Update details about your app" do %>
+
+  <%= render 'team_submissions/app_details',
+    team_submission: @team_submission %>
 <% end %>

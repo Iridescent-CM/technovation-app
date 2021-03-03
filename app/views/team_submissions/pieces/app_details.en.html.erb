@@ -1,0 +1,148 @@
+<div class="panel">
+  <h3 class="panel--heading">Additional Information</h3>
+
+  <%= form_with(
+    model: [current_scope, @team_submission],
+    local: true
+  ) do |f| %>
+    <%= hidden_field_tag :piece, piece_name %>
+
+    <p class="scent scent--strong font-size--slightly-larger margin--b-xlarge">
+      **Judges will not see these answers and this section will NOT affect your judge scores**
+    </p>
+
+    <div class="field">
+      <%= f.label :ai,
+        "Does your app use artificial inteligence?",
+        for: :team_submission_ai %>
+
+      <%= f.select :ai,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        data: {
+          toggles: {
+            "true": "#ai_description"
+          },
+        },
+        class: "width--20-percent",
+        id: :team_submission_ai %>
+
+      <div id="ai_description">
+        <p class="hint margin--b-none">Please explain how:</p>
+
+        <%= f.text_area :ai_description,
+          id: :team_submission_ai_description,
+          data: {
+            word_count: true,
+            word_count_limit: 100,
+            word_count_details_container: "ai-word-count"
+          },
+          rows: 5 %>
+
+        <p id="ai-word-count" class="scent word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="field margin--t-large">
+      <%= f.label :climate_change,
+        "Does your app help solve climate change?",
+        for: :team_submission_climate_change %>
+
+      <%= f.select :climate_change,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        data: {
+          toggles: {
+            "true": "#climate_change_description"
+          },
+        },
+        class: "width--20-percent",
+        id: :team_submission_climate_change %>
+
+      <div id="climate_change_description">
+        <p class="hint margin--b-none">Please explain how:</p>
+
+        <%= f.text_area :climate_change_description,
+          id: :team_submission_climate_change_description,
+          data: {
+            word_count: true,
+            word_count_limit: 100,
+            word_count_details_container: "climate-change-word-count"
+          },
+          rows: 5 %>
+
+        <p id="climate-change-word-count" class="scent word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="field margin--t-large">
+      <%= f.label :game,
+        "Is your app a game?",
+        for: :team_submission_game %>
+
+      <%= f.select :game,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        data: {
+          toggles: {
+            "true": "#game_description"
+          },
+        },
+        class: "width--20-percent",
+        id: :team_submission_game %>
+
+      <div id="game_description">
+        <p class="hint margin--b-none">How does your game work?</p>
+
+        <%= f.text_area :game_description,
+          id: :team_submission_game_description,
+          data: {
+            word_count: true,
+            word_count_limit: 100,
+            word_count_details_container: "game-word-count"
+          },
+          rows: 5 %>
+
+        <p id="game-word-count" class="scent word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="actions margin--t-xlarge">
+      <p>
+        <%= f.submit "Save my responses", class: "button" %>
+        or
+        <%= link_to "cancel",
+          [
+            current_scope,
+            @team_submission,
+            :section,
+            section: @submission_section,
+          ] %>
+      </p>
+    </div>
+  <% end %>
+</div>
