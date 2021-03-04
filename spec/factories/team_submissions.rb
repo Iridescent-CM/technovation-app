@@ -15,7 +15,7 @@ FactoryBot.define do
           :complete,
           team_submission: submission,
           ideation_1: Array(1..5).sample,
-          round: SeasonToggles.judging_round(full_name: true),
+          round: SeasonToggles.judging_round(full_name: true)
         )
       end
     end
@@ -36,7 +36,7 @@ FactoryBot.define do
         submission.update(
           app_name: "Filled in by the factory!",
           app_description: "Filled in by the factory! " +
-                           "Hello world!\n I have line breaks too",
+                           "Hello world!\n I have line breaks too"
         )
       end
     end
@@ -49,7 +49,7 @@ FactoryBot.define do
           app_description: "Filled in by the factory! " +
                            "Hello world!\n I have line breaks too",
           development_platform: "Swift or XCode",
-          pitch_video_link: "http://example.com/pitch",
+          pitch_video_link: "http://example.com/pitch"
         )
       end
     end
@@ -76,8 +76,8 @@ FactoryBot.define do
       association(:team, factory: [:team, :chicago])
     end
 
-    after(:create) do |sub|
-      RegisterToCurrentSeasonJob.perform_now(sub)
+    after(:create) do |team_submission|
+      RegisterToCurrentSeasonJob.perform_now(team_submission)
     end
 
     trait :junior do
@@ -95,11 +95,14 @@ FactoryBot.define do
       demo_video_link { "http://example.com/demo" }
       development_platform { "Swift or XCode" }
 
-      after(:create) do |sub|
-        sub.update_column(:source_code,  "source_code.zip")
-        sub.update_column(:business_plan,  "business_plan.pdf")
-        sub.update_column(:pitch_presentation,  "slides.pdf")
-        sub.reload.published!
+      after(:create) do |team_submission|
+        team_submission.update_column(:source_code, "source_code.zip")
+        team_submission.update_column(:business_plan, "business_plan.pdf")
+        team_submission.update_column(:pitch_presentation, "slides.pdf")
+        team_submission.screenshots.create!
+        team_submission.screenshots.create!
+
+        team_submission.reload.published!
       end
     end
   end

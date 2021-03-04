@@ -15,7 +15,7 @@ RSpec.feature "admin team submissions" do
     click_link "Submissions"
   end
 
-  scenario "list submissions on the admin page" do
+  scenario "list submissions on the admin page with the correct percentage completed" do
     within(page.find_all("tr")[1]) do
       expect(page).to have_link(
         "some app name",
@@ -27,7 +27,7 @@ RSpec.feature "admin team submissions" do
         href: admin_team_path(submission.team)
       )
 
-      expect(page).to have_content("13% completed")
+      expect(page).to have_content("11% completed")
     end
   end
 

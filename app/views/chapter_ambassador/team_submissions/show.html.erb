@@ -155,12 +155,14 @@
           <% if @team_submission.screenshots.any? %>
             <div class="submission-pieces__screenshots">
               <% @team_submission.screenshots.each do |screenshot| %>
-                <div class="submission-pieces__screenshot">
-                  <%= image_tag screenshot.image_url,
-                  data: {
-                    modal_url: screenshot.image_url(:large),
-                  } %>
-                </div>
+                <% if screenshot.image_url.present? %>
+                  <div class="submission-pieces__screenshot">
+                    <%= image_tag screenshot.image_url,
+                      data: {
+                      modal_url: screenshot.image_url(:large),
+                    } %>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           <% else %>

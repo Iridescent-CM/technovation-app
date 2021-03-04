@@ -24,12 +24,14 @@
 
     <div class="submission-pieces__screenshots">
       <% @team_submission.screenshots.each do |screenshot| %>
-        <div class="submission-pieces__screenshot img-modal">
-          <%= image_tag screenshot.image_url,
-            data: {
+        <% if screenshot.image_url.present? %>
+          <div class="submission-pieces__screenshot img-modal">
+            <%= image_tag screenshot.image_url,
+              data: {
               modal_url: screenshot.image_url(:large),
             } %>
-        </div>
+          </div>
+        <% end %>
       <% end %>
     </div>
 
