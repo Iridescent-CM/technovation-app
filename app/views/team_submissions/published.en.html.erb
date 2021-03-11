@@ -20,8 +20,6 @@
 
     <%= simple_format @team_submission.app_description %>
 
-    <%= render "team_submissions/app_details", team_submission: @team_submission %>
-
     <div class="submission-pieces__screenshots">
       <% @team_submission.screenshots.each do |screenshot| %>
         <% if screenshot.image_url.present? %>
@@ -131,6 +129,11 @@
         <% end %>
       </div>
     </div>
+
+    <hr class="width--100-percent height--1-px border--none backgroundcolor--light-gray">
+    <h3>Additional Information</h3>
+
+    <%= render "team_submissions/app_details", team_submission: @team_submission %>
 
     <div class="grid">
       <div class="grid__col-auto submission-footer">
