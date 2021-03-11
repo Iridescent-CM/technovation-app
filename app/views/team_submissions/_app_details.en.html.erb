@@ -27,7 +27,7 @@
   <dd>
     <% if team_submission.game == true %>
       Yes
-      <% simple_format(team_submission.game_description) %>
+      <%= simple_format(team_submission.game_description) %>
     <% elsif team_submission.game == false %>
       No
     <% elsif team_submission.game == nil %>
