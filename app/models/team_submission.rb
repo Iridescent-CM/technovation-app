@@ -214,6 +214,18 @@ class TeamSubmission < ActiveRecord::Base
 
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
+  validates :ai_description,
+    presence: true,
+    if: ->(team_submission) { team_submission.ai? }
+
+  validates :climate_change_description,
+    presence: true,
+    if: ->(team_submission) { team_submission.climate_change? }
+
+  validates :game_description,
+    presence: true,
+    if: ->(team_submission) { team_submission.game? }
+
   delegate :name,
     :division_name,
     :photo,

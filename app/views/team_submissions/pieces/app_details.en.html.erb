@@ -1,6 +1,13 @@
 <div class="panel">
   <h3 class="panel--heading">Additional Information</h3>
 
+  <% if @team_submission.errors.full_messages.any? %>
+    <div class="notice notice--alert">
+      Sorry, there was a problem saving your responses.<br>
+      Please check the fields below.
+    </div>
+  <% end %>
+
   <%= form_with(
     model: [current_scope, @team_submission],
     local: true

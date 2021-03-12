@@ -12,7 +12,7 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
     html = %Q(<div class="field_with_errors">#{html_tag}#{span}</div>)
   elsif tag.name == "input" && type == "checkbox"
     html = html_tag
-  elsif tag.name == "label"
+  elsif tag.name == "label" || tag.name == "textarea"
     span =  %Q(<span class="error">#{Array(instance.error_message).join("\n")}</span>)
     html = %Q(<span class="field_with_errors">#{html_tag}#{span}</span>)
   else
