@@ -45,13 +45,12 @@
     <tab-link
       :class="eventsTabLinkClasses"
       :to="{ name: 'events', meta: { active: eventsPagesActive } }"
-      :disabled-tooltip="tooltips.AVAILABLE_LATER"
+      :disabled-tooltip="tooltips.UNAVAILABLE_DUE_TO_COVID"
       :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
       Find a Pitch Event
     </tab-link>
-
 
     <tab-link
       :class="scoresTabLinkClasses"

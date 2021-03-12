@@ -163,25 +163,14 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_content(
-      "Your team is not set to attend a live Regional Pitch Event."
+      "No team will submit pitch presentation slides here because all " +
+      "official Regional Pitch Events are canceled due to COVID this season."
     )
 
     expect(page).to have_content(
-      "In the spring, Chapter Ambassadors will invite teams " +
-      "to pitch at a live event."
-    )
-
-    expect(page).to have_content(
-      "If you attend, then you will be required to upload your " +
-      "pitch presentation slides here."
-    )
-
-    expect(page).to have_content(
-      "Contact your Chapter Ambassador for the due date."
-    )
-
-    expect(page).to have_content(
-      "(Pitching at a live Regional Pitch Event is not required.)"
+      "If you are attending a local celebration or unofficial pitch event, your " +
+      "Chapter Ambassador may ask you to share your pitch presentation slides with " +
+      "them before the event. Coordinate with them directly and good luck!"
     )
 
     rpe = FactoryBot.create(:regional_pitch_event)

@@ -16,6 +16,7 @@ const Tooltips = {
   },
 
   AVAILABLE_LATER: 'This feature will open later in the Season',
+  UNAVAILABLE_DUE_TO_COVID: 'No official scoring events happening in 2021 due to COVID. Check with your Chapter Ambassador about local celebration events!',
 }
 
 export default {
