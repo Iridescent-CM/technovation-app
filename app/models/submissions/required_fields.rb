@@ -12,6 +12,7 @@ class RequiredFields
       development_platform_text
       pitch_video_link
       demo_video_link
+      screenshots
       source_code_url
     ).map do |field|
       RequiredField.for(submission, field)
@@ -71,6 +72,10 @@ end
 class RequiredScreenshotsField < RequiredField
   def blank?
     value.count < 2
+  end
+
+  def invalidate!
+    submission.screenshots.destroy_all
   end
 end
 
