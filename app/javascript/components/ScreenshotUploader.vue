@@ -227,6 +227,7 @@ export default {
             this.uploads.splice(i, 1)
 
             e.target.value = ""
+            window.location.reload()
           })
       })
     },
