@@ -1,6 +1,12 @@
 <template>
   <div id="screenshot-uploader">
     <template v-if="maxFiles > 0">
+      <p class="margin--b-xlarge">
+        You must submit at least 2 images.
+        Upload 2-6 images that showcase your Technovation journey.
+        They should help judges better understand your ideas.
+      </p>
+
       <label>
         <input
           type="file"
