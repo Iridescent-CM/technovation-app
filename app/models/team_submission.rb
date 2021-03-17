@@ -278,6 +278,18 @@ class TeamSubmission < ActiveRecord::Base
       RequiredFields.new(self).all?(&:complete?)
   end
 
+  def missing_pieces
+    missing_pieces = RequiredFields.new(self)
+      .find_all(&:blank?)
+      .map(&:method_name)
+      .map(&:to_s)
+      .map { |piece| piece == "screenshots" ? "images" : piece }
+
+    missing_pieces << "submitting" if incomplete?
+
+    missing_pieces
+  end
+
   def app_details
     !ai.nil? || !climate_change.nil? || !game.nil?
   end
