@@ -195,7 +195,10 @@ export default {
       const url = this.screenshotsUrl +
                   `/${screenshot.id}?team_id=${this.teamId}`
 
-      window.axios.delete(url);
+      window.axios.delete(url)
+        .then(() => {
+          window.location.reload()
+        })
     },
 
     handleFileInput (e) {
