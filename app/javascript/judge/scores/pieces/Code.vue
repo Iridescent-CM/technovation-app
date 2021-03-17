@@ -3,6 +3,9 @@
     <h4>Code</h4>
 
     <p>
+      Development Platform:
+      <strong>{{ submission.development_platform }}</strong>
+
       <a
         :href="submission.source_code_url"
         target="_blank"
