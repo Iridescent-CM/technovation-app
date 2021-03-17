@@ -20,9 +20,9 @@
         nextSection="technical"
       >
         <p slot="section-summary" class="help-text">
-          To determine if the team has built a solution that will positively impact them
-          and their community, refer to all submission materials and the
-          <a target="_blank" href="https://technovationchallenge.org/wp-content/uploads/2019/10/Ideation.png">rubric</a>.
+          To determine if the team has built a solution that will positively impact them and their community,
+          refer to all submission materials and the
+          <a target="_blank" href="https://technovationchallenge.org/wp-content/uploads/2020/09/Technovation-Girls-2021-Judging-Rubric-FINAL.pdf">rubric</a>.
         </p>
 
         <p slot="comment-tips">
