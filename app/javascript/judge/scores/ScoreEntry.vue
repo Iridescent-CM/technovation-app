@@ -9,7 +9,7 @@
       class="score-question"
       v-for="question in questions"
     >
-      {{ question.text }}
+    <span v-html="question.text"></span>
 
       <ol>
         <li
