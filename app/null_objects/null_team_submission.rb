@@ -31,6 +31,10 @@ class NullTeamSubmission < NullObject
   end
   alias :is_complete :complete?
 
+  def missing_pieces
+    []
+  end
+
   def submission_scores
     ::SubmissionScore.none
   end

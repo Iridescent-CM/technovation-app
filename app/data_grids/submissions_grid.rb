@@ -89,6 +89,10 @@ class SubmissionsGrid
     "#{submission.percent_complete}%"
   end
 
+  column :missing_pieces, header: "Missing submission pieces" do |submission|
+    ApplicationController.helpers.format_missing_submission_pieces(submission)
+  end
+
   column :number_of_students do
     team.students.count
   end

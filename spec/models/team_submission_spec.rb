@@ -509,4 +509,45 @@ RSpec.describe TeamSubmission do
       expect(sub.reload.semifinals_score_range).to eq(7)
     end
   end
+
+  describe "#missing_pieces" do
+    let(:team_submission) { TeamSubmission.new }
+
+    before do
+      allow(RequiredFields).to receive(:new).with(team_submission).and_return(required_fields)
+    end
+
+    let(:required_fields) { [double("required fields", method_name: :app_name, blank?: true, complete?: false)] }
+
+    context "when the submission is incomplete" do
+      before do
+        allow(team_submission).to receive(:incomplete?).and_return(true)
+      end
+
+      it "returns an array of missing pieces, including 'submitting' since the submission is incomplete" do
+        expect(team_submission.missing_pieces).to eq(["app_name", "submitting"])
+      end
+
+      context "when images (formally known as screenshots) are missing" do
+        let(:required_fields) { [double("required fields", method_name: :screenshots, blank?: true, complete?: false)] }
+
+        it "returns 'images' instead of 'screenshots'" do
+          expect(team_submission.missing_pieces).to include("images")
+          expect(team_submission.missing_pieces).not_to include("screenshots")
+        end
+      end
+    end
+
+    context "when the submission is complete" do
+      before do
+        allow(team_submission).to receive(:incomplete?).and_return(false)
+      end
+
+      let(:required_fields) { [] }
+
+      it "returns an empty array" do
+        expect(team_submission.missing_pieces).to eq([])
+      end
+    end
+  end
 end
