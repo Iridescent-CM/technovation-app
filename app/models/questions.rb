@@ -26,19 +26,19 @@ class Questions
   end
 
   def sections
-    collection = %w{
+    collection = %w[
       ideation
       technical
-    }
+    ]
 
     if submission.senior_division?
-      collection << 'entrepreneurship'
+      collection << "entrepreneurship"
     end
 
-    collection += %w{
+    collection + %w[
       pitch
       overall
-    }
+    ]
   end
 
   def as_json(*args, &block)
@@ -62,7 +62,7 @@ class Questions
             :entrepreneurship
           ),
           overall: comment_data(submission_score, :overall)
-        },
+        }
       },
 
       submission: {
@@ -77,7 +77,7 @@ class Questions
           {
             id: s.id,
             thumb: s.image_url(:thumb),
-            full: s.image_url(:large),
+            full: s.image_url(:large)
           }
         },
 
@@ -91,7 +91,7 @@ class Questions
         source_code_url: source_code_url,
 
         business_plan_url: submission.business_plan_url,
-        pitch_presentation_url: submission.pitch_presentation_url,
+        pitch_presentation_url: submission.pitch_presentation_url
       },
 
       team: {
@@ -100,173 +100,207 @@ class Questions
         division: submission.team_division_name,
         location: submission.team_primary_location,
         photo: submission.team_photo_url,
-        live_event: submission.team.live_event?,
+        live_event: submission.team.live_event?
       },
 
-      questions: questions,
+      questions: questions
     }
   end
 
   private
+
   def init_questions
     @submission_score ||= init_db_score
 
     [
       Question.new(
-        section: 'ideation',
+        section: "ideation",
         field: :ideation_1,
         idx: 1,
-        text: "Team has chosen an important problem and uses statistics, " +
-              "facts and personal stories to demonstrate its impact on them " +
-              "and/or their community.",
+        text: %(
+          Did we demonstrate the problem we chose is important, and use
+          statistics, facts and personal stories to show its impact on
+          us and our community or the world?
+        ),
         worth: 5,
-        score: submission_score.ideation_1,
+        score: submission_score.ideation_1
       ),
 
       Question.new(
-        section: 'ideation',
+        section: "ideation",
         field: :ideation_2,
         idx: 2,
-        text: "To ensure positive impact of solution, team has completed " +
-              "user research and adapted their idea based on community feedback.",
+        text: %(
+          Will our app help solve a
+          <a href="https://sdgs.un.org/goals" class="font-weight--bold" target="_blank">UN SDG</a>
+          and positively impact direct and
+          indirect users? Did we conduct solid user research?
+        ),
         worth: 5,
-        score: submission_score.ideation_2,
+        score: submission_score.ideation_2
       ),
 
       Question.new(
-        section: 'ideation',
+        section: "ideation",
         field: :ideation_3,
         idx: 3,
-        text: "Team presents a fundamentally new solution or use of mobile app technology.",
+        text: %(
+          Do you agree that our app is innovative (a fundamentally
+          new solution/use of mobile app technology or an innovative
+          application of an existing structure to a new situation)?
+        ),
         worth: 5,
-        score: submission_score.ideation_3,
+        score: submission_score.ideation_3
       ),
 
       Question.new(
-        section: 'ideation',
+        section: "ideation",
         field: :ideation_4,
         idx: 4,
-        text: "Team's app or idea was improved or changed in response to competitor research.",
+        text: %(
+          Do you see evidence that our app or idea was improved or
+          changed in response to competitor research?
+        ),
         worth: 5,
-        score: submission_score.ideation_4,
+        score: submission_score.ideation_4
       ),
 
       Question.new(
-        section: 'technical',
+        section: "technical",
         field: :technical_1,
         idx: 1,
-        text: "App is fully functional and has no noticeable bugs.",
+        text: %(
+          Do we show that our app is fully functional in the Demo Video
+          or by launching it in an app store?
+        ),
         worth: 5,
-        score: submission_score.technical_1,
+        score: submission_score.technical_1
       ),
 
       Question.new(
-        section: 'technical',
+        section: "technical",
         field: :technical_2,
         idx: 2,
-        text: "Team provides examples of how they developed app for a target audience " +
-              "and shows evidence of testing and refinement.",
+        text: %(
+          Do we demonstrate how we developed our app for our target
+          audience, tested it with them, and made sure it was easy to
+          use?
+        ),
         worth: 5,
-        score: submission_score.technical_2,
+        score: submission_score.technical_2
       ),
 
       Question.new(
-        section: 'technical',
+        section: "technical",
         field: :technical_3,
         idx: 3,
-        text: "All team members appear to have gained technical knowledge and contributed to coding.",
+        text: "Are you able to see what our team learned about coding?",
         worth: 5,
-        score: submission_score.technical_3,
+        score: submission_score.technical_3
       ),
 
       Question.new(
-        section: 'technical',
+        section: "technical",
         field: :technical_4,
         idx: 4,
-        text: "Code includes advanced functions such as using a database with APIs " +
-              "and/or app uses more than 1 sensor, phone function, or different " +
-              "technology (like AI, VR or hardware).",
+        text: %(
+          Does our code include advanced functions such as using a
+          database with APIs and/or using more than 1 sensor, phone
+          function, or different technology (like AI, VR or hardware)?
+        ),
+
         worth: 5,
-        score: submission_score.technical_4,
+        score: submission_score.technical_4
       ),
 
       Question.new(
-        section: 'pitch',
+        section: "pitch",
         field: :pitch_1,
         idx: 1,
-        text: "The pitch makes me believe that this is an urgent problem and that the " +
-              "team has an effective solution.",
+        text: %(
+          Does our pitch video convey the urgency of our problem and
+          solution in a creative and engaging way?
+        ),
         worth: 5,
-        score: submission_score.pitch_1,
+        score: submission_score.pitch_1
       ),
 
       Question.new(
-        section: 'pitch',
+        section: "pitch",
         field: :pitch_2,
         idx: 2,
-        text: "The pitch makes me believe that the team learned from challenges and " +
-              "each girl persevered to learn new skills.",
+        text: %(
+          Do you see evidence of our team sharing our journey, including
+          challenges we encountered and how we grew?
+        ),
         worth: 5,
-        score: submission_score.pitch_2,
+        score: submission_score.pitch_2
       ),
 
       Question.new(
-        section: 'entrepreneurship',
+        section: "entrepreneurship",
         field: :entrepreneurship_1,
         idx: 1,
-        text: "Team has clear goals and plan to reach target users. They've " +
-              "integrated feedback from initial marketing attempts into this plan.",
+        text: %(
+          How clearly has our team defined our goals, planned to reach
+          target users, and integrated feedback from initial marketing
+          attempts into our plan?
+        ),
         worth: 5,
-        score: submission_score.entrepreneurship_1,
+        score: submission_score.entrepreneurship_1
       ),
 
       Question.new(
-        section: 'entrepreneurship',
+        section: "entrepreneurship",
         field: :entrepreneurship_2,
         idx: 2,
-        text: "Team has a financial plan supported by budgets and research for " +
-              "starting and sustaining the business.",
+        text: %(
+          How realistic and thorough do you find our financial plan to
+          be, and is it supported by budgets and research?
+        ),
         worth: 5,
-        score: submission_score.entrepreneurship_2,
+        score: submission_score.entrepreneurship_2
       ),
 
       Question.new(
-        section: 'entrepreneurship',
+        section: "entrepreneurship",
         field: :entrepreneurship_3,
         idx: 3,
-        text: "Business plan includes logical company, product or service descriptions, " +
-              "market analysis, and graphics.",
+        text: %(
+          How cohesive and realistic do find our business plan? Does
+          it include logical company, product or service descriptions,
+          market analysis, and graphics?
+        ),
         worth: 5,
-        score: submission_score.entrepreneurship_3,
+        score: submission_score.entrepreneurship_3
       ),
 
       Question.new(
-        section: 'entrepreneurship',
+        section: "entrepreneurship",
         field: :entrepreneurship_4,
         idx: 4,
-        text: "Branding is clear and amplifies the team’s purpose.",
+        text: "Do you believe our branding is clear and amplifies our team's purpose?",
         worth: 5,
-        score: submission_score.entrepreneurship_4,
+        score: submission_score.entrepreneurship_4
       ),
 
       Question.new(
-        section: 'overall',
+        section: "overall",
         field: :overall_1,
         idx: 1,
-        text: "I believe this team will continue working to make their ideas a reality.",
+        text: "Are our team's proposed plan and goals to continue working on our app realistic?",
         worth: 5,
-        score: submission_score.overall_1,
+        score: submission_score.overall_1
       ),
 
       Question.new(
-        section: 'overall',
+        section: "overall",
         field: :overall_2,
         idx: 2,
-        text: "This solution will positively impact our world! The idea is well thought out " +
-              "and the app is developed.",
+        text: "How well do you think our solution is thought out and can succeed?",
         worth: 5,
-        score: submission_score.overall_2,
-      ),
+        score: submission_score.overall_2
+      )
     ]
   end
 
@@ -275,7 +309,7 @@ class Questions
       team_submission: submission,
       judge_profile: judge,
       seasons: [Season.current.year],
-      round: SeasonToggles.judging_round(full_name: true),
+      round: SeasonToggles.judging_round(full_name: true)
     })
   end
 
@@ -292,7 +326,7 @@ class Questions
   def comment_data(score, section_name)
     {
       text: score["#{section_name}_comment"],
-      word_count: score["#{section_name}_comment_word_count"],
+      word_count: score["#{section_name}_comment_word_count"]
     }
   end
 end
