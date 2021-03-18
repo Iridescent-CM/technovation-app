@@ -46,6 +46,36 @@ class SubmissionsGrid
 
   column :app_name, html: false
 
+  column :ai_question, header: "AI question" do
+    if ai?
+      "Yes - #{ai_description}"
+    elsif ai == false
+      "No"
+    elsif ai.nil?
+      "-"
+    end
+  end
+
+  column :climate_change_question do
+    if climate_change?
+      "Yes - #{climate_change_description}"
+    elsif climate_change == false
+      "No"
+    elsif climate_change.nil?
+      "-"
+    end
+  end
+
+  column :game_question do
+    if game?
+      "Yes - #{game_description}"
+    elsif game == false
+      "No"
+    elsif game.nil?
+      "-"
+    end
+  end
+
   column :city, order: "teams.city" do
     team.city
   end
@@ -102,11 +132,99 @@ class SubmissionsGrid
   end
 
   column :student_names do
-    team.students.map(&:name).to_sentence
+    team.students.collect(&:name).join(",")
+  end
+
+  column :student_1_name do
+    team.students.first&.name
+  end
+
+  column :student_2_name do
+    team.students.second&.name
+  end
+
+  column :student_3_name do
+    team.students.third&.name
+  end
+
+  column :student_4_name do
+    team.students.fourth&.name
+  end
+
+  column :student_5_name do
+    team.students.fifth&.name
+  end
+
+  column :student_emails do
+    team.students.collect(&:email).join(",")
+  end
+
+  column :student_1_email do
+    team.students.first&.email
+  end
+
+  column :student_2_email do
+    team.students.second&.email
+  end
+
+  column :student_3_email do
+    team.students.third&.email
+  end
+
+  column :student_4_email do
+    team.students.fourth&.email
+  end
+
+  column :student_5_email do
+    team.students.fifth&.email
+  end
+
+  column :parent_1_name do
+    team.students.first&.parent_guardian_name
+  end
+
+  column :parent_2_name do
+    team.students.second&.parent_guardian_name
+  end
+
+  column :parent_3_name do
+    team.students.third&.parent_guardian_name
+  end
+
+  column :parent_4_name do
+    team.students.fourth&.parent_guardian_name
+  end
+
+  column :parent_5_name do
+    team.students.fifth&.parent_guardian_name
+  end
+
+  column :parent_1_email do
+    team.students.first&.parent_guardian_email
+  end
+
+  column :parent_2_email do
+    team.students.second&.parent_guardian_email
+  end
+
+  column :parent_3_email do
+    team.students.third&.parent_guardian_email
+  end
+
+  column :parent_4_email do
+    team.students.fourth&.parent_guardian_email
+  end
+
+  column :parent_5_email do
+    team.students.fifth&.parent_guardian_email
   end
 
   column :mentor_names do
-    team.mentors.map(&:name).to_sentence
+    team.mentors.collect(&:email).join(",")
+  end
+
+  column :mentor_emails do
+    team.mentors.collect(&:email).join(",")
   end
 
   filter :team_name do |value, scope, grid|

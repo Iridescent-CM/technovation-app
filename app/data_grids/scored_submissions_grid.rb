@@ -7,7 +7,7 @@ class ScoredSubmissionsGrid
 
   scope do
     TeamSubmission.complete.current
-      .includes(:team, { submission_scores: :judge_profile })
+      .includes(:team, {submission_scores: :judge_profile})
       .references(:teams, :submission_scores, :judge_profiles)
   end
 
@@ -20,15 +20,19 @@ class ScoredSubmissionsGrid
         TeamSubmission.contest_ranks,
         :first,
         :first,
-        asset.contest_rank,
+        asset.contest_rank
       ),
       "v-on:change" => "updateContestRank",
-      data: { submission_id: asset.id },
+      data: {submission_id: asset.id}
     )
   end
 
   column :division do
     team_division_name
+  end
+
+  column :city do
+    team.city
   end
 
   column :country do
@@ -43,10 +47,11 @@ class ScoredSubmissionsGrid
   column :team_name, mandatory: true, html: true do |submission|
     link_to submission.team_name,
       [current_scope, submission.team, allow_out_of_region: true],
-      data: { turbolinks: false }
+      data: {turbolinks: false}
   end
 
   column :app_name, mandatory: true, html: false
+  column :app_description
   column :submission, mandatory: true, html: true do |submission|
     link_to submission.app_name,
       [current_scope, submission, allow_out_of_region: true],
@@ -123,19 +128,73 @@ class ScoredSubmissionsGrid
     end
   end
 
-  column :team_id, header: 'Team ID', if: ->(g) { g.admin } do |submission|
+  column :team_id, header: "Team ID", if: ->(g) { g.admin } do |submission|
     submission.team.id
   end
 
-  column :submission_id, header: 'Submission ID', if: ->(g) { g.admin } do |submission|
+  column :submission_id, header: "Submission ID", if: ->(g) { g.admin } do |submission|
     submission.id
+  end
+
+  column :student_names do
+    team.students.collect(&:name).join(",")
+  end
+
+  column :student_emails do
+    team.students.collect(&:email).join(",")
+  end
+
+  column :parent_names do
+    team.students.collect(&:parent_guardian_name).join(",")
+  end
+
+  column :parent_emails do
+    team.students.collect(&:parent_guardian_email).join(",")
+  end
+
+  column :mentor_names do
+    team.mentors.collect(&:name).join(",")
+  end
+
+  column :mentor_emails do
+    team.mentors.collect(&:email).join(",")
+  end
+
+  column :ai_question, header: "AI question" do
+    if ai?
+      "Yes - #{ai_description}"
+    elsif ai == false
+      "No"
+    elsif ai.nil?
+      "-"
+    end
+  end
+
+  column :climate_change_question do
+    if climate_change?
+      "Yes - #{climate_change_description}"
+    elsif climate_change == false
+      "No"
+    elsif climate_change.nil?
+      "-"
+    end
+  end
+
+  column :game_question do
+    if game?
+      "Yes - #{game_description}"
+    elsif game == false
+      "No"
+    elsif game.nil?
+      "-"
+    end
   end
 
   filter :round,
   :enum,
   select: -> { [
-    ['Quarterfinals', 'quarterfinals'],
-    ['Semifinals', 'semifinals'],
+    ["Quarterfinals", "quarterfinals"],
+    ["Semifinals", "semifinals"]
   ] } do |value, scope, grid|
     mod = grid.complete.present? ? grid.complete : "all"
     assoc = "#{value}_#{mod}_submission_scores".to_sym
@@ -145,8 +204,8 @@ class ScoredSubmissionsGrid
   filter :division,
   :enum,
   select: -> { [
-    ['Senior', 'senior'],
-    ['Junior', 'junior'],
+    ["Senior", "senior"],
+    ["Junior", "junior"]
   ]} do |value, scope, grid|
     scope.public_send(value)
   end
@@ -177,8 +236,8 @@ class ScoredSubmissionsGrid
   filter :live_or_virtual,
     :enum,
     select: [
-      ['Virtual scores', 'virtual'],
-      ['Live event scores', 'live'],
+      ["Virtual scores", "virtual"],
+      ["Live event scores", "live"]
     ],
     filter_group: "common" do |value, scope, grid|
       mod = grid.complete.present? ? grid.complete : "all"
@@ -197,7 +256,7 @@ class ScoredSubmissionsGrid
   :enum,
   select: [
     ["Complete scores", "complete"],
-    ["Incomplete scores", "incomplete"],
+    ["Incomplete scores", "incomplete"]
   ] do |value, scope, grid|
     scope.joins("#{grid.round}_#{value}_submission_scores".to_sym)
   end
@@ -211,7 +270,7 @@ class ScoredSubmissionsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(g) { g.admin } do |values|
       clauses = values.flatten.map { |v| "teams.country = '#{v}'" }
