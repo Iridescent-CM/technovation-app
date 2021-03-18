@@ -27,21 +27,34 @@ class TeamsGrid
     has_students? ? "yes" : "no"
   end
 
+  column :student_names do
+    students.collect(&:name).join(",")
+  end
+
   column :student_emails do
     students.collect(&:email).join(",")
+  end
+
+  column :number_of_students, header: "Number of students" do
+    students.length
+  end
+
+  column :parent_names do
+    students.collect(&:parent_guardian_name).join(",")
+  end
+
+  column :parent_emails do
+    students.collect(&:parent_guardian_email).join(",")
+  end
+
+  column :mentor_names do
+    mentors.collect(&:name).join(",")
   end
 
   column :mentor_emails do
     mentors.collect(&:email).join(",")
   end
 
-  column :parent_emails, header: "Parent emails" do
-    students.collect(&:parent_guardian_email).join(",")
-  end
-
-  column :number_of_students, header: "Number of students" do
-    students.length
-  end
 
   column :number_of_mentors, header: "Number of mentors" do
     mentors.length
