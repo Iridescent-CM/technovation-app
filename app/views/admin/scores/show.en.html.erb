@@ -42,6 +42,28 @@
         <span>(<%= @score.total_for_section(section) %>)</span>
       </h3>
 
+      <% if section == "technical" %>
+        <p>
+          <strong>Clicked Demo Video:</strong>
+          <%= @score.clicked_demo_video? ? "Yes" : "No" %>
+        </p>
+
+        <p>
+          <strong>Downloaded Source Code:</strong>
+          <%= @score.downloaded_source_code? ? "Yes" : "No" %>
+        </p>
+      <% elsif section == "pitch" %>
+        <p>
+          <strong>Clicked Pitch Video:</strong>
+          <%= @score.clicked_pitch_video? ? "Yes" : "No" %>
+        </p>
+      <% elsif section == "entrepreneurship" &&  @score.team.senior? %>
+        <p>
+          <strong>Downloaded Business Plan:</strong>
+          <%= @score.downloaded_business_plan? ? "Yes" : "No" %>
+        </p>
+      <% end %>
+
       <table>
         <% questions.in_section(section).each do |question| %>
           <tr>
