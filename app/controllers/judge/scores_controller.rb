@@ -127,30 +127,30 @@ module Judge
         :ideation_4,
         :ideation_comment,
         :ideation_comment_word_count,
-
         :technical_1,
         :technical_2,
         :technical_3,
         :technical_4,
         :technical_comment,
         :technical_comment_word_count,
-
         :pitch_1,
         :pitch_2,
         :pitch_comment,
         :pitch_comment_word_count,
-
         :entrepreneurship_1,
         :entrepreneurship_2,
         :entrepreneurship_3,
         :entrepreneurship_4,
         :entrepreneurship_comment,
         :entrepreneurship_comment_word_count,
-
         :overall_1,
         :overall_2,
         :overall_comment,
         :overall_comment_word_count,
+        :clicked_pitch_video,
+        :clicked_demo_video,
+        :downloaded_source_code,
+        :downloaded_business_plan
       )
     end
   end

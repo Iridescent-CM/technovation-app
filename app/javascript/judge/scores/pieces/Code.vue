@@ -3,7 +3,12 @@
     <h4>Code</h4>
 
     <p>
-      <a :href="submission.source_code_url" target="_blank" class="download-source-code">
+      <a
+        :href="submission.source_code_url"
+        target="_blank"
+        class="download-source-code"
+        @click="trackSourceCodeDownload"
+      >
         <icon name="code" color="ffffff" />
         <span>{{ submission.source_code_url_label }}</span>
       </a>
@@ -22,6 +27,14 @@ export default {
 
   components: {
     Icon,
+  },
+
+  methods: {
+    trackSourceCodeDownload () {
+      const scoreId = new URLSearchParams(window.location.search).get('score_id')
+
+      window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_source_code': true}})
+    },
   },
 }
 </script>
