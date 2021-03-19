@@ -9,6 +9,7 @@
             href="#"
             :data-opens-modal="`video-modal-${submission.pitch_video_id}`"
             :data-modal-fetch="submission.pitch_video_url"
+            @click="trackPitchVideoClick"
           >
             <icon name="lightbulb-o" color="e6e6e5" />
             <span>Watch the pitch video</span>
@@ -30,6 +31,7 @@
             href="#"
             :data-opens-modal="`video-modal-${submission.demo_video_id}`"
             :data-modal-fetch="submission.demo_video_url"
+            @click="trackDemoVideoClick"
           >
             <icon name="film" color="e6e6e5" />
             <span>Watch the demo video</span>
@@ -43,7 +45,6 @@
           <div class="modal-content"></div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -57,6 +58,18 @@ export default {
   computed: mapState(['submission']),
 
   props: ['solo'],
+
+  methods: {
+    trackPitchVideoClick () {
+      window.axios.patch(`/judge/scores/${scoreId()}`, {submission_score: {'clicked_pitch_video': true}})
+    },
+    trackDemoVideoClick () {
+      window.axios.patch(`/judge/scores/${scoreId()}`, {submission_score: {'clicked_demo_video': true}})
+    },
+    scoreId () {
+      new URLSearchParams(window.location.search).get('score_id')
+    }
+  },
 
   components: {
     Icon,

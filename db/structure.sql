@@ -1364,7 +1364,11 @@ CREATE TABLE public.submission_scores (
     entrepreneurship_3 integer DEFAULT 0,
     entrepreneurship_4 integer DEFAULT 0,
     overall_1 integer DEFAULT 0,
-    overall_2 integer DEFAULT 0
+    overall_2 integer DEFAULT 0,
+    clicked_pitch_video boolean DEFAULT false NOT NULL,
+    clicked_demo_video boolean DEFAULT false NOT NULL,
+    downloaded_source_code boolean DEFAULT false NOT NULL,
+    downloaded_business_plan boolean DEFAULT false NOT NULL
 );
 
 
@@ -3033,6 +3037,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201109234926'),
 ('20210128191135'),
 ('20210201224232'),
-('20210222231733');
+('20210222231733'),
+('20210319163016');
 
 

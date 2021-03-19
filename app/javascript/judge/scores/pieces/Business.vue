@@ -3,7 +3,11 @@
     <h4>Business</h4>
 
     <template v-if="team.division === 'senior'">
-      <a :href="submission.business_plan_url" target="_blank">
+      <a
+        :href="submission.business_plan_url"
+        target="_blank"
+        @click="trackBusinessPlanDownload"
+      >
         Read the business plan
       </a>
     </template>
@@ -19,5 +23,13 @@ import { mapState } from 'vuex'
 
 export default {
   computed: mapState(['team', 'submission']),
+
+  methods: {
+    trackBusinessPlanDownload () {
+      const scoreId = new URLSearchParams(window.location.search).get('score_id')
+
+      window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_business_plan': true}})
+    },
+  },
 }
 </script>
