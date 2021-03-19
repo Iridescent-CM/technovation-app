@@ -45,7 +45,7 @@
       <table>
         <% questions.in_section(section).each do |question| %>
           <tr>
-            <td><%= question.text %></td>
+            <td><%= question.text.html_safe %></td>
             <td><%= @score.total_for_question(question) %></td>
           </tr>
         <% end %>
