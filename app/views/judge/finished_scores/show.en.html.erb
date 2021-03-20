@@ -15,11 +15,14 @@
 
       <div class="grid__col-auto grid__col--bleed grid--align-center">
         <p>
-          You can
-          <%= link_to "review your score",
-            new_judge_score_path(score_id: @score.id) %>
-            and make changes through
-            <%= SeasonToggles.current_round_deadline(current_judge) %>
+          You just completed your
+          <%= (@score.judge_profile.quarterfinals_scores_count + @score.judge_profile.semifinals_scores_count).ordinalize %>
+          score! You can
+          <%= link_to "review your score", new_judge_score_path(score_id: @score.id) %>
+          or see all of your finished scores on your
+          <%= link_to "dashboard", judge_dashboard_path %>
+          and make edits as you need through
+          <%= SeasonToggles.current_round_deadline(current_judge) %>!
         </p>
 
         <p>
