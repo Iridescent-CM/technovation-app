@@ -1,5 +1,5 @@
 <template>
-  <div class="margin-top-normal">
+  <div id="finished-scores" class="margin-top-normal">
     <h6 class="heading--reset">
       Revise & review your finished scores until <strong v-html="deadline"></strong>
     </h6>

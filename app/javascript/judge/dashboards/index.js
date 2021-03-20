@@ -1,10 +1,10 @@
 import Vue from 'vue'
 
 import store from './scores/store'
-import { router } from './scores/routes'
 
-import LiveEventNav from './scores/LiveEventNav'
-import VirtualNav from './scores/VirtualNav'
+import FinishedScoresList from './scores/FinishedScoresList'
+import QfScoresList from './scores/QfScoresList'
+import AssignedScoresList from './scores/AssignedScoresList'
 
 import { airbrake } from 'utilities/utilities'
 
@@ -21,12 +21,12 @@ document.addEventListener('turbolinks:load', () => {
   if (dashEl != undefined) {
     new Vue({
       el: dashEl,
-      router,
       store,
 
       components: {
-        LiveEventNav,
-        VirtualNav,
+        FinishedScoresList,
+        QfScoresList,
+        AssignedScoresList,
       },
 
       mounted () {
@@ -45,9 +45,7 @@ document.addEventListener('turbolinks:load', () => {
             );
           });
 
-        if (this.$refs.disableAssigned && !window.location.hash) {
-          this.$router.push({ name: 'finished-scores' })
-        } else if (!this.$refs.disableAssigned) {
+        if (this.$refs.enableAssigned) {
           $.get("/judge/assigned_submissions.json", null, resp => {
             this.$store.commit('populateSubmissions', resp)
           })
