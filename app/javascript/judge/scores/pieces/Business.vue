@@ -25,10 +25,10 @@ export default {
   computed: mapState(['team', 'submission']),
 
   methods: {
-    trackBusinessPlanDownload () {
+    async trackBusinessPlanDownload () {
       const scoreId = new URLSearchParams(window.location.search).get('score_id')
 
-      window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_business_plan': true}})
+      await window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_business_plan': true}})
     },
   },
 }
