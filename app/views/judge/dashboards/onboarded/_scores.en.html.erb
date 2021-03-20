@@ -49,18 +49,21 @@
       <h5 class="heading--reset">Manage your scores</h5>
 
       <% if LiveEventJudgingEnabled.(current_judge) %>
-        <live-event-nav></live-event-nav>
+        <div ref="enableAssigned"></div>
+        <assigned-scores-list></assigned-scores-list>
+        <finished-scores-list></finished-scores-list>
       <% else %>
-        <virtual-nav></virtual-nav>
-        <div ref="disableAssigned"></div>
+        <finished-scores-list></finished-scores-list>
+
+        <% if SeasonToggles.semifinals_judging? %>
+          <qf-scores-list></qf-scores-list>
+        <% end %>
       <% end %>
 
       <div
         ref="deadline"
         data-date="<%= SeasonToggles.current_round_deadline(current_judge) %>"
       ></div>
-
-      <router-view></router-view>
     </div>
   </div>
 <% end %>

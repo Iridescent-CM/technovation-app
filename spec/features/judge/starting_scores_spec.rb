@@ -69,7 +69,7 @@ feature "starting scores", js: true do
       and_the_judge_has_a_completed_score_for_the_submission
 
       when_the_judge_views_their_dashboard
-      and_reviews_their_completed_score
+      and_views_the_completed_score
 
       then_they_see_the_scoring_screens_for_that_submission
     end
@@ -121,7 +121,7 @@ feature "starting scores", js: true do
       and_the_judge_has_a_completed_score_for_the_submission
 
       when_the_judge_views_their_dashboard
-      and_reviews_their_completed_score
+      and_views_the_completed_score
 
       then_they_see_the_scoring_screens_for_that_submission
     end
@@ -198,13 +198,13 @@ feature "starting scores", js: true do
     end
   end
 
-  def and_reviews_their_completed_score
-    click_link "Finished scores"
-    click_link "Review"
+  def and_views_the_completed_score
+    within "#finished-scores" do
+      first(:link, "Review").click
+    end
   end
 
   def and_starts_scoring_the_submission
-    click_link "Assigned submissions"
     click_link "Start"
   end
 
