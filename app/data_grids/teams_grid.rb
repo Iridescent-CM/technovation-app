@@ -35,23 +35,23 @@ class TeamsGrid
     students.collect(&:name).join(",")
   end
 
-  column :student_1_name do
+  column :student_1_name, if: ->(grid) { grid.admin }  do
     students.first&.name
   end
 
-  column :student_2_name do
+  column :student_2_name, if: ->(grid) { grid.admin }  do
     students.second&.name
   end
 
-  column :student_3_name do
+  column :student_3_name, if: ->(grid) { grid.admin }  do
     students.third&.name
   end
 
-  column :student_4_name do
+  column :student_4_name, if: ->(grid) { grid.admin }  do
     students.fourth&.name
   end
 
-  column :student_5_name do
+  column :student_5_name, if: ->(grid) { grid.admin }  do
     students.fifth&.name
   end
 
@@ -59,23 +59,23 @@ class TeamsGrid
     students.collect(&:email).join(",")
   end
 
-  column :student_1_email do
+  column :student_1_email, if: ->(grid) { grid.admin }  do
     students.first&.email
   end
 
-  column :student_2_email do
+  column :student_2_email, if: ->(grid) { grid.admin }  do
     students.second&.email
   end
 
-  column :student_3_email do
+  column :student_3_email, if: ->(grid) { grid.admin }  do
     students.third&.email
   end
 
-  column :student_4_email do
+  column :student_4_email, if: ->(grid) { grid.admin }  do
     students.fourth&.email
   end
 
-  column :student_5_email do
+  column :student_5_email, if: ->(grid) { grid.admin }  do
     students.fifth&.email
   end
 
@@ -83,23 +83,23 @@ class TeamsGrid
     students.collect(&:parent_guardian_name).join(",")
   end
 
-  column :student_1_parent do
+  column :student_1_parent, if: ->(grid) { grid.admin }  do
     students.first&.parent_guardian_name
   end
 
-  column :student_2_parent do
+  column :student_2_parent, if: ->(grid) { grid.admin }  do
     students.second&.parent_guardian_name
   end
 
-  column :student_3_parent do
+  column :student_3_parent, if: ->(grid) { grid.admin }  do
     students.third&.parent_guardian_name
   end
 
-  column :student_4_parent do
+  column :student_4_parent, if: ->(grid) { grid.admin }  do
     students.fourth&.parent_guardian_name
   end
 
-  column :student_5_parent do
+  column :student_5_parent, if: ->(grid) { grid.admin }  do
     students.fifth&.parent_guardian_name
   end
 
@@ -107,23 +107,23 @@ class TeamsGrid
     students.collect(&:parent_guardian_email).join(",")
   end
 
-  column :student_1_parent_email do
+  column :student_1_parent_email, if: ->(grid) { grid.admin }  do
     students.first&.parent_guardian_email
   end
 
-  column :student_2_parent_email do
+  column :student_2_parent_email, if: ->(grid) { grid.admin }  do
     students.second&.parent_guardian_email
   end
 
-  column :student_3_parent_email do
+  column :student_3_parent_email, if: ->(grid) { grid.admin }  do
     students.third&.parent_guardian_email
   end
 
-  column :student_4_parent_email do
+  column :student_4_parent_email, if: ->(grid) { grid.admin }  do
     students.fourth&.parent_guardian_email
   end
 
-  column :student_5_parent_email do
+  column :student_5_parent_email, if: ->(grid) { grid.admin }  do
     students.fifth&.parent_guardian_email
   end
 
