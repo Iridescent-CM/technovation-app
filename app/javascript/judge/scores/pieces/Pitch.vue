@@ -60,14 +60,16 @@ export default {
   props: ['solo'],
 
   methods: {
-    trackPitchVideoClick () {
-      window.axios.patch(`/judge/scores/${scoreId()}`, {submission_score: {'clicked_pitch_video': true}})
+    async trackPitchVideoClick () {
+      await window.axios.patch(`/judge/scores/${this.scoreId()}`, {submission_score: {'clicked_pitch_video': true}})
     },
-    trackDemoVideoClick () {
-      window.axios.patch(`/judge/scores/${scoreId()}`, {submission_score: {'clicked_demo_video': true}})
+
+    async trackDemoVideoClick () {
+      await window.axios.patch(`/judge/scores/${this.scoreId()}`, {submission_score: {'clicked_demo_video': true}})
     },
+
     scoreId () {
-      new URLSearchParams(window.location.search).get('score_id')
+      return new URLSearchParams(window.location.search).get('score_id')
     }
   },
 

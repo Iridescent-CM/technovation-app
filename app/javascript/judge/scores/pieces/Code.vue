@@ -30,10 +30,10 @@ export default {
   },
 
   methods: {
-    trackSourceCodeDownload () {
+    async trackSourceCodeDownload () {
       const scoreId = new URLSearchParams(window.location.search).get('score_id')
 
-      window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_source_code': true}})
+      await window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_source_code': true}})
     },
   },
 }
