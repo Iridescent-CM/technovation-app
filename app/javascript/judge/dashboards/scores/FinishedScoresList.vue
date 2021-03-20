@@ -1,7 +1,12 @@
 <template>
   <div id="finished-scores" class="margin-top-normal">
     <h6 class="heading--reset">
-      Revise & review your finished scores until <strong v-html="deadline"></strong>
+      Revise & review your finished
+
+      <strong v-if="currentRound == 'qf'">quarterfinal</strong>
+      <strong v-else>semifinal</strong>
+
+      scores until <strong v-html="deadline"></strong>
     </h6>
 
     <template v-if="!finishedScores.length">
@@ -43,7 +48,7 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['finishedScores']),
-    ...mapState(['deadline']),
+    ...mapState(['currentRound', 'deadline']),
   }
 }
 </script>
