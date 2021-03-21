@@ -14,55 +14,56 @@ require "rails_helper"
     end
 
     it "updates newsletters with a change to the #{scope} address" do
-      patch :update, params: {
-        "#{scope}_profile" => {
-          account_attributes: {
-            id: profile.account_id,
-            city: "Los Angeles",
-            state_province: "CA",
-          },
-        },
-      }
-
-      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
         .with(
           account_id: profile.account_id,
           currently_subscribed_as: profile.account.email
         )
+
+      patch :update, params: {
+        "#{scope}_profile" => {
+          account_attributes: {
+            id: profile.account_id,
+            city: "Salvador",
+            state_province: "Bahia",
+            country: "Brazil"
+          }
+        }
+      }
     end
 
     it "updates #{scope} newsletters with changes to first name" do
-      patch :update, params: {
-        "#{scope}_profile" => {
-          account_attributes: {
-            id: profile.account_id,
-            first_name: "someone cool",
-          },
-        },
-      }
-
-      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
         .with(
           account_id: profile.account_id,
           currently_subscribed_as: profile.account.email
         )
+
+      patch :update, params: {
+        "#{scope}_profile" => {
+          account_attributes: {
+            id: profile.account_id,
+            first_name: "someone cool"
+          }
+        }
+      }
     end
 
     it "updates #{scope} newsletters with changes to last name" do
-      patch :update, params: {
-        "#{scope}_profile" => {
-          account_attributes: {
-            id: profile.account_id,
-            last_name: "someone really cool",
-          },
-        },
-      }
-
-      expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
+      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
         .with(
           account_id: profile.account_id,
           currently_subscribed_as: profile.account.email
         )
+
+      patch :update, params: {
+        "#{scope}_profile" => {
+          account_attributes: {
+            id: profile.account_id,
+            last_name: "someone really cool"
+          }
+        }
+      }
     end
 
     it "errors out when #{scope} country is blank" do
@@ -71,19 +72,18 @@ require "rails_helper"
         state_province: nil,
         country: nil,
         latitude: nil,
-        longitude: nil,
+        longitude: nil
       )
 
       patch :update, params: {
-        setting_location: "1",
-
+        :setting_location => "1",
         "#{scope}_profile" => {
           account_attributes: {
             id: profile.account_id,
             city: "Los Angeles",
-            state_province: "CA",
-          },
-        },
+            state_province: "CA"
+          }
+        }
       }
 
       expect(profile.reload.account).not_to be_valid_coordinates
@@ -104,9 +104,9 @@ require "rails_helper"
           account_attributes: {
             id: profile.account_id,
             city: "Los Angeles",
-            state_province: "CA",
-          },
-        },
+            state_province: "CA"
+          }
+        }
       }
 
       expect(profile.reload.latitude).to eq(34.052363)

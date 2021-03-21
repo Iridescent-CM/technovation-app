@@ -257,6 +257,8 @@ class Account < ActiveRecord::Base
     )
   }
 
+  after_commit :update_email_list, on: :update
+
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
          saved_change_to_latitude ||
@@ -999,6 +1001,25 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def update_email_list
+    if any_email_list_fields_changed?
+      UpdateAccountOnEmailListJob.perform_later(
+        account_id: id,
+        currently_subscribed_as: email_before_last_save
+      )
+    end
+  end
+
+  def any_email_list_fields_changed?
+    [
+      :first_name,
+      :last_name,
+      :email,
+      :date_of_birth,
+      :country
+    ].any? { |attr| saved_change_to_attribute?(attr) }
   end
 
   def find_chapter_ambassador_by(query)

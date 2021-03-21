@@ -75,7 +75,6 @@ class ProfileUpdating
   def perform_email_changes_updates
     Casting.delegating(account => EmailUpdater) do
       # TODO: order of operations dependency
-      account.update_email_list
 
       if account.admin_making_changes
         account.confirm_changed_email!
@@ -90,15 +89,6 @@ class ProfileUpdating
   end
 
   module EmailUpdater
-    def update_email_list
-      if email_list_changes_made?
-        UpdateAccountOnEmailListJob.perform_later(
-          account_id: id,
-          currently_subscribed_as: email_before_last_save
-        )
-      end
-    end
-
     def unconfirm_changed_email!
       if saved_change_to_email?
         update(email_confirmed_at: nil)
@@ -111,17 +101,6 @@ class ProfileUpdating
       if saved_change_to_email?
         email_confirmed!
       end
-    end
-
-    private
-    def email_list_changes_made?
-      [:city,
-       :state_province,
-       :country,
-       :first_name,
-       :last_name,
-       :email,
-       :date_of_birth].any? { |attr| saved_change_to_attribute?(attr) }
     end
   end
 end
