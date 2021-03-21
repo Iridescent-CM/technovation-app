@@ -845,4 +845,93 @@ RSpec.describe Account do
       end
     end
   end
+
+  context "updating the email list when making changes to the account" do
+    let!(:account) { FactoryBot.create(:account) }
+
+    context "when the first name on the account is changed" do
+      before do
+        account.first_name = "Carol"
+      end
+
+      it "makes a call to update the email list" do
+        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+          .with(
+            account_id: account.id,
+            currently_subscribed_as: account.email
+          )
+
+        account.save
+      end
+    end
+
+    context "when the last name on the account is changed" do
+      before do
+        account.last_name = "Baskins"
+      end
+
+      it "makes a call to update the email list" do
+        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+          .with(
+            account_id: account.id,
+            currently_subscribed_as: account.email
+          )
+
+        account.save
+      end
+    end
+
+    context "when the email address on the account is changed" do
+      let!(:current_email_address) { account.email }
+
+      before do
+        account.skip_existing_password = true
+        account.email = "carol@example.com"
+      end
+
+      it "makes a call to update the email list" do
+        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+          .with(
+            account_id: account.id,
+            currently_subscribed_as: current_email_address
+          )
+
+        account.save
+      end
+    end
+
+    context "when the date of birth on the account is changed" do
+      before do
+        account.date_of_birth = 25.years.ago
+      end
+
+      it "makes a call to update the email list" do
+        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+          .with(
+            account_id: account.id,
+            currently_subscribed_as: account.email
+          )
+
+        account.save
+      end
+    end
+
+    context "when location details on the account are changed" do
+      before do
+        account.city = "Salvador"
+        account.state_province = "Bahia"
+        account.country = "Brazil"
+      end
+
+      it "makes a call to update the email list" do
+        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+          .with(
+            account_id: account.id,
+            currently_subscribed_as: account.email
+          )
+
+        account.save
+      end
+    end
+  end
 end
