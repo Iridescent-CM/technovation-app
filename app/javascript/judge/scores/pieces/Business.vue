@@ -22,13 +22,11 @@
 import { mapState } from 'vuex'
 
 export default {
-  computed: mapState(['team', 'submission']),
+  computed: mapState(['score', 'submission', 'team']),
 
   methods: {
     async trackBusinessPlanDownload () {
-      const scoreId = new URLSearchParams(window.location.search).get('score_id')
-
-      await window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_business_plan': true}})
+      await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'downloaded_business_plan': true}})
     },
   },
 }
