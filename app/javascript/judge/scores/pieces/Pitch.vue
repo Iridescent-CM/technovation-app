@@ -55,22 +55,18 @@ import { mapState } from 'vuex'
 import Icon from '../../../components/Icon'
 
 export default {
-  computed: mapState(['submission']),
+  computed: mapState(['score', 'submission']),
 
   props: ['solo'],
 
   methods: {
     async trackPitchVideoClick () {
-      await window.axios.patch(`/judge/scores/${this.scoreId()}`, {submission_score: {'clicked_pitch_video': true}})
+      await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_pitch_video': true}})
     },
 
     async trackDemoVideoClick () {
-      await window.axios.patch(`/judge/scores/${this.scoreId()}`, {submission_score: {'clicked_demo_video': true}})
+      await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_demo_video': true}})
     },
-
-    scoreId () {
-      return new URLSearchParams(window.location.search).get('score_id')
-    }
   },
 
   components: {

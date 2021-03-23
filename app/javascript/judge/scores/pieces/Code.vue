@@ -26,7 +26,7 @@ import { mapState } from 'vuex'
 import Icon from '../../../components/Icon'
 
 export default {
-  computed: mapState(['submission']),
+  computed: mapState(['score', 'submission']),
 
   components: {
     Icon,
@@ -34,9 +34,7 @@ export default {
 
   methods: {
     async trackSourceCodeDownload () {
-      const scoreId = new URLSearchParams(window.location.search).get('score_id')
-
-      await window.axios.patch(`/judge/scores/${scoreId}`, {submission_score: {'downloaded_source_code': true}})
+      await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'downloaded_source_code': true}})
     },
   },
 }
