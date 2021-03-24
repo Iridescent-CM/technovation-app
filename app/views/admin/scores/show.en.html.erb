@@ -30,8 +30,34 @@
       <h4><span>Judge</span> <%= @score.judge_name %></h4>
     <% end %>
 
-    <h5><span>Score comes from</span> <%= @score.judge_profile.address_details %></h5>
+    <h5>
+      <span>Score comes from</span>
+      <%= @score.judge_profile.address_details %>
+    </h5>
+
+    <h5>
+      <span>Clicked Pitch Video</span>
+      <%= @score.clicked_pitch_video? ? "Yes" : "No" %>
+    </h5>
+
+    <h5>
+      <span>Clicked Demo Video</span>
+      <%= @score.clicked_demo_video? ? "Yes" : "No" %>
+    </h5>
+
+    <h5>
+      <span>Downloaded Source Code</span>
+      <%= @score.downloaded_source_code? ? "Yes" : "No" %>
+    </h5>
+
+    <% if @score.team.senior? %>
+      <h5>
+        <span>Downloaded Business Plan</span>
+        <%= @score.downloaded_business_plan? ? "Yes" : "No" %>
+      </h5>
+    <% end %>
   </header>
+  <br>
 
   <% questions = Questions.for(@score) %>
 
@@ -41,28 +67,6 @@
         <%= section.titlecase %>
         <span>(<%= @score.total_for_section(section) %>)</span>
       </h3>
-
-      <% if section == "technical" %>
-        <p>
-          <strong>Clicked Demo Video:</strong>
-          <%= @score.clicked_demo_video? ? "Yes" : "No" %>
-        </p>
-
-        <p>
-          <strong>Downloaded Source Code:</strong>
-          <%= @score.downloaded_source_code? ? "Yes" : "No" %>
-        </p>
-      <% elsif section == "pitch" %>
-        <p>
-          <strong>Clicked Pitch Video:</strong>
-          <%= @score.clicked_pitch_video? ? "Yes" : "No" %>
-        </p>
-      <% elsif section == "entrepreneurship" &&  @score.team.senior? %>
-        <p>
-          <strong>Downloaded Business Plan:</strong>
-          <%= @score.downloaded_business_plan? ? "Yes" : "No" %>
-        </p>
-      <% end %>
 
       <table>
         <% questions.in_section(section).each do |question| %>
