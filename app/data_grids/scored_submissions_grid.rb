@@ -140,16 +140,96 @@ class ScoredSubmissionsGrid
     team.students.collect(&:name).join(",")
   end
 
+  column :student_1_name do
+    team.students.first&.name
+  end
+
+  column :student_2_name do
+    team.students.second&.name
+  end
+
+  column :student_3_name do
+    team.students.third&.name
+  end
+
+  column :student_4_name do
+    team.students.fourth&.name
+  end
+
+  column :student_5_name do
+    team.students.fifth&.name
+  end
+
   column :student_emails do
     team.students.collect(&:email).join(",")
+  end
+
+  column :student_1_email do
+    team.students.first&.email
+  end
+
+  column :student_2_email do
+    team.students.second&.email
+  end
+
+  column :student_3_email do
+    team.students.third&.email
+  end
+
+  column :student_4_email do
+    team.students.fourth&.email
+  end
+
+  column :student_5_email do
+    team.students.fifth&.email
   end
 
   column :parent_names do
     team.students.collect(&:parent_guardian_name).join(",")
   end
 
+  column :student_1_parent do
+    team.students.first&.parent_guardian_name
+  end
+
+  column :student_2_parent do
+    team.students.second&.parent_guardian_name
+  end
+
+  column :student_3_parent do
+    team.students.third&.parent_guardian_name
+  end
+
+  column :student_4_parent do
+    team.students.fourth&.parent_guardian_name
+  end
+
+  column :student_5_parent do
+    team.students.fifth&.parent_guardian_name
+  end
+
   column :parent_emails do
     team.students.collect(&:parent_guardian_email).join(",")
+  end
+
+  column :student_1_parent_email do
+    team.students.first&.parent_guardian_email
+  end
+
+  column :student_2_parent_email do
+    team.students.second&.parent_guardian_email
+  end
+
+  column :student_3_parent_email do
+    team.students.third&.parent_guardian_email
+  end
+
+  column :student_4_parent_email do
+    team.students.fourth&.parent_guardian_email
+  end
+
+  column :student_5_parent_email do
+    team.students.fifth&.parent_guardian_email
   end
 
   column :mentor_names do
