@@ -127,10 +127,6 @@ class SubmissionsGrid
     team.students.count
   end
 
-  column :number_of_mentors do
-    team.mentors.count
-  end
-
   column :student_names do
     team.students.collect(&:name).join(",")
   end
@@ -179,44 +175,56 @@ class SubmissionsGrid
     team.students.fifth&.email
   end
 
-  column :parent_1_name do
+  column :parent_names do
+    team.students.collect(&:parent_guardian_name).join(",")
+  end
+
+  column :student_1_parent do
     team.students.first&.parent_guardian_name
   end
 
-  column :parent_2_name do
+  column :student_2_parent do
     team.students.second&.parent_guardian_name
   end
 
-  column :parent_3_name do
+  column :student_3_parent do
     team.students.third&.parent_guardian_name
   end
 
-  column :parent_4_name do
+  column :student_4_parent do
     team.students.fourth&.parent_guardian_name
   end
 
-  column :parent_5_name do
+  column :student_5_parent do
     team.students.fifth&.parent_guardian_name
   end
 
-  column :parent_1_email do
+  column :parent_emails do
+    team.students.collect(&:parent_guardian_email).join(",")
+  end
+
+  column :student_1_parent_email do
     team.students.first&.parent_guardian_email
   end
 
-  column :parent_2_email do
+  column :student_2_parent_email do
     team.students.second&.parent_guardian_email
   end
 
-  column :parent_3_email do
+  column :student_3_parent_email do
     team.students.third&.parent_guardian_email
   end
 
-  column :parent_4_email do
+  column :student_4_parent_email do
     team.students.fourth&.parent_guardian_email
   end
 
-  column :parent_5_email do
+  column :student_5_parent_email do
     team.students.fifth&.parent_guardian_email
+  end
+
+  column :number_of_mentors do
+    team.mentors.count
   end
 
   column :mentor_names do
