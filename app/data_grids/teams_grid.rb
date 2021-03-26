@@ -27,24 +27,108 @@ class TeamsGrid
     has_students? ? "yes" : "no"
   end
 
+  column :number_of_students, header: "Number of students" do
+    students.length
+  end
+
   column :student_names do
     students.collect(&:name).join(",")
+  end
+
+  column :student_1_name do
+    students.first&.name
+  end
+
+  column :student_2_name do
+    students.second&.name
+  end
+
+  column :student_3_name do
+    students.third&.name
+  end
+
+  column :student_4_name do
+    students.fourth&.name
+  end
+
+  column :student_5_name do
+    students.fifth&.name
   end
 
   column :student_emails do
     students.collect(&:email).join(",")
   end
 
-  column :number_of_students, header: "Number of students" do
-    students.length
+  column :student_1_email do
+    students.first&.email
+  end
+
+  column :student_2_email do
+    students.second&.email
+  end
+
+  column :student_3_email do
+    students.third&.email
+  end
+
+  column :student_4_email do
+    students.fourth&.email
+  end
+
+  column :student_5_email do
+    students.fifth&.email
   end
 
   column :parent_names do
     students.collect(&:parent_guardian_name).join(",")
   end
 
+  column :student_1_parent do
+    students.first&.parent_guardian_name
+  end
+
+  column :student_2_parent do
+    students.second&.parent_guardian_name
+  end
+
+  column :student_3_parent do
+    students.third&.parent_guardian_name
+  end
+
+  column :student_4_parent do
+    students.fourth&.parent_guardian_name
+  end
+
+  column :student_5_parent do
+    students.fifth&.parent_guardian_name
+  end
+
   column :parent_emails do
     students.collect(&:parent_guardian_email).join(",")
+  end
+
+  column :student_1_parent_email do
+    students.first&.parent_guardian_email
+  end
+
+  column :student_2_parent_email do
+    students.second&.parent_guardian_email
+  end
+
+  column :student_3_parent_email do
+    students.third&.parent_guardian_email
+  end
+
+  column :student_4_parent_email do
+    students.fourth&.parent_guardian_email
+  end
+
+  column :student_5_parent_email do
+    students.fifth&.parent_guardian_email
+  end
+
+  column :number_of_mentors, header: "Number of mentors" do
+    mentors.length
   end
 
   column :mentor_names do
@@ -53,11 +137,6 @@ class TeamsGrid
 
   column :mentor_emails do
     mentors.collect(&:email).join(",")
-  end
-
-
-  column :number_of_mentors, header: "Number of mentors" do
-    mentors.length
   end
 
   column :city
