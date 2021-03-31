@@ -22,7 +22,7 @@
         <p slot="section-summary" class="help-text">
           To determine if the team has built a solution that will positively impact them and their community,
           refer to all submission materials and the
-          <a target="_blank" href="https://technovationchallenge.org/wp-content/uploads/2020/09/Technovation-Girls-2021-Judging-Rubric-FINAL.pdf">rubric</a>.
+          <a target="_blank" href="http://technovation.staging.wpengine.com/wp-content/uploads/2021/03/ideation.png">rubric</a>.
         </p>
 
         <p slot="comment-tips">
