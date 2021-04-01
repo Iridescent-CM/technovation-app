@@ -228,7 +228,7 @@ class SubmissionsGrid
   end
 
   column :mentor_names do
-    team.mentors.collect(&:email).join(",")
+    team.mentors.collect(&:name).join(",")
   end
 
   column :mentor_emails do
