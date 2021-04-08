@@ -247,7 +247,7 @@ export default {
   }
 
   .help-text {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     font-style: italic;
     margin: 0;
   }
