@@ -3,7 +3,7 @@ class ScoreInProgress
 
   def initialize(judge)
     @judge = judge
-    @score = judge.submission_scores.current_round.incomplete.last
+    @score = judge.submission_scores.current_round.incomplete.not_recused.last
   end
 
   def present?
