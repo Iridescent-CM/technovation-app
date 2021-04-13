@@ -30,7 +30,15 @@
       </div>
 
       <div class="grid grid--bleed grid--justify-space-around">
-        <div class="grid__col-12 grid--align-center">
+        <div v-if="score.incomplete" class="grid__col-6 grid--align-center">
+          <p>
+            <judge-recusal-popup cssClass="button button--danger">
+              I cannot judge this submission
+            </judge-recusal-popup>
+          </p>
+        </div>
+
+        <div class="grid__col-6 grid--align-center">
           <p>
             <router-link
               :to="{ name: 'ideation' }"
@@ -56,11 +64,13 @@ import Pitch from '../pieces/Pitch'
 import TcCode from '../pieces/Code'
 import Business from '../pieces/Business'
 import Presentation from '../pieces/Presentation'
+import JudgeRecusalPopup from '../JudgeRecusalPopup'
 
 export default {
   computed: {
     ...mapState([
       'team',
+      'score',
       'submission',
     ]),
   },
@@ -73,6 +83,7 @@ export default {
     TcCode,
     Business,
     Presentation,
+    JudgeRecusalPopup,
   },
 }
 </script>
