@@ -276,4 +276,46 @@ RSpec.describe Judge::ScoresController do
       end
     end
   end
+
+  describe "PATCH #judge recusal" do
+    let(:judge) { FactoryBot.create(:judge, :onboarded, suspended: true) }
+    let(:team) { FactoryBot.create(:team) }
+    let(:submission) do
+      FactoryBot.create(
+        :submission,
+        :complete,
+        contest_rank: :quarterfinalist,
+        team: team
+      )
+    end
+    let(:score) do
+      judge.submission_scores.create!({
+        team_submission: submission
+      })
+    end
+
+    before do
+      set_judging_round(:QF)
+      sign_in(judge)
+
+      patch :judge_recusal, params: {
+        score_id: score.id,
+        submission_score: {
+          judge_recusal_reason: "other",
+          judge_recusal_comment: "Wakarimasen"
+        }
+      }
+    end
+
+    after { reset_judging_round }
+
+    it "saves the recusal reason and comment" do
+      expect(score.reload.judge_recusal_reason).to eq("other")
+      expect(score.reload.judge_recusal_comment).to eq("Wakarimasen")
+    end
+
+    it "sets the judge recusal flag" do
+      expect(score.reload.judge_recusal).to eq(true)
+    end
+  end
 end
