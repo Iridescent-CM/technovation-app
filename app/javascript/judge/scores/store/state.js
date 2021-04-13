@@ -8,6 +8,7 @@ export default {
 
   score: {
     id: null,
+    incomplete: null,
     comments: {
       ideation: emptyComment,
       technical: emptyComment,
