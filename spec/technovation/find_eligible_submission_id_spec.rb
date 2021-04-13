@@ -8,127 +8,137 @@ RSpec.describe FindEligibleSubmissionId do
     before { set_judging_round("QF") }
     after { reset_judging_round }
 
-    it "does not choose incomplete submission" do
+    it "does not pick incomplete submissions" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
       FactoryBot.create(:submission, team: team)
 
-      expect(FindEligibleSubmissionId.(judge)).to be_nil
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
     end
 
-    it "chooses submissions with fewest scores" do
+    it "picks submissions with fewest scores" do
       judge1 = FactoryBot.create(:judge)
       team1 = FactoryBot.create(:team)
-      sub_with_score = FactoryBot.create(
+      submission_with_score = FactoryBot.create(
         :submission,
         :complete,
         team: team1
       )
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
-        team_submission_id: sub_with_score.id,
-        completed_at: Time.current,
+        team_submission_id: submission_with_score.id,
+        completed_at: Time.current
       )
 
       judge2 = FactoryBot.create(:judge)
       team2 = FactoryBot.create(:team)
-      sub_without_score = FactoryBot.create(
+      submission_without_score = FactoryBot.create(
         :submission,
         :complete,
         team: team2
       )
 
-      expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_score.id)
+      expect(FindEligibleSubmissionId.call(judge2)).to eq(submission_without_score.id)
     end
 
     it "prefers submissions with less than #{FindEligibleSubmissionId::SCORE_COUNT_LIMIT} complete scores" do
       team = FactoryBot.create(:team)
-      sub = FactoryBot.create(:submission, :complete, team: team)
+      submission = FactoryBot.create(:submission, :complete, team: team)
 
       (FindEligibleSubmissionId::SCORE_COUNT_LIMIT - 1).times do
         j = FactoryBot.create(:judge)
         FactoryBot.create(:score, :complete,
-          team_submission: sub,
-          judge_profile: j
-        )
+          team_submission: submission,
+          judge_profile: j)
       end
 
       judge = FactoryBot.create(:judge)
 
       FactoryBot.create(:score, :incomplete,
-        team_submission: sub,
-        judge_profile: judge
-      )
+        team_submission: submission,
+        judge_profile: judge)
 
-      expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+      expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
 
       judge2 = FactoryBot.create(:judge)
       FactoryBot.create(:score, :complete,
-        team_submission: sub,
-        judge_profile: judge2
-      )
+        team_submission: submission,
+        judge_profile: judge2)
 
       judge3 = FactoryBot.create(:judge)
-      expect(FindEligibleSubmissionId.(judge3)).to be_nil
+      expect(FindEligibleSubmissionId.call(judge3)).to be_nil
     end
 
-    it "selects submission with no scores over pending scores" do
-      sub_a = FactoryBot.create(:submission, :complete)
-      sub_b = FactoryBot.create(:submission, :complete)
+    it "picks submission with no scores over pending scores" do
+      submission_a = FactoryBot.create(:submission, :complete)
+      submission_b = FactoryBot.create(:submission, :complete)
 
       FactoryBot.create(:score, :incomplete,
-        team_submission: sub_b
-      )
+        team_submission: submission_b)
 
       judge = FactoryBot.create(:judge)
 
-      expect(FindEligibleSubmissionId.(judge)).to eq(sub_a.id)
+      expect(FindEligibleSubmissionId.call(judge)).to eq(submission_a.id)
     end
 
     it "spreads pending scores evenly" do
-      sub_a = FactoryBot.create(:submission, :complete)
-      sub_b = FactoryBot.create(:submission, :complete)
+      submission_a = FactoryBot.create(:submission, :complete)
+      submission_b = FactoryBot.create(:submission, :complete)
 
       10.times do
-        id = FindEligibleSubmissionId.(FactoryBot.create(:judge))
-        picked = [sub_a, sub_b].select { |sub| sub.id == id }.first
+        id = FindEligibleSubmissionId.call(FactoryBot.create(:judge))
+        picked = [submission_a, submission_b].find { |submission| submission.id == id }
+
         FactoryBot.create(:score, :incomplete,
-          team_submission: picked
-        )
+          team_submission: picked)
       end
 
-      expect(sub_a.submission_scores.incomplete.count).to eq(5)
-      expect(sub_b.submission_scores.incomplete.count).to eq(5)
+      expect(submission_a.submission_scores.incomplete.count).to eq(5)
+      expect(submission_b.submission_scores.incomplete.count).to eq(5)
     end
 
     it "does not count pending scores in max score calculation" do
-      sub = FactoryBot.create(:submission, :complete)
+      submission = FactoryBot.create(:submission, :complete)
 
       11.times do
         FactoryBot.create(:score, :incomplete,
-          team_submission: sub
-        )
+          team_submission: submission)
       end
 
-      expect(FindEligibleSubmissionId.(FactoryBot.create(:judge))).to eq(sub.id)
+      expect(FindEligibleSubmissionId.call(FactoryBot.create(:judge))).to eq(submission.id)
     end
 
-    it "does not reselect previously judged submission" do
+    it "does not pick submissions that a judge has previously completed" do
       team = FactoryBot.create(:team)
-      sub = FactoryBot.create(:submission, :complete, team: team)
+      submission = FactoryBot.create(:submission, :complete, team: team)
 
       judge = FactoryBot.create(:judge)
       score = SubmissionScore.create!(
         judge_profile: judge,
-        team_submission: sub,
+        team_submission: submission
       )
 
       score.complete!
 
-      expect(FindEligibleSubmissionId.(judge)).to be_nil
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
     end
 
-    it "selects submission for an unofficial regional pitch event" do
+    it "does not pick submissions that a judge has been recused from" do
+      judge = FactoryBot.create(:judge)
+      team = FactoryBot.create(:team)
+      submission = FactoryBot.create(:submission, :complete, team: team)
+
+      SubmissionScore.create!(
+        judge_profile: judge,
+        team_submission: submission,
+        judge_recusal: true,
+        judge_recusal_reason: "submission_not_in_english"
+      )
+
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
+    end
+
+    it "picks submission for an unofficial regional pitch event" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
 
@@ -136,12 +146,11 @@ RSpec.describe FindEligibleSubmissionId do
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
         division_ids: Division.senior.id,
-        unofficial: true,
-      )
+        unofficial: true)
 
-      sub = FactoryBot.create(:submission, :complete, team: team)
+      submission = FactoryBot.create(:submission, :complete, team: team)
 
-      expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+      expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
     end
 
     it "ignores unofficial live scores when selecting" do
@@ -149,60 +158,59 @@ RSpec.describe FindEligibleSubmissionId do
 
       team1 = FactoryBot.create(:team)
       team1.regional_pitch_events << unofficial_rpe
-      sub_with_unofficial_scores = FactoryBot.create(:submission, :complete, team: team1)
+      submission_with_unofficial_scores = FactoryBot.create(:submission, :complete, team: team1)
 
       team2 = FactoryBot.create(:team)
-      sub_with_official_score = FactoryBot.create(:submission, :complete, team: team2)
+      submission_with_official_score = FactoryBot.create(:submission, :complete, team: team2)
 
       rpe_judge1 = FactoryBot.create(:judge)
       rpe_judge1.regional_pitch_events << unofficial_rpe
       SubmissionScore.create!(
         judge_profile_id: rpe_judge1.id,
-        team_submission_id: sub_with_unofficial_scores.id
+        team_submission_id: submission_with_unofficial_scores.id
       )
 
       rpe_judge2 = FactoryBot.create(:judge)
       rpe_judge2.regional_pitch_events << unofficial_rpe
       SubmissionScore.create!(
         judge_profile_id: rpe_judge2.id,
-        team_submission_id: sub_with_unofficial_scores.id
+        team_submission_id: submission_with_unofficial_scores.id
       )
 
       judge3 = FactoryBot.create(:judge)
       SubmissionScore.create!(
         judge_profile_id: judge3.id,
-        team_submission_id: sub_with_official_score.id
+        team_submission_id: submission_with_official_score.id
       )
 
-      expect(FindEligibleSubmissionId.(FactoryBot.create(:judge))).to eq(
-        sub_with_unofficial_scores.id
+      expect(FindEligibleSubmissionId.call(FactoryBot.create(:judge))).to eq(
+        submission_with_unofficial_scores.id
       )
     end
 
-    it "does not select submission for an official regional pitch event" do
+    it "does not pick submissions for an official regional pitch event" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
       team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id,
-      )
+        division_ids: Division.senior.id)
 
       TeamSubmission.create!({
         integrity_affirmed: true,
-        team: team,
+        team: team
       })
 
-      expect(FindEligibleSubmissionId.(judge)).to be_nil
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
     end
 
     context "judge without team" do
       it "returns submission id" do
         judge = FactoryBot.create(:judge)
         team = FactoryBot.create(:team)
-        sub = FactoryBot.create(:submission, :complete, team: team)
+        submission = FactoryBot.create(:submission, :complete, team: team)
 
-        expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+        expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
       end
     end
 
@@ -214,13 +222,15 @@ RSpec.describe FindEligibleSubmissionId do
         judges_team = FactoryBot.create(:team, division: Division.senior)
         judge.teams << judges_team
 
-        different_region_team = FactoryBot.create(:team,
-                                                   city: "Los Angeles",
-                                                   state_province: "CA",
-                                                   division: Division.senior)
-        sub = FactoryBot.create(:submission, :complete, team: different_region_team)
+        different_region_team = FactoryBot.create(
+          :team,
+          city: "Los Angeles",
+          state_province: "CA",
+          division: Division.senior
+        )
+        submission = FactoryBot.create(:submission, :complete, team: different_region_team)
 
-        expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+        expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
       end
 
       it "returns submission id from team in different division" do
@@ -231,17 +241,17 @@ RSpec.describe FindEligibleSubmissionId do
 
         judges_team.students.each do |s|
           ProfileUpdating.execute(s, account_attributes: {
-              id: s.account_id,
-              date_of_birth: senior_dob
+            id: s.account_id,
+            date_of_birth: senior_dob
           })
         end
 
         judge.teams << judges_team
 
         different_division_team = FactoryBot.create(:team) # junior by default
-        sub = FactoryBot.create(:submission, :complete, team: different_division_team)
+        submission = FactoryBot.create(:submission, :complete, team: different_division_team)
 
-        expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+        expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
       end
 
       it "does not return submission id from judge's team" do
@@ -252,7 +262,7 @@ RSpec.describe FindEligibleSubmissionId do
         judge.teams << judges_team
         FactoryBot.create(:submission, :complete, team: judges_team)
 
-        expect(FindEligibleSubmissionId.(judge)).to be_nil
+        expect(FindEligibleSubmissionId.call(judge)).to be_nil
       end
 
       it "does not return submission id from team in same region and division" do
@@ -265,7 +275,7 @@ RSpec.describe FindEligibleSubmissionId do
         same_region_division_team = FactoryBot.create(:team)
         FactoryBot.create(:submission, :complete, team: same_region_division_team)
 
-        expect(FindEligibleSubmissionId.(judge)).to be_nil
+        expect(FindEligibleSubmissionId.call(judge)).to be_nil
       end
     end
   end
@@ -281,21 +291,25 @@ RSpec.describe FindEligibleSubmissionId do
     it "does not choose quarterfinalist submission" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
-      FactoryBot.create(:submission,
-                         :complete,
-                         team: team,
-                         contest_rank: TeamSubmission.contest_ranks[:quarterfinalist])
+      FactoryBot.create(
+        :submission,
+        :complete,
+        team: team,
+        contest_rank: TeamSubmission.contest_ranks[:quarterfinalist]
+      )
 
-      expect(FindEligibleSubmissionId.(judge)).to be_nil
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
     end
 
     it "chooses semifinalist submission" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
-      submission = FactoryBot.create(:submission,
-                                      :complete,
-                                      team: team,
-                                      contest_rank: sf_rank)
+      submission = FactoryBot.create(
+        :submission,
+        :complete,
+        team: team,
+        contest_rank: sf_rank
+      )
 
       expect(FindEligibleSubmissionId.(judge)).to eq(submission.id)
     end
@@ -303,82 +317,87 @@ RSpec.describe FindEligibleSubmissionId do
     it "chooses submissions with fewest semifinals scores" do
       judge1 = FactoryBot.create(:judge)
       team1 = FactoryBot.create(:team)
-      sub_with_sf_score = FactoryBot.create(:submission,
-                                             :complete,
-                                             team: team1,
-                                             contest_rank: sf_rank)
+      submission_with_sf_score = FactoryBot.create(
+        :submission,
+        :complete,
+        team: team1,
+        contest_rank: sf_rank
+      )
+
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
-        team_submission_id: sub_with_sf_score.id,
+        team_submission_id: submission_with_sf_score.id,
         round: SubmissionScore.rounds[:semifinals],
-        completed_at: Time.current,
+        completed_at: Time.current
       )
 
       judge2 = FactoryBot.create(:judge)
       team2 = FactoryBot.create(:team)
-      sub_without_sf_score = FactoryBot.create(:submission,
-                                                :complete,
-                                                team: team2,
-                                                contest_rank: sf_rank)
+      submission_without_sf_score = FactoryBot.create(
+        :submission,
+        :complete,
+        team: team2,
+        contest_rank: sf_rank
+      )
+
       SubmissionScore.create!(
         judge_profile_id: judge1.id,
-        team_submission_id: sub_without_sf_score.id,
+        team_submission_id: submission_without_sf_score.id,
         round: qf_round
       )
       SubmissionScore.create!(
         judge_profile_id: FactoryBot.create(:judge).id,
-        team_submission_id: sub_without_sf_score.id,
+        team_submission_id: submission_without_sf_score.id,
         round: qf_round
       )
 
-      expect(FindEligibleSubmissionId.(judge2)).to eq(sub_without_sf_score.id)
+      expect(FindEligibleSubmissionId.call(judge2)).to eq(submission_without_sf_score.id)
     end
 
     it "does not select submission judged in quarterfinals" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
-      sub = FactoryBot.create(:submission, :complete, team: team, contest_rank: sf_rank)
+      submission = FactoryBot.create(:submission, :complete, team: team, contest_rank: sf_rank)
       score = SubmissionScore.create!(
         judge_profile_id: judge.id,
-        team_submission_id: sub.id,
+        team_submission_id: submission.id,
         round: qf_round
       )
       score.complete!
 
-      expect(FindEligibleSubmissionId.(judge)).to be_nil
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
     end
 
     it "does not select submission judged already in semifinals" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
-      sub = FactoryBot.create(:submission, :complete, team: team, contest_rank: sf_rank)
+      submission = FactoryBot.create(:submission, :complete, team: team, contest_rank: sf_rank)
       score = SubmissionScore.create!(
         judge_profile_id: judge.id,
-        team_submission_id: sub.id,
+        team_submission_id: submission.id,
         round: sf_round
       )
       score.complete!
 
-      expect(FindEligibleSubmissionId.(judge)).to be_nil
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
     end
 
-    it "selects submission for an official regional pitch event" do
+    it "picks submission for an official regional pitch event" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
       team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id,
-      )
+        division_ids: Division.senior.id)
 
-      sub = FactoryBot.create(
+      submission = FactoryBot.create(
         :submission,
         :complete,
         team: team,
         contest_rank: sf_rank
       )
 
-      expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+      expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
     end
 
     context "judge with team" do
@@ -389,16 +408,20 @@ RSpec.describe FindEligibleSubmissionId do
         judges_team = FactoryBot.create(:team, division: Division.senior)
         judge.teams << judges_team
 
-        different_region_team = FactoryBot.create(:team,
-                                                   city: "Los Angeles",
-                                                   state_province: "CA",
-                                                   division: Division.senior)
-        sub = FactoryBot.create(:submission,
-                                 :complete,
-                                 team: different_region_team,
-                                 contest_rank: sf_rank)
+        different_region_team = FactoryBot.create(
+          :team,
+          city: "Los Angeles",
+          state_province: "CA",
+          division: Division.senior
+        )
+        submission = FactoryBot.create(
+          :submission,
+          :complete,
+          team: different_region_team,
+          contest_rank: sf_rank
+        )
 
-        expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+        expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
       end
 
       it "returns submission id from team in different division" do
@@ -409,20 +432,22 @@ RSpec.describe FindEligibleSubmissionId do
 
         judges_team.students.each do |s|
           ProfileUpdating.execute(s, account_attributes: {
-              id: s.account_id,
-              date_of_birth: senior_dob
+            id: s.account_id,
+            date_of_birth: senior_dob
           })
         end
 
         judge.teams << judges_team
 
         different_division_team = FactoryBot.create(:team)
-        sub = FactoryBot.create(:submission,
-                                 :complete,
-                                 team: different_division_team,
-                                 contest_rank: sf_rank)
+        submission = FactoryBot.create(
+          :submission,
+          :complete,
+          team: different_division_team,
+          contest_rank: sf_rank
+        )
 
-        expect(FindEligibleSubmissionId.(judge)).to eq(sub.id)
+        expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
       end
 
       it "does not return submission id from judge's team" do
@@ -433,7 +458,7 @@ RSpec.describe FindEligibleSubmissionId do
         judge.teams << judges_team
         FactoryBot.create(:submission, :complete, team: judges_team, contest_rank: sf_rank)
 
-        expect(FindEligibleSubmissionId.(judge)).to be_nil
+        expect(FindEligibleSubmissionId.call(judge)).to be_nil
       end
 
       it "does not return submission id from team in same region and division" do
@@ -444,12 +469,14 @@ RSpec.describe FindEligibleSubmissionId do
         judge.teams << judges_team
 
         same_region_division_team = FactoryBot.create(:team)
-        FactoryBot.create(:submission,
-                           :complete,
-                           team: same_region_division_team,
-                           contest_rank: sf_rank)
+        FactoryBot.create(
+          :submission,
+          :complete,
+          team: same_region_division_team,
+          contest_rank: sf_rank
+        )
 
-        expect(FindEligibleSubmissionId.(judge)).to be_nil
+        expect(FindEligibleSubmissionId.call(judge)).to be_nil
       end
     end
   end

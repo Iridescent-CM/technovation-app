@@ -3,22 +3,23 @@ module FindEligibleSubmissionId
 
   class << self
     def call(judge_profile, options = {})
-      if SeasonToggles.quarterfinals? and judge_profile.live_event?
+      if SeasonToggles.quarterfinals? && judge_profile.live_event?
 
-        submission_id_from_live_event(judge_profile.events, options) or
-          id_for_finished_score(judge_profile, options) or
-            id_for_score_in_progress(judge_profile, options)
+        submission_id_from_live_event(judge_profile.events, options) ||
+          id_for_finished_score(judge_profile, options) ||
+          id_for_score_in_progress(judge_profile, options)
 
       else
 
-        id_for_finished_score(judge_profile, options) or
-          id_for_score_in_progress(judge_profile) or
-              random_eligible_id(judge_profile)
+        id_for_finished_score(judge_profile, options) ||
+          id_for_score_in_progress(judge_profile) ||
+          random_eligible_id(judge_profile)
 
       end
     end
 
     private
+
     def submission_id_from_live_event(events, options)
       id = options[:team_submission_id]
 
@@ -32,12 +33,12 @@ module FindEligibleSubmissionId
     end
 
     def id_for_score_in_progress(judge, options = {})
-      if id = options[:score_id]
-        judge.submission_scores.current_round.incomplete.find_by(
+      if (id = options[:score_id])
+        judge.submission_scores.current_round.incomplete.not_recused.find_by(
           id: id
         ).try(:team_submission_id)
       else
-        judge.submission_scores.current_round.incomplete.last.try(
+        judge.submission_scores.current_round.incomplete.not_recused.first.try(
           :team_submission_id
         )
       end
@@ -52,35 +53,34 @@ module FindEligibleSubmissionId
     def random_eligible_id(judge)
       round = current_round
 
-      scored_submissions = judge.submission_scores.pluck(
+      already_assigned_submission_ids = judge.submission_scores.pluck(
         :team_submission_id
       )
 
       judge_conflicts = judge.team_region_division_names
 
       official_rpe_team_ids = if SeasonToggles.quarterfinals?
-                                RegionalPitchEvent.current.official
-                                  .joins(:teams)
-                                  .pluck(:team_id)
-                              else
-                                []
-                              end
+        RegionalPitchEvent.current.official
+          .joins(:teams)
+          .pluck(:team_id)
+      else
+        []
+      end
 
       candidates = TeamSubmission.current.complete.public_send(
-          rank_for_current_round
-        )
+        rank_for_current_round
+      )
         .where.not(
-          id: scored_submissions
+          id: already_assigned_submission_ids
         )
         .includes(:team)
         .where.not(
-          teams: { id: official_rpe_team_ids }
+          teams: {id: official_rpe_team_ids}
         )
         .where(
-          "complete_#{round}_official_submission_scores_count " +
-          "IS NULL OR " +
-
-          "complete_#{round}_official_submission_scores_count " +
+          "complete_#{round}_official_submission_scores_count " \
+          "IS NULL OR " \
+          "complete_#{round}_official_submission_scores_count " \
            "< #{SCORE_COUNT_LIMIT}"
         )
         .sort { |a, b|
@@ -96,7 +96,7 @@ module FindEligibleSubmissionId
         }
 
       sub = candidates.find { |s| !judge_conflicts.include?(s.team.region_division_name) }
-      sub && sub.id
+      sub&.id
     end
 
     def weighted(sub, round)
@@ -123,7 +123,7 @@ module FindEligibleSubmissionId
     end
 
     def rank_for_current_round
-      current_round.to_s.sub(/s$/, 'ist')
+      current_round.to_s.sub(/s$/, "ist")
     end
   end
 end
