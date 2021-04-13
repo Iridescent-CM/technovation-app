@@ -179,23 +179,23 @@ class SubmissionsGrid
     team.students.collect(&:parent_guardian_name).join(",")
   end
 
-  column :student_1_parent, if: ->(grid) { grid.admin }  do
+  column :student_1_parent, if: ->(grid) { grid.admin } do
     team.students.first&.parent_guardian_name
   end
 
-  column :student_2_parent, if: ->(grid) { grid.admin }  do
+  column :student_2_parent, if: ->(grid) { grid.admin } do
     team.students.second&.parent_guardian_name
   end
 
-  column :student_3_parent, if: ->(grid) { grid.admin }  do
+  column :student_3_parent, if: ->(grid) { grid.admin } do
     team.students.third&.parent_guardian_name
   end
 
-  column :student_4_parent, if: ->(grid) { grid.admin }  do
+  column :student_4_parent, if: ->(grid) { grid.admin } do
     team.students.fourth&.parent_guardian_name
   end
 
-  column :student_5_parent, if: ->(grid) { grid.admin }  do
+  column :student_5_parent, if: ->(grid) { grid.admin } do
     team.students.fifth&.parent_guardian_name
   end
 
@@ -203,23 +203,23 @@ class SubmissionsGrid
     team.students.collect(&:parent_guardian_email).join(",")
   end
 
-  column :student_1_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_1_parent_email, if: ->(grid) { grid.admin } do
     team.students.first&.parent_guardian_email
   end
 
-  column :student_2_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_2_parent_email, if: ->(grid) { grid.admin } do
     team.students.second&.parent_guardian_email
   end
 
-  column :student_3_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_3_parent_email, if: ->(grid) { grid.admin } do
     team.students.third&.parent_guardian_email
   end
 
-  column :student_4_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_4_parent_email, if: ->(grid) { grid.admin } do
     team.students.fourth&.parent_guardian_email
   end
 
-  column :student_5_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_5_parent_email, if: ->(grid) { grid.admin } do
     team.students.fifth&.parent_guardian_email
   end
 
@@ -250,13 +250,13 @@ class SubmissionsGrid
         "teams.division_id = ?",
         Division.send(value).id
       )
-  end
+    end
 
   filter :contest_rank,
     :enum,
     select: TeamSubmission.contest_ranks.keys do |value|
       public_send(value)
-  end
+    end
 
   filter :live_virtual,
     :enum,
@@ -264,9 +264,9 @@ class SubmissionsGrid
     filter_group: "more-specific",
     select: [
       ["Live, official event submissions", "live"],
-      ["Virtual submissions", "virtual"],
+      ["Virtual submissions", "virtual"]
     ] do |value|
-      public_send(value)
+    public_send(value)
   end
 
   filter :submitted,
@@ -274,7 +274,7 @@ class SubmissionsGrid
     filter_group: "more-specific",
     select: [
       ["Yes, submitted", "complete"],
-      ["No, unsubmitted", "incomplete"],
+      ["No, unsubmitted", "incomplete"]
     ] do |value|
       send(value)
     end
@@ -284,7 +284,7 @@ class SubmissionsGrid
     select: (2015..Season.current.year).to_a.reverse,
     filter_group: "more-specific",
     html: {
-      class: "and-or-field",
+      class: "and-or-field"
     } do |value|
     by_season(value)
   end
@@ -298,11 +298,11 @@ class SubmissionsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(g) { g.admin } do |values|
       clauses = values.flatten.map { |v| "teams.country = '#{v}'" }
-      where(clauses.join(' OR '))
+      where(clauses.join(" OR "))
     end
 
   filter :state_province,
@@ -314,7 +314,7 @@ class SubmissionsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
       scope.where("teams.country = ?", grid.country)
@@ -338,7 +338,7 @@ class SubmissionsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
       scope.where(
