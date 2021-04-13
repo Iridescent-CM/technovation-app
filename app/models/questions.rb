@@ -53,6 +53,7 @@ class Questions
     {
       score: {
         id: submission_score.id,
+        incomplete: submission_score.incomplete?,
         comments: {
           ideation: comment_data(submission_score, :ideation),
           technical: comment_data(submission_score, :technical),
