@@ -51,6 +51,17 @@ CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
 COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 
 
+--
+-- Name: judge_recusal_from_submission_reason; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.judge_recusal_from_submission_reason AS ENUM (
+    'submission_not_in_english',
+    'knows_team',
+    'other'
+);
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -1368,7 +1379,10 @@ CREATE TABLE public.submission_scores (
     clicked_pitch_video boolean DEFAULT false NOT NULL,
     clicked_demo_video boolean DEFAULT false NOT NULL,
     downloaded_source_code boolean DEFAULT false NOT NULL,
-    downloaded_business_plan boolean DEFAULT false NOT NULL
+    downloaded_business_plan boolean DEFAULT false NOT NULL,
+    judge_recusal boolean DEFAULT false NOT NULL,
+    judge_recusal_reason public.judge_recusal_from_submission_reason,
+    judge_recusal_comment character varying
 );
 
 
@@ -2490,6 +2504,13 @@ CREATE INDEX index_submission_scores_on_judge_profile_id ON public.submission_sc
 
 
 --
+-- Name: index_submission_scores_on_judge_recusal; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_submission_scores_on_judge_recusal ON public.submission_scores USING btree (judge_recusal);
+
+
+--
 -- Name: index_submission_scores_on_team_submission_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3038,6 +3059,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210128191135'),
 ('20210201224232'),
 ('20210222231733'),
-('20210319163016');
+('20210319163016'),
+('20210407015203');
 
 
