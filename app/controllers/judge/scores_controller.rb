@@ -21,7 +21,7 @@ module Judge
 
           sf: scope.semifinals.complete.map { |score|
             ScoreSerializer.new(score).serialized_json
-          },
+          }
         },
 
         incomplete: {
@@ -31,8 +31,8 @@ module Judge
 
           sf: scope.semifinals.incomplete.map { |score|
             ScoreSerializer.new(score).serialized_json
-          },
-        },
+          }
+        }
       }
     end
 
@@ -41,24 +41,23 @@ module Judge
         f.html
 
         f.json {
-          if submission_id = FindEligibleSubmissionId.(
-               current_judge,
-               {
-                 score_id: params[:score_id],
-                 team_submission_id: params[:team_submission_id],
-               }
-             )
+          if (submission_id = FindEligibleSubmissionId.call(
+            current_judge,
+            {
+              score_id: params[:score_id],
+              team_submission_id: params[:team_submission_id]
+            }
+          ))
 
             submission = TeamSubmission.find(submission_id)
-
             questions = Questions.new(current_judge, submission)
 
             render json: questions
           else
             render json: {
-              msg: "There are no more eligible submissions " +
-                   "for you to judge now. This is not an error. " +
-                   "Thank you for your contribution!",
+              msg: "There are no more eligible submissions " \
+                   "for you to judge now. This is not an error. " \
+                   "Thank you for your contribution!"
             }, status: 404
           end
         }
@@ -69,7 +68,7 @@ module Judge
       @score = current_judge.scores.find(params.fetch(:id))
 
       respond_to do |format|
-        format.html { render 'admin/scores/show' }
+        format.html { render "admin/scores/show" }
         format.json { render json: ScoreSerializer.new(@score).serialized_json }
       end
     end
@@ -84,7 +83,20 @@ module Judge
       end
     end
 
+    def judge_recusal
+      score = current_judge.submission_scores.find(params[:score_id])
+
+      if score.update(score_params.merge({judge_recusal: true}))
+        flash[:success] = "You have been sucessfully recused from this submission"
+      else
+        flash[:error] = "There was a problem, please try again"
+      end
+
+      head :ok, content_type: "text/json"
+    end
+
     private
+
     def require_judging_enabled
       respond_to do |f|
         f.html {
@@ -150,7 +162,9 @@ module Judge
         :clicked_pitch_video,
         :clicked_demo_video,
         :downloaded_source_code,
-        :downloaded_business_plan
+        :downloaded_business_plan,
+        :judge_recusal_reason,
+        :judge_recusal_comment
       )
     end
   end
