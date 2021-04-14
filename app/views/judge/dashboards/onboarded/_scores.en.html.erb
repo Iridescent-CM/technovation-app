@@ -13,35 +13,37 @@
             data: { turbolinks: false } %>
         </p>
       </div>
-    <% elsif @score_in_progress.present? %>
+    <% elsif @scores_in_progress.present? %>
       <div class="panel score-in-progress">
-        <h5 class="heading--reset">Complete your score in progress</h5>
+        <h5 class="heading--reset">Complete your scores in progress</h5>
 
+      <% @scores_in_progress.each do |score| %>
         <div class="grid grid--justify-space-between">
           <div class="grid__col-4 grid__col--bleed-x">
             <small>Submission name</small>
-            <%= @score_in_progress.submission_name %>
+            <%= score.team_submission.app_name %>
           </div>
 
           <div class="grid__col-4 grid__col--bleed-x">
             <small>
-              <%= @score_in_progress.team_division %> division team
+              <%= score.team_division_name %> division team
             </small>
-            <%= @score_in_progress.team_name %>
+            <%= score.team_submission.team.name %>
           </div>
 
           <div class="grid__col-2 grid__col--bleed-x">
             <small>Score so far</small>
-            <%= @score_in_progress.total %> /
-            <%= @score_in_progress.possible %>
+            <%= score.total %> /
+            <%= score.total_possible %>
           </div>
 
           <div class="grid__col-2 grid__col--bleed-x">
             <%= link_to "Resume",
-              new_judge_score_path(score_id: @score_in_progress.id),
+              new_judge_score_path(score_id: score.id),
               class: "button button--remove-bg" %>
           </div>
         </div>
+    <% end %>
       </div>
     <% end %>
 
