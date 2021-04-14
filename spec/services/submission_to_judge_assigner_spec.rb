@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe SubmissionToJudgeAssigner do
   let(:submission_to_judge_assignor) do
     SubmissionToJudgeAssigner.new(submission: submission,
-                              judge: judge,
-                              validator: submission_to_judge_validator,
-                              score_questions: score_questions)
+                                  judge: judge,
+                                  validator: submission_to_judge_validator,
+                                  score_questions: score_questions)
   end
 
   let(:submission) { instance_double(TeamSubmission) }
