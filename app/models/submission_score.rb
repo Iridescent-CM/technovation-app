@@ -9,6 +9,10 @@ class SubmissionScore < ActiveRecord::Base
   SENIOR_LOW_SCORE_THRESHOLD = 19
   JUNIOR_LOW_SCORE_THRESHOLD = 14
 
+  before_commit -> {
+    self.judge_recusal_comment = "" if judge_recusal_reason != "other"
+  }
+
   after_commit :update_team_score_summaries
 
   after_commit -> {
