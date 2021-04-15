@@ -9,7 +9,8 @@ module Admin
     def show
       @account = Account.find(params.fetch(:id))
       @teams = Team.current
-      @scores = submission_score(@account)
+      @scores = submission_score
+      @recused_scores = recused_scores
       @season_flag = SeasonFlag.new(@account)
       @certificates = @account.current_certificates
       @needed_certificates = DetermineCertificates.new(@account).needed
@@ -122,9 +123,17 @@ module Admin
       end
     end
 
-    def submission_score(account)
-      if account.judge_profile.present?
-        account.judge_profile.submission_scores.current.with_deleted.complete
+    def submission_score
+      if @account.judge_profile.present?
+        @account.judge_profile.submission_scores.current.with_deleted.complete
+      else
+        SubmissionScore.none
+      end
+    end
+
+    def recused_scores
+      if @account.judge_profile.present?
+        @account.judge_profile.submission_scores.recused
       else
         SubmissionScore.none
       end

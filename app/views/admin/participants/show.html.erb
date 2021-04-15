@@ -114,6 +114,13 @@
             profile: @account.judge_profile,
             scores: @scores.semifinals %>
         </div>
+
+        <div class="grid__col-12 grid__col--bleed">
+          <h3 class="heading--reset">Recusals:</h3>
+
+          <%= render "admin/participants/judge_recused_scores",
+            recused_scores: @recused_scores %>
+        </div>
       </div>
     <% end %>
 
