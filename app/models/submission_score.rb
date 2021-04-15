@@ -9,6 +9,10 @@ class SubmissionScore < ActiveRecord::Base
   SENIOR_LOW_SCORE_THRESHOLD = 19
   JUNIOR_LOW_SCORE_THRESHOLD = 14
 
+  before_commit -> {
+    self.judge_recusal_comment = "" if judge_recusal_reason != "other"
+  }
+
   after_commit :update_team_score_summaries
 
   after_commit -> {
@@ -39,6 +43,12 @@ class SubmissionScore < ActiveRecord::Base
     semifinals
     finals
     off
+  }
+
+  enum judge_recusal_reason: {
+    submission_not_in_english: "submission_not_in_english",
+    knows_team: "knows_team",
+    other: "other"
   }
 
   belongs_to :team_submission, counter_cache: true
@@ -164,6 +174,9 @@ class SubmissionScore < ActiveRecord::Base
 
   scope :approved, -> { where("submission_scores.approved_at IS NOT NULL") }
   scope :unapproved, -> { where(approved_at: nil) }
+
+  scope :recused, -> { where(judge_recusal: true) }
+  scope :not_recused, -> { where(judge_recusal: false) }
 
   scope :live, -> { where(event_type: :live) }
   scope :virtual, -> { where(event_type: :virtual) }

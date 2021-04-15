@@ -23,7 +23,6 @@
 
         <div class="panel">
           <h6>If something is broken:</h6>
-
           <p>
             Complete as much of the score as you can and
             <a :href="emailSupport">email us</a>.
@@ -32,8 +31,17 @@
             to update the score.
           </p>
 
-          <h6>Finishing a score:</h6>
+          <div v-if="score.incomplete">
+            <h6>Cannot judge this?</h6>
+            <p>
+              If you do not feel comfortable judging this submission, click
+              <judge-recusal-popup>
+                here
+              </judge-recusal-popup>.
+            </p>
+          </div>
 
+          <h6>Finishing a score:</h6>
           <p>
             Even after finishing a score, you have
             until <strong v-html="deadline"></strong> to make
@@ -48,12 +56,14 @@
 <script>
 import { mapState } from 'vuex'
 
+import JudgeRecusalPopup from './JudgeRecusalPopup'
 import Icon from '../../components/Icon'
 
 export default {
   computed: {
     ...mapState([
       'team',
+      'score',
       'submission',
       'deadline',
     ]),
@@ -67,6 +77,7 @@ export default {
 
   components: {
     Icon,
+    JudgeRecusalPopup,
   },
 }
 </script>
