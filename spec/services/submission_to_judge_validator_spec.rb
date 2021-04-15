@@ -1,16 +1,17 @@
 require "rails_helper"
 
 RSpec.describe SubmissionToJudgeValidator do
-  let(:validator_result) { SubmissionToJudgeValidator.new(judge: judge).call }
+  let(:validator_result) { SubmissionToJudgeValidator.new(judge: judge, submission: submission).call }
   let(:judge) { instance_double(JudgeProfile, account: account, suspended?: judge_suspended) }
   let(:account) { instance_double(Account, email: "judge345@alwaysbejudging.com") }
-  let(:judge_suspended) { true }
+  let(:judge_suspended) { false }
+  let(:submission) { instance_double(TeamSubmission, id: 12) }
 
-  context "when a judge can be assigned another submission (not suspended and doesn't have another score in progress)" do
+  context "when a judge can be assigned another submission (i.e. not suspended and not already assigned to the submission" do
     let(:judge_suspended) { false }
 
     before do
-      allow(judge).to receive_message_chain("scores.current_round.incomplete.any?").and_return(false)
+      allow(judge).to receive_message_chain("scores").and_return([])
     end
 
     it "returns successful" do
@@ -46,18 +47,19 @@ RSpec.describe SubmissionToJudgeValidator do
     end
   end
 
-  context "when a judge is not suspended, but has another score already in progress" do
-    let(:judge_suspended) { false }
+  context "when a judge has already been assigned to the submission" do
     before do
-      allow(judge).to receive_message_chain("scores.current_round.incomplete.any?").and_return(true)
+      allow(judge).to receive_message_chain("scores").and_return(already_assigned_submissions)
     end
+
+    let(:already_assigned_submissions) { [instance_double(SubmissionScore, team_submission_id: submission.id)] }
 
     it "does not return successful" do
       expect(validator_result).not_to be_success
     end
 
     it "returns a failure message" do
-      expect(validator_result.message).to eq({error: "#{judge.account.email} already has a score in progress"})
+      expect(validator_result.message).to eq({error: "#{judge.account.email} has already been assigned this submission"})
     end
   end
 end

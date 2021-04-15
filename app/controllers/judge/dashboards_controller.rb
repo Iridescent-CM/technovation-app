@@ -4,19 +4,15 @@ module Judge
 
     def show
       @regional_events = RegionalPitchEvent.available_to(current_judge)
-      @score_in_progress = ScoreInProgress.new(current_judge)
+      @scores_in_progress = current_judge.submission_scores.current_round.incomplete.not_recused
 
       if SeasonToggles.display_scores?
         certificate = current_account.current_judge_certificates.last
-        @certificate_file_url = certificate && certificate.file_url
+        @certificate_file_url = certificate&.file_url
       end
     end
 
     private
-    def is_not_and_cannot_be_judge?
-      not current_account.judge_profile.present? and
-        not current_account.can_be_a_judge?
-    end
 
     def create_judge_mentor_on_dashboard
       return if current_session.authenticated?

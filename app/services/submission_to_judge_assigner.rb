@@ -27,7 +27,7 @@ class SubmissionToJudgeAssigner
   attr_reader :submission, :judge, :validator, :score_questions
 
   def validator_result
-    @validator_result ||= validator.new(judge: judge).call
+    @validator_result ||= validator.new(judge: judge, submission: submission).call
   end
 
   def assign_submission_to_judge
