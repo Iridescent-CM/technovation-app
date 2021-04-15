@@ -1,13 +1,14 @@
 <% if recused_scores.any? %>
   <table class="width--100-percent">
-    <th>
+    <thead>
       <tr>
-        <td>Team Name</td>
-        <td>Submission Name</td>
-        <td>Reason</td>
-        <td>Round</td>
+        <th>Team Name</th>
+        <th>Submission Name</th>
+        <th>Reason</th>
+        <th>Round</th>
       </tr>
-    </th>
+    </thead>
+
     <tbody>
       <% recused_scores.each do |score| %>
         <tr>
