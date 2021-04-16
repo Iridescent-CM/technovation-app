@@ -1,3 +1,11 @@
+table thead tr {
+  border-bottom: 1px solid #333;
+
+  th {
+    text-align: left;
+  }
+}
+
 .table--scrollable {
   display: block;
   width: 100%;

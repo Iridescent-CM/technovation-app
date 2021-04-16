@@ -1,0 +1,31 @@
+<% if recused_scores.any? %>
+  <table class="width--100-percent">
+    <thead>
+      <tr>
+        <th>Team Name</th>
+        <th>Submission Name</th>
+        <th>Reason</th>
+        <th>Round</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% recused_scores.each do |score| %>
+        <tr>
+          <td><%= score.team_name %></td>
+          <td>
+            <%= link_to score.team_submission_app_name,
+                        admin_team_submission_path(score.team_submission_id),
+                        class: "cta-link" %>
+          </td>
+          <td><%= content_tag :span, score.judge_recusal_reason.humanize, title: score.judge_recusal_comment %></td>
+          <td><%= score.round.humanize %></itd>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>
+    No recused scores
+  </p>
+<% end %>

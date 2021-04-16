@@ -1,14 +1,15 @@
 <% if scores.any? %>
   <table class="width--100-percent">
-    <th>
+    <thead>
       <tr>
-        <td>Team Name</td>
-        <td>Submission Name</td>
-        <td>Score</td>
-        <td>Deleted?</td>
-        <td>Details</td>
+        <th>Team Name</th>
+        <th>Submission Name</th>
+        <th>Score</th>
+        <th>Deleted?</th>
+        <th>Details</td>
       </tr>
-    </th>
+    </thead>
+
     <tbody>
       <% scores.each do |score| %>
         <tr class="<%= score.deleted? ? "background-color--subtle-red" : "" %>">
