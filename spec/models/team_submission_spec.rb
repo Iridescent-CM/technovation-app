@@ -48,6 +48,18 @@ RSpec.describe TeamSubmission do
     submission.thunkable_project_url = "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
     expect(submission).to be_valid
     expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4")
+
+    submission.thunkable_project_url = "http://x.thunkable.com/projectPage/abc123"
+    expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projectPage/abc123")
+
+    submission.thunkable_project_url = "x.thunkable.com/projectPage/abc123"
+    expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projectPage/abc123")
+
+    submission.thunkable_project_url = "https://x.thunkable.com/projectPage/dd223dzfe50680a0fa2ac515"
+    expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projectPage/dd223dzfe50680a0fa2ac515")
   end
 
   describe "ACTIVE_DEVELOPMENT_PLATFORMS_ENUM" do
