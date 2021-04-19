@@ -18,6 +18,10 @@
     </p>
 
     <p>Click <a href="https://www.technovationchallenge.org/judge-resources" target="_blank">here</a> for instructions to test source code</p>
+
+    <p id="thunkable-help-text" v-if="submission.development_platform === 'Thunkable'">
+      Can't open the code? Thunkable may be experiencing some issues, please score using the demo video.
+    </p>
   </div>
 </template>
 
@@ -53,5 +57,9 @@ img,
 span {
   align-self: center;
   margin-right: 0.5rem;
+}
+
+#thunkable-help-text{
+  font-weight: bold;
 }
 </style>
