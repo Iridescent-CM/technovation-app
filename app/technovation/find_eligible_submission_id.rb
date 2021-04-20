@@ -12,7 +12,7 @@ module FindEligibleSubmissionId
       else
 
         id_for_finished_score(judge_profile, options) ||
-          id_for_score_in_progress(judge_profile) ||
+          id_for_score_in_progress(judge_profile, options) ||
           random_eligible_id(judge_profile)
 
       end
