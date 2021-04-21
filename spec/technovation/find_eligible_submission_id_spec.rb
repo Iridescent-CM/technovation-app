@@ -214,6 +214,36 @@ RSpec.describe FindEligibleSubmissionId do
       end
     end
 
+    context "when a score_id is provided via the 'options' argument" do
+      it "returns the submission_id for the provided score_id" do
+        judge = FactoryBot.create(:judge)
+        team = FactoryBot.create(:team)
+        submission1 = FactoryBot.create(:submission, :complete, team: team)
+        submission2 = FactoryBot.create(:submission, :complete, team: team)
+        submission3 = FactoryBot.create(:submission, :complete, team: team)
+
+        SubmissionScore.create!(
+          judge_profile_id: judge.id,
+          team_submission_id: submission1.id,
+          round: "quarterfinals"
+        )
+
+        SubmissionScore.create!(
+          judge_profile_id: judge.id,
+          team_submission_id: submission2.id,
+          round: "quarterfinals"
+        )
+
+        score_id = SubmissionScore.create!(
+          judge_profile_id: judge.id,
+          team_submission_id: submission3.id,
+          round: "quarterfinals"
+        ).id
+
+        expect(FindEligibleSubmissionId.call(judge, {score_id: score_id})).to eq(submission3.id)
+      end
+    end
+
     context "judge with team" do
       it "returns submission id from team in different region" do
         judge = FactoryBot.create(:judge)

@@ -1,7 +1,7 @@
 <template>
   <div v-if="!submission.id" class="loading">
     <icon name="spinner" className="spin" />
-    <div>Finding a submission for you to judge...</div>
+    <div>Loading the submission... Happy Judging!</div>
   </div>
 
   <div v-else class="grid">
