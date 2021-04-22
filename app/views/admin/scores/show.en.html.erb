@@ -27,7 +27,12 @@
     <h4><span>Score</span> <%= @score.total %> / <%= @score.total_possible %></h4>
 
     <% if is_privileged %>
-      <h4><span>Judge</span> <%= @score.judge_name %></h4>
+       <h4><span>Judge </span>
+        <%= link_to @score.judge_name,
+          send("#{current_scope}_participant_path", @score.judge_profile.account_id),
+          data: { turbolinks: false }
+        %>
+      </h4>
     <% end %>
 
     <h5>
