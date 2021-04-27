@@ -57,8 +57,10 @@ class SubmissionScore < ActiveRecord::Base
     column_name: ->(score) {
       if score.complete?
         "complete_#{score.round}_submission_scores_count"
-      else
+      elsif score.incomplete? && !score.judge_recusal?
         "pending_#{score.round}_submission_scores_count"
+      elsif score.judge_recusal?
+        "judge_recusal_count"
       end
     },
 

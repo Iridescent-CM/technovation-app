@@ -1496,7 +1496,8 @@ CREATE TABLE public.team_submissions (
     climate_change boolean,
     climate_change_description character varying,
     game boolean,
-    game_description character varying
+    game_description character varying,
+    judge_recusal_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -2532,6 +2533,13 @@ CREATE INDEX index_team_member_invites_on_status ON public.team_member_invites U
 
 
 --
+-- Name: index_team_submissions_on_judge_recusal_count; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_team_submissions_on_judge_recusal_count ON public.team_submissions USING btree (judge_recusal_count);
+
+
+--
 -- Name: index_teams_on_legacy_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3060,6 +3068,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210201224232'),
 ('20210222231733'),
 ('20210319163016'),
-('20210407015203');
+('20210407015203'),
+('20210426215502');
 
 

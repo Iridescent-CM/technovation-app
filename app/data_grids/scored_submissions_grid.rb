@@ -56,6 +56,8 @@ class ScoredSubmissionsGrid
     )
   end
 
+  column :judge_recusal_count, header: "Recusals", mandatory: true, order: true
+
   column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
     str = submission.quarterfinals_average_score.to_s
     str += "/#{submission.total_possible_score}"
