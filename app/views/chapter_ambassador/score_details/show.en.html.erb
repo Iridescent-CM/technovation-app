@@ -57,6 +57,11 @@
       scores: scores.quarterfinals.incomplete %>
   </div>
 
+  <h5>Recusals</h5>
+  <div>
+    <%= render "admin/participants/score_details_judge_recused_scores", recused_scores: @recused_scores %>
+  </div>
+
   <p class="margin--b-xlarge">
     <%= link_to 'Back to scores',
       [current_scope, :scores],
