@@ -296,7 +296,6 @@ Rails.application.routes.draw do
       patch :suspend
       patch :unsuspend
     end
-    resources :contest_rank_changes, only: :create
 
     resources :score_details, only: :show
     resources :submission_score_restorations, only: :update
