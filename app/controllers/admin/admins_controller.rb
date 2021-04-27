@@ -1,10 +1,8 @@
 module Admin
   class AdminsController < AdminController
-    TECHNOVATION_ESTABLISHED_DATE = Date.new(2009, 1, 1)
+    before_action :get_admins, only: [:index, :destroy]
 
-    def index
-      @admins = Account.joins(:admin_profile).all
-    end
+    TECHNOVATION_ESTABLISHED_DATE = Date.new(2009, 1, 1)
 
     def new
       @admin = Account.new
@@ -25,7 +23,7 @@ module Admin
     end
 
     def destroy
-      admin = Account.full_admin.find(params.fetch(:id))
+      admin = @admins.find(params.fetch(:id))
       admin.destroy!
       redirect_to admin_admins_path, success: "You deleted #{admin.name}"
     end
@@ -39,6 +37,10 @@ module Admin
           permitted_params[:date_of_birth] = TECHNOVATION_ESTABLISHED_DATE
           permitted_params[:gender] = "Prefer not to say"
         end
+    end
+
+    def get_admins
+      @admins = Account.joins(:admin_profile)
     end
   end
 end
