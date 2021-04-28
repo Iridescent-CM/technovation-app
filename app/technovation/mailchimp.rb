@@ -23,6 +23,14 @@ module Mailchimp
       end
     end
 
+    def add_profile_type_to_account(profile_type:, account:)
+      handle("add profile type #{profile_type} to #{account.email} on list: #{list_id}") do
+        list.members(subscriber_hash(account.email)).tags.create(
+          body: {tags: [{name: profile_type, status: "active"}]}
+        )
+      end
+    end
+
     def update(account:, currently_subscribed_as: "")
       if currently_subscribed_as.blank?
         currently_subscribed_as = account.email
