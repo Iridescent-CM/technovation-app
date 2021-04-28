@@ -71,7 +71,7 @@ class SubmissionScore < ActiveRecord::Base
       ] => 'complete_quarterfinals_submission_scores_count',
 
       [
-        "submission_scores.round = ? and submission_scores.completed_at IS NULL",
+        "submission_scores.round = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:quarterfinals]
       ] => 'pending_quarterfinals_submission_scores_count',
 
@@ -81,16 +81,16 @@ class SubmissionScore < ActiveRecord::Base
       ] => 'complete_semifinals_submission_scores_count',
 
       [
-        "submission_scores.round = ? and submission_scores.completed_at IS NULL",
+        "submission_scores.round = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:semifinals]
       ] => 'pending_semifinals_submission_scores_count'
     }
 
   counter_culture :team_submission,
     column_name: ->(score) {
-      if score.official? and score.complete?
+      if score.official? && score.complete?
         "complete_#{score.round}_official_submission_scores_count"
-      elsif score.official?
+      elsif score.official? && score.incomplete? && !score.judge_recusal?
         "pending_#{score.round}_official_submission_scores_count"
       end
     },
@@ -103,7 +103,7 @@ class SubmissionScore < ActiveRecord::Base
       ] => 'complete_quarterfinals_official_submission_scores_count',
 
       [
-        "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL",
+        "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:quarterfinals],
         true
       ] => 'pending_quarterfinals_official_submission_scores_count',
@@ -115,7 +115,7 @@ class SubmissionScore < ActiveRecord::Base
       ] => 'complete_semifinals_official_submission_scores_count',
 
       [
-        "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL",
+        "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:semifinals],
         true
       ] => 'pending_semifinals_official_submission_scores_count'
@@ -154,7 +154,7 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
-  scope :incomplete, -> { where("submission_scores.completed_at IS NULL") }
+  scope :incomplete, -> { where("submission_scores.completed_at IS NULL AND submission_scores.judge_recusal = FALSE") }
 
   scope :complete_with_dropped, -> {
     with_deleted.where(
