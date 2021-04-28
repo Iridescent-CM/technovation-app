@@ -11,21 +11,7 @@ class ScoredSubmissionsGrid
       .references(:teams, :submission_scores, :judge_profiles)
   end
 
-  column :contest_rank, mandatory: true, html: false
-
-  column :contest_rank, mandatory: true, html: true, if: ->(g) { g.admin } do |asset, grid|
-    select_tag(
-      :contest_rank,
-      options_from_collection_for_select(
-        TeamSubmission.contest_ranks,
-        :first,
-        :first,
-        asset.contest_rank
-      ),
-      "v-on:change" => "updateContestRank",
-      data: {submission_id: asset.id}
-    )
-  end
+  column :contest_rank
 
   column :division do
     team_division_name
@@ -69,6 +55,8 @@ class ScoredSubmissionsGrid
       "pending_#{grid.round}_official_submission_scores_count"
     )
   end
+
+  column :judge_recusal_count, header: "Recusals", mandatory: true, order: true
 
   column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
     str = submission.quarterfinals_average_score.to_s
