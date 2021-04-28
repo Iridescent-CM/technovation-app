@@ -10,8 +10,6 @@ class State
       IndiaState.new(value)
     elsif countries.include?("KE")
       KenyaState.new(value)
-    elsif countries.include?("ES")
-      SpainState.new(value)
     else
       new(value)
     end
@@ -64,15 +62,6 @@ class IndiaState < State
   def format_map
     {
       "TG" => "telangana",
-    }
-  end
-end
-
-class SpainState < State
-  def format_map
-    {
-      "MD" => "comunidad de madrid",
-      "VC" => "comunidad de valencia",
     }
   end
 end
