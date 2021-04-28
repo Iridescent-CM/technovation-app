@@ -152,7 +152,7 @@ class SubmissionScore < ActiveRecord::Base
   }
 
   scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
-  scope :incomplete, -> { where("submission_scores.completed_at IS NULL") }
+  scope :incomplete, -> { where("submission_scores.completed_at IS NULL AND submission_scores.judge_recusal = FALSE") }
 
   scope :complete_with_dropped, -> {
     with_deleted.where(
