@@ -61,6 +61,9 @@ RSpec.feature "Mentor certificates" do
     TeamRosterManaging.add(team_a, mentor)
     TeamRosterManaging.add(team_b, mentor)
 
+    FactoryBot.create(:team_submission, :complete, team: team_a)
+    FactoryBot.create(:team_submission, :complete, team: team_b)
+
     expect {
       FillPdfs.(mentor.account)
     }.to change {
