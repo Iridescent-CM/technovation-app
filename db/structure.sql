@@ -711,7 +711,8 @@ CREATE TABLE public.judge_profiles (
     onboarded boolean DEFAULT false,
     quarterfinals_scores_count integer DEFAULT 0 NOT NULL,
     semifinals_scores_count integer DEFAULT 0,
-    suspended boolean DEFAULT false
+    suspended boolean DEFAULT false,
+    recusal_scores_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -2400,6 +2401,13 @@ CREATE INDEX index_judge_assignments_on_team_id ON public.judge_assignments USIN
 
 
 --
+-- Name: index_judge_profiles_on_recusal_scores_count; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_profiles_on_recusal_scores_count ON public.judge_profiles USING btree (recusal_scores_count);
+
+
+--
 -- Name: index_judge_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3069,6 +3077,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210222231733'),
 ('20210319163016'),
 ('20210407015203'),
-('20210426215502');
+('20210426215502'),
+('20210430203443');
 
 
