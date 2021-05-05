@@ -2,8 +2,6 @@
   <table class="width--100-percent">
     <thead>
       <tr>
-        <th>Team Name</th>
-        <th>Submission Name</th>
         <th>Judge</th>
         <th>Reason</th>
         <th>Round</th>
@@ -13,12 +11,6 @@
     <tbody>
     <% recused_scores.each do |score| %>
       <tr>
-        <td><%= score.team_name %></td>
-        <td>
-          <%= link_to score.team_submission_app_name,
-                      admin_team_submission_path(score.team_submission_id),
-                      class: "cta-link" %>
-        </td>
         <td>
           <%= link_to score.judge_name,
                       [current_scope, :participant, id: score.judge_profile.account_id] %>
