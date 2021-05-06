@@ -37,6 +37,12 @@ class JudgesGrid
     asset.judge_profile.semifinals_scores_count
   end
 
+  column :recusals_count,
+  header: "Recusals",
+    order: "judge_profiles.recusal_scores_count" do |asset, grid|
+    asset.judge_profile.recusal_scores_count
+  end
+
   column :judge_rank do |account, grid|
     rank = DetermineCertificates.new(account).eligible_types.select { |type|
       type.include?("judge")

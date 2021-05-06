@@ -153,6 +153,12 @@ class SubmissionScore < ActiveRecord::Base
     ] => 'semifinals_scores_count'
   }
 
+  counter_culture :judge_profile, column_name: ->(score) {
+    if score.current_season? && score.incomplete? && score.judge_recusal?
+      "recusal_scores_count"
+    end
+  }
+
   scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
   scope :incomplete, -> { where("submission_scores.completed_at IS NULL AND submission_scores.judge_recusal = FALSE") }
   scope :complete_and_incomplete_without_recused, -> { where("submission_scores.judge_recusal = FALSE") }
