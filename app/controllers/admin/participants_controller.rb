@@ -125,7 +125,7 @@ module Admin
 
     def submission_score
       if @account.judge_profile.present?
-        @account.judge_profile.submission_scores.current.with_deleted.complete
+        @account.judge_profile.submission_scores.current.with_deleted.complete_and_incomplete_without_recused
       else
         SubmissionScore.none
       end
