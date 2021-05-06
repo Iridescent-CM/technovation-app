@@ -16,15 +16,22 @@ RSpec.describe "admin/participants/_judge_scores.html.erb", type: :view do
         total: 99,
         total_possible: 100,
         deleted?: score_submission_deleted,
+        complete?: score_submission_completed,
         dropped?: score_submission_dropped
       )
     }
     let(:score_submission_deleted) { false }
     let(:score_submission_dropped) { false }
+    let(:score_submission_completed) { true }
 
     it "displays score summary information" do
       expect(rendered).to have_content("Score")
       expect(rendered).to have_content("99 / 100")
+    end
+
+    it "displays score completed information" do
+      expect(rendered).to have_content("Completed")
+      expect(rendered).to have_content("yes")
     end
 
     it "displays the team name" do

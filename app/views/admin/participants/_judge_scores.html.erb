@@ -5,8 +5,9 @@
         <th>Team Name</th>
         <th>Submission Name</th>
         <th>Score</th>
+        <th>Completed?</th>
         <th>Deleted?</th>
-        <th>Details</td>
+        <th>Details</th>
       </tr>
     </thead>
 
@@ -20,6 +21,9 @@
                         class: "cta-link" %>
           </td>
           <td><%= score.total %> / <%= score.total_possible %></td>
+          <td class="completed-info">
+            <%= score.complete? ? "yes" : "no"%>
+          </td>
           <td class="deleted-info">
             <%=
               if score.deleted?
