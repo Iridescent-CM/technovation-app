@@ -60,7 +60,7 @@ gem "airbrake", "~> 11.0.3"
 
 gem "dalli", "~> 2.7"
 
-gem "geocoder", "~> 1.4.9"
+gem "geocoder", "~> 1.6.7"
 gem "timezone", "~> 1.3"
 
 gem "carrierwave", "~> 1.2"
