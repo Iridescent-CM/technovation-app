@@ -182,16 +182,19 @@ class JudgesGrid
 
   filter :name_email,
     header: "Name or Email",
-    filter_group: "more-specific" do |value|
+    filter_group: "common" do |value, scope, grid|
       names = value.strip.downcase.split(' ').map { |n|
         I18n.transliterate(n).gsub("'", "''")
       }
-    fuzzy_search({
-      first_name: names.first,
-      last_name: names.last || names.first,
-      email: names.first,
-    }, false) # false enables OR search
-  end
+      scope.fuzzy_search({
+          first_name: names.first,
+          last_name: names.last || names.first,
+          email: names.first,
+        }, false)
+        .left_outer_joins(:judge_profile)
+        .left_outer_joins(judge_profile: :regional_pitch_events)
+        .where("judge_profiles.id IS NOT NULL")
+    end
 
   filter :country,
     :enum,
