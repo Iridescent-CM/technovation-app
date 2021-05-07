@@ -9,3 +9,64 @@
     [:edit, current_scope, team],
     class: "button small" %>
 <% end %>
+
+<!-- Location of team -->
+<div class="tab-content__detail">
+  <h4>Primary location:</h4>
+  <p><%= team.primary_location %></p>
+
+  <% unless current_scope == "chapter_ambassador" %>
+    <% if team.current? %>
+      <p>
+        <%= link_to "Change this team's location",
+          [:edit, current_scope, :team_location,
+            { return_to: send("#{current_scope}_team_path", team, anchor: '!location') }],
+          class: "button" %>
+      </p>
+    <% else %>
+      <dd>You cannot change the location of a past team</dd>
+    <% end %>
+  <% end %>
+</div>
+
+<!-- Division details -->
+<div class="tab-content__detail">
+  <h4 class="content-heading"> Division </h4>
+  <p class="">On <%= Division.cutoff_date.strftime("%B %e, %Y") %>:</p>
+  <ul class="">
+    <% team.students.each do |s| %>
+      <li>
+        <strong><%= s.full_name %></strong>
+        will be age <%= s.age_by_cutoff %>
+      </li>
+    <% end %>
+  </ul>
+
+  <p>
+    which makes <%= team.name %> a
+    <strong><%= team.division_name.humanize %> division</strong>
+    team.
+  </p>
+
+  <ul>
+    <li>
+      <strong>Junior Division</strong>
+      <ul class="">
+        <li>
+          Team members are between 10-14 years old as
+          of <%= Division.cutoff_date.strftime("%B %e, %Y") %>.
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Senior Division</strong>
+      <ul class="">
+        <li>
+          Team members are between 15-18 years old as
+          of <%= Division.cutoff_date.strftime("%B %e, %Y") %>.
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
