@@ -38,6 +38,7 @@ export default {
               <input type="radio" id="other" name="judge-recusal-reason" value="other">
               <label for="other">Other</label>
               <input type="text" id="judge-recusal-comment">
+              <div id="character-div"><span id="character-count">0</span>/50 words</div>
             </div>
           </div>
         `,
@@ -92,6 +93,12 @@ export default {
     width: 75%;
     margin: .75rem 0 0 1rem;
     padding: .2rem;
+  }
+
+  #character-div{
+    justify-content: flex-end;
+    display: flex;
+    width: 80%;
   }
 }
 
