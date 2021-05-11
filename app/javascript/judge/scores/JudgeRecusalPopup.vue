@@ -42,6 +42,24 @@ export default {
             </div>
           </div>
         `,
+        willOpen:() =>{
+          let characterCount = 0;
+          const commentBoxEl = document.querySelector('#judge-recusal-comment');
+          const characterCountEl = document.querySelector('#character-count');
+
+          commentBoxEl.addEventListener('keyup',() =>{
+            let currentCommentText = commentBoxEl.value.trim();
+
+            if(currentCommentText !== ""){
+              characterCount = currentCommentText.split(" ").length;
+            } else {
+              characterCount = 0;
+            }
+
+            characterCountEl.innerHTML = characterCount.toString();
+
+          });
+        },
         preConfirm: () => {
           const judgeRecusalReason = document.querySelector('input[name="judge-recusal-reason"]:checked').value
           const judgeRecusalComment = document.getElementById('judge-recusal-comment').value
