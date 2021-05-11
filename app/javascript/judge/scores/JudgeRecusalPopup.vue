@@ -38,15 +38,37 @@ export default {
               <input type="radio" id="other" name="judge-recusal-reason" value="other">
               <label for="other">Other</label>
               <input type="text" id="judge-recusal-comment">
+              <div id="character-div"><span id="character-count">0</span>/50 words</div>
             </div>
           </div>
         `,
+        willOpen:() =>{
+          let characterCount = 0;
+          const commentBoxEl = document.querySelector('#judge-recusal-comment');
+          const characterCountEl = document.querySelector('#character-count');
+
+          commentBoxEl.addEventListener('keyup',() =>{
+            let currentCommentText = commentBoxEl.value.trim();
+
+            if(currentCommentText !== ""){
+              characterCount = currentCommentText.split(" ").length;
+            } else {
+              characterCount = 0;
+            }
+
+            characterCountEl.innerHTML = characterCount.toString();
+
+          });
+        },
         preConfirm: () => {
           const judgeRecusalReason = document.querySelector('input[name="judge-recusal-reason"]:checked').value
           const judgeRecusalComment = document.getElementById('judge-recusal-comment').value
+          const judgeRecusalCommentWordCount = judgeRecusalComment.trim().split(" ").length;
 
           if (judgeRecusalReason == 'other' && judgeRecusalComment.trim() == '') {
-            Swal.showValidationMessage('Please add a reason for recusing yourself')
+            Swal.showValidationMessage('Please add a reason for recusing yourself. Comment must be 3 words.')
+          } else if (judgeRecusalReason === 'other' && judgeRecusalCommentWordCount < 3 || judgeRecusalCommentWordCount > 50) {
+            Swal.showValidationMessage('Comment must be between 3 and 50 words')
           }
 
           return { judgeRecusalReason, judgeRecusalComment }
@@ -92,6 +114,12 @@ export default {
     width: 75%;
     margin: .75rem 0 0 1rem;
     padding: .2rem;
+  }
+
+  #character-div{
+    justify-content: flex-end;
+    display: flex;
+    width: 80%;
   }
 }
 
