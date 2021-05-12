@@ -9,10 +9,16 @@
 //= require submissions
 //= require dropzones
 
-document.addEventListener('turbolinks:load', function () {
-  $( ".accordion" ).accordion({
+document.addEventListener("turbolinks:load", function() {
+  $(".accordion").accordion({
     collapsible: true,
     active: false,
     heightStyle: "content",
   });
 });
+
+window.onpopstate = function() {
+  Turbolinks.visit(
+    window.location.toString(), { action: "replace" }
+  );
+};
