@@ -48,6 +48,7 @@ export default {
           const characterCountEl = document.querySelector('#character-count');
 
           commentBoxEl.addEventListener('keyup',() =>{
+            Swal.resetValidationMessage();
             let currentCommentText = commentBoxEl.value.trim();
 
             if(currentCommentText !== ""){
@@ -63,11 +64,13 @@ export default {
         preConfirm: () => {
           const judgeRecusalReason = document.querySelector('input[name="judge-recusal-reason"]:checked').value
           const judgeRecusalComment = document.getElementById('judge-recusal-comment').value
-          const judgeRecusalCommentWordCount = judgeRecusalComment.trim().split(" ").length;
+          const judgeRecusalCommentWordCount = judgeRecusalComment.trim().split(" ").length
 
-          if (judgeRecusalReason == 'other' && judgeRecusalComment.trim() == '') {
-            Swal.showValidationMessage('Please add a reason for recusing yourself. Comment must be 3 words.')
-          } else if (judgeRecusalReason === 'other' && judgeRecusalCommentWordCount < 3 || judgeRecusalCommentWordCount > 50) {
+          if (judgeRecusalReason === 'other' && judgeRecusalComment.trim() === '') {
+            Swal.showValidationMessage('Please add a reason for recusing yourself. Comment must be at least 3 words.')
+          } else if (judgeRecusalReason === 'other' && judgeRecusalCommentWordCount < 3 || judgeRecusalCommentWordCount > 50){
+            Swal.showValidationMessage('Comment must be between 3 and 50 words')
+          } else if ( judgeRecusalReason !== 'other' && judgeRecusalComment.trim() !== '' && judgeRecusalCommentWordCount < 3 || judgeRecusalCommentWordCount > 50) {
             Swal.showValidationMessage('Comment must be between 3 and 50 words')
           }
 
