@@ -6,7 +6,7 @@
         <h4>Pitch</h4>
         <p>
           <a
-            href="#"
+            :href="`${submission.pitch_video_url}`"
             :data-opens-modal="`video-modal-${submission.pitch_video_id}`"
             :data-modal-fetch="submission.pitch_video_url"
             @click="trackPitchVideoClick"
@@ -28,7 +28,7 @@
         <h4>Demo Video</h4>
         <p>
           <a
-            href="#"
+            :href="`${submission.demo_video_url}`"
             :data-opens-modal="`video-modal-${submission.demo_video_id}`"
             :data-modal-fetch="submission.demo_video_url"
             @click="trackDemoVideoClick"
@@ -60,11 +60,13 @@ export default {
   props: ['solo'],
 
   methods: {
-    async trackPitchVideoClick () {
+    async trackPitchVideoClick (event) {
+      event.preventDefault()
       await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_pitch_video': true}})
     },
 
-    async trackDemoVideoClick () {
+    async trackDemoVideoClick (event) {
+      event.preventDefault()
       await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_demo_video': true}})
     },
   },
