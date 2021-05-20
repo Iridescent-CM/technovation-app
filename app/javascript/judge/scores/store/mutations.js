@@ -80,6 +80,39 @@ export const updateScores = (state, qData) => {
   })
 }
 
+export const resetState = (state) => {
+  const emptyComment = {
+    text: '',
+    word_count: 0,
+  }
+  state.questions = []
+  state.team = {
+    id: null,
+    name: '',
+    location: '',
+    division: '',
+    photo: '',
+  }
+  state.submission = {
+    id: null,
+    name: '',
+    location: '',
+    division: '',
+    photo: '',
+  }
+  state.score = {
+    id: null,
+    incomplete: null,
+    comments: {
+      ideation: emptyComment,
+      technical: emptyComment,
+      entrepreneurship: emptyComment,
+      pitch: emptyComment,
+      overall: emptyComment,
+    }
+  }
+}
+
 export const setStateFromJSON = (state, json) => {
   state.questions = json.questions
   state.team = json.team

@@ -19,6 +19,9 @@ document.addEventListener('turbolinks:load', () => {
   const scoresEl = document.querySelector("#judge-scores-app")
 
   if (scoresEl != undefined) {
+
+    store.commit('resetState')
+
     new Vue({
       el: scoresEl,
       router,

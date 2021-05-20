@@ -49,7 +49,6 @@ feature "scoring submissions", js: true do
 
   def and_a_user_is_logged_in_as_a_judge
     judge = FactoryBot.create(:judge, :onboarded)
-
     sign_in(judge)
   end
 

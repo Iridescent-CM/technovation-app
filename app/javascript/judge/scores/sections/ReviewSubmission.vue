@@ -55,6 +55,7 @@
 </template>
 
 <script>
+
 import { mapState } from 'vuex'
 import Icon from '../../../components/Icon'
 
@@ -72,7 +73,7 @@ export default {
       'team',
       'score',
       'submission',
-    ]),
+    ])
   },
 
   components: {
