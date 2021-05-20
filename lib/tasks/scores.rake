@@ -119,4 +119,10 @@ namespace :scores do
       ].to_csv
     end
   end
+
+  desc 'delete incomplete submission score by judge profile id'
+  task :delete!, [:judge_profile_id] => :environment do |t, args|
+    puts args[:judge_profile_id]
+    SubmissionScore.current.where(judge_profile_id: args[:judge_profile_id]).delete_all
+  end
 end
