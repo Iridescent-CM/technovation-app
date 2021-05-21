@@ -120,9 +120,9 @@ namespace :scores do
     end
   end
 
-  desc 'delete incomplete submission score by judge profile id'
-  task :delete!, [:judge_profile_id] => :environment do |t, args|
-    puts args[:judge_profile_id]
-    SubmissionScore.current.where(judge_profile_id: args[:judge_profile_id]).delete_all
+  desc 'soft delete incomplete submission score by judge profile id'
+  task :soft_delete!, [:judge_profile_id] => :environment do |t, args|
+    puts "Soft deleting submission scores for judge profile id: #{args[:judge_profile_id]}"
+    SubmissionScore.current.where(judge_profile_id: args[:judge_profile_id]).destroy_all
   end
 end
