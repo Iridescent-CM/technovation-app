@@ -54,7 +54,7 @@
   <h5>Incomplete Quarterfinal scores</h5>
   <div id="incomplete-quarterfinal-scores">
     <%= render 'chapter_ambassador/score_details/scores_table',
-      scores: scores.quarterfinals.incomplete %>
+      scores: scores.judge_not_deleted.quarterfinals.incomplete %>
   </div>
 
   <% if current_account.is_admin? %>
