@@ -89,18 +89,20 @@ $(document).on("click", ".img-modal", function(e) {
     html = "<div class='grid grid--bleed grid--justify-space-between screenshot-nav'>"
 
     html += "<div class='" +
-            "screenshot-nav__item grid__col-auto grid--justify-center" +
+            "screenshot-nav__item grid__col-1 grid--justify-center" +
             "' data-go-to='" + prevIdx + "'>"
     html += "<img src='https://icongr.am/fontawesome/angle-left.svg' />"
     html += "</div>"
 
-    html += "<div class='grid__col-auto grid--justify-center'>"
-    html += "<img class='screenshot__img' " +
+    html += "<div class='grid__col-10 grid--justify-center'>"
+    html += "<a class='screenshot-nav__item' target='_blank' href='" + $(e.target).data("modalUrl") + "'>"
+    html += "<img class='screenshot__img'" +
             "src='" + $(e.target).data("modalUrl") + "' />"
+    html += "</a>"
     html += "</div>"
 
     html += "<div class='" +
-            "screenshot-nav__item grid__col-auto grid--justify-center" +
+            "screenshot-nav__item grid__col-1 grid--justify-center" +
             "' data-go-to='" + nextIdx + "'>"
     html += "<img src='https://icongr.am/fontawesome/angle-right.svg' />"
     html += "</div>"
