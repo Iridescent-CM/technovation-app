@@ -9,7 +9,7 @@ module FillPdfs
       "#{recipient.region} team " +
       "#{recipient.team_name} " +
       "to develop the mobile application " +
-      "#{recipient.mobile_app_name}."
+      "#{recipient.mobile_app_name} for the #{recipient.season} Technovation Girls season."
     end
   end
 end
