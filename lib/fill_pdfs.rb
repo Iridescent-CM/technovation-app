@@ -88,8 +88,7 @@ module FillPdfs
         pathname,
         tmp_output,
         field_values,
-        flatten: true,
-        need_appearances: true
+        flatten: true
       )
     end
   end
