@@ -70,10 +70,16 @@
 
     <div class="certificate-button">
       <% current_account.current_appreciation_certificates.for_team(team).each do |certificate| %>
+        <% if !current_account.took_survey? %>
+          <p style="font-weight: bold">Before you can view your certificate, please complete the post-survey</p>
+        <% end %>
         <%= link_to "Open your certificate",
           certificate.file_url,
           target: "_blank",
-          class: "button button--reward" %>
+          class: "button button--reward",
+          disabled: !current_account.took_survey?
+        %>
+
       <% end %>
     </div>
   </div>
