@@ -71,7 +71,20 @@
     <div class="certificate-button">
       <% current_account.current_appreciation_certificates.for_team(team).each do |certificate| %>
         <% if !current_account.took_program_survey? %>
-          <p style="font-weight: bold">Before you can view your certificate, please complete the post-survey</p>
+          <p id="post-survey-text">Before you can view your certificate, please complete the
+            <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+              <%= link_to "post survey",
+                  SeasonToggles.survey_link(
+                    current_scope, "url",
+                    format_url: true,
+                    account: current_account
+                  ),
+                  target: "_blank"
+              %>
+            <% else %>
+              post survey
+            <% end %>
+          </p>
         <% end %>
         <%= link_to "Open your certificate",
           certificate.file_url,
