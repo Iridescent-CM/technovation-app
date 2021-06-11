@@ -24,6 +24,10 @@ class Certificate < ApplicationRecord
     where(team: team)
   }
 
+  scope :for_cert_type, -> (cert_type) {
+    where(cert_type: cert_type)
+  }
+
   def description
     title = cert_type.humanize.titleize
 
