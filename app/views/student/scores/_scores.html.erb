@@ -56,7 +56,10 @@
       </div>
 
       <dl class="accordion">
-        <dt>Ideation <span><%= score.ideation_total %></span></dt>
+        <dt>Ideation
+            <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
+            <span class="numeric-score"><%= score.ideation_total %></span>
+        </dt>
 
         <dd>
           <%= render "student/scores/section",
@@ -64,7 +67,12 @@
             section: :ideation %>
         </dd>
 
-        <dt>Technical <span><%= score.technical_total %></span></dt>
+        <dt>Technical
+          <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
+          <span class="numeric-score">
+            <%= score.technical_total %>
+          </span>
+        </dt>
 
         <dd>
           <%= render "student/scores/section",
@@ -73,7 +81,10 @@
         </dd>
 
         <% if current_team.senior? %>
-          <dt>Entrepreneurship <span><%= score.entrepreneurship_total %></span></dt>
+          <dt>Entrepreneurship
+            <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
+            <span><%= score.entrepreneurship_total %></span>
+          </dt>
 
           <dd>
             <%= render "student/scores/section",
@@ -82,7 +93,10 @@
           </dd>
         <% end %>
 
-        <dt>Pitch <span><%= score.pitch_total %></span></dt>
+        <dt>Pitch
+          <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
+          <span class="numeric-score"><%= score.pitch_total %></span>
+        </dt>
 
         <dd>
           <%= render "student/scores/section",
@@ -90,7 +104,10 @@
             section: :pitch %>
         </dd>
 
-        <dt>Overall Impression <span><%= score.overall_impression_total %></span></dt>
+        <dt>Overall Impression
+          <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
+          <span class="numeric-score"><%= score.overall_impression_total %></span>
+        </dt>
 
         <dd>
           <%= render "student/scores/section",
