@@ -58,7 +58,7 @@
       :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
-    >View Scores & Feedback</tab-link>
+    >View Scores & Certificates</tab-link>
   </ul>
 </template>
 

@@ -1,8 +1,8 @@
-<h1 class="content-heading">Scores and Certificate</h1>
+<!--<h1 class="content-heading">Scores and Certificate</h1>-->
 
 <% if current_team.submission.complete? && current_team.submission.scores.complete.any? %>
   <p>
-    Congratulations! Your scores and certificate are ready.
+    Congratulations! Your team was a <%= current_team.submission.contest_rank %>.
   </p>
 
   <div class="step-actions">
