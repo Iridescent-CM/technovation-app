@@ -11,7 +11,7 @@ RSpec.feature "Toggling display of scores" do
 
       visit student_dashboard_path
 
-      expect(page).to have_content("Scores and Certificate")
+      expect(page).to have_content("Scores & Certificate")
       expect(page).to have_css(".button", text: "View your scores and certificate")
     end
 
@@ -20,7 +20,7 @@ RSpec.feature "Toggling display of scores" do
 
       visit student_dashboard_path
 
-      expect(page).not_to have_content("Scores and Certificate")
+      expect(page).not_to have_content("Scores & Certificate")
       expect(page).not_to have_css(".button", text: "View your scores and certificate")
     end
   end
