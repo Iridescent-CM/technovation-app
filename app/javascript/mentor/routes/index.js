@@ -158,7 +158,7 @@ export const routes = [
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: 'scores',
-      browserTitle: 'View Scores & Feedback',
+      browserTitle: 'View Scores & Certificates',
     },
   },
   {
