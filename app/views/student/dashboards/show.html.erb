@@ -73,7 +73,7 @@
       </div>
 
       <div slot="find-mentor">
-        <h2 class="content-heading">Mentor Status</h3>
+        <h2 class="content-heading">Mentor Status</h2>
 
         <% if current_student.team.mentors.any? %>
           <p>Your team has <%= pluralize(current_student.team.mentors.count, "mentor") %>. You can have more than one.</p>
@@ -83,7 +83,7 @@
 
         <hr class="margin--t-xlarge">
 
-        <h3>Find a Mentor to invite to your team</h2>
+        <h3>Find a Mentor to invite to your team</h3>
         <% if current_team.present? %>
           <%= link_to "Search for a Mentor to invite", new_student_mentor_search_path, class: "button" %>
         <% else %>

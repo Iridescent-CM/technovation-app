@@ -5,10 +5,14 @@
     Congratulations! Your team was a <%= current_team.submission.contest_rank %>.
   </p>
 
+  <% if !current_student.took_program_survey? %>
+    <%= render "student/dashboards/completion_steps/post_survey_requirement" %>
+  <% end %>
   <div class="step-actions">
     <%= link_to 'View your scores and certificate',
         student_scores_path,
-        class: "button" %>
+        class: "button",
+        disabled: !current_student.took_program_survey?%>
   </div>
 <% elsif current_team.submission.complete? %>
   <p>
@@ -16,10 +20,14 @@
     To see your scores from your live event, ask your Chapter Ambassador for a copy.
   </p>
 
+  <% if !current_student.took_program_survey? %>
+    <%= render "student/dashboards/completion_steps/post_survey_requirement" %>
+  <% end %>
   <div class="step-actions">
     <%= link_to 'View your certificate',
         student_scores_path,
-        class: "button" %>
+        class: "button",
+        disabled: !current_student.took_program_survey?%>
   </div>
 <% elsif !current_team.submission.complete? || !current_team.submission.present? %>
   <h3>No Scores Available</h3>
