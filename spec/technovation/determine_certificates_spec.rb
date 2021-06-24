@@ -63,25 +63,35 @@ RSpec.describe DetermineCertificates do
     end
   end
 
-  context "for mentor" do
-    it "awards mentor appreciation" do
-      mentor = FactoryBot.create(:mentor, number_of_teams: 1)
-
+  context "when the team's submission is more than 50% complete" do
+    it "awards a mentor appreciation certificate" do
+      mentor = FactoryBot.create(:mentor, :complete_submission, number_of_teams: 1)
       expect(DetermineCertificates.new(mentor.account).needed).to contain_exactly(
-        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: mentor.current_teams.first)
+        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: mentor.current_teams.last)
       )
     end
 
     it "awards many mentor appreciations" do
-      mentor = FactoryBot.create(:mentor, number_of_teams: 5)
-
-      expected = mentor.current_teams.map do |team|
-        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: team)
+      mentor = FactoryBot.create(:mentor, :complete_submission, number_of_teams: 5)
+      team_submissions = mentor.current_teams.select do |team|
+        team.submission.complete?
+      end
+      
+      expected = team_submissions.map do |team| 
+        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: team) 
       end
       expect(DetermineCertificates.new(mentor.account).needed).to match_array(expected)
     end
+  end
 
-    it "awards nothing" do
+  context "when the team's submission is less 50% complete" do 
+    it "does not award a mentor appreciation certificate" do
+      mentor = FactoryBot.create(:mentor, number_of_teams: 1)
+      
+      expect(DetermineCertificates.new(mentor.account).needed).to be_empty
+    end
+
+    it "does not award a mentor" do
       mentor = FactoryBot.create(:mentor)
 
       expect(DetermineCertificates.new(mentor.account).needed).to be_empty

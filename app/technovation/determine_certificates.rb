@@ -94,7 +94,8 @@ class DetermineCertificates
 
   def needed_mentor_appreciation_recipients
     @account.mentor_profile.teams.by_season(season).select { |team|
-      !@account.appreciation_certificates.by_season(season).for_team(team).any?
+      !@account.appreciation_certificates.by_season(season).for_team(team).any? && 
+      team.submission.percent_complete > 50
     }.map { |team|
       CertificateRecipient.new(:mentor_appreciation, @account, team: team)
     }
