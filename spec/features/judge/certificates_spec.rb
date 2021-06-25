@@ -290,4 +290,16 @@ RSpec.feature "Judge certificates" do
       href: judge.current_judge_advisor_certificates.last.file_url
     )
   end
+
+  scenario "no certificates for exists certificates" do
+    SeasonToggles.set_judging_round(:sf)
+
+    judge = FactoryBot.create(:judge, :onboarded, :attending_live_event, number_of_scores: 11)
+
+    SeasonToggles.set_judging_round(:off)
+    SeasonToggles.display_scores_on!
+    FillPdfs.(judge.account)
+
+    expect(FillPdfs.(judge.account)).to be_empty
+  end
 end

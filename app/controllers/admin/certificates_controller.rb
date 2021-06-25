@@ -18,12 +18,18 @@ module Admin
         team = nil
       end
 
-      recipient = CertificateRecipient.new(cert_type, account, team: team)
-      CertificateJob.perform_later(recipient.state)
-
-      msg = {
-        success: "Job started to award #{recipient.description}, it may take some time to appear"
-      }
+      msg = nil
+      if account.certificates.by_season(Season.current.year).for_team(team).for_cert_type(cert_type).empty?
+        recipient = CertificateRecipient.new(cert_type, account, team: team)
+        CertificateJob.perform_now(recipient.state)
+        msg = {
+          success: "Job started to award #{recipient.description}, it may take some time to appear"
+        }
+      else
+        msg = {
+          error: "Exist certificate"
+        }
+      end
 
       redirect_to admin_participant_path(account), msg
     end
