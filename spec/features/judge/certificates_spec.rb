@@ -75,7 +75,7 @@ RSpec.feature "Judge certificates" do
     )
 
     expect(page).to have_content(
-      "Questions or feedback about staying involved with Technovation, reach out to volunteer@technovation.org."
+      "Questions or feedback about staying involved with Technovation, reach out to support@technovation.org."
     )
 
     expect(page).to have_content(
