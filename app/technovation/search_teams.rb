@@ -38,6 +38,11 @@ module SearchTeams
       nearby = "Palestine"
     end
 
+    if nearby.is_a?(String)
+      geocoder = Geocoder.search(nearby).first
+      nearby = [geocoder.latitude, geocoder.longitude]
+    end
+
     teams.near(nearby, miles)
   end
 
