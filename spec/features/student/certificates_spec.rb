@@ -118,11 +118,5 @@ RSpec.feature "Student certificates" do
 
       expect(page).not_to have_link("View your scores and certificate")
     end
-
-    scenario "no certificates if exists certificates" do
-      FillPdfs.(student.account)
-  
-      expect(FillPdfs.(student.account)).to be_empty
-    end
   end
 end

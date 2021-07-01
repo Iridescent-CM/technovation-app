@@ -74,16 +74,4 @@ RSpec.feature "Mentor certificates" do
 
     expect(page).to have_link("Open your certificate", count: 2)
   end
-
-  scenario "no certificates for exists certificates" do
-    mentor = FactoryBot.create(:mentor, :onboarded)
-    team_a = FactoryBot.create(:team)
-    team_b = FactoryBot.create(:team)
-
-    TeamRosterManaging.add(team_a, mentor)
-    TeamRosterManaging.add(team_b, mentor)
-    FillPdfs.(mentor.account)
-
-    expect(FillPdfs.(mentor.account)).to be_empty
-  end
 end

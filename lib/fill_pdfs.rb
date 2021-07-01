@@ -30,9 +30,7 @@ module FillPdfs
     season = options.fetch(:season) { Season.current.year }
 
     DetermineCertificates.new(account).needed.each do |recipient|
-      if account.certificates.by_season(season).for_team(recipient.team).for_cert_type(recipient.certificate_type).empty?
-        fill(recipient)
-      end
+      fill(recipient)
     end
   end
 
