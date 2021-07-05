@@ -31,17 +31,13 @@ class ScoredSubmissionsGrid
 
   column :team_name, mandatory: true, html: false
   column :team_name, mandatory: true, html: true do |submission|
-    link_to submission.team_name,
-      [current_scope, submission.team, allow_out_of_region: true],
-      data: {turbolinks: false}
+    link_to submission.team_name, `#{current_scope}_team_path(submission.team, allow_out_of_region: true)`, turbolinks: true
   end
 
   column :app_name, mandatory: true, html: false
   column :app_description
   column :submission, mandatory: true, html: true do |submission|
-    link_to submission.app_name,
-      [current_scope, submission, allow_out_of_region: true],
-      data: { turbolinks: false }
+    link_to submission.app_name, `#{current_scope}_team_submission_path(submission, allow_out_of_region: true)`, turbolinks: true
   end
 
   column :complete_scores, mandatory: true do |asset, grid|
@@ -92,12 +88,9 @@ class ScoredSubmissionsGrid
   column :view, mandatory: true, html: true do |submission, grid|
     html = link_to(
       web_icon('list-ul', size: 16, remote: true),
-      [current_scope, :score_detail, id: submission.id],
-      {
-        class: "view-details",
-        "v-tooltip" => "'Read score details'",
-        data: { turbolinks: false },
-      }
+      send("#{current_scope}_score_detail_path", id: submission.id), turbolinks: false, 
+      "v-tooltip" => "'Read score details'", 
+      class: "view-details"
     )
 
     if grid.admin

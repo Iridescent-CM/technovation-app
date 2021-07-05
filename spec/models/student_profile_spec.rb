@@ -162,7 +162,7 @@ RSpec.describe StudentProfile do
     expect(profile.parent_guardian_email).to eq("ON FILE")
 
     expect(
-      profile.update_attributes(school_name: "some other change works")
+      profile.update(school_name: "some other change works")
     ).to be true
   end
 
@@ -205,7 +205,7 @@ RSpec.describe StudentProfile do
       FactoryBot.attributes_for(:parental_consent)
     )
 
-    profile.update_attributes(parent_guardian_email: "something@else.com")
+    profile.update(parent_guardian_email: "something@else.com")
 
     expect(profile.reload.parental_consent).to be_pending
   end

@@ -5,7 +5,7 @@
     <div class="progress__section">
       <h1>
         <%= link_to "Start",
-          [current_scope, submission, :section, section: :start] %>
+          send("#{current_scope}_team_submission_section_path", submission, section: :start) %>
       </h1>
 
       <ol class="list--reset">
@@ -15,11 +15,10 @@
             :honor_code,
             "Honor code"
           ),
-          [
-            current_scope,
-            :honor_code,
-            team_submission_id: submission.id,
-          ] %>
+          send(
+            "#{current_scope}_honor_code_path",
+            team_submission_id: submission.id
+          ) %>
         </li>
 
         <li>
@@ -28,7 +27,10 @@
             :team_photo,
             "Team photo"
           ),
-          [current_scope, current_team] %>
+          send(
+            "#{current_scope}_team_path",
+            current_team
+          ) %>
         </li>
       </ol>
     </div>
@@ -36,7 +38,11 @@
     <div class="progress__section">
       <h1>
         <%= link_to "Ideation",
-          [current_scope, submission, :section, section: :ideation] %>
+          send(
+            "#{current_scope}_team_submission_section_path",
+            submission,
+            section: :ideation
+          ) %>
       </h1>
 
       <ol class="list--reset">
@@ -46,7 +52,12 @@
             :app_name,
             "Your app's name"
           ),
-          [current_scope, submission, piece: :app_name] %>
+            send(
+              "#{current_scope}_team_submission_path",
+              submission,
+              piece: :app_name
+            )
+          %>
         </li>
 
         <li>
@@ -55,7 +66,12 @@
             :app_description,
             "A description of your app"
           ),
-          [current_scope, submission, piece: :app_description] %>
+            send(
+              "#{current_scope}_team_submission_path",
+              submission,
+              piece: :app_description
+            )
+          %>
         </li>
 
         <li>
@@ -64,7 +80,12 @@
             :app_details,
             "Additional information"
           ),
-          [current_scope, submission, piece: :app_details] %>
+            send(
+              "#{current_scope}_team_submission_path",
+              submission,
+              piece: :app_details
+            )
+          %>
         </li>
       </ol>
     </div>
@@ -72,7 +93,12 @@
     <div class="progress__section">
       <h1>
         <%= link_to "Pitch",
-          [current_scope, submission, :section, section: :pitch] %>
+          send(
+            "#{current_scope}_team_submission_section_path",
+            submission,
+            section: :pitch
+          )
+        %>
       </h1>
 
       <ol class="list--reset">
@@ -82,7 +108,12 @@
             :demo_video,
             "Demo video"
           ),
-          [current_scope, submission, piece: :demo_video_link] %>
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :demo_video_link
+          )
+        %>
         </li>
 
         <li>
@@ -91,7 +122,12 @@
             :pitch_video,
             "Pitch video"
           ),
-          [current_scope, submission, piece: :pitch_video_link] %>
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :pitch_video_link
+          )
+         %>
         </li>
 
         <li>
@@ -100,7 +136,11 @@
             :screenshots,
             "2 or more images"
           ),
-          [current_scope, submission, piece: :screenshots],
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :screenshots
+          ),
           data: { turbolinks: false } %>
         </li>
       </ol>
@@ -109,7 +149,12 @@
     <div class="progress__section">
       <h1>
         <%= link_to "Code",
-          [current_scope, submission, :section, section: :code] %>
+          send(
+            "#{current_scope}_team_submission_section_path",
+            submission,
+            section: :code
+          )
+        %>
       </h1>
 
       <ol class="list--reset">
@@ -119,7 +164,12 @@
             :development_platform,
             "Development platform"
           ),
-          [current_scope, submission, piece: :development_platform] %>
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :development_platform
+          )
+        %>
         </li>
 
         <li>
@@ -128,7 +178,12 @@
             :source_code_url,
             "Upload your source code"
           ),
-          [current_scope, submission, piece: :source_code_url] %>
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :source_code_url
+          )
+        %>
         </li>
       </ol>
     </div>
@@ -136,7 +191,12 @@
     <div class="progress__section">
       <h1>
         <%= link_to "Business",
-          [current_scope, submission, :section, section: :business] %>
+          send(
+            "#{current_scope}_team_submission_section_path",
+            submission,
+            section: :business
+          )
+        %>
       </h1>
 
       <ol class="list--reset">
@@ -150,7 +210,12 @@
             :business_plan,
             "Your business plan"
           ),
-          [current_scope, submission, piece: :business_plan] %>
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :business_plan
+          )
+        %>
         </li>
       </ol>
     </div>
@@ -159,12 +224,12 @@
   <div class="progress__section">
     <h1>
       <%= link_to "Regional events",
-        [
-          current_scope,
-          submission,
-          :section,
-          section: :pitch_presentation,
-        ] %>
+        send(
+            "#{current_scope}_team_submission_section_path",
+            submission,
+            section: :pitch_presentation
+          )
+        %>
     </h1>
 
     <ol class="list--reset">
@@ -178,7 +243,12 @@
           :pitch_presentation,
           "Presentation slides"
         ),
-        [current_scope, submission, piece: :pitch_presentation] %>
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :pitch_presentation
+          )
+        %>
       </li>
     </ol>
   </div>

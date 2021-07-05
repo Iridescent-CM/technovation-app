@@ -43,12 +43,11 @@
           <div class="progress__section">
             <h2 class="reset">
               <%= link_to team.name,
-                [
-                  current_scope,
+                send(
+                  "#{current_scope}_team_submission_section_path",
                   team.submission,
-                  :section,
-                  section: :pitch_presentation,
-                ] %>
+                  section: :pitch_presentation
+                ) %>
             </h2>
 
             <div class="margin--b-large">
@@ -63,7 +62,11 @@
                     :pitch_presentation,
                     "Edit presentation slides"
                   ),
-                  [current_scope, team.submission, piece: :pitch_presentation] %>
+                  send(
+                    "#{current_scope}_team_submission_path",
+                    team.submission,
+                    section: :pitch_presentation
+                  ) %>
                 </li>
               </ol>
             </div>

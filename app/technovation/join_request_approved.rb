@@ -1,6 +1,6 @@
 module JoinRequestApproved
   def self.call(join_request)
-    join_request.update_attributes(accepted_at: Time.current)
+    join_request.update(accepted_at: Time.current)
 
     if join_request.requestor_scope_name == 'student'
       others = JoinRequest.pending.where(requestor_id: join_request.requestor_id)

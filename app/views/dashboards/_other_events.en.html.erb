@@ -27,7 +27,7 @@
       <br />
 
       <%= link_to 'view full details',
-        [current_scope, event],
+        send("#{current_scope}_event_path", event),
         class: "button small" %>
     </li>
   <% end %>

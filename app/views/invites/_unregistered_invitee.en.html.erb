@@ -11,7 +11,7 @@
       <small>Unregistered</small><br />
 
       <%= link_to "delete this invitation",
-        [current_scope, invite],
+        send("#{current_scope}_invite_path"),
         class: "danger small",
         data: {
           method: :delete,

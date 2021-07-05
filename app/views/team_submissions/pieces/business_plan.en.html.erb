@@ -16,8 +16,8 @@
       Submit your 5 to 10 page business plan as a <strong>PDF file</strong>.
     </p>
 
-    <%= form_with model: [current_scope, @team_submission],
-      multipart: true,
+    <%= form_with model: @team_submission,
+      url: send("#{current_scope}_team_submission_path", multipart: true),
       id: "team-submission-business-plan-dropzone",
       class: "dropzone" do |f| %>
 
@@ -32,23 +32,21 @@
 
     <p class="dropzone-save" style="display: none;">
       <%= link_to "Save this upload",
-          [
-            current_scope,
-            @team_submission,
-            :section,
-            section: @submission_section,
-          ],
+        send(
+          "#{current_scope}_team_submission_section_path",
+          @team_submission,
+          section: @submission_section
+        ) ,
           class: "button" %>
     </p>
 
     <p class="after-dropzone-save">
       <%= link_to "cancel",
-          [
-            current_scope,
-            @team_submission,
-            :section,
-            section: @submission_section,
-          ] %>
+        send(
+          "#{current_scope}_team_submission_section_path",
+          @team_submission,
+          section: @submission_section
+        ) %>
     </p>
 
     <p class="grid__cell--padding-sm-y">

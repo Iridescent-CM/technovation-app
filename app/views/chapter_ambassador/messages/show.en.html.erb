@@ -36,7 +36,7 @@
     <% unless @message.sent_at %>
       <div class="card__actions-row card__actions-row--pos-end">
         <%= link_to 'Edit',
-          [:edit, :chapter_ambassador, @message],
+          edit_chapter_ambassador_message_path(@message),
           class: "appy-button appy-button--sm" %>
       </div>
     <% end %>
@@ -69,5 +69,6 @@
 
 <p>
   <%= link_to fa_icon('arrow-left', text: "Go back to #{@message.regarding_name}"),
-    [:chapter_ambassador, @message.regarding] %>
+    chapter_ambassador_message_path(@message.regarding)
+   %>
 </p>

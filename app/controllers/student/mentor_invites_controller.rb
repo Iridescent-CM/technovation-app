@@ -4,7 +4,7 @@ module Student
       @mentor_invite = MentorInvite.new(mentor_invite_params)
 
       if @mentor_invite.save
-        redirect_to [:student, @mentor_invite.team, { anchor: "mentors" }],
+        redirect_to student_team_path(@mentor_invite.team, { anchor: "mentors" }),
           success: t("controllers.team_member_invites.create.success")
       else
         redirect_back fallback_location: student_dashboard_path,

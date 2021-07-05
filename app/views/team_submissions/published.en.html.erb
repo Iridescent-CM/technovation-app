@@ -140,23 +140,17 @@
         <% @team_submission.awaiting_publish(current_scope) do %>
           <p>
             <%= link_to "Submit now",
-              [
-                current_scope,
-                :honor_code_review,
-                { team_id: current_team.id },
-              ],
-
+              send("#{current_scope}_honor_code_review_path", { team_id: current_team.id }),
               class: "button" %>
 
             or
 
             <%= link_to "continue editing",
-              [
-                current_scope,
-                @team_submission,
-                :section,
-                section: :ideation
-              ] %>
+            send(
+              "#{current_scope}_team_submission_section_path",
+              @team_submission,
+              section: :ideation
+            ) %>
           </p>
 
           <p>
@@ -173,12 +167,11 @@
 
             <p>
               <%= link_to "Make changes",
-                [
-                  current_scope,
+                send(
+                  "#{current_scope}_team_submission_section_path",
                   @team_submission,
-                  :section,
                   section: :ideation
-                ],
+                ),
                 class: "button button--small" %>
             </p>
           <% else %>
