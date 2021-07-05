@@ -4,7 +4,8 @@
   </h3>
 
   <%= form_with(
-    model: [current_scope, @team_submission],
+    model: @team_submission,
+    url: send("#{current_scope}_team_submission_path"),
     local: true
   ) do |f| %>
     <%= hidden_field_tag :piece, piece_name %>
@@ -18,7 +19,7 @@
       <p>
         <%= f.submit "Save this name", class: "button" %>
         or
-        <%= link_to "cancel", [current_scope, @team_submission] %>
+        <%= link_to "cancel", send("#{current_scope}_team_submission_path", @team_submission) %>
       </p>
     </div>
   <% end %>

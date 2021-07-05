@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 ruby "2.6.4"
 
-gem "rails", "~> 5.2.0"
+gem "rails", "~> 6.0.0"
 
 gem "puma", "~> 3.12.6"
 gem "pg", "~> 0.21"
@@ -38,7 +38,7 @@ gem "cocoon", "~> 1.2"
 gem "sass-rails", "~> 5.0"
 gem "normalize-rails", "~> 4.1"
 
-gem "rails-i18n", "~> 5.1"
+gem "rails-i18n", "~> 6.0.0"
 gem "i18n-tasks", "~> 0.9"
 gem "clipboard-rails", "~> 1.7"
 gem "will_paginate", "~> 3.1"
@@ -56,8 +56,8 @@ gem "bcrypt", "~> 3.1"
 
 gem "sidekiq", "~> 4.2"
 
-gem "airbrake", "~> 6.3"
-gem "newrelic_rpm", "~> 3.18"
+gem "airbrake", "~> 11.0.3"
+gem "newrelic_rpm", "~> 7.1.0"
 gem "scout_apm", "~> 2.4"
 
 gem "dalli", "~> 2.7"
@@ -117,8 +117,9 @@ group :test do
 
   gem "capybara", "~> 3.31"
   gem "capybara-email", "~> 3.0.2"
-  gem "webdrivers", "~> 4.0"
-  gem "rspec-rails", "~> 3.8"
+  # gem "webdrivers", "~> 4.0"
+  gem 'webdrivers', require: !ENV['SELENIUM_REMOTE_URL']
+  gem "rspec-rails", "~> 4.0.2"
 
   gem "pdf-reader", "~> 2.4"
 

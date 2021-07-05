@@ -65,10 +65,12 @@
   <% end %>
 
   <p class="margin--b-xlarge">
-    <%= link_to 'Back to scores',
-      [current_scope, :scores],
+    <%= link_to(
+      'Back to scores',
+      send("#{current_scope}_score_path"),
       data: { turbolinks: false },
-      class: "button button--small" %>
+      class: "button button--small"
+    ) %>
   </p>
 
   <%= render "admin/team_submissions/judge_assignment", current_account: @current_account, submission: @submission %>

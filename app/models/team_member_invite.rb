@@ -79,7 +79,7 @@ class TeamMemberInvite < ActiveRecord::Base
 
   def self.match_registrant(profile)
     where(invitee_email: profile.email).each do |invite|
-      invite.update_attributes(invitee: profile)
+      invite.update(invitee: profile)
     end
   end
 

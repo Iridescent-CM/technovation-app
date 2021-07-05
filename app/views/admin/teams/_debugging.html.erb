@@ -6,8 +6,7 @@
   <% if team.submission.present? %>
     <p>
       View this team's submission:
-
-      <%= link_to team.submission.app_name, [current_scope, team.submission] %>
+      <%= link_to team.submission.app_name, send("#{current_scope}_team_submission_path", team.submission)  %>
     </p>
 
     <%= submission_progress_bar(team.submission) %>

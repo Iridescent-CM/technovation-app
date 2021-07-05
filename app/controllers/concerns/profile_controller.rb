@@ -30,7 +30,7 @@ module ProfileController
         }
 
         format.html {
-          redirect_to after_update_path,
+          redirect_to send("#{current_scope}_profile_path"),
             success: t('controllers.accounts.update.success')
         }
       end

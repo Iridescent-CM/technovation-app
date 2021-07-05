@@ -12,7 +12,7 @@ module TeamSubmissionVideoLinkReviewController
       recipient: submission,
     )
 
-    redirect_to [current_scope, :team_submission_section, id: submission.to_param, section: :pitch],
+    redirect_to send("#{current_scope}_team_submission_section_path",  id: submission.to_param, section: :pitch),
       success: "You saved your #{params[:piece].humanize}!"
   end
 

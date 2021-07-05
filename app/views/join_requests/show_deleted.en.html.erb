@@ -17,7 +17,7 @@
 
       <p class="margin--t-xlarge">
         <%= link_to "Manage my team",
-          [current_scope, @join_request.team],
+          send("#{current_scope}_join_request_path", @join_request.team),
           class: "button"
         %>
       </p>
