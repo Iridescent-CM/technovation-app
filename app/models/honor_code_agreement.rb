@@ -8,6 +8,6 @@ class HonorCodeAgreement < ActiveRecord::Base
   validates :electronic_signature, presence: true
 
   def void!
-    update_attributes(voided_at: Time.current)
+    update(voided_at: Time.current)
   end
 end

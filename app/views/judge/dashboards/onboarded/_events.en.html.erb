@@ -93,7 +93,7 @@
 
         <div class="step-actions margin--b-xlarge">
           <%= link_to 'View details',
-            [current_scope, event],
+            send("#{current_scope}_event_path", event),
             class: "button" %>
         </div>
       <% end %>

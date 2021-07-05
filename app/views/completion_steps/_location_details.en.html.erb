@@ -22,11 +22,9 @@
 
     <div class="step-actions">
       <%= link_to "Update your location",
-        [
-          current_scope,
-          :location_details,
+        send("edit_#{current_scope}_location_detail_path", 
           { return_to: request.fullpath }
-        ],
+        ),
         class: "button" %>
     </div>
   </li>

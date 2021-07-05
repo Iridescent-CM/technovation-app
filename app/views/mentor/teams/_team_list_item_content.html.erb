@@ -31,11 +31,7 @@
           <p>
             Your last step is to:<br />
             <%= link_to "Review and submit now!",
-              [
-                current_scope,
-                :published,
-                team.submission
-              ],
+              send("#{current_scope}_published_team_submission_path", team.submission),
               class: "button button--secondary" %>
           </p>
         <% else %>

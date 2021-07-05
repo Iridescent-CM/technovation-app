@@ -200,7 +200,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def update_teams_count(team = nil)
-    update_attributes(teams_count: teams.count)
+    update(teams_count: teams.count)
   end
 end
 

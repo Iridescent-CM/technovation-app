@@ -1,6 +1,6 @@
 <p>You're writing a message to <strong><%= message.recipient_name %></strong></p>
 
-<%= simple_form_for [:chapter_ambassador, message] do |f| %>
+<%= simple_form_for message, url: new_chapter_ambassador_message_path(message) do |f| %>
   <%= f.input :regarding_id, as: :hidden %>
   <%= f.input :regarding_type, as: :hidden %>
 

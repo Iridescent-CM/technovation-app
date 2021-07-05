@@ -109,9 +109,8 @@
         <% if current_team.present? %>
           <%= form_with model: current_team,
             data: { submit_on_change: true },
-            url: [current_scope, current_team, { format: :json }],
+            url:  send("#{current_scope}_team_path", current_team, { format: :json }),
             method: :patch do |f| %>
-
             <p>
               <%= f.check_box :accepting_mentor_requests,
                 id: :team_accepting_mentor_requests %>

@@ -69,7 +69,7 @@ module ChapterAmbassador
       if @pitch_event.save
         respond_to do |format|
           format.html {
-            redirect_to [:chapter_ambassador, @pitch_event],
+            redirect_to chapter_ambassador_path(@pitch_event),
               notice: 'Regional pitch event was successfully created.'
           }
 
@@ -100,10 +100,10 @@ module ChapterAmbassador
         .in_region(current_ambassador)
         .find(params[:id])
 
-      if @pitch_event.update_attributes(pitch_event_params)
+      if @pitch_event.update(pitch_event_params)
         respond_to do |f|
           f.html {
-            redirect_to [:chapter_ambassador, @pitch_event],
+            redirect_to chapter_ambassador_path(@pitch_event),
               notice: 'Regional pitch event was successfully updated.'
           }
 

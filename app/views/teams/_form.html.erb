@@ -1,4 +1,4 @@
-<%= simple_form_for [current_scope, @team] do |f| %>
+<%= simple_form_for @team, url: send("new_#{current_scope}_team_path", @team) do |f| %>
   <div class="fields-edit">
     <%= f.input :name, label: "Team name" %>
 
@@ -17,10 +17,13 @@
       <%= t("views.application.or") %>
 
       <% if f.object.persisted? %>
-        <%= link_to t("views.application.cancel"), [current_scope, @team] %>
+        <%= link_to t("views.application.cancel"),
+          send("#{current_scope}_team_path", @team)
+        %>
       <% else %>
         <%= link_to "find a team",
-          [:new, current_scope, :team_search] %>
+          send("new_#{current_scope}_team_search_path")
+        %>
       <% end %>
     </p>
   </div>
