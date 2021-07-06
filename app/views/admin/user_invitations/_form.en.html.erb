@@ -1,5 +1,5 @@
 <%= form_with model: invitation,
-  url: admin_invitation_path(invitation),
+  url: user_invitation_path(invitation),
   local: true do |f| %>
   <% if invitation.errors.any? %>
     <div class="notice notice--error">

@@ -471,6 +471,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def calculate_percent_complete
+    Rails.cache.delete("#{cache_key}/percent_complete")
     Rails.cache.fetch("#{cache_key}/percent_complete") do
       required_fields = RequiredFields.new(self)
 
