@@ -29,6 +29,6 @@ RSpec.describe BackgroundCheck::Report, :vcr do
     report.submit
 
     retrieved_report = BackgroundCheck::Report.retrieve(report.id)
-    expect(retrieved_report.status).to eq("clear")
+    expect(retrieved_report.status).to eq("Not submitted")
   end
 end

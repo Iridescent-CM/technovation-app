@@ -5,8 +5,7 @@
 
       <%= form_with(
         model: @team_submission,
-        scope: :post,
-        url: send("new_#{current_scope}_team_submission_path", @team_submission),
+        url: send("#{current_scope}_team_submissions_path", @team_submission),
         local: true
       ) do |f| %>
         <%= hidden_field_tag :team_id, params[:team_id] %>

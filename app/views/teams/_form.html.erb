@@ -1,4 +1,6 @@
-<%= simple_form_for @team, url: send("new_#{current_scope}_team_path", @team) do |f| %>
+<%= simple_form_for @team, 
+  url: (@team.id.present? ? send("#{current_scope}_team_path", @team) : 
+    send("#{current_scope}_teams_path")) do |f| %>
   <div class="fields-edit">
     <%= f.input :name, label: "Team name" %>
 

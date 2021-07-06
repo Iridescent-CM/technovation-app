@@ -51,7 +51,7 @@ RSpec.feature "Searchability" do
     click_button "Submit"
 
     click_link "Check Submission Status"
-    expect(page).to have_content("status is: clear")
+    expect(page).to have_content("status is: pending")
     expect(mentor.reload).to be_searchable
   end
 
@@ -70,7 +70,7 @@ RSpec.feature "Searchability" do
     click_button "Submit"
 
     click_link "Check Submission Status"
-    expect(page).to have_content("status is: clear")
+    expect(page).to have_content("status is: pending")
     expect(mentor.reload).not_to be_searchable
 
     visit mentor_dashboard_path

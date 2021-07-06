@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "2.6.4"
+ruby "2.7.3"
 
 gem "rails", "~> 6.0.0"
 
@@ -50,7 +50,7 @@ gem "country_state_select", "~> 3.0"
 
 gem "nokogiri", "~> 1.11.0"
 
-gem "friendly_id", "~> 5.2"
+gem "friendly_id", "~> 5.4"
 
 gem "bcrypt", "~> 3.1"
 
@@ -117,8 +117,9 @@ group :test do
 
   gem "capybara", "~> 3.31"
   gem "capybara-email", "~> 3.0.2"
-  gem "webdrivers", "~> 4.0"
+  gem "webdrivers"
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'selenium-webdriver'
 
   gem "pdf-reader", "~> 2.4"
 

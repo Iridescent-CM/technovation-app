@@ -21,7 +21,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
 Capybara.automatic_label_click = true
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 20
 Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
 Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT", 31337)
 
@@ -60,6 +60,7 @@ RSpec.configure do |config|
 
   config.include JudgingHelper
   config.include WebMock::API
+  config.include DataAnalyses, type: :feature
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.infer_spec_type_from_file_location!
@@ -69,6 +70,10 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
+  end
+
+  config.after(:each) do
+    Capybara.reset_sessions!
   end
 
   config.before(:each, type: :system, js: true) do

@@ -1,5 +1,5 @@
 <h3 class="mentor-teams__heading">
-  <%= link_to team.name, [:mentor, team] %>
+  <%= link_to team.name, mentor_team_path(team) %>
 </h3>
 
 <div class="grid grid--bleed">
@@ -7,7 +7,7 @@
     <%= link_to image_tag(
       team.team_photo.url,
       class: "thumbnail--mdlg grid__cell-img"
-    ), [:mentor, team] %>
+    ), mentor_team_path(team) %>
 
     <%= web_icon(
       "flag-o",
