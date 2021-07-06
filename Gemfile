@@ -117,9 +117,8 @@ group :test do
 
   gem "capybara", "~> 3.31"
   gem "capybara-email", "~> 3.0.2"
-  # gem "webdrivers", "~> 4.0"
-  gem 'webdrivers', require: !ENV['SELENIUM_REMOTE_URL']
-  gem "rspec-rails", "~> 4.0.2"
+  gem "webdrivers", "~> 4.0"
+  gem 'rspec-rails', '~> 5.0.0'
 
   gem "pdf-reader", "~> 2.4"
 
