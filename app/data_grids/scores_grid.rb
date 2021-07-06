@@ -114,7 +114,7 @@ class ScoresGrid
   column :view, html: true do |submission_score|
     link_to(
       web_icon("list-ul", size: 16, remote: true),
-      send("#{current_scope}_scores_path", id: submission_score.id),
+      send("#{current_scope}_score_path", id: submission_score.id),
       data: {
         turbolinks: false
       },

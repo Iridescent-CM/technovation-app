@@ -3,6 +3,15 @@ require "rails_helper"
 RSpec.feature "Admins viewing suspicious scores", js: true do
   let(:admin) { FactoryBot.create(:admin) }
 
+  scenario "no suspicious scores" do
+    sign_in(admin)
+    click_link "Scores"
+
+    within ".suspicious-scores" do
+      expect(page).to have_content("There are no suspicious scores at this time.")
+    end
+  end
+  
   scenario "scores that are too low are displayed on the Scores page" do
     FactoryBot.create(:score, :score_too_low)
 
@@ -33,15 +42,6 @@ RSpec.feature "Admins viewing suspicious scores", js: true do
 
     within ".suspicious-scores" do
       expect(page).to have_content("SEEMS TOO LOW AND COMPLETED TOO FAST")
-    end
-  end
-
-  scenario "no suspicious scores" do
-    sign_in(admin)
-    click_link "Scores"
-
-    within ".suspicious-scores" do
-      expect(page).to have_content("There are no suspicious scores at this time.")
     end
   end
 end

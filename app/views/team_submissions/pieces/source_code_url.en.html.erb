@@ -13,7 +13,7 @@
 
   <% if @team_submission.developed_on?("Thunkable") %>
     <%= form_with model: @team_submission,
-      url: send("#{current_scope}_team_submission_path", @team_submission),
+      url: send("#{current_scope}_team_submission_url", @team_submission),
       local: true do |f| %>
       <p>
         <%= f.label :source_code_external_url %>

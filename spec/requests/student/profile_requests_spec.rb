@@ -63,7 +63,7 @@ RSpec.describe "Student Profile Requests", type: :request do
 
         it "returns a success message in JSON format" do
           expect(response.body).to include("You updated your account!")
-          expect(response.content_type).to eq("application/json")
+          expect(response.content_type).to eq("application/json; charset=utf-8")
         end
       end
     end

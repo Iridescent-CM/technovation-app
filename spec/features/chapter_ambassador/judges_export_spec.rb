@@ -34,13 +34,15 @@ RSpec.describe "/chapter_ambassador/judges", type: :request do
 
       url = "/chapter_ambassador/judges.json"
 
-      get url, params: {
-        filename: "regression",
-        judges_grid: {
-          name_email: "only-me",
-        },
-        format: :json,
-      }
+      perform_enqueued_jobs do
+        get url, params: {
+          filename: "regression",
+          judges_grid: {
+            name_email: "only-me",
+          },
+          format: :json,
+        }
+      end
 
       csv = File.read("./tmp/regression.csv")
       expect(csv).to include("only-me@me.com")

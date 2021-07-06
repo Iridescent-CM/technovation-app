@@ -66,7 +66,7 @@ feature "scoring submissions", js: true do
   end
 
   def and_scores_the_technical_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Technical").click()
+    find("#judge-scores-app a.button.btn-next", text: "Next: Technical", wait: 20).click()
 
     find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
     find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
@@ -76,7 +76,7 @@ feature "scoring submissions", js: true do
   end
 
   def and_scores_the_pitch_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Pitch").click()
+    find("#judge-scores-app a.button.btn-next", text: "Next: Pitch", wait: 20).click()
 
     find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
     find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
@@ -84,7 +84,7 @@ feature "scoring submissions", js: true do
   end
 
   def and_scores_the_entrepreneurship_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Entrepreneurship").click()
+    find("#judge-scores-app a.button.btn-next", text: "Next: Entrepreneurship", wait: 20).click()
 
     find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
     find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
@@ -94,7 +94,7 @@ feature "scoring submissions", js: true do
   end
 
   def and_scores_the_overall_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Overall").click()
+    find("#judge-scores-app a.button.btn-next", text: "Next: Overall", wait: 20).click()
 
     find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
     find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
