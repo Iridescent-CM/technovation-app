@@ -5,11 +5,11 @@ RSpec.describe "admin/team_submissions/_judge_assignment.html.erb", type: :view 
     SeasonToggles.set_judging_round(judging_round)
 
     render partial: "admin/team_submissions/judge_assignment",
-      locals: { current_account: current_account, submission: submission }
+      locals: { current_profile: current_profile, submission: submission }
   end
 
   let(:judging_round) { :off }
-  let(:current_account) { instance_double(Account, admin?: admin) }
+  let(:current_profile) { instance_double(Account, admin?: admin) }
   let(:submission) { instance_double(TeamSubmission) }
   let(:admin) { false }
 
