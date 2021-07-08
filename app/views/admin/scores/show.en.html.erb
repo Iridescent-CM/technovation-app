@@ -40,26 +40,28 @@
       <%= @score.judge_profile.address_details %>
     </h5>
 
-    <h5>
-      <span>Clicked Pitch Video</span>
-      <%= @score.clicked_pitch_video? ? "Yes" : "No" %>
-    </h5>
-
-    <h5>
-      <span>Clicked Demo Video</span>
-      <%= @score.clicked_demo_video? ? "Yes" : "No" %>
-    </h5>
-
-    <h5>
-      <span>Downloaded Source Code</span>
-      <%= @score.downloaded_source_code? ? "Yes" : "No" %>
-    </h5>
-
-    <% if @score.team.senior? %>
+    <% if current_account.admin? %>
       <h5>
-        <span>Downloaded Business Plan</span>
-        <%= @score.downloaded_business_plan? ? "Yes" : "No" %>
+        <span>Clicked Pitch Video</span>
+        <%= @score.clicked_pitch_video? ? "Yes" : "No" %>
       </h5>
+
+      <h5>
+        <span>Clicked Demo Video</span>
+        <%= @score.clicked_demo_video? ? "Yes" : "No" %>
+      </h5>
+
+      <h5>
+        <span>Downloaded Source Code</span>
+        <%= @score.downloaded_source_code? ? "Yes" : "No" %>
+      </h5>
+
+      <% if @score.team.senior? %>
+        <h5>
+          <span>Downloaded Business Plan</span>
+          <%= @score.downloaded_business_plan? ? "Yes" : "No" %>
+        </h5>
+      <% end %>
     <% end %>
   </header>
   <br>
