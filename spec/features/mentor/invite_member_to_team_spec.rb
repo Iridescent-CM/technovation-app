@@ -75,16 +75,22 @@ RSpec.feature "Invite a member to a team" do
   end
 
   scenario "complete student accepts invite" do
-    # fill_in "team_member_invite[invitee_email]", with: "complete@student.com"
-    # click_button "Send invite"
+    sign_out
+    sign_in(mentor)
+    within("#find-team #team_#{mentor.current_teams.first.id}") do
+      click_link mentor.team_names.first
+    end
+    
+    fill_in "team_member_invite[invitee_email]", with: "complete@student.com"
+    click_button "Send invite"
 
-    # sign_out
-    # sign_in(invite.invitee)
+    sign_out
+    sign_in(invite.invitee)
 
-    # click_link "Open this invitation"
-    # expect(page).to have_content("Chicago, Illinois, United States")
+    click_link "Open this invitation"
+    expect(page).to have_content("Chicago, Illinois, United States")
 
-    # click_button "Accept invitation to #{mentor.team_names.first}"
-    # expect(current_path).to eq(student_team_path(invite.team))
+    click_button "Accept invitation to #{mentor.team_names.first}"
+    expect(current_path).to eq(student_team_path(invite.team))
   end
 end

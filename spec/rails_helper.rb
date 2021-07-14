@@ -21,7 +21,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
 Capybara.automatic_label_click = true
-Capybara.default_max_wait_time = 20
+Capybara.default_max_wait_time = 10
 Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
 Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT", 31337)
 
