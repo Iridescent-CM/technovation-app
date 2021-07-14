@@ -26,7 +26,9 @@ default: &default
 
 development:
   <<: *default
-  database: technovation-app_development
+  host: postgres
+  password: postgres
+  database: technovation_app_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -60,6 +62,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  host: postgres
+  password: postgres
   database: technovation-app_test
 
 # As with config/secrets.yml, you never want to store sensitive information,

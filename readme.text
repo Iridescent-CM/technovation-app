@@ -1,0 +1,22 @@
+# RENAME
+Dockerfile.dev -> Dockerfile
+docker-compose.yaml -> docker-compose.yml
+
+
+# RUN APP ON DOCKER
+  docker-compose up --build
+# RUN TEST CASE 
+  docker exec -i technovation-app_app_1 bundle exec rspec
+
+#Import database 
+cat ../4292f55a-f722-4721-b42a-cf63f56cdf46 | docker exec -i technovation-app_postgres_1 pg_restore -U postgres -d technovation_app_development
+
+docker exec -it technovation-app_postgres_1 postgres -U postgres 
+
+Pdfkt toolkit on docker alpine
+ 
+https://gitlab.alpinelinux.org/alpine/aports/-/issues/10136
+
+Run capybara on docker
+
+https://www.codewithjason.com/run-rspec-headless-chrome-chromium-alpine-linux/

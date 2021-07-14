@@ -1,0 +1,62 @@
+FROM ruby:2.7.3-alpine
+
+ENV APP_PATH /var/app
+ENV BUNDLE_VERSION 2.2.23
+ENV BUNDLE_PATH /usr/local/bundle/gems
+ENV TMP_PATH /tmp/
+ENV RAILS_LOG_TO_STDOUT true
+ENV RAILS_PORT 3000
+
+# navigate to app directory
+WORKDIR $APP_PATH
+
+# install dependencies for application
+RUN apk -U add --no-cache \
+    build-base \
+    git \
+    postgresql-dev \
+    postgresql-client \
+    libxml2-dev \
+    libxslt-dev \
+    nodejs \
+    yarn \
+    imagemagick \
+    tzdata \
+    less \
+    cairo \
+    libpng \
+    jpeg \
+    giflib \
+    redis \
+    g++ \ 
+    make \ 
+    cairo-dev \
+    jpeg-dev \
+    pango-dev \
+    giflib-dev \
+    wkhtmltopdf \
+    chromium chromium-chromedriver python3 python3-dev py3-pip \
+    libnotify-dev \
+    && rm -rf /var/cache/apk/* \
+    && mkdir -p $APP_PATH
+
+RUN  pip3 install -U selenium
+
+RUN apk update && apk add -u yarn
+
+RUN gem install bundler
+# Copy Gemfile
+RUN bundler --version
+
+COPY Gemfile $APP_PATH
+# COPY Gemfile.lock $APP_PATH
+RUN gem update
+
+# # Copy package nodejs
+COPY package.json $APP_PATH
+
+# # Install dependency of nodejs
+RUN rm -rf node_modules
+RUN yarn install --build-from-source --force
+
+EXPOSE $RAILS_PORT
