@@ -30,8 +30,7 @@ RSpec.feature "Searchability" do
       country: "US",
       not_onboarded: true
     )
-
-    mentor.account.email = 'test002.asnet@gmail.com'
+    mentor.account.email = "test001.asnet@gmail.com"
     mentor.save!
 
     expect(mentor).not_to be_searchable
@@ -56,27 +55,26 @@ RSpec.feature "Searchability" do
     click_link "Check Submission Status"
     expect(page).to have_content("status is: clear")
     expect(mentor.reload).to be_searchable
+
   end
   # US_mentor_passes_bg_check_signs_consent
   scenario "US mentor passes bg check, signs consent", :vcr do
     mentor = FactoryBot.create(:mentor, country: "US", not_onboarded: true)
-    mentor.account.email = 'test008.asnet@gmail.com'
+    mentor.account.email = "test002.asnet@gmail.com"
     mentor.save!
-
     expect(mentor).not_to be_searchable
 
     sign_in(mentor)
     visit mentor_dashboard_path
     visit mentor_training_completion_path
-    click_link "Submit Background Check"
 
+    click_link "Submit Background Check"
     fill_in "Zipcode", with: 60622
     fill_in "Ssn", with: "111-11-2001"
     fill_in "Driver license state", with: "CA"
     click_button "Submit"
-
     click_link "Check Submission Status"
-
+  
     expect(page).to have_content("status is: clear")
     expect(mentor.reload).not_to be_searchable
 

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.checkr.com/v1/candidates
     body:
       encoding: UTF-8
-      string: first_name=Factory&middle_name=&no_middle_name=true&last_name=Account&email=test002.asnet@gmail.com&phone&zipcode=60622&dob=1986-08-28&ssn=111-11-2001&driver_license_number&driver_license_state=CA&previous_driver_license_number&previous_driver_license_state&copy_requested=false&custom_id&reports&geos&documents=%7B%0A++%22object%22%3A+%22list%22%2C%0A++%22data%22%3A+%5B%0A%0A++%5D%0A%7D&id&object&uri&created_at
+      string: first_name=Factory&middle_name=&no_middle_name=true&last_name=Account&email=account2%40example.com&phone&zipcode=60622&dob=1986-08-28&ssn=111-11-2001&driver_license_number&driver_license_state=CA&previous_driver_license_number&previous_driver_license_state&copy_requested=false&custom_id&reports&geos&documents=%7B%0A++%22object%22%3A+%22list%22%2C%0A++%22data%22%3A+%5B%0A%0A++%5D%0A%7D&id&object&uri&created_at
     headers:
       Accept:
       - "*/*"
@@ -51,7 +51,7 @@ http_interactions:
       - 395be414cef056d5-IAD
     body:
       encoding: UTF-8
-      string: '{"id":"2e21f17ba05d69f23048a12d","object":"test_candidate","uri":"/v1/candidates/2e21f17ba05d69f23048a12d","created_at":"2017-08-29T01:55:56Z","first_name":"Factory","last_name":"Account","middle_name":"","mother_maiden_name":null,"dob":"1986-08-28","ssn":"XXX-XX-2001","email":"test002.asnet@gmail.com","zipcode":"60622","phone":null,"driver_license_state":null,"driver_license_number":null,"copy_requested":false,"previous_driver_license_state":null,"previous_driver_license_number":null,"adjudication":null,"custom_id":null,"no_middle_name":true,"report_ids":[],"geo_ids":[]}'
+      string: '{"id":"2e21f17ba05d69f23048a12d","object":"test_candidate","uri":"/v1/candidates/2e21f17ba05d69f23048a12d","created_at":"2017-08-29T01:55:56Z","first_name":"Factory","last_name":"Account","middle_name":"","mother_maiden_name":null,"dob":"1986-08-28","ssn":"XXX-XX-2001","email":"test001.asnet@gmail.com","zipcode":"60622","phone":null,"driver_license_state":null,"driver_license_number":null,"copy_requested":false,"previous_driver_license_state":null,"previous_driver_license_number":null,"adjudication":null,"custom_id":null,"no_middle_name":true,"report_ids":[],"geo_ids":[]}'
     http_version:
   recorded_at: Tue, 29 Aug 2017 01:55:57 GMT
 - request:
@@ -163,3 +163,4 @@ http_interactions:
         H4sIAAAAAAAAA5SSTY7bMAyF78K1g0j+SSyfo6sWA4EWqUQzthRQctqi6N0Lpx50pmjSdini0yP5Hr9BIBgAa9M6TboxPLpu9E3bkOceoYI0PrMrMEDhXKzwJUmBChYJMMD+qvc/S3n/QCMXLEuGAdzEKFCBE8bCZHEVrpU+7lS/q80HpYeuG7rDx5VJ82XiB5RZKeFryBsTl2mqYLmcBOldqSwSUdISyZYwMwxNBbTw9tikzU4d3g1wQfeCpxUomF9YbC4YCYWggoKnDMOnpwqQnhcKDktI8bWfw0iBsLC9uVtzrb0+jqg6OhhfN6rtUdd0W3KJ5at1EuYQcbKZUdzZBtrUKbll5li2CqBWfYfKNb72NLZHp83x4JjhqQLPxILTH8Re5zpNacTJfsbizlPI5S0BncHWGXSmbw5tp5Qm7rRq1vzmVJLYK5+Dm3i7gTey8bb8nc73dPvVYZZ8+yjsWTg6tleW4Dc7f9lwkeQ55/BPcOYvNnnPkdbM/j6JWS80R1sEHT8k6+2W+X5ghUWSrN7+t8seXci/h/b9BwAAAP//AwCpr5pmogMAAA==
     http_version:
   recorded_at: Tue, 29 Aug 2017 01:56:08 GMT
+recorded_with: VCR 3.0.3
