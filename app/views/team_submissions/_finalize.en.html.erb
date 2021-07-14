@@ -17,11 +17,7 @@
 
     <p>
       <%= link_to "Review and submit",
-        [
-          current_scope,
-          :published,
-          submission
-        ],
+        send("#{current_scope}_published_team_submission_path", submission),
         class: "button" %>
     </p>
   <% end %>
@@ -39,11 +35,7 @@
 
     <p>
       <%= link_to "View your complete submission",
-        [
-          current_scope,
-          :published_team_submission,
-          { id: submission.to_param },
-        ],
+        send("#{current_scope}_published_team_submission_path", { id: submission.to_param }),
         class: "button" %>
     </p>
   <% end %>

@@ -109,9 +109,8 @@
         <% if current_team.present? %>
           <%= form_with model: current_team,
             data: { submit_on_change: true },
-            url: [current_scope, current_team, { format: :json }],
+            url:  send("#{current_scope}_team_path", current_team),
             method: :patch do |f| %>
-
             <p>
               <%= f.check_box :accepting_mentor_requests,
                 id: :team_accepting_mentor_requests %>
@@ -149,12 +148,12 @@
             <div class="progress__section">
               <h1>
                 <%= link_to "Regional events",
-                  [
-                    current_scope,
+                  send(
+                    "#{current_scope}_team_submission_section_path",
                     current_submission,
-                    :section,
-                    section: :pitch_presentation,
-                  ] %>
+                    section: :pitch_presentation
+                  )
+                %>
               </h1>
 
               <div class="margin--b-large">
@@ -169,7 +168,11 @@
                       :pitch_presentation,
                       "Edit presentation slides"
                     ),
-                    [current_scope, current_submission, piece: :pitch_presentation] %>
+                    send(
+                      "#{current_scope}_team_submission_section_path",
+                      current_submission,
+                      section: :pitch_presentation
+                    ) %>
                   </li>
                 </ol>
               </div>

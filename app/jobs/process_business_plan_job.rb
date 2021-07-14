@@ -5,7 +5,7 @@ class ProcessBusinessPlanJob < ActiveJob::Base
     submission = TeamSubmission.find(submission_id)
     url = "http://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/#{key}"
     business_plan = submission.business_plan || submission.create_business_plan!
-    business_plan.update_attributes({
+    business_plan.update({
       remote_uploaded_file_url: url,
     })
   end

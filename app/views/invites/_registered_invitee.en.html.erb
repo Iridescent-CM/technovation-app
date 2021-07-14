@@ -27,7 +27,7 @@
       <br>
 
       <%= link_to "delete this invitation",
-        [current_scope, invite],
+        send("#{current_scope}_#{invite.invitee_scope_name}_path"),
         class: "danger small",
         data: {
           method: :delete,

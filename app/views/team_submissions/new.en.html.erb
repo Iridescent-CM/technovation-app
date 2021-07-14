@@ -4,9 +4,10 @@
       <h1><%= Season.current.year %> Technovation Honor Code</h1>
 
       <%= form_with(
-            model: [current_scope, @team_submission],
-            local: true
-          ) do |f| %>
+        model: @team_submission,
+        url: send("#{current_scope}_team_submissions_path", @team_submission),
+        local: true
+      ) do |f| %>
         <%= hidden_field_tag :team_id, params[:team_id] %>
 
         <div class="field">

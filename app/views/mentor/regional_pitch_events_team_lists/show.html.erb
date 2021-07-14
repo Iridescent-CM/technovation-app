@@ -5,7 +5,7 @@
     <% @current_teams.each do |team| %>
       <div class="panel">
         <h3 class="mentor-teams__heading">
-          <%= link_to team.name, [:mentor, team] %>
+          <%= link_to team.name, mentor_team_path(team) %>
         </h3>
 
         <div class="grid">
@@ -13,7 +13,7 @@
             <%= link_to image_tag(
               team.team_photo.url,
               class: "thumbnail--mdlg grid__cell-img"
-            ), [:mentor, team] %>
+            ), mentor_team_path(team) %>
 
             <p>
               <%= web_icon(
@@ -82,7 +82,7 @@
 
               <p>
                 <%= link_to 'View event details',
-                  [current_scope, team.event, team_id: team.id] %>
+                 send("#{current_scope}_team_event_path(team.event, team_id: team.id)") %>
               </p>
             <% else %>
               <p>

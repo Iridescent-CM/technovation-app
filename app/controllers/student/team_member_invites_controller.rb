@@ -34,7 +34,7 @@ module Student
     end
 
     def apply_chosen_status_to_existing_invite(invite)
-      if invite.present? and invite.update_attributes(invite_params)
+      if invite.present? and invite.update(invite_params)
         if invite.accepted?
           TeamRosterManaging.add(invite.team, current_student)
         end

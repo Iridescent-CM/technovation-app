@@ -30,7 +30,7 @@
       <% if SeasonToggles.team_building_enabled? %>
         <%= form_with model: team,
           data: { submit_on_change: true },
-          url: [current_scope, team, { format: :json }],
+          url: send("#{current_scope}_team_path", team, { format: :json }),
           method: :patch do |f| %>
           <p>
             <%= f.check_box :accepting_mentor_requests,

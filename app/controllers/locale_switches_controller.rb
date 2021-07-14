@@ -2,7 +2,7 @@ class LocaleSwitchesController < ApplicationController
   include Authenticated
 
   def create
-    current_account.update_attributes(locale: params[:locale])
+    current_account.update(locale: params[:locale])
     redirect_back fallback_location: send("#{current_scope}_dashboard_path")
   end
 

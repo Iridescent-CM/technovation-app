@@ -1,6 +1,6 @@
 <h1>Editing Team Submission</h1>
 
-<%= simple_form_for [:admin, @team_submission] do |f| %>
+<%= simple_form_for @team_submission, url: admin_team_submission_path(@team_submission) do |f| %>
   <div class="grid">
     <div class="grid__col-6">
       <div class="panel">

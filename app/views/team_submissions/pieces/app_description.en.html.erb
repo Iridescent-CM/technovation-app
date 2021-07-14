@@ -2,7 +2,8 @@
   <h3 class="panel--heading">Description</h3>
 
   <%= form_with(
-    model: [current_scope, @team_submission],
+    model: @team_submission,
+    url: send("#{current_scope}_team_submission_path"),
     local: true
   ) do |f| %>
     <%= hidden_field_tag :piece, piece_name %>
@@ -32,12 +33,11 @@
         <%= f.submit "Save this description", class: "button" %>
         or
         <%= link_to "cancel",
-          [
-            current_scope,
+          send(
+            "#{current_scope}_team_submission_section_path",
             @team_submission,
-            :section,
-            section: @submission_section,
-          ] %>
+            section: @submission_section
+          ) %>
       </p>
 
       <p class="scent word-counter">

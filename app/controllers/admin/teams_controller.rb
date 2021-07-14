@@ -16,7 +16,7 @@ module Admin
       @team = Team.find(params[:id])
 
       if TeamUpdating.execute(@team, team_params)
-        redirect_to [:admin, @team], success: "Team changes saved!"
+        redirect_to admin_team_path, success: "Team changes saved!"
       else
         render :edit
       end

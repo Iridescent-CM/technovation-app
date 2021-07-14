@@ -39,7 +39,7 @@ class ConsentWaiver < ActiveRecord::Base
   end
 
   def void!
-    update_attributes(voided_at: Time.current)
+    update(voided_at: Time.current)
   end
 
   def voided?

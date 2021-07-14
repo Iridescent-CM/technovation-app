@@ -32,12 +32,10 @@ module TeamSubmissionController
         key: "submission.create",
         recipient: @team_submission,
       )
-      redirect_to [
-        current_scope,
+      redirect_to send("#{current_scope}_team_submission_section_path",
         @team_submission,
-        :section,
-        section: SubmissionSection::SECTION_NAMES[1],
-      ],
+        section: SubmissionSection::SECTION_NAMES[1]
+      ),
         success: t("controllers.team_submissions.create.success")
     else
       render "team_submissions/new"
@@ -74,10 +72,10 @@ module TeamSubmissionController
         render "team_submissions/pieces/#{piece_name}"
       rescue ActionView::MissingTemplate,
               ActionController::ParameterMissing
-        redirect_to [current_scope, @team_submission]
+        redirect_to send("#{current_scope}_team_submission_path", @team_submission)
       end
     else
-      redirect_to [:new, current_scope, :team_submission]
+      redirect_to send("new_#{current_scope}_team_submissions_path")
     end
   end
 
@@ -138,12 +136,10 @@ module TeamSubmissionController
       if request.xhr?
         render json: {}
       else
-        redirect_to [
-          current_scope,
+        redirect_to send("#{current_scope}_team_submission_section_path",
           @team_submission,
-          :section,
-          section: SubmissionSection.new(piece_name, self),
-        ],
+          section: SubmissionSection.new(piece_name, self)
+        ),
           success: t("controllers.team_submissions.update.success")
       end
     else
@@ -193,13 +189,13 @@ module TeamSubmissionController
   end
 
   def notify_on_dashboard
-    redirect_to [current_scope, :dashboard],
+    redirect_to send("#{current_scope}_dashboard_path"),
       alert: "Sorry, submissions are not editable at this time"
   end
 
   def respond_according_to_presence
     if current_team.submission.present?
-      redirect_to [current_scope, current_team.submission]
+      redirect_to send("#{current_scope}_team_submission_path", current_team.submission)
     else
       @team_submission = current_team.team_submissions.build
       render "team_submissions/new"

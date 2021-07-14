@@ -1,7 +1,7 @@
 module BackgroundCheckController
   def new
     if current_profile.background_check_candidate_id.present?
-      redirect_to [current_scope, :background_check, id: current_profile.background_check_candidate_id]
+      redirect_to send("#{current_scope}_background_check_path", id: current_profile.background_check_candidate_id)
     else
       @candidate = BackgroundCheckCandidate.new(account: current_account)
     end
@@ -16,11 +16,11 @@ module BackgroundCheckController
     @candidate = BackgroundCheckCandidate.new(candidate_params)
 
     if @candidate.submit
-      current_profile.account.update_attributes(background_check_attributes: {
+      current_profile.account.update(background_check_attributes: {
         candidate_id: @candidate.id,
         report_id: @candidate.report_id
       })
-      redirect_to [current_scope, :dashboard],
+      redirect_to send("#{current_scope}_dashboard_path"),
         success: "Thank you for submitting your background check."
     else
       render :new

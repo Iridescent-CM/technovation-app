@@ -6,7 +6,7 @@
           <td><%= score.total %> / <%= score.total_possible %></td>
           <td>
             <%= link_to score.judge_name,
-              [current_scope, :participant, id: score.judge_profile.account_id] %>
+              send("#{current_scope}_participant_path", id: score.judge_profile.account_id) %>
           </td>
           <td class="official-info"><%= score.official? ? "official" : "unofficial" %></td>
 
@@ -26,7 +26,7 @@
 
           <td>
             <%= link_to 'View score',
-              [current_scope, :score, id: score.id],
+              send("#{current_scope}_score_path", id: score.id),
               data: { turbolinks: false } %>
           </td>
         </tr>

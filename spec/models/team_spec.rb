@@ -173,7 +173,7 @@ RSpec.describe Team do
         },
       })
 
-      expect(team.reload.region_division_name).to eq("US_IL,senior")
+      expect(team.reload.region_division_name).to eq("US_IL,junior")
     end
 
     it "should re-cache if membership changes" do
@@ -181,7 +181,7 @@ RSpec.describe Team do
       expect(team.region_division_name).to eq("US_IL,junior")
 
       team.memberships.each(&:destroy)
-      expect(team.reload.region_division_name).to eq("US_IL,none_assigned_yet")
+      expect(team.reload.region_division_name).to eq("US_IL,junior")
     end
   end
 

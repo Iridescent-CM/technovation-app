@@ -15,9 +15,7 @@
     <div class="grid">
       <%= button_to(
         t("controllers.team_member_invites.update.accept", name: @invite.team_name),
-
-        [current_scope, @invite],
-
+        send("#{current_scope}_team_member_invite_path", @invite),
         class: "button small",
 
         params: {
@@ -37,8 +35,7 @@
       <%= button_to(
         t("controllers.team_member_invites.update.decline",
           name: @invite.team_name),
-
-        [current_scope, @invite],
+          send("#{current_scope}_team_member_invite_path", @invite),
 
         class: "button danger small",
 

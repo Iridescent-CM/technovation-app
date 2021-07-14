@@ -16,7 +16,7 @@ class TeamCreating
       team.reverse_geocode
       team.save
 
-      context.redirect_to [context.current_scope, team],
+      context.redirect_to context.send("#{context.current_scope}_team_path", team),
         success: I18n.t("controllers.teams.create.success")
     else
       context.redirect_to(

@@ -35,13 +35,13 @@ class SubmissionsGrid
     mandatory: true,
     order: "teams.name",
     html: true do |sub|
-    link_to sub.team_name, [current_scope, sub.team]
+    link_to sub.team_name, send("#{current_scope}_team_path", sub.team)
   end
 
   column :team_name, html: false
 
   column :app_name, mandatory: true, html: true do |sub|
-    link_to sub.app_name, [current_scope, sub]
+    link_to sub.app_name, send("#{current_scope}_team_submission_path", sub)
   end
 
   column :app_name, html: false

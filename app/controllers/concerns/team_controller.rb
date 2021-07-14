@@ -57,7 +57,7 @@ module TeamController
         }
 
         format.html {
-          redirect_to [current_scope, @team],
+          redirect_to send("#{current_scope}_team_path", @team),
             success: t("controllers.teams.update.success")
         }
       end

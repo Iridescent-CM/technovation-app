@@ -7,7 +7,7 @@
 
 <p>
   <%= link_to "Read the honor code",
-    [current_scope, :team_submission, { piece: :honor_code }] %>
+    send("#{current_scope}_team_submission_path", { piece: :honor_code }) %>
 </p>
 
 <hr />

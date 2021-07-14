@@ -15,7 +15,7 @@ module MentorToJudgeConversionController
       })
     end
 
-    redirect_to [current_scope, :participant, id: account.to_param],
+    redirect_to send("#{current_scope}_participant_path", id: account.to_param),
       success: "#{account.name} is now a judge"
   end
 end

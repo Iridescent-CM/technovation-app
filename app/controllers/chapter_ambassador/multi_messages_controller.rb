@@ -24,7 +24,7 @@ module ChapterAmbassador
       @message = current_ambassador.multi_messages.build(message_params)
 
       if @message.save
-        redirect_to [:chapter_ambassador, @message],
+        redirect_to chapter_ambassador_path(@message),
           success: "Your message is ready to send"
       else
         render 'chapter_ambassador/messages/new'
@@ -34,8 +34,8 @@ module ChapterAmbassador
     def update
       @message = current_ambassador.multi_messages.unsent.find(params[:id])
 
-      if @message.update_attributes(message_params)
-        redirect_to [:chapter_ambassador, @message],
+      if @message.update(message_params)
+        redirect_to chapter_ambassador_path(@message),
           success: "Your message is ready to send"
       else
         render 'chapter_ambassador/messages/edit'

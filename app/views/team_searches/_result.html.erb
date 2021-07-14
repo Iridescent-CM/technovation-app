@@ -25,7 +25,7 @@
         </span>
       <% else %>
         <%= link_to "View more details",
-          [:new, current_scope, :join_request, { team_id: team.id }],
+          send("new_#{current_scope}_join_request_path", {team_id: team.id}),
           class: 'button' %>
       <% end %>
     </p>

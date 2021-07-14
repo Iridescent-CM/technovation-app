@@ -209,7 +209,7 @@ RSpec.describe SubmissionScore do
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to eq(5)
 
-        sub.update_attributes(ideation_1: 4)
+        sub.update(ideation_1: 4)
         expect(
           team_submission.reload.public_send("#{judging_round}_average_score")
         ).to eq(4)

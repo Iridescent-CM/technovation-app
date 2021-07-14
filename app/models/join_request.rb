@@ -78,7 +78,7 @@ class JoinRequest < ActiveRecord::Base
   end
 
   def deleted!
-    update_attributes(deleted_at: Time.current)
+    update(deleted_at: Time.current)
   end
 
   def status

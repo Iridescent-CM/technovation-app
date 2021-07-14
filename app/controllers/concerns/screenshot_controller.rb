@@ -41,7 +41,7 @@ module ScreenshotController
         large_img_url: screenshot.image_url(:large),
       }
     else
-      redirect_to [current_scope, submission]
+      redirect_to send("#{current_scope}_submission_path", submission)
     end
   end
 

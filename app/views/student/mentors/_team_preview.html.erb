@@ -15,7 +15,8 @@
 <li>
   <div class="grid__cell">
     <%= link_to team_preview.name,
-      [current_scope, team_preview, allow_out_of_region: true] %>
+      send("#{current_scope}_team_path", allow_out_of_region: true)
+    %>
   </div>
 
   <div class="grid__cell">

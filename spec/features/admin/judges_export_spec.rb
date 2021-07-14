@@ -18,16 +18,17 @@ RSpec.describe "/admin/judges", type: :request do
       FactoryBot.create(:judge, account: FactoryBot.create(:account, email: "no_findy-email@judge.com"))
 
       url = "/admin/judges.json"
-
-      get url, params: {
-        filename: "regression",
-        judges_grid: {
-          name_email: "only-me",
-        },
-        format: :json,
-      }
-
-      csv = File.read("./tmp/regression.csv")
+       
+      perform_enqueued_jobs do
+        get url, params: {
+          filename: "regression",
+          judges_grid: {
+            name_email: "only-me",
+          },
+          format: :json,
+        }
+      end 
+      csv = File.read("tmp/regression.csv")
       expect(csv).to include("only-me@me.com")
       expect(csv).not_to include("no_findy-email@judge.com")
     end

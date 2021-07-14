@@ -19,11 +19,8 @@
     <li>
       <p>
         <%= link_to "Set your location",
-          [
-            current_scope,
-            :location_details,
-            { return_to: request.fullpath },
-          ] %>
+          send("#{current_scope}_location_detail_path", 
+          { return_to: request.fullpath }) %>
       </p>
     </li>
   <% end %>

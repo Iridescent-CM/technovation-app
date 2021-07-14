@@ -1,6 +1,6 @@
 module JoinRequestDeclined
   def self.call(join_request)
-    join_request.update_attributes(declined_at: Time.current)
+    join_request.update(declined_at: Time.current)
 
     TeamMailer.public_send(
       "#{join_request.requestor_scope_name}_join_request_declined",

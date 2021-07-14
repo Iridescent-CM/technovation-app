@@ -6,7 +6,7 @@ namespace :legacy_migration do
 
       Legacy::Team.find_each do |legacy_team|
         team = ::Team.find_by(name: legacy_team.name)
-        team.update_attributes(friendly_id: legacy_team.slug)
+        team.update(friendly_id: legacy_team.slug)
         puts "Set friendly id: #{team.reload.friendly_id}"
       end
     end

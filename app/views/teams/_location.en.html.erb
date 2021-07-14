@@ -6,8 +6,11 @@
     <% if team.current? %>
       <p>
         <%= link_to "Change this team's location",
-          [:edit, current_scope, :team_location,
-            { return_to: send("#{current_scope}_team_path", team, anchor: '!location') }],
+          send(
+            "edit_#{current_scope}_team_location_path",
+            team,
+            { return_to: send("#{current_scope}_team_path", team, anchor: '!location') }
+          ),
           class: "button" %>
       </p>
     <% else %>

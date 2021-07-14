@@ -10,14 +10,12 @@
     <h5 class="reset">
       <% if admin_chapter_ambassador %>
         <%= link_to onboarding_member.full_name,
-          [
-            current_scope,
-            :participant,
-            {
-              id: onboarding_member.account_id,
-              allow_out_of_region: true,
-            }
-          ] %>
+          send("#{current_scope}_participant_path", 
+          {
+            id: onboarding_member.account_id,
+            allow_out_of_region: true,
+          })
+        %>
       <% else %>
         <%= onboarding_member.full_name %>
       <% end %>
@@ -38,13 +36,10 @@
 
     <% if CanRemoveTeamMember.(current_account, onboarding_member) %>
       <%= link_to "remove this member",
-        [
-          current_scope,
-          team,
-          :membership,
+        send("#{current_scope}_team_membership_path",
           member_id: onboarding_member.id,
-          member_type: onboarding_member.class.name,
-        ],
+          member_type: onboarding_member.class.name
+        ),
         data: {
           method: :delete,
           confirm: t("views.teams.show.confirm_leave",

@@ -2,7 +2,7 @@
   <h3 class="panel--heading">Review your <%= @method.to_s.humanize %></h3>
 
   <%= form_with(
-    model: [current_scope, @team_submission],
+    model: @team_submission,
     url: send("#{current_scope}_team_submission_video_link_review_path", @team_submission),
     local: true
   ) do |f| %>
@@ -34,13 +34,11 @@
 
         or
         <%= link_to "go back",
-          [
-            :edit,
-            current_scope,
+          send("edit_#{current_scope}_team_submission_path", 
             @team_submission,
             piece: @method,
-            value: @review_value,
-          ] %>
+            value: @review_value
+          ) %>
       </p>
     </div>
   <% end %>

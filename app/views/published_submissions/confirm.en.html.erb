@@ -12,11 +12,10 @@
       <div class="grid--justify-center">
         <p>
           <%= link_to "View your complete submission",
-            [
-              current_scope,
-              :published_team_submission,
-              { id: @team_submission.to_param },
-            ],
+            send(
+              "#{current_scope}_published_team_submission_path",
+              { id: @team_submission.to_param }
+            ),
             class: "button button--small" %>
         </p>
       </div>

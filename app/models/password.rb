@@ -21,7 +21,7 @@ class Password
   end
 
   def perform
-    account.update_attributes({
+    account.update({
       skip_existing_password: true,
       password_reset_token: nil,
       password_reset_token_sent_at: nil,

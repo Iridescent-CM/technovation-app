@@ -1,4 +1,4 @@
-<%= simple_form_for [current_scope, waiver] do |f| %>
+<%= simple_form_for waiver, url: send("#{current_scope}_consent_waivers_path", waiver) do |f| %>
   <%= f.input :account_consent_token, as: :hidden %>
 
   <%= f.input :electronic_signature,

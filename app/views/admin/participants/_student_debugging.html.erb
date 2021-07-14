@@ -84,11 +84,7 @@
         (current_account.is_chapter_ambassador? && profile.age >= 18) %>
   <div class="panel">
     <%= link_to "Convert to a mentor",
-      [
-        current_scope,
-       :student_conversions,
-        student_profile_id: profile.id,
-      ],
+      send("#{current_scope}_student_conversions_path", student_profile_id: profile.id),
       data: {
         method: :post,
         confirm: "You're about to convert #{profile.name} to be a mentor. This will also delete their student profile.",

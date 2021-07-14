@@ -18,7 +18,6 @@ class RecordBrowserDetailsJob < ActiveJob::Base
         os_version: browser.platform.version,
       })
     end
-
-    account.update_attributes(attrs)
+    account.update(attrs)
   end
 end

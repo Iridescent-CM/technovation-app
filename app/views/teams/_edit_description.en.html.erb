@@ -6,6 +6,6 @@
 
 <% unless current_scope == "chapter_ambassador" %>
   <%= link_to t("controllers.teams.edit.link"),
-    [:edit, current_scope, team],
+    send("edit_#{current_scope}_team_path", team),
     class: "button small" %>
 <% end %>

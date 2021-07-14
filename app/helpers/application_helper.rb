@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def al(identifiers)
-    decoded_path = URI::decode(request.fullpath)
+    decoded_path = CGI.escape(request.fullpath)
 
     if Array(identifiers).any? { |i| decoded_path.include?(i) }
       "active"

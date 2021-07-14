@@ -1,4 +1,4 @@
-<%= simple_form_for [:chapter_ambassador, judge_assignment] do |f| %>
+<%= simple_form_for judge_assignment, url: chapter_ambassador_judge_assignment_path(judge_assignment) do |f| %>
   <%= hidden_field_tag :referring_anchor, anchor %>
   <%= f.input :team_id, value: team.id, as: :hidden %>
 

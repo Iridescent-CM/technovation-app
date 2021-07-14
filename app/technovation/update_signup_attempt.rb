@@ -2,7 +2,7 @@ module UpdateSignupAttempt
   def self.call(pending_token, params, callbacks)
     attempt = SignupAttempt.find_by(pending_token: pending_token)
 
-    if attempt.update_attributes(params)
+    if attempt.update(params)
       if attempt.saved_change_to_status? and attempt.active?
         attempt.regenerate_signup_token
       elsif attempt.pending?

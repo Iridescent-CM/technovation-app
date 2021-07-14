@@ -7,7 +7,7 @@ module TeamMemberInviteController
     ) || ::NullInvite.new
 
     if SeasonToggles.judging_enabled_or_between?
-      redirect_to [current_scope, :dashboard],
+      redirect_to send("#{current_scope}_dashboard_path"),
         alert: t("views.team_member_invites.show.invites_disabled_by_judging")
     elsif @invite.invitee and @invite.invitee != current_profile
       signin = @invite.invitee.account
@@ -25,11 +25,9 @@ module TeamMemberInviteController
     @team_member_invite = TeamMemberInvite.new(team_member_invite_params)
 
     if @team_member_invite.save
-      redirect_to [
-        current_scope,
+      redirect_to send("#{current_scope}_team_member_invite_path",
         @team_member_invite.team,
-        { anchor: "students" }
-      ],
+        { anchor: "students" }),
       success: t("controllers.team_member_invites.create.success")
     else
       render :new
@@ -45,19 +43,17 @@ module TeamMemberInviteController
 
       if @invite
         @invite.destroy
-        redirect_to [
-          current_scope,
+        redirect_to send("#{current_scope}_team_path",
           @invite.team,
-          { anchor: "students" }
-        ],
+          { anchor: "students" }),
         success: t("controllers.invites.destroy.success",
                    name: @invite.invitee_name)
       else
-        redirect_to [current_scope, :dashboard],
+        redirect_to send("#{current_scope}_dashboard_path"),
           notice: t("controllers.invites.destroy.not_found")
       end
     else
-      redirect_to [current_scope, :dashboard],
+      redirect_to send("#{current_scope}_dashboard_path"),
         notice: t("controllers.application.general_error")
     end
   end

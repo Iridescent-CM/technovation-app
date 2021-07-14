@@ -5,12 +5,11 @@
 
   <p>
     <%= link_to "Back",
-      [
-        current_scope,
+      send(
+        "#{current_scope}_team_submission_section_path",
         @team_submission,
-        :section,
-        section: "ideation",
-      ],
+        section: "ideation"
+      ),
       class: "button button--small" %>
   </p>
 </div>

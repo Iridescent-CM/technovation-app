@@ -36,7 +36,6 @@ feature "starting scores", js: true do
 
       when_the_judge_views_their_dashboard
       and_starts_scoring_the_submission
-
       then_they_see_the_scoring_screens_for_that_submission
     end
 

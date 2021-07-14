@@ -6,7 +6,7 @@ namespace :utils do
     end
 
     RegionalPitchEvent.find_each do |r|
-      r.update_attributes({
+      r.update({
         city: %w{Guadalajara Mexico\ City Puerto\ Vallarta Cancun Tijuana}.sample,
       })
 
@@ -14,7 +14,7 @@ namespace :utils do
     end
 
     Team.find_each do |t|
-      t.update_attributes({
+      t.update({
         latitude: nil,
         longitude: nil,
       })
@@ -23,7 +23,7 @@ namespace :utils do
     end
 
     Account.find_each do |a|
-      a.update_attributes({
+      a.update({
         city: "Guadalajara",
         state_province: "Jalisco",
         country: "MX",
