@@ -52,7 +52,7 @@ RSpec.feature "Searchability" do
 
     click_link "Check Submission Status"
     expect(page).to have_content("status is: pending")
-    expect(mentor.reload).to be_searchable
+    expect(mentor.reload).not_to be_searchable
   end
 
   scenario "US mentor passes bg check, signs consent", :vcr do
@@ -80,6 +80,6 @@ RSpec.feature "Searchability" do
       with: "Mentor McGee"
     click_button "I agree"
 
-    expect(mentor.reload).to be_searchable
+    expect(mentor.reload).not_to be_searchable
   end
 end
