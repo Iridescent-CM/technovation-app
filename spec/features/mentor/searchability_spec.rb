@@ -23,7 +23,7 @@ RSpec.feature "Searchability" do
 
     expect(mentor.reload).to be_searchable
   end
-
+  # US_mentor_signs_consent_passes_bg_check
   scenario "US mentor signs consent, passes bg check", :vcr do
     mentor = FactoryBot.create(
       :mentor,
@@ -31,6 +31,9 @@ RSpec.feature "Searchability" do
       not_onboarded: true
     )
 
+    mentor.account.email = 'test002.asnet@gmail.com'
+    mentor.save!
+
     expect(mentor).not_to be_searchable
 
     sign_in(mentor)
@@ -51,12 +54,15 @@ RSpec.feature "Searchability" do
     click_button "Submit"
 
     click_link "Check Submission Status"
-    expect(page).to have_content("status is: pending")
-    expect(mentor.reload).not_to be_searchable
+    expect(page).to have_content("status is: clear")
+    expect(mentor.reload).to be_searchable
   end
-
+  # US_mentor_passes_bg_check_signs_consent
   scenario "US mentor passes bg check, signs consent", :vcr do
     mentor = FactoryBot.create(:mentor, country: "US", not_onboarded: true)
+    mentor.account.email = 'test008.asnet@gmail.com'
+    mentor.save!
+
     expect(mentor).not_to be_searchable
 
     sign_in(mentor)
@@ -70,7 +76,8 @@ RSpec.feature "Searchability" do
     click_button "Submit"
 
     click_link "Check Submission Status"
-    expect(page).to have_content("status is: pending")
+
+    expect(page).to have_content("status is: clear")
     expect(mentor.reload).not_to be_searchable
 
     visit mentor_dashboard_path
@@ -80,6 +87,6 @@ RSpec.feature "Searchability" do
       with: "Mentor McGee"
     click_button "I agree"
 
-    expect(mentor.reload).not_to be_searchable
+    expect(mentor.reload).to be_searchable
   end
 end

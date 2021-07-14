@@ -49,11 +49,11 @@ describe("Registration::Components::DataUseTerms.vue", () => {
         defaultWrapper.setProps({ handleSubmit: jest.fn(() => {}) });
         defaultWrapper.vm.$store.state.registration.termsAgreed = true;
 
-        // expect(defaultWrapper.vm.handleSubmit).not.toHaveBeenCalled();
+        expect(defaultWrapper.vm.handleSubmit).not.toHaveBeenCalled();
 
         defaultWrapper.find({ ref: 'dataUseTermsForm' }).trigger('submit');
 
-        // expect(defaultWrapper.vm.handleSubmit).toHaveBeenCalledTimes(1);
+        expect(defaultWrapper.vm.handleSubmit).toHaveBeenCalledTimes(1);
       });
     });
 
