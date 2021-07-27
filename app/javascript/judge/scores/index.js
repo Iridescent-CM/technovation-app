@@ -15,7 +15,7 @@ Vue.config.errorHandler = function (err, vm, info) {
 
 import './stepper'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const scoresEl = document.querySelector("#judge-scores-app")
 
   if (scoresEl != undefined) {

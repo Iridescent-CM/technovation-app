@@ -10,7 +10,7 @@
 //= require submissions
 //= require dropzones
 
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("DOMContentLoaded", function() {
   $("#background_check_candidate_ssn").mask("999-99-9999?");
 
   $(".show-hide").on("click", "a", function(e) {

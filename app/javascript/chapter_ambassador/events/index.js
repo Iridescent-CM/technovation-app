@@ -35,7 +35,7 @@ const store = new Vuex.Store({
   }
 })
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const appEl = document.querySelector("#app")
 
   if (appEl != undefined) {

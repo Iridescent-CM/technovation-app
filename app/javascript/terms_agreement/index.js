@@ -7,7 +7,7 @@ import App from './App';
 
 Vue.use(Vue2Filters);
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const wizardElem = document.querySelector('#vue-enable-terms-agreement-app');
 
   if (wizardElem) {

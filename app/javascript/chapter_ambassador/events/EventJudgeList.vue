@@ -74,7 +74,6 @@
               <div class="cutoff-with-ellipsis">
                 <template v-if="judge.links.self">
                   <a
-                    data-turbolinks="false"
                     target="_blank"
                     :href="judge.links.self"
                   >

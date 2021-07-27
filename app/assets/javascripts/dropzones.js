@@ -46,4 +46,4 @@ Dropzone.options.teamSubmissionSourcecodeDropzone = $.extend(
 
 Dropzone.autoDiscover = false;
 
-$(document).on("ready turbolinks:load", Dropzone.discover);
+$(document).on("ready DOMContentLoaded", Dropzone.discover);

@@ -1,4 +1,4 @@
-$(document).on("turbolinks:load", function() {
+$(document).on("DOMContentLoaded", function() {
   $('.tabs').not('.tabs--css-only').each(function() {
     var $links = $(this).find('.tabs__menu')
                         .first()

@@ -5,7 +5,7 @@ $(document).on('click', '.flash .icon-close', function() {
   });
 });
 
-document.addEventListener('turbolinks:load', function() {
+document.addEventListener('DOMContentLoaded', function() {
   $(document).ajaxComplete(function(_, xhr) {
     if (xhr.status === 200) {
       var res = false;

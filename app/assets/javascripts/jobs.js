@@ -57,7 +57,7 @@ watchJobs = function() {
   );
 }
 
-$(document).on("ready turbolinks:load", watchJobs);
+$(document).on("ready DOMContentLoaded", watchJobs);
 
 $(document).on("click", "#queued-jobs a", function(e) {
   if ($(this).data("preventDefault"))

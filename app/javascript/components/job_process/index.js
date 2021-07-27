@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import JpTemplate from './template'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const el = document.querySelector("#job-process-app")
 
   if (el != undefined) {

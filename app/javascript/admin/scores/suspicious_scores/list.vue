@@ -43,10 +43,7 @@
 
       <div class="score__flags">
         <small>{{ score.flags }}</small>
-        <a
-          :href="score.url"
-          data-turbolinks="false"
-        >Open score</a>
+        <a :href="score.url">Open score</a>
       </div>
     </div>
   </div>

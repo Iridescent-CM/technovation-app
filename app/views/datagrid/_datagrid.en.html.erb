@@ -4,9 +4,7 @@
 %>
 
 <div class="panel">
-  <%= datagrid_form_for grid,
-    data: { turbolinks: false },
-    url: form_url %>
+  <%= datagrid_form_for grid, url: form_url %>
 
   <h6>
     <%= number_with_delimiter(grid.assets.count) %>

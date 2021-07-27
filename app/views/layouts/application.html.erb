@@ -23,8 +23,7 @@
 
     <%= yield :css %>
 
-    <%= javascript_include_tag determine_manifest,
-      'data-turbolinks-track' => true %>
+    <%= javascript_include_tag determine_manifest %>
 
     <%= javascript_packs_with_chunks_tag "application" %>
 

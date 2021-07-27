@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 import store from './store'
 import { router } from './routes'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const adminContentSettingsElement = document.getElementById('admin-content-settings')
 
   if (adminContentSettingsElement) {

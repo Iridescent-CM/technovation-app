@@ -1,7 +1,4 @@
 import Vue from 'vue'
-import TurbolinksAdapter from 'vue-turbolinks'
-
-Vue.use(TurbolinksAdapter)
 
 import '../application/sticky-header';
 
@@ -11,7 +8,7 @@ import LocationForm from '../location/components/LocationForm';
 
 import '../terms_agreement';
 
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('DOMContentLoaded', function () {
   const locationFormElems = document.querySelectorAll('.vue-enable-location-form');
 
   for (let i = 0; i < locationFormElems.length; i += 1) {

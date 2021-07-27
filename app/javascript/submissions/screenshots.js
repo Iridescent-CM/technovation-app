@@ -5,7 +5,7 @@ Vue.use(VueDragula)
 
 import ScreenshotUploader from '../components/ScreenshotUploader'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('vue-screenshot-uploader') !== null) {
     // We have to assign the VueDragula event bus to a global level variable in
     // order to communicate with sub components.

@@ -8,9 +8,7 @@
     <td>Team</td>
 
     <td>
-      <%= link_to activity.trackable.name,
-        [current_scope, activity.trackable],
-        data: { turbolinks: false } %>
+      <%= link_to activity.trackable.name, [current_scope, activity.trackable] %>
     </td>
   <% else %>
     <td>–</td>
@@ -21,9 +19,7 @@
 
   <% if activity.recipient %>
     <td>
-      <%= link_to activity.recipient.name,
-        [current_scope, activity.trackable],
-        data: { turbolinks: false } %>
+      <%= link_to activity.recipient.name, [current_scope, activity.trackable] %>
     </td>
   <% else %>
     <td>–</td>

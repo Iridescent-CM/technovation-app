@@ -1,4 +1,4 @@
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("DOMContentLoaded", function() {
   $(".chosen, select.enum_filter").chosen({
     allow_single_deselect: true,
   });

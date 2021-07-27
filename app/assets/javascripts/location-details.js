@@ -1,5 +1,5 @@
 if ("geolocation" in navigator) {
-  document.addEventListener("turbolinks:load", function() {
+  document.addEventListener("DOMContentLoaded", function() {
     var $form = $('form.geocoding');
     if ($form.length === 0) return;
 

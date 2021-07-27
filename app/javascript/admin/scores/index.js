@@ -5,7 +5,7 @@ import { router } from './routes'
 
 import { mapState } from 'vuex'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const scoresEl = document.querySelector("#admin-scores-app")
 
   if (scoresEl != undefined) {

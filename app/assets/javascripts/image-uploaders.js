@@ -24,7 +24,7 @@ $(document).on("click", ".preview__img .remove", function() {
   $form.find('input[type=file]').val('');
 });
 
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("DOMContentLoaded", function() {
   if ($(".icon-picker").length > 0) {
     const imageId = $('.icon-picker').data("updateImage"),
           $img = $("#" + imageId);

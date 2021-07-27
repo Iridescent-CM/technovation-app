@@ -5,7 +5,7 @@ import { router } from './routes'
 
 import ScoreStepper from './ScoreStepper'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const stepperEl = document.querySelector('#judge-scores-stepper')
 
   if (stepperEl != undefined) {

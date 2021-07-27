@@ -10,9 +10,7 @@
     </td>
 
     <td>
-      <%= link_to activity.recipient.team_name,
-        [current_scope, activity.recipient.team],
-        data: { turbolinks: false } %>
+      <%= link_to activity.recipient.team_name, [current_scope, activity.recipient.team] %>
     </td>
   <% else %>
     <td>–</td>
@@ -23,9 +21,7 @@
 
   <% if activity.recipient %>
     <td>
-      <%= link_to activity.recipient.name || "(no_name)",
-        [current_scope, activity.recipient],
-        data: { turbolinks: false } %>
+      <%= link_to activity.recipient.name || "(no_name)", [current_scope, activity.recipient] %>
     </td>
   <% else %>
     <td>–</td>

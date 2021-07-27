@@ -8,16 +8,12 @@
 
 <% if current_mentor.can_switch_to_judge? %>
   <template slot="judge-switch-link">
-    <%= link_to "Switch to Judge mode",
-      judge_dashboard_path,
-      data: { turbolinks: false } %>
+    <%= link_to "Switch to Judge mode", judge_dashboard_path %>
   </template>
 <% end %>
 
 <% if current_mentor.is_an_ambassador? %>
   <template slot="chapter-ambassador-switch-link">
-    <%= link_to "Switch to Chapter Ambassador mode",
-      chapter_ambassador_dashboard_path,
-      data: { turbolinks: false } %>
+    <%= link_to "Switch to Chapter Ambassador mode", chapter_ambassador_dashboard_path %>
   </template>
 <% end %>

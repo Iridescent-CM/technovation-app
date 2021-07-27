@@ -239,8 +239,7 @@ class AccountsGrid
   column :actions, mandatory: true, html: true do |account, grid|
     html = link_to(
       "view",
-      send("#{current_scope}_participant_path", account),
-      data: { turbolinks: false }
+      send("#{current_scope}_participant_path", account)
     )
 
     if grid.admin

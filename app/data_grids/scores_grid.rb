@@ -116,8 +116,7 @@ class ScoresGrid
       web_icon("list-ul", size: 16, remote: true),
       [current_scope, :score, id: submission_score.id],
       {
-        class: "view-details",
-        data: { turbolinks: false }
+        class: "view-details"
       }
     )
   end

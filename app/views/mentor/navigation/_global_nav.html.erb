@@ -1,6 +1,5 @@
 <%= link_to t("views.application.dashboards.menu.dashboard"),
   mentor_dashboard_path,
-  data: { turbolinks: false },
   class: al(mentor_dashboard_path) %>
 
 <% if current_mentor.onboarded? %>

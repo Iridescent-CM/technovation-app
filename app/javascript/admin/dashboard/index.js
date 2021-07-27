@@ -11,7 +11,7 @@ Vue.use(VueRouter)
 import store from './store'
 import { router } from './routes'
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const pieChartElements = document.querySelectorAll('.vue-enable-pie-chart')
 
   if (pieChartElements.length) {

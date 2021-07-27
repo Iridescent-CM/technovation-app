@@ -12,17 +12,14 @@
 
     <%= link_to "Participants",
       admin_participants_path,
-      data: { turbolinks: false },
       class: al(admin_participants_path) %>
 
     <%= link_to "Teams",
       admin_teams_path,
-      data: { turbolinks: false },
       class: al(admin_teams_path) %>
 
     <%= link_to "Submissions",
       admin_team_submissions_path,
-      data: { turbolinks: false },
       class: al(admin_team_submissions_path) %>
 
     <%= link_to "Events",
@@ -55,8 +52,7 @@
 
     <%= link_to "Background jobs",
       "/sidekiq",
-      target: :_blank,
-      data: { turbolinks: false } %>
+      target: :_blank %>
   <% end %>
 
   <hr />

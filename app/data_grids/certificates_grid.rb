@@ -33,8 +33,7 @@ class CertificatesGrid
       admin_certificate_path(certificate),
       {
         class: "view-details",
-        "v-tooltip" => "'View certificate'",
-        data: { turbolinks: false }
+        "v-tooltip" => "'View certificate'"
       }
     )
   end

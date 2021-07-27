@@ -58,7 +58,7 @@ $(document).on("click", "[data-opens-modal]", function(e) {
   }
 });
 
-$(document).on("ready turbolinks:load", function() {
+$(document).on("DOMContentLoaded", function() {
   $("[data-open-on-page-load]").each(function(_, modal) {
     swal({
       html: $(modal).find(".modal-content"),

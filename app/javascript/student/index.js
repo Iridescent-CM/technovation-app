@@ -8,7 +8,7 @@ import App from './App'
 
 Vue.use(Vue2Filters)
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const appElem = document.querySelector('#vue-enable-student-app')
 
   if (appElem) {

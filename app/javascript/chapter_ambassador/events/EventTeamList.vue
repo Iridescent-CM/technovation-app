@@ -74,7 +74,6 @@
 
               <div class="cutoff-with-ellipsis">
                 <a
-                  data-turbolinks="false"
                   target="_blank"
                   :href="team.links.self"
                 >
@@ -99,7 +98,6 @@
             <td>
               <div class="cutoff-with-ellipsis">
                 <a
-                  data-turbolinks="false"
                   target="_blank"
                   :href="team.links.submission"
                 >

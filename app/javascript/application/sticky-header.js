@@ -19,7 +19,7 @@
 
   window.addEventListener('resize', setStickyNav)
 
-  document.addEventListener('turbolinks:load', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     setStickyNav()
 
     const header = document.querySelector('.header-container')

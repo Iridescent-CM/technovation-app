@@ -3,7 +3,6 @@
 
 // ******** VENDOR
 //
-//= require turbolinks
 //= require jquery3
 //= require jquery_ujs
 //= require chosen-jquery
@@ -25,7 +24,7 @@
 //= require jobs
 //= require sticky-cols
 
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("DOMContentLoaded", function() {
   $(".accordion-toggle").on("click", function(e) {
     e.preventDefault();
 
