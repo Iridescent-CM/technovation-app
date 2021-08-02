@@ -7,15 +7,14 @@ VCR.configure do |config|
   config.cassette_library_dir = "spec/cassettes"
   config.hook_into :webmock # or :fakeweb
   config.configure_rspec_metadata!
-  config.ignore_localhost = true
-  config.allow_http_connections_when_no_cassette = true
   config.ignore_request do |request|
     uri = URI(request.uri)
     LOCALHOSTS.include?(uri.host) and uri.port != 9200
   end
   config.ignore_hosts(
-    'chromedriver.storage.googleapis.com',
-    'github.com'
+    "chromedriver.storage.googleapis.com",
+    "github.com",
+    "github-releases.githubusercontent.com"
   )
 
 end
