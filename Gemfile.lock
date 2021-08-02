@@ -139,13 +139,6 @@ GEM
       httparty
       rails (>= 5.0, < 6.1.0)
     cocoon (1.2.15)
-    coffee-rails (4.2.2)
-      coffee-script (>= 2.2.0)
-      railties (>= 4.0.0)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     counter_culture (1.12.0)
@@ -563,7 +556,6 @@ DEPENDENCIES
   clipboard-rails (~> 1.7)
   cloudflare-rails (~> 0.6)
   cocoon (~> 1.2)
-  coffee-rails (~> 4.2)
   counter_culture (~> 1.12)
   countries (~> 1.2)
   country_state_select (~> 3.0)
