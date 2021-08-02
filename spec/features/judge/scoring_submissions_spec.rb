@@ -11,7 +11,7 @@ feature "scoring submissions", js: true do
 
   scenario "when a junior team receives a perfect score" do
     given_there_is_a_submission_from_a_junior_team_that_needs_scoring
-    and_a_user_is_logged_in_as_a_judge
+    and_a_judge_is_logged_in
 
     when_the_judge_starts_a_new_scoring_session
     and_scores_the_ideation_section_perfectly
@@ -25,7 +25,7 @@ feature "scoring submissions", js: true do
 
   scenario "when a senior team receives a perfect score" do
     given_there_is_a_submission_from_a_senior_team_that_needs_scoring
-    and_a_user_is_logged_in_as_a_judge
+    and_a_judge_is_logged_in
 
     when_the_judge_starts_a_new_scoring_session
     and_scores_the_ideation_section_perfectly
@@ -47,7 +47,7 @@ feature "scoring submissions", js: true do
     FactoryBot.create(:team_submission, :senior, :complete)
   end
 
-  def and_a_user_is_logged_in_as_a_judge
+  def and_a_judge_is_logged_in
     judge = FactoryBot.create(:judge, :onboarded)
     sign_in(judge)
   end
