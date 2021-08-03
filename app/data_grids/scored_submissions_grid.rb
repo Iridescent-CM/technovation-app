@@ -31,13 +31,39 @@ class ScoredSubmissionsGrid
 
   column :team_name, mandatory: true, html: false
   column :team_name, mandatory: true, html: true do |submission|
-    link_to submission.team_name, `#{current_scope}_team_path(submission.team, allow_out_of_region: true)`, turbolinks: true
+    case current_scope
+    when "chapter_ambassador"
+      link_to(
+        submission.team_name,
+        chapter_ambassador_team_path(submission.team, allow_out_of_region: true),
+        turbolinks: true
+      )
+    when "admin"
+      link_to(
+        submission.team_name,
+        admin_team_path(submission.team, allow_out_of_region: true),
+        turbolinks: true
+      )
+    end
   end
 
   column :app_name, mandatory: true, html: false
   column :app_description
   column :submission, mandatory: true, html: true do |submission|
-    link_to submission.app_name, `#{current_scope}_team_submission_path(submission, allow_out_of_region: true)`, turbolinks: true
+    case current_scope
+    when "chapter_ambassador"
+      link_to(
+        submission.app_name,
+        chapter_ambassador_team_submission_path(submission, allow_out_of_region: true),
+        turbolinks: true
+      )
+    when "admin"
+      link_to(
+        submission.app_name,
+        admin_team_submission_path(submission, allow_out_of_region: true),
+        turbolinks: true
+      )
+    end
   end
 
   column :complete_scores, mandatory: true do |asset, grid|
