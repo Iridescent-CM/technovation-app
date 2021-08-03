@@ -84,10 +84,16 @@ RSpec.configure do |config|
     Capybara.page.driver.browser.manage.window.resize_to(1200, 1200)
   end
 
-  config.after(:each, js: :true) do |example|
+  config.after(:each, js: true) do |example|
     if example.exception
-      save_and_open_screenshot if ENV.fetch("OPEN_SCREENSHOT_ON_FAILURE", false)
-      save_and_open_page if ENV.fetch("OPEN_PAGE_ON_FAILURE", false)
+      if ENV["OPEN_SCREENSHOT_ON_FAILURE"].to_s.downcase == "true"
+        save_and_open_screenshot
+      end
+
+      if ENV["OPEN_PAGE_ON_FAILURE"].to_s.downcase == "true"
+        save_and_open_page
+      end
+
       begin
         STDERR.puts page.driver.browser.manage.logs.get(:browser)
       rescue
