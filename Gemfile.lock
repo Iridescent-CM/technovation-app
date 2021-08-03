@@ -96,7 +96,7 @@ GEM
       statsd-ruby (~> 1.1)
     bcrypt (3.1.16)
     bindex (0.8.1)
-    bootsnap (1.7.5)
+    bootsnap (1.7.7)
       msgpack (~> 1.0)
     browser (2.7.1)
     builder (3.2.4)
@@ -631,7 +631,7 @@ DEPENDENCIES
   wkhtmltopdf-heroku (= 2.12.5.0)
 
 RUBY VERSION
-   ruby 2.7.3p183
+   ruby 2.7.4p191
 
 BUNDLED WITH
    2.2.23
