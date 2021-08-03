@@ -87,7 +87,7 @@ gem "browser", "~> 2.5"
 
 gem "loofah", "~> 2.2"
 
-gem "dotenv-rails", "~> 2.5"
+gem "dotenv-rails", "~> 2.7"
 
 gem "pdfkit", "0.8.4.3.2"
 
