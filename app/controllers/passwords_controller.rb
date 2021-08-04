@@ -19,7 +19,7 @@ class PasswordsController < ApplicationController
 
   private
   def alert_message(password)
-    if password.errors.keys.include?(:expires_at)
+    if password.errors.attribute_names.include?(:expires_at)
       t("controllers.passwords.new.expired")
     else
       t("controllers.passwords.new.invalid")
