@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "team_searches/_result.html.erb", type: :view do
   before do
-    render partial: "team_searches/result.html.erb",
+    render partial: "team_searches/result",
       locals: {
         team: team,
         current_scope: current_scope,
