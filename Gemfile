@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 ruby "2.7.4"
 
-gem "rails", "~> 6.0.0"
+gem "rails", "~> 6.1.0"
 
 gem "puma", "~> 3.12.6"
-gem "pg", "~> 0.21"
+gem "pg", "~> 1.2"
 gem "casting", "~> 0.7"
 
 gem "barnes", "~> 0.0.7"
@@ -138,7 +138,7 @@ group :production do
   gem "rack-timeout", "~> 0.5"
   gem "heroku-deflater", "~> 0.6"
   gem "rails_autoscale_agent"
-  gem "cloudflare-rails", "~> 0.6"
+  gem "cloudflare-rails", "~> 2.0"
   gem "wkhtmltopdf-heroku", "2.12.5.0"
 end
 
