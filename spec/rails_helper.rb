@@ -1,36 +1,37 @@
-ENV['RAILS_ENV'] ||= 'test'
+ENV["RAILS_ENV"] ||= "test"
 
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path("../../config/environment", __FILE__)
 
 if Rails.env.production?
   abort("The Rails environment is running in production mode!")
 end
 
-require 'spec_helper'
-require 'rspec/rails'
-require 'capybara'
+require "spec_helper"
+require "rspec/rails"
+require "capybara"
+require "vcr_helper"
+require "geocoder_helper"
+require "rake"
 
 ActiveRecord::Migration.maintain_test_schema!
 
-require 'vcr_helper'
-require "geocoder_helper"
-
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
 ::Timezone::Lookup.config(:test)
 ::Timezone::Lookup.lookup.default("America/Los_Angeles")
 
 Capybara.automatic_label_click = true
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 5
 Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
 Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT", 31337)
 
-require 'rake'
+WebMock.allow_net_connect!(net_http_connect_on_start: true)
+
 Rails.application.load_tasks
 
 RSpec.configure do |config|
   config.fail_fast = ENV.fetch("RSPEC_FAIL_FAST", true)
-  config.example_status_persistence_file_path = './tmp/spec/examples.txt'
+  config.example_status_persistence_file_path = "./tmp/spec/examples.txt"
 
   config.include SigninHelper, type: :feature
   config.include SignupHelper, type: :feature
