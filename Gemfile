@@ -35,6 +35,7 @@ gem "webpacker", "~> 5.x"
 gem "cocoon", "~> 1.2"
 
 gem "sass-rails", "~> 6.0"
+gem "sprockets", "3.7.2"
 gem "normalize-rails", "~> 4.1"
 
 gem "rails-i18n", "~> 6.0.0"

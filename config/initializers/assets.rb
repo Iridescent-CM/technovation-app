@@ -10,4 +10,29 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.paths << Emoji.images_path
 
 # Precompile additional assets.
-Rails.application.config.assets.precompile = ["manifest.js"]
+# application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
+Rails.application.config.assets.precompile += %w(
+  email.css
+
+  public.css
+  admin.css
+  chapter_ambassador.css
+  student.css
+  mentor.css
+  judge.css
+
+  printable_scores.css
+
+  public.js
+  admin.js
+  chapter_ambassador.js
+  student.js
+  mentor.js
+  judge.js
+
+  location-details.js
+
+  location-based-search.js
+  text-based-search.js
+  toggle-based-search.js
+)
