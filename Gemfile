@@ -53,7 +53,7 @@ gem "friendly_id", "~> 5.4"
 
 gem "bcrypt", "~> 3.1"
 
-gem "sidekiq", "~> 4.2"
+gem "sidekiq", "~> 6.2"
 
 gem "airbrake", "~> 11.0.3"
 gem "newrelic_rpm", "~> 7.1.0"
@@ -107,22 +107,18 @@ end
 
 group :test do
   gem "timecop", "~> 0.9"
-  gem "vcr", "~> 3.0"
-  gem "webmock", "~> 3.5"
-  gem "sinatra", "~> 2.0"
+  gem "vcr", "~> 6.0"
+  gem "webmock", "~> 3.13"
 
   gem "rails-controller-testing", "~> 1.0"
-  gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
+  gem "fakeredis", "~> 0.8", require: "fakeredis/rspec"
 
-  gem "capybara", "~> 3.31"
-  gem "capybara-email", "~> 3.0.2"
+  gem "capybara", "~> 3.35"
+  gem "capybara-email", "~> 3.0"
   gem "webdrivers"
-  gem "rspec-rails", "~> 4.0"
+  gem "rspec-rails", "~> 5.0"
 
   gem "pdf-reader", "~> 2.4"
-
-  # deprecated
-  gem "font-awesome-rails", "~> 4.7"
 end
 
 group :development, :test do
