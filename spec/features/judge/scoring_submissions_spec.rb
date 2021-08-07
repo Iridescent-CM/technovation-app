@@ -64,6 +64,8 @@ feature "scoring submissions", js: true do
     find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click
     find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Ideation\n20 / 20")
   end
 
   def and_scores_the_technical_section_perfectly
@@ -74,6 +76,8 @@ feature "scoring submissions", js: true do
     find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click
     find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Technical\n20 / 20")
   end
 
   def and_scores_the_pitch_section_perfectly
@@ -82,6 +86,8 @@ feature "scoring submissions", js: true do
     find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click
     find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Pitch\n10 / 10")
   end
 
   def and_scores_the_entrepreneurship_section_perfectly
@@ -92,6 +98,8 @@ feature "scoring submissions", js: true do
     find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click
     find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Entrepreneurship\n20 / 20")
   end
 
   def and_scores_the_overall_section_perfectly
@@ -100,6 +108,8 @@ feature "scoring submissions", js: true do
     find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click
     find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Overall Impression\n10 / 10")
 
     click_next_button("Next: Review score")
   end
