@@ -97,7 +97,7 @@ Rails.application.configure do
   config.action_mailer.asset_host = "#{protocol}#{ENV.fetch("HOST_DOMAIN")}"
   config.action_controller.asset_host = "#{protocol}#{ENV.fetch('HOST_DOMAIN')}"
 
-  config.cache_store = :dalli_store, ENV.fetch("MEMCACHEDCLOUD_SERVERS").split(','), {
+  config.cache_store = :mem_cache_store, ENV.fetch("MEMCACHEDCLOUD_SERVERS").split(','), {
     username: ENV.fetch("MEMCACHEDCLOUD_USERNAME"),
     password: ENV.fetch("MEMCACHEDCLOUD_PASSWORD"),
     namespace: "Technovation",
