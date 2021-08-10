@@ -1,5 +1,5 @@
 <h3 class="mentor-teams__heading">
-  <%= link_to team.name, [:mentor, team] %>
+  <%= link_to team.name, mentor_team_path(team) %>
 </h3>
 
 <div class="grid grid--bleed">
@@ -7,7 +7,7 @@
     <%= link_to image_tag(
       team.team_photo.url,
       class: "thumbnail--mdlg grid__cell-img"
-    ), [:mentor, team] %>
+    ), mentor_team_path(team) %>
 
     <%= web_icon(
       "flag-o",
@@ -31,11 +31,7 @@
           <p>
             Your last step is to:<br />
             <%= link_to "Review and submit now!",
-              [
-                current_scope,
-                :published,
-                team.submission
-              ],
+              send("#{current_scope}_published_team_submission_path", team.submission),
               class: "button button--secondary" %>
           </p>
         <% else %>

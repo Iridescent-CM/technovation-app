@@ -268,15 +268,15 @@ RSpec.describe Account do
 
     account.email = "hello@world.com"
     account.valid?
-    expect(account.errors.keys).not_to include(:email)
+    expect(account.errors.attribute_names).not_to include(:email)
 
     account.email = "hellono"
     account.valid?
-    expect(account.errors.keys).to include(:email)
+    expect(account.errors.attribute_names).to include(:email)
 
     account.email = "hello@world.com, hello@someone.com"
     account.valid?
-    expect(account.errors.keys).to include(:email)
+    expect(account.errors.attribute_names).to include(:email)
   end
 
   it "does not require a password for email case changing" do

@@ -12,8 +12,9 @@ VCR.configure do |config|
     LOCALHOSTS.include?(uri.host) and uri.port != 9200
   end
   config.ignore_hosts(
-    'chromedriver.storage.googleapis.com',
-    'github.com'
+    "chromedriver.storage.googleapis.com",
+    "github.com",
+    "github-releases.githubusercontent.com"
   )
 
 end

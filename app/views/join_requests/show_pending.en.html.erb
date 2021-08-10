@@ -69,9 +69,7 @@
       <%= button_to(
         t("controllers.join_requests.update.accept",
           name: @join_request.requestor_name),
-
-        [current_scope, @join_request],
-
+          send("#{current_scope}_join_request_path", @join_request),
         class: "button small",
 
         params: {
@@ -91,9 +89,7 @@
       <%= button_to(
         t("controllers.join_requests.update.decline",
           name: @join_request.requestor_name),
-
-        [current_scope, @join_request],
-
+          send("#{current_scope}_join_request_path", @join_request),
         class: "button danger small",
 
         params: {

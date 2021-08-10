@@ -8,7 +8,7 @@ module Student
       begin
 
         AddTeamToRegionalEvent.(event, current_team)
-        redirect_to [:student, current_team.selected_regional_pitch_event],
+        redirect_to student_regional_pitch_event_path(current_team.selected_regional_pitch_event),
           success: t("controllers.student.regional_pitch_event_selections.create.success")
 
       rescue AddTeamToRegionalEvent::EventAtTeamCapacityError => ex

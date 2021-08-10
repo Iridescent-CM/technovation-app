@@ -17,6 +17,8 @@ RSpec.describe "A mentor completing their training", :js do
   it "is not required for new mentors before the ImportantDates.mentor_training_required_since date" do
     Timecop.freeze(ImportantDates.mentor_training_required_since - 1.day) do
       mentor = sign_up(:mentor)
+      expect(page).to have_content("Dashboard")
+
       mentor.update_column(:bio, "Something of sufficient length " * 10)
       mentor.create_consent_waiver!(electronic_signature: "me")
       mentor.create_background_check!(candidate_id: "TEST", report_id: "TEST", status: :clear)

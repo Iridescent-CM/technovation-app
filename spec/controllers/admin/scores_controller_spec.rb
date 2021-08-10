@@ -6,7 +6,7 @@ RSpec.describe Admin::ScoresController do
       admin = FactoryBot.create(:admin)
       sign_in(admin)
 
-      get :index, params: { "scored_submissions_grid": { "round": "" } }
+      get :index, params: {scored_submissions_grid: {round: ""}}
 
       expect(assigns[:round]).to eq("quarterfinals")
     end
@@ -26,7 +26,7 @@ RSpec.describe Admin::ScoresController do
       admin = FactoryBot.create(:admin)
       sign_in(admin)
 
-      get :index, params: { "scored_submissions_grid": { "round": "semifinals" } }
+      get :index, params: {scored_submissions_grid: {round: "semifinals"}}
 
       expect(assigns[:round]).to eq("semifinals")
     end

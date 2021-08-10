@@ -5,14 +5,6 @@
 %>
 
 <%= content_tag :div, class: "saved-search", id: dom_id(saved_search) do %>
-  <%= link_to saved_search.name,
-    [current_scope, saved_search],
-    class: "badge #{active}" %>
-
-  <%= link_to web_icon('close', class: "icon-red"),
-    [current_scope, saved_search],
-    data: {
-      method: :delete,
-      remote: true,
-    } %>
+  <%= link_to saved_search.name, send("#{current_scope}_saved_search_path", saved_search), class: "badge #{active}" %>
+  <%= link_to web_icon('close', class: "icon-red"), send("#{current_scope}_saved_search_path", saved_search), method: :delete, remote: :true, class: "badge #{active}" %>
 <% end %>

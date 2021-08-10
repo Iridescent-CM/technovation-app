@@ -471,6 +471,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def calculate_percent_complete
+    Rails.cache.delete("#{cache_key}/percent_complete")
     Rails.cache.fetch("#{cache_key}/percent_complete") do
       required_fields = RequiredFields.new(self)
 
@@ -562,11 +563,9 @@ class TeamSubmission < ActiveRecord::Base
   private
 
   def team_name_and_app_name
-    "#{app_name} by #{team_name}"
-  end
-
-  def should_generate_new_friendly_id?
-    super || team_name_and_app_name.parameterize != slug
+    [
+      [:app_name, :team_name, :slug]
+    ]
   end
 
   def copy_possible_thunkable_url

@@ -1,10 +1,10 @@
 source "https://rubygems.org"
-ruby "2.6.4"
+ruby "2.7.4"
 
-gem "rails", "~> 5.2.0"
+gem "rails", "~> 6.1.0"
 
 gem "puma", "~> 3.12.6"
-gem "pg", "~> 0.21"
+gem "pg", "~> 1.2"
 gem "casting", "~> 0.7"
 
 gem "barnes", "~> 0.0.7"
@@ -24,7 +24,6 @@ gem "counter_culture", "~> 1.12"
 
 gem "autoprefixer-rails", "~> 6.7"
 gem "uglifier", "~> 3.2"
-gem "coffee-rails", "~> 4.2"
 
 gem "turbolinks", "~> 5.2"
 gem "jquery-rails", "~> 4.3"
@@ -35,10 +34,11 @@ gem "webpacker", "~> 5.x"
 
 gem "cocoon", "~> 1.2"
 
-gem "sass-rails", "~> 5.0"
+gem "sass-rails", "~> 6.0"
+gem "sprockets", "3.7.2"
 gem "normalize-rails", "~> 4.1"
 
-gem "rails-i18n", "~> 5.1"
+gem "rails-i18n", "~> 6.0.0"
 gem "i18n-tasks", "~> 0.9"
 gem "clipboard-rails", "~> 1.7"
 gem "will_paginate", "~> 3.1"
@@ -50,14 +50,14 @@ gem "country_state_select", "~> 3.0"
 
 gem "nokogiri", "~> 1.11.0"
 
-gem "friendly_id", "~> 5.2"
+gem "friendly_id", "~> 5.4"
 
 gem "bcrypt", "~> 3.1"
 
-gem "sidekiq", "~> 4.2"
+gem "sidekiq", "~> 6.2"
 
-gem "airbrake", "~> 6.3"
-gem "newrelic_rpm", "~> 3.18"
+gem "airbrake", "~> 11.0.3"
+gem "newrelic_rpm", "~> 7.1.0"
 gem "scout_apm", "~> 2.4"
 
 gem "dalli", "~> 2.7"
@@ -88,7 +88,7 @@ gem "browser", "~> 2.5"
 
 gem "loofah", "~> 2.2"
 
-gem "dotenv-rails", "~> 2.5"
+gem "dotenv-rails", "~> 2.7"
 
 gem "pdfkit", "0.8.4.3.2"
 
@@ -108,22 +108,18 @@ end
 
 group :test do
   gem "timecop", "~> 0.9"
-  gem "vcr", "~> 3.0"
-  gem "webmock", "~> 3.5"
-  gem "sinatra", "~> 2.0"
+  gem "vcr", "~> 6.0"
+  gem "webmock", "~> 3.13"
 
   gem "rails-controller-testing", "~> 1.0"
-  gem "fakeredis", "~> 0.7", require: "fakeredis/rspec"
+  gem "fakeredis", "~> 0.8", require: "fakeredis/rspec"
 
-  gem "capybara", "~> 3.31"
-  gem "capybara-email", "~> 3.0.2"
-  gem "webdrivers", "~> 4.0"
-  gem "rspec-rails", "~> 3.8"
+  gem "capybara", "~> 3.35"
+  gem "capybara-email", "~> 3.0"
+  gem "webdrivers"
+  gem "rspec-rails", "~> 5.0"
 
   gem "pdf-reader", "~> 2.4"
-
-  # deprecated
-  gem "font-awesome-rails", "~> 4.7"
 end
 
 group :development, :test do
@@ -139,7 +135,7 @@ group :production do
   gem "rack-timeout", "~> 0.5"
   gem "heroku-deflater", "~> 0.6"
   gem "rails_autoscale_agent"
-  gem "cloudflare-rails", "~> 0.6"
+  gem "cloudflare-rails", "~> 2.0"
   gem "wkhtmltopdf-heroku", "2.12.5.0"
 end
 

@@ -54,10 +54,17 @@ RSpec.describe "Mentors register with their location", :js do
     click_button "Profile"
     click_button "Region"
 
-    fill_in "City", with: "Chicago"
-    fill_in "State / Province", with: "IL"
+    fill_in "Country / Territory", with: ""
+    fill_in "State / Province", with: ""
+    fill_in "City", with: ""
+
     fill_in "Country / Territory", with: "United States"
+    fill_in "State / Province", with: "IL"
+    fill_in "City", with: "Chicago"
+
     click_button "Next"
+    expect(page).to have_content("Confirm")
+    click_button "Confirm"
 
     visit mentor_profile_path(anchor: '!location')
     expect(page).to have_content("Chicago, Illinois, United States")

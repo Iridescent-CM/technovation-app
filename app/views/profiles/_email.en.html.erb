@@ -19,7 +19,7 @@
   to confirm your new email address and restore full access to this site.
 </p>
 
-<%= simple_form_for current_profile, local: true, url: [current_scope, :profile] do |f| %>
+<%= simple_form_for current_profile, url: send("#{current_scope}_profile_path", local: true) do |f| %>
   <%= f.simple_fields_for :account, include_id: false do |a| %>
     <%= a.input :existing_password,
       label: "Current password",

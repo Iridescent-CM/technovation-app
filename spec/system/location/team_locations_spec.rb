@@ -12,10 +12,17 @@ RSpec.describe "Team locations", :js do
       expect(page).to have_content("Chicago, Illinois, United States")
 
       click_link "Change this team's location"
+
+      fill_in "State", with: ""
+      fill_in "City", with: ""
+
       fill_in "State", with: "California"
       fill_in "City", with: "Los Angeles"
+
       click_button "Next"
-      click_button  "Confirm"
+      expect(page).to have_content("Confirm")
+
+      click_button "Confirm"
 
       expect(page).to have_content("Los Angeles, California, United States")
     end

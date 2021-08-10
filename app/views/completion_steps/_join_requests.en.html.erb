@@ -4,7 +4,7 @@
 
 <%= link_to(
   t("views.profile_requirements.create_join_team.links.join.text"),
-  [:new, current_scope, :team_search],
+  send("new_#{current_scope}_team_search_path"),
   class: "button"
 ) %>
 
@@ -31,13 +31,10 @@
               <%= join_request.team_division_name.humanize %><br />
               <%= join_request.team_primary_location %><br />
               <%= link_to "Cancel my request to join this team",
-                [
-                  current_scope,
-                  :join_request,
+                send("#{current_scope}_join_request_path", 
                   {
                     id: join_request.review_token
-                  }
-                ],
+                  }),
                 data: {
                   method: :delete,
                   confirm: t("controllers.student.join_requests.destroy.confirm")

@@ -6,7 +6,7 @@
 
     <%= image_tag team.team_photo_url, class: "team-photo" %>
 
-    <h3><span>Team</span> <%= link_to team.name, [:mentor, team] %></h3>
+    <h3><span>Team</span> <%= link_to team.name, mentor_team_path(team) %></h3>
     <h3>
       <span>Submission</span>
       <%= link_to team.submission.app_name,

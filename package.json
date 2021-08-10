@@ -3,7 +3,7 @@
     "test": "jest"
   },
   "engines": {
-    "node": "10.x"
+    "node": ">=14.0.0 <15"
   },
   "jest": {
     "roots": [

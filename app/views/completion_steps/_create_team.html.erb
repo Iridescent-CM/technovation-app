@@ -9,13 +9,13 @@
   <div class="step-actions">
     <%= link_to(
       t("views.profile_requirements.create_join_team.links.create.text"),
-      [:new, current_scope, :team],
+      send("new_#{current_scope}_team_path"),
       class: "button"
     ) %>
     or
     <%= link_to(
       "Find more teams",
-      [:new, current_scope, :team_search]
+      send("new_#{current_scope}_team_search_path")
     ) %>
   </div>
 <% end %>

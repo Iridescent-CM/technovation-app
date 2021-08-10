@@ -7,12 +7,11 @@
 
       <p>
         <%= link_to "We agree",
-          [
-            current_scope,
+          send(
+            "#{current_scope}_team_submission_publications_path",
             @team_submission,
-            :publications,
-            { id: @team_submission.to_param },
-          ],
+            { id: @team_submission.to_param }
+          ),
 
           data: {
             method: :post,
@@ -23,12 +22,11 @@
         or
 
         <%= link_to "go back",
-          [
-            current_scope,
+          send(
+            "#{current_scope}_team_submission_section_path",
             @team_submission,
-            :section,
             section: :ideation
-          ] %>
+          ) %>
       </p>
     </div>
   </div>

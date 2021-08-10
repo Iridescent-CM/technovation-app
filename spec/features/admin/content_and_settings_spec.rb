@@ -5,6 +5,8 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
   before do
     sign_in(admin)
+    expect(page).to have_content("Welcome back!")
+
     visit edit_admin_season_schedule_settings_path
   end
 
@@ -15,15 +17,15 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       click_button "Review"
       click_button "Save these settings"
 
-      expect(SeasonToggles.student_signup?).to be false
-      expect(SeasonToggles.mentor_signup?).to be false
+      expect(SeasonToggles.student_signup?).to eq(false)
+      expect(SeasonToggles.mentor_signup?).to eq(false)
 
-      expect(SeasonToggles.team_building_enabled?).to be false
-      expect(SeasonToggles.team_submissions_editable?).to be false
+      expect(SeasonToggles.team_building_enabled?).to eq(false)
+      expect(SeasonToggles.team_submissions_editable?).to eq(false)
 
-      expect(SeasonToggles.select_regional_pitch_event?).to be false
+      expect(SeasonToggles.select_regional_pitch_event?).to eq(false)
 
-      expect(SeasonToggles.display_scores?).to be false
+      expect(SeasonToggles.display_scores?).to eq(false)
     end
 
     scenario "Checking all boxes" do
@@ -32,15 +34,15 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       click_button "Review"
       click_button "Save these settings"
 
-      expect(SeasonToggles.student_signup?).to be true
-      expect(SeasonToggles.mentor_signup?).to be true
+      expect(SeasonToggles.student_signup?).to eq(true)
+      expect(SeasonToggles.mentor_signup?).to eq(true)
 
-      expect(SeasonToggles.team_building_enabled?).to be true
-      expect(SeasonToggles.team_submissions_editable?).to be true
+      expect(SeasonToggles.team_building_enabled?).to eq(true)
+      expect(SeasonToggles.team_submissions_editable?).to eq(true)
 
-      expect(SeasonToggles.select_regional_pitch_event?).to be true
+      expect(SeasonToggles.select_regional_pitch_event?).to eq(true)
 
-      expect(SeasonToggles.display_scores?).to be true
+      expect(SeasonToggles.display_scores?).to eq(true)
     end
   end
 
@@ -55,10 +57,10 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       click_button "Review"
       click_button "Save these settings"
 
-      expect(SeasonToggles.dashboard_text(:student)).to be_empty
-      expect(SeasonToggles.dashboard_text(:mentor)).to be_empty
-      expect(SeasonToggles.dashboard_text(:judge)).to be_empty
-      expect(SeasonToggles.dashboard_text(:chapter_ambassador)).to be_empty
+      expect(SeasonToggles.dashboard_text(:student)).to eq("")
+      expect(SeasonToggles.dashboard_text(:mentor)).to eq("")
+      expect(SeasonToggles.dashboard_text(:judge)).to eq("")
+      expect(SeasonToggles.dashboard_text(:chapter_ambassador)).to eq("")
     end
 
     scenario "Setting notices" do
@@ -92,13 +94,13 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       click_button "Review"
       click_button "Save these settings"
 
-      expect(SeasonToggles.survey_link(:student, :text)).to be_empty
-      expect(SeasonToggles.survey_link(:student, :url)).to be_empty
-      expect(SeasonToggles.survey_link(:student, :long_desc)).to be_empty
+      expect(SeasonToggles.survey_link(:student, :text)).to eq("")
+      expect(SeasonToggles.survey_link(:student, :url)).to eq("")
+      expect(SeasonToggles.survey_link(:student, :long_desc)).to eq("")
 
-      expect(SeasonToggles.survey_link(:mentor, :text)).to be_empty
-      expect(SeasonToggles.survey_link(:mentor, :url)).to be_empty
-      expect(SeasonToggles.survey_link(:mentor, :long_desc)).to be_empty
+      expect(SeasonToggles.survey_link(:mentor, :text)).to eq("")
+      expect(SeasonToggles.survey_link(:mentor, :url)).to eq("")
+      expect(SeasonToggles.survey_link(:mentor, :long_desc)).to eq("")
     end
 
     scenario "Setting survey fields" do
@@ -187,12 +189,12 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         click_button "Review"
         click_button "Save these settings"
 
-        expect(SeasonToggles.student_signup?).to be false
-        expect(SeasonToggles.mentor_signup?).to be false
-        expect(SeasonToggles.team_building_enabled?).to be false
-        expect(SeasonToggles.team_submissions_editable?).to be false
-        expect(SeasonToggles.select_regional_pitch_event?).to be false
-        expect(SeasonToggles.display_scores?).to be false
+        expect(SeasonToggles.student_signup?).to eq(false)
+        expect(SeasonToggles.mentor_signup?).to eq(false)
+        expect(SeasonToggles.team_building_enabled?).to eq(false)
+        expect(SeasonToggles.team_submissions_editable?).to eq(false)
+        expect(SeasonToggles.select_regional_pitch_event?).to eq(false)
+        expect(SeasonToggles.display_scores?).to eq(false)
       end
 
       scenario "Setting #{round.downcase} shows constraint alerts" do
@@ -248,12 +250,12 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         click_button "Review"
         click_button "Save these settings"
 
-        expect(SeasonToggles.student_signup?).to be true
-        expect(SeasonToggles.mentor_signup?).to be true
-        expect(SeasonToggles.team_building_enabled?).to be true
-        expect(SeasonToggles.team_submissions_editable?).to be true
-        expect(SeasonToggles.select_regional_pitch_event?).to be true
-        expect(SeasonToggles.display_scores?).to be true
+        expect(SeasonToggles.student_signup?).to eq(true)
+        expect(SeasonToggles.mentor_signup?).to eq(true)
+        expect(SeasonToggles.team_building_enabled?).to eq(true)
+        expect(SeasonToggles.team_submissions_editable?).to eq(true)
+        expect(SeasonToggles.select_regional_pitch_event?).to eq(true)
+        expect(SeasonToggles.display_scores?).to eq(true)
       end
 
       scenario "Setting #{round.downcase} hides constraint alerts" do

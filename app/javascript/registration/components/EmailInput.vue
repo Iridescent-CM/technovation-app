@@ -111,7 +111,7 @@ export default {
 
   created () {
     this.debouncedEmailWatcher = debounce(this.validateEmailInput, 750)
-    if (this.email.length) {
+    if (this.email && this.email.length) {
       this.emailHasBeenChecked = false
       this.emailNeedsValidation = true
       this.debouncedEmailWatcher()
@@ -145,7 +145,7 @@ export default {
 
   watch: {
     email () {
-      if (this.email.length) {
+      if (this.email && this.email.length) {
         this.emailHasBeenChecked = false
         this.emailNeedsValidation = true
         this.debouncedEmailWatcher()

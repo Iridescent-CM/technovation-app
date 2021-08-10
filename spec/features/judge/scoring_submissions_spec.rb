@@ -11,7 +11,7 @@ feature "scoring submissions", js: true do
 
   scenario "when a junior team receives a perfect score" do
     given_there_is_a_submission_from_a_junior_team_that_needs_scoring
-    and_a_user_is_logged_in_as_a_judge
+    and_a_judge_is_logged_in
 
     when_the_judge_starts_a_new_scoring_session
     and_scores_the_ideation_section_perfectly
@@ -25,7 +25,7 @@ feature "scoring submissions", js: true do
 
   scenario "when a senior team receives a perfect score" do
     given_there_is_a_submission_from_a_senior_team_that_needs_scoring
-    and_a_user_is_logged_in_as_a_judge
+    and_a_judge_is_logged_in
 
     when_the_judge_starts_a_new_scoring_session
     and_scores_the_ideation_section_perfectly
@@ -37,6 +37,7 @@ feature "scoring submissions", js: true do
 
     then_the_review_page_displays_a_perfect_score_of 80
   end
+
   private
 
   def given_there_is_a_submission_from_a_junior_team_that_needs_scoring
@@ -47,7 +48,7 @@ feature "scoring submissions", js: true do
     FactoryBot.create(:team_submission, :senior, :complete)
   end
 
-  def and_a_user_is_logged_in_as_a_judge
+  def and_a_judge_is_logged_in
     judge = FactoryBot.create(:judge, :onboarded)
     sign_in(judge)
   end
@@ -58,58 +59,76 @@ feature "scoring submissions", js: true do
   end
 
   def and_scores_the_ideation_section_perfectly
-    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click()
+    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Ideation\n20 / 20")
   end
 
   def and_scores_the_technical_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Technical").click()
+    click_next_button("Next: Technical")
 
-    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click()
+    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Technical\n20 / 20")
   end
 
   def and_scores_the_pitch_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Pitch").click()
+    click_next_button("Next: Pitch")
 
-    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
+    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Pitch\n10 / 10")
   end
 
   def and_scores_the_entrepreneurship_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Entrepreneurship").click()
+    click_next_button("Next: Entrepreneurship")
 
-    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click()
+    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(3) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(4) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+
+    expect(page).to have_content("Entrepreneurship\n20 / 20")
   end
 
   def and_scores_the_overall_section_perfectly
-    find("#judge-scores-app a.button.btn-next", text: "Next: Overall").click()
+    click_next_button("Next: Overall")
 
-    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click()
-    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click()
+    find("#judge-scores-app li.score-question:nth-child(1) li.score-value", text: "5").click
+    find("#judge-scores-app li.score-question:nth-child(2) li.score-value", text: "5").click
     find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
 
-    find("#judge-scores-app a.button.btn-next", text: "Next: Review score").click()
+    expect(page).to have_content("Overall Impression\n10 / 10")
+
+    click_next_button("Next: Review score")
   end
 
   def and_submits_the_score
-    click_link "Finish score"
+    finish_score_button = find("#judge-scores-app a.button", text: "Finish score")
+
+    execute_script("arguments[0].click();", finish_score_button)
   end
 
   def then_the_review_page_displays_a_perfect_score_of(perfect_score)
     click_link("review your score")
 
     expect(page).to have_content("#{perfect_score} / #{perfect_score}")
+  end
+
+  def click_next_button(button_text)
+    next_button = find("#judge-scores-app a.button.btn-next", text: button_text)
+
+    execute_script("arguments[0].click();", next_button)
   end
 end
