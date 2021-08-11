@@ -50,6 +50,8 @@ module TechnovationApp
       r301 '/users/sign_in', '/signin'
     end
 
+    config.middleware.use Rack::Deflater
+
     require "pdfkit"
     config.middleware.use PDFKit::Middleware,
       {header_right: '[page]/[toPage]'},
