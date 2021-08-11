@@ -57,8 +57,6 @@ gem "bcrypt", "~> 3.1"
 gem "sidekiq", "~> 6.2"
 
 gem "airbrake", "~> 11.0.3"
-gem "newrelic_rpm", "~> 7.1.0"
-gem "scout_apm", "~> 4.1"
 
 gem "dalli", "~> 2.7"
 
