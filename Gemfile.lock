@@ -304,7 +304,6 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.1.1)
     netrc (0.11.0)
-    newrelic_rpm (7.1.0)
     nio4r (2.5.8)
     nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
@@ -449,8 +448,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scout_apm (4.1.1)
-      parser
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -580,7 +577,6 @@ DEPENDENCIES
   loofah (~> 2.2)
   mailgun-ruby (~> 1.1)
   mini_magick (= 4.9.4)
-  newrelic_rpm (~> 7.1.0)
   nokogiri (~> 1.11.0)
   normalize-rails (~> 4.1)
   paranoia (~> 2.4)
@@ -600,7 +596,6 @@ DEPENDENCIES
   rails_autoscale_agent
   rspec-rails (~> 5.0)
   sass-rails (~> 6.0)
-  scout_apm (~> 4.1)
   sidekiq (~> 6.2)
   simple_form (~> 5.0)
   spring (~> 2.0)
