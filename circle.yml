@@ -115,8 +115,8 @@ jobs:
       - restore_cache:
           name: Restore cached gems
           keys:
-            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
-            - v1-gem-cache-
+            - v2-gem-cache-{{ checksum "Gemfile.lock" }}
+            - v2-gem-cache-
 
       - restore_cache:
           name: Restore cached node packages
@@ -152,7 +152,7 @@ jobs:
 
       - save_cache:
           name: Cache gems
-          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
+          key: v2-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
