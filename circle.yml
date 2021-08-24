@@ -102,10 +102,12 @@ jobs:
           REDIS_URL: redis://127.0.0.1:6379/0
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/local/bin/wkhtmltopdf
-      - image: circleci/postgres:11-alpine-ram
+      - image: circleci/postgres:13-ram
         auth:
           username: technovationdocker
           password: $DOCKERHUB_PASSWORD
+        environment:
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 
     steps:
       - checkout
@@ -128,7 +130,7 @@ jobs:
 
       - run:
           name: Install PostgreSQL
-          command: sudo apt-get install postgresql-client-11
+          command: sudo apt-get install postgresql-client-13
 
       - run:
           name: Install pdftk
