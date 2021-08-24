@@ -126,11 +126,11 @@ jobs:
 
       - run:
           name: Install PostgreSQL
-          command: sudo apt-get install postgresql-client-13
+          command: sudo apt update; sudo apt install postgresql-client-13
 
       - run:
           name: Install pdftk
-          command: sudo apt-get install pdftk
+          command: sudo apt install pdftk
 
       - run:
           name: Install wkhtmltopdf
@@ -140,7 +140,7 @@ jobs:
 
       - run:
           name: Install Jest dependencies
-          command: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+          command: sudo apt install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run:
           name: Install gems
