@@ -124,7 +124,7 @@ jobs:
 
       - run:
           name: Install common dependencies
-          command: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+          command: sudo apt-get update; sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
 
       - run:
           name: Install PostgreSQL
