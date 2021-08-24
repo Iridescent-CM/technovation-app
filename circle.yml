@@ -125,10 +125,6 @@ jobs:
             - v1-node-packages-cache-
 
       - run:
-          name: Install common dependencies
-          command: sudo apt-get update; sudo apt-get install gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-
-      - run:
           name: Install PostgreSQL
           command: sudo apt-get install postgresql-client-13
 
