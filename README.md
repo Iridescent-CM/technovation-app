@@ -41,25 +41,6 @@ Make sure XCode is installed.
 
 Under Xcode preferences locations, make sure there is a version set.
 
-
-Install qt5
-
-```
-brew install qt@5.5
-echo 'export PATH="$(brew --prefix qt@5.5)/bin:$PATH"' >> ~/.bashrc
-```
-
-After running this command:
-
-```
-which qmake
-```
-
-...you should get the following output:
-```
-/usr/local/bin/qmake
-```
-
 Install redis  (follow the post-install instructions)
 
 ```

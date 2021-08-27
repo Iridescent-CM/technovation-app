@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/technovation-girls
     docker:
-      - image: circleci/ruby:2.7.4-node-browsers
+      - image: circleci/ruby:2.7.4-bullseye-node-browsers
         auth:
           username: technovationdocker
           password: $DOCKERHUB_PASSWORD
@@ -102,10 +102,12 @@ jobs:
           REDIS_URL: redis://127.0.0.1:6379/0
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/local/bin/wkhtmltopdf
-      - image: circleci/postgres:11-alpine-ram
+      - image: circleci/postgres:13-ram
         auth:
           username: technovationdocker
           password: $DOCKERHUB_PASSWORD
+        environment:
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 
     steps:
       - checkout
@@ -113,8 +115,8 @@ jobs:
       - restore_cache:
           name: Restore cached gems
           keys:
-            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
-            - v1-gem-cache-
+            - v2-gem-cache-{{ checksum "Gemfile.lock" }}
+            - v2-gem-cache-
 
       - restore_cache:
           name: Restore cached node packages
@@ -123,16 +125,12 @@ jobs:
             - v1-node-packages-cache-
 
       - run:
-          name: Install common dependencies
-          command: sudo apt-get update; sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-
-      - run:
           name: Install PostgreSQL
-          command: sudo apt-get install postgresql-client-11
+          command: sudo apt update; sudo apt install postgresql-client-13
 
       - run:
           name: Install pdftk
-          command: sudo apt-get install pdftk
+          command: sudo apt install pdftk
 
       - run:
           name: Install wkhtmltopdf
@@ -142,7 +140,7 @@ jobs:
 
       - run:
           name: Install Jest dependencies
-          command: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+          command: sudo apt install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run:
           name: Install gems
@@ -150,7 +148,7 @@ jobs:
 
       - save_cache:
           name: Cache gems
-          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
+          key: v2-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
