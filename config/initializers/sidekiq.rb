@@ -9,15 +9,6 @@ Sidekiq.configure_server do |config|
     ActiveRecord::Base.establish_connection "#{database_url}?pool=#{pool}"
   end
 
-  if ENV["PROFILE_SIDEKIQ"].present?
-    require "sidekiq_profiler"
-    ObjectSpace.trace_object_allocations_start
-    Sidekiq.logger.info "allocations tracing enabled"
-    config.server_middleware do |chain|
-      chain.add Sidekiq::Middleware::Server::Profiler
-    end
-  end
-
   config.default_retries_exhausted = -> (msg, ex) do
     job_id = msg.dig('args', 0, 'job_id')
 
