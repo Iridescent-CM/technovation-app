@@ -1,23 +1,40 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
+  <div class="home" id="home">
+    <Navbar/>
+    <Banner/>
+    <FormWrapper/>
+    <div id="thick-rule" class="bg-energetic-blue h-6 my-16"></div>
+    <ContactUs/>
+    <Footer/>
   </div>
 </template>
 
 <script>
+import Navbar from "./components/Navbar";
+import Banner from "./components/Banner";
+import Footer from "./components/Footer";
+import ContactUs from "./components/ContactUs";
+import FormWrapper from "./components/FormWrapper";
+
+
 export default {
   name: 'app',
-  data: function () {
-    return {
-      message: "This is the registration page2.0!"
-    }
+  components: {
+    Navbar,
+    Banner,
+    Footer,
+    ContactUs,
+    FormWrapper
   }
 }
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
+<style>
+#home {
+  font-family: Poppins, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #2c3e50;
 }
 </style>
