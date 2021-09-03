@@ -1,5 +1,76 @@
-<% content_for :js do %>
-  <%= javascript_packs_with_chunks_tag 'new_registration' %>
+<%# content_for :js do %>
+  <%#= javascript_packs_with_chunks_tag 'new_registration' %>
+<%# end %>
+
+<%#= render template: "layouts/application" %>
+
+
+<% if current_session.authenticated? %>
+  <% provide :session_bar, render("layouts/session_bar") %>
 <% end %>
 
-<%= render template: "layouts/application" %>
+<!DOCTYPE html>
+<html id="<%= yield :html_id %>">
+<head>
+  <%= render 'meta' %>
+
+  <title>
+    <%= content_for?(:title) ?
+          sanitize(
+            "#{yield(:title)} • " +
+              t("views.application.site_title")
+          ) : t("views.application.site_title_default") %>
+  </title>
+
+  <%= render 'favicons' %>
+
+  <%#= stylesheet_link_tag determine_manifest %>
+
+  <%= yield :css %>
+
+  <%= javascript_include_tag determine_manifest, 'data-turbolinks-track' => true %>
+  <%= javascript_packs_with_chunks_tag "application" %>
+  <%= javascript_packs_with_chunks_tag 'new_registration' %>
+
+
+  <%= yield :js %>
+
+  <% if ENV.fetch("ENABLE_HEAP", false) %>
+    <script type="text/javascript">
+        window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
+
+        heap.load("<%= ENV.fetch("HEAP_APP_ID") %>");
+    </script>
+  <% end %>
+</head>
+
+<body>
+<!--<div class="header-container">-->
+  <%#= yield :session_bar %>
+
+  <%#= render 'application/navigation' %>
+
+  <%#= yield :subnav %>
+<!--</div>-->
+
+<!--<div class="main-container">-->
+  <%#= render 'application/flash_messages' %>
+
+  <%= yield %>
+
+  <%#= render 'application/footer' %>
+<!--</div>-->
+
+<% if ENV.fetch("GOOGLE_ANALYTICS_ID", nil).present? %>
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '<%= ENV.fetch("GOOGLE_ANALYTICS_ID") %>', 'auto');
+      ga('send', 'pageview');
+  </script>
+<% end %>
+</body>
+</html>
