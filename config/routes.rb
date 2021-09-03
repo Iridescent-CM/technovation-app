@@ -342,6 +342,7 @@ Rails.application.routes.draw do
   get "/parental_consents/new", to: "parental_consents#new"
   resource :parental_consent, only: [:new, :edit]
   resources :parental_consents, only: [:show, :update]
+  resource :media_consent, only: [:show, :edit, :update]
 
   resources :teams, only: :show
   resources :team_submission_pieces, only: :show
