@@ -64,7 +64,7 @@ CREATE TYPE public.judge_recusal_from_submission_reason AS ENUM (
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: accounts; Type: TABLE; Schema: public; Owner: -
@@ -744,6 +744,41 @@ CREATE TABLE public.judge_profiles_regional_pitch_events (
     judge_profile_id integer,
     regional_pitch_event_id integer
 );
+
+
+--
+-- Name: media_consents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.media_consents (
+    id bigint NOT NULL,
+    student_profile_id integer NOT NULL,
+    season smallint NOT NULL,
+    consent_provided boolean,
+    electronic_signature character varying,
+    signed_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: media_consents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.media_consents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: media_consents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.media_consents_id_seq OWNED BY public.media_consents.id;
 
 
 --
@@ -1759,6 +1794,13 @@ ALTER TABLE ONLY public.judge_profiles ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: media_consents id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.media_consents ALTER COLUMN id SET DEFAULT nextval('public.media_consents_id_seq'::regclass);
+
+
+--
 -- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2047,6 +2089,14 @@ ALTER TABLE ONLY public.judge_assignments
 
 ALTER TABLE ONLY public.judge_profiles
     ADD CONSTRAINT judge_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media_consents media_consents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.media_consents
+    ADD CONSTRAINT media_consents_pkey PRIMARY KEY (id);
 
 
 --
@@ -2412,6 +2462,13 @@ CREATE INDEX index_judge_profiles_on_recusal_scores_count ON public.judge_profil
 --
 
 CREATE INDEX index_judge_profiles_on_user_invitation_id ON public.judge_profiles USING btree (user_invitation_id);
+
+
+--
+-- Name: index_media_consents_on_student_profile_id_and_season; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_media_consents_on_student_profile_id_and_season ON public.media_consents USING btree (student_profile_id, season);
 
 
 --
@@ -3078,6 +3135,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210319163016'),
 ('20210407015203'),
 ('20210426215502'),
-('20210430203443');
+('20210430203443'),
+('20210831162123');
 
 
