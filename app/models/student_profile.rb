@@ -96,6 +96,9 @@ class StudentProfile < ActiveRecord::Base
     class_name: "ParentalConsent",
     dependent: :destroy
 
+  has_one :media_consent, -> { where season: Season.current.year }
+  has_many :media_consents, dependent: :destroy
+
   has_many :jobs, as: :owner
 
   after_commit :reset_parent, on: :update
