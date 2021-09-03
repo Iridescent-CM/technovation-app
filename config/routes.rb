@@ -364,6 +364,7 @@ Rails.application.routes.draw do
   get 'signup', to: 'signups#new', as: :signup
 
   get '/new-registration', to: 'new_registration#show'
+  post '/new-registration', to: 'new_registration#create'
 
   match 'logout',
     to: 'signins#destroy',
