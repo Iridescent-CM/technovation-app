@@ -14,7 +14,7 @@
             <a href="" class="registration-nav">About</a>
             <a href="" class="registration-nav">Login</a>
             <a href="" class="registration-nav">Sign Up</a>
-            <a href="" class="py-2 px-2 text-white font-black rounded transition duration-300 energetic-blue">DONATE</a>
+            <a href="" class="py-2 px-2 text-white font-black rounded transition duration-300 bg-energetic-blue">DONATE</a>
           </div>
         </div>
 

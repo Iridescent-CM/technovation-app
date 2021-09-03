@@ -1,6 +1,6 @@
 <template>
-  <div class="energetic-blue">
-    <h4 class="text-left font-extrabold p-4 text-white"> {{ headerText }}</h4>
+  <div class="bg-energetic-blue">
+    <h4 class="text-left font-extrabold p-4 text-white m-0"> {{ headerText }}</h4>
   </div>
 </template>
 
@@ -12,7 +12,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
