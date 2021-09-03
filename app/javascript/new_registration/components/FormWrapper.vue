@@ -86,12 +86,20 @@ export default {
     },
     async submitHandler (data) {
       console.log(data);
+      const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
+
+      let config = {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-Csrf-Token' : csrfTokenMetaTag.getAttribute('content')
+        }
+      }
 
       // not a parent
       if(data.profileType !== "parent"){
         data.parentEmail = false
       }
-      await axios.post('http://localhost:3000/api/v1/accounts', data)
+      await axios.post('/new-registration', data, config)
           .then(response => console.log(response))
 
       alert(`Thank you, ${data.firstName}... redirecting somewhere!`)
