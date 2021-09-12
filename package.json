@@ -52,7 +52,7 @@
     "vue-loader": "^15.9.3",
     "vue-password-strength-meter": "^1.3.0",
     "vue-router": "^3.0.1",
-    "vue-select": "https://github.com/Iridescent-CM/vue-select.git#iridescent-customization-from-v2.5.1",
+    "vue-select": "^3.13.0",
     "vue-template-compiler": "^2.6.12",
     "vue-turbolinks": "^2.0.1",
     "vue2-filters": "^0.3.0",
