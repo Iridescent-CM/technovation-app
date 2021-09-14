@@ -1,8 +1,12 @@
 class Division < ActiveRecord::Base
   SENIOR_DIVISION_AGE = 15
 
-  # If these change, you will need to update dataclips
-  enum name: [:senior, :junior, :none_assigned_yet]
+  enum name: {
+    beginner: 3,
+    junior: 1,
+    senior: 0,
+    none_assigned_yet: 2
+  }
 
   validates :name,
     uniqueness: { case_sensitive: false },
