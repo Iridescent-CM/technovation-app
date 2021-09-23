@@ -9,7 +9,7 @@
 
     <td>
       <%= link_to activity.recipient.team_name,
-        [current_scope, activity.recipient.team],
+        send("#{current_scope}_team_path", activity.recipient.team),
         data: { turbolinks: false } %>
     </td>
   <% else %>
