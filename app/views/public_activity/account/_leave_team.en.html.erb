@@ -5,7 +5,11 @@
         class: "thumbnail-xs" %>
     </td>
     <td><%= activity.trackable.scope_name.humanize %></td>
-    <td><%= activity.trackable.name %></td>
+    <td>
+      <%= link_to activity.trackable.name,
+          send("#{current_scope}_participant_path", activity.trackable),
+          data: { turbolinks: false } %>
+    </td>
   <% else %>
     <td>–</td>
     <td>–</td>

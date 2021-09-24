@@ -11,8 +11,8 @@
 
     <td>
       <%= link_to activity.recipient.team_name,
-        [current_scope, activity.recipient.team],
-        data: { turbolinks: false } %>
+          send("#{current_scope}_team_path", activity.recipient.team),
+          data: { turbolinks: false } %>
     </td>
   <% else %>
     <td>–</td>
@@ -24,7 +24,7 @@
   <% if activity.recipient %>
     <td>
       <%= link_to activity.recipient.name || "(no_name)",
-        [current_scope, activity.recipient],
+        send("#{current_scope}_team_submission_path", activity.recipient),
         data: { turbolinks: false } %>
     </td>
   <% else %>

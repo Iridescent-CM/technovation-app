@@ -6,7 +6,6 @@
     </td>
 
     <td><%= activity.trackable.scope_name.humanize %></td>
-    <a href="/chapter_ambassador/participants/2">Susanne Carlsberg</a>
     <td>
       <%= link_to activity.trackable.name,
         send("#{current_scope}_participant_path", activity.trackable),
