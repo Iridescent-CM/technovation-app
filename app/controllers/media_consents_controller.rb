@@ -9,12 +9,14 @@ class MediaConsentsController < ApplicationController
 
   def edit
     @media_consent = find_media_consent
+    @parental_consent = find_parental_consent
 
     if @media_consent.blank?
       redirect_to root_path, alert: t("controllers.media_consents.invalid")
     elsif @media_consent.signed?
       redirect_to action: :show, token: params.fetch(:token)
     end
+
   end
 
   def update
@@ -36,9 +38,16 @@ class MediaConsentsController < ApplicationController
   private
 
   def find_media_consent
-    Account.find_by(consent_token: params.fetch(:token))
+    student_profile&.media_consent
+  end
+
+  def find_parental_consent
+    student_profile&.parental_consent
+  end
+
+  def student_profile
+    @student_profile ||= Account.find_by(consent_token: params.fetch(:token))
       &.student_profile
-      &.media_consent
   end
 
   def media_consent_params

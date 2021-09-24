@@ -20,6 +20,7 @@ class ParentalConsentsController < ApplicationController
       @parental_consent = student.parental_consent || student.create_parental_consent!
       @parental_consent.student_profile_consent_token = params.fetch(:token)
       @parental_consent.newsletter_opt_in = true
+      @media_consent = student.media_consent
     elsif student.present? && student.consent_signed?
       redirect_to parental_consent_path(student.parental_consent),
         success: t("controllers.parental_consents.create.success")

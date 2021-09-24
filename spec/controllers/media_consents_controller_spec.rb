@@ -39,12 +39,17 @@ RSpec.describe MediaConsentsController do
       context "when the media consent form is unsigned" do
         before do
           FactoryBot.create(:media_consent, :unsigned, student_profile: student)
+          FactoryBot.create(:parental_consent, :signed, student_profile: student)
 
           get :edit, params: {token: token}
         end
 
         it "assigns @media_consent" do
           expect(assigns(:media_consent)).to eq(student.media_consent)
+        end
+
+        it "assigns @parental_consent" do
+          expect(assigns(:parental_consent)).to eq(student.parental_consent)
         end
 
         it "renders the edit template" do

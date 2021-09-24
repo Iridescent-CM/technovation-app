@@ -120,18 +120,28 @@ RSpec.describe ParentalConsentsController do
   end
 
   describe "GET #edit" do
-    it "assigns the student to the consent" do
-      student = FactoryBot.create(:onboarding_student)
+    let(:student) { FactoryBot.create(:onboarding_student) }
 
-      get :edit, params: { token: student.consent_token }
+    before do
+      FactoryBot.create(:media_consent, :unsigned, student_profile: student)
+      FactoryBot.create(:parental_consent, :signed, student_profile: student)
 
+      get :edit, params: {token: student.consent_token}
+    end
+
+    it "assigns @parental_consent" do
+      expect(assigns(:parental_consent)).to eq(student.parental_consent)
+    end
+
+    it "assigns @parental_consent.student_profile_consent_token" do
       expect(assigns[:parental_consent].student_profile_consent_token).to eq(
         student.consent_token
       )
     end
 
-    it "shows the existing parental consent if a repeat visit is made" do
-      student = FactoryBot.create(:onboarded_student)
+    it "assigns @media_consent" do
+      expect(assigns(:media_consent)).to eq(student.media_consent)
+    end
 
       get :edit, params: { token: student.consent_token }
 
