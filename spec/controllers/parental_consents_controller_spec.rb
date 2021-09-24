@@ -99,6 +99,22 @@ RSpec.describe ParentalConsentsController do
         .with(student_profile_id: student.id)
     end
 
+    it "redirects to the media consent form" do
+      student = FactoryBot.create(:onboarding_student)
+
+      patch :update, params: {
+        id: student.parental_consent.id,
+        parental_consent: FactoryBot.attributes_for(
+          :parental_consent,
+          student_profile_consent_token: student.consent_token
+        )
+      }
+
+      expect(response).to redirect_to(
+        edit_media_consent_path(token: student.consent_token)
+      )
+    end
+
     it "shows the existing parental consent if a repeat visit is made" do
       student = FactoryBot.create(:onboarded_student)
 
@@ -123,9 +139,6 @@ RSpec.describe ParentalConsentsController do
     let(:student) { FactoryBot.create(:onboarding_student) }
 
     before do
-      FactoryBot.create(:media_consent, :unsigned, student_profile: student)
-      FactoryBot.create(:parental_consent, :signed, student_profile: student)
-
       get :edit, params: {token: student.consent_token}
     end
 
@@ -139,15 +152,8 @@ RSpec.describe ParentalConsentsController do
       )
     end
 
-    it "assigns @media_consent" do
-      expect(assigns(:media_consent)).to eq(student.media_consent)
-    end
-
-      get :edit, params: { token: student.consent_token }
-
-      expect(response).to redirect_to(
-        parental_consent_path(student.parental_consent)
-      )
+    it "renders the edit template" do
+      expect(response).to render_template(:edit)
     end
   end
 end

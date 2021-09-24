@@ -16,7 +16,6 @@ class MediaConsentsController < ApplicationController
     elsif @media_consent.signed?
       redirect_to action: :show, token: params.fetch(:token)
     end
-
   end
 
   def update

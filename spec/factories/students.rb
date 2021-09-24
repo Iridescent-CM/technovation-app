@@ -133,6 +133,7 @@ FactoryBot.define do
     before(:create) do |s, e|
       if e.not_onboarded
         s.build_parental_consent
+        s.build_media_consent
       else
         s.build_parental_consent(
           FactoryBot.attributes_for(:parental_consent)
