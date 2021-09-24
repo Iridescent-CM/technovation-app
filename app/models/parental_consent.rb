@@ -58,7 +58,7 @@ class ParentalConsent < ActiveRecord::Base
   alias void? voided?
 
   def after_signed_student_actions
-    AccountMailer.confirm_next_steps(self).deliver_later
+    AccountMailer.confirm_next_steps(student_profile.account).deliver_later
   end
 
   def after_signed_parent_actions
@@ -66,11 +66,11 @@ class ParentalConsent < ActiveRecord::Base
       SubscribeParentToEmailListJob.perform_later(student_profile_id: student_profile.id)
     end
 
-    ParentMailer.confirm_consent_finished(id).deliver_later
+    ParentMailer.confirm_consent_finished(student_profile).deliver_later
 
     if Rails.env.production?
       # TODO: entire test suite requires rewrite due to "wait: 3.days"
-      ParentMailer.thank_you(id).deliver_later(wait: 3.days)
+      ParentMailer.thank_you(student_profile).deliver_later(wait: 3.days)
     end
   end
 

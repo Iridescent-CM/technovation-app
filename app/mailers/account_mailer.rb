@@ -39,15 +39,14 @@ class AccountMailer < ApplicationMailer
     end
   end
 
-  def confirm_next_steps(consent)
-    @name = consent.student_profile_first_name
-
+  def confirm_next_steps(account)
+    @name = account.first_name
     @url = student_dashboard_url(
-      mailer_token: consent.student_profile.mailer_token
+      mailer_token: account.mailer_token
     )
 
-    I18n.with_locale(consent.student_profile_locale) do
-      mail to: consent.student_profile_email
+    I18n.with_locale(account.locale) do
+      mail to: account.email
     end
   end
 
