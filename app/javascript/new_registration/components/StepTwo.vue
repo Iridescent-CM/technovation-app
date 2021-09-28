@@ -38,12 +38,51 @@
       />
 
       <FormulateInput
-          name="schoolName"
+          :name="formValues.profileType === 'mentor' ? 'companyName' : 'schoolName'"
           type="text"
-          label="School Name"
-          placeholder="School Name"
+          :label="formValues.profileType === 'mentor' ? 'Company Name' : 'School Name'"
+          :placeholder="formValues.profileType === 'mentor' ? 'Company Name' : 'School Name'"
           validation="required"
       />
+
+      <FormulateInput
+          v-if="formValues.profileType === 'mentor'"
+          name="jobTitle"
+          type="text"
+          label="Job Title"
+          placeholder="Job Title"
+          validation="required"
+      />
+
+      <FormulateInput
+          v-if="formValues.profileType === 'mentor'"
+          :options="mentorTypeOptions"
+          type="select"
+          placeholder="Select an option"
+          label="As a mentor you may call me a ..."
+          id="mentorType"
+          input-class="mentorSelectClass"
+      />
+    </div>
+
+    <div id="mentor-information" class="form-wrapper" v-if="formValues.profileType === 'mentor'">
+      <h2 class="registration-title">Skills & Interests</h2>
+
+      <FormulateInput
+          :options="mentorProfileExpertiseOptions"
+          type="checkbox"
+          id="mentorExpertise"
+      />
+
+      <h2 class="registration-title">Set your personal summary</h2>
+      <p class="text-left">Add a description of yourself to your profile to help students get to know you. You can change this later.</p>
+
+      <FormulateInput
+          name="mentorSummary"
+          type="textarea"
+          validation="required|min:100,length"
+      />
+
     </div>
 
     <div id="parent-information" class="form-wrapper" v-if="formValues.profileType !== 'mentor'">
@@ -94,7 +133,24 @@ import ContainerHeader from "./ContainerHeader";
 export default {
   name: "StepTwo",
   components: {ContainerHeader},
-  props: ['formValues']
+  props: ['formValues'],
+
+  data () {
+    return {
+      mentorTypeOptions: [
+        'Industry professional',
+        'Educator',
+        'Parent',
+        'Past Technovation student',
+      ],
+      mentorProfileExpertiseOptions: ['Coding',
+        'Experience with Java',
+        'Business / entrepreneurship',
+        'Project Management',
+        'Marketing',
+        'Design']
+    }
+  }
 }
 </script>
 
