@@ -154,7 +154,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   .login-form {
     padding: 2em;
   }
