@@ -1,0 +1,45 @@
+<% provide :title, "Electronic Media Release Consent Form" %>
+
+<div class="grid grid--justify-space-around">
+  <div class="panel grid__col-sm-8">
+    <%= simple_form_for @media_consent do |f| %>
+      <%= render "errors", record: @media_consent %>
+
+      <%= render "consent_terms" %>
+
+      <div style="margin: 2rem 0;">
+        <%= f.input :consent_provided,
+          as: :radio_buttons,
+          label: "",
+          collection:
+          [
+            [t("views.media_consents.consent_provided.consent_yes"), true],
+            [t("views.media_consents.consent_provided.consent_no"), false]
+          ]
+        %>
+      </div>
+
+      <div class="disabled" style="margin: 2rem 0;">
+        <strong>
+          <%= label_tag t("views.media_consents.student_name.label") %>
+          <%= @media_consent.student_profile.full_name %>
+        </strong>
+      </div>
+
+      <div style="margin: 2rem 0;">
+        <%= f.input :electronic_signature,
+          label: t("views.media_consents.electronic_signature.label"),
+          input_html: {
+            placeholder: t("views.media_consents.electronic_signature.placeholder")
+          } %>
+      </div>
+
+      <p>
+        <%= f.input :token, as: :hidden, input_html: { name: :token, value: params[:token] } %>
+        <%= f.button :submit,
+          t("views.media_consents.submit"),
+          class: "button" %>
+      </p>
+    <% end %>
+  </div>
+</div>

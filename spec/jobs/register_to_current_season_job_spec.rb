@@ -67,6 +67,20 @@ RSpec.describe RegisterToCurrentSeasonJob do
     }.from(0).to(1)
   end
 
+  it "creates a new media consent for students" do
+    student = FactoryBot.create(:student)
+
+    student.account.update(
+      seasons: []
+    )
+
+    expect {
+      RegisterToCurrentSeasonJob.perform_now(student.account)
+    }.to change {
+      student.media_consents.count
+    }.from(0).to(1)
+  end
+
   it "emails parents of returning students" do
     student = FactoryBot.create(
       :student,

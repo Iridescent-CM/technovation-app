@@ -66,6 +66,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       ParentMailer.consent_notice(profile.id).deliver_later
     end
 
+    profile.media_consents.create(season: Season.current.year)
+
     profile.save # fire commit hooks, if needed
   end
 
