@@ -20,7 +20,7 @@
   <% if activity.recipient %>
     <td>
       <%= link_to activity.recipient.name,
-        send("#{current_scope}_participant_path", activity.trackable),
+        send("#{current_scope}_team_path", activity.recipient),
         data: { turbolinks: false } %>
     </td>
   <% else %>
