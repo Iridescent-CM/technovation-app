@@ -147,18 +147,18 @@ export default {
   data () {
     return {
       mentorTypeOptions: [
-        'Industry professional',
-        'Educator',
-        'Parent',
-        'Past Technovation student',
+        {value: 0, label: 'Industry professional'},
+        {value: 1, label: 'Educator'},
+        {value: 2, label: 'Parent'},
+        {value: 3, label: 'Past Technovation student'}
       ],
       mentorProfileExpertiseOptions: [
-        'Coding',
-        'Experience with Java',
-        'Business / entrepreneurship',
-        'Project Management',
-        'Marketing',
-        'Design'
+        {value:2, label: 'Coding'},
+        {value:8, label: 'Experience with Java'},
+        {value:10, label: 'Business / entrepreneurship'},
+        {value:4, label: 'Project Management'},
+        {value:6, label: 'Marketing'},
+        {value:7, label: 'Design'}
       ],
       referralOptions:[
         'Friend',
