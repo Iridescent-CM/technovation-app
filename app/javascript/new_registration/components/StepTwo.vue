@@ -73,7 +73,9 @@
           type="checkbox"
           id="mentorExpertise"
       />
+    </div>
 
+    <div class="form-wrapper mentor-information" v-if="formValues.profileType === 'mentor'">
       <h2 class="registration-title">Set your personal summary</h2>
       <p class="text-left">Add a description of yourself to your profile to help students get to know you. You can change this later.</p>
 
@@ -83,7 +85,6 @@
           validation="required|min:100,length"
           id="mentorSummary"
       />
-
     </div>
 
     <div id="parent-information" class="form-wrapper" v-if="formValues.profileType !== 'mentor'">
@@ -130,6 +131,7 @@
           :options="referralOptions"
           input-class="mentorSelectClass"
           id="referredBy"
+          placeholder="Select an option"
       />
     </div>
   </div>
