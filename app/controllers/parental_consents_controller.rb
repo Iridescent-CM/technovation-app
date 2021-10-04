@@ -40,8 +40,7 @@ class ParentalConsentsController < ApplicationController
     @parental_consent = student.parental_consent
 
     if @parental_consent.update(parental_consent_params)
-      redirect_to parental_consent_path(@parental_consent),
-        success: t("controllers.parental_consents.create.success")
+      redirect_to edit_media_consent_path(token: token)
     else
       render :edit
     end

@@ -1,0 +1,17 @@
+<ul class="unstyled">
+  <li>
+    <%= web_icon(
+      parental_consent.signed? ? "check-circle" : "circle-o",
+      class: "icon--green",
+      text: "Consent to participate in the program",
+    ) %>
+  </li>
+
+  <li>
+    <%= web_icon(
+      media_consent&.signed? ? "check-circle" : "circle-o",
+      class: "icon--green",
+      text: "Media release",
+    ) %>
+  </li>
+</ul>

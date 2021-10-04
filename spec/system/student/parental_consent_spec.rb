@@ -46,17 +46,11 @@ RSpec.describe "Parental consent", :js do
     )
   end
 
-  it "handls a valid token, with a valid form" do
+  it "handles a valid token, with a valid form" do
     student = FactoryBot.create(:onboarding_student)
     visit edit_parental_consent_path(token: student.reload.consent_token)
 
-    fill_in "Your name", with: "Parent M. McGee"
-    click_button "I agree"
-
-    expect(current_path).to eq(parental_consent_path(student.parental_consent))
-    expect(page).to have_content(
-      "#{student.full_name} received parental consent from #{student.parental_consent_electronic_signature} on #{student.parental_consent_signed_at.strftime("%-d %B, %Y")}"
-    )
+    expect(page).to have_content("Consent to participate")
   end
 
   it "can be filled out on the dashboard" do

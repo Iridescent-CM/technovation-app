@@ -6,6 +6,10 @@ FactoryBot.define do
     trait :signed do
       status { :signed }
     end
+
+    trait :unsigned do
+      electronic_signature { nil }
+    end
   end
 
   factory :consent_waiver do

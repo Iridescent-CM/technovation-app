@@ -2,6 +2,13 @@
 
 <div class="grid grid--justify-space-around">
   <div class="panel grid__col-sm-8">
+    <%= render partial: "parental_consents/consent_status",
+      locals: {
+        parental_consent: @parental_consent,
+        media_consent: @media_consent
+      }
+    %>
+
     <%= simple_form_for @media_consent do |f| %>
       <%= render "errors", record: @media_consent %>
 

@@ -4,19 +4,20 @@
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td class="content-block">
-          Dear <%= @name %>,
+          Dear <%= @student_profile.parent_guardian_name %>,
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Below is a copy of your signed parent/guardian consent form for <%= @student_name %>'s participation in Technovation Girls <%= Season.current.year %>.
+          Below is a copy of your signed parent/guardian consent form for <%= @student_profile.account.full_name %>'s participation in Technovation Girls <%= Season.current.year %>.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Thanks,<br /> The Technovation Team
+          Thanks,<br>
+          The Technovation Team
         </td>
       </tr>
 
@@ -24,11 +25,11 @@
         <td class="content-block">
           <%= render 'parental_consents/consent' %>
 
-          <p>Student name: <%= @student_name %></p>
+          <p>Student name: <%= @student_profile.account.full_name %></p>
 
           <p>
-            Electronic signature<br />
-            <%= @signature %> signed on <%= @signed_date %>
+            Electronic signature<br>
+            <%= @parental_consent.electronic_signature %> signed on <%= @parental_consent.updated_at.strftime("%B %e, %Y") %>
           </p>
         </td>
       </tr>
