@@ -30,6 +30,7 @@
     }
   },
   "dependencies": {
+    "@braid/vue-formulate": "^2.5.2",
     "@rails/webpacker": "5.1.1",
     "airbrake-js": "^1.4.0",
     "axios": "^0.21.1",
@@ -60,12 +61,16 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.2.9",
     "@vue/test-utils": "^1.0.3",
+    "autoprefixer": "^9.8.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.1.0",
     "dotenv": "^8.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
+    "postcss": "^7.0.36",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9",
     "vue-jest": "^3.0.6",
     "webpack-dev-server": "^3.11.2"
   }

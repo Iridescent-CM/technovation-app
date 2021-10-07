@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Rubik:wght@400;500;600;700;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .registration-btns{
+        @apply px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600
+    }
+
+    .registration-nav{
+        @apply py-4 px-2 hover:text-blue-500 transition duration-300;
+    }
+
+    .registration-nav-mobile{
+        @apply block text-sm px-2 py-4 hover:bg-blue-500 hover:text-white transition duration-300;
+    }
+
+    .registration-container{
+        @apply container mx-auto max-w-2xl border-4 border-energetic-blue rounded-md;
+    }
+
+    .registration-title{
+        @apply text-2xl mb-2 text-left font-semibold;
+    }
+
+    #step-two input, #step-four input{
+        @apply border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
+    }
+
+    .name-group {
+        @apply flex justify-between;
+    }
+
+    .tg-green-stripes{
+        background: repeating-linear-gradient(
+                45deg,
+                #5FBC4A,
+                #5FBC4A 10px,
+                #43b02a 10px,
+                #43b02a 26px
+        );
+    }
+
+    .rubik{
+        font-family: 'RUBIK', sans-serif;
+    }
+
+    .form-wrapper{
+        @apply p-6
+    }
+
+}
