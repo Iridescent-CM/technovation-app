@@ -1,0 +1,50 @@
+<%
+  # TODO: Fix hover issue in IE11/Win7
+%>
+
+<%= link_to t("views.application.dashboards.menu.dashboard"),
+            student_dashboard_path,
+            class: al(student_dashboard_path) %>
+
+<%= link_to t("views.student.navigation.my_profile"),
+            student_profile_path,
+            class: al(student_profile_path) %>
+
+<% if current_student.is_on_team? %>
+  <%= link_to t("views.student.navigation.my_team"),
+              student_team_path(current_team),
+              class: al(student_team_path(current_team)) %>
+<% elsif current_student.can_search_teams? %>
+  <%= link_to t("views.student.navigation.create_a_team"),
+              new_student_team_path,
+              class: al(new_student_team_path) %>
+
+  <%= link_to t("views.student.navigation.join_team"),
+              new_student_team_search_path,
+              class: al(new_student_team_search_path) %>
+<% end %>
+
+<% submission_link_guard = StudentSubmissionLinkGuard.new(
+  team: current_team, student: current_student) %>
+
+<% if submission_link_guard.display_link_to_published? %>
+
+  <%= link_to t("views.application.dashboards.menu.team_submission"),
+              student_published_team_submission_path(current_team.submission),
+              class: al(student_published_team_submission_path(current_team.submission)) %>
+
+<% elsif submission_link_guard.display_link_to_in_progress? %>
+
+  <%= link_to t("views.application.dashboards.menu.team_submission"),
+              student_team_submission_path(current_team.submission),
+              class: al(student_team_submission_path(current_team.submission)) %>
+
+<% elsif submission_link_guard.display_link_to_new? %>
+
+  <%= link_to t("views.application.dashboards.menu.team_submission"),
+              new_student_team_submission_path,
+              class: al(new_student_team_submission_path) %>
+
+<% end %>
+
+<%= link_to t('views.application.signout'), signout_path, method: :delete %>
