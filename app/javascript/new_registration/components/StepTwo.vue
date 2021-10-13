@@ -29,6 +29,16 @@
       </div>
 
       <FormulateInput
+          v-if="formValues.profileType === 'mentor'"
+          :options="genderOptions"
+          type="select"
+          placeholder="Select an option"
+          label="Gender Identity"
+          id="genderIdentity"
+          input-class="mentorSelectClass"
+      />
+
+      <FormulateInput
           type="date"
           name="birthday"
           label="Birthday"
@@ -146,6 +156,12 @@ export default {
 
   data () {
     return {
+      genderOptions: [
+        'Female',
+        'Male',
+        'Non-binary',
+        'Prefer not to say'
+      ],
       mentorTypeOptions: [
         {value: 0, label: 'Industry professional'},
         {value: 1, label: 'Educator'},
