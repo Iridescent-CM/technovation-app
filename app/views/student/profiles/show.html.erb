@@ -1,65 +1,97 @@
 <% provide :title, "My profile" %>
 
-<div id="student-profile-tabs" class="grid tabs tabs--vertical">
-  <div class="grid__col-sm-3 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="hidden-xs hidden-xxs">
-          <h3><%= current_student.full_name %></h3>
+<div class="tg-green-stripes rubik h-auto mx-auto py-16 flex flex-col mb-20">
+  <div class="banner-text-wrapper w-full lg:w-3/4 mx-auto">
+    <div class="text-white text-4xl md:text-7xl font-black">TECHNOVATION GIRLS ####</div>
+    <div class="text-white text-lg md:text-3xl font-bold">Meet your Chapter Ambassador ></div>
+  </div>
+</div>
 
-          <%= image_tag current_student.profile_image_url,
-            class: "grid__cell-img",
-            id: "profile-image" %>
 
-          <%= render 'image_upload',
-            choose_from_defaults: true,
-            current_image_path: current_student.profile_image_url,
-            modal_id: "image_upload_desktop",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
-        </div>
+<div class="container w-full lg:w-3/4 mx-auto lg:h-screen flex flex-col lg:flex-row justify-around border-solid border-4 border-red-500" id="show-container">
 
-        <%= render 'student/profiles/menu' %>
+  <div id="profile-settings" class="h-auto mb-10 lg:mb-auto rounded-md border-solid border-4 border-energetic-blue">
+    <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+      <p class="font-bold">Profile Settings</p>
+    </div>
+
+    <div id="tab-wrapper" class="p-6">
+      <div class="tw-tab-content">
+        <p>Basic Information</p>
+      </div>
+
+      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
+
+      <div class="tw-tab-content">
+        <p>Parental Consent</p>
+      </div>
+
+      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
+
+      <div class="tw-tab-content">
+        <p>Location</p>
+      </div>
+
+      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
+
+      <div class="tw-tab-content">
+        <p>Change Email</p>
+      </div>
+
+      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
+
+      <div class="tw-tab-content">
+        <p>Change Password</p>
       </div>
     </div>
   </div>
 
-  <div class="tabs__content grid__col-sm-9 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="tabs__tab-content" id="basic">
-          <%= render 'student/profiles/basic' %>
-        </div>
+  <div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue" >
+    <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+      <p class="font-bold">Basic Information</p>
+    </div>
 
-        <div class="hidden-sm hidden-md hidden-lg tabs__tab-content" id="avatar">
-          <%= image_tag current_student.profile_image_url,
-            id: "profile-image-xs",
-            class: "grid__cell-img" %>
+    <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row">
+      <div id="information-details">
+        <dl>
+        <dt>Name</dt>
+        <dd><%= current_student.full_name %></dd>
 
-          <%= render 'image_upload',
-            choose_from_defaults: true,
-            current_image_path: current_student.profile_image_url,
-            image_id: "profile-image-xs",
-            modal_id: "image_upload_mobile",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
-        </div>
+        <dt>School name</dt>
+        <dd><%= current_student.school_name %></dd>
 
-        <div class="tabs__tab-content" id="parent">
-          <%= render 'student/profiles/parent' %>
-        </div>
+        <dt>Birthdate</dt>
+        <dd><%= current_student.date_of_birth.strftime("%B %e, %Y") %></dd>
 
-        <div class="tabs__tab-content" id="location">
-          <%= render 'student/profiles/location' %>
-        </div>
+        <dt>Team divisions depend on your age on this date</dt>
+        <dd><%= Division.cutoff_date.strftime("%B %e, %Y") %></dd>
 
-        <div class="tabs__tab-content" id="change-email">
-          <%= render 'profiles/email' %>
-        </div>
+        <dt>Your age today</dt>
+        <dd><%= current_student.age %></dd>
 
-        <div class="tabs__tab-content" id="change-password">
-          <%= render 'profiles/password' %>
-        </div>
+        <dt>Your age on <%= Division.cutoff_date.strftime("%B %e, %Y") %></dt>
+        <dd><%= current_student.age_by_cutoff %></dd>
+        </dl>
+
+        <p>
+          <%= link_to "Change your basic profile details",
+                      edit_profile_path,
+                      class: "button bg-tg-green" %>
+        </p>
+
+      </div>
+
+      <div id="profile-picture" class="w-3/12">
+        <%= image_tag current_student.profile_image_url,
+                      class: "grid__cell-img",
+                      id: "profile-image" %>
+
+        <%= render 'image_upload',
+                   choose_from_defaults: true,
+                   current_image_path: current_student.profile_image_url,
+                   modal_id: "image_upload_desktop",
+                   heading: "Upload a profile photo",
+                   size: "300x300" %>
       </div>
     </div>
   </div>
