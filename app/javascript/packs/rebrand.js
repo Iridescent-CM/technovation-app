@@ -1,1 +1,0 @@
-import '../tw_new_registration.css'

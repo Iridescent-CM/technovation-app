@@ -1,0 +1,1 @@
+import '../stylesheets/new_registration.css'
