@@ -1,0 +1,30 @@
+.social-icon{
+    width: 40px;
+    height: 40px;
+}
+
+#site-links > a {
+    margin: 5px;
+    width: calc(100% * (1/4) - 10px - 1px);
+}
+
+nav {
+    font-family: 'Poppins', sans-serif;
+}
+
+.tw-hidden{
+    display: none;
+}
+@media only screen and (min-width: 768px){
+    .tw-hidden{
+        display: block;
+    }
+}
+
+#student-nav-wrapper > a{
+    @apply mx-4
+}
+
+
+
+
