@@ -66,7 +66,7 @@ class ParentalConsent < ActiveRecord::Base
       SubscribeParentToEmailListJob.perform_later(student_profile_id: student_profile.id)
     end
 
-    ParentMailer.confirm_consent_finished(student_profile).deliver_later
+    ParentMailer.confirm_parental_consent_finished(student_profile).deliver_later
 
     if Rails.env.production?
       # TODO: entire test suite requires rewrite due to "wait: 3.days"
