@@ -21,7 +21,7 @@
 
     <%#= stylesheet_packs_with_chunks_tag "application" %>
 
-    <%= yield :css %>
+    <%#= yield :css %>
 
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
@@ -40,20 +40,20 @@
   </head>
 
   <body>
-<!--    <div class="header-container">-->
-      <%#= yield :session_bar %>
+    <div>
+      <%= yield :session_bar %>
 
-      <%#= render 'application_rebrand/navigation' %>
+      <%= render 'application_rebrand/navigation' %>
 
       <%#= yield :subnav %>
-<!--    </div>-->
+    </div>
 
     <div class="main-container bg-white">
       <%= render 'application/flash_messages' %>
 
       <%= yield %>
 
-      <%= render 'application/footer' %>
+     <%= render 'application_rebrand/footer' %>
     </div>
 
     <% if ENV.fetch("GOOGLE_ANALYTICS_ID", nil).present? %>
