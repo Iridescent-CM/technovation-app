@@ -20,6 +20,8 @@ es-MX:
   parent_mailer:
     confirm_consent_finished:
       subject: "Technovation — Copia del formulario de consentimiento firmado"
+    confirm_media_consent_finished:
+      subject: "Technovation — Copia firmada del formulario de consentimiento para medios de comunicacion"
     consent_notice:
       subject: "¡Su hija necesita permiso para participar en Technovation!"
 
