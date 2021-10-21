@@ -1,0 +1,50 @@
+<section class="flex flex-col space-y-6 mb-8">
+  <p>A request for parent consent was sent to:</p>
+
+  <div class="flex flex-col lg:flex-row justify-between">
+    <p>Name: <span class="font-bold"><%= current_student.parent_guardian_name %></span></p>
+    <p>Email: <span class="font-bold"><%= current_student.parent_guardian_email %></span></p>
+  </div>
+
+  <div>
+    <p>Ask the parent/guardian listed above to check their email inbox and spam folder.</p>
+
+    <%= link_to "Resend parent consent email",
+                student_parental_consent_notice_path,
+                data: { method: :post },
+                class:"tw-link"
+    %>
+  </div>
+
+  <%= link_to "Edit parent email",
+              new_student_parental_consent_notice_path,
+              class:"tw-green-btn"
+  %>
+</section>
+
+<div class="bg-energetic-blue h-1 mb-8"></div>
+
+<section class="mb-8">
+  <p class="font-bold">If your parent or guardian does not have an email address:</p>
+
+  <p>
+    Print this
+    <%= link_to "permission form",
+                student_downloadable_parental_consent_path(format: :pdf),
+                target: :_blank,
+                class: "tw-link"
+    %>
+    form and send the signed signature page as an attachment to
+
+    <%= mail_to ENV.fetch("HELP_EMAIL"),
+                "support@technovation.org",
+                subject: "Parental consent signed form",
+                class:"tw-link"
+    %>
+
+    Please make sure the page is well-lit and easy to read.
+  </p>
+</section>
+
+<%= render 'student/profiles/rebrand/parent_help' %>
+

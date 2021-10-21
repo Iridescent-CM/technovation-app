@@ -1,0 +1,15 @@
+<div id="parental-consent" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue" >
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Parental Consent</p>
+  </div>
+
+  <div id="parental-consent-wrapper" class="p-6" >
+    <% if current_student.parental_consent_signed? %>
+      <%= render "student/profiles/rebrand/parent_signed" %>
+    <% elsif current_student.parent_guardian_email.blank? %>
+      <%= render "student/profiles/rebrand/parent_info_blank" %>
+    <% else %>
+      <%= render "student/profiles/rebrand/parent_info_troubleshoot" %>
+    <% end %>
+  </div>
+</div>
