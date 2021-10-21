@@ -18,7 +18,7 @@ RSpec.feature "Students find a team" do
 
   scenario "request to join a team" do
     Timecop.freeze(day_before_qfs) do
-      within (".navigation") { click_link "Find a team" }
+      within (".sub-nav-wrapper") { click_link "Find a team" }
       click_link "View more details"
       click_button "Ask to join #{available_team.name}"
 
@@ -32,7 +32,7 @@ RSpec.feature "Students find a team" do
 
   scenario "onboarded student sees pending requests" do
     Timecop.freeze(day_before_qfs) do
-      within(".navigation") { click_link "Find a team" }
+      within(".sub-nav-wrapper") { click_link "Find a team" }
 
       click_link "View more details"
       click_button "Ask to join #{available_team.name}"
@@ -49,7 +49,7 @@ RSpec.feature "Students find a team" do
 
   scenario "cancel a join request", js: true do
     Timecop.freeze(day_before_qfs) do
-      within(".navigation") { click_link "Find a team" }
+      within(".sub-nav-wrapper") { click_link "Find a team" }
       click_link "View more details"
       click_button "Ask to join #{available_team.name}"
 

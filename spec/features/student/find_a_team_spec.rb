@@ -26,7 +26,7 @@ RSpec.feature "Students find a team" do
       state_province: "CA"
     )
 
-    within(".navigation") { click_link "Find a team" }
+    within(".sub-nav-wrapper") { click_link "Find a team" }
 
     expect(page).to have_css(".search-result-head", text: team.name)
     expect(page).not_to have_css(".search-result-head", text: faraway_team.name)
