@@ -1,98 +1,25 @@
 <% provide :title, "My profile" %>
 
-<div class="tg-green-stripes rubik h-auto mx-auto py-16 flex flex-col mb-20">
-  <div class="banner-text-wrapper w-full lg:w-3/4 mx-auto">
-    <div class="text-white text-4xl md:text-7xl font-black">TECHNOVATION GIRLS ####</div>
-    <div class="text-white text-lg md:text-3xl font-bold">Meet your Chapter Ambassador ></div>
-  </div>
-</div>
+<%= render 'student/navigation/rebrand/tg_green_header' %>
 
+<div class="container mx-auto lg:h-screen flex flex-col lg:flex-row justify-around" id="show-container">
+  <%= render 'student/profiles/rebrand/menu' %>
 
-<div class="container w-full lg:w-3/4 mx-auto lg:h-screen flex flex-col lg:flex-row justify-around border-solid border-4 border-red-500" id="show-container">
-
-  <div id="profile-settings" class="h-auto mb-10 lg:mb-auto rounded-md border-solid border-4 border-energetic-blue">
-    <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
-      <p class="font-bold">Profile Settings</p>
-    </div>
-
-    <div id="tab-wrapper" class="p-6">
-      <div class="tw-tab-content">
-        <p>Basic Information</p>
+    <div class="tab">
+      <div id="basic-tab-content" class="tab-content tw-active">
+        <%= render 'student/profiles/rebrand/basic' %>
       </div>
-
-      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
-
-      <div class="tw-tab-content">
-        <p>Parental Consent</p>
+      <div id="parent-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/parent' %>
       </div>
-
-      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
-
-      <div class="tw-tab-content">
-        <p>Location</p>
+      <div id="location-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/location' %>
       </div>
-
-      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
-
-      <div class="tw-tab-content">
-        <p>Change Email</p>
+      <div id="email-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/email' %>
       </div>
-
-      <div id="thick-rule" class="bg-energetic-blue h-1 my-2 w-60"></div>
-
-      <div class="tw-tab-content">
-        <p>Change Password</p>
+      <div id="pw-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/password' %>
       </div>
     </div>
-  </div>
-
-  <div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue" >
-    <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
-      <p class="font-bold">Basic Information</p>
-    </div>
-
-    <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row">
-      <div id="information-details">
-        <dl>
-        <dt>Name</dt>
-        <dd><%= current_student.full_name %></dd>
-
-        <dt>School name</dt>
-        <dd><%= current_student.school_name %></dd>
-
-        <dt>Birthdate</dt>
-        <dd><%= current_student.date_of_birth.strftime("%B %e, %Y") %></dd>
-
-        <dt>Team divisions depend on your age on this date</dt>
-        <dd><%= Division.cutoff_date.strftime("%B %e, %Y") %></dd>
-
-        <dt>Your age today</dt>
-        <dd><%= current_student.age %></dd>
-
-        <dt>Your age on <%= Division.cutoff_date.strftime("%B %e, %Y") %></dt>
-        <dd><%= current_student.age_by_cutoff %></dd>
-        </dl>
-
-        <p>
-          <%= link_to "Change your basic profile details",
-                      edit_profile_path,
-                      class: "button bg-tg-green" %>
-        </p>
-
-      </div>
-
-      <div id="profile-picture" class="w-3/12">
-        <%= image_tag current_student.profile_image_url,
-                      class: "grid__cell-img",
-                      id: "profile-image" %>
-
-        <%= render 'image_upload',
-                   choose_from_defaults: true,
-                   current_image_path: current_student.profile_image_url,
-                   modal_id: "image_upload_desktop",
-                   heading: "Upload a profile photo",
-                   size: "300x300" %>
-      </div>
-    </div>
-  </div>
 </div>
