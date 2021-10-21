@@ -19,6 +19,7 @@
 //= require chosen-init
 //= require flash-msgs
 //= require tabs
+//= require student-tabs
 //= require image-uploaders
 //= require location-details
 //= require modals
