@@ -1,0 +1,49 @@
+<div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue" >
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Basic Information</p>
+  </div>
+
+  <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row">
+    <div id="information-details">
+      <dl>
+        <dt>Name</dt>
+        <dd><%= current_student.full_name %></dd>
+
+        <dt>School name</dt>
+        <dd><%= current_student.school_name %></dd>
+
+        <dt>Birthdate</dt>
+        <dd><%= current_student.date_of_birth.strftime("%B %e, %Y") %></dd>
+
+        <dt>Team divisions depend on your age on this date</dt>
+        <dd><%= Division.cutoff_date.strftime("%B %e, %Y") %></dd>
+
+        <dt>Your age today</dt>
+        <dd><%= current_student.age %></dd>
+
+        <dt>Your age on <%= Division.cutoff_date.strftime("%B %e, %Y") %></dt>
+        <dd><%= current_student.age_by_cutoff %></dd>
+      </dl>
+
+      <p>
+        <%= link_to "Change your basic profile details",
+                    edit_profile_path,
+                    class: "tw-green-btn" %>
+      </p>
+
+    </div>
+
+    <div id="profile-picture" class="w-3/12">
+      <%= image_tag current_student.profile_image_url,
+                    class: "grid__cell-img rounded-bl-3xl rounded-tr-3xl",
+                    id: "profile-image" %>
+
+      <%= render 'image_upload',
+                 choose_from_defaults: true,
+                 current_image_path: current_student.profile_image_url,
+                 modal_id: "image_upload_desktop",
+                 heading: "Upload a profile photo",
+                 size: "300x300" %>
+    </div>
+  </div>
+</div>
