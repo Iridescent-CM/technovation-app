@@ -14,7 +14,6 @@
             validation="required"
         />
     </div>
-      <!--      <pre class="mt-8 p-2 bg-gray-200 whitespace-pre text-sm">{{ values }}</pre>-->
   </div>
 </template>
 
@@ -46,46 +45,3 @@ export default {
   props: ['formValues']
 }
 </script>
-
-<style>
-/*.formulate-input-group {*/
-/*  display: flex;*/
-/*  justify-content: space-evenly;*/
-/*}*/
-/*.profile-type img {*/
-/*  width: 7em;*/
-/*  !*margin-right: 0.5em;*!*/
-/*  margin: auto;*/
-/*}*/
-
-/*[data-classification="box"] .formulate-input-wrapper {*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*}*/
-
-
-
-/*HORIZONTAL RADIO BUTTONS*/
-.formulate-input-group-item {
-  display: flex;
-}
-.profile-type img {
-  width: 7em;
-  margin-left: 1rem;
-  margin-right: 1.5rem;
-}
-
-[data-classification="box"] .formulate-input-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.input-label-text{
-  display: flex;
-  align-items: center;
-}
-
-.s1-label-text{
-  @apply text-lg text-left
-}
-</style>

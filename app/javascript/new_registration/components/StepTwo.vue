@@ -54,21 +54,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .login-form {
-    padding: 2em;
-  }
-
-  .login-form::v-deep .formulate-input .formulate-input-element {
-    max-width: none;
-  }
-
-  #step-two input[type='checkbox'] {
-    @apply w-5 focus:border-green-500
-  }
-
-  .mentorSelectClass, #mentorSummary{
-    @apply border bg-white border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
-  }
-</style>
