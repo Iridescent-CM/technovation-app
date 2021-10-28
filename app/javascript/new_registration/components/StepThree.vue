@@ -21,7 +21,6 @@
         <p>We will never use, share, rent, or sell your personal data to anyone to advertise to you, or to manipulate you.</p>
       </section>
 
-
       <section class="contract-section" id="personal-data">
         <h2 class="registration-title">Your personal data</h2>
         <p>We will only use your data to help guide you through the Technovation Girls program, and to learn how we can make the program better and easier for everyone. We may share your personal data and activity with a trusted volunteer manager in your region - who has been trained through a proper verification process - in order for them to support you and your team during the program.</p>
@@ -51,9 +50,7 @@
             name="contractLabel"
         />
       </section>
-
     </div>
-
   </div>
 </template>
 

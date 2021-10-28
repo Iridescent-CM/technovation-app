@@ -22,7 +22,6 @@
         <a href="#" class="site-link">Donate</a>
       </div>
     </section>
-
   </div>
 </template>
 

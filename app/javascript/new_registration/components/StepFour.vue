@@ -1,5 +1,4 @@
 <template>
-
   <div id="step-four">
     <ContainerHeader header-text="Set your email and password"/>
 
@@ -30,11 +29,8 @@
             validation="required"
         />
       </div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -55,19 +51,14 @@ export default {
         }
       },
       set(accountEmailVal){
-
         if (this.formValues.parentEmail && this.formValues.profileType === "parent") {
           document.getElementById("accountEmail").disabled = true
         } else{
           document.getElementById("accountEmail").disabled = false
         }
-
         this.formValues.accountEmail = accountEmailVal
       }
     }
   }
 }
 </script>
-
-<style scoped>
-</style>

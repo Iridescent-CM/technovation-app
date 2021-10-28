@@ -1,6 +1,6 @@
 <template>
   <div id="step-two-student">
-    <h2 class="registration-title">Student Information!!!</h2>
+    <h2 class="registration-title">Student Information</h2>
 
     <div class="formulate-input-wrapper name-group">
       <FormulateInput
