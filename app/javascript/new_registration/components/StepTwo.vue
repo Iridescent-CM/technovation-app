@@ -2,136 +2,12 @@
   <div id="step-two">
     <ContainerHeader header-text="Basic Profile"/>
 
-    <div id="student-information" class="form-wrapper">
-
-      <h2 v-if="formValues.profileType === 'mentor'" class="registration-title">Mentor Information</h2>
-      <h2 v-else class="registration-title">Student Information</h2>
-
-      <div class="formulate-input-wrapper name-group">
-        <FormulateInput
-            name="firstName"
-            type="text"
-            label="First Name"
-            placeholder="First Name"
-            validation="required"
-            class="flex-grow pr-2"
-        />
-
-        <FormulateInput
-            name="lastName"
-            type="text"
-            label="Last Name"
-            placeholder="Last Name"
-            validation="required"
-            class="flex-grow pl-2"
-
-        />
+      <div v-if="formValues.profileType === 'mentor'" class="form-wrapper">
+       <MentorStepTwo/>
       </div>
-
-      <FormulateInput
-          v-if="formValues.profileType === 'mentor'"
-          :options="genderOptions"
-          type="select"
-          placeholder="Select an option"
-          label="Gender Identity"
-          id="genderIdentity"
-          input-class="mentorSelectClass"
-      />
-
-      <FormulateInput
-          type="date"
-          name="birthday"
-          label="Birthday"
-          placeholder="Student Birthday"
-          error-behavior="live"
-          validation="required"
-      />
-
-      <FormulateInput
-          :name="formValues.profileType === 'mentor' ? 'companyName' : 'schoolName'"
-          type="text"
-          :label="formValues.profileType === 'mentor' ? 'Company Name' : 'School Name'"
-          :placeholder="formValues.profileType === 'mentor' ? 'Company Name' : 'School Name'"
-          validation="required"
-      />
-
-      <FormulateInput
-          v-if="formValues.profileType === 'mentor'"
-          name="jobTitle"
-          type="text"
-          label="Job Title"
-          placeholder="Job Title"
-          validation="required"
-      />
-
-      <FormulateInput
-          v-if="formValues.profileType === 'mentor'"
-          :options="mentorTypeOptions"
-          type="select"
-          placeholder="Select an option"
-          label="As a mentor you may call me a ..."
-          id="mentorType"
-          input-class="mentorSelectClass"
-      />
-    </div>
-
-    <div id="mentor-information" class="form-wrapper" v-if="formValues.profileType === 'mentor'">
-      <h2 class="registration-title">Skills & Interests</h2>
-
-      <FormulateInput
-          :options="mentorProfileExpertiseOptions"
-          type="checkbox"
-          id="mentorExpertise"
-      />
-    </div>
-
-    <div class="form-wrapper mentor-information" v-if="formValues.profileType === 'mentor'">
-      <h2 class="registration-title">Set your personal summary</h2>
-      <p class="text-left">Add a description of yourself to your profile to help students get to know you. You can change this later.</p>
-
-      <FormulateInput
-          name="mentorSummary"
-          type="textarea"
-          validation="required|min:100,length"
-          id="mentorSummary"
-      />
-    </div>
-
-    <div id="parent-information" class="form-wrapper" v-if="formValues.profileType !== 'mentor'">
-      <h2 class="registration-title">Parent Information</h2>
-
-      <div class="formulate-input-wrapper name-group">
-        <FormulateInput
-            name="parentFirstName"
-            type="text"
-            label="First Name"
-            placeholder="Parent First Name"
-            validation="required"
-            class="flex-grow pr-2"
-        />
-
-        <FormulateInput
-            name="parentLastName"
-            type="text"
-            label="Last Name"
-            placeholder="Parent Last Name"
-            validation="required"
-            class="flex-grow pl-2"
-        />
+      <div v-else class="form-wrapper">
+        <StudentStepTwo/>
       </div>
-
-      <FormulateInput
-          v-if="formValues.profileType === 'parent'"
-          name="parentEmail"
-          type="email"
-          label="Parent Email Address"
-          placeholder="Parent Email address"
-          validation="required|email"
-          :value="formValues.profileType === 'parent' ? formValues.parentEmail : ''"
-      />
-
-
-    </div>
 
     <div class="form-wrapper">
       <FormulateInput
@@ -149,33 +25,18 @@
 
 <script>
 import ContainerHeader from "./ContainerHeader";
+import MentorStepTwo from "./MentorStepTwo";
+import StudentStepTwo from "./StudentStepTwo";
 export default {
   name: "StepTwo",
-  components: {ContainerHeader},
+  components: {
+    ContainerHeader,
+    MentorStepTwo,
+    StudentStepTwo
+  },
   props: ['formValues'],
-
   data () {
     return {
-      genderOptions: [
-        'Female',
-        'Male',
-        'Non-binary',
-        'Prefer not to say'
-      ],
-      mentorTypeOptions: [
-        {value: 0, label: 'Industry professional'},
-        {value: 1, label: 'Educator'},
-        {value: 2, label: 'Parent'},
-        {value: 3, label: 'Past Technovation student'}
-      ],
-      mentorProfileExpertiseOptions: [
-        {value:2, label: 'Coding'},
-        {value:8, label: 'Experience with Java'},
-        {value:10, label: 'Business / entrepreneurship'},
-        {value:4, label: 'Project Management'},
-        {value:6, label: 'Marketing'},
-        {value:7, label: 'Design'}
-      ],
       referralOptions:[
         'Friend',
         'Colleague',
@@ -203,15 +64,11 @@ export default {
     max-width: none;
   }
 
-  #step-two .mentorSelectClass, #step-two #mentorSummary{
-    @apply border bg-white border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
-  }
-
   #step-two input[type='checkbox'] {
     @apply w-5 focus:border-green-500
   }
 
-  /*#step-two #mentorSummary{*/
-  /*  @apply w-full h-16 px-3 py-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg*/
-  /*}*/
+  .mentorSelectClass, #mentorSummary{
+    @apply border bg-white border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
+  }
 </style>
