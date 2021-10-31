@@ -43,21 +43,12 @@
 
       <div class="formulate-input-wrapper name-group">
         <FormulateInput
-            name="parentFirstName"
+            name="parentName"
             type="text"
-            label="First Name"
-            placeholder="Parent First Name"
+            label="Name"
+            placeholder="Parent Name"
             validation="required"
             class="flex-grow pr-2"
-        />
-
-        <FormulateInput
-            name="parentLastName"
-            type="text"
-            label="Last Name"
-            placeholder="Parent Last Name"
-            validation="required"
-            class="flex-grow pl-2"
         />
       </div>
 
