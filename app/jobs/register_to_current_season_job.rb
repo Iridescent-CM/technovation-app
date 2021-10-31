@@ -56,6 +56,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     subscribe_to_newsletter(record, :student)
 
     RegistrationMailer.welcome_student(record).deliver_later
+    TeamMemberInvite.match_registrant(profile)
 
     if profile.reload.parental_consent.nil?
       profile.parental_consents.create!
@@ -75,6 +76,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     notify_airbrake_on_invalid_location(record)
 
     subscribe_to_newsletter(record, :mentor)
+
+    RegistrationMailer.welcome_mentor(record.id).deliver_later
 
     record.mentor_profile.update(training_completed_at: nil)
     record.mentor_profile.save # fire commit hooks, if needed

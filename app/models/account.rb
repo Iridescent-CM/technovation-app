@@ -505,6 +505,12 @@ class Account < ActiveRecord::Base
     end
   }
 
+  before_create do
+    self.email_confirmed_at = Time.current
+    self.icon_path = ActionController::Base.helpers.asset_path("placeholders/avatars/#{rand(1..24)}.svg")
+    self.division = Division.for_account(self)
+  end
+
   validates :email,
     presence: true,
     email: true
