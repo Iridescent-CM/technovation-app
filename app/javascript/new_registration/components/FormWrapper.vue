@@ -98,11 +98,22 @@ export default {
       if(data.profileType !== "parent"){
         data.parentEmail = false
       }
-      await axios.post('/new-registration', data, config)
-          .then(response => console.log(response))
+      try {
+        await axios.post('/new-registration', data, config)
 
-      alert(`Thank you, ${data.firstName}... redirecting somewhere!`)
-
+        switch(data.profileType) {
+          case 'student':
+          case 'parent':
+            window.location.href = '/student/dashboard'
+          case 'mentor':
+            window.location.href = '/mentor/dashboard'
+        }
+      }
+      catch(error) {
+        if(error.response) {
+          console.log(error.response.data);
+        }
+      }
     },
     invalidMessage(fields) {
       const fieldNames = Object.keys(fields)
