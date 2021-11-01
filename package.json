@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.2",
-    "@rails/webpacker": "5.1.1",
+    "@rails/webpacker": "^5.4.0",
     "@tailwindcss/postcss7-compat": "^2.2.9",
     "airbrake-js": "^1.4.0",
     "autoprefixer": "^9.8.6",
@@ -72,6 +72,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
     "vue-jest": "^3.0.6",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.4.0"
   }
 }
