@@ -44,7 +44,7 @@ describe('IntegerInput Vue component', () => {
     });
   });
 
-  it('sets numericValue based on the value prop passed in', async () => {
+  xit('sets numericValue based on the value prop passed in', async () => {
     const valueProps = [ 33, 99, 2808 ];
 
     valueProps.forEach(async (value) => {
