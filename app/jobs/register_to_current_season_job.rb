@@ -56,7 +56,6 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     subscribe_to_newsletter(record, :student)
 
     RegistrationMailer.welcome_student(record).deliver_later
-    TeamMemberInvite.match_registrant(profile)
 
     if profile.reload.parental_consent.nil?
       profile.parental_consents.create!

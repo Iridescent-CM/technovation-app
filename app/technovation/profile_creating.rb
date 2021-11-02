@@ -20,6 +20,16 @@ class ProfileCreating
     AttachSignupAttemptJob.perform_later(profile.account_id)
     AttachUserInvitationJob.perform_later(profile.account_id)
 
+    case scope.to_sym
+    when :student
+      if profile.reload.parental_consent.nil?
+        profile.parental_consents.create! # pending by default
+      end
+      TeamMemberInvite.match_registrant(profile)
+    when :mentor
+      RegistrationMailer.welcome_mentor(profile.account_id).deliver_later
+    end
+
     Geocoding.perform(profile.account).with_save
 
     profile.account.create_activity(
