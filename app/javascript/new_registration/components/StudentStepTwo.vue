@@ -62,11 +62,20 @@
       </div>
 
       <FormulateInput
+          v-if="formValues.profileType === 'parent'"
           name="parentEmail"
           type="email"
           label="Parent Email Address"
           placeholder="Parent Email address"
           validation="required|email"
+      />
+
+      <FormulateInput
+          v-else
+          name="parentEmail"
+          type="email"
+          label="Parent Email Address (Optional)"
+          placeholder="Parent Email address"
       />
     </div>
   </div>

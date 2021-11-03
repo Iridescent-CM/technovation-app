@@ -6,7 +6,7 @@
        <MentorStepTwo/>
       </div>
       <div v-else class="form-wrapper">
-        <StudentStepTwo/>
+        <StudentStepTwo :form-values="formValues"/>
       </div>
 
     <div class="form-wrapper">
