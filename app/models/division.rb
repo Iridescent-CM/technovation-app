@@ -48,10 +48,8 @@ class Division < ActiveRecord::Base
       beginner
     when 13..15
       junior
-    when 16..18
-      senior
     else
-      none_assigned_yet
+      senior
     end
   end
 

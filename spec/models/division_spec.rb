@@ -72,43 +72,11 @@ RSpec.describe Division do
       end
     end
 
-    context "when they are 16 years old" do
-      let(:age_by_cuttoff_date) { 16 }
-
-      it "returns the senior division" do
-        expect(Division.for_account(account)).to eq(Division.senior)
-      end
-    end
-
-    context "when they are 17 years old" do
-      let(:age_by_cuttoff_date) { 17 }
-
-      it "returns the senior division" do
-        expect(Division.for_account(account)).to eq(Division.senior)
-      end
-    end
-
-    context "when they are 18 years old" do
+    context "when the aren't eligible (by age) for a beginner or junior division" do
       let(:age_by_cuttoff_date) { 18 }
 
       it "returns the senior division" do
         expect(Division.for_account(account)).to eq(Division.senior)
-      end
-    end
-
-    context "when they are over 18 years old" do
-      let(:age_by_cuttoff_date) { 19 }
-
-      it "returns 'none assigned yet'" do
-        expect(Division.for_account(account)).to eq(Division.none_assigned_yet)
-      end
-    end
-
-    context "when they are younger than 8 years old" do
-      let(:age_by_cuttoff_date) { 7 }
-
-      it "returns 'none assigned yet'" do
-        expect(Division.for_account(account)).to eq(Division.none_assigned_yet)
       end
     end
   end
