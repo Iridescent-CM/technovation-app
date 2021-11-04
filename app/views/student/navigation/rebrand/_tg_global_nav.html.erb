@@ -1,0 +1,55 @@
+<%
+  # TODO: Fix hover issue in IE11/Win7
+%>
+
+<nav class="list-reset flex border-b">
+
+    <%= link_to t("views.application.dashboards.menu.dashboard"),
+                student_dashboard_path,
+                class: al(student_dashboard_path) + "sub-nav-item"%>
+
+    <%= link_to t("views.student.navigation.my_profile"),
+                student_profile_path,
+                class: al(student_profile_path) + "sub-nav-item"%>
+
+    <% if current_student.is_on_team? %>
+      <%= link_to t("views.student.navigation.my_team"),
+                  student_team_path(current_team),
+                  class: al(student_team_path(current_team)) + "sub-nav-item" %>
+    <% elsif current_student.can_search_teams? %>
+      <%= link_to t("views.student.navigation.create_a_team"),
+                  new_student_team_path,
+                  class: al(new_student_team_path) + "sub-nav-item" %>
+
+      <%= link_to t("views.student.navigation.join_team"),
+                  new_student_team_search_path,
+                  class: al(new_student_team_search_path) + "sub-nav-item" %>
+    <% end %>
+
+    <% submission_link_guard = StudentSubmissionLinkGuard.new(
+      team: current_team, student: current_student) %>
+
+    <% if submission_link_guard.display_link_to_published? %>
+
+      <%= link_to t("views.application.dashboards.menu.team_submission"),
+                  student_published_team_submission_path(current_team.submission),
+                  class: al(student_published_team_submission_path(current_team.submission)) + "sub-nav-item" %>
+
+    <% elsif submission_link_guard.display_link_to_in_progress? %>
+
+      <%= link_to t("views.application.dashboards.menu.team_submission"),
+                  student_team_submission_path(current_team.submission),
+                  class: al(student_team_submission_path(current_team.submission)) + "sub-nav-item" %>
+
+    <% elsif submission_link_guard.display_link_to_new? %>
+
+      <%= link_to t("views.application.dashboards.menu.team_submission"),
+                  new_student_team_submission_path,
+                  class: al(new_student_team_submission_path) + "sub-nav-item" %>
+
+    <% end %>
+</nav>
+
+
+
+<%#= link_to t('views.application.signout'), signout_path, method: :delete %>

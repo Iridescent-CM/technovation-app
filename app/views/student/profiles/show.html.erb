@@ -1,66 +1,25 @@
 <% provide :title, "My profile" %>
 
-<div id="student-profile-tabs" class="grid tabs tabs--vertical">
-  <div class="grid__col-sm-3 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="hidden-xs hidden-xxs">
-          <h3><%= current_student.full_name %></h3>
+<%#= render 'student/navigation/rebrand/tg_green_header' %>
 
-          <%= image_tag current_student.profile_image_url,
-            class: "grid__cell-img",
-            id: "profile-image" %>
+<div class="container mx-auto lg:h-screen flex flex-col lg:flex-row justify-around" id="show-container">
+  <%= render 'student/profiles/rebrand/menu' %>
 
-          <%= render 'image_upload',
-            choose_from_defaults: true,
-            current_image_path: current_student.profile_image_url,
-            modal_id: "image_upload_desktop",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
-        </div>
-
-        <%= render 'student/profiles/menu' %>
+    <div class="tab">
+      <div id="basic-tab-content" class="tab-content tw-active">
+        <%= render 'student/profiles/rebrand/basic' %>
+      </div>
+      <div id="parent-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/parent' %>
+      </div>
+      <div id="location-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/location' %>
+      </div>
+      <div id="email-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/email' %>
+      </div>
+      <div id="pw-tab-content" class="tab-content">
+        <%= render 'student/profiles/rebrand/password' %>
       </div>
     </div>
-  </div>
-
-  <div class="tabs__content grid__col-sm-9 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="tabs__tab-content" id="basic">
-          <%= render 'student/profiles/basic' %>
-        </div>
-
-        <div class="hidden-sm hidden-md hidden-lg tabs__tab-content" id="avatar">
-          <%= image_tag current_student.profile_image_url,
-            id: "profile-image-xs",
-            class: "grid__cell-img" %>
-
-          <%= render 'image_upload',
-            choose_from_defaults: true,
-            current_image_path: current_student.profile_image_url,
-            image_id: "profile-image-xs",
-            modal_id: "image_upload_mobile",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
-        </div>
-
-        <div class="tabs__tab-content" id="parent">
-          <%= render 'student/profiles/parent' %>
-        </div>
-
-        <div class="tabs__tab-content" id="location">
-          <%= render 'student/profiles/location' %>
-        </div>
-
-        <div class="tabs__tab-content" id="change-email">
-          <%= render 'profiles/email' %>
-        </div>
-
-        <div class="tabs__tab-content" id="change-password">
-          <%= render 'profiles/password' %>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

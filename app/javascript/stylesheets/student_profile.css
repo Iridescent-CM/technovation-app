@@ -1,0 +1,83 @@
+.social-icon{
+    width: 40px;
+    height: 40px;
+}
+
+#site-links > a {
+    margin: 5px;
+    width: calc(100% * (1/4) - 10px - 1px);
+}
+
+nav {
+    font-family: 'Poppins', sans-serif;
+}
+
+.tw-hidden{
+    display: none;
+}
+
+
+#student-nav-wrapper > a{
+    @apply mx-4;
+}
+
+.tw-thick-rule{
+    @apply bg-energetic-blue h-1 my-2 w-60;
+}
+
+.sm-header-wrapper{
+    @apply bg-energetic-blue text-white p-2;
+}
+
+.tw-active{
+    display: block !important;
+}
+
+.active-tab{
+    font-weight: bold;
+}
+
+.tab-content{
+    /*display: none;*/
+    @apply hidden
+
+}
+
+#show-container{
+    @apply w-full
+}
+
+@media only screen and (min-width: 768px){
+    .tw-hidden{
+        display: block;
+    }
+
+   .tab-content{
+        width: 48rem;
+    }
+}
+
+
+.tw-link{
+    @apply font-bold text-energetic-blue
+}
+
+.tw-green-btn{
+    @apply w-auto mr-auto px-4 py-2 rounded bg-tg-green text-white hover:bg-green-600
+}
+
+.tw-blue-lg-container{
+    @apply h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue
+}
+
+.tw-lg-container-wrapper{
+    @apply p-6 flex flex-col-reverse lg:flex-row
+}
+
+.sub-nav-item{
+    @apply text-white py-2 px-4
+}
+
+.sub-nav-item-active{
+    @apply bg-white text-energetic-blue py-2 px-4 rounded-tr-3xl font-semibold
+}

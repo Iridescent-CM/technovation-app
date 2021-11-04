@@ -19,7 +19,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     scenario "Toggle on" do
       toggle_on
       visit path
-      within("header.navigation nav") do
+      within("div .sub-nav-wrapper nav") do
         expect(page).to have_link("Create your team")
         expect(page).to have_link("Find a team")
       end
@@ -28,7 +28,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     scenario "Toggle off" do
       toggle_off
       visit path
-      within("header.navigation nav") do
+      within("div .sub-nav-wrapper nav") do
         expect(page).not_to have_link("Create your team")
         expect(page).not_to have_link("Find a team")
       end
