@@ -1,0 +1,11 @@
+<% if current_student.is_on_team? %>
+  You're on a team! Test!!
+  Your team is called <%= current_team.name %>.
+  You can
+  <%= link_to 'manage your team',
+              student_team_path(current_team) %>
+<% elsif SeasonToggles.team_building_disabled? %>
+  Technovation Staff has turned off forming teams for everyone right now.
+<% else %>
+  <%= render "completion_steps/create_team" %>
+<% end %>

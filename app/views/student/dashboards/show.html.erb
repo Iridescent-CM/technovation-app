@@ -37,7 +37,7 @@
       <% end %>
 
       <div slot="chapter-ambassador-intro">
-        <%= render 'dashboards/chapter_ambassador_intro' %>
+        <%= render 'dashboards/rebrand/chapter_ambassador_intro' %>
       </div>
 
       <div slot="change-email">
@@ -49,27 +49,16 @@
       </div>
 
       <div slot="parental-consent">
-        <%= render 'student/profiles/parent' %>
+        <%= render 'student/profiles/rebrand/parent' %>
       </div>
 
       <div slot="find-team">
-        <%= render 'slots/student/join_team' %>
+        <%= render 'slots/student/rebrand/join_team' %>
       </div>
 
       <div id="create-team" slot="create-team">
         <h1 class="margin--none padding--none">Create a team</h1>
-
-        <% if current_student.is_on_team? %>
-          You're on a team!
-          Your team is called <%= current_team.name %>.
-          You can
-          <%= link_to 'manage your team',
-            student_team_path(current_team) %>
-        <% elsif SeasonToggles.team_building_disabled? %>
-          Technovation Staff has turned off forming teams for everyone right now.
-        <% else %>
-          <%= render "completion_steps/create_team" %>
-        <% end %>
+        <%= render 'student/dashboards/rebrand/create_team' %>
       </div>
 
       <div slot="find-mentor">

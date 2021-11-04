@@ -1,0 +1,10 @@
+<% if current_student.is_on_team? %>
+  You're on a team!Yay!
+  Your team is called <%= current_team.name %>.
+  You can
+  <%= link_to 'manage your team',
+    student_team_path(current_team) %>
+<% else %>
+  <% feature = TechnovationFeature.new(current_student, :join_team) %>
+  <%= render partial: feature.partial_path, locals: feature.partial_locals  %>
+<% end %>
