@@ -76,8 +76,6 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
     subscribe_to_newsletter(record, :mentor)
 
-    RegistrationMailer.welcome_mentor(record.id).deliver_later
-
     record.mentor_profile.update(training_completed_at: nil)
     record.mentor_profile.save # fire commit hooks, if needed
   end

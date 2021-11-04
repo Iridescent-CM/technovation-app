@@ -15,6 +15,11 @@ class NewRegistrationController < ApplicationController
     end
 
     if profile.save
+      case params[:profileType]
+      when "mentor"
+        RegistrationMailer.welcome_mentor(profile.account.id).deliver_later
+      end
+
       SignIn.call(
         profile.account,
         self,
