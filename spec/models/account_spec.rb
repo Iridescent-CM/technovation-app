@@ -9,29 +9,80 @@ RSpec.describe Account do
 
   context "validations" do
     describe "student email address validations" do
-      let!(:student_account) { FactoryBot.build_stubbed(:account, email: student_email_address) }
-      let!(:student_profile) { FactoryBot.build_stubbed(:student_profile,
-        account: student_account,
-        parent_guardian_email: parent_guardian_email_address
-      ) }
+      let!(:student_profile) {
+        FactoryBot.build_stubbed(:student_profile,
+          account: student_account,
+          parent_guardian_email: parent_guardian_email_address)
+      }
 
-      context "when the student's email address matches the parent/guardian's email address" do
-        let(:student_email_address) { "rose@example.com" }
-        let(:parent_guardian_email_address) { "rose@example.com" }
+      context "when the student is in the senior division" do
+        let(:student_account) { FactoryBot.build_stubbed(:account, :senior, email: student_email_address) }
 
-        it "is not valid and adds an error to the email attribute" do
-          expect(student_account).not_to be_valid
-          expect(student_account.errors[:email]).to include "cannot be the same as parent/guardian email address"
+        context "when the student's email address matches the parent/guardian's email address" do
+          let(:student_email_address) { "rose@example.com" }
+          let(:parent_guardian_email_address) { "rose@example.com" }
+
+          it "is not valid and adds an error to the email attribute" do
+            expect(student_account).not_to be_valid
+            expect(student_account.errors[:email]).to include "cannot be the same as parent/guardian email address"
+          end
+        end
+
+        context "when the student's email address is different than the parent/guardian's email address" do
+          let(:student_email_address) { "crocus@example.com" }
+          let(:parent_guardian_email_address) { "iris@example.com" }
+
+          it "is valid and does not add an error to the email attribute" do
+            expect(student_account).to be_valid
+            expect(student_account.errors[:email]).to be_blank
+          end
         end
       end
 
-      context "when the student's email address is different than the parent/guardian's email address" do
-        let(:student_email_address) { "crocus@example.com" }
-        let(:parent_guardian_email_address) { "iris@example.com" }
+      context "when the student is in the junior division" do
+        let(:student_account) { FactoryBot.build_stubbed(:account, :junior, email: student_email_address) }
 
-        it "is valid and does not add an error to the email attribute" do
-          expect(student_account).to be_valid
-          expect(student_account.errors[:email]).to be_blank
+        context "when the student's email address matches the parent/guardian's email address" do
+          let(:student_email_address) { "petunia@example.com" }
+          let(:parent_guardian_email_address) { "petunia@example.com" }
+
+          it "is not valid and adds an error to the email attribute" do
+            expect(student_account).not_to be_valid
+            expect(student_account.errors[:email]).to include "cannot be the same as parent/guardian email address"
+          end
+        end
+
+        context "when the student's email address is different than the parent/guardian's email address" do
+          let(:student_email_address) { "mari@example.com" }
+          let(:parent_guardian_email_address) { "gold@example.com" }
+
+          it "is valid and does not add an error to the email attribute" do
+            expect(student_account).to be_valid
+            expect(student_account.errors[:email]).to be_blank
+          end
+        end
+      end
+
+      context "when the student is in the beginners division" do
+        let(:student_account) { FactoryBot.build_stubbed(:account, :beginner, email: student_email_address) }
+
+        context "when the student's email address matches the parent/guardian's email address" do
+          let(:student_email_address) { "lily@example.com" }
+          let(:parent_guardian_email_address) { "lily@example.com" }
+
+          it "is allowed and valid" do
+            expect(student_account).to be_valid
+          end
+        end
+
+        context "when the student's email address is different than the parent/guardian's email address" do
+          let(:student_email_address) { "lav@example.com" }
+          let(:parent_guardian_email_address) { "ender@example.com" }
+
+          it "is allowed and valid" do
+            expect(student_account).to be_valid
+            expect(student_account.errors[:email]).to be_blank
+          end
         end
       end
     end
