@@ -7,7 +7,3 @@ export default {
   name: "PreviousButton",
 }
 </script>
-
-<style scoped>
-
-</style>

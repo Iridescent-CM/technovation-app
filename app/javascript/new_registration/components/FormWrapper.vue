@@ -49,7 +49,6 @@
         class="code"
         v-text="formValues"
     />
-
   </FormulateForm>
 </template>
 

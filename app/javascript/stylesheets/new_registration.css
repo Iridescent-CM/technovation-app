@@ -49,4 +49,36 @@
     .form-wrapper {
         @apply p-6
     }
+
+    .login-form {
+        padding: 2em;
+    }
+
+    .login-form::v-deep .formulate-input .formulate-input-element {
+        max-width: none;
+    }
+
+    /*HORIZONTAL RADIO BUTTONS*/
+    .formulate-input-group-item {
+        @apply flex;
+    }
+    .profile-type img {
+        @apply w-28 ml-4 mr-6
+    }
+
+    [data-classification="box"] .formulate-input-wrapper, .input-label-text {
+        @apply flex items-center
+    }
+
+    .s1-label-text{
+        @apply text-lg text-left
+    }
+
+    #step-two input[type='checkbox'] {
+        @apply w-5 focus:border-green-500
+    }
+
+    .mentorSelectClass, #mentorSummary{
+        @apply border bg-white border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
+    }
 }

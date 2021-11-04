@@ -1,10 +1,10 @@
 <template>
-
   <div id="step-four">
     <ContainerHeader header-text="Set your email and password"/>
 
     <div id="email-password" class="form-wrapper">
       <h1 class="text-tg-green text-2xl text-left mb-6" v-if="formValues.profileType === 'parent'">This is an account for beginners division</h1>
+      <h1 class="text-tg-green text-2xl text-left mb-6" v-if="formValues.profileType === 'mentor'">This is an account for a mentor</h1>
 
       <FormulateInput
           name="accountEmail"
@@ -29,11 +29,8 @@
             validation="required"
         />
       </div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -54,19 +51,14 @@ export default {
         }
       },
       set(accountEmailVal){
-
         if (this.formValues.parentEmail && this.formValues.profileType === "parent") {
           document.getElementById("accountEmail").disabled = true
         } else{
           document.getElementById("accountEmail").disabled = false
         }
-
         this.formValues.accountEmail = accountEmailVal
       }
     }
   }
 }
 </script>
-
-<style scoped>
-</style>
