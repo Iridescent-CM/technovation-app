@@ -1,38 +1,210 @@
 require "rails_helper"
 
 RSpec.describe Division do
-  let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }
-  let(:junior_division_age) { Division::SENIOR_DIVISION_AGE - 1 }
-  let(:junior_dob) { Division.cutoff_date - junior_division_age.years }
-  let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
+  describe ".for_account" do
+    let(:account) { Account.new }
+
+    before do
+      allow(account).to receive(:age_by_cutoff).and_return(age_by_cuttoff_date)
+    end
+
+    context "when they are 8 years old" do
+      let(:age_by_cuttoff_date) { 8 }
+
+      it "returns the beginner division" do
+        expect(Division.for_account(account)).to eq(Division.beginner)
+      end
+    end
+
+    context "when they are 9 years old" do
+      let(:age_by_cuttoff_date) { 9 }
+
+      it "returns the beginner division" do
+        expect(Division.for_account(account)).to eq(Division.beginner)
+      end
+    end
+
+    context "when they are 10 years old" do
+      let(:age_by_cuttoff_date) { 10 }
+
+      it "returns the beginner division" do
+        expect(Division.for_account(account)).to eq(Division.beginner)
+      end
+    end
+
+    context "when they are 11 years old" do
+      let(:age_by_cuttoff_date) { 11 }
+
+      it "returns the beginner division" do
+        expect(Division.for_account(account)).to eq(Division.beginner)
+      end
+    end
+
+    context "when they are 12 years old" do
+      let(:age_by_cuttoff_date) { 12 }
+
+      it "returns the beginner division" do
+        expect(Division.for_account(account)).to eq(Division.beginner)
+      end
+    end
+
+    context "when they are 13 years old" do
+      let(:age_by_cuttoff_date) { 13 }
+
+      it "returns the junior division" do
+        expect(Division.for_account(account)).to eq(Division.junior)
+      end
+    end
+
+    context "when they are 14 years old" do
+      let(:age_by_cuttoff_date) { 14 }
+
+      it "returns the junior division" do
+        expect(Division.for_account(account)).to eq(Division.junior)
+      end
+    end
+
+    context "when they are 15 years old" do
+      let(:age_by_cuttoff_date) { 15 }
+
+      it "returns the junior division" do
+        expect(Division.for_account(account)).to eq(Division.junior)
+      end
+    end
+
+    context "when the aren't eligible (by age) for a beginner or junior division" do
+      let(:age_by_cuttoff_date) { 18 }
+
+      it "returns the senior division" do
+        expect(Division.for_account(account)).to eq(Division.senior)
+      end
+    end
+  end
+
+  describe ".for_team" do
+    let!(:team) { FactoryBot.create(:team) }
+    let!(:beginner_student) { FactoryBot.create(:student, :beginner) }
+    let(:junior_student) { FactoryBot.create(:student, :junior) }
+    let(:senior_student) { FactoryBot.create(:student, :senior) }
+
+    context "when a team has only beginner students" do
+      before do
+        team.students.delete_all
+
+        TeamRosterManaging.add(team, beginner_student)
+      end
+
+      it "returns the beginner division" do
+        expect(Division.for_team(team)).to eq(Division.beginner)
+      end
+    end
+
+    context "when a team has only junior students" do
+      before do
+        team.students.delete_all
+
+        TeamRosterManaging.add(team, junior_student)
+      end
+
+      it "returns the junior division" do
+        expect(Division.for_team(team)).to eq(Division.junior)
+      end
+    end
+
+    context "when a team has only senior students" do
+      before do
+        team.students.delete_all
+
+        TeamRosterManaging.add(team, senior_student)
+      end
+
+      it "returns the senior division" do
+        expect(Division.for_team(team)).to eq(Division.senior)
+      end
+    end
+
+    context "when a team has a beginner and junior student" do
+      before do
+        team.students.delete_all
+
+        TeamRosterManaging.add(team, [beginner_student, junior_student])
+      end
+
+      it "returns the junior division" do
+        expect(Division.for_team(team)).to eq(Division.junior)
+      end
+    end
+
+    context "when a team has a junior and senior student" do
+      before do
+        team.students.delete_all
+
+        TeamRosterManaging.add(team, [junior_student, senior_student])
+      end
+
+      it "returns the senior division" do
+        expect(Division.for_team(team)).to eq(Division.senior)
+      end
+    end
+
+    context "when a team has a beginner, junior and senior student" do
+      before do
+        team.students.delete_all
+
+        TeamRosterManaging.add(team, [beginner_student, junior_student, senior_student])
+      end
+
+      it "returns the senior division" do
+        expect(Division.for_team(team)).to eq(Division.senior)
+      end
+    end
+  end
 
   describe ".for" do
-    it "is Junior for a team with all Junior division students" do
-      student = FactoryBot.create(
-        :student,
-        :on_team,
-        date_of_birth: junior_dob
-      )
-      expect(Division.for(student.team)).to eq(Division.junior)
+    context "when an Account is provided" do
+      let(:account) { Account.new }
+
+      it "calls .for_account" do
+        expect(Division).to receive(:for_account)
+
+        Division.for(account)
+      end
     end
 
-    it "is Senior if the student is 15 by the cutoff date" do
-      student = FactoryBot.create(
-        :student,
-        date_of_birth: senior_dob
-      )
+    context "when a StudentProfile is provided" do
+      let(:student_profile) { StudentProfile.new }
 
-      expect(Division.for(student)).to eq(Division.senior)
+      it "calls .for_account" do
+        expect(Division).to receive(:for_account)
+
+        Division.for(student_profile)
+      end
     end
 
-    it "is Senior if any team student is in Senior" do
-      team = FactoryBot.create(:team)
-      older_student = FactoryBot.create(:student, date_of_birth: senior_dob)
-      younger_student = FactoryBot.create(:student, date_of_birth: junior_dob)
+    context "when a Team is provided" do
+      let(:team) { Team.new }
 
-      TeamRosterManaging.add(team, [older_student, younger_student])
+      it "calls .for_team" do
+        expect(Division).to receive(:for_team)
 
-      expect(Division.for(team)).to eq(Division.senior)
+        Division.for(team)
+      end
+    end
+
+    context "when an unsupported class is provided" do
+      let(:unsupported_class) { MentorProfile.new }
+
+      it "returns 'none assigned yet'" do
+        expect(Division.for(unsupported_class)).to eq(Division.none_assigned_yet)
+      end
+    end
+
+    context "when no class is provided" do
+      let(:nil_class) { nil }
+
+      it "returns 'none assigned yet'" do
+        expect(Division.for(nil_class)).to eq(Division.none_assigned_yet)
+      end
     end
   end
 end

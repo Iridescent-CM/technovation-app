@@ -15,21 +15,6 @@ class ProfileCreating
   end
 
   def execute
-    icon_path = case scope.to_sym
-                when :chapter_ambassador
-                  ""
-                else
-                  ActionController::Base.helpers.asset_path(
-                    "placeholders/avatars/#{rand(1..24)}.svg"
-                  )
-                end
-
-    profile.account.update({
-      email_confirmed_at: Time.current,
-      icon_path: icon_path,
-      division: Division.for(profile.account),
-    })
-
     controller.remove_cookie(CookieNames::SIGNUP_TOKEN)
 
     AttachSignupAttemptJob.perform_later(profile.account_id)

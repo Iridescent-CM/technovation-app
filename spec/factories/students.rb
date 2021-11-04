@@ -166,6 +166,10 @@ FactoryBot.define do
       date_of_birth { Division.cutoff_date - (Division::SENIOR_DIVISION_AGE - 1).years }
     end
 
+    trait :beginner do |s|
+      date_of_birth { Division.cutoff_date - 8.years }
+    end
+
     trait :on_team do
       after(:create) do |s|
         unless s.team.present?

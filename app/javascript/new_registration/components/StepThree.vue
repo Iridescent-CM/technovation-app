@@ -47,7 +47,7 @@
         <FormulateInput
             type="checkbox"
             label="I AGREE TO THESE DATA USE TERMS"
-            name="contractLabel"
+            name="dataTermsAgreedTo"
         />
       </section>
     </div>
