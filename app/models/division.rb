@@ -59,6 +59,8 @@ class Division < ActiveRecord::Base
       member_type: "StudentProfile"
     ).map(&:member).collect { |student_profile| for_account(student_profile.account) }
 
+    return none_assigned_yet if divisions.blank?
+
     if divisions.any?
       division_names = divisions.flat_map(&:name)
 
