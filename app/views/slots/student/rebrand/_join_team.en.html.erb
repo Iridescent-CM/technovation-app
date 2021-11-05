@@ -1,10 +1,26 @@
-<% if current_student.is_on_team? %>
-  You're on a team!Yay!
-  Your team is called <%= current_team.name %>.
-  You can
-  <%= link_to 'manage your team',
-    student_team_path(current_team) %>
-<% else %>
-  <% feature = TechnovationFeature.new(current_student, :join_team) %>
-  <%= render partial: feature.partial_path, locals: feature.partial_locals  %>
-<% end %>
+<div id="join-team" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Build a Team</p>
+  </div>
+
+  <div class="tw-content=-wrapper p-8">
+    <% if current_student.is_on_team? %>
+      <p class="text-2xl">You're on a team!</p>
+      <div class="w-full md:w-64 justify-center items-center bg-white shadow-lg rounded-lg flex flex-col mt-8">
+        <%= image_tag current_team.team_photo_url, class: "w-full h-auto object-cover rounded-t-lg" %>
+        <div class="w-full p-4 justify-start flex flex-col">
+          <p class="font-bold"><%= current_team.name.titleize %></p>
+          <p><%= current_team.city %>, <%= current_team.state_province %></p>
+          <p><%= current_team.division_name.titleize %> Division</p>
+
+          <%= link_to raw('Manage Your Team &#8227;'),
+                      student_team_path(current_team) ,
+                      class: 'text-energetic-blue font-bold text-xl mt-4' %>
+        </div>
+      </div>
+    <% else %>
+      <% feature = TechnovationFeature.new(current_student, :join_team) %>
+      <%= render partial: feature.partial_path, locals: feature.partial_locals  %>
+    <% end %>
+  </div>
+</div>
