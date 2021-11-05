@@ -38,17 +38,17 @@ export default {
   data () {
     return {
       referralOptions:[
-        'Friend',
-        'Colleague',
-        'Article',
-        'Internet',
-        'Social media',
-        'Print',
-        'Web search',
-        'Teacher',
-        'Parent/family',
-        'Company email',
-        'Other',
+        {value: 0, label: 'Friend'},
+        {value: 1, label: 'Colleague'},
+        {value: 2, label: 'Article'},
+        {value: 3, label: 'Internet'},
+        {value: 4, label: 'Social media'},
+        {value: 5, label: 'Print'},
+        {value: 6, label: 'Web search'},
+        {value: 7, label: 'Teacher'},
+        {value: 8, label: 'Parent/family'},
+        {value: 9, label: 'Company email'},
+        {value: 11, label: 'Other'},
       ],
     }
   }
