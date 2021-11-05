@@ -1,0 +1,72 @@
+<div id="join-team" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Build a Team</p>
+  </div>
+
+  <div class="tw-content=-wrapper p-8">
+    <section>
+      <% if current_student.team.mentors.any? %>
+        <p class="font-bold">Mentor Status</p>
+        <p>Your team has <%= pluralize(current_student.team.mentors.count, "mentor") %>. You can have more than one.</p>
+      <% else %>
+        <p class="font-bold">Find a Mentor</p>
+        <p>Add one or more mentors to your team. Mentors guide you in completing your submission. You can ask someone you know to sign up as a mentor and join your team, or you can search for a mentor online.</p>
+      <% end %>
+    </section>
+
+    <section class="mt-12">
+      <% if current_team.pending_mentor_invite_ids.any? %>
+        <p>
+          Your team is awaiting a response from
+          <span class="font-bold"><%= pluralize(current_team.pending_mentor_invites.count, "mentor invite") %>.</span>
+        </p>
+      <% else %>
+        <p>Your team has no open invites to a mentor</p>
+      <% end %>
+
+      <% if current_team.pending_mentor_join_request_ids.any? %>
+        <p>
+          You have
+          <span class="font-bold"><%= pluralize(current_team.pending_mentor_join_requests.count, "mentor request") %></span>
+          waiting for you and your team members.
+        </p>
+      <% end %>
+
+      <% if current_team.pending_mentor_invite_ids.any? || current_team.pending_mentor_join_request_ids.any? %>
+        <%= link_to raw("Manage your invites &#8227;"), student_team_path(current_team, anchor: "!mentors"), class: "tw-link" %>
+      <% end %>
+    </section>
+
+
+    <section class="mt-8">
+      <% if current_team.present? %>
+        <%= link_to "Search for mentors", new_student_mentor_search_path, class: "tw-green-btn" %>
+      <% else %>
+        <p>When you are on a team, you will be able to search for mentors.</p>
+      <% end %>
+    </section>
+
+    <section class="mt-12">
+      <% if current_team.present? %>
+        <p class="font-bold">Decide if Mentors (who ask) can join your team</p>
+        <%= form_with model: current_team,
+                      data: { submit_on_change: true },
+                      url:  send("#{current_scope}_team_path", current_team),
+                      method: :patch do |f| %>
+          <p>
+            <%= f.check_box :accepting_mentor_requests,
+                            id: :team_accepting_mentor_requests %>
+
+            <%= f.label :accepting_mentor_requests,
+                        "Make your team appear in search results",
+                        for: :team_accepting_mentor_requests %>
+          </p>
+        <% end %>
+      <% end %>
+    </section>
+  </div>
+</div>
+
+
+
+
