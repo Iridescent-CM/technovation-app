@@ -7,10 +7,10 @@
 
     <section id="links" class="flex flex-wrap-reverse md:flex-nowrap justify-between my-12">
       <div id="icons" class="flex mx-auto md:mx-0 my-8 md: my-0 w-1/2 md:w-48 justify-between">
-        <img :src="require('../assets/fb.png').default" alt="" class="social-icon">
-        <img :src="require('../assets/twitter.png').default" alt="" class="social-icon">
-        <img :src="require('../assets/instagram.png').default" alt="" class="social-icon">
-        <img :src="require('../assets/youtube.png').default" alt="" class="social-icon">
+        <img :src="require('social-media/fb.png')" alt="" class="social-icon">
+        <img :src="require('social-media/twitter.png')" alt="" class="social-icon">
+        <img :src="require('social-media/instagram.png')" alt="" class="social-icon">
+        <img :src="require('social-media/youtube.png')" alt="" class="social-icon">
       </div>
 
       <div id="site-links" class="flex flex-wrap w-full  md:mx-0 md:w-1/2 my-8 md: my-0">
