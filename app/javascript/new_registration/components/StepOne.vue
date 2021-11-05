@@ -28,15 +28,15 @@ export default {
       values: {},
       options: [
         {
-          label: `<img src="${require('../assets/myTG-parent.png').default}" alt=""> <span class="s1-label-text">PARENT <br> Registering a daughter 8-12 years old</span>`,
+          label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">PARENT <br> Registering a daughter 8-12 years old</span>`,
           value: "parent",
         },
         {
-          label: `<img src="${require('../assets/myTG-student.png').default}" alt=""><span class="s1-label-text"> STUDENT <br> 13 - 18 year old female-identifying student</span>`,
+          label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text"> STUDENT <br> 13 - 18 year old female-identifying student</span>`,
           value: "student",
         },
         {
-          label: `<img src="${require('../assets/myTG-mentor.png').default}" alt=""> <span class="s1-label-text">MENTOR <br> Over 18 years old who wants to help guide a team of girls</span>`,
+          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">MENTOR <br> Over 18 years old who wants to help guide a team of girls</span>`,
           value: "mentor",
         }
       ],

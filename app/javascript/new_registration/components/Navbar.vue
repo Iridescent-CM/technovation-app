@@ -4,7 +4,7 @@
       <div class="flex justify-between">
           <div>
             <a href="#" class="flex items-center py-4 px-2">
-              <img id="tg-logo" :src="require('../assets/tg-girls-logo.png').default" alt="Technovation Girls Logo" />
+              <img id="tg-logo" :src="require('tg-girls-logo.png')" alt="Technovation Girls Logo" />
             </a>
           </div>
         <div class="flex space-x-7">
