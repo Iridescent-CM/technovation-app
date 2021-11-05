@@ -26,6 +26,18 @@ FactoryBot.define do
       seasons { [Season.current.year - 1, Season.current.year] }
     end
 
+    trait :senior do |s|
+      date_of_birth { Division.cutoff_date - Division::SENIOR_DIVISION_AGE.years }
+    end
+
+    trait :junior do |s|
+      date_of_birth { Division.cutoff_date - (Division::SENIOR_DIVISION_AGE - 1).years }
+    end
+
+    trait :beginner do |s|
+      date_of_birth { Division.cutoff_date - 8.years }
+    end
+
     trait :mentor do
       mentor_profile
     end
