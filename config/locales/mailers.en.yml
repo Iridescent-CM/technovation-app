@@ -18,8 +18,10 @@ en:
       subject: "Your file is ready to download"
 
   parent_mailer:
-    confirm_consent_finished:
+    confirm_parental_consent_finished:
       subject: "Technovation — Copy of signed consent form"
+    confirm_media_consent_finished:
+      subject: "Technovation — Copy of signed media consent form"
     consent_notice:
       subject: "Your daughter needs permission to participate in Technovation!"
 

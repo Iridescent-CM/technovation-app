@@ -16,11 +16,21 @@ class ParentMailer < ApplicationMailer
     end
   end
 
-  def confirm_consent_finished(student_profile)
+  def confirm_parental_consent_finished(student_profile)
     return if student_profile.parent_guardian_email.blank?
 
     @student_profile = student_profile
     @parental_consent = student_profile.parental_consent
+
+    I18n.with_locale(@student_profile.account.locale) do
+      mail to: @student_profile.parent_guardian_email
+    end
+  end
+
+  def confirm_media_consent_finished(student_profile)
+    return if student_profile.parent_guardian_email.blank?
+
+    @student_profile = student_profile
     @media_consent = student_profile.media_consent
 
     I18n.with_locale(@student_profile.account.locale) do
