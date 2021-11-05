@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs tabs--vertical tabs--css-only grid">
+  <div :class="mainTabClass">
     <div :class="['tabs__content', mainContainerGridColumn]">
       <router-view :key="$route.name">
         <div slot="parental-consent"><slot name="parental-consent" /></div>
@@ -24,6 +24,12 @@ import TeamMenu from 'student/menus/Team'
 export default {
   name: 'team-building',
 
+  data(){
+    return{
+      isStudentDash: false
+    }
+  },
+
   directives: {
     'sticky-sidebar': StickySidebar,
   },
@@ -43,13 +49,27 @@ export default {
     },
   },
 
+  beforeMount() {
+    let pathname = window.location.pathname
+    if (pathname === '/student/dashboard') {
+      this.isStudentDash = true
+    }
+  },
+
   computed: {
     mainContainerGridColumn () {
-      if (this.embedded)
+      if (this.embedded && !this.isStudentDash)
         return 'grid__col-12 tabs__content--embedded'
 
-      return 'grid__col-9'
+      if(!this.isStudentDash)
+        return 'grid__col-9'
     },
+
+    mainTabClass () {
+      if(this.embedded && !this.isStudentDash){
+        return 'tabs tabs--vertical tabs--css-only grid'
+      }
+    }
   },
 }
 </script>
