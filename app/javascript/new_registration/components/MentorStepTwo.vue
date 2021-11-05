@@ -23,6 +23,7 @@
     </div>
 
     <FormulateInput
+        name="gender"
         :options="genderOptions"
         type="select"
         placeholder="Select an option"
@@ -32,8 +33,8 @@
     />
 
     <FormulateInput
-        type="date"
         name="birthday"
+        type="date"
         label="Birthday"
         placeholder="Birthday"
         validation="required"
@@ -56,6 +57,7 @@
     />
 
     <FormulateInput
+        name="mentorType"
         :options="mentorTypeOptions"
         type="select"
         placeholder="Select an option"
@@ -67,6 +69,7 @@
     <div id="mentor-information">
       <h2 class="registration-title">Skills & Interests</h2>
       <FormulateInput
+          name="mentorExpertises"
           :options="mentorProfileExpertiseOptions"
           type="checkbox"
           id="mentorExpertise"
@@ -99,14 +102,15 @@
           'Prefer not to say'
         ],
         mentorTypeOptions: [
-          {value: 0, label: 'Industry professional'},
-          {value: 1, label: 'Educator'},
-          {value: 2, label: 'Parent'},
-          {value: 3, label: 'Past Technovation student'}
+          'Industry professional',
+          'Educator',
+          'Parent',
+          'Past Technovation student'
         ],
         mentorProfileExpertiseOptions: [
           {value: 2, label: 'Coding'},
           {value: 8, label: 'Experience with Java'},
+          {value: 9, label: 'Experience with Swift'},
           {value: 10, label: 'Business / entrepreneurship'},
           {value: 4, label: 'Project Management'},
           {value: 6, label: 'Marketing'},

@@ -52,7 +52,12 @@ class NewRegistrationController < ApplicationController
 
   def mentor_params
     {
-      account_attributes: account_attributes
+      mentor_type: registration_params[:mentorType],
+      school_company_name: registration_params[:companyName],
+      job_title: registration_params[:jobTitle],
+      bio: registration_params[:mentorSummary],
+      expertise_ids: registration_params["mentorExpertises"],
+      account_attributes: account_attributes.merge({gender: registration_params[:gender]})
     }
   end
 
@@ -61,8 +66,9 @@ class NewRegistrationController < ApplicationController
       first_name: registration_params[:firstName],
       last_name: registration_params[:lastName],
       date_of_birth: registration_params[:birthday],
-      email: registration_params[:accountEmail],
+      referred_by: registration_params[:referredBy].to_i,
       terms_agreed_at: registration_params[:dataTermsAgreedTo].present? ? Time.current : nil,
+      email: registration_params[:accountEmail],
       password: registration_params[:password]
     }
   end
@@ -73,12 +79,19 @@ class NewRegistrationController < ApplicationController
       :firstName,
       :lastName,
       :birthday,
+      :gender,
       :accountEmail,
       :password,
       :dataTermsAgreedTo,
+      :referredBy,
       :parentName,
       :parentEmail,
-      :schoolName
+      :schoolName,
+      :companyName,
+      :jobTitle,
+      :mentorType,
+      :mentorSummary,
+      mentorExpertises: []
     )
   end
 end
