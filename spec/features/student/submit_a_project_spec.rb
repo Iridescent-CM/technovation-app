@@ -58,7 +58,7 @@ RSpec.feature "Student submits a project", :js do
   end
 
   def when_they_view_their_submission
-    click_link "My team's submission"
+    click_link "My Submission"
   end
 
   def then_they_see_a_disabled_submit_button

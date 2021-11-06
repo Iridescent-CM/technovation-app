@@ -6,7 +6,7 @@ RSpec.describe "Team locations", :js do
       team = FactoryBot.create(:team, :chicago)
 
       sign_in(team.students.sample)
-      click_link "My team"
+      click_link "My Team"
 
       click_button "Location"
       expect(page).to have_content("Chicago, Illinois, United States")

@@ -76,7 +76,7 @@ RSpec.feature "Admin / chapter ambassador logging in as a user" do
       click_link "Login as #{student.full_name}"
       expect(current_path).to eq(student_dashboard_path)
 
-      click_link "My team"
+      click_link "My Team"
       expect(current_path).to eq(student_team_path(student.team))
 
       click_link "return to Admin mode"

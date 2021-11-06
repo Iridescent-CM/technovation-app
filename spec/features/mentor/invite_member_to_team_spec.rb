@@ -67,7 +67,7 @@ RSpec.feature "Invite a member to a team" do
     sign_out
     sign_in(invite.invitee)
 
-    click_link "Open this invitation"
+    click_link "Open invite"
     expect(page).to have_content("Chicago, Illinois, United States")
 
     click_button "Accept invitation to #{mentor.team_names.first}"
@@ -87,7 +87,7 @@ RSpec.feature "Invite a member to a team" do
     sign_out
     sign_in(invite.invitee)
 
-    click_link "Open this invitation"
+    click_link "Open invite"
     expect(page).to have_content("Chicago, Illinois, United States")
 
     click_button "Accept invitation to #{mentor.team_names.first}"

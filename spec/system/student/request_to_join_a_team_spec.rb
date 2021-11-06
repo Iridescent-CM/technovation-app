@@ -76,7 +76,7 @@ RSpec.describe "Students request to join a team",
       expect(page).to have_content(team.name)
       expect(page).to have_content(team.primary_location)
       expect(page).to have_content(team.division_name.humanize)
-      expect(page).to have_css("img.thumbnail-md[src*='#{team.team_photo_url}']")
+      expect(page).to have_css("img[src*='#{team.team_photo_url}']")
 
       expect(page).not_to have_link("Find a team")
     end

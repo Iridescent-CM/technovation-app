@@ -20,7 +20,7 @@ RSpec.feature "Student team submissions" do
     sign_out
     sign_in(team_student)
     expect(page).to have_link(
-      "My team's submission",
+      "My Submission",
       href: new_student_team_submission_path
     )
   end
@@ -29,7 +29,7 @@ RSpec.feature "Student team submissions" do
     student = FactoryBot.create(:student, :on_team, :geocoded)
     sign_in(student)
 
-    click_link "My team's submission"
+    click_link "My Submission"
 
     check "team_submission[integrity_affirmed]"
     click_button "Start now!"
@@ -38,7 +38,7 @@ RSpec.feature "Student team submissions" do
       student_team_submission_section_path(TeamSubmission.last)
     )
     expect(page).to have_link(
-      "My team's submission",
+      "My Submission",
       href: student_team_submission_path(TeamSubmission.last)
     )
   end
@@ -48,7 +48,7 @@ RSpec.feature "Student team submissions" do
     submission = FactoryBot.create(:team_submission, team: student.team)
     sign_in(student)
 
-    click_link "My team's submission"
+    click_link "My Submission"
     click_link "Ideation"
 
     expect(page).to have_link(
@@ -120,7 +120,7 @@ RSpec.feature "Student team submissions" do
 
     sign_in(student)
 
-    click_link "My team's submission"
+    click_link "My Submission"
     click_link "Business"
 
     expect(page).not_to have_link(
@@ -137,7 +137,7 @@ RSpec.feature "Student team submissions" do
       date_of_birth: senior_dob,
     })
 
-    click_link "My team's submission"
+    click_link "My Submission"
     click_link "Business"
 
     expect(page).to have_link(
@@ -155,7 +155,7 @@ RSpec.feature "Student team submissions" do
 
     sign_in(student)
 
-    click_link "My team's submission"
+    click_link "My Submission"
     click_link "Regional events"
 
     expect(page).not_to have_link(
@@ -176,7 +176,7 @@ RSpec.feature "Student team submissions" do
     rpe = FactoryBot.create(:regional_pitch_event)
     rpe.teams << student.team
 
-    click_link "My team's submission"
+    click_link "My Submission"
     click_link "Regional events"
 
     expect(page).to have_link(
