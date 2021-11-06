@@ -55,7 +55,7 @@
       :condition-to-complete="false"
     >
       <hr class="bg-energetic-blue h-1 w-full">
-      Find a Pitch Event
+      Pitch your project
     </tab-link>
 
     <tab-link
