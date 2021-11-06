@@ -1,11 +1,21 @@
-<% if current_student.is_on_team? %>
-  You're on a team! Test!!
-  Your team is called <%= current_team.name %>.
-  You can
-  <%= link_to 'manage your team',
-              student_team_path(current_team) %>
-<% elsif SeasonToggles.team_building_disabled? %>
-  Technovation Staff has turned off forming teams for everyone right now.
-<% else %>
-  <%= render "completion_steps/create_team" %>
-<% end %>
+<div id="create-team" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Build your team</p>
+  </div>
+
+  <div class="tw-content=-wrapper p-8">
+    <% if current_student.is_on_team? %>
+      You're on a team!
+      Your team is called <%= current_team.name %>.
+      You can
+      <%= link_to 'manage your team',
+                  student_team_path(current_team),
+                  class: 'tw-link'
+      %>
+    <% elsif SeasonToggles.team_building_disabled? %>
+      Technovation Staff has turned off forming teams for everyone right now.
+    <% else %>
+      <%= render "student/dashboards/completion_steps/rebrand/create_team" %>
+    <% end %>
+  </div>
+</div>

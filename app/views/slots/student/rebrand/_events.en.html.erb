@@ -1,0 +1,12 @@
+<div id="events" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Pitch your project</p>
+  </div>
+
+  <div class="tw-content=-wrapper p-8">
+    <% if current_student.onboarded? && SeasonToggles.select_regional_pitch_event? %>
+      <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
+    <% else %>
+      <p>Due to COVID, there are no official pitch events this season.</p>
+    <% end %>  </div>
+</div>

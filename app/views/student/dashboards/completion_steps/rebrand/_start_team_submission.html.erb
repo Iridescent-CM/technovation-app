@@ -1,0 +1,34 @@
+<% if SeasonToggles.team_submissions_editable? %>
+  <p>
+    You and your teammates can begin submitting your app now!
+    As you work through the curriculum, you can upload it in parts.
+    You can also edit as much as you need to until the deadline!
+  </p>
+
+  <div class="step-actions mt-8">
+    <%= link_to 'Begin your submission',
+      new_student_team_submission_path,
+      class: "tw-green-btn" %>
+  </div>
+<% else %>
+  <h1 class="content-heading">Your Team Submission</h1>
+
+  <p>
+    Submissions are currently locked. Starting a submission
+    is not available at this time.
+  </p>
+
+  <% before_submissions_are_open do %>
+    <h5 class="heading--reset">
+      We are going to open submissions very soon!
+    </h5>
+
+    <p>Watch your email for an update from us!</p>
+  <% end %>
+
+  <p class="scent">
+    Contact
+    <%= mail_to ENV.fetch("HELP_EMAIL") %>
+    if you have questions.
+  </p>
+<% end %>
