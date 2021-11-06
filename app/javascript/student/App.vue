@@ -1,11 +1,11 @@
 <template>
   <div>
-<!--    <dashboard-header-->
-<!--      default-title="Student Dashboard"-->
-<!--      :resource-links="resourceLinks"-->
-<!--    >-->
-<!--      <div slot="chapter-ambassador-intro"><slot name="chapter-ambassador-intro" /></div>-->
-<!--    </dashboard-header>-->
+    <dashboard-header
+      default-title="Student Dashboard"
+      :resource-links="resourceLinks"
+    >
+      <div slot="chapter-ambassador-intro"><slot name="chapter-ambassador-intro" /></div>
+    </dashboard-header>
 
     <div class="container mx-auto">
       <div class="p-6 flex flex-col-reverse lg:flex-row justify-between">
