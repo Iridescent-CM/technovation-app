@@ -86,10 +86,12 @@ export default {
     ]),
 
     mainContainerGridColumn () {
-      if (this.embedded && this.isSignup)
+      if (this.embedded)
         return "grid__col-12"
 
-      return "grid__col-9"
+      if(this.isSignup){
+        return "grid__col-9"
+      }
     },
 
     menuGridColumn () {
