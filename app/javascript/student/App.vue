@@ -1,12 +1,5 @@
 <template>
   <div>
-    <dashboard-header
-      default-title="Student Dashboard"
-      :resource-links="resourceLinks"
-    >
-      <div slot="chapter-ambassador-intro"><slot name="chapter-ambassador-intro" /></div>
-    </dashboard-header>
-
     <div class="container mx-auto">
       <div class="p-6 flex flex-col-reverse lg:flex-row justify-between">
         <div id="student-dash" class="w-full lg:w-4/6">
@@ -36,7 +29,6 @@
 </template>
 
 <script>
-import DashboardHeader from './DashboardHeader'
 import DashboardMenuRebrand from "./DashboardMenuRebrand";
 import ContainerHeader from "../new_registration/components/ContainerHeader";
 
@@ -44,7 +36,6 @@ export default {
   name: 'app',
 
   components: {
-    DashboardHeader,
     DashboardMenuRebrand,
     ContainerHeader
   },
