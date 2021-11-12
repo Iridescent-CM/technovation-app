@@ -58,7 +58,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     if profile.division.junior? || profile.division.senior?
       RegistrationMailer.welcome_student(record).deliver_later
     elsif profile.division.beginner?
-      RegistrationMailer.welcome_beginner_student(record).deliver_later
+      RegistrationMailer.welcome_parent(record).deliver_later
     end
 
     if profile.reload.parental_consent.nil?

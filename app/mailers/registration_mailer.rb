@@ -73,7 +73,7 @@ class RegistrationMailer < ApplicationMailer
     end
   end
 
-  def welcome_beginner_student(student)
+  def welcome_parent(student)
     @registration_opens = ImportantDates.registration_opens.strftime("%B %Y")
     @official_start_of_season = ImportantDates.official_start_of_season.strftime("%B %d, %Y")
     @team_registration_deadline = ImportantDates.team_registration_deadline.strftime("%B %d, %Y")

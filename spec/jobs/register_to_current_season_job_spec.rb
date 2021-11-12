@@ -71,8 +71,8 @@ RSpec.describe RegisterToCurrentSeasonJob do
     context "when it's a beginner student" do
       let(:student) { FactoryBot.create(:student, :beginner) }
 
-      it "sends the 'welcome_beginner_student' email" do
-        expect(RegistrationMailer).to receive(:welcome_beginner_student)
+      it "sends the 'welcome_parent' email" do
+        expect(RegistrationMailer).to receive(:welcome_parent)
           .with(student.account)
           .and_return(registration_mailer)
 
