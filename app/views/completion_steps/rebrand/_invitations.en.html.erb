@@ -1,0 +1,41 @@
+<p class="font-bold mb-6">Invites from teams</p>
+
+<% if hidden ||= false %>
+  <%= render 'explanations/feature_not_available', feature: :team_invites %>
+<% else %>
+  <% if SeasonToggles.judging_enabled_or_between? %>
+    <p><%= t("views.team_member_invites.show.invites_disabled_by_judging") %></p>
+  <% elsif invites.any? %>
+    <% if current_scope == :student and invites.many? %>
+      <p class="hint">You can only accept one!</p>
+    <% end %>
+    <div id="invite-wrapper" class="flex flex-row flex-wrap justify-between">
+      <% invites.each do |invite| %>
+        <div class="lg:tw-flex-basis-33 mb-8">
+          <%= content_tag :div, id: dom_id(invite), class:'h-full' do %>
+            <div class="w-full md:w-64 h-full justify-center items-center bg-white shadow-lg rounded-lg flex flex-col">
+              <%= image_tag invite.team.team_photo.url, class: "w-full h-auto object-cover rounded-t-lg" %>
+              <div class="w-full p-4 justify-start flex flex-col">
+                <section class="h-4/5">
+                  <p class="font-bold"><%= invite.team_name.titleize %></p>
+                  <p><%= invite.team.state_province %>, <%= invite.team.country %></p>
+                  <p><%= invite.team.division_name.titleize %> Division</p>
+                </section>
+
+                <%= link_to raw("Open invite &#8227;"),
+                            send("#{current_scope}_team_member_invite_path", invite),
+                            class: 'tw-link mt-8' %>
+
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>
+      You have no pending invitations. When a team invites you to join,
+      you will see the invitation here.
+    </p>
+  <% end %>
+<% end %>
