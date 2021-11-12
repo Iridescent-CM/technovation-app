@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.feature "Set survey links and link text", :js do
   context "student survey link is configured" do
-    # let(:user) { FactoryBot.create(:student) }
     let(:user) { FactoryBot.create(:student) }
 
     before do
