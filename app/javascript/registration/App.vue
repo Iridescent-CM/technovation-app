@@ -73,17 +73,17 @@ export default {
     },
   },
 
+  beforeMount() {
+    let pathname = window.location.pathname
+    if (pathname === '/signup') {
+      this.isSignup = true
+    }
+  },
+
   computed: {
     ...mapState([
       'isReady',
     ]),
-
-    beforeMount() {
-      let pathname = window.location.pathname
-      if (pathname === '/signup') {
-        this.isSignup = true
-      }
-    },
 
     mainContainerGridColumn () {
       if (this.embedded && this.isSignup)
@@ -111,7 +111,7 @@ export default {
         }
       }
     },
-  },
+  }
 }
 </script>
 
