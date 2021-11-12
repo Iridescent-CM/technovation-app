@@ -72,4 +72,23 @@ class RegistrationMailer < ApplicationMailer
                    season_year: @season_year)
     end
   end
+
+  def welcome_beginner_student(student)
+    @registration_opens = ImportantDates.registration_opens.strftime("%B %Y")
+    @official_start_of_season = ImportantDates.official_start_of_season.strftime("%B %d, %Y")
+    @team_registration_deadline = ImportantDates.team_registration_deadline.strftime("%B %d, %Y")
+    @season_submission_deadline = Season.submission_deadline
+    @season_submissions_open_month = ImportantDates.official_start_of_season.strftime("%B")
+    @season_year = Season.current.year
+    @root_url = root_url(mailer_token: student.mailer_token)
+    @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
+    @technovation_url = "http://technovationchallenge.org/about/"
+    @safety_url = "http://iridescentlearning.org/internet-safety/"
+    @faq_url = "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation"
+
+    I18n.with_locale(student.locale) do
+      mail to: student.email,
+        subject: t("registration_mailer.welcome_student.subject", season_year: @season_year)
+    end
+  end
 end
