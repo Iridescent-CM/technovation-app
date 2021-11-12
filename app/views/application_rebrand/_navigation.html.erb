@@ -10,13 +10,40 @@
         <div class="flex items-center space-x-1" id="student-nav-wrapper">
           <a href="">Curriculum</a>
           <a href="">About</a>
-          <% if current_account.authenticated? %>
-            <%= link_to t('views.application.signout'), signout_path %>
-          <% end %>
-          <a href=""><%= current_student.first_name %></a>
-          <%= image_tag current_student.profile_image_url,
-                        class: "rounded-bl-3xl rounded-tr-3xl w-14",
-                        id: "profile-image" %>
+
+          <div class="flex items-center justify-center">
+            <div class="relative inline-block text-left tw-dropdown" id="student-dropdown-wrapper">
+              <span class="flex cursor-pointer hover:text-energetic-blue"><%= current_student.first_name %>
+                <img src="https://icongr.am/fontawesome/caret-down.svg?size=12" alt="">
+              </span>
+
+              <div class="tw-dropdown-menu">
+                <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none">
+                  <div class="p-4">
+                    <ul class="text-sm">
+                      <li><a href="https://youtu.be/whZjfiB3vgQ">Using Your Dashboard</a></li>
+                      <li><a href="https://iridescentlearning.org/internet-safety/">Safety Information</a></li>
+                      <li><a href="https://www.technovationchallenge.org/curriculum-intro/registered/new/">Curriculum
+                        Lessons</a></li>
+                      <li><a href="https://www.technovationchallenge.org/submission-guidelines/">Submission Guide</a>
+                      </li>
+                      <li><a href="https://www.technovationchallenge.org/judging-rubric/">Judging Rubric</a></li>
+                      <li><a href="">Help Technovation Improve</a></li>
+                      <li>
+                        <% if current_account.authenticated? %>
+                          <%= link_to t('views.application.signout'), signout_path, class: 'text-sm' %>
+                        <% end %>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <%= image_tag current_student.profile_image_url,
+                          class: "rounded-bl-3xl rounded-tr-3xl w-14",
+                          id: "profile-image" %>
+          </div>
         </div>
       </div>
     </div>
