@@ -84,7 +84,7 @@ RSpec.describe "Students request to join a team",
     it "student accepts the request" do
       ActionMailer::Base.deliveries.clear
 
-      sign_out
+      student_sign_out
       student = team.students.sample
 
       visit student_join_request_path(
@@ -121,7 +121,7 @@ RSpec.describe "Students request to join a team",
     end
 
     it "student accepts from team page" do
-      sign_out
+      student_sign_out
       sign_in(team.students.sample)
 
       visit student_team_path(team)
@@ -135,7 +135,7 @@ RSpec.describe "Students request to join a team",
     end
 
     it "student declines from team page" do
-      sign_out
+      student_sign_out
       sign_in(team.students.sample)
 
       visit student_team_path(team)
@@ -151,7 +151,7 @@ RSpec.describe "Students request to join a team",
     it "mentor accepts the request" do
       ActionMailer::Base.deliveries.clear
 
-      sign_out
+      student_sign_out
       mentor = team.mentors.sample
       visit mentor_join_request_path(
         JoinRequest.last,
@@ -168,7 +168,7 @@ RSpec.describe "Students request to join a team",
     end
 
     it "mentor accepts from team page" do
-      sign_out
+      student_sign_out
       sign_in(team.mentors.sample)
 
       visit mentor_team_path(team)
@@ -182,7 +182,7 @@ RSpec.describe "Students request to join a team",
     end
 
     it "mentor declines from team page" do
-      sign_out
+      student_sign_out
       sign_in(team.mentors.sample)
 
       visit mentor_team_path(team)
@@ -198,7 +198,7 @@ RSpec.describe "Students request to join a team",
     it "student declines the request" do
       ActionMailer::Base.deliveries.clear
 
-      sign_out
+      student_sign_out
       student = team.students.sample
 
       visit student_join_request_path(
@@ -224,7 +224,7 @@ RSpec.describe "Students request to join a team",
     it "mentor declines the request" do
       ActionMailer::Base.deliveries.clear
 
-      sign_out
+      student_sign_out
       mentor = team.mentors.sample
 
       visit mentor_join_request_path(
