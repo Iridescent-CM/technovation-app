@@ -27,7 +27,7 @@ class NewRegistrationController < ApplicationController
         redirect_to: "student_dashboard_path"
       )
     else
-      render json: {errors: profile.errors}, status: :unprocessable_entity
+      render json: {errors: ValidationErrorMessagesConverter.new(errors: profile.errors).call}, status: :unprocessable_entity
     end
   end
 
