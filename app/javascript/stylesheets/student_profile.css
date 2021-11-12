@@ -89,3 +89,15 @@ nav {
 .tw-flex-basis-33{
     flex-basis: 33.333333%
 }
+
+#cha-student-intro-wrapper, .tw-dropdown-menu{
+    display: none;
+}
+
+.tw-dropdown-menu a, #student-nav-wrapper a{
+   @apply hover:text-energetic-blue
+}
+
+.tw-dropdown-menu li{
+   @apply py-2
+}
