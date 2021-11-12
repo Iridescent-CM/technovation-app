@@ -1,0 +1,27 @@
+<% if chapter_ambassador.provided_intro? %>
+  <div id="cha-student-intro-wrapper">
+    <div class="bg-white p-6 rounded-md flex flex-col lg:flex-row justify-between">
+      <section id="cha-avatar" class="mx-4 mb-4 lg:mb-0">
+        <img class="rounded-bl-3xl rounded-tr-3xl" src="<%= chapter_ambassador.profile_image %>" alt="" style="height: auto; width: 200px;">
+      </section>
+      <section id="cha-profile-summary" class="mx-4 mb-4 lg:mb-0 p-0 lg:px-8">
+        <p class="font-bold text-2xl"><%= chapter_ambassador.full_name %></p>
+        <p class="font-bold"><%= chapter_ambassador.program_name %> Chapter Ambassador</p>
+        <p class="mt-8"><%= chapter_ambassador.intro_summary %></p>
+      </section>
+      <section id=cha-social-links class="mx-4 mb-4 lg:mb-0 w-full lg:w-1/6">
+        <ul>
+          <% chapter_ambassador.regional_links.each do |link| %>
+            <li class="tw-link">
+              <% if link.name == "email" %>
+                <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>
+              <% else %>
+                <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </section>
+    </div>
+  </div>
+<% end %>
