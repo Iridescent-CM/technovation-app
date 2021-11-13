@@ -16,7 +16,7 @@ RSpec.feature "Set survey links and link text", :js do
       sign_in(user)
 
       expect(current_path).to eq(public_send("student_dashboard_path"))
-      expect(page).to have_link("link text", href: "google.com", count: 1)
+      expect(page).to have_link("link text", href: "google.com", count: 2)
 
       expect(page).to have_css(".swal2-modal")
       within(".swal2-modal") do
