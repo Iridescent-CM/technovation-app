@@ -10,7 +10,16 @@
         <div class="flex items-center space-x-1" id="student-nav-wrapper">
           <a href="">Curriculum</a>
           <a href="">About</a>
-
+          <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+            <%= link_to SeasonToggles.survey_link(current_scope, "text"),
+                        SeasonToggles.survey_link(
+                          current_scope, "url",
+                          format_url: true,
+                          account: current_account
+                        ),
+                        target: "_blank"
+            %>
+          <% end %>
           <div class="flex items-center justify-center">
             <div class="relative inline-block text-left tw-dropdown" id="student-dropdown-wrapper">
               <span class="flex cursor-pointer hover:text-energetic-blue"><%= current_student.first_name %>
@@ -27,7 +36,8 @@
                       <li><a href="https://www.technovationchallenge.org/submission-guidelines/">Submission Guide</a></li>
                       <li><a href="https://www.technovationchallenge.org/judging-rubric/">Judging Rubric</a></li>
                       <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-                        <%= link_to "Help Technovation Improve! " + SeasonToggles.survey_link(current_scope, "text", account: current_account),
+                        <p>Help Technovation Improve!</p>
+                        <%= link_to SeasonToggles.survey_link(current_scope, "text"),
                                     SeasonToggles.survey_link(
                                       current_scope, "url",
                                       format_url: true,

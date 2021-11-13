@@ -5,8 +5,8 @@ RSpec.feature "Set survey links and link text", :js do
     let(:user) { FactoryBot.create(:student) }
 
     before do
-      SeasonToggles.set_dashboard_text("student", "this is a dependency")
-      SeasonToggles.set_survey_link("student", "link text", "google.com")
+      SeasonToggles.set_dashboard_text(:student, "this is a dependency")
+      SeasonToggles.set_survey_link(:student, "link text", "google.com")
     end
 
     scenario "when they have not seen it yet" do
@@ -33,7 +33,7 @@ RSpec.feature "Set survey links and link text", :js do
       expect(current_path).to eq(public_send("student_dashboard_path"))
 
       find('#student-dropdown-wrapper').click
-      expect(page).to have_link("link text", href: "google.com", count: 1)
+      expect(page).to have_link("link text", href: "google.com", count: 2)
 
       expect(page).not_to have_css(".swal2-modal")
     end
@@ -43,8 +43,8 @@ RSpec.feature "Set survey links and link text", :js do
     let(:mentor) { FactoryBot.create(:mentor) }
 
     before do
-      SeasonToggles.set_dashboard_text("mentor", "this is a dependency")
-      SeasonToggles.set_survey_link("mentor", "link text", "google.com")
+      SeasonToggles.set_dashboard_text(:mentor, "this is a dependency")
+      SeasonToggles.set_survey_link(:mentor, "link text", "google.com")
     end
 
     scenario "when they have not seen it yet" do
@@ -69,7 +69,7 @@ RSpec.feature "Set survey links and link text", :js do
       sign_in(mentor)
 
       expect(current_path).to eq(public_send("mentor_dashboard_path"))
-      expect(page).to have_link("link text", href: "google.com", count: 2)
+      expect(page).to have_link("link text", href: "google.com", count: 1)
 
       expect(page).not_to have_css(".swal2-modal")
     end
