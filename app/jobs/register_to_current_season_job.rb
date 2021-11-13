@@ -55,7 +55,11 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
     subscribe_to_newsletter(record, :student)
 
-    RegistrationMailer.welcome_student(record).deliver_later
+    if profile.division.junior? || profile.division.senior?
+      RegistrationMailer.welcome_student(record).deliver_later
+    elsif profile.division.beginner?
+      RegistrationMailer.welcome_parent(record).deliver_later
+    end
 
     if profile.reload.parental_consent.nil?
       profile.parental_consents.create!

@@ -1,0 +1,213 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Welcome Students"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          We're so glad you and your daughter are joining Technovation Girls for the
+          <%= @season_year %> season! We can't wait to hear how she wants to change your community with
+          technology. In this email you can find information about what she will be doing in the Technovation
+          Girls program and Beginner Division, and how you can support her.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>About Technovation Girls</strong><br /><br />
+          <%= link_to "Technovation Girls", @technovation_url %>
+          is a free technology entrepreneurship program for girls ages 8-18 that offers girls
+          around the world the opportunity to learn the skills they need to become problem solvers
+          and leaders who aren’t afraid to learn new technologies. Every year we invite girls to
+          identify a problem in their community, and then challenge them to solve it.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Girls work in teams (of 1 to 5) to build a mobile app or AI project to solve
+          the problem they have identified. Girls can be supported by mentors and guided
+          by our curriculum. Parents are encouraged to take an active role in mentoring
+          or supporting their daughters especially in the Beginner Division. In April,
+          teams submit their app, pitch, and other
+          <%= link_to "submission materials", "https://technovationchallenge.org/submission-guidelines/" %>
+          online. Judges from around the world provide written feedback to teams to help them make
+          their ideas even better in the future!
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          After all of the submissions have been judged, finalist teams are invited to pitch their
+          ideas live to finalist judges to see who will win a special prize, and all participants
+          and their families (including you!) are invited to attend our virtual World Summit. Please
+          note that while your daughter is registered as a participant in the Beginner Division, if
+          she joins a team with an older student the team will submit their project and be judged by
+          the criteria of the division of the oldest girl on the team.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>What your daughter will learn&hellip;</strong>
+          <ul>
+            <li>How to identify and solve a problem</li>
+            <li>
+              New technology: How to code and create a mobile app or create and train an AI-powered
+              machine learning model that can interact with the user
+            </li>
+            <li>What it takes to bring an idea or business to life!</li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>What your daughter will do&hellip;</strong>
+          <ul>
+            <li>Develop a mobile app prototype or AI project</li>
+            <li>
+              Work with other girls and one or more parents and/or mentors to find the best approach
+              to solving their chosen problem taking constraints into account
+            </li>
+            <li>Gather user feedback from community members about her idea and prototype(s)</li>
+            <li>Create pitch and demo videos to show her ideas</li>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>How you can support your daughter and her team</strong>
+          <ul>
+            <li>
+              <strong>Stay informed:</strong>
+              You’ll get an email every other two weeks or so from us at Technovation from now
+              until April with details about how to support your daughter at different points in the
+              season, so stay tuned!
+            </li>
+            <li>
+              <strong>Offer encouragement and support:</strong>
+              Through Technovation Girls, girls undertake a big project and are expected to learn
+              how to work as a team, collaborate on a project, and divide work fairly. Share your experience and
+              advice for staying motivated through tough times, managing disagreements, addressing frustration,
+              and communicating clearly.
+            </li>
+            <li>
+              <strong>Mentor your daughter’s team:</strong>
+              In the Beginner Division, parents are encouraged to actively mentor their daughter and
+              their team. If you have time to spend an hour a week learning and helping to guide your daughter and
+              her team through the curriculum, you won’t regret it! Spending time doing something meaningful as
+              a family like Technovation Girls is special and has proven benefits for all. You don’t need to
+              sign up for a Mentor account - your Beginner Division account is a joint parent/student account and
+              is all you’ll need.
+            </li>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>Parent/Guardian Permission:</strong>
+          Make sure that you have shared your official permission for your daughter to participate!
+          There are instructions on how to sign permission and media consent forms on
+          <%= link_to "your dashboard", @dashboard_url %>.
+          Once the consent forms are signed, your family will be ready to participate.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>Internet safety and digital literacy:</strong>
+          Technovation Girls is an online program, and we want to make sure your daughter knows
+          how to be safe online. In Technovation Girls, you can look for another adult mentor to support
+          your daughter’s team develop your app through our platform. We trust our mentors. They have been
+          pre-approved to support your team, but we still recommend that you discuss
+          <link_to "how to keep yourself safe", @safety_url %>
+          with your daughter when collaborating online
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>Rules and Honor Code:</strong>
+          Technovation Girls is a learning experience. By participating in this program, your
+          daughter agrees to only submit your team's work from this season to the competition. If she is found
+          breaking competition rules or plagiarizing, her team will not be eligible to participate.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <%= link_to "Key Dates",
+            "https://technovationchallenge.org/wp-content/uploads/2021/09/2022-ProgramTimeline_vertical-9-15-21.jpg"
+          %>
+          <br />
+          <strong>
+            Write these dates on your calendar! All deadlines are firm.
+          </strong>
+
+          <ul>
+            <li>
+              <strong>
+                <%= @registration_opens %>:
+                Registration Opens:
+              </strong>
+
+              You can now register your team and get started
+            </li>
+
+            <li>
+              <strong>
+                <%= @official_start_of_season %>:
+                Official start of <%= @season_year %> Season!
+              </strong>
+            </li>
+
+            <li>
+              <strong>
+                <%= @team_registration_deadline %>:
+                Last Day to register as a student or a mentor
+              </strong>
+
+              All members of your team must have
+              registered and joined your team by this date
+            </li>
+
+            <li>
+              <strong>
+                <%= @season_submission_deadline %>:
+                Submission Deadline
+              </strong>
+
+               All parts of your project must be submitted on
+               <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
+               (submissions open in <%= @season_submissions_open_month %>)
+            </li>
+          </ol>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          If you have questions, be sure to
+          <%= link_to "check our FAQ", @faq_url %>!
+          You can also reach out to us at
+          <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Thank you again for encouraging your daughter to dream big and develop real solutions to community problems.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Warmly,
+          <br/>
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

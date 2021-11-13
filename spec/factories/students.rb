@@ -158,16 +158,28 @@ FactoryBot.define do
       ProfileCreating.execute(s, FakeController.new)
     end
 
-    trait :senior do |s|
+    trait :senior do
       date_of_birth { Division.cutoff_date - Division::SENIOR_DIVISION_AGE.years }
+
+      after(:create) do |s|
+        s.division = Division.senior
+      end
     end
 
-    trait :junior do |s|
+    trait :junior do
       date_of_birth { Division.cutoff_date - (Division::SENIOR_DIVISION_AGE - 1).years }
+
+      after(:create) do |s|
+        s.division = Division.junior
+      end
     end
 
-    trait :beginner do |s|
+    trait :beginner do
       date_of_birth { Division.cutoff_date - 8.years }
+
+      after(:create) do |s|
+        s.division = Division.beginner
+      end
     end
 
     trait :on_team do

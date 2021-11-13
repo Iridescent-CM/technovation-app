@@ -33,22 +33,54 @@ RSpec.describe RegisterToCurrentSeasonJob do
     end
   end
 
-  it "welcomes students" do
-    student = FactoryBot.create(:student)
+  context "welcome student emails" do
+    let(:registration_mailer) { double(RegistrationMailer, deliver_later: true) }
 
-    student.account.update(
-      seasons: [],
-    )
+    before do
+      student.account.update(seasons: [])
+    end
 
-    mailer = double(:RegistrationMailer, deliver_later: true)
+    context "when it's a senior student" do
+      let(:student) { FactoryBot.create(:student, :senior) }
 
-    expect(RegistrationMailer).to receive(:welcome_student)
-      .with(student.account)
-      .and_return(mailer)
+      it "sends the 'welcome_student' email" do
+        expect(RegistrationMailer).to receive(:welcome_student)
+          .with(student.account)
+          .and_return(registration_mailer)
 
-    expect(mailer).to receive(:deliver_later)
+        expect(registration_mailer).to receive(:deliver_later)
 
-    RegisterToCurrentSeasonJob.perform_now(student.account)
+        RegisterToCurrentSeasonJob.perform_now(student.account)
+      end
+    end
+
+    context "when it's a junior student" do
+      let(:student) { FactoryBot.create(:student, :junior) }
+
+      it "sends the 'welcome_student' email" do
+        expect(RegistrationMailer).to receive(:welcome_student)
+          .with(student.account)
+          .and_return(registration_mailer)
+
+        expect(registration_mailer).to receive(:deliver_later)
+
+        RegisterToCurrentSeasonJob.perform_now(student.account)
+      end
+    end
+
+    context "when it's a beginner student" do
+      let(:student) { FactoryBot.create(:student, :beginner) }
+
+      it "sends the 'welcome_parent' email" do
+        expect(RegistrationMailer).to receive(:welcome_parent)
+          .with(student.account)
+          .and_return(registration_mailer)
+
+        expect(registration_mailer).to receive(:deliver_later)
+
+        RegisterToCurrentSeasonJob.perform_now(student.account)
+      end
+    end
   end
 
   it "creates unsigned parental consents for students" do
