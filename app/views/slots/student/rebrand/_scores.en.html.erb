@@ -1,0 +1,25 @@
+<div id="scores-and-certs" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Scores & Certificate</p>
+  </div>
+
+  <div class="tw-content=-wrapper p-8">
+    <% if current_student.onboarded? && SeasonToggles.display_scores? %>
+      <% if current_team.submission.complete? %>
+        <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
+      <% elsif current_student.participated? %>
+        <%= render "student/dashboards/completion_steps/participation_certificate" %>
+      <% else %>
+        <h1 class="content-heading">Thank you for your participation</h1>
+
+        <p>
+          Unfortunately, no scores are available for your team because your
+          submission was incomplete. We hope you will continue working on your
+          app and join us again next season!
+        </p>
+      <% end %>
+    <% else %>
+      <%= render 'explanations/feature_not_available', feature: :scores %>
+    <% end %>
+  </div>
+</div>

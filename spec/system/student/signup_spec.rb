@@ -37,6 +37,7 @@ RSpec.describe "Students signing up", :js do
       fill_in "Password", with: "margeysecret1234"
       click_button "Next"
 
+      find('#student-dropdown-wrapper').click
       click_link "Logout"
 
       fill_in "Email", with: "margeyb@springfield.net"

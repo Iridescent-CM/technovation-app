@@ -9,7 +9,7 @@ RSpec.feature "Students leave their own team" do
     student = FactoryBot.create(:student, :on_team, :geocoded)
 
     sign_in(student)
-    click_link "My team"
+    click_link "My Team"
 
     within("##{dom_id(student)}") do
       click_link "remove this member"

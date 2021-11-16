@@ -12,7 +12,7 @@ RSpec.feature "Students edit submission pieces" do
   before do
     SeasonToggles.team_submissions_editable!
     sign_in(student)
-    click_link "My team's submission"
+    click_link "My Submission"
   end
 
   scenario "Set the app name" do

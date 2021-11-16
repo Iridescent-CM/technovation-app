@@ -42,7 +42,7 @@ RSpec.feature "Students find a team" do
       visit student_dashboard_path(anchor: "/find-team")
 
       expect(current_path).to eq(student_dashboard_path)
-      expect(page).to have_content(join_request.team_name)
+      expect(page).to have_content(join_request.team_name.titleize)
       expect(page).to have_content("You have asked to join")
     end
   end

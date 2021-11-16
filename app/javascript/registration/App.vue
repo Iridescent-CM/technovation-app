@@ -28,6 +28,12 @@ const { mapState } = createNamespacedHelpers('registration')
 export default {
   name: 'app',
 
+  data () {
+    return{
+      isSignup: false
+    }
+  },
+
   directives: {
     'sticky-sidebar': StickySidebar,
   },
@@ -67,6 +73,13 @@ export default {
     },
   },
 
+  beforeMount() {
+    let pathname = window.location.pathname
+    if (pathname === '/signup') {
+      this.isSignup = true
+    }
+  },
+
   computed: {
     ...mapState([
       'isReady',
@@ -76,26 +89,31 @@ export default {
       if (this.embedded)
         return "grid__col-12"
 
-      return "grid__col-9"
+      if(this.isSignup){
+        return "grid__col-9"
+      }
     },
 
     menuGridColumn () {
       if (this.embedded)
         return ''
 
-      return 'grid__col-3 grid__col--bleed'
+      if(this.isSignup)
+        return 'grid__col-3 grid__col--bleed'
     },
 
     wrapperClasses () {
-      return {
-        grid: true,
-        tabs: true,
-        'tabs--vertical': true,
-        'tabs--remove-bg': this.removeWhiteBackground,
-        'tabs--css-only': true,
+      if(this.isSignup){
+        return {
+          grid: true,
+          tabs: true,
+          'tabs--vertical': true,
+          'tabs--remove-bg': this.removeWhiteBackground,
+          'tabs--css-only': true,
+        }
       }
     },
-  },
+  }
 }
 </script>
 

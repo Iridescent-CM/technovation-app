@@ -3,10 +3,10 @@ import VueRouter from 'vue-router'
 
 import RegistrationApp from 'registration/App'
 import TeamBuilding from 'student/components/TeamBuilding'
-import Submission from 'dashboard/components/Submission'
-import Curriculum from 'dashboard/components/Curriculum'
-import Scores from 'dashboard/components/Scores'
-import Events from 'dashboard/components/Events'
+import Submission from 'dashboard/components/SubmissionRebrand'
+import Curriculum from 'dashboard/components/CurriculumRebrand'
+import Scores from 'dashboard/components/ScoresRebrand'
+import Events from 'dashboard/components/EventsRebrand'
 
 import store from '../store'
 

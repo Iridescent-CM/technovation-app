@@ -1,54 +1,45 @@
-<h1 class="margin--none padding--none">Join a team</h1>
+<section class="mb-8">
+  <%= render "completion_steps/rebrand/invitations",
+    invites: current_student.team_member_invites.pending %>
+</section>
 
-<%= render "completion_steps/invitations",
-  invites: current_student.team_member_invites.pending %>
+<section>
+  <p class="font-bold">Ask to join a team</p>
 
-<h3 class="margin--t-large">Ask to join a team</h3>
+  <div id="join-requests">
+    <% if current_student.join_requests.pending.any? %>
+      <p>You have asked to join a team!</p>
+      <% current_student.join_requests.pending.each do |join_request| %>
+        <%= content_tag :div,
+          class: "join_request",
+          id: dom_id(join_request) do %>
+          <div class="w-full md:w-64 justify-center items-center bg-white shadow-lg rounded-lg flex flex-col mt-8">
+            <%= image_tag join_request.team_team_photo_url, class: "w-full h-auto object-cover rounded-t-lg" %>
+            <div class="w-full p-4 justify-start flex flex-col">
+              <p class="font-bold"><%= join_request.team_name.titleize %></p>
+              <p><%= join_request.team_primary_location %></p>
+              <p><%= join_request.team_division_name.titleize %> Division</p>
 
-<div id="join-requests">
-  <% if current_student.join_requests.pending.any? %>
-    <p>You have asked to join a team!</p>
-
-    <% current_student.join_requests.pending.each do |join_request| %>
-      <%= content_tag :div,
-        class: "join_request",
-        id: dom_id(join_request) do %>
-        <div class="grid grid--bleed">
-          <div class="grid__col-4">
-            <div class="grid__cell">
-              <%= image_tag join_request.team_team_photo_url,
-                class: 'thumbnail-md grid__cell-img' %>
+              <%= link_to raw("Cancel my request to join this team &#8227;"),
+                          send("#{current_scope}_join_request_path", id: join_request.review_token),
+                          data: {
+                            method: :delete,
+                            confirm: t("controllers.student.join_requests.destroy.confirm")
+                          },
+                          class: "danger small mt-4"
+              %>
             </div>
           </div>
-
-          <div class="grid__col-8">
-            <div class="grid__cell">
-              <p>
-                <%= join_request.team_name %><br />
-                Division:
-                <%= join_request.team_division_name.humanize %><br />
-                <%= join_request.team_primary_location %><br />
-                <%= link_to "Cancel my request to join this team",
-                  send("#{current_scope}_join_request_path", id: join_request.review_token),
-                  data: {
-                    method: :delete,
-                    confirm: t("controllers.student.join_requests.destroy.confirm")
-                  },
-                  class: "danger small"
-                %>
-              </p>
-            </div>
-          </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
-  <% else %>
-    <p>Use our team search to find a team and ask to join them!</p>
+    <% else %>
+      <p class="mb-4">Use the team search to find a team and ask to join them!</p>
 
-    <%= link_to(
-      t("views.profile_requirements.create_join_team.links.join.text"),
-      send("new_#{current_scope}_team_search_path"),
-      class: "button"
-    ) %>
-  <% end %>
-</div>
+      <%= link_to(
+        t("views.profile_requirements.create_join_team.links.join.text"),
+        send("new_#{current_scope}_team_search_path"),
+        class: "tw-green-btn"
+      ) %>
+    <% end %>
+  </div>
+</section>

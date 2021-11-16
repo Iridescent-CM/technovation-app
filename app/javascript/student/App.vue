@@ -1,47 +1,43 @@
 <template>
   <div>
-    <dashboard-header
-      default-title="Student Dashboard"
-      :resource-links="resourceLinks"
-    >
-      <div slot="chapter-ambassador-intro"><slot name="chapter-ambassador-intro" /></div>
-    </dashboard-header>
+    <div class="container mx-auto">
+      <div class="p-6 flex flex-col-reverse lg:flex-row justify-between">
+        <div id="student-dash" class="w-full lg:w-4/6">
+          <router-view :key="$route.name" :profile-icons="profileIcons">
+            <div slot="change-email"><slot name="change-email" /></div>
+            <div slot="change-password"><slot name="change-password" /></div>
+            <div slot="parental-consent"><slot name="parental-consent" /></div>
+            <div slot="find-team"><slot name="find-team" /></div>
+            <div slot="create-team"><slot name="create-team" /></div>
+            <div slot="find-mentor"><slot name="find-mentor" /></div>
+            <div slot="submission"><slot name="submission" /></div>
+            <div slot="events"><slot name="events" /></div>
+            <div slot="scores"><slot name="scores" /></div>
+          </router-view>
+        </div>
 
-    <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">
-      <div class="tabs__content background-color--white grid__col-9">
-        <router-view :key="$route.name" :profile-icons="profileIcons">
-          <div slot="change-email"><slot name="change-email" /></div>
-          <div slot="change-password"><slot name="change-password" /></div>
-          <div slot="parental-consent"><slot name="parental-consent" /></div>
-          <div slot="find-team"><slot name="find-team" /></div>
-          <div slot="create-team"><slot name="create-team" /></div>
-          <div slot="find-mentor"><slot name="find-mentor" /></div>
-          <div slot="submission"><slot name="submission" /></div>
-          <div slot="events"><slot name="events" /></div>
-          <div slot="scores"><slot name="scores" /></div>
-        </router-view>
-      </div>
-
-      <div class="grid__col-3 grid__col--bleed">
-        <dashboard-menu
-          :regional-pitch-events-enabled="regionalPitchEventsEnabled"
-          :scores-and-certificates-enabled="scoresAndCertificatesEnabled"
-        />
+        <div class="tw-blue-lg-container w-full lg:w-1/4">
+          <ContainerHeader header-text="To-do"/>
+          <dashboard-menu-rebrand
+            :regional-pitch-events-enabled="regionalPitchEventsEnabled"
+            :scores-and-certificates-enabled="scoresAndCertificatesEnabled"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import DashboardHeader from './DashboardHeader'
-import DashboardMenu from './DashboardMenu'
+import DashboardMenuRebrand from "./DashboardMenuRebrand";
+import ContainerHeader from "../new_registration/components/ContainerHeader";
 
 export default {
   name: 'app',
 
   components: {
-    DashboardHeader,
-    DashboardMenu,
+    DashboardMenuRebrand,
+    ContainerHeader
   },
 
   data () {

@@ -18,7 +18,7 @@
           <div class="grid__col-4">
             <div class="grid__cell">
               <%= image_tag invite.team.team_photo.url,
-                class: "thumbnail-md grid__cell-img" %>
+                            class: "thumbnail-md grid__cell-img" %>
             </div>
           </div>
 
@@ -28,7 +28,7 @@
 
               <p>
                 <%= link_to "Open this invitation",
-                  send("#{current_scope}_team_member_invite_path", invite) %>
+                            send("#{current_scope}_team_member_invite_path", invite) %>
               </p>
             </div>
           </div>

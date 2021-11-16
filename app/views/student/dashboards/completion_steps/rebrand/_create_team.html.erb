@@ -1,0 +1,22 @@
+<% if hidden ||= false %>
+  <%= render 'explanations/feature_not_available', feature: :create_team %>
+<% else %>
+  <p class="font-bold">Create a team</p>
+  <p>
+    Start your own team and then invite team members, or let other students
+    <span>
+     <%= link_to("find you in search",
+           send("new_#{current_scope}_team_search_path"),
+           class: 'tw-link')
+     %>
+      .
+    </span>
+  </p>
+  <div class="step-actions mt-8">
+    <%= link_to(
+      t("views.profile_requirements.create_join_team.links.create.text"),
+      send("new_#{current_scope}_team_path"),
+      class: "tw-green-btn"
+    ) %>
+  </div>
+<% end %>

@@ -16,7 +16,7 @@ en:
           my_account: "My profile"
           my_requests: "My requests"
           my_teams: "My teams"
-          team_submission: "My team's submission"
+          team_submission: "My Submission"
         buttons:
           team_submission_html: "View my team's submission"
         show:
