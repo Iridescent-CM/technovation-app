@@ -1,17 +1,17 @@
 
 <template>
-  <ul class="tabs__menu tabs-menu__parent-menu padding--none">
-    <tab-link
-      :class="registrationTabLinkClasses"
-      :to="{ name: 'basic-profile', meta: { active: registrationPagesActive } }"
-      :condition-to-enable="true"
-      :condition-to-complete="true"
-    >
-      Complete your Profile
-      <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">
-        <registration-menu />
-      </div>
-    </tab-link>
+  <ul class="">
+<!--    <tab-link-->
+<!--      :class="registrationTabLinkClasses"-->
+<!--      :to="{ name: 'basic-profile', meta: { active: registrationPagesActive } }"-->
+<!--      :condition-to-enable="true"-->
+<!--      :condition-to-complete="true"-->
+<!--    >-->
+<!--      Complete your Profile-->
+<!--      <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">-->
+<!--        <registration-menu />-->
+<!--      </div>-->
+<!--    </tab-link>-->
 
     <tab-link
       :class="teamTabLinkClasses"
@@ -19,12 +19,13 @@
       :condition-to-enable="true"
       :condition-to-complete="hasParentalConsent && isOnTeam"
     >
-      <hr class="bg-energetic-blue h-1 w-full">
-      Build your Team
-      <div slot="subnav" class="tabs-menu__child-menu" v-if="teamPagesActive">
+      <span class="btn-text-space">Build your team</span>
+      <div slot="subnav" class="tabs-menu__child-menu ml-8" v-if="teamPagesActive">
         <team-menu />
       </div>
     </tab-link>
+
+    <li><hr class="todo-menu-hr"></li>
 
     <tab-link
       :class="curriculumTabLinkClasses"
@@ -32,9 +33,10 @@
       :condition-to-enable="true"
       :condition-to-complete="submissionComplete"
     >
-      <hr class="bg-energetic-blue h-1 w-full">
-      Learn from the Curriculum
+      <span class="btn-text-space">Learn from the curriculum</span>
     </tab-link>
+
+    <li><hr class="todo-menu-hr"></li>
 
     <tab-link
       :class="submissionTabLinkClasses"
@@ -43,9 +45,10 @@
       :condition-to-enable="hasParentalConsent && isOnTeam"
       :condition-to-complete="submissionComplete"
     >
-      <hr class="bg-energetic-blue h-1 w-full">
-      Submit your Project
+      <span class="btn-text-space">Submit your project</span>
     </tab-link>
+
+    <li><hr class="todo-menu-hr"></li>
 
     <tab-link
       :class="eventsTabLinkClasses"
@@ -54,9 +57,11 @@
       :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
-      <hr class="bg-energetic-blue h-1 w-full">
-      Pitch your project
+      <span class="btn-text-space">Pitch your project</span>
+
     </tab-link>
+
+    <li><hr class="todo-menu-hr"></li>
 
     <tab-link
       :class="scoresTabLinkClasses"
@@ -65,8 +70,7 @@
       :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
     >
-      <hr class="bg-energetic-blue h-1 w-full">
-      View Scores & Certificate
+      <span class="btn-text-space">Find your scores & certificates</span>
     </tab-link>
   </ul>
 </template>
@@ -78,10 +82,10 @@ import tooltipsMixin from 'mixins/tooltips'
 
 const { mapGetters } = createNamespacedHelpers('authenticated')
 
-import TabLink from 'tabs/components/TabLink'
+import TabLink from 'tabs/components/TabLinkRebrand'
 
 import RegistrationMenu from 'registration/DashboardMenu'
-import TeamMenu from './menus/Team'
+import TeamMenu from './menus/TeamRebrand'
 
 export default {
   name: 'dashboard-menu',
@@ -172,3 +176,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+ .btn-text-space{
+   @apply ml-2
+ }
+
+ .todo-menu-hr{
+   @apply bg-energetic-blue h-1 w-full my-4
+ }
+</style>

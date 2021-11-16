@@ -11,7 +11,7 @@ RSpec.describe "Students invite mentors to join their team", :js do
     student.memberships.destroy_all
 
     visit student_dashboard_path
-    click_button "Build your Team"
+    click_button "Build your team"
     click_button "Add a mentor to your team"
 
     expect(page).not_to have_link("Search for a Mentor")

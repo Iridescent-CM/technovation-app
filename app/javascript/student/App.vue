@@ -18,10 +18,12 @@
 
         <div class="tw-blue-lg-container w-full lg:w-1/4">
           <ContainerHeader header-text="To-do"/>
-          <dashboard-menu-rebrand
-            :regional-pitch-events-enabled="regionalPitchEventsEnabled"
-            :scores-and-certificates-enabled="scoresAndCertificatesEnabled"
-          />
+          <div class="p-6">
+            <dashboard-menu-rebrand
+              :regional-pitch-events-enabled="regionalPitchEventsEnabled"
+              :scores-and-certificates-enabled="scoresAndCertificatesEnabled"
+            />
+          </div>
         </div>
       </div>
     </div>

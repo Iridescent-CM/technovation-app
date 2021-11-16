@@ -7,7 +7,7 @@ RSpec.describe "Students view scores", :js do
     submission = FactoryBot.create(:submission, :incomplete)
 
     sign_in(submission.team.students.sample)
-    click_button "View Scores & Certificate"
+    click_button "Find your scores & certificates"
 
     expect(page).to have_content("Thank you for your participation")
     expect(page).to have_content(
@@ -28,7 +28,7 @@ RSpec.describe "Students view scores", :js do
     student.account.took_program_survey!
 
     sign_in(student)
-    click_button "View Scores & Certificate"
+    click_button "Find your scores & certificates"
     click_link "View your scores and certificate"
 
     expect(page).to have_selector('.ui-accordion-content', visible: false)
@@ -58,7 +58,7 @@ RSpec.describe "Students view scores", :js do
     student.account.took_program_survey!
 
     sign_in(student)
-    click_button "View Scores & Certificate"
+    click_button "Find your scores & certificates"
     click_link "View your scores and certificate"
 
     expect(page).to have_selector('.ui-accordion-content', visible: false)
