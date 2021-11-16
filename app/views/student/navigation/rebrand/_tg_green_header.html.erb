@@ -8,6 +8,8 @@
     </div>
     <% if chapter_ambassador.present? %>
       <%= render 'dashboards/rebrand/chapter_ambassador_intro' %>
+    <% else %>
+      <%= render 'dashboards/rebrand/chapter_ambassador_missing' %>
     <% end %>
   </div>
 
