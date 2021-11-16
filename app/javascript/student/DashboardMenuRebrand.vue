@@ -1,17 +1,17 @@
 
 <template>
   <ul class="">
-    <tab-link
-      :class="registrationTabLinkClasses"
-      :to="{ name: 'basic-profile', meta: { active: registrationPagesActive } }"
-      :condition-to-enable="true"
-      :condition-to-complete="true"
-    >
-      Complete your Profile
-      <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">
-        <registration-menu />
-      </div>
-    </tab-link>
+<!--    <tab-link-->
+<!--      :class="registrationTabLinkClasses"-->
+<!--      :to="{ name: 'basic-profile', meta: { active: registrationPagesActive } }"-->
+<!--      :condition-to-enable="true"-->
+<!--      :condition-to-complete="true"-->
+<!--    >-->
+<!--      Complete your Profile-->
+<!--      <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">-->
+<!--        <registration-menu />-->
+<!--      </div>-->
+<!--    </tab-link>-->
 
     <tab-link
       :class="teamTabLinkClasses"
