@@ -10,7 +10,7 @@ RSpec.describe "Uploading source code to submissions", :js do
 
       visit "/logout"
       sign_in(user)
-      click_button "Submit your Project"
+      click_button "Submit your project"
 
       if scope == :mentor
         click_link "Edit this team's submission"
