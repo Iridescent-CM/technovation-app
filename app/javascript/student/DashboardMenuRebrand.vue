@@ -1,6 +1,5 @@
-
 <template>
-  <ul class="">
+  <ul>
 <!--    <tab-link-->
 <!--      :class="registrationTabLinkClasses"-->
 <!--      :to="{ name: 'basic-profile', meta: { active: registrationPagesActive } }"-->
@@ -176,13 +175,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
- .btn-text-space{
-   @apply ml-2
- }
-
- .todo-menu-hr{
-   @apply bg-energetic-blue h-1 w-full my-4
- }
-</style>

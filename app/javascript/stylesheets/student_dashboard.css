@@ -1,0 +1,15 @@
+.btn-text-space{
+    @apply ml-2
+}
+
+.todo-menu-hr{
+    @apply bg-energetic-blue h-1 w-full my-4
+}
+
+.menu-item-wrapper{
+    @apply flex flex-col text-left ml-2
+}
+
+.support-text{
+    @apply italic text-sm
+}

@@ -121,13 +121,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-  .menu-item-wrapper{
-    @apply flex flex-col text-left ml-2
-  }
-
-  .support-text{
-    @apply italic text-sm
-  }
-</style>
