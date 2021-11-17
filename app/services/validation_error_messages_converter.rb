@@ -21,14 +21,14 @@ class ValidationErrorMessagesConverter
   attr_accessor :errors, :error_key_conversions
 
   DEFAULT_ERROR_KEY_CONVERSIONS = {
-    "account.date_of_birth": "birthday",
-    "account.email": "accountEmail",
+    "account.date_of_birth": "dateOfBirth",
+    "account.email": "email",
     "account.first_name": "firstName",
     "account.gender": "gender",
     "account.last_name": "lastName",
-    "account.password": "accountPassword",
-    parent_guardian_email: "parentName",
-    school_company_name: "companyName",
-    school_name: "schoolName"
+    "account.password": "password",
+    parent_guardian_email: "studentParentGuardianName",
+    school_company_name: "mentorschoolCompanyName",
+    school_name: "studentSchoolName"
   }
 end

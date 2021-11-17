@@ -7,18 +7,18 @@
       <h1 class="text-tg-green text-2xl text-left mb-6" v-if="formValues.profileType === 'mentor'">This is an account for a mentor</h1>
 
       <FormulateInput
-          name="accountEmail"
+          name="email"
           type="email"
           :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Email Address'"
           placeholder="Email address"
           validation="required|email"
           validation-name="Email address"
-          validationjjjj
           @keyup="checkValidation"
           @blur="checkValidation"
           class="flex-grow "
           id="accountEmail"
           v-model="setAccountEmailForParentProfile"
+          :disabled="formValues.profileType === 'parent'"
       />
 
       <p class="text-left text-sm mb-12">Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.</p>
@@ -81,19 +81,14 @@ export default {
   computed:{
     setAccountEmailForParentProfile: {
       get(){
-        if (this.formValues.parentEmail && this.formValues.profileType === "parent") {
-          return this.formValues.parentEmail
+        if (this.formValues.profileType === "parent") {
+          return this.formValues.studentParentGuardianEmail
         } else {
-          return  this.formValues.accountEmail
+          return  this.formValues.email
         }
       },
       set(accountEmailVal){
-        if (this.formValues.parentEmail && this.formValues.profileType === "parent") {
-          document.getElementById("accountEmail").disabled = true
-        } else{
-          document.getElementById("accountEmail").disabled = false
-        }
-        this.formValues.accountEmail = accountEmailVal
+        this.formValues.email = accountEmailVal
       }
     }
   }

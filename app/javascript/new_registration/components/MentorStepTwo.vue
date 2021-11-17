@@ -43,17 +43,18 @@
         />
 
         <FormulateInput
-          name="birthday"
+          name="dateOfBirth"
           type="date"
           label="Birthday"
           placeholder="Birthday"
           validation="required"
+          validation-name="Birthday"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
 
         <FormulateInput
-          name="companyName"
+          name="mentorSchoolCompanyName"
           type="text"
           label="Company Name"
           placeholder="Company Name"
@@ -64,7 +65,7 @@
         />
 
         <FormulateInput
-          name="jobTitle"
+          name="mentorJobTitle"
           type="text"
           label="Job Title"
           placeholder="Job Title"
@@ -100,7 +101,7 @@
 
           <p class="text-left">Add a description of yourself to your profile to help students get to know you. You can change this later.</p>
           <FormulateInput
-            name="mentorSummary"
+            name="mentorBio"
             type="textarea"
             validation="required|min:100,length"
             validation-name="Personal summary"
