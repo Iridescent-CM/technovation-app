@@ -9,67 +9,50 @@
   >
 
     <div v-show="step === 1">
-      <StepOne :form-values="formValues"/>
-      <NextButton @next="next()"/>
+      <StepOne :form-values="formValues" @next="next" />
     </div>
 
     <div v-show="step === 2">
-      <StepTwo :form-values="formValues"/>
-      <div class="registration-btn-wrapper">
-        <PreviousButton @prev="prev()"/>
-        <NextButton @next="next()"/>
-      </div>
+      <MentorStepTwo v-if="formValues.profileType === 'mentor'"
+        :form-values="formValues"
+        @next="next"
+        @prev="prev"
+      />
+      <StudentStepTwo v-else
+        :form-values="formValues"
+        @next="next"
+        @prev="prev"
+      />
     </div>
 
     <div v-show="step === 3">
-      <StepThree :form-values="formValues"/>
-      <div class="registration-btn-wrapper">
-        <PreviousButton @prev="prev()"/>
-        <NextButton @next="next()"/>
-      </div>
+      <StepThree :form-values="formValues" @next="next" @prev="prev" />
     </div>
 
     <div v-show="step === 4">
-      <StepFour :form-values="formValues"/>
+      <StepFour :form-values="formValues" :isLoading="isLoading" @prev="prev" />
 
       <FormulateErrors />
-
-      <div class="registration-btn-wrapper">
-        <PreviousButton @prev="prev()"/>
-        <FormulateInput
-            type="submit"
-            :disabled="isLoading"
-            :label="isLoading ? 'Submitting...' : 'Submit this form'"
-            class="registration-btns"
-        />
-      </div>
-
     </div>
-
-    <pre
-        class="code"
-        v-text="formValues"
-    />
   </FormulateForm>
 </template>
 
 <script>
 import StepOne from "./StepOne";
-import StepTwo from "./StepTwo";
+import MentorStepTwo from "./MentorStepTwo";
+import StudentStepTwo from "./StudentStepTwo";
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
-import PreviousButton from "./PreviousButton";
-import NextButton from "./NextButton";
 import axios from "axios";
+
 export default {
   name: "FormWrapper.vue",
   components:{
     StepOne,
-    StepTwo,
+    MentorStepTwo,
+    StudentStepTwo,
     StepThree,
-    StepFour,
-    PreviousButton,
-    NextButton
+    StepFour
   },
   data(){
     return {
@@ -86,7 +69,6 @@ export default {
       this.step++;
     },
     async submitHandler (data) {
-      console.log(data);
       const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
 
       let config = {
@@ -128,9 +110,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.registration-btn-wrapper{
-  @apply flex p-6 justify-between;
-}
-</style>

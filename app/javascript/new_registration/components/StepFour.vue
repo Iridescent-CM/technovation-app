@@ -1,6 +1,6 @@
 <template>
   <div id="step-four">
-    <ContainerHeader header-text="Set your email and password"/>
+    <ContainerHeader header-text="Set your email and password" />
 
     <div id="email-password" class="form-wrapper">
       <h1 class="text-tg-green text-2xl text-left mb-6" v-if="formValues.profileType === 'parent'">This is an account for beginners division</h1>
@@ -11,11 +11,14 @@
           type="email"
           :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Email Address'"
           placeholder="Email address"
-          validation="required"
+          validation="required|email"
+          validation-name="Email address"
+          validationjjjj
+          @keyup="checkValidation"
+          @blur="checkValidation"
           class="flex-grow "
           id="accountEmail"
           v-model="setAccountEmailForParentProfile"
-          :validation-messages="{required: 'Email address is required.'}"
       />
 
       <p class="text-left text-sm mb-12">Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.</p>
@@ -27,20 +30,54 @@
             label="Password"
             placeholder="At least 8 characters"
             validation="required"
+            @keyup="checkValidation"
+            @blur="checkValidation"
         />
       </div>
+    </div>
+
+    <div class="registration-btn-wrapper">
+      <div>
+        <PreviousButton @prev="$emit('prev')" />
+      </div>
+
+      <FormulateInput
+        type="submit"
+        :disabled="hasValidationErrors || isLoading"
+        :label="isLoading ? 'Submitting...' : 'Submit this form'"
+        input-class="registration-btns"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import ContainerHeader from "./ContainerHeader";
+import PreviousButton from "./PreviousButton";
+
 export default {
   name: "StepFour",
   components: {
-    ContainerHeader
+    ContainerHeader,
+    PreviousButton
   },
-  props: ['formValues'],
+  data () {
+    return {
+      hasValidationErrors: true
+    }
+  },
+  methods: {
+    checkValidation() {
+      const validationErrors = document.querySelector('#step-four div[data-has-errors="true"]')
+
+      if (validationErrors) {
+        this.hasValidationErrors = true
+      } else {
+        this.hasValidationErrors = false
+      }
+    }
+  },
+  props: ['formValues', 'isLoading'],
   computed:{
     setAccountEmailForParentProfile: {
       get(){

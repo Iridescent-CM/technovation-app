@@ -1,6 +1,6 @@
 <template>
-  <div class="step-three">
-    <ContainerHeader header-text="Agree to our data use terms"/>
+  <div id="step-three">
+    <ContainerHeader header-text="Agree to our data use terms" />
 
     <div id="data-use" class="form-wrapper text-left">
 
@@ -51,15 +51,25 @@
         />
       </section>
     </div>
+
+    <div class="registration-btn-wrapper">
+      <PreviousButton @prev="$emit('prev')" />
+      <NextButton @next="$emit('next')" />
+    </div>
   </div>
 </template>
 
 <script>
 import ContainerHeader from "./ContainerHeader";
+import PreviousButton from "./PreviousButton";
+import NextButton from "./NextButton";
+
 export default {
   name: "StepThree",
   components: {
-    ContainerHeader
+    ContainerHeader,
+    PreviousButton,
+    NextButton
   },
   props: ['formValues']
 }
