@@ -93,7 +93,7 @@
             type="email"
             label="Parent Email Address (Optional)"
             placeholder="Parent Email address"
-            validation="email"
+            validation="optional|email"
             validation-name="Email address"
           />
         </div>
