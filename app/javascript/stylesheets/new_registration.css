@@ -5,7 +5,15 @@
 
 @layer components {
     .registration-btns {
-        @apply px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600
+        @apply px-4 py-2 rounded bg-green-500 text-white font-bold hover:bg-green-600
+    }
+
+    .registration-btns:disabled {
+        @apply opacity-50 cursor-not-allowed
+    }
+
+    .registration-btn-wrapper{
+        @apply flex p-6 justify-between;
     }
 
     .registration-nav {
@@ -74,8 +82,8 @@
         @apply text-lg text-left
     }
 
-    #step-two input[type='checkbox'] {
-        @apply w-5 focus:border-green-500
+    #step-two input[type='checkbox'], #step-three input[type='checkbox'] {
+        @apply w-7 focus:border-green-500
     }
 
     .mentorSelectClass, #mentorSummary{

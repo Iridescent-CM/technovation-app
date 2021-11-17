@@ -1,28 +1,33 @@
 <template>
   <div id="step-one">
-    <ContainerHeader header-text="Your Profile Type"/>
+    <ContainerHeader header-text="Your Profile Type" />
 
     <div id="profile-type" class="form-wrapper">
       <h2 class="registration-title">I am a...</h2>
 
-        <FormulateInput
-            label-position="before"
-            type="radio"
-            class="profile-type"
-            :options="options"
-            name="profileType"
-            validation="required"
+      <FormulateInput
+        label-position="before"
+        type="radio"
+        class="profile-type"
+        :options="options"
+        name="profileType"
+        validation="required"
+        @input="hasValidationErrors = false"
         />
     </div>
+
+    <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
   </div>
 </template>
 
 
 <script>
 import ContainerHeader from "./ContainerHeader";
+import NextButton from "./NextButton";
+
 export default {
   name: 'StepOne',
-  components: {ContainerHeader},
+  components: {ContainerHeader, NextButton},
   data() {
     return {
       values: {},
@@ -40,6 +45,7 @@ export default {
           value: "mentor",
         }
       ],
+      hasValidationErrors: true
     };
   },
   props: ['formValues']
