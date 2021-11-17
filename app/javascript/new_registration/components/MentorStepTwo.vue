@@ -14,6 +14,7 @@
             placeholder="First Name"
             validation="required"
             validation-name="First name"
+            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pr-2"
@@ -26,6 +27,7 @@
             placeholder="Last Name"
             validation="required"
             validation-name="Last name"
+            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pl-2"
@@ -49,6 +51,7 @@
           placeholder="Birthday"
           validation="required"
           validation-name="Birthday"
+          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
@@ -60,6 +63,7 @@
           placeholder="Company Name"
           validation="required"
           validation-name="Company name"
+          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
@@ -71,6 +75,7 @@
           placeholder="Job Title"
           validation="required"
           validation-name="Job title"
+          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
@@ -105,6 +110,7 @@
             type="textarea"
             validation="required|min:100,length"
             validation-name="Personal summary"
+            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             id="mentorSummary"
