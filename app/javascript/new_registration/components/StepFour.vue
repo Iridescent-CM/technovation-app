@@ -30,7 +30,7 @@
             type="password"
             label="Password"
             placeholder="At least 8 characters"
-            validation="required"
+            validation="required|min:8,length"
             error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
