@@ -35,17 +35,18 @@ class NewRegistrationController < ApplicationController
 
   def student_params
     {
-      parent_guardian_name: registration_params[:parentName],
-      school_name: registration_params[:schoolName],
+      parent_guardian_name: registration_params[:studentParentGuardianName],
+      parent_guardian_email: registration_params[:studentParentGuardianEmail],
+      school_name: registration_params[:studentSchoolName],
       account_attributes: account_attributes
     }
   end
 
   def parent_params
     {
-      parent_guardian_name: registration_params[:parentName],
-      parent_guardian_email: registration_params[:accountEmail],
-      school_name: registration_params[:schoolName],
+      parent_guardian_name: registration_params[:studentParentGuardianName],
+      parent_guardian_email: registration_params[:email],
+      school_name: registration_params[:studentSchoolName],
       account_attributes: account_attributes
     }
   end
@@ -53,9 +54,9 @@ class NewRegistrationController < ApplicationController
   def mentor_params
     {
       mentor_type: registration_params[:mentorType],
-      school_company_name: registration_params[:companyName],
-      job_title: registration_params[:jobTitle],
-      bio: registration_params[:mentorSummary],
+      school_company_name: registration_params[:mentorSchoolCompanyName],
+      job_title: registration_params[:mentorJobTitle],
+      bio: registration_params[:mentorBio],
       expertise_ids: registration_params["mentorExpertises"],
       account_attributes: account_attributes.merge({gender: registration_params[:gender]})
     }
@@ -65,10 +66,10 @@ class NewRegistrationController < ApplicationController
     {
       first_name: registration_params[:firstName],
       last_name: registration_params[:lastName],
-      date_of_birth: registration_params[:birthday],
+      date_of_birth: registration_params[:dateOfBirth],
       referred_by: registration_params[:referredBy].to_i,
       terms_agreed_at: registration_params[:dataTermsAgreedTo].present? ? Time.current : nil,
-      email: registration_params[:accountEmail],
+      email: registration_params[:email],
       password: registration_params[:password]
     }
   end
@@ -78,19 +79,19 @@ class NewRegistrationController < ApplicationController
       :profileType,
       :firstName,
       :lastName,
-      :birthday,
+      :dateOfBirth,
       :gender,
-      :accountEmail,
+      :email,
       :password,
       :dataTermsAgreedTo,
       :referredBy,
-      :parentName,
-      :parentEmail,
-      :schoolName,
-      :companyName,
-      :jobTitle,
+      :studentParentGuardianName,
+      :studentParentGuardianEmail,
+      :studentSchoolName,
       :mentorType,
-      :mentorSummary,
+      :mentorSchoolCompanyName,
+      :mentorJobTitle,
+      :mentorBio,
       mentorExpertises: []
     )
   end

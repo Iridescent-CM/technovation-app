@@ -34,16 +34,17 @@
 
         <FormulateInput
           type="date"
-          name="birthday"
+          name="dateOfBirth"
           label="Birthday"
           placeholder="Birthday"
           validation="required"
+          validation-name="Birthday"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
 
         <FormulateInput
-          name="schoolName"
+          name="studentSchoolName"
           type="text"
           label="School Name"
           placeholder="School Name"
@@ -58,7 +59,7 @@
 
           <div class="formulate-input-wrapper name-group">
             <FormulateInput
-              name="parentName"
+              name="studentParentGuardianName"
               type="text"
               label="Name"
               placeholder="Parent Name"
@@ -71,7 +72,7 @@
           </div>
 
           <FormulateInput v-if="formValues.profileType === 'parent'"
-            name="parentEmail"
+            name="studentParentGuardianEmail"
             type="email"
             label="Parent Email Address"
             placeholder="Parent Email address"
@@ -82,10 +83,12 @@
           />
 
           <FormulateInput v-else
-            name="parentEmail"
+            name="studentParentGuardianEmail"
             type="email"
             label="Parent Email Address (Optional)"
             placeholder="Parent Email address"
+            validation="email"
+            validation-name="Email address"
           />
         </div>
       </div>
