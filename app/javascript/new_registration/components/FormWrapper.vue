@@ -61,12 +61,23 @@ export default {
       inputErrors: {}
     }
   },
+  created() {
+    window.addEventListener('keypress', this.onKeyPress);
+  },
+  beforeDestroy() {
+    window.removeEventListener('keypress', this.onKeyPress);
+  },
   methods: {
     prev() {
       this.step--;
     },
     next() {
       this.step++;
+    },
+    onKeyPress(e) {
+      if (e.which === 13) {
+        e.preventDefault();
+      }
     },
     async submitHandler (data) {
       const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
@@ -78,7 +89,6 @@ export default {
         }
       }
 
-      // not a parent
       if(data.profileType !== "parent"){
         data.parentEmail = false
       }
