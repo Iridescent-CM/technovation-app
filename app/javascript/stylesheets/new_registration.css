@@ -86,7 +86,7 @@
         @apply w-7 focus:border-green-500
     }
 
-    .mentorSelectClass, #mentorSummary{
+    .mentorSelectClass, #mentorBio{
         @apply border bg-white border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
     }
 }

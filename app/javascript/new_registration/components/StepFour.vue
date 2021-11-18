@@ -7,31 +7,33 @@
       <h1 class="text-tg-green text-2xl text-left mb-6" v-if="formValues.profileType === 'mentor'">This is an account for a mentor</h1>
 
       <FormulateInput
-          name="email"
-          type="email"
-          :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Email Address'"
-          placeholder="Email address"
-          validation="required|email"
-          validation-name="Email address"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          class="flex-grow "
-          id="accountEmail"
-          v-model="setAccountEmailForParentProfile"
-          :disabled="formValues.profileType === 'parent'"
+        name="email"
+        id="email"
+        type="email"
+        :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Email Address'"
+        placeholder="Email address"
+        validation="required|email"
+        validation-name="Email address"
+        @keyup="checkValidation"
+        @blur="checkValidation"
+        class="flex-grow "
+        v-model="setAccountEmailForParentProfile"
+        :disabled="formValues.profileType === 'parent'"
       />
 
       <p class="text-left text-sm mb-12">Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.</p>
 
       <div class="double-wide">
         <FormulateInput
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="At least 8 characters"
-            validation="required|min:8,length"
-            @keyup="checkValidation"
-            @blur="checkValidation"
+          name="password"
+          id="password"
+          type="password"
+          label="Password"
+          placeholder="At least 8 characters"
+          validation="required|min:8,length"
+          @keydown="checkValidation"
+          @keyup="checkValidation"
+          @blur="checkValidation"
         />
       </div>
     </div>
@@ -68,9 +70,17 @@ export default {
   },
   methods: {
     checkValidation() {
-      const validationErrors = document.querySelector('#step-four div[data-has-errors="true"]')
+      const validationErrorMessages = Array.from(
+        document.getElementsByClassName('validation-error-message')
+      ).map(element => element.innerText)
 
-      if (validationErrors) {
+      if (document.getElementById('email').value.length === 0 ||
+        document.getElementById('password').value.length < 8 ||
+        validationErrorMessages.some((message) => {
+          return (message.indexOf('is not a valid email address') >= 0 ||
+            message.indexOf('Password must be at least') >= 0)
+        })) {
+
         this.hasValidationErrors = true
       } else {
         this.hasValidationErrors = false

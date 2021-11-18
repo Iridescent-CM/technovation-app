@@ -9,6 +9,7 @@
         <div class="formulate-input-wrapper name-group">
           <FormulateInput
             name="firstName"
+            id="firstName"
             type="text"
             label="First Name"
             placeholder="First Name"
@@ -21,6 +22,7 @@
 
           <FormulateInput
             name="lastName"
+            id="lastName"
             type="text"
             label="Last Name"
             placeholder="Last Name"
@@ -44,6 +46,7 @@
 
         <FormulateInput
           name="dateOfBirth"
+          id="dateOfBirth"
           type="date"
           label="Birthday"
           placeholder="Birthday"
@@ -59,6 +62,7 @@
 
         <FormulateInput
           name="mentorSchoolCompanyName"
+          id="mentorSchoolCompanyName"
           type="text"
           label="Company Name"
           placeholder="Company Name"
@@ -70,6 +74,7 @@
 
         <FormulateInput
           name="mentorJobTitle"
+          id="mentorJobTitle"
           type="text"
           label="Job Title"
           placeholder="Job Title"
@@ -106,12 +111,12 @@
           <p class="text-left">Add a description of yourself to your profile to help students get to know you. You can change this later.</p>
           <FormulateInput
             name="mentorBio"
+            id="mentorBio"
             type="textarea"
             validation="required|min:100,length"
             validation-name="Personal summary"
             @keyup="checkValidation"
             @blur="checkValidation"
-            id="mentorSummary"
           />
         </div>
       </div>
@@ -168,9 +173,21 @@ export default {
   },
   methods: {
     checkValidation() {
-      const validationErrors = document.querySelector('#step-two-mentor div[data-has-errors="true"]')
+      const validationErrorMessages = Array.from(
+        document.getElementsByClassName('validation-error-message')
+      ).map(element => element.innerText)
 
-      if (validationErrors) {
+      if (document.getElementById('firstName').value.length === 0 ||
+        document.getElementById('lastName').value.length === 0 ||
+        document.getElementById('dateOfBirth').value.length === 0 ||
+        document.getElementById('mentorSchoolCompanyName').value.length === 0 ||
+        document.getElementById('mentorJobTitle').value.length === 0 ||
+        document.getElementById('mentorBio').value.length < 100 ||
+        validationErrorMessages.some((message) => {
+          return (message.indexOf('Please enter a valid birthday') >= 0 ||
+            message.indexOf('Personal summary must be at least') >= 0)
+        })) {
+
         this.hasValidationErrors = true
       } else {
         this.hasValidationErrors = false
