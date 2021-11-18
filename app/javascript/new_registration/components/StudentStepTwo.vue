@@ -14,6 +14,7 @@
             placeholder="First Name"
             validation="required"
             validation-name="First name"
+            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pr-2"
@@ -26,6 +27,7 @@
             placeholder="Last Name"
             validation="required"
             validation-name="Last name"
+            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pl-2"
@@ -39,6 +41,7 @@
           placeholder="Birthday"
           validation="required"
           validation-name="Birthday"
+          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
@@ -50,6 +53,7 @@
           placeholder="School Name"
           validation="required"
           validation-name="School name"
+          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
@@ -65,6 +69,7 @@
               placeholder="Parent Name"
               validation="required"
               validation-name="Parent name"
+              error-behavior="live"
               @keyup="checkValidation"
               @blur="checkValidation"
               class="flex-grow pr-2"
@@ -78,6 +83,7 @@
             placeholder="Parent Email address"
             validation="required|email"
             validation-name="Email address"
+            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
           />
@@ -87,7 +93,7 @@
             type="email"
             label="Parent Email Address (Optional)"
             placeholder="Parent Email address"
-            validation="email"
+            validation="optional|email"
             validation-name="Email address"
           />
         </div>
