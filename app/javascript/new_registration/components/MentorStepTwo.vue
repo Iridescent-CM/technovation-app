@@ -47,7 +47,11 @@
           type="date"
           label="Birthday"
           placeholder="Birthday"
-          validation="required"
+          validation="required|after:01/01/1900|before:01/01/2020"
+          :validation-messages="{
+            after: 'Please enter a valid birthday.',
+            before: 'Please enter a valid birthday.'
+          }"
           validation-name="Birthday"
           @keyup="checkValidation"
           @blur="checkValidation"
