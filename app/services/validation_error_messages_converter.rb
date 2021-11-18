@@ -27,7 +27,7 @@ class ValidationErrorMessagesConverter
     "account.gender": "gender",
     "account.last_name": "lastName",
     "account.password": "password",
-    parent_guardian_email: "studentParentGuardianName",
+    parent_guardian_email: "studentParentGuardianEmail",
     school_company_name: "mentorschoolCompanyName",
     school_name: "studentSchoolName"
   }
