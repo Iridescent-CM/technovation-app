@@ -76,25 +76,16 @@
             />
           </div>
 
-          <FormulateInput v-if="formValues.profileType === 'parent'"
+          <FormulateInput
             name="studentParentGuardianEmail"
             type="email"
-            label="Parent Email Address"
+            :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Parent Email Address (Optional)'"
             placeholder="Parent Email address"
-            validation="required|email"
+            :validation="formValues.profileType === 'parent' ? 'required|email' : 'optional|email'"
             validation-name="Email address"
             error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
-          />
-
-          <FormulateInput v-else
-            name="studentParentGuardianEmail"
-            type="email"
-            label="Parent Email Address (Optional)"
-            placeholder="Parent Email address"
-            validation="optional|email"
-            validation-name="Email address"
           />
         </div>
       </div>
