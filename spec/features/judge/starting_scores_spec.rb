@@ -11,7 +11,7 @@ feature "starting scores", js: true do
     Capybara.default_max_wait_time = @wait_time
   end
 
-  context "as an RPE judge" do
+  xcontext "as an RPE judge" do
     before do
       SeasonToggles.judging_round = :qf
     end
