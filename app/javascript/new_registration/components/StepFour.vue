@@ -13,7 +13,6 @@
           placeholder="Email address"
           validation="required|email"
           validation-name="Email address"
-          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
           class="flex-grow "
@@ -31,7 +30,6 @@
             label="Password"
             placeholder="At least 8 characters"
             validation="required|min:8,length"
-            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
         />
