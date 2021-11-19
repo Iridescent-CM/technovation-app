@@ -40,7 +40,7 @@
           type="date"
           label="Birthday"
           placeholder="Birthday"
-          validation="required|after:01/01/1900|before:01/01/2020"
+          :validation="birthdayValidation"
           :validation-messages="{
             after: 'Please enter a valid birthday.',
             before: 'Please enter a valid birthday.'
@@ -48,6 +48,7 @@
           validation-name="Birthday"
           @keyup="checkValidation"
           @blur="checkValidation"
+          @change="checkValidation"
         />
 
         <FormulateInput
@@ -105,6 +106,8 @@
 </template>
 
 <script>
+import { DateTime } from 'luxon';
+
 import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
@@ -137,13 +140,27 @@ export default {
         (this.formValues.profileType === 'parent' &&
           document.getElementById('studentParentGuardianEmail').value.length === 0) ||
         validationErrorMessages.some((message) => {
-          return (message.indexOf('is not a valid email address') >= 0 ||
-            message.indexOf('Please enter a valid birthday') >= 0)
+          return (
+            message.indexOf('is not a valid email address') >= 0 ||
+            message.indexOf('years old to participate') >= 0 ||
+            message.indexOf('Please enter a valid birthday') >= 0
+          )
         })) {
 
         this.hasValidationErrors = true
       } else {
         this.hasValidationErrors = false
+      }
+    }
+  },
+  computed: {
+    birthdayValidation() {
+      const today = DateTime.now().toFormat('MM/dd/yyyy')
+
+      if (this.formValues.profileType === 'parent') {
+        return `required|student_age:beginner|after:01/01/1900|before:${today}`
+      } else {
+        return `required|student_age|after:01/01/1900|before:${today}`
       }
     }
   },

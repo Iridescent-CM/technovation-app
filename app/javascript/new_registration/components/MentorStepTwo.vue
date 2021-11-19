@@ -50,7 +50,7 @@
           type="date"
           label="Birthday"
           placeholder="Birthday"
-          validation="required|after:01/01/1900|before:01/01/2020"
+          validation="required|mentor_age|after:01/01/1900|before:01/01/2020"
           :validation-messages="{
             after: 'Please enter a valid birthday.',
             before: 'Please enter a valid birthday.'
@@ -58,6 +58,7 @@
           validation-name="Birthday"
           @keyup="checkValidation"
           @blur="checkValidation"
+          @change="checkValidation"
         />
 
         <FormulateInput
@@ -184,8 +185,11 @@ export default {
         document.getElementById('mentorJobTitle').value.length === 0 ||
         document.getElementById('mentorBio').value.length < 100 ||
         validationErrorMessages.some((message) => {
-          return (message.indexOf('Please enter a valid birthday') >= 0 ||
-            message.indexOf('Personal summary must be at least') >= 0)
+          return (
+            message.indexOf('years old to participate') >= 0 ||
+            message.indexOf('Please enter a valid birthday') >= 0 ||
+            message.indexOf('Personal summary must be at least') >= 0
+          )
         })) {
 
         this.hasValidationErrors = true
