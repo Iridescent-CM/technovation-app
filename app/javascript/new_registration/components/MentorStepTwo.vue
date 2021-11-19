@@ -9,12 +9,12 @@
         <div class="formulate-input-wrapper name-group">
           <FormulateInput
             name="firstName"
+            id="firstName"
             type="text"
             label="First Name"
             placeholder="First Name"
             validation="required"
             validation-name="First name"
-            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pr-2"
@@ -22,12 +22,12 @@
 
           <FormulateInput
             name="lastName"
+            id="lastName"
             type="text"
             label="Last Name"
             placeholder="Last Name"
             validation="required"
             validation-name="Last name"
-            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pl-2"
@@ -46,36 +46,40 @@
 
         <FormulateInput
           name="dateOfBirth"
+          id="dateOfBirth"
           type="date"
           label="Birthday"
           placeholder="Birthday"
-          validation="required"
+          validation="required|after:01/01/1900|before:01/01/2020"
+          :validation-messages="{
+            after: 'Please enter a valid birthday.',
+            before: 'Please enter a valid birthday.'
+          }"
           validation-name="Birthday"
-          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
 
         <FormulateInput
           name="mentorSchoolCompanyName"
+          id="mentorSchoolCompanyName"
           type="text"
           label="Company Name"
           placeholder="Company Name"
           validation="required"
           validation-name="Company name"
-          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
 
         <FormulateInput
           name="mentorJobTitle"
+          id="mentorJobTitle"
           type="text"
           label="Job Title"
           placeholder="Job Title"
           validation="required"
           validation-name="Job title"
-          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
@@ -107,13 +111,12 @@
           <p class="text-left">Add a description of yourself to your profile to help students get to know you. You can change this later.</p>
           <FormulateInput
             name="mentorBio"
+            id="mentorBio"
             type="textarea"
             validation="required|min:100,length"
             validation-name="Personal summary"
-            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
-            id="mentorSummary"
           />
         </div>
       </div>
@@ -170,9 +173,21 @@ export default {
   },
   methods: {
     checkValidation() {
-      const validationErrors = document.querySelector('#step-two-mentor div[data-has-errors="true"]')
+      const validationErrorMessages = Array.from(
+        document.getElementsByClassName('validation-error-message')
+      ).map(element => element.innerText)
 
-      if (validationErrors) {
+      if (document.getElementById('firstName').value.length === 0 ||
+        document.getElementById('lastName').value.length === 0 ||
+        document.getElementById('dateOfBirth').value.length === 0 ||
+        document.getElementById('mentorSchoolCompanyName').value.length === 0 ||
+        document.getElementById('mentorJobTitle').value.length === 0 ||
+        document.getElementById('mentorBio').value.length < 100 ||
+        validationErrorMessages.some((message) => {
+          return (message.indexOf('Please enter a valid birthday') >= 0 ||
+            message.indexOf('Personal summary must be at least') >= 0)
+        })) {
+
         this.hasValidationErrors = true
       } else {
         this.hasValidationErrors = false

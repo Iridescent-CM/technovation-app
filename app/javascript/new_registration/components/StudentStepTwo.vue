@@ -9,12 +9,12 @@
         <div class="formulate-input-wrapper name-group">
           <FormulateInput
             name="firstName"
+            id="firstName"
             type="text"
             label="First Name"
             placeholder="First Name"
             validation="required"
             validation-name="First name"
-            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pr-2"
@@ -22,12 +22,12 @@
 
           <FormulateInput
             name="lastName"
+            id="lastName"
             type="text"
             label="Last Name"
             placeholder="Last Name"
             validation="required"
             validation-name="Last name"
-            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
             class="flex-grow pl-2"
@@ -35,25 +35,29 @@
         </div>
 
         <FormulateInput
-          type="date"
           name="dateOfBirth"
+          id="dateOfBirth"
+          type="date"
           label="Birthday"
           placeholder="Birthday"
-          validation="required"
+          validation="required|after:01/01/1900|before:01/01/2020"
+          :validation-messages="{
+            after: 'Please enter a valid birthday.',
+            before: 'Please enter a valid birthday.'
+          }"
           validation-name="Birthday"
-          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
 
         <FormulateInput
           name="studentSchoolName"
+          id="studentSchoolName"
           type="text"
           label="School Name"
           placeholder="School Name"
           validation="required"
           validation-name="School name"
-          error-behavior="live"
           @keyup="checkValidation"
           @blur="checkValidation"
         />
@@ -64,12 +68,12 @@
           <div class="formulate-input-wrapper name-group">
             <FormulateInput
               name="studentParentGuardianName"
+              id="studentParentGuardianName"
               type="text"
               label="Name"
               placeholder="Parent Name"
               validation="required"
               validation-name="Parent name"
-              error-behavior="live"
               @keyup="checkValidation"
               @blur="checkValidation"
               class="flex-grow pr-2"
@@ -78,12 +82,12 @@
 
           <FormulateInput
             name="studentParentGuardianEmail"
+            id="studentParentGuardianEmail"
             type="email"
             :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Parent Email Address (Optional)'"
             placeholder="Parent Email address"
             :validation="formValues.profileType === 'parent' ? 'required|email' : 'optional|email'"
             validation-name="Email address"
-            error-behavior="live"
             @keyup="checkValidation"
             @blur="checkValidation"
           />
@@ -121,9 +125,22 @@ export default {
   },
   methods: {
     checkValidation() {
-      const validationErrors = document.querySelector('#step-two-student div[data-has-errors="true"]')
+      const validationErrorMessages = Array.from(
+        document.getElementsByClassName('validation-error-message')
+      ).map(element => element.innerText)
 
-      if (validationErrors) {
+      if (document.getElementById('firstName').value.length === 0 ||
+        document.getElementById('lastName').value.length === 0 ||
+        document.getElementById('dateOfBirth').value.length === 0 ||
+        document.getElementById('studentSchoolName').value.length === 0 ||
+        document.getElementById('studentParentGuardianName').value.length === 0 ||
+        (this.formValues.profileType === 'parent' &&
+          document.getElementById('studentParentGuardianEmail').value.length === 0) ||
+        validationErrorMessages.some((message) => {
+          return (message.indexOf('is not a valid email address') >= 0 ||
+            message.indexOf('Please enter a valid birthday') >= 0)
+        })) {
+
         this.hasValidationErrors = true
       } else {
         this.hasValidationErrors = false
