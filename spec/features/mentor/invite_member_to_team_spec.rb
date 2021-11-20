@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Invite a member to a team" do
+RSpec.xfeature "Invite a member to a team" do
   before do
     SeasonToggles.team_building_enabled!
     Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)

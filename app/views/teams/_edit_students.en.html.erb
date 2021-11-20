@@ -78,25 +78,31 @@
     </p>
   </div>
 
-  <hr />
-  <h3 class="margin--t-large margin--b-none">Invitations and requests</h3>
-  <div class="margin--b-large">
-    <%= render "teams/pending_invites",
-      team: team,
-      preview_method: :invitee_email,
-      invites: team.pending_student_invites %>
+  <% if nil %>
+    <hr />
+    <h3 class="margin--t-large margin--b-none">Invitations</h3>
+    <div class="margin--b-large">
+      <%= render "teams/pending_invites",
+        team: team,
+        preview_method: :invitee_email,
+        invites: team.pending_student_invites %>
 
-    <% if SeasonToggles.team_building_enabled? &&
-         !SeasonToggles.judging_enabled_or_between? &&
-         team.current? &&
-         team.spot_available? %>
-      <%= render "team_member_invites/form" %>
-    <% end %>
-  </div>
+      <% if SeasonToggles.team_building_enabled? &&
+          !SeasonToggles.judging_enabled_or_between? &&
+          team.current? &&
+          team.spot_available? %>
+        <%= render "team_member_invites/form" %>
+      <% end %>
+    </div>
+  <% end %>
 
-  <div class="margin--t-xlarge">
-    <%= render "teams/pending_requests",
-      team: team,
-      requests: team.pending_student_join_requests %>
-  </div>
+  <% if team.pending_student_join_requests.present? %>
+    <hr />
+    <h3 class="margin--t-large margin--b-none">Requests to join your team</h3>
+    <div class="margin--t-xlarge">
+      <%= render "teams/pending_requests",
+        team: team,
+        requests: team.pending_student_join_requests %>
+    </div>
+  <% end %>
 <% end %>
