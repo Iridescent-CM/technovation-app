@@ -6,7 +6,6 @@
       #default="{ isLoading }"
       :form-errors="formErrors"
       :errors="inputErrors"
-      :invalid-message="invalidMessage"
   >
 
     <div v-show="step === 1">
@@ -108,14 +107,6 @@ export default {
           this.inputErrors = error.response.data.errors
         }
       }
-    },
-    invalidMessage(fields) {
-      const fieldNames = Object.keys(fields)
-      const listOfNames = fieldNames.map(fieldName => {
-        return fieldName.replace(/([a-z](?=[A-Z]))/g, '$1 ').replace(/^./, function(str){ return str.toUpperCase(); })
-      })
-
-      return `Invalid fields: ${listOfNames.map(name => ` ${name}`)}`
     }
   }
 }
