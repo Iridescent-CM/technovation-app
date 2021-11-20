@@ -91,9 +91,6 @@ export default {
         }
       }
 
-      if(data.profileType !== "parent"){
-        data.parentEmail = false
-      }
       try {
         await axios.post('/new-registration', data, config)
 
