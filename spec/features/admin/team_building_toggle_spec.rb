@@ -82,7 +82,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     end
   end
 
-  context "Viewing current team as student" do
+  xcontext "Viewing current team as student" do
     let(:user) { FactoryBot.create(:student, :on_team) }
     let(:team) { user.team }
     let(:path) { student_team_path(team) }
@@ -197,7 +197,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     end
   end
 
-  context "Viewing current team as mentor" do
+  xcontext "Viewing current team as mentor" do
     let(:user) { FactoryBot.create(:mentor, :onboarded) }
     let(:team) { FactoryBot.create(:team) }
     let(:path) { mentor_team_path(team) }
