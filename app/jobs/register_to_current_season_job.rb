@@ -49,8 +49,6 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_student_for_current_season(record)
-    notify_airbrake_on_invalid_location(record)
-
     profile = record.student_profile
 
     subscribe_to_newsletter(record, :student)
@@ -76,8 +74,6 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_mentor_for_current_season(record)
-    notify_airbrake_on_invalid_location(record)
-
     subscribe_to_newsletter(record, :mentor)
 
     record.mentor_profile.update(training_completed_at: nil)
@@ -85,8 +81,6 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_judge_for_current_season(record)
-    notify_airbrake_on_invalid_location(record)
-
     subscribe_to_newsletter(record, :judge)
 
     record.judge_profile.update(completed_training_at: nil)
@@ -108,34 +102,5 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       account_id: record.id,
       profile_type: profile_type.to_s
     )
-  end
-
-  def location_data(record)
-    [
-      { Key: 'City',
-        Value: record.city },
-      { Key: 'State/Province',
-        Value: record.state_code },
-      { Key: 'Country',
-        Value: FriendlyCountry.(record, prefix: false) },
-    ]
-  end
-
-  def notify_airbrake_on_invalid_location(record)
-    if !record.valid_address? || !record.valid_coordinates?
-      Airbrake.notify(
-        "RegisterToCurrentSeasonJob - Invalid record address or coordinates",
-        {
-          id: record.id,
-          city: record.city,
-          state_province: record.state_province,
-          country: record.country,
-          latitude: record.latitude,
-          longitude: record.longitude,
-          valid_address: record.valid_address?,
-          valid_coordinates: record.valid_coordinates?
-        }
-      )
-    end
   end
 end
