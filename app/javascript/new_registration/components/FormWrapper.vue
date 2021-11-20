@@ -4,6 +4,7 @@
       v-model="formValues"
       @submit="submitHandler"
       #default="{ isLoading }"
+      :form-errors="formErrors"
       :errors="inputErrors"
       :invalid-message="invalidMessage"
   >
@@ -58,6 +59,7 @@ export default {
     return {
       step: 1,
       formValues: {},
+      formErrors: [],
       inputErrors: {}
     }
   },
@@ -105,6 +107,7 @@ export default {
       }
       catch(error) {
         if(error.response) {
+          this.formErrors = error.response.data.full_error_messages
           this.inputErrors = error.response.data.errors
         }
       }
