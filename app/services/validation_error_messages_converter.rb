@@ -4,16 +4,20 @@ class ValidationErrorMessagesConverter
     @error_key_conversions = error_key_conversions
   end
 
-  def call
-    json = {}
-
-    errors.each do |error|
+  def individual_errors
+    errors.each_with_object({}) do |error, result|
       converted_key = error_key_conversions.fetch(error.attribute.to_sym, error.attribute)
 
-      json[converted_key] = error.message
+      result[converted_key] = error.message
     end
+  end
 
-    json
+  def full_errors
+    errors.full_messages
+      .prepend("Something went wrong saving your profile")
+      .delete_if do |message|
+      ["Account is invalid", "Mentor profile expertises is invalid"].include?(message)
+    end
   end
 
   private
