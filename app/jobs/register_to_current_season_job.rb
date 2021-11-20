@@ -49,28 +49,28 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_student_for_current_season(record)
-    profile = record.student_profile
+    student_profile = record.student_profile
 
     subscribe_to_newsletter(record, :student)
 
-    if profile.division.junior? || profile.division.senior?
+    if student_profile.division.junior? || student_profile.division.senior?
       RegistrationMailer.welcome_student(record).deliver_later
-    elsif profile.division.beginner?
+    elsif student_profile.division.beginner?
       RegistrationMailer.welcome_parent(record).deliver_later
     end
 
-    if profile.reload.parental_consent.nil?
-      profile.parental_consents.create!
+    if student_profile.reload.parental_consent.nil?
+      student_profile.parental_consents.create!
     end
 
-    if profile.reload.parental_consent.pending? &&
-        !profile.parent_guardian_email.blank?
-      ParentMailer.consent_notice(profile.id).deliver_later
+    if student_profile.reload.parental_consent.pending? &&
+        !student_profile.parent_guardian_email.blank?
+      ParentMailer.consent_notice(student_profile.id).deliver_later
     end
 
-    profile.media_consents.create(season: Season.current.year)
+    student_profile.media_consents.create(season: Season.current.year)
 
-    profile.save # fire commit hooks, if needed
+    student_profile.save # fire commit hooks, if needed
   end
 
   def prepare_mentor_for_current_season(record)
