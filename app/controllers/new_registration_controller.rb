@@ -31,7 +31,7 @@ class NewRegistrationController < ApplicationController
 
       render json: {
         errors: errors.individual_errors,
-        full_error_messages: errors.full_messages
+        full_error_messages: errors.full_errors
       }, status: :unprocessable_entity
     end
   end

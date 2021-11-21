@@ -17,15 +17,16 @@ describe ValidationErrorMessagesConverter do
         "account.first_name": "accountFirstName"
       }
     }
-    let(:expectedErrorsWithConvertedKeys) {
+
+    let(:expected_errrors_with_converted_keys) {
       {
-        "accountEmail" => "is invalid",
-        "accountFirstName" => "can't be blank"
+        "accountEmail" => ["is invalid"],
+        "accountFirstName" => ["can't be blank"]
       }
     }
 
     it "returns the original error messages with converted keys based on 'error_key_conversions'" do
-      expect(validation_error_messages_converter.individual_errors).to eq(expectedErrorsWithConvertedKeys)
+      expect(validation_error_messages_converter.individual_errors).to eq(expected_errrors_with_converted_keys)
     end
 
     context "when the error key is not in 'error_key_conversions'" do
@@ -33,7 +34,24 @@ describe ValidationErrorMessagesConverter do
       let(:error_key_conversions) { {} }
 
       it "returns the original error message with the original key" do
-        expect(validation_error_messages_converter.individual_errors).to eq({"originalKey" => "is invalid"})
+        expect(validation_error_messages_converter.individual_errors).to eq({"originalKey" => ["is invalid"]})
+      end
+    end
+
+    context "when there is more than one error for the same error key" do
+      let(:errors) { [error1, error2] }
+      let(:error1) { double("EmailValidationError1", attribute: "account.email", message: "is invalid") }
+      let(:error2) { double("EmailValidationError1", attribute: "account.email", message: "wrong format") }
+      let(:error_key_conversions) { {} }
+
+      let(:expected_errrors_with_converted_keys) {
+        {
+          "account.email" => ["is invalid", "wrong format"]
+        }
+      }
+
+      it "returns all the errors for the error key" do
+        expect(validation_error_messages_converter.individual_errors).to eq(expected_errrors_with_converted_keys)
       end
     end
   end

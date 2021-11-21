@@ -8,7 +8,7 @@ class ValidationErrorMessagesConverter
     errors.each_with_object({}) do |error, result|
       converted_key = error_key_conversions.fetch(error.attribute.to_sym, error.attribute)
 
-      result[converted_key] = error.message
+      result[converted_key] = Array(result[converted_key]) << error.message
     end
   end
 
