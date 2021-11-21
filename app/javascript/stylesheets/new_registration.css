@@ -78,6 +78,18 @@
         @apply flex items-center
     }
 
+    ul.formulate-form-errors {
+        @apply mx-5 p-3 rounded bg-red-200 text-red-800
+    }
+
+    ul.formulate-form-errors li {
+        @apply ml-10 text-left list-disc
+    }
+
+    ul.formulate-form-errors li:first-child {
+        @apply ml-0 font-medium list-none
+    }
+
     .s1-label-text{
         @apply text-lg text-left
     }
