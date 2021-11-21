@@ -38,12 +38,16 @@ Vue.use(VueFormulate, {
             },
             mentorAge () {
                 return "You must be at least 18 years old to participate as a mentor."
+            },
+            accountEmail () {
+                return "This email address must be different than your parent's, please change one of them."
             }
         }
     },
     rules: {
         studentAge: ({value}, division) => verifyStudentAge({birthday: value, division}),
-        mentorAge: ({value}) => verifyMentorAge({birthday: value})
+        mentorAge: ({value}) => verifyMentorAge({birthday: value}),
+        accountEmail: ({value}, parentEmailAddress) => (value != parentEmailAddress)
     },
     slotComponents: {
         label: "HTMLAllowedCustomLabel"
