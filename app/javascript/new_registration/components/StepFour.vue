@@ -12,11 +12,11 @@
         type="email"
         :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Email Address'"
         placeholder="Email address"
-        validation="required|email"
+        :validation="emailValidation"
         validation-name="Email address"
         @keyup="checkValidation"
         @blur="checkValidation"
-        class="flex-grow "
+        class="flex-grow"
         v-model="setAccountEmailForParentProfile"
         :disabled="formValues.profileType === 'parent'"
       />
@@ -78,6 +78,7 @@ export default {
         document.getElementById('password').value.length < 8 ||
         validationErrorMessages.some((message) => {
           return (message.indexOf('is not a valid email address') >= 0 ||
+            message.indexOf("email address must be different than your parent's") >= 0 ||
             message.indexOf('Password must be at least') >= 0)
         })) {
 
@@ -99,6 +100,13 @@ export default {
       },
       set(accountEmailVal){
         this.formValues.email = accountEmailVal
+      }
+    },
+    emailValidation() {
+      if (this.formValues.profileType === 'student') {
+        return `required|email|account_email:${this.formValues.studentParentGuardianEmail}`
+      } else {
+        return 'required|email'
       }
     }
   }
