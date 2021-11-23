@@ -1,6 +1,6 @@
 <template>
   <div id="step-three">
-    <ContainerHeader header-text="Agree to our data use terms" />
+    <ContainerHeader header-text="Data Use Terms" />
 
     <div id="data-use" class="form-wrapper text-left">
 
