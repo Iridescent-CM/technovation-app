@@ -25,6 +25,16 @@
         <td class="content-block">
           <%= render "media_consents/consent_terms" %>
 
+            <p>
+              <% if @media_consent.consent_provided? %>
+                [X] <%= t("views.media_consents.consent_provided.consent_yes") %><br>
+                [ ] <%= t("views.media_consents.consent_provided.consent_no") %>
+              <% else %>
+                [ ] <%= t("views.media_consents.consent_provided.consent_yes") %><br>
+                [X] <%= t("views.media_consents.consent_provided.consent_no") %>
+              <% end %>
+            </p>
+
           <p>Student name: <%= @student_profile.account.full_name %></p>
 
           <p>

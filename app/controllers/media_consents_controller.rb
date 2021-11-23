@@ -20,6 +20,7 @@ class MediaConsentsController < ApplicationController
 
   def update
     @media_consent = find_media_consent
+    @parental_consent = find_parental_consent
 
     if @media_consent.update(media_consent_params.merge(signed_at: Time.current))
       redirect_to(
