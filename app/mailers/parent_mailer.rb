@@ -43,7 +43,6 @@ class ParentMailer < ApplicationMailer
 
     @student_profile = student_profile
     @technovation_url = "http://technovationchallenge.org/about/"
-    @newsletter_url = "https://confirmsubscription.com/h/d/C9D08C6FF3FA972C"
 
     I18n.with_locale(@student_profile.account.locale) do
       mail to: @student_profile.parent_guardian_email
