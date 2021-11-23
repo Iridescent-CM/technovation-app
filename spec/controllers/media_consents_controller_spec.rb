@@ -115,6 +115,14 @@ RSpec.describe MediaConsentsController do
         }
       end
 
+      it "assigns @media_consent" do
+        expect(assigns(:media_consent)).to eq(student.media_consent)
+      end
+
+      it "assigns @parental_consent" do
+        expect(assigns(:parental_consent)).to eq(student.parental_consent)
+      end
+
       it "renders the edit template again" do
         expect(response).to render_template(:edit)
       end
