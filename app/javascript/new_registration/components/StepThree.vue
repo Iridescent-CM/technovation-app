@@ -1,13 +1,16 @@
 <template>
   <div id="step-three">
-    <ContainerHeader header-text="Agree to our data use terms" />
+    <ContainerHeader header-text="Data Use Terms" />
 
     <div id="data-use" class="form-wrapper text-left">
 
       <section class="contract-section" id="how">
         <h2 class="registration-title">How Technovation Uses Your Data</h2>
-        <p>Please take a moment to read this before continuing registration. We have tried to make it very easy to understand. You can read our
-          <a href="#">full terms of use.</a> Below is a summary.</p>
+        <p>
+          Please take a moment to read this before continuing registration. We have tried to make it very easy to understand. You can read our
+          <a href="https://iridescentlearning.org/terms-of-use/" target="_blank">full terms of use.</a>
+          Below is a summary.
+        </p>
       </section>
 
       <hr class="contract-hr">
@@ -45,16 +48,20 @@
 
       <section class="contract-section" id="agree-checkbox">
         <FormulateInput
-            type="checkbox"
-            label="I AGREE TO THESE DATA USE TERMS"
-            name="dataTermsAgreedTo"
+          name="dataTermsAgreedTo"
+          id="dataTermsAgreedTo"
+          type="checkbox"
+          label="I AGREE TO THESE DATA USE TERMS"
+          validation="required"
+          :validation-messages="{ required: 'Data terms need to be agreed to in order to participate in Technovation Girls.' }"
+          @input="checkValidation"
         />
       </section>
     </div>
 
     <div class="registration-btn-wrapper">
       <PreviousButton @prev="$emit('prev')" />
-      <NextButton @next="$emit('next')" />
+      <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
     </div>
   </div>
 </template>
@@ -70,6 +77,20 @@ export default {
     ContainerHeader,
     PreviousButton,
     NextButton
+  },
+  data() {
+    return {
+      hasValidationErrors: true
+    }
+  },
+  methods: {
+    checkValidation() {
+      if (document.getElementById('dataTermsAgreedTo').checked) {
+        this.hasValidationErrors = false
+      } else {
+        this.hasValidationErrors = true
+      }
+    }
   },
   props: ['formValues']
 }
