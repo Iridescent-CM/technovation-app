@@ -48,16 +48,20 @@
 
       <section class="contract-section" id="agree-checkbox">
         <FormulateInput
-            type="checkbox"
-            label="I AGREE TO THESE DATA USE TERMS"
-            name="dataTermsAgreedTo"
+          name="dataTermsAgreedTo"
+          id="dataTermsAgreedTo"
+          type="checkbox"
+          label="I AGREE TO THESE DATA USE TERMS"
+          validation="required"
+          :validation-messages="{ required: 'Data terms need to be agreed to in order to participate in Technovation Girls.' }"
+          @input="checkValidation"
         />
       </section>
     </div>
 
     <div class="registration-btn-wrapper">
       <PreviousButton @prev="$emit('prev')" />
-      <NextButton @next="$emit('next')" />
+      <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
     </div>
   </div>
 </template>
@@ -73,6 +77,20 @@ export default {
     ContainerHeader,
     PreviousButton,
     NextButton
+  },
+  data() {
+    return {
+      hasValidationErrors: true
+    }
+  },
+  methods: {
+    checkValidation() {
+      if (document.getElementById('dataTermsAgreedTo').checked) {
+        this.hasValidationErrors = false
+      } else {
+        this.hasValidationErrors = true
+      }
+    }
   },
   props: ['formValues']
 }
