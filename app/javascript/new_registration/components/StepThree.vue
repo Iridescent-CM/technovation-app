@@ -6,8 +6,11 @@
 
       <section class="contract-section" id="how">
         <h2 class="registration-title">How Technovation Uses Your Data</h2>
-        <p>Please take a moment to read this before continuing registration. We have tried to make it very easy to understand. You can read our
-          <a href="#">full terms of use.</a> Below is a summary.</p>
+        <p>
+          Please take a moment to read this before continuing registration. We have tried to make it very easy to understand. You can read our
+          <a href="https://iridescentlearning.org/terms-of-use/">full terms of use.</a>
+          Below is a summary.
+        </p>
       </section>
 
       <hr class="contract-hr">
