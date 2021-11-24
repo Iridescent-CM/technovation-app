@@ -41,20 +41,22 @@
             </li>
 
             <li>
+              <%= link_to "Sign the consent waiver", @consent_url, itemprop: "url" %>
+            </li>
+            
+            <li>
               <%= link_to "Click this link", ENV.fetch("MENTOR_SLACK_SIGNUP_URL"), itemprop: "url" %>
               to join our online Slack community to meet mentors from around the world.
             </li>
 
             <li>
-              <%= link_to "Read the mentor orientation",
-                "https://venngage.net/pl/ME5Lt10JUAI",
-                itemprop: "url" %>
-              (5 minutes)
+              Check to see if you have a Chapter Ambassador by looking at the top left corner of your Technovation Dashboard. 
+              Send an email to your Chapter Ambassador for assistance in finding a team to mentor!
             </li>
 
             <li>
               <%= link_to "Review the important dates and timeline",
-              "https://technovationchallenge.org/wp-content/uploads/2020/09/Technovation-Girls-2021-Season-Timeline-Key-Dates-Infographic.pdf",
+              "https://technovationchallenge.org/wp-content/uploads/2021/11/2022-ProgramTimeline_vertical-2.png",
                itemprop: "url" %>
               (2 minutes)
             </li>
@@ -62,10 +64,6 @@
             <li>
               Complete your profile. A complete profile increases your chances of
               finding a team. (2 minutes)
-            </li>
-
-            <li>
-              <%= link_to "Sign the consent waiver", @consent_url, itemprop: "url" %>
             </li>
 
             <li>
