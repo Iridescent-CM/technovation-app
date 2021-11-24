@@ -7,6 +7,18 @@
       <section>
         <p>Learn how to make your project as strong as possible by following these lessons. Most participants spend
           around 60 hours working on their ideas.</p>
+      </section>
+      <section>
+        <h3>Beginner Division</h3>
+        <p class="mt-6">
+          <a href="https://beginner.technovationchallenge.org/" class="tw-green-btn"
+             target="_blank">
+            Go to Beginner Curriculum
+          </a>
+        </p>
+      </section>
+      <section>
+        <h3>Junior and Senior Division
         <p class="mt-6">
           <a href="https://technovationchallenge.org/curriculum-intro/registered/new/" class="tw-green-btn"
              target="_blank">
@@ -28,7 +40,7 @@
             </a>
           </li>
           <li>
-            <a href="https://technovationchallenge.org/wp-content/uploads/2020/09/Technovation-Girls-2021-Season-Timeline-Key-Dates-Infographic.pdf"
+            <a href="https://technovationchallenge.org/wp-content/uploads/2021/09/2022-ProgramTimeline_vertical-9-15-21.jpg"
                target="_blank" class="tw-link">
               Suggested Milestones
             </a>
