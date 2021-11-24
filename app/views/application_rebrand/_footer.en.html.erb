@@ -9,19 +9,39 @@
 
     <section id="links" class="flex flex-wrap-reverse md:flex-nowrap justify-between my-12">
       <div id="icons" class="flex mx-auto md:mx-0 my-8 md: my-0 w-1/2 md:w-48 justify-between">
-        <%= image_tag "new_registration/fb.png", class:"social-icon"%>
-        <%= image_tag "new_registration/twitter.png", class:"social-icon"%>
-        <%= image_tag "new_registration/instagram.png", class:"social-icon"%>
-        <%= image_tag "new_registration/youtube.png", class:"social-icon"%>
+        <%= link_to "https://www.facebook.com/technovationglobal" do %>
+          <%= image_tag "new_registration/fb.png", class:"social-icon"%>
+        <% end %>
+        <%= link_to "https://twitter.com/technovation" do %>
+          <%= image_tag "new_registration/twitter.png", class:"social-icon"%>
+        <% end %>
+        <%= link_to "https://www.instagram.com/technovationglobal" do %>
+          <%= image_tag "new_registration/instagram.png", class:"social-icon"%>
+        <% end %>
+        <%= link_to "https://www.youtube.com/technovationglobal" do %>
+          <%= image_tag "new_registration/youtube.png", class:"social-icon"%>
+        <% end %>
       </div>
 
       <div id="site-links" class="flex flex-wrap w-full  md:mx-0 md:w-1/2 my-8 md: my-0">
-        <a href="#">FAQ</a>
-        <a href="#">Contact</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Press</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Donate</a>
+        <%= link_to "FAQ",
+            "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation"
+          %>
+        <%= link_to "Contact",
+            "mailto:support@technovation.org"
+          %>
+        <%= link_to "Terms of Use",
+            "https://www.technovation.org/terms-of-use/"
+          %>
+        <%= link_to "Press",
+            "https://www.technovation.org/news-events/"
+          %>
+        <%= link_to "Privacy Policy",
+            "https://www.technovation.org/privacy-policy/"
+          %>
+        <%= link_to "Donate",
+            "https://www.technovation.org/donate-today/"
+          %>
       </div>
     </section>
   <p class="text-sm text-center">&copy; 2021 Technovation. All Rights Reserved. Technovation is a 501c3 nonprofit organization in the United States.</p>
