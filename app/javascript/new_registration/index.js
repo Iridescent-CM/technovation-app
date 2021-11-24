@@ -2,20 +2,10 @@ import Vue from 'vue'
 import VueFormulate from '@braid/vue-formulate'
 
 import App from './App'
+import CustomLabel from './components/CustomLabel'
 import { verifyStudentAge, verifyMentorAge } from 'utilities/age-validations.js'
 
-const htmlCustomLabelComponent = {
-    props: ["context"],
-    template: `
-    <label
-      :class="[context.classes.label, 'input-label-text']"
-      :for="context.id"
-      v-html="context.label"
-    />
-  `
-};
-
-Vue.component("HTMLAllowedCustomLabel", htmlCustomLabelComponent);
+Vue.component("CustomLabel", CustomLabel);
 
 Vue.use(VueFormulate, {
     classes: {
@@ -50,7 +40,7 @@ Vue.use(VueFormulate, {
         accountEmail: ({value}, parentEmailAddress) => (value != parentEmailAddress)
     },
     slotComponents: {
-        label: "HTMLAllowedCustomLabel"
+        label: "CustomLabel"
     }
 });
 
