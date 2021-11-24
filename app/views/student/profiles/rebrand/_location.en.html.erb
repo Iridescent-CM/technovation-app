@@ -1,48 +1,27 @@
 <div id="location" class="tw-blue-lg-container" >
   <div class="sm-header-wrapper ">
-    <p class="font-bold">Your Region</p>
+    <p class="font-bold">Your Location</p>
   </div>
 
   <div id="location-wrapper" class="p-6">
     <div id="location-details" class="flex-col space-y-6">
       <div class="mb-8">
-        <p class="font-bold">Your Location</p>
-        <p><%= current_student.address_details %></p>
+        <% if current_account.valid_address? %>
+          <p class="font-bold">Your current location</p>
+          <p><%= current_student.address_details %></p>
+        <% else %>
+          <p class="font-bold">Your don't have a location set yet</p>
+        <% end %>
       </div>
 
       <p>
-        <%= link_to "Change your location",
+        <%= link_to current_account.valid_address? ? "Change your location" : "Set your location",
           student_location_details_path(
             return_to: student_profile_path(anchor: '!location')
           ),
-          class: "tw-green-btn disabled" %>
+          class: "tw-green-btn"
+        %>
       </p>
-
-      <div id="location-form" class="mt-12">
-        <p class="font-bold">Confirm Your Region</p>
-        <form action="">
-          <div class="tw-input-wrapper">
-            <label for="country">Country / Territory</label>
-            <input type="text" id="country" name="country">
-          </div>
-          <div class="tw-input-wrapper">
-            <label for="state">State / Province</label>
-            <input type="text" id="state" name="state">
-          </div>
-          <div class="tw-input-wrapper">
-            <label for="city">City</label>
-            <input type="text" id="city" name="city">
-          </div>
-        </form>
-
-        <p class="text-sm text-tg-magenta font-bold">reset this form</p>
-      </div>
-
     </div>
-
   </div>
-
-
 </div>
-
-

@@ -25,6 +25,20 @@ RSpec.describe "Register as a student", :js do
 
     click_button "Submit"
 
+    # Location missing - redirect to location input page
+    expect(page).to have_current_path(student_location_details_path, ignore_query: true)
+
+    expect(page).to have_selector('#location_city', visible: true)
+    expect(page).to have_selector('#location_state', visible: true)
+    expect(page).to have_selector('#location_country', visible: true)
+
+    fill_in "State / Province", with: "California"
+    fill_in "City", with: "Los Angeles"
+    fill_in "Country", with: "United States"
+
+    click_button "Next"
+    click_button "Confirm"
+
     # Redirect to student dashboard
     expect(page).to have_current_path(student_dashboard_path, ignore_query: true)
 
