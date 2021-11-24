@@ -18,7 +18,7 @@
         </p>
       </section>
       <section>
-        <h3>Junior and Senior Division
+        <h3>Junior and Senior Division</h3>
         <p class="mt-6">
           <a href="https://technovationchallenge.org/curriculum-intro/registered/new/" class="tw-green-btn"
              target="_blank">
