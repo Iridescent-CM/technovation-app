@@ -67,7 +67,11 @@ nav {
 }
 
 .tw-green-btn{
-    @apply w-auto mr-auto px-4 py-2 rounded bg-tg-green text-white hover:bg-green-600
+    @apply w-auto mr-auto px-4 py-2 rounded bg-tg-green text-white font-medium
+}
+
+.tw-green-btn:hover{
+    @apply bg-tg-dark-green text-gray-50
 }
 
 .tw-blue-lg-container{

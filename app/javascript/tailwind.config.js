@@ -7,6 +7,7 @@ module.exports = {
         'energetic-blue': "#0075cf",
         'energetic-blue-light': '#539aef',
         'tg-green': '#43b02a',
+        'tg-dark-green': '#3fa428',
         'tg-dark-blue': '#041E42',
         'tg-bright-blue': '#5bc2e7',
         'tg-gold': '#ffb81c',
