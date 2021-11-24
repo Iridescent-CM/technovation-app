@@ -40,7 +40,7 @@
           type="select"
           placeholder="Select an option"
           validation="required"
-          validation-name="Gender Identity"
+          validation-name="Gender identity"
           @keyup="checkValidation"
           @blur="checkValidation"
           label="Gender Identity"
