@@ -1,21 +1,26 @@
 <div id="location" class="tw-blue-lg-container" >
   <div class="sm-header-wrapper ">
-    <p class="font-bold">Your Region</p>
+    <p class="font-bold">Your Location</p>
   </div>
 
   <div id="location-wrapper" class="p-6">
     <div id="location-details" class="flex-col space-y-6">
       <div class="mb-8">
-        <p class="font-bold">Your Location</p>
-        <p><%= current_student.address_details %></p>
+        <% if current_account.valid_address? %>
+          <p class="font-bold">Your current location</p>
+          <p><%= current_student.address_details %></p>
+        <% else %>
+          <p class="font-bold">Your don't have a location set yet</p>
+        <% end %>
       </div>
 
       <p>
-        <%= link_to "Change your location",
+        <%= link_to current_account.valid_address? ? "Change your location" : "Set your location",
           student_location_details_path(
             return_to: student_profile_path(anchor: '!location')
           ),
-          class: "tw-green-btn disabled" %>
+          class: "tw-green-btn"
+        %>
       </p>
     </div>
   </div>
