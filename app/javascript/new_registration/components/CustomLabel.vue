@@ -27,9 +27,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.formulate-required-field {
-  @apply text-red-700
-}
-</style>

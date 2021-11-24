@@ -117,7 +117,11 @@
         <div class="mentor-information">
           <h2 class="registration-title">Set your personal summary</h2>
 
-          <p class="text-left">Add a description of yourself to your profile to help students get to know you. You can change this later.</p>
+          <p class="text-left pb-2">
+            Add a description of yourself to your profile to help students get to know you.
+            Entering at least 100 characters is required.
+            You can change this later.<span class="formulate-required-field">*</span>
+          </p>
           <FormulateInput
             name="mentorBio"
             id="mentorBio"

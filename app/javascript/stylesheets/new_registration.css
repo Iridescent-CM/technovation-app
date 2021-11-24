@@ -94,6 +94,9 @@
         @apply ml-0 font-medium list-none
     }
 
+    .formulate-required-field {
+        @apply text-red-700
+    }
     .s1-label-text{
         @apply text-lg text-left
     }
