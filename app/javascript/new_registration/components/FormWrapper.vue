@@ -1,11 +1,12 @@
 <template>
   <FormulateForm
-      class="registration-container pb-6"
-      v-model="formValues"
-      @submit="submitHandler"
-      #default="{ isLoading }"
-      :form-errors="formErrors"
-      :errors="inputErrors"
+    class="registration-container pb-6"
+    v-model="formValues"
+    @submit="submitHandler"
+    #default="{ isLoading }"
+    :form-errors="formErrors"
+    :errors="inputErrors"
+    id="registration-form"
   >
 
     <div v-show="step === 1">
@@ -71,9 +72,14 @@ export default {
   methods: {
     prev() {
       this.step--;
+      this.scrollToTopOfForm();
     },
     next() {
       this.step++;
+      this.scrollToTopOfForm();
+    },
+    scrollToTopOfForm() {
+      document.getElementById('registration-form').scrollIntoView();
     },
     onKeyPress(e) {
       if (e.which === 13) {
