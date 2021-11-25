@@ -414,6 +414,8 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
     rspec-support (3.10.2)
     rubocop (1.18.3)
       parallel (~> 1.10)
@@ -592,6 +594,7 @@ DEPENDENCIES
   rails-i18n (~> 6.0.0)
   rails_autoscale_agent
   rspec-rails (~> 5.0)
+  rspec-retry
   sass-rails (~> 6.0)
   sidekiq (~> 6.2)
   simple_form (~> 5.0)

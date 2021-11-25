@@ -116,6 +116,7 @@ group :test do
   gem "capybara-email", "~> 3.0"
   gem "webdrivers"
   gem "rspec-rails", "~> 5.0"
+  gem "rspec-retry"
 
   gem "pdf-reader", "~> 2.4"
 end
