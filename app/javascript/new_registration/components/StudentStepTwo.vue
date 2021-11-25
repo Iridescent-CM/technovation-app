@@ -38,6 +38,7 @@
           name="dateOfBirth"
           id="dateOfBirth"
           type="date"
+          v-model="birthday"
           label="Birthday"
           placeholder="Birthday"
           :validation="birthdayValidation"
@@ -50,6 +51,13 @@
           @blur="checkValidation"
           @change="checkValidation"
         />
+
+        <div class=" border-l-2 border-blue-500 bg-blue-50 p-2 mb-8">
+          <p class="text-left">
+            The cutoff date used for division assignment is <strong>{{ divisionCutoff }}</strong>.
+            Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years old by this date.
+          </p>
+        </div>
 
         <FormulateInput
           name="studentSchoolName"
@@ -112,6 +120,8 @@ import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
 import NextButton from "./NextButton";
+import { divisionCutoffDate } from "../../utilities/technovation-dates.js"
+import { calculateAgeByDivisionCutoffDate } from "../../utilities/age-helpers.js"
 
 export default {
   name: "StudentStepTwo",
@@ -123,6 +133,7 @@ export default {
   },
   data () {
     return {
+      birthday: '',
       hasValidationErrors: true
     }
   },
@@ -162,6 +173,17 @@ export default {
       } else {
         return `required|student_age|after:01/01/1900|before:${today}`
       }
+    },
+    pronoun() {
+      return (this.formValues.profileType === 'parent') ? 'this student' : 'you'
+    },
+    divisionCutoff() {
+      return divisionCutoffDate().toFormat('MMMM d, yyyy')
+    },
+    ageByDivisionCutoff() {
+      const ageByDivisionCutoffDate = calculateAgeByDivisionCutoffDate({ birthday: this.birthday })
+
+      return isNaN(ageByDivisionCutoffDate) ? '?' : ageByDivisionCutoffDate
     }
   },
   props: ['formValues']

@@ -1,7 +1,7 @@
 import {
   verifyStudentAge,
   verifyMentorAge,
-} from "utilities/age-validations.js";
+} from "utilities/age-helpers.js";
 
 const currentEnv = process.env;
 

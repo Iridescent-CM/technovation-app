@@ -1,5 +1,7 @@
 import { DateTime, Interval } from 'luxon';
 
+import { divisionCutoffDate } from './technovation-dates.js'
+
 function ageToday(birthday) {
   return Math.floor(
     Interval
@@ -8,22 +10,16 @@ function ageToday(birthday) {
   )
 }
 
-function ageByDivisionCutOff(birthday) {
-  const divisonCuttOffDate = DateTime.fromFormat(
-    process.env.DATES_DIVISION_CUTOFF_YEAR +
-      process.env.DATES_DIVISION_CUTOFF_MONTH +
-      process.env.DATES_DIVISION_CUTOFF_DAY,
-    'yyyyMd')
-
+function calculateAgeByDivisionCutoffDate({birthday}) {
   return Math.floor(
     Interval
-      .fromDateTimes(DateTime.fromISO(birthday), divisonCuttOffDate)
+      .fromDateTimes(DateTime.fromISO(birthday), divisionCutoffDate())
       .length('years')
   )
 }
 
 function verifyStudentAge({birthday, division}) {
-  const age = ageByDivisionCutOff(birthday)
+  const age = calculateAgeByDivisionCutoffDate({birthday})
 
   if (division === 'beginner') {
     return (age >= 8 && age <= 12)
@@ -36,4 +32,4 @@ function verifyMentorAge({birthday}) {
   return (ageToday(birthday) >= 18)
 }
 
-export { verifyStudentAge, verifyMentorAge }
+export { verifyStudentAge, verifyMentorAge, calculateAgeByDivisionCutoffDate }

@@ -3,7 +3,7 @@ import VueFormulate from '@braid/vue-formulate'
 
 import App from './App'
 import CustomLabel from './components/CustomLabel'
-import { verifyStudentAge, verifyMentorAge } from 'utilities/age-validations.js'
+import { verifyStudentAge, verifyMentorAge } from 'utilities/age-helpers.js'
 
 Vue.component("CustomLabel", CustomLabel);
 
