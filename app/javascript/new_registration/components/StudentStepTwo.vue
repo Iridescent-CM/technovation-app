@@ -52,10 +52,10 @@
           @change="checkValidation"
         />
 
-        <div class=" border-l-2 border-blue-500 bg-blue-50 p-2 mb-6">
+        <div class=" border-l-2 border-blue-500 bg-blue-50 p-2 mb-8">
           <p class="text-left">
-            The cutoff date used for division assignment is <strong>{{ divisionCutoffDate }}</strong>.
-            Based on the birthday you entered, you will be <strong>{{ ageByDivisionCutoffDate }}</strong> years old by this date.
+            The cutoff date used for division assignment is <strong>{{ divisionCutoff }}</strong>.
+            Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years old by this date.
           </p>
         </div>
 
@@ -120,7 +120,8 @@ import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
 import NextButton from "./NextButton";
-import { calculateAgeByDivisionCutoffDate } from "../../utilities/age-validations.js"
+import { divisionCutoffDate } from "../../utilities/technovation-dates.js"
+import { calculateAgeByDivisionCutoffDate } from "../../utilities/age-helpers.js"
 
 export default {
   name: "StudentStepTwo",
@@ -173,14 +174,13 @@ export default {
         return `required|student_age|after:01/01/1900|before:${today}`
       }
     },
-    divisionCutoffDate() {
-      return DateTime.fromFormat(
-        process.env.DATES_DIVISION_CUTOFF_YEAR +
-          process.env.DATES_DIVISION_CUTOFF_MONTH +
-          process.env.DATES_DIVISION_CUTOFF_DAY,
-        'yyyyMd').toFormat('DDD')
+    pronoun() {
+      return (this.formValues.profileType === 'parent') ? 'this student' : 'you'
     },
-    ageByDivisionCutoffDate() {
+    divisionCutoff() {
+      return divisionCutoffDate().toFormat('MMMM d, yyyy')
+    },
+    ageByDivisionCutoff() {
       const ageByDivisionCutoffDate = calculateAgeByDivisionCutoffDate({ birthday: this.birthday })
 
       return isNaN(ageByDivisionCutoffDate) ? '?' : ageByDivisionCutoffDate
