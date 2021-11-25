@@ -9,12 +9,13 @@
           </div>
         <div class="flex space-x-7">
           <div class="md:flex items-center space-x-1">
-            <a href="" class="registration-nav">Get Started</a>
-            <a href="" class="registration-nav">Chapters</a>
-            <a href="" class="registration-nav">About</a>
+            <a href="https://technovationchallenge.org/get-started/" class="registration-nav">Get Started</a>
+            <a href="https://technovationchallenge.org/" class="registration-nav">Chapters</a>
+            <a href="https://www.technovation.org/about/" class="registration-nav">About</a>
             <a href="" class="registration-nav">Login</a>
             <a href="" class="registration-nav">Sign Up</a>
-            <a href="" class="py-2 px-2 text-white font-black rounded transition duration-300 bg-energetic-blue">DONATE</a>
+            <a href="https://www.technovation.org/donate-today/" class="py-2 px-2 text-white font-black 
+            rounded transition duration-300 bg-energetic-blue">DONATE</a>
           </div>
         </div>
 
