@@ -50,16 +50,22 @@
         <h4>Team divisions explained:</h4>
 
         <dl>
+          <dt class="color--secondary">Beginner Division</dt>
+          <dd>
+          Team members are between 8-12 years old as of {{ cutoffDay }}.
+          </dd>
+        
           <dt class="color--secondary">Junior Division</dt>
           <dd>
-            Team members are between 10-14 years old as of {{ cutoffDay }}.
+            Team members are between 13-15 years old as of {{ cutoffDay }}.
           </dd>
 
           <dt class="color--secondary">Senior Division</dt>
           <dd>
-            Team members are between 15-18 years old as of {{ cutoffDay }}.
+            Team members are between 16-18 years old as of {{ cutoffDay }}.
           </dd>
         </dl>
+        
       </div>
     </div>
 
