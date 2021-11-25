@@ -246,7 +246,9 @@ class StudentProfile < ActiveRecord::Base
       errors.add(a, :blank)
     end
 
-    if parent_guardian_email == account.email
+    if (account.division.junior? || account.division.senior?) &&
+        (parent_guardian_email == account.email)
+
       errors.add(:parent_guardian_email, :matches_student_email)
     end
 
@@ -364,9 +366,11 @@ class StudentProfile < ActiveRecord::Base
   end
 
   private
+
   def validate_valid_parent_email
     return if parent_guardian_email.blank? ||
-      (!parent_guardian_email_changed? && parent_guardian_email == "ON FILE")
+      (!parent_guardian_email_changed? && parent_guardian_email == "ON FILE") ||
+      account.division.beginner?
 
     if Account.joins(:student_profile).where(
          "lower(email) = ?",
