@@ -52,7 +52,7 @@ class NewRegistrationController < ApplicationController
       parent_guardian_name: registration_params[:studentParentGuardianName],
       parent_guardian_email: registration_params[:email],
       school_name: registration_params[:studentSchoolName],
-      account_attributes: account_attributes
+      account_attributes: account_attributes.merge({parent_registered: true})
     }
   end
 
