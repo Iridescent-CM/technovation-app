@@ -370,7 +370,7 @@ class StudentProfile < ActiveRecord::Base
   def validate_valid_parent_email
     return if parent_guardian_email.blank? ||
       (!parent_guardian_email_changed? && parent_guardian_email == "ON FILE") ||
-      account.division.beginner?
+      account&.division&.beginner?
 
     if Account.joins(:student_profile).where(
          "lower(email) = ?",
