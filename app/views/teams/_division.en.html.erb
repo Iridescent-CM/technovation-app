@@ -19,10 +19,20 @@
 
 <ul class="reset">
   <li>
+    <strong>Beginner Division</strong>
+    <ul class="unstyled">
+      <li>
+        Team members are between 8-12 years old as
+        of <%= Division.cutoff_date.strftime("%B %e, %Y") %>.
+      </li>
+    </ul>
+  </li>
+
+  <li>
     <strong>Junior Division</strong>
     <ul class="unstyled">
       <li>
-        Team members are between 10-14 years old as
+        Team members are between 13-15 years old as
         of <%= Division.cutoff_date.strftime("%B %e, %Y") %>.
       </li>
     </ul>
@@ -32,7 +42,7 @@
     <strong>Senior Division</strong>
     <ul class="unstyled">
       <li>
-        Team members are between 15-18 years old as
+        Team members are between 16-18 years old as
         of <%= Division.cutoff_date.strftime("%B %e, %Y") %>.
       </li>
     </ul>
