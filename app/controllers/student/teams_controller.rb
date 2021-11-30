@@ -1,5 +1,7 @@
 module Student
   class TeamsController < StudentController
+    include RequireParentalConsentSigned
+    include RequireLocationSet
     include TeamController
 
     before_action -> {

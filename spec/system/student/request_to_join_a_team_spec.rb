@@ -8,7 +8,7 @@ RSpec.describe "Students request to join a team",
   before { SeasonToggles.team_building_enabled! }
 
   it "students already on a team don't see the link" do
-    student = FactoryBot.create(:student, :on_team, not_onboarded: true)
+    student = FactoryBot.create(:student, :on_team, :onboarded)
     sign_in(student)
     expect(page).not_to have_link("Find a team")
   end
@@ -45,7 +45,7 @@ RSpec.describe "Students request to join a team",
     let!(:team) { FactoryBot.create(:team, :with_mentor) }
       # Default is in Chicago
 
-    let!(:student) { FactoryBot.create(:student, not_onboarded: true) }
+    let!(:student) { FactoryBot.create(:student, :onboarded) }
       # Default Chicago
 
     before do

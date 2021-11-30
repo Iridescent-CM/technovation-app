@@ -116,7 +116,11 @@ RSpec.describe "Admins invite users to signup", :js do
           click_button "Confirm"
         end
 
-        expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+        if scope == :student
+          expect(page).to have_current_path(student_profile_path)
+        else
+          expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+        end
       end
 
       invite = UserInvitation.last

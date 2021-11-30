@@ -11,7 +11,7 @@ RSpec.feature "Students find a team" do
     # Default is in Chicago
 
   before do
-    student = FactoryBot.create(:student, :geocoded, not_onboarded: true)
+    student = FactoryBot.create(:student, :geocoded, :onboarded)
       # City is Chicago
     sign_in(student)
   end

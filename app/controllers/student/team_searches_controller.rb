@@ -1,5 +1,8 @@
 module Student
   class TeamSearchesController < StudentController
+    include RequireParentalConsentSigned
+    include RequireLocationSet
+
     def new
       unless current_student.valid_coordinates?
         redirect_to student_location_details_path(return_to: request.fullpath),

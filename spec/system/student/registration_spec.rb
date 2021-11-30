@@ -25,8 +25,7 @@ RSpec.describe "Register as a student", :js do
 
     click_button "Submit"
 
-    # Redirect to student dashboard
-    expect(page).to have_current_path(student_dashboard_path, ignore_query: true)
+    expect(page).to have_current_path(student_profile_path, ignore_query: true)
 
     # Confirm signup attempt attached
     attempt = SignupAttempt.find_by(
