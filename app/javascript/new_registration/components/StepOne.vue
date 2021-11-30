@@ -3,7 +3,9 @@
     <ContainerHeader header-text="Your Profile Type" />
 
     <div id="profile-type" class="form-wrapper">
-      <h2 class="registration-title">I am a...</h2>
+      <h2 class="registration-title">Technovation Girls is a free program 
+      that empowers <a href="https://www.technovation.org/diversity-equity-inclusion-statement/" target="_blank">girls</a> 
+      to be leaders. How will you participate?</h2>
 
       <FormulateInput
         label-position="before"
@@ -33,15 +35,15 @@ export default {
       values: {},
       options: [
         {
-          label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">PARENT <br> Registering a daughter 8-12 years old</span>`,
+          label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year* old daughter</span>`,
           value: "parent",
         },
         {
-          label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text"> STUDENT <br> 13 - 18 year old female-identifying student</span>`,
+          label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering to participate and am 13-18 years* old</span>`,
           value: "student",
         },
         {
-          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">MENTOR <br> Over 18 years old who wants to help guide a team of girls</span>`,
+          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years* old and will guide a team</span>`,
           value: "mentor",
         }
       ],
