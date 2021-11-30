@@ -102,9 +102,11 @@ export default {
         switch(data.profileType) {
           case 'student':
           case 'parent':
-            window.location.href = '/student/dashboard'
+            window.location.href = '/student/profile'
+            break
           case 'mentor':
             window.location.href = '/mentor/dashboard'
+            break
         }
       }
       catch(error) {
