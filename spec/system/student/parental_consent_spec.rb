@@ -2,9 +2,10 @@ require "rails_helper"
 
 RSpec.describe "Parental consent", :js do
   it "handles invalid email" do
-    student = FactoryBot.create(:onboarding_student)
+    student = FactoryBot.create(:student, :onboarded)
 
     sign_in(student)
+    visit(new_student_parental_consent_notice_path)
     fill_in "Parent or guardian's email", with: "no-work"
 
     click_button "Send the form"
@@ -53,25 +54,11 @@ RSpec.describe "Parental consent", :js do
     expect(page).to have_content("Consent to participate")
   end
 
-  it "can be filled out on the dashboard" do
-    student = FactoryBot.create(:onboarding_student)
-
-    sign_in(student)
-
-    fill_in "Parent or guardian's name", with: "Parent name"
-    fill_in "Parent or guardian's email", with: "parent@parent.com"
-    click_button "Send the form"
-
-    mail = ActionMailer::Base.deliveries.last
-    expect(mail).to be_present, "no parent email sent"
-    expect(mail.to).to eq(["parent@parent.com"])
-    expect(mail.subject).to include("Your daughter needs permission")
-  end
-
   it "validates parental consent info" do
-    student = FactoryBot.create(:onboarding_student)
+    student = FactoryBot.create(:student, :onboarded)
 
     sign_in(student)
+    visit(new_student_parental_consent_notice_path)
 
     fill_in "Parent or guardian's name", with: ""
     fill_in "Parent or guardian's email", with: ""
