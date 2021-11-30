@@ -23,8 +23,7 @@ class NewRegistrationController < ApplicationController
       SignIn.call(
         profile.account,
         self,
-        message: "Welcome to Technovation!",
-        redirect_to: "student_dashboard_path"
+        enable_redirect: false
       )
     else
       errors = ValidationErrorMessagesConverter.new(errors: profile.errors)

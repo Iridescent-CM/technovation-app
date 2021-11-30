@@ -1,5 +1,7 @@
 module Student
   class DashboardsController < StudentController
+    include RequireParentalConsentSigned
+    include RequireLocationSet
     include LocationStorageController
 
     def show
@@ -7,6 +9,7 @@ module Student
     end
 
     private
+
     def available_regional_events
       if SeasonToggles.select_regional_pitch_event?
         RegionalPitchEvent.available_to(

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Admin season toggle effects", :js do
   context "Student dashboard" do
     before do
-      student = FactoryBot.create(:student, :onboarding)
+      student = FactoryBot.create(:student, :onboarded)
       sign_in(student)
     end
 

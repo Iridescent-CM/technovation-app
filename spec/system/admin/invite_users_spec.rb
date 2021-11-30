@@ -96,25 +96,31 @@ RSpec.describe "Admins invite users to signup", :js do
 
         click_button "Submit"
 
-        expect(page).to have_current_path(
-          send("#{scope}_location_details_path"), ignore_query: true
-        )
+        if scope != :student
+          expect(page).to have_current_path(
+            send("#{scope}_location_details_path"), ignore_query: true
+          )
 
-        expect(page).to have_selector('#location_city', visible: true)
-        expect(page).to have_selector('#location_state', visible: true)
-        expect(page).to have_selector('#location_country', visible: true)
+          expect(page).to have_selector('#location_city', visible: true)
+          expect(page).to have_selector('#location_state', visible: true)
+          expect(page).to have_selector('#location_country', visible: true)
 
-        fill_in "State / Province", with: "California"
-        fill_in "City", with: "Los Angeles"
-        fill_in "Country", with: "United States"
+          fill_in "State / Province", with: "California"
+          fill_in "City", with: "Los Angeles"
+          fill_in "Country", with: "United States"
 
-        click_button "Next"
+          click_button "Next"
 
-        expect(page).to have_selector(:button, text: "Confirm", visible: true)
+          expect(page).to have_selector(:button, text: "Confirm", visible: true)
 
-        click_button "Confirm"
+          click_button "Confirm"
+        end
 
-        expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+        if scope == :student
+          expect(page).to have_current_path(student_profile_path)
+        else
+          expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+        end
       end
 
       invite = UserInvitation.last

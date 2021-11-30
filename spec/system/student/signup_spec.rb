@@ -44,7 +44,7 @@ RSpec.describe "Students signing up", :js do
       fill_in "Password", with: "margeysecret1234"
       click_button "Sign in"
 
-      expect(current_path).to eq(student_dashboard_path)
+      expect(current_path).to eq(student_profile_path)
     end
   end
 
