@@ -3,6 +3,7 @@ module SignIn
     signin_options = {
       message: I18n.translate('controllers.signins.create.success'),
       redirect_to: after_signin_path(signin, context),
+      enable_redirect: true,
       permanent: false,
     }.merge(options)
 
@@ -28,11 +29,13 @@ module SignIn
       Time.current.to_i
     )
 
-    context.redirect_to(
-      (context.remove_cookie(CookieNames::REDIRECTED_FROM) or
-        context.send(*Array(signin_options[:redirect_to]))),
-      success: signin_options[:message]
-    )
+    if signin_options[:enable_redirect] == true
+      context.redirect_to(
+        (context.remove_cookie(CookieNames::REDIRECTED_FROM) or
+          context.send(*Array(signin_options[:redirect_to]))),
+        success: signin_options[:message]
+      )
+    end
   end
 
   private
