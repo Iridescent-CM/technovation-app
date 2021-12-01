@@ -2,14 +2,14 @@
   <div class="w-full lg:w-3/4 mx-auto px-1">
     <div class="flex justify-between">
       <div>
-        <a href="#" class="flex items-center py-4 px-2">
+        <a href="/" class="flex items-center py-4 px-2">
           <%= image_tag "new_registration/tg-girls-logo.png", alt:"Technovation Girls Logo", id:"tg-logo", class:"w-52"%>
         </a>
       </div>
       <div class="flex space-x-7 tw-hidden py-4" id="student-nav">
         <div class="flex items-center space-x-1" id="student-nav-wrapper">
-          <a href="">Curriculum</a>
-          <a href="">About</a>
+          <a href="/student/dashboard#/curriculum">Curriculum</a>
+          <a href="https://www.technovation.org/about/">About</a>
           <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
             <%= link_to SeasonToggles.survey_link(current_scope, "text"),
                         SeasonToggles.survey_link(
