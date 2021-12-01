@@ -1,4 +1,6 @@
 $(document).on("turbolinks:load", function() {
+    const anchor = $(location).attr('hash');
+
     $("#tab-wrapper div a").click(function(e){
         e.preventDefault();
 
@@ -10,4 +12,8 @@ $(document).on("turbolinks:load", function() {
         $(tabid).show();
         $(this).addClass("tw-active active-tab");
     });
+
+    if (anchor.length > 0 && anchor === '#parent-tab-content') {
+        $(`a[href*='#parent-tab-content']`).click()
+    }
 });

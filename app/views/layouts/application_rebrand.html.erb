@@ -54,6 +54,8 @@
     <div class="main-container bg-white">
       <%= render 'application/flash_messages' %>
 
+      <%= yield :notifications %>
+
       <%= yield %>
 
      <%= render 'application_rebrand/footer' %>
