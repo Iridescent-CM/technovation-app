@@ -1,7 +1,7 @@
 module Student
   class TeamSearchesController < StudentController
     include RequireParentalConsentSigned
-    include RequireLocationSet
+    include RequireLocationIsSet
 
     def new
       unless current_student.valid_coordinates?
