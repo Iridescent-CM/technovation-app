@@ -1,7 +1,7 @@
 module Student
   class DashboardsController < StudentController
     include RequireParentalConsentSigned
-    include RequireLocationSet
+    include RequireLocationIsSet
     include LocationStorageController
 
     def show
