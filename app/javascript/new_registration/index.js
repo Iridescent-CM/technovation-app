@@ -21,9 +21,9 @@ Vue.use(VueFormulate, {
                 const [division] = args
 
                 if (division === 'beginner') {
-                    return "A student must be 8-12 years old to participate in the beginners division."
+                    return "Students ages 13 to 18 by the cutoff date can register themselves. Please return to the first screen and select the 13 to 18 option if the student is older than 12."
                 } else {
-                    return "You must be 13-18 years old to participate as a student."
+                    return "You must be 13-18 years old by the cutoff date to register yourself as a student. Please return to the previous screen and have a parent or guardian register you if you are under 13."
                 }
             },
             mentorAge () {
