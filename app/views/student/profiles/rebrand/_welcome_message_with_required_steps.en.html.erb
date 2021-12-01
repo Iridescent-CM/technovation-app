@@ -2,8 +2,8 @@
   {
     name: "Location Details",
     completed?: current_account.valid_address?,
-    completed_details: "#{current_account.city}, #{current_account.country}",
-    link_to_complete: student_location_details_path,
+    completed_details: "#{current_account.city&.capitalize}, #{current_account.country&.capitalize}",
+    link_to_complete: student_location_details_path(return_to: student_profile_path),
     link_to_complete_text: "Set your location"
   },
   {
@@ -23,8 +23,8 @@
   </p>
 
   <p class="mb-6 text-base text-gray-500">
-    We need a few more details in order to get started. Parental consent is required to participate,
-    and your location is needed to assign you a chapter ambassador and used for team building.
+    We need a few more details in order to get started.
+    Please complete the parental consent and media consent forms, and add your location so you can build a Technovation team.
   </p>
 
   <ul class="space-y-6">
