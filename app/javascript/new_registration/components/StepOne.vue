@@ -20,6 +20,9 @@
 
     <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
   </div>
+  <p><small><em>*As of <strong>August 1st, 2022</strong>. For example, if you turn 13 
+  on July 28, 2022, you will need to select “I am registering to participate 
+  and am 13-18 years old.”</em></small></p>
 </template>
 
 
