@@ -58,7 +58,7 @@ export default {
       resourceLinks: [
         {
           heading: 'Curriculum Lessons',
-          url: 'https://www.technovationchallenge.org/curriculum-intro/registered/new/',
+          url: '/mentor/dashboard#/curriculum',
           text: 'Open the Technovation Curriculum',
         },
 
@@ -94,9 +94,9 @@ export default {
         },
 
         {
-          heading: 'Competition Judging Rubric',
+          heading: 'Competition Judging Rubrics',
           url: 'https://www.technovationchallenge.org/judging-rubric/',
-          text: 'Read the Judging Rubric',
+          text: 'Read the Judging Rubrics',
         },
       ],
     }
