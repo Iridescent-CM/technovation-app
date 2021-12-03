@@ -258,7 +258,7 @@ class AccountsGrid
   filter :division,
     :enum,
     header: "Division (students only)",
-    select: [["Senior", "senior"], ["Junior", "junior"]],
+    select: [["Senior", "senior"], ["Junior", "junior"], ["Beginner", "beginner"]],
     filter_group: "common",
     html: {
       class: "and-or-field",
