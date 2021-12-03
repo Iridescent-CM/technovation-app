@@ -4,7 +4,7 @@
 
     <div id="profile-type" class="form-wrapper">
       <h2 class="registration-title">Technovation Girls is a free program 
-      that empowers <a href="https://www.technovation.org/diversity-equity-inclusion-statement/" target="_blank">girls</a> 
+      that empowers <a href="https://www.technovation.org/diversity-equity-inclusion-statement/" target="_blank"><em>girls</em></a>
       to be leaders. How will you participate?</h2>
 
       <FormulateInput
@@ -16,8 +16,8 @@
         validation="required"
         @input="hasValidationErrors = false"
         />
-      <p><small><em>*As of <strong>August 1st, 2022</strong>. For example, if you turn 13 
-      on July 28, 2022, you will need to select “I am registering to participate 
+      <p><small><em>*As of <strong>August 1, 2022</strong>. For example, if you turn 13 
+      on July 28, 2022, you will need to select “I am registering myself 
       and am 13-18 years old.”</em></small></p>
     </div>
 
@@ -38,15 +38,15 @@ export default {
       values: {},
       options: [
         {
-          label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year* old daughter</span>`,
+          label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year old* daughter</span>`,
           value: "parent",
         },
         {
-          label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering to participate and am 13-18 years* old</span>`,
+          label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering myself and am 13-18 years old*</span>`,
           value: "student",
         },
         {
-          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years* old and will guide a team</span>`,
+          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
           value: "mentor",
         }
       ],

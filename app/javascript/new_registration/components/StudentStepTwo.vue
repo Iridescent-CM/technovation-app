@@ -72,7 +72,7 @@
         />
 
         <div id="parent-information">
-          <h2 class="registration-title">Parent Information</h2>
+          <h2 class="registration-title">Parent/Guardian Information</h2>
 
           <div class="formulate-input-wrapper name-group">
             <FormulateInput
