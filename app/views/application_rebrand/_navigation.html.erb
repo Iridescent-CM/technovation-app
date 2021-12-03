@@ -35,7 +35,6 @@
                       <li><a href="https://www.technovationchallenge.org/submission-guidelines/">Submission Guide</a></li>
                       <li><a href="https://www.technovationchallenge.org/judging-rubric/">Judging Rubrics</a></li>
                       <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-                        <p>Help Technovation Improve!</p>
                         <%= link_to SeasonToggles.survey_link(current_scope, "text"),
                                     SeasonToggles.survey_link(
                                       current_scope, "url",
