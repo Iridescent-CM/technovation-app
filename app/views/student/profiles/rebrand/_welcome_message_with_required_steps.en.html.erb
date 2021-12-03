@@ -8,7 +8,7 @@
   },
   {
     name: "Parental Consent",
-    completed?: current_account.parental_consent.signed?,
+    completed?: current_account.parental_consent&.signed?,
     completed_details: "Signed on #{current_account.parental_consent.updated_at.strftime("%-d %B, %Y")} by #{current_account.parental_consent.electronic_signature}",
     link_to_complete: student_profile_path(anchor: "parent-tab-content"),
     link_to_complete_text: "Check the status of your parental consent"
