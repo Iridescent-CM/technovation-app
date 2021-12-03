@@ -34,7 +34,7 @@
                       <li><a href="https://www.technovation.org/safety/internet-safety-tips-for-children/">Safety Information</a></li>
                       <li><a href="https://www.technovationchallenge.org/submission-guidelines/">Submission Guide</a></li>
                       <li><a href="https://www.technovationchallenge.org/judging-rubric/">Judging Rubrics</a></li>
-                      <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+                      <li><% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
                         <%= link_to SeasonToggles.survey_link(current_scope, "text"),
                                     SeasonToggles.survey_link(
                                       current_scope, "url",
@@ -43,7 +43,7 @@
                                     ),
                                     target: "_blank"
                         %>
-                      <% end %>
+                        <% end %></li>
                       <li>
                         <% if current_account.authenticated? %>
                           <%= link_to t('views.application.signout'), signout_path, class: 'text-sm' %>
