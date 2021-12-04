@@ -30,6 +30,8 @@ class StudentToMentorConverter
       mentor_type: "Past Technovation student",
       former_student: true
     })
+
+    account.update_columns(gender: "Prefer not to say")
   end
 
   def delete_pending_join_requests
