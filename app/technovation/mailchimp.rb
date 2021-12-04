@@ -73,7 +73,9 @@ module Mailchimp
           COUNTRY: account.country.to_s,
           FNAME: account.first_name.to_s,
           LNAME: account.last_name.to_s,
-          NAME: account.full_name.to_s
+          NAME: account.full_name.to_s,
+          PARENTNAME: account.student_profile&.parent_guardian_name.to_s,
+          PARENTREG: account.parent_registered?.to_s
         }
       }.merge(location_for(account))
        .merge(tags_for(profile_type))

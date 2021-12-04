@@ -30,7 +30,9 @@ RSpec.describe Mailchimp::MailingList do
       date_of_birth: Date.parse("2005-05-05"),
       country: "US",
       latitude: 5000,
-      longitude: 5000
+      longitude: 5000,
+      parent_registered?: "false",
+      student_profile: double("student_profile", parent_guardian_name: "Guardian Parento")
     )
   end
 
@@ -62,11 +64,13 @@ RSpec.describe Mailchimp::MailingList do
                 COUNTRY: account.country,
                 FNAME: account.first_name,
                 LNAME: account.last_name,
-                NAME: account.full_name
+                NAME: account.full_name,
+                PARENTNAME: account.student_profile.parent_guardian_name,
+                PARENTREG: account.parent_registered?
               },
-              status: "subscribed",
+              status: "subscribed"
             }
-        )
+          )
 
         mailchimp_mailing_list.subscribe(account: account)
       end
@@ -88,12 +92,14 @@ RSpec.describe Mailchimp::MailingList do
                   COUNTRY: account.country,
                   FNAME: account.first_name,
                   LNAME: account.last_name,
-                  NAME: account.full_name
+                  NAME: account.full_name,
+                  PARENTNAME: account.student_profile.parent_guardian_name,
+                  PARENTREG: account.parent_registered?
                 },
                 status: "subscribed",
                 tags: [profile_type]
               }
-          )
+            )
 
           mailchimp_mailing_list.subscribe(account: account, profile_type: profile_type)
         end
@@ -145,10 +151,12 @@ RSpec.describe Mailchimp::MailingList do
                 COUNTRY: account.country,
                 FNAME: account.first_name,
                 LNAME: account.last_name,
-                NAME: account.full_name
+                NAME: account.full_name,
+                PARENTNAME: account.student_profile.parent_guardian_name,
+                PARENTREG: account.parent_registered?
               }
             }
-        )
+          )
 
         mailchimp_mailing_list.update(account: account)
       end
@@ -170,10 +178,12 @@ RSpec.describe Mailchimp::MailingList do
                   COUNTRY: account.country,
                   FNAME: account.first_name,
                   LNAME: account.last_name,
-                  NAME: account.full_name
+                  NAME: account.full_name,
+                  PARENTNAME: account.student_profile.parent_guardian_name,
+                  PARENTREG: account.parent_registered?
                 }
               }
-          )
+            )
 
           mailchimp_mailing_list.update(
             account: account,
