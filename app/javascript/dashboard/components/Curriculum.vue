@@ -4,17 +4,18 @@
       <div class="grid">
         <div class="grid__col-12">
           <h1>Curriculum</h1>
-
-          <p>Learn how to make your project as strong as possible by following these lessons. 
-          Most participants spend around 40+ hours working on their ideas.</p>
+          <p>
+            Learn how to make your project as strong as possible by following these lessons.
+            Most participants spend around 40+ hours working on their ideas.
+          </p>
 
           <h3>Beginner Division</h3>
           <p>
-            <a href="https://beginner.technovationchallenge.org/" class="button" target="_blank">
+            <a href="/learnworlds" class="button" target="_blank">
               Go to Beginner Lessons
             </a>
           </p>
-          
+
           <h3>Junior and Senior Divisions</h3>
           <p>
             <a href="https://technovationchallenge.org/curriculum-intro/registered/new/" class="button" target="_blank">
