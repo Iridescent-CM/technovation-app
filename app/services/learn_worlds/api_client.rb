@@ -4,7 +4,8 @@ module LearnWorlds
       client_id: ENV.fetch("LEARNWORLDS_CLIENT_ID"),
       access_token: Authentication.new.access_token,
       http_client: Faraday,
-      logger: Rails.logger
+      logger: Rails.logger,
+      error_notifier: Airbrake
     )
 
       @client = http_client.new(
@@ -15,6 +16,7 @@ module LearnWorlds
         }
       )
       @logger = logger
+      @error_notifier = error_notifier
     end
 
     def sso(account:)
@@ -29,7 +31,10 @@ module LearnWorlds
         Result.new(success?: true, redirect_url: response_body[:url])
       else
         response_body[:errors].each do |error|
-          logger.error("[LEARNWORLDS ERROR] #{error}")
+          error = "[LEARNWORLDS] Error performing SSO for account #{account.id} - #{error}"
+
+          logger.error(error)
+          error_notifier.notify(error)
         end
 
         Authentication.new.refresh_access_token
@@ -40,7 +45,7 @@ module LearnWorlds
 
     private
 
-    attr_reader :client, :logger
+    attr_reader :client, :logger, :error_notifier
 
     Result = Struct.new(:success?, :message, :redirect_url, keyword_init: true)
 

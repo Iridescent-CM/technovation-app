@@ -4,7 +4,8 @@ module LearnWorlds
       client_id: ENV.fetch("LEARNWORLDS_CLIENT_ID"),
       client_secret: ENV.fetch("LEARNWORLDS_CLIENT_SECRET"),
       http_client: Faraday,
-      logger: Rails.logger
+      logger: Rails.logger,
+      error_notifier: Airbrake
     )
 
       @client = http_client.new(
@@ -16,6 +17,7 @@ module LearnWorlds
       @client_id = client_id
       @client_secret = client_secret
       @logger = logger
+      @error_notifier = error_notifier
     end
 
     def access_token
@@ -37,7 +39,10 @@ module LearnWorlds
         Result.new(success?: true, access_token: response_body[:tokenData][:access_token])
       else
         response_body[:errors].each do |error|
-          logger.error("[LEARNWORLDS ERROR] #{error}")
+          error = "[LEARNWORLDS] Error getting an access token - #{error}"
+
+          logger.error(error)
+          error_notifier.notify(error)
         end
 
         Result.new(success?: false, message: "There was an error trying to get an access token, please check the logs for more info.")
@@ -46,7 +51,7 @@ module LearnWorlds
 
     private
 
-    attr_reader :client, :client_id, :client_secret, :logger
+    attr_reader :client, :client_id, :client_secret, :logger, :error_notifier
 
     Result = Struct.new(:success?, :message, :access_token, keyword_init: true)
   end
