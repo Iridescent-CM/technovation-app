@@ -2,7 +2,7 @@ module LearnWorlds
   class ApiClient
     def initialize(
       client_id: ENV.fetch("LEARNWORLDS_CLIENT_ID"),
-      access_token: Authentication.new.access_token,
+      authentication_service: LearnWorlds::Authentication.new,
       http_client: Faraday,
       logger: Rails.logger,
       error_notifier: Airbrake
@@ -12,7 +12,7 @@ module LearnWorlds
         url: "https://api-lw9.learnworlds.com",
         headers: {
           "Lw-Client" => client_id,
-          "Authorization" => "Bearer #{access_token}"
+          "Authorization" => "Bearer #{authentication_service.access_token}"
         }
       )
       @logger = logger
@@ -37,7 +37,7 @@ module LearnWorlds
           error_notifier.notify(error)
         end
 
-        Authentication.new.refresh_access_token
+        authentication_service.refresh_access_token
 
         Result.new(success?: false)
       end
