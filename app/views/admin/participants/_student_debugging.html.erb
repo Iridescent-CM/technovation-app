@@ -6,9 +6,9 @@
   </p>
 
   <dl>
-    <dt>Parental consent</dt>
+    <dt>Data Terms</dt>
     <dd>
-      <% if profile.consent_signed? %>
+      <% if profile.account.terms_agreed_at? %>
         <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
       <% else %>
         <%= web_icon("exclamation-circle icon-red",
@@ -16,18 +16,13 @@
       <% end %>
     </dd>
 
-    <dt>Parent information</dt>
+    <dt>Parental Consent</dt>
     <dd>
-      <% if profile.parent_guardian_email.blank? %>
-        <%= web_icon(
-          "exclamation-circle icon-red",
-          text: "Not filled in... boo..."
-        ) %>
+      <% if profile.consent_signed? %>
+        <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
       <% else %>
-        <%= web_icon(
-          "check-circle icon-green",
-          text: "Filled in! Yay!"
-        ) %>
+        <%= web_icon("exclamation-circle icon-red",
+                     text: "Not signed... boo...") %>
       <% end %>
     </dd>
 

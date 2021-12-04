@@ -361,8 +361,9 @@ class StudentProfile < ActiveRecord::Base
   def can_be_marked_onboarded?
     account.present? &&
       signed_parental_consent.present? &&
-        !account.email_confirmed_at.blank? &&
-          account.valid_coordinates?
+      !account.email_confirmed_at.blank? &&
+      account.valid_coordinates? &&
+      account.terms_agreed_at?
   end
 
   private
