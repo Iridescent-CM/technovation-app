@@ -6,7 +6,8 @@ class SubscribeParentToEmailListJob < ActiveJob::Base
     faux_parent_account = FauxAccount.new(
       methods_with_return_values: {
         email: student_profile.parent_guardian_email,
-        full_name: student_profile.parent_guardian_name
+        full_name: student_profile.parent_guardian_name,
+        parent_registered?: student_profile.account.parent_registered?.to_s
       }
     )
 

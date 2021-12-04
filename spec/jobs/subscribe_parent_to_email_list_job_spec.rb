@@ -5,7 +5,8 @@ RSpec.describe SubscribeParentToEmailListJob do
     double(StudentProfile,
       id: 1,
       parent_guardian_name: "Witch Wizard",
-      parent_guardian_email: "witch@example.com")
+      parent_guardian_email: "witch@example.com",
+      account: double(Account, parent_registered?: "false"))
   end
   let(:faux_parent_account) do
     double(FauxAccount,
@@ -19,7 +20,8 @@ RSpec.describe SubscribeParentToEmailListJob do
     allow(FauxAccount).to receive(:new)
       .with(methods_with_return_values: {
         full_name: student_profile.parent_guardian_name,
-        email: student_profile.parent_guardian_email
+        email: student_profile.parent_guardian_email,
+        parent_registered?: student_profile.account.parent_registered?
       })
       .and_return(faux_parent_account)
     allow(Mailchimp::MailingList).to receive_message_chain(:new, :subscribe)
@@ -29,17 +31,18 @@ RSpec.describe SubscribeParentToEmailListJob do
     expect(FauxAccount).to receive(:new)
       .with(methods_with_return_values: {
         full_name: student_profile.parent_guardian_name,
-        email: student_profile.parent_guardian_email
+        email: student_profile.parent_guardian_email,
+        parent_registered?: student_profile.account.parent_registered?
       })
       .and_return(faux_parent_account)
 
-      SubscribeParentToEmailListJob.perform_now(student_profile_id: student_profile.id)
+    SubscribeParentToEmailListJob.perform_now(student_profile_id: student_profile.id)
   end
 
   it "calls the Mailchimp service that will subscribe the parent" do
-    expect(Mailchimp::MailingList).to receive_message_chain(:new, :subscribe).
-      with(account: faux_parent_account, profile_type: profile_type)
+    expect(Mailchimp::MailingList).to receive_message_chain(:new, :subscribe)
+      .with(account: faux_parent_account, profile_type: profile_type)
 
-      SubscribeParentToEmailListJob.perform_now(student_profile_id: student_profile.id)
+    SubscribeParentToEmailListJob.perform_now(student_profile_id: student_profile.id)
   end
 end
