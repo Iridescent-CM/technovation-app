@@ -4,12 +4,13 @@ describe StudentToMentorConverter do
   let(:student_to_mentor_converter) {
     StudentToMentorConverter.new(account: account)
   }
-  let(:account) { instance_double(Account, name: "Fizzy Izzy") }
+  let(:account) { double(Account, name: "Fizzy Izzy") }
   let(:student_profile) { instance_double(StudentProfile, school_name: "Slytherin") }
 
   before do
     allow(account).to receive(:create_mentor_profile!)
     allow(account).to receive(:student_profile).and_return(student_profile)
+    allow(account).to receive(:update_columns)
     allow(student_profile).to receive(:delete)
     allow(student_profile).to receive_message_chain(:join_requests, :pending, :delete_all)
   end
@@ -21,6 +22,15 @@ describe StudentToMentorConverter do
         mentor_type: "Past Technovation student",
         job_title: "Technovation Alumnus",
         school_company_name: student_profile.school_name
+      })
+
+    student_to_mentor_converter.call
+  end
+
+  it "sets the gender on the account to 'Prefer not to say'" do
+    expect(account).to receive(:update_columns)
+      .with({
+        gender: "Prefer not to say"
       })
 
     student_to_mentor_converter.call
