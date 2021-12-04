@@ -20,15 +20,25 @@ module LearnWorlds
       @error_notifier = error_notifier
     end
 
-    def access_token
-      Rails.cache.fetch(:learn_worlds_access_token) do
-        result = refresh_access_token
+    def access_token(force_cache_refresh: false)
+      Rails.cache.fetch(:learn_worlds_access_token, force: force_cache_refresh) do
+        result = get_access_token
 
         result.access_token if result.success?
       end
     end
 
     def refresh_access_token
+      access_token(force_cache_refresh: true)
+    end
+
+    private
+
+    attr_reader :client, :client_id, :client_secret, :logger, :error_notifier
+
+    Result = Struct.new(:success?, :message, :access_token, keyword_init: true)
+
+    def get_access_token
       response = client.post(
         "/oauth2/access_token",
         {client_id: client_id, client_secret: client_secret, grant_type: "client_credentials"}
@@ -48,11 +58,5 @@ module LearnWorlds
         Result.new(success?: false, message: "There was an error trying to get an access token, please check the logs for more info.")
       end
     end
-
-    private
-
-    attr_reader :client, :client_id, :client_secret, :logger, :error_notifier
-
-    Result = Struct.new(:success?, :message, :access_token, keyword_init: true)
   end
 end
