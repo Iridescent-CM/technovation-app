@@ -261,22 +261,15 @@ class Account < ActiveRecord::Base
 
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
-         saved_change_to_latitude ||
-           saved_change_to_city
+        saved_change_to_latitude ||
+        saved_change_to_city ||
+        saved_change_to_terms_agreed_at
 
-      # TODO - Move this out of here so that this logic fires whent the record is touched.
       if student_profile.present?
-        student_profile.update_column(
-          :onboarded,
-          student_profile.can_be_marked_onboarded?
-        )
+        student_profile.update_column(:onboarded, student_profile.can_be_marked_onboarded?)
       elsif judge_profile.present?
-        judge_profile.update_column(
-          :onboarded,
-          judge_profile.can_be_marked_onboarded?
-        )
+        judge_profile.update_column(:onboarded, judge_profile.can_be_marked_onboarded?)
       end
-
     end
 
     if saved_change_to_first_name || saved_change_to_last_name
