@@ -6,24 +6,28 @@
   <% end %>
 <% end %>
 
-<div class="container mx-auto flex flex-col lg:flex-row justify-around" id="show-container">
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6" id="show-container">
   <%= render 'student/profiles/rebrand/menu' %>
 
-    <div class="tab">
-      <div id="basic-tab-content" class="tab-content tw-active">
-        <%= render 'student/profiles/rebrand/basic' %>
-      </div>
-      <div id="parent-tab-content" class="tab-content">
-        <%= render 'student/profiles/rebrand/parent' %>
-      </div>
-      <div id="location-tab-content" class="tab-content">
-        <%= render 'student/profiles/rebrand/location' %>
-      </div>
-      <div id="email-tab-content" class="tab-content">
-        <%= render 'student/profiles/rebrand/email' %>
-      </div>
-      <div id="pw-tab-content" class="tab-content">
-        <%= render 'student/profiles/rebrand/password' %>
-      </div>
+  <div class="tab">
+    <div id="basic-tab-content" class="tab-content tw-active">
+      <%= render 'student/profiles/rebrand/basic' %>
     </div>
+
+    <div id="parent-tab-content" class="tab-content">
+      <%= render 'student/profiles/rebrand/parent' %>
+    </div>
+
+    <div id="location-tab-content" class="tab-content">
+      <%= render 'student/profiles/rebrand/location' %>
+    </div>
+
+    <div id="email-tab-content" class="tab-content">
+      <%= render 'student/profiles/rebrand/email' %>
+    </div>
+
+    <div id="pw-tab-content" class="tab-content">
+      <%= render 'student/profiles/rebrand/password' %>
+    </div>
+  </div>
 </div>
