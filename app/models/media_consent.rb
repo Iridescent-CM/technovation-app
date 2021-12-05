@@ -19,6 +19,6 @@ class MediaConsent < ActiveRecord::Base
   private
 
   def send_media_conent_confirmation_email_to_parent
-    ParentMailer.confirm_media_consent_finished(student_profile).deliver_later
+    ParentMailer.confirm_media_consent_finished(student_profile.id).deliver_later
   end
 end

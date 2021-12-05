@@ -16,32 +16,26 @@ class ParentMailer < ApplicationMailer
     end
   end
 
-  def confirm_parental_consent_finished(student_profile)
-    return if student_profile.parent_guardian_email.blank?
-
-    @student_profile = student_profile
-    @parental_consent = student_profile.parental_consent
+  def confirm_parental_consent_finished(student_profile_id)
+    @student_profile = StudentProfile.find(student_profile_id)
+    @parental_consent = @student_profile.parental_consent
 
     I18n.with_locale(@student_profile.account.locale) do
       mail to: @student_profile.parent_guardian_email
     end
   end
 
-  def confirm_media_consent_finished(student_profile)
-    return if student_profile.parent_guardian_email.blank?
-
-    @student_profile = student_profile
-    @media_consent = student_profile.media_consent
+  def confirm_media_consent_finished(student_profile_id)
+    @student_profile = StudentProfile.find(student_profile_id)
+    @media_consent = @student_profile.media_consent
 
     I18n.with_locale(@student_profile.account.locale) do
       mail to: @student_profile.parent_guardian_email
     end
   end
 
-  def thank_you(student_profile)
-    return if student_profile.parent_guardian_email.blank?
-
-    @student_profile = student_profile
+  def thank_you(student_profile_id)
+    @student_profile = StudentProfile.find(student_profile_id)
     @technovation_url = "http://technovationchallenge.org/about/"
 
     I18n.with_locale(@student_profile.account.locale) do
