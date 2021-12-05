@@ -15,6 +15,7 @@ module LearnWorlds
           "Authorization" => "Bearer #{authentication_service.access_token}"
         }
       )
+      @authentication_service = authentication_service
       @logger = logger
       @error_notifier = error_notifier
     end
@@ -45,7 +46,7 @@ module LearnWorlds
 
     private
 
-    attr_reader :client, :logger, :error_notifier
+    attr_reader :client, :authentication_service, :logger, :error_notifier
 
     Result = Struct.new(:success?, :message, :redirect_url, keyword_init: true)
 
