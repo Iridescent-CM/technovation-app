@@ -3,7 +3,7 @@
     <p class="font-bold">Basic Information</p>
   </div>
 
-  <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row">
+  <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
     <div id="information-details">
       <dl>
         <dt>Name</dt>
@@ -33,17 +33,21 @@
 
     </div>
 
-    <div id="profile-picture" class="w-3/12">
+    <div id="profile-picture" class="flex flex-col items-center self-start mb-4">
+      <div class="">
       <%= image_tag current_student.profile_image_url,
-                    class: "grid__cell-img rounded-bl-3xl rounded-tr-3xl",
+                    class: "w-24 h-24 rounded-bl-3xl rounded-tr-3xl mb-3",
                     id: "profile-image" %>
+      </div>
 
+      <div>
       <%= render 'image_upload',
                  choose_from_defaults: true,
                  current_image_path: current_student.profile_image_url,
                  modal_id: "image_upload_desktop",
                  heading: "Upload a profile photo",
                  size: "300x300" %>
+      </div>
     </div>
   </div>
 </div>
