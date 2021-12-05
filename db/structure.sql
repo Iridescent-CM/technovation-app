@@ -119,7 +119,8 @@ CREATE TABLE public.accounts (
     geocoding_country_was character varying,
     geocoding_fixed_at timestamp without time zone,
     terms_agreed_at timestamp without time zone,
-    parent_registered boolean DEFAULT false NOT NULL
+    parent_registered boolean DEFAULT false NOT NULL,
+    learn_worlds_user_id character varying
 );
 
 
@@ -3138,6 +3139,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210426215502'),
 ('20210430203443'),
 ('20210831162123'),
-('20211125180122');
+('20211125180122'),
+('20211204185710');
 
 

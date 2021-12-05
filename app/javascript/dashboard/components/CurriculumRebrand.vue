@@ -5,14 +5,15 @@
     </div>
     <div class="tw-content=-wrapper p-8">
       <section>
-        <p>Learn how to make your project as strong as possible by following these lessons. 
-        Most participants spend around 40+ hours working on their ideas.</p>
+        <p>
+          Learn how to make your project as strong as possible by following these lessons.
+          Most participants spend around 40+ hours working on their ideas.
+        </p>
       </section>
       <section>
         <h1 class="mt-6">Beginner Division</h1>
         <p class="mt-3">
-          <a href="https://beginner.technovationchallenge.org/" class="tw-green-btn"
-             target="_blank">
+          <a href="/learnworlds" class="tw-green-btn" target="_blank">
             Go to Beginner Lessons
           </a>
         </p>

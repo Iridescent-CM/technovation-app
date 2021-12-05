@@ -356,6 +356,8 @@ Rails.application.routes.draw do
 
   resources :geolocation_results, only: :index
 
+  get "learnworlds", to: "learn_worlds#sso"
+
   get '/general_info/get_started_with_thunkable', to: 'thunkable#show'
 
   get 'login', to: 'signins#new', as: :login

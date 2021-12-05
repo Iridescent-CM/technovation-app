@@ -41,6 +41,10 @@ en:
       update:
         failure: "Sorry, but we could not find a pending mentor invite with that token for this account."
 
+    learn_worlds:
+      sso:
+        error: "There was an issue connecting to LearnWorlds, please try again later, or contact us if you need assistance."
+
     join_requests:
       update:
         accept: "Approve request from %{name}"
