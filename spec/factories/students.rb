@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :student_profile, aliases: [:student, :student_account] do
     account
 
+    parent_guardian_name { "Parenty Guardiana" }
+    parent_guardian_email { "parentguardian@example.com" }
     school_name { "FactoryBot High" }
 
     transient do
