@@ -86,6 +86,10 @@ nav {
     @apply text-white py-2 px-4
 }
 
+.sub-nav-item:first-child{
+    @apply pl-0
+}
+
 .sub-nav-item-active{
     @apply bg-white text-energetic-blue py-2 px-4 rounded-tr-3xl font-semibold
 }
