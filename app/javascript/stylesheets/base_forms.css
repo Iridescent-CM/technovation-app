@@ -1,0 +1,32 @@
+@layer base {
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    input[type="url"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="search"],
+    input[type="tel"],
+    select,
+    select[multiple],
+    textarea {
+        @apply rounded border-gray-400 w-full focus:border-energetic-blue focus:ring-energetic-blue
+    }
+
+    input[type="checkbox"], input[type="radio"] {
+        @apply focus:ring-transparent text-energetic-blue mr-2
+    }
+
+    input[type="text"]:disabled, input[type="email"]:disabled {
+        @apply text-gray-400 bg-gray-100
+    }
+
+    input[type="checkbox"]:disabled, input[type="radio"]:disabled {
+        @apply text-gray-400
+    }
+}
+
