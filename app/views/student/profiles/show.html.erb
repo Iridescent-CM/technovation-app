@@ -1,6 +1,6 @@
 <% provide :title, "My profile" %>
 
-<% if !current_account.parental_consent.signed? || !current_account.valid_address? %>
+<% if !current_account.parental_consent&.signed? || !current_account.valid_address? %>
   <% content_for :notifications do %>
     <%= render "student/profiles/rebrand/welcome_message_with_required_steps" %>
   <% end %>
