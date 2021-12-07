@@ -13,11 +13,26 @@ module.exports = {
         'tg-gold': '#ffb81c',
         'tg-magenta': '#d0006f',
         'tg-orange': '#ff7500',
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            a: {
+              'text-decoration': 'none',
+              '&:hover': {
+                'text-decoration': 'underline'
+              }
+            }
+          }
+        }
       }
-    },
+    }
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms')
+  ],
 }
