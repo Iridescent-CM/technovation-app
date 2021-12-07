@@ -51,7 +51,7 @@ RSpec.describe "Parental consent", :js do
     student = FactoryBot.create(:onboarding_student)
     visit edit_parental_consent_path(token: student.reload.consent_token)
 
-    expect(page).to have_content("Consent to participate")
+    expect(page).to have_content("Consent to Participate")
   end
 
   it "validates parental consent info" do
