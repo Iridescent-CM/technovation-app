@@ -1,5 +1,5 @@
 <section class="flex flex-col space-y-6 mb-8">
-  <p>A request for parent consent was sent to:</p>
+  <p>A request for parent program permission and media consent was sent to:</p>
 
   <div class="flex flex-col lg:flex-row justify-between">
     <p>Name: <span class="font-bold"><%= current_student.parent_guardian_name %></span></p>
@@ -9,7 +9,7 @@
   <div>
     <p>Ask the parent/guardian listed above to check their email inbox and spam folder.</p>
 
-    <%= link_to "Resend parent consent email",
+    <%= link_to "Resend consent email",
                 student_parental_consent_notice_path,
                 data: { method: :post },
                 class:"tw-link"
@@ -28,13 +28,20 @@
   <p class="font-bold">If your parent or guardian does not have an email address:</p>
 
   <p>
-    Print this
-    <%= link_to "permission form",
+    Print these
+    <%= link_to "permission",
                 student_downloadable_parental_consent_path(format: :pdf),
                 target: :_blank,
                 class: "tw-link"
     %>
-    form and send the signed signature page as an attachment to
+    and 
+    
+    <%= link_to "media",
+                "https://s3.amazonaws.com/curiositymachine/units/resources/TechnovationMediaRelease.pdf",
+                target: :_blank,
+                class: "tw-link"
+    %>
+    consent forms and send the signed signature pages as attachments to
 
     <%= mail_to ENV.fetch("HELP_EMAIL"),
                 "support@technovation.org",
@@ -42,7 +49,7 @@
                 class:"tw-link"
     %>
 
-    Please make sure the page is well-lit and easy to read.
+    Please make sure the pages are well-lit and easy to read.
   </p>
 </section>
 
