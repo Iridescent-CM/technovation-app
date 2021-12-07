@@ -26,7 +26,7 @@ module LearnWorlds
 
       if response_body[:success] == true
         if account.learn_worlds_user_id.blank?
-          client.post("/user-product", {user: response_body[:user_id], course: "beginners", type: "course"})
+          client.post("/user-product", {user: response_body[:user_id], product: "beginners", type: "course"})
 
           account.update_attribute(:learn_worlds_user_id, response_body[:user_id])
         end
