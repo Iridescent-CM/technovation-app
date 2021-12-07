@@ -27,7 +27,7 @@ en:
 
   registration_mailer:
     admin_permission:
-      subject: "TG Invitation: Sign up for your %{season_year} account"
+      subject: "Technovation Girls Invitation: Sign up for your %{season_year} account"
     confirm_email:
       subject: "Confirm your email for Technovation %{season_year}"
     welcome_mentor:
