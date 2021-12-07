@@ -52,7 +52,7 @@
           @change="checkValidation"
         />
 
-        <div class=" border-l-2 border-blue-500 bg-blue-50 p-2 mb-8">
+        <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
           <p class="text-left">
             The cutoff date used for division assignment is <strong>{{ divisionCutoffDate }}</strong>.
             Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years old by this date.
