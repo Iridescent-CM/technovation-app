@@ -3,9 +3,13 @@
     <ContainerHeader header-text="Your Profile Type" />
 
     <div id="profile-type" class="form-wrapper">
-      <h2 class="registration-title">Technovation Girls is a free program 
-      that empowers <a href="https://www.technovation.org/diversity-equity-inclusion-statement/" target="_blank"><em>girls</em></a>
-      to be leaders. How will you participate?</h2>
+      <h2 class="registration-title">
+        Technovation Girls is a free program that empowers
+        <a href="https://www.technovation.org/diversity-equity-inclusion-statement/" target="_blank">
+          <em>girls</em>
+        </a>
+        to be leaders. How will you participate?
+      </h2>
 
       <FormulateInput
         label-position="before"
@@ -15,10 +19,13 @@
         name="profileType"
         validation="required"
         @input="hasValidationErrors = false"
-        />
-      <p><small><em>*As of <strong>August 1, 2022</strong>. For example, if you turn 13 
-      on July 28, 2022, you will need to select “I am registering myself 
-      and am 13-18 years old.”</em></small></p>
+      />
+
+      <p class="italic text-sm">
+        *As of <strong>{{ divisionCutoffDate }}</strong>.
+        For example, if you turn 13 on July 28, 2022, you will need to select
+        “I am registering myself and am 13-18 years old.”
+      </p>
     </div>
 
     <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
@@ -29,6 +36,7 @@
 <script>
 import ContainerHeader from "./ContainerHeader";
 import NextButton from "./NextButton";
+import { divisionCutoffDateFormatted } from "../../utilities/technovation-dates.js"
 
 export default {
   name: 'StepOne',
@@ -52,6 +60,9 @@ export default {
       ],
       hasValidationErrors: true
     };
+  },
+  computed: {
+    divisionCutoffDate: divisionCutoffDateFormatted
   },
   props: ['formValues']
 }

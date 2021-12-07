@@ -54,7 +54,7 @@
 
         <div class=" border-l-2 border-blue-500 bg-blue-50 p-2 mb-8">
           <p class="text-left">
-            The cutoff date used for division assignment is <strong>{{ divisionCutoff }}</strong>.
+            The cutoff date used for division assignment is <strong>{{ divisionCutoffDate }}</strong>.
             Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years old by this date.
           </p>
         </div>
@@ -120,7 +120,7 @@ import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
 import NextButton from "./NextButton";
-import { divisionCutoffDate } from "../../utilities/technovation-dates.js"
+import { divisionCutoffDateFormatted } from "../../utilities/technovation-dates.js"
 import { calculateAgeByDivisionCutoffDate } from "../../utilities/age-helpers.js"
 
 export default {
@@ -177,8 +177,8 @@ export default {
     pronoun() {
       return (this.formValues.profileType === 'parent') ? 'this student' : 'you'
     },
-    divisionCutoff() {
-      return divisionCutoffDate().toFormat('MMMM d, yyyy')
+    divisionCutoffDate() {
+      return divisionCutoffDateFormatted()
     },
     ageByDivisionCutoff() {
       const ageByDivisionCutoffDate = calculateAgeByDivisionCutoffDate({ birthday: this.birthday })
