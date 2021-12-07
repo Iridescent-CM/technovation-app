@@ -26,12 +26,26 @@ module LearnWorlds
 
       if response_body[:success] == true
         if account.learn_worlds_user_id.blank?
-          client.post("/user-product", {user: response_body[:user_id], product: "beginners", type: "course", justification: "Auto-enrollment"})
-
           account.update_attribute(:learn_worlds_user_id, response_body[:user_id])
-        end
 
-        Result.new(success?: true, redirect_url: response_body[:url])
+          enroll_response = client.post("/user-product", {user: response_body[:user_id], product: "beginners", type: "course", justification: "Auto-enrollment"})
+          enroll_response_body = JSON.parse(enroll_response.body, symbolize_names: true)
+
+          if enroll_response_body[:success] == true
+            Result.new(success?: true, redirect_url: response_body[:url])
+          else
+            enroll_response_body [:errors].each do |error|
+              error = "[LEARNWORLDS] Error performing auto-enrollment for account #{account.id} - #{error}"
+
+              logger.error(error)
+              error_notifier.notify(error)
+            end
+
+            Result.new(success?: false)
+          end
+        else
+          Result.new(success?: true, redirect_url: response_body[:url])
+        end
       else
         response_body[:errors].each do |error|
           error = "[LEARNWORLDS] Error performing SSO for account #{account.id} - #{error}"
