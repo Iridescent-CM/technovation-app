@@ -74,6 +74,14 @@ nav {
     @apply bg-tg-dark-green text-gray-50
 }
 
+.tw-gray-btn{
+    @apply px-4 py-2 rounded bg-gray-200 text-gray-600
+}
+
+.tw-gray-btn:hover{
+    @apply bg-gray-300 text-gray-700
+}
+
 .tw-blue-lg-container{
     @apply h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue
 }
@@ -84,6 +92,10 @@ nav {
 
 .sub-nav-item{
     @apply text-white py-2 px-4
+}
+
+.sub-nav-item:first-child{
+    @apply pl-0
 }
 
 .sub-nav-item-active{
