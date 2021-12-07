@@ -11,7 +11,7 @@
         </p>
       </section>
       <section>
-        <h1 class="mt-6">Beginner Division</h1>
+        <h1 class="mt-6"><strong>Beginner Division</strong></h1>
         <p class="mt-3">
           <a href="/learnworlds" class="tw-green-btn" target="_blank">
             Go to Beginner Lessons
@@ -19,7 +19,7 @@
         </p>
       </section>
       <section>
-        <h1 class="mt-6">Junior and Senior Divisions</h1>
+        <h1 class="mt-6"><strong>Junior and Senior Divisions</strong></h1>
         <p class="mt-3">
           <a href="https://technovationchallenge.org/curriculum-intro/registered/new/" class="tw-green-btn"
              target="_blank">
