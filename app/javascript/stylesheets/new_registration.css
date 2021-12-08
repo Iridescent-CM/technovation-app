@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Rubik:wght@400;500;600;700;900&display=swap');
 
 @layer components {
     .registration-btns {
@@ -35,20 +34,6 @@
 
     .name-group {
         @apply flex justify-between;
-    }
-
-    .tg-green-stripes {
-        background: repeating-linear-gradient(
-                45deg,
-                #5FBC4A,
-                #5FBC4A 10px,
-                #43b02a 10px,
-                #43b02a 26px
-        );
-    }
-
-    .rubik {
-        font-family: 'RUBIK', sans-serif;
     }
 
     .form-wrapper {
