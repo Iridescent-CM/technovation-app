@@ -103,17 +103,6 @@
           input-class="mentorSelectClass"
         />
 
-        <div id="mentor-information">
-          <h2 class="registration-title">Skills & Interests</h2>
-
-          <FormulateInput
-            name="mentorExpertises"
-            :options="mentorProfileExpertiseOptions"
-            type="checkbox"
-            id="mentorExpertise"
-          />
-        </div>
-
         <div class="mentor-information">
           <h2 class="registration-title">Set your personal summary</h2>
 
