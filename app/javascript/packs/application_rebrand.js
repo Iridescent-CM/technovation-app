@@ -1,6 +1,4 @@
-import "tailwindcss/base";
-import "tailwindcss/components";
-import "tailwindcss/utilities";
+import "tailwindcss/tailwind.css"
 
 import "../stylesheets/base_forms.css"
 import "../stylesheets/documents.css"
