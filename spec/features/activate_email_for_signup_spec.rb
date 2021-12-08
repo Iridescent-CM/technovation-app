@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Activate your email to sign up" do
+RSpec.xfeature "Activate your email to sign up" do
   before { SeasonToggles.enable_signups! }
 
   scenario "Activate your email for signing up" do
