@@ -1,7 +1,7 @@
 require "rails_helper"
 require "./lib/invite_chapter_ambassador"
 
-RSpec.feature "Invited chapter ambassadors confirm their details" do
+RSpec.xfeature "Invited chapter ambassadors confirm their details" do
   let(:attempt) {
     InviteChapterAmbassador.(
       FactoryBot.attributes_for(:account).merge(
