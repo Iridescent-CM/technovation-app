@@ -39,7 +39,7 @@
         heap.load("<%= ENV.fetch("HEAP_APP_ID") %>");
 
         <% if current_account.authenticated? && !current_session.authenticated? %>
-          heap.identify("<%= current_account.id %>");
+          heap.identify("<%= current_account.email %>");
         <% end %>
       </script>
     <% end %>
