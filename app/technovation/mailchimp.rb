@@ -6,13 +6,15 @@ module Mailchimp
       api_key: ENV.fetch("MAILCHIMP_API_KEY"),
       list_id: ENV.fetch("MAILCHIMP_LIST_ID"),
       enabled: ENV.fetch("ENABLE_MAILCHIMP", false),
-      logger: Rails.logger
+      logger: Rails.logger,
+      error_notifier: Airbrake
     )
 
       @list = client_constructor.new({api_key: api_key}).lists(list_id)
       @list_id = list_id
       @enabled = enabled
       @logger = logger
+      @error_notifier = error_notifier
     end
 
     def subscribe(account:, profile_type: "")
@@ -51,14 +53,17 @@ module Mailchimp
 
     private
 
-    attr_reader :list, :list_id, :enabled, :logger
+    attr_reader :list, :list_id, :enabled, :logger, :error_notifier
 
     def handle(message, &block)
       if enabled
         begin
           block.call
         rescue Gibbon::MailChimpError => e
-          logger.error("[MAILCHIMP ERROR] #{e.message}")
+          error = "[MAILCHIMP] #{e.message}"
+
+          logger.error(error)
+          error_notifier.notify(error)
         end
       else
         logger.info "[MAILCHIMP DISABLED] Trying to #{message}"
