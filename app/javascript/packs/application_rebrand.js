@@ -1,4 +1,4 @@
-import "tailwindcss/tailwind.css"
+import "../stylesheets/tailwind.css"
 
 import "../stylesheets/base_forms.css"
 import "../stylesheets/documents.css"
