@@ -14,7 +14,7 @@
     <%= render "favicons" %>
 
     <%= javascript_packs_with_chunks_tag "documents" %>
-    <%= stylesheet_pack_tag "documents" %>
+    <%= stylesheet_pack_tag "documents", "data-turbolinks-track": "reload" %>
   </head>
 
   <body>
