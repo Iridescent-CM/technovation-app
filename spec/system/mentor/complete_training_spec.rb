@@ -14,7 +14,7 @@ RSpec.describe "A mentor completing their training", :js do
     )
   end
 
-  it "is not required for new mentors before the ImportantDates.mentor_training_required_since date" do
+  xit "is not required for new mentors before the ImportantDates.mentor_training_required_since date" do
     Timecop.freeze(ImportantDates.mentor_training_required_since - 1.day) do
       mentor = sign_up(:mentor)
       expect(page).to have_content("Dashboard")
@@ -62,7 +62,7 @@ RSpec.describe "A mentor completing their training", :js do
     end
   end
 
-  it "is required on and after the ImportantDates.mentor_training_required_since date" do
+  xit "is required on and after the ImportantDates.mentor_training_required_since date" do
     Timecop.freeze(ImportantDates.mentor_training_required_since) do
       mentor = sign_up(:mentor)
       mentor.update_column(:bio, "Something of sufficient length " * 10)

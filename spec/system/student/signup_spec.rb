@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Students signing up", :js do
+RSpec.xdescribe "Students signing up", :js do
   describe "authenticating" do
     it "logs in okay with the email / password used during signup" do
       SeasonToggles.enable_signup(:student)
