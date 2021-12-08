@@ -101,15 +101,21 @@ en:
         message: "Review their profile and respond below"
         missing: "Sorry, but this request appears to be missing."
 
-    media_consents:
+    parental_consents:
+      new:
+        submit: "I agree"
+      show:
+        signed: "%{student_name} received parental consent from %{parent_name} on %{date}"
+      student_name:
+        label: "Student's name"
       electronic_signature:
         label: "Your name"
-        placeholder: "Please type your name here as electronic consent"
+        placeholder: "Please enter your name here as electronic consent"
+
+    media_consents:
       consent_provided:
         consent_yes: "I grant permission"
         consent_no: "I do not grant permission"
-      student_name:
-        label: "Student's name"
       submit: "Submit"
 
     mentor:
@@ -144,12 +150,6 @@ en:
           virtual: "Virtual"
       none_found: "Sorry... we couldn't find any mentors with your criteria."
       title: "Search for Team Mentors"
-
-    parental_consents:
-      new:
-        submit: "I agree"
-      show:
-        signed: "%{student_name} received parental consent from %{parent_name} on %{date}"
 
     passwords:
       new:

@@ -1,4 +1,6 @@
 class ParentalConsentsController < ApplicationController
+  layout "documents"
+
   def show
     @parental_consent = ParentalConsent.find(params.fetch(:id))
   end

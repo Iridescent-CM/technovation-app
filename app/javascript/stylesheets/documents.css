@@ -1,0 +1,24 @@
+.prose.welcome-message h2{
+    @apply text-tg-green
+}
+
+.prose.consent-document p{
+    @apply leading-tight
+}
+
+.prose.consent-document li {
+    @apply mt-0 mb-0.5 leading-tight;
+}
+
+.consent-form label{
+    @apply uppercase tracking-tight text-gray-500 text-sm mb-2
+}
+
+.consent-form input[type="radio"], .consent-form input[type="checkbox"] {
+    @apply mb-0.5
+}
+
+.consent-form .radio{
+    @apply block my-2
+}
+

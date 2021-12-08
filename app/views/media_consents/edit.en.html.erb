@@ -1,52 +1,54 @@
 <% provide :title, "Electronic Media Release Consent Form" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8">
-    <%= render partial: "parental_consents/consent_status",
-      locals: {
-        parental_consent: @parental_consent,
-        media_consent: @media_consent
+<%= render partial: "parental_consents/consent_status",
+  locals: {
+    parental_consent: @parental_consent,
+    media_consent: @media_consent
+  }
+%>
+
+<%= simple_form_for @media_consent, html: {class: "consent-form"} do |f| %>
+  <%= render "errors", record: @media_consent %>
+
+  <div class="prose consent-document prose-sm w-full max-w-full mt-8">
+    <h3 class="border-b border-gray-600">Media Consent</h3>
+
+    <%= render "consent_terms" %>
+  </div>
+
+  <div class="w-full border-gray-400 my-8"></div>
+
+  <div style="my-4">
+    <%= f.input :consent_provided,
+      as: :radio_buttons,
+      label: "",
+      collection:
+      [
+        [t("views.media_consents.consent_provided.consent_yes"), true],
+        [t("views.media_consents.consent_provided.consent_no"), false]
+      ]
+    %>
+  </div>
+
+  <div class="my-4">
+    <%= label_tag t("views.parental_consents.student_name.label") %>
+    <%= text_field_tag nil, f.object.student_profile.full_name, disabled: "disabled" %>
+  </div>
+
+  <div class="my-4">
+    <%= f.input :electronic_signature,
+      label: t("views.parental_consents.electronic_signature.label"),
+      input_html: {
+        placeholder: t("views.parental_consents.electronic_signature.placeholder")
       }
     %>
-
-    <%= simple_form_for @media_consent do |f| %>
-      <%= render "errors", record: @media_consent %>
-
-      <%= render "consent_terms" %>
-
-      <div style="margin: 2rem 0;">
-        <%= f.input :consent_provided,
-          as: :radio_buttons,
-          label: "",
-          collection:
-          [
-            [t("views.media_consents.consent_provided.consent_yes"), true],
-            [t("views.media_consents.consent_provided.consent_no"), false]
-          ]
-        %>
-      </div>
-
-      <div class="disabled" style="margin: 2rem 0;">
-        <strong>
-          <%= label_tag t("views.media_consents.student_name.label") %>
-          <%= @media_consent.student_profile.full_name %>
-        </strong>
-      </div>
-
-      <div style="margin: 2rem 0;">
-        <%= f.input :electronic_signature,
-          label: t("views.media_consents.electronic_signature.label"),
-          input_html: {
-            placeholder: t("views.media_consents.electronic_signature.placeholder")
-          } %>
-      </div>
-
-      <p>
-        <%= f.input :token, as: :hidden, input_html: { name: :token, value: params[:token] } %>
-        <%= f.button :submit,
-          t("views.media_consents.submit"),
-          class: "button" %>
-      </p>
-    <% end %>
   </div>
-</div>
+
+  <div>
+    <%= f.input :token, as: :hidden, input_html: { name: :token, value: params[:token] } %>
+    <%= f.button :submit,
+      t("views.media_consents.submit"),
+      class: "tw-green-btn"
+    %>
+  </div>
+<% end %>

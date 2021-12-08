@@ -1,6 +1,9 @@
 class MediaConsentsController < ApplicationController
+  layout "documents"
+
   def show
     @media_consent = find_media_consent
+    @parental_consent = find_parental_consent
 
     if @media_consent.blank?
       redirect_to root_path, alert: t("controllers.media_consents.invalid")

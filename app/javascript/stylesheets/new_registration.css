@@ -1,11 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Rubik:wght@400;500;600;700;900&display=swap');
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
 
 @layer components {
     .registration-btns {
-        @apply px-4 py-2 rounded bg-green-500 text-white font-bold hover:bg-green-600
+        @apply px-4 py-2 rounded bg-tg-green text-white font-bold hover:bg-tg-dark-green
     }
 
     .registration-btns:disabled {
@@ -32,12 +29,8 @@
         @apply text-2xl mb-2 text-left font-semibold;
     }
 
-    #step-two input, #step-four input {
-        @apply border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
-    }
-
-    #step-four input:disabled {
-        @apply text-gray-400 bg-gray-100
+    input[type="text"], input[type="email"], input[type="date"], input[type="password"], select, textarea {
+        @apply mb-1
     }
 
     .name-group {
@@ -99,13 +92,5 @@
     }
     .s1-label-text{
         @apply text-lg text-left
-    }
-
-    #step-two input[type='checkbox'], #step-three input[type='checkbox'] {
-        @apply w-7 focus:border-green-500
-    }
-
-    .mentorSelectClass, #mentorBio{
-        @apply border bg-white border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none w-full mb-1
     }
 }

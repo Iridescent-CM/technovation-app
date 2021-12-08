@@ -8,4 +8,8 @@ function divisionCutoffDate() {
     'yyyyMd')
 }
 
-export { divisionCutoffDate }
+function divisionCutoffDateFormatted() {
+  return divisionCutoffDate().toFormat('MMMM d, yyyy')
+}
+
+export { divisionCutoffDate, divisionCutoffDateFormatted }

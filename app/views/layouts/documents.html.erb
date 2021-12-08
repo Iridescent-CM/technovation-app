@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html id="<%= yield :html_id %>">
+  <head>
+    <%= render "meta" %>
+
+    <title>
+      <%= content_for?(:title) ?
+        sanitize(
+          "#{yield(:title)} • " +
+          t("views.application.site_title")
+        ) : t("views.application.site_title_default") %>
+    </title>
+
+    <%= render "favicons" %>
+
+    <%= javascript_packs_with_chunks_tag "application_rebrand" %>
+    <%= stylesheet_pack_tag "application_rebrand", "data-turbolinks-track": "reload" %>
+  </head>
+
+  <body>
+    <div class="w-full h-4 bg-energetic-blue"></div>
+
+    <div class="max-w-prose mx-auto px-8">
+      <%= image_tag "new_registration/tg-girls-logo.png", alt:"Technovation Girls Logo", id:"tg-logo", class:"w-72 -ml-6"%>
+
+      <%= render "application/flash_messages" %>
+
+      <%= yield %>
+    </div>
+
+      <%= render "application_rebrand/footer" %>
+  </body>
+</html>

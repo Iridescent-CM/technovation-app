@@ -1,47 +1,57 @@
-<% provide :title, "Electronic consent form" %>
+<% provide :title, "Parental Consent Form" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8">
-    <%= render partial: "parental_consents/consent_status",
-      locals: {
-        parental_consent: @parental_consent,
-        media_consent: @media_consent
+<div class="prose welcome-message prose-energetic-blue-600 prose-md text-gray-500 mt-2">
+  <%= render "welcome_message" %>
+</div>
+
+<div class="max-w-full border-t h-1 bg-tg-green mt-4 mb-8"></div>
+
+<%= render partial: "parental_consents/consent_status",
+  locals: {
+    parental_consent: @parental_consent,
+    media_consent: @media_consent
+  }
+%>
+
+<%= simple_form_for @parental_consent, html: {class: "consent-form"} do |f| %>
+  <%= render "errors", record: @parental_consent %>
+
+  <div class="prose consent-document prose-sm w-full max-w-full mt-10">
+    <h3 class="border-b border-gray-600">Consent to Participate</h3>
+
+    <%= render "consent" %>
+  </div>
+
+  <div class="w-full border-gray-400 my-8"></div>
+
+  <div class="my-4">
+    <%= label_tag t("views.parental_consents.student_name.label") %>
+    <%= text_field_tag nil, f.object.student_profile.full_name, disabled: "disabled" %>
+  </div>
+
+  <div class="my-4">
+    <%= f.input :electronic_signature,
+      label: t("views.parental_consents.electronic_signature.label"),
+      input_html: {
+        placeholder: t("views.parental_consents.electronic_signature.placeholder")
       }
     %>
-
-    <%= simple_form_for @parental_consent do |f| %>
-      <%= render 'errors', record: @parental_consent %>
-
-      <%= render 'consent' %>
-
-      <%= f.input :student_profile_consent_token, as: :hidden %>
-
-      <div class="disabled" style="margin: 2rem 0;">
-        <strong>
-          <%= label_tag t("models.parental_consent.student_name") %>
-          <%= f.object.student_profile.full_name %>
-        </strong>
-      </div>
-
-      <div style="margin: 2rem 0;">
-        <%= f.input :electronic_signature,
-          label: t("models.parental_consent.electronic_signature"),
-          input_html: {
-            placeholder: "Please type your name here as electronic consent",
-          } %>
-
-        <p>
-          <%= f.input :newsletter_opt_in,
-            as: :boolean,
-            label: "It's okay for Technovation to send email to me (about every two months)." %>
-        </p>
-      </div>
-
-      <p>
-        <%= f.button :submit,
-          t("views.parental_consents.new.submit"),
-          class: "button" %>
-      </p>
-    <% end %>
   </div>
-</div>
+
+  <% if !@parental_consent.student_profile.account.parent_registered? %>
+    <div class="mt-4 mb-8">
+      <%= f.input :newsletter_opt_in,
+        as: :boolean,
+        label: "It's okay for Technovation to send email to me (about every two months)"
+      %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.input :student_profile_consent_token, as: :hidden %>
+    <%= f.button :submit,
+      t("views.parental_consents.new.submit"),
+      class: "tw-green-btn"
+    %>
+  </div>
+<% end %>
