@@ -13,8 +13,8 @@
 
     <%= render "favicons" %>
 
-    <%= javascript_packs_with_chunks_tag "application_rebrand" %>
-    <%= stylesheet_pack_tag "application_rebrand", "data-turbolinks-track": "reload" %>
+    <%= javascript_packs_with_chunks_tag "documents" %>
+    <%= stylesheet_pack_tag "documents" %>
   </head>
 
   <body>
@@ -28,6 +28,6 @@
       <%= yield %>
     </div>
 
-      <%= render "application_rebrand/footer" %>
+    <%= render "application_rebrand/footer" %>
   </body>
 </html>
