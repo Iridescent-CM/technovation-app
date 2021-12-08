@@ -21,6 +21,10 @@
         @apply focus:ring-transparent text-energetic-blue mr-2
     }
 
+    input[type="checkbox"] {
+        @apply rounded
+    }
+
     input[type="text"]:disabled, input[type="email"]:disabled {
         @apply text-gray-400 bg-gray-100
     }
