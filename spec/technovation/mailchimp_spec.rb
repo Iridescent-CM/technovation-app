@@ -7,7 +7,8 @@ RSpec.describe Mailchimp::MailingList do
       api_key: mailchimp_api_key,
       list_id: mailchimp_list_id,
       enabled: mailchimp_enabled,
-      logger: logger
+      logger: logger,
+      error_notifier: error_notifier
     )
   end
   let(:mailchimp_client_constructor) { double("MailchimpClientConstructor") }
@@ -15,6 +16,7 @@ RSpec.describe Mailchimp::MailingList do
   let(:mailchimp_list_id) { "12345abcde" }
   let(:mailchimp_enabled) { false }
   let(:logger) { double("Logger") }
+  let(:error_notifier) { double("ErrorNotifier") }
 
   let(:mailchimp_client) { double("MailchimpClient") }
   let(:mailchimp_list) { double("MailchimpList") }
@@ -44,6 +46,9 @@ RSpec.describe Mailchimp::MailingList do
     allow(mailchimp_client).to receive(:lists)
       .with(mailchimp_list_id)
       .and_return(mailchimp_list)
+
+    allow(logger).to receive(:error)
+    allow(error_notifier).to receive(:notify)
   end
 
   describe "#subscribe" do
@@ -115,6 +120,12 @@ RSpec.describe Mailchimp::MailingList do
 
         it "logs the error message" do
           expect(logger).to receive(:error).with(/#{error_message}/)
+
+          mailchimp_mailing_list.subscribe(account: account)
+        end
+
+        it "creates a notification via the error_notifier" do
+          expect(error_notifier).to receive(:notify).with(/#{error_message}/)
 
           mailchimp_mailing_list.subscribe(account: account)
         end
@@ -205,6 +216,12 @@ RSpec.describe Mailchimp::MailingList do
 
           mailchimp_mailing_list.update(account: account)
         end
+
+        it "creates a notification via the error_notifier" do
+          expect(error_notifier).to receive(:notify).with(/#{error_message}/)
+
+          mailchimp_mailing_list.update(account: account)
+        end
       end
     end
 
@@ -242,6 +259,12 @@ RSpec.describe Mailchimp::MailingList do
 
         it "logs the error message" do
           expect(logger).to receive(:error).with(/#{error_message}/)
+
+          mailchimp_mailing_list.delete(email_address: email_address)
+        end
+
+        it "creates a notification via the error_notifier" do
+          expect(error_notifier).to receive(:notify).with(/#{error_message}/)
 
           mailchimp_mailing_list.delete(email_address: email_address)
         end
