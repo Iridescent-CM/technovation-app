@@ -92,7 +92,12 @@ export default {
       }
     }
   },
-  props: ['formValues']
+  props: {
+    formValues: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>
 

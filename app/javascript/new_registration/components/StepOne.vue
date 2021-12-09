@@ -64,6 +64,11 @@ export default {
   computed: {
     divisionCutoffDate: divisionCutoffDateFormatted
   },
-  props: ['formValues']
+  props: {
+    formValues: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>

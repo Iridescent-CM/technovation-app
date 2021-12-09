@@ -186,6 +186,11 @@ export default {
       return isNaN(ageByDivisionCutoffDate) ? '?' : ageByDivisionCutoffDate
     }
   },
-  props: ['formValues']
+  props: {
+    formValues: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>

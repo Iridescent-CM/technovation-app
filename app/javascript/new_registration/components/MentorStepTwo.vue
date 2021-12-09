@@ -103,6 +103,17 @@
           input-class="mentorSelectClass"
         />
 
+        <div id="mentor-information" v-show="mentorProfileExpertiseOptions.length > 0">
+          <h2 class="registration-title">Skills & Interests</h2>
+
+          <FormulateInput
+            name="mentorExpertises"
+            :options="mentorProfileExpertiseOptions"
+            type="checkbox"
+            id="mentorExpertise"
+          />
+        </div>
+
         <div class="mentor-information">
           <h2 class="registration-title">Set your personal summary</h2>
 
@@ -161,15 +172,6 @@ export default {
         'Parent',
         'Past Technovation student'
       ],
-      mentorProfileExpertiseOptions: [
-        {value: 2, label: 'Coding'},
-        {value: 8, label: 'Experience with Java'},
-        {value: 9, label: 'Experience with Swift'},
-        {value: 10, label: 'Business / entrepreneurship'},
-        {value: 4, label: 'Project Management'},
-        {value: 6, label: 'Marketing'},
-        {value: 7, label: 'Design'}
-      ],
       hasValidationErrors: true
     }
   },
@@ -199,6 +201,15 @@ export default {
       }
     }
   },
-  props: ['formValues'],
+  props: {
+    formValues: {
+      type: Object,
+      required: true
+    },
+    mentorProfileExpertiseOptions: {
+      type: Array,
+      required: true
+    }
+  }
 }
 </script>
