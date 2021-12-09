@@ -87,7 +87,16 @@ export default {
       }
     }
   },
-  props: ['formValues', 'isLoading'],
+  props: {
+    formValues: {
+      type: Object,
+      required: true
+    },
+    isLoading: {
+      type: Boolean,
+      required: true
+    }
+  },
   computed:{
     setAccountEmailForParentProfile: {
       get(){
