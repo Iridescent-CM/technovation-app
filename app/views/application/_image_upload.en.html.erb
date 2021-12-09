@@ -39,6 +39,7 @@
       <label class="file-field" for="<%= modal_id %>_file_field">
         <div class="button secondary">Choose from your computer</div>
 
+        <input type="hidden" name="utf8">
         <%= f.file_field :image, id: "#{modal_id}_file_field" %>
       </label>
 
