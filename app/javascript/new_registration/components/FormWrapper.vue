@@ -16,7 +16,6 @@
     <div v-show="step === 2">
       <MentorStepTwo v-if="formValues.profileType === 'mentor'"
         :form-values="formValues"
-        :mentor-profile-expertise-options="mentorProfileExpertiseOptions"
         @next="next"
         @prev="prev"
       />
@@ -42,7 +41,6 @@
 <script>
 import axios from 'axios';
 
-import { airbrake } from 'utilities/utilities'
 import StepOne from './StepOne';
 import MentorStepTwo from './MentorStepTwo';
 import StudentStepTwo from './StudentStepTwo';
@@ -69,8 +67,6 @@ export default {
   },
   created() {
     window.addEventListener('keypress', this.onKeyPress);
-
-    this.getMentorExpertiseOptions();
   },
   beforeDestroy() {
     window.removeEventListener('keypress', this.onKeyPress);
@@ -90,23 +86,6 @@ export default {
     onKeyPress(e) {
       if (e.which === 13) {
         e.preventDefault();
-      }
-    },
-    async getMentorExpertiseOptions () {
-      try {
-        const response = await axios.get('/registration/expertises')
-
-        response.data.attributes.forEach((expertise) => {
-          this.mentorProfileExpertiseOptions.push({
-            label: expertise.name,
-            value: expertise.id
-          })
-        })
-      }
-      catch(error) {
-        airbrake.notify({
-          error: `[REGISTRATION] Error getting mentor expertises - ${error.response.data}`
-        })
       }
     },
     async submitHandler (data) {

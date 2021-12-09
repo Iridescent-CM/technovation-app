@@ -145,6 +145,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+import { airbrake } from 'utilities/utilities'
 import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
@@ -172,6 +175,7 @@ export default {
         'Parent',
         'Past Technovation student'
       ],
+      mentorProfileExpertiseOptions: [],
       hasValidationErrors: true
     }
   },
@@ -199,15 +203,31 @@ export default {
       } else {
         this.hasValidationErrors = false
       }
-    }
+    },
+    async getMentorExpertiseOptions () {
+      try {
+        const response = await axios.get('/registration/expertises')
+
+        response.data.attributes.forEach((expertise) => {
+          this.mentorProfileExpertiseOptions.push({
+            label: expertise.name,
+            value: expertise.id
+          })
+        })
+      }
+      catch(error) {
+        airbrake.notify({
+          error: `[REGISTRATION] Error getting mentor expertises - ${error.response.data}`
+        })
+      }
+    },
+  },
+  created() {
+    this.getMentorExpertiseOptions();
   },
   props: {
     formValues: {
       type: Object,
-      required: true
-    },
-    mentorProfileExpertiseOptions: {
-      type: Array,
       required: true
     }
   }
