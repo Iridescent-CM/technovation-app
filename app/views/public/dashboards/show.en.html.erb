@@ -1,15 +1,5 @@
-<%= render 'public/dashboards/homepage_banner' if ENV.fetch("ENABLE_HOMEPAGE_BANNER", false) %>
-
-<% if SeasonToggles.registration_open? %>
-  <div class="grid grid--justify-space-around margin--t-xxlarge">
-    <div class="grid__col-12 grid__col-md-10">
-      <%= render 'landing' %>
-    </div>
+<div class="grid grid--justify-space-around margin--t-xxlarge">
+  <div class="grid__col-12 grid__col-md-10">
+    <%= render 'landing' %>
   </div>
-<% else %>
-  <div class="grid grid--justify-space-around">
-    <div class="panel grid__col-12 grid__col-md-6">
-      <%= render 'off_season_splash' %>
-    </div>
-  </div>
-<% end %>
+</div>

@@ -1,34 +1,59 @@
 <% provide :title, "Sign in" %>
 
-<%= render 'public/dashboards/homepage_banner' if ENV.fetch("ENABLE_HOMEPAGE_BANNER", false) %>
+<div class="tg-green-stripes rubik h-36 flex items-center mb-20">
+  <div class="text-white sm:ml-8 lg:ml-72 text-7xl font-black">WELCOME BACK</div>
+</div>
 
-<div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8 grid__col-md-5">
-    <h2><%= t('views.signins.new.title') %></h2>
+<div class="mt-8">
+  <div class="w-full max-w-md m-auto rounded rounded-md border-4 border-indigo-500">
+    <header class="bg-blue-500 text-white text-sm p-2">Log in</header>
+    <div class="p-5">
+      <%= simple_form_for @signin, url: signins_path do |f| %>
+        <%= label_tag :email, nil, class: 'text-sm' %>
+        <%= f.email_field :email, class: 'my-3 border-2 border-green-600' %>
 
-    <%= simple_form_for @signin, url: signins_path do |f| %>
-      <%= f.input :email %>
-      <%= f.input :password %>
+        <%= label_tag nil, class: 'text-sm relative text-gray-400 focus-within:text-gray-600 block' do %>
+          Password
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pointer-events-none w-4 h-4 absolute top-1/2 transform -translate-y-1/5 right-2" viewBox="0 0 20 20" fill="green">
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+          </svg>
+          <%= f.password_field :password, class: 'my-3 border-2 border-green-600' %>
+        <% end %>
 
-      <p>
-        <%= check_box_tag :remember_me, '1', true %>
-        <%= label_tag nil, "Remember me for future visits", for: :remember_me %>
-      </p>
+        <p>
+          <%= check_box_tag :remember_me, '1', true, class: 'text-green-600' %>
+          <%= label_tag nil, "Remember me for future visits", for: :remember_me %>
+        </p>
 
-      <%= f.button :submit,
-        t('views.signins.form.signin'),
-        class: "button" %>
+        <%= f.button :submit,
+          t('views.signins.form.signin'),
+          class: "py-2 px-2 text-white font-black rounded transition duration-300 bg-blue-500 rounded-sm my-5" %>
 
-      <p>
-        <%= t("controllers.signins.new.no_account") %>
-        <%= link_to t("controllers.signups.new.link"), signup_path, data: { turbolinks: false } %>
-      </p>
+        <p>
+          <%= t("controllers.signins.new.no_account") %>
+          <%= link_to signup_path, 
+                      data: { turbolinks: false }, 
+                      class: 'text-blue-600 hover:text-blue-800 visited:text-purple-600 font-bold' do %>
+            <span><%= t("controllers.signups.new.link") %></span>
+            <svg class="w-5 inline-block" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          <% end %>
+        </p>
 
-      <p>
-        <%= t("controllers.password_resets.new.text") %>
-        <%= link_to t("controllers.password_resets.new.link"),
-          new_password_reset_path %>
-      </p>
-    <% end %>
+        <p>
+          <%= t("controllers.password_resets.new.text") %>
+          <%= link_to new_password_reset_path, 
+                      data: { turbolinks: false }, 
+                      class: 'text-blue-600 hover:text-blue-800 visited:text-purple-600 font-bold' do %>
+            <span><%= t("controllers.password_resets.new.link") %></span>
+            <svg class="w-5 inline-block" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
   </div>
 </div>

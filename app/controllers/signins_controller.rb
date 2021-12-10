@@ -1,4 +1,5 @@
 class SigninsController < ApplicationController
+  layout 'public_dashboard'
   before_action :require_unauthenticated, except: :destroy
 
   def new

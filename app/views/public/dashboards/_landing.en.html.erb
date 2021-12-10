@@ -1,31 +1,43 @@
 <% provide :html_id, "registration-landing" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-6 grid__col-xs-10 panel">
-    <h1>Join the movement</h1>
+<section class="relative py-24 px-4">
+  <div class="z-20 rubik relative text-white container mx-auto">
+    <h1 class="text-white sm:ml-8 lg:ml-72 text-7xl font-black">SIGN UP</h1>
+  </div>
 
-    <div class="text-align--center">
-      <%= image_tag asset_path('tc-landing-globe.svg'),
-        alt: 'Illustration of a globe',
-        width: "40%" %>
+  <div class="absolute inset-0 h-auto z-10">
+    <%= image_tag "social-sharing-preview-image.png", alt: "", class: "h-full w-full object-cover" %>
+  </div>
+</section>
+
+<div class="max-w-prose mx-auto px-8">
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-sm-6 grid__col-xs-10 panel">
+      <h1 class="text-4xl font-bold my-10">Join the movement.</h1>
+
+      <p class="my-5">
+        We're entrepreneurs, mentors, and educators working together
+        to learn and apply the skills needed to change the world
+        with technology.
+      </p>
+
+      <p class="mt-10 mb-5">
+        <%= link_to "Sign up today",
+          signup_path,
+          class: "py-2 px-2 text-white font-black rounded transition duration-300 bg-green-500 rounded-sm",
+          data: { turbolinks: false } %>
+      </p>
+
+      <p>
+        Already have and an account? 
+
+        <%= link_to login_path, class: "text-blue-600 hover:text-blue-800 visited:text-purple-600 font-bold", data: { turbolinks: false } do %>
+          <span>Please log in</span>
+          <svg class="w-5 inline-block" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        <% end %>
+      </p>
     </div>
-
-    <p>
-      We're entrepreneurs, mentors, and educators looking to teach girls everywhere
-      the skills they need to change the world with technology.
-    </p>
-
-    <p>
-      <%= link_to "Sign up today",
-        signup_path,
-        class: "button",
-        data: { turbolinks: false } %>
-
-      or
-
-      <%= link_to "Log in",
-        login_path,
-        data: { turbolinks: false } %>
-    </p>
   </div>
 </div>
