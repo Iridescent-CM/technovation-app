@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Mentor receives welcome email", js: true do
+RSpec.xfeature "Mentor receives welcome email", js: true do
   let(:mentor) { FactoryBot.create(:mentor) }
 
   background(:each) do
