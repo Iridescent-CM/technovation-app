@@ -1,0 +1,62 @@
+<div class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper">
+    <p class="font-bold">Mentors</p>
+  </div>
+
+  <div class="p-6">
+    <div class="mb-4">
+      <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
+        Mentors on your team
+      </h2>
+
+      <p class="mb-3 text-sm">
+        You can add as many mentors as your team needs.
+      </p>
+
+      <%= render "mentors_list",
+        mentors: team.mentors,
+        team: team %>
+    </div>
+
+    <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
+      <%= render "pending_mentor_invites",
+        team: team,
+        invites: team.pending_mentor_invites %>
+
+      <div class="mt-4">
+        <%= link_to(
+          "Invite a mentor to join your team",
+          new_student_mentor_search_path,
+          class: "link-button link-button-success"
+        ) %>
+      </div>
+
+      <%= render "pending_mentor_join_requests",
+        team: team,
+        join_requests: team.pending_mentor_join_requests %>
+
+      <div class="mt-10">
+        <%= render "application/templates/content_well" do %>
+          <h2 class="mb-2 text-lg text-gray-600">
+            Do you want more mentors?
+          </h2>
+
+          <%= form_with model: team,
+            data: { submit_on_change: true },
+            url: student_team_path(
+              team,
+              { format: :json }
+            ),
+            method: :patch do |f| %>
+
+            <%= f.check_box :accepting_mentor_requests,
+              id: :team_accepting_mentor_requests %>
+
+            <%= f.label :accepting_mentor_requests,
+              "Allow mentors to find your team and request to join", for: :team_accepting_mentor_requests %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

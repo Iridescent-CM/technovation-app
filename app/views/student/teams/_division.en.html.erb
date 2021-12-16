@@ -1,0 +1,57 @@
+<% division_cutoff_date = Division.cutoff_date.strftime("%B %e, %Y") %>
+
+<div class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper">
+    <p class="font-bold">Division</p>
+  </div>
+
+  <div class="p-6">
+    <div class="flex items-center">
+      <div>
+        <%= image_tag team.photo_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8 mr-2" %>
+      </div>
+
+      <p>
+        <%= team.name %> is in the <strong class="font-semibold"><%= team.division_name.humanize %></strong> division
+      </p>
+    </div>
+
+    <div class="w-full border-t border-gray-300 my-4"></div>
+
+    <p class="mt-4 text-sm">The cutoff date used for division assignment is <%= division_cutoff_date %>.</p>
+    <p class="mt-1 text-sm">Based on this date, your team member's ages will be:</p>
+
+    <ul role="list" class="divide-y divide-gray-200">
+      <% team.students.each do |student| %>
+        <li class="py-3 ml-6 flex items-center text-sm">
+          <div>
+            <%= image_tag student.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8 mr-2" %>
+          </div>
+
+          <div>
+            <strong class="font-bold"><%= student.full_name %></strong>, <%= student.age_by_cutoff %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="mt-6 mb-2">
+      <%= render "application/templates/content_well" do %>
+        <h4 class="text-sm font-medium text-gray-800">Beginner Division</h4>
+        <p class="text-sm">
+          Team members are between <strong class="font-semibold">8-12 years old</strong> as of <%= division_cutoff_date %>.
+        </p>
+
+        <h4 class="text-sm font-medium text-gray-800 mt-4">Junior Division</h4>
+        <p class="text-sm">
+          Team members are between <strong class="font-semibold">13-15 years old</strong> as of <%= division_cutoff_date %>.
+        </p>
+
+        <h4 class="text-sm font-medium text-gray-800 mt-4">Senior Division</h4>
+        <p class="text-sm">
+          Team members are between <strong class="font-semibold">16-18 years old</strong> as of <%= division_cutoff_date %>.
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,2 +1,29 @@
 <% provide :title, "My team: #{current_team.name}" %>
-<%= render 'teams/show', team: current_team %>
+
+<div class="lg:flex lg:justify-around">
+  <div class="flex flex-col lg:flex-row gap-6">
+    <%= render "menu" %>
+
+    <div class="tab">
+      <div id="student-tab-content" class="tab-content tw-active">
+        <%= render "students", team: @team %>
+      </div>
+
+      <div id="mentor-tab-content" class="tab-content">
+        <%= render "mentors", team: @team %>
+      </div>
+
+      <div id="summary-tab-content" class="tab-content">
+        <%= render "summary", team: @team %>
+      </div>
+
+      <div id="location-tab-content" class="tab-content">
+        <%= render "location", team: @team %>
+      </div>
+
+      <div id="division-tab-content" class="tab-content">
+        <%= render "division", team: @team %>
+      </div>
+    </div>
+  </div>
+</div>
