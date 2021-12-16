@@ -11,7 +11,7 @@
             <%= team.name %>
           </h3>
 
-          <% if !team.description.present? %>
+          <% if team.description.present? %>
             <div class="prose">
               <%= simple_format team.description %>
             </div>
