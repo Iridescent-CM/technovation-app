@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Students leave their own team" do
+RSpec.xfeature "Students leave their own team" do
   include ActionView::RecordIdentifier
 
   before { SeasonToggles.team_building_enabled="yes" }

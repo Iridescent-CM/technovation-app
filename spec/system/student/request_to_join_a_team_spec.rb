@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Students request to join a team",
+RSpec.xdescribe "Students request to join a team",
   :js,
   vcr: { match_requests_on: [:method, :host] } do
   include ActionView::RecordIdentifier

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Remove an onboarding student" do
+RSpec.xfeature "Remove an onboarding student" do
   scenario "remove the student" do
     student = FactoryBot.create(:student, :onboarding)
     mentor = FactoryBot.create(:mentor, :onboarded)
