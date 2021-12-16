@@ -1,0 +1,50 @@
+<div class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper">
+    <p class="font-bold">Team Summary</p>
+  </div>
+
+  <div class="p-6">
+    <div class="flex justify-between">
+      <div class="w-3/4 flex flex-col justify-between">
+        <div>
+          <h3>
+            <%= team.name %>
+          </h3>
+
+          <% if team.description.present? %>
+            <div class="prose">
+              <%= simple_format team.description %>
+            </div>
+          <% else %>
+            <div class="mt-2">
+              <%= render "application/templates/alerts/info",
+                message: "Your team has not written a summary yet."
+              %>
+            </div>
+          <% end %>
+        </div>
+
+        <div>
+          <%= link_to t("controllers.teams.edit.link"),
+            edit_student_team_path(team),
+            class: "link-button link-button-success" %>
+        </div>
+      </div>
+
+      <div class="self-end">
+        <div class="ml-4 flex flex-col items-center content-start">
+          <div>
+            <%= image_tag team.photo_url, class: "rounded-tl-sm rounded-tr-3xl rounded-bl-3xl rounded-br-md w-24 md:w-48 h-24 md:h-48 mb-4" %>
+          </div>
+
+          <div>
+            <%= render "image_upload",
+              modal_id: "team_photo_desktop",
+              heading: "Upload a team photo",
+              size: "450x300" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

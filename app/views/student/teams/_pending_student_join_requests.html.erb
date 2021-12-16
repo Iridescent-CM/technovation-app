@@ -1,0 +1,73 @@
+<% if join_requests.present? %>
+  <div class="my-4">
+    <h2 class="mb-4 text-base text-energetic-blue font-semibold tracking-wide uppercase">
+      Requests to join your team
+    </h2>
+
+    <ul role="list" class="divide-y divide-gray-200">
+      <% join_requests.each do |join_request| %>
+        <li class="py-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0 self-start">
+              <%= link_to(
+                send(
+                  "student_#{join_request.requestor_scope_name}_path",
+                  join_request.requestor,
+                  back_title: "Back to your team",
+                  back: student_team_path(team, anchor: join_request.requestor_scope_name.pluralize)
+                )
+              ) do %>
+
+              <%= image_tag join_request.requestor.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+            <% end %>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <p class="flex text-sm font-medium text-gray-900 truncate">
+                <%= link_to(
+                  join_request.requestor_full_name,
+                  send(
+                    "student_#{join_request.requestor_scope_name}_path",
+                    join_request.requestor,
+                    back_title: "Back to your team",
+                    back: student_team_path(team, anchor: join_request.requestor_scope_name.pluralize)
+                  ),
+                  class: "font-medium hover:text-gray-900 hover:underline"
+                ) %>
+              </p>
+
+              <p class="text-sm text-gray-500">
+                <%= join_request.requestor_primary_location %>
+              </p>
+            </div>
+
+            <div class="self-start">
+              <div>
+                <%= link_to(
+                  t("views.application.approved"),
+                  student_join_request_path(join_request, join_request: {status: :approved}),
+                  data: {
+                    method: :put,
+                    confirm: t("views.application.confirm_approved", name: join_request.requestor_first_name),
+                    positive: true
+                  },
+                  class: "px-2 py-2 mr-2 rounded shadow-sm text-sm text-white hover:text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                ) %>
+
+              <%= link_to(
+              t("views.application.declined"),
+              student_join_request_path(join_request, join_request: {status: :declined}),
+              data: {
+                method: :put,
+                confirm: t("views.application.confirm_declined", name: join_request.requestor_first_name),
+              },
+              class: "px-2 py-2 rounded shadow-sm text-sm text-gray-100 hover:text-gray-100 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            ) %>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

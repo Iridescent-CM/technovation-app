@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Student receives mentor request to join their team", js: true do
+RSpec.xfeature "Student receives mentor request to join their team", js: true do
   before { SeasonToggles.team_building_enabled="yes" }
 
   let(:student) { FactoryBot.create(:student, :geocoded, :on_team) }

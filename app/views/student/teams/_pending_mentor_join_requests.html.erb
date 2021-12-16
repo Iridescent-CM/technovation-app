@@ -1,0 +1,57 @@
+<% if join_requests.present? %>
+  <div class="my-6">
+    <h2 class="mb-4 text-base text-energetic-blue font-semibold tracking-wide uppercase">
+      Mentors requesting to join your team
+    </h2>
+
+    <ul role="list" class="-my-5 divide-y divide-gray-200">
+      <% join_requests.each do |join_request| %>
+        <li class="py-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0 self-start">
+              <%= image_tag join_request.requestor.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <p class="flex text-sm font-medium text-gray-900 truncate">
+                <%= join_request.requestor_full_name %>
+              </p>
+
+              <p class="text-sm text-gray-500 truncate">
+                <%= join_request.requestor.mentor_profile.gender %><br>
+                <%= join_request.requestor.mentor_profile.school_company_name %>, <%= join_request.requestor.mentor_profile.job_title %><br>
+                <%= join_request.requestor.mentor_profile.primary_location %><br>
+                <%= join_request.requestor.mentor_profile.expertise_names.to_sentence %>
+              </p>
+            </div>
+
+            <div class="self-start">
+              <div>
+                <%= link_to(
+                  t("views.application.approved"),
+                  student_join_request_path(join_request, join_request: {status: :approved}),
+                  data: {
+                    method: :put,
+                    confirm: t("views.application.confirm_approved", name: join_request.requestor_first_name),
+                    positive: true
+                  },
+                  class: "link-button link-button-success mr-2"
+                ) %>
+
+              <%= link_to(
+              t("views.application.declined"),
+              student_join_request_path(join_request, join_request: {status: :declined}),
+              data: {
+                method: :put,
+                confirm: t("views.application.confirm_declined", name: join_request.requestor_first_name),
+              },
+              class: "link-button link-button-danger"
+            ) %>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -1,0 +1,46 @@
+<% if invites.present? %>
+  <div class="my-4">
+    <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
+      Mentors you invited to your team
+    </h2>
+
+    <ul role="list" class="divide-y divide-gray-200">
+      <% invites.each do |invite| %>
+        <li class="py-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0 self-start">
+              <%= image_tag invite.invitee.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <p class="flex text-sm font-medium text-gray-900 truncate">
+                <%= invite.invitee_first_name %>
+                <%= invite.invitee_last_name %>
+              </p>
+
+              <p class="text-sm text-gray-500 truncate">
+                <%= invite.invitee.mentor_profile.gender %><br>
+                <%= invite.invitee.mentor_profile.school_company_name %>, <%= invite.invitee.mentor_profile.job_title %><br>
+                <%= invite.invitee.mentor_profile.primary_location %><br>
+                <%= invite.invitee.mentor_profile.expertise_names.to_sentence %>
+              </p>
+            </div>
+
+            <div class="self-start">
+              <%= link_to(
+                "Cancel this invitation",
+                student_mentor_invite_path(invite),
+                data: {
+                  method: :delete,
+                  confirm: t("controllers.invites.destroy.confirm",
+                             name: invite.invitee_name),
+                },
+                class: "link-button link-button-neutral"
+              ) %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

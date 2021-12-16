@@ -1,0 +1,65 @@
+<div class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue" >
+  <div class="sm-header-wrapper">
+    <p class="font-bold">Students</p>
+  </div>
+
+  <div class="p-6">
+    <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
+      Your team
+    </h2>
+
+    <p class="mb-3 text-sm">
+      Your team can have up to five students.
+    </p>
+
+    <%= render "students_list",
+      students: team.students,
+      team: team
+    %>
+
+    <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
+      <% if nil %>
+        <h3 class="margin--t-large margin--b-none">Invitations</h3>
+        <div class="margin--b-large">
+          <%= render "pending_invites",
+            team: team,
+            preview_method: :invitee_email,
+            invites: team.pending_student_invites %>
+
+          <% if SeasonToggles.team_building_enabled? &&
+              !SeasonToggles.judging_enabled_or_between? &&
+              team.current? &&
+              team.spot_available? %>
+            <%= render "team_member_invites/form" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= render "pending_student_join_requests",
+        team: team,
+        join_requests: team.pending_student_join_requests
+      %>
+
+      <div class="mt-10">
+        <%= render "application/templates/content_well" do %>
+          <h2 class="mb-2 text-lg text-gray-600">
+            Do you want more teammates?
+          </h2>
+
+          <%= form_with model: team,
+            data: { submit_on_change: true },
+            url: student_team_path(team, { format: :json }),
+            method: :patch do |f| %>
+
+            <%= f.check_box :accepting_student_requests,
+              id: :team_accepting_student_requests %>
+
+            <%= f.label :accepting_student_requests,
+              "Allow other students to find your team and request to join",
+              for: :team_accepting_student_requests %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

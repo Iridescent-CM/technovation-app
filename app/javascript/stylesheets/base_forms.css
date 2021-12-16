@@ -18,7 +18,7 @@
     }
 
     input[type="checkbox"], input[type="radio"] {
-        @apply focus:ring-transparent text-energetic-blue mr-2
+        @apply inline-block focus:ring-transparent text-energetic-blue mr-2
     }
 
     input[type="checkbox"] {

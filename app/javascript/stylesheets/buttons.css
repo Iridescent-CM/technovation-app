@@ -1,0 +1,15 @@
+a.link-button {
+    @apply px-3 py-2 rounded shadow-sm text-sm
+}
+
+a.link-button.link-button-success {
+    @apply text-white hover:text-white bg-tg-green hover:bg-tg-dark-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tg-dark-green
+}
+
+a.link-button.link-button-danger {
+    @apply text-gray-100 hover:text-gray-100 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+}
+
+a.link-button.link-button-neutral {
+    @apply text-gray-500 hover:text-gray-500 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400
+}

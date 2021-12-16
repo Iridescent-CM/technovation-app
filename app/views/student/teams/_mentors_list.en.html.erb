@@ -1,0 +1,51 @@
+<% admin_chapter_ambassador = false %>
+
+<% if mentors.present? %>
+  <ul role="list" class="divide-y divide-gray-200">
+    <% mentors.each do |mentor| %>
+      <li class="py-2">
+        <div class="flex items-center space-x-4">
+          <div class="flex-shrink-0 self-start">
+            <%= image_tag mentor.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <p class="flex text-sm font-medium text-gray-900 truncate">
+              <%= mentor.full_name %>
+            </p>
+
+            <p class="text-sm text-gray-500 truncate">
+              <%= mentor.gender %><br>
+              <%= mentor.school_company_name %>, <%= mentor.job_title %><br>
+              <%= mentor.primary_location %><br>
+              <%= mentor.expertise_names.to_sentence %>
+              <%= mentor.primary_location %>
+            </p>
+          </div>
+
+          <div class="self-start">
+            <% if CanRemoveTeamMember.(current_account, mentor, admin_chapter_ambassador) %>
+              <%= link_to "Remove",
+                student_team_membership_path(
+                  @team,
+                  allow_out_of_region: false,
+                  member_id: mentor.id,
+                  member_type: mentor.class.name
+                ),
+                data: {
+                  method: :delete,
+                  confirm: t("views.teams.show.confirm_leave", name: mentor.name)
+                },
+                class: "link-button link-button-neutral"
+              %>
+          <% end %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <%= render "application/templates/alerts/info",
+    message: "Your team currently doesn't have any mentors."
+  %>
+<% end %>
