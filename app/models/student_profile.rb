@@ -370,7 +370,10 @@ class StudentProfile < ActiveRecord::Base
 
   def validate_valid_parent_email
     return if parent_guardian_email.blank? ||
-      (!parent_guardian_email_changed? && parent_guardian_email == "ON FILE") ||
+      (
+        !parent_guardian_email_changed? &&
+        parent_guardian_email == ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+      ) ||
       account&.division&.beginner?
 
     if Account.joins(:student_profile).where(
@@ -388,6 +391,8 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def reset_parent
+    return if parent_guardian_email == ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+
     if saved_change_to_parent_guardian_email? &&
         parent_guardian_email.present?
       if consent = parental_consent

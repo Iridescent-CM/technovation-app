@@ -210,18 +210,43 @@ RSpec.describe StudentProfile do
     expect(profile.reload.parental_consent).to be_pending
   end
 
-  it "updates the email list when the parent/guardian's email address is changed" do
-    student_profile = FactoryBot.create(
-      :student_profile,
-      parent_guardian_email: "old@parent-email.com"
-    )
+  context "when the parent/guardian email address has been updated" do
+    let(:new_parent_guardian_email_address) { "acoolparent@example.com" }
 
-    expect(UpdateParentOnEmailListJob).to receive(:perform_later)
-      .with(
-        student_profile_id: student_profile.id,
-        currently_subscribed_as: student_profile.parent_guardian_email
+    it "updates the parent/guardian on our email list" do
+      student_profile = FactoryBot.create(
+        :student_profile,
+        parent_guardian_email: "parenttrap@example.com"
       )
 
-    student_profile.update(parent_guardian_email: "new@parent-email.com")
+      expect(UpdateParentOnEmailListJob).to receive(:perform_later)
+        .with(
+          student_profile_id: student_profile.id,
+          currently_subscribed_as: student_profile.parent_guardian_email
+        )
+
+      student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
+    end
+  end
+
+  context "when the parent/guardian email address has been updated because of a paper parental consent" do
+    let(:new_parent_guardian_email_address) do
+      ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+    end
+
+    it "does not update the parent/guardian on our email list" do
+      student_profile = FactoryBot.create(
+        :student_profile,
+        parent_guardian_email: "oldparentemail@example.com"
+      )
+
+      expect(UpdateParentOnEmailListJob).not_to receive(:perform_later)
+        .with(
+          student_profile_id: student_profile.id,
+          currently_subscribed_as: student_profile.parent_guardian_email
+        )
+
+      student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
+    end
   end
 end

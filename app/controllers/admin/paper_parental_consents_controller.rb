@@ -3,8 +3,10 @@ module Admin
     def create
       student = StudentProfile.find(params[:id])
 
-      student.student_profile.update(parent_guardian_name: "ON FILE",
-                                     parent_guardian_email: "ON FILE")
+      student.student_profile.update(
+        parent_guardian_name: ParentalConsent::PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT,
+        parent_guardian_email: ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+      )
 
       consent = ParentalConsent.where(student_profile_id: params[:id]).last
 
