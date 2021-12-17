@@ -26,7 +26,7 @@ class JoinRequest < ActiveRecord::Base
            :email,
            :account_id,
            :mailer_token,
-           :primary_location
+           :primary_location,
     to: :requestor,
     allow_nil: true,
     prefix: true
