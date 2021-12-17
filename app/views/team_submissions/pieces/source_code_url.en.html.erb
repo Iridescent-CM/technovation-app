@@ -40,6 +40,7 @@
     <p class="hint">File types allowed: *.zip or *.aia</p>
 
     <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
+      <input type="hidden" name="utf8">
       <%= f.label :file, "Upload your app's source code" %>
       <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
 
