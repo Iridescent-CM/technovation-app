@@ -121,34 +121,6 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
-  scenario "Set the devleopment platform" do
-    click_link "Code"
-
-    within(".development_platform.incomplete") do
-      click_link "Select your development platform"
-    end
-
-    select "Swift or XCode",
-      from: "Which development platform did your team use?"
-
-    click_button "Save this development platform selection"
-
-    within(".development_platform.complete") do
-      expect(page).not_to have_link(
-        "Select the development platform that your team used"
-      )
-
-      expect(page).to have_content "Swift or XCode"
-      expect(page).to have_link(
-        "Change your selection",
-        href: edit_student_team_submission_path(
-          submission,
-          piece: :development_platform
-        )
-      )
-    end
-  end
-
   scenario "Upload the .zip source code" do
     skip "Direct to s3 how to mock"
     click_link "Code"

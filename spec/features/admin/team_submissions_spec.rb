@@ -46,7 +46,6 @@ RSpec.feature "admin team submissions" do
     click_link "Edit"
 
     fill_in "App description", with: "A great description for the ages"
-    select "Swift or XCode", from: "Development platform"
 
     attach_file(
       "Business plan",
@@ -60,8 +59,6 @@ RSpec.feature "admin team submissions" do
     )
 
     expect(page).to have_content("A great description for the ages")
-
-    expect(page).to have_content("Swift or XCode")
 
     expect(page).to have_link(
       "business_plan.pdf",

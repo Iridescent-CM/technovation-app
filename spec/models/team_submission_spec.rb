@@ -54,9 +54,7 @@ RSpec.describe TeamSubmission do
     it "returns a list of active development platforms (in Rails enum format)" do
       expect(TeamSubmission::ACTIVE_DEVELOPMENT_PLATFORMS_ENUM).to eq({
         "App Inventor" => 0,
-        "Thunkable" => 6,
-        "Java or Android Studio" => 2,
-        "Swift or XCode" => 1
+        "Thunkable" => 6
       })
     end
   end
@@ -67,7 +65,9 @@ RSpec.describe TeamSubmission do
         "C++" => 3,
         "PhoneGap/Apache Cordova" => 4,
         "Other" => 5,
-        "Thunkable Classic" => 7
+        "Thunkable Classic" => 7,
+        "Java or Android Studio" => 2,
+        "Swift or XCode" => 1
       })
     end
   end
