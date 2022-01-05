@@ -31,6 +31,7 @@
           toggles: {
             "App Inventor": "#app_inventor_fields",
             "Thunkable": "#thunkable_fields",
+            "Other": "#other",
           },
         },
         id: :team_submission_development_platform %>
@@ -86,6 +87,10 @@
         We are keeping this information private; it will help us improve how
         our program works with Thunkable.
       </p>
+
+      <div id="other">
+        <%= f.text_field :development_platform_other %>
+      </div>
     </div>
 
     <div class="actions">

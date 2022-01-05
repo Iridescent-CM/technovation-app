@@ -7,6 +7,7 @@ class TeamSubmission < ActiveRecord::Base
   ACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
     "App Inventor" => 0,
     "Thunkable" => 6,
+    "Other" => 5
   }
 
   INACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
@@ -14,7 +15,6 @@ class TeamSubmission < ActiveRecord::Base
     "Java or Android Studio" => 2,
     "C++" => 3,
     "PhoneGap/Apache Cordova" => 4,
-    "Other" => 5,
     "Thunkable Classic" => 7
   }
 
