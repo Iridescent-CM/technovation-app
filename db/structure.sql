@@ -1535,7 +1535,8 @@ CREATE TABLE public.team_submissions (
     climate_change_description character varying,
     game boolean,
     game_description character varying,
-    judge_recusal_count integer DEFAULT 0 NOT NULL
+    judge_recusal_count integer DEFAULT 0 NOT NULL,
+    submission_type integer DEFAULT 0 NOT NULL
 );
 
 
@@ -3140,6 +3141,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210430203443'),
 ('20210831162123'),
 ('20211125180122'),
-('20211204185710');
+('20211204185710'),
+('20220105203716');
 
 
