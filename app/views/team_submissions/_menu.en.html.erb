@@ -63,6 +63,20 @@
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
+            :learning_journey,
+            "Learning journey"
+          ),
+            send(
+              "#{current_scope}_team_submission_path",
+              submission,
+              piece: :learning_journey
+            )
+          %>
+        </li>
+
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
             :app_description,
             "A description of your app"
           ),
