@@ -78,11 +78,12 @@
     </p>
 
     <%= link_to "go back",
-      [
-        current_scope,
+      send(
+        "#{current_scope}_team_submission_path",
         @team_submission,
         :section,
         section: @submission_section,
-      ] %>
+      )
+    %>
   <% end %>
 </div>
