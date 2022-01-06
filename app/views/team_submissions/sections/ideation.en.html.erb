@@ -35,6 +35,17 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
+  title: "Learning Journey",
+  scope: current_scope,
+  attribute: :learning_journey,
+  cta_when_empty: "Add your learning journey",
+  cta_when_filled: "Update your learning journey" do %>
+
+  <%= simple_format(@team_submission.learning_journey) %>
+<% end %>
+
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
   title: "Additional Information",
   scope: current_scope,
   attribute: :app_details,

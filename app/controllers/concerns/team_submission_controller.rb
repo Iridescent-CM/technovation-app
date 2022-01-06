@@ -228,6 +228,7 @@ module TeamSubmissionController
         :pitch_presentation,
         :app_name,
         :app_description,
+        :learning_journey,
         :ai,
         :ai_description,
         :climate_change,
