@@ -8,9 +8,14 @@
     </p>
   <% else %>
     <h3 class="panel--heading">
-      Development platform
+      Submission Type
     </h3>
   <% end %>
+
+  <p class="scent scent--strong">
+    Please indicate which type of submission this is. This will affect how you are judged.
+    Think back on the work you did for these lessons: Beginner Division OR Junior/Senior Division.
+  </p>
 
   <%= form_with(
     model: @team_submission,
@@ -20,11 +25,29 @@
     <%= hidden_field_tag :piece, piece_name %>
 
     <div class="field">
-      <%= f.label :development_platform,
-        "Which development platform did your team use?",
-        for: :team_submission_development_platform %>
+      <%= f.label :submission_type,
+        "Submission type",
+        for: :team_submission_submission_type %>
 
-      <%= f.select :development_platform,
+      <%= f.select :submission_type,
+        TeamSubmission::SUBMISSION_TYPES,
+        { include_blank: true },
+        data: {
+          toggles: {
+            "Mobile App": "#mobile-app"
+          },
+        },
+        id: :team_submission_submission_type %>
+
+    </div>
+
+    <div id="mobile-app">
+      <div class="field">
+        <%= f.label :development_platform,
+          "Which development platform did your team use?",
+          for: :team_submission_development_platform %>
+
+        <%= f.select :development_platform,
         TeamSubmission::DEVELOPMENT_PLATFORMS,
         { include_blank: true },
         data: {
@@ -35,19 +58,19 @@
           },
         },
         id: :team_submission_development_platform %>
-    </div>
+      </div>
 
-    <div id="app_inventor_fields">
-      <p class="scent">
-        We want to ask you two questions about your use of
-        App Inventor.
-      </p>
+      <div id="app_inventor_fields">
+        <p class="scent">
+          We want to ask you two questions about your use of
+          App Inventor.
+        </p>
 
-      <%= f.label :app_inventor_app_name,
-        "What is your App Inventor Project Name?",
-        for: :team_submission_app_inventor_app_name %>
+        <%= f.label :app_inventor_app_name,
+          "What is your App Inventor Project Name?",
+          for: :team_submission_app_inventor_app_name %>
 
-      <%= f.text_field :app_inventor_app_name,
+        <%= f.text_field :app_inventor_app_name,
         id: :team_submission_app_inventor_app_name %>
 
       <%= f.label :app_inventor_gmail,
@@ -62,31 +85,32 @@
         We are keeping this information private; it will help us improve how
         our program works with App Inventor.
       </p>
-    </div>
+      </div>
 
-    <div id="thunkable_fields">
-      <p class="scent">
-        We want to ask you two questions about your use of Thunkable.
-      </p>
+      <div id="thunkable_fields">
+        <p class="scent">
+          We want to ask you two questions about your use of Thunkable.
+        </p>
 
-      <%= f.label :thunkable_account_email,
-        "What is the email address of your team's Thunkable account?",
-        for: :team_submission_thunkable_account_email %>
+        <%= f.label :thunkable_account_email,
+          "What is the email address of your team's Thunkable account?",
+          for: :team_submission_thunkable_account_email %>
 
-      <%= f.text_field :thunkable_account_email,
-        id: :team_submission_thunkable_account_email %>
+        <%= f.text_field :thunkable_account_email,
+          id: :team_submission_thunkable_account_email %>
 
-      <%= f.label :thunkable_project_url,
-        "What is the shareable URL of your Thunkable project?",
-        for: :team_submission_thunkable_project_url %>
+        <%= f.label :thunkable_project_url,
+          "What is the shareable URL of your Thunkable project?",
+          for: :team_submission_thunkable_project_url %>
 
-      <%= f.text_field :thunkable_project_url,
-        id: :team_submission_thunkable_project_url %>
+        <%= f.text_field :thunkable_project_url,
+          id: :team_submission_thunkable_project_url %>
 
-      <p class="hint">
-        We are keeping this information private; it will help us improve how
-        our program works with Thunkable.
-      </p>
+        <p class="hint">
+          We are keeping this information private; it will help us improve how
+          our program works with Thunkable.
+        </p>
+      </div>
 
       <div id="other">
         <%= f.text_field :development_platform_other %>
@@ -95,11 +119,11 @@
 
     <div class="actions">
       <p>
-        <%= f.submit "Save this development platform selection",
+        <%= f.submit "Save",
           class: "button" %>
         or
         <%= link_to "cancel",
-        send("#{current_scope}_team_submission_section_path", 
+        send("#{current_scope}_team_submission_section_path",
           @team_submission,
           section: @submission_section
         ) %>
