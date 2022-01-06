@@ -237,6 +237,7 @@ module TeamSubmissionController
         :game_description,
         :demo_video_link,
         :pitch_video_link,
+        :submission_type,
         :development_platform_other,
         :development_platform,
         :app_inventor_app_name,
