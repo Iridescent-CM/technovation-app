@@ -4,6 +4,13 @@ class TeamSubmission < ActiveRecord::Base
   MAX_SCREENSHOTS_ALLOWED = 6
   PARTICIPATION_MINIMUM_PERCENT = 50
 
+  SUBMISSION_TYPES_ENUM = {
+    "Mobile App" => 0,
+    "AI Project" => 1
+  }
+
+  SUBMISSION_TYPES = SUBMISSION_TYPES_ENUM.keys
+
   ACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
     "App Inventor" => 0,
     "Thunkable" => 6,
@@ -78,6 +85,7 @@ class TeamSubmission < ActiveRecord::Base
     end
   }, on: :update
 
+  enum submission_type: SUBMISSION_TYPES_ENUM
   enum development_platform: ALL_DEVELOPMENT_PLATFORMS_ENUM
 
   def developed_on?(platform_name)
