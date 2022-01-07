@@ -1,6 +1,6 @@
 <div class="panel">
   <h3 class="panel--heading">
-    Source code
+    Technical Additions
   </h3>
 
   <% if @team_submission.source_code_url_complete? %>
@@ -21,7 +21,7 @@
       </p>
 
       <p>
-        Help for submitting your source code is
+        Help for submitting your technical work is
         <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-" target="_blank">here</a>
         or take a look at the
         <a href="https://technovationchallenge.org/curriculum/coding-14-debugging-tips-in-app-inventor-and-thunkable/" target="_blank">debugging curriculum</a>
@@ -41,7 +41,7 @@
 
     <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
       <input type="hidden" name="utf8">
-      <%= f.label :file, "Upload your app's source code" %>
+      <%= f.label :file, "Upload your technical work" %>
       <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
 
       <div class="flash flash--alert source-code-uploader__error hidden">
@@ -52,7 +52,7 @@
     <% end %>
 
     <p class="grid__cell--padding-sm-y">
-      Help for submitting your source code is
+      Help for submitting your technical work is
       <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-" target="_blank">
         here
       </a>

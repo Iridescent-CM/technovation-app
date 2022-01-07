@@ -187,18 +187,18 @@ RSpec.feature "Students edit submission pieces" do
     click_link "Code"
 
     within(".source_code_url.incomplete") do
-      click_link "Upload your app's source code"
+      click_link "Upload your technical work"
     end
 
     attach_file(
-      "Upload your app's source code",
+      "Upload your technical work",
       Rails.root + "spec/support/fixtures/source_code.zip"
     )
 
     click_button "Upload"
 
     within(".source_code_url.complete") do
-      expect(page).not_to have_link("Upload your app's source code")
+      expect(page).not_to have_link("Upload your technical work")
 
       expect(page).to have_link(
         "source_code.zip",
@@ -219,17 +219,17 @@ RSpec.feature "Students edit submission pieces" do
     click_link "Code"
 
     within(".source_code_url.incomplete") do
-      click_link "Upload your app's source code"
+      click_link "Upload your technical work"
     end
 
     attach_file_for_direct_upload(
-      "Upload your app's source code",
+      "Upload your technical work",
       Rails.root + "spec/support/fixtures/source_code.aia"
     )
     upload_directly(FileUploader.new, "Upload")
 
     within(".source_code_url.complete") do
-      expect(page).not_to have_link("Upload your app's source code")
+      expect(page).not_to have_link("Upload your technical work")
 
       expect(page).to have_link(
         "source_code.aia",
