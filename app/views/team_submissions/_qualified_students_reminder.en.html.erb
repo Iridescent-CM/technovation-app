@@ -38,8 +38,12 @@
 
     <p>
       <%= link_to "Fix this now",
-        [current_scope, :pending_teammates, team_id: current_team.id],
-        class: "button small" %>
+        send(
+          "#{current_scope}_pending_teammates_path",
+          current_team
+        ),
+        class: "button small"
+      %>
     </p>
   <% else %>
     <p class="scent">
