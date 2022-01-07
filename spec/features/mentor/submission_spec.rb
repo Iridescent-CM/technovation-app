@@ -99,7 +99,7 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_link(
-      "Upload your app's source code",
+      "Upload your technical work",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :source_code_url
