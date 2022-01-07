@@ -33,7 +33,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
 
           context "and a valid file is uploaded" do
             it "allows the form to be submitted without issue" do
-              click_link "Upload your technical work"
+              click_link "Technical Additions"
               expect(page).to have_css('input[type=file]')
 
               ['aia', 'apk', 'zip'].each do |good_file|
@@ -51,7 +51,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
 
           context "and an invalid file is uploaded" do
             it "allows the form to be submitted without issue" do
-              click_link "Upload your technical work"
+              click_link "Technical Additions"
               expect(page).to have_css('input[type=file]')
 
               attach_file(
@@ -79,7 +79,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
         end
 
         it "displays a text field with the URL filled in" do
-          click_link "Upload your technical work"
+          click_link "Technical Additions"
           expect(page).not_to have_css('input[type=file]')
           expect(page).to have_xpath("//input[@type='text' and @value='#{url}']")
         end
@@ -88,7 +88,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
 
     context "when development platform has not been entered" do
       it "displays the development platform selection" do
-        click_link "Upload your technical work"
+        click_link "Technical Additions"
 
         select "Thunkable", from: "Which development platform did your team use?"
 
