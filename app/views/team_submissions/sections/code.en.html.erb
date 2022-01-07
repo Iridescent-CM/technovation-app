@@ -34,10 +34,10 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
-  title: "Source code",
+  title: "Technical Additions",
   scope: current_scope,
   attribute: :source_code_url,
-  cta_when_empty: "Upload your app's source code",
+  cta_when_empty: "Upload your technical work",
   cta_when_filled: "Change your upload" do %>
   <% if @team_submission.developed_on?("Thunkable") %>
     <p>
