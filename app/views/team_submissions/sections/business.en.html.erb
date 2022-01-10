@@ -24,10 +24,14 @@
   "
 >
   <h3 class="panel--heading">
-    Business plan
+    <% if @team.junior? %>
+      User Adoption Plan
+    <% else %>
+      Business plan
+    <% end %>
   </h3>
 
-  <% if @team.senior? %>
+  <% if @team.senior? || @team.junior? %>
     <% if @team_submission.business_plan_url_complete? %>
       <p>
         Your team has uploaded:
@@ -51,7 +55,7 @@
       </p>
 
       <div class="panel--footer">
-        <%= link_to "Upload your team's business plan",
+        <%= link_to "Upload your team's plan",
           send(
             "edit_#{current_scope}_team_submission_path",
             @team_submission,
@@ -72,7 +76,7 @@
     <p class="scent">
       Uploading a business plan is
       <strong>not required</strong>
-      in the Junior Division.
+      in the Beginner Division.
     </p>
 
     <p class="scent">
