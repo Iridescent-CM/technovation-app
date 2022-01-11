@@ -46,10 +46,10 @@ module StudentHelper
                   :complete
                 end
               when :business_plan
-                if submission.junior_division?
-                  :not_required
+                if submission.junior_division? || submission.senior_division?
+                  :complete if submission.business_plan_url.present?
                 else
-                  :complete unless submission.business_plan_url.blank?
+                  :not_required
                 end
               when :pitch_presentation
                 if !submission.pitch_presentation_url.blank?
