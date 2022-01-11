@@ -246,21 +246,21 @@ RSpec.feature "Students edit submission pieces" do
   end
 
   scenario "Upload a .pdf business plan" do
-    click_link "Business"
+    click_link "Entrepreneurship"
 
     within(".business_plan.incomplete") do
-      click_link "Upload your team's business plan"
+      click_link "Upload your team's plan"
     end
 
     attach_file(
-      "Upload your team's business plan",
+      "Upload your team's plan",
       Rails.root + "spec/support/fixtures/business_plan.pdf"
     )
 
     click_button "Upload"
 
     within(".business_plan.complete") do
-      expect(page).not_to have_link("Upload your team's business plan")
+      expect(page).not_to have_link("Upload your team's plan")
 
       expect(page).to have_link(
         "business_plan.pdf",

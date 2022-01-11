@@ -121,27 +121,24 @@ RSpec.feature "Student team submissions" do
     sign_in(student)
 
     click_link "My Submission"
-    click_link "Business"
+    click_link "Entrepreneurship"
 
-    expect(page).not_to have_link(
-      "Upload your team's business plan",
+    expect(page).to have_link(
+      "Upload your team's plan"
     )
 
-    expect(page).to have_content("Your team is in the Junior Division")
-    expect(page).to have_content(
-      "Uploading a business plan is not required in the Junior Division."
-    )
+    expect(page).to have_content("User Adoption Plan")
 
     ProfileUpdating.execute(student, :student, account_attributes: {
       id: student.account_id,
-      date_of_birth: senior_dob,
+      date_of_birth: senior_dob
     })
 
     click_link "My Submission"
-    click_link "Business"
+    click_link "Entrepreneurship"
 
     expect(page).to have_link(
-      "Upload your team's business plan",
+      "Upload your team's plan",
       href: edit_student_team_submission_path(
         submission,
         piece: :business_plan
