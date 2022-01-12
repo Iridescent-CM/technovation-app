@@ -36,6 +36,10 @@
               </p>
             <% else %>
               <p class="text-sm text-gray-500 truncate">
+                <% if current_student.email != student.email %>
+                  <%= student.email %><br>
+                <% end %>
+
                 <%= student.primary_location %>
               </p>
             <% end %>
