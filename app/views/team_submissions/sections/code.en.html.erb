@@ -16,19 +16,36 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
-  title: "Development platform",
+  title: "Submission Type",
   scope: current_scope,
   attribute: :development_platform,
-  cta_when_empty: "Select your development platform",
+  cta_when_empty: "Select your submission type",
   cta_when_filled: "Change your selection" do %>
-  <% if @team_submission.developed_on?("Thunkable") %>
-    <%= @team_submission.development_platform_text %>
 
-    <p>
-      Project url:
-      <%= link_to @team_submission.thunkable_project_url,
+  <p>
+    <%= @team_submission.submission_type %>
+  </p>
+
+  <% if @team_submission.submission_type == "Mobile App" %>
+    <% if @team_submission.developed_on?("Other") %>
+      <p>
+        <%= @team_submission.development_platform_other %>
+      </p>
+    <% else %>
+      <p>
+        <%= @team_submission.development_platform %>
+      </p>
+    <% end %>
+
+    <% if @team_submission.developed_on?("Thunkable") %>
+      <%= @team_submission.development_platform_text %>
+
+      <p>
+        Project url:
+        <%= link_to @team_submission.thunkable_project_url,
         @team_submission.thunkable_project_url %>
-    </p>
+      </p>
+    <% end %>
   <% end %>
 <% end %>
 

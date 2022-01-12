@@ -91,7 +91,7 @@ RSpec.feature "Student team submissions" do
     click_link "Code"
 
     expect(page).to have_link(
-      "Select your development platform",
+      "Select your submission type",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :development_platform
