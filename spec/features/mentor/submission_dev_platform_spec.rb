@@ -11,7 +11,7 @@ RSpec.feature "Mentors edit submission development platform" do
 
     within("#find-team") { click_link "Edit this team's submission" }
     click_link "Code"
-    click_link "Select your development platform"
+    click_link "Select your submission type"
   end
 
   scenario "Choose App Inventor" do
