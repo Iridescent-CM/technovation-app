@@ -14,7 +14,7 @@ RSpec.feature "Students edit submission development platform" do
     sign_in(student)
 
     click_link "My Submission"
-    click_link "Code"
+    click_link "Technical Elements"
     click_link "Select your submission type"
   end
 

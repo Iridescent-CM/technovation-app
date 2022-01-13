@@ -162,7 +162,7 @@
 
     <div class="progress__section">
       <h1>
-        <%= link_to "Code",
+        <%= link_to "Technical Elements",
           send(
             "#{current_scope}_team_submission_section_path",
             submission,
@@ -176,7 +176,7 @@
           <%= link_to submission_progress_web_icon(
             submission,
             :development_platform,
-            "Development platform"
+            "Submission Type"
           ),
           send(
             "#{current_scope}_team_submission_path",

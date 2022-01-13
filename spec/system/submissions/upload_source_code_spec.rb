@@ -107,7 +107,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
           expect(page).to have_link "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
         end
 
-        click_link "Code"
+        click_link "Technical Elements"
 
         within(".source_code_url.complete") do
           expect(page).to have_link "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"

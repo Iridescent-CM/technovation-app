@@ -85,7 +85,7 @@ RSpec.feature "Student team submissions" do
       )
     )
 
-    click_link "Code"
+    click_link "Technical Elements"
 
     expect(page).to have_link(
       "Select your submission type",
