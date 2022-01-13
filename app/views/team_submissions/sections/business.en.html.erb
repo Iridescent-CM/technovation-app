@@ -7,13 +7,6 @@
   section: :code
 ) %>
 
-<% provide :next_link_txt, "Regional events" %>
-<% provide :next_link, send(
-  "#{current_scope}_team_submission_section_path",
-  @team_submission,
-  section: :pitch_presentation
-) %>
-
 <div
   id="<%= dom_id(@team_submission) %>_business_plan"
   class="

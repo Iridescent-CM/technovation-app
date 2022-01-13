@@ -234,36 +234,4 @@
       </ol>
     </div>
   <% end %>
-
-  <div class="progress__section">
-    <h1>
-      <%= link_to "Regional events",
-        send(
-            "#{current_scope}_team_submission_section_path",
-            submission,
-            section: :pitch_presentation
-          )
-        %>
-    </h1>
-
-    <ol class="list--reset">
-      <li>
-        <small>
-          only if attending a live, regional event:
-        </small>
-
-        <%= link_to submission_progress_web_icon(
-          submission,
-          :pitch_presentation,
-          "Presentation slides"
-        ),
-          send(
-            "#{current_scope}_team_submission_path",
-            submission,
-            piece: :pitch_presentation
-          )
-        %>
-      </li>
-    </ol>
-  </div>
 </div>

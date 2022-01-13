@@ -146,7 +146,7 @@ RSpec.feature "Student team submissions" do
     )
   end
 
-  scenario "See live pitch event submission pieces on TOC" do
+  xscenario "See live pitch event submission pieces on TOC" do
     student = FactoryBot.create(:student, :on_team, :geocoded)
     submission = FactoryBot.create(:team_submission, team: student.team)
 
