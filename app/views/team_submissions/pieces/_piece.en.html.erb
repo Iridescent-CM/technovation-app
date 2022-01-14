@@ -3,6 +3,7 @@
   base_path_name = "edit_#{scope}_team_submission_path"
   completion_css_class = value_is_complete ? :complete : :incomplete
   link_options ||= {}
+  attribute = :development_platform if attribute == :submission_type
 %>
 
 <div
