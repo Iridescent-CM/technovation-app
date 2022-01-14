@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <% if @team_submission.submission_type == "Mobile App" && @team_submission.development_platform.blank? %>
+  <% if @team_submission.submission_type.blank? || (@team_submission.submission_type == "Mobile App" && @team_submission.development_platform.blank?) %>
     <%= render template: 'team_submissions/pieces/development_platform',
       locals: {
          submission: @team_submission,
