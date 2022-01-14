@@ -1536,7 +1536,7 @@ CREATE TABLE public.team_submissions (
     game boolean,
     game_description character varying,
     judge_recusal_count integer DEFAULT 0 NOT NULL,
-    submission_type integer DEFAULT 0 NOT NULL,
+    submission_type integer,
     learning_journey text
 );
 
@@ -3144,6 +3144,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211125180122'),
 ('20211204185710'),
 ('20220105203716'),
-('20220106224855');
+('20220106224855'),
+('20220114040538'),
+('20220114040857');
 
 
