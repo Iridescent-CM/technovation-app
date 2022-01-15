@@ -56,6 +56,11 @@ class TeamSubmission < ActiveRecord::Base
     end
   }
 
+  before_commit :reset_development_platform_fields_for_ai_projects
+  before_commit :reset_development_platform_fields_for_app_inventor
+  before_commit :reset_development_platform_fields_for_thunkable
+  before_commit :reset_development_platform_fields_for_other_platforms
+
   before_commit -> {
     self.ai_description = "" if ai.blank?
     self.climate_change_description = "" if climate_change.blank?
@@ -588,6 +593,42 @@ class TeamSubmission < ActiveRecord::Base
       demo_video_link
     when "pitch_video_link", "pitch", :pitch
       pitch_video_link
+    end
+  end
+
+  def reset_development_platform_fields_for_ai_projects
+    if submission_type == "AI Project"
+      self.development_platform = nil
+      self.development_platform_other = nil
+      self.app_inventor_app_name = nil
+      self.app_inventor_gmail = nil
+      self.thunkable_account_email = nil
+      self.thunkable_project_url = nil
+    end
+  end
+
+  def reset_development_platform_fields_for_app_inventor
+    if development_platform == "App Inventor"
+      self.development_platform_other = nil
+      self.thunkable_account_email = nil
+      self.thunkable_project_url = nil
+    end
+  end
+
+  def reset_development_platform_fields_for_thunkable
+    if development_platform == "Thunkable"
+      self.development_platform_other = nil
+      self.app_inventor_app_name = nil
+      self.app_inventor_gmail = nil
+    end
+  end
+
+  def reset_development_platform_fields_for_other_platforms
+    if development_platform == "Other"
+      self.thunkable_account_email = nil
+      self.thunkable_project_url = nil
+      self.app_inventor_app_name = nil
+      self.app_inventor_gmail = nil
     end
   end
 end

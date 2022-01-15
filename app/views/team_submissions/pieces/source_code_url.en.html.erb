@@ -11,7 +11,13 @@
     </div>
   <% end %>
 
-  <% if @team_submission.developed_on?("Thunkable") %>
+  <% if @team_submission.submission_type.blank? || (@team_submission.submission_type == "Mobile App" && @team_submission.development_platform.blank?) %>
+    <%= render template: 'team_submissions/pieces/development_platform',
+      locals: {
+         submission: @team_submission,
+         embedded: true,
+      } %>
+  <% elsif @team_submission.developed_on?("Thunkable") %>
     <%= form_with model: @team_submission,
       url: send("#{current_scope}_team_submission_url", @team_submission),
       local: true do |f| %>
@@ -30,12 +36,6 @@
 
       <%= f.submit "Save", class: "button" %>
     <% end %>
-  <% elsif @team_submission.development_platform.blank? %>
-    <%= render template: 'team_submissions/pieces/development_platform',
-      locals: {
-         submission: @team_submission,
-         embedded: true,
-      } %>
   <% else %>
     <p class="hint">File types allowed: *.zip or *.aia</p>
 

@@ -28,7 +28,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
       ["Swift or XCode", "Thunkable Classic"].each do |platform|
         context "and development platform (#{platform}) is not Thunkable" do
           before do
-            TeamSubmission.last.update!(development_platform: platform)
+            TeamSubmission.last.update!(submission_type: 1, development_platform: platform)
           end
 
           context "and a valid file is uploaded" do
