@@ -87,6 +87,7 @@ end
 
 class RequiredDevPlatformField < RequiredField
   def invalidate!
+    submission.submission_type = nil
     submission.development_platform = nil
     submission.development_platform_other = nil
     submission.app_inventor_app_name = nil
