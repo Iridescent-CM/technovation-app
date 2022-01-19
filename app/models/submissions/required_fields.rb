@@ -18,7 +18,7 @@ class RequiredFields
       RequiredField.for(submission, field)
     end
 
-    if submission.senior_division?
+    if submission.junior_division? || submission.senior_division?
       @fields << RequiredField.new(submission, :business_plan)
     end
 
@@ -87,6 +87,7 @@ end
 
 class RequiredDevPlatformField < RequiredField
   def invalidate!
+    submission.submission_type = nil
     submission.development_platform = nil
     submission.development_platform_other = nil
     submission.app_inventor_app_name = nil

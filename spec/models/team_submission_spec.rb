@@ -169,20 +169,20 @@ RSpec.describe TeamSubmission do
         expect(junior_submission.percent_complete).to eq(0)
       end
 
-      it "returns 13% when one required item has been completed" do
+      it "returns 11% when one required item has been completed" do
         junior_submission = FactoryBot.create(:submission, :junior)
 
         junior_submission.update(app_name: "An amazing app")
 
-        expect(junior_submission.percent_complete).to eq(13)
+        expect(junior_submission.percent_complete).to eq(11)
       end
 
-      it "returns 88% when all required items have been completed, but it hasn't been published yet" do
+      it "returns 89% when all required items have been completed, but it hasn't been published yet" do
         junior_submission = FactoryBot.create(:submission, :junior, :complete)
 
         junior_submission.update(published_at: nil)
 
-        expect(junior_submission.percent_complete).to eq(88)
+        expect(junior_submission.percent_complete).to eq(89)
       end
 
       it "returns 100% when all required items have been completed, and it has been published" do

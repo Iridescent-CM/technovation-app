@@ -50,6 +50,7 @@ FactoryBot.define do
                            "Hello world!\n I have line breaks too",
           submission_type: "Mobile App",
           development_platform: "Swift or XCode",
+          demo_video_link: "http://example.com/pitch",
           pitch_video_link: "http://example.com/pitch"
         )
       end
