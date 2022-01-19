@@ -40,7 +40,7 @@ module StudentHelper
               when :screenshots
                 :complete if submission.screenshots.many?
               when :development_platform
-                :complete unless submission.development_platform_text.blank?
+                :complete if submission.submission_type.present?
               when :source_code, :source_code_url
                 if RequiredField.for(submission, :source_code_url).complete?
                   :complete

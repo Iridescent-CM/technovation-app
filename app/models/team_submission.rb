@@ -520,10 +520,12 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def development_platform_text
-    if development_platform == "Other"
-      ["Other", "-", development_platform_other].join(" ")
+    if submission_type == "Mobile App" && development_platform != "Other"
+      "#{submission_type} - #{development_platform}"
+    elsif submission_type == "Mobile App" && development_platform == "Other"
+      "#{submission_type} - #{development_platform} - #{development_platform_other}"
     else
-      development_platform
+      submission_type
     end
   end
 
