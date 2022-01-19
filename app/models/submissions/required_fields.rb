@@ -18,7 +18,7 @@ class RequiredFields
       RequiredField.for(submission, field)
     end
 
-    if submission.senior_division?
+    if submission.junior_division? || submission.senior_division?
       @fields << RequiredField.new(submission, :business_plan)
     end
 
