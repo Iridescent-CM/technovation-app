@@ -6,6 +6,7 @@ en:
       class_name: "account"
       change_password: "Change your password"
       country: "Region"
+      division: "Division"
       email: "Email"
       first_name: "First name"
       full_name: "Name"
