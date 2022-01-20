@@ -9,6 +9,7 @@ class RequiredFields
     @fields = %i(
       app_name
       app_description
+      learning_journey
       development_platform_text
       pitch_video_link
       demo_video_link
