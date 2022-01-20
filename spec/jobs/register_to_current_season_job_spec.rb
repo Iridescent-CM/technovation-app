@@ -34,6 +34,34 @@ RSpec.describe RegisterToCurrentSeasonJob do
   end
 
   context "students" do
+    context "division assignment" do
+      let(:student) { FactoryBot.create(:student) }
+
+      context "for returning students" do
+        before do
+          student.account.update(seasons: ["2020"])
+        end
+
+        it "updates the student's division assignment" do
+          expect(student.account).to receive(:update).with(division: Division.for_account(student.account))
+
+          RegisterToCurrentSeasonJob.perform_now(student.account)
+        end
+      end
+
+      context "for new students" do
+        before do
+          student.account.update(seasons: [])
+        end
+
+        it "does not update the student's division assignment" do
+          expect(student.account).not_to receive(:update).with(division: Division.for_account(student.account))
+
+          RegisterToCurrentSeasonJob.perform_now(student.account)
+        end
+      end
+    end
+
     context "welcome student emails" do
       let(:registration_mailer) { double(RegistrationMailer, deliver_later: true) }
 
