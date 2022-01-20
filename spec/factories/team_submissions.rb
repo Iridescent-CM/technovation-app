@@ -93,6 +93,7 @@ FactoryBot.define do
     trait :complete do
       app_name { "Submission name" }
       app_description { "Submission description" }
+      learning_journey { "Learning journey description" }
       pitch_video_link { "http://example.com/pitch" }
       demo_video_link { "http://example.com/demo" }
       submission_type { "Mobile App" }
