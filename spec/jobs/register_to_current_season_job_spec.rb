@@ -163,20 +163,22 @@ RSpec.describe RegisterToCurrentSeasonJob do
     end
   end
 
-  it "resets mentor training" do
-    profile = nil
+  context "mentors" do
+    it "resets mentor training" do
+      profile = nil
 
-    Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
-      profile = FactoryBot.create(:mentor, :onboarded)
-    end
-
-    expect {
-      Timecop.freeze(ImportantDates.new_season_switch + 1.day) do
-        RegisterToCurrentSeasonJob.perform_now(profile.account)
+      Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
+        profile = FactoryBot.create(:mentor, :onboarded)
       end
-    }.to change {
-      profile.reload.training_complete?
-    }.from(true).to(false)
+
+      expect {
+        Timecop.freeze(ImportantDates.new_season_switch + 1.day) do
+          RegisterToCurrentSeasonJob.perform_now(profile.account)
+        end
+      }.to change {
+        profile.reload.training_complete?
+      }.from(true).to(false)
+    end
   end
 
   it "resets judge training" do
