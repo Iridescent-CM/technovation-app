@@ -33,102 +33,104 @@ RSpec.describe RegisterToCurrentSeasonJob do
     end
   end
 
-  context "welcome student emails" do
-    let(:registration_mailer) { double(RegistrationMailer, deliver_later: true) }
+  context "students" do
+    context "welcome student emails" do
+      let(:registration_mailer) { double(RegistrationMailer, deliver_later: true) }
 
-    before do
-      student.account.update(seasons: [])
-    end
+      before do
+        student.account.update(seasons: [])
+      end
 
-    context "when it's a senior student" do
-      let(:student) { FactoryBot.create(:student, :senior) }
+      context "when it's a senior student" do
+        let(:student) { FactoryBot.create(:student, :senior) }
 
-      it "sends the 'welcome_student' email" do
-        expect(RegistrationMailer).to receive(:welcome_student)
-          .with(student.account)
-          .and_return(registration_mailer)
+        it "sends the 'welcome_student' email" do
+          expect(RegistrationMailer).to receive(:welcome_student)
+            .with(student.account)
+            .and_return(registration_mailer)
 
-        expect(registration_mailer).to receive(:deliver_later)
+          expect(registration_mailer).to receive(:deliver_later)
 
-        RegisterToCurrentSeasonJob.perform_now(student.account)
+          RegisterToCurrentSeasonJob.perform_now(student.account)
+        end
+      end
+
+      context "when it's a junior student" do
+        let(:student) { FactoryBot.create(:student, :junior) }
+
+        it "sends the 'welcome_student' email" do
+          expect(RegistrationMailer).to receive(:welcome_student)
+            .with(student.account)
+            .and_return(registration_mailer)
+
+          expect(registration_mailer).to receive(:deliver_later)
+
+          RegisterToCurrentSeasonJob.perform_now(student.account)
+        end
+      end
+
+      context "when it's a beginner student" do
+        let(:student) { FactoryBot.create(:student, :beginner) }
+
+        it "sends the 'welcome_parent' email" do
+          expect(RegistrationMailer).to receive(:welcome_parent)
+            .with(student.account)
+            .and_return(registration_mailer)
+
+          expect(registration_mailer).to receive(:deliver_later)
+
+          RegisterToCurrentSeasonJob.perform_now(student.account)
+        end
       end
     end
 
-    context "when it's a junior student" do
-      let(:student) { FactoryBot.create(:student, :junior) }
+    it "creates unsigned parental consents for students" do
+      student = FactoryBot.create(:student)
 
-      it "sends the 'welcome_student' email" do
-        expect(RegistrationMailer).to receive(:welcome_student)
-          .with(student.account)
-          .and_return(registration_mailer)
+      student.account.update(
+        seasons: [],
+      )
 
-        expect(registration_mailer).to receive(:deliver_later)
+      student.parental_consents.destroy_all
 
+      expect {
         RegisterToCurrentSeasonJob.perform_now(student.account)
-      end
+      }.to change {
+        student.parental_consents.unsigned.count
+      }.from(0).to(1)
     end
 
-    context "when it's a beginner student" do
-      let(:student) { FactoryBot.create(:student, :beginner) }
+    it "creates a new media consent for students" do
+      student = FactoryBot.create(:student)
 
-      it "sends the 'welcome_parent' email" do
-        expect(RegistrationMailer).to receive(:welcome_parent)
-          .with(student.account)
-          .and_return(registration_mailer)
+      student.account.update(
+        seasons: []
+      )
 
-        expect(registration_mailer).to receive(:deliver_later)
-
+      expect {
         RegisterToCurrentSeasonJob.perform_now(student.account)
-      end
+      }.to change {
+        student.media_consents.count
+      }.from(0).to(1)
     end
-  end
 
-  it "creates unsigned parental consents for students" do
-    student = FactoryBot.create(:student)
+    it "emails parents of returning students" do
+      student = FactoryBot.create(
+        :student,
+        :past,
+        parent_guardian_email: "something@exists.com"
+      )
 
-    student.account.update(
-      seasons: [],
-    )
+      mailer = double(:ParentMailer, deliver_later: true)
 
-    student.parental_consents.destroy_all
+      expect(ParentMailer).to receive(:consent_notice)
+        .with(student.id)
+        .and_return(mailer)
 
-    expect {
-      RegisterToCurrentSeasonJob.perform_now(student.account)
-    }.to change {
-      student.parental_consents.unsigned.count
-    }.from(0).to(1)
-  end
+      expect(mailer).to receive(:deliver_later)
 
-  it "creates a new media consent for students" do
-    student = FactoryBot.create(:student)
-
-    student.account.update(
-      seasons: []
-    )
-
-    expect {
-      RegisterToCurrentSeasonJob.perform_now(student.account)
-    }.to change {
-      student.media_consents.count
-    }.from(0).to(1)
-  end
-
-  it "emails parents of returning students" do
-    student = FactoryBot.create(
-      :student,
-      :past,
-      parent_guardian_email: "something@exists.com"
-    )
-
-    mailer = double(:ParentMailer, deliver_later: true)
-
-    expect(ParentMailer).to receive(:consent_notice)
-      .with(student.id)
-      .and_return(mailer)
-
-    expect(mailer).to receive(:deliver_later)
-
-    RegisterToCurrentSeasonJob.perform_now(student.reload.account)
+      RegisterToCurrentSeasonJob.perform_now(student.reload.account)
+    end
   end
 
   it "resets mentor training" do
