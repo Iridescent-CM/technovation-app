@@ -181,20 +181,22 @@ RSpec.describe RegisterToCurrentSeasonJob do
     end
   end
 
-  it "resets judge training" do
-    profile = nil
+  context "judges" do
+    it "resets judge training" do
+      profile = nil
 
-    Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
-      profile = FactoryBot.create(:judge, :onboarded)
-    end
-
-    expect {
-      Timecop.freeze(ImportantDates.new_season_switch + 1.day) do
-        RegisterToCurrentSeasonJob.perform_now(profile.account)
+      Timecop.freeze(ImportantDates.new_season_switch - 1.day) do
+        profile = FactoryBot.create(:judge, :onboarded)
       end
-    }.to change {
-      profile.reload.training_completed?
-    }.from(true).to(false)
+
+      expect {
+        Timecop.freeze(ImportantDates.new_season_switch + 1.day) do
+          RegisterToCurrentSeasonJob.perform_now(profile.account)
+        end
+      }.to change {
+        profile.reload.training_completed?
+      }.from(true).to(false)
+    end
   end
 
   it "records activity" do
