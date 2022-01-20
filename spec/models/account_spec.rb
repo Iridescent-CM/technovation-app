@@ -985,4 +985,19 @@ RSpec.describe Account do
       end
     end
   end
+
+  context "updating division assignment" do
+    let(:account) { FactoryBot.create(:account, :beginner) }
+
+    context "when an account's date of birth has changed" do
+      before do
+        account.date_of_birth = 18.years.ago
+        account.save
+      end
+
+      it "updates their division" do
+        expect(account.division.name).to eq("senior")
+      end
+    end
+  end
 end

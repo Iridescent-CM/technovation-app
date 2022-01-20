@@ -46,6 +46,11 @@
             <dt><%= t('models.account.age') %></dt>
             <dd><%= @account.age %></dd>
 
+            <% if @account.student? %>
+              <dt><%= t('models.account.division') %></dt>
+              <dd><%= @account.division.name.capitalize %></dd>
+            <% end %>
+
             <dt>Seasons</dt>
             <dd><%= @account.seasons.to_sentence %></dd>
 

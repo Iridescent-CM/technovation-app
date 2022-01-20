@@ -257,6 +257,7 @@ class Account < ActiveRecord::Base
     )
   }
 
+  before_update :update_division
   after_commit :update_email_list, on: :update
 
   after_commit -> {
@@ -1000,6 +1001,12 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def update_division
+    if date_of_birth_changed?
+      self.division = Division.for_account(self)
+    end
   end
 
   def update_email_list

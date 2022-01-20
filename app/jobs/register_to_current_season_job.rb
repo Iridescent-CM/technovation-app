@@ -70,6 +70,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
     student_profile.media_consents.create(season: Season.current.year)
 
+    if record.seasons.many?
+      record.update(division: Division.for_account(record))
+    end
+
     student_profile.save # fire commit hooks, if needed
   end
 
