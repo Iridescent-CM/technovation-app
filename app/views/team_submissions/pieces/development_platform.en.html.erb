@@ -43,7 +43,7 @@
     <div id="mobile-app">
       <div class="field">
         <%= f.label :development_platform,
-          "Which development platform did your team use?",
+          "Which coding language did your team use?",
           for: :team_submission_development_platform %>
 
         <%= f.select :development_platform,
@@ -112,6 +112,9 @@
       </div>
 
       <div id="other">
+        <%= f.label :development_platform_other,
+          "Please write the coding language your team used:" %>
+
         <%= f.text_field :development_platform_other %>
       </div>
     </div>
