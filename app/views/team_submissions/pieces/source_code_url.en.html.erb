@@ -14,41 +14,36 @@
   <% if @team_submission.submission_type.blank? || (@team_submission.submission_type == "Mobile App" && @team_submission.development_platform.blank?) %>
     <%= render template: 'team_submissions/pieces/development_platform',
       locals: {
-         submission: @team_submission,
-         embedded: true,
+        submission: @team_submission,
+        embedded: true,
       } %>
-  <% elsif @team_submission.developed_on?("Thunkable") %>
-    <%= form_with model: @team_submission,
-      url: send("#{current_scope}_team_submission_url", @team_submission),
-      local: true do |f| %>
-      <p>
-        <%= f.label :source_code_external_url %>
-        <%= f.text_field :source_code_external_url %>
-      </p>
-
-      <p>
-        For help submitting your technical work, check
-        <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-" target="_blank">here</a>
-        or take a look at the
-        <a href="https://technovationchallenge.org/curriculum/coding-14-debugging-tips-in-app-inventor-and-thunkable/" target="_blank">debugging curriculum</a>
-        unit for more resources.
-      </p>
-
-      <%= f.submit "Save", class: "button" %>
-    <% end %>
   <% else %>
-    <p class="hint">File types allowed: *.zip or *.aia</p>
 
-    <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
-      <input type="hidden" name="utf8">
-      <%= f.label :file, "Upload your technical work" %>
-      <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
+    <% if @team_submission.developed_on?("Thunkable") %>
+      <%= form_with model: @team_submission,
+        url: send("#{current_scope}_team_submission_url", @team_submission),
+        local: true do |f| %>
+        <p>
+          <%= f.label :source_code_external_url %>
+          <%= f.text_field :source_code_external_url %>
+        </p>
 
-      <div class="flash flash--alert source-code-uploader__error hidden">
-        Sorry, you tried to upload an invalid file type.
-      </div>
+        <%= f.submit "Save", class: "button" %>
+      <% end %>
+    <% else %>
+      <p class="hint">File types allowed: *.zip or *.aia</p>
 
-      <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
+      <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
+        <input type="hidden" name="utf8">
+        <%= f.label :file, "Upload your technical work" %>
+        <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
+
+        <div class="flash flash--alert source-code-uploader__error hidden">
+          Sorry, you tried to upload an invalid file type.
+        </div>
+
+        <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
+      <% end %>
     <% end %>
 
     <p class="grid__cell--padding-sm-y">
