@@ -18,8 +18,7 @@
         embedded: true,
       } %>
   <% else %>
-
-    <% if @team_submission.developed_on?("Thunkable") %>
+    <% if @team_submission.submission_type == "Mobile App" && @team_submission.developed_on?("Thunkable") %>
       <%= form_with model: @team_submission,
         url: send("#{current_scope}_team_submission_url", @team_submission),
         local: true do |f| %>
@@ -30,13 +29,34 @@
 
         <%= f.submit "Save", class: "button" %>
       <% end %>
-    <% else %>
+    <% elsif @team_submission.submission_type == "Mobile App" %>
       <p class="hint">File types allowed: *.zip or *.aia</p>
 
       <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
         <input type="hidden" name="utf8">
         <%= f.label :file, "Upload your technical work" %>
         <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
+
+        <div class="flash flash--alert source-code-uploader__error hidden">
+          Sorry, you tried to upload an invalid file type.
+        </div>
+
+        <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
+      <% end %>
+
+    <% elsif @team_submission.submission_type == "AI Project" %>
+      <p>AI Projects should include 1 zip file that contains:</p>
+      <ul>
+        <li>Screenshot of dataset training (ML4Kids, TeachableMachine, App Inventor, etc.) or spreadsheet or link to images/sounds folder</li>
+        <li>Picture(s) of prototype (cardboard model, drawings, devices)</li>
+        <li>(For online inventions) Any link with demo login information</li>
+      </ul>
+      <br>
+
+      <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
+        <input type="hidden" name="utf8">
+        <%= f.label :file, "Upload your technical work" %>
+        <%= f.file_field :file, accept: ".zip", class: 'source-code-uploader__file' %>
 
         <div class="flash flash--alert source-code-uploader__error hidden">
           Sorry, you tried to upload an invalid file type.
