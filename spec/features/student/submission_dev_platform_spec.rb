@@ -23,7 +23,7 @@ RSpec.feature "Students edit submission development platform" do
       from: "Submission type"
 
     select "App Inventor",
-      from: "Which development platform did your team use?"
+      from: "Which coding language did your team use?"
 
     click_button "Save"
 
@@ -52,7 +52,7 @@ RSpec.feature "Students edit submission development platform" do
       from: "Submission type"
 
     select "Thunkable",
-      from: "Which development platform did your team use?"
+      from: "Which coding language did your team use?"
 
     click_button "Save"
 

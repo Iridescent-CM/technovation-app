@@ -91,7 +91,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
         click_link "Technical Additions"
 
         select "Mobile App", from: "Submission type"
-        select "Thunkable", from: "Which development platform did your team use?"
+        select "Thunkable", from: "Which coding language did your team use?"
 
         fill_in "What is the email address of your team's Thunkable account?",
           with: "our-team@thunkable.com"
