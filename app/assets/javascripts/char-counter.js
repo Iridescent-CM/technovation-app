@@ -88,7 +88,7 @@ function executeWordCounting($el) {
 
   function countWords($el) {
     return $el.val().split(" ").filter(function(word) {
-      return word.length > 2;
+      return word.length >= 1;
     }).length;
   }
 
