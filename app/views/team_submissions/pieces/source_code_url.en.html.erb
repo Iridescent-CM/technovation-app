@@ -30,7 +30,11 @@
         <%= f.submit "Save", class: "button" %>
       <% end %>
     <% elsif @team_submission.submission_type == "Mobile App" %>
-      <p class="hint">File types allowed: *.zip or *.aia</p>
+      <p>Mobile App source code should be submitted depending on the language used:</p>
+      <ul>
+        <li><em>.aia</em> file (MIT App Inventor) OR <em>.zip</em> file (other languages)</li>
+      </ul>
+      <br>
 
       <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
         <input type="hidden" name="utf8">
