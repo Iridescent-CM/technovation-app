@@ -63,6 +63,20 @@
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
+            :app_description,
+            "A description of your product"
+          ),
+            send(
+              "#{current_scope}_team_submission_path",
+              submission,
+              piece: :app_description
+            )
+          %>
+        </li>
+
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
             :learning_journey,
             "Learning journey"
           ),
@@ -77,15 +91,15 @@
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
-            :app_description,
-            "A description of your product"
+            :screenshots,
+            "2 or more images"
           ),
-            send(
-              "#{current_scope}_team_submission_path",
-              submission,
-              piece: :app_description
-            )
-          %>
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :screenshots
+          ),
+          data: { turbolinks: false } %>
         </li>
 
         <li>
@@ -142,20 +156,6 @@
             piece: :pitch_video_link
           )
          %>
-        </li>
-
-        <li>
-          <%= link_to submission_progress_web_icon(
-            submission,
-            :screenshots,
-            "2 or more images"
-          ),
-          send(
-            "#{current_scope}_team_submission_path",
-            submission,
-            piece: :screenshots
-          ),
-          data: { turbolinks: false } %>
         </li>
       </ol>
     </div>
