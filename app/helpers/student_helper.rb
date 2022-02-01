@@ -42,7 +42,7 @@ module StudentHelper
               when :development_platform
                 :complete if submission.submission_type.present? && submission.valid?
               when :source_code, :source_code_url
-                if RequiredField.for(submission, :source_code_url).complete?
+                if RequiredField.for(submission, :source_code_url).complete? and submission.valid?
                   :complete
                 end
               when :business_plan
