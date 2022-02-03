@@ -56,10 +56,10 @@ class TeamSubmission < ActiveRecord::Base
     end
   }
 
-  before_commit :reset_development_platform_fields_for_ai_projects
-  before_commit :reset_development_platform_fields_for_app_inventor
-  before_commit :reset_development_platform_fields_for_thunkable
-  before_commit :reset_development_platform_fields_for_other_platforms
+  before_validation :reset_development_platform_fields_for_ai_projects
+  before_validation :reset_development_platform_fields_for_app_inventor
+  before_validation :reset_development_platform_fields_for_thunkable
+  before_validation :reset_development_platform_fields_for_other_platforms
 
   before_commit -> {
     self.ai_description = "" if ai.blank?

@@ -40,9 +40,44 @@ module StudentHelper
               when :screenshots
                 :complete if submission.screenshots.many?
               when :development_platform
-                :complete if submission.submission_type.present?
+                if submission.submission_type == "AI Project" ||
+                    (
+                      submission.submission_type == "Mobile App" &&
+                      submission.development_platform == "App Inventor" &&
+                      submission.app_inventor_app_name.present? &&
+                      submission.errors.attribute_names.exclude?(:app_inventor_app_name) &&
+                      submission.app_inventor_gmail.present? &&
+                      submission.errors.attribute_names.exclude?(:app_inventor_gmail)
+                    ) ||
+                    (
+                      submission.submission_type == "Mobile App" &&
+                      submission.development_platform == "Thunkable" &&
+                      submission.thunkable_project_url.present? &&
+                      submission.errors.attribute_names.exclude?(:thunkable_project_url) &&
+                      submission.thunkable_account_email.present? &&
+                      submission.errors.attribute_names.exclude?(:thunkable_account_email)
+                    ) ||
+                    (
+                      submission.submission_type == "Mobile App" &&
+                      submission.development_platform == "Other"
+                    )
+
+                  :complete
+                end
               when :source_code, :source_code_url
-                if RequiredField.for(submission, :source_code_url).complete?
+                if (submission.submission_type == "Mobile App" &&
+                    submission.development_platform == "Thunkable" &&
+                    submission.thunkable_project_url.present? &&
+                    submission.errors.attribute_names.exclude?(:thunkable_project_url) &&
+                    submission.thunkable_account_email.present? &&
+                    submission.errors.attribute_names.exclude?(:thunkable_account_email) &&
+                    submission.source_code_external_url.present? &&
+                    submission.errors.attribute_names.exclude?(:source_code_external_url)) ||
+                    (
+                      submission.source_code_url.present? &&
+                      submission.errors.attribute_names.exclude?(:source_code_url)
+                    )
+
                   :complete
                 end
               when :business_plan
