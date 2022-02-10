@@ -59,7 +59,7 @@ FactoryBot.define do
     trait :thunkable do
       development_platform { "Thunkable" }
       thunkable_account_email { "user@thunkable.com" }
-      thunkable_project_url { "https://x.thunkable.com/copy/abc123" }
+      thunkable_project_url { "https://x.thunkable.com/projects/abc123" }
     end
 
     trait :semifinalist do

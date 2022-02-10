@@ -68,7 +68,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
       end
 
       context "and development platform is Thunkable" do
-        let(:url) { "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4" }
+        let(:url) { "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4" }
 
         before do
           TeamSubmission.last.update!({
@@ -97,7 +97,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
           with: "our-team@thunkable.com"
 
         fill_in "What is the shareable URL of your Thunkable project?",
-          with: "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
+          with: "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4"
 
         sleep 1
 
@@ -105,13 +105,13 @@ RSpec.describe "Uploading technical work to submissions", :js do
 
         within(".development_platform.complete") do
           expect(page).to have_content "Thunkable"
-          expect(page).to have_link "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
+          expect(page).to have_link "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4"
         end
 
         click_link "Technical Elements"
 
         within(".source_code_url.complete") do
-          expect(page).to have_link "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
+          expect(page).to have_link "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4"
         end
       end
     end
