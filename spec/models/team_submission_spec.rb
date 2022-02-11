@@ -31,23 +31,23 @@ RSpec.describe TeamSubmission do
     submission.thunkable_project_url = "https://thunkable.com/something"
     expect(submission).not_to be_valid
 
-    submission.thunkable_project_url = "https://x.thunkable.com/not-copy/something"
+    submission.thunkable_project_url = "https://x.thunkable.com/not-projects/something"
     expect(submission).not_to be_valid
 
-    submission.thunkable_project_url = "https://not-an-x.thunkable.com/copy/abc123"
+    submission.thunkable_project_url = "https://not-an-x.thunkable.com/projects/abc123"
     expect(submission).not_to be_valid
 
-    submission.thunkable_project_url = "http://x.thunkable.com/copy/abc123"
+    submission.thunkable_project_url = "http://x.thunkable.com/projects/abc123"
     expect(submission).to be_valid
-    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/abc123")
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projects/abc123")
 
-    submission.thunkable_project_url = "x.thunkable.com/copy/abc123"
+    submission.thunkable_project_url = "x.thunkable.com/projects/abc123"
     expect(submission).to be_valid
-    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/abc123")
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projects/abc123")
 
-    submission.thunkable_project_url = "https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4"
+    submission.thunkable_project_url = "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4"
     expect(submission).to be_valid
-    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/copy/47d800b3aa47590210ad662249e63dd4")
+    expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4")
   end
 
   describe "ACTIVE_DEVELOPMENT_PLATFORMS_ENUM" do

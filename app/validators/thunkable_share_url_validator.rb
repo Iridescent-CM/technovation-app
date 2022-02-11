@@ -1,6 +1,6 @@
 class ThunkableShareUrlValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    if not value.match(/^https?:\/\/x.thunkable.com\/copy\/\w+$/)
+    if !value.match(/^https?:\/\/x.thunkable.com\/projects\/\w+$/)
       record.errors.add(attribute, :invalid)
     end
   end
