@@ -245,7 +245,7 @@ class SubmissionsGrid
 
   filter :division,
     :enum,
-    select: [["Senior", "senior"], ["Junior", "junior"]] do |value|
+    select: [["Senior", "senior"], ["Junior", "junior"], ["Beginner", "beginner"]] do |value|
       where(
         "teams.division_id = ?",
         Division.send(value).id
