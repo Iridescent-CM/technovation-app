@@ -15,6 +15,8 @@ class NewRegistrationController < ApplicationController
     end
 
     if profile.save
+      TeamMemberInvite.match_registrant(profile)
+
       SignIn.call(
         profile.account,
         self,
