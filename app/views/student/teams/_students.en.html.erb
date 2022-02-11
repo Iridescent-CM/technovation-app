@@ -18,21 +18,17 @@
     %>
 
     <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
-      <% if nil %>
-        <h3 class="margin--t-large margin--b-none">Invitations</h3>
-        <div class="margin--b-large">
-          <%= render "pending_invites",
-            team: team,
-            preview_method: :invitee_email,
-            invites: team.pending_student_invites %>
+      <h2 class="mt-4 mb-2 text-base text-energetic-blue font-semibold tracking-wide uppercase">
+        Invitations
+      </h2>
 
-          <% if SeasonToggles.team_building_enabled? &&
-              !SeasonToggles.judging_enabled_or_between? &&
-              team.current? &&
-              team.spot_available? %>
-            <%= render "team_member_invites/form" %>
-          <% end %>
-        </div>
+      <%= render "pending_student_invites",
+        team: team,
+        preview_method: :invitee_email,
+        invites: team.pending_student_invites %>
+
+      <% if team.current? && team.spot_available? %>
+        <%= render "team_member_invites/form" %>
       <% end %>
 
       <%= render "pending_student_join_requests",
