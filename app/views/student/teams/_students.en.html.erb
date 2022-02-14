@@ -18,10 +18,6 @@
     %>
 
     <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
-      <h2 class="mt-4 mb-2 text-base text-energetic-blue font-semibold tracking-wide uppercase">
-        Invitations
-      </h2>
-
       <%= render "pending_student_invites",
         team: team,
         preview_method: :invitee_email,
