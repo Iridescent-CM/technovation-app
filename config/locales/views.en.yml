@@ -139,6 +139,10 @@ en:
         invite_to_team: "Invite %{name} to mentor your team"
         manage_team: "Manage your team's join requests"
 
+    mentor_invites:
+      form:
+        invite_by_email: "Invite a mentor by email to join your team (one email address at a time)"
+
     mentor_searches:
       filter_options: "Search options"
       intro: "Find and connect with nearby mentors. Mentors are sorted based on distance, expertise, and location."

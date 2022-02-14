@@ -23,9 +23,13 @@
         team: team,
         invites: team.pending_mentor_invites %>
 
-      <div class="mt-4">
+      <%= render "mentor_invites/form" %>
+
+      <div class="w-full border-t border-gray-300 my-4"></div>
+
+      <div class="mt-4 mb-8">
         <%= link_to(
-          "Invite a mentor to join your team",
+          "Find a mentor to join your team",
           new_student_mentor_search_path,
           class: "link-button link-button-success"
         ) %>
