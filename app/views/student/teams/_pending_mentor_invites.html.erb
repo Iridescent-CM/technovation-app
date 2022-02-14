@@ -9,21 +9,29 @@
         <li class="py-4">
           <div class="flex items-center space-x-4">
             <div class="flex-shrink-0 self-start">
-              <%= image_tag invite.invitee.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+              <% if invite.invitee.present? %>
+                <%= image_tag invite.invitee.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+              <% end %>
             </div>
 
             <div class="flex-1 min-w-0">
               <p class="flex text-sm font-medium text-gray-900 truncate">
-                <%= invite.invitee_first_name %>
-                <%= invite.invitee_last_name %>
+                <% if invite.invitee.present? %>
+                  <%= invite.invitee_first_name %>
+                  <%= invite.invitee_last_name %>
+                <% else %>
+                  <%= invite.invitee_email %>
+                <% end %>
               </p>
 
-              <p class="text-sm text-gray-500 truncate">
-                <%= invite.invitee.mentor_profile.gender %><br>
-                <%= invite.invitee.mentor_profile.school_company_name %>, <%= invite.invitee.mentor_profile.job_title %><br>
-                <%= invite.invitee.mentor_profile.primary_location %><br>
-                <%= invite.invitee.mentor_profile.expertise_names.to_sentence %>
-              </p>
+              <% if invite.invitee.present? %>
+                <p class="text-sm text-gray-500 truncate">
+                  <%= invite.invitee.mentor_profile.gender %><br>
+                  <%= invite.invitee.mentor_profile.school_company_name %>, <%= invite.invitee.mentor_profile.job_title %><br>
+                  <%= invite.invitee.mentor_profile.primary_location %><br>
+                  <%= invite.invitee.mentor_profile.expertise_names.to_sentence %>
+                </p>
+              <% end %>
             </div>
 
             <div class="self-start">
