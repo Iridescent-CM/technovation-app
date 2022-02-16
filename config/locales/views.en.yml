@@ -25,7 +25,7 @@ en:
       get_started: "Get Started"
       get_started_judges_only: "Get Started (Judges only!)"
       instead: "instead"
-      invite: "Send invite"
+      invite: "Send email invitation"
       judge_dashboard: "Judge Dashboard"
       judge_mode: "Switch to judging"
       judging_rubric: "Judging Rubric"
@@ -138,6 +138,10 @@ en:
         already_requested: "%{name} has asked to mentor your team."
         invite_to_team: "Invite %{name} to mentor your team"
         manage_team: "Manage your team's join requests"
+
+    mentor_invites:
+      form:
+        invite_by_email: "Invite a mentor by email to join your team (one email address at a time)"
 
     mentor_searches:
       filter_options: "Search options"
@@ -356,7 +360,7 @@ en:
       form:
         confirm_accept: "You are about to accept the invitation."
         confirm_decline: "You are about to decline the invitation."
-        invite_by_email: "Invite another student by email (one at a time)"
+        invite_by_email: "Invite a student by email to join your team (one email address at a time)"
       show:
         accepted: "You have previously accepted this invite."
         declined: "You previously declined this invite. If you're a student and you accepted an invite from another team, then this one was automatically declined."

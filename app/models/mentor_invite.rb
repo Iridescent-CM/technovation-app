@@ -6,25 +6,28 @@ class MentorInvite < TeamMemberInvite
   end
 
   private
+
   def send_invite
-    TeamMailer.invite_mentor(self).deliver_later
+    if invitee.present?
+      TeamMailer.invite_mentor(self).deliver_later
+    else
+      TeamMailer.invite_member(self).deliver_later
+    end
   end
 
   def set_invitee
-    self.invitee ||= MentorProfile
+    if mentor_profile.present?
+      self.invitee = mentor_profile
+    end
+  end
+
+  def correct_invitee_type
+  end
+
+  def mentor_profile
+    @mentor_profile ||= MentorProfile
       .joins(:account)
       .where("lower(accounts.email) = ?", invitee_email.downcase)
       .first
-
-    self.invitee_email = invitee.email
-  end
-
-  # Overwriting parent validation
-  def correct_invitee_type
-     unless Account.joins(:mentor_profile)
-       .where("lower(email) = ?", invitee_email.downcase)
-       .exists?
-      errors.add(:invitee_email, :is_not_a_mentor)
-     end
   end
 end

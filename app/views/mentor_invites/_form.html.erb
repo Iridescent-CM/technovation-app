@@ -1,0 +1,9 @@
+<%= simple_form_for(@mentor_invite, url: send("#{current_scope}_mentor_invites_path")) do |f| %>
+  <%= f.input :invitee_email,
+    label: false,
+    placeholder: t("views.mentor_invites.form.invite_by_email") %>
+
+  <%= f.button :submit,
+    t("views.application.invite"),
+    class: "submit-button submit-button-neutral" %>
+<% end %>

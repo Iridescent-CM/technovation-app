@@ -8,7 +8,7 @@ module Student
           success: t("controllers.team_member_invites.create.success")
       else
         redirect_back fallback_location: student_dashboard_path,
-          alert: t("views.application.general_error")
+          alert: t("controllers.application.general_error")
       end
     end
 
