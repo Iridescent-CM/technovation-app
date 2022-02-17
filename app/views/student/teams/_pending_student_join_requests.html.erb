@@ -25,7 +25,7 @@
             <div class="flex-1 min-w-0">
               <p class="flex text-sm font-medium text-gray-900 truncate">
                 <%= link_to(
-                  join_request.requestor_full_name,
+                  join_request.requestor_first_name,
                   send(
                     "student_#{join_request.requestor_scope_name}_path",
                     join_request.requestor,
