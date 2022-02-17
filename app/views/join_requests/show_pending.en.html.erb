@@ -3,7 +3,7 @@
     <h3 class="reset">
       <%= t(
         "views.join_requests.show.greeting",
-        name: @join_request.requestor_name,
+        name: @join_request.requestor_first_name,
         team_name: @join_request.team_name,
       ) %>
     </h3>
@@ -15,7 +15,7 @@
 <div class="grid grid--bleed grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="grid__cell">
-      <h1 class="page-heading"><%= @join_request.requestor_name %></h1>
+      <h1 class="page-heading"><%= @join_request.requestor_first_name %></h1>
     </div>
   </div>
 </div>
@@ -68,7 +68,7 @@
     <div class="grid">
       <%= button_to(
         t("controllers.join_requests.update.accept",
-          name: @join_request.requestor_name),
+          name: @join_request.requestor_first_name),
           send("#{current_scope}_join_request_path", @join_request),
         class: "button small",
 
