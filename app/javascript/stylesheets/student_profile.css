@@ -59,6 +59,10 @@ nav {
    .tab-content{
         width: 48rem;
     }
+
+    .tw-mobile-show{
+        display: none;
+    }
 }
 
 
