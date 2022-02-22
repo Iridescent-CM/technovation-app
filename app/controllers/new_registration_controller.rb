@@ -69,6 +69,7 @@ class NewRegistrationController < ApplicationController
       last_name: registration_params[:lastName],
       date_of_birth: registration_params[:dateOfBirth],
       referred_by: registration_params[:referredBy].to_i,
+      referred_by_other: registration_params[:referredByOther],
       terms_agreed_at: registration_params[:dataTermsAgreedTo].present? ? Time.current : nil,
       email: registration_params[:email],
       password: registration_params[:password]
@@ -86,6 +87,7 @@ class NewRegistrationController < ApplicationController
       :password,
       :dataTermsAgreedTo,
       :referredBy,
+      :referredByOther,
       :studentParentGuardianName,
       :studentParentGuardianEmail,
       :studentSchoolName,
