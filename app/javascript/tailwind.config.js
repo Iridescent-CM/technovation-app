@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false,
   theme: {
     extend: {
+      borderRadius: {
+        '4xl': '2.5rem;'
+      },
       colors: {
         'energetic-blue': "#0075cf",
         'energetic-blue-600': { 600: '#0075cf' },
