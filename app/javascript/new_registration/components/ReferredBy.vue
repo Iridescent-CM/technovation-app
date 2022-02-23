@@ -8,7 +8,7 @@
       input-class="mentorSelectClass"
       id="referredBy"
       placeholder="Select an option"
-      @change="changeOption"
+      v-model="referralOption"
     />
 
     <FormulateInput
@@ -17,7 +17,7 @@
       type="text"
       label="Who referred you?"
       placeholder="Referred by"
-      v-show="isOtherOption"
+      v-show="referralOption == 11"
     />
   </div>
 </template>
@@ -26,7 +26,7 @@
 export default {
   data () {
     return {
-      currentOption: 0,
+      referralOption: 0,
       referralOptions:[
         {value: 0, label: 'Friend'},
         {value: 1, label: 'Colleague'},
@@ -40,19 +40,6 @@ export default {
         {value: 9, label: 'Company email'},
         {value: 11, label: 'Other'}
       ]
-    }
-  },
-  
-  methods: {
-    changeOption($event) {
-      this.currentOption = parseInt($event.target.value);
-    }
-  },
-
-  computed: {
-    isOtherOption() {
-      // 11 is de ID of "other" option
-      return this.currentOption === 11;
     }
   }
 }
