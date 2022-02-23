@@ -17,7 +17,7 @@
       type="text"
       label="Who referred you?"
       placeholder="Referred by"
-      v-show="referralOption === 11"
+      v-show="parseInt(referralOption) === 11"
     />
   </div>
 </template>
