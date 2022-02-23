@@ -8,8 +8,8 @@
       </div>
       <div class="flex space-x-7 py-4" id="student-nav">
         <div class="flex items-center space-x-1" id="student-nav-wrapper">
-            <a class="tw-hidden" href="/student/dashboard#/curriculum">Curriculum</a>
-            <a class="tw-hidden" href="https://www.technovation.org/about/">About</a>
+            <a class="tw-sm-hidden" href="/student/dashboard#/curriculum">Curriculum</a>
+            <a class="tw-sm-hidden" href="https://www.technovation.org/about/">About</a>
             <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
               <%= link_to SeasonToggles.survey_link(current_scope, "text"),
                           SeasonToggles.survey_link(
@@ -18,7 +18,7 @@
                             account: current_account
                           ),
                           target: "_blank",
-                          class: "tw-hidden"
+                          class: "tw-sm-hidden"
               %>
             <% end %>
           <div class="flex items-center justify-center">
@@ -31,8 +31,8 @@
                 <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none">
                   <div class="p-4">
                     <ul class="text-sm" id="student-dropdown-list">
-                      <li class="tw-mobile-show"><a href="/student/dashboard#/curriculum">Curriculum</a></li>
-                      <li class="tw-mobile-show"><a href="https://www.technovation.org/about/">About</a></li>
+                      <li class="md:hidden"><a href="/student/dashboard#/curriculum">Curriculum</a></li>
+                      <li class="md:hidden"><a href="https://www.technovation.org/about/">About</a></li>
                       <li><a href="https://youtu.be/whZjfiB3vgQ">Using Your Dashboard</a></li>
                       <li><a href="https://www.technovation.org/safety/internet-safety-tips-for-children/">Safety Information</a></li>
                       <li><a href="https://www.technovationchallenge.org/submission-guidelines/">Submission Guide</a></li>
