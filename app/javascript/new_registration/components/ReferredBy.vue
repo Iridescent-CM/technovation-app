@@ -8,6 +8,16 @@
       input-class="mentorSelectClass"
       id="referredBy"
       placeholder="Select an option"
+      v-model="referralOption"
+    />
+
+    <FormulateInput
+      name="referredByOther"
+      id="referredByOther"
+      type="text"
+      label="Who referred you?"
+      placeholder="Referred by"
+      v-show="parseInt(referralOption) === 11"
     />
   </div>
 </template>
@@ -16,6 +26,7 @@
 export default {
   data () {
     return {
+      referralOption: 0,
       referralOptions:[
         {value: 0, label: 'Friend'},
         {value: 1, label: 'Colleague'},
