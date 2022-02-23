@@ -16,8 +16,8 @@ nav {
     font-family: 'Poppins', sans-serif;
 }
 
-.tw-hidden{
-    display: none;
+.tw-sm-hidden{
+    @apply hidden
 }
 
 
@@ -42,25 +42,22 @@ nav {
 }
 
 .tab-content{
-    /*display: none;*/
     @apply hidden
-
 }
 
 #show-container{
     @apply w-full
 }
 
-@media only screen and (min-width: 768px){
-    .tw-hidden{
-        display: block;
+@screen md{
+    .tw-sm-hidden{
+       @apply block
     }
 
    .tab-content{
         width: 48rem;
     }
 }
-
 
 .tw-link{
     @apply font-bold text-energetic-blue
