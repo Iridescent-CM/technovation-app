@@ -17,9 +17,9 @@
             </div>
           <% else %>
             <div class="mt-2">
-              <%= render "application/templates/alerts/info",
-                message: "Your team has not written a summary yet."
-              %>
+              <%= render "application/templates/alerts/info" do %>
+                Your team has not written a summary yet
+              <% end %>
             </div>
           <% end %>
         </div>

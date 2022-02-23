@@ -46,7 +46,7 @@
     <% end %>
   </ul>
 <% else %>
-  <%= render "application/templates/alerts/info",
-    message: "Your team currently doesn't have any mentors."
-  %>
+  <%= render "application/templates/alerts/info" do %>
+    Your team currently doesn't have any mentors
+  <% end %>
 <% end %>

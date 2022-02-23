@@ -1,5 +1,10 @@
 <% if current_team.present? and current_student.onboarded? %>
-  <% if current_team.submission.present? %>
+  <% if current_team.submission.complete? %>
+    <%= render(
+      "student/dashboards/completion_steps/rebrand/view_completed_team_submission",
+      submission: current_team.submission
+    ) %>
+  <% elsif current_team.submission.present? %>
     <%= render(
       "student/dashboards/completion_steps/team_submission_progress",
       submission: current_team.submission
