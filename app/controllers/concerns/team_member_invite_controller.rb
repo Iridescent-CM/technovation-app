@@ -25,10 +25,21 @@ module TeamMemberInviteController
     @team_member_invite = TeamMemberInvite.new(team_member_invite_params)
 
     if @team_member_invite.save
-      redirect_to send("#{current_scope}_team_member_invite_path",
-        @team_member_invite.team,
-        { anchor: "students" }),
-      success: t("controllers.team_member_invites.create.success")
+      if current_scope == "student"
+        redirect_to(
+          student_teams_path(@team_member_invite.team),
+          success: t("controllers.team_member_invites.create.success")
+        )
+      else
+        redirect_to(
+          send(
+            "#{current_scope}_team_member_invite_path",
+            @team_member_invite.team,
+            {anchor: "students"}
+          ),
+          success: t("controllers.team_member_invites.create.success")
+        )
+      end
     else
       render :new
     end
