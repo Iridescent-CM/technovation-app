@@ -194,7 +194,7 @@ class TeamMailer < ApplicationMailer
     )
 
     if token = attempt.activation_token
-      @url = signup_url
+      @url = signup_url(token: token)
       @team_name = invite.team_name
       @link_text = "Signup to join this team"
 
