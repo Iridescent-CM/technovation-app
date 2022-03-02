@@ -47,7 +47,7 @@ export default {
       resourceLinks: [
         {
           heading: 'Using Your Dashboard',
-          url: 'https://youtu.be/whZjfiB3vgQ',
+          url: 'https://youtu.be/XOApxANDG-s',
           text: 'Watch this Video Guide'
         },
 
