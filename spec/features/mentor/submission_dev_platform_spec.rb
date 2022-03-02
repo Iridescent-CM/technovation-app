@@ -65,7 +65,7 @@ RSpec.feature "Mentors edit submission development platform" do
     fill_in "What is the email address of your team's Thunkable account?",
       with: "our-team@thunkable.com"
 
-    fill_in "What is the URL to your Thunkable project? Copy your URL from the address bar of your Thunkable project. For more information, go <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-" target="_blank">here.</a>",
+    fill_in "What is the URL to your Thunkable project?",
       with: "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4"
 
     click_button "Save"
