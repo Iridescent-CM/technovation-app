@@ -19,6 +19,11 @@
         @next="next"
         @prev="prev"
       />
+      <JudgeStepTwo v-else-if="formValues.profileType === 'judge'"
+        :form-values="formValues"
+        @next="next"
+        @prev="prev"
+      />
       <StudentStepTwo v-else
         :form-values="formValues"
         @next="next"
@@ -44,6 +49,7 @@ import axios from 'axios';
 import StepOne from './StepOne';
 import MentorStepTwo from './MentorStepTwo';
 import StudentStepTwo from './StudentStepTwo';
+import JudgeStepTwo from "./JudgeStepTwo";
 import StepThree from './StepThree';
 import StepFour from './StepFour';
 
@@ -53,6 +59,7 @@ export default {
     StepOne,
     MentorStepTwo,
     StudentStepTwo,
+    JudgeStepTwo,
     StepThree,
     StepFour
   },
@@ -108,6 +115,9 @@ export default {
             break
           case 'mentor':
             window.location.href = '/mentor/dashboard'
+            break
+          case 'judge':
+            window.location.href = '/judge/dashboard'
             break
         }
       }
