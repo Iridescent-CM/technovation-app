@@ -17,7 +17,13 @@ module TeamMemberInviteController
         redirect_to: "#{current_scope}_team_member_invite_path"
       )
     else
-      render template: "team_member_invites/show_#{@invite.status}"
+      if @invite.inviter_type == "StudentProfile" && @invite.status == "pending"
+        @team = @invite.team
+
+        render "team_member_invites/rebrand/show_pending"
+      else
+        render template: "team_member_invites/show_#{@invite.status}"
+      end
     end
   end
 
