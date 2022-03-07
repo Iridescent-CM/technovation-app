@@ -4,7 +4,7 @@ module Admin
       student = StudentProfile.find(params[:id])
 
       consent = ParentalConsent.where(student_profile_id: params[:id]).last
-      
+
       consent.update(
         status: ParentalConsent.statuses[:signed],
         electronic_signature: "ON FILE"
