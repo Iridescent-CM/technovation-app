@@ -67,10 +67,8 @@ class NewRegistrationController < ApplicationController
 
   def judge_params
     {
-      # industry: registration_params[:judgeType],
       company_name: registration_params[:judgeSchoolCompanyName],
       job_title: registration_params[:judgeJobTitle],
-      # expertise_ids: registration_params["mentorExpertises"],
       account_attributes: account_attributes.merge({gender: registration_params[:gender]})
     }
   end
