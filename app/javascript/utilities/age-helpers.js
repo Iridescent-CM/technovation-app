@@ -32,4 +32,8 @@ function verifyMentorAge({birthday}) {
   return (ageToday(birthday) >= 18)
 }
 
-export { verifyStudentAge, verifyMentorAge, calculateAgeByDivisionCutoffDate }
+function verifyJudgeAge({birthday}) {
+  return (ageToday(birthday) >= 18)
+}
+
+export { verifyStudentAge, verifyMentorAge, verifyJudgeAge, calculateAgeByDivisionCutoffDate }
