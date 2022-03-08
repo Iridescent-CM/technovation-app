@@ -29,12 +29,12 @@ RSpec.describe "Toggling editable team submissions", :js do
         "Submitting your project is not available right now.\n" +
         "Technovation staff has disabled this feature for everyone."
       )
-      expect(page).not_to have_link("Your app's name")
+      expect(page).not_to have_link("Your product's name")
 
       visit student_team_submission_path(team.reload.submission)
       expect(page).not_to have_css(
         ".button",
-        text: "Set your app's name"
+        text: "Set your product's name"
       )
 
       visit student_team_path(team)
@@ -72,7 +72,7 @@ RSpec.describe "Toggling editable team submissions", :js do
       check "team_submission[integrity_affirmed]"
       click_button "Start now!"
 
-      expect(page).to have_css('.button', text: "Set your app's name")
+      expect(page).to have_css('.button', text: "Set your product's name")
 
       visit student_dashboard_path
       click_button "Submit your project"
@@ -83,7 +83,7 @@ RSpec.describe "Toggling editable team submissions", :js do
           "Technovation staff has disabled this feature for everyone."
         )
         expect(page).to have_link(
-          "Your app's name",
+          "Your product's name",
           href: student_team_submission_path(
             team.reload.submission,
             piece: :app_name
