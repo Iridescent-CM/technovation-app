@@ -52,7 +52,7 @@ RSpec.feature "Student team submissions" do
     click_link "Ideation"
 
     expect(page).to have_link(
-      "Set your app's name",
+      "Set your product's name",
       href: edit_student_team_submission_path(
         submission,
         piece: :app_name
@@ -60,7 +60,7 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_link(
-      "Add your app's description",
+      "Add your product's description",
       href: edit_student_team_submission_path(
         submission,
         piece: :app_description
@@ -68,7 +68,7 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_link(
-      "Upload images of your app",
+      "Upload images of your product",
       href: edit_student_team_submission_path(
         submission,
         piece: :screenshots
