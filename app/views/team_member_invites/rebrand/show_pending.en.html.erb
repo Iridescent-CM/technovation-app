@@ -1,0 +1,119 @@
+<div class="h-auto mx-auto rounded-md border-solid border-4 border-energetic-blue w-3/4">
+  <div class="sm-header-wrapper">
+    <p class="font-bold">You have been invited to join a team!</p>
+  </div>
+
+  <div class="p-6">
+    <div class="flex items-end">
+      <div>
+        <%= image_tag @team.photo_url, class: "w-32 h-auto rounded-tl-md rounded-tr-4xl rounded-bl-4xl rounded-br-md" %>
+      </div>
+
+      <div class="pl-4">
+        <h2 class="mb-2 text-3xl font-thin text-gray-700">
+          <%= @team.name %>
+        </h2>
+
+        <strong class="text-sm font-bold">
+          <%= @team.division.name.titleize %> Division
+        </strong>
+
+        <div class="flex items-center text-sm my-1">
+          <svg class="mr-1 h-5 w-5 flex-shrink text-energetic-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+          </svg>
+
+          <%= @team.primary_location %>
+        </div>
+      </div>
+    </div>
+
+    <%= simple_format @team.description, class: "mt-3 space-y-6 text-base text-gray-600" %>
+
+    <h2 class="mt-6 text-base text-energetic-blue font-semibold tracking-wide uppercase">
+      Students
+    </h2>
+
+    <% if @team.students.present? %>
+      <ul role="list" class="divide-y divide-gray-200">
+        <% @team.students.each do |student| %>
+          <li class="py-2">
+            <div class="flex items-center space-x-4">
+              <div class="flex-shrink-0 self-start">
+                <%= image_tag student.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <p class="flex text-sm font-medium text-gray-900 truncate">
+                  <%= student.full_name %>
+                </p>
+
+                <p class="text-sm text-gray-500 truncate">
+                  <%= student.primary_location %>
+                </p>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-base"> This team doesn't have any students yet.</p>
+    <% end %>
+
+    <h2 class="mt-6 text-base text-energetic-blue font-semibold tracking-wide uppercase">
+      Mentors
+    </h2>
+
+    <% if @team.mentors.present? %>
+      <ul role="list" class="divide-y divide-gray-200">
+        <% @team.mentors.each do |mentor| %>
+          <li class="py-2">
+            <div class="flex items-center space-x-4">
+              <div class="flex-shrink-0 self-start">
+                <%= image_tag mentor.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <p class="flex text-sm font-medium text-gray-900 truncate">
+                  <%= mentor.full_name %>
+                </p>
+
+                <p class="text-sm text-gray-500 truncate">
+                  <%= mentor.primary_location %><br>
+                  <%= mentor.school_company_name %>, <%= mentor.job_title %><br>
+                </p>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-base"> This team doesn't have any mentors yet.</p>
+    <% end %>
+
+    <div class="flex justify-center mt-10">
+      <%= button_to(
+        t("controllers.team_member_invites.update.accept", name: @team.name),
+        send("#{current_scope}_team_member_invite_path", @invite),
+        class: "mr-8 submit-button submit-button-success",
+        params: { "team_member_invite[status]" => :accepted },
+        method: :put,
+        data: {
+          confirm: t("views.team_member_invites.form.confirm_accept"),
+          positive: true
+        }
+      ) %>
+
+    <%= button_to(
+      t("controllers.team_member_invites.update.decline", name: @team.name),
+      send("#{current_scope}_team_member_invite_path", @invite),
+      class: "submit-button submit-button-danger",
+      params: { "team_member_invite[status]" => :declined },
+      method: :put,
+      data: {
+        confirm: t("views.team_member_invites.form.confirm_decline")
+      }
+    ) %>
+    </div>
+  </div>
+</div>

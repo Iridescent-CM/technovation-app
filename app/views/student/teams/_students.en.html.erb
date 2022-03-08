@@ -24,7 +24,9 @@
         invites: team.pending_student_invites %>
 
       <% if team.current? && team.spot_available? %>
-        <%= render "team_member_invites/form" %>
+        <div class="mt-8">
+          <%= render "team_member_invites/form" %>
+        </div>
       <% end %>
 
       <%= render "pending_student_join_requests",
