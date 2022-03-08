@@ -3,8 +3,7 @@ class AccountsGrid
 
   attr_accessor :admin, :allow_state_search
 
-  self.batch_size = 1_000
-
+  self.batch_size = 5_000
   scope do
     Account.not_admin
   end
