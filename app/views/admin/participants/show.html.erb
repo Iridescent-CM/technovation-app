@@ -43,8 +43,10 @@
             <dt><%= t('models.account.email') %></dt>
             <dd><%= mail_to @account.email %></dd>
 
-            <dt><%= t('models.account.age') %></dt>
-            <dd><%= @account.age %></dd>
+            <% if not @account.is_a_mentor? %>
+              <dt><%= t('models.account.age') %></dt>
+              <dd><%= @account.age %></dd>
+            <% end %>
 
             <% if @account.student? %>
               <dt><%= t('models.account.division') %></dt>
