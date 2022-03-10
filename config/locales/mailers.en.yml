@@ -41,7 +41,7 @@ en:
         mentor: "You are invited to be a mentor for a Technovation team — %{name}."
         student: "You've been invited to join Technovation as a member of %{name}."
       intro:
-        existing_profile: "You can review and accept or decline your invitation here:"
+        existing_profile: "Click below to review the invitation. If you haven't completed the onboarding steps, you will need to do that first. Then you can go to your dashboard and click on Find your team from the sidebar to see the invitation."
       subject: "You're invited to join a Technovation team!"
     invite_mentor:
       subject: "You're invited to be a mentor for a Technovation team!"
