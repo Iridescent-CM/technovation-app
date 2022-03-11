@@ -3,192 +3,191 @@
     class="panel panel--contains-bottom-bar panel--contains-top-bar"
     @submit.prevent="handleSubmit"
   >
-    <div class="panel__top-bar">
-      Confirm {{ subjectPossessive }} region
-    </div>
-
-    <div
-      v-if="isNotFound"
-      class="flash flash--error"
-    >
-      We're sorry, but we cannot find a region with that information.
-    </div>
-
-    <div
-      v-if="suggestions.length"
-      class="flash"
-    >
-      We couldn't match exact results to the information that you gave us.<br />
-      Select a result below, or try the form fields again.
-    </div>
-
-    <div class="panel__content suggestions">
-      <template v-if="savedLocation">
-        <p class="padding--t-r-l-none margin--t-r-l-none margin--b-large">
-          We have saved {{ subjectPossessive }} region as:
-        </p>
-
-        <div ref="savedLocationTable">
-          <div class="Rtable Rtable--3cols">
-            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-              <h6 class="margin--none">City</h6>
-            </div>
-
-            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-              <h6 class="margin--none">State / Province</h6>
-            </div>
-
-            <div class="Rtable-cell padding--t-b-none padding--r-l-large">
-              <h6 class="margin--none">Country / Territory</h6>
-            </div>
-          </div>
-
-          <div class="Rtable Rtable--3cols" ref="savedLocationTableRow">
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ savedLocation.city || "(no city)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ savedLocation.state || "(no state/province)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ savedLocation.country || "(no country)" }}
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-if="suggestions.length">
-        <div ref="suggestionsTable">
-          <div class="Rtable Rtable--3cols">
-            <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
-            <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
-            <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
-          </div>
-
-          <div
-            class="Rtable Rtable--3cols suggestion"
-            v-for="suggestion in suggestions"
-            :key="suggestion.id"
-            @click="handleSuggestionClick(suggestion)"
-          >
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ suggestion.city || "(no city)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ suggestion.state || "(no state/province)" }}
-            </div>
-
-            <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
-              {{ suggestion.country || "(no country)" }}
-            </div>
-          </div>
-        </div>
-      </template>
+    <div id="location-change" class="tw-blue-lg-container">
+      <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+        <p class="font-bold">Confirm {{ subjectPossessive }} region</p>
+      </div>
 
       <div
-        v-show="!savedLocation"
-        class="padding--t-medium"
+        v-if="isNotFound"
+        class="flash flash--error"
       >
-        <template v-if="countryConfirmed || country !== 'Israel'">
-          <label for="location_country">Country / Territory</label>
+        We're sorry, but we cannot find a region with that information.
+      </div>
+
+      <div
+        v-if="suggestions.length"
+        class="flash"
+      >
+        We couldn't match exact results to the information that you gave us.<br />
+        Select a result below, or try the form fields again.
+      </div>
+
+      <div class="p-6">
+        <template v-if="savedLocation">
+          <p class="padding--t-r-l-none margin--t-r-l-none margin--b-large">
+            We have saved {{ subjectPossessive }} region as:
+          </p>
+
+          <div ref="savedLocationTable">
+            <div class="Rtable Rtable--3cols">
+              <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+                <h6 class="margin--none">City</h6>
+              </div>
+
+              <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+                <h6 class="margin--none">State / Province</h6>
+              </div>
+
+              <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+                <h6 class="margin--none">Country / Territory</h6>
+              </div>
+            </div>
+
+            <div class="Rtable Rtable--3cols" ref="savedLocationTableRow">
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+                {{ savedLocation.city || "(no city)" }}
+              </div>
+
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+                {{ savedLocation.state || "(no state/province)" }}
+              </div>
+
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+                {{ savedLocation.country || "(no country)" }}
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template v-if="suggestions.length">
+          <div ref="suggestionsTable">
+            <div class="Rtable Rtable--3cols">
+              <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
+              <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
+              <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
+            </div>
+
+            <div
+              class="Rtable Rtable--3cols suggestion"
+              v-for="suggestion in suggestions"
+              :key="suggestion.id"
+              @click="handleSuggestionClick(suggestion)"
+            >
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+                {{ suggestion.city || "(no city)" }}
+              </div>
+
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+                {{ suggestion.state || "(no state/province)" }}
+              </div>
+
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+                {{ suggestion.country || "(no country)" }}
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <div
+          v-show="!savedLocation"
+        >
+          <template v-if="countryConfirmed || country !== 'Israel'">
+            <label for="location_country">Country / Territory</label>
+
+            <input
+              ref="countryField"
+              type="text"
+              id="location_country"
+              autocomplete="country-name"
+              v-model="country"
+            />
+          </template>
+
+          <template v-else>
+            <label>Please choose the correct terrritory:</label>
+
+            <p class="inline-checkbox">
+              <label>
+                <input
+                  type="radio"
+                  name="location_country"
+                  value="Israel"
+                  v-model="country"
+                  @click="confirmCountry('Israel')"
+                /> Israel
+              </label>
+            </p>
+
+            <p class="inline-checkbox">
+              <label>
+                <input
+                  type="radio"
+                  name="location_country"
+                  value="Palestine"
+                  v-model="country"
+                  @click="confirmCountry('Palestine')"
+                /> Palestine
+              </label>
+            </p>
+          </template>
+
+          <label for="location_state">State / Province {{ optionalStateLabel }}</label>
 
           <input
-            ref="countryField"
             type="text"
-            id="location_country"
-            autocomplete="country-name"
-            v-model="country"
+            id="location_state"
+            autocomplete="address-level1"
+            :placeholder="optionalStatePlaceholder"
+            v-model="state"
           />
-        </template>
 
-        <template v-else>
-          <label>Please choose the correct terrritory:</label>
+          <label for="location_city">City</label>
 
-          <p class="inline-checkbox">
-            <label>
-              <input
-                type="radio"
-                name="location_country"
-                value="Israel"
-                v-model="country"
-                @click="confirmCountry('Israel')"
-              /> Israel
-            </label>
-          </p>
+          <input
+            type="text"
+            id="location_city"
+            ref="cityField"
+            autocomplete="address-level2"
+            v-model="city"
+          />
 
-          <p class="inline-checkbox">
-            <label>
-              <input
-                type="radio"
-                name="location_country"
-                value="Palestine"
-                v-model="country"
-                @click="confirmCountry('Palestine')"
-              /> Palestine
-            </label>
-          </p>
-        </template>
-
-        <label for="location_state">State / Province {{ optionalStateLabel }}</label>
-
-        <input
-          type="text"
-          id="location_state"
-          autocomplete="address-level1"
-          :placeholder="optionalStatePlaceholder"
-          v-model="state"
-        />
-
-        <label for="location_city">City</label>
-
-        <input
-          type="text"
-          id="location_city"
-          ref="cityField"
-          autocomplete="address-level2"
-          v-model="city"
-        />
+          <a
+            href="#"
+            class="color--danger font-size--small padding--t-b-medium"
+            @click.prevent="resetAll"
+            v-if="formHasInput"
+          >
+            reset this form
+          </a>
+        </div>
 
         <a
-          href="#"
-          class="color--danger font-size--small"
-          @click.prevent="resetAll"
-          v-if="formHasInput"
+          class="button float--left"
+          @click.prevent="handleBack"
+          v-if="showBackBtn"
         >
-          reset this form
+          Back
         </a>
+        <p class="padding--none margin--none">
+          <a
+            href="#"
+            class="tw-green-btn float--left"
+            v-if="showCancel"
+            @click.prevent="handleCancel"
+          >
+            {{ cancelText }}
+          </a>
+          &nbsp;
+          <button
+            class="tw-green-btn float--right"
+            :disabled="searching"
+            @click.prevent="handleSubmit"
+          >
+            {{ submitText }}
+          </button>
+        </p>
       </div>
-    </div>
-
-    <div class="panel__bottom-bar">
-      <a
-        class="button float--left"
-        @click.prevent="handleBack"
-        v-if="showBackBtn"
-      >
-        Back
-      </a>
-      <p class="padding--none margin--none">
-        <a
-          href="#"
-          class="color--secondary"
-          v-if="showCancel"
-          @click.prevent="handleCancel"
-        >
-          {{ cancelText }}
-        </a>
-        &nbsp;
-        <button
-          class="button"
-          :disabled="searching"
-          @click.prevent="handleSubmit"
-        >
-          {{ submitText }}
-        </button>
-      </p>
     </div>
   </form>
 </template>
