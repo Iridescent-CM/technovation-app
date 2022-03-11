@@ -1,48 +1,13 @@
-html{
-    @apply bg-white
-}
-
-.social-icon{
-    width: 40px;
-    height: 40px;
-}
-
-#site-links > a {
-    margin: 5px;
-    width: calc(100% * (1/4) - 10px - 1px);
-}
-
-nav {
-    font-family: 'Poppins', sans-serif;
-}
-
 .tw-sm-hidden{
     @apply hidden
 }
-
 
 #student-nav-wrapper > a{
     @apply mx-4;
 }
 
-.tw-thick-rule{
-    @apply bg-energetic-blue h-1 my-2 w-60;
-}
-
 .sm-header-wrapper{
     @apply bg-energetic-blue text-white p-2;
-}
-
-.tw-active{
-    display: block !important;
-}
-
-.active-tab{
-    font-weight: bold;
-}
-
-.tab-content{
-    @apply hidden
 }
 
 #show-container{
@@ -52,10 +17,6 @@ nav {
 @screen md{
     .tw-sm-hidden{
        @apply block
-    }
-
-   .tab-content{
-        width: 48rem;
     }
 }
 
@@ -109,8 +70,4 @@ nav {
 
 .tw-dropdown-menu a, #student-nav-wrapper a{
    @apply hover:text-energetic-blue
-}
-
-.tw-dropdown-menu li{
-   @apply py-2
 }

@@ -1,0 +1,17 @@
+.tw-active{
+    display: block !important;
+}
+
+.active-tab{
+    font-weight: bold;
+}
+
+.tab-content{
+    @apply hidden
+}
+
+@screen md{
+    .tab-content{
+        width: 48rem;
+    }
+}
