@@ -169,9 +169,9 @@ class AccountsGrid
 
   column :media_consent do |account, grid|
     if account.student_profile.present? and account.student_profile.media_consent.present?
-      account.student_profile.media_consent.consent_provided ? "yes" : "no"
+      account.student_profile.media_consent.consent_provided ? "Yes" : "No"
     else
-      "no"
+      "-"
     end
   end
 
