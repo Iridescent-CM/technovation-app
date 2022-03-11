@@ -1,3 +1,15 @@
+<% content_for :tab_content do %>
+  <div id="tab-wrapper" class="p-6">
+    <%= render 'judge/dashboards/rebrand/side_nav_content' %>
+  </div>
+<% end %>
+
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render partial: 'application/templates/dashboards/side_nav', locals: { heading: 'To do'} %>
+  <%= render partial: 'application/templates/dashboards/energetic_container', locals: { heading: 'SOMETHING HERE'} %>
+</div>
+
+
 <div class="grid dashboard-notices">
   <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y">
     <div class="grid__cell">
