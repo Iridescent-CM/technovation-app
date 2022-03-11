@@ -167,6 +167,14 @@ class AccountsGrid
     end
   end
 
+  column :media_consent do |account, grid|
+    if account.student_profile.present? and account.student_profile.media_consent.present?
+      account.student_profile.media_consent.consent_provided ? "yes" : "no"
+    else
+      "no"
+    end
+  end
+
   column :consent_waiver do
     if mentor_profile.present? || judge_profile.present?
       consent_waiver.present? ? "Signed" : "Not signed"
