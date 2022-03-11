@@ -3,7 +3,7 @@ import VueFormulate from '@braid/vue-formulate'
 
 import App from './App'
 import CustomLabel from './components/CustomLabel'
-import { verifyStudentAge, verifyMentorAge } from 'utilities/age-helpers.js'
+import { verifyStudentAge, verifyMentorAge, verifyJudgeAge } from 'utilities/age-helpers.js'
 
 Vue.component("CustomLabel", CustomLabel);
 
@@ -29,6 +29,9 @@ Vue.use(VueFormulate, {
             mentorAge () {
                 return "You must be at least 18 years old to participate as a mentor."
             },
+            judgeAge () {
+                return "You must be at least 18 years old to participate as a judge."
+            },
             accountEmail () {
                 return "This email address must be different than your parent's, please change one of them."
             }
@@ -37,6 +40,7 @@ Vue.use(VueFormulate, {
     rules: {
         studentAge: ({value}, division) => verifyStudentAge({birthday: value, division}),
         mentorAge: ({value}) => verifyMentorAge({birthday: value}),
+        judgeAge: ({value}) => verifyJudgeAge({birthday: value}),
         accountEmail: ({value}, parentEmailAddress) => (value != parentEmailAddress)
     },
     slotComponents: {

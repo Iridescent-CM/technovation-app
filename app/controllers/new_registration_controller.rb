@@ -12,6 +12,8 @@ class NewRegistrationController < ApplicationController
       profile = StudentProfile.new(parent_params)
     when "mentor"
       profile = MentorProfile.new(mentor_params)
+    when "judge"
+      profile = JudgeProfile.new(judge_params)
     end
 
     if profile.save
@@ -63,6 +65,14 @@ class NewRegistrationController < ApplicationController
     }
   end
 
+  def judge_params
+    {
+      company_name: registration_params[:judgeSchoolCompanyName],
+      job_title: registration_params[:judgeJobTitle],
+      account_attributes: account_attributes.merge({gender: registration_params[:gender]})
+    }
+  end
+
   def account_attributes
     {
       first_name: registration_params[:firstName],
@@ -95,6 +105,8 @@ class NewRegistrationController < ApplicationController
       :mentorSchoolCompanyName,
       :mentorJobTitle,
       :mentorBio,
+      :judgeSchoolCompanyName,
+      :judgeJobTitle,
       mentorExpertises: []
     )
   end

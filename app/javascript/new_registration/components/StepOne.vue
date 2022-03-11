@@ -56,6 +56,10 @@ export default {
         {
           label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
           value: "mentor",
+        },
+        {
+          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will <span class="font-bold">judge submissions</span></span>`,
+          value: "judge",
         }
       ],
       hasValidationErrors: true

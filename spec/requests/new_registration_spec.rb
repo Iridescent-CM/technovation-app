@@ -16,7 +16,9 @@ RSpec.describe "New registration", type: :request do
         studentSchoolName: "Top School 1",
         mentorType: "Educator",
         mentorSchoolCompanyName: "Wonderful Inc",
-        mentorJobTitle: "Widgets "
+        mentorJobTitle: "Widgets ",
+        judgeSchoolCompanyName: "Court House",
+        judgeJobTitle: "Main Judge"
       }
     }
   end
@@ -50,6 +52,15 @@ RSpec.describe "New registration", type: :request do
 
     context "when a mentor is registering" do
       let(:profile_type) { "mentor" }
+      let(:date_of_birth) { (Division.cutoff_date - 26.years) }
+
+      it "sets the parent_registered? flag to false" do
+        expect(Account.last.parent_registered?).to eq(false)
+      end
+    end
+
+    context "when a judge is registering" do
+      let(:profile_type) { "judge" }
       let(:date_of_birth) { (Division.cutoff_date - 26.years) }
 
       it "sets the parent_registered? flag to false" do
