@@ -37,7 +37,7 @@
         <dt><%= t('models.account.email') %></dt>
         <dd><%= mail_to @account.email %></dd>
 
-        <% if not @account.is_a_mentor? %>
+        <% if !@account.is_a_mentor? %>
           <dt><%= t('models.account.age') %></dt>
           <dd><%= @account.age %></dd>
         <% end %>
