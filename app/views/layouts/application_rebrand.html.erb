@@ -49,10 +49,8 @@
   <body>
     <div>
       <%= yield :session_bar %>
-      <%= render 'application_rebrand/navigation' %>
-      <%= render 'student/navigation/rebrand/tg_green_header' %>
-      <%#= render 'application/navigation' %>
-
+      <%= render 'application_rebrand/global_nav' %>
+      <%= yield :main_header %>
       <%#= yield :subnav %>
     </div>
 
