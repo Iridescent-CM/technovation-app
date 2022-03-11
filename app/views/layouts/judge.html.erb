@@ -1,5 +1,6 @@
 <% provide :root_path, judge_dashboard_path %>
-<% provide :menu, render('judge/navigation/global_nav') %>
+<% provide :drop_down, render('judge/navigation/rebrand/dropdown_nav') %>
+<% provide :main_header, render('application/templates/tg_green_header') %>
 
 <% content_for :js,
   javascript_packs_with_chunks_tag("judge", data: { turbolinks_track: :reload }) %>
@@ -7,4 +8,4 @@
 <% provide :css,
   stylesheet_packs_with_chunks_tag("judge", data: { turbolinks_track: :reload }) %>
 
-<%= render template: "layouts/application" %>
+<%= render template: "layouts/application_rebrand" %>
