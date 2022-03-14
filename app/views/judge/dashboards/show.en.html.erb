@@ -1,94 +1,13 @@
-<% content_for :tab_content do %>
-  <div id="tab-wrapper" class="p-6">
-    <%= render 'judge/dashboards/rebrand/side_nav_content' %>
-  </div>
-<% end %>
-
+<span class="dashboard-notice"></span>
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render partial: 'application/templates/dashboards/side_nav', locals: { heading: 'To do'} %>
-  <%= render partial: 'application/templates/dashboards/energetic_container', locals: { heading: 'SOMETHING HERE'} %>
-</div>
-
-
-<div class="grid dashboard-notices">
-  <div class="grid__col-sm-6 grid__col-xs-12 grid__col--bleed-y">
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        Judge Dashboard!!
-
-        <% if current_judge.can_switch_to_mentor? %>
-          <small>
-            <%= link_to "Switch to Mentor mode", mentor_dashboard_path %>
-          </small>
-        <% end %>
-
-        <% if current_judge.is_an_ambassador? %>
-          <small>
-            <%= link_to "Switch to Chapter Ambassador mode",
-              chapter_ambassador_dashboard_path,
-              data: { turbolinks: false } %>
-          </small>
-        <% end %>
-      </h1>
+  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'To-do'} do%>
+    <div class="p-6">
+      <%= render 'judge/dashboards/rebrand/side_nav_content' %>
     </div>
-  </div>
-
-  <div
-    class="
-      grid__col-sm-6
-      grid__col-xs-12
-      grid__col--bleed-y
-      grid--align-end
-    "
-  >
-    <div class="grid__cell">
-      <h1 class="page-heading">
-        <%= SeasonToggles.dashboard_text(:judge) %>
-      </h1>
-    </div>
-  </div>
-</div>
-
-<div class="grid">
-  <div class="grid__col-md-3 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="panel">
-          <%= image_tag current_judge.profile_image_url,
-            class: "grid__cell-img" %>
-
-          <h3 class="reset"><%= current_judge.full_name %></h3>
-
-          <%= link_to "View your profile", judge_profile_path %>
-        </div>
-
-        <% if current_judge.onboarded? %>
-          <div class="panel panel--left">
-            <%= render "judge/dashboards/info_sidebar" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid__col-md-9">
-    <div class="grid__cell">
-      <%= render 'completion_steps/confirm_changed_email',
-        profile: current_judge %>
-
-      <% if current_judge.onboarding? %>
-        <div class="panel panel--left">
-          <%= render "judge/dashboards/onboarding" %>
-          <%= render "judge/dashboards/info_sidebar" %>
-        </div>
-      <% else %>
-        <%= render 'judge/dashboards/onboarded/scores' %>
-        <%= render 'judge/dashboards/onboarded/certificates' %>
-      <% end %>
-
-      <% if !SeasonToggles.display_scores? %>
-        <%= render 'judge/dashboards/onboarded/events' %>
-      <% end %>
-    </div>
-  </div>
+  <% end %>
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Online Judging'} do %>
+    <% if !SeasonToggles.display_scores? %>
+      <%= render 'judge/dashboards/onboarded/rebrand/events' %>
+    <% end %>
+  <% end %>
 </div>
