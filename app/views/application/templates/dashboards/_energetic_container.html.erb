@@ -2,9 +2,7 @@
   <div class="sm-header-wrapper ">
     <p class="font-bold"><%= heading %></p>
   </div>
-  <div class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
-    <% if content_for?(:main_content) %>
-      <%=yield :main_content %>
-    <% end %>
+  <div class="p-6 flex-row justify-between">
+    <%= yield %>
   </div>
 </div>
