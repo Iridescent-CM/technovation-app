@@ -2,7 +2,5 @@
   <div class="bg-energetic-blue text-white p-2">
     <p class="font-bold"><%= heading %></p>
   </div>
-  <% if content_for?(:tab_content) %>
-    <%=yield :tab_content %>
-  <% end %>
+  <%= yield %>
 </div>
