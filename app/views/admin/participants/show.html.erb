@@ -200,6 +200,18 @@
       </div>
     <% end %>
 
+    <% if @account.student_profile %>
+      <div class="panel">
+        <h5>
+            <% if @account.student_profile&.media_consent&.consent_provided %>
+              Media Consent on file
+            <% else %>
+              No Media Consent on file
+            <% end %>
+        </h5>
+      </div>
+    <% end %>
+
     <%= render 'admin/participants/certificates',
         account: @account %>
 
