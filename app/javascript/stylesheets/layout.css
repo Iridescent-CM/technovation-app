@@ -21,3 +21,7 @@ html{
 .tw-thick-rule{
     @apply bg-energetic-blue h-1 my-2 w-60;
 }
+
+.tw-green-input{
+   @apply px-4 py-2 rounded bg-tg-green text-white font-medium cursor-pointer
+}
