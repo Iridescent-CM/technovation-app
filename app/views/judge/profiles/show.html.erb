@@ -1,61 +1,30 @@
 <% provide :title, "My profile" %>
 
-<div id="judge-profile-tabs" class="grid tabs tabs--vertical">
-  <div class="grid__col-sm-3">
-    <div class="hidden-xs hidden-xxs">
-      <h3><%= current_judge.full_name %></h3>
+<span class="dashboard-notice"></span>
 
-      <%= image_tag current_judge.profile_image_url,
-        id: "profile-image",
-        class: "grid__cell-img" %>
-
-      <%= render 'image_upload',
-        choose_from_defaults: (
-          not current_account.chapter_ambassador_profile.present?
-        ),
-        current_image_path: current_judge.profile_image_url,
-        modal_id: "image_upload_desktop",
-        heading: "Upload a profile photo",
-        size: "300x300" %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'To-do'} do%>
+    <div id="tab-wrapper" class="p-6">
+      <%= render 'judge/profiles/rebrand/side_nav_content' %>
     </div>
+  <% end %>
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Basic Information'} do %>
+    <div class="tab">
+      <div class="tab-content tw-active" id="judge-basic">
+        <%= render 'judge/profiles/rebrand/basic' %>
+      </div>
 
-    <%= render 'judge/profiles/menu' %>
-  </div>
+      <div class="tab-content" id="judge-location">
+        <%= render 'judge/profiles/rebrand/location' %>
+      </div>
 
-  <div class="tabs__content grid__col-sm-9">
-    <div class="tabs__tab-content" id="basic">
-      <%= render 'judge/profiles/basic' %>
+      <div class="tab-content" id="judge-change-email">
+        <%= render 'judge/profiles/rebrand/email' %>
+      </div>
+
+      <div class="tab-content" id="judge-change-password">
+        <%= render 'judge/profiles/rebrand/password' %>
+      </div>
     </div>
-
-    <div class="hidden-sm hidden-md hidden-lg tabs__tab-content" id="avatar">
-      <%= image_tag current_judge.profile_image_url,
-        class: "grid__cell-img" %>
-
-      <%= render 'image_upload',
-        choose_from_defaults: (
-          not current_account.chapter_ambassador_profile.present?
-        ),
-        current_image_path: current_judge.profile_image_url,
-        image_id: "profile-image-xs",
-        modal_id: "image_upload_mobile",
-        heading: "Upload a profile photo",
-        size: "300x300" %>
-    </div>
-
-    <div class="tabs__tab-content" id="survey-answers">
-      <%= render 'judge/profiles/survey_answers' %>
-    </div>
-
-    <div class="tabs__tab-content" id="location">
-      <%= render 'judge/profiles/location' %>
-    </div>
-
-    <div class="tabs__tab-content" id="change-email">
-      <%= render 'profiles/email' %>
-    </div>
-
-    <div class="tabs__tab-content" id="change-password">
-      <%= render 'profiles/password' %>
-    </div>
-  </div>
+  <% end %>
 </div>
