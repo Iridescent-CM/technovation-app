@@ -148,7 +148,7 @@ class AccountsGrid
   column :background_check, if: ->(g) {
     g.admin or Array(g.country)[0] == "US"
   } do
-    if country_code == "US" and mentor_profile.present?
+    if country_code == "US" && mentor_profile.present?
       background_check.present? ?
         background_check.status :
         "Not submitted"
@@ -160,7 +160,7 @@ class AccountsGrid
   end
 
   column :parental_consent do |account, grid|
-    if account.student_profile.present? and account.parental_consent(grid.season).present?
+    if account.student_profile.present? && account.parental_consent(grid.season).present?
       account.parental_consent(grid.season).status
     else
       "-"
@@ -168,7 +168,7 @@ class AccountsGrid
   end
 
   column :media_consent do |account, grid|
-    if account.student_profile.present? and account.student_profile.media_consent.present?
+    if account.student_profile.present? && account.student_profile.media_consent.present?
       account.student_profile.media_consent.consent_provided ? "Yes" : "No"
     else
       "-"
@@ -184,9 +184,9 @@ class AccountsGrid
   end
 
   column :mentor_training do
-    if mentor_profile.present? and mentor_profile.training_required?
+    if mentor_profile.present? && mentor_profile.training_required?
       mentor_profile.training_complete? ? "Yes" : "No"
-    elsif mentor_profile.present? and !mentor_profile.training_required?
+    elsif mentor_profile.present? && !mentor_profile.training_required?
       "N/A"
     else
       "-"
