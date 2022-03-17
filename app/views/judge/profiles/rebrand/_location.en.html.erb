@@ -1,0 +1,12 @@
+<dl>
+  <dt>Your location</dt>
+  <dd><%= current_judge.address_details %></dd>
+</dl>
+
+<p>
+  <%= link_to "Change your location",
+    judge_location_details_path(
+      return_to: judge_profile_path(anchor: '!location')
+    ),
+    class: "tw-green-btn" %>
+</p>
