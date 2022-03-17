@@ -2,4 +2,7 @@
   <div class="banner-text-wrapper w-full lg:w-3/4 mx-auto pb-16">
     <div class="text-white text-4xl md:text-6xl font-black mb-8 uppercase">Technovation Girls</div>
   </div>
+  <% if current_scope == 'judge' %>
+    <%= render 'judge/navigation/rebrand/tg_sub_nav' %>
+  <% end %>
 </div>
