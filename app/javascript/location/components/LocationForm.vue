@@ -1,10 +1,15 @@
 <template>
   <form
-    class="panel panel--contains-bottom-bar panel--contains-top-bar"
+    class="simple_form"
     @submit.prevent="handleSubmit"
   >
+    
+    <div v-if="!isStudent" class="panel__top-bar">
+      Confirm {{ subjectPossessive }} region
+    </div>
+    
     <div id="location-change" class="tw-blue-lg-container">
-      <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+      <div v-if="isStudent" class="sm-header-wrapper bg-energetic-blue text-white p-2">
         <p class="font-bold">Confirm {{ subjectPossessive }} region</p>
       </div>
 
@@ -338,6 +343,10 @@ export default {
       return (this.city && this.city.length) ||
               (this.state && this.state.length) ||
                 (this.country && this.country.length)
+    },
+
+    isStudent () {
+      return this.scopeName === "student"
     },
 
     getCurrentLocationEndpoint () {

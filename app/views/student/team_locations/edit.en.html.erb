@@ -1,7 +1,15 @@
 <% provide :title, "Change your team location" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <%= render 'signups/location_fields', team_id: @team.id %>
+<% if current_profile.is_a? StudentProfile %>
+  <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
+    <div class="tab-content tw-active">
+      <%= render 'signups/location_fields', team_id: @team.id %>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-sm-8 panel">
+      <%= render 'signups/location_fields', team_id: @team.id %>
+    </div>
+  </div>
+<% end %>
