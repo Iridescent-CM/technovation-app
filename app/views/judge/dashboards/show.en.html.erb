@@ -6,6 +6,12 @@
     </div>
   <% end %>
   <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Online Judging'} do %>
+
+    <% if !current_judge.onboarding? %>
+      <%= render 'judge/dashboards/onboarded/scores' %>
+      <%= render 'judge/dashboards/onboarded/certificates' %>
+    <%end %>
+
     <% if !SeasonToggles.display_scores? %>
       <%= render 'judge/dashboards/onboarded/rebrand/events' %>
     <% end %>
