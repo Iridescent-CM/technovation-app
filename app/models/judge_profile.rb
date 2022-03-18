@@ -226,7 +226,6 @@ class JudgeProfile < ActiveRecord::Base
     account &&
       account.email_confirmed? &&
         consent_signed? &&
-          training_completed? &&
-            survey_completed?
+          training_completed?
   end
 end
