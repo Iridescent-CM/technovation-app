@@ -178,8 +178,8 @@ feature "starting scores", js: true do
   end
 
   def when_the_judge_views_their_dashboard
-    click_link "My Dashboard"
-    expect(page).to have_content "Judge Dashboard"
+    click_link "Dashboard"
+    expect(page).to have_content "Judging Rubric"
   end
 
   def and_starts_a_new_score

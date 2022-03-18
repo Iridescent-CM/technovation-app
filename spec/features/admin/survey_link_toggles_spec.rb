@@ -32,7 +32,7 @@ RSpec.feature "Set survey links and link text", :js do
 
       expect(current_path).to eq(public_send("student_dashboard_path"))
 
-      find('#student-dropdown-wrapper').click
+      find('#global-dropdown-wrapper').click
       expect(page).to have_link("link text", href: "google.com", count: 2)
 
       expect(page).not_to have_css(".swal2-modal")
