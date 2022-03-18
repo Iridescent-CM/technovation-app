@@ -28,15 +28,16 @@
   %>
 </div>
 
-<%= render 'application/templates/tw_thick_rule' %>
+<% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
+  <%= render 'application/templates/tw_thick_rule' %>
 
-<div class="tw-tab-content">
-  <a id="judge-submissions-tab" href="#judge-submissions-tab-content">Judge Submissions</a>
-</div>
+  <div class="tw-tab-content">
+    <a id="judge-submissions-tab" href="#judge-submissions-tab-content">Judge Submissions</a>
+  </div>
 
-<%= render 'application/templates/tw_thick_rule' %>
+  <%= render 'application/templates/tw_thick_rule' %>
 
-<div class="tw-tab-content">
-  <a id="scores-tab" href="#scores-tab-content">Find your scores & certificates</a>
-</div>
-
+  <div class="tw-tab-content">
+    <a id="scores-tab" href="#scores-tab-content">Find your scores & certificates</a>
+  </div>
+<% end %>
