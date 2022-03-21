@@ -1,8 +1,8 @@
 #!/bin/bash
 cat > ~/.netrc << EOF
 machine api.heroku.com
-  login $HEROKU_LOGIN
-  password $HEROKU_API_KEY
+  login $NEW_HEROKU_LOGIN
+  password $NEW_HEROKU_API_KEY
 EOF
 
 cat >> ~/.ssh/config << EOF
