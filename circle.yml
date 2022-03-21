@@ -198,7 +198,7 @@ jobs:
           name: Deploy Production to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "production" ]; then
-              git push git@heroku.com:technovation.git production:master
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation.git qa:master
             fi
 
 general:
