@@ -4,6 +4,7 @@
 
     <div id="email-password" class="form-wrapper">
       <h1 class="text-tg-green text-2xl text-left mb-6" v-if="formValues.profileType === 'mentor'">This is an account for a mentor</h1>
+      <h1 class="text-tg-green text-2xl text-left mb-6" v-else-if="formValues.profileType === 'judge'">This is an account for a judge</h1>
 
       <FormulateInput
         name="email"
@@ -20,7 +21,8 @@
         :disabled="formValues.profileType === 'parent'"
       />
 
-      <p class="text-left text-sm mb-12">Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.</p>
+      <p class="text-left text-sm mb-12" v-if="formValues.profileType === 'judge'">Please use your company email if you want your employer to know you volunteered with Technovation.</p>
+      <p class="text-left text-sm mb-12" v-else >Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.</p>
 
       <div class="double-wide">
         <FormulateInput
