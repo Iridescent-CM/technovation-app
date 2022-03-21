@@ -191,7 +191,7 @@ jobs:
           name: Deploy QA to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "qa" ]; then
-              git push https://git.heroku.com/technovation-qa.git qa:master
+              git push git@heroku.com:technovation-qa.git qa:master
             fi
 
       - deploy:
