@@ -204,7 +204,7 @@
       <div class="panel">
         <h5>
             <% media_consent = @account.student_profile.media_consent %>
-            <% if media_consent.consent_provided %>
+            <% if media_consent&.consent_provided %>
               Media Consent provided via <%= 
                 media_consent.electronic_signature === "ON FILE" ? 
                 "paper form" : 
