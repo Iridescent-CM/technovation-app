@@ -203,10 +203,27 @@
     <% if @account.student_profile %>
       <div class="panel">
         <h5>
-            <% if @account.student_profile&.media_consent&.consent_provided %>
-              Media Consent on file
+            <% media_consent = @account.student_profile.media_consent %>
+            <% if media_consent.consent_provided %>
+              Media Consent provided via <%= 
+                media_consent.electronic_signature === "ON FILE" ? 
+                "paper form" : 
+                "online form" 
+              %>
             <% else %>
-              No Media Consent on file
+              <h5>
+                Indicate that a media consent is on file
+              </h5>
+              <%= link_to "Create media consent",
+                admin_paper_media_consent_path(
+                  id: @account.student_profile.id
+                ),
+                class: "button button--secondary",
+                data: {
+                  method: :post,
+                  confirm: "You are marking #{@account.full_name} " +
+                           "as having a media consent on file.",
+                } %>
             <% end %>
         </h5>
       </div>
