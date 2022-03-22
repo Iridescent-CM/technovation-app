@@ -1,21 +1,17 @@
 <div class="tw-tab-content list-none">
   <% if current_judge.consent_signed? %>
-    <li>
-      <%= web_icon(
-            "check-circle",
-            class: "icon--green",
-            text: "Consent has been signed!",
-            ) %>
-    </li>
+    <%= web_icon(
+          "check-circle",
+          class: "icon--green",
+          text: "Consent has been signed!",
+          ) %>
   <% else %>
-    <li>
       <%= web_icon("circle-o") %>
       <%= link_to "Consent Waiver",
                   new_judge_consent_waiver_path(
                     token: current_judge.account.consent_token
                   )
       %>
-    </li>
   <% end %>
 </div>
 
