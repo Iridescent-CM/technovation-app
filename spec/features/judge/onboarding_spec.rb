@@ -5,7 +5,7 @@ RSpec.feature "Judge onboarding" do
 
   scenario "signing the consent form" do
     sign_in judge
-    click_link "Sign the consent form"
+    click_link "Consent Waiver"
 
     fill_in "Type your name", with: "me"
     click_button "I agree"

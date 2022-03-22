@@ -1,0 +1,59 @@
+<li class="md:hidden">
+  <%= link_to "Read the judging rubric",
+              "http://www.technovationchallenge.org/judging-rubric/",
+              target: "_blank" %>
+</li>
+<li class="md:hidden"><a href="https://www.technovation.org/about/">About</a></li>
+<li>
+  <%= link_to t('views.application.dashboard'),
+              judge_dashboard_path,
+              class: al(judge_dashboard_path)
+  %>
+</li>
+<li>
+  <%= link_to t('views.application.my_profile'),
+              judge_profile_path,
+              class: al(judge_profile_path)
+  %>
+</li>
+<li>
+  <%= link_to "Resource Page",
+              "https://technovationchallenge.org/judge-resources/",
+              target: "_blank"
+  %>
+</li>
+<li>
+  <%= link_to "Judge Slack",
+              ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
+              target: "_blank"
+  %>
+</li>
+<% if current_judge.can_switch_to_mentor? %>
+  <li>
+    <%= link_to "Mentor Mode", mentor_dashboard_path %>
+  </li>
+<% end %>
+<% if current_judge.is_an_ambassador? %>
+  <li>
+    <%= link_to "Chapter Ambassador Mode",
+                chapter_ambassador_dashboard_path,
+                data: { turbolinks: false } %>
+  </li>
+<% end %>
+<% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+  <li>
+    <%= link_to SeasonToggles.survey_link(current_scope, "text"),
+                SeasonToggles.survey_link(
+                  current_scope, "url",
+                  format_url: true,
+                  account: current_account
+                ),
+                target: "_blank"
+    %>
+  </li>
+<% end %>
+<li>
+  <% if current_account.authenticated? %>
+    <%= link_to t('views.application.signout'), signout_path, class: 'text-sm' %>
+  <% end %>
+</li>

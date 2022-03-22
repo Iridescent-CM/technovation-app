@@ -1,0 +1,7 @@
+#judge-consent-waiver > section{
+    @apply my-6
+}
+
+#judge-consent-waiver .section-title{
+    @apply font-bold
+}

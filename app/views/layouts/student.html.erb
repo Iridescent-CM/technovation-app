@@ -1,9 +1,7 @@
 <% provide :root_path, student_dashboard_path %>
-<% provide :menu, render('student/navigation/tg_global_nav') %>
-
-<%# content_for :css do %>
-  <%#= stylesheet_packs_with_chunks_tag("student", data: { turbolinks_track: :reload }) %>
-<%# end %>
+<% provide :global_nav_links, render('student/navigation/rebrand/global_nav_links') %>
+<% provide :drop_down, render('student/navigation/rebrand/dropdown_nav') %>
+<% provide :main_header, render('student/navigation/rebrand/tg_green_header') %>
 
 <% content_for :js do %>
   <%= javascript_packs_with_chunks_tag("student", data: { turbolinks_track: :reload }) %>

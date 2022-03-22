@@ -4,6 +4,10 @@
     font-family: 'RUBIK', sans-serif;
 }
 
+html{
+    @apply bg-white
+}
+
 .tg-green-stripes {
     background: repeating-linear-gradient(
     45deg,
@@ -12,4 +16,12 @@
     #43b02a 10px,
     #43b02a 26px
     );
+}
+
+.tw-thick-rule{
+    @apply bg-energetic-blue h-1 my-2 w-60;
+}
+
+.tw-green-input{
+   @apply px-4 py-2 rounded bg-tg-green text-white font-medium cursor-pointer
 }

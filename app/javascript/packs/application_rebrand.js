@@ -6,3 +6,8 @@ import "../stylesheets/layout.css"
 import "../stylesheets/documents.css"
 import "../stylesheets/student_profile.css"
 import "../stylesheets/student_dashboard.css"
+import "../stylesheets/navigation.css"
+import "../stylesheets/footer.css"
+import "../stylesheets/tabs.css"
+import "../stylesheets/judge.css"
+

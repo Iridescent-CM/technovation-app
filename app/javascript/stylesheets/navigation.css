@@ -1,0 +1,11 @@
+nav {
+    font-family: 'Poppins', sans-serif;
+}
+
+#global-nav-wrapper > a{
+    @apply mx-4 hover:text-energetic-blue;
+}
+
+.tw-dropdown-menu li{
+    @apply py-2
+}

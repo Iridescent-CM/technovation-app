@@ -4,6 +4,11 @@ $(document).on("turbolinks:load", function() {
     $("#tab-wrapper div a").click(function(e){
         e.preventDefault();
 
+        let heading = $(this).data("heading");
+        if (heading !== undefined) {
+            $("#energetic-heading").html(heading);
+        }
+
         let tabid = $(this).attr('href');
 
         $("#tab-wrapper div a, .tab div").removeClass("tw-active active-tab");

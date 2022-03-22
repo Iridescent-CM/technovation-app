@@ -15,11 +15,12 @@ RSpec.feature "Mentors switch to judging mode", :js do
     expect(mentor.is_a_judge?).to be_truthy
 
     click_link "Switch to Judge mode"
-    expect(page).to have_link "Switch to Mentor mode"
+    find('#global-dropdown-wrapper').click
+    expect(page).to have_link "Mentor Mode"
 
     expect(current_path).to eq(judge_dashboard_path)
 
-    click_link "Switch to Mentor mode"
+    click_link "Mentor Mode"
     expect(page).to have_link "Switch to Judge mode"
 
     expect(current_path).to eq(mentor_dashboard_path)
@@ -43,13 +44,14 @@ RSpec.feature "Mentors switch to judging mode", :js do
     expect(mentor.is_a_judge?).to be_falsey
 
     click_link "Switch to Judge mode"
-    expect(page).to have_link "Switch to Mentor mode"
+    find('#global-dropdown-wrapper').click
+    expect(page).to have_link "Mentor Mode"
 
     expect(current_path).to eq(judge_dashboard_path)
 
     expect(mentor.account_id).to eq(JudgeProfile.last.account_id)
 
-    click_link "Switch to Mentor mode"
+    click_link "Mentor Mode"
     expect(page).to have_link "Switch to Judge mode"
 
     expect(current_path).to eq(mentor_dashboard_path)

@@ -1,0 +1,43 @@
+<div class="tw-tab-content">
+<!--  <a class="tw-active active-tab" id="profile-tab" href="#profile-tab-content">Consent Waiver</a>-->
+  <% if current_judge.consent_signed? %>
+    <li>
+      <%= web_icon(
+            "check-circle",
+            class: "icon--green",
+            text: "Consent has been signed!",
+            ) %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to "Consent Waiver",
+                  new_judge_consent_waiver_path(
+                    token: current_judge.account.consent_token
+                  ) %>
+    </li>
+  <% end %>
+</div>
+
+<%= render 'application/templates/tw_thick_rule' %>
+
+<div class="tw-tab-content">
+  <%= link_to "Judge Training",
+              "https://technovationchallenge.org/judge-training/",
+              target: "_blank",
+              id: "judge-training-tab"
+  %>
+</div>
+
+<% if current_judge.onboarded? && SeasonToggles.judging_enabled? %>
+  <%= render 'application/templates/tw_thick_rule' %>
+
+  <div class="tw-tab-content">
+    <a id="judge-submissions-tab" href="#judge-submissions-tab-content">Judge Submissions</a>
+  </div>
+
+  <%= render 'application/templates/tw_thick_rule' %>
+
+  <div class="tw-tab-content">
+    <a id="scores-tab" href="#scores-tab-content">Find your scores & certificates</a>
+  </div>
+<% end %>

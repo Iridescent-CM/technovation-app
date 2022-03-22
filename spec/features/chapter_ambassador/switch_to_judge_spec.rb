@@ -15,7 +15,7 @@ feature "chapter ambassadors switch to judge mode from chapter ambassador dashbo
       expect(chapter_ambassador.is_a_judge?).to be_truthy
 
       click_link "Judge Mode"
-      expect(page).to have_text("Judge Dashboard")
+      expect(page).to have_text("Judging Rubric")
       expect(current_path).to eq(judge_dashboard_path)
     end
 
@@ -25,10 +25,11 @@ feature "chapter ambassadors switch to judge mode from chapter ambassador dashbo
       sign_in(chapter_ambassador)
 
       click_link "Judge Mode"
-      expect(page).to have_text("Judge Dashboard")
+      expect(page).to have_text("Judging Rubric")
       expect(current_path).to eq(judge_dashboard_path)
 
-      click_link "Switch to Chapter Ambassador mode"
+      find('#global-dropdown-wrapper').click
+      click_link "Chapter Ambassador Mode"
       expect(page).to have_text("Technovation Ambassador")
       expect(current_path).to eq(chapter_ambassador_dashboard_path)
     end
@@ -113,7 +114,7 @@ feature "chapter ambassadors switch to judge mode through mentor dashboard", :js
       expect(current_path).to eq(mentor_dashboard_path)
 
       click_link "Switch to Judge mode"
-      expect(page).to have_text("Judge Dashboard")
+      expect(page).to have_text("Judging Rubric")
       expect(current_path).to eq(judge_dashboard_path)
     end
 
