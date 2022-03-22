@@ -304,6 +304,8 @@ Rails.application.routes.draw do
 
     resource :paper_parental_consent, only: :create
 
+    resource :paper_media_consent, only: :create
+
     resources :export_downloads, only: :update
 
     resource :season_schedule_settings, only: [:show, :edit, :update]
