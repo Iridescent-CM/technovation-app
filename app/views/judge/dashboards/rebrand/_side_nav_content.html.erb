@@ -1,5 +1,4 @@
-<div class="tw-tab-content">
-<!--  <a class="tw-active active-tab" id="profile-tab" href="#profile-tab-content">Consent Waiver</a>-->
+<div class="tw-tab-content list-none">
   <% if current_judge.consent_signed? %>
     <li>
       <%= web_icon(
@@ -10,10 +9,12 @@
     </li>
   <% else %>
     <li>
+      <%= web_icon("circle-o") %>
       <%= link_to "Consent Waiver",
                   new_judge_consent_waiver_path(
                     token: current_judge.account.consent_token
-                  ) %>
+                  )
+      %>
     </li>
   <% end %>
 </div>
@@ -21,6 +22,14 @@
 <%= render 'application/templates/tw_thick_rule' %>
 
 <div class="tw-tab-content">
+  <% if current_judge.training_completed? %>
+    <%= web_icon(
+          "check-circle",
+          class: "icon--green",
+          ) %>
+  <% else %>
+    <%= web_icon("circle-o") %>
+  <% end  %>
   <%= link_to "Judge Training",
               "https://technovationchallenge.org/judge-training/",
               target: "_blank",
