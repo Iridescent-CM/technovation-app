@@ -2,19 +2,43 @@
   url ||= url_for(signup)
   title ||= t("views.signups.new.title.#{signup.scope_name}")
   admin ||= false
+  new_brand = ["student", "judge"].include? signup.scope_name
+  main_class = new_brand ? 
+    "container mx-auto flex flex-col lg:flex-row justify-around gap-6" : 
+    "grid grid--justify-space-around"
+  grid_class = new_brand ? 
+    "tab-content tw-active" : 
+    "grid__col-sm-8 panel" 
 %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8 panel">
-    <h1>
-      <%= title %>
-      <% unless signup.persisted? %>
-        <%= t("views.signups.new.roles.#{signup.scope_name}") %>
-      <% end %>
-    </h1>
+<div class="<%= main_class %>">
+  <div class="<%= grid_class %>">
+    <% if !new_brand %>
+      <h1>
+        <%= title %>
+        <% unless signup.persisted? %>
+          <%= t("views.signups.new.roles.#{signup.scope_name}") %>
+        <% end %>
+      </h1>
+    <% end %>
 
     <%= simple_form_for(signup, url: url) do |f| %>
       <%= render 'errors', record: signup %>
+
+      <% if new_brand %>
+        <div class="tw-blue-lg-container">
+
+        <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+          <p class="font-bold">
+            <%= title %>
+            <% unless signup.persisted? %>
+              <%= t("views.signups.new.roles.#{signup.scope_name}") %>
+            <% end %>
+          </p>
+        </div>
+
+        <div class="p-6" >
+      <% end %>
 
       <% if admin || signup.used_global_invitation? %>
         <%= f.fields_for :account do |a| %>
@@ -81,6 +105,12 @@
           t('views.signups.form.create_account'),
           class: 'button' %>
       <% end %>
+      
+      <% if new_brand %>
+          </div>
+        </div>
+      <% end %>
+      
     <% end %>
   </div>
 </div>

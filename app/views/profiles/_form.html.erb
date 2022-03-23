@@ -10,5 +10,15 @@
     title: title,
     admin: admin,
   } do |f| %>
-  <%= f.button :submit, t('views.application.save'), class: "button" %>
+
+  <% button_class = "button" %>
+  <% if ["student", "judge"].include? current_scope %>
+    <% button_class = "tw-green-btn" %>
+  <% end %>
+  
+  <%= 
+    f.button :submit, 
+    t('views.application.save'), 
+    class: button_class 
+  %>
 <% end %>
