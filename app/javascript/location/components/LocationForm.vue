@@ -5,7 +5,7 @@
   >
     
     <div v-if="!isStudent && !isJudge" class="panel__top-bar">
-      Confirm {{ subjectPossessive }} region xxx
+      Confirm {{ subjectPossessive }} region
     </div>
     
     <div id="location-change" class="tw-blue-lg-container">
