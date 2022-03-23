@@ -1,6 +1,6 @@
 <% provide :title, "Location details" %>
 
-<% if current_profile.is_a? StudentProfile %>
+<% if (current_profile.is_a? StudentProfile) || (current_profile.is_a? JudgeProfile) %>
   <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
     <div class="tab-content tw-active">
       <%= render 'signups/location_fields' %>
