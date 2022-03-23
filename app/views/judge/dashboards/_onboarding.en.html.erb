@@ -42,21 +42,6 @@
     </li>
   <% end %>
 
-  <% if current_judge.survey_completed? %>
-    <li>
-      <%= web_icon(
-        "check-circle",
-        class: "icon--green",
-        text: "Survey questions answered!",
-      ) %>
-    </li>
-  <% else %>
-    <li>
-      <%= link_to "Answer a couple of short survey questions",
-        new_judge_survey_answers_path %>
-    </li>
-  <% end %>
-
   <% if current_judge.training_completed? %>
     <li>
       <%= web_icon(
