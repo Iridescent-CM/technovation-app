@@ -16,7 +16,7 @@
 
   <p>
     <%= link_to "It looks good, take me back",
-      params[:back] || send("#{current_account.scope_name}_profile_path"),
+      params[:back] || send("#{current_scope}_profile_path"),
       class: "button small" %>
   </p>
 </center>
