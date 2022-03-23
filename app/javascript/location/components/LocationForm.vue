@@ -4,12 +4,12 @@
     @submit.prevent="handleSubmit"
   >
     
-    <div v-if="!isStudent" class="panel__top-bar">
-      Confirm {{ subjectPossessive }} region
+    <div v-if="!isStudent && !isJudge" class="panel__top-bar">
+      Confirm {{ subjectPossessive }} region xxx
     </div>
     
     <div id="location-change" class="tw-blue-lg-container">
-      <div v-if="isStudent" class="sm-header-wrapper bg-energetic-blue text-white p-2">
+      <div v-if="isStudent || isJudge" class="sm-header-wrapper bg-energetic-blue text-white p-2">
         <p class="font-bold">Confirm {{ subjectPossessive }} region</p>
       </div>
 
@@ -347,6 +347,10 @@ export default {
 
     isStudent () {
       return this.scopeName === "student"
+    },
+
+    isJudge () {
+      return this.scopeName === "judge"
     },
 
     getCurrentLocationEndpoint () {
