@@ -5,7 +5,7 @@ RSpec.describe "Admins invite users to signup", :js do
 
   before { sign_in(admin) }
 
-  %i{judge chapter_ambassador mentor student}.each do |scope|
+  %i{chapter_ambassador mentor student}.each do |scope|
     it "Inviting a user with profile type #{scope}" do
       email = "#{scope}@example.com"
 
