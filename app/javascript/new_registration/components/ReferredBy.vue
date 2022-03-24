@@ -26,7 +26,7 @@
 export default {
   data () {
     return {
-      referralOption: 0,
+      referralOption: null,
       referralOptions:[
         {value: 0, label: 'Friend'},
         {value: 1, label: 'Colleague'},

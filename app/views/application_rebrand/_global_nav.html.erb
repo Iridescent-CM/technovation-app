@@ -11,7 +11,7 @@
           <% if content_for?(:global_nav_links) %>
             <%= yield :global_nav_links %>
           <% end %>
-          <a class="tw-sm-hidden" href="https://www.technovation.org/about/">About</a>
+          <a class="tw-sm-hidden" href="https://www.technovation.org/about/" target="_blank">About</a>
           <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
             <%= link_to SeasonToggles.survey_link(current_scope, "text"),
                         SeasonToggles.survey_link(
@@ -26,7 +26,7 @@
           <div class="flex items-center justify-center">
             <div class="relative inline-block text-left tw-dropdown" id="global-dropdown-wrapper">
               <span class="flex cursor-pointer hover:text-energetic-blue"><%= current_account.first_name %>
-                <img src="https://icongr.am/fontawesome/caret-down.svg?size=12" alt="Current User Profile Picture">
+                <img src="https://icongr.am/fontawesome/caret-down.svg?size=12" alt="Drop down caret">
               </span>
 
               <div class="tw-dropdown-menu">
