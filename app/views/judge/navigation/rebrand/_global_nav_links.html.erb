@@ -4,3 +4,9 @@
                target: "_blank",
                class: "tw-sm-hidden"
 %>
+
+<% if current_judge.can_switch_to_mentor? %>
+  <%= link_to "Mentor Mode", mentor_dashboard_path,
+              class: "tw-sm-hidden"
+  %>
+<% end %>

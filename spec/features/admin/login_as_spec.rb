@@ -52,7 +52,7 @@ RSpec.feature "Admin / chapter ambassador logging in as a user" do
       click_link "Login as #{judge.full_name}"
       expect(current_path).to eq(judge_dashboard_path)
 
-      click_link "My profile"
+      click_link "My Profile"
       expect(current_path).to eq(judge_profile_path)
 
       click_link "return to chapter ambassador mode"
@@ -106,7 +106,7 @@ RSpec.feature "Admin / chapter ambassador logging in as a user" do
       click_link "Login as #{judge.full_name}"
       expect(current_path).to eq(judge_dashboard_path)
 
-      click_link "My profile"
+      click_link "My Profile"
       expect(current_path).to eq(judge_profile_path)
 
       click_link "return to Admin mode"
