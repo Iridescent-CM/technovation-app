@@ -78,7 +78,7 @@ class NewRegistrationController < ApplicationController
       first_name: registration_params[:firstName],
       last_name: registration_params[:lastName],
       date_of_birth: registration_params[:dateOfBirth],
-      referred_by: registration_params[:referredBy].to_i,
+      referred_by: registration_params[:referredBy].nil? ? nil : registration_params[:referredBy].to_i,
       referred_by_other: registration_params[:referredByOther],
       terms_agreed_at: registration_params[:dataTermsAgreedTo].present? ? Time.current : nil,
       email: registration_params[:email],
