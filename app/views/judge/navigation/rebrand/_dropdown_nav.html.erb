@@ -1,32 +1,26 @@
 <ul>
-  <li class="md:hidden">
-    <%= link_to "Judging Rubric",
-                "http://www.technovationchallenge.org/judging-rubric/",
-                target: "_blank" %>
-  </li>
+  <li class="md:hidden"><a target="_blank" href="http://www.technovationchallenge.org/judging-rubric/">Judging Rubric</a></li>
   <li class="md:hidden"><a href="https://www.technovation.org/about/">About</a></li>
   <% if current_judge.can_switch_to_mentor? %>
     <li class="md:hidden">
-      <%= link_to "Mentor Mode", mentor_dashboard_path %>
+      <%= link_to "Mentor Mode",
+                  mentor_dashboard_path %>
     </li>
   <% end %>
   <li>
     <%= link_to t('views.application.dashboard'),
                 judge_dashboard_path,
-                class: al(judge_dashboard_path)
-    %>
+                class: al(judge_dashboard_path) %>
   </li>
   <li>
     <%= link_to "Resource Page",
                 "https://technovationchallenge.org/judge-resources/",
-                target: "_blank"
-    %>
+                target: "_blank" %>
   </li>
   <li>
     <%= link_to "Judge Slack",
                 ENV.fetch("JUDGE_SLACK_SIGNUP_URL"),
-                target: "_blank"
-    %>
+                target: "_blank" %>
   </li>
   <% if current_judge.is_an_ambassador? %>
     <li>
@@ -43,13 +37,13 @@
                     format_url: true,
                     account: current_account
                   ),
-                  target: "_blank"
-      %>
+                  target: "_blank" %>
     </li>
   <% end %>
   <li>
     <% if current_account.authenticated? %>
-      <%= link_to t('views.application.signout'), signout_path, class: 'text-sm' %>
+      <%= link_to t('views.application.signout'), signout_path,
+                  class: 'text-sm' %>
     <% end %>
   </li>
 </ul>
