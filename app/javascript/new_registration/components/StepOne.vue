@@ -22,9 +22,9 @@
       />
 
       <p class="italic text-sm">
-        *As of <strong>{{ divisionCutoffDate }}</strong>.
-        For example, if you turn 13 on July 28, 2022, you will need to select
-        “I am registering myself and am 13-18 years old.”
+        <!-- *As of <strong>{{ divisionCutoffDate }}</strong>. -->
+        <!-- For example, if you turn 13 on July 28, 2022, you will need to select -->
+        <!-- “I am registering myself and am 13-18 years old.” -->
       </p>
     </div>
 
@@ -45,18 +45,18 @@ export default {
     return {
       values: {},
       options: [
-        {
-          label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year old* daughter</span>`,
-          value: "parent",
-        },
-        {
-          label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering myself and am 13-18 years old*</span>`,
-          value: "student",
-        },
-        {
-          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
-          value: "mentor",
-        },
+        //{
+        //  label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year old* daughter</span>`,
+        //  value: "parent",
+        //},
+        //{
+        //  label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering myself and am 13-18 years old*</span>`,
+        //  value: "student",
+        //},
+        //{
+        //  label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
+        //  value: "mentor",
+        //},
         {
           label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will <span class="font-bold">judge submissions</span></span>`,
           value: "judge",
