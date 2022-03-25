@@ -110,6 +110,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     secondary_regions
   end
 
+  def rebranded?
+    false
+  end
+  
   def onboarded?
     account.email_confirmed? and
       approved? and

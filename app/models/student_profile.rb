@@ -358,6 +358,10 @@ class StudentProfile < ActiveRecord::Base
     actions
   end
 
+  def rebranded?
+    true
+  end
+  
   def can_be_marked_onboarded?
     account.present? &&
       signed_parental_consent.present? &&
