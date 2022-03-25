@@ -96,8 +96,7 @@
       <section class="mb-8">
         <p>
           <% if current_judge.onboarding? %>
-            Once you are finished onboarding,
-            you will be able to judge submissions online.
+            To be able to judge submissions online this season, make sure to complete the To-do items on the left: Consent Waiver and Judge Training.
           <% else %>
             You are currently set to judge submissions online.
           <% end %>
@@ -114,10 +113,13 @@
       </section>
       <section>
         <p>
-          Quarterfinals judging begins on
+          Quarterfinals judging (round 1) begins on
           <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d") %>
           and ends on
           <%= ImportantDates.virtual_quarterfinals_judging_ends.strftime("%B %-d, %Y") %>.
+          Log back in starting
+          <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d") %>
+          to start judging!
         </p>
       </section>
     <% end %>
