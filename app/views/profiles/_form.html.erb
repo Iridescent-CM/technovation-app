@@ -1,14 +1,16 @@
 <%
   url ||= send("#{current_scope}_profile_path")
   admin ||= false
+  form = current_profile.rebranded? ? 
+    'signups/rebranded/form' :
+    'signups/form'
 %>
 
-<%= render layout: 'signups/form',
+<%= render layout: form,
   locals: {
     signup: profile,
     url: url,
     title: title,
     admin: admin,
   } do |f| %>
-  <%= f.button :submit, t('views.application.save'), class: "button" %>
 <% end %>

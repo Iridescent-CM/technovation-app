@@ -16,71 +16,15 @@
     <%= simple_form_for(signup, url: url) do |f| %>
       <%= render 'errors', record: signup %>
 
-      <% if admin || signup.used_global_invitation? %>
-        <%= f.fields_for :account do |a| %>
-          <%= a.input :email %>
-
-          <% if signup.account.errors[:email].include?("has already been taken") %>
-            <p>
-              (<%= link_to "try logging in instead",
-               login_path(email: signup.email) %>)
-            </p>
-          <% end %>
-        <% end %>
-      <% elsif signup.new_record? %>
-        <p>
-          <strong>
-            <%= t("views.signups.form.signing_up_email",
-                  email: signup.email) %>
-          </strong>
-        </p>
-      <% end %>
-
-      <%= render 'signups/basic_profile_fields', f: f, admin: admin %>
-
-      <%= render "signups/#{signup.scope_name}_profile_fields", f: f %>
-
-      <% if signup.account.temporary_password? ||
-          signup.used_global_invitation? %>
-        <h6 class="signup-section">
-          <%= t("models.account.password") %>
-        </h6>
-
-        <%= f.fields_for :account do |a| %>
-          <%= a.input :password, label: t("models.account.password") %>
-        <% end %>
-
-        <p class="hint"><%= t("models.account.password_hint") %></p>
-      <% end %>
-
-      <% if f.object.persisted? %>
-        <%= yield(f) %>
-      <% else %>
-        <%= f.fields_for :account do |a| %>
-          <%= a.input :referred_by,
-            collection: Account.referred_bies.keys,
-            label: t('models.account.referred_by') +
-                     t('views.application.optional'),
-            input_html: {
-              data: {
-                toggles: {
-                  "Other": ".referred_by_other",
-                },
-              },
-              class: 'sign-up-referred-by'
-            } %>
-
-          <div class="referred_by_other">
-            <%= a.input :referred_by_other,
-              label: false,
-              placeholder: t("models.account.referred_by_other") %>
-          </div>
-        <% end %>
-
-        <%= f.button :submit,
-          t('views.signups.form.create_account'),
-          class: 'button' %>
-      <% end %>
+      <%= 
+        render 'signups/form_content', 
+        url: url, 
+        title: title, 
+        admin: admin,
+        button_class: "button",
+        signup: signup,
+        f:f 
+      %>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,36 @@
+<%
+  url ||= url_for(signup)
+  title ||= t("views.signups.new.title.#{signup.scope_name}")
+  admin ||= false
+%>
+
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
+  <div class="tab-content tw-active">
+    <%= simple_form_for(signup, url: url) do |f| %>
+      <%= render 'errors', record: signup %>
+        <div class="tw-blue-lg-container">
+
+            <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+                <p class="font-bold">
+                    <%= title %>
+                    <% unless signup.persisted? %>
+                    <%= t("views.signups.new.roles.#{signup.scope_name}") %>
+                    <% end %>
+                </p>
+            </div>
+
+            <div class="p-6" >
+            <%= 
+              render 'signups/form_content', 
+              url: url, 
+              title: title, 
+              admin: admin, 
+              button_class: "tw-green-btn",
+              signup: signup,
+              f:f
+            %>
+            </div>
+        </div>
+    <% end %>
+  </div>
+</div>
