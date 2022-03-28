@@ -84,4 +84,20 @@ describe JudgeQuestionsForSubmissionScore do
       end
     end
   end
+
+  context "when the submission score is before the 2020 season" do
+    let(:season) { 2015 }
+
+    it "raises an error indicating that there are no questions for this season" do
+      expect { judge_questions_for_submission_score }.to raise_error(/Questions for the 2015 season don't exist/)
+    end
+  end
+
+  context "when the submisison score is for a future season (that questions haven't been setup for yet)" do
+    let(:season) { 2050 }
+
+    it "raises an error indicating that questions need to be setup" do
+      expect { judge_questions_for_submission_score }.to raise_error(/Questions for the 2050 season haven't been setup yet/)
+    end
+  end
 end
