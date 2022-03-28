@@ -20,8 +20,10 @@ class JudgeQuestionsForSubmissionScore
       "TwentyTwo"
     when 2021
       "TwentyOne"
+    when 2020
+      "Twenty"
     else
-      if season < 2021
+      if season < 2020
         raise "Questions for the #{season} season don't exist! This season was before we had seasonality for the judging questions."
       else
         raise "Questions for the #{season} season haven't been setup yet! You'll likely want to copy the previous year's queetions in '/app/services/judging/#{season - 1}/' to get them setup."
