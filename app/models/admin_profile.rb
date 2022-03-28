@@ -15,6 +15,10 @@ class AdminProfile < ActiveRecord::Base
     "admin"
   end
 
+  def rebranded?
+    false
+  end
+
   def method_missing(method_name, *args)
     begin
       account.public_send(method_name, *args)

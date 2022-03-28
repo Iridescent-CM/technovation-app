@@ -222,6 +222,10 @@ class JudgeProfile < ActiveRecord::Base
     "judge"
   end
 
+  def rebranded?
+    true
+  end
+
   def can_be_marked_onboarded?
     account &&
       account.email_confirmed? &&

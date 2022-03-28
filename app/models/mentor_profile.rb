@@ -345,6 +345,10 @@ class MentorProfile < ActiveRecord::Base
     teams.include?(team)
   end
 
+  def rebranded?
+    false
+  end
+
   def onboarding?
     not onboarded?
   end
