@@ -1,5 +1,5 @@
 module Judging
-  module TwentyTwo
+  module TwentyTwentyTwo
     class BeginnerQuestions
       def call
         [

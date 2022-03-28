@@ -1,6 +1,6 @@
 module Judging
-  module TwentyOne
-    class JuniorQuestions
+  module TwentyTwentyTwo
+    class SeniorQuestions
       def call
         [
           Question.new(

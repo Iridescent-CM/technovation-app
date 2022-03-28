@@ -1,5 +1,5 @@
 module Judging
-  module TwentyOne
+  module TwentyTwentyOne
     class SeniorQuestions
       def call
         [

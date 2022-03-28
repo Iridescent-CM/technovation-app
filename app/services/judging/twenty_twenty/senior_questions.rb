@@ -1,6 +1,6 @@
 module Judging
-  module TwentyTwo
-    class JuniorQuestions
+  module TwentyTwenty
+    class SeniorQuestions
       def call
         [
           Question.new(
@@ -9,9 +9,9 @@ module Judging
             field: :ideation_1,
             worth: 5,
             text: %(
-              Did we demonstrate the problem we chose is important, and use
-              statistics, facts and personal stories to show its impact on
-              us and our community or the world?
+              Team has chosen an important problem and uses statistics,
+              facts and personal stories to demonstrate its impact on them
+              and/or their community.
             )
           ),
 
@@ -21,10 +21,8 @@ module Judging
             field: :ideation_2,
             worth: 5,
             text: %(
-              Will our app help solve a
-              <a href="https://sdgs.un.org/goals" class="font-weight--bold" target="_blank">UN SDG</a>
-              and positively impact direct and
-              indirect users? Did we conduct solid user research?
+              To ensure positive impact of solution, team has completed
+              user research and adapted their idea based on community feedback.
             )
           ),
 
@@ -33,11 +31,7 @@ module Judging
             section: "ideation",
             field: :ideation_3,
             worth: 5,
-            text: %(
-              Do you agree that our app is innovative (a fundamentally
-              new solution/use of mobile app technology or an innovative
-              application of an existing structure to a new situation)?
-            )
+            text: "Team presents a fundamentally new solution or use of mobile app technology."
           ),
 
           Question.new(
@@ -45,10 +39,7 @@ module Judging
             section: "ideation",
             field: :ideation_4,
             worth: 5,
-            text: %(
-              Do you see evidence that our app or idea was improved or
-              changed in response to competitor research?
-            )
+            text: "Team's app or idea was improved or changed in response to competitor research."
           ),
 
           Question.new(
@@ -56,10 +47,7 @@ module Judging
             section: "technical",
             field: :technical_1,
             worth: 5,
-            text: %(
-              Do we show that our app is fully functional in the Demo Video
-              or by launching it in an app store?
-            )
+            text: "App is fully functional and has no noticeable bugs."
           ),
 
           Question.new(
@@ -68,9 +56,8 @@ module Judging
             field: :technical_2,
             worth: 5,
             text: %(
-              Do we demonstrate how we developed our app for our target
-              audience, tested it with them, and made sure it was easy to
-              use?
+              Team provides examples of how they developed app for a target audience
+              and shows evidence of testing and refinement.
             )
           ),
 
@@ -79,7 +66,7 @@ module Judging
             section: "technical",
             field: :technical_3,
             worth: 5,
-            text: "Are you able to see what our team learned about coding?"
+            text: "All team members appear to have gained technical knowledge and contributed to coding."
           ),
 
           Question.new(
@@ -88,9 +75,9 @@ module Judging
             field: :technical_4,
             worth: 5,
             text: %(
-              Does our code include advanced functions such as using a
-              database with APIs and/or using more than 1 sensor, phone
-              function, or different technology (like AI, VR or hardware)?
+              Code includes advanced functions such as using a database with APIs
+              and/or app uses more than 1 sensor, phone function, or different
+              technology (like AI, VR or hardware).
             )
           ),
 
@@ -100,8 +87,8 @@ module Judging
             field: :pitch_1,
             worth: 5,
             text: %(
-              Does our pitch video convey the urgency of our problem and
-              solution in a creative and engaging way?
+              The pitch makes me believe that this is an urgent problem and that the
+              team has an effective solution.
             )
           ),
 
@@ -111,8 +98,8 @@ module Judging
             field: :pitch_2,
             worth: 5,
             text: %(
-              Do you see evidence of our team sharing our journey, including
-              challenges we encountered and how we grew?
+              The pitch makes me believe that the team learned from challenges and
+              each girl persevered to learn new skills.
             )
           ),
 
@@ -122,9 +109,8 @@ module Judging
             field: :entrepreneurship_1,
             worth: 5,
             text: %(
-              How clearly has our team defined our goals, planned to reach
-              target users, and integrated feedback from initial marketing
-              attempts into our plan?
+              Team has clear goals and plan to reach target users.
+              They've integrated feedback from initial marketing attempts into this plan.
             )
           ),
 
@@ -134,8 +120,8 @@ module Judging
             field: :entrepreneurship_2,
             worth: 5,
             text: %(
-              How realistic and thorough do you find our financial plan to
-              be, and is it supported by budgets and research?
+              Team has a financial plan supported by budgets and research for
+              starting and sustaining the business.
             )
           ),
 
@@ -145,9 +131,8 @@ module Judging
             field: :entrepreneurship_3,
             worth: 5,
             text: %(
-              How cohesive and realistic do find our business plan? Does
-              it include logical company, product or service descriptions,
-              market analysis, and graphics?
+              Business plan includes logical company, product or service descriptions,
+              market analysis, and graphics.
             )
           ),
 
@@ -156,7 +141,7 @@ module Judging
             section: "entrepreneurship",
             field: :entrepreneurship_4,
             worth: 5,
-            text: "Do you believe our branding is clear and amplifies our team's purpose?"
+            text: "Branding is clear and amplifies the team’s purpose."
           ),
 
           Question.new(
@@ -164,7 +149,7 @@ module Judging
             section: "overall",
             field: :overall_1,
             worth: 5,
-            text: "Are our team's proposed plan and goals to continue working on our app realistic?"
+            text: "I believe this team will continue working to make their ideas a reality."
           ),
 
           Question.new(
@@ -172,7 +157,10 @@ module Judging
             section: "overall",
             field: :overall_2,
             worth: 5,
-            text: "How well do you think our solution is thought out and can succeed?"
+            text: %(
+              This solution will positively impact our world!
+              The idea is well thought out and the app is developed.
+            )
           )
         ]
       end

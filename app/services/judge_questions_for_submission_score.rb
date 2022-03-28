@@ -17,11 +17,11 @@ class JudgeQuestionsForSubmissionScore
   def season_module_name
     case season
     when 2022
-      "TwentyTwo"
+      "TwentyTwentyTwo"
     when 2021
-      "TwentyOne"
+      "TwentyTwentyOne"
     when 2020
-      "Twenty"
+      "TwentyTwenty"
     else
       if season < 2020
         raise "Questions for the #{season} season don't exist! This season was before we had seasonality for the judging questions."
