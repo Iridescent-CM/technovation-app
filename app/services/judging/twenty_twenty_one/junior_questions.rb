@@ -118,49 +118,6 @@ module Judging
 
           Question.new(
             idx: 1,
-            section: "entrepreneurship",
-            field: :entrepreneurship_1,
-            worth: 5,
-            text: %(
-              How clearly has our team defined our goals, planned to reach
-              target users, and integrated feedback from initial marketing
-              attempts into our plan?
-            )
-          ),
-
-          Question.new(
-            idx: 2,
-            section: "entrepreneurship",
-            field: :entrepreneurship_2,
-            worth: 5,
-            text: %(
-              How realistic and thorough do you find our financial plan to
-              be, and is it supported by budgets and research?
-            )
-          ),
-
-          Question.new(
-            idx: 3,
-            section: "entrepreneurship",
-            field: :entrepreneurship_3,
-            worth: 5,
-            text: %(
-              How cohesive and realistic do find our business plan? Does
-              it include logical company, product or service descriptions,
-              market analysis, and graphics?
-            )
-          ),
-
-          Question.new(
-            idx: 4,
-            section: "entrepreneurship",
-            field: :entrepreneurship_4,
-            worth: 5,
-            text: "Do you believe our branding is clear and amplifies our team's purpose?"
-          ),
-
-          Question.new(
-            idx: 1,
             section: "overall",
             field: :overall_1,
             worth: 5,
