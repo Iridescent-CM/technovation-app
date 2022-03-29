@@ -36,29 +36,29 @@
 
           <div ref="savedLocationTable">
             <div class="Rtable Rtable--3cols">
-              <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-none padding--r-l-large" style="width:33%">
                 <h6 class="margin--none">City</h6>
               </div>
 
-              <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-none padding--r-l-large"  style="width:33%">
                 <h6 class="margin--none">State / Province</h6>
               </div>
 
-              <div class="Rtable-cell padding--t-b-none padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-none padding--r-l-large"  style="width:33%">
                 <h6 class="margin--none">Country / Territory</h6>
               </div>
             </div>
 
             <div class="Rtable Rtable--3cols" ref="savedLocationTableRow">
-              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large"  style="width:33%">
                 {{ savedLocation.city || "(no city)" }}
               </div>
 
-              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large"  style="width:33%">
                 {{ savedLocation.state || "(no state/province)" }}
               </div>
 
-              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large"  style="width:33%">
                 {{ savedLocation.country || "(no country)" }}
               </div>
             </div>
@@ -68,9 +68,9 @@
         <template v-if="suggestions.length">
           <div ref="suggestionsTable">
             <div class="Rtable Rtable--3cols">
-              <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
-              <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
-              <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
+              <div class="Rtable-cell padding--t-b-none" style="width:33%"><h6>City</h6></div>
+              <div class="Rtable-cell padding--t-b-none" style="width:33%"><h6>State / Province</h6></div>
+              <div class="Rtable-cell padding--t-b-none" style="width:33%"><h6>Country / Territory</h6></div>
             </div>
 
             <div
@@ -79,15 +79,15 @@
               :key="suggestion.id"
               @click="handleSuggestionClick(suggestion)"
             >
-              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large" style="width:33%">
                 {{ suggestion.city || "(no city)" }}
               </div>
 
-              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large" style="width:33%">
                 {{ suggestion.state || "(no state/province)" }}
               </div>
 
-              <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
+              <div class="Rtable-cell padding--t-b-medium padding--r-l-large" style="width:33%">
                 {{ suggestion.country || "(no country)" }}
               </div>
             </div>
@@ -579,5 +579,6 @@ label:not(:first-child) {
   list-style: none;
 }
 
-.Rtable--3cols > .Rtable-cell  { width: 33.33%!important; }
+.Rtable--3cols > .Rtable-cell  { width: 33.33%; }
+
 </style>
