@@ -313,7 +313,7 @@ export default {
       if (this.savedLocation) {
         return 'change region'
       } else {
-        return 'cancel'
+        return 'Cancel'
       }
     },
 
