@@ -579,5 +579,5 @@ label:not(:first-child) {
   list-style: none;
 }
 
-.Rtable--3cols > .Rtable-cell  { width: 33.33%; }
+.Rtable--3cols > .Rtable-cell  { width: 33.33%!important; }
 </style>
