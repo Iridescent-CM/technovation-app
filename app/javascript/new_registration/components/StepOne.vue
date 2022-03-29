@@ -11,6 +11,10 @@
         to be leaders. How will you participate?
       </h2>
 
+      <p class="italic text-sm text-red-500 my-4">
+        Registration for the 2022 season is now closed for students and mentors.
+      </p>
+
       <FormulateInput
         label-position="before"
         type="radio"
