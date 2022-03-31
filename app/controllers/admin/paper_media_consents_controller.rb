@@ -1,11 +1,13 @@
 module Admin
   class PaperMediaConsentsController < AdminController
     def create
-        student = StudentProfile.find(params[:id])
+      params.permit(:id, :consent)
+      
+      student = StudentProfile.find(params[:id])
         if student.media_consent.present? && !student.media_consent.consent_provided?
             consent = student.media_consent
             consent.update(
-                consent_provided: true,
+                consent_provided: params[:consent],
                 electronic_signature: "ON FILE",
                 signed_at: DateTime.current
             )

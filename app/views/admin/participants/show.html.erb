@@ -204,26 +204,48 @@
       <div class="panel">
         <h5>
             <% media_consent = @account.student_profile.media_consent %>
-            <% if media_consent&.consent_provided %>
-              Media Consent provided via <%= 
-                media_consent.electronic_signature === "ON FILE" ? 
-                "paper form" : 
-                "online form" 
-              %>
-            <% else %>
-              <h5>
-                Indicate that a media consent is on file
-              </h5>
-              <%= link_to "Create media consent",
+            <% if media_consent&.consent_provided.nil? %>
+              <h5>Has not completed media consent form</h5>
+
+              <%= link_to "GRANT permission",
                 admin_paper_media_consent_path(
-                  id: @account.student_profile.id
+                  id: @account.student_profile.id,
+                  consent: true
                 ),
                 class: "button button--secondary",
                 data: {
                   method: :post,
-                  confirm: "You are marking #{@account.full_name} " +
-                           "as having a media consent on file.",
-                } %>
+                  confirm: "You are granting to #{@account.full_name} " +
+                          "media consent on file.",
+                } 
+              %>
+
+              <%= link_to "Do NOT GRANT permission",
+                admin_paper_media_consent_path(
+                  id: @account.student_profile.id,
+                  consent: false
+                ),
+                class: "button button--secondary",
+                data: {
+                  method: :post,
+                  confirm: "You are denying to #{@account.full_name} " +
+                          "media consent on file.",
+                } 
+              %>
+            <% else %>
+              <% if media_consent&.consent_provided %>
+                AGREED to media content  via <%= 
+                  media_consent.electronic_signature === "ON FILE" ? 
+                  "paper form" : 
+                  "online form" 
+                %>
+              <% else %>
+                Did NOT AGREE to media consent via <%= 
+                  media_consent.electronic_signature === "ON FILE" ? 
+                  "paper form" : 
+                  "online form" 
+                %>
+              <% end %>
             <% end %>
         </h5>
       </div>
