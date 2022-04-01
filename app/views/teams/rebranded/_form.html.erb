@@ -1,0 +1,35 @@
+<%= simple_form_for @team, 
+  url: (@team.id.present? ? send("#{current_scope}_team_path", @team) : 
+    send("#{current_scope}_teams_path")) do |f| %>
+    <div class="tw-blue-lg-container">
+        <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+            <p class="font-bold"><%= t("views.teams.edit.title") %></p>
+        </div>
+        <div class="p-6">
+            <%= f.input :name, label: "Team name" %>
+
+            <% if f.object.persisted? %>
+            <%= f.input :description, label: t("models.team.description") %>
+            <% end %>
+
+            <% action = f.object.persisted? ? :save : :create %>
+
+            <div class="pt-3 pb-7">
+                <p class="padding--none margin--none">
+                    <%= f.button :submit,
+                        t("views.application.#{action}",
+                        thing: t("models.team.class_name")),
+                        class: "tw-green-btn float--right" %>
+                </p>
+
+                <p class="padding--none margin--none">
+                    <%= 
+                        link_to t("views.application.cancel"),
+                        send("#{current_scope}_team_path", @team),
+                        class: "tw-green-btn float--left"
+                    %>
+                </p>
+            </div>
+        </div>
+  </div>
+<% end %>
