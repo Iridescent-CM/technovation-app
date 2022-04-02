@@ -1,4 +1,6 @@
 class MediaConsent < ActiveRecord::Base
+  MEDIA_PAPER_CONSENT = "ON FILE"
+
   belongs_to :student_profile
 
   validates :season, presence: true
@@ -14,6 +16,10 @@ class MediaConsent < ActiveRecord::Base
 
   def unsigned?
     electronic_signature.blank?
+  end
+
+  def on_file?
+    electronic_signature === MEDIA_PAPER_CONSENT
   end
 
   private
