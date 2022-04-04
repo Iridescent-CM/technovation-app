@@ -163,6 +163,24 @@
       </p>
 
       <p>
+        Learning Journey:
+        <% if !@team_submission.learning_journey.nil? %>
+          <%= @team_submission.learning_journey %>
+        <% else %>
+          blank
+        <% end %>
+      </p>
+
+      <p>
+        Submission Type:
+        <% if !@team_submission.submission_type.nil? %>
+          <%= @team_submission.submission_type %>
+        <% else %>
+          blank
+        <% end %>
+      </p>
+
+      <p>
         <% if @team_submission.screenshots.any? %>
           <div class="submission-pieces__screenshots">
             <% @team_submission.screenshots.each do |screenshot| %>
