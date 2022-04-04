@@ -18,13 +18,15 @@ class SubmissionsGrid
   column :app_name
   column :app_description
   column :demo_video_link
+  column :learning_journey
   column :pitch_video_link
+  column :submission_type
+  column :thunkable_project_url
 
   column :screenshots do
     screenshots.count
   end
 
-  column :development_platform_text
   column :app_inventor_app_name
   column :app_inventor_gmail
   column :source_code_url
@@ -78,6 +80,13 @@ class SubmissionsGrid
 
   column :city, order: "teams.city" do
     team.city
+  end
+
+  column :development_platform do
+    if development_platform_text.present?
+      platform = development_platform_text 
+      platform.downcase.starts_with("mobile") ? platform : ""
+    end  
   end
 
   column :state_province, header: "State" do
