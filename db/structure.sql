@@ -1420,7 +1420,17 @@ CREATE TABLE public.submission_scores (
     downloaded_business_plan boolean DEFAULT false NOT NULL,
     judge_recusal boolean DEFAULT false NOT NULL,
     judge_recusal_reason public.judge_recusal_from_submission_reason,
-    judge_recusal_comment character varying
+    judge_recusal_comment character varying,
+    overview_1 integer DEFAULT 0,
+    pitch_3 integer DEFAULT 0,
+    pitch_4 integer DEFAULT 0,
+    pitch_5 integer DEFAULT 0,
+    pitch_6 integer DEFAULT 0,
+    pitch_7 integer DEFAULT 0,
+    pitch_8 integer DEFAULT 0,
+    demo_1 integer DEFAULT 0,
+    demo_2 integer DEFAULT 0,
+    demo_3 integer DEFAULT 0
 );
 
 
@@ -3146,6 +3156,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220105203716'),
 ('20220106224855'),
 ('20220114040538'),
-('20220114040857');
+('20220114040857'),
+('20220405040709');
 
 
