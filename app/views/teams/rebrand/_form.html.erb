@@ -15,18 +15,18 @@
             <% action = f.object.persisted? ? :save : :create %>
 
             <div class="pt-3 pb-7">
-                <p class="padding--none margin--none">
+                <p class="p-0 m-0">
                     <%= f.button :submit,
                         t("views.application.#{action}",
                         thing: t("models.team.class_name")),
-                        class: "tw-green-btn float--right" %>
+                        class: "tw-green-btn float-right" %>
                 </p>
 
-                <p class="padding--none margin--none">
+                <p class="p-0 m-0">
                     <%= 
                         link_to t("views.application.cancel"),
                         send("#{current_scope}_team_path", @team),
-                        class: "tw-green-btn float--left"
+                        class: "tw-green-btn float-left"
                     %>
                 </p>
             </div>
