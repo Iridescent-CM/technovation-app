@@ -1,5 +1,5 @@
 class MediaConsent < ActiveRecord::Base
-  MEDIA_PAPER_CONSENT = "ON FILE"
+  ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT = "ON FILE"
 
   belongs_to :student_profile
 
@@ -19,7 +19,7 @@ class MediaConsent < ActiveRecord::Base
   end
 
   def on_file?
-    electronic_signature === MEDIA_PAPER_CONSENT
+    electronic_signature === ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT
   end
 
   private
