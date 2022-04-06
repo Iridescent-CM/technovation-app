@@ -180,6 +180,31 @@
         <% end %>
       </p>
 
+      <h5>Additional Questions</h5>
+      <p>
+        Does your submission use artificial intelligence? 
+        <%= @team_submission.uses_ai? ? "Yes" : "No"  %>
+      </p>
+      <% if @team_submission.uses_ai? %>
+        <i><%= @team_submission.ai_description  %></i>
+      <% end %>
+
+      <p>
+        Does your submission help solve climate change?
+        <%= @team_submission.solves_climate_change? ? "Yes" : "No"  %>
+      </p>
+      <% if @team_submission.solves_climate_change? %>
+        <i><%= @team_submission.climate_change_description  %></i>
+      <% end %>
+
+      <p>
+        Does your submission help solve a health problem?
+        <%= @team_submission.solves_health_problem? ? "Yes" : "No"  %>
+      </p>
+      <% if @team_submission.solves_health_problem? %>
+        <i><%= @team_submission.game_description  %></i>
+      <% end %>
+
       <p>
         <% if @team_submission.screenshots.any? %>
           <div class="submission-pieces__screenshots">

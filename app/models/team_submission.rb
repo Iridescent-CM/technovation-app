@@ -578,6 +578,18 @@ class TeamSubmission < ActiveRecord::Base
     VideoUrl.new(video_link_for(video_type)).root
   end
 
+  def uses_ai?
+    ai == true
+  end
+
+  def solves_climate_change?
+    climate_change == true
+  end
+
+  def solves_health_problem?
+    game == true
+  end
+
   private
 
   def team_name_and_app_name
