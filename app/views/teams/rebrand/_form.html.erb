@@ -3,8 +3,11 @@
     send("#{current_scope}_teams_path")) do |f| %>
     <div class="tw-blue-lg-container">
         <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
-            <p class="font-bold"><%= t("views.teams.edit.title") %></p>
+            <p class="font-bold">
+                <%= t("views.teams.edit.title") %>
+            </p>
         </div>
+
         <div class="p-6">
             <%= f.input :name, label: "Team name" %>
 
