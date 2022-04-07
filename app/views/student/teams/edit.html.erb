@@ -1,10 +1,6 @@
 <% provide :title, t("views.teams.edit.title") %>
-
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <div class="panel">
-      <h1><%= t("views.teams.edit.title") %></h1>
-      <%= render 'teams/form' %>
-    </div>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
+  <div class="tab-content tw-active">
+    <%= render 'teams/rebrand/form' %>
   </div>
 </div>
