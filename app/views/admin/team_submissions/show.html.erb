@@ -122,7 +122,7 @@
         <p>
           User Adoption Plan:
           
-          <% if @team_submission.business_plan_url %>
+          <% if @team_submission.business_plan_url_complete? %>
             <%= link_to @team_submission.business_plan_identifier,
               @team_submission.business_plan_url,
               target: :_blank %>
