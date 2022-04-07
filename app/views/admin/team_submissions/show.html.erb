@@ -118,6 +118,20 @@
         </p>
       <% end %>
 
+      <% if @team_submission.junior_division? %>
+        <p>
+          User Adoption Plan:
+          
+          <% if @team_submission.business_plan_url %>
+            <%= link_to @team_submission.business_plan_identifier,
+              @team_submission.business_plan_url,
+              target: :_blank %>
+          <% else %>
+            <span>blank</span>
+          <% end %>
+        </p>
+      <% end %>
+
       <h5>Technical</h5>
 
       <p>
