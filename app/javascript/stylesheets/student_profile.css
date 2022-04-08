@@ -20,10 +20,6 @@
     }
 }
 
-.tw-link{
-    @apply font-bold text-energetic-blue
-}
-
 .tw-green-btn{
     @apply w-auto mr-auto px-4 py-2 rounded bg-tg-green text-white font-medium
 }
