@@ -18,6 +18,9 @@ module.exports = {
         'tg-magenta': '#d0006f',
         'tg-orange': '#ff7500',
       },
+      height: {
+        'fit-content': 'fit-content'
+      },
       typography: {
         DEFAULT: {
           css: {
