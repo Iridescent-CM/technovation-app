@@ -1,56 +1,37 @@
 <template>
-  <div class="grid__col-3 grid__col--bleed-y col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="panel">
-          <img :src="team.photo" class="grid__cell-img" />
+  <div class="mb-10">
+    <p class="font-bold text-3xl">{{ team.name | capitalize}}</p>
+    <div class="flex flex-col lg:flex-row gap-x-8 mt-4">
+      <div class="w-full lg:w-1/4">
+        <!--    <img :src="team.photo"/>-->
+        <img class="h-full object-cover rounded-tr-2xl rounded-bl-2xl" src="https://cdn.vox-cdn.com/thumbor/Ndb49Uk3hjiquS041NDD0tPDPAs=/0x169:1423x914/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/7342855/microsoftteams.0.jpg"/>
+      </div>
 
-          <h3>{{ team.name }}</h3>
-
-          <ul class="list--reset">
-            <li><icon size="16" name="flag-o" />
-              {{ team.division | capitalize }} Division
-            </li>
-
-            <li><icon size="16" name="globe" />{{ team.location }}</li>
-
-            <li>
-              <icon size="16" name="code-fork" />
-              {{ submission.development_platform }}
-            </li>
-          </ul>
-        </div>
-
-        <div class="panel">
-          <h6>If something is broken:</h6>
-          <p>
-            Complete as much of the score as you can and
-            <a :href="emailSupport">email us</a>.
-            If the team is able to fix the issue,
-            we will email you back and you will be able
-            to update the score.
-          </p>
-
-          <div v-if="score.incomplete">
-            <h6>Cannot judge this?</h6>
-            <p>
-              If you do not feel comfortable judging this submission, click
-              <judge-recusal-popup>
-                here
-              </judge-recusal-popup>.
-            </p>
-          </div>
-
-          <h6>Finishing a score:</h6>
-          <p>
-            Even after finishing a score, you have
-            until <strong v-html="deadline"></strong> to make
-            changes.
-          </p>
-        </div>
+      <div class="mt-6">
+        <p class="font-bold text-3xl text-energetic-blue rubik">{{ team.division | uppercase }} DIVISION</p>
+        <p class="font-bold text-3xl text-energetic-blue rubik">{{ submission.development_platform }}</p>
+        <p>
+          <span><icon
+              size="20"
+              name="map-marker"
+              class="inline"
+              color="0075cf"
+          />
+          {{ team.location | capitalize }}</span>
+        </p>
+        <p>
+          <span><icon
+              size="20"
+              name="code"
+              class="inline"
+              color="0075cf"
+          />
+          {{ submission.development_platform | capitalize }}</span>
+        </p>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -77,21 +58,7 @@ export default {
 
   components: {
     Icon,
-    JudgeRecusalPopup,
+    JudgeRecusalPopup
   },
 }
 </script>
-
-<style scoped>
-  h3 {
-    font-size: 1.1rem;
-  }
-
-  ul {
-    font-size: 0.9rem;
-  }
-
-  h6 {
-    margin: 1rem 0 0;
-  }
-</style>
