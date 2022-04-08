@@ -1,61 +1,18 @@
 <template>
-  <div v-if="!submission.id" class="loading">
-    <icon name="spinner" className="spin" />
-    <div>Loading the submission... Happy Judging!</div>
-  </div>
-
-  <div v-else class="grid">
-    <div class="grid__col-12 grid__col--bleed-y">
-      <h2>Review submission</h2>
-    </div>
-
-    <team-info />
-
-    <div class="grid__col-9 grid__col--bleed-y">
-      <h1 class="border--b-thin-primary">{{ submission.name }}</h1>
-
-      <div class="app-description" v-html="submission.description"></div>
-
-      <screenshots />
-
-      <div class="grid grid--bleed submission-pieces primary-row">
-        <pitch />
-        <tc-code />
+  <div>
+    <EnergeticContainer heading="Review Submission">
+      <div v-if="!submission.id" class="loading">
+        <icon name="spinner" className="spin" />
+        <div>Loading the submission... Happy Judging!</div>
       </div>
-
-      <div class="grid grid--bleed submission-pieces white-row">
-        <business />
-
-        <presentation />
+      <div v-else>
+        <SubmissionOverview/>
       </div>
-
-      <div class="grid grid--bleed grid--justify-space-around">
-        <div v-if="score.incomplete" class="grid__col-6 grid--align-center">
-          <p>
-            <judge-recusal-popup cssClass="button button--danger">
-              I cannot judge this submission
-            </judge-recusal-popup>
-          </p>
-        </div>
-
-        <div class="grid__col-6 grid--align-center">
-          <p>
-            <router-link
-              :to="{ name: 'ideation' }"
-              class="button"
-            >
-              Start scoring
-            </router-link>
-          </p>
-
-        </div>
-      </div>
-    </div>
+    </EnergeticContainer>
   </div>
 </template>
 
 <script>
-
 import { mapState } from 'vuex'
 import Icon from '../../../components/Icon'
 
@@ -66,6 +23,8 @@ import TcCode from '../pieces/Code'
 import Business from '../pieces/Business'
 import Presentation from '../pieces/Presentation'
 import JudgeRecusalPopup from '../JudgeRecusalPopup'
+import EnergeticContainer from "../../components/EnergeticContainer";
+import SubmissionOverview from "../SubmissionOverview";
 
 export default {
   computed: {
@@ -75,8 +34,9 @@ export default {
       'submission',
     ])
   },
-
   components: {
+    SubmissionOverview,
+    EnergeticContainer,
     Icon,
     TeamInfo,
     Screenshots,
@@ -88,71 +48,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-  #judge-scores-app h2 {
-    margin: 1rem 0;
-  }
-
-  .app-description p {
-    margin: 1rem 0;
-  }
-
-  .scent--strong {
-    a {
-      color: black;
-      font-weight: bold;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .submission-pieces h4 {
-    margin: 0;
-  }
-
-  .primary-row {
-    background: #903D54;
-    color: white;
-    padding: 1rem;
-    min-height: 240px;
-    -webkit-font-smoothing: antialiased;
-
-    a {
-      color: #e6e6e5;
-      font-weight: bold;
-      transition: transform 0.2s;
-
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-
-    > div {
-      align-self: center;
-    }
-  }
-
-  .white-row,
-  .grid--bleed [class*="grid__col-"].white-row {
-    background: white;
-    padding: 1rem;
-    min-height: 240px;
-
-    > div,
-    > h4 + div {
-      align-self: center;
-    }
-  }
-
-  .loading {
-    padding: 2rem;
-    text-align: center;
-
-    div {
-      margin: 1rem auto;
-    }
-  }
-</style>
