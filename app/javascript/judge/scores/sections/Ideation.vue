@@ -49,7 +49,6 @@ import Pitch from '../pieces/Pitch'
 import QuestionSection from '../QuestionSection'
 import EnergeticContainer from "../../components/EnergeticContainer";
 import ThickRule from "../../components/ThickRule";
-GenericJudgingContainer
 
 import { mapState } from 'vuex'
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
