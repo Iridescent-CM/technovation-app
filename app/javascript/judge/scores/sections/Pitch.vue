@@ -1,40 +1,36 @@
 <template>
-  <div class="grid">
-    <div class="grid__col-12 grid__col--bleed-y">
-      <h2>Technical</h2>
-    </div>
+  <div >
+    <EnergeticContainer>
+      <team-info />
 
-    <team-info />
+      <div>
+        <p class="font-bold text-lg">Videos</p>
 
-    <div class="grid__col-9 grid__col--bleed-y">
-      <h1 class="border--b-thin-primary">{{ submission.name }}</h1>
+        <div class="grid grid--bleed submission-pieces primary-row">
+          <pitch :solo="true" />
+        </div>
 
-      <div class="app-description" v-html="submission.description"></div>
+        <ThickRule/>
 
-      <screenshots />
+        <question-section
+          prevSection="technical"
+          section="pitch"
+          :nextSection="nextSection"
+        >
+          <p slot="section-summary" class="help-text">
+            To assess how well a team presented (or pitched) their idea to you, please
+            refer to all submission elements and the
+            <a target="_blank" href="http://technovation.staging.wpengine.com/wp-content/uploads/2021/03/Pitch.png">rubric</a>.
+          </p>
 
-      <div class="grid grid--bleed submission-pieces primary-row">
-        <pitch :solo="true" />
+          <p slot="comment-tips">
+            English may not be the native language for the students.
+            Focus on how well the team did at telling the story of their
+            submission and convincing you of their solution.
+          </p>
+        </question-section>
       </div>
-
-      <question-section
-        prevSection="technical"
-        section="pitch"
-        :nextSection="nextSection"
-      >
-        <p slot="section-summary" class="help-text">
-          To assess how well a team presented (or pitched) their idea to you, please
-          refer to all submission elements and the
-          <a target="_blank" href="http://technovation.staging.wpengine.com/wp-content/uploads/2021/03/Pitch.png">rubric</a>.
-        </p>
-
-        <p slot="comment-tips">
-          English may not be the native language for the students.
-          Focus on how well the team did at telling the story of their
-          submission and convincing you of their solution.
-        </p>
-      </question-section>
-    </div>
+    </EnergeticContainer>
   </div>
 </template>
 
@@ -46,6 +42,8 @@ import Pitch from '../pieces/Pitch'
 import QuestionSection from '../QuestionSection'
 
 import { mapState } from 'vuex'
+import EnergeticContainer from "../../components/EnergeticContainer";
+import ThickRule from "../../components/ThickRule";
 
 export default {
   computed: {
@@ -59,6 +57,8 @@ export default {
   },
 
   components: {
+    ThickRule,
+    EnergeticContainer,
     QuestionSection,
     TeamInfo,
     Screenshots,
