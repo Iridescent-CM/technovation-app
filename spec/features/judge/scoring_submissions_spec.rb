@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "scoring submissions", js: true do
+xfeature "scoring submissions", js: true do
   before do
     SeasonToggles.judging_round = :qf
   end
