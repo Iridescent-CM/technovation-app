@@ -577,17 +577,16 @@ class TeamSubmission < ActiveRecord::Base
   def video_url_root(video_type)
     VideoUrl.new(video_link_for(video_type)).root
   end
-
-  def uses_ai?
-    ai == true
-  end
-
-  def solves_climate_change?
-    climate_change == true
-  end
-
-  def solves_health_problem?
-    game == true
+  
+  def question_response(question)
+    question_key = question == "health_problem" ? :game : question.to_sym 
+    if self[question_key].nil?
+      "-"
+    elsif self[question_key]
+      "Yes"
+    else
+      "No"
+    end
   end
 
   private

@@ -178,7 +178,7 @@
 
       <p>
         Learning Journey:
-        <% if !@team_submission.learning_journey.nil? %>
+        <% if @team_submission.learning_journey.present? %>
           <%= @team_submission.learning_journey %>
         <% else %>
           blank
@@ -196,26 +196,26 @@
 
       <h5>Additional Questions</h5>
       <p>
-        Does your submission use artificial intelligence? 
-        <%= @team_submission.uses_ai? ? "Yes" : "No"  %>
+        Does your submission use artificial intelligence?
+        <%= @team_submission.question_response("ai")  %>
       </p>
-      <% if @team_submission.uses_ai? %>
+      <% if @team_submission.ai? %>
         <i><%= @team_submission.ai_description  %></i>
       <% end %>
 
       <p>
         Does your submission help solve climate change?
-        <%= @team_submission.solves_climate_change? ? "Yes" : "No"  %>
+        <%= @team_submission.question_response("climate_change")  %>
       </p>
-      <% if @team_submission.solves_climate_change? %>
+      <% if @team_submission.climate_change? %>
         <i><%= @team_submission.climate_change_description  %></i>
       <% end %>
 
       <p>
         Does your submission help solve a health problem?
-        <%= @team_submission.solves_health_problem? ? "Yes" : "No"  %>
+        <%= @team_submission.question_response("health_problem")  %>
       </p>
-      <% if @team_submission.solves_health_problem? %>
+      <% if @team_submission.game? %>
         <i><%= @team_submission.game_description  %></i>
       <% end %>
 
