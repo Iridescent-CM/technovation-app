@@ -347,10 +347,6 @@ class SubmissionScore < ActiveRecord::Base
     !!dropped_at
   end
 
-  def changed?
-    created_at != updated_at
-  end
-
   def suspicious?
     complete? && approved_at.nil?
   end

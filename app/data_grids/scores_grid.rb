@@ -111,16 +111,16 @@ class ScoresGrid
     dropped? ? "yes" : "no"
   end
 
-  column :changed do
-    changed? ? "yes" : "no"
-  end
-
   column :suspicious do
     suspicious? ? "yes" : "no"
   end
 
-  column :submited_at do
+  column :created_at do
     created_at.strftime("%Y-%m-%d %H:%M")
+  end
+
+  column :updated_at do
+    updated_at.strftime("%Y-%m-%d %H:%M")
   end
 
   column :view, html: true do |submission_score|
