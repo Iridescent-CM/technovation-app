@@ -2,11 +2,8 @@
 
 <h1>Season <%= Season.current.year %> Scores</h1>
 
-<%= @scores_grid.inspect %>
-
 <%= render 'datagrid/datagrid',
   grid: @scores_grid,
   form_url: admin_score_exports_path,
   model_name: "score",
-  scope: :admin 
-%>
+  scope: :admin %>
