@@ -41,8 +41,10 @@
           <dt><%= t('models.account.email') %></dt>
           <dd><%= mail_to account.email %></dd>
 
-          <dt><%= t('models.account.age') %></dt>
-          <dd><%= account.age %></dd>
+          <% if !account.mentor_profile.present? %>
+            <dt><%= t('models.account.age') %></dt>
+            <dd><%= account.age %></dd>
+          <% end %>
 
           <% unless account.student_profile.present? %>
             <dt><%= t('models.account.gender') %></dt>
