@@ -273,6 +273,10 @@ class StudentProfile < ActiveRecord::Base
     !!parental_consent && parental_consent.signed?
   end
 
+  def media_consent_signed?
+    !!media_consent && media_consent.signed?
+  end  
+
   def can_search_teams?
     SeasonToggles.team_building_enabled? and
       not is_on_team? and

@@ -201,50 +201,11 @@
     <% end %>
 
     <% if @account.student_profile %>
-      <div class="panel">
-        <% media_consent = @account.student_profile.media_consent %>
-        <% if media_consent&.consent_provided.nil? %>
-          <h5>Has not completed media consent form</h5>
-
-          <%= link_to "GRANT permission",
-            admin_paper_media_consent_path(
-              id: @account.student_profile.id,
-              consent: true
-            ),
-            class: "button button--secondary",
-            data: {
-              method: :post,
-              confirm: "You are granting to #{@account.full_name} " +
-              "media consent on file.",
-            } 
-          %>
-
-          <%= link_to "Do NOT GRANT permission",
-            admin_paper_media_consent_path(
-              id: @account.student_profile.id,
-              consent: false
-            ),
-            class: "button button--secondary",
-            data: {
-              method: :post,
-              confirm: "You are denying to #{@account.full_name} " +
-              "media consent on file.",
-            } 
-          %>
-        <% else %>
-          <% if media_consent&.consent_provided? %>
-            <h5>
-              AGREED to media content  via 
-              <%= media_consent.on_file? ? "paper form" : "online form" %>
-            </h5>
-          <% else %>
-            <h5>
-              Did NOT AGREE to media consent via 
-              <%= media_consent.on_file? ? "paper form" : "online form" %>
-            </h5>
-          <% end %>
-        <% end %>
-      </div>
+      <%= render 'admin/participants/student_media_consent',
+        profile: @account.student_profile,
+        full_name: @account.full_name,
+        admin: true
+      %>
     <% end %>
 
     <%= render 'admin/participants/certificates',
