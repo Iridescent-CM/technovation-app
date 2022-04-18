@@ -1,5 +1,5 @@
 class Question
-  attr_reader :section, :idx, :text, :worth, :score, :field
+  attr_reader :section, :idx, :text, :worth, :score, :field, :submission_type
   attr_writer :score
 
   def initialize(attrs)
@@ -10,5 +10,6 @@ class Question
     @worth = attrs[:worth]
     @score = attrs[:score]
     @field = attrs[:field]
+    @submission_type = attrs[:submission_type]
   end
 end

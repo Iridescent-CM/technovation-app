@@ -225,6 +225,7 @@ class SubmissionScore < ActiveRecord::Base
            :team_division_name,
            :team_primary_location,
            :team_ages,
+           :submission_type,
     to: :team_submission,
     prefix: true,
     allow_nil: false
