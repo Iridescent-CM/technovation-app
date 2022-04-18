@@ -4,9 +4,12 @@ class TeamSubmission < ActiveRecord::Base
   MAX_SCREENSHOTS_ALLOWED = 6
   PARTICIPATION_MINIMUM_PERCENT = 50
 
+  MOBILE_APP_SUBMISSION_TYPE = "Mobile App"
+  AI_PROJECT_SUBMISSION_TYPE = "AI Project"
+
   SUBMISSION_TYPES_ENUM = {
-    "Mobile App" => 0,
-    "AI Project" => 1
+    MOBILE_APP_SUBMISSION_TYPE => 0,
+    AI_PROJECT_SUBMISSION_TYPE => 1
   }
 
   SUBMISSION_TYPES = SUBMISSION_TYPES_ENUM.keys
@@ -520,9 +523,9 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def development_platform_text
-    if submission_type == "Mobile App" && development_platform != "Other"
+    if submission_type == MOBILE_APP_SUBMISSION_TYPE && development_platform != "Other"
       "#{submission_type} - #{development_platform}"
-    elsif submission_type == "Mobile App" && development_platform == "Other"
+    elsif submission_type == MOBILE_APP_SUBMISSION_TYPE && development_platform == "Other"
       "#{submission_type} - #{development_platform} - #{development_platform_other}"
     else
       submission_type
@@ -599,7 +602,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def reset_development_platform_fields_for_ai_projects
-    if submission_type == "AI Project"
+    if submission_type == AI_PROJECT_SUBMISSION_TYPE
       self.development_platform = nil
       self.development_platform_other = nil
       self.app_inventor_app_name = nil
