@@ -1,36 +1,22 @@
 <template>
   <div >
-    <EnergeticContainer>
-      <team-info />
-
+    <template>
       <div>
-        <p class="font-bold text-lg">Videos</p>
-
-        <div class="grid grid--bleed submission-pieces primary-row">
-          <pitch :solo="true" />
-        </div>
-
-        <ThickRule/>
-
-        <question-section
-          prevSection="technical"
-          section="pitch"
-          :nextSection="nextSection"
+        <GenericJudgingContainer
+            heading="Pitch"
+            section="pitch"
+            next-section="business-plan"
+            prev-section="technical"
         >
-          <p slot="section-summary" class="help-text">
-            To assess how well a team presented (or pitched) their idea to you, please
-            refer to all submission elements and the
-            <a target="_blank" href="http://technovation.staging.wpengine.com/wp-content/uploads/2021/03/Pitch.png">rubric</a>.
-          </p>
-
-          <p slot="comment-tips">
-            English may not be the native language for the students.
-            Focus on how well the team did at telling the story of their
-            submission and convincing you of their solution.
-          </p>
-        </question-section>
+          <template v-slot:main-content>
+            <p class="font-bold text-lg">Videos</p>
+            <div class="grid grid--bleed submission-pieces primary-row">
+              <pitch :solo="true" />
+            </div>
+          </template>
+        </GenericJudgingContainer>
       </div>
-    </EnergeticContainer>
+    </template>
   </div>
 </template>
 
@@ -44,6 +30,7 @@ import QuestionSection from '../QuestionSection'
 import { mapState } from 'vuex'
 import EnergeticContainer from "../../components/EnergeticContainer";
 import ThickRule from "../../components/ThickRule";
+import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 
 export default {
   computed: {
@@ -63,6 +50,7 @@ export default {
     TeamInfo,
     Screenshots,
     Pitch,
+    GenericJudgingContainer
   },
 }
 </script>
