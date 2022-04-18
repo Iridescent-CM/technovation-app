@@ -104,10 +104,12 @@ export const resetState = (state) => {
     id: null,
     incomplete: null,
     comments: {
+      overview: emptyComment,
       ideation: emptyComment,
       technical: emptyComment,
       entrepreneurship: emptyComment,
       pitch: emptyComment,
+      demo: emptyComment,
       overall: emptyComment,
     }
   }
