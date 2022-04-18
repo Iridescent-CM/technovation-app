@@ -1,6 +1,7 @@
 class JudgeQuestionsForSubmissionScore
   def initialize(submission_score)
     @submission_score = submission_score
+    @submission_type = submission_score.team_submission_submission_type
     @season = submission_score.seasons.last
     @division = submission_score.team_division_name
     @questions = "Judging::#{season_module_name}::#{questions_class_name}".constantize.new.call
@@ -12,7 +13,7 @@ class JudgeQuestionsForSubmissionScore
 
   private
 
-  attr_reader :submission_score, :season, :division, :questions
+  attr_reader :submission_score, :submission_type, :season, :division, :questions
 
   def season_module_name
     case season
@@ -43,10 +44,16 @@ class JudgeQuestionsForSubmissionScore
   end
 
   def questions_with_scores_populated
-    questions.map do |question|
+    filtered_questions.map do |question|
       question.score = submission_score.instance_eval(question.field.to_s)
 
       question
+    end
+  end
+
+  def filtered_questions
+    questions.delete_if do |question|
+      question.section == "demo" && question.submission_type != submission_type
     end
   end
 end
