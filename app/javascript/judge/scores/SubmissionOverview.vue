@@ -20,15 +20,6 @@
           />
           {{ team.location | capitalize }}</span>
         </p>
-        <p>
-          <span><icon
-              size="16"
-              name="code"
-              class="inline"
-              color="0075cf"
-          />
-          {{ submission.development_platform | capitalize }}</span>
-        </p>
       </div>
     </div>
 
