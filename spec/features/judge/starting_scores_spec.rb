@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "starting scores", js: true do
+Rspec.xfeature "starting scores", js: true do
 
   before(:all) do
     @wait_time = Capybara.default_max_wait_time
