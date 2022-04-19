@@ -65,17 +65,17 @@ export const totalPossible = state => {
 export const sections = (state, getters) => {
   let sections = [
     {
-      name: 'ideation',
-      title: 'Ideation',
-      pointsTotal: getters.sectionPointsTotal('ideation'),
-      pointsPossible: getters.sectionPointsPossible('ideation'),
+      name: 'overview',
+      title: 'Project Name & Description',
+      pointsTotal: getters.sectionPointsTotal('overview'),
+      pointsPossible: getters.sectionPointsPossible('overview'),
     },
 
     {
-      name: 'technical',
-      title: 'Technical',
-      pointsTotal: getters.sectionPointsTotal('technical'),
-      pointsPossible: getters.sectionPointsPossible('technical'),
+      name: 'ideation',
+      title: 'Learning Journey',
+      pointsTotal: getters.sectionPointsTotal('ideation'),
+      pointsPossible: getters.sectionPointsPossible('ideation'),
     },
 
     {
@@ -83,6 +83,13 @@ export const sections = (state, getters) => {
       title: 'Pitch',
       pointsTotal: getters.sectionPointsTotal('pitch'),
       pointsPossible: getters.sectionPointsPossible('pitch'),
+    },
+
+    {
+      name: 'demo',
+      title: 'Demo',
+      pointsTotal: getters.sectionPointsTotal('demo'),
+      pointsPossible: getters.sectionPointsPossible('demo'),
     },
   ]
 
