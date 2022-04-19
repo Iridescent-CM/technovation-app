@@ -102,13 +102,6 @@ export const sections = (state, getters) => {
     })
   }
 
-  sections.push({
-    name: 'overall',
-    title: 'Overall Impression',
-    pointsTotal: getters.sectionPointsTotal('overall'),
-    pointsPossible: getters.sectionPointsPossible('overall'),
-  })
-
   return sections
 }
 
