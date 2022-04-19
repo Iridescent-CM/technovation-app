@@ -93,10 +93,10 @@ export const sections = (state, getters) => {
     },
   ]
 
-  if (state.team.division === 'senior') {
+  if (state.team.division === 'senior' || state.team.division === 'junior') {
     sections.push({
       name: 'entrepreneurship',
-      title: 'Entrepreneurship',
+      title: state.team.division === 'senior' ? 'Business Plan' : 'User Adoption Plan',
       pointsTotal: getters.sectionPointsTotal('entrepreneurship'),
       pointsPossible: getters.sectionPointsPossible('entrepreneurship'),
     })
