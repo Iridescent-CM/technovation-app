@@ -15,7 +15,10 @@ class SubmissionsGrid
 
   column :contest_rank, mandatory: true
 
-  column :app_name
+  column :app_name, mandatory: true, html: true do |sub|
+    link_to sub.app_name, send("#{current_scope}_team_submission_path", sub)
+  end
+  
   column :app_description
   column :demo_video_link
   column :learning_journey
@@ -41,10 +44,6 @@ class SubmissionsGrid
   end
 
   column :team_name, html: false
-
-  column :app_name, mandatory: true, html: true do |sub|
-    link_to sub.app_name, send("#{current_scope}_team_submission_path", sub)
-  end
 
   column :app_name, html: false
 
