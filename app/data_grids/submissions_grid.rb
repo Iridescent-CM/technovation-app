@@ -85,7 +85,7 @@ class SubmissionsGrid
   column :development_platform do
     if development_platform_text.present?
       platform = development_platform_text 
-      platform.downcase.starts_with("mobile") ? platform : ""
+      platform.downcase.starts_with?("mobile") ? platform : ""
     end  
   end
 
