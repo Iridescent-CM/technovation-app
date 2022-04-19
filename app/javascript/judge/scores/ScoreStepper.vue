@@ -17,7 +17,7 @@
         class=""
       >
         <span class="stepper__step-number">1</span>
-        Review submission
+        Overview
       </router-link>
     </div>
 

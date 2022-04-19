@@ -3,7 +3,8 @@
     <GenericJudgingContainer
         heading="Demo"
         section="demo"
-        next-section="business-plan"
+        :next-section="nextSection"
+        prevSection="pitch"
     >
       <template v-slot:main-content>
         <p class="font-bold text-lg">Videos</p>
@@ -32,7 +33,7 @@ export default {
     ...mapState(['team', 'submission']),
 
     nextSection () {
-      return this.team.division === 'senior' ?
+      return (this.team.division === 'senior' || this.team.division === 'junior') ?
         'entrepreneurship' :
         'overall'
     },

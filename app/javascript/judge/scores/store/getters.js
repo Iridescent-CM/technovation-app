@@ -65,17 +65,17 @@ export const totalPossible = state => {
 export const sections = (state, getters) => {
   let sections = [
     {
-      name: 'ideation',
-      title: 'Ideation',
-      pointsTotal: getters.sectionPointsTotal('ideation'),
-      pointsPossible: getters.sectionPointsPossible('ideation'),
+      name: 'overview',
+      title: 'Project Name & Description',
+      pointsTotal: getters.sectionPointsTotal('overview'),
+      pointsPossible: getters.sectionPointsPossible('overview'),
     },
 
     {
-      name: 'technical',
-      title: 'Technical',
-      pointsTotal: getters.sectionPointsTotal('technical'),
-      pointsPossible: getters.sectionPointsPossible('technical'),
+      name: 'ideation',
+      title: 'Learning Journey',
+      pointsTotal: getters.sectionPointsTotal('ideation'),
+      pointsPossible: getters.sectionPointsPossible('ideation'),
     },
 
     {
@@ -84,23 +84,23 @@ export const sections = (state, getters) => {
       pointsTotal: getters.sectionPointsTotal('pitch'),
       pointsPossible: getters.sectionPointsPossible('pitch'),
     },
+
+    {
+      name: 'demo',
+      title: 'Demo',
+      pointsTotal: getters.sectionPointsTotal('demo'),
+      pointsPossible: getters.sectionPointsPossible('demo'),
+    },
   ]
 
-  if (state.team.division === 'senior') {
+  if (state.team.division === 'senior' || state.team.division === 'junior') {
     sections.push({
       name: 'entrepreneurship',
-      title: 'Entrepreneurship',
+      title: state.team.division === 'senior' ? 'Business Plan' : 'User Adoption Plan',
       pointsTotal: getters.sectionPointsTotal('entrepreneurship'),
       pointsPossible: getters.sectionPointsPossible('entrepreneurship'),
     })
   }
-
-  sections.push({
-    name: 'overall',
-    title: 'Overall Impression',
-    pointsTotal: getters.sectionPointsTotal('overall'),
-    pointsPossible: getters.sectionPointsPossible('overall'),
-  })
 
   return sections
 }

@@ -51,7 +51,6 @@
       <%= yield :session_bar %>
       <%= render 'application_rebrand/global_nav' %>
       <%= yield :main_header %>
-      <%#= yield :subnav %>
     </div>
 
     <div class="main-container bg-white">
@@ -59,6 +58,7 @@
 
       <%= yield :notifications %>
 
+      <%= yield :judge_score_stepper %>
       <%= yield %>
 
      <%= render 'application_rebrand/footer' %>
