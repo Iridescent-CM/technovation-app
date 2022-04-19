@@ -1,9 +1,10 @@
 <template>
     <div>
       <GenericJudgingContainer
-          heading="Project Name & Description"
+          heading="Learning Journey"
           section="ideation"
-          next-section="technical"
+          next-section="pitch"
+          prev-section="overview"
       >
         <template v-slot:main-content>
           <p class="font-bold text-lg">{{ submission.name }}</p>
