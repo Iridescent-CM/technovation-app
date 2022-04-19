@@ -31,6 +31,7 @@
     >
       <router-link
         :to="{ name: section.name }"
+        class="truncate"
       >
         <span class="stepper__step-number">
           {{ i + 2 }}
@@ -103,13 +104,11 @@ export default {
     opacity: 0.5;
     transition: opacity 0.2s;
     white-space: nowrap;
-    overflow: hidden;
     flex: 0 1 auto;
     font-size: 0.9rem;
   }
 
   .stepper__step a {
-    text-overflow: ellipsis;
     font-weight: bold;
   }
 
