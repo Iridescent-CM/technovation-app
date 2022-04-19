@@ -25,3 +25,11 @@ html{
 .tw-green-input{
    @apply px-4 py-2 rounded bg-tg-green text-white font-medium cursor-pointer
 }
+
+.tw-link{
+    @apply font-bold text-energetic-blue
+}
+
+.tw-wrapper{
+    @apply container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4
+}

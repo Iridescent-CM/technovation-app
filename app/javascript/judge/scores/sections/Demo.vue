@@ -1,22 +1,17 @@
 <template>
-  <div >
-    <template>
-      <div>
-        <GenericJudgingContainer
-            heading="Pitch"
-            section="pitch"
-            next-section="business-plan"
-            prev-section="technical"
-        >
-          <template v-slot:main-content>
-            <p class="font-bold text-lg">Videos</p>
-            <div class="grid grid--bleed submission-pieces primary-row">
-              <pitch :solo="true" />
-            </div>
-          </template>
-        </GenericJudgingContainer>
-      </div>
-    </template>
+  <div>
+    <GenericJudgingContainer
+        heading="Demo"
+        section="demo"
+        next-section="business-plan"
+    >
+      <template v-slot:main-content>
+        <p class="font-bold text-lg">Videos</p>
+        <div class="grid grid--bleed submission-pieces primary-row">
+          <pitch :solo="true" />
+        </div>
+      </template>
+    </GenericJudgingContainer>
   </div>
 </template>
 

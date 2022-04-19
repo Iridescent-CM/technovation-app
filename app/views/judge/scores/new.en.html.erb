@@ -11,11 +11,8 @@
   >
   </div>
 
-  <template v-else>
-    <% provide :subnav do %>
-      <div id="judge-scores-stepper"></div>
-    <% end %>
-
-    <router-view></router-view>
-  </template>
+  <div v-else class="flex flex-col lg:flex-row lg:gap-x-4 tw-wrapper">
+    <div id="judge-scores-stepper"></div>
+    <router-view class="w-full"></router-view>
+  </div>
 </div>

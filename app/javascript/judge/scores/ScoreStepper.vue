@@ -1,8 +1,12 @@
 <template>
-  <nav class="grid grid--bleed grid--justify-space-around stepper">
+  <div class="w-full lg:w-1/3 rounded-md border-solid border-4 border-energetic-blue h-fit-content">
+    <div class="bg-energetic-blue text-white p-2">
+      <p class="font-bold">Score</p>
+    </div>
+
+  <nav class="p-8">
     <div
       :class="[
-        'grid__col-auto',
         'stepper__step',
         $route.name === 'review-submission' ?
                           'stepper__step--active' : ''
@@ -10,7 +14,7 @@
     >
       <router-link
         :to="{ name: 'review-submission' }"
-        class="grid__cell"
+        class=""
       >
         <span class="stepper__step-number">1</span>
         Review submission
@@ -19,7 +23,6 @@
 
     <div
       :class="[
-        'grid__col-auto',
         'stepper__step',
         $route.name === section.name ? 'stepper__step--active' : ''
       ]"
@@ -28,7 +31,6 @@
     >
       <router-link
         :to="{ name: section.name }"
-        class="grid__cell"
       >
         <span class="stepper__step-number">
           {{ i + 2 }}
@@ -44,14 +46,12 @@
 
     <div
       :class="[
-        'grid__col-auto',
         'stepper__step',
         $route.name === 'review-score' ? 'stepper__step--active' : ''
       ]"
     >
       <router-link
         :to="{ name: 'review-score' }"
-        class="grid__cell"
       >
         <span class="stepper__step-number">{{ lastStepNum }}</span>
         Review score
@@ -62,6 +62,7 @@
       </router-link>
     </div>
   </nav>
+  </div>
 </template>
 
 <script>
