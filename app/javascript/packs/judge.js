@@ -17,8 +17,3 @@ Vue.use(Vue2Filters)
 
 import '../judge/dashboards'
 import '../judge/scores'
-
-import "../stylesheets/tailwind.css"
-import "../stylesheets/base_forms.css"
-import "../stylesheets/layout.css"
-import "../stylesheets/judge.css"
