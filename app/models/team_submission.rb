@@ -209,12 +209,10 @@ class TeamSubmission < ActiveRecord::Base
   }
 
   validates :app_inventor_app_name,
-    :app_inventor_gmail,
     presence: true,
     if: ->(s) { s.development_platform == "App Inventor" }
 
-  validates :thunkable_account_email,
-    :thunkable_project_url,
+  validates :thunkable_project_url,
     presence: true,
     if: ->(s) { s.development_platform == "Thunkable" }
 
