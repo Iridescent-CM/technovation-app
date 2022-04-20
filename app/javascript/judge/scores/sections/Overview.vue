@@ -4,6 +4,7 @@
           heading="Project Name & Description"
           section="overview"
           next-section="ideation"
+          next-button-text="Learning Journey"
       >
         <template v-slot:main-content>
           <p class="font-bold text-lg">{{ submission.name }}</p>
