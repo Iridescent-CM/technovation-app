@@ -172,11 +172,11 @@ export default {
     },
 
     nextBtnTxt () {
-      return this.nextSectionTitle || capitalize(this.nextSection)
+      return this.nextButtonText || capitalize(this.nextSection)
     },
 
     prevBtnTxt () {
-      return capitalize(this.prevSection)
+      return this.prevButtonText || capitalize(this.prevSection)
     },
   },
 
@@ -184,7 +184,8 @@ export default {
     'nextSection',
     'prevSection',
     'section',
-    'nextSectionTitle',
+    'nextButtonText',
+    'prevButtonText',
     'solo',
   ],
 

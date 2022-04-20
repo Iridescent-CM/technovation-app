@@ -8,9 +8,11 @@
         <ThickRule/>
 
         <question-section
-            :prevSection="prevSection"
-            :section="section"
-            :nextSection="nextSection"
+          :prevSection="prevSection"
+          :prevButtonText="prevButtonText"
+          :section="section"
+          :nextSection="nextSection"
+          :nextButtonText="nextButtonText"
         >
           <p slot="section-summary" class="help-text">
             To determine if the team has built a solution that will positively impact them and their community,
@@ -46,6 +48,6 @@ export default {
     EnergeticContainer,
     ThickRule
   },
-  props: ['heading', 'section', 'nextSection', 'prevSection']
+  props: ['heading', 'section', 'nextSection', 'prevSection', 'nextButtonText', 'prevButtonText']
 }
 </script>
