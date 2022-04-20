@@ -36,34 +36,30 @@
 
       <textarea ref="commentText" :value="comment.text" @input="updateCommentText" />
 
-      <div class="grid grid--bleed grid--justify-space-between">
-        <div class="grid__col-6 nav-btns--left">
-          <p>
-            <router-link
-              v-if="!!prevSection"
-              v-on:click.native="handleCommentChange"
-              :to="{ name: prevSection }"
-              class="button button--small btn-prev"
-            >
-              Back: {{ prevBtnTxt }}
-            </router-link>
-          </p>
+      <div class="flex justify-between mt-6">
+        <div>
+          <router-link
+            v-if="!!prevSection"
+            v-on:click.native="handleCommentChange"
+            :to="{ name: prevSection }"
+            class="link-button link-button-success font-bold"
+          >
+            Back: {{ prevBtnTxt }}
+          </router-link>
         </div>
 
-        <div class="grid__col-6 nav-btns--right">
-          <p>
-            <span v-tooltip="nextDisabledMsg">
-              <router-link
-                v-if="!!nextSection"
-                v-on:click.native="handleCommentChange"
-                :to="{ name: nextSection }"
-                :disabled="goingNextIsDisabled"
-                class="button button--small btn-next"
-              >
-                Next: {{ nextBtnTxt }}
-              </router-link>
-            </span>
-          </p>
+        <div>
+          <span v-tooltip="nextDisabledMsg">
+            <router-link
+              v-if="!!nextSection"
+              v-on:click.native="handleCommentChange"
+              :to="{ name: nextSection }"
+              :disabled="goingNextIsDisabled"
+              class="link-button link-button-success font-bold"
+            >
+              Next: {{ nextBtnTxt }}
+            </router-link>
+          </span>
         </div>
       </div>
     </div>
