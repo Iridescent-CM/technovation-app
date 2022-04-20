@@ -33,7 +33,15 @@ class SubmissionsGrid
   column :app_inventor_app_name
   column :app_inventor_gmail
   column :source_code_url
-  column :business_plan_url
+  
+  column :business_plan_url do
+    !team.junior? ? self.business_plan_url : "-"
+  end
+
+  column :adoption_plan_url do
+    team.junior? ? self.business_plan_url : "-"
+  end 
+
   column :pitch_presentation_url
 
   column :team_name,
