@@ -1,10 +1,11 @@
 <template>
   <div>
     <GenericJudgingContainer
-        heading="Demo"
-        section="demo"
-        :next-section="nextSection"
-        prevSection="pitch"
+      heading="Demo"
+      section="demo"
+      :next-section="nextSection"
+      :next-button-text="nextButtonText"
+      prevSection="pitch"
     >
       <template v-slot:main-content>
         <p class="font-bold text-lg">Videos</p>
@@ -37,6 +38,17 @@ export default {
         'entrepreneurship' :
         'overall'
     },
+
+    nextButtonText () {
+      switch (this.team.division) {
+        case 'senior':
+          return 'Business Plan'
+          break
+        case 'junior':
+          return 'User Adoption Plan'
+          break
+      }
+    }
   },
 
   components: {
