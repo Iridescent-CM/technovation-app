@@ -118,6 +118,20 @@
         </p>
       <% end %>
 
+      <% if @team_submission.junior_division? %>
+        <p>
+          User Adoption Plan:
+          
+          <% if @team_submission.business_plan_url_complete? %>
+            <%= link_to @team_submission.business_plan_identifier,
+              @team_submission.business_plan_url,
+              target: :_blank %>
+          <% else %>
+            <span>blank</span>
+          <% end %>
+        </p>
+      <% end %>
+
       <h5>Technical</h5>
 
       <p>
@@ -161,6 +175,49 @@
           blank
         <% end %>
       </p>
+
+      <p>
+        Learning Journey:
+        <% if @team_submission.learning_journey.present? %>
+          <%= @team_submission.learning_journey %>
+        <% else %>
+          blank
+        <% end %>
+      </p>
+
+      <p>
+        Submission Type:
+        <% if !@team_submission.submission_type.nil? %>
+          <%= @team_submission.submission_type %>
+        <% else %>
+          blank
+        <% end %>
+      </p>
+
+      <h5>Additional Questions</h5>
+      <p>
+        Does your submission use artificial intelligence?
+        <%= @team_submission.question_response("ai")  %>
+      </p>
+      <% if @team_submission.ai? %>
+        <i><%= @team_submission.ai_description  %></i>
+      <% end %>
+
+      <p>
+        Does your submission help solve climate change?
+        <%= @team_submission.question_response("climate_change")  %>
+      </p>
+      <% if @team_submission.climate_change? %>
+        <i><%= @team_submission.climate_change_description  %></i>
+      <% end %>
+
+      <p>
+        Does your submission help solve a health problem?
+        <%= @team_submission.question_response("health_problem")  %>
+      </p>
+      <% if @team_submission.game? %>
+        <i><%= @team_submission.game_description  %></i>
+      <% end %>
 
       <p>
         <% if @team_submission.screenshots.any? %>
