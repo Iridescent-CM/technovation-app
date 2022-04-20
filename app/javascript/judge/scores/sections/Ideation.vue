@@ -1,17 +1,18 @@
 <template>
-    <div>
-      <GenericJudgingContainer
-          heading="Learning Journey"
-          section="ideation"
-          next-section="pitch"
-          prev-section="overview"
-      >
-        <template v-slot:main-content>
-          <p class="font-bold text-lg">{{ submission.name }}</p>
-          <div v-html="submission.description"></div>
-        </template>
-      </GenericJudgingContainer>
-    </div>
+  <div>
+    <GenericJudgingContainer
+      heading="Learning Journey"
+      section="ideation"
+      next-section="pitch"
+      prev-section="overview"
+      prev-button-text="Project Name & Description"
+    >
+      <template v-slot:main-content>
+        <p class="font-bold text-lg">{{ submission.name }}</p>
+        <div v-html="submission.description"></div>
+      </template>
+    </GenericJudgingContainer>
+  </div>
 </template>
 
 <script>
