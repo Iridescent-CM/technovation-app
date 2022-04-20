@@ -35,7 +35,7 @@ class SubmissionsGrid
   column :source_code_url
   
   column :business_plan_url do
-    !team.junior? ? self.business_plan_url : "-"
+    team.senior? ? self.business_plan_url : "-"
   end
 
   column :adoption_plan_url do
