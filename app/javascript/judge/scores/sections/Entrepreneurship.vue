@@ -1,43 +1,15 @@
 <template>
-  <div class="grid">
-      <div class="grid__col-12 grid__col--bleed-y">
-        <h2>Entrepreneurship</h2>
-      </div>
-
-      <team-info />
-
-      <div class="grid__col-9 grid__col--bleed-y">
-        <h1 class="border--b-thin-primary">{{ submission.name }}</h1>
-
-        <div class="app-description" v-html="submission.description"></div>
-
-        <div class="grid grid--bleed submission-pieces white-row">
-          <business />
-        </div>
-
-        <div class="grid grid--bleed submission-pieces primary-row">
-          <pitch :solo="true" />
-        </div>
-
-        <question-section
-          prevSection="pitch"
-          section="entrepreneurship"
-          nextSection="overall"
-        >
-          <p slot="section-summary" class="help-text">
-            To judge how well a team has planned their business, please refer to all submission
-            elements, particularly the business plan, and the
-            <a target="_blank" href="http://technovation.staging.wpengine.com/wp-content/uploads/2021/03/Entrepreneurship.png">rubric</a>.
-          </p>
-
-          <p slot="comment-tips">
-            How well the team did in developing a business.
-            Like the technical section, entrepreneurship is not
-            about how complex the business plan is, but how
-            well the business meets the needs outlined by the team.
-          </p>
-        </question-section>
-      </div>
+  <div>
+    <GenericJudgingContainer
+        :heading="team.division === 'senior' ? 'Business Plan' : 'User Adoption Plan'"
+        section="entrepreneurship"
+        prev-section="demo"
+        next-section="overall"
+    >
+      <template v-slot:main-content>
+        <business />
+      </template>
+    </GenericJudgingContainer>
   </div>
 </template>
 
@@ -47,17 +19,18 @@ import { mapState } from 'vuex'
 import TeamInfo from '../TeamInfo'
 import Pitch from '../pieces/Pitch'
 import Business from '../pieces/Business'
-
-import QuestionSection from '../QuestionSection'
+import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 
 export default {
-  computed: mapState(['submission']),
-
+  computed: mapState([
+      'submission',
+      'team'
+  ]),
   components: {
     TeamInfo,
     Pitch,
     Business,
-    QuestionSection,
+    GenericJudgingContainer,
   },
 }
 </script>
