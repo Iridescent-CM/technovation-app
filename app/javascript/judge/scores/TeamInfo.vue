@@ -3,8 +3,7 @@
     <p class="font-bold text-3xl">{{ team.name | capitalize}}</p>
     <div class="flex flex-col lg:flex-row gap-x-8 mt-4">
       <div class="w-full lg:w-1/4">
-        <!--    <img :src="team.photo"/>-->
-        <img class="h-full object-cover rounded-tr-2xl rounded-bl-2xl" src="https://cdn.vox-cdn.com/thumbor/Ndb49Uk3hjiquS041NDD0tPDPAs=/0x169:1423x914/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/7342855/microsoftteams.0.jpg"/>
+        <img class="h-full object-cover rounded-tr-2xl rounded-bl-2xl" :src="team.photo" alt="Team Photo"/>
       </div>
 
       <div class="mt-6">
