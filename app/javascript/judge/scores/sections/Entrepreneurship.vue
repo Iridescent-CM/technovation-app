@@ -4,7 +4,6 @@
         :heading="team.division === 'senior' ? 'Business Plan' : 'User Adoption Plan'"
         section="entrepreneurship"
         prev-section="demo"
-        prev-button-text="Demo"
         next-section="overall"
         next-button-text="Review Score"
     >
