@@ -2,20 +2,20 @@
   <div>
     <p>
       <a
-          :href="`${submission.pitch_video_url}`"
-          :data-opens-modal="`video-modal-${submission.pitch_video_id}`"
-          :data-modal-fetch="submission.pitch_video_url"
-          @click="trackPitchVideoClick"
+          :href="`${submission.demo_video_url}`"
+          :data-opens-modal="`video-modal-${submission.demo_video_id}`"
+          :data-modal-fetch="submission.demo_video_url"
+          @click="trackDemoVideoClick"
           class="text-energetic-blue flex"
       >
         <icon name="play-circle-o" color="0075cf"/>
-        Watch the pitch video
+        Watch the demo video
       </a>
     </p>
 
     <div
         class="modal"
-        :id="`video-modal-${submission.pitch_video_id}`"
+        :id="`video-modal-${submission.demo_video_id}`"
     >
       <div class="modal-content"></div>
     </div>
