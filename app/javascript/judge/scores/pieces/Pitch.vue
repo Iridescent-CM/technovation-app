@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
 import Icon from '../../../components/Icon'
 
@@ -31,12 +31,12 @@ export default {
   computed: mapState(['score', 'submission']),
 
   methods: {
-    async trackPitchVideoClick(event) {
+    async trackPitchVideoClick (event) {
       event.preventDefault()
       await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_pitch_video': true}})
     },
 
-    async trackDemoVideoClick(event) {
+    async trackDemoVideoClick (event) {
       event.preventDefault()
       await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_demo_video': true}})
     },
