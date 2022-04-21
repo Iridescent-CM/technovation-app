@@ -20,7 +20,7 @@
             <a target="_blank" href="http://technovation.staging.wpengine.com/wp-content/uploads/2021/03/ideation.png">rubric</a>.
           </p>
 
-          <p slot="comment-tips">
+          <p slot="comment-tips" class="text-sm">
             Be sensitive to cultural differences and
             focus on how well the team identified the problem
             and presented a solution.
