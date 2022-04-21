@@ -18,7 +18,6 @@ import Icon from '../../../components/Icon'
 
 import TeamInfo from '../TeamInfo'
 import Screenshots from '../pieces/Screenshots'
-import Pitch from '../pieces/Pitch'
 import TcCode from '../pieces/Code'
 import Business from '../pieces/Business'
 import Presentation from '../pieces/Presentation'
@@ -40,7 +39,6 @@ export default {
     Icon,
     TeamInfo,
     Screenshots,
-    Pitch,
     TcCode,
     Business,
     Presentation,
