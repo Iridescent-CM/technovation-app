@@ -2,7 +2,7 @@
     <div>
       <GenericJudgingContainer
           heading="Project Name & Description"
-          section="overview"
+          section="project_details"
           next-section="ideation"
           next-button-text="Learning Journey"
       >
@@ -15,11 +15,6 @@
 </template>
 
 <script>
-import TeamInfo from '../TeamInfo'
-import QuestionSection from '../QuestionSection'
-import EnergeticContainer from "../../components/EnergeticContainer";
-import ThickRule from "../../components/ThickRule";
-
 import { mapState } from 'vuex'
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 import Template from "../../../components/job_process/template";
@@ -29,10 +24,6 @@ export default {
 
   components: {
     Template,
-    QuestionSection,
-    TeamInfo,
-    EnergeticContainer,
-    ThickRule,
     GenericJudgingContainer
   },
 }
