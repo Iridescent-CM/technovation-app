@@ -39,10 +39,10 @@ export const totalPossible = state => {
 export const sections = (state, getters) => {
   let sections = [
     {
-      name: 'overview',
+      name: 'project-details',
       title: 'Project Name & Description',
-      pointsTotal: getters.sectionPointsTotal('overview'),
-      pointsPossible: getters.sectionPointsPossible('overview'),
+      pointsTotal: getters.sectionPointsTotal('project_details'),
+      pointsPossible: getters.sectionPointsPossible('project_details'),
     },
 
     {

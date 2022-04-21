@@ -5,7 +5,7 @@ module Judging
         [
           Question.new(
             idx: 1,
-            section: "overview",
+            section: "project_details",
             field: :overview_1,
             worth: 5,
             text: %(

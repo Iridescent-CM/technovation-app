@@ -10,7 +10,7 @@ export default {
     id: null,
     incomplete: null,
     comments: {
-      overview: emptyComment,
+      project_details: emptyComment,
       ideation: emptyComment,
       entrepreneurship: emptyComment,
       pitch: emptyComment,
