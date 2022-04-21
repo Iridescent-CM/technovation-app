@@ -15,7 +15,7 @@
             class="inline"
             color="0075cf"
         />
-        Read the business plan
+        Read the <span>{{ documentType }}</span> plan
       </a>
     </template>
 
@@ -30,7 +30,20 @@ import { mapState } from 'vuex'
 import Icon from "../../../components/Icon";
 
 export default {
-  computed: mapState(['score', 'submission', 'team']),
+  computed: {
+    ...mapState(['score', 'submission', 'team']),
+
+    documentType () {
+      switch (this.team.division) {
+        case 'senior':
+          return 'business'
+          break
+        case 'junior':
+          return 'user adoption'
+          break
+      }
+    }
+  },
   components: {
     Icon
   },
