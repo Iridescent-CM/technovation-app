@@ -26,6 +26,16 @@
       <% end %>
     </dd>
 
+    <dt>Media Consent</dt>
+    <dd>
+      <% if profile.media_consent_signed? %>
+        <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
+      <% else %>
+        <%= web_icon("exclamation-circle icon-red",
+                     text: "Not signed... boo...") %>
+      <% end %>
+    </dd>
+
     <dt>Location</dt>
     <dd>
       <% if profile.address_details.empty? %>

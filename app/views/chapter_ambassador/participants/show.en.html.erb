@@ -85,6 +85,12 @@
 <% if @account.student_profile %>
   <%= render 'admin/participants/student_debugging',
     profile: @account.student_profile %>
+
+  <%= render 'admin/participants/student_media_consent',
+    profile: @account.student_profile,
+    full_name: @account.full_name,
+    admin: false
+  %>
 <% end %>
 
 <% if @account.chapter_ambassador_profile %>
