@@ -18,8 +18,6 @@
 <script>
 import { mapState } from 'vuex'
 
-import TeamInfo from '../TeamInfo'
-import Pitch from '../pieces/Pitch'
 import Business from '../pieces/Business'
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 
@@ -29,8 +27,6 @@ export default {
       'team'
   ]),
   components: {
-    TeamInfo,
-    Pitch,
     Business,
     GenericJudgingContainer,
   },
