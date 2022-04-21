@@ -11,7 +11,7 @@
         >
           <template v-slot:main-content>
             <p class="font-bold text-lg">Videos</p>
-            <Pitch/>
+            <PitchVideoLink />
           </template>
         </GenericJudgingContainer>
       </div>
@@ -22,9 +22,8 @@
 <script>
 import { mapState } from 'vuex'
 
-import Pitch from '../pieces/Pitch'
+import PitchVideoLink from '../pieces/PitchVideoLink'
 import EnergeticContainer from "../../components/EnergeticContainer";
-import ThickRule from "../../components/ThickRule";
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 
 export default {
@@ -39,9 +38,8 @@ export default {
   },
 
   components: {
-    ThickRule,
     EnergeticContainer,
-    Pitch,
+    PitchVideoLink,
     GenericJudgingContainer
   },
 }

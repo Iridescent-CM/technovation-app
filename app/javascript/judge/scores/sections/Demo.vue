@@ -9,7 +9,7 @@
     >
       <template v-slot:main-content>
         <p class="font-bold text-lg">Videos</p>
-        <Demo/>
+        <DemoVideoLink/>
       </template>
     </GenericJudgingContainer>
   </div>
@@ -19,9 +19,8 @@
 import { mapState } from 'vuex'
 
 import EnergeticContainer from "../../components/EnergeticContainer";
-import ThickRule from "../../components/ThickRule";
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
-import Demo from "../pieces/Demo";
+import DemoVideoLink from "../pieces/DemoVideoLink";
 
 export default {
   computed: {
@@ -46,10 +45,9 @@ export default {
   },
 
   components: {
-    ThickRule,
     EnergeticContainer,
     GenericJudgingContainer,
-    Demo
+    DemoVideoLink
   },
 }
 </script>
