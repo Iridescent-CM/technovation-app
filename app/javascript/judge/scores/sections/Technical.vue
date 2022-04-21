@@ -43,7 +43,6 @@
 import TeamInfo from '../TeamInfo'
 
 import Screenshots from '../pieces/Screenshots'
-import Pitch from '../pieces/Pitch'
 import TcCode from '../pieces/Code'
 
 import QuestionSection from '../QuestionSection'
@@ -57,7 +56,6 @@ export default {
     QuestionSection,
     TeamInfo,
     Screenshots,
-    Pitch,
     TcCode,
   },
 }

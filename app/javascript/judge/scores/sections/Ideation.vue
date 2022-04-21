@@ -17,7 +17,6 @@
 
 <script>
 import TeamInfo from '../TeamInfo'
-import Pitch from '../pieces/Pitch'
 import QuestionSection from '../QuestionSection'
 import EnergeticContainer from "../../components/EnergeticContainer";
 import ThickRule from "../../components/ThickRule";
@@ -33,7 +32,6 @@ export default {
     Template,
     QuestionSection,
     TeamInfo,
-    Pitch,
     EnergeticContainer,
     ThickRule,
     GenericJudgingContainer
