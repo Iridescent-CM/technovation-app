@@ -31,10 +31,6 @@ RSpec.feature "Students edit submission development platform" do
       ".field_with_errors #team_submission_app_inventor_app_name",
     )
 
-    expect(page).to have_css(
-      ".field_with_errors #team_submission_app_inventor_gmail",
-    )
-
     fill_in "What is your App Inventor Project Name?", with: "my_exact_app_name"
 
     fill_in "What is the gmail address of the App Inventor account that your team is using?",
@@ -58,10 +54,6 @@ RSpec.feature "Students edit submission development platform" do
 
     expect(page).to have_css(
       ".field_with_errors #team_submission_thunkable_project_url",
-    )
-
-    expect(page).to have_css(
-      ".field_with_errors #team_submission_thunkable_account_email",
     )
 
     fill_in "What is the email address of your team's Thunkable account?",
