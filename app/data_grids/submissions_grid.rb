@@ -20,7 +20,7 @@ class SubmissionsGrid
   end
   
   column :project_description do
-    self.app_description
+    app_description
   end
 
   column :demo_video_link
@@ -43,7 +43,7 @@ class SubmissionsGrid
 
   column :adoption_plan_url do
     team.junior? ? self.business_plan_url : "-"
-  end 
+  end
 
   column :pitch_presentation_url
 
@@ -56,7 +56,9 @@ class SubmissionsGrid
 
   column :team_name, html: false
 
-  column :project_name, html: false
+  column :project_name, html: false do
+    app_name
+  end
 
   column :ai_question, header: "AI question", if: ->(grid) { grid.admin } do
     if ai?
