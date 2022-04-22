@@ -54,7 +54,7 @@ RSpec.feature "Mentors edit submission development platform" do
       ".field_with_errors #team_submission_thunkable_project_url",
     )
 
-    fill_in "What is the email address of your team's Thunkable account? (optional)",
+    fill_in "What is the email address of your team's Thunkable account (optional)?",
       with: "our-team@thunkable.com"
 
     fill_in "What is the URL to your Thunkable project?",
