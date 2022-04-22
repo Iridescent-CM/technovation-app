@@ -15,18 +15,21 @@ class SubmissionsGrid
 
   column :contest_rank, mandatory: true
 
-  column :app_name, mandatory: true, html: true do |sub|
+  column :project_name, mandatory: true, html: true do |sub|
     link_to sub.app_name, send("#{current_scope}_team_submission_path", sub)
   end
   
-  column :app_description
+  column :project_description do
+    self.app_description
+  end
+
   column :demo_video_link
   column :learning_journey
   column :pitch_video_link
   column :submission_type
   column :thunkable_project_url
 
-  column :screenshots do
+  column :images do
     screenshots.count
   end
 
@@ -53,7 +56,7 @@ class SubmissionsGrid
 
   column :team_name, html: false
 
-  column :app_name, html: false
+  column :project_name, html: false
 
   column :ai_question, header: "AI question", if: ->(grid) { grid.admin } do
     if ai?
