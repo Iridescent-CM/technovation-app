@@ -11,30 +11,24 @@
     </div>
 
     <div :class="solo ? 'grid__col-md-6' : 'grid__col-12'">
-      <h3>{{ section | capitalize }} comment</h3>
+      <h3 class="mb-2">{{ section | capitalize }} comment</h3>
 
-      <h5 class="heading--reset">Please keep in mind</h5>
+      <div class="p-4 bg-gray-50 shadow-lg border border-gray-300 rounded ring-gray-900 ring-opacity-5">
+        <h5 class="text-sm mb-2">Please keep in mind</h5>
 
-      <slot name="comment-tips" />
-
-      <div class="grid grid--bleed grid--justify-space-between">
-        <div class="grid__col-6"></div>
-
-        <div class="grid__col-6">
-          <p class="word-count">
-            <span :style="`color: ${colorForWordCount}`">
-              {{ wordCount }}
-              {{ wordCount | pluralize('word') }}
-            </span>
-
-            <br>
-
-            <span class="font-weight--300">Please write at least {{ minWordCount }} words</span>
-          </p>
-        </div>
+        <slot name="comment-tips" />
       </div>
 
-      <textarea ref="commentText" :value="comment.text" @input="updateCommentText" />
+      <div class="flex justify-between mt-8 mb-1 ml-1 mr-2">
+        <p class="text-base italic">Please write at least {{ minWordCount }} words</p>
+
+        <p class="text-base font-bold" :style="`color: ${colorForWordCount}`">
+          {{ wordCount }}
+          {{ wordCount | pluralize('word') }}
+        </p>
+      </div>
+
+      <textarea ref="commentText" :value="comment.text" @input="updateCommentText" class="w-full h-36" />
 
       <div class="flex justify-between mt-6">
         <div>
@@ -237,38 +231,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .grid {
-    background: white;
-  }
-
-  .help-text {
-    font-size: 1.3rem;
-    font-style: italic;
-    margin: 0;
-  }
-
-  textarea {
-    width: 100%;
-    height: 35vh;
-    margin: 0;
-    padding: 1rem;
-    box-shadow: inset 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
-  }
-
-  .nav-btns--right {
-    text-align: right;
-  }
-
-  .word-count {
-    text-align: right;
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 0.5rem 0;
-  }
-
-  .font-weight--300 {
-    font-weight: 300;
-  }
-</style>
