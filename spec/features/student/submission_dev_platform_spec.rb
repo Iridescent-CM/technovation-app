@@ -33,7 +33,7 @@ RSpec.feature "Students edit submission development platform" do
 
     fill_in "What is your App Inventor Project Name?", with: "my_exact_app_name"
 
-    fill_in "What is the gmail address of the App Inventor account that your team is using?",
+    fill_in "What is the gmail address of the App Inventor account that your team is using (optional)?",
       with: "my@gmail.com"
 
     click_button "Save"
@@ -56,7 +56,7 @@ RSpec.feature "Students edit submission development platform" do
       ".field_with_errors #team_submission_thunkable_project_url",
     )
 
-    fill_in "What is the email address of your team's Thunkable account?",
+    fill_in "What is the email address of your team's Thunkable account (optional)?",
       with: "our-team@thunkable.com"
 
     fill_in "What is the URL to your Thunkable project?",
