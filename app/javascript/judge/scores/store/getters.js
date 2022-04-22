@@ -1,16 +1,9 @@
 import flatMap from 'lodash/flatMap'
 
-export const anyScoresEmpty = state => {
-  let expectedScoreLength = 12
-
-  if (state.team.division === 'senior')
-    expectedScoreLength = 16
-
-  const scores = flatMap(state.questions, 'score')
-
-  const actualScoreLength = scores.filter((score) => { return score > 0 }).length
-
-  return actualScoreLength < expectedScoreLength
+export const anyScoresEmpty = (state) => {
+  return state.questions.some((question) => (
+    question.score === 0
+  ))
 }
 
 export const anyCommentsInvalid = state => {
