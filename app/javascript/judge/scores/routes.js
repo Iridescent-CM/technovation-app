@@ -13,7 +13,7 @@ import ReviewScore from './sections/ReviewScore'
 export const routes = [
   { path: '/', redirect: { name: 'review-submission' } },
   { path: '/review-submission', name: 'review-submission', component: ReviewSubmission },
-  { path: '/project-details', name: 'project-details', component: ProjectDetails },
+  { path: '/project-details', name: 'project_details', component: ProjectDetails },
   { path: '/ideation', name: 'ideation', component: Ideation },
   { path: '/technical', name: 'technical', component: Technical },
   { path: '/pitch', name: 'pitch', component: Pitch },
