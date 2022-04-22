@@ -6,29 +6,10 @@ export const anyScoresEmpty = (state) => {
   ))
 }
 
-export const anyCommentsInvalid = state => {
-  let expectedCount = 4
-
-  if (state.team.division === 'senior')
-    expectedCount = 5
-
-  let commentsToCount = Object.keys(state.score.comments)
-
-  if (state.team.division === 'junior')
-    commentsToCount = commentsToCount
-      .filter((section) => section !== 'entrepreneurship')
-
-  const actualCount = commentsToCount.length
-
-  const notEnoughComments = actualCount < expectedCount
-
-  const anyCommentsTooShort = commentsToCount.some((section) => {
-    const minWordCount = (section == 'overall') ? 40 : 20
-
-    return state.score.comments[section].word_count < minWordCount
-  })
-
-  return notEnoughComments || anyCommentsTooShort
+export const anyCommentsInvalid = (state, getters) => {
+  return getters.sections.some((section) => (
+    state.score.comments[section.name].word_count < 20
+  ))
 }
 
 export const comment = (state) => (sectionName) => {
