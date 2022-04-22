@@ -3,6 +3,8 @@
       <GenericJudgingContainer
           heading="Project Name & Description"
           section="project_details"
+          prev-section="review-submission"
+          prev-button-text="Overview"
           next-section="ideation"
           next-button-text="Learning Journey"
       >

@@ -4,7 +4,7 @@
       heading="Learning Journey"
       section="ideation"
       next-section="pitch"
-      prev-section="overview"
+      prev-section="project_details"
       prev-button-text="Project Name & Description"
     >
       <template v-slot:main-content>

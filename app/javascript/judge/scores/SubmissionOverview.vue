@@ -41,7 +41,7 @@
       <div>
         <p>
           <router-link
-              :to="{ name: 'project-details' }"
+              :to="{ name: 'project_details' }"
               class="tw-green-btn"
           >
             Start score
