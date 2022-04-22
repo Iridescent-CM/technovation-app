@@ -46,6 +46,8 @@ module Admin
         :business_plan,
         :development_platform,
         :app_inventor_app_name,
+        :learning_journey,
+        :submission_type,
         :app_inventor_gmail,
         :source_code,
         :contest_rank,

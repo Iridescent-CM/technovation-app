@@ -40,7 +40,10 @@
           <h6>Technical</h6>
           <%= f.input :development_platform,
             collection: TeamSubmission::DEVELOPMENT_PLATFORMS %>
+          <%= f.input :submission_type,
+            collection: TeamSubmission::SUBMISSION_TYPES %>
           <%= f.input :development_platform_other %>
+          <%= f.input :learning_journey %>
           <%= f.input :app_inventor_app_name %>
           <%= f.input :app_inventor_gmail %>
           <%= f.input :thunkable_account_email %>
