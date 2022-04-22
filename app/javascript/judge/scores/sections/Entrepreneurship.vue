@@ -4,7 +4,7 @@
         :heading="team.division === 'senior' ? 'Business Plan' : 'User Adoption Plan'"
         section="entrepreneurship"
         prev-section="demo"
-        next-section="overall"
+        next-section="review-score"
         next-button-text="Review Score"
     >
       <template v-slot:main-content>

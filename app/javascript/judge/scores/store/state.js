@@ -12,11 +12,9 @@ export default {
     comments: {
       overview: emptyComment,
       ideation: emptyComment,
-      technical: emptyComment,
       entrepreneurship: emptyComment,
       pitch: emptyComment,
       demo: emptyComment,
-      overall: emptyComment,
     },
   },
 

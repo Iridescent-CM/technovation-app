@@ -26,7 +26,7 @@ module Judging
 
           Question.new(
             idx: 2,
-            section: "ideaton",
+            section: "ideation",
             field: :ideation_2,
             worth: 5,
             text: %(

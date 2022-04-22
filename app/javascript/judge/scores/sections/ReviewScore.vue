@@ -108,15 +108,14 @@ export default {
 
     sectionNames () {
       let names = [
+        'overview',
         'ideation',
-        'technical',
         'pitch',
+        'demo',
       ]
 
-      if (this.team.division === 'senior')
+      if (this.team.division === 'senior' || this.team.division == 'junior')
         names.push('entrepreneurship')
-
-      names.push('overall')
 
       return names
     },
