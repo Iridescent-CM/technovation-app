@@ -39,8 +39,8 @@ module SubmissionsHelper
 
   def format_missing_submission_pieces(submission)
     pieces = submission.missing_pieces.map(&:humanize).map(&:titlecase).join(", ")
-    pieces.gsub("App Name", "Project Name")
-    pieces.gsub("App Description", "Project Description")
+    pieces = pieces.gsub("App Name", "Project Name")
+    pieces = pieces.gsub("App Description", "Project Description")
     pieces
   end
 end
