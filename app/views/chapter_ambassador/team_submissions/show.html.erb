@@ -113,6 +113,21 @@
         </dl>
       <% end %>
 
+      <% if @team_submission.junior_division? %>
+        <dl>
+          <dt>User Adoption Plan:</dt>
+          <dd>
+            <% if @team_submission.business_plan_url_complete? %>
+              <%= link_to @team_submission.business_plan_identifier,
+                @team_submission.business_plan_url,
+                target: :_blank %>
+            <% else %>
+              -
+            <% end %>
+          </dd>
+        </dl>
+      <% end %>
+
       <dl>
         <dt>Technical Additions:</dt>
 
