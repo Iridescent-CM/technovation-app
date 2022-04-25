@@ -55,7 +55,7 @@ class Questions
         id: submission_score.id,
         incomplete: submission_score.incomplete?,
         comments: {
-          overview: comment_data(submission_score, :overview),
+          project_details: comment_data(submission_score, :project_details),
           ideation: comment_data(submission_score, :ideation),
           technical: comment_data(submission_score, :technical),
           pitch: comment_data(submission_score, :pitch),
