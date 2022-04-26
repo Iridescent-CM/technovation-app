@@ -1421,7 +1421,7 @@ CREATE TABLE public.submission_scores (
     judge_recusal boolean DEFAULT false NOT NULL,
     judge_recusal_reason public.judge_recusal_from_submission_reason,
     judge_recusal_comment character varying,
-    overview_1 integer DEFAULT 0,
+    project_details_1 integer DEFAULT 0,
     pitch_3 integer DEFAULT 0,
     pitch_4 integer DEFAULT 0,
     pitch_5 integer DEFAULT 0,
@@ -1431,8 +1431,8 @@ CREATE TABLE public.submission_scores (
     demo_1 integer DEFAULT 0,
     demo_2 integer DEFAULT 0,
     demo_3 integer DEFAULT 0,
-    overview_comment text,
-    overview_comment_word_count integer DEFAULT 0,
+    project_details_comment text,
+    project_details_comment_word_count integer DEFAULT 0,
     demo_comment text,
     demo_comment_word_count integer DEFAULT 0
 );
@@ -3163,6 +3163,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220114040857'),
 ('20220405040709'),
 ('20220406163528'),
-('20220406164442');
+('20220406164442'),
+('20220426020533');
 
 
