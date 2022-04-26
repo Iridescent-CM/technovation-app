@@ -29,7 +29,7 @@ export default {
     nextSection () {
       return (this.team.division === 'senior' || this.team.division === 'junior') ?
         'entrepreneurship' :
-        'overall'
+        'review-score'
     },
 
     nextButtonText () {
@@ -40,6 +40,8 @@ export default {
         case 'junior':
           return 'User Adoption Plan'
           break
+        case 'beginner':
+          return 'Review Score'
       }
     }
   },
