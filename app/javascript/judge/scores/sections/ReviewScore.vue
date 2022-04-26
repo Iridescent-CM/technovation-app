@@ -4,28 +4,28 @@
       <TeamInfo/>
       <ThickRule/>
       <div class="w-full lg:w-1/2 mx-auto">
-        <div v-for="detail in sectionDetails" class="odd:bg-gray-200 p-6">
+        <div v-for="section in sections" class="odd:bg-gray-200 p-6">
           <router-link
-          :to="{ name: detail.section }"
-          v-tooltip.top-center="`Make changes to your ${detail.displayName} score`"
-          :key="detail.section"
+          :to="{ name: section.name }"
+          v-tooltip.top-center="`Make changes to your ${section.title} score`"
+          :key="section.name"
         >
           <div>
             <p class="flex">
               <icon
-                v-if="problemInSection(detail.section)"
-                :alt="`Problem indicated in ${detail.section}`"
-                :title="`Problem indicated in ${detail.section}`"
+                v-if="problemInSection(section.name)"
+                :alt="`Problem indicated in ${section.name}`"
+                :title="`Problem indicated in ${section.name}`"
                 name="exclamation-triangle"
                 color="d0006f"
                 size="18"
                 class-name="mr-4"
               />
-              <span class="font-bold">{{ detail.displayName | capitalize }}</span>
+              <span class="font-bold">{{ section.title | capitalize }}</span>
             </p>
           </div>
           <div class="font-bold text-4xl text-center">
-            {{ sectionPointsTotal(detail.section) }}
+            {{ sectionPointsTotal(section.name) }}
           </div>
         </router-link>
         </div>
@@ -86,30 +86,8 @@ export default {
       'problemInSection'
     ]),
 
-    sectionDetails () {
-      let sectionDetails = [
-        { section: 'project_details', displayName: 'Project Name & Description' },
-        { section: 'ideation', displayName: 'Learning Journey' },
-        { section: 'pitch', displayName: 'Pitch' },
-        { section: 'demo', displayName: 'Demo' },
-      ]
-
-      if(this.team.division === 'senior'){
-        sectionDetails.push(
-          {
-            section: 'entrepreneurship',
-            displayName: 'Business Plan'
-          }
-        )
-      } else if (this.team.division === 'junior'){
-        sectionDetails.push(
-          {
-            section: 'entrepreneurship',
-            displayName: 'User Adoption Plan'
-          }
-        )
-      }
-      return sectionDetails
+    sections () {
+      return this.$store.getters.sections
     },
 
     isScoreIncomplete () {
