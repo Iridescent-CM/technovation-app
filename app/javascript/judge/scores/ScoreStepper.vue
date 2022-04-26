@@ -55,7 +55,7 @@
         :to="{ name: 'review-score' }"
       >
         <span class="stepper__step-number">{{ lastStepNum }}</span>
-        Review score
+        Review Score
 
         <span class="stepper__step-score">
           {{ totalScore }} / {{ totalPossible }}
