@@ -2,6 +2,10 @@ a.link-button, .submit-button {
     @apply px-3 py-2 rounded shadow-sm text-sm
 }
 
+a.link-button-small {
+    @apply px-2 py-1
+}
+
 a.lg-link-button {
     @apply px-6 py-4 rounded shadow-md text-xl font-bold
 }
