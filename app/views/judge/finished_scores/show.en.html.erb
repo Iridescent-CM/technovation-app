@@ -1,42 +1,37 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-6">
-    <div class="panel">
-      <h2>Thank you!</h2>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-1/2">
+  <div class="panel p-6">
+    <h2 class="font-bold text-tg-magenta text-2xl">Thank you!</h2>
 
+    <div class="my-6">
       <p>
-        Our Technovation participants have taken up the challenge
-        to address problems in their local and global communities.
+        Our Technovation participants have taken up the challenge to address problems in their local and global communities.
+        Your help and contribution makes a huge impact and we highly appreciate your time.
+      </p>
+    </div>
+
+    <div>
+      <p>
+        You just completed your
+        <%= (@score.judge_profile.quarterfinals_scores_count + @score.judge_profile.semifinals_scores_count).ordinalize %>
+        score! You can
+        <%= link_to "review your score", new_judge_score_path(score_id: @score.id), class:'text-energetic-blue font-bold' %>
+        or see all of your finished scores on your
+        <%= link_to "dashboard", judge_dashboard_path, class:'text-energetic-blue font-bold' %>
+        and make edits as you need through
+        <%= SeasonToggles.current_round_deadline(current_judge) %>!
       </p>
 
-      <p>
-        Your help and contribution makes a huge impact and
-        we highly appreciate your time.
+      <p class="mt-8 text-center">
+        <% if CanStartNewScore.(current_judge) %>
+          <%= link_to "Start another score",
+            new_judge_score_path,
+            class: "tw-green-btn" %>
+        <% else %>
+          <%= link_to "Start another score",
+            judge_dashboard_path,
+            class: "tw-green-btn" %>
+        <% end %>
       </p>
-
-      <div class="grid__col-auto grid__col--bleed grid--align-center">
-        <p>
-          You just completed your
-          <%= (@score.judge_profile.quarterfinals_scores_count + @score.judge_profile.semifinals_scores_count).ordinalize %>
-          score! You can
-          <%= link_to "review your score", new_judge_score_path(score_id: @score.id) %>
-          or see all of your finished scores on your
-          <%= link_to "dashboard", judge_dashboard_path %>
-          and make edits as you need through
-          <%= SeasonToggles.current_round_deadline(current_judge) %>!
-        </p>
-
-        <p>
-          <% if CanStartNewScore.(current_judge) %>
-            <%= link_to "Start another score",
-              new_judge_score_path,
-              class: "button" %>
-          <% else %>
-            <%= link_to "Start another score",
-              judge_dashboard_path,
-              class: "button" %>
-          <% end %>
-        </p>
-      </div>
     </div>
   </div>
 </div>
