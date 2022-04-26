@@ -9,7 +9,7 @@
       <div class="mt-6">
         <p class="font-bold text-3xl text-energetic-blue rubik">{{ team.division | uppercase }} DIVISION</p>
         <p class="font-bold text-3xl text-energetic-blue rubik">{{ submission.development_platform }}</p>
-        <p>
+        <p class="mt-4">
           <span><icon
               size="20"
               name="map-marker"
@@ -17,6 +17,17 @@
               color="0075cf"
           />
           {{ team.location | capitalize }}</span>
+        </p>
+        <p>
+          <span><icon
+              size="18"
+              name="file-o"
+              class="inline"
+              color="0075cf"
+          />
+            <a :href="rubricLink" class="font-bold text-tg-magenta" target="_blank">View</a>
+             {{ team.division }} division judging rubric
+          </span>
         </p>
       </div>
     </div>
@@ -44,6 +55,20 @@ export default {
 
       return `mailto:${process.env.HELP_EMAIL}?subject=${subject}`
     },
+
+    rubricLink () {
+      console.log(this.submission)
+      switch (this.team.division) {
+        case 'senior':
+          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Senior-Rubric-2022-Season-FINAL-9-14-21.pdf"
+        case 'junior':
+          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Junior-Rubric-2022-Season-FINAL-9-14-21.pdf"
+        case 'beginner':
+          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Beginner-Rubric-2022-Season-FINAL-9-14-21.pdf"
+        default:
+          return "https://technovationchallenge.org/curriculum/judging-rubric/"
+      }
+    }
   },
 
   components: {
