@@ -350,12 +350,12 @@ class SubmissionScore < ActiveRecord::Base
     team_submission.team.division.junior?
   end
 
-  def total
-    ideation_total +
-      technical_total +
-        entrepreneurship_total +
-          pitch_total +
-            overall_impression_total
+  def total(season = Season.current.year)
+    JudgeQuestions
+      .new(division: team_division_name, season: season)
+      .call
+      .uniq(&:field)
+      .sum { |question| instance_eval(question.field.to_s) }
   end
 
   def total_for_question(question)
