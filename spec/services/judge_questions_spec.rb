@@ -71,6 +71,16 @@ describe JudgeQuestions do
           judge_questions
         end
       end
+
+      context "when no division is provided" do
+        let(:division) { nil }
+
+        it "calls the appropriate class to get the 2022 senior questions (this is to retain existing behavior)" do
+          expect(Judging::TwentyTwentyTwo::SeniorQuestions).to receive_message_chain(:new, :call)
+
+          judge_questions
+        end
+      end
     end
   end
 

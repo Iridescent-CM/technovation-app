@@ -30,12 +30,14 @@ class JudgeQuestions
   end
 
   def questions_class_name
-    case division.downcase
+    case division&.downcase
     when "beginner"
       "BeginnerQuestions"
     when "junior"
       "JuniorQuestions"
     when "senior"
+      "SeniorQuestions"
+    else
       "SeniorQuestions"
     end
   end
