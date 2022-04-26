@@ -97,22 +97,27 @@
         <p>
           <% if current_judge.onboarding? %>
             To be able to judge submissions online this season, make sure to complete the To-do items on the left: Consent Waiver and Judge Training.
-          <% else %>
-            You are currently set to judge submissions online.
           <% end %>
         </p>
       </section>
-      <section>
-        <p>
-          Quarterfinals judging (round 1) begins on
-          <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d") %>
-          and ends on
-          <%= ImportantDates.virtual_quarterfinals_judging_ends.strftime("%B %-d, %Y") %>.
-          Log back in starting
-          <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d") %>
-          to start judging!
-        </p>
-      </section>
+
+      <div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-4">
+        <ul class="list-disc list-inside">
+          <li class="text-left">
+            <strong class="font-bold">Quarterfinals</strong> judging begins on
+            <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d") %>
+            and ends on
+            <%= ImportantDates.virtual_quarterfinals_judging_ends.strftime("%B %-d, %Y") %>
+          </li>
+
+          <li class="text-left">
+            <strong class="font-bold">Semifinals</strong> judging begins on
+            <%= ImportantDates.semifinals_judging_begins.strftime("%B %-d") %>
+            and ends on
+            <%= ImportantDates.semifinals_judging_ends.strftime("%B %-d, %Y") %>
+          </li>
+        </ul>
+      </div>
     <% end %>
   <% end %>
 </div>
