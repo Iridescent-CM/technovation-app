@@ -28,7 +28,7 @@ export default {
           <div id="judge-recusal-form">
             <div>
               <input type="radio" id="not-in-english" name="judge-recusal-reason" value="submission_not_in_english" checked>
-              <label for="not-in-english">The submission is not in Engish</label>
+              <label for="not-in-english">The submission is not in English</label>
             </div>
             <div>
               <input type="radio" id="knows-team" name="judge-recusal-reason" value="knows_team">
