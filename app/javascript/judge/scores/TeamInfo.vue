@@ -57,7 +57,6 @@ export default {
     },
 
     rubricLink () {
-      console.log(this.submission)
       switch (this.team.division) {
         case 'senior':
           return "https://technovationchallenge.org/wp-content/uploads/2021/09/Senior-Rubric-2022-Season-FINAL-9-14-21.pdf"
