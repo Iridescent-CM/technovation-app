@@ -262,15 +262,12 @@ class SubmissionScore < ActiveRecord::Base
     first && first.total_possible || 0.0
   end
 
-  def self.total_possible_for(division)
-    case division
-    when "junior"
-      60
-    when "senior"
-      80
-    else
-      0
-    end
+  def self.total_possible_score_for(division:, season: Season.current.year)
+    JudgeQuestions
+      .new(division: division, season: season)
+      .call
+      .uniq(&:field)
+      .sum(&:worth)
   end
 
   def overall_impression_comment
@@ -414,9 +411,8 @@ class SubmissionScore < ActiveRecord::Base
     overall_impression_total
   end
 
-
   def total_possible
-    self.class.total_possible_for(team_submission.team_division_name)
+    self.class.total_possible_score_for(division: team_submission.team_division_name)
   end
 
   def status

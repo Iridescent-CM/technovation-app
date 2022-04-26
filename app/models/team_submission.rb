@@ -283,7 +283,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def total_possible_score
-    SubmissionScore.total_possible_for(team_division_name)
+    SubmissionScore.total_possible_score_for(division: team_division_name)
   end
 
   def only_needs_to_submit?
