@@ -49,6 +49,12 @@ export default new Vuex.Store({
       ))
     },
 
+    finishedSemifinalsScores (state) {
+      return state.scores.finished.sf.map(score => (
+        { ...JSON.parse(score).data.attributes }
+      ))
+    },
+
     assignedSubmissions (state) {
       return state.submissions
     },
