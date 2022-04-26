@@ -202,7 +202,7 @@ module Judging
           Question.new(
             idx: 2,
             section: "entrepreneurship",
-            field: :entrepreneurship_1,
+            field: :entrepreneurship_2,
             worth: 5,
             text: %(
               Do we explain how we will get new users to use our
