@@ -6,7 +6,7 @@ module Judging
           Question.new(
             idx: 1,
             section: "project_details",
-            field: :overview_1,
+            field: :project_details_1,
             worth: 5,
             text: %(
               Is our project name and 100 word problem/project description clear and compelling?
