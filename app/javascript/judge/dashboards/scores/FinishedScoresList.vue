@@ -1,42 +1,74 @@
 <template>
-  <div id="finished-scores" class="margin-top-normal">
-    <h6 class="heading--reset">
-      Revise & review your finished
+  <div id="finished-scores">
+    <div v-if="scores.length">
+      <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
+        {{ this.title }}
+      </h2>
 
-      <strong v-if="currentRound == 'qf'">quarterfinal</strong>
-      <strong v-else>semifinal</strong>
+      <div class="mt-2 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                      Project Name
+                    </th>
+                    <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                      Team
+                    </th>
+                    <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                      Division
+                    </th>
+                    <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                      Score
+                    </th>
+                    <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
+                      <span class="sr-only">Update</span>
+                    </th>
+                  </tr>
+                </thead>
 
-      scores until <strong v-html="deadline"></strong>
-    </h6>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <tr
+                    v-for="score in scores"
+                    :key="score.id">
 
-    <template v-if="!finishedScores.length">
-      <p>Finish a score and it will appear here for you to review</p>
-    </template>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                      {{ score.submission_name }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {{ score.team_name }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <span class="division">{{ score.team_division }}</span>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {{ score.total }} / {{ score.total_possible }}
+                    </td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <a
+                        v-if="scoresEditable"
+                        :href="score.url"
+                        class="link-button link-button-small link-button-success">
+                        Update
+                      </a>
 
-    <div
-      class="grid grid--justify-space-between"
-      v-for="score in finishedScores"
-      :key="score.id"
-    >
-      <div class="grid__col-4 grid__col--bleed-x">
-        <small>Submission name</small>
-        {{ score.submission_name }}
-      </div>
-
-      <div class="grid__col-4 grid__col--bleed-x">
-        <small>{{ score.team_division }} division team</small>
-        {{ score.team_name }}
-      </div>
-
-      <div class="grid__col-2 grid__col--bleed-x">
-        <small>Score given</small>
-        {{ score.total }} / {{ score.total_possible }}
-      </div>
-
-      <div class="grid__col-2 grid__col--bleed-x">
-        <a :href="score.url" class="button button--remove-bg">
-          Review
-        </a>
+                      <a
+                        v-else
+                        :href="`/judge/scores/${score.id}`"
+                        class="link-button link-button-small link-button-neutral"
+                        data-turbolinks="false">
+                        View score
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -47,21 +79,39 @@ import { mapGetters, mapState } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['finishedScores']),
-    ...mapState(['currentRound', 'deadline']),
+    ...mapGetters(['finishedQuarterfinalsScores', 'finishedSemifinalsScores']),
+
+    scores () {
+      switch (this.round) {
+        case 'quarterfinals':
+          return this.finishedQuarterfinalsScores
+          break
+        case 'semifinals':
+          return this.finishedSemifinalsScores
+          break
+      }
+    }
+  },
+  props: {
+    title: {
+      type: String,
+      default: 'Finished Scores'
+    },
+    round: {
+      type: String,
+      default: 'quarterfinals',
+      validator: (value) => ['quarterfinals', 'semifinals'].includes(value)
+    },
+    scoresEditable: {
+      type: Boolean,
+      default: true,
+    }
   }
 }
 </script>
 
 <style scoped>
-small {
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #666;
-}
-
-.margin-top-normal {
-  margin-top: 1rem;
+.division {
+  text-transform: capitalize;
 }
 </style>
