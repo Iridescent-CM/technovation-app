@@ -543,6 +543,14 @@ class TeamSubmission < ActiveRecord::Base
     team_division_name == "senior"
   end
 
+  def plan_type
+    if self.senior_division?
+      :business_plan
+    elsif self.junior_division?
+      :user_adoption_plan
+    end
+  end
+
   def development_platform_text
     if submission_type == MOBILE_APP_SUBMISSION_TYPE && development_platform != "Other"
       "#{submission_type} - #{development_platform}"
