@@ -1,71 +1,104 @@
 <% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
   <div id="judge-dashboard-scores-app">
     <% if CanStartNewScore.(current_judge) %>
-      <div class="panel">
-        <h5 class="heading--reset">
-          You are ready to start a new score!
-        </h5>
+      <h5 class="mb-4">
+        You are ready to start a new score!
+      </h5>
 
-        <p>
-          <%= link_to "Start a new score",
-            new_judge_score_path,
-            class: "button",
-            data: { turbolinks: false } %>
-        </p>
-      </div>
+      <%= link_to "Start a new score",
+        new_judge_score_path,
+        class: "link-button link-button-success",
+        data: { turbolinks: false } %>
     <% elsif @scores_in_progress.present? %>
-      <div class="panel score-in-progress">
-        <h5 class="heading--reset">Complete your scores in progress</h5>
+      <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
+        Scores in Progress
+      </h2>
 
-      <% @scores_in_progress.each do |score| %>
-        <div class="grid grid--justify-space-between">
-          <div class="grid__col-4 grid__col--bleed-x">
-            <small>Submission name</small>
-            <%= score.team_submission.app_name %>
-          </div>
+      <div class="mt-2 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                      Project Name
+                    </th>
+                    <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                      Team
+                    </th>
+                    <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                      Division
+                    </th>
+                    <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                      Score
+                    </th>
+                    <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
+                      <span class="sr-only">Resume</span>
+                    </th>
+                  </tr>
+                </thead>
 
-          <div class="grid__col-4 grid__col--bleed-x">
-            <small>
-              <%= score.team_division_name %> division team
-            </small>
-            <%= score.team_submission.team.name %>
-          </div>
-
-          <div class="grid__col-2 grid__col--bleed-x">
-            <small>Score so far</small>
-            <%= score.total %> /
-            <%= score.total_possible %>
-          </div>
-
-          <div class="grid__col-2 grid__col--bleed-x">
-            <%= link_to "Resume",
-              new_judge_score_path(score_id: score.id),
-              class: "button button--remove-bg" %>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  <% @scores_in_progress.each do |score| %>
+                    <tr>
+                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                        <%= score.team_submission.name %>
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <%= score.team_submission.team.name %>
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <%= score.team_division_name.titleize %>
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <%= score.total %> /
+                        <%= score.total_possible %>
+                      </td>
+                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <%= link_to "Resume",
+                          new_judge_score_path(score_id: score.id),
+                          class: "link-button link-button-success link-button-small" %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-    <% end %>
       </div>
     <% end %>
 
-    <div class="panel">
-      <h5 class="heading--reset">Manage your scores</h5>
-
+    <div class="mt-8">
       <% if LiveEventJudgingEnabled.(current_judge) %>
         <div ref="enableAssigned"></div>
         <assigned-scores-list></assigned-scores-list>
         <finished-scores-list></finished-scores-list>
       <% else %>
-        <finished-scores-list></finished-scores-list>
+        <% if SeasonToggles.quarterfinals_judging? %>
+          <finished-scores-list
+            title="Finished Scores"
+            round="quarterfinals"
+          >
+          </finished-scores-list>
+        <% end %>
 
         <% if SeasonToggles.semifinals_judging? %>
-          <qf-scores-list></qf-scores-list>
+          <finished-scores-list
+            title="Finished Scores"
+            round="semifinals"
+          >
+          </finished-scores-list>
+
+          <finished-scores-list
+            title="Finished Quarterfinals Scores"
+            round="quarterfinals"
+            :scores-editable="false"
+          />
+          </finished-scores-list>
         <% end %>
       <% end %>
-
-      <div
-        ref="deadline"
-        data-date="<%= SeasonToggles.current_round_deadline(current_judge) %>"
-      ></div>
     </div>
   </div>
 <% end %>
