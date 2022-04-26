@@ -74,6 +74,8 @@ class Questions
         name: submission.app_name,
         description: simple_format(submission.app_description),
 
+        learning_journey: submission.learning_journey,
+
         development_platform: submission.development_platform_text,
 
         screenshots: submission.screenshots.map { |s|
