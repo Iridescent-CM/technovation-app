@@ -43,7 +43,7 @@
             class="tw-green-btn"
             data-method="post"
           >
-            Submit score
+            Finish Score
           </a>
         </p>
       </div>
