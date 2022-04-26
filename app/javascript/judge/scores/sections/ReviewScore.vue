@@ -1,76 +1,53 @@
 <template>
-  <div class="grid">
-    <div class="grid__col-12 grid__col--bleed-y">
-      <h2>Review score</h2>
-    </div>
-
-    <team-info />
-
-    <div class="grid__col-9 grid__col--bleed-y">
-      <h1 class="border--b-thin-primary">{{ submission.name }}</h1>
-
-      <div class="app-description" v-html="submission.description"></div>
-
-      <div class="grid grid--justify-space-around">
-        <div class="grid__col-9 panel">
-          <h1>Review your score</h1>
-
+  <div>
+    <EnergeticContainer heading="Review Score">
+      <TeamInfo/>
+      <ThickRule/>
+      <div class="w-full lg:w-1/2 mx-auto">
+        <div v-for="section in sections" class="odd:bg-gray-200 p-6">
           <router-link
-            :to="{ name: name }"
-            v-tooltip.top-center="`Make changes to your ${name} score`"
-            v-for="name in sectionNames"
-            :key="name"
-            class="grid grid--bleed row"
-          >
-            <div class="grid__col-11">
-              <p>
-                <icon
-                  v-if="problemInSection(name)"
-                  :alt="`Problem indicated in ${name}`"
-                  :title="`Problem indicated in ${name}`"
-                  name="exclamation-triangle"
-                  color="903D54"
-                  size="18"
-                />
-                {{ name | capitalize }}
-              </p>
-            </div>
-
-            <div class="grid__col-1">
-              {{ sectionPointsTotal(name) }}
-            </div>
-          </router-link>
-
-          <div class="grid grid--bleed row row--bottom">
-            <div class="grid__col-11">
-              Final total score
-            </div>
-
-            <div class="grid__col-1">
-              {{ totalScore }}
-            </div>
+          :to="{ name: section.name }"
+          v-tooltip.top-center="`Make changes to your ${section.title} score`"
+          :key="section.name"
+        >
+          <div>
+            <p class="flex">
+              <icon
+                v-if="problemInSection(section.name)"
+                :alt="`Problem indicated in ${section.name}`"
+                :title="`Problem indicated in ${section.name}`"
+                name="exclamation-triangle"
+                color="d0006f"
+                size="18"
+                class-name="mr-4"
+              />
+              <span class="font-bold">{{ section.title | capitalize }}</span>
+            </p>
           </div>
+          <div class="font-bold text-4xl text-center">
+            {{ sectionPointsTotal(section.name) }}
+          </div>
+        </router-link>
         </div>
-      </div>
 
-      <div class="grid grid--bleed grid--justify-space-around">
-        <div class="grid__col-auto">
-          <p
-            class="align-center"
-            v-tooltip.top-center="finishScoreTooltip"
-          >
-            <a
-              :href="`/judge/score_completions?id=${score.id}`"
-              :disabled="isScoreIncomplete"
-              class="button"
-              data-method="post"
-            >
-              Finish score
-            </a>
-          </p>
+        <div class="p-6">
+          <p class="font-bold">Final Total Score</p>
+          <p class="text-center font-bold text-4xl">{{ totalScore }}</p>
         </div>
+
+        <p class="mt-8 text-center" v-tooltip.top-center="finishScoreTooltip">
+          <a
+            :href="`/judge/score_completions?id=${score.id}`"
+            :disabled="isScoreIncomplete"
+            :class="isScoreIncomplete ? 'opacity-50 cursor-not-allowed' : ''"
+            class="tw-green-btn"
+            data-method="post"
+          >
+            Finish Score
+          </a>
+        </p>
       </div>
-    </div>
+    </EnergeticContainer>
   </div>
 </template>
 
@@ -78,13 +55,16 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import Icon from '../../../components/Icon'
-
-import TeamInfo from '../TeamInfo'
+import EnergeticContainer from "../../components/EnergeticContainer";
+import TeamInfo from "../TeamInfo";
+import ThickRule from "../../components/ThickRule";
 
 export default {
   components: {
     Icon,
+    EnergeticContainer,
     TeamInfo,
+    ThickRule
   },
 
   created () {
@@ -106,18 +86,8 @@ export default {
       'problemInSection'
     ]),
 
-    sectionNames () {
-      let names = [
-        'overview',
-        'ideation',
-        'pitch',
-        'demo',
-      ]
-
-      if (this.team.division === 'senior' || this.team.division == 'junior')
-        names.push('entrepreneurship')
-
-      return names
+    sections () {
+      return this.$store.getters.sections
     },
 
     isScoreIncomplete () {
@@ -144,55 +114,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-  .panel {
-    padding: 0;
-
-    h1 {
-      margin: 1rem 0;
-    }
-  }
-
-  .row {
-    color: black;
-    padding: 0.5rem 1rem;
-
-    &:nth-child(even) {
-      background: DarkSeaGreen;
-    }
-
-    &:not(.row--bottom) {
-      opacity: 0.8;
-      transition: opacity 0.2s;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-
-    div {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      position: relative;
-
-      img {
-        position: absolute;
-        top: 0.65rem;
-        left: -50px;
-      }
-
-      &.grid__col-1 {
-        font-size: 2rem;
-        color: #666;
-        font-weight: bold;
-        text-align: center;
-      }
-    }
-  }
-
-  .align-center {
-    text-align: center;
-  }
-</style>

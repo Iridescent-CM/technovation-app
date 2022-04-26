@@ -36,7 +36,10 @@ module.exports = {
     }
   },
   variants: {
-    extend: {},
+    extend: {
+      opacity: ['disabled'],
+      backgroundColor: ['even', 'odd'],
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
