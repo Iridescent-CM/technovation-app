@@ -53,71 +53,35 @@ RSpec.describe SuspiciousSubmissionScores do
       end
 
       senior_min_score.update({
-        ideation_1: 1,
-        ideation_2: 1,
-        ideation_3: 1,
-        ideation_4: 1,
-        technical_1: 1,
-        technical_2: 1,
-        technical_3: 1,
-        technical_4: 1,
-        pitch_1: 1,
-        pitch_2: 1,
-        entrepreneurship_1: 1,
-        entrepreneurship_2: 1,
-        entrepreneurship_3: 1,
-        entrepreneurship_4: 1,
-        overall_1: 1,
-        overall_2: 4,
+        pitch_1: 5,
+        pitch_2: 5,
+        pitch_3: 5,
+        pitch_4: 5
       })
 
       junior_min_score.update({
-        ideation_1: 1,
-        ideation_2: 1,
-        ideation_3: 1,
-        ideation_4: 1,
-        technical_1: 1,
-        technical_2: 1,
-        technical_3: 1,
-        technical_4: 1,
-        pitch_1: 1,
-        pitch_2: 1,
-        overall_1: 1,
-        overall_2: 3,
+        pitch_1: 5,
+        pitch_2: 5,
+        pitch_3: 5,
+        pitch_4: 5
       })
 
       senior_low_score.update({
         ideation_1: 1,
         ideation_2: 1,
-        ideation_3: 1,
-        ideation_4: 1,
-        technical_1: 1,
-        technical_2: 1,
-        technical_3: 1,
-        technical_4: 1,
         pitch_1: 1,
         pitch_2: 1,
         entrepreneurship_1: 1,
-        entrepreneurship_2: 1,
-        entrepreneurship_3: 1,
-        entrepreneurship_4: 1,
-        overall_1: 1,
-        overall_2: 3,
+        entrepreneurship_2: 1
       })
 
       junior_low_score.update({
         ideation_1: 1,
         ideation_2: 1,
-        ideation_3: 1,
-        ideation_4: 1,
-        technical_1: 1,
-        technical_2: 1,
-        technical_3: 1,
-        technical_4: 1,
         pitch_1: 1,
         pitch_2: 1,
-        overall_1: 1,
-        overall_2: 2,
+        entrepreneurship_1: 1,
+        entrepreneurship_2: 1
       })
 
       SubmissionScore.find_each(&:complete!)
@@ -125,7 +89,7 @@ RSpec.describe SuspiciousSubmissionScores do
       suspicious = SuspiciousSubmissionScores.new
       expect(suspicious.map(&:id)).to contain_exactly(
         senior_low_score.id,
-        junior_low_score.id,
+        junior_low_score.id
       )
     end
   end
