@@ -111,6 +111,7 @@ export default {
 
   watch: {
     '$route': 'validateScore',
+    score: 'validateScore'
   },
 }
 </script>
