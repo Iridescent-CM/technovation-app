@@ -16,11 +16,6 @@
 </template>
 
 <script>
-import TeamInfo from '../TeamInfo'
-import QuestionSection from '../QuestionSection'
-import EnergeticContainer from "../../components/EnergeticContainer";
-import ThickRule from "../../components/ThickRule";
-
 import { mapState } from 'vuex'
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 import Template from "../../../components/job_process/template";
@@ -29,12 +24,8 @@ export default {
   computed: mapState(['submission']),
 
   components: {
-    Template,
-    QuestionSection,
-    TeamInfo,
-    EnergeticContainer,
-    ThickRule,
-    GenericJudgingContainer
+    GenericJudgingContainer,
+    Template
   },
 }
 </script>

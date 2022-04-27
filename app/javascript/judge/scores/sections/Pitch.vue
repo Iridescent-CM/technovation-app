@@ -22,9 +22,8 @@
 <script>
 import { mapState } from 'vuex'
 
-import PitchVideoLink from '../pieces/PitchVideoLink'
-import EnergeticContainer from "../../components/EnergeticContainer";
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
+import PitchVideoLink from '../pieces/PitchVideoLink'
 
 export default {
   computed: {
@@ -38,9 +37,8 @@ export default {
   },
 
   components: {
-    EnergeticContainer,
-    PitchVideoLink,
-    GenericJudgingContainer
+    GenericJudgingContainer,
+    PitchVideoLink
   },
 }
 </script>

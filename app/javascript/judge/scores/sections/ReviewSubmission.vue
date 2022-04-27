@@ -16,13 +16,9 @@
 import { mapState } from 'vuex'
 import Icon from '../../../components/Icon'
 
-import TeamInfo from '../TeamInfo'
-import Screenshots from '../pieces/Screenshots'
-import Business from '../pieces/Business'
-import Presentation from '../pieces/Presentation'
-import JudgeRecusalPopup from '../JudgeRecusalPopup'
 import EnergeticContainer from "../../components/EnergeticContainer";
 import SubmissionOverview from "../SubmissionOverview";
+import JudgeRecusalPopup from '../JudgeRecusalPopup'
 
 export default {
   computed: {
@@ -33,13 +29,9 @@ export default {
     ])
   },
   components: {
-    SubmissionOverview,
-    EnergeticContainer,
     Icon,
-    TeamInfo,
-    Screenshots,
-    Business,
-    Presentation,
+    EnergeticContainer,
+    SubmissionOverview,
     JudgeRecusalPopup,
   },
 }
