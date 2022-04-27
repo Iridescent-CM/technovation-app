@@ -18,7 +18,6 @@ import Icon from '../../../components/Icon'
 
 import TeamInfo from '../TeamInfo'
 import Screenshots from '../pieces/Screenshots'
-import TcCode from '../pieces/Code'
 import Business from '../pieces/Business'
 import Presentation from '../pieces/Presentation'
 import JudgeRecusalPopup from '../JudgeRecusalPopup'
@@ -39,7 +38,6 @@ export default {
     Icon,
     TeamInfo,
     Screenshots,
-    TcCode,
     Business,
     Presentation,
     JudgeRecusalPopup,
