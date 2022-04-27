@@ -11,10 +11,10 @@
     </div>
 
     <div :class="solo ? 'grid__col-md-6' : 'grid__col-12'">
-      <h3 class="mb-2">{{ commentTitle | capitalize }} comment</h3>
+      <h3 class="mb-2">{{ commentTitle | capitalize }} Feedback for Students</h3>
 
       <div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-4">
-        <h5 class="text-sm mb-2">Please keep in mind</h5>
+        <h4 class="text-base mb-2 font-bold">Please Keep in Mind</h4>
 
         <slot name="comment-tips" />
       </div>
