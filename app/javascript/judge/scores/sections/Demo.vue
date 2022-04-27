@@ -18,7 +18,6 @@
 <script>
 import { mapState } from 'vuex'
 
-import EnergeticContainer from "../../components/EnergeticContainer";
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 import DemoVideoLink from "../pieces/DemoVideoLink";
 
@@ -47,7 +46,6 @@ export default {
   },
 
   components: {
-    EnergeticContainer,
     GenericJudgingContainer,
     DemoVideoLink
   },
