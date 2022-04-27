@@ -6,7 +6,7 @@
         :data-opens-modal="`video-modal-${submission.pitch_video_id}`"
         :data-modal-fetch="submission.pitch_video_url"
         @click="trackPitchVideoClick"
-        class="text-energetic-blue flex"
+        class="text-energetic-blue flex text-3xl"
       >
         <Icon name="play-circle-o" color="0075cf"/>
         Watch the pitch video

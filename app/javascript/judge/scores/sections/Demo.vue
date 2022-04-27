@@ -8,7 +8,6 @@
       prevSection="pitch"
     >
       <template v-slot:main-content>
-        <p class="font-bold text-lg">Videos</p>
         <DemoVideoLink/>
       </template>
     </GenericJudgingContainer>

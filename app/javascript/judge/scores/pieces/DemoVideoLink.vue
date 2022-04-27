@@ -6,7 +6,7 @@
         :data-opens-modal="`video-modal-${submission.demo_video_id}`"
         :data-modal-fetch="submission.demo_video_url"
         @click="trackDemoVideoClick"
-        class="text-energetic-blue flex"
+        class="text-energetic-blue flex text-3xl"
       >
         <icon name="play-circle-o" color="0075cf"/>
         Watch the demo video
