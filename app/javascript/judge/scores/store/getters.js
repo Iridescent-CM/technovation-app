@@ -31,6 +31,7 @@ export const sections = (state, getters) => {
       title: 'Project Name & Description',
       pointsTotal: getters.sectionPointsTotal('project_details'),
       pointsPossible: getters.sectionPointsPossible('project_details'),
+      isComplete: getters.isSectionComplete('project_details')
     },
 
     {
@@ -38,6 +39,7 @@ export const sections = (state, getters) => {
       title: 'Learning Journey',
       pointsTotal: getters.sectionPointsTotal('ideation'),
       pointsPossible: getters.sectionPointsPossible('ideation'),
+      isComplete: getters.isSectionComplete('ideation')
     },
 
     {
@@ -45,6 +47,7 @@ export const sections = (state, getters) => {
       title: 'Pitch',
       pointsTotal: getters.sectionPointsTotal('pitch'),
       pointsPossible: getters.sectionPointsPossible('pitch'),
+      isComplete: getters.isSectionComplete('pitch')
     },
 
     {
@@ -52,6 +55,7 @@ export const sections = (state, getters) => {
       title: 'Demo',
       pointsTotal: getters.sectionPointsTotal('demo'),
       pointsPossible: getters.sectionPointsPossible('demo'),
+      isComplete: getters.isSectionComplete('demo')
     },
   ]
 
@@ -61,6 +65,7 @@ export const sections = (state, getters) => {
       title: state.team.division === 'senior' ? 'Business Plan' : 'User Adoption Plan',
       pointsTotal: getters.sectionPointsTotal('entrepreneurship'),
       pointsPossible: getters.sectionPointsPossible('entrepreneurship'),
+      isComplete: getters.isSectionComplete('entrepreneurship')
     })
   }
 
