@@ -37,4 +37,3 @@ html{
 .tw-wrapper{
     @apply container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4
 }
-
