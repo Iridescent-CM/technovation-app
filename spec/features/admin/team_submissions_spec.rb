@@ -48,7 +48,7 @@ RSpec.feature "admin team submissions" do
     fill_in "App description", with: "A great description for the ages"
 
     attach_file(
-      "Business plan",
+      "Business Plan",
       Rails.root + "spec/support/fixtures/business_plan.pdf"
     )
 
