@@ -26,7 +26,7 @@
 
     <div class="mt-8">
       <p>You are reviewing a <span class="font-bold">{{ team.division | capitalize }} Division {{ submission.development_platform}}</span> submission.</p>
-      <p>For tips on judging this category, click <a :href="rubricLink" class="tw-link" target="_blank">here</a>.</p>
+      <p>For tips on judging this category, click <a :href="rubricLink" class="tw-link-magenta" target="_blank">here</a>.</p>
     </div>
 
     <div class="mt-8 flex flex-col justify-center lg:flex-row lg:justify-between">
@@ -58,6 +58,7 @@ import { mapState } from 'vuex'
 import JudgeRecusalPopup from './JudgeRecusalPopup'
 import Icon from '../../components/Icon'
 import ThickRule from "../components/ThickRule";
+import {getJudgingRubricLink} from "../../utilities/judge-helpers";
 
 export default {
   data() {
@@ -81,16 +82,7 @@ export default {
     },
 
     rubricLink () {
-      switch (this.team.division) {
-        case 'senior':
-          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Senior-Rubric-2022-Season-FINAL-9-14-21.pdf"
-        case 'junior':
-          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Junior-Rubric-2022-Season-FINAL-9-14-21.pdf"
-        case 'beginner':
-          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Beginner-Rubric-2022-Season-FINAL-9-14-21.pdf"
-        default:
-          return "https://technovationchallenge.org/curriculum/judging-rubric/"
-      }
+      return getJudgingRubricLink(this.team.division)
     }
   },
   components: {

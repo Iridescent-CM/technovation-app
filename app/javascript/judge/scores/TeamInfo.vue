@@ -25,7 +25,7 @@
               class="inline"
               color="0075cf"
           />
-            <a :href="rubricLink" class="font-bold text-tg-magenta" target="_blank">View</a>
+            <a :href="rubricLink" class="tw-link-magenta" target="_blank">View</a>
              {{ team.division }} division judging rubric
           </span>
         </p>
@@ -37,6 +37,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import {getJudgingRubricLink} from "../../utilities/judge-helpers"
 
 import JudgeRecusalPopup from './JudgeRecusalPopup'
 import Icon from '../../components/Icon'
@@ -57,16 +58,7 @@ export default {
     },
 
     rubricLink () {
-      switch (this.team.division) {
-        case 'senior':
-          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Senior-Rubric-2022-Season-FINAL-9-14-21.pdf"
-        case 'junior':
-          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Junior-Rubric-2022-Season-FINAL-9-14-21.pdf"
-        case 'beginner':
-          return "https://technovationchallenge.org/wp-content/uploads/2021/09/Beginner-Rubric-2022-Season-FINAL-9-14-21.pdf"
-        default:
-          return "https://technovationchallenge.org/curriculum/judging-rubric/"
-      }
+      return getJudgingRubricLink(this.team.division)
     }
   },
 
