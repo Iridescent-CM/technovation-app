@@ -6,7 +6,6 @@ import Ideation from "./sections/Ideation"
 import Pitch from "./sections/Pitch"
 import Demo from "./sections/Demo"
 import Entrepreneurship from "./sections/Entrepreneurship"
-import Overall from "./sections/Overall"
 import ReviewScore from './sections/ReviewScore'
 
 export const routes = [
@@ -17,7 +16,6 @@ export const routes = [
   { path: '/pitch', name: 'pitch', component: Pitch },
   { path: '/demo', name: 'demo', component: Demo },
   { path: '/entrepreneurship', name: 'entrepreneurship', component: Entrepreneurship },
-  { path: '/overall', name: 'overall', component: Overall },
   { path: '/review-score', name: 'review-score', component: ReviewScore },
 ]
 
