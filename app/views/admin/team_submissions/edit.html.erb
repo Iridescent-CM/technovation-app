@@ -25,7 +25,7 @@
           <%= f.input :demo_video_link %>
           <%= f.input :pitch_video_link %>
         </div>
-        
+      
         <div class="grid__cell--padding-md-y">
           <h6>Entrepreneurship</h6>
           <%= f.label :business_plan, "#{@team_submission.senior_division? ? "Business Plan" : "User Adoption Plan"}" %>
@@ -38,7 +38,7 @@
           <%= f.file_field :business_plan %>
           <%= f.hidden_field :business_plan_cache %>
         </div>
-
+        
         <div>
           <h6>Additional Questions</h6>
           <%= f.input :ai, label: 'Does your submission use artificial intelligence?', 

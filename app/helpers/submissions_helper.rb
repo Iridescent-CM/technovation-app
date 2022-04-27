@@ -37,6 +37,14 @@ module SubmissionsHelper
     )
   end
 
+  def label_for_submission_plan(submission)    
+    if submission.senior_division?
+      :business_plan
+    elsif submission.junior_division?
+      :user_adoption_plan
+    end
+  end
+
   def format_missing_submission_pieces(submission)
     pieces = submission.missing_pieces.map(&:humanize).map(&:titlecase).join(", ")
     pieces = pieces.gsub("App Name", "Project Name")
