@@ -4,6 +4,7 @@
   <div class="grid">
     <div class="grid__col-6">
       <div class="panel">
+        <h4>This is a <%= @team_submission.team.division.name.capitalize %> division submission</h4>
         <%= f.input :contest_rank,
           collection: TeamSubmission.contest_ranks.keys %>
         <div class="grid__cell--padding-md-y">
