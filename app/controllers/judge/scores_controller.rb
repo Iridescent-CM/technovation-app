@@ -133,9 +133,9 @@ module Judge
 
     def score_params
       params.require(:submission_score).permit(
-        :overview_1,
-        :overview_comment,
-        :overview_comment_word_count,
+        :project_details_1,
+        :project_details_comment,
+        :project_details_comment_word_count,
         :ideation_1,
         :ideation_2,
         :ideation_3,
