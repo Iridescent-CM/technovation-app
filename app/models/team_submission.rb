@@ -562,7 +562,7 @@ class TeamSubmission < ActiveRecord::Base
     %{<iframe
         src="#{src}"
         width="100%"
-        height="315"
+        height="415"
         frameborder="0"
         allowfullscreen>
       </iframe>}.strip_heredoc

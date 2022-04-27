@@ -16,6 +16,7 @@
     <div
       class="modal"
       :id="`video-modal-${submission.pitch_video_id}`"
+      data-width="700px"
     >
       <div class="modal-content"></div>
     </div>
