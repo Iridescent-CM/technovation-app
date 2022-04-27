@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import ReviewSubmission from './sections/ReviewSubmission'
 import ProjectDetails from "./sections/ProjectDetails"
 import Ideation from "./sections/Ideation"
-import Technical from "./sections/Technical"
 import Pitch from "./sections/Pitch"
 import Demo from "./sections/Demo"
 import Entrepreneurship from "./sections/Entrepreneurship"
@@ -15,7 +14,6 @@ export const routes = [
   { path: '/review-submission', name: 'review-submission', component: ReviewSubmission },
   { path: '/project-details', name: 'project_details', component: ProjectDetails },
   { path: '/ideation', name: 'ideation', component: Ideation },
-  { path: '/technical', name: 'technical', component: Technical },
   { path: '/pitch', name: 'pitch', component: Pitch },
   { path: '/demo', name: 'demo', component: Demo },
   { path: '/entrepreneurship', name: 'entrepreneurship', component: Entrepreneurship },
