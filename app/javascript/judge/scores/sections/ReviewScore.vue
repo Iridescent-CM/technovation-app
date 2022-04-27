@@ -14,8 +14,8 @@
             <p class="flex">
               <icon
                 v-if="problemInSection(section.name)"
-                :alt="`Problem indicated in ${section.name}`"
-                :title="`Problem indicated in ${section.name}`"
+                :alt="`Problem indicated in ${section.title}`"
+                :title="`Problem indicated in ${section.title}`"
                 name="exclamation-triangle"
                 color="d0006f"
                 size="18"
@@ -39,7 +39,7 @@
           <a
             :href="`/judge/score_completions?id=${score.id}`"
             :disabled="isScoreIncomplete"
-            :class="isScoreIncomplete ? 'opacity-50 cursor-not-allowed' : ''"
+            :class="isScoreIncomplete ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''"
             class="tw-green-btn"
             data-method="post"
           >
