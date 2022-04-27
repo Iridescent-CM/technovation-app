@@ -4,6 +4,7 @@
   <div class="grid">
     <div class="grid__col-6">
       <div class="panel">
+        <h4>This is a <%= @team_submission.team.division.name.capitalize %> division submission</h4>
         <%= f.input :contest_rank,
           collection: TeamSubmission.contest_ranks.keys %>
         <div class="grid__cell--padding-md-y">
@@ -27,7 +28,7 @@
         
         <div class="grid__cell--padding-md-y">
           <h6>Entrepreneurship</h6>
-          <%= f.label :business_plan %>
+          <%= f.label :business_plan, "#{@team_submission.senior_division? ? "Business Plan" : "User Adoption Plan"}" %>
           <% if @team_submission.business_plan_url %>
             <%= link_to @team_submission.business_plan_identifier,
               @team_submission.business_plan_url,
