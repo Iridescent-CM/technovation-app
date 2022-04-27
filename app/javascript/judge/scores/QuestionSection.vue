@@ -13,13 +13,13 @@
     <div :class="solo ? 'grid__col-md-6' : 'grid__col-12'">
       <h3 class="mb-2">{{ commentTitle | capitalize }} comment</h3>
 
-      <div class="p-4 bg-gray-50 shadow-lg border border-gray-300 rounded ring-gray-900 ring-opacity-5">
+      <div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-4">
         <h5 class="text-sm mb-2">Please keep in mind</h5>
 
         <slot name="comment-tips" />
       </div>
 
-      <div class="flex justify-between mt-8 mb-1 ml-1 mr-2">
+      <div class="flex justify-between mb-1 ml-1 mr-2">
         <p class="text-base italic">Please write at least {{ minWordCount }} words</p>
 
         <p class="text-base font-bold" :style="`color: ${colorForWordCount}`">

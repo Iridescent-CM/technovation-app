@@ -84,22 +84,12 @@ FactoryBot.define do
     end
 
     trait :minimum_auto_approved_total do
-      ideation_1 { 1 }
-      ideation_2 { 1 }
-      ideation_3 { 1 }
-      ideation_4 { 1 }
-      technical_1 { 1 }
-      technical_2 { 1 }
-      technical_3 { 1 }
-      technical_4 { 1 }
-      pitch_1 { 1 }
-      pitch_2 { 1 }
-      entrepreneurship_1 { 1 }
-      entrepreneurship_2 { 1 }
-      entrepreneurship_3 { 1 }
-      entrepreneurship_4 { 1 }
-      overall_1 { 5 }
-      overall_2 { 5 }
+      ideation_1 { 5 }
+      ideation_2 { 5 }
+      pitch_1 { 5 }
+      pitch_2 { 5 }
+      entrepreneurship_1 { 5 }
+      entrepreneurship_2 { 5 }
     end
   end
 end

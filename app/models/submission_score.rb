@@ -6,8 +6,9 @@ class SubmissionScore < ActiveRecord::Base
   include Regioned
   regioned_source Team, through: :team_submission
 
-  SENIOR_LOW_SCORE_THRESHOLD = 19
-  JUNIOR_LOW_SCORE_THRESHOLD = 14
+  SENIOR_LOW_SCORE_THRESHOLD = 18
+  JUNIOR_LOW_SCORE_THRESHOLD = 16
+  BEGINNER_LOW_SCORE_THRESHOLD = 16
 
   before_commit -> {
     self.judge_recusal_comment = "" if judge_recusal_reason != "other"
@@ -262,15 +263,12 @@ class SubmissionScore < ActiveRecord::Base
     first && first.total_possible || 0.0
   end
 
-  def self.total_possible_for(division)
-    case division
-    when "junior"
-      60
-    when "senior"
-      80
-    else
-      0
-    end
+  def self.total_possible_score_for(division:, season: Season.current.year)
+    JudgeQuestions
+      .new(division: division, season: season)
+      .call
+      .uniq(&:field)
+      .sum(&:worth)
   end
 
   def overall_impression_comment
@@ -353,12 +351,16 @@ class SubmissionScore < ActiveRecord::Base
     team_submission.team.division.junior?
   end
 
-  def total
-    ideation_total +
-      technical_total +
-        entrepreneurship_total +
-          pitch_total +
-            overall_impression_total
+  def beginner_team_division?
+    team_submission.team.division.beginner?
+  end
+
+  def total(season = Season.current.year)
+    JudgeQuestions
+      .new(division: team_division_name, season: season)
+      .call
+      .uniq(&:field)
+      .sum { |question| instance_eval(question.field.to_s) }
   end
 
   def total_for_question(question)
@@ -414,9 +416,8 @@ class SubmissionScore < ActiveRecord::Base
     overall_impression_total
   end
 
-
   def total_possible
-    self.class.total_possible_for(team_submission.team_division_name)
+    self.class.total_possible_score_for(division: team_submission.team_division_name)
   end
 
   def status
@@ -453,7 +454,8 @@ class SubmissionScore < ActiveRecord::Base
 
   def detect_if_raw_total_seems_too_low
     (senior_team_division? && raw_total < SENIOR_LOW_SCORE_THRESHOLD) ||
-      (junior_team_division? && raw_total < JUNIOR_LOW_SCORE_THRESHOLD)
+      (junior_team_division? && raw_total < JUNIOR_LOW_SCORE_THRESHOLD) ||
+      (beginner_team_division? && raw_total < BEGINNER_LOW_SCORE_THRESHOLD)
   end
 
   def can_automatically_approve?

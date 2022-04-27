@@ -2,9 +2,12 @@ require "rails_helper"
 
 describe JudgeQuestionsForSubmissionScore do
   let(:judge_questions_for_submission_score) {
-    JudgeQuestionsForSubmissionScore.new(submission_score).call
+    JudgeQuestionsForSubmissionScore
+      .new(submission_score, judge_questions_constructor: judge_questions_constructor)
+      .call
   }
   let(:submission_score) { instance_double(SubmissionScore) }
+  let(:judge_questions_constructor) { double(JudgeQuestions) }
   let(:submission_type) { TeamSubmission::MOBILE_APP_SUBMISSION_TYPE }
   let(:season) { 2021 }
   let(:division) { "senior" }
@@ -16,8 +19,11 @@ describe JudgeQuestionsForSubmissionScore do
   end
 
   describe "#call" do
-    let(:season) { 2022 }
-    let(:division) { "beginner" }
+    before do
+      allow(judge_questions_constructor).to receive_message_chain(:new, :call).and_return(questions)
+      allow(submission_score).to receive(:ideation_1).and_return(submission_score_for_ideation_1)
+    end
+
     let(:questions) {
       [
         Question.new(
@@ -31,11 +37,6 @@ describe JudgeQuestionsForSubmissionScore do
     }
     let(:submission_score_for_ideation_1) { 5 }
 
-    before do
-      allow(Judging::TwentyTwentyTwo::BeginnerQuestions).to receive_message_chain(:new, :call).and_return(questions)
-      allow(submission_score).to receive(:ideation_1).and_return(submission_score_for_ideation_1)
-    end
-
     it "returns a list of questions" do
       expect(judge_questions_for_submission_score).to eq(questions)
     end
@@ -45,54 +46,9 @@ describe JudgeQuestionsForSubmissionScore do
     end
   end
 
-  describe "getting the correct questions for a given season and division" do
-    before do
-      allow(Judging::TwentyTwentyTwo::SeniorQuestions).to receive_message_chain(:new, :call).and_return([])
-      allow(Judging::TwentyTwentyTwo::JuniorQuestions).to receive_message_chain(:new, :call).and_return([])
-      allow(Judging::TwentyTwentyTwo::BeginnerQuestions).to receive_message_chain(:new, :call).and_return([])
-    end
-
-    context "when it's the 2022 season" do
-      let(:season) { 2022 }
-
-      context "when it's the senior division" do
-        let(:division) { "senior" }
-
-        it "calls the appropriate class to get the 2022 senior questions" do
-          expect(Judging::TwentyTwentyTwo::SeniorQuestions).to receive_message_chain(:new, :call)
-
-          judge_questions_for_submission_score
-        end
-      end
-
-      context "when it's the junior division" do
-        let(:division) { "junior" }
-
-        it "calls the appropriate class to get the 2022 junior questions" do
-          expect(Judging::TwentyTwentyTwo::JuniorQuestions).to receive_message_chain(:new, :call)
-
-          judge_questions_for_submission_score
-        end
-      end
-
-      context "when it's the beginner division" do
-        let(:division) { "beginner" }
-
-        it "calls the appropriate class to get the 2022 beginner questions" do
-          expect(Judging::TwentyTwentyTwo::BeginnerQuestions).to receive_message_chain(:new, :call)
-
-          judge_questions_for_submission_score
-        end
-      end
-    end
-  end
-
   describe "filtering questions based on submission type" do
-    let(:division) { "senior" }
-    let(:season) { 2022 }
-
     before do
-      allow(Judging::TwentyTwentyTwo::SeniorQuestions).to receive_message_chain(:new, :call).and_return(questions)
+      allow(judge_questions_constructor).to receive_message_chain(:new, :call).and_return(questions)
     end
 
     let(:questions) { [mobile_app_question, ai_project_question] }
@@ -127,22 +83,6 @@ describe JudgeQuestionsForSubmissionScore do
         expect(judge_questions_for_submission_score).to include(mobile_app_question)
         expect(judge_questions_for_submission_score).not_to include(ai_project_question)
       end
-    end
-  end
-
-  context "when the submission score is before the 2020 season" do
-    let(:season) { 2015 }
-
-    it "raises an error indicating that there are no questions for this season" do
-      expect { judge_questions_for_submission_score }.to raise_error(/Questions for the 2015 season don't exist/)
-    end
-  end
-
-  context "when the submisison score is for a future season (that questions haven't been setup for yet)" do
-    let(:season) { 2050 }
-
-    it "raises an error indicating that questions need to be setup" do
-      expect { judge_questions_for_submission_score }.to raise_error(/Questions for the 2050 season haven't been setup yet/)
     end
   end
 end

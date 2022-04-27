@@ -98,29 +98,14 @@ RSpec.describe SubmissionScore do
       team_submission: team_submission,
       judge_profile: judge_profile,
 
+      project_details_1: 5,
       ideation_1: 5,
-      ideation_2: 2,
-      ideation_3: 1,
-      ideation_4: 3,
-
-      technical_1: 4,
-      technical_2: 3,
-      technical_3: 3,
-      technical_4: 2,
-
-      pitch_1: 3,
-      pitch_2: 5,
-
-      entrepreneurship_1: 5,
-      entrepreneurship_2: 4,
-      entrepreneurship_3: 5,
-      entrepreneurship_4: 3,
-
-      overall_1: 3,
-      overall_2: 2,
+      pitch_1: 5,
+      demo_1: 5,
+      entrepreneurship_1: 5
     })
 
-    expect(subscore.total).to eq(53)
+    expect(subscore.total).to eq(25)
   end
 
   it "calculates section totals" do
@@ -164,27 +149,37 @@ RSpec.describe SubmissionScore do
     expect(subscore.overall_total).to eq(5)
   end
 
-  it "calculates total possible score based on division" do
-    team = Team.create!(name: "A", description: "B", division: Division.senior)
-    team_submission = TeamSubmission.create!(
-      team_id: team.id,
-      integrity_affirmed: true
-    )
-    judge_profile = FactoryBot.create(:judge_profile)
+  describe ".total_possible_score_for" do
+    let(:total_score_possible) {
+      SubmissionScore.total_possible_score_for(division: division, season: season)
+    }
 
-    subscore = SubmissionScore.create!({
-      team_submission: team_submission,
-      judge_profile: judge_profile,
-    })
+    context "when it's the senior division in the 2022 season" do
+      let(:division) { "senior" }
+      let(:season) { 2022 }
 
-    expect(subscore.total_possible).to eq(80)
+      it "returns 90" do
+        expect(total_score_possible).to eq(90)
+      end
+    end
 
-    team.division = Division.junior
-    team.save!
+    context "when it's the junior division in the 2022 season" do
+      let(:division) { "junior" }
+      let(:season) { 2022 }
 
-    team_submission.reload
+      it "returns 90" do
+        expect(total_score_possible).to eq(80)
+      end
+    end
 
-    expect(subscore.total_possible).to eq(60)
+    context "when it's the beginner division in the 2022 season" do
+      let(:division) { "beginner" }
+      let(:season) { 2022 }
+
+      it "returns 90" do
+        expect(total_score_possible).to eq(39)
+      end
+    end
   end
 
   [:quarterfinals, :semifinals].each do |judging_round|
