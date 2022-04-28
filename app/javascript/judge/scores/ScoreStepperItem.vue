@@ -27,7 +27,10 @@
       </span>
 
       <div class="ml-3 min-w-0">
-        <h5 class="text-sm font-semibold tracking-wide">
+        <h5
+          :class="this.isActive ? 'font-medium' : 'font-normal'"
+          class="text-base tracking-wide"
+        >
           {{ this.sectionTitle }}
         </h5>
       </div>
