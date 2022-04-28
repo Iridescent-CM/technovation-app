@@ -94,7 +94,7 @@ $(document).on("click", ".img-modal", function(e) {
     html += "<img src='https://icongr.am/fontawesome/angle-left.svg' />"
     html += "</div>"
 
-    html += "<div class='grid__col-auto grid--justify-center'>"
+    html += "<div>"
     html += "<img class='screenshot__img' " +
             "src='" + $(e.target).data("modalUrl") + "' />"
     html += "</div>"
