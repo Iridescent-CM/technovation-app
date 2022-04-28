@@ -36,7 +36,9 @@
       </div>
     </router-link>
 
-    <p class="text-sm text-gray-500 text-right">
+    <p
+      :class="this.isActive ? 'font-semibold text-gray-600' : 'font-normal text-gray-500'"
+      class="text-sm text-right">
       {{ this.sectionScore || "&nbsp;" }}
     </p>
   </li>
