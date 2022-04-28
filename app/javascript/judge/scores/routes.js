@@ -9,7 +9,7 @@ import Entrepreneurship from "./sections/Entrepreneurship"
 import ReviewScore from './sections/ReviewScore'
 
 export const routes = [
-  { path: '/', redirect: { name: 'review-submission' } },
+  { path: '/', redirect: { name: 'overview' } },
   { path: '/overview', name: 'overview', component: Overview },
   { path: '/project-details', name: 'project_details', component: ProjectDetails },
   { path: '/ideation', name: 'ideation', component: Ideation },
