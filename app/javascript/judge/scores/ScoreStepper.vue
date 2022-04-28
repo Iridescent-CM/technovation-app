@@ -1,7 +1,7 @@
 <template>
   <div class="sticky top-4 w-full lg:w-1/3 rounded-md border-solid border-4 border-energetic-blue h-fit-content">
     <div class="bg-energetic-blue text-white p-2">
-      <p class="font-bold">Score Overview</p>
+      <p class="font-bold">Score</p>
     </div>
 
     <nav class="p-4">
