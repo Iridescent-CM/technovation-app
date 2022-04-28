@@ -25,7 +25,6 @@
                       Score
                     </th>
                     <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
-                      <span class="sr-only">Update</span>
                     </th>
                   </tr>
                 </thead>
@@ -52,7 +51,7 @@
                         v-if="scoresEditable"
                         :href="score.url"
                         class="link-button link-button-small link-button-success">
-                        Update
+                        Review or Edit
                       </a>
 
                       <a

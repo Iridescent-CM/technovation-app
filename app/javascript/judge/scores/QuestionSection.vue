@@ -29,30 +29,28 @@
 
     <textarea ref="commentText" :value="comment.text" @input="updateCommentText" class="w-full h-36" />
 
-    <div class="flex justify-between mt-6">
+    <div class="flex justify-between mt-12">
       <div>
         <router-link
           v-if="!!prevSection"
           v-on:click.native="handleCommentChange"
           :to="{ name: prevSection }"
-          class="link-button link-button-success font-bold"
+          :class="prevSectionIsIncomplete ? 'link-button-success' : 'link-button-neutral'"
+          class="link-button md-link-button"
         >
-          Back: {{ prevBtnTxt }}
+          Back
         </router-link>
       </div>
 
       <div>
-        <span v-tooltip="nextDisabledMsg">
-          <router-link
-            v-if="!!nextSection"
-            v-on:click.native="handleCommentChange"
-            :to="{ name: nextSection }"
-            :disabled="goingNextIsDisabled"
-            class="link-button link-button-success font-bold"
-          >
-            Next: {{ nextBtnTxt }}
-          </router-link>
-        </span>
+        <router-link
+          v-if="!!nextSection"
+          v-on:click.native="handleCommentChange"
+          :to="{ name: nextSection }"
+          class="link-button link-button-success md-link-button"
+        >
+          Next
+        </router-link>
       </div>
     </div>
   </div>
@@ -112,21 +110,16 @@ export default {
       return this.$store.getters.section(this.section).title
     },
 
-    nextDisabledMsg () {
-      if (this.goingNextIsDisabled) {
-        return 'Please write a substantial comment, ' +
-               'keep it clean, and be friendly'
-      } else {
+    prevSectionIsIncomplete () {
+      if (this.prevSection === 'overview') {
         return false
+      } else {
+        return !this.$store.getters.isSectionComplete(this.prevSection)
       }
     },
 
-    goingNextIsDisabled () {
-      return this.wordCount < this.minWordCount
-    },
-
     minWordCount() {
-      return (this.section == 'overall') ? 40 : 20
+      return 20
     },
 
     wordCount () {
@@ -162,22 +155,12 @@ export default {
     commentStorageKey () {
       return `${this.section}-comment-${this.submission.id}`
     },
-
-    nextBtnTxt () {
-      return this.nextButtonText || capitalize(this.nextSection)
-    },
-
-    prevBtnTxt () {
-      return this.prevButtonText || capitalize(this.prevSection)
-    },
   },
 
   props: [
     'nextSection',
     'prevSection',
     'section',
-    'nextButtonText',
-    'prevButtonText',
     'solo',
   ],
 

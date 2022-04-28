@@ -126,7 +126,7 @@ describe('Question comments section', () => {
       expect(wrapper.vm.minWordCount).toEqual(20)
     })
 
-    it('returns 20 for the entrepreneurship section (which only applies for the senior division)', () => {
+    it('returns 20 for the entrepreneurship section', () => {
       storeMocks = mockStore.createMocks({
         state: { team: { division: 'senior' }}
       })
@@ -142,12 +142,6 @@ describe('Question comments section', () => {
       )
 
       expect(wrapper.vm.minWordCount).toEqual(20)
-    })
-
-    it('returns 40 for the overall section', () => {
-      wrapper.setProps({ section: 'overall' })
-
-      expect(wrapper.vm.minWordCount).toEqual(40)
     })
   })
 
