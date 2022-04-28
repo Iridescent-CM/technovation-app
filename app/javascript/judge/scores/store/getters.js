@@ -107,8 +107,10 @@ export const isScoreComplete = (state) => {
   return state.score.complete
 }
 
-export const hasScoreBeenStarted = (state) => {
-  return state.score.started
+export const hasScoreBeenStarted = (state, getters) => {
+  return state.questions.some(question => (
+    question.score > 0
+  ))
 }
 
 export const hasIncompleteSections = (state, getters) => {
