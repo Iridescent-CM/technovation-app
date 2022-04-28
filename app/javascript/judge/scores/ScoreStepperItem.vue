@@ -31,7 +31,7 @@
       </router-link>
 
       <p class="text-sm text-gray-500 text-right">
-        {{ this.sectionScore }}
+        {{ this.sectionScore || "&nbsp;" }}
       </p>
     </li>
     </div>
