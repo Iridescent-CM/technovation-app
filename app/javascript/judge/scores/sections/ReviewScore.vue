@@ -40,7 +40,7 @@
             :href="`/judge/score_completions?id=${score.id}`"
             :disabled="isScoreIncomplete"
             :class="isScoreIncomplete ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''"
-            class="tw-green-btn"
+            class="link-button md-link-button link-button-success"
             data-method="post"
           >
             {{ isScoreComplete ? "Update Score" : "Finish Score" }}
