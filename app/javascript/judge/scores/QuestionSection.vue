@@ -145,13 +145,13 @@ export default {
 
     colorForWordCount () {
       if (this.wordCount >= this.minWordCount) {
-        return 'darkgreen'
+        return '#43b02a';
       } else if (this.wordCount >= (66 / 100) * this.minWordCount) {
-        return 'goldenrod'
+        return '#eab308'
       } else if (this.wordCount >= (33 / 100) * this.minWordCount) {
-        return 'orange'
+        return '#f97316'
       } else {
-        return 'darkred'
+        return '#ef4444'
       }
     },
 
