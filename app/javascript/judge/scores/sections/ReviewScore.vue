@@ -79,8 +79,7 @@ export default {
     ...mapState(['team', 'score', 'submission', 'deadline']),
 
     ...mapGetters([
-      'anyCommentsInvalid',
-      'anyScoresEmpty',
+      'hasIncompleteSections',
       'sectionPointsTotal',
       'totalScore',
       'problemInSection'
@@ -91,10 +90,7 @@ export default {
     },
 
     isScoreIncomplete () {
-      // Check remote database instead of local state
-      // GET `/judge/scores/${this.score.id}.json`
-      // Modify JSON returned in app/serializers/score_serializer.rb
-      return this.anyCommentsInvalid || this.anyScoresEmpty
+      return this.hasIncompleteSections
     },
 
     finishScoreTooltip () {

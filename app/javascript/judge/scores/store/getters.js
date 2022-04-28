@@ -1,17 +1,5 @@
 import flatMap from 'lodash/flatMap'
 
-export const anyScoresEmpty = (state) => {
-  return state.questions.some((question) => (
-    question.score === 0
-  ))
-}
-
-export const anyCommentsInvalid = (state, getters) => {
-  return getters.sections.some((section) => (
-    state.score.comments[section.name].word_count < 20
-  ))
-}
-
 export const comment = (state) => (sectionName) => {
   return state.score.comments[sectionName]
 }
@@ -43,6 +31,7 @@ export const sections = (state, getters) => {
       title: 'Project Name & Description',
       pointsTotal: getters.sectionPointsTotal('project_details'),
       pointsPossible: getters.sectionPointsPossible('project_details'),
+      isComplete: getters.isSectionComplete('project_details')
     },
 
     {
@@ -50,6 +39,7 @@ export const sections = (state, getters) => {
       title: 'Learning Journey',
       pointsTotal: getters.sectionPointsTotal('ideation'),
       pointsPossible: getters.sectionPointsPossible('ideation'),
+      isComplete: getters.isSectionComplete('ideation')
     },
 
     {
@@ -57,6 +47,7 @@ export const sections = (state, getters) => {
       title: 'Pitch',
       pointsTotal: getters.sectionPointsTotal('pitch'),
       pointsPossible: getters.sectionPointsPossible('pitch'),
+      isComplete: getters.isSectionComplete('pitch')
     },
 
     {
@@ -64,6 +55,7 @@ export const sections = (state, getters) => {
       title: 'Demo',
       pointsTotal: getters.sectionPointsTotal('demo'),
       pointsPossible: getters.sectionPointsPossible('demo'),
+      isComplete: getters.isSectionComplete('demo')
     },
   ]
 
@@ -73,6 +65,7 @@ export const sections = (state, getters) => {
       title: state.team.division === 'senior' ? 'Business Plan' : 'User Adoption Plan',
       pointsTotal: getters.sectionPointsTotal('entrepreneurship'),
       pointsPossible: getters.sectionPointsPossible('entrepreneurship'),
+      isComplete: getters.isSectionComplete('entrepreneurship')
     })
   }
 
@@ -108,4 +101,26 @@ export const sectionQuestions = (state) => (section) => {
 
 export const problemInSection = (state) => (name) => {
   return state.problemSections.includes(name)
+}
+
+export const isScoreComplete = (state) => {
+  return state.score.complete
+}
+
+export const hasScoreBeenStarted = (state) => {
+  return state.score.started
+}
+
+export const hasIncompleteSections = (state, getters) => {
+  return getters.sections.some((section) => (
+    !getters.isSectionComplete(section.name)
+  ))
+}
+
+export const isSectionComplete = (state, getters) => (section) => {
+  const questions = getters.sectionQuestions(section)
+  const hasValidComment = state.score.comments[section].word_count >= 20
+  const allQuestionsHaveBeenAnswered = questions && questions.every((q) => q.score > 0)
+
+  return hasValidComment && allQuestionsHaveBeenAnswered
 }

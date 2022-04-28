@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EnergeticContainer heading="Review Submission">
+    <EnergeticContainer heading="Overview">
       <div v-if="!submission.id" class="loading">
         <icon name="spinner" className="spin" />
         <div>Loading the submission... Happy Judging!</div>
