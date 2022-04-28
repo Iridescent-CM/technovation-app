@@ -157,30 +157,30 @@ describe('Question comments section', () => {
         wrapper.setProps({ section: 'pitch' })
       })
 
-      it('returns "darkred" when no words have been entered', () => {
+      it('returns a red color when no words have been entered', () => {
         wrapper.vm.comment.text = ''
 
-        expect(wrapper.vm.colorForWordCount).toEqual('darkred')
+        expect(wrapper.vm.colorForWordCount).toEqual('#ef4444')
       })
 
-      it('returns "orange" when 1/3 of the mimumum word count has been entered', () => {
+      it('returns an orange color when 1/3 of the mimumum word count has been entered', () => {
         wrapper.vm.comment.text = 'one two three four five six seven'
 
-        expect(wrapper.vm.colorForWordCount).toEqual('orange')
+        expect(wrapper.vm.colorForWordCount).toEqual('#f97316')
       })
 
-      it('returns "goldenrod" when 2/3 of the minimum word count has been entered', () => {
+      it('returns a yellow color when 2/3 of the minimum word count has been entered', () => {
         wrapper.vm.comment.text = `one two three four five six seven eight nine ten
           eleven twelve thirteen fourteen`
 
-        expect(wrapper.vm.colorForWordCount).toEqual('goldenrod')
+        expect(wrapper.vm.colorForWordCount).toEqual('#eab308')
       })
 
-      it('returns "darkgreen" when the miniumum word count has been met', () => {
+      it('returns a green color when the miniumum word count has been met', () => {
         wrapper.vm.comment.text = `one two three four five six seven eight nine ten
           eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty`
 
-        expect(wrapper.vm.colorForWordCount).toEqual('darkgreen')
+        expect(wrapper.vm.colorForWordCount).toEqual('#43b02a')
       })
     })
   })
