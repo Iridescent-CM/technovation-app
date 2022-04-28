@@ -27,18 +27,15 @@ class Questions
 
   def sections
     collection = %w[
+      project_details
       ideation
-      technical
+      pitch
+      demo
     ]
 
-    if submission.senior_division?
+    if submission.senior_division? || submission.junior_division?
       collection << "entrepreneurship"
     end
-
-    collection + %w[
-      pitch
-      overall
-    ]
   end
 
   def as_json(*args, &block)
