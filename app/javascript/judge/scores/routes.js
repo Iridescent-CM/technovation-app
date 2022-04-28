@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
 
-import ReviewSubmission from './sections/ReviewSubmission'
+import Overview from './sections/Overview'
 import ProjectDetails from "./sections/ProjectDetails"
 import Ideation from "./sections/Ideation"
 import Pitch from "./sections/Pitch"
@@ -10,7 +10,7 @@ import ReviewScore from './sections/ReviewScore'
 
 export const routes = [
   { path: '/', redirect: { name: 'review-submission' } },
-  { path: '/review-submission', name: 'review-submission', component: ReviewSubmission },
+  { path: '/overview', name: 'overview', component: Overview },
   { path: '/project-details', name: 'project_details', component: ProjectDetails },
   { path: '/ideation', name: 'ideation', component: Ideation },
   { path: '/pitch', name: 'pitch', component: Pitch },

@@ -7,9 +7,9 @@
     <nav class="p-4">
       <ol role="list" class="overflow-hidden">
         <score-stepper-item
-          section-name="review-submission"
+          section-name="overview"
           section-title="Overview"
-          :is-active="$route.name === 'review-submission'"
+          :is-active="$route.name === 'overview'"
           :is-complete="hasScoreBeenStarted"
         />
 
