@@ -86,7 +86,7 @@ $(document).on("click", ".img-modal", function(e) {
     const nextIdx = idx + 1 > last ? 0 : idx + 1
     const prevIdx = idx - 1 < 0 ? last : idx - 1
 
-    html = "<div class='grid grid--bleed grid--justify-space-between screenshot-nav'>"
+    html = "<div class='flex justify-between screenshot-nav'>"
 
     html += "<div class='" +
             "screenshot-nav__item grid__col-auto grid--justify-center" +
