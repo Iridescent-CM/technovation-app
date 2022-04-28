@@ -43,7 +43,7 @@
             class="tw-green-btn"
             data-method="post"
           >
-            Finish Score
+            {{ isScoreComplete ? "Update Score" : "Finish Score" }}
           </a>
         </p>
       </div>
@@ -91,6 +91,10 @@ export default {
 
     isScoreIncomplete () {
       return this.hasIncompleteSections
+    },
+
+    isScoreComplete () {
+      return this.$store.getters.isScoreComplete
     },
 
     finishScoreTooltip () {
