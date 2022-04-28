@@ -55,7 +55,7 @@ class Questions
         id: submission_score.id,
         complete: submission_score.complete?,
         incomplete: submission_score.incomplete?,
-        started: submission.updated_at,
+        started: submission.updated_at.present?,
         comments: {
           project_details: comment_data(submission_score, :project_details),
           ideation: comment_data(submission_score, :ideation),
