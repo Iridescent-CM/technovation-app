@@ -10,6 +10,7 @@
       <template v-slot:main-content>
         <p class="font-bold text-lg">{{ submission.name }}</p>
         <div v-html="submission.learning_journey"></div>
+        <div><Screenshots/></div>
       </template>
     </GenericJudgingContainer>
   </div>
@@ -19,13 +20,16 @@
 import { mapState } from 'vuex'
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 import Template from "../../../components/job_process/template";
+import Screenshots from "../pieces/Screenshots";
 
 export default {
+
   computed: mapState(['submission']),
 
   components: {
     GenericJudgingContainer,
-    Template
+    Template,
+    Screenshots
   },
 }
 </script>
