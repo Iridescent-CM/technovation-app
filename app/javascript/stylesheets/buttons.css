@@ -7,7 +7,7 @@ a.link-button-small {
 }
 
 a.md-link-button {
-    @apply px-4 py-3 rounded shadow-md text-xl font-bold
+    @apply px-4 py-3 rounded shadow-md text-xl font-semibold
 }
 
 a.lg-link-button {

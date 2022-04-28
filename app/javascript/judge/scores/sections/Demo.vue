@@ -4,7 +4,6 @@
       heading="Demo"
       section="demo"
       :next-section="nextSection"
-      :next-button-text="nextButtonText"
       prevSection="pitch"
     >
       <template v-slot:main-content>
@@ -31,19 +30,6 @@ export default {
         'entrepreneurship' :
         'review-score'
     },
-
-    nextButtonText () {
-      switch (this.team.division) {
-        case 'senior':
-          return 'Business Plan'
-          break
-        case 'junior':
-          return 'User Adoption Plan'
-          break
-        case 'beginner':
-          return 'Review Score'
-      }
-    }
   },
 
   components: {

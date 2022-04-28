@@ -42,8 +42,7 @@
         <p>
           <router-link
             :to="{ name: 'project_details' }"
-            :class="!hasScoreBeenStarted ? 'lg-link-button' : ''"
-            class="link-button link-button-success"
+            class="link-button link-button-success md-link-button"
           >
             {{ hasScoreBeenStarted ? "Next" : "Start Score" }}
           </router-link>

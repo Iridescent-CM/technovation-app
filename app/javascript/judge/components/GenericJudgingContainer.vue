@@ -9,10 +9,8 @@
 
         <question-section
           :prevSection="prevSection"
-          :prevButtonText="prevButtonText"
           :section="section"
           :nextSection="nextSection"
-          :nextButtonText="nextButtonText"
         >
           <p slot="section-summary" class="help-text text-base">
             To determine if the team has built a solution that will positively impact them and their community,
@@ -55,6 +53,6 @@ export default {
     EnergeticContainer,
     ThickRule
   },
-  props: ['heading', 'section', 'nextSection', 'prevSection', 'nextButtonText', 'prevButtonText']
+  props: ['heading', 'section', 'nextSection', 'prevSection']
 }
 </script>
