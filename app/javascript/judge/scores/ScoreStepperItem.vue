@@ -1,7 +1,11 @@
 <template>
   <div>
     <li class="relative pb-6">
-      <router-link :to="{ name: this.sectionName }" class="relative flex items-center group truncate hover:text-tg-green" aria-current="step">
+      <router-link
+        :to="{ name: this.sectionName }"
+        :class="this.isActive ? 'text-tg-green' : ''"
+        class="relative flex items-center group truncate hover:text-tg-green"
+      >
         <span class="flex items-center" aria-hidden="true">
           <span v-if="this.isActive"
             class="relative z-10 w-6 h-6 flex items-center justify-center bg-white border-2 border-tg-green rounded-full"
