@@ -10,7 +10,6 @@
           prev-button-text="Learning Journey"
         >
           <template v-slot:main-content>
-            <p class="font-bold text-lg">Videos</p>
             <PitchVideoLink />
           </template>
         </GenericJudgingContainer>

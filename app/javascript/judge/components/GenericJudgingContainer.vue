@@ -17,7 +17,7 @@
           <p slot="section-summary" class="help-text">
             To determine if the team has built a solution that will positively impact them and their community,
             refer to all submission materials and the
-            <a target="_blank" href="http://technovation.staging.wpengine.com/wp-content/uploads/2021/03/ideation.png">rubric</a>.
+            <a target="_blank" :href="rubricLink" class="tw-link-magenta">rubric</a>.
           </p>
 
           <p slot="comment-tips" class="text-sm">
@@ -38,9 +38,16 @@ import QuestionSection from "../scores/QuestionSection";
 import EnergeticContainer from "./EnergeticContainer";
 import ThickRule from "./ThickRule";
 import {mapState} from "vuex";
+import {getJudgingRubricLink} from "../../utilities/judge-helpers";
 
 export default {
-  computed: mapState(['submission']),
+  computed: {
+    ...mapState(['submission', 'team']),
+
+    rubricLink () {
+      return getJudgingRubricLink(this.team.division)
+    }
+  },
   name: "GenericJudgingContainer",
   components: {
     TeamInfo,
