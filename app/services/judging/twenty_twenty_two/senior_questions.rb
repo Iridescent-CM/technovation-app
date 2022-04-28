@@ -216,7 +216,7 @@ module Judging
             field: :entrepreneurship_3,
             worth: 5,
             text: %(
-              Do we explain how we will get new users to use their
+              Do we explain how we will get new users to use our
               app or invention in its first year?
             )
           ),
