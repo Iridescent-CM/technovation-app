@@ -32,7 +32,7 @@
     <div class="mt-8 flex flex-col justify-center lg:flex-row lg:justify-between">
       <div v-if="score.incomplete">
         <p>
-          <judge-recusal-popup cssClass="button button--danger">
+          <judge-recusal-popup cssClass="link-button link-button-neutral">
             I cannot judge this submission
           </judge-recusal-popup>
         </p>
@@ -41,10 +41,11 @@
       <div>
         <p>
           <router-link
-              :to="{ name: 'project_details' }"
-              class="tw-green-btn"
+            :to="{ name: 'project_details' }"
+            :class="!hasScoreBeenStarted ? 'lg-link-button' : ''"
+            class="link-button link-button-success"
           >
-            Start score
+            {{ hasScoreBeenStarted ? "Next" : "Start Score" }}
           </router-link>
         </p>
       </div>
@@ -74,6 +75,10 @@ export default {
       'submission',
       'deadline',
     ],),
+
+    hasScoreBeenStarted () {
+      return this.$store.getters.hasScoreBeenStarted
+    },
 
     emailSupport() {
       const subject = `Errors while judging submission "${this.submission.name}" by ${this.team.name}`
