@@ -26,7 +26,7 @@
         <score-stepper-item
           section-name="review-score"
           section-title="Review Score"
-          :section-score="`${totalScore} / ${totalPossible}`"
+          :section-score="`${totalScore} / ${totalPossibleScore}`"
           :is-active="$route.name === 'review-score'"
           :is-complete="isScoreComplete"
         />
@@ -48,8 +48,8 @@ export default {
       return this.$store.getters.totalScore
     },
 
-    totalPossible () {
-      return this.$store.getters.totalPossible
+    totalPossibleScore () {
+      return this.$store.getters.totalPossibleScore
     },
 
     hasScoreBeenStarted () {

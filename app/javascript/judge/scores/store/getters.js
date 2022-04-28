@@ -5,21 +5,13 @@ export const comment = (state) => (sectionName) => {
 }
 
 export const totalScore = state => {
-  const questions = state.team.division === 'junior' ?
-    state.questions.filter(q => q.section !== 'entrepreneurship') :
-    state.questions
-
-  return questions.reduce((acc, q) => {
+  return state.questions.reduce((acc, q) => {
     return acc += q.score
   }, 0)
 }
 
-export const totalPossible = state => {
-  const questions = state.team.division === 'junior' ?
-    state.questions.filter(q => q.section !== 'entrepreneurship') :
-    state.questions
-
-  return questions.reduce((acc, q) => {
+export const totalPossibleScore = state => {
+  return state.questions.reduce((acc, q) => {
     return acc += q.worth
   }, 0)
 }
