@@ -92,24 +92,24 @@ export default {
   .score-value {
     opacity: 0.5;
     background: none;
-    border: 1px solid darkgreen;
+    border: 1px solid #43b02a;
     padding: 1.2rem 1.7rem;
     border-radius: 50%;
     font-weight: bold;
-    color: darkgreen;
+    color: #43b02a;
     transition: opacity 0.2s;
     cursor: pointer;
 
     &:hover {
       opacity: 0.3;
-      background: darkgreen;
+      background: #43b02a;
       color: white;
     }
 
     &.selected,
     &.selected:hover {
       opacity: 1;
-      background: darkgreen;
+      background: #43b02a;
       color: white;
     }
   }
