@@ -9,8 +9,8 @@
     >
       <template v-slot:main-content>
         <p class="font-bold text-lg">{{ submission.name }}</p>
-        <div v-html="submission.learning_journey"></div>
-        <div><Screenshots/></div>
+        <div class="mb-8" v-html="submission.learning_journey"></div>
+        <Screenshots/>
       </template>
     </GenericJudgingContainer>
   </div>

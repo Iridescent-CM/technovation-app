@@ -1,16 +1,13 @@
 <template>
-  <div :class="team.live_event ? 'grid__col-6' : 'grid__col-12'">
-    <p class="font-bold">Business</p>
-
+  <div>
     <template v-if="team.division === 'senior' || team.division ===  'junior'">
       <a
         :href="submission.business_plan_url"
         target="_blank"
         @click="trackBusinessPlanDownload"
-        class="text-energetic-blue font-bold"
+        class="text-energetic-blue text-3xl"
       >
         <Icon
-            size="16"
             name="file-o"
             class="inline"
             color="0075cf"

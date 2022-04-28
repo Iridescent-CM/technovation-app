@@ -8,10 +8,10 @@
     <div
       v-for="(screenshot, i) in submission.screenshots"
       :key="screenshot.id"
-      class="submission-pieces__screenshot"
+      class="mx-2"
     >
       <img
-        class="img-modal"
+        class="img-modal rounded"
         :src="screenshot.thumb"
         :data-modal-url="screenshot.full"
         :data-modal-idx="i"
