@@ -9,6 +9,7 @@
     >
       <template v-slot:main-content>
         <DemoVideoLink/>
+        <Code/>
       </template>
     </GenericJudgingContainer>
   </div>
@@ -19,6 +20,7 @@ import { mapState } from 'vuex'
 
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 import DemoVideoLink from "../pieces/DemoVideoLink";
+import Code from "../pieces/Code";
 
 export default {
   computed: {
@@ -46,7 +48,8 @@ export default {
 
   components: {
     GenericJudgingContainer,
-    DemoVideoLink
+    DemoVideoLink,
+    Code
   },
 }
 </script>
