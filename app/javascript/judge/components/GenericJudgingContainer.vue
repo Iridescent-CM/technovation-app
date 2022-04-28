@@ -14,13 +14,13 @@
           :nextSection="nextSection"
           :nextButtonText="nextButtonText"
         >
-          <p slot="section-summary" class="help-text">
+          <p slot="section-summary" class="help-text text-base">
             To determine if the team has built a solution that will positively impact them and their community,
             refer to all submission materials and the
             <a target="_blank" :href="rubricLink" class="tw-link-magenta">rubric</a>.
           </p>
 
-          <p slot="comment-tips" class="text-sm">
+          <p slot="comment-tips" class="text-base">
             Be sensitive to cultural differences and
             focus on how well the team identified the problem
             and presented a solution.
