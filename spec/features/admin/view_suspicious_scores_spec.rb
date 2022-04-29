@@ -11,7 +11,7 @@ RSpec.feature "Admins viewing suspicious scores", js: true do
       expect(page).to have_content("There are no suspicious scores at this time.")
     end
   end
-  
+
   scenario "scores that are too low are displayed on the Scores page" do
     FactoryBot.create(:score, :score_too_low)
 

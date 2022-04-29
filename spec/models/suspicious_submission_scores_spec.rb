@@ -40,56 +40,27 @@ RSpec.describe SuspiciousSubmissionScores do
     end
   end
 
-  describe "when score is too low" do
-    it "includes those scores" do
-      senior_min_score, senior_low_score, junior_low_score, junior_min_score = nil
+  describe "when scores are too low" do
+    let(:senior_low_score) { FactoryBot.create(:score, :senior) }
+    let(:junior_low_score) { FactoryBot.create(:score, :junior) }
+    let(:beginner_low_score) { FactoryBot.create(:score, :beginner) }
+    let(:normal_score) { FactoryBot.create(:score, :minimum_auto_approved_total) }
 
-      Timecop.freeze(10.minutes.ago) do
-        senior_min_score = FactoryBot.create(:score, :senior)
-        junior_min_score = FactoryBot.create(:score, :junior)
-
-        senior_low_score = FactoryBot.create(:score, :senior)
-        junior_low_score = FactoryBot.create(:score, :junior)
-      end
-
-      senior_min_score.update({
-        pitch_1: 5,
-        pitch_2: 5,
-        pitch_3: 5,
-        pitch_4: 5
-      })
-
-      junior_min_score.update({
-        pitch_1: 5,
-        pitch_2: 5,
-        pitch_3: 5,
-        pitch_4: 5
-      })
-
-      senior_low_score.update({
-        ideation_1: 1,
-        ideation_2: 1,
-        pitch_1: 1,
-        pitch_2: 1,
-        entrepreneurship_1: 1,
-        entrepreneurship_2: 1
-      })
-
-      junior_low_score.update({
-        ideation_1: 1,
-        ideation_2: 1,
-        pitch_1: 1,
-        pitch_2: 1,
-        entrepreneurship_1: 1,
-        entrepreneurship_2: 1
-      })
+    before do
+      senior_low_score.update({ideation_1: 24})
+      junior_low_score.update({ideation_1: 19})
+      beginner_low_score.update({ideation_1: 14})
 
       SubmissionScore.find_each(&:complete!)
+    end
 
-      suspicious = SuspiciousSubmissionScores.new
-      expect(suspicious.map(&:id)).to contain_exactly(
+    it "includes all of the low scores" do
+      expect(
+        SuspiciousSubmissionScores.new.map(&:id)
+      ).to contain_exactly(
         senior_low_score.id,
-        junior_low_score.id
+        junior_low_score.id,
+        beginner_low_score.id
       )
     end
   end

@@ -38,6 +38,20 @@ FactoryBot.define do
       country { "BR" }
     end
 
+    trait :beginner do
+      after(:create) do |team, evaluator|
+        members = evaluator.members_count.times.collect {
+          FactoryBot.create(:student, :beginner)
+        }
+
+        TeamCreating.execute(team, members.first, FakeController.new)
+
+        members.drop(1).each do |m|
+          TeamRosterManaging.add(team, m)
+        end
+      end
+    end
+
     trait :junior do
       after(:create) do |team, evaluator|
         members = evaluator.members_count.times.collect {
