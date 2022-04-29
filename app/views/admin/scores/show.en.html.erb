@@ -79,7 +79,7 @@
     <% questions.sections.each do |section| %>
       <h3>
         <%= section.titlecase %>
-        <span>(<%= @score.total_for_section(section) %>)</span>
+        <span>(<%= @score.total_for_section(@score.team.division_name, section) %>)</span>
       </h3>
 
       <table>

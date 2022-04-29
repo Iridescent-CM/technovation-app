@@ -271,6 +271,14 @@ class SubmissionScore < ActiveRecord::Base
       .sum(&:worth)
   end
 
+  def self.total_possible_points_for_section(division:, section:, season: Season.current.year)
+    JudgeQuestions
+      .new(division: division, season: season)
+      .call
+      .select { |question| question.section == section }
+      .sum(&:worth)
+  end
+
   def overall_impression_comment
     overall_comment
   end
@@ -367,8 +375,8 @@ class SubmissionScore < ActiveRecord::Base
     public_send(question.field)
   end
 
-  def total_for_section(section_name)
-    public_send("#{section_name}_total")
+  def total_for_section(division, section_name)
+    self.class.total_possible_points_for_section(division: division, section: section_name)
   end
 
   def comment_for_section(section_name)
