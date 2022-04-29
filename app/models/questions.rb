@@ -25,6 +25,14 @@ class Questions
     end
   end
 
+  def sections_for(division:, season: Season.current.year)
+    JudgeQuestions
+      .new(division: division, season: season)
+      .call
+      .uniq(&:section)
+      .map(&:section)
+  end
+
   def sections
     collection = %w[
       ideation

@@ -76,7 +76,7 @@
   <% questions = Questions.for(@score) %>
 
   <div class="admin-score-sections">
-    <% questions.sections.each do |section| %>
+    <% questions.sections_for(division: @score.team.division_name).each do |section| %>
       <h3>
         <%= section.titlecase %>
         <span>(<%= @score.total_for_section(@score.team.division_name, section) %>)</span>
