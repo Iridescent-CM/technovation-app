@@ -76,7 +76,13 @@
   <div class="admin-score-sections">
     <% questions.sections_for(division: @score.team.division_name).each do |section| %>
       <h3>
-        <%= section.titlecase %>
+        <% if section === "ideation" %>
+          Learning Journey
+        <% elsif section === "entrepreneurship" %>
+          <%= @score.team.senior? ? "Business Plan" : "User Adoption Plan" %>
+        <% else %>
+          <%= section.titlecase %>
+        <% end %>
         <span>(<%= @score.total_points_for_section(@score.team.division_name, section) %>)</span>
       </h3>
 
