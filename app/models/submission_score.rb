@@ -375,7 +375,7 @@ class SubmissionScore < ActiveRecord::Base
     public_send(question.field)
   end
 
-  def total_for_section(division, section_name)
+  def total_for_section(section_name)
     public_send("#{section_name}_total")
   end
 
