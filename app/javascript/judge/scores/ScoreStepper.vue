@@ -10,7 +10,7 @@
           section-name="overview"
           section-title="Overview"
           :is-active="$route.name === 'overview'"
-          :is-complete="hasScoreBeenStarted"
+          :is-complete="$route.name !== 'overview'"
         />
 
         <score-stepper-item
@@ -50,10 +50,6 @@ export default {
 
     totalPossibleScore () {
       return this.$store.getters.totalPossibleScore
-    },
-
-    hasScoreBeenStarted () {
-      return this.$store.getters.hasScoreBeenStarted
     },
 
     isScoreComplete () {
