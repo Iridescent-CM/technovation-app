@@ -68,6 +68,10 @@ FactoryBot.define do
       association(:team_submission, factory: [:team_submission, :complete, :junior])
     end
 
+    trait :beginner do
+      association(:team_submission, factory: [:team_submission, :complete, :beginner])
+    end
+
     trait :brazil do
       association(:team_submission, factory: [:team_submission, :complete, :brazil])
     end

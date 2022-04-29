@@ -82,6 +82,10 @@ FactoryBot.define do
       RegisterToCurrentSeasonJob.perform_now(team_submission)
     end
 
+    trait :beginner do
+      association(:team, factory: [:team, :beginner])
+    end
+
     trait :junior do
       association(:team, factory: [:team, :junior])
     end

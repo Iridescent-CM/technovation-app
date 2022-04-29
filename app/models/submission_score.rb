@@ -6,9 +6,9 @@ class SubmissionScore < ActiveRecord::Base
   include Regioned
   regioned_source Team, through: :team_submission
 
-  SENIOR_LOW_SCORE_THRESHOLD = 18
-  JUNIOR_LOW_SCORE_THRESHOLD = 16
-  BEGINNER_LOW_SCORE_THRESHOLD = 16
+  SENIOR_LOW_SCORE_THRESHOLD = 25
+  JUNIOR_LOW_SCORE_THRESHOLD = 20
+  BEGINNER_LOW_SCORE_THRESHOLD = 15
 
   before_commit -> {
     self.judge_recusal_comment = "" if judge_recusal_reason != "other"
