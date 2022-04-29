@@ -376,6 +376,10 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def total_for_section(division, section_name)
+    public_send("#{section_name}_total")
+  end
+
+  def total_points_for_section(division, section_name)
     self.class.total_possible_points_for_section(division: division, section: section_name)
   end
 
