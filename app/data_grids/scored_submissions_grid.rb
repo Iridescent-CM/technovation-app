@@ -295,7 +295,8 @@ class ScoredSubmissionsGrid
   :enum,
   select: -> { [
     ["Senior", "senior"],
-    ["Junior", "junior"]
+    ["Junior", "junior"],
+    ["Beginner", "beginner"]
   ]} do |value, scope, grid|
     scope.public_send(value)
   end
