@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:sticky lg:top-4 w-full lg:w-1/3 rounded-md border-solid border-4 border-energetic-blue h-fit-content">
+  <div class="lg:sticky lg:top-8 w-full lg:w-1/3 rounded-md border-solid border-4 border-energetic-blue h-fit-content">
     <div class="bg-energetic-blue text-white p-2">
       <p class="font-bold">Score</p>
     </div>
@@ -10,7 +10,7 @@
           section-name="overview"
           section-title="Overview"
           :is-active="$route.name === 'overview'"
-          :is-complete="hasScoreBeenStarted"
+          :is-complete="$route.name !== 'overview'"
         />
 
         <score-stepper-item
@@ -50,10 +50,6 @@ export default {
 
     totalPossibleScore () {
       return this.$store.getters.totalPossibleScore
-    },
-
-    hasScoreBeenStarted () {
-      return this.$store.getters.hasScoreBeenStarted
     },
 
     isScoreComplete () {
