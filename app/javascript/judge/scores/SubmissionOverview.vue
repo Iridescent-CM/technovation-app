@@ -38,7 +38,7 @@
         </p>
       </div>
 
-      <div>
+      <div class="ml-auto">
         <p>
           <router-link
             :to="{ name: 'project_details' }"
