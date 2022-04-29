@@ -13,6 +13,11 @@
     </h3>
 
     <h3>
+      <span>Division</span>
+      <%= @score.team.division_name.humanize %>
+    </h3>
+
+    <h3>
       <span>Submission</span>
       <%= link_to @score.team_submission.app_name,
         app_path(@score.team_submission),
@@ -53,9 +58,12 @@
         <%= @score.downloaded_source_code? ? "Yes" : "No" %>
       </h5>
 
-      <% if @score.team.senior? %>
+      <% if @score.team.senior? || @score.team.junior? %>
         <h5>
-          <span>Downloaded Business Plan</span>
+          <span>
+            Downloaded
+            <%= @score.team.senior? ? "Business Plan" : "User Adoption Plan" %>
+          </span>
           <%= @score.downloaded_business_plan? ? "Yes" : "No" %>
         </h5>
       <% end %>
@@ -66,10 +74,10 @@
   <% questions = Questions.for(@score) %>
 
   <div class="admin-score-sections">
-    <% questions.sections.each do |section| %>
+    <% questions.sections_for(division: @score.team.division_name).each do |section| %>
       <h3>
         <%= section.titlecase %>
-        <span>(<%= @score.total_for_section(section) %>)</span>
+        <span>(<%= @score.total_points_for_section(@score.team.division_name, section) %>)</span>
       </h3>
 
       <table>
