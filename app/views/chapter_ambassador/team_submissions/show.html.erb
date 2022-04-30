@@ -88,9 +88,9 @@
         <% end %>
       </dl>
 
-      <% if @team_submission.senior_division? %>
+      <% if @team_submission.senior_division? || @team_submission.junior_division? %>
         <dl>
-          <dt>Business Plan:</dt>
+          <dt><%= @team_submission.senior_division? ? 'Business Plan' : 'User Adoption Plan' %></dt>
           <dd>
             <% if @team_submission.seasons == [2017] %>
               <% if bp = BusinessPlan.find_by(team_submission_id: @team_submission.id) %>
