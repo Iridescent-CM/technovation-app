@@ -42,18 +42,19 @@ module SignIn
   def self.after_signin_path(signin, context)
     last_profile_used = context.remove_cookie(CookieNames::LAST_PROFILE_USED)
 
-    if last_profile_used == "regional_ambassador"
-      last_profile_used = "chapter_ambassador"
-    end
-
     if last_profile_used and
         not signin.public_send("#{last_profile_used}_profile").present?
       last_profile_used = nil
     end
 
-    (last_profile_used && "#{last_profile_used}_dashboard_path") or
-      "#{signin.scope_name.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")}_dashboard_path"
-    # TODO --- root out this pending chapter ambassador stuff into something
-    # sensible
+    if last_profile_used.present?
+      "#{last_profile_used}_dashboard_path"
+    elsif JudgeDashboardRedirector.new(account: signin).enabled?
+      "judge_dashboard_path"
+    elsif signin.scope_name == "pending_chapter_ambassador"
+      "chapter_ambassador_dashboard_path"
+    else
+      "#{signin.scope_name}_dashboard_path"
+    end
   end
 end
