@@ -19,6 +19,7 @@
           :section-name="section.name"
           :section-title="section.title"
           :section-score="`${section.pointsTotal}/${section.pointsPossible}`"
+          :show-section-progress="true"
           :is-active="$route.name === section.name"
           :is-complete="section.isComplete"
         />
