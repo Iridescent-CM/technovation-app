@@ -18,7 +18,8 @@
           :key="i"
           :section-name="section.name"
           :section-title="section.title"
-          :section-score="`${section.pointsTotal} / ${section.pointsPossible}`"
+          :section-score="`${section.pointsTotal}/${section.pointsPossible}`"
+          :show-section-progress="true"
           :is-active="$route.name === section.name"
           :is-complete="section.isComplete"
         />
@@ -26,7 +27,7 @@
         <score-stepper-item
           section-name="review-score"
           section-title="Review Score"
-          :section-score="`${totalScore} / ${totalPossibleScore}`"
+          :section-score="`${totalScore}/${totalPossibleScore}`"
           :is-active="$route.name === 'review-score'"
           :is-complete="isScoreComplete"
         />
