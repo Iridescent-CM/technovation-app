@@ -32,8 +32,11 @@
 
 <script>
 import Icon from '../../components/Icon'
+import {mapState} from "vuex";
 
 export default {
+  computed: mapState(['team']),
+
   components: {
     Icon,
   },
@@ -50,19 +53,34 @@ export default {
     },
 
     explainScores (n) {
+      return this.team.division === 'beginner' ? this.explainBeginnerScores(n) : this.explainJuniorSeniorScores(n)
+    },
+
+    explainBeginnerScores (n) {
       switch (n) {
         case 1:
-          return "Incomplete. The work is missing."
+          return "Not there yet. Missing or needs major improvement."
         case 2:
-          return "Needs Improvement. The work needs major improvement."
+          return "Good. The work needs minor improvement."
         case 3:
-          return "Acceptable. The work needs minor improvement."
-        case 4:
-          return "Good. The work is of good quality."
-        case 5:
-          return "Excellent. The work is of excellent quality"
+          return "Amazing. The work is of excellent quality."
       }
     },
+
+    explainJuniorSeniorScores (n) {
+      switch (n) {
+        case 1:
+          return "Not there yet. The work is missing."
+        case 2:
+          return "Getting there. The work needs major improvement."
+        case 3:
+          return "Good. The work needs minor improvement."
+        case 4:
+          return "A cut above. The work is of good quality."
+        case 5:
+          return "Amazing. The work is of excellent quality."
+      }
+    }
   }
 }
 </script>
