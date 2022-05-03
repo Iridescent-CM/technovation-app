@@ -5,9 +5,13 @@ module Admin
       participant.regenerate_session_token
       set_cookie(CookieNames::SESSION_TOKEN, participant.session_token)
 
-      redirect_to send(
-        "#{participant.scope_name.sub(/^\w+_r/, "r")}_dashboard_path"
-      )
+      if JudgeDashboardRedirector.new(account: participant).enabled?
+        redirect_to judge_dashboard_path
+      else
+        redirect_to send(
+          "#{participant.scope_name}_dashboard_path"
+        )
+      end
     end
 
     def destroy
