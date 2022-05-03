@@ -51,8 +51,6 @@ module SignIn
       "#{last_profile_used}_dashboard_path"
     elsif JudgeDashboardRedirector.new(account: signin).enabled?
       "judge_dashboard_path"
-    elsif signin.scope_name == "pending_chapter_ambassador"
-      "chapter_ambassador_dashboard_path"
     else
       "#{signin.scope_name}_dashboard_path"
     end
