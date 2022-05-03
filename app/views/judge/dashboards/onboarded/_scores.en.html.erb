@@ -11,7 +11,11 @@
         data: { turbolinks: false } %>
     <% elsif @scores_in_progress.present? %>
       <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
-        Scores in Progress
+        <% if @scores_in_progress.one? %>
+          Your Score in Progress
+        <% else %>
+          Scores in Progress
+        <% end %>
       </h2>
 
       <div class="mt-2 flex flex-col">
