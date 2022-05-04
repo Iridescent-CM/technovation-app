@@ -59,26 +59,26 @@ export default {
     explainBeginnerScores (n) {
       switch (n) {
         case 1:
-          return "Not there yet. Missing or needs major improvement."
+          return "Not there yet"
         case 2:
-          return "Good. The work needs minor improvement."
+          return "Good"
         case 3:
-          return "Amazing. The work is of excellent quality."
+          return "Amazing"
       }
     },
 
     explainJuniorSeniorScores (n) {
       switch (n) {
         case 1:
-          return "Not there yet. The work is missing."
+          return "Not there yet"
         case 2:
-          return "Getting there. The work needs major improvement."
+          return "Getting there"
         case 3:
-          return "Good. The work needs minor improvement."
+          return "Good"
         case 4:
-          return "A cut above. The work is of good quality."
+          return "A cut above"
         case 5:
-          return "Amazing. The work is of excellent quality."
+          return "Amazing"
       }
     }
   }
