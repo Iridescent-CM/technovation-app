@@ -3,56 +3,58 @@
 <div class="w-full lg:w-3/4 mx-auto">
   <%= render("student/dashboards/completion_steps/rebrand/view_completed_team_submission", submission: @team_submission) %>
 
-  <div class="border-b-2 border-energetic-blue my-8 mb-6"></div>
+  <% if current_account.authenticated? && current_account.is_not_a_judge? %>
+    <div class="border-b-2 border-energetic-blue my-8 mb-6"></div>
 
-  <div class="mt-8">
-    <% @team_submission.awaiting_publish(current_scope) do %>
-      <p class="text-lg">
-        <%= link_to(
-          "Submit now",
-          send("#{current_scope}_honor_code_review_path", { team_id: current_team.id }),
-          class: "lg-link-button link-button-success"
-        ) %>
-
-        or
-
-        <%= link_to(
-          "continue editing",
-          send(
-            "#{current_scope}_team_submission_section_path",
-            @team_submission,
-            section: :ideation
-          ),
-          class: "text-energetic-blue hover:text-energetic-blue"
-        ) %>
-      </p>
-
-      <p class="mt-6 text-lg">
-        You can still make changes after you submit,
-        until <%= Season.deadline %>.
-      </p>
-    <% end %>
-
-    <% @team_submission.already_published(current_scope) do %>
-      <% if SeasonToggles.team_submissions_editable? %>
-        <p>
+    <div class="mt-8">
+      <% @team_submission.awaiting_publish(current_scope) do %>
+        <p class="text-lg">
           <%= link_to(
-            "Make changes",
+            "Submit now",
+            send("#{current_scope}_honor_code_review_path", { team_id: current_team.id }),
+            class: "lg-link-button link-button-success"
+          ) %>
+
+          or
+
+          <%= link_to(
+            "continue editing",
             send(
               "#{current_scope}_team_submission_section_path",
               @team_submission,
               section: :ideation
             ),
-            class: "lg-link-button link-button-success"
+            class: "text-energetic-blue hover:text-energetic-blue"
           ) %>
         </p>
 
         <p class="mt-6 text-lg">
-          You can make changes until <%= Season.deadline %>.
+          You can still make changes after you submit,
+          until <%= Season.deadline %>.
         </p>
-      <% else %>
-        <p class="text-lg">Submissions are not editable at this time.</p>
       <% end %>
-    <% end %>
-  </div>
+
+      <% @team_submission.already_published(current_scope) do %>
+        <% if SeasonToggles.team_submissions_editable? %>
+          <p>
+            <%= link_to(
+              "Make changes",
+              send(
+                "#{current_scope}_team_submission_section_path",
+                @team_submission,
+                section: :ideation
+              ),
+              class: "lg-link-button link-button-success"
+            ) %>
+          </p>
+
+          <p class="mt-6 text-lg">
+            You can make changes until <%= Season.deadline %>.
+          </p>
+        <% else %>
+          <p class="text-lg">Submissions are not editable at this time.</p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
