@@ -36,13 +36,13 @@ class SeasonToggles
       def current_round_deadline(judge)
         if LiveEventJudgingEnabled.(judge)
           ImportantDates.live_quarterfinals_judging_ends
-            .strftime("%B %-d (US/Pacific time)").html_safe
+            .strftime("%B %-d at 5pm (Pacific Daylight Time)").html_safe
         elsif quarterfinals?
           ImportantDates.virtual_quarterfinals_judging_ends
-            .strftime("%B %-d (US/Pacific time)").html_safe
+            .strftime("%B %-d at 5pm (Pacific Daylight Time)").html_safe
         elsif semifinals?
           ImportantDates.semifinals_judging_ends
-            .strftime("%B %-d (US/Pacific time)").html_safe
+            .strftime("%B %-d at 5pm (Pacific Daylight Time)").html_safe
         else
           "- judging is closed -"
         end
