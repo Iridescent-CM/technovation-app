@@ -168,44 +168,46 @@
   <% end %>
 </div>
 
-<div class="mt-8">
-  <%= render "application/templates/alerts/info" do %>
-    Judges will not see the answers to the following questions and they will <strong class="font-semibold">NOT</strong> affect your judge scores
-  <% end %>
-</div>
+<% if current_account.authenticated? && current_account.is_not_a_judge? %>
+  <div class="mt-8">
+    <%= render "application/templates/alerts/info" do %>
+      Judges will not see the answers to the following questions and they will <strong class="font-semibold">NOT</strong> affect your judge scores
+    <% end %>
+  </div>
 
-<div class="mt-4">
-  <h3 class="mb-2 text-base font-semibold uppercase">
-    Does your submission use artificial intelligence?
-  </h3>
+  <div class="mt-4">
+    <h3 class="mb-2 text-base font-semibold uppercase">
+      Does your submission use artificial intelligence?
+    </h3>
 
-  <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
-    <%= submission.ai? ? "Yes" : "No"  %>
-  </span>
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
+      <%= submission.ai? ? "Yes" : "No"  %>
+    </span>
 
-  <%= simple_format submission.ai_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
-</div>
+    <%= simple_format submission.ai_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
+  </div>
 
-<div class="mt-6">
-  <h3 class="mb-2 text-base font-semibold uppercase">
-    Does your submission help solve climate change?
-  </h3>
+  <div class="mt-6">
+    <h3 class="mb-2 text-base font-semibold uppercase">
+      Does your submission help solve climate change?
+    </h3>
 
-  <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
-    <%= submission.climate_change? ? "Yes" : "No"  %>
-  </span>
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
+      <%= submission.climate_change? ? "Yes" : "No"  %>
+    </span>
 
-  <%= simple_format submission.climate_change_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
-</div>
+    <%= simple_format submission.climate_change_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
+  </div>
 
-<div class="mt-6">
-  <h3 class="mb-2 text-base font-semibold uppercase">
-    Does your submission help solve a health problem?
-  </h3>
+  <div class="mt-6">
+    <h3 class="mb-2 text-base font-semibold uppercase">
+      Does your submission help solve a health problem?
+    </h3>
 
-  <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
-    <%= submission.game? ? "Yes" : "No"  %>
-  </span>
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
+      <%= submission.game? ? "Yes" : "No"  %>
+    </span>
 
-  <%= simple_format submission.game_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
-</div>
+    <%= simple_format submission.game_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
+  </div>
+<% end %>
