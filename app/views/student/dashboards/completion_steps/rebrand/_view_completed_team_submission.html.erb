@@ -101,14 +101,14 @@
 
       <ul>
         <li>
-          <%= link_to submission.source_code_url, class: "text-energetic-blue hover:text-energetic-blue text-lg", target: :blank do %>
+          <%= link_to submission.developed_on?("Thunkable") ? submission.thunkable_project_url : submission.source_code_url, class: "text-energetic-blue hover:text-energetic-blue text-lg", target: :blank do %>
             <div class="flex items-center">
               <svg class="mr-2 h-6 w-6 flex-shrink" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
 
               <div>
-                Download the technical work
+                <%= submission.developed_on?("Thunkable") ? "View on Thunkable" : "Download the technical work" %>
               </div>
 
               <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
