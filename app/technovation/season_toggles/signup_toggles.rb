@@ -28,6 +28,8 @@ class SeasonToggles
         define_method("#{scope}_signup?") do
           convert_to_bool(store.get("#{scope}_signup"))
         end
+
+        alias_method "#{scope}_registration_open?", "#{scope}_signup?"
       end
 
       def registration_open?
