@@ -6,7 +6,6 @@ namespace :jobs do
     owner_type = args[:owner_type]
     dry_run = args[:dry_run] != "run"
 
-
     puts "DRY RUN: #{dry_run ? 'on' : 'off'}"
     puts "Force failing queued jobs for #{owner_type} that were created before #{(Date.today - num_of_days.days).strftime("%B %d, %Y")}"
 
