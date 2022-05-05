@@ -6,54 +6,57 @@
           <%= image_tag "new_registration/tg-girls-logo.png", alt:"Technovation Girls Logo", id:"tg-logo", class:"w-44 md:w-52"%>
         </a>
       </div>
-      <div class="flex space-x-7 py-4" id="global-nav">
-        <div class="flex items-center space-x-1" id="global-nav-wrapper">
-          <% if content_for?(:global_nav_links) %>
-            <%= yield :global_nav_links %>
-          <% end %>
-          <a class="tw-sm-hidden" href="https://www.technovation.org/about/" target="_blank">About</a>
-          <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-            <%= link_to SeasonToggles.survey_link(current_scope, "text"),
-                        SeasonToggles.survey_link(
-                          current_scope, "url",
-                          format_url: true,
-                          account: current_account
-                        ),
-                        target: "_blank",
-                        class: "tw-sm-hidden"
-            %>
-          <% end %>
-          <div class="flex items-center justify-center">
-            <div class="relative inline-block text-left tw-dropdown" id="global-dropdown-wrapper">
-              <span class="flex cursor-pointer hover:text-energetic-blue"><%= current_account.first_name %>
-                <img src="https://icongr.am/fontawesome/caret-down.svg?size=12" alt="Drop down caret">
-              </span>
 
-              <div class="tw-dropdown-menu">
-                <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none">
-                  <div class="p-4">
-                    <ul class="text-sm" id="global-dropdown-list">
-                      <% if content_for?(:drop_down) %>
-                        <%= yield :drop_down %>
-                      <% elsif current_account.authenticated? %>
-                        <%= link_to t('views.application.signout'), signout_path %>
-                      <% else %>
-                        <%= link_to t('views.application.signin'),
-                                    signin_path,
-                                    class: al(signin_path) %>
-                      <% end %>
-                    </ul>
+      <% if current_account.present? %>
+        <div class="flex space-x-7 py-4" id="global-nav">
+          <div class="flex items-center space-x-1" id="global-nav-wrapper">
+            <% if content_for?(:global_nav_links) %>
+              <%= yield :global_nav_links %>
+            <% end %>
+            <a class="tw-sm-hidden" href="https://www.technovation.org/about/" target="_blank">About</a>
+            <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+              <%= link_to SeasonToggles.survey_link(current_scope, "text"),
+                          SeasonToggles.survey_link(
+                            current_scope, "url",
+                            format_url: true,
+                            account: current_account
+                          ),
+                          target: "_blank",
+                          class: "tw-sm-hidden"
+              %>
+            <% end %>
+            <div class="flex items-center justify-center">
+              <div class="relative inline-block text-left tw-dropdown" id="global-dropdown-wrapper">
+                <span class="flex cursor-pointer hover:text-energetic-blue"><%= current_account.first_name %>
+                  <img src="https://icongr.am/fontawesome/caret-down.svg?size=12" alt="Drop down caret">
+                </span>
+
+                <div class="tw-dropdown-menu">
+                  <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none">
+                    <div class="p-4">
+                      <ul class="text-sm" id="global-dropdown-list">
+                        <% if content_for?(:drop_down) %>
+                          <%= yield :drop_down %>
+                        <% elsif current_account.authenticated? %>
+                          <%= link_to t('views.application.signout'), signout_path %>
+                        <% else %>
+                          <%= link_to t('views.application.signin'),
+                                      signin_path,
+                                      class: al(signin_path) %>
+                        <% end %>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <%= image_tag current_account.profile_image_url,
-                          class: "rounded-bl-3xl rounded-tr-3xl w-14",
-                          id: "profile-image" %>
+              <%= image_tag current_account.profile_image_url,
+                            class: "rounded-bl-3xl rounded-tr-3xl w-14",
+                            id: "profile-image" %>
+            </div>
           </div>
         </div>
-      </div>
+    <% end %>
     </div>
   </div>
 </nav>
