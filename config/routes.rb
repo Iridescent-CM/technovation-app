@@ -335,6 +335,10 @@ Rails.application.routes.draw do
     resources :expertises, only: :index
   end
 
+  namespace :api do
+    resources :registration_settings, only: :index
+  end
+
   resource :terms_agreement, only: [:edit, :update]
 
   resources :password_resets, only: [:new, :create]
