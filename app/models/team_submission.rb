@@ -50,9 +50,9 @@ class TeamSubmission < ActiveRecord::Base
   before_validation -> {
     return if thunkable_project_url.blank?
     
-    thunkable_project_url = self.padronize_url(thunkable_project_url)
-    thunkable_project_url = self.padronize_url(demo_video_link)
-    pitch_video_link = self.padronize_url(pitch_video_link)
+    self.thunkable_project_url = padronize_url(thunkable_project_url)
+    self.demo_video_link = padronize_url(demo_video_link)
+    self.pitch_video_link = padronize_url(pitch_video_link)
   }
 
   before_validation :reset_development_platform_fields_for_ai_projects
