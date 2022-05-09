@@ -213,7 +213,19 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(s) { s.development_platform == "App Inventor" }
 
   validates :thunkable_project_url,
+    absence: { 
+      message: 'Cannot add a Thunkable project URL when App Inventor selected as the development platform.' 
+    },
+    if: ->(s) { s.development_platform == "App Inventor" }
+
+  validates :thunkable_project_url,
     presence: true,
+    if: ->(s) { s.development_platform == "Thunkable" }
+
+  validates :app_inventor_app_name,
+    absence: { 
+      message: 'Cannot add an App Inventor app name when Thunkable selected as the development platform.' 
+    },
     if: ->(s) { s.development_platform == "Thunkable" }
 
   validates :app_inventor_app_name,
@@ -225,7 +237,6 @@ class TeamSubmission < ActiveRecord::Base
 
   validates :app_inventor_gmail, email: true, allow_blank: true
   validates :thunkable_account_email, email: true, allow_blank: true
-
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
   validates :ai_description,
@@ -239,6 +250,9 @@ class TeamSubmission < ActiveRecord::Base
   validates :game_description,
     presence: true,
     if: ->(team_submission) { team_submission.game? }
+
+  validates :pitch_video_link, format: { with: URI.regexp }, allow_blank: true
+  validates :demo_video_link, format: { with: URI.regexp }, allow_blank: true
 
   delegate :name,
     :division_name,
@@ -620,16 +634,12 @@ class TeamSubmission < ActiveRecord::Base
       self.development_platform_other = nil
       self.app_inventor_app_name = nil
       self.app_inventor_gmail = nil
-      self.thunkable_account_email = nil
-      self.thunkable_project_url = nil
     end
   end
 
   def reset_development_platform_fields_for_app_inventor
     if development_platform == "App Inventor"
       self.development_platform_other = nil
-      self.thunkable_account_email = nil
-      self.thunkable_project_url = nil
     end
   end
 
