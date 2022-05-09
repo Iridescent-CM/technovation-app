@@ -49,14 +49,10 @@ class TeamSubmission < ActiveRecord::Base
 
   before_validation -> {
     return if thunkable_project_url.blank?
-
-    if !thunkable_project_url.match(/^https:\/\//)
-      self.thunkable_project_url = thunkable_project_url.sub("http", "https")
-    end
-
-    if !thunkable_project_url.match(/^https:\/\//)
-      self.thunkable_project_url = "https://" + thunkable_project_url
-    end
+    
+    self.padronize_url(thunkable_project_url)
+    self.padronize_url(demo_video_link)
+    self.padronize_url(pitch_video_link)
   }
 
   before_validation :reset_development_platform_fields_for_ai_projects
@@ -606,6 +602,16 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   private
+
+  def padronize_url( url )
+    if !url.match(/^https:\/\//)
+      self.thunkable_project_url = url.sub("http", "https")
+    end
+
+    if !url.match(/^https:\/\//)
+      self.thunkable_project_url = "https://" + url
+    end  
+  end
 
   def team_name_and_app_name
     [
