@@ -47,18 +47,18 @@ class TeamSubmission < ActiveRecord::Base
     use: :scoped,
     scope: :deleted_at
 
-  before_validation -> {
-    return if thunkable_project_url.blank?
-    
-    self.thunkable_project_url = padronize_url(thunkable_project_url)
-    self.demo_video_link = padronize_url(demo_video_link)
-    self.pitch_video_link = padronize_url(pitch_video_link)
-  }
-
   before_validation :reset_development_platform_fields_for_ai_projects
   before_validation :reset_development_platform_fields_for_app_inventor
   before_validation :reset_development_platform_fields_for_thunkable
   before_validation :reset_development_platform_fields_for_other_platforms
+
+  before_validation -> {
+    return if thunkable_project_url.blank?
+    
+    self.thunkable_project_url = padronize_url(self.thunkable_project_url)
+    self.demo_video_link = padronize_url(self.demo_video_link)
+    self.pitch_video_link = padronize_url(self.pitch_video_link)
+  }
 
   before_commit -> {
     self.ai_description = "" if ai.blank?
