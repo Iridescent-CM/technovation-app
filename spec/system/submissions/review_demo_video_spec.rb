@@ -15,7 +15,7 @@ RSpec.describe "Reviewing the demo video" do
     end
 
     it "adds an intermediary step before really saving the demo video" do
-      fill_in "Youtube", with: "https://youtube.com/watch?v=adGebPmRjxg"
+      fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       expect(page).to have_xpath(
         "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg']"
@@ -56,7 +56,7 @@ RSpec.describe "Reviewing the demo video" do
     end
 
     it "adds an intermediary step before really saving the demo video" do
-      fill_in "Youtube", with: "https://youtube.com/watch?v=adGebPmRjxg"
+      fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       expect(page).to have_xpath(
         "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg']"
@@ -76,7 +76,7 @@ RSpec.describe "Reviewing the demo video" do
     end
 
     it "saves after the intermediary step" do
-      fill_in "Youtube", with: "https://youtube.com/watch?v=adGebPmRjxg"
+      fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       click_button "Save"
       expect(page).to have_css('.demo_video_link.complete')
