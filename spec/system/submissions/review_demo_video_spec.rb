@@ -34,7 +34,7 @@ RSpec.describe "Reviewing the demo video" do
     end
 
     it "saves after the intermediary step" do
-      fill_in "Youtube", with: "https://youtube.com/watch?v=adGebPmRjxg"
+      fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       click_button "Save"
       expect(page).to have_css('.demo_video_link.complete')
