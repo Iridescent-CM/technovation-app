@@ -247,8 +247,7 @@ class TeamSubmission < ActiveRecord::Base
     presence: true,
     if: ->(team_submission) { team_submission.game? }
 
-  validates 
-    :pitch_video_link, 
+  validates :pitch_video_link, 
     format: { 
       with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/ 
     }, 
