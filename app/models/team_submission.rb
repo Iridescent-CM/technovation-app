@@ -665,8 +665,6 @@ class TeamSubmission < ActiveRecord::Base
   def reset_development_platform_fields_for_thunkable
     if development_platform == "Thunkable"
       self.development_platform_other = nil
-      self.app_inventor_app_name = nil
-      self.app_inventor_gmail = nil
     end
   end
 
