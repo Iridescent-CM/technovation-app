@@ -512,6 +512,10 @@ class TeamSubmission < ActiveRecord::Base
     team.division_id
   end
 
+  def beginner_division?
+    team_division_name == "beginner"
+  end
+
   def junior_division?
     team_division_name == "junior"
   end

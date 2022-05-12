@@ -20,7 +20,7 @@ RSpec.feature "getting the semifinalist blog post snippet" do
     end
   end
 
-  context "with a junior and a senior semifinalist" do
+  context "with a beginner, junior, and a senior semifinalist" do
     let!(:senior_submission) {
       FactoryBot.create(
         :team_submission,
@@ -35,6 +35,16 @@ RSpec.feature "getting the semifinalist blog post snippet" do
         :team_submission,
         :complete,
         :junior,
+        :brazil,
+        contest_rank: :semifinalist
+      )
+    }
+
+    let!(:beginner_submission) {
+      FactoryBot.create(
+        :team_submission,
+        :complete,
+        :beginner,
         :brazil,
         contest_rank: :semifinalist
       )
@@ -57,6 +67,12 @@ RSpec.feature "getting the semifinalist blog post snippet" do
       within "#junior" do
         expect(page).to have_css("#junior-col-1", count: 1)
         expect(page).to have_css("#junior-col-2", count: 1)
+      end
+
+      expect(page).to have_css("#beginner", count: 1)
+      within "#beginner" do
+        expect(page).to have_css("#beginner-col-1", count: 1)
+        expect(page).to have_css("#beginner-col-2", count: 1)
       end
     end
 
