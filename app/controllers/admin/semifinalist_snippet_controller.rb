@@ -15,6 +15,12 @@ module Admin
         .select { |sub| sub.junior_division? }
       @junior_section = Section.new("junior", junior_submissions)
 
+      beginner_submissions = TeamSubmission
+        .current
+        .semifinalist
+        .select { |sub| sub.beginner_division? }
+      @beginner_section = Section.new("beginner", beginner_submissions)
+
       respond_to :html, :text
     end
 
