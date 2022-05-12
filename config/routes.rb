@@ -387,7 +387,7 @@ Rails.application.routes.draw do
   resource :token_error, only: :show
   resource :timeout_error, only: :show
 
-  resources :apps, only: :show
+  resources :projects, only: :show
 
   root to: "public/dashboards#show"
 

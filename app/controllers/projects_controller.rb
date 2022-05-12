@@ -1,4 +1,4 @@
-class AppsController < ApplicationController
+class ProjectsController < ApplicationController
   helper_method :current_scope,
     :determine_manifest
 

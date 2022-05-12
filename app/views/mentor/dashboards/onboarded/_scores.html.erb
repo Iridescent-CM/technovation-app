@@ -27,7 +27,7 @@
         <% if team.submission.present? %>
           <p>
             <%= link_to "Open your submission page",
-                app_path(team.submission),
+                project_path(team.submission),
                 class: "button",
                 target: "_blank" %>
           </p>
@@ -45,7 +45,7 @@
 
         <p>
           <%= link_to "Open your submission page",
-              app_path(team.submission),
+              project_path(team.submission),
               class: "button",
               target: "_blank" %>
         </p>

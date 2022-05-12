@@ -114,7 +114,7 @@ class ScoredSubmissionsGrid
   column :view, mandatory: true, html: true do |submission, grid|
     html = link_to(
       web_icon('list-ul', size: 16, remote: true),
-      send("#{current_scope}_score_detail_path", id: submission.id), 
+      send("#{current_scope}_score_detail_path", id: submission.id),
       {
         class: "view-details",
         "v-tooltip" => "'Read score details'",
@@ -127,7 +127,7 @@ class ScoredSubmissionsGrid
 
       html += link_to(
         web_icon('photo', size: 16, remote: true),
-        app_path(submission),
+        project_path(submission),
         class: "open-public",
         "v-tooltip" => "'Open public page'",
         target: :_blank,
