@@ -20,7 +20,7 @@
     <h3>
       <span>Submission</span>
       <%= link_to @score.team_submission.app_name,
-        app_path(@score.team_submission),
+        project_path(@score.team_submission),
         data: { turbolinks: false },
         target: "_blank"
       %>

@@ -63,7 +63,7 @@
               <td><%= submission.team.name %></td>
               <td>
                 <%= link_to submission.app_name,
-                  app_path(submission),
+                  project_path(submission),
                   target: :_blank %>
               </td>
               <td><%= submission.submission_scores.semifinals.complete.count %></td>

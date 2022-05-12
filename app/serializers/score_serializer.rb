@@ -19,6 +19,6 @@ class ScoreSerializer
   end
 
   attribute :submission_url do |score|
-    Rails.application.routes.url_helpers.app_path(score.team_submission)
+    Rails.application.routes.url_helpers.project_path(score.team_submission)
   end
 end
