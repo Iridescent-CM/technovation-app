@@ -123,6 +123,44 @@ $(document).on("click", ".img-modal", function(e) {
   });
 });
 
+$(document).on("click", ".judge-screenshot-modal", function(e) {
+  var html, animation
+
+  if (typeof $(e.target).data("modalIdx") !== 'undefined') {
+    const last = parseInt($("#screenshots-nav").data("modalLast"))
+    const idx = parseInt($(e.target).data("modalIdx"))
+    const nextIdx = idx + 1 > last ? 0 : idx + 1
+    const prevIdx = idx - 1 < 0 ? last : idx - 1
+
+    html =
+      `<div class="screenshot-nav">
+         <div class="screenshot-nav__item" data-go-to=" ${prevIdx}">
+           <img src=https://icongr.am/fontawesome/angle-left.svg alt="Left arrow icon" />
+         </div>
+          
+         <div>
+           <img class="screenshot__img" src="${$(e.target).data("modalUrl")}" alt="Team screenshot" />
+         </div>
+  
+         <div class="screenshot-nav__item" data-go-to="${nextIdx}">
+           <img src="https://icongr.am/fontawesome/angle-right.svg" alt="Right arrow icon" />
+         </div>
+      </div>`
+
+    animation = false
+  } else {
+    html = `<img src="${$(e.target).data("modalUrl")}" width="100%" />`
+    animation = true
+  }
+
+  swal({
+    html: html,
+    confirmButtonText: "Done",
+    animation: animation,
+    customClass: 'judge-sub-screenshot',
+  });
+});
+
 $(document).on("modals.beforeOpen",
   "[data-modal-fetch]",
   function(evt, modal) {
