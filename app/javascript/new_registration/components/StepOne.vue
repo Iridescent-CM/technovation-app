@@ -19,7 +19,7 @@
         label-position="before"
         type="radio"
         class="profile-type"
-        :options="options"
+        :options="profileTypes"
         name="profileType"
         validation="required"
         @input="hasValidationErrors = false"
@@ -48,26 +48,50 @@ export default {
   data() {
     return {
       values: {},
-      options: [
-        //{
-        //  label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year old* daughter</span>`,
-        //  value: "parent",
-        //},
-        //{
-        //  label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering myself and am 13-18 years old*</span>`,
-        //  value: "student",
-        //},
-        //{
-        //  label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
-        //  value: "mentor",
-        //},
-        {
-          label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will <span class="font-bold">judge submissions</span></span>`,
-          value: "judge",
-        }
-      ],
+      profileTypes: [],
+      isRegistrationOpen: true,
+      isStudentRegistrationOpen: false,
+      isMentorRegistrationOpen: false,
       hasValidationErrors: true
     };
+  },
+  methods: {
+    setupProfileTypes() {
+      if (this.isStudentRegistrationOpen) {
+        this.profileTypes.push(this.studentProfileType())
+        this.profileTypes.push(this.parentProfileType())
+      }
+
+      if (this.isMentorRegistrationOpen) {
+        this.profileTypes.push(this.mentorProfileType())
+      }
+
+      this.profileTypes.push(this.judgeProfileType())
+    },
+    studentProfileType() {
+      return {
+        label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering myself and am 13-18 years old*</span>`,
+        value: "student"
+      }
+    },
+    parentProfileType() {
+      return {
+        label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year old* daughter</span>`,
+        value: "parent"
+      }
+    },
+    mentorProfileType() {
+      return {
+        label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
+          value: "mentor"
+      }
+    },
+    judgeProfileType() {
+      return {
+        label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will <span class="font-bold">judge submissions</span></span>`,
+        value: "judge"
+      }
+    },
   },
   computed: {
     divisionCutoffDate: divisionCutoffDateFormatted
@@ -77,6 +101,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  created() {
+    this.setupProfileTypes()
   }
 }
 </script>
