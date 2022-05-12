@@ -11,7 +11,7 @@
       class="mx-2"
     >
       <img
-        class="img-modal rounded"
+        class="judge-screenshot-modal rounded"
         :src="screenshot.thumb"
         :data-modal-url="screenshot.full"
         :data-modal-idx="i"

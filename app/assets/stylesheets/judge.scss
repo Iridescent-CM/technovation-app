@@ -53,3 +53,25 @@
     opacity: 1;
   }
 }
+
+.judge-sub-screenshot {
+  width: 100% !important;
+
+  .screenshot-nav {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+  }
+
+  .screenshot__img {
+    object-fit: contain;
+    height: 40rem;
+  }
+}
+
+@media only screen and (min-width: 992px){
+  .judge-sub-screenshot {
+    width: 50% !important;
+  }
+}
