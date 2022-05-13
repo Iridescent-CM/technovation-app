@@ -1,5 +1,5 @@
 <template>
-  <div id="step-one">
+  <div v-if="isRegistrationOpen" id="step-one">
     <ContainerHeader header-text="Your Profile Type" />
 
     <div id="profile-type" class="form-wrapper">
@@ -34,10 +34,18 @@
 
     <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
   </div>
+
+  <div v-else>
+    <p class="italic text-sm text-red-500 my-4">
+      Registration for the 2022 season is now closed.
+    </p>
+  </div>
 </template>
 
-
 <script>
+import axios from "axios";
+
+import { airbrake } from "utilities/utilities"
 import ContainerHeader from "./ContainerHeader";
 import NextButton from "./NextButton";
 import { divisionCutoffDateFormatted } from "../../utilities/technovation-dates.js"
@@ -49,13 +57,27 @@ export default {
     return {
       values: {},
       profileTypes: [],
-      isRegistrationOpen: true,
+      isRegistrationOpen: false,
       isStudentRegistrationOpen: false,
       isMentorRegistrationOpen: false,
       hasValidationErrors: true
     };
   },
   methods: {
+    async getRegistrationSettings() {
+      try {
+        const response = await axios.get("/api/registration_settings")
+
+        this.isRegistrationOpen = true
+        this.isStudentRegistrationOpen = response.data.isStudentRegistrationOpen
+        this.isMentorRegistrationOpen = response.data.isMentorRegistrationOpen
+      }
+      catch(error) {
+        airbrake.notify({
+          error: `[REGISTRATION] Error getting registration settings - ${error.response.data}`
+        })
+      }
+    },
     setupProfileTypes() {
       if (this.isStudentRegistrationOpen) {
         this.profileTypes.push(this.studentProfileType())
@@ -102,7 +124,9 @@ export default {
       required: true
     }
   },
-  created() {
+  async created() {
+    await this.getRegistrationSettings()
+
     this.setupProfileTypes()
   }
 }
