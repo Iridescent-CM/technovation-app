@@ -1,0 +1,44 @@
+<h1 class="appy-title">Technovation Girls</h1>
+
+<h2>Registration is currently open for judges</h2>
+
+<p>
+  Thank you for your interest in Technovation Girls. Register <%= link_to "here", signup_path, data: { turbolinks: false } %> to judge projects.
+</p>
+
+<p>
+  <strong>
+    Registration is currently closed for students and mentors, 
+    although students with existing accounts are welcome to 
+    <%= link_to "log-in", login_path, data: { turbolinks: false } %> and review their existing projects.
+  </strong>
+</p>
+
+<p>
+  You can learn more about Technovation on our <%= link_to "website", "https://www.technovation.org/" %> 
+  or follow us at:
+</p>
+
+<ul class="unstyled">
+  <li>
+    <%= web_icon("facebook-square") %>
+    <%= link_to "Facebook", 'https://www.facebook.com/technovationglobal' %>
+  </li>
+
+  <li>
+    <%= web_icon("twitter-square") %>
+    <%= link_to "Twitter", 'https://twitter.com/technovation' %>
+  </li>
+
+  <li>
+    <%= web_icon("instagram") %>
+    <%= link_to "Instagram", 'https://www.instagram.com/technovationglobal' %>
+  </li>
+
+  <li>
+    <%= web_icon("youtube") %>
+    <%= link_to "YouTube", 'https://www.youtube.com/channel/UCvxNjrhfz_M68fwT2QcurjQ' %>
+  </li>
+</ul>
+
+<p>Let's learn and build a better world together!</p>
