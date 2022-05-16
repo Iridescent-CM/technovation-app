@@ -138,7 +138,7 @@ $(document).on("click", ".judge-screenshot-modal", function(e) {
            <img src=https://icongr.am/fontawesome/angle-left.svg alt="Left arrow icon" />
          </div>
           
-         <div>
+         <div class="screenshot-container">
            <img class="screenshot__img" src="${$(e.target).data("modalUrl")}" alt="Team screenshot" />
          </div>
   
