@@ -89,6 +89,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def prepare_judge_for_current_season(record)
     subscribe_to_newsletter(record, :judge)
 
+    RegistrationMailer.welcome_judge(record.id).deliver_later
+
     record.judge_profile.update(completed_training_at: nil)
     record.judge_profile.save # fire commit hooks, if needed
   end
