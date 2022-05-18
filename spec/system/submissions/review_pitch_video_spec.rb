@@ -18,14 +18,14 @@ RSpec.describe "Reviewing the pitch video" do
       fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       expect(page).to have_xpath(
-        "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg?rel=0&cc_load_policy=1']"
+        "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg']"
       )
 
       click_link  "go back"
       fill_in "Youtube", with: "https://vimeo.com/119811742"
       click_button "Next"
       expect(page).to have_xpath(
-        "//iframe[@src='https://player.vimeo.com/video/119811742?rel=0&cc_load_policy=1']"
+        "//iframe[@src='https://player.vimeo.com/video/119811742']"
       )
 
       visit student_dashboard_path
@@ -59,14 +59,14 @@ RSpec.describe "Reviewing the pitch video" do
       fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       expect(page).to have_xpath(
-        "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg?rel=0&cc_load_policy=1']"
+        "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg']"
       )
 
       click_link  "go back"
       fill_in "Youtube", with: "https://vimeo.com/119811742"
       click_button "Next"
       expect(page).to have_xpath(
-        "//iframe[@src='https://player.vimeo.com/video/119811742?rel=0&cc_load_policy=1']"
+        "//iframe[@src='https://player.vimeo.com/video/119811742']"
       )
 
       visit mentor_dashboard_path
