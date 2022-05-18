@@ -72,12 +72,6 @@ class SubmissionsGrid
     )
   end
 
-  column :project_page, 
-    html: false, 
-    mandatory: true do |sub|
-    "#{request.base_url}#{project_path(sub)}"
-  end
-
   column :ai_question, header: "AI question", if: ->(grid) { grid.admin } do
     if ai?
       "Yes - #{ai_description}"
