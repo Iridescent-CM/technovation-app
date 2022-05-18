@@ -33,14 +33,16 @@ module FindEligibleSubmissionId
     end
 
     def id_for_score_in_progress(judge, options = {})
-      if (id = options[:score_id])
-        judge.submission_scores.current_round.incomplete.not_recused.find_by(
-          id: id
-        ).try(:team_submission_id)
-      else
+      score_id = options[:score_id]
+
+      if score_id.blank? || score_id == "null"
         judge.submission_scores.current_round.incomplete.not_recused.first.try(
           :team_submission_id
         )
+      else
+        judge.submission_scores.current_round.incomplete.not_recused.find_by(
+          id: score_id
+        ).try(:team_submission_id)
       end
     end
 
