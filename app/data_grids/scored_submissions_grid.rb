@@ -121,6 +121,21 @@ class ScoredSubmissionsGrid
         data: { turbolinks: false }
       }
     )
+
+    if grid.admin
+      html += " "
+
+      html += link_to(
+        web_icon('photo', size: 16, remote: true),
+        project_path(submission),
+        class: "open-public",
+        "v-tooltip" => "'Open public page'",
+        target: :_blank,
+        data: { turbolinks: false }
+      )
+    else
+      html
+    end
   end
 
   column :team_id, header: "Team ID", if: ->(g) { g.admin } do |submission|
