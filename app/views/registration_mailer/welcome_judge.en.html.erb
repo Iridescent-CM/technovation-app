@@ -31,8 +31,7 @@
 
       <tr>
         <td class="content-block">
-          <strong>So, let's get started! This is what you can do in under 40 minutes
-            in order to start matching with teams:</strong>
+          <strong>Let's get started! This is what you can do in under 40 minutes to start getting submissions to review:</strong>
 
           <ol>
             <li>
@@ -50,18 +49,21 @@
               <%= link_to "Click this link", ENV.fetch("JUDGE_SLACK_SIGNUP_URL"), itemprop: "url" %>
               to join our online Slack community to meet judges from around the world.
             </li>
-
-            <li>
-              <%= link_to "Start Scoring!", judge_dashboard_url, itemprop: "url" %>
-              Log on to your dashboard and click “start score” to begin.
-            </li>
           </ol>
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          <p>Regards,</p>
+          You are now all set to start
+          <%= link_to "Scoring!", judge_dashboard_url, itemprop: "url" %>
+          Log on to your dashboard and click “start score” to begin.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <p>Thank you for your time and support!</p>
           <p>The Technovation Team</p>
         </td>
       </tr>
