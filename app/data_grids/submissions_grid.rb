@@ -72,9 +72,8 @@ class SubmissionsGrid
     )
   end
 
-  column :project_page, html: false do |sub|
-    url_helper = Rails.application.routes.url_helpers
-    "https://my.technovationchallenge.org#{url_helper.project_path(sub)}"
+  column :project_page, html: false do |submission|
+    Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: submission)
   end
 
   column :ai_question, header: "AI question", if: ->(grid) { grid.admin } do
