@@ -10,7 +10,11 @@ class VideoUrl
     when /youtu/
       url[/(?:youtube(?:-nocookie)?\.com\/(?:[^\/\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/, 1] || ""
     when /vimeo/
-      url[/\/(\d+)$/, 1] || ""
+      if /\/(\d+)\/(\w+)/ =~ url
+        "#{$1}?h=#{$2}"
+      else
+        url[/\/(\d+)$/, 1] || ""
+      end
     when /youku/
       url[/\/v_show\/id_(\w+)(?:==)?(?:\.html)?.*$/, 1] || ""
     else

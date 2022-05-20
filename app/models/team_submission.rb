@@ -558,7 +558,7 @@ class TeamSubmission < ActiveRecord::Base
     video_url = VideoUrl.new(video || video_link_for(video_type))
 
     if video_url.valid?
-      src = "#{video_url.root}#{video_url.video_id}?rel=0&cc_load_policy=1"
+      src = "#{video_url.root}#{video_url.video_id}"
     else
       src = "/video-link-broken.html"
     end

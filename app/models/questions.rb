@@ -95,10 +95,10 @@ class Questions
           }
         },
 
-        demo_video_id: submission.video_id(:demo),
+        demo_video_id: submission.video_id(:demo).first(5),
         demo_video_url: judge_embed_code_path(submission, piece: :demo),
 
-        pitch_video_id: submission.video_id(:pitch),
+        pitch_video_id: submission.video_id(:pitch).first(5),
         pitch_video_url: judge_embed_code_path(submission, piece: :pitch),
 
         source_code_url_label: source_code_url_label,

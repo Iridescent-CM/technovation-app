@@ -56,10 +56,20 @@ describe VideoUrl do
     end
 
     context "Vimeo" do
-      let(:url) { "https://vimeo.com/96816279" }
+      context "when the URL is in the format https://vimeo.com/703480970/a4333a9b0c" do
+        let(:url) { "https://vimeo.com/703480970/a4333a9b0c" }
 
-      it "extracts and returns the video id" do
-        expect(video_url.video_id).to eq("96816279")
+        it "returns the correct format in order to embed the video" do
+          expect(video_url.video_id).to eq("703480970?h=a4333a9b0c")
+        end
+      end
+
+      context "when the URL is in the format https://vimeo.com/96816279" do
+        let(:url) { "https://vimeo.com/96816279" }
+
+        it "extracts and returns the video id" do
+          expect(video_url.video_id).to eq("96816279")
+        end
       end
     end
 
