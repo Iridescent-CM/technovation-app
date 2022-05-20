@@ -55,9 +55,9 @@ class TeamSubmission < ActiveRecord::Base
   before_validation -> {
     return if thunkable_project_url.blank?
     
-    self.thunkable_project_url = padronize_url(self.thunkable_project_url)
-    self.demo_video_link = padronize_url(self.demo_video_link)
-    self.pitch_video_link = padronize_url(self.pitch_video_link)
+    self.thunkable_project_url = standardize_url(self.thunkable_project_url)
+    self.demo_video_link = standardize_url(self.demo_video_link)
+    self.pitch_video_link = standardize_url(self.pitch_video_link)
   }
 
   before_commit -> {
@@ -612,7 +612,7 @@ class TeamSubmission < ActiveRecord::Base
 
   private
 
-  def padronize_url( url )
+  def standardize_url( url )
     return if url.blank?
 
     if !url.match(/^https:\/\//)
