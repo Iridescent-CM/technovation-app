@@ -60,6 +60,22 @@ class SubmissionsGrid
     app_name
   end
 
+  column :project_page,
+    mandatory: true,
+    order: "teams.name",
+    html: true do |sub|
+    link_to(
+        "#{request.base_url}#{project_path(sub)}",
+        project_path(sub),
+        target: :_blank,
+        data: { turbolinks: false }
+    )
+  end
+
+  column :project_page, html: false do |submission|
+    Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: submission)
+  end
+
   column :ai_question, header: "AI question", if: ->(grid) { grid.admin } do
     if ai?
       "Yes - #{ai_description}"
