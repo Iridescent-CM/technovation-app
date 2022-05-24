@@ -612,7 +612,7 @@ class TeamSubmission < ActiveRecord::Base
 
   private
 
-  def standardize_url( url )
+  def standardize_url(url)
     return if url.blank?
 
     if !url.match(/^https:\/\//)
