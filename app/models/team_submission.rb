@@ -47,22 +47,18 @@ class TeamSubmission < ActiveRecord::Base
     use: :scoped,
     scope: :deleted_at
 
-  before_validation -> {
-    return if thunkable_project_url.blank?
-
-    if !thunkable_project_url.match(/^https:\/\//)
-      self.thunkable_project_url = thunkable_project_url.sub("http", "https")
-    end
-
-    if !thunkable_project_url.match(/^https:\/\//)
-      self.thunkable_project_url = "https://" + thunkable_project_url
-    end
-  }
-
   before_validation :reset_development_platform_fields_for_ai_projects
   before_validation :reset_development_platform_fields_for_app_inventor
   before_validation :reset_development_platform_fields_for_thunkable
   before_validation :reset_development_platform_fields_for_other_platforms
+
+  before_validation -> {
+    return if thunkable_project_url.blank?
+    
+    self.thunkable_project_url = standardize_url(self.thunkable_project_url)
+    self.demo_video_link = standardize_url(self.demo_video_link)
+    self.pitch_video_link = standardize_url(self.pitch_video_link)
+  }
 
   before_commit -> {
     self.ai_description = "" if ai.blank?
@@ -213,7 +209,19 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(s) { s.development_platform == "App Inventor" }
 
   validates :thunkable_project_url,
+    absence: { 
+      message: 'Cannot add a Thunkable project URL when App Inventor selected as the development platform.' 
+    },
+    if: ->(s) { s.development_platform == "App Inventor" }
+
+  validates :thunkable_project_url,
     presence: true,
+    if: ->(s) { s.development_platform == "Thunkable" }
+
+  validates :app_inventor_app_name,
+    absence: { 
+      message: 'Cannot add an App Inventor app name when Thunkable selected as the development platform.' 
+    },
     if: ->(s) { s.development_platform == "Thunkable" }
 
   validates :app_inventor_app_name,
@@ -225,7 +233,6 @@ class TeamSubmission < ActiveRecord::Base
 
   validates :app_inventor_gmail, email: true, allow_blank: true
   validates :thunkable_account_email, email: true, allow_blank: true
-
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
   validates :ai_description,
@@ -240,6 +247,18 @@ class TeamSubmission < ActiveRecord::Base
     presence: true,
     if: ->(team_submission) { team_submission.game? }
 
+  validates :pitch_video_link, 
+    format: { 
+      with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/ 
+    }, 
+    allow_blank: true
+  
+  validates :demo_video_link, 
+    format: { 
+      with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/ 
+    }, 
+    allow_blank: true
+  
   delegate :name,
     :division_name,
     :photo,
@@ -593,6 +612,20 @@ class TeamSubmission < ActiveRecord::Base
 
   private
 
+  def standardize_url(url)
+    return if url.blank?
+
+    if !url.match(/^https:\/\//)
+      url = url.sub("http", "https")
+    end
+
+    if !url.match(/^https:\/\//)
+      url = "https://" + url
+    end
+
+    return url
+  end
+
   def team_name_and_app_name
     [
       [:app_name, :team_name, :slug]
@@ -620,24 +653,18 @@ class TeamSubmission < ActiveRecord::Base
       self.development_platform_other = nil
       self.app_inventor_app_name = nil
       self.app_inventor_gmail = nil
-      self.thunkable_account_email = nil
-      self.thunkable_project_url = nil
     end
   end
 
   def reset_development_platform_fields_for_app_inventor
     if development_platform == "App Inventor"
       self.development_platform_other = nil
-      self.thunkable_account_email = nil
-      self.thunkable_project_url = nil
     end
   end
 
   def reset_development_platform_fields_for_thunkable
     if development_platform == "Thunkable"
       self.development_platform_other = nil
-      self.app_inventor_app_name = nil
-      self.app_inventor_gmail = nil
     end
   end
 
