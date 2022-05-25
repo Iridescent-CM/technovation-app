@@ -119,6 +119,10 @@ class ScoresGrid
     suspicious_reasons.join(". ")
   end
 
+  column :updated do
+    updated? ? "yes" : "no"
+  end
+
   column :created_at do
     created_at.strftime("%Y-%m-%d %H:%M")
   end
