@@ -1,7 +1,7 @@
 <template>
   <div>
   <nav class="bg-white">
-      <!--// Desktop Navbar //-->
+      <!--// Desktop Navbar Container //-->
       <div class="hidden md:flex max-w-7xl mx-auto px-1">
         <div class="flex justify-between">
             <div>
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <!--// Mob Navbar //-->
+      <!--// Mobile Navbar Container //-->
       <div class="sm:flex md:hidden">
         <div class="block w-full">
           <div class="items-start float-left">
