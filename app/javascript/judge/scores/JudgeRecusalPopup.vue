@@ -37,7 +37,7 @@ export default {
             <div>
               <input type="radio" id="other" name="judge-recusal-reason" value="other">
               <label for="other">Other</label>
-              <input type="text" id="judge-recusal-comment">
+              <textarea id="judge-recusal-comment"></textarea>
               <div id="character-div"><span id="character-count">0</span>/50 words</div>
             </div>
           </div>
@@ -77,12 +77,13 @@ export default {
           return { judgeRecusalReason, judgeRecusalComment }
         },
         confirmButtonText: 'Remove me from this submission',
-        confirmButtonColor: '#a50009',
+        confirmButtonColor: '#3FA428',
         showCancelButton: true,
         cancelButtonText: 'I want to go back and try judging',
         focusConfirm: false,
         reverseButtons: true,
-        width: '70%'
+        width: '45%',
+        customClass: 'tw-green-btn'
       })
 
       if (formValues) {
@@ -112,23 +113,33 @@ export default {
     text-align: left;
   }
 
+  #character-div, #character-div span {
+    font-size: 10pt;
+  }
+
   #judge-recusal-comment {
     display: inline;
-    width: 75%;
-    margin: .75rem 0 0 1rem;
+    width: 100%;
     padding: .2rem;
+    margin-top: .4rem;
+    margin-bottom: .4rem;
   }
 
   #character-div{
     justify-content: flex-end;
     display: flex;
-    width: 80%;
+    width: 50%;
+    float: right;
   }
+}
+
+.swal2-content, .swal2-actions {
+  width: 100%;
 }
 
 .swal2-actions button.swal2-confirm,
 .swal2-actions button.swal2-cancel {
   margin-bottom: 1rem;
-  font-weight: 700;
+  font-weight: 10;
 }
 </style>
