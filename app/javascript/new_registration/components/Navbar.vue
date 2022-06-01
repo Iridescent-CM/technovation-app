@@ -2,7 +2,7 @@
   <div>
   <nav class="bg-white">
       <!--// Desktop Navbar Container //-->
-      <div class="hidden md:flex max-w-7xl mx-auto px-1">
+      <div class="hidden md:block max-w-7xl mx-auto px-1">
         <div class="flex justify-between">
             <div>
               <a href="/" class="flex items-center py-4 px-2">
