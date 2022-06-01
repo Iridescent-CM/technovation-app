@@ -67,7 +67,7 @@
       </div>
     </nav>
     
-    <div class="w-full flex items-center">
+    <div class="sm:w-full flex items-center md:hidden">
       <ul class="hidden mobile-menu w-full">
         <li><a href="https://technovationchallenge.org/get-started/" class="registration-nav-mobile">Get Started</a></li>
         <li><a href="https://www.technovation.org/about/" class="registration-nav-mobile">About</a></li>
