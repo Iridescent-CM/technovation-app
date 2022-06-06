@@ -4,7 +4,7 @@
     <div class="tw-blue-lg-container">
         <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
             <p class="font-bold">
-                <%= t("views.teams.edit.title") %>
+                <%= t("views.teams.#{view_type}.title") %>
             </p>
         </div>
 
@@ -27,9 +27,15 @@
 
                 <p class="p-0 m-0">
                     <%= 
-                        link_to t("views.application.cancel"),
-                        send("#{current_scope}_team_path", @team),
-                        class: "tw-green-btn float-left"
+                        if @team.id.present?
+                            link_to t("views.application.cancel"),
+                            send("#{current_scope}_team_path", @team),
+                            class: "tw-green-btn float-left"
+                        else
+                            link_to t("views.application.cancel"),
+                            send("#{current_scope}_teams_path", @team),
+                            class: "tw-green-btn float-left"
+                        end      
                     %>
                 </p>
             </div>

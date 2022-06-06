@@ -1,6 +1,7 @@
 <% provide :title, t("views.teams.edit.title") %>
+
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
   <div class="tab-content tw-active">
-    <%= render 'teams/rebrand/form' %>
+    <%= render 'teams/rebrand/form', view_type: "edit" %>
   </div>
 </div>
