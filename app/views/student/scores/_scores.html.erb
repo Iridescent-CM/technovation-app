@@ -8,37 +8,24 @@
   </div>
 </div>
 
-<div class="grid judging-banner">
-  <div class="grid__col-6">
-    <h3 class="judging-banner__header">
-      Scores Explained
-    </h3>
-
-    <dl>
-      <dt>1: Incomplete</dt>
-      <dd>The work is missing.</dd>
-
-      <dt>2: Needs Improvement.</dt>
-      <dd>The work needs major improvement.</dd>
-    </dl>
-  </div>
-
-  <div class="grid__col-6">
-    <dl>
-      <dt>3: Acceptable.</dt>
-      <dd>The work needs minor improvement.</dd>
-
-      <dt>4: Good.</dt>
-      <dd>The work is of good quality.</dd>
-
-      <dt>5: Excellent.</dt>
-      <dd>The work is of excellent quality.</dd>
-    </dl>
-  </div>
+<div>
+  <h3 class="text-3xl">Scores Explained</h3>
+  <% if current_submission.beginner_division? %>
+    <p>1. Not there yet</p>
+    <p>2. Good</p>
+    <p>3. Amazing</p>
+  <% elsif current_submission.junior_division? || current_submission.senior_division? %>
+    <p>1. Not there yet</p>
+    <p>2. Getting there</p>
+    <p>3. Good</p>
+    <p>4. A cut above</p>
+    <p>5. Amazing</p>
+  <% end %>
 </div>
 
 <div class="grid">
   <% scores.sort_by(&:total).reverse.each do |score| %>
+    <% questions = Questions.for(score) %>
     <% globes = %w{🌍 🌎 🌏}.shuffle %>
 
     <div class="grid__col-6">
@@ -56,64 +43,25 @@
       </div>
 
       <dl class="accordion">
-        <dt>Ideation
+        <% questions.sections_for(division: score.team.division_name).each do |section| %>
+          <dt>
+            <% if section === "ideation" %>
+              Learning Journey
+            <% elsif section === "entrepreneurship" %>
+              <%= current_team.senior? ? "Business Plan" : "User Adoption Plan" %>
+            <% else %>
+              <%= section.titlecase %>
+            <% end %>
+            (<%= score.total_points_for_section(score.team.division_name,section) %>)
             <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
-            <span class="numeric-score"><%= score.ideation_total %></span>
-        </dt>
-
-        <dd>
-          <%= render "student/scores/section",
-            score: score,
-            section: :ideation %>
-        </dd>
-
-        <dt>Technical
-          <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
-          <span class="numeric-score">
-            <%= score.technical_total %>
-          </span>
-        </dt>
-
-        <dd>
-          <%= render "student/scores/section",
-            score: score,
-            section: :technical %>
-        </dd>
-
-        <% if current_team.senior? %>
-          <dt>Entrepreneurship
-            <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
-            <span class="numeric-score"><%= score.entrepreneurship_total %></span>
+            <span class="numeric-score"><%= score.total_for_section(section)%></span>
           </dt>
-
           <dd>
             <%= render "student/scores/section",
-              score: score,
-              section: :entrepreneurship %>
+                       score: score,
+                       section: section %>
           </dd>
-        <% end %>
-
-        <dt>Pitch
-          <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
-          <span class="numeric-score"><%= score.pitch_total %></span>
-        </dt>
-
-        <dd>
-          <%= render "student/scores/section",
-            score: score,
-            section: :pitch %>
-        </dd>
-
-        <dt>Overall Impression
-          <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
-          <span class="numeric-score"><%= score.overall_impression_total %></span>
-        </dt>
-
-        <dd>
-          <%= render "student/scores/section",
-            score: score,
-            section: :overall %>
-        </dd>
+        <%end %>
       </dl>
     </div>
   <% end %>

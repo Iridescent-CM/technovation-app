@@ -391,6 +391,10 @@ class SubmissionScore < ActiveRecord::Base
     total
   end
 
+  def project_details_total
+    project_details_1
+  end
+
   def ideation_total
     ideation_1 +
       ideation_2 +
@@ -406,7 +410,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def entrepreneurship_total
-    return 0 if junior_team_division?
+    return 0 if beginner_team_division?
 
     entrepreneurship_1 +
       entrepreneurship_2 +
@@ -416,7 +420,19 @@ class SubmissionScore < ActiveRecord::Base
 
   def pitch_total
     pitch_1 +
-      pitch_2
+      pitch_2 +
+        pitch_3 +
+          pitch_4 +
+            pitch_5 +
+              pitch_6 +
+                pitch_7 +
+                  pitch_8
+  end
+
+  def demo_total
+    demo_1 +
+      demo_2 +
+        demo_3
   end
 
   def overall_impression_total

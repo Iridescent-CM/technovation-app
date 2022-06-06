@@ -7,6 +7,7 @@ RSpec.describe "Students view scores", :js do
     submission = FactoryBot.create(:submission, :incomplete)
 
     sign_in(submission.team.students.sample)
+    visit student_dashboard_path
     click_button "Find your scores & certificates"
 
     expect(page).to have_content("Thank you for your participation")
