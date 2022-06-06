@@ -45,7 +45,6 @@ RSpec.feature "Judge certificates" do
     FillPdfs.(judge.account)
     sign_in(judge)
 
-    expect(page).not_to have_css("#judge-certificate")
     expect(page).not_to have_link("View your certificate")
 
     expect(page).to have_content(
@@ -53,38 +52,16 @@ RSpec.feature "Judge certificates" do
     )
 
     expect(page).to have_content(
-      "You can see this year's finalists here."
+      "Did you enjoy the submissions you reviewed?"
+    )
+
+    expect(page).to have_content(
+      "Sign up for our newsletter to learn more about the girls you helped this season"
     )
 
     expect(page).to have_link(
-      "here",
-      href: ENV.fetch("FINALISTS_URL")
-    )
-
-    expect(page).to have_content(
-      "The next season will open in the Fall of #{Season.current.year}."
-    )
-
-    expect(page).to have_content(
-      "Stay informed about important dates and updates. Sign up for our newsletter."
-    )
-
-    expect(page).to have_link(
-      "Sign up for our newsletter",
-      href: ENV.fetch("NEWSLETTER_URL")
-    )
-
-    expect(page).to have_content(
-      "Questions or feedback about staying involved with Technovation, reach out to support@technovation.org."
-    )
-
-    expect(page).to have_content(
-      "Make sure to visit Technovation's blog for program updates and announcements."
-    )
-
-    expect(page).to have_link(
-      "Technovation's blog",
-      href: "https://www.technovation.org/blog/"
+      "Consider mentoring",
+      href: "https://technovationchallenge.org/get-started/"
     )
   end
 
@@ -100,7 +77,6 @@ RSpec.feature "Judge certificates" do
     judge.suspend!
 
     sign_in(judge)
-    expect(page).not_to have_css("#judge-certificate")
     expect(page).not_to have_link("View your certificate")
   end
 
@@ -116,7 +92,6 @@ RSpec.feature "Judge certificates" do
     judge.account.judge_certificates.destroy_all
 
     sign_in(judge)
-    expect(page).not_to have_css("#judge-certificate")
     expect(page).not_to have_link("View your certificate")
   end
 
@@ -142,7 +117,6 @@ RSpec.feature "Judge certificates" do
       }
 
       sign_in(judge)
-      expect(page).not_to have_css("#judge-certificate")
       expect(page).not_to have_link("View your certificate")
     end
   end
