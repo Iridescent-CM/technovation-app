@@ -1,29 +1,40 @@
 <% if SeasonToggles.display_scores? %>
-  <% if current_judge.judge_certificates.present? && !current_judge.suspended? %>
-    <div id="judge-certificate" class="panel panel--left">
-      <div class="flags">
-        <span class="flag flag-registration">
-          Season close
-        </span>
-      </div>
-
-      <h1>Thank You</h1>
-
-      <p>Thank you for being a judge this season!</p>
-
-      <p>
-        We appreciate your thoughtful feedback and the time you spent
-        supporting teams around the world.
-      </p>
-
-      <span class="display--block margin--t-xlarge text-align--center">
-        <%= link_to 'View your certificate',
-          @certificate_file_url,
-          class: "button",
-          target: :_blank %>
+  <div id="judge-certificate" class="panel panel--left">
+    <div class="flags">
+      <span class="flag flag-registration">
+        Season close
       </span>
     </div>
-  <% else %>
-    <%= render 'dashboards/no_certificates' %>
-  <% end %>
+
+    <h1 class="font-bold">Thank You!</h1>
+
+    <p class="mt-4">Thank you for participating in this season of Technovation Girls. We appreciate
+      your feedback and the time you spent supporting teams from around the world!
+    </p>
+
+    <p class="mt-4">
+      Did you enjoy the submissions you reviewed? Were you impressed by the work the
+      girls accomplished? We’d love to stay connected with you! We have a couple of
+      ways for you to remain involved:
+    </p>
+
+    <ul class="list-disc list-inside">
+      <li class="pl-4">Sign up for our newsletter to learn more about the girls you helped this season</li>
+      <li class="pl-4"><a class="tw-link" href="https://technovationchallenge.org/get-started/" target="_blank">Consider mentoring</a> a team in the 2022-2023 season</li>
+    </ul>
+
+    <p class="mt-4">
+      We hope to see you soon!
+    </p>
+
+    <% if current_judge.judge_certificates.present? && !current_judge.suspended? %>
+      <div class="my-8 text-center">
+        <%= link_to 'View your certificate',
+          @certificate_file_url,
+          class: "tw-green-btn shadow-md",
+          target: :_blank %>
+      </div>
+    <% end %>
+
+  </div>
 <% end %>
