@@ -63,6 +63,11 @@ RSpec.feature "Judge certificates" do
       "Consider mentoring",
       href: "https://technovationchallenge.org/get-started/"
     )
+
+    expect(page).to have_link(
+      "Sign up for our newsletter",
+      href: ENV.fetch("GENERAL_NEWSLETTER_URL")
+    )
   end
 
   scenario "judge who is suspended - it doesn't display the certificate's page" do

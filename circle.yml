@@ -93,6 +93,7 @@ jobs:
           MAILGUN_PRIVATE_KEY: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a
           NEWSLETTER_URL: "https://some/other/url"
+          GENERAL_NEWSLETTER_URL: "https://some/general/url"
           NEW_RELIC_LICENSE_KEY: n-a
           PARENT_CONSENT_PDF: n-a
           PDFTK_PATH: /usr/bin/pdftk
