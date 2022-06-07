@@ -38,7 +38,6 @@ html{
     @apply container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4
 }
 
-
 .tw-flag-magenta{
     @apply text-white block p-2 text-right text-base font-bold shadow-sm bg-tg-magenta
 }
