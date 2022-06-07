@@ -1,7 +1,7 @@
 <% if SeasonToggles.display_scores? %>
   <div id="judge-certificate" class="panel panel--left">
     <div class="flags">
-      <span class="flag flag-registration">
+      <span class="tw-flag-magenta">
         Season close
       </span>
     </div>
@@ -18,8 +18,13 @@
       ways for you to remain involved:
     </p>
 
-    <ul class="list-disc list-inside">
-      <li class="pl-4">Sign up for our newsletter to learn more about the girls you helped this season</li>
+    <ul class="list-disc list-inside mt-4">
+      <li class="pl-4">
+        <%= link_to "Sign up for our newsletter", ENV.fetch("GENERAL_NEWSLETTER_URL"),
+                    class: "tw-link",
+                    target: "_blank" %>
+        to learn more about the girls you helped this season
+      </li>
       <li class="pl-4"><a class="tw-link" href="https://technovationchallenge.org/get-started/" target="_blank">Consider mentoring</a> a team in the 2022-2023 season</li>
     </ul>
 
