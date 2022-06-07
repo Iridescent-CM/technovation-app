@@ -111,6 +111,26 @@ class ScoresGrid
     dropped? ? "yes" : "no"
   end
 
+  column :suspicious do
+    suspicious? ? "yes" : "no"
+  end
+
+  column :suspicious_reasons do
+    suspicious_reasons.join(". ")
+  end
+
+  column :updated do
+    updated? ? "yes" : "no"
+  end
+
+  column :created_at do
+    created_at.strftime("%Y-%m-%d %H:%M")
+  end
+
+  column :updated_at do
+    updated_at.strftime("%Y-%m-%d %H:%M")
+  end
+
   column :view, html: true do |submission_score|
     link_to(
       web_icon("list-ul", size: 16, remote: true),

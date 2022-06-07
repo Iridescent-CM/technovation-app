@@ -347,6 +347,24 @@ class SubmissionScore < ActiveRecord::Base
     !!dropped_at
   end
 
+  def suspicious?
+    completed_too_fast ||
+    seems_too_low ||
+    completed_too_fast_repeat_offense
+  end
+
+  def suspicious_reasons
+    flags = []
+    flags << "Completed too fast" if completed_too_fast?
+    flags << "Seems too low" if seems_too_low?
+    flags << "Completed too fast (repeat offense)" if completed_too_fast_repeat_offense?
+    flags
+  end
+
+  def updated?
+    created_at != updated_at
+  end
+
   def approved?
     !!approved_at
   end
