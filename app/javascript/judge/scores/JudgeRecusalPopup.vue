@@ -82,8 +82,7 @@ export default {
         cancelButtonText: 'I want to go back and try judging',
         focusConfirm: false,
         reverseButtons: true,
-        width: '45%',
-        customClass: 'tw-green-btn'
+        width: '45%'
       })
 
       if (formValues) {
