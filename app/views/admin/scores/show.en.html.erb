@@ -8,7 +8,7 @@
       <span>Team</span>
       <%= link_to_if current_scope == "mentor",
         @score.team_name,
-        send("#{current_scope}_team_path", @score.team)
+        send("mentor_team_path", @score.team)
       %>
     </h3>
 
