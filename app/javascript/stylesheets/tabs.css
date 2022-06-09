@@ -1,3 +1,7 @@
+.tw-tab-content > a {
+    @apply hover:text-energetic-blue
+}
+
 .tw-active{
     display: block !important;
 }
