@@ -1,0 +1,56 @@
+<div id="student-scores-tabs" class="tabs">
+  <ul class="score-tabs-menu tabs__menu">
+    <% if @quarterfinals_scores.official.any? %>
+      <li class="tabs__menu-link">
+        <button
+          class="tabs__menu-button"
+          data-tab-id="quarterfinal"
+        >Quarterfinals</button>
+      </li>
+    <% end %>
+
+    <% if @quarterfinals_scores.unofficial.any? %>
+      <li class="tabs__menu-link">
+        <button
+          class="tabs__menu-button"
+          data-tab-id="unofficial"
+        >Celebration Scores</button>
+      </li>
+    <% end %>
+
+    <% if @semifinals_scores.any? %>
+      <li class="tabs__menu-link">
+        <button
+          class="tabs__menu-button"
+          data-tab-id="semifinal"
+        >Semifinals</button>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="score-tab-content tabs__content">
+    <% if @quarterfinals_scores.official.any? %>
+      <div class="score-tab tabs__tab-content" id="quarterfinal">
+        <%= render "student/scores/scores",
+          round: :quarterfinals,
+          scores: @quarterfinals_scores.official %>
+      </div>
+    <% end %>
+
+    <% if @quarterfinals_scores.unofficial.any? %>
+      <div class="score-tab tabs__tab-content" id="unofficial">
+        <%= render "student/scores/scores",
+          round: UnofficialJudgingRound.new,
+          scores: @quarterfinals_scores.unofficial %>
+      </div>
+    <% end %>
+
+    <% if @semifinals_scores.any? %>
+      <div class="score-tab tabs__tab-content" id="semifinal">
+        <%= render "student/scores/scores",
+          round: :semifinals,
+          scores: @semifinals_scores %>
+      </div>
+    <% end %>
+  </div>
+</div>
