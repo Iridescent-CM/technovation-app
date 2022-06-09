@@ -48,6 +48,12 @@
                   class: al(new_student_team_submission_path) + "sub-nav-item" %>
 
     <% end %>
+
+  <% if SeasonToggles.display_scores? %>
+    <%= link_to t("views.student.navigation.my_scores"),
+                student_scores_path,
+                class: al(student_scores_path) + "sub-nav-item" %>
+  <% end %>
 </nav>
 
 
