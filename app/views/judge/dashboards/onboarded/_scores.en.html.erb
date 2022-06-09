@@ -1,10 +1,6 @@
 <% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
   <div id="judge-dashboard-scores-app">
     <% if CanStartNewScore.(current_judge) %>
-      <h5 class="mb-4">
-        You are ready to start a new score!
-      </h5>
-
       <%= link_to "Start a new score",
         new_judge_score_path,
         class: "md-link-button link-button-success",
@@ -90,7 +86,7 @@
 
         <% if SeasonToggles.semifinals_judging? %>
           <finished-scores-list
-            title="Finished Scores"
+            title="Finished Semifinals Scores"
             round="semifinals"
           >
           </finished-scores-list>
