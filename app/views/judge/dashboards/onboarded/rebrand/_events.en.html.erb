@@ -6,19 +6,21 @@
       </span>
     </div>
 
-    <h1>Thank You</h1>
+    <h2 class="text-2xl text-energetic-blue font-semibold tracking-wide mb-2">
+      Thank you!
+    </h2>
 
-    <p>
+    <p class="mb-3 text-base">
       Thank you for your help scoring and giving valuable feedback to
       Technovation teams.
     </p>
 
-    <p>
+    <p class="mb-3 text-base">
       Your judging certificate will be available
       <%= ImportantDates.certificates_available.strftime("%B %e") %>.
     </p>
 
-    <p>
+    <p class="text-base">
       Thank you again for helping girls lead the change. See you next season!
     </p>
   <% elsif SeasonToggles.between_rounds? %>
