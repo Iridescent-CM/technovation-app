@@ -1,99 +1,37 @@
-<h3 class="heading--page">View your Scores and Certificate</h3>
-
-<div id="student-scores-tabs" class="tabs">
-  <ul class="score-tabs-menu tabs__menu">
-    <% if @quarterfinals_scores.official.any? %>
-      <li class="tabs__menu-link">
-        <button
-          class="tabs__menu-button"
-          data-tab-id="quarterfinal"
-        >Quarterfinals</button>
-      </li>
-    <% end %>
-
-    <% if @quarterfinals_scores.unofficial.any? %>
-      <li class="tabs__menu-link">
-        <button
-          class="tabs__menu-button"
-          data-tab-id="unofficial"
-        >Celebration Scores</button>
-      </li>
-    <% end %>
-
-    <% if @semifinals_scores.any? %>
-      <li class="tabs__menu-link">
-        <button
-          class="tabs__menu-button"
-          data-tab-id="semifinal"
-        >Semifinals</button>
-      </li>
-    <% end %>
-
-    <li class="tabs__menu-link">
-      <button
-        class="tabs__menu-button"
-        data-tab-id="certificates"
-      >Certificate</button>
-    </li>
-  </ul>
-
-  <div class="score-tab-content tabs__content">
-    <% if @quarterfinals_scores.official.any? %>
-      <div class="score-tab tabs__tab-content" id="quarterfinal">
-        <%= render "student/scores/scores",
-          round: :quarterfinals,
-          scores: @quarterfinals_scores.official %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'My Scores'} do%>
+    <div class="p-6" id="tab-wrapper">
+      <%= render 'student/scores/side_nav_content' %>
+    </div>
+  <% end %>
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Scores'} do %>
+    <div class="tab">
+      <div id="scores-tab-content" class="tab-content tw-active">
+        <% if current_student.onboarded? && SeasonToggles.display_scores? %>
+          <% if current_team.submission.complete? %>
+            <%= render "student/scores/scores_and_certificates" %>
+          <% elsif current_student.participated? %>
+            <%= render "student/scores/participation_certificate" %>
+          <% else %>
+            <h1 class="content-heading">Thank you for your participation</h1>
+            <p>
+              Unfortunately, no scores are available for your team because your
+              submission was incomplete. We hope you will continue working on your
+              app and join us again next season!
+            </p>
+          <% end %>
+        <% else %>
+          <%= render 'explanations/feature_not_available', feature: :scores %>
+        <% end %>
       </div>
-    <% end %>
 
-    <% if @quarterfinals_scores.unofficial.any? %>
-      <div class="score-tab tabs__tab-content" id="unofficial">
-        <%= render "student/scores/scores",
-          round: UnofficialJudgingRound.new,
-          scores: @quarterfinals_scores.unofficial %>
-      </div>
-    <% end %>
-
-    <% if @semifinals_scores.any? %>
-      <div class="score-tab tabs__tab-content" id="semifinal">
-        <%= render "student/scores/scores",
-          round: :semifinals,
-          scores: @semifinals_scores %>
-      </div>
-    <% end %>
-
-    <div class="score-tab tabs__tab-content" id="certificates">
-      <h2>YOU DID IT!</h2>
-
-      <p>
-        Congratulations on developing real change for your community and the world.
-        We hope you take the time to celebrate your accomplishment with your team —
-        and maybe even show off your certificate! 👏
-      </p>
-
-      <p>
-        Download and share your achievement on
-        <a href="https://twitter.com/technovation">Twitter</a>,
-        <a href="https://www.facebook.com/technovationglobal">Facebook</a>,
-        <a href="https://www.instagram.com/technovationglobal">Instagram</a>, or
-        <a href="https://www.linkedin.com/company/technovation">LinkedIn</a>
-        and use the hashtag #Technovation2021Alum! <span id="disclaimer-text">Please do not share your full name unless you have permission from your parent(s), guardian(s), or are 18 years old.</span>
-      </p>
-
-      <p>
-        Congratulations again, and we hope you enjoy your certificate.
-      </p>
-
-      <%= image_tag "certificates-congrats.svg", width: 500 %>
-
-      <div class="certificates-btn-wrapper">
-        <% @certificates.each do |certificate| %>
-          <%= link_to "Open your #{certificate.cert_type} certificate",
-            certificate.file_url,
-            target: "_blank",
-            class: "certificates-btn" %>
+      <div id="certificates-tab-content" class="tab-content">
+        <% if !current_student.took_program_survey? %>
+          <%= render "student/scores/post_survey_requirement" %>
+        <% else %>
+          <%= render 'student/scores/certificates' %>
         <% end %>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
