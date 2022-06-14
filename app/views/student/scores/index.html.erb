@@ -25,7 +25,7 @@
         <% end %>
       </div>
 
-      <div id="certificates-tab-content" class="tab-content">
+      <div id="certificates-tab-content" class="mx-auto tab-content">
         <% if !current_student.took_program_survey? %>
           <%= render "student/scores/post_survey_requirement" %>
         <% else %>
