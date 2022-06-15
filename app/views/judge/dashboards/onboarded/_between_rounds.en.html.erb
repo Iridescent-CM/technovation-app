@@ -1,57 +1,59 @@
-<h3>You finished quarterfinals!</h3>
+<div class="mb-4">
+  <h2 class="text-lg text-energetic-blue font-semibold tracking-wide uppercase">
+    You finished quarterfinals!
+  </h2>
 
-<p>
-  If you had the time to judge this round, we sincerely thank you for
-  supporting teams across 60+ countries this season. We appreciate you
-  volunteering your time to give insightful and compassionate feedback
-  on the hard work of Technovation’s young change makers.
-</p>
-
-<div class="grid">
-  <div class="grid__col-6">
-    <h4>What happens next?</h4>
-
-    <p>
-      <strong>If you scored 5 submissions or more</strong>, you will be invited
-      to judge in our semifinal round starting on
-      <%= ImportantDates.semifinals_judging_begins.to_date.to_s(:short_ordinal) %>.
-    </p>
-
-    <p>
-      <strong>Semifinals will take place from
-      <%= ImportantDates.semifinals_judging_begins.to_date.to_s(:short_ordinal) %> -
-      <%= ImportantDates.semifinals_judging_ends.to_date.to_s(:short_ordinal) %></strong>, the number of scores you finish will determine what judge certificate you receive.
-    </p>
-
-    <p>
-      Your scores from the semifinal round will <strong>determine the top 12 teams</strong>
-      that will be finalists in our online World Summit event in August of 2021!
-    </p>
-  </div>
-
-  <div class="grid__col-6">
-    <h4>Judge Levels</h4>
-    <p>
-      <strong>
-        Login after
-        <%= ImportantDates.certificates_available.to_date.to_s(:short_ordinal) %>
-        to view and download your certificate
-      </strong>
-    </p>
-
-    <dl>
-      <dt class="font-weight--unset">5 submissions:</dt>
-      <dd>Certified Technovation Judge</dd>
-
-      <dt class="font-weight--unset">5-10 submissions:</dt>
-      <dd>Head Judge</dd>
-
-      <dt class="font-weight--unset">11+ submissions:</dt>
-      <dd>Judge Advisor</dd>
-    </dl>
-  </div>
+  <p class="text-justify mb-2">
+    If you had the time to judge this round, we sincerely thank you for
+    supporting teams across 60+ countries this season. We appreciate you
+    volunteering your time to give insightful and compassionate feedback
+    on the hard work of Technovation’s young change makers.
+  </p>
 </div>
 
-<p>
-  View our <a href="https://technovationchallenge.org/judge-resources/" target="_blank">Judge Resource page</a> for more information.
-</p>
+<div class="mb-4">
+  <h2 class="text-lg text-energetic-blue font-semibold tracking-wide uppercase">
+    What happens next?
+  </h2>
+
+  <p class="text-justify mb-2">
+    <span class="font-bold">If you scored 5 submissions or more</span>, you will be invited
+      to judge in our semifinal round starting on
+      <%= ImportantDates.semifinals_judging_begins.to_date.to_s(:short_ordinal) %>.
+  </p>
+
+  <p class="text-justify mb-2">
+    <span class="font-bold">Semifinals will take place from
+    <%= ImportantDates.semifinals_judging_begins.to_date.to_s(:short_ordinal) %> -
+    <%= ImportantDates.semifinals_judging_ends.to_date.to_s(:short_ordinal) %></span>, the number of scores you finish will determine what judge certificate you receive.
+  </p>
+
+  <p class="text-justify mb-2">
+    Your scores from the semifinal round will <span class="font-bold">determine the top 12 teams</span>
+    that will be finalists in our online World Summit event in August of <%= Season.current.year %>!
+  </p>
+</div>
+
+<div class="mb-4">
+  <h2 class="text-lg text-energetic-blue font-semibold tracking-wide uppercase">
+    Judge Levels
+  </h2>
+
+  <p class="text-justify mb-2">
+    <span class="font-bold">
+      Login after
+      <%= ImportantDates.certificates_available.to_date.to_s(:short_ordinal) %>
+      to view and download your certificate
+    </span>
+  </p>
+
+  <ul class="list-disc list-inside mb-2">
+    <li><span class="font-bold">5 submissions:</span> Certified Technovation Judge</li>
+    <li><span class="font-bold">5-10 submissions:</span> Head Judge</li>
+    <li><span class="font-bold">11+ submissions:</span> Judge Advisor</li>
+  </ul>
+  
+  <p class="text-justify mt-4">
+    View our <a class="tw-link" href="https://technovationchallenge.org/judge-resources/" target="_blank">Judge Resource page</a> for more information.
+  </p>
+</div>
