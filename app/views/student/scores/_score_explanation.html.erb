@@ -1,14 +1,20 @@
-<div class="bg-energetic-blue-light">
-  <h3 class="text-3xl">Scores Explained</h3>
-  <% if current_submission.beginner_division? %>
-    <p>1. Not there yet</p>
-    <p>2. Good</p>
-    <p>3. Amazing</p>
-  <% elsif current_submission.junior_division? || current_submission.senior_division? %>
-    <p>1. Not there yet</p>
-    <p>2. Getting there</p>
-    <p>3. Good</p>
-    <p>4. A cut above</p>
-    <p>5. Amazing</p>
-  <% end %>
+<div class="bg-gray-200 rounded shadow-md">
+  <div class="p-6">
+    <h3 class="text-xl text-center">Scores Explained</h3>
+    <div class="flex justify-around mt-4">
+      <% if current_submission.beginner_division? %>
+        <span>1 - Not there yet</span>
+        <span>2 - Good</span>
+        <span>3 - Amazing</span>
+      <% elsif current_submission.junior_division? || current_submission.senior_division? %>
+        <span>1 - Not there yet</span>
+        <span>2 - Getting there</span>
+        <span>3 - Good</span>
+        <span>4 - A cut above</span>
+        <span>5 - Amazing</span>
+      <% else %>
+        <span>Sorry, no score explanation available!</span>
+      <% end %>
+    </div>
+  </div>
 </div>
