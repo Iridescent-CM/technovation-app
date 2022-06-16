@@ -5,13 +5,27 @@
     </span>
   </div>
 
-  <h1>Thank You</h1>
+  <h1>Thank You!</h1>
 
-  <p>Thank you for participating in this season of Technovation Girls.</p>
-  <p>You can see this year's finalists <%= link_to "here", ENV.fetch("FINALISTS_URL") %>.</p>
-  <p>The next season will open in the Fall of <%= Season.current.year %>.</p><br>
+  <p>
+    Thank you for participating in this season of Technovation Girls.
+    We appreciate your feedback and the time you spent supporting teams from around the world!
+  </p>
 
-  <p>Stay informed about important dates and updates. <%= link_to "Sign up for our newsletter", ENV.fetch("NEWSLETTER_URL") %>.</p>
-  <p>Questions or feedback about staying involved with Technovation, reach out to <%= mail_to "support@technovation.org" %>.</p>
-  <p>Make sure to visit <%= link_to "Technovation's blog", "https://www.technovation.org/blog/" %> for program updates and announcements.</p>
+  <p>We’d love to stay connected with you! We have a couple of ways for you to remain involved:</p>
+
+  <ul>
+    <li>
+      <%= link_to "Sign up for our newsletter", ENV.fetch("NEWSLETTER_URL"), target: :_blank %>
+      to learn more about the girls you helped this season
+    </li>
+    <li>
+      <%= link_to "Consider mentoring", "https://technovationchallenge.org/get-started/", target: :_blank %>
+      a team in the <%=Season.current.year %>-<%= Season.next.year %> season
+    </li>
+  </ul>
+
+  <p>
+    We hope to see you soon!
+  </p>
 </div>
