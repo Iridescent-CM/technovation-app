@@ -1,7 +1,13 @@
 <% if current_team.submission.complete? && current_team.submission.scores.complete.any? %>
-  <p>
-    Congratulations! Your team was a <%= current_team.submission.contest_rank %>.
-  </p>
+  <div class="text-center mt-8 mb-16">
+    <p class="mb-4 text-2xl text-tg-magenta uppercase font-bold">
+      Congratulations, your team was a <%= current_team.submission.contest_rank %>!
+    </p>
+    <p class="text-xl">
+      Thank you for completing the survey and participating in the Technovation program.
+      Find your scores and comments from the judges below!
+    </p>
+  </div>
 
   <% if !current_student.took_program_survey? %>
     <%= render "student/scores/post_survey_requirement" %>
