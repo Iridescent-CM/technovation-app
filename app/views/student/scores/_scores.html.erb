@@ -1,55 +1,51 @@
-<div class="">
-  <div class="grid__col-12">
-    Average <%= String(round).titlecase %> Score
-    <span>
-      <%= scores.average_score(round) %>
-      <sub>/<%= scores.total_possible %></sub>
-    </span>
-  </div>
-</div>
+<div>
+  <h2 class="text-xl text-energetic-blue font-semibold">
+    Finished Scores
+  </h2>
 
-<div class="grid">
-  <% scores.sort_by(&:total).reverse.each do |score| %>
-    <% questions = Questions.for(score) %>
-    <% globes = %w{🌍 🌎 🌏}.shuffle %>
+  <div class="mt-2 mb-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300" id="student-finished-scores-table">
+            <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="py-3 pl-4 pr-3 text-left text-base font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                Judging Session
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Judging Location
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Score
+              </th>
+              <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
+              </th>
+            </tr>
+            </thead>
 
-    <div class="grid__col-6">
-      <div class="score-title">
-        <div class="score-title__total">
-          <%= score.total %><sub>/<%= score.total_possible %></sub>
-        </div>
+            <tbody class="divide-y divide-gray-200 bg-white">
 
-        <div class="score-title__judge">
-          from<br />
-          <%= globes.pop %>
-          <strong><%= score.judge_profile.address_details %></strong>
-          <%= globes.pop %>
+            <% scores.sort_by(&:round).reverse.each do |score| %>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-base font-medium text-gray-900 sm:pl-6">
+                  <%= score.round.titlecase%>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                  <%= score.judge_profile.address_details %>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                  <%= score.total %>/<%= score.total_possible %>
+                </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-base font-medium sm:pr-6">
+                  <a class="tw-green-btn">View Details</a>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
-
-      <dl class="accordion">
-        <% questions.sections_for(division: score.team.division_name).each do |section| %>
-          <dt>
-            <% if section === "ideation" %>
-              Learning Journey
-            <% elsif section === "entrepreneurship" %>
-              <%= current_team.senior? ? "Business Plan" : "User Adoption Plan" %>
-            <% else %>
-              <%= section.titlecase %>
-            <% end %>
-            (<%= score.total_points_for_section(score.team.division_name,section) %>)
-            <span class="custom-dropdown"> <img  src="https://icongr.am/fontawesome/chevron-down.svg?color=903D54" /></span>
-            <span class="numeric-score"><%= score.total_for_section(section)%></span>
-          </dt>
-          <dd>
-            <%= render "student/scores/section",
-                       score: score,
-                       section: section %>
-          </dd>
-        <%end %>
-      </dl>
     </div>
-  <% end %>
-
-  <%= render "student/scores/score_explanation" %>
+  </div>
 </div>
