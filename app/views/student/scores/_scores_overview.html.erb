@@ -1,56 +1,27 @@
-<div id="student-scores-tabs" class="tabs">
-  <ul class="score-tabs-menu tabs__menu">
-    <% if @quarterfinals_scores.official.any? %>
-      <li class="tabs__menu-link">
-        <button
-          class="tabs__menu-button"
-          data-tab-id="quarterfinal"
-        >Quarterfinals</button>
-      </li>
+<div class="bg-energetic-blue rounded w-full lg:w-3/4 mx-auto shadow-md mb-16">
+  <div class="p-8 text-center">
+    <% if @quarterfinals_scores.any? %>
+      <%= render "student/scores/round_score_average",
+                 scores: @quarterfinals_scores,
+                 round: :quarterfinals %>
     <% end %>
-
-    <% if @quarterfinals_scores.unofficial.any? %>
-      <li class="tabs__menu-link">
-        <button
-          class="tabs__menu-button"
-          data-tab-id="unofficial"
-        >Celebration Scores</button>
-      </li>
-    <% end %>
-
     <% if @semifinals_scores.any? %>
-      <li class="tabs__menu-link">
-        <button
-          class="tabs__menu-button"
-          data-tab-id="semifinal"
-        >Semifinals</button>
-      </li>
-    <% end %>
-  </ul>
-
-  <div class="score-tab-content tabs__content">
-    <% if @quarterfinals_scores.official.any? %>
-      <div class="score-tab tabs__tab-content" id="quarterfinal">
-        <%= render "student/scores/scores",
-          round: :quarterfinals,
-          scores: @quarterfinals_scores.official %>
-      </div>
-    <% end %>
-
-    <% if @quarterfinals_scores.unofficial.any? %>
-      <div class="score-tab tabs__tab-content" id="unofficial">
-        <%= render "student/scores/scores",
-          round: UnofficialJudgingRound.new,
-          scores: @quarterfinals_scores.unofficial %>
-      </div>
-    <% end %>
-
-    <% if @semifinals_scores.any? %>
-      <div class="score-tab tabs__tab-content" id="semifinal">
-        <%= render "student/scores/scores",
-          round: :semifinals,
-          scores: @semifinals_scores %>
-      </div>
+      <%= render "student/scores/round_score_average",
+                 scores: @semifinals_scores,
+                 round: :semifinals %>
     <% end %>
   </div>
+</div>
+
+<div id="student-finished-scores" class="mb-10">
+  <% if @all_scores.any? %>
+    <%= render "student/scores/scores",
+               scores: @all_scores %>
+  <% else %>
+    <p>Sorry, there are no available finished scores!</p>
+  <% end %>
+</div>
+
+<div class="mb-10">
+  <%= render "student/scores/score_explanation" %>
 </div>
