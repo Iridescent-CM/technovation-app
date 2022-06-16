@@ -1,0 +1,14 @@
+<div class="bg-energetic-blue-light">
+  <h3 class="text-3xl">Scores Explained</h3>
+  <% if current_submission.beginner_division? %>
+    <p>1. Not there yet</p>
+    <p>2. Good</p>
+    <p>3. Amazing</p>
+  <% elsif current_submission.junior_division? || current_submission.senior_division? %>
+    <p>1. Not there yet</p>
+    <p>2. Getting there</p>
+    <p>3. Good</p>
+    <p>4. A cut above</p>
+    <p>5. Amazing</p>
+  <% end %>
+</div>
