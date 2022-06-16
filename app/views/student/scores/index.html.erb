@@ -1,4 +1,4 @@
-<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4" id="student-scores">
   <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'My Scores'} do%>
     <div class="p-6" id="tab-wrapper">
       <%= render 'student/scores/side_nav_content' %>
@@ -25,7 +25,7 @@
         <% end %>
       </div>
 
-      <div id="certificates-tab-content" class="mx-auto tab-content">
+      <div id="certificates-tab-content" class="tab-content">
         <% if !current_student.took_program_survey? %>
           <%= render "student/scores/post_survey_requirement" %>
         <% else %>
