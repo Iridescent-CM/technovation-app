@@ -1,6 +1,9 @@
 module.exports = {
-  purge: [],
-  darkMode: false,
+  content: [
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.{js,vue}',
+    './app/views/**/*',
+  ],
   theme: {
     extend: {
       borderRadius: {
@@ -34,12 +37,6 @@ module.exports = {
         }
       }
     }
-  },
-  variants: {
-    extend: {
-      opacity: ['disabled'],
-      backgroundColor: ['even', 'odd'],
-    },
   },
   plugins: [
     require('@tailwindcss/typography'),
