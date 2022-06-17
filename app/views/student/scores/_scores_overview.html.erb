@@ -1,12 +1,12 @@
 <div class="bg-energetic-blue rounded w-full lg:w-3/4 mx-auto shadow-md mb-16">
   <div class="p-8 text-center">
     <% if @quarterfinals_scores.any? %>
-      <%= render "student/scores/round_score_average",
+      <%= render "student/scores/average_score",
                  scores: @quarterfinals_scores,
                  round: :quarterfinals %>
     <% end %>
     <% if @semifinals_scores.any? %>
-      <%= render "student/scores/round_score_average",
+      <%= render "student/scores/average_score",
                  scores: @semifinals_scores,
                  round: :semifinals %>
     <% end %>
