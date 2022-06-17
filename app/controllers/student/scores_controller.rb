@@ -22,5 +22,17 @@ module Student
 
       render template: 'student/scores/index'
     end
+
+    def show
+      submission_id = TeamSubmission.where(team_id: current_team.id)
+
+      @score = SubmissionScore.where(team_submission_id: submission_id).find(params[:id])
+      @team = @score.team
+      @team_submission = @team.submission
+
+      # TODO: Create rebranded template for student score details
+      render 'admin/scores/show'
+    end
+
   end
 end

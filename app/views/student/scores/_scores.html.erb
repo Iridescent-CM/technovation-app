@@ -36,7 +36,10 @@
                   <%= score.total %>/<%= score.total_possible %>
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-base font-medium sm:pr-6">
-                  <a class="tw-green-btn">View Details</a>
+                  <%= link_to 'View details',
+                              send("#{current_scope}_score_path", score),
+                              class: "tw-green-btn cursor-pointer",
+                              target: "_blank"%>
                 </td>
               </tr>
             <% end %>
