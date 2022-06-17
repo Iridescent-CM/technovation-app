@@ -32,11 +32,7 @@ RSpec.describe "Students view scores", :js do
     click_button "Find your scores & certificates"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
-    accordions = page.all(:css, '.ui-accordion-content', visible: false)
-    accordions.each do |el|
-      execute_script("arguments[0].style.display = 'block'", el)
-    end
+    expect(page).to have_selector('#student-finished-scores-table')
 
     expect(page).to have_content("Scores Explained")
   end
@@ -62,11 +58,7 @@ RSpec.describe "Students view scores", :js do
     click_button "Find your scores & certificates"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('.ui-accordion-content', visible: false)
-    accordions = page.all(:css, '.ui-accordion-content', visible: false)
-    accordions.each do |el|
-      execute_script("arguments[0].style.display = 'block'", el)
-    end
+    expect(page).to have_selector('#student-finished-scores-table')
 
     expect(page).to have_content("Scores Explained")
     end

@@ -18,4 +18,8 @@
     .tab-content{
         width: 48rem;
     }
+
+    #student-scores .tab-content {
+        width: 100%
+    }
 }
