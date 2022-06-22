@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Judges sign up at special link", :js do
+RSpec.xdescribe "Judges sign up at special link", :js do
   it "visit the normal url" do
     visit judge_signup_path
     expect(current_path).to eq(root_path)
