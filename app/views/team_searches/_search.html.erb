@@ -1,0 +1,36 @@
+<!--// Main Search For Team Form //-->
+<% provide :title, "Search for a team" %>
+
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading"><%= t("views.team_searches.new.title") %></h1>
+
+      <p><%= t("views.team_searches.new.intro") %></p>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__col-sm-3">
+    <div class="sidebar">
+      <%= render "team_searches/filter_options", account: account %>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-9">
+    <h3>Available Teams</h3>
+
+    <div class="grid">
+      <%= render partial: "team_searches/result", collection: teams, as: :team %>
+
+      <% if teams.empty? %>
+        <div class="grid__col-auto grid__col--bleed">
+          <%= t("views.team_searches.new.no_results") %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= will_paginate teams %>
+  </div>
+</div>
