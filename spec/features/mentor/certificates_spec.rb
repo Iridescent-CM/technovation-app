@@ -2,9 +2,15 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.feature "Mentor certificates" do
-  before  { SeasonToggles.display_scores_on! }
-  let(:season_with_templates) { instance_double(Season, year:2020) }
-  before { allow(Season).to receive(:current).and_return(season_with_templates) }
+  before do
+    SeasonToggles.display_scores_on!
+
+    allow(Season).to receive(:current).and_return(current_season)
+    allow(Season).to receive(:next).and_return(next_season)
+  end
+
+  let(:current_season) { instance_double(Season, year: 2020) }
+  let(:next_season) { instance_double(Season, year: 2021) }
 
   scenario "no certificates for no teams" do
     mentor = FactoryBot.create(:mentor, :onboarded)
@@ -18,38 +24,12 @@ RSpec.feature "Mentor certificates" do
     )
 
     expect(page).to have_content(
-      "You can see this year's finalists here."
-    )
-
-    expect(page).to have_link(
-      "here",
-      href: ENV.fetch("FINALISTS_URL")
-    )
-
-    expect(page).to have_content(
-      "The next season will open in the Fall of #{Season.current.year}."
-    )
-
-    expect(page).to have_content(
-      "Stay informed about important dates and updates. Sign up for our newsletter."
+      "Consider mentoring a team in the #{Season.current.year}-#{Season.next.year}"
     )
 
     expect(page).to have_link(
       "Sign up for our newsletter",
       href: ENV.fetch("NEWSLETTER_URL")
-    )
-
-    expect(page).to have_content(
-      "Questions or feedback about staying involved with Technovation, reach out to support@technovation.org."
-    )
-
-    expect(page).to have_content(
-      "Make sure to visit Technovation's blog for program updates and announcements."
-    )
-
-    expect(page).to have_link(
-      "Technovation's blog",
-      href: "https://www.technovation.org/blog/"
     )
   end
 
