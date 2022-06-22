@@ -9,7 +9,11 @@
 <% else %>
   <div class="grid grid--justify-space-around">
     <div class="panel grid__col-12 grid__col-md-6">
-      <%= render 'judging_open_splash' %>
+      <% if SeasonToggles.judging_finished? %>
+        <%= render 'off_season_splash' %>
+      <% else %>
+        <%= render 'judging_open_splash' %>
+      <% end %>
     </div>
   </div>
 <% end %>
