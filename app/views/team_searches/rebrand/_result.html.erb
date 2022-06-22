@@ -1,0 +1,27 @@
+<div class="max-w-sm rounded overflow-hidden shadow-lg grid__col--bleed">
+  <%= image_tag team.team_photo_url, class: "w-full" %>
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-1"><%= team.name %></div>
+    <div class="py-1 text-base mb-2">
+      <%= team.primary_location %>
+    </div>
+
+    <span class="bg-green-100 text-green-800 text-base font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+      <%= t("views.application.division") %>: <%= team.division.name.humanize %>
+    </span>
+    
+    <div class="text-right mt-10">
+      <% if current_profile.teams_that_declined.include?(team) %>
+        <p class="text-base text-red-500">You asked to join <%= team.name %>, and they declined.</p>
+      <% elsif current_scope == "student" && !team.spot_available? %>
+        <p class="text-base text-red-500">This team is currently full.</p>
+      <% else %>
+        <%= link_to 'More Details >', 
+          send("new_#{current_scope}_join_request_path", {team_id: team.id}),
+          :class => "tw-link text-base" 
+        %>
+      <% end %>
+    </div>
+  </div>
+
+</div>
