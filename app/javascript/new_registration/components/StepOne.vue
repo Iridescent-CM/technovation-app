@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isRegistrationOpen" id="step-one">
+  <div id="step-one">
     <ContainerHeader header-text="Your Profile Type" />
 
     <div id="profile-type" class="form-wrapper">
@@ -34,12 +34,6 @@
 
     <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
   </div>
-
-  <div v-else>
-    <p class="italic text-sm text-red-500 my-4">
-      Registration for the 2022 season is now closed.
-    </p>
-  </div>
 </template>
 
 <script>
@@ -57,7 +51,6 @@ export default {
     return {
       values: {},
       profileTypes: [],
-      isRegistrationOpen: false,
       isStudentRegistrationOpen: false,
       isMentorRegistrationOpen: false,
       hasValidationErrors: true
@@ -68,7 +61,6 @@ export default {
       try {
         const response = await axios.get("/api/registration_settings")
 
-        this.isRegistrationOpen = true
         this.isStudentRegistrationOpen = response.data.isStudentRegistrationOpen
         this.isMentorRegistrationOpen = response.data.isMentorRegistrationOpen
       }
