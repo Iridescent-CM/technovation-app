@@ -25,9 +25,9 @@
         @input="hasValidationErrors = false"
       />
 
-      <p class="italic text-sm">
+      <p v-if="this.isStudentRegistrationOpen" class="italic text-sm">
         *As of <strong>{{ divisionCutoffDate }}</strong>.
-        For example, if you turn 13 on July 28, 2022, you will need to select
+        For example, if you turn 13 on {{ exampleStudentBirthday }}, you will need to select
         “I am registering myself and am 13-18 years old.”
       </p>
     </div>
@@ -43,6 +43,7 @@ import { airbrake } from "utilities/utilities"
 import ContainerHeader from "./ContainerHeader";
 import NextButton from "./NextButton";
 import { divisionCutoffDateFormatted } from "../../utilities/technovation-dates.js"
+import { exampleStudentBirthday } from "../../utilities/age-helpers.js"
 
 export default {
   name: 'StepOne',
@@ -108,7 +109,8 @@ export default {
     },
   },
   computed: {
-    divisionCutoffDate: divisionCutoffDateFormatted
+    divisionCutoffDate: divisionCutoffDateFormatted,
+    exampleStudentBirthday
   },
   props: {
     formValues: {
