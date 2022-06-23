@@ -30,8 +30,7 @@ module Student
       @team = @score.team
       @team_submission = @team.submission
 
-      # TODO: Create rebranded template for student score details
-      render 'admin/scores/show'
+      render 'student/scores/score_details'
     end
 
   end
