@@ -1,0 +1,32 @@
+<div class="mb-10">
+  <div class="flex justify-between items-center text-xl font-bold mb-8">
+    <span>
+      <% if section === "ideation" %>
+        Learning Journey
+      <% elsif section === "entrepreneurship" %>
+        <%= score.team.senior? ? "Business Plan" : "User Adoption Plan" %>
+      <% else %>
+        <%= section.titlecase %>
+      <% end %>
+    </span>
+  </div>
+
+  <div class="flex-col mb-6 ml-8">
+    <% questions.in_section(section).each do |question| %>
+      <div class="flex justify-between my-2">
+        <p><%= question.text.html_safe %></p>
+        <p><%= score.total_for_question(question) %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex justify-between items-center font-semibold border-t border-energetic-blue ml-8 mb-8">
+    <span class="mt-2">Section Total</span>
+    <span><%= score.total_for_section(section)%></span>
+  </div>
+
+  <div class="ml-8">
+    <p class="font-semibold">Judge Feedback</p>
+    <p><%= simple_format score.comment_for_section(section) %></p>
+  </div>
+</div>

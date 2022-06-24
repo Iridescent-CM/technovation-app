@@ -1,0 +1,27 @@
+<% provide :title, "Score Details" %>
+
+<% globes = %w{🌍 🌎 🌏}.shuffle %>
+
+<div class="container mx-auto w-8/12" id="student-score-details">
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Score Details'} do %>
+    <div class="bg-gray-200 rounded shadow-md w-full mx-auto mb-8 text-center">
+      <div class="p-6">
+        <p class="text-4xl font-bold"> <%= @score.total %> / <%= @score.total_possible %></p>
+        from<br />
+        <%= globes.pop %>
+        <strong><%= @score.judge_profile.address_details %></strong>
+        <%= globes.pop %>
+      </div>
+    </div>
+
+    <% questions = Questions.for(@score) %>
+    <section class="w-full px-0 lg:px-8 mx-auto">
+      <% questions.sections_for(division: @score.team.division_name).each do |section| %>
+        <%= render 'student/scores/section_score',
+                    score: @score,
+                    section: section,
+                    questions: questions %>
+      <% end %>
+    </section>
+  <% end %>
+</div>
