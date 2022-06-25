@@ -1,0 +1,41 @@
+<% f ||= false %>
+
+<%= label_tag :nearby, t("views.application.search_near") %>
+
+<div class="location-based-search">
+  <% if f # TODO: shim until team search is updated %>
+    <%= f.text_field :nearby,
+      class: "search-by-text",
+      value: params[:nearby],
+      data: { location_field: true } %>
+  <% else %>
+    <%= text_field_tag :nearby,
+      params[:nearby],
+      class: "search-by-text",
+      data: { location_field: true } %>
+  <% end %>
+  <p class="hint margin--t-medium-negative">Press enter/return after typing</p>
+
+  <div class="search-toggles">
+    <h3><%= t("views.application.location") %></h3>
+    <p>
+      <%= 
+        radio_button_tag :location_type, 
+        "nearme", 
+        params[:location_type] == "nearme", 
+        data: { update_location: account.address_details } 
+      %>
+      <label for="location_type %>"><%= t('views.application.near_me') %></label>
+    </p>
+
+    <p>
+      <%= 
+        radio_button_tag "location_type", 
+        "anywhere", 
+        params[:location_type] == "anywhere", 
+        data: { update_location: "anywhere" } 
+      %>
+      <label for="location_type %>"><%= t('views.application.anywhere') %></label>
+    </p>
+  </div>
+</div>
