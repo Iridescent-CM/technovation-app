@@ -6,8 +6,6 @@ RSpec.describe "Registration Settings" do
   let(:mentor_registration_open) { true }
 
   before do
-    allow(SeasonToggles).to receive(:registration_open?)
-      .and_return(registration_open)
     allow(SeasonToggles).to receive(:student_registration_open?)
       .and_return(student_registration_open)
     allow(SeasonToggles).to receive(:mentor_registration_open?)
@@ -19,7 +17,6 @@ RSpec.describe "Registration Settings" do
 
     expect(JSON.parse(response.body)).to eq(
       {
-        "isRegistrationOpen" => registration_open,
         "isStudentRegistrationOpen" => student_registration_open,
         "isMentorRegistrationOpen" => mentor_registration_open
       }

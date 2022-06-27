@@ -2,6 +2,9 @@ class NewRegistrationController < ApplicationController
   layout "new_registration"
 
   def show
+    if SeasonToggles.registration_closed?
+      redirect_to "/"
+    end
   end
 
   def create

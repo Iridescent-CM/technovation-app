@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isRegistrationOpen" id="step-one">
+  <div id="step-one">
     <ContainerHeader header-text="Your Profile Type" />
 
     <div id="profile-type" class="form-wrapper">
@@ -11,8 +11,13 @@
         to be leaders. How will you participate?
       </h2>
 
+      <div v-if="anyDisabledProfileTypes" class="border-l-2 border-red-700 bg-red-50 p-2 my-8">
+        <p class="text-left text-sm">
+          Registration is currently closed for {{ this.disabledProfileTypes }}.
+        </p>
+      </div>
+
       <p class="italic text-sm text-red-500 my-4">
-        Registration for the 2022 season is now closed for students and mentors.
       </p>
 
       <FormulateInput
@@ -25,30 +30,25 @@
         @input="hasValidationErrors = false"
       />
 
-      <p class="italic text-sm">
+      <p v-if="this.isStudentRegistrationOpen" class="italic text-sm">
         *As of <strong>{{ divisionCutoffDate }}</strong>.
-        For example, if you turn 13 on July 28, 2022, you will need to select
+        For example, if you turn 13 on {{ exampleStudentBirthday }}, you will need to select
         “I am registering myself and am 13-18 years old.”
       </p>
     </div>
 
     <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
   </div>
-
-  <div v-else>
-    <p class="italic text-sm text-red-500 my-4">
-      Registration for the 2022 season is now closed.
-    </p>
-  </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
-import { airbrake } from "utilities/utilities"
-import ContainerHeader from "./ContainerHeader";
-import NextButton from "./NextButton";
-import { divisionCutoffDateFormatted } from "../../utilities/technovation-dates.js"
+import { airbrake } from 'utilities/utilities'
+import ContainerHeader from './ContainerHeader'
+import NextButton from './NextButton'
+import { divisionCutoffDateFormatted } from '../../utilities/technovation-dates.js'
+import { exampleStudentBirthday } from '../../utilities/age-helpers.js'
 
 export default {
   name: 'StepOne',
@@ -57,18 +57,18 @@ export default {
     return {
       values: {},
       profileTypes: [],
-      isRegistrationOpen: false,
       isStudentRegistrationOpen: false,
       isMentorRegistrationOpen: false,
+      anyDisabledProfileTypes: false,
+      disabledProfileTypes: '',
       hasValidationErrors: true
-    };
+    }
   },
   methods: {
     async getRegistrationSettings() {
       try {
-        const response = await axios.get("/api/registration_settings")
+        const response = await axios.get('/api/registration_settings')
 
-        this.isRegistrationOpen = true
         this.isStudentRegistrationOpen = response.data.isStudentRegistrationOpen
         this.isMentorRegistrationOpen = response.data.isMentorRegistrationOpen
       }
@@ -90,33 +90,51 @@ export default {
 
       this.profileTypes.push(this.judgeProfileType())
     },
+    setupDisabledProfileTypes() {
+      let disabledProfiles = []
+
+      if (!this.isStudentRegistrationOpen) {
+        disabledProfiles.push('students')
+      }
+
+      if (!this.isMentorRegistrationOpen) {
+        disabledProfiles.push('mentors')
+      }
+
+      if (disabledProfiles.length > 0) {
+        this.anyDisabledProfileTypes = true
+      }
+
+      this.disabledProfileTypes = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(disabledProfiles)
+    },
     studentProfileType() {
       return {
         label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering myself and am 13-18 years old*</span>`,
-        value: "student"
+        value: 'student'
       }
     },
     parentProfileType() {
       return {
         label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year old* daughter</span>`,
-        value: "parent"
+        value: 'parent'
       }
     },
     mentorProfileType() {
       return {
         label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
-          value: "mentor"
+          value: 'mentor'
       }
     },
     judgeProfileType() {
       return {
         label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will <span class="font-bold">judge submissions</span></span>`,
-        value: "judge"
+        value: 'judge'
       }
     },
   },
   computed: {
-    divisionCutoffDate: divisionCutoffDateFormatted
+    divisionCutoffDate: divisionCutoffDateFormatted,
+    exampleStudentBirthday
   },
   props: {
     formValues: {
@@ -128,6 +146,7 @@ export default {
     await this.getRegistrationSettings()
 
     this.setupProfileTypes()
+    this.setupDisabledProfileTypes()
   }
 }
 </script>
