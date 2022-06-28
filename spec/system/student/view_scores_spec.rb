@@ -1,7 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Students view scores", :js do
-  before { SeasonToggles.display_scores_on! }
+  before do
+    SeasonToggles.display_scores_on!
+    SeasonToggles.set_survey_link(:student, "Hello World", "https://google.com")
+  end
 
   it "Unfinished / unstarted submission" do
     submission = FactoryBot.create(:submission, :incomplete)
@@ -78,9 +81,8 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
-    expect(page).to have_content("Congratulations! Your team was a quarterfinalist.")
-    expect(page).to have_content("Before you can view your certificate, please complete the post-survey")
-    expect(page).to have_selector(:link_or_button, 'View your scores and certificate')
+    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-survey.")
+    expect(page).to have_selector(:link_or_button, 'Complete Survey')
 
   end
 
@@ -100,9 +102,8 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
-    expect(page).to have_content("Congratulations! Your team was a semifinalist.")
-    expect(page).to have_content("Before you can view your certificate, please complete the post-survey")
-    expect(page).to have_selector(:link_or_button, 'View your scores and certificate')
+    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-survey.")
+    expect(page).to have_selector(:link_or_button, 'Complete Survey')
 
   end
 end
