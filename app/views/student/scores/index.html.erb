@@ -12,9 +12,7 @@
             <%= render "student/scores/scores_and_certificates" %>
           <% elsif current_student.participated? %>
             <%= render "student/scores/participation_certificate" %>
-          <% else %>
-            <%= render "student/scores/incomplete_submission" %>
-      <% end %>
+          <% end %>
         <% else %>
           <%= render 'explanations/feature_not_available', feature: :scores %>
         <% end %>
@@ -23,9 +21,7 @@
       <div id="certificates-tab-content" class="tab-content">
         <% if current_student.onboarded? && SeasonToggles.display_scores? %>
           <% if current_team.submission.complete? || current_student.participated? %>
-              <%= render 'student/scores/certificates' %>
-          <% else %>
-            <%= render 'student/scores/incomplete_submission' %>
+            <%= render 'student/scores/certificates' %>
           <% end %>
         <% else %>
           <%= render 'explanations/feature_not_available', feature: :scores %>
