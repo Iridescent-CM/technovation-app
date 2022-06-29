@@ -1,7 +1,23 @@
-<p class="text-2xl mb-4">Thank you for your participation!</p>
+<p class="text-xl mb-4">Thank you for your participation!</p>
 
-<p>
-  Unfortunately, no scores are available for your team because your
-  submission was incomplete. We hope you will continue working on your
-  app and join us again next season!
+<p class="mb-4">
+  Unfortunately, scores and certificates are not available for your team because
+  your submission was incomplete. We hope you will continue working on your project
+  for next season!
 </p>
+
+<% if !current_student.took_program_survey? %>
+  <p>
+    Help us improve the Technovation Girls program by completing the
+    <%= link_to "post-season survey",
+                SeasonToggles.survey_link(
+                  current_scope, "url",
+                  format_url: true,
+                  account: current_account
+                ),
+                target: "_blank",
+                class: "tw-link" %>!
+    Feedback on what you learned and what impacted your ability to work
+    on your project are particularly useful as we plan for next year. Thank you!
+  </p>
+<% end %>
