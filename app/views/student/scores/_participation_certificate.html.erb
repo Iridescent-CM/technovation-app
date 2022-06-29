@@ -1,6 +1,3 @@
 <p class="text-center mb-8">
   Thank you for participating in Technovation <%= Season.current.year %>!
 </p>
-<% if !current_student.took_program_survey? %>
-  <%= render "student/scores/post_survey_requirement" %>
-<% end %>
