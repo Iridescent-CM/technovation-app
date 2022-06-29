@@ -49,7 +49,7 @@
 
     <% end %>
 
-  <% if SeasonToggles.display_scores? && current_student.took_program_survey?%>
+  <% if SeasonToggles.display_scores? && current_student.took_program_survey? %>
     <%= link_to t("views.student.navigation.my_scores"),
                 student_scores_path,
                 class: al(student_scores_path) + "sub-nav-item" %>
