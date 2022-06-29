@@ -15,8 +15,7 @@ RSpec.describe "Students view scores", :js do
 
     expect(page).to have_content("Thank you for your participation")
     expect(page).to have_content(
-      "Unfortunately, no scores are available for your team " +
-      "because your submission was incomplete"
+      "Unfortunately, scores and certificates are not available for your team because your submission was incomplete"
     )
   end
 
