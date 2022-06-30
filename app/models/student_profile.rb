@@ -368,7 +368,7 @@ class StudentProfile < ActiveRecord::Base
 
   def can_view_scores?
     current_account.took_program_survey? &&
-      (team.submission.complete? || current_account.participated?)
+      (team.submission.complete? || participated?)
   end
 
   def can_be_marked_onboarded?
