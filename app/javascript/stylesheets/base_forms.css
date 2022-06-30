@@ -1,5 +1,3 @@
-@tailwind base;
-
 @layer base {
     input[type="text"],
     input[type="password"],
