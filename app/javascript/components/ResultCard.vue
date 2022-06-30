@@ -1,12 +1,12 @@
 <template>
-  <div class="card-result max-w-sm rounded-lg overflow-hidden shadow-lg grid__col--bleed">
+  <div class="card-result grid__col--bleed">
     <img :src="cardImage" class="w-full" @error="imgBroken" />
 
-    <div class="card-photo-placeholder" :id="imgPlaceholderId">
+    <div class="card-photo-placeholder hidden" :id="imgPlaceholderId">
       <p class="text-xl font-bold text-black-200">No picture<p/>
     </div>
     
-    <div class="px-6 py-4">
+    <div class="body px-6 py-4">
       <div class="search-card-title font-bold text-xl mb-1">{{ cardTitle }}</div>
       <div class="search-card-subtitle py-1 text-base">{{ cardSubtitle }}</div>
       <div class="search-card-content py-1 text-base mb-2">{{ cardContent }}</div>
@@ -20,7 +20,6 @@
       <div v-else class="search-card-footer text-right mt-6">
         <a :href="linkPath" class="tw-link text-lg" >{{ linkText }}</a>
       </div>
-
     </div>
   </div>
 </template>
@@ -30,8 +29,9 @@
     name: 'result-card',
     methods: {
       imgBroken(e) {
-        e.target.style = 'display:none';
-        e.target.nextElementSibling.style = 'display:flex';
+        e.target.classList.add("hidden")
+        e.target.nextElementSibling.classList.remove("hidden")
+        e.target.nextElementSibling.classList.add("flex")
       }
     },
     props: {
@@ -85,13 +85,11 @@
 </script>
 
 <style lang="scss">
+  .card-result {
+    @apply max-w-sm rounded-lg overflow-hidden shadow-lg mb-5
+  }
+  
   .card-photo-placeholder {
-    display: none;
-    background-color: #aeaeae;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    padding-top:33.5%;
-    padding-bottom:33.5%;
+    @apply bg-slate-300 w-full items-center justify-center pt-[33.5%] pb-[33.5%]
   }
 </style>
