@@ -1,8 +1,12 @@
 require "rails_helper"
 require "fill_pdfs"
 
-RSpec.xfeature "Student certificates" do
-  before { SeasonToggles.display_scores_on! }
+RSpec.feature "Student certificates" do
+  before do
+    SeasonToggles.display_scores_on!
+    SeasonToggles.set_survey_link(:student, "Hello World", "https://google.com")
+  end
+
   let(:season_with_templates) { instance_double(Season, year: 2020) }
   before { allow(Season).to receive(:current).and_return(season_with_templates) }
 
@@ -16,13 +20,12 @@ RSpec.xfeature "Student certificates" do
         student.certificates.current.semifinalist.count
       }.from(0).to(1)
 
+      student.account.took_program_survey!
       sign_in(student)
-      click_link("View your scores and certificate")
 
-      expect(page).to have_link(
-        "Open your semifinalist certificate",
-        href: student.certificates.semifinalist.current.last.file_url
-      )
+      expect(page).to have_content("Congratulations, your team was a semifinalist!")
+
+      click_link("View your scores and certificate")
     end
 
     scenario "no completion certificate is generated" do
