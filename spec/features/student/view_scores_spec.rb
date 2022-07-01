@@ -9,9 +9,6 @@ RSpec.feature "Students view scores" do
     sign_in(submission.team.students.sample)
 
     expect(page).to have_content("Thank you for your participation")
-    expect(page).to have_content(
-      "Unfortunately, no scores are available for your team " +
-      "because your submission was incomplete"
-    )
+    expect(page).to have_content("Unfortunately, scores and certificates are not available for your team because your submission was incomplete")
   end
 end

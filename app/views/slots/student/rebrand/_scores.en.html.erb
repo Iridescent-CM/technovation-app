@@ -3,20 +3,25 @@
     <p class="font-bold">Scores & Certificate</p>
   </div>
 
-  <div class="tw-content=-wrapper p-8">
+  <div class="tw-content-wrapper p-8">
     <% if current_student.onboarded? && SeasonToggles.display_scores? %>
-      <% if current_team.submission.complete? %>
-        <%= render "student/dashboards/completion_steps/scores_and_certificates" %>
-      <% elsif current_student.participated? %>
-        <%= render "student/dashboards/completion_steps/participation_certificate" %>
+      <% if current_team.submission.complete? || current_student.participated? %>
+        <% if current_team.submission.complete? %>
+          <p class="text-center">Congratulations, your team was a <%= current_team.submission.contest_rank %>!</p>
+        <% end %>
+        <% if current_student.took_program_survey? %>
+          <p class="mb-8">Thank you for participating this season! Click the button below to view your scores and certificate.</p>
+          <div class="step-actions text-center">
+            <%= link_to 'View your scores and certificate',
+                        student_scores_path,
+                        class: "tw-green-btn",
+                        disabled: !current_student.took_program_survey? %>
+          </div>
+        <% else %>
+          <%= render "student/scores/post_survey_requirement" %>
+        <% end %>
       <% else %>
-        <h1 class="content-heading">Thank you for your participation</h1>
-
-        <p>
-          Unfortunately, no scores are available for your team because your
-          submission was incomplete. We hope you will continue working on your
-          app and join us again next season!
-        </p>
+        <%= render "student/scores/incomplete_submission" %>
       <% end %>
     <% else %>
       <%= render 'explanations/feature_not_available', feature: :scores %>

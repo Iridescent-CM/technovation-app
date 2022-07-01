@@ -1,7 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Students view scores", :js do
-  before { SeasonToggles.display_scores_on! }
+  before do
+    SeasonToggles.display_scores_on!
+    SeasonToggles.set_survey_link(:student, "Hello World", "https://google.com")
+  end
 
   it "Unfinished / unstarted submission" do
     submission = FactoryBot.create(:submission, :incomplete)
@@ -12,8 +15,7 @@ RSpec.describe "Students view scores", :js do
 
     expect(page).to have_content("Thank you for your participation")
     expect(page).to have_content(
-      "Unfortunately, no scores are available for your team " +
-      "because your submission was incomplete"
+      "Unfortunately, scores and certificates are not available for your team because your submission was incomplete"
     )
   end
 
@@ -32,7 +34,7 @@ RSpec.describe "Students view scores", :js do
     click_button "Find your scores & certificates"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('#student-finished-scores-table')
+    expect(page).to have_selector("#student-finished-scores-table")
 
     expect(page).to have_content("Scores Explained")
   end
@@ -58,7 +60,7 @@ RSpec.describe "Students view scores", :js do
     click_button "Find your scores & certificates"
     click_link "View your scores and certificate"
 
-    expect(page).to have_selector('#student-finished-scores-table')
+    expect(page).to have_selector("#student-finished-scores-table")
 
     expect(page).to have_content("Scores Explained")
     end
@@ -78,9 +80,8 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
-    expect(page).to have_content("Congratulations! Your team was a quarterfinalist.")
-    expect(page).to have_content("Before you can view your certificate, please complete the post-survey")
-    expect(page).to have_selector(:link_or_button, 'View your scores and certificate')
+    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-survey.")
+    expect(page).to have_selector(:link_or_button, "Complete Survey")
 
   end
 
@@ -100,9 +101,8 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
-    expect(page).to have_content("Congratulations! Your team was a semifinalist.")
-    expect(page).to have_content("Before you can view your certificate, please complete the post-survey")
-    expect(page).to have_selector(:link_or_button, 'View your scores and certificate')
+    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-survey.")
+    expect(page).to have_selector(:link_or_button, "Complete Survey")
 
   end
 end

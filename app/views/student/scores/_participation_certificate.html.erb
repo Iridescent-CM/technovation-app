@@ -1,14 +1,5 @@
-<h1 class="content-heading">Participation Certificate</h1>
-
-<p>Thank you for participating in Technovation <%= Season.current.year %>!</p>
-<% if !current_student.took_program_survey? %>
-  <%= render "student/dashboards/completion_steps/post_survey_requirement" %>
-<% end %>
-<div class="step-actions">
-  <%= 
-    link_to 'View your certificate', 
-    student_scores_path, 
-    class: "button",
-    disabled: !current_student.took_program_survey?
-  %>
-</div>
+<p class="text-center mb-8">
+  Thank you for being part of Technovation Girls! No scores are available
+  since your project submission was incomplete. Please click on Certificates to
+  access your certificate for participating this season.
+</p>

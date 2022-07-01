@@ -365,7 +365,12 @@ class StudentProfile < ActiveRecord::Base
   def rebranded?
     true
   end
-  
+
+  def can_view_scores?
+    current_account.took_program_survey? &&
+      (team.submission.complete? || participated?)
+  end
+
   def can_be_marked_onboarded?
     account.present? &&
       signed_parental_consent.present? &&

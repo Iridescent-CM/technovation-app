@@ -5,7 +5,7 @@ module Student
       @quarterfinals_scores = SubmissionScore.none
       @semifinals_scores = SubmissionScore.none
 
-      if current_team.submission.present? and SeasonToggles.display_scores?
+      if current_team.submission.present? && SeasonToggles.display_scores?
         @all_scores = current_team.submission.submission_scores.complete
         @quarterfinals_scores = @all_scores.quarterfinals
 
@@ -20,7 +20,11 @@ module Student
         @certificates = current_account.certificates.current
       end
 
-      render template: 'student/scores/index'
+      if SeasonToggles.display_scores? && current_student.can_view_scores?
+        render template: "student/scores/index"
+      else
+        redirect_to student_dashboard_path
+      end
     end
 
     def show
@@ -30,7 +34,7 @@ module Student
       @team = @score.team
       @team_submission = @team.submission
 
-      render 'student/scores/score_details'
+      render "student/scores/score_details"
     end
 
   end

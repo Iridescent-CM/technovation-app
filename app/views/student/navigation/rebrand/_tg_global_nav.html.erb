@@ -49,13 +49,9 @@
 
     <% end %>
 
-  <% if SeasonToggles.display_scores? %>
+  <% if SeasonToggles.display_scores? && current_student.took_program_survey? %>
     <%= link_to t("views.student.navigation.my_scores"),
                 student_scores_path,
                 class: al(student_scores_path) + "sub-nav-item" %>
   <% end %>
 </nav>
-
-
-
-<%#= link_to t('views.application.signout'), signout_path, method: :delete %>
