@@ -127,7 +127,7 @@ jobs:
 
       - run:
           name: Install PostgreSQL
-          command: sudo apt update -y --allow-releaseinfo-change; sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B; sudo apt install postgresql-client-13
+          command: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B; sudo apt update -y --allow-releaseinfo-change; sudo apt install postgresql-client-13
 
       - run:
           name: Install pdftk
