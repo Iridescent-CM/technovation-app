@@ -22,8 +22,9 @@
       <%= 
         radio_button_tag :location_type, 
         "nearme", 
-        params[:location_type] == "nearme", 
-        data: { update_location: account.address_details } 
+        params[:location_type].nil? ? true : params[:location_type] == "nearme", 
+        data: { update_location: account.address_details },
+        class: "w-4 h-4 text-green-600"
       %>
       <label for="location_type %>"><%= t('views.application.near_me') %></label>
     </p>
