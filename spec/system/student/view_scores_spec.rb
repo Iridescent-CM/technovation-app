@@ -80,7 +80,7 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
-    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-survey.")
+    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
     expect(page).to have_selector(:link_or_button, "Complete Survey")
 
   end
@@ -101,7 +101,7 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
-    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-survey.")
+    expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
     expect(page).to have_selector(:link_or_button, "Complete Survey")
 
   end
