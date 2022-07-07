@@ -24,7 +24,7 @@
 
   <div class="certificates-btn-wrapper">
     <% @certificates.each do |certificate| %>
-      <%= link_to "Open your #{certificate.cert_type} certificate",
+      <%= link_to "Open your #{certificate.cert_type == 'completion' ? 'quarterfinalist' : certificate.cert_type} certificate",
                   certificate.file_url,
                   target: "_blank",
                   class: "tw-green-btn" %>
