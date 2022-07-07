@@ -57,11 +57,17 @@ RSpec.feature "Student certificates" do
         student.certificates.current.completion.count
       }.from(0).to(1)
 
+      student.account.took_program_survey!
       sign_in(student)
-      click_link("View your scores and certificate")
 
+      expect(page).to have_content("Congratulations, your team was a quarterfinalist!")
+
+      click_link("View your scores and certificate")
+      expect(page).to have_content("Congratulations, your team was a quarterfinalist!")
+
+      click_link("Certificates")
       expect(page).to have_link(
-        "Open your completion certificate",
+        "Open your quarterfinalist certificate",
         href: student.certificates.completion.current.last.file_url
       )
     end
@@ -101,9 +107,16 @@ RSpec.feature "Student certificates" do
         student.certificates.current.participation.count
       }.from(0).to(1)
 
+      student.account.took_program_survey!
       sign_in(student)
-      click_link( "View your certificate")
 
+      expect(page).to have_content("Thank you for participating this season! Click the button below to view your scores and certificate.")
+
+      click_link("View your scores and certificate")
+
+      expect(page).to have_content("Thank you for being part of Technovation Girls! No scores are available since your project submission was incomplete.")
+
+      click_link("Certificates")
       expect(page).to have_link(
         "Open your participation certificate",
         href: student.certificates.participation.current.last.file_url
