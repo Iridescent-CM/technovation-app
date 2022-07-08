@@ -1,5 +1,5 @@
 <template>
-  <div class="card-result grid__col--bleed">
+  <div class="card-result">
     <img :src="cardImage" class="w-full" @error="imgBroken" />
 
     <div class="card-photo-placeholder hidden" :id="imgPlaceholderId">
@@ -11,13 +11,13 @@
       <div class="search-card-subtitle py-1 text-base">{{ cardSubtitle }}</div>
       <div class="search-card-content py-1 text-base mb-2">{{ cardContent }}</div>
 
-      <div v-if="declined" class="search-card-footer text-right mt-6">
-          <p class="text-base text-red-500">You asked to join {{ name }}, and they declined.</p>
+      <div v-if="declined" class="search-card-footer">
+          <p>You asked to join {{ name }}, and they declined.</p>
       </div>
-      <div v-else-if="full" class="search-card-footer text-right mt-6">
-        <p class="text-base text-red-500">This team is currently full.</p>
+      <div v-else-if="full" class="search-card-footer">
+        <p>This team is currently full.</p>
       </div>
-      <div v-else class="search-card-footer text-right mt-6">
+      <div v-else class="search-card-footer">
         <a :href="linkPath" class="tw-link text-lg" >{{ linkText }}</a>
       </div>
     </div>
@@ -88,8 +88,13 @@
   .card-result {
     @apply max-w-sm rounded-lg overflow-hidden shadow-lg mb-5
   }
-  
   .card-photo-placeholder {
     @apply bg-slate-300 w-full items-center justify-center pt-[33.5%] pb-[33.5%]
+  }
+  .search-card-footer {
+    @apply text-right mt-6
+  }
+  .search-card-footer p {
+    @apply text-base text-red-500
   }
 </style>
