@@ -89,7 +89,7 @@
     @apply max-w-sm rounded-lg overflow-hidden shadow-lg mb-5
   }
   .card-photo-placeholder {
-    @apply bg-slate-300 w-full items-center justify-center pt-[33.5%] pb-[33.5%]
+    @apply bg-gray-300 w-full items-center justify-center py-34.5
   }
   .search-card-footer {
     @apply text-right mt-6
