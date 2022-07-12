@@ -1,4 +1,4 @@
-label {
+label:not(.tw-label) {
   display: block;
   cursor: pointer;
   font-family: "Source Sans Pro", sans-serif;
