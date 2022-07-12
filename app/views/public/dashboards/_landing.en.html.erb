@@ -1,31 +1,23 @@
 <% provide :html_id, "registration-landing" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-6 grid__col-xs-10 panel">
-    <h1>Join the movement</h1>
+<h1 class="text-3xl font-bold mb-6">Join the movement.</h1>
+<p class="mb-8">
+  We're entrepreneurs, mentors, and educators looking to teach girls everywhere
+  the skills they need to change the world with technology.
+</p>
 
-    <div class="text-align--center">
-      <%= image_tag asset_path('tc-landing-globe.svg'),
-        alt: 'Illustration of a globe',
-        width: "40%" %>
-    </div>
+<p class="mb-6">
+  <%= link_to "Sign up today",
+    signup_path,
+    class: "tw-green-btn",
+    data: { turbolinks: false } %>
+</p>
 
-    <p>
-      We're entrepreneurs, mentors, and educators looking to teach girls everywhere
-      the skills they need to change the world with technology.
-    </p>
+<p>
+  Already have an account?
+  <%= link_to raw("Please log in &#8227"),
+    login_path,
+    data: { turbolinks: false },
+    class: "tw-link" %>
+</p>
 
-    <p>
-      <%= link_to "Sign up today",
-        signup_path,
-        class: "button",
-        data: { turbolinks: false } %>
-
-      or
-
-      <%= link_to "Log in",
-        login_path,
-        data: { turbolinks: false } %>
-    </p>
-  </div>
-</div>
