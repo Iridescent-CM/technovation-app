@@ -3,13 +3,25 @@ import { shallowMount } from '@vue/test-utils'
 import ResultCard from 'components/ResultCard'
 
 describe('ResultCard Vue component', () => {
+  const reload = window.location.reload;
+
+  beforeAll(() => {
+    Object.defineProperty(window, 'location', {
+      value: { reload: jest.fn() }
+    });
+  });
+
+  afterAll(() => {
+    window.location.reload = reload;
+  });  
+
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(ResultCard, {
       attachToDocument: true,
       propsData: {
-        cardId: 'team-123',
+        cardId: 'team-1',
         cardImage: 'path/to/my/image.jpg',
         cardTitle:'My Cool Team',
         cardSubtitle:'Los Angeles, California, United States',
@@ -18,7 +30,7 @@ describe('ResultCard Vue component', () => {
         declined:false,
         full:false,
         linkText:'More Details >',
-        linkPath:'path/to/team/123',
+        linkPath:'/path/to/team/1',
       },
     })
   })
@@ -77,7 +89,7 @@ describe('ResultCard Vue component', () => {
   describe('computed properties', () => {
     describe('imgPlaceholderId', () => {
       it('set placeHolder id correctly', () => {
-        expect(wrapper.vm.imgPlaceholderId).toEqual('img-ph-team-123')
+        expect(wrapper.vm.imgPlaceholderId).toEqual('img-ph-team-1')
       })
     })
   })

@@ -9,6 +9,6 @@
     :declined="<%= current_profile.teams_that_declined.include?(team) %>"
     :full="<%= (current_scope == "student" && !team.spot_available?) %>"
     link-text="More Details >"
-    link-path="<%= "new_{ current_scope }_join_request_path" %>"
+    link-path="<%= send("new_#{current_scope}_join_request_path", {team_id: team.id}) %>"
   ></result-card>
 </div>
