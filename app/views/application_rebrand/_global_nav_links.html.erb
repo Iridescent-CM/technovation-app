@@ -1,0 +1,47 @@
+<a class="tw-sm-hidden" href="https://www.technovation.org/about/" target="_blank">Get Started</a>
+<a class="tw-sm-hidden" href="https://www.technovation.org/about/" target="_blank">Chapters</a>
+
+<%= link_to t('views.application.signin'),
+            signin_path,
+            class: al(signin_path) + 'tw-sm-hidden' %>
+
+<%= link_to t('views.application.signup'),
+            signup_path,
+            class: al(signup_path) + 'tw-sm-hidden' %>
+
+<a href="https://www.technovation.org/donate-today/" class="py-2 px-2 text-white font-black
+              rounded transition duration-300 bg-energetic-blue tw-sm-hidden">DONATE</a>
+
+
+<div class="flex items-center justify-center md:hidden">
+  <div class="relative inline-block text-left tw-dropdown" id="global-dropdown-wrapper">
+                  <span class="flex cursor-pointer hover:text-energetic-blue"> Menu
+                    <img src="https://icongr.am/fontawesome/caret-down.svg?size=12" alt="Drop down caret">
+                  </span>
+    <div class="tw-dropdown-menu">
+      <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none">
+        <div class="p-4">
+          <ul class="text-sm" id="global-dropdown-list">
+            <li class="md-hidden">
+              <a href="https://www.technovation.org/about/" target="_blank">Get Started</a>
+            </li>
+            <li class="md-hidden">
+              <a href="https://www.technovation.org/about/" target="_blank">Chapters</a>
+            </li>
+            <li class="md-hidden">
+              <%= link_to t('views.application.signin'),
+                          signin_path,
+                          class: al(signin_path) %>
+            </li>
+            <li class="md-hidden">
+              <%= link_to t('views.application.signup'),
+                          signup_path,
+                          class: al(signup_path) %>
+            </li>
+            <li class="md-hidden"><a href="">DONATE</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
