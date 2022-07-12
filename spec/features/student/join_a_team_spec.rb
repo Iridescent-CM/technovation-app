@@ -18,7 +18,7 @@ RSpec.xfeature "Students find a team" do
 
   before(:all) do
     @wait_time = Capybara.default_max_wait_time
-    Capybara.default_max_wait_time = 90
+    Capybara.default_max_wait_time = 15
   end
 
   after(:all) do
