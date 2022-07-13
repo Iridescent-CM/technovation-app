@@ -21,30 +21,6 @@
   on our website or follow us at:
 </p>
 
-<ul class="unstyled mb-4">
-  <li>
-    <%= web_icon("facebook-square") %>
-    <%= link_to "Facebook", 'https://www.facebook.com/technovationglobal',
-                class: 'tw-link-magenta' %>
-  </li>
-
-  <li>
-    <%= web_icon("twitter-square") %>
-    <%= link_to "Twitter", 'https://twitter.com/technovation',
-                class: 'tw-link-magenta' %>
-  </li>
-
-  <li>
-    <%= web_icon("instagram") %>
-    <%= link_to "Instagram", 'https://www.instagram.com/technovationglobal',
-                class: 'tw-link-magenta' %>
-  </li>
-
-  <li>
-    <%= web_icon("youtube") %>
-    <%= link_to "YouTube", 'https://www.youtube.com/channel/UCvxNjrhfz_M68fwT2QcurjQ',
-                class: 'tw-link-magenta' %>
-  </li>
-</ul>
+<%= render 'application_rebrand/social_links' %>
 
 <p>Let's learn and build a better world together!</p>
