@@ -1,5 +1,6 @@
 class SigninsController < ApplicationController
   before_action :require_unauthenticated, except: :destroy
+  layout "application_rebrand"
 
   def new
     @signin = Account.new(email: params[:email])

@@ -4,6 +4,10 @@
     font-family: 'RUBIK', sans-serif;
 }
 
+.poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
 html{
     @apply bg-white
 }
