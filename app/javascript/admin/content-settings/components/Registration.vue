@@ -4,7 +4,7 @@
     <div v-for="(label, scope) in checkboxes" :key="scope">
       <p class="inline-checkbox">
         <input
-          v-if="judgingEnabled"
+          v-if="isRegistrationClosed(scope)"
           :id="`season_toggles_${scope}_signup`"
           type="checkbox"
           :value="0"
@@ -18,10 +18,10 @@
         >
         <label
           :for="`season_toggles_${scope}_signup`"
-          :class="{ 'label--disabled': judgingEnabled }"
+          :class="{ 'label--disabled': isRegistrationClosed(scope) }"
         >{{ label }}</label>
       </p>
-      <div v-if="judgingEnabled" class="notice info hint user-notice">
+      <div v-if="isRegistrationClosed(scope)" class="notice info hint user-notice">
         <icon name="exclamation-circle" :size="16" color="00529B" />
         When judging is enabled, {{ `${scope}s` }} cannot sign up
       </div>
@@ -46,6 +46,7 @@ export default {
       checkboxes: {
         student: 'Students',
         mentor: 'Mentors',
+        judge: 'Judges',
       },
     }
   },
@@ -55,6 +56,12 @@ export default {
       'judgingEnabled',
     ])
   },
+
+  methods: {
+    isRegistrationClosed(scope) {
+      return (scope == 'student' || scope == 'mentor') && this.judgingEnabled
+    }
+  }
 }
 </script>
 

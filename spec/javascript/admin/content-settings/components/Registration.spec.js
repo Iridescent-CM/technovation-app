@@ -33,6 +33,7 @@ describe('Admin Content & Settings - Registration component', () => {
         checkboxes: {
           student: 'Students',
           mentor: 'Mentors',
+          judge: 'Judges',
         },
       })
     })
@@ -48,6 +49,9 @@ describe('Admin Content & Settings - Registration component', () => {
       const mentorCheckbox = wrapper.find('#season_toggles_mentor_signup')
       const mentorCheckboxLabel = wrapper
         .find('label[for="season_toggles_mentor_signup"]')
+      const judgeCheckbox = wrapper.find('#season_toggles_judge_signup')
+      const judgeCheckboxLabel = wrapper
+        .find('label[for="season_toggles_judge_signup"]')
 
       expect(wrapper.vm.judgingEnabled).toBe(false)
 
@@ -55,6 +59,8 @@ describe('Admin Content & Settings - Registration component', () => {
       expect(studentCheckboxLabel.exists()).toBe(true)
       expect(mentorCheckbox.exists()).toBe(true)
       expect(mentorCheckboxLabel.exists()).toBe(true)
+      expect(judgeCheckbox.exists()).toBe(true)
+      expect(judgeCheckboxLabel.exists()).toBe(true)
     })
 
     it('disables checkboxes and sets values to 0 is judging is enabled', () => {
@@ -106,6 +112,49 @@ describe('Admin Content & Settings - Registration component', () => {
       )
 
       expect(mentorCheckboxLabel.attributes()).toEqual(
+        expect.objectContaining({
+          class: 'label--disabled',
+        })
+      )
+    })
+
+    it('allows judge registraitons when juding is enabled', () => {
+      wrapper = shallowMount(
+        Registration,
+        {
+          localVue,
+          store: mockStore.createMocks({
+            getters: {
+              judgingEnabled: () => {
+                return true
+              },
+            },
+          }).store,
+        }
+      )
+
+      const judgeCheckbox = wrapper.find('#season_toggles_judge_signup')
+      const judgeCheckboxLabel = wrapper
+        .find('label[for="season_toggles_judge_signup"]')
+
+      expect(wrapper.vm.judgingEnabled).toBe(true)
+
+      expect(judgeCheckbox.attributes()).toEqual(
+        expect.objectContaining({
+          id: 'season_toggles_judge_signup',
+          type: 'checkbox',
+        })
+      )
+
+      expect(judgeCheckbox.attributes()).not.toEqual(
+        expect.objectContaining({
+          id: 'season_toggles_judge_signup',
+          type: 'checkbox',
+          disabled: 'disabled',
+        })
+      )
+
+      expect(judgeCheckboxLabel.attributes()).not.toEqual(
         expect.objectContaining({
           class: 'label--disabled',
         })

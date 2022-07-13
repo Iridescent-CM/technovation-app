@@ -13,6 +13,10 @@ class SeasonTogglesSerializer
     season_toggles.signup_enabled?('mentor')
   end
 
+  attribute :judge_signup do |season_toggles|
+    season_toggles.signup_enabled?('judge')
+  end
+
   attribute :student_dashboard_text do |season_toggles|
     season_toggles.dashboard_text('student')
   end
