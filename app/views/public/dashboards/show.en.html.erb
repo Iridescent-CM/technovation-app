@@ -1,4 +1,4 @@
-<% provide :main_header, render('application/templates/tg_green_header', heading: "Technovation Girls") %>
+<% provide :main_header, render('application/templates/tg_hero_header') %>
 <% provide :global_nav_links, render('application_rebrand/global_nav_links') %>
 
 <%= render 'public/dashboards/homepage_banner' if ENV.fetch("ENABLE_HOMEPAGE_BANNER", false) %>
