@@ -1,11 +1,19 @@
 <template>
   <div class="card-result">
-    <img :src="cardImage" class="w-full" @error="imgBroken" />
+    <div class="relative" :class="w-full">
+      <img :src="cardImage" class="w-full" @error="imgBroken" />
 
-    <div class="card-photo-placeholder hidden" :id="imgPlaceholderId">
-      <p class="text-xl font-bold text-black-200">No picture<p/>
+      <div class="card-photo-placeholder hidden" :id="imgPlaceholderId">
+        <p class="text-xl font-bold text-black-200">No picture<p/>
+      </div>
+
+      <div class="flex flex-col items-end absolute bottom-1 right-1">
+        <span v-for="(expertise, key) in expertises" class="list-badge bg-blue-600" :key="key">
+          {{ expertise.name }}
+        </span>
+      </div>
     </div>
-    
+
     <div class="body px-6 py-4">
       <div class="search-card-title font-bold text-xl mb-1">{{ cardTitle }}</div>
       <div class="search-card-subtitle py-1 text-base">{{ cardSubtitle }}</div>
@@ -67,6 +75,10 @@
         type: Boolean,
         required: false,
       },
+      expertises: {
+        type: Array,
+        required: false,
+      },
       linkText: {
         type: String,
         required: false,
@@ -89,12 +101,15 @@
     @apply max-w-sm rounded-lg overflow-hidden shadow-lg mb-5
   }
   .card-photo-placeholder {
-    @apply bg-slate-300 w-full items-center justify-center pt-[33.5%] pb-[33.5%]
+    @apply bg-gray-300 w-full items-center justify-center py-34.5
   }
   .search-card-footer {
     @apply text-right mt-6
   }
   .search-card-footer p {
     @apply text-base text-red-500
+  }
+  .list-badge {
+    @apply text-xs py-3 px-3 mb-2 leading-none text-center align-baseline font-bold text-white rounded-full rounded-r-none
   }
 </style>

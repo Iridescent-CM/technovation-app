@@ -1,0 +1,13 @@
+<div class="vue-search-mentor-result">
+  <result-card 
+    card-id= "mentor-<%= mentor_preview.id %>"
+    card-image= "<%= mentor_preview.profile_image_url %>"
+    card-title="<%= mentor_preview.full_name %>"
+    card-subtitle="<%= mentor_preview.address_details %>"
+    card-content="<%= mentor_preview.school_company_name %>"
+    :expertises="<%= mentor_preview.expertises.to_json %>"
+    name="<%= mentor_preview.full_name %>"
+    link-text="More Details >"
+    link-path="<%= mentor_mentor_path(mentor_preview, review_before: true) %>"
+  ></result-card>
+</div>

@@ -1,0 +1,28 @@
+.pagination a {
+    @apply align-top px-4 py-3 rounded shadow-md text-xl text-blue-500 font-semibold border-2 border-blue-500 hover:text-white hover:bg-energetic-blue
+}
+
+.pagination a.next_page, .pagination a.previous_page {
+    font-size: 0;
+}
+
+.pagination a.next_page:after {
+    font-size: initial;
+    content: ">";
+}
+.pagination a.previous_page:after {
+    font-size: initial;
+    content: "<";
+}
+
+.pagination a.next_page, .pagination a.previous_page {
+    @apply pt-2.5 pb-2
+}
+
+.pagination .current {
+    @apply px-4 py-3 rounded shadow-md text-xl font-semibold border-2 border-blue-500 text-white bg-energetic-blue
+}
+
+.pagination .disabled {
+    @apply hidden
+}

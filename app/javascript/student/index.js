@@ -6,6 +6,8 @@ import store from './store'
 
 import App from './App'
 
+import ResultCard from '../components/ResultCard'
+
 Vue.use(Vue2Filters)
 
 document.addEventListener('turbolinks:load', () => {
@@ -46,6 +48,18 @@ document.addEventListener('turbolinks:load', () => {
       router.afterEach(( to, from ) => {
         ga('set', 'page', to.path);
         ga('send', 'pageview');
+      });
+    })
+  }
+
+  let searchMentors = document.querySelectorAll('.vue-search-mentor-result');
+  if ( searchMentors.length > 0 ) {
+    searchMentors.forEach(element => {
+      new Vue({
+        el: element,
+        components: {
+          ResultCard,
+        },
       });
     })
   }
