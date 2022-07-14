@@ -26,6 +26,20 @@
             </strong>
           </p>
         </div>
+
+        <div ref="signupFieldJudges" class="review-label">
+          <p>
+            Judges
+            <strong
+              :class="{
+                on: formData.judge_signup,
+                off: !formData.judge_signup
+              }"
+            >
+              {{ formData.judge_signup ? 'yes' : 'no' }}
+            </strong>
+          </p>
+        </div>
       </div>
 
       <div class="review-panel">

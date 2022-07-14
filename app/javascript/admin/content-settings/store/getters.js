@@ -12,7 +12,7 @@ export default {
       // Registration
       student_signup: Boolean(!judgingRoundEnabled && state.student_signup),
       mentor_signup: Boolean(!judgingRoundEnabled && state.mentor_signup),
-      judge_signup: Boolean(!judgingRoundEnabled && state.judge_signup),
+      judge_signup: Boolean(state.judge_signup),
       chapter_ambassador_signup: Boolean(
         !judgingRoundEnabled && state.chapter_ambassador_signup
       ),
