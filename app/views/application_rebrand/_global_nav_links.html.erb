@@ -1,5 +1,4 @@
-<a class="tw-sm-hidden" href="https://www.technovation.org/about/" target="_blank">Get Started</a>
-<a class="tw-sm-hidden" href="https://www.technovation.org/about/" target="_blank">Chapters</a>
+<a class="tw-sm-hidden" href="https://technovationchallenge.org/get-started/" target="_blank">Get Started</a>
 
 <%= link_to t('views.application.signin'),
             signin_path,
@@ -15,18 +14,18 @@
 
 <div class="flex items-center justify-center md:hidden">
   <div class="relative inline-block text-left tw-dropdown" id="global-dropdown-wrapper">
-                  <span class="flex cursor-pointer hover:text-energetic-blue"> Menu
-                    <img src="https://icongr.am/fontawesome/caret-down.svg?size=12" alt="Drop down caret">
-                  </span>
+    <span class="flex cursor-pointer hover:text-energetic-blue">
+      <img src="https://icongr.am/fontawesome/bars.svg?size=30" alt="Drop down caret">
+    </span>
     <div class="tw-dropdown-menu">
       <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none">
         <div class="p-4">
           <ul class="text-sm" id="global-dropdown-list">
             <li class="md-hidden">
-              <a href="https://www.technovation.org/about/" target="_blank">Get Started</a>
+              <a href="https://technovationchallenge.org/about/" target="_blank">About</a>
             </li>
             <li class="md-hidden">
-              <a href="https://www.technovation.org/about/" target="_blank">Chapters</a>
+              <a href="https://technovationchallenge.org/get-started/" target="_blank">Get Started</a>
             </li>
             <li class="md-hidden">
               <%= link_to t('views.application.signin'),
