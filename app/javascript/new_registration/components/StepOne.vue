@@ -59,6 +59,7 @@ export default {
       profileTypes: [],
       isStudentRegistrationOpen: false,
       isMentorRegistrationOpen: false,
+      isJudgeRegistrationOpen: false,
       anyDisabledProfileTypes: false,
       disabledProfileTypes: '',
       hasValidationErrors: true
@@ -71,6 +72,7 @@ export default {
 
         this.isStudentRegistrationOpen = response.data.isStudentRegistrationOpen
         this.isMentorRegistrationOpen = response.data.isMentorRegistrationOpen
+        this.isJudgeRegistrationOpen = response.data.isJudgeRegistrationOpen
       }
       catch(error) {
         airbrake.notify({
@@ -88,7 +90,9 @@ export default {
         this.profileTypes.push(this.mentorProfileType())
       }
 
-      this.profileTypes.push(this.judgeProfileType())
+      if (this.isJudgeRegistrationOpen) {
+        this.profileTypes.push(this.judgeProfileType())
+      }
     },
     setupDisabledProfileTypes() {
       let disabledProfiles = []
@@ -99,6 +103,10 @@ export default {
 
       if (!this.isMentorRegistrationOpen) {
         disabledProfiles.push('mentors')
+      }
+
+      if (!this.isJudgeRegistrationOpen) {
+        disabledProfiles.push('judges')
       }
 
       if (disabledProfiles.length > 0) {
