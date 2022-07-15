@@ -16,6 +16,7 @@ describe('ResultCard Vue component', () => {
         cardContent:'Division: None assigned yet',
         name:'My Cool Team',
         declined:false,
+        expertises:['exp1', 'exp1', 'exp3'],
         full:false,
         linkText:'More Details >',
         linkPath:'path/to/team/123',
@@ -56,6 +57,10 @@ describe('ResultCard Vue component', () => {
         },
         declined: {
           type: Boolean,
+          required: false,
+        },
+        expertises: {
+          type: Array,
           required: false,
         },
         full: {
