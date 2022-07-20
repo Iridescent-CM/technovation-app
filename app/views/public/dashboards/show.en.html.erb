@@ -5,14 +5,14 @@
 
 <div class="w-full lg:w-1/2 mx-auto border-2 shadow-md rounded">
   <div class="p-8">
-    <% if SeasonToggles.registration_open? %>
-      <%= render 'landing' %>
-    <% else %>
-      <% if SeasonToggles.judging_finished? %>
+    <% if SeasonToggles.judging_enabled_or_between? %>
+      <%= render 'judging_open_splash' %>
+    <% elsif SeasonToggles.judging_finished? %>
         <%= render 'off_season_splash' %>
-      <% else %>
-        <%= render 'judging_open_splash' %>
-      <% end %>
+    <% elsif  SeasonToggles.registration_open? %>
+        <%= render 'landing' %>
+    <% else %>
+        <%= render 'off_season_splash' %>
     <% end %>
   </div>
 </div>
