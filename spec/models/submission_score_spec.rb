@@ -635,4 +635,37 @@ RSpec.describe SubmissionScore do
       expect(SubmissionScore.judge_not_deleted).to include(score_with_judge)
     end
   end
+
+  describe ".total_possible_points_for_section" do
+    before do
+      allow(JudgeQuestions)
+        .to receive(:new)
+        .with(division: division, season: season)
+        .and_return(judge_questions_instance)
+    end
+
+    let(:division) { "senior" }
+    let(:season) { 2022 }
+    let(:section) { "demo" }
+    let(:judge_questions_instance) { instance_double(JudgeQuestions, call: judge_questions) }
+    let(:judge_questions) do
+      [
+        instance_double(Question, idx: 1, section: "demo", worth: 5, submission_type: "A"),
+        instance_double(Question, idx: 1, section: "demo", worth: 5, submission_type: "B"),
+        instance_double(Question, idx: 2, section: "demo", worth: 5),
+        instance_double(Question, idx: 3, section: "demo", worth: 5),
+        instance_double(Question, idx: 3, section: "not demo", worth: 5)
+      ]
+    end
+
+    it "returns the total points for a given section and for unique idx values" do
+      expect(
+        SubmissionScore.total_possible_points_for_section(
+          section: section,
+          division: division,
+          season: season
+        )
+      ).to equal(15)
+    end
+  end
 end
