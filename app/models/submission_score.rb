@@ -276,6 +276,7 @@ class SubmissionScore < ActiveRecord::Base
       .new(division: division, season: season)
       .call
       .select { |question| question.section == section }
+      .uniq { |question| question.idx }
       .sum(&:worth)
   end
 
