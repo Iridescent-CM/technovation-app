@@ -1,0 +1,25 @@
+<% provide :title, "Search for a team" %>
+
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6" id="show-container">
+  <%= render "team_searches/rebrand/filter_options", account: account %>
+
+  <div class="tw-blue-lg-container w-full">
+    <div class="bg-energetic-blue">
+        <h4 class="text-left font-extrabold p-4 text-white m-0">Search for teams</h4>
+    </div>
+
+    <div class="tw-grid grid-cols-3 gap-4 px-4 py-4">
+      <%= render partial: "team_searches/rebrand/result", collection: teams, as: :team %>
+
+      <% if teams.empty? %>
+        <div>
+          <%= t("views.team_searches.new.no_results") %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex items-center justify-center">
+      <%= will_paginate teams %>
+    </div>
+  </div>
+</div>

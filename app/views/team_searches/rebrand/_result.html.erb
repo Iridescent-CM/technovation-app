@@ -1,0 +1,14 @@
+<div class="vue-search-result">
+  <result-card 
+    card-id= "team-<%= team.id %>"
+    card-image= "<%= team.team_photo_url %>"
+    card-title="<%= team.name %>"
+    card-subtitle="<%= team.primary_location %>"
+    card-content="<%= t("views.application.division") %>: <%= team.division.name.humanize %>"
+    name="<%= team.name %>"
+    :declined="<%= current_profile.teams_that_declined.include?(team) %>"
+    :full="<%= (current_scope == "student" && !team.spot_available?) %>"
+    link-text="More Details >"
+    link-path="<%= send("new_#{current_scope}_join_request_path", {team_id: team.id}) %>"
+  ></result-card>
+</div>

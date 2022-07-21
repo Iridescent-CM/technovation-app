@@ -24,9 +24,6 @@ module.exports = {
       height: {
         'fit-content': 'fit-content'
       },
-      spacing: {
-        '34.5': '34.5%'
-      },
       typography: {
         DEFAULT: {
           css: {

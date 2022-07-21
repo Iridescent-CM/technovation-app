@@ -22,7 +22,7 @@
     input[type="checkbox"], input[type="radio"] {
         @apply inline-block focus:ring-transparent text-energetic-blue mr-2
     }
-
+    
     input[type="checkbox"], input[type="radio"] {
         color: #43b02a;
     }

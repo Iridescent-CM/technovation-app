@@ -52,9 +52,10 @@ document.addEventListener('turbolinks:load', () => {
     })
   }
 
-  let searchMentors = document.querySelectorAll('.vue-search-mentor-result');
-  if ( searchMentors.length > 0 ) {
-    searchMentors.forEach(element => {
+  // Apply result card
+  let searchResults = document.querySelectorAll('.vue-search-result');
+  if ( searchResults.length > 0 ) {
+    searchResults.forEach(element => {
       new Vue({
         el: element,
         components: {
