@@ -1,17 +1,21 @@
-<div class="font-bold text-center mb-8">
+<div class="font-bold text-center mb-4">
   <h1 class="text-4xl">Technovation Girls</h1>
-
-  <h2 class="text-3xl text-tg-magenta">Registration is currently open for judges</h2>
 </div>
 
-<p class="mb-4">
-  Thank you for your interest in Technovation Girls. Register
-  <%= link_to "here",
-              signup_path,
-              data: { turbolinks: false },
-              class: "tw-link"%>
-  to judge projects.
-</p>
+<% if SeasonToggles.judge_registration_open? %>
+  <h2 class="text-3xl text-tg-magenta font-bold text-center mb-4">Registration is currently open for judges</h2>
+
+  <p class="mb-4">
+    Thank you for your interest in Technovation Girls. Register
+    <%= link_to "here",
+                signup_path,
+                data: { turbolinks: false },
+                class: "tw-link"%>
+    to judge projects.
+  </p>
+<% else%>
+  <h2 class="text-3xl text-tg-magenta font-bold text-center mb-4">Judging is open</h2>
+<% end %>
 
 <p class="mb-4">
   Registration is currently closed for students and mentors,
@@ -19,7 +23,7 @@
   <%= link_to "log-in", login_path,
               data: { turbolinks: false },
               class: "tw-link" %>
-  and review their existing projects.
+  and review their existing projects. Existing judges may also log-in to finish judging submissions.
 </p>
 
 <p>
