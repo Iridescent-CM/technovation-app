@@ -3,7 +3,7 @@
     <div class="relative">
       <img :src="cardImage" class="object-contain h-48 w-96" @error="imgBroken" />
 
-      <div class="card-photo-placeholder hidden">
+      <div class="card-photo-placeholder hidden" :id="imgPlaceholderId">
         <p class="text-xl font-bold text-black-200">No picture<p/>
       </div>
 
@@ -66,6 +66,11 @@
         let bg = flag ? bgs[type].on : bgs[type].off
         
         return `list-badge ${bg} left-arrow uppercase`
+      }
+    },
+    computed: {
+      imgPlaceholderId() {
+        return `img-ph-${this.cardId}`;
       }
     }
   }
