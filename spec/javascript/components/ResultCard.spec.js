@@ -85,15 +85,7 @@ describe('ResultCard Vue component', () => {
       })
     })
   })
-
-  describe('computed properties', () => {
-    describe('imgPlaceholderId', () => {
-      it('set placeHolder id correctly', () => {
-        expect(wrapper.vm.imgPlaceholderId).toEqual('img-ph-team-1')
-      })
-    })
-  })
-
+  
   describe('component states', () => {
     it('card has a footer', () => {
       let ResultCardFooter = wrapper.find('.search-card-footer')
