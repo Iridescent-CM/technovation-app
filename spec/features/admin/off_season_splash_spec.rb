@@ -15,6 +15,6 @@ RSpec.feature "Off-season splash page" do
     SeasonToggles.disable_signups!
     visit root_path
     expect(page).not_to have_css("#registration-landing")
-    expect(page).to have_content("Registration is currently open for judges")
+    expect(page).to have_content("Registration is currently closed")
   end
 end
