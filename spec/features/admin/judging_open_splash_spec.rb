@@ -11,7 +11,7 @@ RSpec.feature "Judging open splash page" do
     expect(page).to have_content("Registration is currently closed for students and mentors")
   end
 
-  scenario "Judging is set to QF and judge registration is enabled" do
+  scenario "Judging is set to QF and judge registration is disabled" do
     SeasonToggles.set_judging_round(:qf)
     SeasonToggles.disable_signups!
 
