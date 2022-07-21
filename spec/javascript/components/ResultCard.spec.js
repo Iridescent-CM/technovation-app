@@ -29,8 +29,13 @@ describe('ResultCard Vue component', () => {
         name:'My Cool Team',
         declined:false,
         full:false,
+        showBadges: false,
+        isOnTeam: false,
+        isVirtual: false,
         linkText:'More Details >',
         linkPath:'/path/to/team/1',
+        onTeamText:'',
+        virtualText:'',
       },
     })
   })
@@ -42,46 +47,21 @@ describe('ResultCard Vue component', () => {
   describe('props', () => {
     it('contains valid props', () => {
       expect(ResultCard.props).toEqual({
-        cardId: {
-          type: String,
-          required: true,
-        },
-        cardImage: {
-          type: String,
-          required: false,
-        },
-        cardTitle: {
-          type: String,
-          required: false,
-        },
-        cardSubtitle: {
-          type: String,
-          required: false,
-        },
-        cardContent: {
-          type: String,
-          required: false,
-        },
-        name: {
-          type: String,
-          required: false,
-        },
-        declined: {
-          type: Boolean,
-          required: false,
-        },
-        full: {
-          type: Boolean,
-          required: false,
-        },
-        linkText: {
-          type: String,
-          required: false,
-        },
-        linkPath: {
-          type: String,
-          required: false,
-        },
+        cardId:       { type: String,  required: true },
+        cardImage:    { type: String,  required: false },
+        cardTitle:    { type: String,  required: false },
+        cardSubtitle: { type: String,  required: false },
+        cardContent:  { type: String,  required: false },
+        name:         { type: String,  required: false },
+        linkText:     { type: String,  required: false },
+        linkPath:     { type: String,  required: false },
+        onTeamText:   { type: String,  required: false },
+        virtualText:  { type: String,  required: false },
+        declined:     { type: Boolean, required: false },
+        full:         { type: Boolean, required: false },
+        showBadges:   { type: Boolean, required: false },
+        isOnTeam:     { type: Boolean, required: false },
+        isVirtual:    { type: Boolean, required: false },
       })
     })
   })
