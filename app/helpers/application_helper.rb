@@ -91,4 +91,16 @@ module ApplicationHelper
     )
     web_icon(*args)
   end
+
+  def determine_homepage_content
+    if SeasonToggles.judging_enabled_or_between?
+      render partial: "judging_open_splash"
+    elsif SeasonToggles.judging_finished?
+      render partial: "off_season_splash"
+    elsif SeasonToggles.registration_open?
+      render partial: "landing"
+    else
+      render partial: "off_season_splash"
+    end
+  end
 end
