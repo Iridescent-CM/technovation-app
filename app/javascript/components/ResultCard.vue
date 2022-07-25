@@ -25,7 +25,7 @@
         <p>This team is currently full.</p>
       </div>
       <div v-else class="search-card-footer">
-        <a :href="linkPath" class="tw-link text-lg" >{{ linkText }}</a>
+        <a :href="linkPath" class="tw-link text-base md:text-lg lg:text-lg" >{{ linkText }}</a>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
 
 <style lang="scss">
   .card-result {
-    @apply max-w-sm rounded-lg overflow-hidden shadow-lg m-auto
+    @apply max-w-sm rounded-lg overflow-hidden shadow-lg m-auto h-96
   }
   .card-title {
     @apply font-bold text-xl mb-1
