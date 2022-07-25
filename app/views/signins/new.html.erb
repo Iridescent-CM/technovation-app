@@ -4,7 +4,7 @@
 
 <%= render 'public/dashboards/homepage_banner' if ENV.fetch("ENABLE_HOMEPAGE_BANNER", false) %>
 
-<div class="w-full lg:w-1/2 mx-auto">
+<div class="w-11/12 lg:w-1/2 mx-auto">
   <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: t('views.signins.new.title')} do %>
     <%= simple_form_for @signin, url: signins_path do |f| %>
 
