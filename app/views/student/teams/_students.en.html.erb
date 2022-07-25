@@ -12,13 +12,13 @@
       Your team can have up to five students.
     </p>
 
-    <%= render "students_list",
+    <%= render "student/teams/students_list",
       students: team.students,
       team: team
     %>
 
     <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
-      <%= render "pending_student_invites",
+      <%= render "student/teams/pending_student_invites",
         team: team,
         preview_method: :invitee_email,
         invites: team.pending_student_invites %>
@@ -29,7 +29,7 @@
         </div>
       <% end %>
 
-      <%= render "pending_student_join_requests",
+      <%= render "student/teams/pending_student_join_requests",
         team: team,
         join_requests: team.pending_student_join_requests
       %>
