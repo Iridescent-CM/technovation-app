@@ -139,7 +139,7 @@ en:
     student:
       join_requests:
         create:
-          link: "Ask to join %{name}"
+          link: "Send request"
           success: "You have requested to join %{name}"
         update:
           success: "%{name} was %{status}"
