@@ -20,7 +20,9 @@ RSpec.feature "Students find a team" do
     Timecop.freeze(day_before_qfs) do
       within (".sub-nav-wrapper") { click_link "Find a team" }
       click_link "View more details"
-      click_button "Ask to join #{available_team.name}"
+
+      expect(page).to have_content(available_team.name)
+      click_button "Send request"
 
       join_request = JoinRequest.last
 
@@ -35,7 +37,7 @@ RSpec.feature "Students find a team" do
       within(".sub-nav-wrapper") { click_link "Find a team" }
 
       click_link "View more details"
-      click_button "Ask to join #{available_team.name}"
+      click_button "Send request"
 
       join_request = JoinRequest.last
 
@@ -51,7 +53,7 @@ RSpec.feature "Students find a team" do
     Timecop.freeze(day_before_qfs) do
       within(".sub-nav-wrapper") { click_link "Find a team" }
       click_link "View more details"
-      click_button "Ask to join #{available_team.name}"
+      click_button "Send request"
 
       join_request = JoinRequest.last
 
