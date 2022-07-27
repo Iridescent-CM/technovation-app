@@ -8,7 +8,7 @@
         <h4 class="text-left font-extrabold p-4 text-white m-0">Search for teams</h4>
     </div>
 
-    <div class="tw-grid grid-cols-3 gap-4 px-4 py-4">
+    <div class="tw-grid place-content-center gap-4 px-4 py-4 grid-cols-1 lg:grid-cols-3">
       <%= render partial: "team_searches/rebrand/result", collection: teams, as: :team %>
 
       <% if teams.empty? %>

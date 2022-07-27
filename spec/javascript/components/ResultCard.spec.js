@@ -27,6 +27,7 @@ describe('ResultCard Vue component', () => {
         cardSubtitle:'Los Angeles, California, United States',
         cardContent:'Division: None assigned yet',
         name:'My Cool Team',
+        coverImage:false,
         declined:false,
         full:false,
         showBadges: false,

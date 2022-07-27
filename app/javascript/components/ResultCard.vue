@@ -1,7 +1,7 @@
 <template>
   <div class="card-result">
     <div class="relative">
-      <img :src="cardImage" class="object-contain h-48 w-96" @error="imgBroken" />
+      <img :src="cardImage" :class="coverImageClass(coverImage)" @error="imgBroken" />
 
       <div class="card-photo-placeholder hidden" :id="imgPlaceholderId">
         <p class="text-xl font-bold text-black-200">No picture<p/>
@@ -25,7 +25,7 @@
         <p>This team is currently full.</p>
       </div>
       <div v-else class="search-card-footer">
-        <a :href="linkPath" class="tw-link text-base md:text-lg lg:text-lg" >{{ linkText }}</a>
+        <a :href="linkPath" class="tw-link text-base md:text-base lg:text-base" >{{ linkText }}</a>
       </div>
     </div>
   </div>
@@ -45,6 +45,7 @@
       linkPath:     { type: String,  required: false },
       onTeamText:   { type: String,  required: false },
       virtualText:  { type: String,  required: false },
+      coverImage:   { type: Boolean, required: false },
       declined:     { type: Boolean, required: false },
       full:         { type: Boolean, required: false },
       showBadges:   { type: Boolean, required: false },
@@ -66,6 +67,9 @@
         let bg = flag ? bgs[type].on : bgs[type].off
         
         return `list-badge ${bg} left-arrow uppercase`
+      },
+      coverImageClass(flag) {
+        return flag ? 'w-full' : 'object-contain h-48 w-96'
       }
     },
     computed: {
@@ -78,10 +82,10 @@
 
 <style lang="scss">
   .card-result {
-    @apply max-w-sm rounded-lg overflow-hidden shadow-lg m-auto h-96
+    @apply max-w-sm rounded-lg overflow-hidden shadow-lg m-auto h-96 w-60
   }
   .card-title {
-    @apply font-bold text-xl mb-1
+    @apply font-bold text-base mb-1
   }
   .card-text {
     @apply text-base whitespace-nowrap overflow-ellipsis overflow-hidden

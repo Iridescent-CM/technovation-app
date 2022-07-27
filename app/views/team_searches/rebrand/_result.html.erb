@@ -6,6 +6,7 @@
     card-subtitle="<%= team.primary_location %>"
     card-content="<%= t("views.application.division") %>: <%= team.division.name.humanize %>"
     name="<%= team.name %>"
+    :cover-image="true"
     :declined="<%= current_profile.teams_that_declined.include?(team) %>"
     :full="<%= (current_scope == "student" && !team.spot_available?) %>"
     link-text="More Details >"
