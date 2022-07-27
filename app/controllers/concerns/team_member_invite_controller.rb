@@ -52,6 +52,7 @@ module TeamMemberInviteController
         @mentor_invite = MentorInvite.new(team_id: @team.id)
         @uploader = ImageDirectUploader.new
 
+        flash.now[:error] = t("controllers.team_member_invites.create.failure")
         render "student/teams/show"
       else
         render :new
