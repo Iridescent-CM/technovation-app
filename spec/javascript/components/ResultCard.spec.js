@@ -58,6 +58,7 @@ describe('ResultCard Vue component', () => {
         linkPath:     { type: String,  required: false },
         onTeamText:   { type: String,  required: false },
         virtualText:  { type: String,  required: false },
+        coverImage:   { type: Boolean, required: false },
         declined:     { type: Boolean, required: false },
         full:         { type: Boolean, required: false },
         showBadges:   { type: Boolean, required: false },
