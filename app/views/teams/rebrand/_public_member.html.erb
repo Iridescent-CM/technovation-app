@@ -1,0 +1,20 @@
+<div class="rounded-md flex flex-row space-x-7 mb-4">
+  <% if public_member.account.present? %>
+    <%= image_tag public_member.profile_image_url,
+                  class: "w-24"%>
+  <% else %>
+    <%= image_tag "placeholders/avatars/#{rand(21..24)}.svg",
+                  class: "w-24"%>
+  <% end %>
+
+  <div class="mt-auto">
+    <% if public_member.account.present? %>
+      <h3 class="font-bold"><%= public_member.first_name %></h3>
+      <% if public_member.student_profile %>
+        <h4>Age <%= public_member.age %></h4>
+      <% end %>
+    <% else %>
+      - account deleted -
+    <% end %>
+  </div>
+</div>
