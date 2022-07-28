@@ -59,7 +59,7 @@ Rails.application.routes.draw do
     resources :mentors, only: :show
     resources :students, only: :show
 
-    resources :team_member_invites, except: [:edit, :index]
+    resources :team_member_invites, except: [:edit]
     resources :mentor_invites, only: [:create, :destroy]
     resources :join_requests, only: [:new, :show, :create, :update, :destroy]
 
