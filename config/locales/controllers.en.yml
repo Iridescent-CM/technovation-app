@@ -190,6 +190,7 @@ en:
     team_member_invites:
       create:
         success: "Your team invite was sent!"
+        failure: "There was an issue sending your invite, please check the error message below."
       update:
         accept: "Accept invitation to %{name}"
         already_on_team: "You are already on a team, so you cannot accept that invite."

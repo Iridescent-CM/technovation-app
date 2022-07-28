@@ -2,6 +2,10 @@ module Student
   class TeamMemberInvitesController < StudentController
     include TeamMemberInviteController
 
+    def index
+      redirect_to student_teams_path(current_student.team)
+    end
+
     def update
       invite = current_student.team_member_invites.pending.find_by(
         invite_token: params.fetch(:id)

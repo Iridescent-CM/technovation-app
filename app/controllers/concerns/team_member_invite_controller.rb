@@ -47,7 +47,16 @@ module TeamMemberInviteController
         )
       end
     else
-      render :new
+      if current_scope == "student"
+        @team = current_profile.teams.find(@team_member_invite.team.id)
+        @mentor_invite = MentorInvite.new(team_id: @team.id)
+        @uploader = ImageDirectUploader.new
+
+        flash.now[:error] = t("controllers.team_member_invites.create.failure")
+        render "student/teams/show"
+      else
+        render :new
+      end
     end
   end
 

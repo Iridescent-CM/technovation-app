@@ -2,27 +2,27 @@
 
 <div class="lg:flex lg:justify-around">
   <div class="flex flex-col lg:flex-row gap-6">
-    <%= render "menu" %>
+    <%= render "student/teams/menu" %>
 
     <div class="tab">
       <div id="student-tab-content" class="tab-content tw-active">
-        <%= render "students", team: @team %>
+        <%= render "student/teams/students", team: @team %>
       </div>
 
       <div id="mentor-tab-content" class="tab-content">
-        <%= render "mentors", team: @team %>
+        <%= render "student/teams/mentors", team: @team %>
       </div>
 
       <div id="summary-tab-content" class="tab-content">
-        <%= render "summary", team: @team %>
+        <%= render "student/teams/summary", team: @team %>
       </div>
 
       <div id="location-tab-content" class="tab-content">
-        <%= render "location", team: @team %>
+        <%= render "student/teams/location", team: @team %>
       </div>
 
       <div id="division-tab-content" class="tab-content">
-        <%= render "division", team: @team %>
+        <%= render "student/teams/division", team: @team %>
       </div>
     </div>
   </div>

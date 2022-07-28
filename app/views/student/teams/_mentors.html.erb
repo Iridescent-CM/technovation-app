@@ -13,13 +13,13 @@
         You can add as many mentors as your team needs.
       </p>
 
-      <%= render "mentors_list",
+      <%= render "student/teams/mentors_list",
         mentors: team.mentors,
         team: team %>
     </div>
 
     <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
-      <%= render "pending_mentor_invites",
+      <%= render "student/teams/pending_mentor_invites",
         team: team,
         invites: team.pending_mentor_invites %>
 
@@ -37,7 +37,7 @@
         ) %>
       </div>
 
-      <%= render "pending_mentor_join_requests",
+      <%= render "student/teams/pending_mentor_join_requests",
         team: team,
         join_requests: team.pending_mentor_join_requests %>
 
