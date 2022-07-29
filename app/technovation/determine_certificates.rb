@@ -40,7 +40,7 @@ class DetermineCertificates
     send("needed_#{certificate_type}_recipients")
   end
 
-  def gets_completion_certificate?
+  def gets_quarterfinalist_certificate?
     return false if !@account.student?
 
     team = @account.student_profile.team
@@ -49,11 +49,11 @@ class DetermineCertificates
         team.submission.quarterfinalist?
   end
 
-  def needed_completion_recipients
+  def needed_quarterfinalist_recipients
     if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
       []
     else
-      [CertificateRecipient.new(:completion, @account, team: @account.student_profile.team)]
+      [CertificateRecipient.new(:quarterfinalist, @account, team: @account.student_profile.team)]
     end
   end
 

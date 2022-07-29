@@ -4,7 +4,7 @@ MENTOR_CERTIFICATE_TYPES = {
 
 STUDENT_CERTIFICATE_TYPES = {
   participation: 3,
-  completion: 0,
+  quarterfinalist: 0,
   semifinalist: 4
 }
 

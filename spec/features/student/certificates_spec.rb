@@ -28,11 +28,11 @@ RSpec.feature "Student certificates" do
       click_link("View your scores and certificate")
     end
 
-    scenario "no completion certificate is generated" do
+    scenario "no quarterfinalist certificate is generated" do
       expect {
         FillPdfs.(student.account)
       }.not_to change {
-        student.certificates.current.completion.count
+        student.certificates.current.quarterfinalist.count
       }
     end
 
@@ -50,11 +50,11 @@ RSpec.feature "Student certificates" do
       FactoryBot.create(:student, :virtual, :has_qf_scores)
     }
 
-    scenario "receive a completion certificate" do
+    scenario "receive a quarterfinalist certificate" do
       expect {
         FillPdfs.(student.account)
       }.to change {
-        student.certificates.current.completion.count
+        student.certificates.current.quarterfinalist.count
       }.from(0).to(1)
 
       student.account.took_program_survey!
@@ -68,7 +68,7 @@ RSpec.feature "Student certificates" do
       click_link("Certificates")
       expect(page).to have_link(
         "Open your quarterfinalist certificate",
-        href: student.certificates.completion.current.last.file_url
+        href: student.certificates.quarterfinalist.current.last.file_url
       )
     end
 
@@ -123,11 +123,11 @@ RSpec.feature "Student certificates" do
       )
     end
 
-    scenario "no completion certificate is generated" do
+    scenario "no quarterfinalist certificate is generated" do
       expect {
         FillPdfs.(student.account)
       }.not_to change {
-        student.certificates.current.completion.count
+        student.certificates.current.quarterfinalist.count
       }
 
       sign_in(student)

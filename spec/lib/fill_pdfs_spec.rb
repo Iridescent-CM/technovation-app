@@ -5,7 +5,7 @@ RSpec.describe FillPdfs do
   it "does not run twice for accounts with current certs of the detected type" do
     student = FactoryBot.create(:student, :quarterfinalist)
     FactoryBot.create(:certificate,
-      cert_type: :completion,
+      cert_type: :quarterfinalist,
       account: student.account,
       team: student.team
     )
@@ -13,7 +13,7 @@ RSpec.describe FillPdfs do
     expect {
       FillPdfs.(student.account)
     }.not_to change {
-      student.certificates.current.completion.count
+      student.certificates.current.quarterfinalist.count
     }
   end
 

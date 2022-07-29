@@ -14,11 +14,11 @@ RSpec.describe DetermineCertificates do
       )
     end
 
-    it "awards completion" do
+    it "awards quarterfinalist" do
       student = FactoryBot.create(:student, :quarterfinalist)
 
       expect(DetermineCertificates.new(student.account).needed).to contain_exactly(
-        CertificateRecipient.new(:completion, student.account, team: student.team)
+        CertificateRecipient.new(:quarterfinalist, student.account, team: student.team)
       )
     end
 
@@ -55,7 +55,7 @@ RSpec.describe DetermineCertificates do
       FactoryBot.create(:certificate,
         account: student.account,
         team: student.team,
-        cert_type: :completion
+        cert_type: :quarterfinalist
       )
 
       expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
