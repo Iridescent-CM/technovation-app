@@ -20,19 +20,18 @@ RSpec.feature "Students find a team" do
     @wait_time = Capybara.default_max_wait_time
     Capybara.default_max_wait_time = 15
   end
-
+  
   after(:all) do
     Capybara.default_max_wait_time = @wait_time
   end
 
-  describe "request to join a team" do
-    it do
+  scenario "request to join a team", js: true do
+    Timecop.freeze(day_before_qfs) do
+      within (".sub-nav-wrapper") { click_link "Find a team" }
       
-      click_link "Find a team"
-      click_link "More Details >"
-      
+      find(".tw-link", match: :first).click()
+
       expect(page).to have_content(available_team.name)
-      
       click_button "Send request"
 
       join_request = JoinRequest.last
@@ -42,12 +41,12 @@ RSpec.feature "Students find a team" do
       expect(page).to have_content("You have asked to join")
     end
   end
-  
-  describe "onboarded student sees pending requests" do
-    it do
+
+  scenario "onboarded student sees pending requests", js: true do
+    Timecop.freeze(day_before_qfs) do
       within(".sub-nav-wrapper") { click_link "Find a team" }
-      
-      click_link "More Details >"
+
+      find(".tw-link", match: :first).click()
       click_button "Send request"
 
       join_request = JoinRequest.last
@@ -59,13 +58,15 @@ RSpec.feature "Students find a team" do
       expect(page).to have_content("You have asked to join")
     end
   end
-  
-  describe "cancel a join request", js: true do
-    it do
-      within(".sub-nav-wrapper") { click_link "Find a team" }
 
-      click_link "More Details >"
+  scenario "cancel a join request", js: true do
+    Timecop.freeze(day_before_qfs) do
+      within(".sub-nav-wrapper") { click_link "Find a team" }
+      
+      find(".tw-link", match: :first).click()
+
       click_button "Send request"
+
       join_request = JoinRequest.last
 
       visit student_dashboard_path(anchor: "/find-team")
