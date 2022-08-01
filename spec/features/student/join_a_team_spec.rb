@@ -25,58 +25,56 @@ RSpec.feature "Students find a team" do
     Capybara.default_max_wait_time = @wait_time
   end
 
-  context "as a Student" do
-    describe "request to join a team" do
-      it "request to join a team" do
-        within (".sub-nav-wrapper") { click_link "Find a team" }
-       
-        click_link "More details >"
-        
-        expect(page).to have_content(available_team.name)
-        click_button "Send request"
+  describe "request to join a team" do
+    it do
+      
+      click_link "Find a team"
+      click_link "More Details >"
+      
+      expect(page).to have_content(available_team.name)
+      
+      click_button "Send request"
 
-        join_request = JoinRequest.last
-  
-        expect(current_path).to eq(student_dashboard_path)
-        expect(page).to have_content(join_request.team_name)
-        expect(page).to have_content("You have asked to join")
-      end
+      join_request = JoinRequest.last
+
+      expect(current_path).to eq(student_dashboard_path)
+      expect(page).to have_content(join_request.team_name)
+      expect(page).to have_content("You have asked to join")
     end
+  end
   
-    describe "onboarded student sees pending requests" do
-      it "onboarded student sees pending requests" do
-        within(".sub-nav-wrapper") { click_link "Find a team" }
-  
-        click_link "More details >"
-        click_button "Send request"
-  
-        join_request = JoinRequest.last
-  
-        visit student_dashboard_path(anchor: "/find-team")
-  
-        expect(current_path).to eq(student_dashboard_path)
-        expect(page).to have_content(join_request.team_name.titleize)
-        expect(page).to have_content("You have asked to join")
-      end
+  describe "onboarded student sees pending requests" do
+    it do
+      within(".sub-nav-wrapper") { click_link "Find a team" }
+      
+      click_link "More Details >"
+      click_button "Send request"
+
+      join_request = JoinRequest.last
+
+      visit student_dashboard_path(anchor: "/find-team")
+
+      expect(current_path).to eq(student_dashboard_path)
+      expect(page).to have_content(join_request.team_name.titleize)
+      expect(page).to have_content("You have asked to join")
     end
+  end
   
-    describe "cancel a join request", js: true do
-      it "onboarded student sees pending requests" do
-        within(".sub-nav-wrapper") { click_link "Find a team" }
-  
-        click_link "More details >"
-        click_button "Send request"
-  
-        join_request = JoinRequest.last
-  
-        visit student_dashboard_path(anchor: "/find-team")
-  
-        within("#join_request_#{join_request.id}") { click_link "Cancel my request" }
-        click_button "Yes, do it"
-  
-        expect(page).to have_content("You have cancelled your request")
-        within("#join-requests") { expect(page).not_to have_content(available_team.name) }
-      end
+  describe "cancel a join request", js: true do
+    it do
+      within(".sub-nav-wrapper") { click_link "Find a team" }
+
+      click_link "More Details >"
+      click_button "Send request"
+      join_request = JoinRequest.last
+
+      visit student_dashboard_path(anchor: "/find-team")
+
+      within("#join_request_#{join_request.id}") { click_link "Cancel my request" }
+      click_button "Yes, do it"
+
+      expect(page).to have_content("You have cancelled your request")
+      within("#join-requests") { expect(page).not_to have_content(available_team.name) }
     end
   end
 end
