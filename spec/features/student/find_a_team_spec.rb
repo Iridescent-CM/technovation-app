@@ -17,11 +17,10 @@ RSpec.feature "Students find a team" do
   end
 
   let!(:available_team) { FactoryBot.create(:team, :geocoded) }
-    # Default is in Chicago
 
   before do
+    # City is Chicago
     student = FactoryBot.create(:student, :geocoded, :onboarded)
-      # City is Chicago
     sign_in(student)
   end
 
@@ -38,8 +37,10 @@ RSpec.feature "Students find a team" do
         )
     
         within(".sub-nav-wrapper") { click_link "Find a team" }
-    
-        expect(page).to have_css(".card-title", text: team.name)
+
+        find(:css, "#location_type_nearme").click()
+
+        expect(page).to have_css(".vue-search-result")
       end
     end
   end
