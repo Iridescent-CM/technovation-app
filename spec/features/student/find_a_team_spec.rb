@@ -25,8 +25,8 @@ RSpec.feature "Students find a team" do
     sign_in(student)
   end
 
-  xcontext "as a Student" do
-    xdescribe do
+  context "as a Student" do
+    describe do
       it "browse nearby teams" do
         team = FactoryBot.create(:team, :geocoded) # Default is in Chicago
   

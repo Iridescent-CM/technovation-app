@@ -25,8 +25,8 @@ RSpec.feature "Students find a team" do
     Capybara.default_max_wait_time = @wait_time
   end
 
-  xcontext "as a Student" do
-    xdescribe "request to join a team" do
+  context "as a Student" do
+    describe "request to join a team" do
       it "request to join a team" do
         within (".sub-nav-wrapper") { click_link "Find a team" }
        
@@ -43,7 +43,7 @@ RSpec.feature "Students find a team" do
       end
     end
   
-    xdescribe "onboarded student sees pending requests" do
+    describe "onboarded student sees pending requests" do
       it "onboarded student sees pending requests" do
         within(".sub-nav-wrapper") { click_link "Find a team" }
   
@@ -60,7 +60,7 @@ RSpec.feature "Students find a team" do
       end
     end
   
-    xdescribe "cancel a join request", js: true do
+    describe "cancel a join request", js: true do
       it "onboarded student sees pending requests" do
         within(".sub-nav-wrapper") { click_link "Find a team" }
   
