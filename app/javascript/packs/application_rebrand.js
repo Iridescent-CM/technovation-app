@@ -11,4 +11,5 @@ import "../stylesheets/footer.css"
 import "../stylesheets/tabs.css"
 import "../stylesheets/judge.css"
 import "../stylesheets/pagination.css"
+import "../stylesheets/result_card.css"
 

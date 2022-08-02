@@ -1,0 +1,24 @@
+.card-result {
+    @apply max-w-sm rounded-lg overflow-hidden shadow-lg m-auto h-96 w-60
+  }
+  .card-title {
+    @apply font-bold text-base mb-1
+  }
+  .card-text {
+    @apply text-base whitespace-nowrap overflow-ellipsis overflow-hidden
+  }
+  .card-photo-placeholder {
+    @apply bg-gray-300 w-full items-center justify-center object-contain h-48 w-60
+  }
+  .search-card-footer {
+    @apply text-right mt-6
+  }
+  .search-card-footer p {
+    @apply text-base text-red-500
+  }
+  .list-badge {
+    @apply text-xs py-3 px-3 mb-1 leading-none text-center align-baseline font-bold text-white
+  }
+  .left-arrow {
+    clip-path: polygon(15% 0%, 100% 1%, 100% 100%, 15% 100%, 0% 50%);
+  }
