@@ -22,6 +22,10 @@ html{
     );
 }
 
+.tw-grid {
+    @apply grid
+}
+
 .tw-thick-rule{
     @apply bg-energetic-blue h-1 my-2 w-60;
 }

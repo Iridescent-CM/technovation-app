@@ -16,10 +16,20 @@ RSpec.feature "Students find a team" do
     sign_in(student)
   end
 
-  scenario "request to join a team" do
+  before(:all) do
+    @wait_time = Capybara.default_max_wait_time
+    Capybara.default_max_wait_time = 15
+  end
+  
+  after(:all) do
+    Capybara.default_max_wait_time = @wait_time
+  end
+
+  scenario "request to join a team", js: true do
     Timecop.freeze(day_before_qfs) do
       within (".sub-nav-wrapper") { click_link "Find a team" }
-      click_link "View more details"
+      
+      find(".tw-link", match: :first).click()
 
       expect(page).to have_content(available_team.name)
       click_button "Send request"
@@ -32,11 +42,11 @@ RSpec.feature "Students find a team" do
     end
   end
 
-  scenario "onboarded student sees pending requests" do
+  scenario "onboarded student sees pending requests", js: true do
     Timecop.freeze(day_before_qfs) do
       within(".sub-nav-wrapper") { click_link "Find a team" }
 
-      click_link "View more details"
+      find(".tw-link", match: :first).click()
       click_button "Send request"
 
       join_request = JoinRequest.last
@@ -52,7 +62,9 @@ RSpec.feature "Students find a team" do
   scenario "cancel a join request", js: true do
     Timecop.freeze(day_before_qfs) do
       within(".sub-nav-wrapper") { click_link "Find a team" }
-      click_link "View more details"
+      
+      find(".tw-link", match: :first).click()
+
       click_button "Send request"
 
       join_request = JoinRequest.last

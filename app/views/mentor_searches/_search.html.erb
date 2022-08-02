@@ -1,0 +1,39 @@
+<% provide :title, "Search for mentors" %>
+
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <div class="grid__cell">
+      <h1 class="page-heading"><%= t("views.mentor_searches.title") %></h1>
+
+      <p><%= t("views.mentor_searches.intro") %></p>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="grid__col-sm-3">
+    <div class="sidebar">
+      <%= render "mentor_searches/filter_options", account: account %>
+    </div>
+  </div>
+
+  <div class="grid__col-sm-9">
+    <h3>Available Mentors</h3>
+
+    <div class="grid">
+      <%= render(
+        partial: "mentor_searches/mentor_preview",
+        collection: @mentors,
+        locals: { account: account }
+      ) %>
+
+      <% if @mentors.empty? %>
+        <div class="grid__col-auto grid__col--bleed">
+          <%= t("views.mentor_searches.none_found") %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= will_paginate @mentors %>
+  </div>
+</div>

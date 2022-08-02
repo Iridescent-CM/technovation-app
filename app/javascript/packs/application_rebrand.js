@@ -10,4 +10,5 @@ import "../stylesheets/navigation.css"
 import "../stylesheets/footer.css"
 import "../stylesheets/tabs.css"
 import "../stylesheets/judge.css"
+import "../stylesheets/pagination.css"
 

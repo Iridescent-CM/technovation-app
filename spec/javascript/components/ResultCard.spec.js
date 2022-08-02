@@ -3,22 +3,40 @@ import { shallowMount } from '@vue/test-utils'
 import ResultCard from 'components/ResultCard'
 
 describe('ResultCard Vue component', () => {
+  const reload = window.location.reload;
+
+  beforeAll(() => {
+    Object.defineProperty(window, 'location', {
+      value: { reload: jest.fn() }
+    });
+  });
+
+  afterAll(() => {
+    window.location.reload = reload;
+  });  
+
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(ResultCard, {
       attachToDocument: true,
       propsData: {
-        cardId: 'team-123',
+        cardId: 'team-1',
         cardImage: 'path/to/my/image.jpg',
         cardTitle:'My Cool Team',
         cardSubtitle:'Los Angeles, California, United States',
         cardContent:'Division: None assigned yet',
         name:'My Cool Team',
+        coverImage:false,
         declined:false,
         full:false,
+        showBadges: false,
+        isOnTeam: false,
+        isVirtual: false,
         linkText:'More Details >',
-        linkPath:'path/to/team/123',
+        linkPath:'/path/to/team/1',
+        onTeamText:'',
+        virtualText:'',
       },
     })
   })
@@ -30,46 +48,22 @@ describe('ResultCard Vue component', () => {
   describe('props', () => {
     it('contains valid props', () => {
       expect(ResultCard.props).toEqual({
-        cardId: {
-          type: String,
-          required: true,
-        },
-        cardImage: {
-          type: String,
-          required: false,
-        },
-        cardTitle: {
-          type: String,
-          required: false,
-        },
-        cardSubtitle: {
-          type: String,
-          required: false,
-        },
-        cardContent: {
-          type: String,
-          required: false,
-        },
-        name: {
-          type: String,
-          required: false,
-        },
-        declined: {
-          type: Boolean,
-          required: false,
-        },
-        full: {
-          type: Boolean,
-          required: false,
-        },
-        linkText: {
-          type: String,
-          required: false,
-        },
-        linkPath: {
-          type: String,
-          required: false,
-        },
+        cardId:       { type: String,  required: true },
+        cardImage:    { type: String,  required: false },
+        cardTitle:    { type: String,  required: false },
+        cardSubtitle: { type: String,  required: false },
+        cardContent:  { type: String,  required: false },
+        name:         { type: String,  required: false },
+        linkText:     { type: String,  required: false },
+        linkPath:     { type: String,  required: false },
+        onTeamText:   { type: String,  required: false },
+        virtualText:  { type: String,  required: false },
+        coverImage:   { type: Boolean, required: false },
+        declined:     { type: Boolean, required: false },
+        full:         { type: Boolean, required: false },
+        showBadges:   { type: Boolean, required: false },
+        isOnTeam:     { type: Boolean, required: false },
+        isVirtual:    { type: Boolean, required: false },
       })
     })
   })
@@ -77,7 +71,7 @@ describe('ResultCard Vue component', () => {
   describe('computed properties', () => {
     describe('imgPlaceholderId', () => {
       it('set placeHolder id correctly', () => {
-        expect(wrapper.vm.imgPlaceholderId).toEqual('img-ph-team-123')
+        expect(wrapper.vm.imgPlaceholderId).toEqual('img-ph-team-1')
       })
     })
   })

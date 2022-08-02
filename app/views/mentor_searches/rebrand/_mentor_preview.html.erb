@@ -1,0 +1,25 @@
+<div class="vue-search-result">
+  <result-card 
+    card-id= "mentor-<%= mentor_preview.id %>"
+    card-image= "<%= mentor_preview.profile_image_url %>"
+    card-title="<%= mentor_preview.full_name %>"
+    card-subtitle="<%= mentor_preview.address_details %>"
+    card-content="<%= mentor_preview.school_company_name %>"
+    :show-badges="true"
+    :is-on-team="<%= mentor_preview.is_on_team? %>"
+    on-team-text="<%= 
+      mentor_preview.is_on_team? ? 
+        t("views.mentor_searches.new.mentor_preview.on_team") : 
+        t("views.mentor_searches.new.mentor_preview.needs_team")
+    %>"
+    :is-virtual="<%= mentor_preview.virtual? %>"
+    virtual-text="<%= 
+      mentor_preview.virtual? ? 
+        t("views.mentor_searches.new.mentor_preview.virtual") : 
+        t("views.mentor_searches.new.mentor_preview.in_person")
+    %>"
+    name="<%= mentor_preview.full_name %>"
+    link-text="More Details >"
+    link-path="<%= mentor_mentor_path(mentor_preview, review_before: true) %>"
+  ></result-card>
+</div>
