@@ -14,7 +14,8 @@ VCR.configure do |config|
   config.ignore_hosts(
     "chromedriver.storage.googleapis.com",
     "github.com",
-    "github-releases.githubusercontent.com"
+    "github-releases.githubusercontent.com",
+    "objects.githubusercontent.com"
   )
 
 end
