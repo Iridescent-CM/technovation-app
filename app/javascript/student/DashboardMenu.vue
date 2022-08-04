@@ -45,7 +45,7 @@
     <tab-link
       :class="eventsTabLinkClasses"
       :to="{ name: 'events', meta: { active: eventsPagesActive } }"
-      :disabled-tooltip="tooltips.UNAVAILABLE_DUE_TO_COVID"
+      :disabled-tooltip="tooltips.AVAILABLE_LATER"
       :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
