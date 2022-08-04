@@ -1,9 +1,9 @@
 <% provide :title, "Parental Consent Form" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8">
-    <h3><%= t("views.student.parental_consent_notices.new.title") %></h3>
-
-    <%= render "student/parental_consent_notices/form" %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
+  <div class="tab-content tw-active">
+    <%= render "student/parental_consent_notices/form", 
+      title: t("views.student.parental_consent_notices.new.title") 
+    %>
   </div>
 </div>
