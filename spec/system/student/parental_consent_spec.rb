@@ -8,7 +8,7 @@ RSpec.describe "Parental consent", :js do
     visit(new_student_parental_consent_notice_path)
     fill_in "Parent or guardian's email", with: "no-work"
 
-    click_button "Next"
+    click_button "Send the form"
 
     expect(page).to have_css(
       '.error',
@@ -17,7 +17,7 @@ RSpec.describe "Parental consent", :js do
 
     fill_in "Parent or guardian's email", with: "no-work@gmail.com."
 
-    click_button "Next"
+    click_button "Send the form"
 
     expect(page).to have_css(
       '.error',
@@ -62,7 +62,7 @@ RSpec.describe "Parental consent", :js do
 
     fill_in "Parent or guardian's name", with: ""
     fill_in "Parent or guardian's email", with: ""
-    click_button "Next"
+    click_button "Send the form"
 
     expect(page).to have_content("can't be blank")
   end
