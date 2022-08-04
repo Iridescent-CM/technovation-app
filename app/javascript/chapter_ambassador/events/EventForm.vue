@@ -2,22 +2,10 @@
   <div id="new-event">
     <p class="grid__cell--padding-sm">
       <button
-        class="button button--small disabled"
+        class="button button--small"
         @click.prevent="active = true"
         v-if="!active"
       >+ Add an event</button>
-    </p>
-
-    <p>
-      Due to COVID, there are no official pitch events this season.
-      To list an UNOFFICIAL event, Chapter Ambassadors may add it to
-      <a href="https://docs.google.com/spreadsheets/d/1xmsOtPcnargy9AeNcBJf65s0DoPnbYp108adZp4nQsU/edit#gid=27021989" target=_blank>
-        this spreadsheet
-      </a>.
-      After being reviewed by Technovation staff, the event will be publicly displayed on the Technovation website under
-      <a href="https://www.technovation.org/news-events/local-events/" target="_blank">
-        Local Events
-      </a>.
     </p>
 
     <form
