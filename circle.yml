@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/technovation-girls
     docker:
-      - image: circleci/ruby:2.7.6-bullseye-node-browsers
+      - image: circleci/ruby:2.7.5-bullseye-node-browsers
         auth:
           username: technovationdocker
           password: $DOCKERHUB_PASSWORD
