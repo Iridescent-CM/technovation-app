@@ -1,29 +1,15 @@
 <%= simple_form_for current_student,
-  class: "simple_form",
   url: [:student, :parental_consent_notice],
   method: :post do |f| %>
+  <%= render 'signups/student_profile_parental_fields', f: f %>
 
-  <div id="parental-consent" class="tw-blue-lg-container">
-    <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
-      <p class="font-bold"><%= title %></p>
-    </div>
-      <div class="p-6">
-        <div>
-          <%= render 'signups/student_profile_parental_fields', f: f %>
-        </div>
-        
-        <div class="pb-6 mb-2">
-          <%= link_to 'cancel', 
-              params[:back] || student_dashboard_path,
-              class: "tw-green-btn float--left"
-          %>
+  <%= f.button :submit,
+    t("views.student.parental_consent_notices.form.submit"),
+    class: "button" %>
 
-          <%= f.button :submit,
-            t("views.student.parental_consent_notices.form.submit"),
-            class: "tw-green-btn float--right"
-          %>
-        </div>
-      </div>
-  </div>
+  <% unless current_page?(student_dashboard_path) %>
+    or
 
+    <%= link_to 'cancel', params[:back] || student_dashboard_path %>
+  <% end %>
 <% end %>
