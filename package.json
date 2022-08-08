@@ -74,6 +74,7 @@
     "dotenv": "^8.2.0",
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
     "prettier": "2.7.1",
