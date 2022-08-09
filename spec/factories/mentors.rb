@@ -6,7 +6,8 @@ FactoryBot.define do
     job_title { "Engineer" }
     mentor_type { MentorProfile.mentor_types.keys.sample }
     bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
-
+    accepting_team_invites { true }
+    
     transient do
       first_name { "Mentor" }
       last_name { nil }
