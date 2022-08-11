@@ -260,7 +260,7 @@ class TeamSubmission < ActiveRecord::Base
     allow_blank: true
 
   validate :demo_and_pitch_video_links_are_different, on: :update,
-           if: ->(s) { s.compare_demo_and_video_links? }
+           if: ->(s) { s.demo_video_link.present? || s.pitch_video_link.present? }
 
   def demo_and_pitch_video_links_are_different
     errors.add(:base, "Demo and pitch video links cannot be the same! Please add a valid video link.") if demo_video_link == pitch_video_link
@@ -301,10 +301,6 @@ class TeamSubmission < ActiveRecord::Base
 
   def random_id
     SecureRandom.hex(4)
-  end
-
-  def compare_demo_and_video_links?
-    (demo_video_link.present? && pitch_video_link.nil?) || (pitch_video_link.present? && demo_video_link.nil?)
   end
 
   def qualifies_for_participation?
