@@ -20,7 +20,7 @@ module TeamSubmissionVideoLinkReviewController
       end
     end
 
-    redirect_to send("#{current_scope}_team_submission_section_path",  id: submission.to_param, section: :pitch), msg
+    redirect_to send("#{current_scope}_team_submission_section_path", id: submission.to_param, section: :pitch), msg
   end
 
   private
