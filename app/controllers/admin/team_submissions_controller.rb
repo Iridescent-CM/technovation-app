@@ -19,6 +19,11 @@ module Admin
         redirect_to admin_team_submission_path,
         success: "Submission has been updated"
       else
+        flash.now[:alert] = if @team_submission.errors.full_messages
+          @team_submission.errors.full_messages.join(" , ")
+        else
+          "There was an error processing your request. Please notify the dev team."
+        end
         render :edit
       end
     end
