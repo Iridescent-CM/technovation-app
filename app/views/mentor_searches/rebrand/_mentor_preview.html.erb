@@ -20,6 +20,10 @@
     %>"
     name="<%= mentor_preview.full_name %>"
     link-text="More Details >"
-    link-path="<%= mentor_mentor_path(mentor_preview, review_before: true) %>"
+    link-path="<%= 
+      current_scope == "mentor" ? 
+      mentor_mentor_path(mentor_preview, review_before: true) : 
+      student_mentor_path(mentor_preview, review_before: true) 
+    %>"
   ></result-card>
 </div>
