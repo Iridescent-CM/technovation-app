@@ -2,18 +2,23 @@ module TeamSubmissionVideoLinkReviewController
   extend ActiveSupport::Concern
 
   def update
+    msg = {success: "You saved your #{params[:piece].humanize}!"}
     submission = current_profile.team_submissions.current.friendly.find(video_link_params[:id])
-    submission.update({ video_link_params[:piece] => video_link_params[:value] })
 
-    submission.team.create_activity(
-      trackable: current_profile.account,
-      key: "submission.update",
-      parameters: { piece: video_link_params[:piece] },
-      recipient: submission,
-    )
+    if submission.update({video_link_params[:piece] => video_link_params[:value]})
+      submission.team.create_activity(
+        trackable: current_profile.account,
+        key: "submission.update",
+        parameters: {piece: video_link_params[:piece]},
+        recipient: submission
+      )
+    elsif submission.errors.full_messages
+      msg = {alert: submission.errors.full_messages.join(" , ")}
+    else
+      msg = {alert: "An error has occurred. Please try again later."}
+    end
 
-    redirect_to send("#{current_scope}_team_submission_section_path",  id: submission.to_param, section: :pitch),
-      success: "You saved your #{params[:piece].humanize}!"
+    redirect_to send("#{current_scope}_team_submission_section_path",  id: submission.to_param, section: :pitch), msg
   end
 
   private
