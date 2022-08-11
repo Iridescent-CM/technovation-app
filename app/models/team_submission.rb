@@ -258,6 +258,12 @@ class TeamSubmission < ActiveRecord::Base
       with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/ 
     }, 
     allow_blank: true
+
+  validate :demo_and_pitch_video_links_are_different, on: :update
+
+  def demo_and_pitch_video_links_are_different
+    errors.add(:base, "Demo and pitch video links cannot be the same! Please add a valid video link.") if demo_video_link == pitch_video_link
+  end
   
   delegate :name,
     :division_name,
