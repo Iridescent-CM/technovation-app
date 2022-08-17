@@ -246,7 +246,7 @@ class StudentProfile < ActiveRecord::Base
       errors.add(a, :blank)
     end
 
-    if (account.division.junior? || account.division.senior?) &&
+    if account.division.senior? &&
         (parent_guardian_email == account.email)
 
       errors.add(:parent_guardian_email, :matches_student_email)
@@ -392,7 +392,8 @@ class StudentProfile < ActiveRecord::Base
     if Account.joins(:student_profile).where(
          "lower(email) = ?",
          parent_guardian_email.downcase
-       ).any?
+       ).any? && account&.division&.senior?
+
       errors.add(:parent_guardian_email, :found_in_student_accounts)
     end
 
