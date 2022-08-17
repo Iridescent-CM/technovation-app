@@ -4,7 +4,7 @@ RSpec.describe "Student Profile Requests", type: :request do
   let(:student_account) { FactoryBot.create(:account, email: student_email_address) }
   let(:student_email_address) { "harry@example.com"  }
   let(:student_profile) {
-    FactoryBot.create(:student_profile, :geocoded,
+    FactoryBot.create(:student_profile, :geocoded, :senior,
       account: student_account,
       parent_guardian_email: parent_guardian_email_address)
   }
