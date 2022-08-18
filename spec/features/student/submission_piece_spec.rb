@@ -121,6 +121,47 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
+  scenario "Uses the same video link for the demo video and pitch video" do
+    click_link "Pitch"
+
+    within(".demo_video_link.incomplete") do
+      click_link "Add the demo video link"
+    end
+
+    video_id = "XMzMyNzg3OTY1Mg"
+    fill_in "Youtube, Vimeo, or Youku URL",
+      with: "https://v.youku.com/v_show/id_#{video_id}"
+
+    click_button "Next"
+    click_button "Save"
+
+    within(".demo_video_link.complete") do
+      expect(page).not_to have_link("Add your product's description")
+
+      expect(page).to have_css "[data-modal-fetch*='piece=demo']"
+      expect(page).to have_link(
+        "Change the demo video link",
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :demo_video_link
+        )
+      )
+    end
+
+    within(".pitch_video_link.incomplete") do
+      click_link "Add the pitch video link"
+    end
+
+    duplicate_video_id = "XMzMyNzg3OTY1Mg"
+    fill_in "Youtube, Vimeo, or Youku URL",
+      with: "https://v.youku.com/v_show/id_#{duplicate_video_id}"
+
+    click_button "Next"
+    click_button "Save"
+
+    expect(page).to have_css(".flash.flash--alert", text: "Demo and pitch video links cannot be the same! Please add a valid video link.")
+  end
+
   scenario "Upload the .zip source code" do
     skip "Direct to s3 how to mock"
     click_link "Code"
