@@ -152,9 +152,9 @@ RSpec.feature "Students edit submission pieces" do
       click_link "Add the pitch video link"
     end
 
-    video_id = "XMzMyNzg3OTY1Mg"
+    duplicate_video_id = "XMzMyNzg3OTY1Mg"
     fill_in "Youtube, Vimeo, or Youku URL",
-      with: "https://v.youku.com/v_show/id_#{video_id}"
+      with: "https://v.youku.com/v_show/id_#{duplicate_video_id}"
 
     click_button "Next"
     click_button "Save"
