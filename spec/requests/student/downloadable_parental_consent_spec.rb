@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Student::DownloadableParentalConsentsController do
+RSpec.xdescribe Student::DownloadableParentalConsentsController do
   let(:student_account) { FactoryBot.create(:account, email: student_email_address) }
   let(:student_email_address) { "harry@example.com"  }
   let(:student_profile) {
