@@ -92,6 +92,8 @@ gem "pdfkit", "0.8.4.3.2"
 gem "gibbon", "~> 3.3.0"
 
 gem "net-smtp", require: false
+gem "net-imap", require: false
+gem "net-pop", require: false
 
 gem "rexml"
 
