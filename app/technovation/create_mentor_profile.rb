@@ -1,6 +1,6 @@
 module CreateMentorProfile
   def self.call(account, **options)
-    if account.can_be_a_mentor?(options)
+    if account.can_be_a_mentor?(**options)
       attrs = setup_attributes(account)
       account.create_mentor_profile!(attrs)
     else
