@@ -93,6 +93,8 @@ gem "gibbon", "~> 3.4.4"
 
 gem "net-smtp", require: false
 
+gem "rexml"
+
 group :development do
   gem "pp_sql", "~> 0.2", require: false
   gem "active_record_query_trace", "~> 1.5"
