@@ -6,9 +6,13 @@ class MentorProfileSerializer
 
   attributes :school_company_name, :job_title, :bio
 
-  attribute(:is_onboarded, &:onboarded?)
+  attribute :is_onboarded do |mentor|
+    mentor.onboarded?
+  end
 
-  attribute(:is_training_complete, &:training_complete?)
+  attribute :is_training_complete do |mentor|
+    mentor.training_complete?
+  end
 
   attribute(:next_onboarding_step) do |mentor|
     case mentor.onboarding_steps.first

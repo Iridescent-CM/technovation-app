@@ -10,7 +10,7 @@ module Mailchimp
       error_notifier: Airbrake
     )
 
-      @list = client_constructor.new({api_key: api_key}).lists(list_id)
+      @list = client_constructor.new(api_key: api_key).lists(list_id)
       @list_id = list_id
       @enabled = enabled
       @logger = logger

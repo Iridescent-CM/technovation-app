@@ -11,14 +11,14 @@ class FriendlyCountry
       source: :address_details,
     }
 
-    merged_options = default_options.merge(options)
+    merged_options = default_options.merge(**options)
 
     if merged_options[:short_code]
       friendly_country.as_short_code
     elsif merged_options[:prefix]
       friendly_country.with_prefix
     else
-      friendly_country.country_name(merged_options)
+      friendly_country.country_name(**merged_options)
     end
   end
 
@@ -42,7 +42,7 @@ class FriendlyCountry
   end
 
   def country_name(**options)
-    result(options).country || record.address_details
+    result(**options).country || record.address_details
   end
 
   private
