@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "2.7.4"
+ruby "3.1.2"
 
 gem "rails", "~> 6.1.0"
 
@@ -9,7 +9,7 @@ gem "casting", "~> 0.7"
 
 gem "barnes", "~> 0.0.7"
 
-gem "bootsnap", "~> 1.3", require: false
+gem "bootsnap", require: false
 
 gem "fast_jsonapi", "~> 1.4"
 gem "httparty", "~> 0.16"
@@ -39,7 +39,6 @@ gem "sprockets", "3.7.2"
 gem "normalize-rails", "~> 4.1"
 
 gem "rails-i18n", "~> 6.0.0"
-gem "i18n-tasks", "~> 0.9"
 gem "clipboard-rails", "~> 1.7"
 gem "will_paginate", "~> 3.1"
 
@@ -92,6 +91,8 @@ gem "pdfkit", "0.8.4.3.2"
 
 gem "gibbon", "~> 3.4.4"
 
+gem "net-smtp", require: false
+
 group :development do
   gem "pp_sql", "~> 0.2", require: false
   gem "active_record_query_trace", "~> 1.5"
@@ -106,13 +107,13 @@ end
 
 group :test do
   gem "timecop", "~> 0.9"
-  gem "vcr", "~> 6.0"
-  gem "webmock", "~> 3.13"
+  gem "vcr", "~> 6.1"
+  gem "webmock", "~> 3.17"
 
   gem "rails-controller-testing", "~> 1.0"
   gem "fakeredis", "~> 0.8", require: "fakeredis/rspec"
 
-  gem "capybara", "~> 3.35"
+  gem "capybara", "~> 3.37"
   gem "capybara-email", "~> 3.0"
   gem "webdrivers"
   gem "rspec-rails", "~> 5.0"
