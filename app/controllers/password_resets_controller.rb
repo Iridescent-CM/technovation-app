@@ -1,4 +1,8 @@
 class PasswordResetsController < ApplicationController
+  before_action :require_unauthenticated
+
+  layout "application_rebrand"
+
   def new
     @password_reset = PasswordReset.new(email: params[:email])
   end
