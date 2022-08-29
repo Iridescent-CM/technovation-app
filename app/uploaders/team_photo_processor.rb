@@ -39,6 +39,10 @@ class TeamPhotoProcessor < CarrierWave::Uploader::Base
   # end
 
   def default_url
-    ActionController::Base.helpers.asset_path("placeholders/team-missing.jpg")
+    if Season.current.year >= 2023
+      ActionController::Base.helpers.asset_path("placeholders/default-team-avatar.png")
+    else
+      ActionController::Base.helpers.asset_path("placeholders/team-missing.jpg")
+    end
   end
 end
