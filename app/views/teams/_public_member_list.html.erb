@@ -2,7 +2,11 @@
   <h3 class="font-bold text-2xl mb-4"><%= t("views.teams.show.members_subheading") %></h3>
 
   <% if team.students.any? %>
-    <%= render partial: "teams/rebrand/public_member", collection: team.students %>
+    <% if current_profile.rebranded? %>
+      <%= render partial: "teams/rebrand/public_member", collection: team.students %>
+    <% else %>
+      <%= render partial: "teams/public_member", collection: team.students %>
+    <% end %>
   <% else %>
     <p>This team doesn't have any students yet!</p>
   <% end %>
