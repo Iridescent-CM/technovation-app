@@ -51,7 +51,7 @@ class Password
 
   def valid_password
     if !!resetting and password.to_s.length < 8
-      errors.add(:password, :too_short, { count: 8 })
+      errors.add(:password, :too_short, count: 8)
     elsif !!resetting and password != password_confirmation
       errors.add(:password_confirmation, :doesnt_match)
     end
