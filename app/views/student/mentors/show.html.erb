@@ -1,15 +1,72 @@
 <% provide :title, t("views.student.mentors.show.title") %>
 
-<%= render 'profiles/public_show',
-  title: t("views.student.mentors.show.title"),
-  account: @mentor %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around w-full lg:w-1/2">
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: t("views.student.mentors.show.title")} do %>
+    <section class="mb-8">
+      <h3 class="text-3xl font-bold mb-4">
+        <%= @mentor.first_name %>
+      </h3>
+      <div class="flex flex-col lg:flex-row lg:space-x-12 mb-4">
+        <%= image_tag @mentor.profile_image_url,
+            class: "rounded-tr-3xl rounded-bl-3xl w-1/4" 
+        %>
+      </div>
+      <% unless @mentor.student_profile.present? %>
+        <div class="mt-auto">
+          <p class="font-bold">
+            <%= t('models.account.gender') %>
+          </p>
+          <p><%= @mentor.gender %></p>
+        </div>
+      <% end %>
 
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8 grid__col--bleed-y">
-    <div class="panel">
-      <strong>
+      <div class="mt-auto">
+        <p class="font-bold">
+          <%= t('models.account.address') %>
+        </p>
+        <p>
+          <%= web_icon("globe") %>
+          <%= @mentor.address_details %>
+        </p>
+
+        <p class="font-bold">
+          <%= t('models.mentor_profile.school_company_name') %>
+        </p>
+        <p>
+          <%= @mentor.school_company_name %>
+        </p>
+
+        <p class="font-bold">
+          <%= t('models.mentor_profile.job_title') %>
+        </p>
+        <p>
+          <%= @mentor.job_title %>
+        </p>
+
+        <p class="font-bold">
+          <%= t('models.mentor_profile.expertise_names') %>
+        </p>
+        <p>
+          <%= @mentor.expertise_names.to_sentence %>
+        </p>
+      </div>
+
+      <% if @mentor.respond_to?(:bio) %>
+        <p class="font-bold">
+          <%= t('models.profile.bio') %>
+        </p>
+        <p>
+          <%= simple_format @mentor.bio %>
+        </p>
+      <% end %>
+    </section>
+    
+    <%= render 'application/templates/tw_thick_rule' %>
+
+    <section class="mb-8">
+      <h3 class="text-3xl font-bold mb-4">
         <%= t("views.student.mentors.show.teams", name: @mentor.first_name) %>
-      </strong>
+      </h3>
 
       <% if @mentor.teams.current.any? %>
         <ul class="unstyled">
@@ -24,17 +81,18 @@
         </p>
       <% end %>
 
+      <%= render 'application/templates/tw_thick_rule' %>
+      
       <% if current_team.present? and SeasonToggles.team_building_enabled? %>
         <%= render(
-          "student/mentors/#{mentor_invitation_template(current_team, @mentor)}",
-          mentor_invite: @mentor_invite,
-          mentor: @mentor,
-          team: current_team
-        ) # `mentor_invitation_template`
-          # is defined in 
-          # app/helpers/student_helper.rb
+            "student/mentors/rebrand/#{mentor_invitation_template(current_team, @mentor)}",
+            mentor_invite: @mentor_invite,
+            mentor: @mentor,
+            team: current_team
+          )
         %>
       <% end %>
-    </div>
-  </div>
+
+    </section>
+  <% end %>
 </div>

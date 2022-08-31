@@ -1,0 +1,63 @@
+<!--//
+<% title ||= t("views.accounts.show.title") %>
+
+<div class="grid grid--justify-space-around">
+  <div class="grid__col-sm-8 grid__col--bleed-y">
+    <div class="panel">
+      <% if params[:review_before] || params[:back] %>
+        <div class="grid__cell">
+          <%= link_to params[:back] ||= :back, class: "button secondary" do %>
+            <span class="back-btn"></span>
+            <%= params[:back_title] ||= "Search results" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto">
+          <div class="grid__cell">
+            <h1 class="page-heading"><%= title %></h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid--bleed">
+        <div class="grid__col-sm-4 grid__cell">
+          <%= image_tag account.profile_image_url,
+            class: "thumbnail-lg grid__cell-img" %>
+        </div>
+
+        <div class="grid__col-sm-4">
+          <dl>
+            <% unless account.student_profile.present? %>
+              <dt><%= t('models.account.gender') %></dt>
+              <dd><%= account.gender %></dd>
+            <% end %>
+
+            <dt><%= t('models.account.address') %></dt>
+            <dd><%= account.address_details %></dd>
+          </dl>
+        </div>
+
+        <div class="grid__col-sm-4">
+          <dl>
+            <%= render "#{account.scope_name}/profiles/public_profile",
+              account: account %>
+          </dl>
+        </div>
+      </div>
+
+      <% if account.respond_to?(:bio) %>
+        <div class="grid">
+          <div class="grid__col-auto grid__col--bleed-x">
+            <dl>
+              <dt><%= t('models.profile.bio') %></dt>
+              <dd><%= simple_format account.bio %></dd>
+            </dl>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+//-->
