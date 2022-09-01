@@ -67,6 +67,8 @@ gem "mini_magick", "4.9.4"
 gem "fog-aws", "~> 1.4"
 gem "carrierwave_direct", "~> 0.0"
 
+gem "filestack-rails"
+
 gem "checkr-official", "~> 1.5", require: "checkr"
 
 gem "countries", "~> 1.2", require: "countries/global"
