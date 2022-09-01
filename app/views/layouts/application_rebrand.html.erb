@@ -23,6 +23,9 @@
 
     <%= yield :additional_css %>
 
+    <%= filestack_js_include_tag %>
+    <%= filestack_js_init_tag %>
+
     <%= javascript_include_tag determine_manifest,
       'data-turbolinks-track' => true %>
 
