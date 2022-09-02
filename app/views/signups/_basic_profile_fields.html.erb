@@ -21,7 +21,7 @@
                           storeTo: {
                             location: "s3",
                             container: ENV.fetch("AWS_BUCKET_NAME"),
-                            path: "uploads/account/profile_image/#{current_student.account_id}/",
+                            path: "uploads/account/profile_image/#{current_account.id}/",
                             region: "us-east-1"
                           }
                         } %>
