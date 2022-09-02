@@ -145,6 +145,7 @@ jobs:
           name: Install wkhtmltopdf
           command: |
             sudo apt update
+            sudo apt install libxrender1 libfontconfig1
             sudo apt install wkhtmltopdf
 
       - run:

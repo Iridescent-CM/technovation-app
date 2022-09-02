@@ -139,7 +139,7 @@ group :production do
   gem "rack-timeout", "~> 0.5"
   gem "rails_autoscale_agent"
   gem "cloudflare-rails", "~> 2.0"
-  gem "wkhtmltopdf-heroku", "2.12.5.0"
+  gem "wkhtmltopdf-heroku", "2.12.6.1.pre.jammy"
 end
 
 gem "factory_bot_rails", "~> 4.11"
