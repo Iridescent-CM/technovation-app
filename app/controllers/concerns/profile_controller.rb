@@ -65,7 +65,8 @@ module ProfileController
         :latitude,
         :longitude,
         :icon_path,
-      ],
+        :profile_image
+      ]
     ).tap do |tapped|
       if tapped[:account_attributes]
         tapped[:account_attributes][:id] = current_account.id
