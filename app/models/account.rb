@@ -693,8 +693,26 @@ class Account < ActiveRecord::Base
     )
   end
 
+  def default_image_url
+    "https://placekitten.com/300/300"
+  end
+
+  def s3_profile_image_url(profile_image)
+    "https://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/uploads/account/profile_image/#{id}/#{profile_image}"
+  end
+
+  def determine_profile_image_url(profile_image)
+    if profile_image.blank?
+      default_image_url
+    elsif profile_image.include? "filestackcontent"
+      profile_image
+    else
+      s3_profile_image_url(profile_image)
+    end
+  end
+
   def profile_image_url
-    icon_path.blank? ? super : icon_path
+    icon_path.blank? ? determine_profile_image_url(profile_image) : icon_path
   end
 
   def can_be_a_mentor?(**options)
