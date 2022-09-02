@@ -480,8 +480,6 @@ class Account < ActiveRecord::Base
       .where("divisions.name = ?", Division.names[division])
   }
 
-  mount_uploader :profile_image, ImageProcessor
-
   has_secure_token :auth_token
   has_secure_token :consent_token
   has_secure_token :password_reset_token
