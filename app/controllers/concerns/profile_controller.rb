@@ -3,13 +3,6 @@ module ProfileController
 
   included do
     helper_method :profile, :edit_profile_path
-
-    before_action -> {
-      @uploader = ImageDirectUploader.new
-      @uploader.success_action_redirect = send(
-        "#{profile.class.name.underscore}_image_upload_confirmation_url"
-      )
-    }, only: :show
   end
 
   def update
