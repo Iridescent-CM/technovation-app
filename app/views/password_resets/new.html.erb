@@ -1,12 +1,13 @@
 <% provide :title, "Reset your password" %>
-<% provide :main_header, render('application/templates/tg_green_header', heading: "Welcome Back") %>
-<% provide :global_nav_links, render('application_rebrand/global_nav_links') %>
+<% provide :main_header, render("application/templates/tg_green_header", heading: "Welcome Back") %>
+<% provide :global_nav_links, render("application_rebrand/global_nav_links") %>
 
 <div class="w-11/12 lg:w-1/2 mx-auto">
-  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: t("views.password_resets.new.title")} do %>
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: t("views.password_resets.new.title")} do %>
+
     <%= simple_form_for @password_reset do |f| %>
-      
-      <%= f.input :email, label_html: {class: 'tw-label'} %>
+
+      <%= f.input :email, label_html: {class: "tw-label"} %>
 
       <%= f.button :submit,
         t("views.password_resets.new.submit"),
