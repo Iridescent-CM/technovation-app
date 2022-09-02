@@ -511,8 +511,6 @@ class Account < ActiveRecord::Base
     case_sensitive: false,
     scope: :deleted_at
 
-  validates :profile_image, verify_cached_file: true
-
   validates :existing_password,
     valid_password: true,
     if: :changes_require_password?
