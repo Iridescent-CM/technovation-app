@@ -1,0 +1,19 @@
+<%= form_with model: current_profile do |form| %>
+  <%= form.fields_for :account do |a| %>
+    <%= a.filestack_field :profile_image,
+                          "Change Image",
+                          id: "profile-image-filepicker",
+                          pickerOptions: {
+                            uploadConfig: {
+                              intelligent: true,
+                            },
+                            storeTo: {
+                              location: "s3",
+                              container: ENV.fetch("AWS_BUCKET_NAME"),
+                              path: "uploads/account/profile_image/#{current_account.id}/",
+                              region: "us-east-1"
+                            }
+                          } %>
+  <% end %>
+  <%= form.submit "Save photo", class: 'tw-green-btn' %>
+<% end %>
