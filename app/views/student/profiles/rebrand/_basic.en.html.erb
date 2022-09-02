@@ -35,29 +35,10 @@
 
     <div id="profile-picture" class="flex flex-col items-center self-start mb-4">
       <div>
-        <%= filestack_image current_student.profile_image_url, transform: filestack_transform.resize(width: 100, height: 100) %>
+        <%= render 'profiles/filestack_profile_image_tag' %>
       </div>
-
       <div>
-        <%= form_with model: current_student do |form| %>
-          <%= form.fields_for :account do |a| %>
-            <%= a.filestack_field :profile_image,
-                                  "Change Image",
-                                  id: "profile-image-filepicker",
-                                  pickerOptions: {
-                                    uploadConfig: {
-                                      intelligent: true,
-                                    },
-                                    storeTo: {
-                                      location: "s3",
-                                      container: ENV.fetch("AWS_BUCKET_NAME"),
-                                      path: "uploads/account/profile_image/#{current_student.account_id}/",
-                                      region: "us-east-1"
-                                    }
-                                  } %>
-          <% end %>
-          <%= form.submit "Save photo", class: 'tw-green-btn' %>
-        <% end %>
+        <%= render 'profiles/filestack_profile_image_upload' %>
       </div>
     </div>
   </div>

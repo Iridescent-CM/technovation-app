@@ -6,21 +6,13 @@
       <div class="col--sticky">
         <div class="hidden-xs hidden-xxs">
           <h3><%= current_mentor.full_name %></h3>
-
-          <%= image_tag current_mentor.profile_image_url,
-            id: "profile-image",
-            class: "grid__cell-img" %>
-
-          <%= render 'image_upload',
-            choose_from_defaults: (
-              not current_account.chapter_ambassador_profile.present?
-            ),
-            current_image_path: current_mentor.profile_image_url,
-            modal_id: "image_upload_desktop",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
+          <%= filestack_image current_profile.profile_image_url,
+                              id: "profile-image",
+                              class: "grid__cell-img" %>
+          <div>
+            <%= render 'profiles/filestack_profile_image_upload' %>
+          </div>
         </div>
-
         <%= render 'mentor/profiles/menu' %>
       </div>
     </div>
@@ -36,10 +28,7 @@
         <div class="hidden-sm hidden-md hidden-lg tabs__tab-content" id="avatar">
           <%= image_tag current_mentor.profile_image_url, class: "grid__cell-img" %>
 
-          <%= render 'image_upload',
-            modal_id: "image_upload_mobile",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
+
         </div>
 
         <div class="tabs__tab-content" id="location">
