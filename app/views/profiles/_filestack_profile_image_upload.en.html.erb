@@ -1,3 +1,14 @@
+<%= javascript_tag do %>
+  function onFileUploadFinished(data) {
+  const filestackImgTag = document.getElementById('filestack-img-tag');
+    filestackImgTag.src =  filestack_client.transform(data.handle, {
+        resize: {
+            width: 200,
+            height: 200
+        }});
+  }
+<% end %>
+
 <%= form_with model: current_profile do |form| %>
   <%= form.fields_for :account do |a| %>
     <%= a.filestack_field :profile_image,
@@ -7,6 +18,7 @@
                             uploadConfig: {
                               intelligent: true,
                             },
+                            onFileUploadFinished: 'onFileUploadFinished',
                             storeTo: {
                               location: "s3",
                               container: ENV.fetch("AWS_BUCKET_NAME"),
