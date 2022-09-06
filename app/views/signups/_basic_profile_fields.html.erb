@@ -23,22 +23,24 @@
     end_year: f.object.oldest_birth_year,
     input_html: { class: "chosen dob_field" } %>
 
-  <%= render 'profiles/filestack_profile_image_tag' %>
+  <% if current_profile.present? %>
+    <%= render 'profiles/filestack_profile_image_tag' %>
 
-      <%= a.filestack_field :profile_image,
-                            "Select Image",
-                            id: "profile-image-filepicker",
-                            class: "filestack-picker-btn",
-                            pickerOptions: {
-                              uploadConfig: {
-                                intelligent: true,
-                              },
-                              onFileUploadFinished: 'onFileUploadFinished',
-                              storeTo: {
-                                location: "s3",
-                                container: ENV.fetch("AWS_BUCKET_NAME"),
-                                path: "uploads/account/profile_image/#{current_account.id}/",
-                                region: "us-east-1"
-                              }
-                            } %>
+    <%= a.filestack_field :profile_image,
+                          "Select Image",
+                          id: "profile-image-filepicker",
+                          class: "filestack-picker-btn",
+                          pickerOptions: {
+                            uploadConfig: {
+                              intelligent: true,
+                            },
+                            onFileUploadFinished: 'onFileUploadFinished',
+                            storeTo: {
+                              location: "s3",
+                              container: ENV.fetch("AWS_BUCKET_NAME"),
+                              path: "uploads/account/profile_image/#{current_account.id}/",
+                              region: "us-east-1"
+                            }
+                          } %>
+  <% end %>
 <% end %>
