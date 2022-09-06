@@ -1,3 +1,13 @@
+<%= javascript_tag do %>
+  function onFileUploadFinished(data) {
+    const filestackImgTag = document.getElementById('filestack-img-tag');
+    filestackImgTag.src =  filestack_client.transform(data.handle, {
+      resize: {
+          width: 100
+      }
+    });
+  }
+<% end %>
 <div class="panel">
   <%= form_with model: @account,
     url: admin_participant_path(@account),
@@ -35,6 +45,32 @@
 
       <%= f.select :gender,
         collection: Account.genders.keys %>
+    </p>
+
+    <p>
+      <%= f.label :profle_image %>
+
+      <%= filestack_image @account.profile_image_url,
+                          transform: filestack_transform.resize(width: 100, height: 100) ,
+                          id: 'filestack-img-tag'
+      %>
+      <br>
+
+      <%= f.filestack_field :profile_image,
+                              "Change Image",
+                              id: "profile-image-filepicker",
+                              pickerOptions: {
+                                uploadConfig: {
+                                  intelligent: true,
+                                },
+                                onFileUploadFinished: 'onFileUploadFinished',
+                                storeTo: {
+                                  location: "s3",
+                                  container: ENV.fetch("AWS_BUCKET_NAME"),
+                                  path: "uploads/account/profile_image/#{@account.id}/",
+                                  region: "us-east-1"
+                                }
+                              } %>
     </p>
 
     <% if f.object.mentor_profile.present? %>
