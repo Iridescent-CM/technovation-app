@@ -6,19 +6,19 @@ RSpec.feature "Survey links" do
       SeasonToggles.set_survey_link(scope, "survey", "http")
     end
 
-    scenario "a new #{scope} waits 2 weeks from profile creation" do
+    scenario "a new #{scope} waits 2 days from profile creation" do
       user = FactoryBot.create(scope)
 
       sign_in(user)
       expect(page).not_to have_css("#survey-modal")
 
-      Timecop.travel(2.weeks.from_now) do
+      Timecop.travel(2.days.from_now) do
         visit send("#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
       end
     end
 
-    scenario "an existing #{scope} waits 2 weeks from season registration" do
+    scenario "an existing #{scope} waits 2 days from season registration" do
       user = FactoryBot.create(scope)
 
       user.account.update_columns(
@@ -35,20 +35,20 @@ RSpec.feature "Survey links" do
       sign_in(user) # Signing in registers to the season
       expect(page).not_to have_css("#survey-modal")
 
-      Timecop.travel(2.weeks.from_now) do
+      Timecop.travel(2.days.from_now) do
         visit send("#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
       end
     end
 
 
-    scenario "all #{scope}s get reminded in 2 more weeks" do
+    scenario "all #{scope}s get reminded in 2 more days" do
       user = FactoryBot.create(scope)
 
       sign_in(user)
       expect(page).not_to have_css("#survey-modal")
 
-      Timecop.travel(2.weeks.from_now) do
+      Timecop.travel(2.days.from_now) do
         visit send("#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
 
@@ -56,7 +56,7 @@ RSpec.feature "Survey links" do
         visit send("#{scope}_dashboard_path")
         expect(page).not_to have_css("#survey-modal")
 
-        Timecop.travel(2.weeks.from_now) do
+        Timecop.travel(2.days.from_now) do
           visit send("#{scope}_dashboard_path")
           expect(page).to have_css("#survey-modal")
         end
@@ -69,7 +69,7 @@ RSpec.feature "Survey links" do
       sign_in(user)
       expect(page).not_to have_css("#survey-modal")
 
-      Timecop.travel(2.weeks.from_now) do
+      Timecop.travel(2.days.from_now) do
         visit send("#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
 
@@ -77,7 +77,7 @@ RSpec.feature "Survey links" do
         visit send("#{scope}_dashboard_path")
         expect(page).not_to have_css("#survey-modal")
 
-        Timecop.travel(2.weeks.from_now) do
+        Timecop.travel(2.days.from_now) do
           visit send("#{scope}_dashboard_path")
           expect(page).to have_css("#survey-modal")
 
@@ -85,7 +85,7 @@ RSpec.feature "Survey links" do
           visit send("#{scope}_dashboard_path")
           expect(page).not_to have_css("#survey-modal")
 
-          Timecop.travel(2.weeks.from_now) do
+          Timecop.travel(2.days.from_now) do
             visit send("#{scope}_dashboard_path")
             expect(page).not_to have_css("#survey-modal")
           end
@@ -99,7 +99,7 @@ RSpec.feature "Survey links" do
 
       sign_in(user)
 
-      Timecop.travel(2.weeks.from_now) do
+      Timecop.travel(2.days.from_now) do
         visit send("#{scope}_dashboard_path")
         expect(page).not_to have_css("#survey-modal")
       end
