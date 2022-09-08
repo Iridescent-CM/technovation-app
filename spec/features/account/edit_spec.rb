@@ -60,7 +60,7 @@ RSpec.feature "Edit account spec" do
   end
 
   %i{mentor chapter_ambassador}.each do |scope|
-    skip scenario "edit #{scope} bio" do
+    scenario "edit #{scope} bio" do
       sign_out
       profile = FactoryBot.create(scope)
 
