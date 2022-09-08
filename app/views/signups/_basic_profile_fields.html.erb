@@ -1,15 +1,3 @@
-<%= javascript_tag do %>
-  function onFileUploadFinished(data) {
-    const filestackImgTag = document.getElementById('filestack-img-tag');
-    filestackImgTag.src =  filestack_client.transform(data.handle, {
-        resize: {
-            width: 200,
-            height: 200
-        }
-    });
-  }
-<% end %>
-
 <%= f.fields_for :account do |a| %>
   <div class="signup-form-name-fields">
     <%= a.input :first_name %>
@@ -22,25 +10,4 @@
     start_year: f.object.youngest_birth_year,
     end_year: f.object.oldest_birth_year,
     input_html: { class: "chosen dob_field" } %>
-
-  <% if current_profile.present? %>
-    <%= render 'profiles/filestack_profile_image_tag' %>
-
-    <%= a.filestack_field :profile_image,
-                          "Select Image",
-                          id: "profile-image-filepicker",
-                          class: "filestack-picker-btn",
-                          pickerOptions: {
-                            uploadConfig: {
-                              intelligent: true,
-                            },
-                            onFileUploadFinished: 'onFileUploadFinished',
-                            storeTo: {
-                              location: "s3",
-                              container: ENV.fetch("AWS_BUCKET_NAME"),
-                              path: "uploads/account/profile_image/#{current_account.id}/",
-                              region: "us-east-1"
-                            }
-                          } %>
-  <% end %>
 <% end %>
