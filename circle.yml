@@ -83,6 +83,7 @@ jobs:
           DATES_VIRTUAL_QUARTERFINALS_ENDS_YEAR: 2022
           ENABLE_HOMEPAGE_BANNER: true
           FINALISTS_URL: "https://some/url"
+          FILESTACK_API_KEY: n-a
           GOOGLE_ANALYTICS_ID: n-a
           GOOGLE_MAPS_API_KEY: n-a
           GOOGLE_PLACES_API_KEY: n-a
