@@ -1,0 +1,8 @@
+<p class="font-bold"><%= t('models.mentor_profile.school_company_name') %></p>
+<p><%= account.school_company_name %></p>
+
+<p class="font-bold"><%= t('models.mentor_profile.job_title') %></p>
+<p><%= account.job_title %></p>
+
+<p class="font-bold"><%= t('models.mentor_profile.expertise_names') %></p>
+<p><%= account.expertise_names.present? ? account.expertise_names.to_sentence : 'No expertises selected'%></p>
