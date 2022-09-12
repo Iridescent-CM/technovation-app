@@ -3,17 +3,10 @@
 </h3>
 
 <div class="mb-4">
-  <% if mentor.virtual? %>
     <p>
-      <span class="italic"><%= mentor.first_name %></span>
-      will mentor teams from anywhere.
+      <span class="italic"><%= mentor.first_name %></span> will mentor teams from
+      <%= mentor.virtual? ? "anywhere" : mentor.address_details %>
     </p>
-  <% else %>
-    <p>
-      <span class="italic"><%= mentor.first_name %></span>
-      will only mentor teams from <%= mentor.address_details %>.
-    </p>
-  <% end %>
 </div>
 
 <%= form_for [:student, mentor_invite] do |f| %>
