@@ -9,8 +9,8 @@
                   class: "rounded-tr-3xl rounded-bl-3xl w-1/4" %>
 
     <div class="mt-auto">
-        <p class="font-bold">Location</p>
-        <p><%= account.address_details %></p>
+      <p class="font-bold">Location</p>
+      <p><%= account.address_details %></p>
 
       <% unless account.student_profile.present? %>
         <p class="font-bold"><%= t('models.account.gender') %></p>
