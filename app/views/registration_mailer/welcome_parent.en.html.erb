@@ -4,7 +4,7 @@
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td class="content-block">
-          We're so glad you and your daughter are joining Technovation Girls for the
+          We're so glad your daughter is joining Technovation Girls for the
           <%= @season_year %> season! We can't wait to hear how she wants to change your community with
           technology. In this email you can find information about what she will be doing in the Technovation
           Girls program and Beginner Division, and how you can support her.
@@ -28,10 +28,11 @@
           the problem they have identified. Girls can be supported by mentors and guided
           by our curriculum. Parents are encouraged to take an active role in mentoring
           or supporting their daughters especially in the Beginner Division. In April,
-          teams submit their app, pitch, and other
+          teams submit their app of AI prototype, pitch, and other
           <%= link_to "submission materials", "https://technovationchallenge.org/submission-guidelines/" %>
           online. Judges from around the world provide written feedback to teams to help them make
-          their ideas even better in the future!
+          their ideas even better in the future! In some locations, teams are also eligible
+          to sign up for live pitch events organized by chapters.
         </td>
       </tr>
 
@@ -48,7 +49,7 @@
 
       <tr>
         <td class="content-block">
-          <strong>What your daughter will learn&hellip;</strong>
+          <strong>Your daughter will learn&hellip;</strong>
           <ul>
             <li>How to identify and solve a problem</li>
             <li>
@@ -62,7 +63,7 @@
 
       <tr>
         <td class="content-block">
-          <strong>What your daughter will do&hellip;</strong>
+          <strong>Your daughter will&hellip;</strong>
           <ul>
             <li>Develop a mobile app prototype or AI project</li>
             <li>
@@ -70,7 +71,8 @@
               to solving their chosen problem taking constraints into account
             </li>
             <li>Gather user feedback from community members about her idea and prototype(s)</li>
-            <li>Create pitch and demo videos to show her ideas</li>
+            <li>Create pitch and technical videos to show her ideas</li>
+          </ul>
         </td>
       </tr>
 
@@ -82,7 +84,9 @@
               <strong>Stay informed:</strong>
               You’ll get an email every two weeks or so from us at Technovation from now
               until April with details about how to support your daughter at different points in the
-              season, so stay tuned!
+              season, so stay tuned! Make sure to also review the
+              <%= link_to "Parent Resource" , "https://technovationchallenge.org/parent-resources/"%>
+              page for more tips and information.
             </li>
             <li>
               <strong>Offer encouragement and support:</strong>
@@ -96,9 +100,9 @@
               In the Beginner Division, parents are encouraged to actively mentor their daughter and
               their team. If you have time to spend an hour a week learning and helping to guide your daughter and
               her team through the curriculum, you won’t regret it! Spending time doing something meaningful as
-              a family like Technovation Girls is special and has proven benefits for all. You don’t need to
-              sign up for a Mentor account - your Beginner Division account is a joint parent/student account and
-              is all you’ll need.
+              a family like Technovation Girls is special and has proven benefits for all.  If you will be mentoring your
+              daughter’s team, please also create an additional Mentor account (use a different email address or the +
+              sign, example: youraddress+mentor@gmail.com) to be able to access mentor trainings and support.
             </li>
           </ul>
         </td>
@@ -117,12 +121,12 @@
       <tr>
         <td class="content-block">
           <strong>Internet safety and digital literacy:</strong>
-          Technovation Girls is an online program, and we want to make sure your daughter knows
+          Technovation Girls is a program with online components, and we want to make sure your daughter knows
           how to be safe online. In Technovation Girls, you can look for another adult mentor to support
-          your daughter’s team develop your app through our platform. We trust our mentors. They have been
-          pre-approved to support your team, but we still recommend that you discuss
-          <link_to "how to keep yourself safe", @safety_url %>
-          with your daughter when collaborating online
+          your daughter’s team develop their app or AI prototype through our platform. Our mentors complete a
+          mandatory training and sign a volunteer agreement, but we still recommend that you discuss
+          <%= link_to "how to keep yourself safe", @safety_url %>
+          with your daughter when collaborating online.
         </td>
       </tr>
 
@@ -130,7 +134,7 @@
         <td class="content-block">
           <strong>Rules and Honor Code:</strong>
           Technovation Girls is a learning experience. By participating in this program, your
-          daughter agrees to only submit your team's work from this season to the competition. If she is found
+          daughter agrees to only submit their team's work from this season to the competition. If she is found
           breaking competition rules or plagiarizing, her team will not be eligible to participate.
         </td>
       </tr>
@@ -168,7 +172,7 @@
                 Last Day to register as a student or a mentor
               </strong>
 
-              All members of your team must have
+              All members of your daughter's team must have
               registered and joined your team by this date
             </li>
 
@@ -182,7 +186,7 @@
                <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
                (submissions open in <%= @season_submissions_open_month %>)
             </li>
-          </ol>
+          </ul>
         </td>
       </tr>
 
