@@ -36,6 +36,10 @@ FactoryBot.define do
       training_completed_at { nil }
     end
 
+    trait :connected_with_mentors do
+      connect_with_mentors { true }
+    end
+
     trait :chicago do
       city { "Chicago" }
       state_province { "IL" }
