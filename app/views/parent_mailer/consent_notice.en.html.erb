@@ -12,21 +12,20 @@
         <td class="content-block">
           We are writing to let you know that your daughter,
           <strong><%= @student_name %></strong>,
-          has registered for Technovation Girls, a global technology
-          entrepreneurship program for girls.
+          has registered for Technovation Girls.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
           Technovation Girls, a flagship program of non-profit Technovation, is the
-          world’s largest global tech entrepreneurship competition for girls.
+          world’s largest global tech entrepreneurship competition for female-identifying students.
           The program offers girls around the world the opportunity to learn the
           necessary skills to emerge as tech entrepreneurs and leaders.
           Every year, Technovation Girls challenges 8 to 18 year old girls to build
-          a business plan and mobile app that will address a community problem.
-          In 2021, nearly 5,900 girls from more than 60 countries collectively created 1,700 mobile apps,
-          which addressed problems they care about most, including domestic violence, water pollution, 
+          a business plan and mobile app or AI project that will address a community problem.
+          In 2022, over 5,500 girls from more than 60 countries collectively created nearly 1,700
+          tech-based solutions to problems they care about most, including mental health, air pollution,
           access to education, and more.
         </td>
       </tr>
@@ -35,7 +34,7 @@
         <td class="content-block">
           To participate, she needs your permission. Please review the
           permission form and media consent form at this link and sign electronically as soon as possible.
-          Once you sign the forms, you will receive copies via email within 3 days.
+          Once you sign the forms, you will receive copies via email.
         </td>
       </tr>
 
@@ -55,7 +54,7 @@
       <tr>
         <td class="content-block">
           If you cannot use the button above, your daughter can resend this email or
-          download the form from her
+          download the form from here
           <%= link_to "dashboard", @dashboard_url, itemprop: "url" %>.
           If you still have questions, email us at <%= mail_to ENV.fetch("HELP_EMAIL") %> immediately.
         </td>

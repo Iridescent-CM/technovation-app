@@ -6,7 +6,7 @@
         <td class="content-block">
           We're so glad you're joining Technovation Girls for the <%= @season_year %>
           season! We can't wait to hear how you want to change your community with
-          technology, but first things first, a few reminders and important
+          technology, but first, a few reminders and important
           deadlines.
         </td>
       </tr>
@@ -19,7 +19,7 @@
           participate! There are instructions on how to send a permission and media consent form on
           <%= link_to "your dashboard", @dashboard_url %>.
           Once the forms are signed, you'll be ready to participate in
-          Technovation Girls.
+          Technovation Girls and access the rest of your dashboard.
         </td>
       </tr>
 
@@ -27,10 +27,10 @@
         <td class="content-block">
           <strong>Internet safety and digital literacy:</strong>
 
-          Technovation Girls is an online program, and we want to make sure you know
+          Technovation Girls is a program with online components, and we want to make sure you know
           how to be safe online. In Technovation Girls, you might be connected with an adult
-          mentor to support you as you develop your app. We trust our mentors.
-          They have been pre-approved to support your team, but we still recommend
+          mentor to support you as you develop your app or AI prototype.
+          Our mentors have been pre-approved to support your team, but we still recommend
           that you take a few minutes to
           <%= link_to "learn how to keep yourself safe", @safety_url %>
           when collaborating online.
@@ -45,7 +45,7 @@
           you agree to submit your own team’s work to the competition. You can find more 
           rules and guidelines about what is possible to submit 
           <%= link_to "here.", "https://iridescentsupport.zendesk.com/hc/en-us/articles/115002717413-Submission-rules-for-girls-and-mentors" %> 
-          If you are found breaking competition rules or plagiarizing, your team will not be eligible to participate. 
+          If you are found breaking competition rules or plagiarizing, your team will not be eligible to compete.
         </td>
       </tr>
 
@@ -96,7 +96,7 @@
                <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
                (submissions open in <%= @season_submissions_open_month %>)
             </li>
-          </ol>
+          </ul>
         </td>
       </tr>
 
