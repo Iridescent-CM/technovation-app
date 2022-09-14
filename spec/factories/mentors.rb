@@ -36,7 +36,7 @@ FactoryBot.define do
       training_completed_at { nil }
     end
 
-    trait :connected_with_mentors do
+    trait :searchable_by_other_mentors do
       connect_with_mentors { true }
     end
 

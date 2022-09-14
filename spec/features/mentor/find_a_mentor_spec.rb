@@ -13,7 +13,7 @@ RSpec.feature "Mentors find a team" do
   end
 
   let!(:find_mentor) do
-    FactoryBot.create(:mentor, :onboarded, :geocoded, :connected_with_mentors, first_name: "Findme") # City is Chicago
+    FactoryBot.create(:mentor, :onboarded, :geocoded, :searchable_by_other_mentors, first_name: "Findme") # City is Chicago
   end
 
   after do
@@ -61,7 +61,7 @@ RSpec.feature "Mentors find a team" do
       :mentor,
       :onboarded,
       :geocoded,
-      :connected_with_mentors,
+      :searchable_by_other_mentors,
       first_name: "Faraway",
       last_name: "Mentor",
       city: "Los Angeles",
@@ -83,7 +83,7 @@ RSpec.feature "Mentors find a team" do
       :mentor,
       :onboarded,
       :geocoded,
-      :connected_with_mentors,
+      :searchable_by_other_mentors,
       first_name: "Faraway",
       last_name: "Mentor",
       city: "Los Angeles",
@@ -105,7 +105,7 @@ RSpec.feature "Mentors find a team" do
       :mentor,
       :onboarded,
       :geocoded,
-      :connected_with_mentors,
+      :searchable_by_other_mentors,
       first_name: "Traditional Mexican",
       last_name: "Family Name",
       city: "Los Angeles",
