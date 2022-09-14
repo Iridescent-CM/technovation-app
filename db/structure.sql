@@ -866,7 +866,7 @@ CREATE TABLE public.mentor_profiles (
     searchable boolean DEFAULT false NOT NULL,
     accepting_team_invites boolean DEFAULT true NOT NULL,
     virtual boolean DEFAULT true NOT NULL,
-    connect_with_mentors boolean DEFAULT true NOT NULL,
+    connect_with_mentors boolean DEFAULT false NOT NULL,
     user_invitation_id bigint,
     mentor_type integer,
     training_completed_at timestamp without time zone,
@@ -3164,6 +3164,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220405040709'),
 ('20220406163528'),
 ('20220406164442'),
-('20220426020533');
+('20220426020533'),
+('20220914184120');
 
 
