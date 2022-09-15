@@ -1,41 +1,138 @@
-<h3><%= t("views.mentor_searches.filter_options") %></h3>
-
 <%= form_with url: request.fullpath, method: :get, local: true do |f| %>
-  <label>Search by name</label>
+  <%= label_tag :text, "Search by name" %>
+  <%= f.text_field :text, class: "search-by-text mb-1", value: params[:text] %>
+  <p class="italic text-sm">Press enter/return after typing</p>
 
-  <%= f.text_field :text, class: "search-by-text", value: params[:text] %>
-  <p class="hint margin--t-medium-negative">Press enter/return after typing</p>
+  <div class="location-based-search">
+    <%= label_tag :nearby, t("views.application.search_near"), class: "mt-6" %>
+    <%= f.text_field :nearby, class: "search-by-text mb-1", value: params[:nearby], data: { location_field: true } %>
+    <p class="italic text-sm">Press enter/return after typing</p>
 
-  <%= render 'mentor_searches/rebrand/location_options', account: account, f: f %>
+    <h3 class="text-base text-energetic-blue font-medium tracking-wide mt-6">
+      Location
+    </h3>
 
-  <div class="search-toggles">
-    <h3>Needs a team?</h3>
+    <div>
+      <%= radio_button_tag :location_type,
+        "nearme",
+        params[:location_type].nil? ? true : params[:location_type] == "nearme",
+        data: { update_location: account.address_details },
+        class: "w-4 h-4 text-green-600"
+      %>
 
-    <%= render 'searches/toggle_mentor_needs_team', account: account, f: f %>
+      <%= label_tag :location_type_nearme, t("views.application.near_me") %>
+    </div>
 
-    <h3>Only virtual mentors?</h3>
+    <div>
+      <%= radio_button_tag "location_type",
+        "anywhere",
+        params[:location_type] == "anywhere",
+        data: { update_location: "anywhere" }
+      %>
 
-    <%= render 'searches/toggle_mentor_virtual', f: f %>
+      <%= label_tag :location_type_anywhere, t("views.application.anywhere") %>
+    </div>
+  </div>
 
-    <h3>Gender Identity</h3>
+  <h3 class="text-base text-energetic-blue font-medium tracking-wide mt-6">
+    Needs a team?
+  </h3>
 
-    <%= render 'searches/toggle_gender_identity_preference', account: account, f: f %>
+  <div>
+    <%= f.radio_button :needs_team,
+      1,
+      checked: params[:needs_team] == "1",
+      id: :needs_team_1,
+      class: "toggle-based-search"
+    %>
 
-    <h3>Expertise</h3>
+    <%= f.label :needs_team_1, "Yes" %>
+  </div>
 
-    <%= collection_check_boxes :search_filter,
-      :expertise_ids, @expertises, :id, :name do |b| %>
-      <p>
-        <%= b.check_box(
-          id: "expertise_#{b.value}",
-          class: "toggle-based-search",
-          checked: params[:search_filter][:expertise_ids].map(&:to_i).include?(
-            b.value
-          )
-        ) %>
+  <div>
+    <%= f.radio_button :needs_team,
+      0,
+      checked: params[:needs_team] == "0",
+      id: :needs_team_0,
+      class: "toggle-based-search"
+    %>
 
-        <%= b.label text: b.text, for: "expertise_#{b.value}" %>
-      </p>
+    <%= f.label :needs_team_0, "No" %>
+  </div>
+
+  <div>
+    <%= f.radio_button :needs_team,
+      -1,
+      checked: params[:needs_team] == "-1",
+      id: :needs_team_2,
+      class: "toggle-based-search"
+    %>
+
+    <%= f.label :needs_team_2, "Both" %>
+  </div>
+
+  <h3 class="text-base text-energetic-blue font-medium tracking-wide mt-6">
+    Only virtual mentors?
+  </h3>
+
+  <div>
+    <%= f.check_box :virtual_only,
+      value: 1,
+      checked: params[:virtual_only] == "1",
+      id: :virtual_only,
+      class: "toggle-based-search"
+    %>
+
+    <%= f.label :virtual_only, "Yes" %>
+  </div>
+
+  <h3 class="text-base text-energetic-blue font-medium tracking-wide mt-6">
+    Gender Identity
+  </h3>
+
+  <div>
+    <%= f.radio_button :female_only,
+      1,
+      checked: params[:female_only] == "1",
+      id: :female_only_1,
+      class: "toggle-based-search "
+    %>
+
+    <%= f.label :female_only_1, "Female" %>
+  </div>
+
+  <div>
+    <%= f.radio_button :female_only,
+      0,
+      checked: params[:female_only] == "0",
+      id: :female_only_0,
+      class: "toggle-based-search "
+    %>
+
+    <%= f.label :female_only_0, "No preference" %>
+  </div>
+
+  <h3 class="text-base text-energetic-blue font-medium tracking-wide mt-6">
+    Expertise
+  </h3>
+
+  <div class="flex-col">
+    <%= collection_check_boxes :search_filter, :expertise_ids, @expertises, :id, :name do |e| %>
+      <div class="flex items-baseline">
+        <div>
+          <%= e.check_box(
+            id: "expertise_#{e.value}",
+            class: "toggle-based-search",
+            checked: params[:search_filter][:expertise_ids].map(&:to_i).include?(
+              e.value
+            )
+          ) %>
+        </div>
+
+        <div>
+          <%= e.label text: e.text, for: "expertise_#{e.value}" %>
+        </div>
+      </div>
     <% end %>
   </div>
 <% end %>
