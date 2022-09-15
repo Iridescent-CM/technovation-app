@@ -4,10 +4,11 @@ RSpec.describe Mentor::MentorSearchesController do
   describe "GET #new" do
     it "does not include mentors who don't want to connect" do
       mentor = FactoryBot.create(:mentor, :onboarded, :geocoded)
-      find_mentor = FactoryBot.create(:mentor, :onboarded, :geocoded, :searchable_by_other_mentors)
+      find_mentor = FactoryBot.create(:mentor, :onboarded, :geocoded)
       no_find = FactoryBot.create(
         :mentor,
-        :geocoded
+        :geocoded,
+        connect_with_mentors: false
       )
 
       sign_in(mentor)
