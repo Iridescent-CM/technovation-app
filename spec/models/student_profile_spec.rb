@@ -131,23 +131,69 @@ RSpec.describe StudentProfile do
     end
   end
 
-  it "at least wants parent/guardian email to look like an email" do
-    FactoryBot.create(
-      :student,
-      account: FactoryBot.create(:account, email: "noway@jose.com")
-    )
-    profile = FactoryBot.build(
-      :student_profile,
-      parent_guardian_email: "nowayjose.com"
-    )
+  describe "parent/guardian email validations" do
+    it "requires a valid parent/guardian email address" do
+      student_profile = FactoryBot.build(
+        :student_profile,
+        parent_guardian_email: "someinvalidemailaddress"
+      )
 
-    expect(profile).not_to be_valid
-    expect(profile.errors[:parent_guardian_email]).to include(
-      "does not appear to be an email address"
-    )
+      expect(student_profile).to be_invalid
+      expect(student_profile.errors[:parent_guardian_email]).to include(
+        "does not appear to be an email address"
+      )
+    end
 
-    profile.parent_guardian_email = "okeay@jose.com"
-    expect(profile).to be_valid
+    it "doesn't allow a senior student's email address to be used as another student's parent/guardian email address" do
+      FactoryBot.create(
+        :student,
+        :senior,
+        account: FactoryBot.create(:account, email: "senior_student@test.com")
+      )
+      another_student = FactoryBot.build(
+        :student_profile,
+        parent_guardian_email: "senior_student@test.com"
+      )
+
+      expect(another_student).to be_invalid
+      expect(another_student.errors[:parent_guardian_email]).to include(
+        "cannot match your (or any other student's) email"
+      )
+    end
+
+    it "doesn't allow a junior student's email address to be used as another student's parent/guardian email address" do
+      FactoryBot.create(
+        :student,
+        :junior,
+        account: FactoryBot.create(:account, email: "junior_student@test.com")
+      )
+      another_student = FactoryBot.build(
+        :student_profile,
+        parent_guardian_email: "junior_student@test.com"
+      )
+
+      expect(another_student).to be_invalid
+      expect(another_student.errors[:parent_guardian_email]).to include(
+        "cannot match your (or any other student's) email"
+      )
+    end
+
+    it "allows a beginner parent's email address to be used as another student's parent/guardian email address" do
+      FactoryBot.create(
+        :student,
+        :beginner,
+        account: FactoryBot.create(:account, email: "parent_of_beginner@test.com")
+      )
+      another_student = FactoryBot.build(
+        :student_profile,
+        parent_guardian_email: "parent_of_beginner@test.com"
+      )
+
+      expect(another_student).to be_valid
+      expect(another_student.errors[:parent_guardian_email]).not_to include(
+        "cannot match your (or any other student's) email"
+      )
+    end
   end
 
   it "allows ON FILE as the email ONLY by admin action" do
@@ -164,22 +210,6 @@ RSpec.describe StudentProfile do
     expect(
       profile.update(school_name: "some other change works")
     ).to be true
-  end
-
-  it "doesn't allow a student email to be used as parent email" do
-    FactoryBot.create(
-      :student,
-      account: FactoryBot.create(:account, email: "noway@jose.com")
-    )
-    profile = FactoryBot.build(
-      :student_profile,
-      parent_guardian_email: "noway@jose.com"
-    )
-
-    expect(profile).not_to be_valid
-    expect(profile.errors[:parent_guardian_email]).to include(
-      "cannot match your (or any other student's) email"
-    )
   end
 
   it "re-sends the parental consent on update of parent email" do
