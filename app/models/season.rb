@@ -9,7 +9,7 @@ class Season
   end
 
   def self.deadline
-    day = ImportantDates.submission_deadline.day.ordinalize
+    day = ImportantDates.submission_deadline.day
     ImportantDates.submission_deadline.strftime("%B #{day}")
   end
 
