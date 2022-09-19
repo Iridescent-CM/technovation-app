@@ -389,10 +389,11 @@ class StudentProfile < ActiveRecord::Base
       ) ||
       account&.division&.beginner?
 
-    if Account.joins(:student_profile).where(
-         "lower(email) = ?",
-         parent_guardian_email.downcase
-       ).any?
+    if Account.joins(:student_profile, :division)
+        .where("lower(email) = ?", parent_guardian_email.downcase)
+        .where.not(division: {name: "beginner"})
+        .any?
+
       errors.add(:parent_guardian_email, :found_in_student_accounts)
     end
 
