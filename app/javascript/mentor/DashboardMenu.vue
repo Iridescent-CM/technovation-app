@@ -2,7 +2,7 @@
   <ul class="tabs__menu tabs-menu__parent-menu padding--none">
     <tab-link
       :class="registrationTabLinkClasses"
-      :to="{ name: 'basic-profile', meta: { active: registrationPagesActive } }"
+      :to="{ name: 'data-use', meta: { active: registrationPagesActive } }"
       :condition-to-enable="true"
       :condition-to-complete="true"
     >
