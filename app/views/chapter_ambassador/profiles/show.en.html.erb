@@ -6,14 +6,12 @@
       <div class="col--sticky">
         <div class="hidden-xs hidden-xxs">
           <h3><%= current_ambassador.full_name %></h3>
-
-          <%= image_tag current_ambassador.profile_image_url,
-            class: "grid__cell-img" %>
-
-          <%= render 'image_upload',
-            modal_id: "image_upload_desktop",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
+          <div>
+            <%= render 'profiles/filestack_profile_image_tag' %>
+          </div>
+          <div>
+            <%= render 'profiles/filestack_profile_image_upload' %>
+          </div>
         </div>
 
         <%= render 'chapter_ambassador/profiles/menu' %>
@@ -29,13 +27,12 @@
         </div>
 
         <div class="hidden-sm hidden-md hidden-lg tabs__tab-content" id="avatar">
-          <%= image_tag current_ambassador.profile_image_url,
-            class: "grid__cell-img" %>
-
-          <%= render 'image_upload',
-            modal_id: "image_upload_mobile",
-            heading: "Upload a profile photo",
-            size: "300x300" %>
+          <div>
+            <%= render 'profiles/filestack_profile_image_tag' %>
+          </div>
+          <div>
+            <%= render 'profiles/filestack_profile_image_upload' %>
+          </div>
         </div>
 
         <div class="tabs__tab-content" id="location">

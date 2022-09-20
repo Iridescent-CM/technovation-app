@@ -3,13 +3,6 @@ module ProfileController
 
   included do
     helper_method :profile, :edit_profile_path
-
-    before_action -> {
-      @uploader = ImageDirectUploader.new
-      @uploader.success_action_redirect = send(
-        "#{profile.class.name.underscore}_image_upload_confirmation_url"
-      )
-    }, only: :show
   end
 
   def update
@@ -72,7 +65,8 @@ module ProfileController
         :latitude,
         :longitude,
         :icon_path,
-      ],
+        :profile_image
+      ]
     ).tap do |tapped|
       if tapped[:account_attributes]
         tapped[:account_attributes][:id] = current_account.id

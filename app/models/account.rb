@@ -480,8 +480,6 @@ class Account < ActiveRecord::Base
       .where("divisions.name = ?", Division.names[division])
   }
 
-  mount_uploader :profile_image, ImageProcessor
-
   has_secure_token :auth_token
   has_secure_token :consent_token
   has_secure_token :password_reset_token
@@ -512,8 +510,6 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :email,
     case_sensitive: false,
     scope: :deleted_at
-
-  validates :profile_image, verify_cached_file: true
 
   validates :existing_password,
     valid_password: true,
@@ -698,7 +694,13 @@ class Account < ActiveRecord::Base
   end
 
   def profile_image_url
-    icon_path.blank? ? super : icon_path
+    if profile_image.blank?
+      "https://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/placeholders/1.svg"
+    elsif profile_image.include? "filestackcontent"
+      profile_image
+    else
+      "https://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/uploads/account/profile_image/#{id}/#{profile_image}"
+    end
   end
 
   def can_be_a_mentor?(**options)

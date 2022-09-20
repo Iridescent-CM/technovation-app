@@ -11,7 +11,7 @@ class ChapterAmbassadorSerializer
   end
 
   attribute(:avatar_url) do |account|
-    account.profile_image.thumb.url
+    account.profile_image_url
   end
 
   attribute(:has_provided_intro) do |account|
