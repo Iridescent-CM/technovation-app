@@ -44,17 +44,6 @@
     </tab-link>
 
     <tab-link
-      :to="{ name: 'basic-profile' }"
-      css-classes="tabs__menu-link--has-subtitles"
-      :disabled-tooltip="basicProfileDisabledMessage"
-      :condition-to-enable="termsAgreed && isAgeSet && isProfileChosen"
-      :condition-to-complete="isBasicProfileSet"
-    >
-      Profile detail
-      <span>{{ profileLabel }}</span>
-    </tab-link>
-
-    <tab-link
       :to="{ name: 'login' }"
       :disabled-tooltip="Tooltips.MUST_FILL_OTHER_SECTIONS"
       :condition-to-enable="readyForAccount"
@@ -165,19 +154,6 @@ export default {
 
       if (!this.isAgeSet)
         return Tooltips.MUST_SET_AGE
-
-      return ''
-    },
-
-    basicProfileDisabledMessage () {
-      if (!this.termsAgreed)
-        return Tooltips.MUST_AGREE_TERMS
-
-      if (!this.isAgeSet)
-        return Tooltips.MUST_SET_AGE
-
-      if (!this.profileChoice)
-        return Tooltips.MUST_CHOOSE_PROFILE
 
       return ''
     },

@@ -59,13 +59,7 @@
       >
         Back
       </a>
-      <button
-        class="button"
-        :disabled="!nextStepEnabled"
-        @click.prevent="handleSubmit"
-      >
-        Next
-      </button>
+      <br clear="all">
     </div>
   </form>
 </template>
@@ -103,10 +97,6 @@ export default {
     ...mapState(['months', 'birthMonth', 'genderIdentity', 'isLocked']),
 
     ...mapGetters(['getAge', 'getAgeByCutoff', 'isAgeSet', 'getBirthdate']),
-
-    nextStepEnabled () {
-      return this.isAgeSet && !!this.profileChoice
-    },
 
     profileChoice: {
       get () {
@@ -155,13 +145,6 @@ export default {
 
   methods: {
     ...mapActions(['updateProfileChoice']),
-
-    handleSubmit () {
-      if (!this.nextStepEnabled) return false
-      this.updateProfileChoice(this.profileChoice).then(() => {
-        this.$router.push({ name: 'basic-profile' })
-      })
-    },
 
     navigateBack () {
       this.$router.push({ name: 'age' })
