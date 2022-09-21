@@ -1,5 +1,3 @@
-<%= filestack_image current_profile.profile_image_url,
-                    transform: filestack_transform.resize(width: 200, height: 200) ,
-                    id: 'filestack-img-tag' %>
-
-<div id="thumbnail-container"></div>
+  <%= image_tag current_profile.profile_image_url,
+                id: 'main-profile-image',
+                class: 'w-24 h-24 rounded-bl-3xl rounded-tr-3xl mb-3' %>
