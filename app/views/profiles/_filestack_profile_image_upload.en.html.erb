@@ -8,7 +8,7 @@
       data: $("#filestack-form").serialize(),
       success: function() {
         const filestackImgTag = $("#filestack-img-tag");
-        filestackImgTag.attr('src',
+        filestackImgTag.attr("src",
           filestack_client.transform(data.handle, {
             resize: {
                 width: 200,
@@ -18,7 +18,7 @@
         );
 
         const navbarProfileImg = $("#profile-image");
-        navbarProfileImg.attr('src', filestack_client.transform(data.handle))
+        navbarProfileImg.attr("src", filestack_client.transform(data.handle))
       }
     });
   }
