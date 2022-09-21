@@ -50,6 +50,6 @@ html{
     @apply text-white block p-2 text-right text-base font-bold shadow-sm bg-tg-magenta
 }
 
-.filestack-profile-img{
+.filestack-profile-img {
     @apply rounded-bl-3xl rounded-tr-3xl mb-3 object-cover w-48 h-48
 }
