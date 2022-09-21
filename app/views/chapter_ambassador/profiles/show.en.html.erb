@@ -6,9 +6,9 @@
       <div class="col--sticky">
         <div class="hidden-xs hidden-xxs">
           <h3><%= current_ambassador.full_name %></h3>
-          <div>
-            <%= render 'profiles/filestack_profile_image_tag' %>
-          </div>
+          <%= image_tag current_ambassador.profile_image_url,
+                        id: "main-profile-image",
+                        class: "grid__cell-img og-style-filestack-img" %>
           <div>
             <%= render 'profiles/filestack_profile_image_upload' %>
           </div>
