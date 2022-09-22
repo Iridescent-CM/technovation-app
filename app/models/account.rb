@@ -695,8 +695,8 @@ class Account < ActiveRecord::Base
 
   def profile_image_url
     if profile_image.blank?
-      "https://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/placeholders/1.svg"
-    elsif profile_image.include? "filestackcontent"
+      "placeholders/avatars/1.svg"
+    elsif profile_image.include?("filestackcontent")
       profile_image
     else
       "https://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/uploads/account/profile_image/#{id}/#{profile_image}"

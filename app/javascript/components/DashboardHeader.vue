@@ -33,12 +33,12 @@
     <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
       <div class="grid__cell">
         <h1 class="page-heading">
-          <img
-            :src="currentAccountAvatarUrl"
-            class="profile-image"
-            width="40"
-            height="40"
-          />
+<!--          <img-->
+<!--            :src="currentAccountAvatarUrl"-->
+<!--            class="profile-image"-->
+<!--            width="40"-->
+<!--            height="40"-->
+<!--          />-->
 
           {{ currentAccountName }}
 
