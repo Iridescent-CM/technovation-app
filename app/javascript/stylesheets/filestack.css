@@ -1,0 +1,7 @@
+.filestack-picker-btn {
+    @apply w-auto mr-auto mt-4 text-sm rounded bg-zinc-300 p-2
+}
+
+.filestack-profile-img {
+    @apply rounded-bl-3xl rounded-tr-3xl mb-3 object-cover w-48 h-48
+}
