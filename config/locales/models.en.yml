@@ -38,6 +38,7 @@ en:
       virtual: "I am available to mentor teams virtually (online) from anywhere."
       job_title: "Job title"
       school_company_name: "School or company name"
+      bio: "Bio"
 
     parental_consent:
       electronic_signature: "Your name"
