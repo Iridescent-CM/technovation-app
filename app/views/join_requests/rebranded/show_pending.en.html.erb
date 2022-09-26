@@ -1,0 +1,49 @@
+<% provide :title, "Invite Details" %>
+
+<div class="container mx-auto flex flex-col lg:flex-row justify-around w-full lg:w-1/2">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Invite Details"} do %>
+    <h3>
+      <%= t(
+        "views.join_requests.show.greeting",
+        name: @join_request.requestor_first_name,
+        team_name: @join_request.team_name
+      ) %>
+    </h3>
+
+    <p class="mb-6"><%= t("views.join_requests.show.message") %></p>
+
+    <%= render "profiles/rebrand/public_show",
+               account: @join_request.requestor %>
+
+    <%= render "application/templates/tw_thick_rule" %>
+
+    <div class="flex justify-between mt-8">
+      <%= button_to(
+        t("controllers.join_requests.update.decline", name: @join_request.requestor_name),
+          send("#{current_scope}_join_request_path", @join_request),
+          class: "tw-gray-btn",
+          params: {
+            join_request: { status: :declined },
+          },
+          method: :put,
+          data: {
+            confirm: t("views.join_requests.form.confirm_decline")
+          }
+      ) %>
+
+      <%= button_to(
+        t("controllers.join_requests.update.accept", name: @join_request.requestor_first_name),
+          send("#{current_scope}_join_request_path", @join_request),
+          class: "tw-green-btn",
+          params: {
+            join_request: { status: :approved },
+          },
+          method: :put,
+          data: {
+            confirm: t("views.join_requests.form.confirm_accept"),
+            positive: true
+          }
+      ) %>
+    </div>
+  <% end %>
+</div>
