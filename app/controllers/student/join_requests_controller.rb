@@ -27,6 +27,8 @@ module Student
       elsif reviewer_is_unauthorized?(@join_request)
         redirect_to student_dashboard_path,
           alert: "You do not have permission to visit that page"
+      elsif @join_request.status == :pending
+        render template: "join_requests/rebranded/show_pending"
       else
         render template: "join_requests/show_#{@join_request.status}"
       end
