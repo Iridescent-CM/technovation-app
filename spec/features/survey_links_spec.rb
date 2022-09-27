@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Survey links" do
+RSpec.xfeature "Survey links" do
   %i{student mentor}.each do |scope|
     before do
       SeasonToggles.set_survey_link(scope, "survey", "http")
