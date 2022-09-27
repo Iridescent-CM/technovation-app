@@ -15,6 +15,9 @@
 
     <%= csrf_meta_tags %>
 
+    <%= filestack_js_include_tag %>
+    <%= filestack_js_init_tag %>
+
     <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
     <%= javascript_packs_with_chunks_tag("application", "admin", data: { turbolinks_track: :reload }) %>
   </head>
