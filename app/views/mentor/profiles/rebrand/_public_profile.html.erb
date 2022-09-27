@@ -1,8 +1,21 @@
-<p class="font-bold"><%= t('models.mentor_profile.school_company_name') %></p>
-<p><%= account.school_company_name %></p>
+<dl>
+  <dt class="leading-tight"><%= t("models.account.address") %></dt>
+  <dd class="leading-tight"><%= account.address_details %></dd>
 
-<p class="font-bold"><%= t('models.mentor_profile.job_title') %></p>
-<p><%= account.job_title %></p>
+  <dt class="leading-tight"><%= t("models.account.gender") %></dt>
+  <dd class="leading-tight"><%= account.gender %></dd>
 
-<p class="font-bold"><%= t('models.mentor_profile.expertise_names') %></p>
-<p><%= account.expertise_names.present? ? account.expertise_names.to_sentence : 'No expertises selected'%></p>
+  <dt class="leading-tight"><%= t("models.mentor_profile.school_company_name") %></dt>
+  <dd class="leading-tight"><%= account.school_company_name %></dd>
+
+  <dt class="leading-tight"><%= t("models.mentor_profile.job_title") %></dt>
+  <dd class="leading-tight"><%= account.job_title %></dd>
+
+  <dt class="leading-tight"><%= t("models.mentor_profile.expertise_names") %></dt>
+  <dd class="leading-tight"><%= account.expertise_names.present? ? account.expertise_names.to_sentence : "No expertises selected"%></dd>
+</dl>
+
+<div>
+  <h3 class="text-neutral-700 font-bold leading-tight"><%= t("models.mentor_profile.bio") %></h3>
+  <%= account.bio.present? ? simple_format(account.bio) : "This mentor has not written a bio." %>
+</div>

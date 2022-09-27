@@ -1,33 +1,13 @@
 <% title ||= t("views.accounts.show.title") %>
 
 <section class="mb-8">
-
   <h3 class="text-3xl font-bold mb-4"><%= account.full_name %></h3>
 
-  <div class="flex flex-col lg:flex-row lg:space-x-12 mb-4">
+  <div class="flex flex-wrap flex-col lg:flex-row lg:items-start mb-4">
     <%= image_tag account.profile_image_url,
-                  class: "rounded-tr-3xl rounded-bl-3xl w-1/4" %>
+                  class: "rounded-tr-3xl rounded-bl-3xl w-1/4 mr-8" %>
 
-    <div class="mt-auto">
-      <p class="font-bold">Location</p>
-      <p><%= account.address_details %></p>
-
-      <% unless account.student_profile.present? %>
-        <p class="font-bold"><%= t('models.account.gender') %></p>
-        <p><%= account.gender %></p>
-      <% end %>
-
-      <%= render "#{account.scope_name}/profiles/rebrand/public_profile",
-                 account: account %>
-    </div>
-  </div>
-
-  <div>
-    <p class="font-bold">Bio</p>
-    <% if account.respond_to?(:bio) %>
-      <p><%= simple_format account.bio %></p>
-    <% else %>
-      <p> This mentor has not written a bio.</p>
-    <% end %>
+    <%= render "#{account.scope_name}/profiles/rebrand/public_profile",
+               account: account %>
   </div>
 </section>
