@@ -1,7 +1,11 @@
 <div>
   <h3 class="font-bold text-2xl mb-4"><%= t("views.teams.show.mentors_subheading") %></h3>
   <% if team.mentors.any? %>
-    <%= render partial: "teams/rebrand/public_member", collection: team.mentors %>
+    <% if current_profile.rebranded? %>
+      <%= render partial: "teams/rebrand/public_member", collection: team.mentors %>
+    <% else %>
+      <%= render partial: "teams/public_member", collection: team.mentors %>
+    <% end %>
   <% else %>
     <p>This team doesn't have any mentors yet!</p>
   <% end %>
