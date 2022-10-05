@@ -1,0 +1,27 @@
+<p class="font-bold">If your parent or guardian does not have an email address:</p>
+
+<p>
+  Print these
+  <%= link_to "permission",
+              student_downloadable_parental_consent_path(format: :pdf),
+              target: :_blank,
+              class: "tw-link"
+  %>
+  and
+
+  <%= link_to "media",
+              "https://s3.amazonaws.com/curiositymachine/units/resources/TGMediaConsent.pdf",
+              target: :_blank,
+              class: "tw-link"
+  %>
+  consent forms and send the signed signature pages as attachments to
+
+  <%= mail_to ENV.fetch("HELP_EMAIL"),
+              "support@technovation.org",
+              subject: "Parental consent signed form",
+              class:"tw-link"
+  %>.
+  Please make sure the pages are well-lit and easy to read.
+  Make sure to include your name as it appears on the platform in
+  the email subject line.
+</p>

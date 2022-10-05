@@ -57,7 +57,7 @@ export default {
     return {
       resourceLinks: [
         {
-          heading: 'Curriculum Lessons',
+          heading: 'Student Curriculum',
           url: '/mentor/dashboard#/curriculum',
           text: 'Open the Technovation Curriculum',
         },
@@ -72,12 +72,6 @@ export default {
           heading: 'Safety Information',
           url: 'https://www.technovation.org/safety/',
           text: 'Stay Safe Online',
-        },
-
-        {
-          heading: 'Mentor Guide',
-          url: 'https://docs.google.com/document/d/1rqd8DB4e-JqPRIG-yrdqPT_8zECbyXnoR9njo7FwZ6Y/edit#heading=h.kxoc4txdn9x',
-          text: 'Read our Tips and Strategies',
         },
 
         {
