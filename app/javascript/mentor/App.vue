@@ -57,7 +57,7 @@ export default {
     return {
       resourceLinks: [
         {
-          heading: 'Curriculum Lessons',
+          heading: 'Student Curriculum',
           url: '/mentor/dashboard#/curriculum',
           text: 'Open the Technovation Curriculum',
         },
