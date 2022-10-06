@@ -1,6 +1,6 @@
 <tr>
   <td class="content-wrap">
-    <meta itemprop="name" content="Confirm Email">
+    <meta itemprop="name" content="Confirm Email"/>
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td class="content-block">
@@ -10,60 +10,136 @@
 
       <tr>
         <td class="content-block">
-          Welcome to the Technovation Girls Community!
+          Welcome to the Technovation Girls community! We're so glad your daughter is
+          joining us this year. In this email you can learn a little bit more about 
+          Technovation Girls, what your daughter will be doing,
+          and what you can do to support her.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Thank you for supporting your daughter to participate in Technovation Girls, the technology entrepreneurship program and competition for students who identify as female, trans, nonbinary or gender nonconforming offered by
-          <%= link_to "Technovation", "https://www.technovation.org/" %>,
-          a technology education nonprofit.
+          <strong>About Technovation Girls</strong><br /><br />
+
+          <%= link_to "Technovation Girls", @technovation_url %>
+          is a free technology entrepreneurship program for girls ages 8-18
+          that offers girls around the world the opportunity to learn
+          the skills they need to become problem solvers and leaders who 
+          aren't afraid to learn new technologies.
+          Every year we invite girls to identify a problem in their community,
+          and then challenge and support them to solve it.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          During the program, your child will learn the basics of coding and/or AI models and create a mobile app or AI project that solves a problem in her community. She will learn to be a technology entrepreneur! Technovation Girls is more than a coding program; it is an opportunity for your daughter to develop a variety of life and professional skills and challenge herself.
+          Girls work in teams to build a mobile app or an AI project along with
+          a business plan to bring the solution to the world. Girls are supported
+          by mentors and guided by our curriculum.
+          In April, teams submit their app or AI prototype, pitch, and other
+          <%= link_to "submission materials", "https://technovationchallenge.org/submission-guidelines/" %> 
+          online. Judges from around the world provide written feedback to teams to help them make 
+          their ideas even better in the future!
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          It won’t always be easy, but she will be encouraged to persist when she meets adversity and obstacles. Completing the Technovation Girls curriculum is a huge accomplishment for every participant. When she is done, she will have completed the early stages of founding a real-life tech startup. Your child’s learning is at the center of all that we do. We share your commitment to your daughter’s success and have created a page to help you understand
-          <%= link_to "more about the Technovation program", "https://www.technovation.org/about/" %>,
-          and how you can help support your child’s participation. We take safety seriously and invite you to review our safety guidelines and other helpful resources
-          <%= link_to "here", "https://www.technovation.org/safety/" %>.
+          After all of the submissions have been judged, finalist teams are invited to pitch 
+          their ideas live to finalist judges to see who will win a special prize, and all 
+          participants and their families (including you!) are invited to attend our 
+          virtual World Summit celebration.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Whether your child chooses to work in a team or on her own, we recommend that she be supported by a mentor (an educator, parent, or industry professional). In addition to completing Technovation’s online curriculum, your child will be expected to submit her project’s deliverables online. Your child can work and communicate with her mentor either online or at in-person sessions, following COVID-19 related safety guidelines in your area. Parents are always welcome to attend any sessions and monitor all communications - here is a 
-          <%= link_to "sample communication plan", "https://techstage19.wpengine.com/wp-content/uploads/2019/10/Mentorship-Communications-Parental-Consent.pdf" %>.
+          <strong>Your daughter will learn&hellip;</strong>
 
-      <tr>
-        <td class="content-block">
-          After your daughter’s team submits their idea, Technovation judges, who are technology and entrepreneurship professionals, will review the team’s entry and provide feedback on their work. After the judging process, if your daughter is selected as a program finalist or winner, she and her team will be invited to attend the World Summit and present their pitch live to a panel of judges.
+          <ul>
+            <li>How to identify and solve a problem</li>
+            <li>New technology: How to code and create a mobile app or create and train an 
+              AI-powered machine learning model that can interact with the user</li>
+            <li>What it takes to bring an idea or business to life!</li>
+          </ul>
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          We are delighted to help foster your daughter’s interest and development in technology and entrepreneurship and we are honored to work with students everywhere as they develop new skills and confidence.
+          <strong>Your daughter will&hellip;</strong>
+
+          <ul>
+            <li>Develop a mobile app prototype or AI project</li>
+            <li>
+              Work with other girls and one or more mentors to find the best approach 
+              to solving their chosen problem taking constraints into account
+            </li>
+            <li>Make a business plan and revenue model, or user adoption plan</li>
+            <li>Gather user feedback from community members about her idea and prototype(s)</li>
+            <li>Create pitch and technical videos to show her ideas</li>
+          </ul>
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          If you have any questions at any time, please don’t hesitate to contact us at <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+          <strong>How you can support your daughter and her team</strong>
+
+          <ul>
+            <li>
+              <strong>Share your experience:</strong>
+
+              Through Technovation Girls, girls undertake a big project and 
+              are expected to learn how to work as a team, collaborate on 
+              a project, and divide work fairly. Share your experience and 
+              advice for staying motivated through tough times, managing disagreements,
+              addressing frustration, and communicating clearly.
+            </li>
+
+            <li>
+              <strong>Share your network:</strong>
+
+              Do you know someone who has a really interesting job? Would they
+              be willing to give a brief overview of their work to your
+              daughter and her team? Can you introduce your daughter and her team
+              to professionals who might have advice for them as they work on part
+              of their project?
+            </li>
+
+            <li>
+              <strong>Encourage others to sign up:</strong>
+
+              Do you have friends with daughters who might be interested?
+              Or colleagues who might want to mentor a team?
+              Invite them to learn more about Technovation Girls and join the movement.
+            </li>
+
+            <li>
+              <strong>Stay informed:</strong>
+
+              You’ll get around 3 emails from us at Technovation from now until April 
+              with details about how to support your daughter at different points in 
+              the season and information about virtual learning and community opportunities, 
+              so stay tuned! Make sure to also review the
+              <%= link_to "Parent Resource", "https://technovationchallenge.org/parent-resources/"  %>
+              page for more information.
+            </li>
+          </ul>
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Warm Regards,<br>
-          The Technovation Staff
+          Thank you again for encouraging your daughter to dream big and develop
+          real solutions to community problems.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Warmly,<br />
+          The Technovation Team
         </td>
       </tr>
     </table>
