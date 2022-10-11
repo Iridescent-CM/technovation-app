@@ -15,7 +15,7 @@ const Tooltips = {
     }
   },
 
-  AVAILABLE_LATER: 'This feature will open later in the Season',
+  AVAILABLE_LATER: 'This feature will open later in the season if your local chapter is hosting an event.',
 }
 
 export default {

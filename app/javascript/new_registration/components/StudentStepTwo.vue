@@ -100,6 +100,12 @@
             @keyup="checkValidation"
             @blur="checkValidation"
           />
+
+          <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2">
+            <p class="text-left">
+              A parental consent form will be sent to this email address.
+            </p>
+          </div>
         </div>
       </div>
     </div>
