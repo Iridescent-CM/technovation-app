@@ -155,8 +155,6 @@ class Team < ActiveRecord::Base
     team_photo
   end
 
-  mount_uploader :team_photo, TeamPhotoProcessor
-
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(:division).where(
@@ -261,7 +259,6 @@ class Team < ActiveRecord::Base
 
   validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true
-  validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
 
