@@ -7,7 +7,10 @@
   }
 %>
 
-<%= simple_form_for @media_consent, html: {class: "consent-form"} do |f| %>
+<%= simple_form_for @media_consent,
+  html: {class: "consent-form"},
+  url:  media_consent_path(@media_consent, anchor: "media-consent-form") do |f| %>
+
   <%= render "errors", record: @media_consent %>
 
   <div class="prose consent-document prose-sm w-full max-w-full mt-8">
@@ -18,7 +21,7 @@
 
   <div class="w-full border-gray-400 my-8"></div>
 
-  <div style="my-4">
+  <div id="media-consent-form" style="my-4">
     <%= f.input :consent_provided,
       as: :radio_buttons,
       label: "",

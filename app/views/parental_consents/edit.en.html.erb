@@ -13,7 +13,10 @@
   }
 %>
 
-<%= simple_form_for @parental_consent, html: {class: "consent-form"} do |f| %>
+<%= simple_form_for @parental_consent,
+  html: {class: "consent-form"},
+  url:  parental_consent_path(@parental_consent, anchor: "parental-consent-form") do |f| %>
+
   <%= render "errors", record: @parental_consent %>
 
   <div class="prose consent-document prose-sm w-full max-w-full mt-10">
@@ -24,7 +27,7 @@
 
   <div class="w-full border-gray-400 my-8"></div>
 
-  <div class="my-4">
+  <div id="parental-consent-form" class="my-4">
     <%= label_tag t("views.parental_consents.student_name.label") %>
     <%= text_field_tag nil, f.object.student_profile.full_name, disabled: "disabled" %>
   </div>
