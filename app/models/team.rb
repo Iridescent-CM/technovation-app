@@ -274,6 +274,16 @@ class Team < ActiveRecord::Base
     has_students? && all_students_onboarded?
   end
 
+  def team_photo_url
+    if team_photo.blank?
+      default_team_photo_url
+    elsif team_photo.include?("filestackcontent")
+      team_photo
+    else
+      "https://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/uploads/team/team_photo/#{id}/#{team_photo}"
+    end
+  end
+
   def photo_url
     team_photo_url
   end
@@ -397,5 +407,15 @@ class Team < ActiveRecord::Base
 
   def assigned_judge_names
     assigned_judges.flat_map(&:full_name)
+  end
+
+  private
+
+  def default_team_photo_url
+    if Season.current.year >= 2023
+      ActionController::Base.helpers.asset_path("placeholders/default-team-avatar.png")
+    else
+      ActionController::Base.helpers.asset_path("placeholders/team-missing.jpg")
+    end
   end
 end
