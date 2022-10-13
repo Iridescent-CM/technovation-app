@@ -88,7 +88,7 @@ en:
     media_consents:
       invalid: "You don't have permission to go there"
       update:
-        success: "Thank you for signing the media consent form"
+        success_html: "Thank you for signing the forms. Your child can now join a Technovation Girls team. Please find more information on supporting her participation in Technovation on our <a href='https://technovationchallenge.org/parent-resources/' class='underline'>Parent Resources</a> page."
 
     parental_consents:
       create:

@@ -36,7 +36,13 @@
     <div class="max-w-prose mx-auto px-8">
       <%= image_tag "new_registration/tg-girls-logo.png", alt:"Technovation Girls Logo", id:"tg-logo", class:"w-72 -ml-6"%>
 
-      <%= render "application/flash_messages" %>
+      <div id="flash">
+        <% flash.each do |type, message| %>
+          <div>
+            <%= message.html_safe %>
+          </div>
+        <% end %>
+      </div>
 
       <%= yield %>
     </div>
