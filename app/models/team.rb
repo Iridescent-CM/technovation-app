@@ -412,7 +412,7 @@ class Team < ActiveRecord::Base
   private
 
   def default_team_photo_url
-    if Season.current.year >= 2023
+    if Season.current.year >= 2023 && current?
       ActionController::Base.helpers.asset_path("placeholders/default-team-avatar.png")
     else
       ActionController::Base.helpers.asset_path("placeholders/team-missing.jpg")
