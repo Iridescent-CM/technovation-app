@@ -34,13 +34,13 @@
       <div class="w-1/4 self-end">
         <div class="ml-4 flex flex-col items-center content-start">
           <div>
-            <%= image_tag team.photo_url, class: "max-w-full h-auto mb-4 rounded-tl-sm rounded-tr-3xl rounded-bl-3xl rounded-br-sm" %>
+            <%= image_tag team.team_photo_url,
+                          class: "max-w-full h-auto mb-4 rounded-tl-sm rounded-tr-3xl rounded-bl-3xl rounded-br-sm filestack-profile-img",
+                          id: "team-photo" %>
           </div>
 
           <div>
-            <button class="filestack-picker-btn cursor-not-allowed">
-              Team photo upload coming soon
-            </button>
+            <%= render "filestack_uploads/team_photo_upload" %>
           </div>
         </div>
       </div>

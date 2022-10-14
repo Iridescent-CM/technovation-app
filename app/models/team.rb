@@ -155,8 +155,6 @@ class Team < ActiveRecord::Base
     team_photo
   end
 
-  mount_uploader :team_photo, TeamPhotoProcessor
-
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(:division).where(
@@ -261,7 +259,6 @@ class Team < ActiveRecord::Base
 
   validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true
-  validates :team_photo, verify_cached_file: true
 
   delegate :name, to: :division, prefix: true
 
@@ -275,6 +272,16 @@ class Team < ActiveRecord::Base
 
   def qualified?
     has_students? && all_students_onboarded?
+  end
+
+  def team_photo_url
+    if team_photo.blank?
+      default_team_photo_url
+    elsif team_photo.include?("filestackcontent")
+      team_photo
+    else
+      "https://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/uploads/team/team_photo/#{id}/#{team_photo}"
+    end
   end
 
   def photo_url
@@ -400,5 +407,15 @@ class Team < ActiveRecord::Base
 
   def assigned_judge_names
     assigned_judges.flat_map(&:full_name)
+  end
+
+  private
+
+  def default_team_photo_url
+    if Season.current.year >= 2023 && current?
+      ActionController::Base.helpers.asset_path("placeholders/default-team-avatar.png")
+    else
+      ActionController::Base.helpers.asset_path("placeholders/team-missing.jpg")
+    end
   end
 end

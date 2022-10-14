@@ -27,6 +27,7 @@ module Admin
       params.require(:team).permit(
         :name,
         :description,
+        :team_photo,
         :city,
         :state_province,
         :country
