@@ -49,9 +49,6 @@
 
   <div>
     <%= f.input :student_profile_consent_token, as: :hidden %>
-    <%= f.button :submit,
-      t("views.parental_consents.new.submit"),
-      class: "tw-green-btn"
-    %>
+    <%= f.submit t("views.parental_consents.new.submit"), class: "tw-green-btn cursor-pointer" %>
   </div>
 <% end %>
