@@ -31,7 +31,7 @@ class MediaConsentsController < ApplicationController
           action: :show,
           token: params.fetch(:token)
         },
-        success: t("controllers.media_consents.update.success")
+        success: t("controllers.media_consents.update.success_html")
       )
     else
       render :edit

@@ -22,7 +22,7 @@
     input[type="checkbox"], input[type="radio"] {
         @apply inline-block focus:ring-transparent text-energetic-blue mr-2
     }
-    
+
     input[type="checkbox"], input[type="radio"] {
         color: #43b02a;
     }
@@ -38,5 +38,8 @@
     input[type="checkbox"]:disabled, input[type="radio"]:disabled {
         @apply text-gray-400
     }
-}
 
+    .radio label, .boolean label {
+      @apply cursor-pointer
+    }
+}
