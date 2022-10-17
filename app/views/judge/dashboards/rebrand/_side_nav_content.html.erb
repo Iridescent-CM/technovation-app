@@ -26,11 +26,18 @@
   <% else %>
     <%= web_icon("circle-o") %>
   <% end  %>
-  <%= link_to "Judge Training",
-              "https://technovationchallenge.org/judge-training/",
-              target: "_blank",
-              id: "judge-training-tab"
-  %>
+
+  <% if SeasonToggles.judging_enabled? || SeasonToggles.judge_registration_open? %>
+    <%= link_to "Judge Training",
+                "https://technovationchallenge.org/judge-training/",
+                target: "_blank",
+                id: "judge-training-tab" %>
+  <% else %>
+    <span class='has-tooltip cursor-not-allowed'>
+      <span class='tooltip-text'>Currently not available</span>
+      Judge Training
+    </span>
+  <% end %>
 </div>
 
 <% if current_judge.onboarded? && SeasonToggles.judging_enabled? %>
