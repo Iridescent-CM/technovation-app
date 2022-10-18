@@ -1,0 +1,7 @@
+.tooltip-text {
+    @apply rounded-tl-lg invisible absolute z-50 rounded-tr-lg rounded-br-lg shadow-md p-2 bg-red-100 text-black ml-24 -mt-10;
+}
+
+.has-tooltip:hover .tooltip-text {
+    @apply visible ;
+}
