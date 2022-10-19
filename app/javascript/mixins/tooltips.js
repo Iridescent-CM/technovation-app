@@ -15,7 +15,8 @@ const Tooltips = {
     }
   },
 
-  AVAILABLE_LATER: 'This feature will open later in the season if your local chapter is hosting an event.',
+  REGIONAL_PITCH_EVENTS_AVAILABLE_LATER: 'This feature will open later in the season if your local chapter is hosting an event.',
+  SCORES_AND_CERTIFICATES_AVAILABLE_LATER: 'This feature will open later in the season.'
 }
 
 export default {
