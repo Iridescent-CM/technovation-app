@@ -52,7 +52,7 @@
     <tab-link
       :class="eventsTabLinkClasses"
       :to="{ name: 'events', meta: { active: eventsPagesActive } }"
-      :disabled-tooltip="tooltips.AVAILABLE_LATER"
+      :disabled-tooltip="tooltips.REGIONAL_PITCH_EVENTS_AVAILABLE_LATER"
       :condition-to-enable="regionalPitchEventsEnabled"
       :condition-to-complete="false"
     >
@@ -65,7 +65,7 @@
     <tab-link
       :class="scoresTabLinkClasses"
       :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
-      :disabled-tooltip="tooltips.AVAILABLE_LATER"
+      :disabled-tooltip="tooltips.SCORES_AND_CERTIFICATES_AVAILABLE_LATER"
       :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
     >
