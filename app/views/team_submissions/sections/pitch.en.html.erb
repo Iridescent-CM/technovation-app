@@ -16,13 +16,13 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
-  title: "Demo video",
+  title: t("submissions.demo_video").titleize,
   scope: current_scope,
   attribute: :demo_video_link,
-  cta_when_empty: "Add the demo video link",
-  cta_when_filled: "Change the demo video link" do %>
+  cta_when_empty: "Add the #{t("submissions.demo_video")} link",
+  cta_when_filled: "Change the #{t("submissions.demo_video")} link" do %>
 
-  <%= link_to web_icon("play-circle-o", text: "Watch the demo video"),
+  <%= link_to web_icon("play-circle-o", text: "Watch the #{t("submissions.demo_video")}"),
     "#",
     class: "button button--small",
     data: {
