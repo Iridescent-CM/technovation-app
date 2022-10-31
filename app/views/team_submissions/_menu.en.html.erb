@@ -134,7 +134,7 @@
           <%= link_to submission_progress_web_icon(
             submission,
             :demo_video,
-            "Demo video"
+            t("submissions.demo_video").upcase_first
           ),
           send(
             "#{current_scope}_team_submission_path",
