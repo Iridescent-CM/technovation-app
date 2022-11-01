@@ -81,7 +81,7 @@ RSpec.feature "Student team submissions" do
     click_link "Pitch"
 
     expect(page).to have_link(
-      "Add the demo video link",
+      "Add the technical video link",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :demo_video_link

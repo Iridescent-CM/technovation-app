@@ -247,25 +247,31 @@ class TeamSubmission < ActiveRecord::Base
     presence: true,
     if: ->(team_submission) { team_submission.game? }
 
-  validates :pitch_video_link, 
-    format: { 
-      with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/ 
-    }, 
+  validates :pitch_video_link,
+    format: {
+      with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/
+    },
     allow_blank: true
-  
-  validates :demo_video_link, 
-    format: { 
-      with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/ 
-    }, 
+
+  validates :demo_video_link,
+    format: {
+      with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/
+    },
     allow_blank: true
 
   validate :demo_and_pitch_video_links_are_different, on: :update,
            if: ->(s) { s.demo_video_link.present? || s.pitch_video_link.present? }
 
   def demo_and_pitch_video_links_are_different
-    errors.add(:base, "Demo and pitch video links cannot be the same! Please add a valid video link.") if demo_video_link == pitch_video_link
+    if demo_video_link == pitch_video_link
+      errors.add(
+        :base,
+        "#{I18n.t("submissions.demo_video").truncate_words(1, omission: "").capitalize}
+          and pitch video links cannot be the same! Please add a valid video link."
+      )
+    end
   end
-  
+
   delegate :name,
     :division_name,
     :photo,
