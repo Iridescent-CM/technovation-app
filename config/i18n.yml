@@ -1,0 +1,4 @@
+translations:
+  - file: app/javascript/config/locales/:locale.json
+    patterns:
+      - "*.submissions.*"

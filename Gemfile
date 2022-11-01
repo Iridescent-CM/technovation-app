@@ -39,6 +39,7 @@ gem "sprockets", "3.7.2"
 gem "normalize-rails", "~> 4.1"
 
 gem "rails-i18n", "~> 6.0.0"
+gem "i18n-js", "~> 4.0"
 gem "clipboard-rails", "~> 1.7"
 gem "will_paginate", "~> 3.1"
 
