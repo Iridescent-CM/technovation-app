@@ -17,9 +17,7 @@ module ScreenshotController
 
   def create
     submission = current_team.submission
-    screenshot = submission.screenshots.create!(
-      screenshot_params[:screenshots_attributes]
-    )
+    screenshot = submission.screenshots.create!(screenshot_params)
 
     # TODO: why is submission.screenshots.create returning an array ??
     screenshot = Array(screenshot).first
@@ -60,14 +58,6 @@ module ScreenshotController
 
   private
   def screenshot_params
-    params.require(:team_submission).permit(
-      screenshots_attributes: :image,
-    ).tap do |t|
-      if Array(t[:screenshots_attributes])[0].dig("0")
-        t[:screenshots_attributes] = Array(
-          t[:screenshots_attributes]
-        )[0].dig("0")
-      end
-    end
+    params.require(:team_submission).permit(:image)
   end
 end
