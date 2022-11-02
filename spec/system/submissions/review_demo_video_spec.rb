@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Reviewing the demo video" do
+RSpec.describe "Reviewing the demo/technical video" do
   context "as a student" do
     before do
       SeasonToggles.team_submissions_editable!
@@ -11,10 +11,10 @@ RSpec.describe "Reviewing the demo video" do
 
       sign_in(student)
 
-      click_link "Demo video"
+      click_link "Technical video"
     end
 
-    it "adds an intermediary step before really saving the demo video" do
+    it "adds an intermediary step before really saving the demo/technical video" do
       fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       expect(page).to have_xpath(
@@ -52,10 +52,10 @@ RSpec.describe "Reviewing the demo video" do
       sign_in(mentor)
 
       within("#find-team") { click_link "Edit this team's submission" }
-      click_link "Demo video"
+      click_link "Technical video"
     end
 
-    it "adds an intermediary step before really saving the demo video" do
+    it "adds an intermediary step before really saving the demo/technical video" do
       fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       expect(page).to have_xpath(

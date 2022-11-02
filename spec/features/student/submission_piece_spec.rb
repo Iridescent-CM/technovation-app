@@ -72,11 +72,11 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
-  scenario "Set the demo video" do
+  scenario "Set the demo/technical video" do
     click_link "Pitch"
 
     within(".demo_video_link.incomplete") do
-      click_link "Add the demo video link"
+      click_link "Add the technical video link"
     end
 
     video_id = "qQTVuRrZO8w"
@@ -91,7 +91,7 @@ RSpec.feature "Students edit submission pieces" do
 
       expect(page).to have_css "[data-modal-fetch*='piece=demo']"
       expect(page).to have_link(
-        "Change the demo video link",
+        "Change the technical video link",
         href: edit_student_team_submission_path(
           submission,
           piece: :demo_video_link
@@ -132,7 +132,7 @@ RSpec.feature "Students edit submission pieces" do
     click_link "Pitch"
 
     within(".demo_video_link.incomplete") do
-      click_link "Add the demo video link"
+      click_link "Add the technical video link"
     end
 
     video_id = "XMzMyNzg3OTY1Mg"
@@ -147,7 +147,7 @@ RSpec.feature "Students edit submission pieces" do
 
       expect(page).to have_css "[data-modal-fetch*='piece=demo']"
       expect(page).to have_link(
-        "Change the demo video link",
+        "Change the technical video link",
         href: edit_student_team_submission_path(
           submission,
           piece: :demo_video_link
@@ -166,7 +166,7 @@ RSpec.feature "Students edit submission pieces" do
     click_button "Next"
     click_button "Save"
 
-    expect(page).to have_css(".flash.flash--alert", text: "Demo and pitch video links cannot be the same! Please add a valid video link.")
+    expect(page).to have_css(".flash.flash--alert", text: "Technical and pitch video links cannot be the same! Please add a valid video link.")
   end
 
   scenario "Upload the .zip source code" do

@@ -81,7 +81,7 @@
       </p>
 
       <p>
-        Demo Video:
+        <%= t("submissions.demo_video").titleize %>:
 
         <% if @team_submission.demo_video_link %>
           <%= link_to @team_submission.demo_video_link,
@@ -121,7 +121,7 @@
       <% if @team_submission.junior_division? %>
         <p>
           User Adoption Plan:
-          
+
           <% if @team_submission.business_plan_url_complete? %>
             <%= link_to @team_submission.business_plan_identifier,
               @team_submission.business_plan_url,
