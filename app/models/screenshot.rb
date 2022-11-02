@@ -10,7 +10,9 @@ class Screenshot < ActiveRecord::Base
   end
 
   def image_url
-    if image.include?("filestackcontent")
+    if image.blank?
+      nil
+    elsif image.include?("filestackcontent")
       image
     else
       # This only applies to the old submission screenshots that were uploaded to S3 before 2023 season
