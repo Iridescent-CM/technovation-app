@@ -8,15 +8,19 @@
     <screenshot-uploader
       screenshots-url="<%= send("#{current_scope}_screenshots_path") %>"
       :team-id="<%= @team_submission.team_id %>"
+      :team-submission-id="<%= @team_submission.id %>"
       sort-url="<%=
         send(
           "#{current_scope}_team_submission_path",
           @team_submission
         )
       %>"
-    ><screenshot-uploader>
+    ></screenshot-uploader>
   </div>
 
+  <p class="grid__cell--padding-sm-y">
+    Note: Click on an image to view it full-size.
+  </p>
   <p class="grid__cell--padding-sm-y">
     Review the
     <a href="https://technovationchallenge.org/submission-guidelines/" target="_blank">submission guidelines</a>

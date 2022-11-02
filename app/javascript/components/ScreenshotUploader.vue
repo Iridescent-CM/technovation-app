@@ -7,33 +7,15 @@
         They should help judges better understand your ideas.
       </p>
 
-      <label>
-        <input
-          type="file"
-          multiple
-          @change="handleFileInput"
-          id="attach-screenshots"
-          style="display: none;"
-        />
-
-        <span class="button button--small">
-          + Add {{ prefix }} {{ maxFiles }} {{ object }}
-        </span>
-      </label>
+      <button @click="uploadFile" class="button button--small">
+        + Add {{ prefix }} {{ maxFiles }} {{ object }}
+      </button>
     </template>
 
     <template v-else>
       You have uploaded the maximum of {{ maxAllowed }} images.
       You need to remove some if you want to add others.
     </template>
-
-    <div v-if="uploadsHaveErrors" class="flash flash--alert">
-      <span
-        class="icon-close icon--red"
-        @click.prevent="resetErrors"
-      ></span>
-      Sorry, you tried to upload an invalid file type.
-    </div>
 
     <p v-if="screenshots.length > 1">
       Sort your images in the order that you want
@@ -43,10 +25,10 @@
     <ol
       v-dragula
       id="sortable-list"
-      class="sortable-list submission-pieces__screenshots"
+      class="submission-pieces__screenshots"
     >
       <li
-        class="sortable-list__item draggable"
+        class="sortable-list__item draggable screenshot-wrapper"
         v-for="screenshot in screenshots"
         :key="screenshot.id"
         :data-db-id="screenshot.id"
@@ -54,8 +36,8 @@
         <img
           class="submission-pieces__screenshot img-modal"
           :src="screenshot.src"
-          :alt="screenshot.name"
-          :data-modal-url="screenshot.largeImgUrl"
+          alt="Screenshot"
+          :data-modal-url="screenshot.src"
         />
 
         <div class="sortable-list__item-actions">
@@ -65,20 +47,12 @@
           ></i>
         </div>
       </li>
-
-      <li
-        class="submission-pieces__screenshot-placeholder"
-        v-for="upload in uploads"
-        :key="upload.id"
-      >
-        <i class="icon-spinner2 spin"></i>
-        <span>{{ upload.name }}</span>
-      </li>
     </ol>
   </div>
 </template>
 
 <script>
+import * as filestack from 'filestack-js';
 export default {
   name: 'screenshot-uploader',
 
@@ -86,8 +60,6 @@ export default {
     return {
       maxAllowed: 6,
       screenshots: [],
-      uploads: [],
-      uploadsHaveErrors: false,
     }
   },
 
@@ -103,6 +75,11 @@ export default {
     },
 
     teamId: {
+      type: Number,
+      required: true,
+    },
+
+    teamSubmissionId: {
       type: Number,
       required: true,
     },
@@ -161,8 +138,32 @@ export default {
   },
 
   methods: {
-    resetErrors () {
-      this.uploadsHaveErrors = false
+    uploadFile() {
+      const client = filestack.init(process.env.FILESTACK_API_KEY);
+
+      const fsPickerOptions = {
+        accept: ["image/jpeg", "image/jpg", "image/png"],
+        fromSources: ["local_file_system"],
+        maxFiles: this.maxFiles,
+        storeTo: {
+          location: "s3",
+          container: process.env.AWS_BUCKET_NAME,
+          path: "uploads/screenshot/filestack/" + this.teamSubmissionId + "/",
+          region: "us-east-1"
+        },
+        onFileUploadFinished: (file) => {
+          const form = new FormData();
+          form.append("team_id", this.teamId)
+          form.append("team_submission[image]", file.url)
+
+          window.axios.post(this.screenshotsUrl, form)
+            .then(({data}) => {
+              this.screenshots.push(data)
+            })
+        }
+      };
+
+      client.picker(fsPickerOptions).open();
     },
 
     loadScreenshots () {
@@ -200,43 +201,6 @@ export default {
           window.location.reload()
         })
     },
-
-    handleFileInput (e) {
-      this.uploadsHaveErrors = false
-
-      const keep = [].slice.call(e.target.files, 0, this.maxFiles).filter(i => {
-        return i.type.match(/image\/(?:jpe?g|gif|png)/)
-      })
-
-      const discard = [].slice.call(e.target.files, 0, this.maxFiles).filter(i => {
-        return !i.type.match(/image\/(?:jpe?g|gif|png)/)
-      })
-
-      if (discard.length)
-        this.uploadsHaveErrors = true
-
-      keep.forEach((file) => {
-        this.uploads.push(file)
-
-        const form = new FormData()
-        form.append("team_submission[screenshots_attributes][]image", file)
-        form.append("team_id", this.teamId)
-
-        window.axios.post(this.screenshotsUrl, form)
-          .then(({data}) => {
-            this.screenshots.push(data)
-
-            const i = this.uploads.indexOf(file)
-            this.uploads.splice(i, 1)
-
-            e.target.value = ""
-            window.location.reload()
-          })
-      })
-    },
   },
 }
 </script>
-
-<style scoped>
-</style>
