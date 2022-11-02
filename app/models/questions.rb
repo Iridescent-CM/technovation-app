@@ -90,8 +90,8 @@ class Questions
         screenshots: submission.screenshots.map { |s|
           {
             id: s.id,
-            thumb: s.image_url(:thumb),
-            full: s.image_url(:large)
+            thumb: s.image_url,
+            full: s.image_url
           }
         },
 

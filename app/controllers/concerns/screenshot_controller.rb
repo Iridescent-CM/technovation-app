@@ -10,9 +10,7 @@ module ScreenshotController
     render(json: current_team.submission.screenshots.map do |s|
       {
         id: s.id,
-        src: s.image_url,
-        name: s.image.identifier,
-        large_img_url: s.image_url(:large),
+        src: s.image
       }
     end)
   end
@@ -36,9 +34,7 @@ module ScreenshotController
     if request.xhr?
       render json: {
         id: screenshot.id,
-        src: screenshot.image_url,
-        name: screenshot.image.identifier,
-        large_img_url: screenshot.image_url(:large),
+        src: screenshot.image
       }
     else
       redirect_to send("#{current_scope}_submission_path", submission)
