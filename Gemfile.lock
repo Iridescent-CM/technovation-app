@@ -227,6 +227,7 @@ GEM
     gibbon (3.4.4)
       faraday (>= 1.0)
       multi_json (>= 1.11.0)
+    glob (0.3.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashdiff (1.0.1)
@@ -243,6 +244,9 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    i18n-js (4.0.1)
+      glob
+      i18n
     i18n_data (0.7.0)
     indefinite_article (0.2.4)
       activesupport
@@ -576,6 +580,7 @@ DEPENDENCIES
   gibbon (~> 3.4.4)
   hiredis (~> 0.6)
   httparty (~> 0.16)
+  i18n-js (~> 4.0)
   indefinite_article (~> 0.2)
   jquery-rails (~> 4.3)
   jquery-ui-rails (~> 6.0)
