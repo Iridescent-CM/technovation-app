@@ -1,4 +1,4 @@
-#sortable-list {
+#sortable-list:not(.submission-pieces__screenshots) {
   display: flex;
   flex-flow: row nowrap;
   list-style: none;

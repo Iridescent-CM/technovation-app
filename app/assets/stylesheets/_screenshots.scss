@@ -1,17 +1,25 @@
 .submission-pieces__screenshots {
-  display: flex;
-  flex-flow: row nowrap;
+  margin-top: 30px;
+  margin-bottom: 50px;
   max-width: 100%;
-  margin: 1rem 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 50px;
 }
 
-.submission-pieces__screenshot {
-  margin-right: 1rem;
+.screenshot-wrapper {
+  width: 200px;
+  height: 200px;
+  margin: auto;
 
   img {
-    max-width: 100%;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
   }
 }
+
 .submission-pieces__screenshot-placeholder {
   margin-right: 1rem;
   display: flex;
