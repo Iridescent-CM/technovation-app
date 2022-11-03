@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Uploading images to submissions", :js do
+RSpec.xdescribe "Uploading images to submissions", :js do
   before { SeasonToggles.team_submissions_editable! }
 
   let(:student) { FactoryBot.create(:student, :onboarded, :on_team) }

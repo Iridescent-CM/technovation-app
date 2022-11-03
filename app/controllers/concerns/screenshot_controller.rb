@@ -10,18 +10,14 @@ module ScreenshotController
     render(json: current_team.submission.screenshots.map do |s|
       {
         id: s.id,
-        src: s.image_url,
-        name: s.image.identifier,
-        large_img_url: s.image_url(:large),
+        src: s.image
       }
     end)
   end
 
   def create
     submission = current_team.submission
-    screenshot = submission.screenshots.create!(
-      screenshot_params[:screenshots_attributes]
-    )
+    screenshot = submission.screenshots.create!(screenshot_params)
 
     # TODO: why is submission.screenshots.create returning an array ??
     screenshot = Array(screenshot).first
@@ -36,9 +32,7 @@ module ScreenshotController
     if request.xhr?
       render json: {
         id: screenshot.id,
-        src: screenshot.image_url,
-        name: screenshot.image.identifier,
-        large_img_url: screenshot.image_url(:large),
+        src: screenshot.image
       }
     else
       redirect_to send("#{current_scope}_submission_path", submission)
@@ -64,14 +58,6 @@ module ScreenshotController
 
   private
   def screenshot_params
-    params.require(:team_submission).permit(
-      screenshots_attributes: :image,
-    ).tap do |t|
-      if Array(t[:screenshots_attributes])[0].dig("0")
-        t[:screenshots_attributes] = Array(
-          t[:screenshots_attributes]
-        )[0].dig("0")
-      end
-    end
+    params.require(:team_submission).permit(:image)
   end
 end
