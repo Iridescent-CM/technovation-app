@@ -181,7 +181,7 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
-  scenario "Uses the same video link for the demo video and pitch video" do
+  scenario "Doesn't allow the same video link for the demo/technical video and pitch video" do
     click_link "Pitch"
 
     within(".demo_video_link.incomplete") do
