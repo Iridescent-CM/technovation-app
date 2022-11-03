@@ -55,13 +55,7 @@
   <div class="submission-pieces__screenshots">
     <% @team_submission.screenshots.each do |screenshot| %>
       <% if screenshot.image_url.present? %>
-        <div class="screenshot-wrapper">
-          <%= image_tag screenshot.image_url,
-            data: {
-            modal_url: screenshot.image_url,
-          },
-          class: "submission-pieces__screenshot" %>
-        </div>
+        <%= render "screenshots/screenshot_grid", screenshot: screenshot %>
       <% end %>
     <% end %>
   </div>
