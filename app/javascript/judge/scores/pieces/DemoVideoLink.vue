@@ -9,7 +9,7 @@
         class="text-energetic-blue flex text-3xl"
       >
         <icon name="play-circle-o" color="0075cf"/>
-        Watch the demo video
+        Watch the {{ demo_video() }}
       </a>
     </p>
 
@@ -27,6 +27,7 @@
 import {mapState} from 'vuex'
 
 import Icon from '../../../components/Icon'
+import { i18n } from '../../../utilities/i18n.js'
 
 export default {
   computed: mapState(['score', 'submission']),
@@ -41,5 +42,11 @@ export default {
   components: {
     Icon
   },
+
+  methods: {
+    demo_video() {
+      return i18n.t("submissions.demo_video")
+    }
+  }
 }
 </script>
