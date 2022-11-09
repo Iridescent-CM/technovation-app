@@ -168,7 +168,7 @@ Rails.application.routes.draw do
     resource :missing_participant_search, only: [:new, :show, :create]
     resources :missing_participant_locations, only: [:edit, :update]
 
-    resources :teams, only: [:show, :index]
+    resources :teams, only: [:show, :index, :edit, :update]
     resources :team_submissions, only: [:index, :show]
     resources :team_memberships, only: [:create, :destroy]
 
