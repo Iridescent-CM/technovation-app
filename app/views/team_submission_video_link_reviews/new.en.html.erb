@@ -1,5 +1,9 @@
+<%= video_link_text = @method == :demo_video_link ? "#{t("submissions.demo_video")} link" : @method.to_s.humanize %>
+
 <div class="panel">
-  <h3 class="panel--heading">Review your <%= @method.to_s.humanize %></h3>
+  <h3 class="panel--heading">
+    Review your <%= video_link_text %>
+  </h3>
 
   <%= form_with(
     model: @team_submission,
@@ -22,7 +26,7 @@
       <p class="margin--b-none">
         Review the area above this message.
         If there is a problem with viewing your video,
-        you should GO BACK and fix the <%= @method.to_s.humanize %>.
+        you should GO BACK and fix the <%= video_link_text %>
       </p>
     </div>
 
@@ -34,7 +38,7 @@
 
         or
         <%= link_to "go back",
-          send("edit_#{current_scope}_team_submission_path", 
+          send("edit_#{current_scope}_team_submission_path",
             @team_submission,
             piece: @method,
             value: @review_value
