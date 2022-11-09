@@ -17,11 +17,11 @@ module ChapterAmbassador
     end
 
     def edit
-      @team = Team.find(params[:id])
+      @team = Team.in_region(current_ambassador).find(params[:id])
     end
 
     def update
-      @team = Team.find(params[:id])
+      @team = Team.in_region(current_ambassador).find(params[:id])
 
       if TeamUpdating.execute(@team, team_params)
         redirect_to chapter_ambassador_team_path, success: "Team changes saved!"
