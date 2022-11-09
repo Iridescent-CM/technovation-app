@@ -31,7 +31,10 @@
 
   <div class="step-actions margin--t-large">
     <%= link_to 'View full details',
-      [current_scope, current_team.selected_regional_pitch_event],
+      send(
+        "#{current_scope}_regional_pitch_event_path",
+        current_team.selected_regional_pitch_event,
+      ),
       class: "button" %>
   </div>
 <% else %>
