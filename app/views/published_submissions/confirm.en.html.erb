@@ -1,24 +1,23 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <div class="panel">
-      <h2>It's a girl's world!</h2>
-
-      <p>
+<div class="container mx-auto flex flex-col w-full lg:w-1/2">
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Submission Confirmed'} do %>
+    <div class="flex flex-col gap-4">
+      <p class="text-2xl font-bold text-center text-tg-magenta">It's a girl's world!</p>
+      <p class="text-lg">
         Your project has been successfully submitted!
         Thanks for taking on the challenge and creating positive change in
         your local community using technology.
       </p>
 
-      <div class="grid--justify-center">
+      <div class="flex justify-center">
         <p>
           <%= link_to "View your complete submission",
-            send(
-              "#{current_scope}_published_team_submission_path",
-              { id: @team_submission.to_param }
-            ),
-            class: "button button--small" %>
+                      send(
+                        "#{current_scope}_published_team_submission_path",
+                        { id: @team_submission.to_param  }
+                      ),
+                      class: "tw-green-btn" %>
         </p>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
