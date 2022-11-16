@@ -18,12 +18,12 @@ class SubmissionsGrid
   column :project_name, mandatory: true, html: true do |sub|
     link_to sub.app_name, send("#{current_scope}_team_submission_path", sub)
   end
-  
+
   column :project_description do
     app_description
   end
 
-  column :demo_video_link
+  column :demo_video_link, header: "#{I18n.t("submissions.demo_video").upcase_first} link"
   column :learning_journey
   column :pitch_video_link
   column :submission_type
@@ -36,7 +36,7 @@ class SubmissionsGrid
   column :app_inventor_app_name
   column :app_inventor_gmail
   column :source_code_url
-  
+
   column :business_plan_url do
     team.senior? ? self.business_plan_url : "-"
   end
@@ -112,9 +112,9 @@ class SubmissionsGrid
 
   column :development_platform do
     if development_platform_text.present?
-      platform = development_platform_text 
+      platform = development_platform_text
       platform.downcase.starts_with?("mobile") ? platform : ""
-    end  
+    end
   end
 
   column :state_province, header: "State" do
