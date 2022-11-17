@@ -28,7 +28,7 @@ class SeasonToggles
 
     private
     def store
-      @@store ||= Redis.new
+      @@store ||= Redis.new(ssl_params: {verify_mode: OpenSSL::SSL::VERIFY_NONE})
     end
 
     def with_proper_dependency_order(attrs, &block)
