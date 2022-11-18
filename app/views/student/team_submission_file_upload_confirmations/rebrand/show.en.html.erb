@@ -1,0 +1,25 @@
+<% provide :js, javascript_packs_with_chunks_tag('job_process') %>
+<% provide :css, stylesheet_packs_with_chunks_tag('job_process') %>
+
+<div class="container mx-auto flex flex-col w-full lg:w-1/2">
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Upload Confirmed'} do %>
+    <div class="flex flex-col gap-4">
+      <p class="text-2xl font-bold text-center text-tg-magenta">
+        Your file has been uploaded and will be linked soon!
+      </p>
+
+      <div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-2">
+        <p class="font-bold">However, please note:</p>
+        <p>If you used any format besides .zip, .aia, .ppt, .pptx, or .pdf, your file will NOT be linked!</p>
+      </div>
+
+      <div class="flex justify-center">
+        <div id="job-process-app-rebrand">
+          <jp-template
+            status-url="<%= send("#{current_scope}_job_status_path", @job.job_id) %>"
+          ></jp-template>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
