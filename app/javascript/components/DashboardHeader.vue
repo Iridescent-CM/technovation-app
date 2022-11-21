@@ -4,7 +4,7 @@
       <div v-if="chapterAmbassadorHasProvidedIntro" class="grid__cell">
         <h1 class="page-heading">
           <img
-            :src="chapterAmbassadorAvatarUrl"
+            :src="getChapterAmbassadorAvatarUrl()"
             class="profile-image"
             width="40"
             height="40"
@@ -114,6 +114,16 @@ export default {
       return Object.assign({}, this.resourceLinks.filter(l => l.isSurveyLink)[0])
     },
   },
+
+  methods: {
+    getChapterAmbassadorAvatarUrl () {
+      if (this.chapterAmbassadorAvatarUrl === "placeholders/avatars/1.svg") {
+        return `${require('placeholders/avatars/1.svg')}`
+      } else {
+        return this.chapterAmbassadorAvatarUrl
+      }
+    },
+  }
 }
 </script>
 
