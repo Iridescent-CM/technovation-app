@@ -159,9 +159,9 @@
 
     props: [
       "postUrl",
-      "seniorDivisionId",
       "juniorDivisionId",
       "juniorDivisionName",
+      "seniorDivisionId",
       "seniorDivisionName",
     ],
 
