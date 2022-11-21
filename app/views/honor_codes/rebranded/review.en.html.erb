@@ -1,0 +1,32 @@
+<div class="w-11/12 lg:w-1/2 mx-auto">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: "#{Season.current.year} Technovation Honor Code"} do %>
+    <div class="prose">
+      <%= render "team_submissions/honor_code" %>
+    </div>
+  <% end %>
+
+  <div class="flex justify-between mt-6">
+    <div>
+      <%= link_to "Go back",
+        send(
+          "#{current_scope}_team_submission_section_path",
+          @team_submission,
+          section: :ideation
+        ),
+        class: "md-link-button link-button-neutral"
+      %>
+    </div>
+
+    <div>
+      <%= link_to "We agree",
+        send(
+          "#{current_scope}_team_submission_publications_path",
+          @team_submission,
+          {id: @team_submission.to_param}
+        ),
+        data: {method: :post},
+        class: "md-link-button link-button-success"
+      %>
+    </div>
+  </div>
+</div>
