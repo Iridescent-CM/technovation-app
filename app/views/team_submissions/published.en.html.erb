@@ -115,7 +115,7 @@
       <div class="grid__col-12 grid__col--bleed-y">
        <h3>Learning Journey</h3>
        <%= simple_format @team_submission.learning_journey %>
-       <div class="screenshot-container__flex">
+       <div class="screenshot-container__flex margin--t-xlarge">
          <% @team_submission.screenshots.each do |screenshot| %>
            <% if screenshot.image_url.present? %>
              <div class="screenshot-wrapper">
