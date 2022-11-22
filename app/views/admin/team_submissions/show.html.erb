@@ -221,6 +221,7 @@
 
       <p>
         <% if @team_submission.screenshots.any? %>
+          Total Uploaded Images: <%= @team_submission.screenshots.count %>
           <div class="submission-pieces__screenshots">
             <% @team_submission.screenshots.each do |screenshot| %>
               <% if screenshot.image_url.present? %>
