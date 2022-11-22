@@ -45,6 +45,16 @@
             Junior division
           </label>
 
+          <label>
+            <input
+              type="radio"
+              name="division"
+              v-model="eventDivision"
+              :value="beginnerDivisionId"
+            />
+            Beginner division
+          </label>
+
           <errors :errors="eventErrors.division_ids"></errors>
         </div>
 
@@ -159,9 +169,11 @@
 
     props: [
       "postUrl",
-      "seniorDivisionId",
+      "beginnerDivisionId",
+      "beginnerDivisionName",
       "juniorDivisionId",
       "juniorDivisionName",
+      "seniorDivisionId",
       "seniorDivisionName",
     ],
 
@@ -288,6 +300,9 @@
 
         if (ids.includes(parseInt(this.juniorDivisionId)))
           this.event.division_names.push(this.juniorDivisionName);
+
+        if (ids.includes(parseInt(this.beginnerDivisionId)))
+          this.event.division_names.push(this.beginnerDivisionName);
 
         this.event.division_names = this.event.division_names.join(", ")
       },
@@ -500,6 +515,11 @@
           parseInt(this.event.division_ids[0], 10) === parseInt(this.juniorDivisionId, 10)
         ) {
           this.eventDivision = parseInt(this.juniorDivisionId, 10);
+        } else if (
+          this.event.division_ids.length === 1 &&
+          parseInt(this.event.division_ids[0], 10) === parseInt(this.beginnerDivisionId, 10)
+        ) {
+          this.eventDivision = parseInt(this.beginnerDivisionId, 10);
         } else {
           this.eventDivision = null;
           this.event.division_ids = [];
