@@ -1,6 +1,10 @@
 <div class="w-11/12 lg:w-1/2 mx-auto">
-  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: "#{Season.current.year} Technovation Honor Code"} do %>
-    <div class="prose">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: ""} do %>
+    <div class="prose mx-auto">
+      <h4 class="text-zinc-50">
+        <%= "#{Season.current.year} Technovation Honor Code" %>
+      </h4>
+
       <%= render "team_submissions/honor_code" %>
     </div>
   <% end %>
