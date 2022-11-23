@@ -25,7 +25,7 @@
           <%= f.input :demo_video_link %>
           <%= f.input :pitch_video_link %>
         </div>
-        
+
         <div class="grid__cell--padding-md-y">
           <h6>Entrepreneurship</h6>
           <%= f.label :business_plan, "#{@team_submission.senior_division? ? "Business Plan" : "User Adoption Plan"}" %>
@@ -41,19 +41,19 @@
 
         <div>
           <h6>Additional Questions</h6>
-          <%= f.input :ai, label: 'Does your submission use artificial intelligence?', 
+          <%= f.input :ai, label: 'Does your submission use artificial intelligence?',
             collection: [['Yes', true], ['No', false]]%>
           <%= f.input :ai_description, label: false %>
 
-          <%= f.input :climate_change, label: 'Does your submission help solve climate change?', 
+          <%= f.input :climate_change, label: 'Does your submission help solve climate change?',
             collection: [['Yes', true], ['No', false]] %>
           <%= f.input :climate_change_description, label: false %>
 
-          <%= f.input :game, label: 'Does your submission help solve a health problem?', 
+          <%= f.input :game, label: t('submissions.solve_hunger_or_food_waste_question'),
             collection: [['Yes', true], ['No', false]] %>
           <%= f.input :game_description, label: false %>
         </div>
-        
+
         <div>
           <h6>Technical</h6>
           <%= f.input :development_platform,
