@@ -55,7 +55,7 @@ RSpec.feature "Student team submissions" do
     within("#find-team") { click_link "Edit this team's submission" }
 
     expect(page).to have_link(
-      "Set your product's name",
+      "Set your project's name",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :app_name
@@ -63,7 +63,7 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_link(
-      "Add your product's description",
+      "Add your project's description",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :app_description

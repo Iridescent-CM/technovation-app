@@ -15,22 +15,22 @@ RSpec.feature "Students edit submission pieces" do
     click_link "My Submission"
   end
 
-  scenario "Set the product name" do
+  scenario "Set the project name" do
     click_link "Ideation"
 
     within(".app_name.incomplete") do
-      click_link "Set your product's name"
+      click_link "Set your project's name"
     end
 
-    fill_in "Your product's name", with: "WonderApp2018"
+    fill_in "Your project's name", with: "WonderApp2018"
     click_button "Save this name"
 
     within(".app_name.complete") do
-      expect(page).not_to have_link("Set your product's name")
+      expect(page).not_to have_link("Set your project's name")
 
       expect(page).to have_content "WonderApp2018"
       expect(page).to have_link(
-        "Change your product's name",
+        "Change your project's name",
         href: edit_student_team_submission_path(
           submission.reload,
           piece: :app_name
@@ -46,24 +46,24 @@ RSpec.feature "Students edit submission pieces" do
     expect(page).to have_button "Change Image"
   end
 
-  scenario "Set the product description" do
+  scenario "Set the project description" do
     click_link "Ideation"
 
     within(".app_description.incomplete") do
-      click_link "Add your product's description"
+      click_link "Add your project's description"
     end
 
-    fill_in "Describe your product in a few sentences (100 words or less)",
+    fill_in "Describe your project in a few sentences (100 words or less)",
       with: "Only a few sentences"
 
     click_button "Save this description"
 
     within(".app_description.complete") do
-      expect(page).not_to have_link("Add your product's description")
+      expect(page).not_to have_link("Add your project's description")
 
       expect(page).to have_content "Only a few sentences"
       expect(page).to have_link(
-        "Change your product's description",
+        "Change your project's description",
         href: edit_student_team_submission_path(
           submission,
           piece: :app_description
@@ -87,7 +87,7 @@ RSpec.feature "Students edit submission pieces" do
     click_button "Save"
 
     within(".demo_video_link.complete") do
-      expect(page).not_to have_link("Add your product's description")
+      expect(page).not_to have_link("Add your project's description")
 
       expect(page).to have_css "[data-modal-fetch*='piece=demo']"
       expect(page).to have_link(
@@ -115,7 +115,7 @@ RSpec.feature "Students edit submission pieces" do
     click_button "Save"
 
     within(".pitch_video_link.complete") do
-      expect(page).not_to have_link("Add your product's description")
+      expect(page).not_to have_link("Add your project's description")
 
       expect(page).to have_css "[data-modal-fetch*='piece=pitch']"
       expect(page).to have_link(
@@ -143,7 +143,7 @@ RSpec.feature "Students edit submission pieces" do
     click_button "Save"
 
     within(".demo_video_link.complete") do
-      expect(page).not_to have_link("Add your product's description")
+      expect(page).not_to have_link("Add your project's description")
 
       expect(page).to have_css "[data-modal-fetch*='piece=demo']"
       expect(page).to have_link(

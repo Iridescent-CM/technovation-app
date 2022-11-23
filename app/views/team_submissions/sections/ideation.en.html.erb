@@ -16,19 +16,19 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
-  title: "Name Your Product",
+  title: "Name Your #{t("submissions.app").titlecase}",
   scope: current_scope,
   attribute: :app_name,
-  cta_when_empty: "Set your product's name",
-  cta_when_filled: "Change your product's name" %>
+  cta_when_empty: "Set your #{t("submissions.app")}'s name",
+  cta_when_filled: "Change your #{t("submissions.app")}'s name" %>
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
-  title: "Describe Your Product",
+  title: "Describe Your #{t("submissions.app").titlecase}",
   scope: current_scope,
   attribute: :app_description,
-  cta_when_empty: "Add your product's description",
-  cta_when_filled: "Change your product's description" do %>
+  cta_when_empty: "Add your #{t("submissions.app")}'s description",
+  cta_when_filled: "Change your #{t("submissions.app")}'s description" do %>
 
   <%= simple_format(@team_submission.app_description) %>
 <% end %>
@@ -50,7 +50,7 @@
   scope: current_scope,
   attribute: :screenshots,
   link_options: { data: { turbolinks: false } },
-  cta_when_empty: "Upload images of your product",
+  cta_when_empty: "Upload images of your #{t("submissions.app")}",
   cta_when_filled: "Make changes to your images" do %>
   <div class="submission-pieces__screenshots">
     <% @team_submission.screenshots.each do |screenshot| %>
@@ -66,8 +66,8 @@
   title: "Additional Information",
   scope: current_scope,
   attribute: :app_details,
-  cta_when_empty: "Add details about your product",
-  cta_when_filled: "Update details about your product" do %>
+  cta_when_empty: "Add details about your #{t("submissions.app")}",
+  cta_when_filled: "Update details about your #{t("submissions.app")}" do %>
 
   <%= render 'team_submissions/app_details',
     team_submission: @team_submission %>
