@@ -47,7 +47,7 @@ RSpec.feature "Students edit submission pieces" do
       click_link "Add your project's description"
     end
 
-    fill_in "Describe your product in a few sentences (100 words or less)",
+    fill_in "Describe your project in a few sentences (100 words or less)",
       with: "Only a few sentences"
 
     click_button "Save this description"
