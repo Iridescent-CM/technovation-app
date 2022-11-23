@@ -187,7 +187,7 @@
           <% end %>
 
           <p>
-            Does your submission help solve a health problem?
+            <%= t("submissions.solve_hunger_or_food_waste_question") %>
             <%= @team_submission.question_response("health_problem")  %>
           </p>
           <% if @team_submission.game? %>

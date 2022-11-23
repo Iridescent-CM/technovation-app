@@ -101,7 +101,7 @@
 
     <div class="field margin--t-large">
       <%= f.label :game,
-        "Does your submission help solve a health problem?",
+        t("submissions.solve_hunger_or_food_waste_question"),
         for: :team_submission_game %>
 
       <%= f.select :game,
@@ -145,7 +145,7 @@
         or
         <%= link_to "cancel",
           send(
-            "#{current_scope}_team_submission_section_path", 
+            "#{current_scope}_team_submission_section_path",
             @team_submission,
             section: @submission_section
           ) %>
