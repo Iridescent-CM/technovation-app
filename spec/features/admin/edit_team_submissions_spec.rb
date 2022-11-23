@@ -31,7 +31,7 @@ RSpec.feature "Toggling editable team submissions" do
         check "team_submission[integrity_affirmed]"
         click_button "Start now!"
 
-        expect(page).to have_css('.button', text: "Set your project'sname")
+        expect(page).to have_css('.button', text: "Set your project's name")
 
         visit mentor_dashboard_path
 
@@ -63,7 +63,7 @@ RSpec.feature "Toggling editable team submissions" do
         visit mentor_team_submission_path(team.reload.submission)
         expect(page).not_to have_css(
           ".button",
-          text: "Set your project'sname"
+          text: "Set your project's name"
         )
 
         visit mentor_team_path(team)
