@@ -71,7 +71,7 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_link(
-      "Upload images of your product",
+      "Upload images of your project",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :screenshots
