@@ -50,7 +50,7 @@
           <%= link_to submission_progress_web_icon(
             submission,
             :app_name,
-            "Your product's name"
+            "Your #{t("submissions.app")}'s name"
           ),
             send(
               "#{current_scope}_team_submission_path",
@@ -64,7 +64,7 @@
           <%= link_to submission_progress_web_icon(
             submission,
             :app_description,
-            "A description of your product"
+            "A description of your #{t("submissions.app")}"
           ),
             send(
               "#{current_scope}_team_submission_path",

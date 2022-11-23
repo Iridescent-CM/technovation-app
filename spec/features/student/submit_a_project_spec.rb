@@ -66,8 +66,8 @@ RSpec.feature "Student submits a project", :js do
   end
 
   def when_they_complete_their_submission
-    click_link "Your product's name"
-    fill_in "Your product's name", with: "Coolest app"
+    click_link "Your project's name"
+    fill_in "Your project's name", with: "Coolest app"
     click_button "Save this name"
   end
 
