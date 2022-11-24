@@ -2,16 +2,16 @@
   margin-top: 30px;
   margin-bottom: 50px;
   max-width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 20px;
-  grid-row-gap: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .screenshot-wrapper {
-  width: 200px;
-  height: 200px;
-  margin: auto;
+  width: 12rem;
+  height: 12rem;
 
   img {
       height: 100%;
