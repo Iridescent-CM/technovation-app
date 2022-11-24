@@ -36,3 +36,20 @@
     transform: scale(1.05, 1.05);
   }
 }
+
+.screenshot-container__flex {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+
+  .screenshot-wrapper{
+    width: 12.5rem;
+    height: 12.5rem;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}

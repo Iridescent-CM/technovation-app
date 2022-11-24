@@ -1,60 +1,184 @@
 <% provide :title, "#{@team_submission.app_name} by #{@team.name}" %>
 
-<div class="w-full lg:w-3/4 mx-auto">
-  <%= render("student/dashboards/completion_steps/rebrand/view_completed_team_submission", submission: @team_submission) %>
-
-  <% if current_account.authenticated? && current_account.is_not_a_judge? %>
-    <div class="border-b-2 border-energetic-blue my-8 mb-6"></div>
-
-    <div class="mt-8">
-      <% @team_submission.awaiting_publish(current_scope) do %>
-        <p class="text-lg">
-          <%= link_to(
-            "Submit now",
-            send("#{current_scope}_honor_code_review_path", { team_id: current_team.id }),
-            class: "lg-link-button link-button-success"
-          ) %>
-
-          or
-
-          <%= link_to(
-            "continue editing",
-            send(
-              "#{current_scope}_team_submission_section_path",
-              @team_submission,
-              section: :ideation
-            ),
-            class: "text-energetic-blue hover:text-energetic-blue"
-          ) %>
-        </p>
-
-        <p class="mt-6 text-lg">
-          You can still make changes after you submit,
-          until <%= Season.deadline %>.
-        </p>
-      <% end %>
-
-      <% @team_submission.already_published(current_scope) do %>
-        <% if SeasonToggles.team_submissions_editable? %>
-          <p>
-            <%= link_to(
-              "Make changes",
-              send(
-                "#{current_scope}_team_submission_section_path",
-                @team_submission,
-                section: :ideation
-              ),
-              class: "lg-link-button link-button-success"
-            ) %>
-          </p>
-
-          <p class="mt-6 text-lg">
-            You can make changes until <%= Season.deadline %>.
-          </p>
-        <% else %>
-          <p class="text-lg">Submissions are not editable at this time.</p>
-        <% end %>
-      <% end %>
+<div class="grid">
+  <div class="grid__col-sm-3 col--sticky-parent">
+    <div class="col--sticky-spacer">
+      <div class="col--sticky">
+        <div class="submission-sidebar">
+          <%= render "team_submissions/team_info",
+                     submission: @team_submission,
+                     team: @team %>
+        </div>
+      </div>
     </div>
-  <% end %>
+  </div>
+
+  <div class="grid__col-sm-9">
+    <h3><%= @team_submission.app_name %></h3>
+    <%= simple_format @team_submission.app_description %>
+
+    <hr class="width--100-percent height--1-px border--none backgroundcolor--light-gray margin--b-xlarge">
+
+    <div class="grid" style="row-gap: 50px;">
+      <div class="grid__col-6 grid__col--bleed-y">
+        <h3>Videos</h3>
+
+        <p>
+          <%= link_to web_icon(
+                        "play-circle-o",
+                        text: "Watch the #{t("submissions.demo_video")}"
+                      ),
+                      "#",
+                      data: {
+                        opens_modal: "video-modal-" +
+                          @team_submission.video_id(:demo),
+                        modal_fetch: send(
+                          "#{current_scope}_embed_code_path",
+                          @team_submission,
+                          piece: :demo,
+                          ),
+                      } %>
+        </p>
+
+        <div
+          class="modal"
+          id="video-modal-<%= @team_submission.video_id(:demo) %>"
+        >
+          <div class="modal-content"></div>
+        </div>
+
+        <p>
+          <%= link_to web_icon(
+                        "play-circle-o",
+                        text: "Watch the pitch video"
+
+                      ),
+                      "#",
+                      data: {
+                        opens_modal: "video-modal-" +
+                          @team_submission.video_id(:pitch),
+                        modal_fetch: send(
+                          "#{current_scope}_embed_code_path",
+                          @team_submission,
+                          piece: :pitch,
+                          ),
+                      } %>
+        </p>
+
+        <div class="modal" id="video-modal-<%= @team_submission.video_id(:pitch) %>">
+          <div class="modal-content"></div>
+        </div>
+      </div>
+
+      <div class="grid__col-6 grid__col--bleed-y source-code">
+        <h3>Technical Elements</h3>
+
+        <%= link_to_submission_source_code(@team_submission) %>
+      </div>
+
+      <div class="grid__col-6 grid__col--bleed-y">
+        <h3>Entrepreneurship</h3>
+
+        <% if @team_submission.team.division.name != "beginner" %>
+          <%= link_to web_icon(
+                        "briefcase",
+                        text: "Read the #{@team_submission.senior_division? ? "business" : "user adoption"} plan",
+                        remote: true,
+                        size: 12,
+                        color: "5ABF94",
+                        ),
+                      @team_submission.business_plan_url,
+                      target: :_blank %>
+        <% else %>
+          Beginner teams do not upload a business plan
+        <% end %>
+      </div>
+
+      <div class="grid__col-6 grid__col--bleed-y">
+        <h3>Regional Pitch Events</h3>
+
+        <% if @team.live_event? %>
+          <%= link_to web_icon(
+                        "area-chart",
+                        text: "See the presentation slides",
+                        remote: true,
+                        size: 12,
+                        color: "5ABF94",
+                        ),
+                      @team_submission.pitch_presentation_url,
+                      target: :_blank %>
+        <% else %>
+          Virtual judging teams do not upload presentation slides
+        <% end %>
+      </div>
+
+      <div class="grid__col-12 grid__col--bleed-y">
+       <h3>Learning Journey</h3>
+       <%= simple_format @team_submission.learning_journey %>
+       <div class="screenshot-container__flex margin--t-xlarge">
+         <% @team_submission.screenshots.each do |screenshot| %>
+           <% if screenshot.image_url.present? %>
+             <div class="screenshot-wrapper">
+                 <%= image_tag screenshot.image_url,
+                               data: {
+                                 modal_url: screenshot.image_url,
+                               } %>
+             </div>
+          <% end %>
+        <% end %>
+       </div>
+     </div>
+    </div>
+
+    <hr class="width--100-percent height--1-px border--none backgroundcolor--light-gray margin--b-xlarge margin--t-xlarge">
+    <h3>Additional Information</h3>
+
+    <%= render "team_submissions/app_details", team_submission: @team_submission %>
+
+    <div class="grid">
+      <div class="grid__col-auto submission-footer">
+        <% @team_submission.awaiting_publish(current_scope) do %>
+          <p>
+            <%= link_to "Submit now",
+                        send("#{current_scope}_honor_code_review_path", { team_id: current_team.id }),
+                        class: "button" %>
+
+            or
+
+            <%= link_to "continue editing",
+                        send(
+                          "#{current_scope}_team_submission_section_path",
+                          @team_submission,
+                          section: :ideation
+                        ) %>
+          </p>
+
+          <p>
+            You can still make changes after you submit,
+            until <%= Season.deadline %>.
+          </p>
+        <% end %>
+
+        <% @team_submission.already_published(current_scope) do %>
+          <% if SeasonToggles.team_submissions_editable? %>
+            <p>
+              You can make changes until <%= Season.deadline %>.
+            </p>
+
+            <p>
+              <%= link_to "Make changes",
+                          send(
+                            "#{current_scope}_team_submission_section_path",
+                            @team_submission,
+                            section: :ideation
+                          ),
+                          class: "button button--small" %>
+            </p>
+          <% else %>
+            <p>Submissions are not editable at this time.</p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

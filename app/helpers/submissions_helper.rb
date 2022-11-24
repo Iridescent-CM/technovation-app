@@ -20,7 +20,7 @@ module SubmissionsHelper
       text = "Open this project in Thunkable"
       url = submission.thunkable_project_url
     else
-      text = "Download the source code"
+      text = "Download the technical work"
       url = submission.source_code_url
     end
 
