@@ -34,23 +34,20 @@
 
     <p class="dropzone-save" style="display: none;">
       <%= link_to "Save this upload",
-        [
-          current_scope,
-          submission,
-          :section,
-          section: @submission_section,
-        ],
-        class: "button" %>
+        send("#{current_scope}_team_submission_path", submission,
+        :section,
+        section: @submission_section),
+        class: "button"
+      %>
     </p>
 
     <p class="after-dropzone-save">
       <%= link_to "cancel",
-        [
-          current_scope,
-          submission,
-          :section,
-          section: @submission_section,
-        ] %>
+        send("#{current_scope}_team_submission_path", submission,
+        :section,
+        section: @submission_section),
+        class: "button"
+      %>
     </p>
 
     <p class="grid__cell--padding-sm-y">
