@@ -96,7 +96,7 @@ class SubmissionsGrid
     end
   end
 
-  column :game_question, if: ->(grid) { grid.admin } do
+  column :game_question, header: "Hunger question", if: ->(grid) { grid.admin } do
     if game?
       "Yes - #{game_description}"
     elsif game == false
