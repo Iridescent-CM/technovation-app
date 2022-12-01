@@ -1,0 +1,43 @@
+<% if not current_team.submission.present? %>
+  <p>
+    Your team needs to start a submission in
+    order to select an event.
+  </p>
+
+<% elsif !current_team.live_event? && @regional_events.any? %>
+  <p class="mb-4">
+    Attend a pitching event in your area to pitch
+    your submission to a live panel of judges!
+  </p>
+
+  <%= render 'regional_pitch_events/dashboard_disclaimer' %>
+
+  <div class="step-actions mt-8">
+    <%= link_to 'Select an Event',
+        student_regional_pitch_events_path,
+        class: "tw-green-btn" %>
+  </div>
+<% elsif current_team.live_event? %>
+  <p class="mb-8">
+    You are attending
+    <span class="font-medium"><%= current_team.event_name %></span>.
+    If this is a mistake or you want to attend a
+    different event please contact your chapter ambassador.
+  </p>
+
+  <%= render 'regional_pitch_events/dashboard_disclaimer' %>
+
+  <div class="step-actions mt-8">
+    <%= link_to 'View full details',
+      send(
+        "#{current_scope}_regional_pitch_event_path",
+        current_team.selected_regional_pitch_event,
+      ),
+      class: "tw-green-btn" %>
+  </div>
+<% else %>
+  <p>
+    There are no pitching events in your region.
+    When you submit, your work will be judged online.
+  </p>
+<% end %>
