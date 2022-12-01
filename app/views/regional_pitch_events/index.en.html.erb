@@ -1,21 +1,23 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-8">
-    <h4 class="content-heading">Select a Regional Pitch Event</h4>
+<% if current_scope == "mentor" %>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-8">
+      <h4 class="content-heading">Select a Regional Pitch Event</h4>
 
-    <% if current_scope == "mentor" %>
-      <div class="panel">
-        <%= render "mentor/teams/team_list_item_content",
-          team: current_team %>
-      </div>
-    <% end %>
+        <div class="panel">
+          <%= render "mentor/teams/team_list_item_content",
+            team: current_team %>
+        </div>
 
-    <%= render partial: 'regional_pitch_events/event',
-      collection: @regional_events %>
-
-    <p>
-      <%= link_to 'Go back',
-        back_from_event_path,
-        class: "button small" %>
-    </p>
+      <%= render partial: 'regional_pitch_events/event',
+                 collection: @regional_events %>
+      <p>
+        <%= link_to 'Go back',
+          back_from_event_path,
+          class: "button small" %>
+      </p>
+    </div>
   </div>
-</div>
+<% else %>
+  <%= render partial: 'regional_pitch_events/rebrand/event',
+             collection: @regional_events %>
+<% end %>
