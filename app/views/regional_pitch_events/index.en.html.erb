@@ -5,16 +5,16 @@
 
         <div class="panel">
           <%= render "mentor/teams/team_list_item_content",
-            team: current_team %>
+                     team: current_team %>
         </div>
 
-      <%= render partial: 'regional_pitch_events/event',
-                 collection: @regional_events %>
-      <p>
-        <%= link_to 'Go back',
-          back_from_event_path,
-          class: "button small" %>
-      </p>
+        <%= render partial: 'regional_pitch_events/event',
+                   collection: @regional_events %>
+        <p>
+          <%= link_to 'Go back',
+                      back_from_event_path,
+                      class: "button small" %>
+        </p>
     </div>
   </div>
 <% else %>
