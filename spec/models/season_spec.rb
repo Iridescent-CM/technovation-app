@@ -52,7 +52,7 @@ RSpec.describe Season do
     it "returns human-readable month and day" do
       deadline = Date.new(2019, 4, 25)
       expect(ImportantDates).to receive(:submission_deadline).at_least(:once).and_return(deadline)
-      expect(Season.deadline).to eq("April 25")
+      expect(Season.deadline).to include("April 25")
     end
   end
 

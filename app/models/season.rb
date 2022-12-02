@@ -9,8 +9,12 @@ class Season
   end
 
   def self.deadline
-    day = ImportantDates.submission_deadline.day
-    ImportantDates.submission_deadline.strftime("%B #{day}")
+    [
+      submission_deadline_in_los_angeles_time_zone,
+      submission_deadline_in_africa_time_zone,
+      submission_deadline_in_madrid_time_zone,
+      submission_deadline_in_india_time_zone
+    ].join(" / ")
   end
 
   def self.submission_deadline
@@ -53,4 +57,25 @@ class Season
 
     current_year
   end
+
+  def self.submission_deadline_in_los_angeles_time_zone
+    ImportantDates.submission_deadline.in_time_zone("America/Los_Angeles").strftime("%B %d, %l%p PDT")
+  end
+
+  def self.submission_deadline_in_africa_time_zone
+    ImportantDates.submission_deadline.in_time_zone("Africa/Algiers").strftime("%B %d at %l%p WAT")
+  end
+
+  def self.submission_deadline_in_madrid_time_zone
+    ImportantDates.submission_deadline.in_time_zone("Europe/Madrid").strftime("%l%p CEST")
+  end
+
+  def self.submission_deadline_in_india_time_zone
+    ImportantDates.submission_deadline.in_time_zone("Asia/Kolkata").strftime("%l%p IST")
+  end
+
+  private_class_method :submission_deadline_in_los_angeles_time_zone,
+    :submission_deadline_in_africa_time_zone,
+    :submission_deadline_in_madrid_time_zone,
+    :submission_deadline_in_india_time_zone
 end
