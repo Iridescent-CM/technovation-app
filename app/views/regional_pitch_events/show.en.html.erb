@@ -1,20 +1,21 @@
-<div class="grid grid--justify-center">
-  <div class="grid__col-8">
+<% if current_scope == "mentor" %>
+  <div class="grid grid--justify-center">
+    <div class="grid__col-8">
+        <div class="panel">
+          <%= render "mentor/teams/team_list_item_content",
+                     team: current_team %>
+        </div>
 
-    <% if current_scope == "mentor" %>
-      <div class="panel">
-        <%= render "mentor/teams/team_list_item_content",
-          team: current_team %>
-      </div>
-    <% end %>
-
-    <%= render 'regional_pitch_events/event',
-      event: @regional_pitch_event %>
-
-    <p>
-      <%= link_to 'Go back',
-        back_from_event_path,
-        class: "button small" %>
-    </p>
+        <%= render 'regional_pitch_events/event',
+                   event: @regional_pitch_event %>
+        <p>
+          <%= link_to 'Go back',
+                      back_from_event_path,
+                      class: "button small" %>
+        </p>
+    </div>
   </div>
-</div>
+<% else %>
+  <%= render 'regional_pitch_events/rebrand/event',
+             event: @regional_pitch_event %>
+<% end %>

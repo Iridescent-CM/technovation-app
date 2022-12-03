@@ -5,7 +5,7 @@
 
   <div class="tw-content=-wrapper p-8">
     <% if current_student.onboarded? && SeasonToggles.select_regional_pitch_event? %>
-      <%= render "student/dashboards/completion_steps/regional_pitch_events" %>
+      <%= render "student/dashboards/completion_steps/rebrand/regional_pitch_events" %>
     <% else %>
       <p>Due to COVID, there are no official pitch events this season.</p>
     <% end %>  </div>
