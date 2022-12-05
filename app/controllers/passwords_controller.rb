@@ -1,4 +1,6 @@
 class PasswordsController < ApplicationController
+  layout "application_rebrand"
+
   def new
     @password = Password.find_by(token: params.fetch(:token))
     unless @password.valid?
