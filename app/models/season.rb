@@ -8,17 +8,13 @@ class Season
     @year = year
   end
 
-  def self.deadline
+  def self.submission_deadline
     [
       submission_deadline_in_los_angeles_time_zone,
       submission_deadline_in_africa_time_zone,
       submission_deadline_in_madrid_time_zone,
       submission_deadline_in_india_time_zone
-    ].join(" / ")
-  end
-
-  def self.submission_deadline
-    "#{deadline}, #{ImportantDates.submission_deadline.year}"
+    ].join(" / ").squish
   end
 
   def self.years
