@@ -13,6 +13,7 @@ class NullProfile < NullObject
   def completed_scores; NullCompletedScores.new; end
   def events; []; end
   def account; ::NullAccount.new; end
+  def rebranded?; false; end
 end
 
 class NullCompletedScores < NullObject
