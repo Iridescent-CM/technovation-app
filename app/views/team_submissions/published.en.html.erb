@@ -155,14 +155,14 @@
 
           <p>
             You can still make changes after you submit,
-            until <%= Season.deadline %>.
+            until <%= Season.submission_deadline %>.
           </p>
         <% end %>
 
         <% @team_submission.already_published(current_scope) do %>
           <% if SeasonToggles.team_submissions_editable? %>
             <p>
-              You can make changes until <%= Season.deadline %>.
+              You can make changes until <%= Season.submission_deadline %>.
             </p>
 
             <p>

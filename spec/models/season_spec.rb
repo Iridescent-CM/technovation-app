@@ -48,19 +48,28 @@ RSpec.describe Season do
     end
   end
 
-  describe ".deadline" do
-    it "returns human-readable month and day" do
-      deadline = Date.new(2019, 4, 25)
-      expect(ImportantDates).to receive(:submission_deadline).at_least(:once).and_return(deadline)
-      expect(Season.deadline).to eq("April 25")
-    end
-  end
-
   describe ".submission_deadline" do
-    it "returns human-readable date" do
-      deadline = Date.new(2019, 4, 25)
-      expect(ImportantDates).to receive(:submission_deadline).at_least(:once).and_return(deadline)
-      expect(Season.submission_deadline).to eq("April 25, 2019")
+    let(:deadline) { Time.zone.local(2019, 4, 25, 17) }
+
+    before do
+      allow(ImportantDates).to receive(:submission_deadline).at_least(:once).and_return(deadline)
+    end
+
+    it "includes a human-readable date in the PDT time zone" do
+      expect(Season.submission_deadline).to include("April 25, 5PM PDT")
+    end
+
+    it "includes a human-readable date in the WAT time zone" do
+      expect(Season.submission_deadline).to include("April 26")
+      expect(Season.submission_deadline).to include("1AM WAT")
+    end
+
+    it "includes a human-readable date in the CEST time zone" do
+      expect(Season.submission_deadline).to include("2AM CEST")
+    end
+
+    it "includes a human-readable date in the IST time zone" do
+      expect(Season.submission_deadline).to include("5AM IST")
     end
   end
 end
