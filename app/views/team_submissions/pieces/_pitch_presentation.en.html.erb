@@ -15,7 +15,7 @@
     <p class="hint">File types allowed: *.ppt, *.pptx, *.pdf</p>
 
     <%= form_with model: submission,
-      url: send("#{current_scope}_team_submission_path", multipart: true),
+      url: send("#{current_scope}_team_submission_path", submission, multipart: true),
       id: "team-submission-pitch-presentation-dropzone",
       class: "dropzone" do |f| %>
 
