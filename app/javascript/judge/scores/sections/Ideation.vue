@@ -3,9 +3,9 @@
     <GenericJudgingContainer
       heading="Learning Journey"
       section="ideation"
-      next-section="pitch"
-      prev-section="project_details"
-      prev-button-text="Project Name & Description"
+      :prev-section="prevSection"
+      next-section="review-score"
+      next-button-text="Review Score"
     >
       <template v-slot:main-content>
         <p class="font-bold text-lg">{{ submission.name }}</p>
@@ -28,8 +28,14 @@ import Template from "../../../components/job_process/template";
 import Screenshots from "../pieces/Screenshots";
 
 export default {
-
-  computed: mapState(['submission']),
+  computed: {
+    ...mapState(['team', 'submission']),
+    prevSection () {
+      return (this.team.division === 'senior' || this.team.division === 'junior') ?
+        'entrepreneurship' :
+        'demo'
+    },
+  },
 
   components: {
     GenericJudgingContainer,

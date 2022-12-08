@@ -27,14 +27,6 @@ export const sections = (state, getters) => {
     },
 
     {
-      name: 'ideation',
-      title: 'Learning Journey',
-      pointsTotal: getters.sectionPointsTotal('ideation'),
-      pointsPossible: getters.sectionPointsPossible('ideation'),
-      isComplete: getters.isSectionComplete('ideation')
-    },
-
-    {
       name: 'pitch',
       title: 'Pitch',
       pointsTotal: getters.sectionPointsTotal('pitch'),
@@ -60,6 +52,14 @@ export const sections = (state, getters) => {
       isComplete: getters.isSectionComplete('entrepreneurship')
     })
   }
+
+  sections.push({
+    name: 'ideation',
+    title: 'Learning Journey',
+    pointsTotal: getters.sectionPointsTotal('ideation'),
+    pointsPossible: getters.sectionPointsPossible('ideation'),
+    isComplete: getters.isSectionComplete('ideation')
+  })
 
   return sections
 }

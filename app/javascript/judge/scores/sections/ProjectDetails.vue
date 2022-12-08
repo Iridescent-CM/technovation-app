@@ -5,7 +5,7 @@
           section="project_details"
           prev-section="overview"
           prev-button-text="Overview"
-          next-section="ideation"
+          next-section="pitch"
           next-button-text="Learning Journey"
       >
         <template v-slot:main-content>
