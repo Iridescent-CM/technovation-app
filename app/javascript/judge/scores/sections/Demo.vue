@@ -28,7 +28,7 @@ export default {
     nextSection () {
       return (this.team.division === 'senior' || this.team.division === 'junior') ?
         'entrepreneurship' :
-        'review-score'
+        'ideation'
     },
   },
 

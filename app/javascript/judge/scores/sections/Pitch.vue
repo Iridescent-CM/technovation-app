@@ -6,8 +6,7 @@
           heading="Pitch"
           section="pitch"
           next-section="demo"
-          prev-section="ideation"
-          prev-button-text="Learning Journey"
+          prev-section="project_details"
         >
           <template v-slot:main-content>
             <PitchVideoLink />
