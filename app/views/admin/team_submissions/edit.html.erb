@@ -78,6 +78,27 @@
           <%= f.file_field :source_code %>
           <%= f.hidden_field :source_code_cache %>
         </div>
+
+        <div>
+          <h5>Screenshots</h5>
+
+          <% if @team_submission.screenshots.any? %>
+            Total Uploaded Images: <%= @team_submission.screenshots.count %>
+
+            <div class="submission-pieces__screenshots">
+              <% @team_submission.screenshots.each do |screenshot| %>
+                <% if screenshot.image_url.present? %>
+                  <%= render "screenshots/screenshot_grid", screenshot: screenshot %>
+                <% else %>
+                  <p> Issue displaying screenshots. Please notify the dev team.</p>
+                <% end %>
+              <% end %>
+            </div>
+
+          <% else %>
+            <p> No screenshots uploaded </p>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
