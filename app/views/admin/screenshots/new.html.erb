@@ -1,0 +1,45 @@
+<%= javascript_tag do %>
+  function onFileUploadFinished(data) {
+    const screenshot = document.getElementById("screenshot");
+    screenshot.src = filestack_client.transform(data.handle);
+  }
+<% end %>
+
+<div class="grid">
+  <div class="grid__col-10">
+    <div class="panel">
+
+      <h1>Add a screenshot</h1>
+      <% @team_submission.while_no_screenshots_remaining do %>
+        <p>Please delete a screenshot(s) in order to upload additional images</p>
+      <% end %>
+
+      <% @team_submission.while_screenshots_remaining do %>
+        <img src="" alt="" id="screenshot" class="og-style-filestack-img">
+
+        <%= form_with model:[@team_submission, @screenshot], url: admin_team_submission_screenshots_path(@team_submission), local: true do |f| %>
+          <%= f.label :image, "Screenshot" %>
+          <%= f.filestack_field :image,
+                                "Select image",
+                                id: 'admin-screenshot-picker',
+                                pickerOptions: {
+                                  accept: ["image/jpeg", "image/jpg", "image/png"],
+                                  uploadConfig: {
+                                    intelligent: true,
+                                  },
+                                  fromSources: ["local_file_system"],
+                                  onFileUploadFinished: 'onFileUploadFinished',
+                                  storeTo: {
+                                    location: "s3",
+                                    container: ENV.fetch("AWS_BUCKET_NAME"),
+                                    path: "uploads/screenshot/filestack/#{@team_submission.id}/",
+                                    region: "us-east-1"
+                                  }
+                                } %>
+          <br>
+          <%= f.submit "Save", class:"button" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
