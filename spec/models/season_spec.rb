@@ -69,7 +69,7 @@ RSpec.describe Season do
     end
 
     it "includes a human-readable date in the IST time zone" do
-      expect(Season.submission_deadline).to include("5AM IST")
+      expect(Season.submission_deadline).to include("530AM IST")
     end
   end
 end
