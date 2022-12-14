@@ -20,8 +20,8 @@
         <%= form_with model:[@team_submission, @screenshot], url: admin_team_submission_screenshots_path(@team_submission), local: true do |f| %>
           <%= f.label :image, "Screenshot" %>
           <%= f.filestack_field :image,
-                                "Select image",
-                                id: 'admin-screenshot-picker',
+                                "Select screenshot",
+                                id: "admin-screenshot-picker",
                                 pickerOptions: {
                                   accept: ["image/jpeg", "image/jpg", "image/png"],
                                   uploadConfig: {
