@@ -219,6 +219,8 @@
         <i><%= @team_submission.game_description  %></i>
       <% end %>
 
+      <h5>Screenshots</h5>
+
       <p>
         <% if @team_submission.screenshots.any? %>
           Total Uploaded Images: <%= @team_submission.screenshots.count %>
@@ -233,6 +235,12 @@
           No screenshots uploaded
         <% end %>
       </p>
+
+      <% if @team_submission.max_screenshots_remaining > 0 %>
+        <%= link_to 'Add Screenshot', new_admin_team_submission_screenshot_path(@team_submission) %>
+      <% else %>
+        <p>Delete a screenshot(s) to upload additional images</p>
+      <% end %>
     </div>
   </div>
 </div>

@@ -65,4 +65,22 @@ RSpec.feature "admin team submissions" do
       href: submission.business_plan_url
     )
   end
+
+  scenario "Add a screenshot" do
+    click_link "some app name"
+    expect(page).to have_content("No screenshots uploaded")
+
+    click_link "Add Screenshot"
+    expect(page).to have_button("Select screenshot")
+
+    # TODO: Groundwork for filestack specs
+    # expect(page).to have_selector("div#__filestack-picker")
+    # find("#fsp-fileUpload").set(Rails.root + "spec/support/fixtures/screenshot.jpg")
+
+    click_button "Save"
+
+    expect(current_path).to eq(
+      admin_team_submission_path(submission.reload)
+    )
+  end
 end
