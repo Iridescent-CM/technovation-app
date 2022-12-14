@@ -63,6 +63,12 @@ export default {
         },
 
         {
+          heading: 'Mentor Curriculum',
+          url: 'https://technovationchallenge.org/mentor-curriculum/',
+          text: 'Open the Curriculum',
+        },
+
+        {
           heading: 'Mentor Resources',
           url: 'https://technovationchallenge.org/mentor-resources/',
           text: 'Learn more about mentoring',
