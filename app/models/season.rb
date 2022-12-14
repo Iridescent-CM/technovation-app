@@ -67,7 +67,7 @@ class Season
   end
 
   def self.submission_deadline_in_india_time_zone
-    ImportantDates.submission_deadline.in_time_zone("Asia/Kolkata").strftime("%l%p IST")
+    ImportantDates.submission_deadline.in_time_zone("Asia/Kolkata").strftime("%l%M%p IST")
   end
 
   private_class_method :submission_deadline_in_los_angeles_time_zone,
