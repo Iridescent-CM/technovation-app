@@ -1,9 +1,9 @@
 <% provide :title, "Parental Consent Form" %>
 
-<div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8">
-    <h3><%= t("views.student.parental_consent_notices.new.title") %></h3>
+<div class="w-11/12 lg:w-1/2 mx-auto">
+  <%= render layout: "application/templates/dashboards/energetic_container",
+    locals: {heading: t("views.student.parental_consent_notices.new.title")} do %>
 
     <%= render "student/parental_consent_notices/form" %>
-  </div>
+  <% end %>
 </div>
