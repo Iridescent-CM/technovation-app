@@ -1,7 +1,7 @@
 <template>
   <div>
     <GenericJudgingContainer
-      heading="Demo"
+      heading="Technical"
       section="demo"
       :next-section="nextSection"
       prevSection="pitch"

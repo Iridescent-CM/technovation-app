@@ -36,7 +36,7 @@ export const sections = (state, getters) => {
 
     {
       name: 'demo',
-      title: 'Demo',
+      title: 'Technical',
       pointsTotal: getters.sectionPointsTotal('demo'),
       pointsPossible: getters.sectionPointsPossible('demo'),
       isComplete: getters.isSectionComplete('demo')
