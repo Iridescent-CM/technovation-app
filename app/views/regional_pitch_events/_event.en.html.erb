@@ -80,19 +80,17 @@
                   not event.at_team_capacity? %>
         <p>
           <%= link_to "Select this event",
-            [
-              current_scope,
-              :regional_pitch_event_selection,
-              { event_id: event.id, team_id: current_team.id },
-            ],
-            class: "button small",
-            data: {
-              disable_with: "Selecting event...",
-              positive: true,
-              method: :post,
-              confirm: "Are you sure you want to attend #{event.name}? " +
-              "<p><strong>You cannot change this.</strong></p>"
-            } %>
+                      send("#{current_scope}_regional_pitch_event_selection_path",
+                           :regional_pitch_event_selection,
+                           { event_id: event.id, team_id: current_team.id }),
+                      class: "button small",
+                      data: {
+                        disable_with: "Selecting event...",
+                        positive: true,
+                        method: :post,
+                        confirm: "Are you sure you want to attend #{event.name}? " +
+                        "<p><strong>You cannot change this.</strong></p>"
+                      } %>
         </p>
       <% end %>
     </div>

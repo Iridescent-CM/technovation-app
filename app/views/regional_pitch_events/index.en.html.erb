@@ -19,5 +19,6 @@
   </div>
 <% else %>
   <%= render partial: 'regional_pitch_events/rebrand/event',
+             locals: { multiple_events: true },
              collection: @regional_events %>
 <% end %>
