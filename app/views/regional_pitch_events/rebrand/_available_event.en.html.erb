@@ -1,0 +1,99 @@
+<div class="border-solid rounded border-4 p-4 mb-4">
+    <% if current_scope != "judge" and
+        event.at_team_capacity? and
+          not current_team.attending_event?(event) %>
+            <div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-2">
+              <p>This event is currently full</p>
+            </div>
+    <% end %>
+
+    <div class="mt-4 flex flex-col lg:flex-row lg:justify-between">
+      <section>
+        <p class="font-semibold text-2xl"><%= event.name %></p>
+        <p class="italic"><%= event.officiality.capitalize %> Event</p>
+      </section>
+
+      <section>
+        <p class="text-xl font-semibold">Event Details</p>
+
+        <div class="flex flex-col lg:flex-row mt-4">
+          <p class="font-medium w-24">Time:</p>
+          <p>
+            <%= event.starts_at
+                     .in_time_zone(event.timezone)
+                     .strftime("%A, %B %e") %>
+
+            <br />
+
+            <%= event.starts_at
+                     .in_time_zone(event.timezone)
+                     .strftime("%-I:%M%P") %>
+
+            &ndash;
+
+            <%= event.ends_at
+                     .in_time_zone(event.timezone)
+                     .strftime("%-I:%M%P %Z") %>
+          </p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row mt-8">
+          <p class="font-medium w-24">Location:</p>
+          <p>
+            <%= event.venue_address %>
+            <br />
+            <%= event.city %>
+          </p>
+        </div>
+
+        <% unless event.event_link.blank? %>
+          <div class="flex flex-col lg:flex-row mt-8">
+            <p class="font-medium w-24">Event Link:</p>
+            <p>
+              <%= link_to "#{event.name}",
+                          event.event_link,
+                          target: :_blank,
+                          class: 'tw-link' %>
+            </p>
+          </div>
+        <% end %>
+      </section>
+
+      <section>
+        <p class="text-xl font-semibold">Hosted By</p>
+
+        <div class="flex flex-col lg:flex-row mt-4">
+          <p class="font-medium w-24">Name:</p>
+          <p><%= event.ambassador.name %></p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row mt-8">
+          <p class="font-medium w-24">Email:</p>
+          <p class>
+            <%= event.ambassador.email %>
+          </p>
+        </div>
+
+        <% if current_scope != "judge" and
+            not current_team.attending_event?(event) and
+              SeasonToggles.select_regional_pitch_event? and
+                not event.at_team_capacity? %>
+                  <section class="mt-8 flex justify-center">
+                    <p>
+                      <%= link_to "Select this event",
+                                  send("#{current_scope}_regional_pitch_event_selection_path",
+                                       :regional_pitch_event_selection,
+                                       { event_id: event.id, team_id: current_team.id }),
+                                  class: "tw-green-btn mx-auto",
+                                  data: {
+                                    disable_with: "Selecting event...",
+                                    positive: true,
+                                    method: :post,
+                                    confirm: "Are you sure you want to attend #{event.name}? " + "<p><strong>You cannot change this.</strong></p>"
+                                  } %>
+                    </p>
+                  </section>
+        <% end %>
+      </section>
+    </div>
+</div>

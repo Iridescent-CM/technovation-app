@@ -18,6 +18,25 @@
     </div>
   </div>
 <% else %>
-  <%= render partial: 'regional_pitch_events/rebrand/event',
-             collection: @regional_events %>
+  <div class="container mx-auto flex w-full lg:w-3/4">
+    <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Available Events'} do %>
+      <section class="mb-8">
+        <p class="mb-4">
+          <%= link_to 'Go back!',
+                      back_from_event_path,
+                      class: "tw-gray-btn text-sm" %>
+        </p>
+        <p>These are the available events in your area. </p>
+        <p>
+          Events will be confirmed as either Regional Pitch Events or
+          Celebration Events after <%= ImportantDates.rpe_officiality_finalized.strftime("%B %-d") %>.
+          For more information, please check out the
+          <%= link_to 'Technovation FAQ', 'https://iridescentsupport.zendesk.com/hc/en-us/sections/360007469154-Regional-Pitch-Events' %>
+          or contact your chapter ambassador.
+        </p>
+      </section>
+      <%= render partial: 'regional_pitch_events/rebrand/available_event',
+                 collection: @regional_events, as: :event %>
+    <% end %>
+  </div>
 <% end %>
