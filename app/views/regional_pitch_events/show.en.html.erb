@@ -16,6 +16,18 @@
     </div>
   </div>
 <% else %>
-  <%= render 'regional_pitch_events/rebrand/event',
-             event: @regional_pitch_event %>
+
+  <div class="container mx-auto flex w-full lg:w-3/4">
+    <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Event Details'} do %>
+      <section class="mb-8">
+        <p class="mb-4">
+          <%= link_to 'Go back!',
+                      back_from_event_path,
+                      class: "tw-gray-btn text-sm" %>
+        </p>
+        <%= render 'regional_pitch_events/rebrand/event',
+                   event: @regional_pitch_event %>
+      </section>
+      <% end %>
+    </div>
 <% end %>
