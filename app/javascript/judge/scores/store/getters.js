@@ -20,7 +20,7 @@ export const sections = (state, getters) => {
   let sections = [
     {
       name: 'project_details',
-      title: 'Project Name & Description',
+      title: 'Project Description',
       pointsTotal: getters.sectionPointsTotal('project_details'),
       pointsPossible: getters.sectionPointsPossible('project_details'),
       isComplete: getters.isSectionComplete('project_details')
@@ -36,7 +36,7 @@ export const sections = (state, getters) => {
 
     {
       name: 'demo',
-      title: 'Demo',
+      title: 'Technical',
       pointsTotal: getters.sectionPointsTotal('demo'),
       pointsPossible: getters.sectionPointsPossible('demo'),
       isComplete: getters.isSectionComplete('demo')

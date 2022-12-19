@@ -1,7 +1,7 @@
 <template>
     <div>
       <GenericJudgingContainer
-          heading="Project Name & Description"
+          heading="Project Description"
           section="project_details"
           prev-section="overview"
           prev-button-text="Overview"
