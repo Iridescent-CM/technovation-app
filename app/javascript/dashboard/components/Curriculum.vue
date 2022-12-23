@@ -30,6 +30,9 @@
             </a>
           </p>
 
+          <h3 class="margin--t-xlarge margin--b-none">Judging</h3>
+          <p class="margin--t-none">Visit these helpful links to prepare your project for judging:</p>
+
           <ul>
             <li>
               <a href="https://technovationchallenge.org/submission-guidelines/" target="_blank">
