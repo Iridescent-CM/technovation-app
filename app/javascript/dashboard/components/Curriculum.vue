@@ -23,7 +23,12 @@
             </a>
           </p>
 
-          <p>Visit these helpful links to prepare your project for judging:</p>
+          <h3 class="margin--t-xlarge margin--b-none">Mentor Curriculum</h3>
+          <p>
+            <a href="https://technovationchallenge.org/mentor-curriculum/" class="button" target="_blank">
+              Go to Mentor Curriculum
+            </a>
+          </p>
 
           <ul>
             <li>
