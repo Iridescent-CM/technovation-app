@@ -139,6 +139,46 @@
       </div>
     </div>
 
+    <div class="field margin--t-large">
+      <%= f.label :game,
+        t("submissions.uses_open_ai_question"),
+        for: :team_submission_game %>
+
+      <%= f.select :uses_open_ai,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        data: {
+          toggles: {
+            "true": "#uses_open_ai_description"
+          },
+        },
+        class: "width--20-percent",
+        id: :team_submission_game %>
+
+      <div id="uses_open_ai_description">
+        <p class="hint margin--b-none">Please explain how:</p>
+
+        <%= f.text_area :uses_open_ai_description,
+          id: :team_submission_uses_open_ai_description,
+          data: {
+            word_count: true,
+            word_count_limit: 100,
+            word_count_details_container: "uses-open-ai-word-count"
+          },
+          rows: 5 %>
+
+        <p id="uses-open-ai-word-count" class="scent word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
+      </div>
+    </div>
+
     <div class="actions margin--t-xlarge">
       <p>
         <%= f.submit "Save my responses", class: "button" %>

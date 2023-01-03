@@ -236,6 +236,8 @@ module TeamSubmissionController
         :game,
         :game_description,
         :demo_video_link,
+        :uses_open_ai,
+        :uses_open_ai_description,
         :pitch_video_link,
         :submission_type,
         :development_platform_other,
