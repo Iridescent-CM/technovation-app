@@ -1551,7 +1551,9 @@ CREATE TABLE public.team_submissions (
     game_description character varying,
     judge_recusal_count integer DEFAULT 0 NOT NULL,
     submission_type integer,
-    learning_journey text
+    learning_journey text,
+    uses_open_ai boolean,
+    uses_open_ai_description character varying
 );
 
 
@@ -3166,6 +3168,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220406164442'),
 ('20220426020533'),
 ('20220914184120'),
-('20220929165539');
+('20220929165539'),
+('20221220211548');
 
 
