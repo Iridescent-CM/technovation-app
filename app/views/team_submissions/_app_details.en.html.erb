@@ -37,13 +37,10 @@
 
   <dt><%= t("submissions.uses_open_ai_question") %></dt>
   <dd>
-    <% if team_submission.uses_open_ai == true %>
-      Yes
+    <%= humanize_boolean(team_submission.uses_open_ai?) %>
+
+    <% if team_submission.uses_open_ai? %>
       <%= simple_format(team_submission.uses_open_ai_description) %>
-    <% elsif team_submission.uses_open_ai == false %>
-      No
-    <% elsif team_submission.uses_open_ai == nil %>
-      -
     <% end %>
   </dd>
 </dl>
