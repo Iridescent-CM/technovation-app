@@ -1,37 +1,28 @@
 <dl>
   <dt>Does your submission use artificial intelligence?</dt>
   <dd>
-    <% if team_submission.ai == true %>
-      Yes
+    <%= humanize_boolean(team_submission.ai?) %>
+
+    <% if team_submission.ai? %>
       <%= simple_format(team_submission.ai_description) %>
-    <% elsif team_submission.ai == false %>
-      No
-    <% elsif team_submission.ai == nil %>
-      -
     <% end %>
   </dd>
 
   <dt>Does your submission help solve climate change?</dt>
   <dd>
-    <% if team_submission.climate_change == true %>
-      Yes
+    <%= humanize_boolean(team_submission.game?) %>
+
+    <% if team_submission.climate_change? %>
       <%= simple_format(team_submission.climate_change_description) %>
-    <% elsif team_submission.climate_change == false %>
-      No
-    <% elsif team_submission.climate_change == nil %>
-      -
     <% end %>
   </dd>
 
-  <dt><%= t("submissions.solve_hunger_or_food_waste_question") %></dt>
+  <dt><%= t("submissions.solves_hunger_or_food_waste_question") %></dt>
   <dd>
-    <% if team_submission.game == true %>
-      Yes
+    <%= humanize_boolean(team_submission.game?) %>
+
+    <% if team_submission.game? %>
       <%= simple_format(team_submission.game_description) %>
-    <% elsif team_submission.game == false %>
-      No
-    <% elsif team_submission.game == nil %>
-      -
     <% end %>
   </dd>
 
