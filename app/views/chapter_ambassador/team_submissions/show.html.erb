@@ -193,6 +193,15 @@
           <% if @team_submission.game? %>
             <i><%= @team_submission.game_description  %></i>
           <% end %>
+
+          <p>
+            <%= t("submissions.uses_open_ai_question") %>
+            <%= humanize_boolean(@team_submission.uses_open_ai?) %>
+          </p>
+
+          <% if @team_submission.uses_open_ai? %>
+            <i><%= @team_submission.uses_open_ai_description %></i>
+          <% end %>
         </dd>
 
         <dt>Images</dt>
