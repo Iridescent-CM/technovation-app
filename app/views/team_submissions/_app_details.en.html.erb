@@ -34,4 +34,13 @@
       -
     <% end %>
   </dd>
+
+  <dt><%= t("submissions.uses_open_ai_question") %></dt>
+  <dd>
+    <%= humanize_boolean(team_submission.uses_open_ai?) %>
+
+    <% if team_submission.uses_open_ai? %>
+      <%= simple_format(team_submission.uses_open_ai_description) %>
+    <% end %>
+  </dd>
 </dl>

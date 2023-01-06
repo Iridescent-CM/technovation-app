@@ -211,4 +211,16 @@
 
     <%= simple_format submission.game_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
   </div>
+
+  <div class="mt-6">
+    <h3 class="mb-2 text-base font-semibold uppercase">
+      <%= t("submissions.uses_open_ai_question") %>
+    </h3>
+
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
+      <%= humanize_boolean(submission.uses_open_ai?) %>
+    </span>
+
+    <%= simple_format submission.uses_open_ai_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
+  </div>
 <% end %>
