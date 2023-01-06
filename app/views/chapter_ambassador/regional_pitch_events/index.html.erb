@@ -40,21 +40,16 @@
   </div>
 </div>
 
-<% if invitation_token.present? %>
-  <div class="panel">
-    <h6 class="heading--reset">
-      You may give this URL to new judges which
-      enables them to sign up:
-    </h6>
-
-    <p><%= judge_signup_url(invitation: invitation_token) %></p>
-
-    <h6 class="heading--reset">Reminder:</h6>
-
-    <p>
-      Existing mentors should use <em>Switch to judge mode</em>
-      from their dashboards to get started as a judge.
-      <strong>Mentors on teams can only be virtual judges.</strong>
-    </p>
-  </div>
-<% end %>
+<div class="panel">
+  <p class="heading--reset">
+    You can only add currently registered judges to an event.
+    If you would like to invite someone to register as a judge,
+    please have them sign up at <%= signup_url %>
+  </p>
+  <p>
+    Once they are registered, judges who enter a location within
+    your chapter's region during their registration process will
+    automatically appear in the list of judges you can assign to
+    an event.
+  </p>
+</div>
