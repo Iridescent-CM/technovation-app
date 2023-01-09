@@ -106,6 +106,10 @@ class SubmissionsGrid
     end
   end
 
+  column :uses_open_ai, header: "Uses OpenAI/ChatGPT", if: ->(grid) { grid.admin } do
+    ApplicationController.helpers.humanize_boolean(uses_open_ai?)
+  end
+
   column :city, order: "teams.city" do
     team.city
   end

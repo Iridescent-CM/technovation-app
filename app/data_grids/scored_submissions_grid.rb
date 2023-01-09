@@ -280,6 +280,10 @@ class ScoredSubmissionsGrid
     end
   end
 
+  column :uses_open_ai, if: ->(grid) { grid.admin } do
+    ApplicationController.helpers.humanize_boolean(uses_open_ai?)
+  end
+
   filter :round,
   :enum,
   select: -> { [

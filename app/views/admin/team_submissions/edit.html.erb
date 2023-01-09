@@ -52,6 +52,10 @@
           <%= f.input :game, label: t('submissions.solves_hunger_or_food_waste_question'),
             collection: [['Yes', true], ['No', false]] %>
           <%= f.input :game_description, label: false %>
+
+          <%= f.input :game, label: t('submissions.uses_open_ai_question'),
+            collection: [['Yes', true], ['No', false]] %>
+          <%= f.input :uses_open_ai_description, label: false %>
         </div>
 
         <div>
