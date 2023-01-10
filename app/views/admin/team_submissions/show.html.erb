@@ -213,10 +213,11 @@
 
       <p>
         <%= t("submissions.solves_hunger_or_food_waste_question") %>
-        <%= @team_submission.question_response("health_problem")  %>
+        <%= humanize_boolean(@team_submission.solves_hunger_or_food_waste?) %>
       </p>
-      <% if @team_submission.game? %>
-        <i><%= @team_submission.game_description  %></i>
+
+      <% if @team_submission.solves_hunger_or_food_waste? %>
+        <i><%= @team_submission.solves_hunger_or_food_waste_description %></i>
       <% end %>
 
       <p>
