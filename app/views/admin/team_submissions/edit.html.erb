@@ -41,11 +41,11 @@
 
         <div>
           <h6>Additional Questions</h6>
-          <%= f.input :ai, label: 'Does your submission use artificial intelligence?',
+          <%= f.input :ai, label: t('submissions.ai_question'),
             collection: [['Yes', true], ['No', false]]%>
           <%= f.input :ai_description, label: false %>
 
-          <%= f.input :climate_change, label: 'Does your submission help solve climate change?',
+          <%= f.input :climate_change, label: t('submissions.climate_change_question'),
             collection: [['Yes', true], ['No', false]] %>
           <%= f.input :climate_change_description, label: false %>
 

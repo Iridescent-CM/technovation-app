@@ -196,19 +196,19 @@
 
       <h5>Additional Questions</h5>
       <p>
-        Does your submission use artificial intelligence?
-        <%= @team_submission.question_response("ai")  %>
+        <%= t("submissions.ai_question") %>
+        <%= humanize_boolean(@team_submission.ai?) %>
       </p>
       <% if @team_submission.ai? %>
-        <i><%= @team_submission.ai_description  %></i>
+        <i><%= @team_submission.ai_description %></i>
       <% end %>
 
       <p>
-        Does your submission help solve climate change?
-        <%= @team_submission.question_response("climate_change")  %>
+        <%= t("submissions.climate_change_question") %>
+        <%= humanize_boolean(@team_submission.climate_change?) %>
       </p>
       <% if @team_submission.climate_change? %>
-        <i><%= @team_submission.climate_change_description  %></i>
+        <i><%= @team_submission.climate_change_description %></i>
       <% end %>
 
       <p>

@@ -209,8 +209,8 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(s) { s.development_platform == "App Inventor" }
 
   validates :thunkable_project_url,
-    absence: { 
-      message: 'Cannot add a Thunkable project URL when App Inventor selected as the development platform.' 
+    absence: {
+      message: 'Cannot add a Thunkable project URL when App Inventor selected as the development platform.'
     },
     if: ->(s) { s.development_platform == "App Inventor" }
 
@@ -219,8 +219,8 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(s) { s.development_platform == "Thunkable" }
 
   validates :app_inventor_app_name,
-    absence: { 
-      message: 'Cannot add an App Inventor app name when Thunkable selected as the development platform.' 
+    absence: {
+      message: 'Cannot add an App Inventor app name when Thunkable selected as the development platform.'
     },
     if: ->(s) { s.development_platform == "Thunkable" }
 
@@ -610,17 +610,6 @@ class TeamSubmission < ActiveRecord::Base
 
   def video_url_root(video_type)
     VideoUrl.new(video_link_for(video_type)).root
-  end
-  
-  def question_response(question)
-    question_key = question == "health_problem" ? :game : question.to_sym 
-    if self[question_key].nil?
-      "-"
-    elsif self[question_key]
-      "Yes"
-    else
-      "No"
-    end
   end
 
   private
