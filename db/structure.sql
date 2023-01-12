@@ -1555,7 +1555,9 @@ CREATE TABLE public.team_submissions (
     uses_open_ai boolean,
     uses_open_ai_description character varying,
     solves_hunger_or_food_waste boolean,
-    solves_hunger_or_food_waste_description character varying
+    solves_hunger_or_food_waste_description character varying,
+    solves_health_problem boolean,
+    solves_health_problem_description character varying
 );
 
 
@@ -3173,6 +3175,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220929165539'),
 ('20221220211548'),
 ('20230104033534'),
-('20230104212325');
+('20230104212325'),
+('20230112172357');
 
 
