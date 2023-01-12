@@ -17,5 +17,5 @@
 
 <div>
   <h3 class="text-neutral-700 font-bold leading-tight"><%= t("models.mentor_profile.bio") %></h3>
-  <%= account.bio.present? ? simple_format(account.bio) : "This mentor has not written a bio." %>
+  <%= account.bio.present? ? simple_format(h(account.bio)) : "This mentor has not written a bio." %>
 </div>

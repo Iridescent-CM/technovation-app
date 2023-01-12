@@ -4,6 +4,6 @@
   <%= render 'mentor/bios/form' %>
 <% else %>
   <h1 class="content-heading">Your personal summary</h1>
-  <%= simple_format current_mentor.bio %>
+  <%= simple_format h(current_mentor.bio) %>
   <p><%= link_to "Change your summary", edit_mentor_bio_path %></p>
 <% end %>
