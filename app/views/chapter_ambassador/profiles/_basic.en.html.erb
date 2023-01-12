@@ -19,7 +19,7 @@
   <dd><%= current_ambassador.gender || "Not specified" %></dd>
 
   <dt>Personal summary</dt>
-  <dd><%= simple_format current_ambassador.bio %></dd>
+  <dd><%= simple_format h(current_ambassador.bio) %></dd>
 </dl>
 
 <p>

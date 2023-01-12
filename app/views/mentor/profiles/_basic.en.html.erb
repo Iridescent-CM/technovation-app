@@ -18,7 +18,7 @@
   <dd><%= current_mentor.expertises.map(&:name).to_sentence %></dd>
 
   <dt>Personal summary</dt>
-  <dd><%= simple_format current_mentor.bio %></dd>
+  <dd><%= simple_format h(current_mentor.bio) %></dd>
 </dl>
 
 <% if current_mentor.onboarded? %>
