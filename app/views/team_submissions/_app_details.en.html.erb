@@ -19,10 +19,10 @@
 
   <dt><%= t("submissions.solves_hunger_or_food_waste_question") %></dt>
   <dd>
-    <%= humanize_boolean(team_submission.game?) %>
+    <%= humanize_boolean(team_submission.solves_hunger_or_food_waste?) %>
 
-    <% if team_submission.game? %>
-      <%= simple_format(team_submission.game_description) %>
+    <% if team_submission.solves_hunger_or_food_waste? %>
+      <%= simple_format(team_submission.solves_hunger_or_food_waste_description) %>
     <% end %>
   </dd>
 
