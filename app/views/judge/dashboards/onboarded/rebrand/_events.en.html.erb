@@ -89,9 +89,9 @@
         </p>
 
         <div class="step-actions margin--b-xlarge">
-          <%= link_to 'View details',
-            send("#{current_scope}_consent_waiver_path", event),
-            class: "button" %>
+          <%= link_to "View details",
+                      judge_regional_pitch_event_path(event),
+                      class: "tw-green-btn" %>
         </div>
       <% end %>
     <% else %>
