@@ -10,7 +10,7 @@
 
   <dt>Does your submission help solve climate change?</dt>
   <dd>
-    <%= humanize_boolean(team_submission.game) %>
+    <%= humanize_boolean(team_submission.climate_change) %>
 
     <% if team_submission.climate_change? %>
       <%= simple_format(team_submission.climate_change_description) %>
