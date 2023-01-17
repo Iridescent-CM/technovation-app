@@ -1,7 +1,7 @@
 <dl>
   <dt>Does your submission use artificial intelligence?</dt>
   <dd>
-    <%= humanize_boolean(team_submission.ai?) %>
+    <%= humanize_boolean(team_submission.ai) %>
 
     <% if team_submission.ai? %>
       <%= simple_format(team_submission.ai_description) %>
@@ -10,7 +10,7 @@
 
   <dt>Does your submission help solve climate change?</dt>
   <dd>
-    <%= humanize_boolean(team_submission.game?) %>
+    <%= humanize_boolean(team_submission.game) %>
 
     <% if team_submission.climate_change? %>
       <%= simple_format(team_submission.climate_change_description) %>
@@ -19,7 +19,7 @@
 
   <dt><%= t("submissions.solves_hunger_or_food_waste_question") %></dt>
   <dd>
-    <%= humanize_boolean(team_submission.solves_hunger_or_food_waste?) %>
+    <%= humanize_boolean(team_submission.solves_hunger_or_food_waste) %>
 
     <% if team_submission.solves_hunger_or_food_waste? %>
       <%= simple_format(team_submission.solves_hunger_or_food_waste_description) %>
@@ -28,7 +28,7 @@
 
   <dt><%= t("submissions.uses_open_ai_question") %></dt>
   <dd>
-    <%= humanize_boolean(team_submission.uses_open_ai?) %>
+    <%= humanize_boolean(team_submission.uses_open_ai) %>
 
     <% if team_submission.uses_open_ai? %>
       <%= simple_format(team_submission.uses_open_ai_description) %>

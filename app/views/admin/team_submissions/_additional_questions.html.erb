@@ -3,8 +3,8 @@
 
   <% additional_question_labels(team_submission).each do |question_label| %>
     <p>
-      <%= t("submissions.#{question_label}_question") %>
-      <%= humanize_boolean(eval("team_submission.#{question_label}?")) %>
+      <strong><%= t("submissions.#{question_label}_question") %></strong>
+      <%= humanize_boolean(eval("team_submission.#{question_label}")) %>
     </p>
 
     <i><%= eval("team_submission.#{question_label}_description") %></i>
