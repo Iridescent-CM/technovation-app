@@ -30,70 +30,25 @@
     <% if current_judge.live_event? %>
       <h1 class="content-heading">Regional Pitch Events</h1>
 
-      <p>
+      <p class="mb-4">
         <% if current_judge.onboarding? %>
-          Please finish your onboarding steps above, so
-          that you will be able to judge at your events.
+          To be able to judge submissions this season, make sure to complete the
+          To-do items on the left: Consent Waiver and Judge Training.
         <% else %>
           You will be judging teams at the following events.
         <% end %>
       </p>
 
-      <p>
-        If you want to change events or leave an event,
-        please contact your Chapter Ambassador.
+      <p class="mb-8">
+        If you want to change events or leave an event, please contact your
+        Chapter Ambassador. You can preview your event's submissions beginning
+        on <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
       </p>
 
-      <% current_judge.events.each do |event| %>
-        <div class="grid">
-          <div class="grid__col-auto grid__col--bleed-x">
-            <dl>
-              <dt><%= event.name %></dt>
-              <dd>
-                <%= event.starts_at
-                  .in_time_zone(event.timezone)
-                  .strftime("%A, %B %e") %>
+      <%= render partial: 'regional_pitch_events/rebrand/event',
+                 locals: { multiple_events: true },
+                 collection: current_judge.events %>
 
-                <br />
-
-                <%= event.starts_at
-                  .in_time_zone(event.timezone)
-                  .strftime("%-I:%M%P") %>
-
-                &ndash;
-
-                <%= event.ends_at
-                  .in_time_zone(event.timezone)
-                  .strftime("%-I:%M%P %Z") %>
-              </dd>
-            </dl>
-          </div>
-
-          <div class="grid__col-auto grid__col--bleed-x">
-            <h6>Chapter Ambassador</h6>
-
-            <dl>
-              <dt>Name</dt>
-              <dd><%= event.ambassador.name  %></dd>
-
-              <dt>Email</dt>
-              <dd><%= mail_to event.ambassador.email %></dd>
-            </dl>
-          </div>
-        </div>
-
-        <p>
-          You can preview your event's submissions
-          beginning on
-          <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
-        </p>
-
-        <div class="step-actions margin--b-xlarge">
-          <%= link_to "View details",
-                      judge_regional_pitch_event_path(event),
-                      class: "tw-green-btn" %>
-        </div>
-      <% end %>
     <% else %>
       <section class="mb-8">
         <p>
