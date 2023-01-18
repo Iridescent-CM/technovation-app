@@ -112,6 +112,34 @@ RSpec.describe TeamSubmission do
     end
   end
 
+  describe "#additional_questions?" do
+    let(:submission) { TeamSubmission.new(seasons: [season]) }
+
+    context "when the season is 2020" do
+      let(:season) { "2020" }
+
+      it "returns false" do
+        expect(submission.additional_questions?).to eq(false)
+      end
+    end
+
+    context "when the season is 2021" do
+      let(:season) { "2021" }
+
+      it "returns true" do
+        expect(submission.additional_questions?).to eq(true)
+      end
+    end
+
+    context "when the season is 2022" do
+      let(:season) { "2022" }
+
+      it "returns true" do
+        expect(submission.additional_questions?).to eq(true)
+      end
+    end
+  end
+
   it "removes existing current round scores if unpublished" do
     SeasonToggles.set_judging_round(:qf)
 

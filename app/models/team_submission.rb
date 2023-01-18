@@ -575,6 +575,10 @@ class TeamSubmission < ActiveRecord::Base
     send("Thunkable?")
   end
 
+  def additional_questions?
+    seasons.last >= 2021
+  end
+
   %i[
     source_code
     business_plan

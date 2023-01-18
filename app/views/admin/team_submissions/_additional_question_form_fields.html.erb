@@ -1,0 +1,8 @@
+<% if team_submission.additional_questions? %>
+  <h5>Additional Questions</h5>
+
+  <% additional_question_labels(team_submission).each do |question_label| %>
+    <%= form.input question_label, label: t("submissions.#{question_label}_question"), collection: [["Yes", true], ["No", false]]%>
+    <%= form.input "#{question_label}_description".to_sym, label: false %>
+  <% end %>
+<% end %>

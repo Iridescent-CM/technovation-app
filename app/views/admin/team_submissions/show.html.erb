@@ -194,40 +194,7 @@
         <% end %>
       </p>
 
-      <h5>Additional Questions</h5>
-      <p>
-        <%= t("submissions.ai_question") %>
-        <%= humanize_boolean(@team_submission.ai?) %>
-      </p>
-      <% if @team_submission.ai? %>
-        <i><%= @team_submission.ai_description %></i>
-      <% end %>
-
-      <p>
-        <%= t("submissions.climate_change_question") %>
-        <%= humanize_boolean(@team_submission.climate_change?) %>
-      </p>
-      <% if @team_submission.climate_change? %>
-        <i><%= @team_submission.climate_change_description %></i>
-      <% end %>
-
-      <p>
-        <%= t("submissions.solves_hunger_or_food_waste_question") %>
-        <%= humanize_boolean(@team_submission.solves_hunger_or_food_waste?) %>
-      </p>
-
-      <% if @team_submission.solves_hunger_or_food_waste? %>
-        <i><%= @team_submission.solves_hunger_or_food_waste_description %></i>
-      <% end %>
-
-      <p>
-        <%= t("submissions.uses_open_ai_question") %>
-        <%= humanize_boolean(@team_submission.uses_open_ai?) %>
-      </p>
-
-      <% if @team_submission.uses_open_ai? %>
-        <i><%= @team_submission.uses_open_ai_description %></i>
-      <% end %>
+      <%= render "additional_questions", team_submission: @team_submission %>
 
       <h5>Screenshots</h5>
 
