@@ -1,33 +1,79 @@
 <template>
-  <div class="margin-top-normal">
-    <h6 class="heading--reset">
-      Start scoring your assigned submissions
-    </h6>
+  <div class="my-4">
+    <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
+      {{ this.title }}
+    </h2>
 
-    <div
-      class="grid grid--justify-space-between"
-      v-for="submission in assignedSubmissions"
-      :key="submission.id"
-    >
-      <div class="grid__col-5 grid__col--bleed-x">
-        <small>Submission name</small>
-        {{ submission.app_name }}
-      </div>
+    <!-- Im trying to use hasSubmissionsToStart.length here   -->
+    <!--    I also tried a .length > 0 in the original getter method in the store -->
+    <div v-if="1===1">
+      <div class="mt-2 mb-8 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                    Project Name
+                  </th>
+                  <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                    Team
+                  </th>
+                  <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                    Division
+                  </th>
+                  <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                    Judging Format
+                  </th>
+                  <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
+                  </th>
+                </tr>
+                </thead>
 
-      <div class="grid__col-5 grid__col--bleed-x">
-        <small>{{ submission.team_division }} division team</small>
-        {{ submission.team_name }}
-      </div>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                <tr
+                  v-for="submission in assignedSubmissions"
+                  v-if="!submission.score_started"
+                  :key="submission.id">
 
-      <div class="grid__col-2 grid__col--bleed-x">
-        <a
-          :href="submission.new_score_url"
-          class="button button--remove-bg"
-        >
-          {{ callToAction(submission) }}
-        </a>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    {{ submission.app_name }}
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {{ submission.team_name }}
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
+                    <span class="division">{{ submission.team_division }}</span>
+                  </td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    Pitch Event
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <a
+                      v-if="scoresEditable"
+                      :href="submission.new_score_url"
+                      class="link-button link-button-small link-button-success">
+                      Start
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <div v-else >
+      <p>
+        You currently do not have any new submissions to score.
+        Please contact your chapter ambassador if this is a mistake.
+      </p>
+    </div>
+
+    {{ hasSubmissionsToStart}}
+
   </div>
 </template>
 
@@ -35,8 +81,11 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  mounted() {
+    console.log('Component mounted')
+  },
   computed: {
-    ...mapGetters(['assignedSubmissions']),
+    ...mapGetters(['assignedSubmissions', 'hasSubmissionsToStart']),
   },
 
   methods: {
@@ -49,6 +98,16 @@ export default {
         return 'Start'
       }
     },
+  },
+  props: {
+    title: {
+      type: String,
+      default: 'Submissions to Score'
+    },
+    scoresEditable: {
+      type: Boolean,
+      default: true,
+    }
   },
 }
 </script>

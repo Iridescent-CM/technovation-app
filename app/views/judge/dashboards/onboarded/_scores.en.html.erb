@@ -1,5 +1,10 @@
 <% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
   <div id="judge-dashboard-scores-app">
+    <% if LiveEventJudgingEnabled.(current_judge) %>
+      <div ref="enableAssigned"></div>
+      <assigned-scores-list></assigned-scores-list>
+    <% end %>
+
     <% if CanStartNewScore.(current_judge) %>
       <%= link_to "Start a new score",
         new_judge_score_path,
@@ -71,34 +76,28 @@
     <% end %>
 
     <div class="mt-8">
-      <% if LiveEventJudgingEnabled.(current_judge) %>
-        <div ref="enableAssigned"></div>
-        <assigned-scores-list></assigned-scores-list>
-        <finished-scores-list></finished-scores-list>
-      <% else %>
-        <% if SeasonToggles.quarterfinals_judging? %>
-          <finished-scores-list
-            title="Finished Scores"
-            round="quarterfinals"
-          >
-          </finished-scores-list>
-        <% end %>
-
-        <% if SeasonToggles.semifinals_judging? %>
-          <finished-scores-list
-            title="Finished Semifinals Scores"
-            round="semifinals"
-          >
-          </finished-scores-list>
-
-          <finished-scores-list
-            title="Finished Quarterfinals Scores"
-            round="quarterfinals"
-            :scores-editable="false"
-          />
-          </finished-scores-list>
-        <% end %>
+      <% if SeasonToggles.quarterfinals_judging? %>
+        <finished-scores-list
+          title="Finished Scores"
+          round="quarterfinals"
+        >
+        </finished-scores-list>
       <% end %>
+
+      <% if SeasonToggles.semifinals_judging? %>
+        <finished-scores-list
+          title="Finished Semifinals Scores"
+          round="semifinals"
+        >
+        </finished-scores-list>
+
+        <finished-scores-list
+          title="Finished Quarterfinals Scores"
+          round="quarterfinals"
+          :scores-editable="false"
+        >
+        </finished-scores-list>
+        <% end %>
     </div>
   </div>
 <% end %>
