@@ -4,9 +4,7 @@
       {{ this.title }}
     </h2>
 
-    <!-- Im trying to use hasSubmissionsToStart.length here   -->
-    <!--    I also tried a .length > 0 in the original getter method in the store -->
-    <div v-if="1===1">
+    <div v-if="notStartedSubmissions.length">
       <div class="mt-2 mb-8 flex flex-col">
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -111,16 +109,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-small {
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #666;
-}
-
-.margin-top-normal {
-  margin-top: 1rem;
-}
-</style>
