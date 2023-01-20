@@ -59,9 +59,9 @@ export default new Vuex.Store({
       return state.submissions;
     },
 
-    hasSubmissionsToStart(state) {
+    notStartedSubmissions(state) {
       return state.submissions.filter(
-        (submission) => !submission.score_started
+        (submission) => !submission.score_started && !submission.score_finished
       );
     },
   },
