@@ -30,32 +30,30 @@
                 </thead>
 
                 <tbody class="divide-y divide-gray-200 bg-white">
-                <tr
-                  v-for="submission in assignedSubmissions"
-                  v-if="!submission.score_started"
-                  :key="submission.id">
-
-                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                    {{ submission.app_name }}
-                  </td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {{ submission.team_name }}
-                  </td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
-                    <span class="division">{{ submission.team_division }}</span>
-                  </td>
-                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    Pitch Event
-                  </td>
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <a
-                      v-if="scoresEditable"
-                      :href="submission.new_score_url"
-                      class="link-button link-button-small link-button-success">
-                      Start
-                    </a>
-                  </td>
-                </tr>
+                  <tr
+                    v-for="submission in notStartedSubmissions"
+                    :key="submission.id">
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                      {{ submission.app_name }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {{ submission.team_name }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
+                      <span class="division">{{ submission.team_division }}</span>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      Pitch Event
+                    </td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <a
+                        v-if="scoresEditable"
+                        :href="submission.new_score_url"
+                        class="link-button link-button-small link-button-success">
+                        Start
+                      </a>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -77,7 +75,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['assignedSubmissions', 'hasSubmissionsToStart']),
+    ...mapGetters(['assignedSubmissions', 'notStartedSubmissions']),
   },
 
   props: {
