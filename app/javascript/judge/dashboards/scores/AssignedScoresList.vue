@@ -63,15 +63,12 @@
         </div>
       </div>
     </div>
-    <div v-else >
+    <div v-else>
       <p>
         You currently do not have any new submissions to score.
         Please contact your chapter ambassador if this is a mistake.
       </p>
     </div>
-
-    {{ hasSubmissionsToStart}}
-
   </div>
 </template>
 
@@ -79,24 +76,10 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  mounted() {
-    console.log('Component mounted')
-  },
   computed: {
     ...mapGetters(['assignedSubmissions', 'hasSubmissionsToStart']),
   },
 
-  methods: {
-    callToAction (submission) {
-      if (submission.score_started) {
-        return 'Resume'
-      } else if (submission.score_finished) {
-        return 'Review'
-      } else {
-        return 'Start'
-      }
-    },
-  },
   props: {
     title: {
       type: String,
