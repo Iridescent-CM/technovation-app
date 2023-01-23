@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentRound: 'qf',
+    currentRound: "qf",
 
     scores: {
       finished: {
@@ -19,59 +19,61 @@ export default new Vuex.Store({
       },
     },
 
-    submissions: {},
+    submissions: [],
 
-    deadline: '',
+    deadline: "",
   },
 
   getters: {
-    finishedScores (state) {
-      return state.scores.finished[state.currentRound].map(score => (
-        { ...JSON.parse(score).data.attributes }
-      ))
+    finishedScores(state) {
+      return state.scores.finished[state.currentRound].map((score) => ({
+        ...JSON.parse(score).data.attributes,
+      }));
     },
 
-    quarterFinalsScores (state) {
-      return state.scores.incomplete.qf.map(score => (
-        { ...JSON.parse(score).data.attributes }
-      ))
+    quarterFinalsScores(state) {
+      return state.scores.incomplete.qf.map((score) => ({
+        ...JSON.parse(score).data.attributes,
+      }));
     },
 
-    finishedQuarterfinalsScores (state) {
-      return state.scores.finished.qf.map(score => (
-        { ...JSON.parse(score).data.attributes }
-      ))
+    finishedQuarterfinalsScores(state) {
+      return state.scores.finished.qf.map((score) => ({
+        ...JSON.parse(score).data.attributes,
+      }));
     },
 
-    semiFinalsScores (state) {
-      return state.scores.incomplete.sf.map(score => (
-        { ...JSON.parse(score).data.attributes }
-      ))
+    semiFinalsScores(state) {
+      return state.scores.incomplete.sf.map((score) => ({
+        ...JSON.parse(score).data.attributes,
+      }));
     },
 
-    finishedSemifinalsScores (state) {
-      return state.scores.finished.sf.map(score => (
-        { ...JSON.parse(score).data.attributes }
-      ))
+    finishedSemifinalsScores(state) {
+      return state.scores.finished.sf.map((score) => ({
+        ...JSON.parse(score).data.attributes,
+      }));
     },
 
-    assignedSubmissions (state) {
-      return state.submissions
+    notStartedSubmissions(state) {
+      return state.submissions.filter(
+        (submission) => !submission.score_started && !submission.score_finished
+      );
     },
   },
 
   mutations: {
-    populateScores (state, payload) {
-      state.scores = payload
-      state.currentRound = payload.current_round
+    populateScores(state, payload) {
+      state.scores = payload;
+      state.currentRound = payload.current_round;
     },
 
-    populateSubmissions (state, payload) {
-      state.submissions = payload
+    populateSubmissions(state, payload) {
+      state.submissions = payload;
     },
 
-    deadline (state, date) {
-      state.deadline = date
+    deadline(state, date) {
+      state.deadline = date;
     },
   },
-})
+});
