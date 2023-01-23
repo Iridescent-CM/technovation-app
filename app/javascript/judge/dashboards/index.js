@@ -3,7 +3,7 @@ import Vue from 'vue'
 import store from './scores/store'
 
 import FinishedScoresList from './scores/FinishedScoresList'
-import AssignedScoresList from './scores/AssignedScoresList'
+import NotStartedScoresList from './scores/NotStartedScoresList'
 
 import { airbrake } from 'utilities/utilities'
 
@@ -24,7 +24,7 @@ document.addEventListener('turbolinks:load', () => {
 
       components: {
         FinishedScoresList,
-        AssignedScoresList,
+        NotStartedScoresList,
       },
 
       mounted () {

@@ -79,7 +79,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['assignedSubmissions', 'notStartedSubmissions']),
+    ...mapGetters(['notStartedSubmissions']),
   },
 
   props: {

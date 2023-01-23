@@ -2,7 +2,7 @@
   <div id="judge-dashboard-scores-app">
     <% if LiveEventJudgingEnabled.(current_judge) %>
       <div ref="enableAssigned"></div>
-      <assigned-scores-list></assigned-scores-list>
+      <not-started-scores-list></not-started-scores-list>
     <% end %>
 
     <% if CanStartNewScore.(current_judge) %>
