@@ -113,6 +113,14 @@ class SubmissionsGrid
       .concat(description)
   end
 
+  column :solves_hunger_or_food_waste, if: ->(grid) { grid.admin } do
+    description = solves_hunger_or_food_waste? ? " - #{solves_hunger_or_food_waste_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(solves_hunger_or_food_waste)
+      .concat(description)
+  end
+
   column :uses_open_ai, header: "Uses OpenAI/ChatGPT", if: ->(grid) { grid.admin } do
     ApplicationController.helpers.humanize_boolean(uses_open_ai)
   end
