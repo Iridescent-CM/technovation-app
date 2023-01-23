@@ -104,6 +104,13 @@ class SubmissionsGrid
     elsif game.nil?
       "-"
     end
+
+  column :solves_health_problem, if: ->(grid) { grid.admin } do
+    description = solves_health_problem? ? " - #{solves_health_problem_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(solves_health_problem)
+      .concat(description)
   end
 
   column :uses_open_ai, header: "Uses OpenAI/ChatGPT", if: ->(grid) { grid.admin } do
