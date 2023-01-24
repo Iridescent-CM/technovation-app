@@ -7,6 +7,26 @@ describe JudgeQuestions do
   let(:season) { 2021 }
   let(:division) { "senior" }
 
+  describe "#initialize" do
+    let(:judge_questions) { JudgeQuestions.new(season: season, division: division) }
+
+    context "when the season is not present" do
+      let(:season) { nil }
+
+      it "defaults the season to the current season" do
+        expect(judge_questions.season).to eq(Season.current.year)
+      end
+    end
+
+    context "when the season is an empty array" do
+      let(:season) { [] }
+
+      it "defaults the season to the current season" do
+        expect(judge_questions.season).to eq(Season.current.year)
+      end
+    end
+  end
+
   describe "#call" do
     let(:season) { 2022 }
     let(:division) { "beginner" }
