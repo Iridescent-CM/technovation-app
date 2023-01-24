@@ -76,38 +76,52 @@ class SubmissionsGrid
     Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: submission)
   end
 
-  column :ai_question, header: "AI question", if: ->(grid) { grid.admin } do
-    if ai?
-      "Yes - #{ai_description}"
-    elsif ai == false
-      "No"
-    elsif ai.nil?
-      "-"
-    end
+  column :ai, header: "Uses AI", if: ->(grid) { grid.admin } do
+    description = ai? ? " - #{ai_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(ai)
+      .concat(description)
   end
 
-  column :climate_change_question, if: ->(grid) { grid.admin } do
-    if climate_change?
-      "Yes - #{climate_change_description}"
-    elsif climate_change == false
-      "No"
-    elsif climate_change.nil?
-      "-"
-    end
+  column :climate_change, header: "Helps solve climate change", if: ->(grid) { grid.admin } do
+    description = climate_change? ? " - #{climate_change_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(climate_change)
+      .concat(description)
   end
 
-  column :game_question, header: "Hunger question", if: ->(grid) { grid.admin } do
-    if game?
-      "Yes - #{game_description}"
-    elsif game == false
-      "No"
-    elsif game.nil?
-      "-"
-    end
+  column :game, header: "Is a game", if: ->(grid) { grid.admin } do
+    description = game? ? " - #{game_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(game)
+      .concat(description)
+  end
+
+  column :solves_health_problem, if: ->(grid) { grid.admin } do
+    description = solves_health_problem? ? " - #{solves_health_problem_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(solves_health_problem)
+      .concat(description)
+  end
+
+  column :solves_hunger_or_food_waste, if: ->(grid) { grid.admin } do
+    description = solves_hunger_or_food_waste? ? " - #{solves_hunger_or_food_waste_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(solves_hunger_or_food_waste)
+      .concat(description)
   end
 
   column :uses_open_ai, header: "Uses OpenAI/ChatGPT", if: ->(grid) { grid.admin } do
-    ApplicationController.helpers.humanize_boolean(uses_open_ai)
+    description = uses_open_ai? ? " - #{uses_open_ai_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(uses_open_ai)
+      .concat(description)
   end
 
   column :city, order: "teams.city" do
