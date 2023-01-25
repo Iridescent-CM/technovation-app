@@ -1,7 +1,7 @@
 $(document).on("turbolinks:load", function() {
     const anchor = $(location).attr('hash');
 
-    $("#tab-wrapper div a").click(function(e){
+    $("#tab-wrapper div a:not(#exclude)").click(function(e){
         e.preventDefault();
 
         let heading = $(this).data("heading");

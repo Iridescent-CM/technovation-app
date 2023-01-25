@@ -1,55 +1,63 @@
-<div class="tw-tab-content list-none">
-  <% if current_judge.consent_signed? %>
-    <%= web_icon(
-          "check-circle",
-          class: "icon--green",
-          text: "Consent Signed",
+<div class="tw-tab-content">
+  <a id="dashboard-tab" href="#dashboard-tab-content" data-heading="Judge Dashboard">Dashboard</a>
+  <div>
+    <% if current_judge.consent_signed? %>
+      <%= web_icon(
+            "check-circle",
+            class: "icon--green ml-4",
+            text: "Consent Signed",
+            id: "exclude"
           ) %>
-  <% else %>
-      <%= web_icon("circle-o") %>
+    <% else %>
+      <%= web_icon(
+            "circle-o",
+            class: "ml-4"
+          ) %>
       <%= link_to "Consent Waiver",
                   new_judge_consent_waiver_path(
                     token: current_judge.account.consent_token
-                  )
-      %>
-  <% end %>
-</div>
+                  ),
+                  id: "exclude" %>
+    <% end %>
+  </div>
 
-<%= render 'application/templates/tw_thick_rule' %>
-
-<div class="tw-tab-content">
-  <% if current_judge.training_completed? %>
-    <%= web_icon(
-          "check-circle",
-          class: "icon--green",
+  <div>
+    <% if current_judge.training_completed? %>
+      <%= web_icon(
+            "check-circle",
+            class: "icon--green ml-4"
           ) %>
-  <% else %>
-    <%= web_icon("circle-o") %>
-  <% end  %>
+    <% else %>
+      <%= web_icon(
+            "circle-o",
+            class: "ml-4"
+          ) %>
+    <% end  %>
 
-  <% if SeasonToggles.judging_enabled? || SeasonToggles.judge_registration_open? %>
-    <%= link_to "Judge Training",
-                "https://technovationchallenge.org/judge-training/",
-                target: "_blank",
-                id: "judge-training-tab" %>
-  <% else %>
-    <span class="has-tooltip cursor-not-allowed">
-      <span class="tooltip-text">Currently not available</span>
-      Judge Training
-    </span>
-  <% end %>
+    <% if SeasonToggles.judging_enabled? || SeasonToggles.judge_registration_open? %>
+      <%= link_to "Judge Training",
+                  "https://technovationchallenge.org/judge-training/",
+                  target: "_blank",
+                  id: "exclude" %>
+    <% else %>
+      <span class="has-tooltip cursor-not-allowed">
+        <span class="tooltip-text">Currently not available</span>
+        Judge Training
+      </span>
+    <% end %>
+  </div>
 </div>
 
 <% if current_judge.onboarded? && SeasonToggles.judging_enabled? %>
   <%= render 'application/templates/tw_thick_rule' %>
 
   <div class="tw-tab-content">
-    <a id="judge-submissions-tab" href="#judge-submissions-tab-content">Judge Submissions</a>
+    <a id="judge-submissions-tab" href="#judge-submissions-tab-content" data-heading="Online Judging">Judge Submissions</a>
   </div>
 
   <%= render 'application/templates/tw_thick_rule' %>
 
   <div class="tw-tab-content">
-    <a id="scores-tab" href="#scores-tab-content">Find your scores & certificates</a>
+    <a id="scores-tab" href="#scores-tab-content" data-heading="Scores & Certificates">Find your scores & certificates</a>
   </div>
 <% end %>
