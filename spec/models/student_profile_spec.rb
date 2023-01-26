@@ -157,7 +157,7 @@ RSpec.describe StudentProfile do
 
       expect(another_student).to be_invalid
       expect(another_student.errors[:parent_guardian_email]).to include(
-        "cannot match your (or any other student's) email"
+        "cannot match your (or any other student's) email address"
       )
     end
 
@@ -174,7 +174,7 @@ RSpec.describe StudentProfile do
 
       expect(another_student).to be_invalid
       expect(another_student.errors[:parent_guardian_email]).to include(
-        "cannot match your (or any other student's) email"
+        "cannot match your (or any other student's) email address"
       )
     end
 
@@ -191,7 +191,7 @@ RSpec.describe StudentProfile do
 
       expect(another_student).to be_valid
       expect(another_student.errors[:parent_guardian_email]).not_to include(
-        "cannot match your (or any other student's) email"
+        "cannot match your (or any other student's) email address"
       )
     end
   end
