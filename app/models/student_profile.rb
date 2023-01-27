@@ -383,11 +383,11 @@ class StudentProfile < ActiveRecord::Base
 
   def validate_valid_parent_email
     return if parent_guardian_email.blank? ||
+      Division.for_account(account).name == "beginner" ||
       (
         !parent_guardian_email_changed? &&
         parent_guardian_email == ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
-      ) ||
-      account&.division&.beginner?
+      )
 
     if Account.joins(:student_profile, :division)
         .where("lower(email) = ?", parent_guardian_email.downcase)
