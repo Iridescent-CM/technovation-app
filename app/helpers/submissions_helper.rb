@@ -43,4 +43,15 @@ module SubmissionsHelper
     pieces = pieces.gsub("App Description", "Project Description")
     pieces
   end
+
+  def additional_question_labels(team_submission)
+    case team_submission.seasons.last
+    when 2021
+      [:ai, :climate_change, :game]
+    when 2022
+      [:ai, :climate_change, :solves_health_problem]
+    when 2023
+      [:ai, :climate_change, :solves_hunger_or_food_waste, :uses_open_ai]
+    end
+  end
 end
