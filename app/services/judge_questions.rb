@@ -1,6 +1,8 @@
 class JudgeQuestions
+  attr_reader :season, :division
+
   def initialize(season:, division:)
-    @season = season
+    @season = season.presence || Season.current.year
     @division = division
   end
 
@@ -9,8 +11,6 @@ class JudgeQuestions
   end
 
   private
-
-  attr_reader :season, :division
 
   def season_module_name
     case season
