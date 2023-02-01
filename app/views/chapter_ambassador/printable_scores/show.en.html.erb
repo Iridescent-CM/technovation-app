@@ -41,43 +41,22 @@
       <% unless score = @scores.find { |score| score.judge_profile_id == judge.id && score.team == team }
         score = SubmissionScore.new(judge_profile: judge, team_submission: team.submission)
       end %>
+
+      <% sections = Questions.sections_for(division: team.division_name) %>
+
       <div class="page <%= team.division_name %>">
         <header>
           <h3><%= judge.name %></h3>
           <h4><%= team.name %></h4>
 
           <table>
-            <tr>
-              <td>Ideation</td>
-              <td><%= score.ideation_total %></td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>Technical</td>
-              <td><%= score.technical_total %></td>
-              <td></td>
-            </tr>
-
-            <tr>
-              <td>Pitch</td>
-              <td><%= score.pitch_total %></td>
-              <td></td>
-            </tr>
-
-            <% if team.senior? %>
+            <% sections.each do |section_lookup_key, section_display_name| %>
               <tr>
-                <td>Entrepreneurship</td>
-                <td><%= score.entrepreneurship_total %></td>
+                <td><%= section_display_name %></td>
+                <td><%= eval("score.#{section_lookup_key}_total") %></td>
                 <td></td>
               </tr>
             <% end %>
-
-            <tr>
-              <td>Overall</td>
-              <td><%= score.overall_impression_total %></td>
-              <td></td>
-            </tr>
 
             <tr>
               <th scope="row">Final:</th>
@@ -88,47 +67,11 @@
         </header>
 
         <div class="sections">
-          <h3>Ideation</h3>
-
-          <table>
-            <% Questions.for(score).in_section(:ideation).each do |question| %>
-              <tr>
-                <td><%= question.text %></td>
-                <td><%= question.score %></td>
-                <td></td>
-              </tr>
-            <% end %>
-          </table>
-
-          <h3>Technical</h3>
-
-          <table>
-            <% Questions.for(score).in_section(:technical).each do |question| %>
-              <tr>
-                <td><%= question.text %></td>
-                <td><%= question.score %></td>
-                <td></td>
-              </tr>
-            <% end %>
-          </table>
-
-          <h3>Pitch</h3>
-
-          <table>
-            <% Questions.for(score).in_section(:pitch).each do |question| %>
-              <tr>
-                <td><%= question.text %></td>
-                <td><%= question.score %></td>
-                <td></td>
-              </tr>
-            <% end %>
-          </table>
-
-          <% if team.senior? %>
-            <h3>Entrepreneurship</h3>
+          <% sections.each do |section_lookup_key, section_display_name| %>
+            <h3><%= section_display_name %></h3>
 
             <table>
-              <% Questions.for(score).in_section(:entrepreneurship).each do |question| %>
+              <% Questions.for(score).in_section(section_lookup_key).each do |question| %>
                 <tr>
                   <td><%= question.text %></td>
                   <td><%= question.score %></td>
@@ -137,18 +80,6 @@
               <% end %>
             </table>
           <% end %>
-
-          <h3>Overall Impression</h3>
-
-          <table>
-            <% Questions.for(score).in_section(:overall).each do |question| %>
-              <tr>
-                <td><%= question.text %></td>
-                <td><%= question.score %></td>
-                <td></td>
-              </tr>
-            <% end %>
-          </table>
         </div>
       </div>
 
@@ -156,22 +87,10 @@
         <h2>Comments given for <%= team.name %> by <%= judge.name %></h2>
         <h3>(they may be shortened to fit the page)</h3>
 
-        <h3>Ideation</h3>
-        <%= simple_format(truncate(score.ideation_comment, length: 500)) %>
-
-        <h3>Technical</h3>
-        <%= simple_format(truncate(score.technical_comment, length: 500)) %>
-
-        <h3>Pitch</h3>
-        <%= simple_format(truncate(score.pitch_comment, length: 500)) %>
-
-        <% if team.senior? %>
-          <h3>Entrepreneurship</h3>
-          <%= simple_format(truncate(score.entrepreneurship_comment, length: 500)) %>
+        <% sections.each do |section_lookup_key, section_display_name| %>
+          <h3><%= section_display_name %></h3>
+          <%= simple_format(truncate(eval("score.#{section_lookup_key}_comment"), length: 500)) %>
         <% end %>
-
-        <h3>Overall Impression</h3>
-        <%= simple_format(truncate(score.overall_comment, length: 500)) %>
       </div>
     <% end %>
   <% end %>
