@@ -31,6 +31,7 @@ class Questions
       .call
       .uniq(&:section)
       .map(&:section)
+      .each_with_object({}) { |section, new_hash| new_hash[section] = section_display_name_for(section, division) }
   end
 
   def sections
@@ -153,5 +154,20 @@ class Questions
       text: score["#{section_name}_comment"],
       word_count: score["#{section_name}_comment_word_count"]
     }
+  end
+
+  def section_display_name_for(section, division)
+    case section
+    when "project_details"
+      "Project Description"
+    when "ideation"
+      "Learning Journey"
+    when "demo"
+      "Technical"
+    when "entrepreneurship"
+      division == "senior" ? "Business Plan" : "User Adoption Plan"
+    else
+      section.titlecase
+    end
   end
 end
