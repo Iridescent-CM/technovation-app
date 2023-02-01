@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AdminHelper do
+RSpec.describe SubmissionsHelper do
   describe "#additional_question_labels" do
     let(:submission) { TeamSubmission.new(seasons: [season]) }
 

@@ -176,51 +176,17 @@
     <% end %>
   </div>
 
-  <div class="mt-4">
-    <h3 class="mb-2 text-base font-semibold uppercase">
-      Does your submission use artificial intelligence?
-    </h3>
+  <% additional_question_labels(submission).each do |question_label| %>
+    <div class="mt-6">
+      <h3 class="mb-2 text-base font-semibold uppercase">
+        <%= t("submissions.#{question_label}_question") %>
+      </h3>
 
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
-      <%= submission.ai? ? "Yes" : "No"  %>
-    </span>
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
+        <%= humanize_boolean(eval("submission.#{question_label}")) %>
+      </span>
 
-    <%= simple_format submission.ai_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
-  </div>
-
-  <div class="mt-6">
-    <h3 class="mb-2 text-base font-semibold uppercase">
-      Does your submission help solve climate change?
-    </h3>
-
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
-      <%= submission.climate_change? ? "Yes" : "No"  %>
-    </span>
-
-    <%= simple_format submission.climate_change_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
-  </div>
-
-  <div class="mt-6">
-    <h3 class="mb-2 text-base font-semibold uppercase">
-      <%= t("submissions.solves_hunger_or_food_waste_question") %>
-    </h3>
-
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
-      <%= submission.game? ? "Yes" : "No"  %>
-    </span>
-
-    <%= simple_format submission.game_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
-  </div>
-
-  <div class="mt-6">
-    <h3 class="mb-2 text-base font-semibold uppercase">
-      <%= t("submissions.uses_open_ai_question") %>
-    </h3>
-
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800">
-      <%= humanize_boolean(submission.uses_open_ai) %>
-    </span>
-
-    <%= simple_format submission.uses_open_ai_description, class: "mt-3 space-y-6 text-base text-gray-600" %>
-  </div>
+      <%= simple_format eval("submission.#{question_label}_description"), class: "mt-3 space-y-6 text-base text-gray-600" %>
+    </div>
+  <% end %>
 <% end %>
