@@ -1,9 +1,5 @@
 <div class="relative">
-  <% if SeasonToggles.judging_finished? %>
-    <%= render 'judge/dashboards/onboarded/rebrand/judging_finished' %>
-  <% elsif SeasonToggles.between_rounds? %>
-    <%= render 'judge/dashboards/onboarded/between_rounds' %>
-  <% elsif SeasonToggles.quarterfinals_or_earlier? %>
+  <% if SeasonToggles.quarterfinals_or_earlier? %>
     <div class="mb-4">
       <p>
         <% if current_judge.onboarding? %>
@@ -34,5 +30,9 @@
         </ul>
       </div>
     <% end %>
+  <% elsif SeasonToggles.between_rounds? %>
+    <%= render 'judge/dashboards/onboarded/between_rounds' %>
+  <% elsif SeasonToggles.judging_finished? %>
+    <%= render 'judge/dashboards/onboarded/rebrand/judging_finished' %>
   <% end %>
 </div>
