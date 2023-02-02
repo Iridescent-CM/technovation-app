@@ -74,7 +74,7 @@
   <% questions = Questions.for(@score) %>
 
   <div class="admin-score-sections">
-    <% questions.sections_for(division: @score.team.division_name).each do |section| %>
+    <% questions.sections_for(division: @score.team.division_name).each do |section, _| %>
       <% if section === "ideation" %>
         <% section_name = "Learning Journey" %>
       <% elsif section === "entrepreneurship" %>

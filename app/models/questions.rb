@@ -15,6 +15,15 @@ class Questions
     new(score.judge_profile, score.team_submission, score: score)
   end
 
+  def self.sections_for(division:, season: Season.current.year)
+    JudgeQuestions
+      .new(division: division, season: season)
+      .call
+      .uniq(&:section)
+      .map(&:section)
+      .each_with_object({}) { |section, new_hash| new_hash[section] = section_display_name_for(section, division) }
+  end
+
   def each(&block)
     @questions.each { |q| block.call(q) }
   end
@@ -26,11 +35,7 @@ class Questions
   end
 
   def sections_for(division:, season: Season.current.year)
-    JudgeQuestions
-      .new(division: division, season: season)
-      .call
-      .uniq(&:section)
-      .map(&:section)
+    self.class.sections_for(division: division, season: season)
   end
 
   def sections
@@ -154,4 +159,21 @@ class Questions
       word_count: score["#{section_name}_comment_word_count"]
     }
   end
+
+  def self.section_display_name_for(section, division)
+    case section
+    when "project_details"
+      "Project Description"
+    when "ideation"
+      "Learning Journey"
+    when "demo"
+      "Technical"
+    when "entrepreneurship"
+      division == "senior" ? "Business Plan" : "User Adoption Plan"
+    else
+      section.titlecase
+    end
+  end
+
+  private_class_method :section_display_name_for
 end
