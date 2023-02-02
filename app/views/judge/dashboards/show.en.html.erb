@@ -1,19 +1,29 @@
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'To-do'} do%>
-    <div class="p-6">
-      <%= SeasonToggles.dashboard_text(:judge) %>
+  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'Welcome'} do%>
+    <%= SeasonToggles.dashboard_text(:judge) %>
+    <div class="p-6" id="tab-wrapper">
       <%= render 'judge/dashboards/rebrand/side_nav_content' %>
     </div>
   <% end %>
-  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Online Judging'} do %>
-
-    <% if !current_judge.onboarding? %>
-      <%= render 'judge/dashboards/onboarded/scores' %>
-      <%= render 'judge/dashboards/onboarded/certificates' %>
-    <%end %>
-
-    <% if !SeasonToggles.display_scores? %>
-      <%= render 'judge/dashboards/onboarded/rebrand/events' %>
-    <% end %>
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Judge Dashboard'} do %>
+    <div class="tab">
+      <div id="dashboard-tab-content" class="tab-content tw-active" >
+        <% if !SeasonToggles.display_scores? %>
+          <%= render 'judge/dashboards/onboarded/rebrand/events' %>
+        <% end %>
+      </div>
+      <div id="judge-submissions-tab-content" class="tab-content">
+        <% if current_judge.onboarded? %>
+            <%= render 'judge/dashboards/onboarded/scores' %>
+        <%end %>
+      </div>
+      <div id="scores-tab-content" class="tab-content">
+        <% if current_judge.onboarded? && SeasonToggles.display_scores? %>
+          <%= render 'judge/dashboards/onboarded/certificates' %>
+        <% else %>
+          <p>Scores and certificates are currently unavailable.</p>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>

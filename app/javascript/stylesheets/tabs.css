@@ -15,7 +15,7 @@
 }
 
 @screen md{
-    .tab-content{
+   #show-container div.tab-content{
         width: 48rem;
     }
 
