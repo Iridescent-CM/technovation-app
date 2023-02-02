@@ -1,5 +1,5 @@
 <template>
-  <div class="my-4">
+  <div class="mb-4">
     <p class="mb-4">
       Begin scoring your assigned submissions. You will be able to edit your scores until the end of the event.
       For more information about your events, please view your dashboard.
