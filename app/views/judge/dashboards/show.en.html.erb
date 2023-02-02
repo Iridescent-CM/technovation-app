@@ -13,7 +13,7 @@
         <% end %>
       </div>
       <div id="judge-submissions-tab-content" class="tab-content">
-        <% if !current_judge.onboarding? %>
+        <% if current_judge.onboarded? %>
             <%= render 'judge/dashboards/onboarded/scores' %>
         <%end %>
       </div>
