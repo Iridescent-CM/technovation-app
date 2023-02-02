@@ -5,8 +5,7 @@
       <%= web_icon(
             "check-circle",
             class: "icon--green ml-4",
-            text: "Consent Signed",
-            id: "exclude"
+            text: "Consent Signed"
           ) %>
     <% else %>
       <%= web_icon(
@@ -16,8 +15,7 @@
       <%= link_to "Consent Waiver",
                   new_judge_consent_waiver_path(
                     token: current_judge.account.consent_token
-                  ),
-                  id: "exclude" %>
+                  ) %>
     <% end %>
   </div>
 
@@ -37,8 +35,7 @@
     <% if SeasonToggles.judging_enabled? || SeasonToggles.judge_registration_open? %>
       <%= link_to "Judge Training",
                   "https://technovationchallenge.org/judge-training/",
-                  target: "_blank",
-                  id: "exclude" %>
+                  target: "_blank" %>
     <% else %>
       <span class="has-tooltip cursor-not-allowed">
         <span class="tooltip-text">Currently not available</span>
