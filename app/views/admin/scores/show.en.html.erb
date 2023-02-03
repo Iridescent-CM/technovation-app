@@ -74,23 +74,15 @@
   <% questions = Questions.for(@score) %>
 
   <div class="admin-score-sections">
-    <% questions.sections_for(division: @score.team.division_name).each do |section, _| %>
-      <% if section === "ideation" %>
-        <% section_name = "Learning Journey" %>
-      <% elsif section === "entrepreneurship" %>
-        <% section_name = @score.team.senior? ? "Business Plan" : "User Adoption Plan" %>
-      <% else %>
-        <% section_name = section %>
-      <% end %>
-
+    <% questions.sections_for(division: @score.team.division_name).each do |section_lookup_key, section_display_name| %>
       <h3>
-        <%= section_name.titlecase %>
+        <%= section_display_name %>
       </h3>
 
       <table>
         <% section_total = 0 %>
 
-        <% questions.in_section(section).each do |question| %>
+        <% questions.in_section(section_lookup_key).each do |question| %>
           <% section_total += @score.total_for_question(question) %>
 
           <tr>
@@ -101,18 +93,18 @@
 
         <tr>
           <td style="font-weight: 500;">
-            <%= section_name.titlecase %> Score
+            <%= section_display_name %> Score
           </td>
           <td nowrap>
             <span>
               <%= section_total %> /
-              <%= @score.total_points_for_section(@score.team.division_name, section) %>
+              <%= @score.total_points_for_section(@score.team.division_name, section_lookup_key) %>
             </span>
           </td>
         </tr>
       </table>
 
-      <%= simple_format @score.comment_for_section(section) %>
+      <%= simple_format @score.comment_for_section(section_lookup_key) %>
     <% end %>
   </div>
 
