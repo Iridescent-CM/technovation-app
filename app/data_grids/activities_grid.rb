@@ -61,6 +61,19 @@ class ActivitiesGrid
     end
   end
 
+  column :city do |activity|
+    resource_name = activity.trackable_type
+    resource_id = activity.trackable_id
+
+    if resource_name == "Account"
+      Account.find(resource_id).city
+    elsif resource_name == "Team"
+      Team.find(resource_id).city
+    else
+      "-"
+    end
+  end
+
   column :when, html: true, mandatory: true do |activity|
     "#{time_ago_in_words(activity.created_at)} ago"
   end
