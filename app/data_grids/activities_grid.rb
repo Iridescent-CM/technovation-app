@@ -122,4 +122,10 @@ class ActivitiesGrid
       ["Submission was created", "submission.create"],
       ["Submission was updated", "submission.update"],
     ]
+
+  column_names_filter(
+    header: "More columns",
+    filter_group: "more-columns",
+    multiple: true
+  )
 end
