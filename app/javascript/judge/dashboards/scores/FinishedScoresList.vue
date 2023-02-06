@@ -22,6 +22,9 @@
                       Division
                     </th>
                     <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                      Judging Format
+                    </th>
+                    <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
                       Score
                     </th>
                     <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
@@ -42,6 +45,9 @@
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <span class="division">{{ score.team_division }}</span>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <span class="division">{{ score.event_type }}</span>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {{ score.total }} / {{ score.total_possible }}

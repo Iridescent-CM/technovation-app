@@ -14,6 +14,10 @@ class ScoreSerializer
     score.team_submission.team_division_name
   end
 
+  attribute :event_type do |score|
+    score.event_type
+  end
+
   attribute :url do |score|
     Rails.application.routes.url_helpers.new_judge_score_path(score_id: score.id)
   end
