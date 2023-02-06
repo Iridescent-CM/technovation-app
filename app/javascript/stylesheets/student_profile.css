@@ -10,10 +10,6 @@
     @apply bg-energetic-blue text-white p-2;
 }
 
-#show-container{
-    @apply w-full
-}
-
 @screen md{
     .tw-sm-hidden{
        @apply block
