@@ -5,4 +5,4 @@ en:
     game_question: Is your app a game?
     solves_health_problem_question: Does your submission help solve a health problem?
     solves_hunger_or_food_waste_question: Does your submission help solve hunger or food waste in some way?
-    uses_open_ai_question: "Did you use OpenAI/ChatGPT at any point when working on your project?"
+    uses_open_ai_question: "Did you use AI assistance such as ChatGPT at any point when working on your project?"
