@@ -31,10 +31,17 @@ class EventMailer < ApplicationMailer
                admin_permission_token: @invite.admin_permission_token
              )
            when "registered", "past_season", "training", "ready"
-             send(
-               "#{@invite.scope_name}_dashboard_url",
-               mailer_token: @invite.mailer_token
-             )
+             if @invite.scope_name == "student"
+               student_dashboard_url(
+                 mailer_token: @invite.mailer_token,
+                 anchor: "/events"
+               )
+             else
+               send(
+                 "#{@invite.scope_name}_dashboard_url",
+                 mailer_token: @invite.mailer_token
+               )
+             end
            else
              raise ArgumentError,
                "#{@invite.status} is an unsupported @invite status"
