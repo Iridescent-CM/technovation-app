@@ -1,8 +1,9 @@
 <% provide :title, t("views.teams.new.title") %>
 
-<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
-  <div class="tab-content tw-active">
-    <%= render 'teams/rebrand/form', view_type: "new" %>
-  </div>
+<div class="mx-auto w-full lg:w-1/2">
+  <%= render layout: "application/templates/dashboards/energetic_container",
+             locals: {heading: t("views.teams.new.title")} do %>
+    <%= render 'teams/rebrand/form'%>
+  <% end %>
 </div>
 

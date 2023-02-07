@@ -1,44 +1,33 @@
 <%= simple_form_for @team, 
-  url: (@team.id.present? ? send("#{current_scope}_team_path", @team) : 
-    send("#{current_scope}_teams_path")) do |f| %>
-    <div class="tw-blue-lg-container">
-        <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
-            <p class="font-bold">
-                <%= t("views.teams.#{view_type}.title") %>
-            </p>
-        </div>
+  url: (@team.id.present? ? send("#{current_scope}_team_path", @team) : send("#{current_scope}_teams_path")) do |f| %>
+    <div class="p-2">
+      <%= f.input :name, label: "Team name" %>
 
-        <div class="p-6">
-            <%= f.input :name, label: "Team name" %>
+      <% if f.object.persisted? %>
+        <%= f.input :description, label: t("models.team.description") %>
+      <% end %>
 
-            <% if f.object.persisted? %>
-            <%= f.input :description, label: t("models.team.description") %>
-            <% end %>
+      <% action = f.object.persisted? ? :save : :create %>
 
-            <% action = f.object.persisted? ? :save : :create %>
+      <div class="pt-3 pb-7">
+        <p class="p-0 m-0">
+          <%= f.button :submit,
+             t("views.application.#{action}",
+             thing: t("models.team.class_name")),
+             class: "tw-green-btn float-right cursor-pointer" %>
+        </p>
 
-            <div class="pt-3 pb-7">
-                <p class="p-0 m-0">
-                    <%= f.button :submit,
-                        t("views.application.#{action}",
-                        thing: t("models.team.class_name")),
-                        class: "tw-green-btn float-right" %>
-                </p>
-
-                <p class="p-0 m-0">
-                    <%= 
-                        if @team.id.present?
-                            link_to t("views.application.cancel"),
-                            send("#{current_scope}_team_path", @team),
-                            class: "tw-green-btn float-left"
-                        else
-                            link_to t("views.application.cancel"),
-                            send("#{current_scope}_teams_path", @team),
-                            class: "tw-green-btn float-left"
-                        end      
-                    %>
-                </p>
-            </div>
-        </div>
-  </div>
+        <p class="p-0 m-0">
+          <% if @team.id.present? %>
+            <%= link_to t("views.application.cancel"),
+                        send("#{current_scope}_team_path", @team),
+                        class: "tw-green-btn float-left" %>
+          <% else %>
+            <%= link_to t("views.application.cancel"),
+                        send("#{current_scope}_teams_path", @team),
+                        class: "tw-green-btn float-left" %>
+          <% end %>
+        </p>
+      </div>
+    </div>
 <% end %>

@@ -15,7 +15,7 @@
 }
 
 @screen md{
-   #show-container div.tab-content{
+   .student-tab-container div.tab-content{
         width: 48rem;
     }
 
