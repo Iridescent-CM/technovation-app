@@ -29,6 +29,10 @@ class BackgroundCheck::Report
   end
 
   class NoReport
+    def result
+      nil
+    end
+
     def status
       "Not submitted"
     end
