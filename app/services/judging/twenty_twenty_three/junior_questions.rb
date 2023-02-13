@@ -9,7 +9,7 @@ module Judging
             field: :project_details_1,
             worth: 5,
             text: %(
-              Is our project name and 100 word problem/project description clear and compelling?
+              Is our 100 word problem/project description clear and compelling?
             )
           ),
 
@@ -19,8 +19,8 @@ module Judging
             field: :ideation_1,
             worth: 5,
             text: %(
-              Do we share what we learned through a combination of
-              words and pictures (e.g. screenshots, prototypes)?
+              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
+              Do we share any technical sources used/remixed and/or our favorite technical resource?
             )
           ),
 
@@ -126,7 +126,7 @@ module Judging
             field: :demo_1,
             worth: 5,
             text: %(
-              Do we show what app we built and how it works?
+              Do we show what app we built and what parts work successfully so far?
             )
           ),
 
@@ -137,8 +137,7 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we show what works successfully and
-              explain what coding was required to make it work?
+              Do we explain the coding we did for 1 or 2 important parts of our app, other than the login screen?
             )
           ),
 
@@ -149,7 +148,7 @@ module Judging
             field: :demo_3,
             worth: 5,
             text: %(
-              Do we show what doesn’t work yet and/or share future features?
+              Do we show what doesn’t work yet and/or share future app features?
             )
           ),
 
@@ -172,8 +171,9 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we show what invention we built or prototyped,
-              explain how we built it, and show how it works?
+              Do we show the invention we built or prototyped?
+              Do we explain how we built it?
+              Do we show the parts that work?
             )
           ),
 
