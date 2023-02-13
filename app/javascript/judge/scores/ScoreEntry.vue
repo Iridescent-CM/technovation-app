@@ -76,7 +76,7 @@ export default {
         case 3:
           return "Good"
         case 4:
-          return "A cut above"
+          return "Impressive"
         case 5:
           return "Amazing"
       }
