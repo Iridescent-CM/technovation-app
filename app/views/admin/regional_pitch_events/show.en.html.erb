@@ -36,8 +36,12 @@
 
             <dd><%= @event.division_names %></dd>
 
-            <dt># of Teams</dt>
-            <dd><%= @event.teams.count %></dd>
+            <dt>Teams (<%= @event.teams.count %>)</dt>
+            <dd>
+              <% @event.teams.each do |team| %>
+                <%= link_to team.name, admin_team_path(team) %><br>
+              <% end %>
+            </dd>
 
             <dt># of Judges</dt>
             <dd><%= @event.judge_list.size %></dd>
