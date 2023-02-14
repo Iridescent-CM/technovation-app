@@ -16,6 +16,12 @@
         v-show="searching"
       >
         <div class="modal">
+          <div v-if="eventAtCapacity()" class="margin--b-xlarge">
+            <div class="flash flash--error margin--none">
+              This event is currently at capacity. No additional teams can be added.
+            </div>
+          </div>
+
           <input
             type="search"
             :placeholder="searchPlaceholder"
