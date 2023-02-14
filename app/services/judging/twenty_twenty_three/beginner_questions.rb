@@ -15,27 +15,6 @@ module Judging
 
           Question.new(
             idx: 1,
-            section: "ideation",
-            field: :ideation_1,
-            worth: 3,
-            text: %(
-              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
-              Do we share any technical sources used/remixed and/or our favorite technical resource?
-            )
-          ),
-
-          Question.new(
-            idx: 2,
-            section: "ideation",
-            field: :ideation_2,
-            worth: 3,
-            text: %(
-              Do we describe how we overcame challenges?
-            )
-          ),
-
-          Question.new(
-            idx: 1,
             section: "pitch",
             field: :pitch_1,
             worth: 3,
@@ -170,6 +149,27 @@ module Judging
             worth: 3,
             text: %(
               Do we show what doesn’t work yet and/or share future prototype features?
+            )
+          ),
+
+          Question.new(
+            idx: 1,
+            section: "ideation",
+            field: :ideation_1,
+            worth: 3,
+            text: %(
+              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
+              Do we share any technical sources used/remixed and/or our favorite technical resource?
+            )
+          ),
+
+          Question.new(
+            idx: 2,
+            section: "ideation",
+            field: :ideation_2,
+            worth: 3,
+            text: %(
+              Do we describe how we overcame challenges?
             )
           )
         ]
