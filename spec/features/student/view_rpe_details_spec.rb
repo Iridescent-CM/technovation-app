@@ -63,9 +63,9 @@ RSpec.feature "Students view rpe details", js: true do
       expect(page).to have_link("Select an Event")
     end
 
-    scenario "Judging is on" do
+    scenario "Judging is set to quarterfinals" do
       # When judging is on, RPE selection is automatically disabled
-      SeasonToggles.judging_round = :off
+      SeasonToggles.judging_round = :qf
 
       sign_in(@student)
 
