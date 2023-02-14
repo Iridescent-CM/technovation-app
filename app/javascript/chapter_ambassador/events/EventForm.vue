@@ -23,7 +23,7 @@
         </div>
 
         <div class="grid__col-sm-6">
-          <h6>Hosting divisions:</h6>
+          <h6>Hosting Divisions</h6>
 
           <label>
             <input
