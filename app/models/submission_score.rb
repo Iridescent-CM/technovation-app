@@ -293,6 +293,10 @@ class SubmissionScore < ActiveRecord::Base
     team.selected_regional_pitch_event_name
   end
 
+  def event_type_display_name
+    event_type == "live" ? "Pitch Event" : "Online"
+  end
+
   def judge_name
     judge_profile.name
   end

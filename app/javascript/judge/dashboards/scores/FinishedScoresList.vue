@@ -47,7 +47,7 @@
                       <span class="division">{{ score.team_division }}</span>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <span class="division">{{ score.event_type }}</span>
+                      <span class="division">{{ score.event_type_display_name }}</span>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {{ score.total }} / {{ score.total_possible }}
