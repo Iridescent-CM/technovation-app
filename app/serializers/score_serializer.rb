@@ -14,8 +14,8 @@ class ScoreSerializer
     score.team_submission.team_division_name
   end
 
-  attribute :event_type do |score|
-    score.event_type
+  attribute :event_type_display_name do |score|
+    score.event_type_display_name
   end
 
   attribute :url do |score|
