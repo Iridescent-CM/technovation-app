@@ -88,6 +88,11 @@
         </div>
 
         <div class="grid__col-6">
+          <h6 class="margin--none">Event Time</h6>
+          <p class="hint">
+            Please select the time using a 24 hour clock. The time will display to students as the local time zone in your area.
+          </p>
+
           <label>
             From
             <datetime-input
