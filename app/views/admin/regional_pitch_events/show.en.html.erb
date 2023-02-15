@@ -39,7 +39,7 @@
             <dt>Teams (<%= @event.teams.count %>)</dt>
             <dd>
               <% @event.teams.each do |team| %>
-                <%= link_to team.name, admin_team_path(team) %><br>
+                <%= link_to team.name, admin_team_submission_path(team.submission) %><br>
               <% end %>
             </dd>
 
