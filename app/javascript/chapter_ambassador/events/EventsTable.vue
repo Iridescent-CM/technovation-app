@@ -87,6 +87,7 @@
                 className="events-list__action-item"
                 name="edit"
                 size="16"
+                v-tooltip.top-center="`Edit event`"
                 :handleClick="editEvent.bind(this, event)"
               />
 
@@ -96,6 +97,7 @@
                 name="remove"
                 size="16"
                 color="ff0000"
+                v-tooltip.top-center="`Delete event`"
                 :handleClick="removeEvent.bind(this, event)"
               />
             </div>
