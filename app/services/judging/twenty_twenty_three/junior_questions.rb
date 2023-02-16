@@ -15,27 +15,6 @@ module Judging
 
           Question.new(
             idx: 1,
-            section: "ideation",
-            field: :ideation_1,
-            worth: 5,
-            text: %(
-              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
-              Do we share any technical sources used/remixed and/or our favorite technical resource?
-            )
-          ),
-
-          Question.new(
-            idx: 2,
-            section: "ideation",
-            field: :ideation_2,
-            worth: 5,
-            text: %(
-              Do we describe how we overcame challenges?
-            )
-          ),
-
-          Question.new(
-            idx: 1,
             section: "pitch",
             field: :pitch_1,
             worth: 5,
@@ -207,6 +186,27 @@ module Judging
             text: %(
               Do we explain how we will get new users to use our
               app or invention in its first year?
+            )
+          ),
+
+          Question.new(
+            idx: 1,
+            section: "ideation",
+            field: :ideation_1,
+            worth: 5,
+            text: %(
+              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
+              Do we share any technical sources used/remixed and/or our favorite technical resource?
+            )
+          ),
+
+          Question.new(
+            idx: 2,
+            section: "ideation",
+            field: :ideation_2,
+            worth: 5,
+            text: %(
+              Do we describe how we overcame challenges?
             )
           )
         ]
