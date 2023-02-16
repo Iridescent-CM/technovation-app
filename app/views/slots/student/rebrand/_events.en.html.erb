@@ -4,9 +4,10 @@
   </div>
 
   <div class="tw-content=-wrapper p-8">
-    <% if current_student.onboarded? && SeasonToggles.select_regional_pitch_event? %>
+    <% if SeasonToggles.select_regional_pitch_event? || current_team.live_event? %>
       <%= render "student/dashboards/completion_steps/rebrand/regional_pitch_events" %>
-    <% else %>
-      <p>Due to COVID, there are no official pitch events this season.</p>
-    <% end %>  </div>
+    <% elsif SeasonToggles.events_disabled? %>
+      <%= render "explanations/feature_not_available", feature: :events %>
+    <% end %>
+  </div>
 </div>
