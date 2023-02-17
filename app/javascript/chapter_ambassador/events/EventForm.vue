@@ -137,6 +137,7 @@
             <input type="text" v-model="event.event_link" />
           </label>
 
+          <errors :errors="eventErrors.event_link"></errors>
           <p>
             <input
               type="submit"
@@ -451,6 +452,10 @@
 
         if (!this.event.ends_at) {
           this.eventErrors.ends_at = ["can't be blank"];
+        }
+
+        if (this.event.event_link.length > 0 && !(/^(http|https):\/\//.test(this.event.event_link))) {
+          this.eventErrors.event_link = ["Please start the event URL with http:// or https://"];
         }
 
         if (!Array.from(this.event.division_ids || []).length) {
