@@ -1,16 +1,16 @@
 <template>
   <div
     id="screenshots-nav"
-    class="flex flex-row flex-wrap gap-4 justify-center"
+    class="flex flex-col lg:flex-row flex-wrap"
     :data-modal-last="submission.screenshots.length - 1"
   >
     <div
       v-for="(screenshot, i) in submission.screenshots"
       :key="screenshot.id"
-      class="mx-2 w-1/2 lg:w-1/4"
+      class="w-full lg:w-1/3 h-64 p-4 flex flex-col justify-center items-center"
     >
       <img
-        class="judge-screenshot-modal rounded object-cover w-full h-full"
+        class="judge-screenshot-modal object-cover h-full w-full rounded"
         :src="screenshot.thumb"
         :data-modal-url="screenshot.full"
         :data-modal-idx="i"
