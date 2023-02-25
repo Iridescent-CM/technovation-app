@@ -16,7 +16,7 @@ RSpec.feature "starting RPE scores", js: true do
 
       sign_in(judge)
       expect(page).to have_content("Welcome to the online judging portal!")
-      expect(page).to have_content("You will be judging teams at the following events.")
+      expect(page).to have_content("You will be judging teams at the following event(s).")
     end
 
     scenario "Judging is set to qf" do
