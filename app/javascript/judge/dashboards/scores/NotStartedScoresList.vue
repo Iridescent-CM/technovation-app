@@ -1,8 +1,9 @@
 <template>
   <div class="mb-4">
     <p class="mb-4">
-      Begin scoring your assigned submissions. You will be able to edit your scores until the end of the event.
-      For more information about your events, please view your dashboard.
+      Begin scoring your assigned submissions. You will be able to edit
+      your scores until round one of judging closes. For more information
+      about your events, please view your dashboard.
     </p>
     <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
       {{ this.title }}
