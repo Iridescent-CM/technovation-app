@@ -23,8 +23,8 @@
       <p>There are no more teams available to add to your event.</p>
 
       <p>
-        Teams must not be attending other events,
-        and must have started their submission.
+        To be eligible, teams must have started their submission
+        and not be attending other events.
       </p>
 
       <p>

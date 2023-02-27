@@ -1,11 +1,13 @@
 <p class="font-medium">Regional Pitch Events</p>
 
-<p class="mb-4"> You will be judging teams at the following events.</p>
+<p class="mb-4">
+  You will be judging teams at the following event(s).
+  You can preview your event’s submissions beginning on
+  <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
+</p>
 
 <p class="mb-8">
-  If you want to change events or leave an event, please contact your
-  Chapter Ambassador. You can preview your event's submissions beginning
-  on <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d, %Y") %>.
+  If you want to leave an event, please contact your Chapter Ambassador.
 </p>
 
 <%= render partial: 'regional_pitch_events/rebrand/event',
