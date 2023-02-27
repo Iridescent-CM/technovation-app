@@ -86,7 +86,7 @@ class Questions
         id: submission.id,
 
         name: submission.app_name,
-        description: simple_format(submission.app_description),
+        description: submission.app_description,
 
         learning_journey: submission.learning_journey,
 

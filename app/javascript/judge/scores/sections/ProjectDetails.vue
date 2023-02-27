@@ -10,7 +10,7 @@
       >
         <template v-slot:main-content>
           <p class="font-bold text-lg">{{ submission.name }}</p>
-          <div v-html="submission.description"></div>
+          <div style="white-space: pre-line;">{{ submission.description }}</div>
         </template>
       </GenericJudgingContainer>
     </div>

@@ -9,7 +9,7 @@
     >
       <template v-slot:main-content>
         <p class="font-bold text-lg">{{ submission.name }}</p>
-        <div class="mb-8" v-html="submission.learning_journey"></div>
+        <div class="mb-8" style="white-space: pre-line;">{{ submission.learning_journey }}</div>
 
         <p class="font-bold text-lg">Screenshots</p>
         <p class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-6 text-base">
