@@ -12,6 +12,8 @@ class State
       KenyaState.new(value)
     elsif countries.include?("PT")
       PortugalState.new(value)
+    elsif countries.include?("KG")
+      KyrgyzstanState.new(value)
     else
       new(value)
     end
@@ -83,6 +85,14 @@ class IndiaState < State
   def format_map
     {
       "TG" => "telangana",
+    }
+  end
+end
+
+class KyrgyzstanState < State
+  def format_map
+    {
+      "GB" => "gorod bishkek"
     }
   end
 end
