@@ -25,40 +25,56 @@
 //= require jobs
 //= require sticky-cols
 
-document.addEventListener("turbolinks:load", function() {
-  $(".accordion-toggle").on("click", function(e) {
+document.addEventListener("turbolinks:load", function () {
+  $(".accordion-toggle").on("click", function (e) {
     e.preventDefault();
 
     $accordion = $($(this).data("accordion"));
 
-    $accordion.addClass('open');
+    $accordion.addClass("open");
 
     $(this).hide().next(".accordion-open").show();
   });
 
-  $(document).on("change", "[data-remote-select]", function(evt) {
+  $(document).on("change", "[data-remote-select]", function (evt) {
     var $el = $(this),
-        data = {}
+      data = {};
 
-    data[$el.data('modelName')] = {}
-    data[$el.data('modelName')][$el.data('fieldName')] = evt.target.value
+    data[$el.data("modelName")] = {};
+    data[$el.data("modelName")][$el.data("fieldName")] = evt.target.value;
 
     $.ajax({
       method: "POST",
-      url: $el.data('url'),
+      url: $el.data("url"),
       data: data,
-    })
-  })
+    });
+  });
 
   // Scrollable datagrid table dual scrollbars
-  $('.table--scrollable').doubleScroll({
+  $(".table--scrollable").doubleScroll({
     resetOnWindowResize: true,
-  })
+  });
 });
 
-$(document).ajaxSend(function(_, xhr) {
+$(document).ajaxSend(function (_, xhr) {
   xhr.setRequestHeader(
-    'X-CSRF-Token',
-    $('meta[name="csrf-token"]').attr('content')
+    "X-CSRF-Token",
+    $('meta[name="csrf-token"]').attr("content")
   );
+});
+
+// app/views/admin/team_submissions/edit.html.erb
+document.addEventListener("turbolinks:load", function () {
+  document
+    .querySelectorAll(".submission-pieces__screenshots input[type='checkbox']")
+    .forEach((checkbox) => {
+      checkbox.addEventListener("click", function () {
+        const screenshot = checkbox.parentNode.querySelector("img");
+        if (screenshot) {
+          checkbox.checked
+            ? (screenshot.style.opacity = "0.5")
+            : (screenshot.style.opacity = "1");
+        }
+      });
+    });
 });
