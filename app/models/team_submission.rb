@@ -132,7 +132,7 @@ class TeamSubmission < ActiveRecord::Base
     dependent: :destroy,
     after_add: proc { |ts, _| ts.touch },
     after_remove: proc { |ts, _| ts.touch }
-  accepts_nested_attributes_for :screenshots
+  accepts_nested_attributes_for :screenshots, allow_destroy: true
 
   has_many :submission_scores,
     -> { current },

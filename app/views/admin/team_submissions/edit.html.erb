@@ -75,15 +75,17 @@
             Total Uploaded Images: <%= @team_submission.screenshots.count %>
 
             <div class="submission-pieces__screenshots">
-              <% @team_submission.screenshots.each do |screenshot| %>
-                <% if screenshot.image_url.present? %>
-                  <%= render "screenshots/screenshot_grid", screenshot: screenshot %>
-                <% else %>
-                  <p> Issue displaying screenshots. Please notify the dev team.</p>
-                <% end %>
+              <%= f.fields_for :screenshots do |sc_fields| %>
+                <div>
+                  <div class="screenshot-wrapper">
+                    <%= image_tag sc_fields.object.image_url,
+                                  class: "submission-pieces__screenshot" %>
+                  </div>
+                  <%= sc_fields.check_box :_destroy %>
+                  <%= sc_fields.label :_destroy, 'Remove' %>
+                </div>
               <% end %>
             </div>
-
           <% else %>
             <p> No screenshots uploaded </p>
           <% end %>
