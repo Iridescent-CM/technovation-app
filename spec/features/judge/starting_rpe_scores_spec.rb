@@ -47,6 +47,17 @@ RSpec.feature "starting RPE scores", js: true do
       judge.regional_pitch_events << @rpe
     end
 
+    scenario "Judge does not see an incomplete submission" do
+      @incomplete_submission = FactoryBot.create(:team_submission, :senior, :incomplete)
+      @incomplete_submission.team.regional_pitch_events << @rpe
+
+      SeasonToggles.judging_round = :qf
+      sign_in(judge)
+      click_link "Judge Submissions"
+
+      expect(page).not_to have_content(@incomplete_submission.app_name)
+    end
+
     scenario "Judging is set to qf and the judge can see all the start buttons for all assigned submissions that have not been started" do
       SeasonToggles.judging_round = :qf
 
