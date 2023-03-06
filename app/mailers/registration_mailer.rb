@@ -70,6 +70,20 @@ class RegistrationMailer < ApplicationMailer
     end
   end
 
+  def welcome_returning_judge(account_id)
+    account = Account.joins(:judge_profile).find(account_id)
+
+    @first_name = account.first_name
+    @root_url = judge_dashboard_url(mailer_token: account.mailer_token)
+    @season_year = Season.current.year
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
+        subject: t("registration_mailer.welcome_returning_judge.subject",
+          season_year: Season.current.year)
+    end
+  end
+
   def welcome_student(student)
     @registration_opens = ImportantDates.registration_opens.strftime("%B %Y")
     @official_start_of_season = ImportantDates.official_start_of_season.strftime("%B %d, %Y")

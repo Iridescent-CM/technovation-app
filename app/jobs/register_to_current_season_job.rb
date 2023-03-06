@@ -90,7 +90,11 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     subscribe_to_newsletter(record, :judge)
 
     if SeasonToggles.judge_registration_open?
-      RegistrationMailer.welcome_judge(record.id).deliver_later
+      if record.returning?
+        RegistrationMailer.welcome_returning_judge(record.id).deliver_later
+      else
+        RegistrationMailer.welcome_judge(record.id).deliver_later
+      end
     end
 
     record.judge_profile.update(completed_training_at: nil)

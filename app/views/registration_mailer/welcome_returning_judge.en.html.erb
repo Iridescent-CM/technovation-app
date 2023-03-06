@@ -1,0 +1,79 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Confirm Email"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Welcome back to Technovation Girls Judging, thank you for joining us for the <%= @season_year %> season, <%= @first_name %>!
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          As you’ve seen, Technovation judges are an integral part of the Technovation Girls
+          program, thank you for joining us for another year! The time and commitment that
+          you make to a team goes a long way in helping young changemakers solve real problems
+          in their community.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Technovation Girls is the world's largest global tech competition and program
+          offered by Technovation. You are a part of a community of 4,000+ judges from
+          around the world scoring and giving feedback to almost 1,700 projects!
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          We engage with this community using a free communication tool called Slack
+          where you can connect with other judges, ask questions, and stay informed.
+          We also provide newsletters from Technovation to keep you motivated throughout
+          judging.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <strong>Let's get started! This is what you can do in under 40 minutes to start getting submissions to review:</strong>
+
+          <ol>
+            <li>
+              Finish your judge training if you haven’t done so already!
+              You can access the training
+              <%= link_to "here", "https://technovationchallenge.org/judge%20training/", itemprop: "url" %>
+              or from your <%= link_to "dashboard", judge_dashboard_url, itemprop: "url" %>.
+            </li>
+
+            <li>
+              Sign the <%= link_to "consent waiver", judge_dashboard_url, itemprop: "url" %>.
+            </li>
+
+            <li>
+              Click <%= link_to "this link", ENV.fetch("JUDGE_SLACK_SIGNUP_URL"), itemprop: "url" %>
+              to join our online Slack community to meet judges from around the world.
+            </li>
+          </ol>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          You are now all set to start scoring!
+          When judging opens on
+          <%= ImportantDates.quarterfinals_judging_begins.strftime("%B") %> <%= ImportantDates.quarterfinals_judging_begins.day.ordinalize %>,
+          log on to your <%= link_to "dashboard", judge_dashboard_url, itemprop: "url" %>
+          and click “start score” to begin.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          <p>Thank you for your time and support!</p>
+          <p>The Technovation Team</p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

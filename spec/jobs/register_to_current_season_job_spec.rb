@@ -210,6 +210,47 @@ RSpec.describe RegisterToCurrentSeasonJob do
   end
 
   context "judges" do
+    describe "welcome emails" do
+      let(:judge) { FactoryBot.create(:judge) }
+      let(:registration_mailer) { double(RegistrationMailer, deliver_later: true) }
+
+      before do
+        allow(SeasonToggles).to receive(:judge_registration_open?).and_return(true)
+      end
+
+      context "when it's a new judge" do
+        before do
+          judge.account.update(seasons: [])
+        end
+
+        it "sends the 'welcome_judge' email" do
+          expect(RegistrationMailer).to receive(:welcome_judge)
+            .with(judge.account.id)
+            .and_return(registration_mailer)
+
+          expect(registration_mailer).to receive(:deliver_later)
+
+          RegisterToCurrentSeasonJob.perform_now(judge.account)
+        end
+      end
+
+      context "when it's a returning judge" do
+        before do
+          judge.account.update(seasons: [2020])
+        end
+
+        it "sends the 'welcome_returning_judge' email" do
+          expect(RegistrationMailer).to receive(:welcome_returning_judge)
+            .with(judge.account.id)
+            .and_return(registration_mailer)
+
+          expect(registration_mailer).to receive(:deliver_later)
+
+          RegisterToCurrentSeasonJob.perform_now(judge.account)
+        end
+      end
+    end
+
     it "resets judge training" do
       profile = nil
 

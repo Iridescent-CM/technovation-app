@@ -36,6 +36,8 @@ en:
       subject: "Welcome to Technovation %{season_year}!"
     welcome_judge:
       subject: "Welcome to Technovation %{season_year}!"
+    welcome_returning_judge:
+      subject: "Welcome to Technovation %{season_year}!"
 
   team_mailer:
     invite_member:
