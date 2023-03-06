@@ -54,27 +54,26 @@ document.addEventListener("turbolinks:load", function () {
   $(".table--scrollable").doubleScroll({
     resetOnWindowResize: true,
   });
-});
 
+  // app/views/admin/team_submissions/edit.html.erb
+  const checkboxes = document.querySelectorAll(
+    ".submission-pieces__screenshots input[type='checkbox']"
+  );
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", () => {
+      const screenshot = checkbox.parentNode.querySelector("img");
+      if (screenshot) {
+        checkbox.checked
+          ? (screenshot.style.opacity = "0.5")
+          : (screenshot.style.opacity = "1");
+      }
+    });
+  });
+});
 $(document).ajaxSend(function (_, xhr) {
   xhr.setRequestHeader(
     "X-CSRF-Token",
     $('meta[name="csrf-token"]').attr("content")
   );
-});
-
-// app/views/admin/team_submissions/edit.html.erb
-document.addEventListener("turbolinks:load", function () {
-  document
-    .querySelectorAll(".submission-pieces__screenshots input[type='checkbox']")
-    .forEach((checkbox) => {
-      checkbox.addEventListener("click", function () {
-        const screenshot = checkbox.parentNode.querySelector("img");
-        if (screenshot) {
-          checkbox.checked
-            ? (screenshot.style.opacity = "0.5")
-            : (screenshot.style.opacity = "1");
-        }
-      });
-    });
 });
