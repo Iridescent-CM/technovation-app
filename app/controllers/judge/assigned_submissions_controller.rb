@@ -5,7 +5,7 @@ module Judge
 
       current_scores = current_judge.submission_scores.current_round
 
-      render json: teams.collect(&:submission).map { |submission|
+      render json: teams.collect(&:submission).select(&:complete?).map { |submission|
         {
           id: submission.id,
           app_name: submission.app_name,
