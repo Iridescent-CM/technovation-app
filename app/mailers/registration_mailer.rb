@@ -58,15 +58,29 @@ class RegistrationMailer < ApplicationMailer
     account = Account.joins(:judge_profile).find(account_id)
 
     @first_name = account.first_name
-
     @root_url = judge_dashboard_url(mailer_token: account.mailer_token)
-
     @season_year = Season.current.year
+    @judging_start_date = "#{ImportantDates.quarterfinals_judging_begins.strftime("%B")} #{ImportantDates.quarterfinals_judging_begins.day.ordinalize}"
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
         subject: t("registration_mailer.welcome_judge.subject",
                    season_year: Season.current.year)
+    end
+  end
+
+  def welcome_returning_judge(account_id)
+    account = Account.joins(:judge_profile).find(account_id)
+
+    @first_name = account.first_name
+    @root_url = judge_dashboard_url(mailer_token: account.mailer_token)
+    @season_year = Season.current.year
+    @judging_start_date = "#{ImportantDates.quarterfinals_judging_begins.strftime("%B")} #{ImportantDates.quarterfinals_judging_begins.day.ordinalize}"
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
+        subject: t("registration_mailer.welcome_returning_judge.subject",
+          season_year: Season.current.year)
     end
   end
 
