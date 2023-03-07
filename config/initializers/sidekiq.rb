@@ -4,7 +4,13 @@ Sidekiq.default_worker_options = {
 }
 
 Sidekiq.configure_server do |config|
-  config.redis = {ssl_params: {verify_mode: OpenSSL::SSL::VERIFY_NONE}}
+  config.redis = {
+    url: ENV["REDIS_URL"],
+    ssl_params: {
+      verify_mode: OpenSSL::SSL::VERIFY_NONE
+    }
+  }
+
 
   if database_url = ENV['DATABASE_URL']
     pool = ENV.fetch("SIDEKIQ_DB_POOL_SIZE") { 25 }
@@ -13,5 +19,10 @@ Sidekiq.configure_server do |config|
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = {ssl_params: {verify_mode: OpenSSL::SSL::VERIFY_NONE}}
+  config.redis = {
+    url: ENV["REDIS_URL"],
+    ssl_params: {
+      verify_mode: OpenSSL::SSL::VERIFY_NONE
+    }
+  }
 end
