@@ -1,6 +1,6 @@
 class BackgroundCheck < ActiveRecord::Base
   # If these change, you will need to update dataclips
-  enum status: %i{ pending clear consider suspended }
+  enum status: %i[pending clear consider suspended canceled]
 
   belongs_to :account
 

@@ -9,26 +9,34 @@ class BackgroundChecking
 
   def execute
     if @report.present?
-      new_status = "engaged" == @report.adjudication ? "clear" : @report.status
+      case @report.result
+      when "clear"
+        @bg_check.clear!
+        do_clear
+      when "consider"
+        @bg_check.consider!
+      else
+        new_status = "engaged" == @report.adjudication ? "clear" : @report.status
 
-      if new_status != @bg_check.status
-        if @bg_check.respond_to?("#{new_status}!")
-          @bg_check.send("#{new_status}!")
-          @logger.info(
-            "Report UPDATED TO #{@bg_check.status.upcase} for #{@bg_check.account.email}"
-          )
+        if new_status != @bg_check.status
+          if @bg_check.respond_to?("#{new_status}!")
+            @bg_check.send("#{new_status}!")
+            @logger.info(
+              "Report UPDATED TO #{@bg_check.status.upcase} for #{@bg_check.account.email}"
+            )
+          else
+            @logger.info(
+              "Could not call ##{new_status}! for #{@bg_check.account.email}"
+            )
+          end
+          if respond_to?("do_#{new_status}", :include_private)
+            send("do_#{new_status}")
+          end
         else
           @logger.info(
-            "Could not call ##{new_status}! for #{@bg_check.account.email}"
+            "Report STILL #{@bg_check.status} for #{@bg_check.account.email}"
           )
         end
-        if respond_to?("do_#{new_status}", :include_private)
-          send("do_#{new_status}")
-        end
-      else
-        @logger.info(
-          "Report STILL #{@bg_check.status} for #{@bg_check.account.email}"
-        )
       end
     else
       @logger.info("Report NOT FOUND for #{@bg_check.account.email}")
