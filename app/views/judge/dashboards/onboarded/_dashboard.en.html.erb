@@ -8,7 +8,7 @@
       <%= render 'judge/dashboards/onboarded/rebrand/quarterfinals_or_semifinals' %>
     <% end %>
   <% elsif SeasonToggles.between_rounds? %>
-    <%= render 'judge/dashboards/onboarded/between_rounds' %>
+    <%= render 'judge/dashboards/onboarded/rebrand/between_rounds' %>
   <% elsif SeasonToggles.semifinals_judging? %>
     <%= render 'judge/dashboards/onboarded/rebrand/quarterfinals_or_semifinals' %>
   <% elsif SeasonToggles.judging_finished? %>
