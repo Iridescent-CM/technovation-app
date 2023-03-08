@@ -72,7 +72,8 @@ module Admin
         :development_platform_other,
         :source_code_cache,
         :thunkable_project_url,
-        :thunkable_account_email
+        :thunkable_account_email,
+        screenshots_attributes: [:id, :_destroy]
       )
     end
   end
