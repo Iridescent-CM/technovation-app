@@ -1,0 +1,16 @@
+<div class="mb-4">
+  <p>Welcome to the online judging portal for the first round of Technovation Judging!</p>
+</div>
+<% if CanStartNewScore.(current_judge) %>
+  <p class="mb-4">Click on the button below to open a submission and start scoring.</p>
+  <p class="mb-8">
+    <%= link_to "Start a new score",
+                new_judge_score_path,
+                class: "md-link-button link-button-success",
+                data: { turbolinks: false } %>
+  </p>
+  <%= render 'judge/dashboards/rebrand/important_dates' %>
+<% elsif @scores_in_progress.present? %>
+  You have <%= @scores_in_progress.count %> score(s) in progress.
+  Check out the submissions tab to continue scoring.
+<% end %>
