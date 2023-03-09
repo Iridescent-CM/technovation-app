@@ -1,7 +1,11 @@
 <div class="mb-4">
-  <p>
-    Welcome to the online judging portal! Judging is currently closed but will open soon.
-    You will receive an email when judging opens. Please check back on the dates listed below!
-  </p>
-  <%= render 'judge/dashboards/rebrand/important_dates' %>
+  <% if current_judge.live_event? %>
+    <%= render 'judge/dashboards/onboarded/rebrand/live_events' %>
+  <% else %>
+    <p class="mb-4">
+      Welcome to the online judging portal! Judging is currently closed but will open soon.
+      You will receive an email when judging opens. Please check back on the dates listed below!
+    </p>
+    <%= render 'judge/dashboards/rebrand/important_dates' %>
+  <% end %>
 </div>
