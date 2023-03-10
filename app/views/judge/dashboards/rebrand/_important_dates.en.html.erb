@@ -1,0 +1,17 @@
+<div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-4">
+  <ul class="list-disc list-inside">
+    <li class="text-left">
+      <strong class="font-bold">Quarterfinals</strong> judging begins on
+      <%= ImportantDates.quarterfinals_judging_begins.strftime("%B %-d") %>
+      and ends on
+      <%= ImportantDates.virtual_quarterfinals_judging_ends.strftime("%B %-d, %Y") %>
+    </li>
+
+    <li class="text-left">
+      <strong class="font-bold">Semifinals</strong> judging begins on
+      <%= ImportantDates.semifinals_judging_begins.strftime("%B %-d") %>
+      and ends on
+      <%= ImportantDates.semifinals_judging_ends.strftime("%B %-d, %Y") %>
+    </li>
+  </ul>
+</div>

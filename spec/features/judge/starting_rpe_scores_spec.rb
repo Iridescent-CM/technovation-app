@@ -15,7 +15,6 @@ RSpec.feature "starting RPE scores", js: true do
       SeasonToggles.judging_round = :off
 
       sign_in(judge)
-      expect(page).to have_content("Welcome to the online judging portal!")
       expect(page).to have_content("You will be judging teams at the following event(s).")
     end
 

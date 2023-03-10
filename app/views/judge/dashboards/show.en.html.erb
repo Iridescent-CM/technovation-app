@@ -9,7 +9,13 @@
     <div class="tab">
       <div id="dashboard-tab-content" class="tab-content tw-active" >
         <% if !SeasonToggles.display_scores? %>
-          <%= render 'judge/dashboards/onboarded/rebrand/events' %>
+          <% if current_judge.onboarded? %>
+            <%= render 'judge/dashboards/onboarded/dashboard' %>
+          <% else %>
+            <div class="mb-4">
+              <p>To be able to judge submissions online this season, make sure to complete the items on the left: Consent Waiver and Judge Training.</p>
+            </div>
+          <% end %>
         <% end %>
       </div>
       <div id="judge-submissions-tab-content" class="tab-content">
