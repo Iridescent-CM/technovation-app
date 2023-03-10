@@ -11,6 +11,6 @@
   </p>
   <%= render 'judge/dashboards/rebrand/important_dates' %>
 <% elsif @scores_in_progress.present? %>
-  You have <%= @scores_in_progress.count %> score(s) in progress.
-  Check out the submissions tab to continue scoring.
+  You have <%=  pluralize( @scores_in_progress.count, 'score' ) %> in progress.
+  View the submissions tab to continue scoring.
 <% end %>
