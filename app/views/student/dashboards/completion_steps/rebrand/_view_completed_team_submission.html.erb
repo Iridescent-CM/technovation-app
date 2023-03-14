@@ -160,8 +160,8 @@
     <div class="mt-8 flex flex-wrap gap-8">
       <% submission.screenshots.each do |screenshot| %>
         <% if screenshot.image_url.present? %>
-          <div>
-            <%= image_tag screenshot.image_url, class: "w-52 h-auto border border-gray-400 rounded-lg shadow" %>
+          <div class="w-full lg:w-1/6 h-64 p-4 flex flex-col justify-center items-center">
+            <%= image_tag screenshot.image_url, class: "object-cover h-full w-full rounded border border-gray-200 shadow" %>
           </div>
         <% end %>
       <% end %>
