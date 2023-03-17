@@ -18,16 +18,22 @@ FactoryBot.define do
       round { :semifinals }
     end
 
-    trait :complete do
-      completed_at { Time.current }
-    end
-
-    trait :incomplete do
+    trait :not_started do
+      created_at { Time.current }
+      updated_at { created_at }
       completed_at { nil }
     end
 
     trait :in_progress do
       updated_at { Time.current + 1.hour }
+      completed_at { nil }
+    end
+
+    trait :complete do
+      completed_at { Time.current }
+    end
+
+    trait :incomplete do
       completed_at { nil }
     end
 

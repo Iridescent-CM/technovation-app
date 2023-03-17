@@ -194,6 +194,7 @@ class SubmissionScore < ActiveRecord::Base
   scope :official, -> { where(official: true) }
   scope :unofficial, -> { where(official: false) }
 
+  scope :not_started, -> { where("created_at = updated_at AND completed_at IS NULL") }
   scope :in_progress, -> { where("created_at != updated_at AND completed_at IS NULL") }
 
   scope :current_round, -> {

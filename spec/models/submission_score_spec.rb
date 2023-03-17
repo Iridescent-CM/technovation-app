@@ -483,12 +483,31 @@ RSpec.describe SubmissionScore do
   end
 
   describe "scopes" do
+    let(:not_started_score) { FactoryBot.create(:score, :not_started) }
     let(:in_progress_score) { FactoryBot.create(:score, :in_progress) }
     let(:finished_score) { FactoryBot.create(:score, :complete) }
+
+    describe ".not_started" do
+      it "includes scores that haven't been started yet" do
+        expect(SubmissionScore.not_started).to include(not_started_score)
+      end
+
+      it "des not include scores that are in progress" do
+        expect(SubmissionScore.not_started).not_to include(in_progress_score)
+      end
+
+      it "does not include finished scores" do
+        expect(SubmissionScore.not_started).not_to include(finished_score)
+      end
+    end
 
     describe ".in_progress" do
       it "includes scores that are in progress" do
         expect(SubmissionScore.in_progress).to include(in_progress_score)
+      end
+
+      it "does not include scores that haven't been started yet" do
+        expect(SubmissionScore.in_progress).not_to include(not_started_score)
       end
 
       it "does not include finished scores" do
