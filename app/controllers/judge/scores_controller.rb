@@ -24,16 +24,6 @@ module Judge
           }
         },
 
-        incomplete: {
-          qf: scope.quarterfinals.incomplete.map { |score|
-            ScoreSerializer.new(score).serialized_json
-          },
-
-          sf: scope.semifinals.incomplete.map { |score|
-            ScoreSerializer.new(score).serialized_json
-          }
-        },
-
         not_started: not_started_rpe_assigned_submissions + not_started_scores
       }
     end
