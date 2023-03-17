@@ -135,14 +135,12 @@ module Judge
         .map do |submission|
         {
           id: submission.id,
+          submission_id: submission.id,
+          score_id: nil,
           app_name: submission.app_name,
           team_name: submission.team_name,
           team_division: submission.team_division_name,
-          judging_format: SubmissionScore::RPE_JUDGING_DISPLAY_TEXT,
-
-          new_score_url: new_judge_score_path(
-            team_submission_id: submission.id
-          )
+          judging_format: SubmissionScore::RPE_JUDGING_DISPLAY_TEXT
         }
       end
     end
@@ -152,14 +150,12 @@ module Judge
         .map do |score|
         {
           id: score.id,
+          submission_id: nil,
+          score_id: score.id,
           app_name: score.team_submission.app_name,
           team_name: score.team_submission.team_name,
           team_division: score.team_submission.team_division_name,
-          judging_format: SubmissionScore::ONLINE_JUDGING_DISPLAY_TEXT,
-
-          new_score_url: new_judge_score_path(
-            score: score.id
-          )
+          judging_format: SubmissionScore::ONLINE_JUDGING_DISPLAY_TEXT
         }
       end
     end
