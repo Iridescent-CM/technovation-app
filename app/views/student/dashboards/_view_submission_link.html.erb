@@ -1,9 +1,6 @@
 <% if StudentSubmissionLinkGuard.new(team: current_team, student: current_student).
   display_link_to_published? %>
-
-  <div class="margin--t-xlarge">
-    <%= link_to t("views.application.dashboards.buttons.team_submission_html"),
-      student_published_team_submission_path(current_team.submission),
-      class: "button" %>
-  </div>
+  <%= link_to t("views.application.dashboards.buttons.team_submission_html"),
+    student_published_team_submission_path(current_team.submission),
+    class: "tw-green-btn mx-auto" %>
 <% end %>

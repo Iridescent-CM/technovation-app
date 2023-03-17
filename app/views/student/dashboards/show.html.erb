@@ -66,48 +66,6 @@
 
       <div slot="submission">
         <%= render "slots/student/submissions" %>
-        <%= render "student/dashboards/view_submission_link",
-          current_team: current_team,
-          current_student: current_student %>
-
-        <% if SeasonToggles.submissions_disabled? and
-                SeasonToggles.quarterfinals_or_earlier? and
-                  current_team.live_event? %>
-          <div class="progress">
-            <div class="progress__section">
-              <h1>
-                <%= link_to "Regional events",
-                  send(
-                    "#{current_scope}_team_submission_section_path",
-                    current_submission,
-                    section: :pitch_presentation
-                  )
-                %>
-              </h1>
-
-              <div class="margin--b-large">
-                <ol class="list--reset">
-                  <li>
-                    <small>
-                      Your team is attending a live, regional event:
-                    </small>
-
-                    <%= link_to submission_progress_web_icon(
-                      current_submission,
-                      :pitch_presentation,
-                      "Edit presentation slides"
-                    ),
-                    send(
-                      "#{current_scope}_team_submission_section_path",
-                      current_submission,
-                      section: :pitch_presentation
-                    ) %>
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        <% end %>
       </div>
 
       <div slot="events">

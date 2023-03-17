@@ -5,7 +5,32 @@
     <p class="font-bold">My Submission</p>
   </div>
 
-  <div class="tw-content=-wrapper p-8">
-    <%= render partial: feature.partial_path, locals: feature.partial_locals  %>
+  <div class="tw-content-wrapper p-8">
+    <% if SeasonToggles.submissions_disabled? and SeasonToggles.quarterfinals_or_earlier? and current_team.live_event? %>
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="w-full lg:w-2/3">
+          <p>Your team is attending a Regional Pitch Event. Please upload the slides your team will use to pitch your project at the event.</p>
+          <p class="mt-4">Contact your mentor or Chapter Ambassador for more information about the presentation slides.</p>
+        </div>
+        <div class="w-full lg:w-1/3 flex justify-center items-center">
+            <%= link_to "Edit presentation slides",
+                        send("#{current_scope}_team_submission_section_path",
+                             current_submission,
+                             section: :pitch_presentation),
+                        class: "tw-green-btn mx-auto" %>
+        </div>
+      </div>
+    <% else %>
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="w-full lg:w-1/2">
+          <%= render partial: feature.partial_path, locals: feature.partial_locals  %>
+        </div>
+        <div class="w-full lg:w-1/2 flex justify-center items-center">
+          <%= render "student/dashboards/view_submission_link",
+                     current_team: current_team,
+                     current_student: current_student %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
