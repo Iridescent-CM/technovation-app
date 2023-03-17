@@ -8,6 +8,7 @@ export default new Vuex.Store({
     currentRound: "qf",
 
     scores: {
+      not_started: [],
       finished: {
         qf: [],
         sf: [],
@@ -56,9 +57,7 @@ export default new Vuex.Store({
     },
 
     notStartedSubmissions(state) {
-      return state.submissions.filter(
-        (submission) => !submission.score_started && !submission.score_finished
-      );
+      return state.scores.not_started
     },
   },
 

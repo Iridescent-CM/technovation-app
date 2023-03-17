@@ -32,7 +32,9 @@ module Judge
           sf: scope.semifinals.incomplete.map { |score|
             ScoreSerializer.new(score).serialized_json
           }
-        }
+        },
+
+        not_started: not_started_rpe_assigned_submissions + not_started_scores
       }
     end
 
@@ -127,6 +129,47 @@ module Judge
                    'to learn more about our monitoring process.'
             }, status: 403
           end
+        }
+      end
+    end
+
+    def not_started_rpe_assigned_submissions
+      teams = GatherAssignedTeams.call(current_judge)
+      current_scores = current_judge.submission_scores.current_round
+
+      teams
+        .collect(&:submission)
+        .select(&:complete?)
+        .filter { |submission| current_scores.in_progress.pluck(:team_submission_id).exclude?(submission.id) }
+        .filter { |submission| current_scores.complete.pluck(:team_submission_id).exclude?(submission.id) }
+        .map do |submission|
+        {
+          id: submission.id,
+          app_name: submission.app_name,
+          team_name: submission.team_name,
+          team_division: submission.team_division_name,
+          judging_format: "Pitch Event",
+
+          new_score_url: new_judge_score_path(
+            team_submission_id: submission.id
+          )
+        }
+      end
+    end
+
+    def not_started_scores
+      current_judge.scores.not_started
+        .map do |score|
+        {
+          id: score.id,
+          app_name: score.team_submission.app_name,
+          team_name: score.team_submission.team_name,
+          team_division: score.team_submission.team_division_name,
+          judging_format: "Live",
+
+          new_score_url: new_judge_score_path(
+            score: score.id
+          )
         }
       end
     end
