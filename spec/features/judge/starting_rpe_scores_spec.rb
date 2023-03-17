@@ -70,7 +70,7 @@ RSpec.feature "starting RPE scores", js: true do
 
     scenario "the judge has a score in progress" do
       score = FactoryBot.create(:score,
-        :incomplete,
+        :in_progress,
         :quarterfinals,
         judge_profile: judge,
         team_submission: @submissions[0])
