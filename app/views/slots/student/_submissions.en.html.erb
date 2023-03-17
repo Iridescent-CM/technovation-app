@@ -6,7 +6,7 @@
   </div>
 
   <div class="tw-content-wrapper p-8">
-    <% if SeasonToggles.submissions_disabled? and SeasonToggles.quarterfinals_or_earlier? and current_team.live_event? %>
+    <% if SeasonToggles.submissions_disabled? && SeasonToggles.quarterfinals_or_earlier? && current_team.live_event? %>
       <div class="flex flex-col lg:flex-row gap-8">
         <div class="w-full lg:w-2/3">
           <p>Your team is attending a Regional Pitch Event. Please upload the slides your team will use to pitch your project at the event.</p>
@@ -23,7 +23,7 @@
     <% else %>
       <div class="flex flex-col lg:flex-row gap-8">
         <div class="w-full lg:w-1/2">
-          <%= render partial: feature.partial_path, locals: feature.partial_locals  %>
+          <%= render partial: feature.partial_path, locals: feature.partial_locals %>
         </div>
         <div class="w-full lg:w-1/2 flex justify-center items-center">
           <%= render "student/dashboards/view_submission_link",
