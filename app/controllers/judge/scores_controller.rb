@@ -138,7 +138,7 @@ module Judge
           app_name: submission.app_name,
           team_name: submission.team_name,
           team_division: submission.team_division_name,
-          judging_format: "Pitch Event",
+          judging_format: SubmissionScore::RPE_JUDGING_DISPLAY_TEXT,
 
           new_score_url: new_judge_score_path(
             team_submission_id: submission.id
@@ -155,7 +155,7 @@ module Judge
           app_name: score.team_submission.app_name,
           team_name: score.team_submission.team_name,
           team_division: score.team_submission.team_division_name,
-          judging_format: "Live",
+          judging_format: SubmissionScore::ONLINE_JUDGING_DISPLAY_TEXT,
 
           new_score_url: new_judge_score_path(
             score: score.id
