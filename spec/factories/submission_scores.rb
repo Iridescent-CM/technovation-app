@@ -26,6 +26,11 @@ FactoryBot.define do
       completed_at { nil }
     end
 
+    trait :in_progress do
+      updated_at { Time.current + 1.hour }
+      completed_at { nil }
+    end
+
     trait :approved do
       approved_at { Time.current }
     end

@@ -194,6 +194,8 @@ class SubmissionScore < ActiveRecord::Base
   scope :official, -> { where(official: true) }
   scope :unofficial, -> { where(official: false) }
 
+  scope :in_progress, -> { where("created_at != updated_at AND completed_at IS NULL") }
+
   scope :current_round, -> {
     case SeasonToggles.judging_round
     when "qf"
