@@ -229,7 +229,6 @@ Rails.application.routes.draw do
       patch :judge_recusal
     end
 
-    resources :assigned_submissions, only: :index
     resources :score_completions, only: :create
     resources :finished_scores, only: :show
     resources :embed_codes, only: :show

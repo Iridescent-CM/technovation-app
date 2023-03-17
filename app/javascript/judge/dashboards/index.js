@@ -43,23 +43,6 @@ document.addEventListener('turbolinks:load', () => {
             );
           });
 
-        if (this.$refs.enableAssigned) {
-          $.get("/judge/assigned_submissions.json", null, resp => {
-            this.$store.commit('populateSubmissions', resp)
-          })
-            .fail((jqXHR, textStatus, errorThrown) => {
-              airbrake.notify({
-                error: errorThrown,
-                params: { jqXHR, textStatus, errorThrown },
-              });
-
-              displayFlashMessage(
-                'There was an issue fetching your assigned submissions. Please try refreshing the page.',
-                'error'
-              );
-            });
-        }
-
         if (this.$refs.deadline)
           this.$store.commit('deadline', this.$refs.deadline.dataset.date)
       },
