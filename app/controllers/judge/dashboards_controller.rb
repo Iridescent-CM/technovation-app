@@ -4,7 +4,7 @@ module Judge
 
     def show
       @regional_events = RegionalPitchEvent.available_to(current_judge)
-      @scores_in_progress = current_judge.submission_scores.current_round.incomplete.not_recused
+      @scores_in_progress = current_judge.submission_scores.current_round.in_progress.not_recused
 
       if SeasonToggles.display_scores?
         certificate = current_account.current_judge_certificates.last
