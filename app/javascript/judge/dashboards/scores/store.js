@@ -8,6 +8,7 @@ export default new Vuex.Store({
     currentRound: "qf",
 
     scores: {
+      not_started: [],
       finished: {
         qf: [],
         sf: [],
@@ -19,32 +20,12 @@ export default new Vuex.Store({
       },
     },
 
-    submissions: [],
-
     deadline: "",
   },
 
   getters: {
-    finishedScores(state) {
-      return state.scores.finished[state.currentRound].map((score) => ({
-        ...JSON.parse(score).data.attributes,
-      }));
-    },
-
-    quarterFinalsScores(state) {
-      return state.scores.incomplete.qf.map((score) => ({
-        ...JSON.parse(score).data.attributes,
-      }));
-    },
-
     finishedQuarterfinalsScores(state) {
       return state.scores.finished.qf.map((score) => ({
-        ...JSON.parse(score).data.attributes,
-      }));
-    },
-
-    semiFinalsScores(state) {
-      return state.scores.incomplete.sf.map((score) => ({
         ...JSON.parse(score).data.attributes,
       }));
     },
@@ -56,9 +37,7 @@ export default new Vuex.Store({
     },
 
     notStartedSubmissions(state) {
-      return state.submissions.filter(
-        (submission) => !submission.score_started && !submission.score_finished
-      );
+      return state.scores.not_started
     },
   },
 
@@ -66,10 +45,6 @@ export default new Vuex.Store({
     populateScores(state, payload) {
       state.scores = payload;
       state.currentRound = payload.current_round;
-    },
-
-    populateSubmissions(state, payload) {
-      state.submissions = payload;
     },
 
     deadline(state, date) {

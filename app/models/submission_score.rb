@@ -10,6 +10,9 @@ class SubmissionScore < ActiveRecord::Base
   JUNIOR_LOW_SCORE_THRESHOLD = 20
   BEGINNER_LOW_SCORE_THRESHOLD = 15
 
+  RPE_JUDGING_DISPLAY_TEXT = "Pitch Event"
+  ONLINE_JUDGING_DISPLAY_TEXT = "Online"
+
   before_commit -> {
     self.judge_recusal_comment = "" if judge_recusal_reason != "other"
   }
@@ -193,6 +196,9 @@ class SubmissionScore < ActiveRecord::Base
 
   scope :official, -> { where(official: true) }
   scope :unofficial, -> { where(official: false) }
+
+  scope :not_started, -> { where("created_at = updated_at AND completed_at IS NULL") }
+  scope :in_progress, -> { where("created_at != updated_at AND completed_at IS NULL") }
 
   scope :current_round, -> {
     case SeasonToggles.judging_round

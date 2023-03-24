@@ -482,27 +482,61 @@ RSpec.describe SubmissionScore do
     ).to eq(1)
   end
 
-  describe ".current_round" do
-    it "pulls QF scores" do
-      qf = FactoryBot.create(:score, round: :quarterfinals)
-      FactoryBot.create(:score, round: :semifinals)
+  describe "scopes" do
+    let(:not_started_score) { FactoryBot.create(:score, :not_started) }
+    let(:in_progress_score) { FactoryBot.create(:score, :in_progress) }
+    let(:finished_score) { FactoryBot.create(:score, :complete) }
 
-      set_judging_round("QF")
+    describe ".not_started" do
+      it "includes scores that haven't been started yet" do
+        expect(SubmissionScore.not_started).to include(not_started_score)
+      end
 
-      expect(SubmissionScore.current_round).to eq([qf])
+      it "des not include scores that are in progress" do
+        expect(SubmissionScore.not_started).not_to include(in_progress_score)
+      end
 
-      reset_judging_round
+      it "does not include finished scores" do
+        expect(SubmissionScore.not_started).not_to include(finished_score)
+      end
     end
 
-    it "pulls SF scores" do
-      sf = FactoryBot.create(:score, round: :semifinals)
-      FactoryBot.create(:score, round: :quarterfinals)
+    describe ".in_progress" do
+      it "includes scores that are in progress" do
+        expect(SubmissionScore.in_progress).to include(in_progress_score)
+      end
 
-      set_judging_round("SF")
+      it "does not include scores that haven't been started yet" do
+        expect(SubmissionScore.in_progress).not_to include(not_started_score)
+      end
 
-      expect(SubmissionScore.current_round).to eq([sf])
+      it "does not include finished scores" do
+        expect(SubmissionScore.in_progress).not_to include(finished_score)
+      end
+    end
 
-      reset_judging_round
+    describe ".current_round" do
+      it "pulls QF scores" do
+        qf = FactoryBot.create(:score, round: :quarterfinals)
+        FactoryBot.create(:score, round: :semifinals)
+
+        set_judging_round("QF")
+
+        expect(SubmissionScore.current_round).to eq([qf])
+
+        reset_judging_round
+      end
+
+      it "pulls SF scores" do
+        sf = FactoryBot.create(:score, round: :semifinals)
+        FactoryBot.create(:score, round: :quarterfinals)
+
+        set_judging_round("SF")
+
+        expect(SubmissionScore.current_round).to eq([sf])
+
+        reset_judging_round
+      end
     end
   end
 

@@ -48,12 +48,12 @@
                       <span class="division">{{ submission.team_division }}</span>
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      Pitch Event
+                      {{ submission.judging_format }}
                     </td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <a
                         v-if="scoresEditable"
-                        :href="submission.new_score_url"
+                        :href="newScoreUrl(submission)"
                         class="link-button link-button-small link-button-success">
                         Start
                       </a>
@@ -93,5 +93,15 @@ export default {
       default: true,
     }
   },
+
+  methods: {
+    newScoreUrl(submission) {
+      if (submission.score_id) {
+        return `/judge/scores/new?score=${submission.score_id}`
+      } else if (submission.submission_id) {
+        return `/judge/scores/new?team_submission_id=${submission.submission_id}`
+      }
+    }
+  }
 }
 </script>
