@@ -143,6 +143,7 @@ export default {
 
       const fsPickerOptions = {
         accept: ["image/jpeg", "image/jpg", "image/png"],
+        maxSize: 2 * 1024 * 1024,
         fromSources: ["local_file_system"],
         maxFiles: this.maxFiles,
         storeTo: {
@@ -150,6 +151,11 @@ export default {
           container: process.env.AWS_BUCKET_NAME,
           path: "uploads/screenshot/filestack/" + this.teamSubmissionId + "/",
           region: "us-east-1"
+        },
+        onFileSelected: (file) => {
+          if (file.size > 2 * 1024 * 1024) {
+            throw new Error("Image is too large. Please select a photo under 2MB.");
+          }
         },
         onFileUploadFinished: (file) => {
           const form = new FormData();
