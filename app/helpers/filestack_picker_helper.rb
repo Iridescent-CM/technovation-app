@@ -1,5 +1,5 @@
 module FilestackPickerHelper
-  def filestack_picker_options(object)
+  def filestack_picker_options(klass, record)
     {
       accept: ["image/jpeg", "image/jpg", "image/png"],
       uploadConfig: {
@@ -12,16 +12,15 @@ module FilestackPickerHelper
       storeTo: {
         location: "s3",
         container: ENV.fetch("AWS_BUCKET_NAME"),
-        path: aws_path(object),
+        path: aws_path(klass, record),
         region: "us-east-1"
       }
     }
   end
 
-  def aws_path(object)
-    case object
-    when TeamSubmission
-      "uploads/screenshot/filestack/#{object.id}/"
+  def aws_path(klass, record)
+    if klass.safe_constantize == TeamSubmission
+      "uploads/screenshot/filestack/#{record.id}/"
     end
   end
 end

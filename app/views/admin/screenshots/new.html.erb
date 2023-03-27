@@ -29,7 +29,7 @@
           <%= f.filestack_field :image,
                                 "Select image",
                                 id: "admin-image-picker",
-                                pickerOptions: filestack_picker_options(@team_submission) %>
+                                pickerOptions: filestack_picker_options("TeamSubmission", @team_submission) %>
           <br>
           <%= f.submit "Save", class:"button" %>
         <% end %>
