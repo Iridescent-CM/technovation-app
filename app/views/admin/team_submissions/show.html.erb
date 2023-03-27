@@ -196,7 +196,7 @@
 
       <%= render "additional_questions", team_submission: @team_submission %>
 
-      <h5>Screenshots</h5>
+      <h5>Images</h5>
 
       <p>
         <% if @team_submission.screenshots.any? %>
@@ -209,14 +209,14 @@
             <% end %>
           </div>
         <% else %>
-          No screenshots uploaded
+          No images uploaded
         <% end %>
       </p>
 
       <% if @team_submission.max_screenshots_remaining > 0 %>
-        <%= link_to 'Add Screenshot', new_admin_team_submission_screenshot_path(@team_submission) %>
+        <%= link_to 'Add image', new_admin_team_submission_screenshot_path(@team_submission) %>
       <% else %>
-        <p>Delete a screenshot(s) to upload additional images</p>
+        <p>Delete an image to upload additional images</p>
       <% end %>
     </div>
   </div>

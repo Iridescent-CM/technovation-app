@@ -9,16 +9,16 @@
   <div class="grid__col-10">
     <div class="panel">
 
-      <h1>Add a screenshot</h1>
+      <h1>Add an image</h1>
       <% @team_submission.while_no_screenshots_remaining do %>
-        <p>Please delete a screenshot(s) in order to upload additional screenshots</p>
+        <p>Please delete an image in order to upload additional images.</p>
       <% end %>
 
       <% @team_submission.while_screenshots_remaining do %>
         <img src="" alt="" id="screenshot" class="og-style-filestack-img">
 
         <%= form_with model:[@team_submission, @screenshot], url: admin_team_submission_screenshots_path(@team_submission), local: true do |f| %>
-          <%= f.label :image, "Screenshot" %>
+          <%= f.label :image, "Image" %>
           <%= f.filestack_field :image,
                                 "Select screenshot",
                                 id: "admin-screenshot-picker",
