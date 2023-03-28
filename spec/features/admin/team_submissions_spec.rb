@@ -66,12 +66,12 @@ RSpec.feature "admin team submissions" do
     )
   end
 
-  scenario "Add a screenshot" do
+  scenario "Add an image" do
     click_link "some app name"
-    expect(page).to have_content("No screenshots uploaded")
+    expect(page).to have_content("No images uploaded")
 
-    click_link "Add Screenshot"
-    expect(page).to have_button("Select screenshot")
+    click_link "Add image"
+    expect(page).to have_button("Select image")
 
     # TODO: Groundwork for filestack specs
     # expect(page).to have_selector("div#__filestack-picker")
