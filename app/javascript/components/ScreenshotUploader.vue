@@ -140,10 +140,11 @@ export default {
   methods: {
     uploadFile() {
       const client = filestack.init(process.env.FILESTACK_API_KEY);
+      const TWO_MB_FILE_SIZE = 2 * 1024 * 1024
 
       const fsPickerOptions = {
         accept: ["image/jpeg", "image/jpg", "image/png"],
-        maxSize: 2 * 1024 * 1024,
+        maxSize: TWO_MB_FILE_SIZE,
         fromSources: ["local_file_system"],
         maxFiles: this.maxFiles,
         storeTo: {
@@ -153,7 +154,7 @@ export default {
           region: "us-east-1"
         },
         onFileSelected: (file) => {
-          if (file.size > 2 * 1024 * 1024) {
+          if (file.size > TWO_MB_FILE_SIZE) {
             throw new Error("Image is too large. Please select a photo under 2MB.");
           }
         },
