@@ -6,6 +6,14 @@ export const airbrake = new AirbrakeClient({
   environment: process.env.AIRBRAKE_RAILS_ENV,
 });
 
+export const isProduction = () => {
+  return process.env.HOST_DOMAIN == "my.technovationchallenge.org"
+}
+
+export const isQa = () => {
+  return process.env.HOST_DOMAIN == "technovation-qa.herokuapp.com"
+}
+
 export const isEmptyObject = (object) => {
   return Object.keys(object).length === 0 && object.constructor === Object
 }
