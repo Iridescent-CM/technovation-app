@@ -209,6 +209,7 @@ export default {
       Swal.fire({
         title: 'PRODUCTION SETTINGS',
         html: 'You are about to update settings on Production!<br>Are you sure you want to continue?',
+        background: '#fecaca',
         confirmButtonText: 'Yes, save settings',
         confirmButtonColor: '#28A880',
         showCancelButton: true,
