@@ -172,14 +172,19 @@
     </div>
 
     <div class="notice warning">
-      The changes you make here affect the end-user experience.<br>
-      Please double check everything before saving.
+      The changes you are about to make are for {{ environmentName() }}.
+
+      <p v-if="isProduction()">
+        Please double check everything before saving.
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+
+import { isProduction, isQa } from '../../../utilities/utilities'
 
 export default {
   name: 'review-and-save-settings-section',
@@ -204,6 +209,20 @@ export default {
         finished: 'Finished',
       }
     }
+  },
+
+  methods: {
+    isProduction,
+
+    environmentName() {
+      if (isProduction()) {
+        return "PRODUCTION"
+      } else if (isQa()) {
+        return "QA"
+      } else {
+        return "your local environment"
+      }
+    },
   },
 
   computed: {

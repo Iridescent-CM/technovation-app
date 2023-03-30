@@ -135,7 +135,7 @@
         ref="submitButton"
         type="submit"
         class="button primary"
-        @click.prevent="saveSettings"
+        @click.prevent="isProduction() ? confirmSaveSettings() : saveSettings()"
       >Save these settings</button>
       or
       <a
@@ -149,9 +149,11 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import { mapGetters, mapMutations } from 'vuex'
 
 import Icon from 'components/Icon'
+import { isProduction } from '../../../utilities/utilities'
 
 export default {
   name: 'admin-content-settings',
@@ -196,9 +198,27 @@ export default {
   },
 
   methods: {
+    isProduction,
+
     saveSettings () {
       this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData)
       document.getElementById('season_schedule').submit()
+    },
+
+    confirmSaveSettings () {
+      Swal.fire({
+        title: 'PRODUCTION SETTINGS',
+        html: 'You are about to update settings on Production!<br>Are you sure you want to continue?',
+        background: '#fecaca',
+        confirmButtonText: 'Yes, save settings',
+        confirmButtonColor: '#28A880',
+        showCancelButton: true,
+        focusCancel: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+         this.saveSettings();
+        }
+      })
     },
 
     buildFormInputsMarkup (formData, prefix = 'season_toggles') {
