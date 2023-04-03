@@ -143,43 +143,4 @@ RSpec.feature "Student team submissions" do
       )
     )
   end
-
-  xscenario "See live pitch event submission pieces on TOC" do
-    student = FactoryBot.create(:student, :on_team, :geocoded)
-    submission = FactoryBot.create(:team_submission, team: student.team)
-
-    sign_in(student)
-
-    click_link "My Submission"
-    click_link "Regional events"
-
-    expect(page).not_to have_link(
-      "Upload the pitch presentation slides for your live event",
-    )
-
-    expect(page).to have_content(
-      "No team will submit pitch presentation slides here because all " +
-      "official Regional Pitch Events are canceled due to COVID this season."
-    )
-
-    expect(page).to have_content(
-      "If you are attending a local celebration or unofficial pitch event, your " +
-      "Chapter Ambassador may ask you to share your pitch presentation slides with " +
-      "them before the event. Coordinate with them directly and good luck!"
-    )
-
-    rpe = FactoryBot.create(:regional_pitch_event)
-    rpe.teams << student.team
-
-    click_link "My Submission"
-    click_link "Regional events"
-
-    expect(page).to have_link(
-      "Upload the pitch presentation slides for your live event",
-      href: edit_student_team_submission_path(
-        submission,
-        piece: :pitch_presentation
-      )
-    )
-  end
 end
