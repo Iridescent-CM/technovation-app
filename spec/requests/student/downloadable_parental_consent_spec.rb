@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.xdescribe Student::DownloadableParentalConsentsController do
+RSpec.describe Student::DownloadableParentalConsentsController do
   let(:student_account) { FactoryBot.create(:account, email: student_email_address) }
   let(:student_email_address) { "harry@example.com"  }
   let(:student_profile) {
@@ -19,7 +19,7 @@ RSpec.xdescribe Student::DownloadableParentalConsentsController do
 
       io = StringIO.new(response.body)
       reader = PDF::Reader.new(io)
-      @pdf_text = reader.pages.collect { |page| page.text }.join(" ")
+      @pdf_text = reader.pages.collect { |page| page.text }.join(" ").squish
     end
 
     after(:each) do |example|
