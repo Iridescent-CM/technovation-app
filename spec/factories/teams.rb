@@ -49,6 +49,9 @@ FactoryBot.define do
         members.drop(1).each do |m|
           TeamRosterManaging.add(team, m)
         end
+
+        team.division = Division.beginner
+        team.save
       end
     end
 
