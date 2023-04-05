@@ -14,14 +14,12 @@ RSpec.feature "scoring submissions", js: true do
     and_a_judge_is_logged_in
 
     when_the_judge_starts_a_new_scoring_session
-    page.save_and_open_page
     and_scores_the_project_details_section_perfectly
     and_scores_the_pitch_section_perfectly
     and_scores_the_technical_section_perfectly
-    and_scores_the_entrepreneurship_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 5
+    then_the_review_page_displays_a_perfect_score_of 39
     and_then_submits_the_score
   end
 
@@ -58,15 +56,15 @@ RSpec.feature "scoring submissions", js: true do
   private
 
   def given_there_is_a_submission_from_a_beginner_team_that_needs_scoring
-    FactoryBot.create(:team_submission, :beginner, :complete)
+    @submission = FactoryBot.create(:team_submission, :beginner, :complete)
   end
 
   def given_there_is_a_submission_from_a_junior_team_that_needs_scoring
-    FactoryBot.create(:team_submission, :junior, :complete)
+    @submission = FactoryBot.create(:team_submission, :junior, :complete)
   end
 
   def given_there_is_a_submission_from_a_senior_team_that_needs_scoring
-    FactoryBot.create(:team_submission, :senior, :complete)
+    @submission = FactoryBot.create(:team_submission, :senior, :complete)
   end
 
   def and_a_judge_is_logged_in
@@ -80,37 +78,37 @@ RSpec.feature "scoring submissions", js: true do
   end
 
   def and_scores_the_project_details_section_perfectly
-    click_all_five_options
-    find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+    click_highest_score_bubble
+    fill_in_comment
   end
 
   def and_scores_the_pitch_section_perfectly
     click_next_button("Next")
 
-    click_all_five_options
-    find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+    click_highest_score_bubble
+    fill_in_comment
   end
 
   def and_scores_the_technical_section_perfectly
     click_next_button("Next")
 
-    click_all_five_options
-    find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+    click_highest_score_bubble
+    fill_in_comment
   end
 
   def and_scores_the_entrepreneurship_section_perfectly
     click_next_button("Next")
 
-    click_all_five_options
-    find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+    click_highest_score_bubble
+    fill_in_comment
   end
 
   def and_scores_the_ideation_section_perfectly
     # this is the learning journey section
     click_next_button("Next")
 
-    click_all_five_options
-    find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
+    click_highest_score_bubble
+    fill_in_comment
   end
 
   def then_the_review_page_displays_a_perfect_score_of(perfect_score)
@@ -132,8 +130,13 @@ RSpec.feature "scoring submissions", js: true do
     execute_script("arguments[0].click();", next_button)
   end
 
-  def click_all_five_options
-    fives = all("#judge-scores-app li.score-value", text: "5")
-    fives.each(&:click)
+  def click_highest_score_bubble
+    highest_score = @submission.beginner_division? ? "3" : "5"
+    highest_score_bubble = all("#judge-scores-app li.score-value", text: "#{highest_score}")
+    highest_score_bubble.each(&:click)
+  end
+
+  def fill_in_comment
+    find("#judge-scores-app textarea").set("Lorem ipsum dolor sit amet consectetur adipiscing elit iaculis suspendisse natoque magna senectus, tempus nulla maecenas rutrum cursus euismod ante cras posuere proin himenaeos. Nisi primis ullamcorper penatibus vivamus dapibus, risus vel lobortis nam sed convallis, velit a cubilia hendrerit.")
   end
 end
