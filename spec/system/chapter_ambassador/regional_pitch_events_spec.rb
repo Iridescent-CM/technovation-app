@@ -7,22 +7,22 @@ RSpec.describe "Regional Pitch Events", :js do
     allow(ENV).to receive(:fetch).and_call_original
   end
 
-  xit "successfully creates a new event" do
+  it "successfully creates a new event" do
     sign_in(chapter_ambassador)
 
     click_link "Events"
     click_button "Add an event"
 
-    find("#new-event .grid div:nth-child(5) label").click
+    find("label#event-date").click
     all(".dayContainer .flatpickr-day:not(.disabled)").first.click
     expect(find_field("Date").value).to be_present
 
-    find("#new-event .grid div:nth-child(6) label:nth-child(1)").click
+    find("label#event-start-time").click
     find(".numInputWrapper:nth-child(1)").hover
     find(".arrowDown").click
     expect(find_field("From").value).to be_present
 
-    find("#new-event .grid div:nth-child(6) label:nth-child(2)").click
+    find("label#event-end-time").click
     find(".numInputWrapper:nth-child(1)").hover
     find(".arrowUp").click
     expect(find_field("To").value).to be_present
