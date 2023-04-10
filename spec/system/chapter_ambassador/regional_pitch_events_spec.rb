@@ -39,7 +39,7 @@ RSpec.describe "Regional Pitch Events", :js do
     end
   end
 
-  xit "successfully updates an event" do
+  it "successfully updates an event" do
     FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
     expect(RegionalPitchEvent.count).to be_present
 
@@ -55,7 +55,7 @@ RSpec.describe "Regional Pitch Events", :js do
     end
   end
 
-  xit "sucessfully deletes an event" do
+  it "sucessfully deletes an event" do
     FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
     expect(RegionalPitchEvent.count).to be_present
 
