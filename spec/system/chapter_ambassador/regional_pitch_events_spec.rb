@@ -7,22 +7,22 @@ RSpec.describe "Regional Pitch Events", :js do
     allow(ENV).to receive(:fetch).and_call_original
   end
 
-  xit "successfully creates a new event" do
+  it "successfully creates a new event" do
     sign_in(chapter_ambassador)
 
     click_link "Events"
     click_button "Add an event"
 
-    find("#new-event .grid div:nth-child(5) label").click
+    find("label#event-date").click
     all(".dayContainer .flatpickr-day:not(.disabled)").first.click
     expect(find_field("Date").value).to be_present
 
-    find("#new-event .grid div:nth-child(6) label:nth-child(1)").click
+    find("label#event-start-time").click
     find(".numInputWrapper:nth-child(1)").hover
     find(".arrowDown").click
     expect(find_field("From").value).to be_present
 
-    find("#new-event .grid div:nth-child(6) label:nth-child(2)").click
+    find("label#event-end-time").click
     find(".numInputWrapper:nth-child(1)").hover
     find(".arrowUp").click
     expect(find_field("To").value).to be_present
@@ -39,9 +39,9 @@ RSpec.describe "Regional Pitch Events", :js do
     end
   end
 
-  xit "successfully updates an event" do
+  it "successfully updates an event" do
     FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
-    expect(RegionalPitchEvent.count).to be_present
+    expect(RegionalPitchEvent.count).to be > 0
 
     sign_in(chapter_ambassador)
 
@@ -55,9 +55,9 @@ RSpec.describe "Regional Pitch Events", :js do
     end
   end
 
-  xit "sucessfully deletes an event" do
+  it "sucessfully deletes an event" do
     FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
-    expect(RegionalPitchEvent.count).to be_present
+    expect(RegionalPitchEvent.count).to be > 0
 
     sign_in(chapter_ambassador)
 

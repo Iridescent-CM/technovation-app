@@ -77,7 +77,7 @@
         </div>
 
         <div class="grid__col-sm-6">
-          <label>
+          <label id="event-date">
             Date
             <datetime-input
               v-model="eventDate"
@@ -93,7 +93,7 @@
             Please select the time using a 24 hour clock. The time will display to students as the local time zone in your area.
           </p>
 
-          <label>
+          <label id="event-start-time">
             From
             <datetime-input
               v-model="eventStartTime"
@@ -103,7 +103,7 @@
 
           <errors :errors="eventErrors.starts_at"></errors>
 
-          <label>
+          <label id="event-end-time">
             To
             <datetime-input
               v-model="eventEndTime"
