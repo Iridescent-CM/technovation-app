@@ -24,7 +24,7 @@ RSpec.feature "starting RPE scores", js: true do
       sign_in(judge)
       click_link "Judge Submissions"
 
-      expect(page).to have_content("Begin scoring your assigned submissions.")
+      expect(page).to have_content("Begin scoring your submissions.")
       expect(page).to have_content("SUBMISSIONS TO SCORE")
       expect(page).to have_link "Start"
 
@@ -63,7 +63,7 @@ RSpec.feature "starting RPE scores", js: true do
       sign_in(judge)
       click_link "Judge Submissions"
 
-      expect(page).to have_content("Begin scoring your assigned submissions.")
+      expect(page).to have_content("Begin scoring your submissions.")
       expect(page).to have_content("SUBMISSIONS TO SCORE")
       expect(page).to have_link "Start", count: @submissions.count
     end
@@ -79,7 +79,7 @@ RSpec.feature "starting RPE scores", js: true do
       sign_in(judge)
       click_link "Judge Submissions"
 
-      expect(page).to have_content("Begin scoring your assigned submissions.")
+      expect(page).to have_content("Begin scoring your submissions.")
       expect(page).to have_content("YOUR SCORE IN PROGRESS")
       expect(page).to have_link "Resume", count: 1
     end

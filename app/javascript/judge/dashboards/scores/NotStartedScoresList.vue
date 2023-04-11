@@ -1,15 +1,18 @@
 <template>
   <div class="mb-4">
-    <p class="mb-4">
-      Begin scoring your assigned submissions. You will be able to edit
-      your scores until round one of judging closes. For more information
-      about your events, please view your dashboard.
-    </p>
-    <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
-      {{ this.title }}
-    </h2>
-
     <div v-if="notStartedSubmissions.length">
+      <p class="mb-4">
+        Begin scoring your submissions. You will be able to edit
+        your scores until the current round of judging closes.
+        <span v-if="isLiveJudge">For more information about your
+          events, please view your dashboard.
+        </span>
+      </p>
+
+      <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
+        {{ this.title }}
+      </h2>
+
       <div class="mt-2 mb-8 flex flex-col">
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -67,9 +70,12 @@
       </div>
     </div>
     <div v-else>
-      <p>
+      <p v-if="isLiveJudge">
         You currently do not have any new submissions to score.
         Please contact your chapter ambassador if this is a mistake.
+      </p>
+      <p v-else>
+        To start a new score, complete any scores in progress.
       </p>
     </div>
   </div>
@@ -91,7 +97,11 @@ export default {
     scoresEditable: {
       type: Boolean,
       default: true,
-    }
+    },
+    isLiveJudge: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   methods: {

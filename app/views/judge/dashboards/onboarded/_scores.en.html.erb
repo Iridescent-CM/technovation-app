@@ -1,13 +1,19 @@
 <% if current_judge.onboarded? and SeasonToggles.judging_enabled? %>
   <div id="judge-dashboard-scores-app">
-      <not-started-scores-list></not-started-scores-list>
-
     <% if CanStartNewScore.(current_judge) %>
+      <p class="mb-4">Click on the button below to open a submission and start scoring.</p>
       <%= link_to "Start a new score",
-        new_judge_score_path,
-        class: "md-link-button link-button-success",
-        data: { turbolinks: false } %>
-    <% elsif @scores_in_progress.present? %>
+                  new_judge_score_path,
+                  class: "md-link-button link-button-success",
+                  data: { turbolinks: false } %>
+    <% else %>
+      <not-started-scores-list
+        :is-live-judge="<%= current_judge.live_event? %>"
+      >
+      </not-started-scores-list>
+    <% end %>
+
+    <% if @scores_in_progress.present? %>
       <h2 class="text-base text-energetic-blue font-semibold tracking-wide uppercase">
         <% if @scores_in_progress.one? %>
           Your Score in Progress
