@@ -9,27 +9,36 @@ task update_spain_location_data: :environment do
   #################################################################################################
 
   community_of_madrid_account_ids = %w[
-    74452 156765 70297 175384 158842 175745 164927 89820 72926 175102 167801 170884 101210 171426 175473 79663 175352 175694 175345 170854 175360 175402 171573 164760 175076 170881 170989 173932 175675 175210 175665 166434 175326 175661 84312 171604 171574 174200 159635 175660 164305 97514 160899 171575 40312 175038 172484 175654 77662 175428 88611 175037 175454 83188 83007 175198 174774 175491 79680 175480 171764 109257 104561 84232 84550 175509 175504 91172 83191 86143 165923 73166 165407 170551 171346 70196 166868 161714 170460 86611 70131 49750 98993 81717 82374 82351 175142 70075 161080 174778 87637 68539 47919 37751 60023 69401 104557 48602 60439 60993 49671 38104 68240 57640 38270
+    74452 156765 70297 175384 158842 175745 164927 89820 72926 175102 167801 170884 101210 171426 175473 79663 175352 175694 175345 170854 175360 175402 171573 164760 175076 170881 170989 173932 175675 175210 175665 166434 175326 175661 84312 171604 171574 174200 159635 175660 164305 97514 160899 171575 40312 175038 172484 175654 77662 175428 88611 175037 175454 83188 83007 175198 174774 175491 79680 175480 171764 109257 104561 84232 84550 175509 175504 91172 83191 86143 165923 73166 165407 170551 171346 70196 166868 161714 170460 86611 70131 49750 98993 81717 82374 82351 175142 70075 161080 174778 87637 68539 47919 37751 60023 69401 104557 48602 60439 60993 49671 38104 68240 57640 38270 176044
   ]
+
+  puts "Updating Madrid accounts..."
 
   Account.where(id: community_of_madrid_account_ids).update_all(state_province: "MD", country: "ES")
 
+  puts "Total Madrid Accounts Updated: #{community_of_madrid_account_ids.count}"
   #################################################################################################
 
   valencian_account_ids = %w[
     24238 59925 45949 42967 69287 69232 165578 158038 161349 89581 166925 166927 166954 162217 166936 166923 110341 166929 166928 153325 166931 166932 85593 166926 166933 159842 83805
   ]
 
+  puts "Updating Valencian accounts..."
+
   Account.where(id: valencian_account_ids).update_all(state_province: "VC", country: "ES")
 
+  puts "Total Valencian Accounts Updated: #{valencian_account_ids.count}"
   #################################################################################################
 
   aragon_account_ids = %w[
-    77579 75603 91484
+    77579 75603 91484 175879 175881
   ]
+
+  puts "Updating Aragon accounts..."
 
   Account.where(id: aragon_account_ids).update_all(state_province: "AR", country: "ES")
 
+  puts "Total Aragon Accounts Updated: #{aragon_account_ids.count}"
   #################################################################################################
 
   # asturias_account_ids = %w[82673 112248 113485 121078 125828 128322]
@@ -54,16 +63,22 @@ task update_spain_location_data: :environment do
 
   castilla_la_mancha_account_ids = %w[156956]
 
+  puts "Updating Castilla La Mancha accounts..."
+
   Account.where(id: castilla_la_mancha_account_ids).update_all(state_province: "CM", country: "ES")
 
+  puts "Total Castilla La Mancha Accounts Updated: #{castilla_la_mancha_account_ids.count}"
   #################################################################################################
 
   catalonia_account_ids = %w[
     165484 157753 73204 159843 142727 157568 156073 162909 154411
   ]
 
+  puts "Updating Catalonia accounts..."
+
   Account.where(id: catalonia_account_ids).update_all(state_province: "CT", country: "ES")
 
+  puts "Total Catalonia Accounts Updated: #{catalonia_account_ids.count}"
   #################################################################################################
 
   # extremadura_account_ids = %w[110241]
@@ -80,16 +95,19 @@ task update_spain_location_data: :environment do
 
   # la_rioja_account_ids = %w[125829]
 
-  Account.where(id: la_rioja_account_ids).update_all(state_province: "RI", country: "ES")
+  # Account.where(id: la_rioja_account_ids).update_all(state_province: "RI", country: "ES")
 
   #################################################################################################
 
   region_of_murcia_account_ids = %w[
-    91702 162974 166443 164120 163542 70102 159463 163156
+    91702 162974 166443 164120 163542 70102 159463 163156 61379
   ]
+
+  puts "Updating Murcia accounts..."
 
   Account.where(id: region_of_murcia_account_ids).update_all(state_province: "MC", country: "ES")
 
+  puts "Total Murcia Accounts Updated: #{region_of_murcia_account_ids.count}"
   #################################################################################################
 
   # navarre_account_ids = %w[127396 122503]
