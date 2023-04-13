@@ -19,7 +19,7 @@ module SigninHelper
   end
 
   def sign_out
-    click_link "Logout"
+    visit signout_path
 
     expect(page).to have_content("See you next time!")
   end
@@ -30,5 +30,4 @@ module SigninHelper
 
     expect(page).to have_content("See you next time!")
   end
-
 end
