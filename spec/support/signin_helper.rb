@@ -23,11 +23,4 @@ module SigninHelper
 
     expect(page).to have_content("See you next time!")
   end
-
-  def student_sign_out
-    find('#student-dropdown-wrapper').click
-    click_link "Logout"
-
-    expect(page).to have_content("See you next time!")
-  end
 end
