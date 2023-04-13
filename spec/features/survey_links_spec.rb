@@ -1,9 +1,11 @@
 require "rails_helper"
 
-RSpec.xfeature "Survey links" do
-  %i{student mentor}.each do |scope|
+RSpec.feature "Survey links" do
+  %i[student mentor].each do |scope|
     before do
       SeasonToggles.set_survey_link(scope, "survey", "http")
+
+      allow(ImportantDates).to receive(:new_season_switch).and_return(Date.new(2020, 1, 1))
     end
 
     scenario "a new #{scope} waits 2 days from profile creation" do
@@ -24,12 +26,12 @@ RSpec.xfeature "Survey links" do
       user.account.update_columns(
         seasons: [Season.current.year - 1],
         created_at: 1.year.ago,
-        updated_at: 1.year.ago,
+        updated_at: 1.year.ago
       )
 
       user.update_columns(
         created_at: 1.year.ago,
-        updated_at: 1.year.ago,
+        updated_at: 1.year.ago
       )
 
       sign_in(user) # Signing in registers to the season
@@ -40,7 +42,6 @@ RSpec.xfeature "Survey links" do
         expect(page).to have_css("#survey-modal")
       end
     end
-
 
     scenario "all #{scope}s get reminded in 2 more days" do
       user = FactoryBot.create(scope)
