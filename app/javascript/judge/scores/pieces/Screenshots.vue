@@ -11,7 +11,7 @@
     >
       <img
         class="judge-screenshot-modal object-cover h-full w-full rounded"
-        :src="filestackTransformationUrl(screenshot)"
+        :src="filestackResizeUrl(screenshot.full)"
         :data-modal-url="screenshot.full"
         :data-modal-idx="i"
       />
@@ -21,12 +21,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import {getFilestackResizeUrl} from "../../../utilities/filestack-helpers";
 
 export default {
   computed: mapState(['submission']),
   methods: {
-    filestackTransformationUrl(screenshot) {
-      return (screenshot.full).replace("https://cdn.filestackcontent.com/", "https://cdn.filestackcontent.com/resize=w:300/")
+    filestackResizeUrl(screenshotUrl) {
+      return getFilestackResizeUrl(screenshotUrl, 300)
     }
   }
 }
