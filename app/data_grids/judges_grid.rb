@@ -17,6 +17,8 @@ class JudgesGrid
       .where("judge_profiles.id IS NOT NULL")
   end
 
+  column :id, header: "Participant ID", if: ->(g) { g.admin }
+
   column :mentor, header: "Mentor?", mandatory: true do
     mentor_profile.present? ? "yes" : "no"
   end
