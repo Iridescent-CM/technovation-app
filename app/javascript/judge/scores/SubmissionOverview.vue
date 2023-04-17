@@ -4,7 +4,6 @@
 
     <div class="flex flex-col lg:flex-row gap-x-8 mt-4">
       <div class="w-full lg:w-1/4">
-        <p>overview!</p>
         <img class="h-full object-cover rounded-tr-2xl rounded-bl-2xl"
              :src="filestackResizeUrl"
              alt="Team Photo"
