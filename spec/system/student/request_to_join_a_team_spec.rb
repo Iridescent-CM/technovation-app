@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.xdescribe "Students request to join a team",
+RSpec.describe "Students request to join a team",
   :js,
-  vcr: { match_requests_on: [:method, :host] } do
+  vcr: {match_requests_on: [:method, :host]} do
   include ActionView::RecordIdentifier
 
   before { SeasonToggles.team_building_enabled! }
@@ -13,20 +13,47 @@ RSpec.xdescribe "Students request to join a team",
     expect(page).not_to have_link("Find a team")
   end
 
-  %i{mentor student}.each do |scope|
-    it "#{scope} searches after their request is declined" do
-      user = FactoryBot.create(scope, :onboarded, :geocoded)
-      team = FactoryBot.create(:team, :geocoded)
+  context "when a student views their join request after it has been declined" do
+    let(:student) { FactoryBot.create(:student, :onboarded, :geocoded) }
+    let(:team) { FactoryBot.create(:team, :geocoded) }
 
-      user.join_requests.create!(
+    before do
+      student.join_requests.create!(
         team: team,
         declined_at: Time.current
       )
 
-      sign_in(user)
+      sign_in(student)
 
-      visit send("new_#{scope}_team_search_path")
+      visit new_student_team_search_path
+    end
 
+    it "displays a message that it has been declined" do
+      within(".card-result") do
+        expect(page).to have_content(team.name)
+        expect(page).to have_content(
+          "You asked to join #{team.name}, and they declined."
+        )
+      end
+    end
+  end
+
+  context "when a mentor views their join request after it has been declined" do
+    let(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) }
+    let(:team) { FactoryBot.create(:team, :geocoded) }
+
+    before do
+      mentor.join_requests.create!(
+        team: team,
+        declined_at: Time.current
+      )
+
+      sign_in(mentor)
+
+      visit new_mentor_team_search_path
+    end
+
+    it "displays a message that it has been declined" do
       within(".search-result") do
         expect(page).to have_content(team.name)
         expect(page).to have_content(
@@ -53,7 +80,7 @@ RSpec.xdescribe "Students request to join a team",
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       visit new_student_join_request_path(team_id: team.id)
-      click_button "Ask to join #{team.name}"
+      click_button "Send request"
     end
 
     after do
@@ -70,7 +97,7 @@ RSpec.xdescribe "Students request to join a team",
     end
 
     it "the requesting student can see their pending request" do
-      click_button 'Build your team'
+      click_button "Build your team"
       click_button "Find your team"
       expect(page).to have_content("You have asked to join a team")
       expect(page).to have_content(team.name)
@@ -84,7 +111,7 @@ RSpec.xdescribe "Students request to join a team",
     it "student accepts the request" do
       ActionMailer::Base.deliveries.clear
 
-      student_sign_out
+      sign_out
       student = team.students.sample
 
       visit student_join_request_path(
@@ -121,29 +148,25 @@ RSpec.xdescribe "Students request to join a team",
     end
 
     it "student accepts from team page" do
-      student_sign_out
+      sign_out
       sign_in(team.students.sample)
 
       visit student_team_path(team)
 
       expect {
-        within("#" + dom_id(JoinRequest.last)) do
-          click_link "approve"
-        end
+        click_link "Approve"
         click_button "Yes, do it"
       }.not_to raise_error
     end
 
     it "student declines from team page" do
-      student_sign_out
+      sign_out
       sign_in(team.students.sample)
 
       visit student_team_path(team)
 
       expect {
-        within("#" + dom_id(JoinRequest.last)) do
-          click_link "decline"
-        end
+        click_link "Decline"
         click_button "Yes, do it"
       }.not_to raise_error
     end
@@ -151,7 +174,7 @@ RSpec.xdescribe "Students request to join a team",
     it "mentor accepts the request" do
       ActionMailer::Base.deliveries.clear
 
-      student_sign_out
+      sign_out
       mentor = team.mentors.sample
       visit mentor_join_request_path(
         JoinRequest.last,
@@ -168,29 +191,25 @@ RSpec.xdescribe "Students request to join a team",
     end
 
     it "mentor accepts from team page" do
-      student_sign_out
+      sign_out
       sign_in(team.mentors.sample)
 
       visit mentor_team_path(team)
 
       expect {
-        within("#" + dom_id(JoinRequest.last)) do
-          click_link "approve"
-        end
+        click_link "Approve"
         click_button "Yes, do it"
       }.not_to raise_error
     end
 
     it "mentor declines from team page" do
-      student_sign_out
+      sign_out
       sign_in(team.mentors.sample)
 
       visit mentor_team_path(team)
 
       expect {
-        within("#" + dom_id(JoinRequest.last)) do
-          click_link "decline"
-        end
+        click_link "Decline"
         click_button "Yes, do it"
       }.not_to raise_error
     end
@@ -198,7 +217,7 @@ RSpec.xdescribe "Students request to join a team",
     it "student declines the request" do
       ActionMailer::Base.deliveries.clear
 
-      student_sign_out
+      sign_out
       student = team.students.sample
 
       visit student_join_request_path(
@@ -224,7 +243,7 @@ RSpec.xdescribe "Students request to join a team",
     it "mentor declines the request" do
       ActionMailer::Base.deliveries.clear
 
-      student_sign_out
+      sign_out
       mentor = team.mentors.sample
 
       visit mentor_join_request_path(
