@@ -107,7 +107,7 @@ export default {
   methods: {
     newScoreUrl(submission) {
       if (submission.score_id) {
-        return `/judge/scores/new?score=${submission.score_id}`
+        return `/judge/scores/new?score_id=${submission.score_id}`
       } else if (submission.submission_id) {
         return `/judge/scores/new?team_submission_id=${submission.submission_id}`
       }
