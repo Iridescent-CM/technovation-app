@@ -4,7 +4,10 @@
 
     <div class="flex flex-col lg:flex-row gap-x-8 mt-4">
       <div class="w-full lg:w-1/4">
-        <img class="h-full object-cover rounded-tr-2xl rounded-bl-2xl" :src="team.photo" alt="Team Photo"/>
+        <img class="h-full object-cover rounded-tr-2xl rounded-bl-2xl"
+             :src="filestackResizeUrl"
+             alt="Team Photo"
+        />
       </div>
 
       <div class="mt-6">
@@ -59,6 +62,7 @@ import JudgeRecusalPopup from './JudgeRecusalPopup'
 import Icon from '../../components/Icon'
 import ThickRule from "../components/ThickRule";
 import {getJudgingRubricLink} from "../../utilities/judge-helpers";
+import {getFilestackResizeUrl} from "../../utilities/filestack-helpers";
 
 export default {
   data() {
@@ -87,6 +91,10 @@ export default {
 
     rubricLink () {
       return getJudgingRubricLink(this.team.division)
+    },
+
+    filestackResizeUrl() {
+      return getFilestackResizeUrl(this.team.photo, 300)
     }
   },
   components: {
