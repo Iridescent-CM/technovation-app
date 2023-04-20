@@ -616,6 +616,10 @@ class TeamSubmission < ActiveRecord::Base
     VideoUrl.new(video_link_for(video_type)).root
   end
 
+  def scope_name
+    "submission"
+  end
+
   private
 
   def standardize_url(url)
