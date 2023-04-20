@@ -672,6 +672,10 @@ class Account < ActiveRecord::Base
     !!pre_survey_completed_at
   end
 
+  def incomplete_program_survey?
+    !pre_survey_completed_at
+  end
+
   def took_survey?
     !!survey_completed_at
   end
