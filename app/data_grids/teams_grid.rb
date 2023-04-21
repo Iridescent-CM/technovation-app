@@ -137,6 +137,10 @@ class TeamsGrid
     mentors.length
   end
 
+  column :mentor_ids, header: "Mentor Ids", if: ->(grid) { grid.admin } do
+    mentors.collect { |m| m.account.id }.join(",")
+  end
+
   column :mentor_names do
     mentors.collect(&:name).join(",")
   end
