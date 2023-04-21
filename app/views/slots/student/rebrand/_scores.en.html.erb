@@ -18,7 +18,7 @@
                         disabled: !current_student.took_program_survey? %>
           </div>
         <% else %>
-          <%= render "student/scores/post_survey_requirement" %>
+          <%= render "student/scores/program_survey_requirement" %>
         <% end %>
       <% else %>
         <%= render "student/scores/incomplete_submission" %>

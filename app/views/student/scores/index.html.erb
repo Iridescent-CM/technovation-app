@@ -10,7 +10,7 @@
         <% if SeasonToggles.display_scores_disabled? || current_student.onboarding? %>
           <%= render "explanations/feature_not_available", feature: :scores %>
         <% elsif current_student.incomplete_program_survey? %>
-          <%= render "student/scores/post_survey_requirement" %>
+          <%= render "student/scores/program_survey_requirement" %>
         <% elsif current_team.submission.complete? %>
           <%= render "student/scores/scores_and_certificates" %>
         <% elsif current_student.participated? %>
@@ -24,7 +24,7 @@
         <% if SeasonToggles.display_scores_disabled? || current_student.onboarding? %>
           <%= render "explanations/feature_not_available", feature: :scores %>
         <% elsif current_student.incomplete_program_survey? %>
-          <%= render "student/scores/post_survey_requirement" %>
+          <%= render "student/scores/program_survey_requirement" %>
         <% elsif current_team.submission.complete? || current_student.participated? %>
           <%= render "student/scores/certificates" %>
         <% else %>
