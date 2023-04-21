@@ -47,6 +47,10 @@ class SubmissionsGrid
 
   column :pitch_presentation_url
 
+  column :team_id, header: "Team Id", if: ->(grid) { grid.admin } do
+    team.id
+  end
+
   column :team_name,
     mandatory: true,
     order: "teams.name",
