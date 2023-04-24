@@ -33,5 +33,9 @@ module ChapterAmbassador
     def grid_params
       params[:activities_grid] ||= {}
     end
+
+    def csv_export_supported?(grid)
+      false
+    end
   end
 end
