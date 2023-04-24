@@ -12,6 +12,10 @@
   <% elsif SeasonToggles.semifinals_judging? %>
     <%= render 'judge/dashboards/onboarded/rebrand/quarterfinals_or_semifinals' %>
   <% elsif SeasonToggles.judging_finished? %>
-    <%= render 'judge/dashboards/onboarded/rebrand/judging_finished' %>
+    <% if SeasonToggles.display_scores? %>
+      <%= render 'judge/dashboards/onboarded/rebrand/judging_finished_certs_on' %>
+    <% else %>
+      <%= render 'judge/dashboards/onboarded/rebrand/judging_finished_certs_off' %>
+    <% end %>
   <% end %>
 </div>
