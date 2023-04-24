@@ -24,19 +24,21 @@ class ActivitiesGrid
     end
   end
 
-  column :name, html: true,  mandatory: true do |activity|
+  column :name, mandatory: true do |activity|
     if !!activity.trackable
       resource_name = activity.trackable.is_a?(Account) ?
         "participant" :
         "team"
 
-      link_to(
-        activity.trackable.name,
-        send(
-          "#{current_scope}_#{resource_name}_path",
-          activity.trackable
+      format(activity.trackable.name) do |value|
+        link_to(
+          value,
+          send(
+            "#{current_scope}_#{resource_name}_path",
+            activity.trackable
+          )
         )
-      )
+      end
     else
       "–"
     end
@@ -46,7 +48,7 @@ class ActivitiesGrid
     HumanizedActivity.(key, parameters)
   end
 
-  column :target, html: true, mandatory: true do |activity|
+  column :target, mandatory: true do |activity|
     if !!activity.recipient
       resource_name = activity.recipient_type.underscore.singularize
 
@@ -54,8 +56,10 @@ class ActivitiesGrid
         resource_name = "participant"
       end
 
-      link_to activity.recipient.name,
-        send("#{current_scope}_#{resource_name}_path", activity.recipient)
+      format(activity.recipient.name) do |value|
+        link_to activity.recipient.name,
+          send("#{current_scope}_#{resource_name}_path", activity.recipient)
+      end
     else
       "–"
     end
@@ -87,8 +91,10 @@ class ActivitiesGrid
     end
   end
 
-  column :when, html: true, mandatory: true do |activity|
-    "#{time_ago_in_words(activity.created_at)} ago"
+  column :when, mandatory: true do |activity|
+    format(activity.created_at) do |value|
+      "#{time_ago_in_words(value)} ago"
+    end
   end
 
   filter :trackable_type,
