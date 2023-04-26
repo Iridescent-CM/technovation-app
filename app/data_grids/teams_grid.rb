@@ -33,7 +33,7 @@ class TeamsGrid
     students.length
   end
 
-  column :student_ids, header: "Student Participant Ids", if: ->(grid) { grid.admin } do
+  column :student_ids, header: "Student Participant IDs", if: ->(grid) { grid.admin } do
     students.collect { |s| s.account.id }.join(",")
   end
 
@@ -137,7 +137,7 @@ class TeamsGrid
     mentors.length
   end
 
-  column :mentor_ids, header: "Mentor Participant Ids", if: ->(grid) { grid.admin } do
+  column :mentor_ids, header: "Mentor Participant IDs", if: ->(grid) { grid.admin } do
     mentors.collect { |m| m.account.id }.join(",")
   end
 

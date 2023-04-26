@@ -47,7 +47,7 @@ class SubmissionsGrid
 
   column :pitch_presentation_url
 
-  column :team_id, header: "Team Id", if: ->(grid) { grid.admin } do
+  column :team_id, header: "Team ID", if: ->(grid) { grid.admin } do
     team.id
   end
 
