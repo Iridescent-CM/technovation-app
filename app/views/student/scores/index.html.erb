@@ -1,30 +1,34 @@
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4" id="student-scores">
-  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'My Scores'} do%>
+  <%= render layout: "application/templates/dashboards/side_nav", locals: { heading: "My Scores"} do%>
     <div class="p-6" id="tab-wrapper">
-      <%= render 'student/scores/side_nav_content' %>
+      <%= render "student/scores/side_nav_content" %>
     </div>
   <% end %>
-  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Scores'} do %>
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Scores"} do %>
     <div class="tab">
       <div id="scores-tab-content" class="tab-content tw-active">
-        <% if current_student.onboarded? && SeasonToggles.display_scores? %>
-          <% if current_team.submission.complete? %>
-            <%= render "student/scores/scores_and_certificates" %>
-          <% elsif current_student.participated? %>
-            <%= render "student/scores/participation_certificate" %>
-          <% end %>
+        <% if SeasonToggles.display_scores_disabled? || current_student.onboarding? %>
+          <%= render "explanations/feature_not_available", feature: :scores %>
+        <% elsif current_student.incomplete_program_survey? %>
+          <%= render "student/scores/program_survey_requirement" %>
+        <% elsif current_team.submission.complete? %>
+          <%= render "student/scores/scores_and_certificates" %>
+        <% elsif current_student.participated? %>
+          <%= render "student/scores/participation_certificate" %>
         <% else %>
-          <%= render 'explanations/feature_not_available', feature: :scores %>
+          <%= render "student/scores/incomplete_submission" %>
         <% end %>
       </div>
 
       <div id="certificates-tab-content" class="tab-content">
-        <% if current_student.onboarded? && SeasonToggles.display_scores? %>
-          <% if current_team.submission.complete? || current_student.participated? %>
-            <%= render 'student/scores/certificates' %>
-          <% end %>
+        <% if SeasonToggles.display_scores_disabled? || current_student.onboarding? %>
+          <%= render "explanations/feature_not_available", feature: :scores %>
+        <% elsif current_student.incomplete_program_survey? %>
+          <%= render "student/scores/program_survey_requirement" %>
+        <% elsif current_team.submission.complete? || current_student.participated? %>
+          <%= render "student/scores/certificates" %>
         <% else %>
-          <%= render 'explanations/feature_not_available', feature: :scores %>
+          <%= render "student/scores/incomplete_submission" %>
         <% end %>
       </div>
     </div>

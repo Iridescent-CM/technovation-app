@@ -8,10 +8,13 @@ RSpec.describe "Students view scores", :js do
 
   it "Unfinished / unstarted submission" do
     submission = FactoryBot.create(:submission, :incomplete)
+    student = submission.team.students.sample
+    student.account.took_program_survey!
 
-    sign_in(submission.team.students.sample)
+    sign_in(student)
     visit student_dashboard_path
     click_button "Find your scores & certificates"
+    click_link "Scores"
 
     expect(page).to have_content("Thank you for your participation")
     expect(page).to have_content(
@@ -32,7 +35,7 @@ RSpec.describe "Students view scores", :js do
 
     sign_in(student)
     click_button "Find your scores & certificates"
-    click_link "View your scores and certificate"
+    click_link "Scores"
 
     expect(page).to have_selector("#student-finished-scores-table")
 
@@ -58,12 +61,12 @@ RSpec.describe "Students view scores", :js do
 
     sign_in(student)
     click_button "Find your scores & certificates"
-    click_link "View your scores and certificate"
+    click_link "Scores"
 
     expect(page).to have_selector("#student-finished-scores-table")
 
     expect(page).to have_content("Scores Explained")
-    end
+  end
 
   it "view QF scores page if program survey is not completed" do
     submission = FactoryBot.create(

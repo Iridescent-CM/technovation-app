@@ -20,11 +20,7 @@ module Student
         @certificates = current_account.certificates.current
       end
 
-      if SeasonToggles.display_scores? && current_student.can_view_scores?
-        render template: "student/scores/index"
-      else
-        redirect_to student_dashboard_path
-      end
+      render template: "student/scores/index"
     end
 
     def show

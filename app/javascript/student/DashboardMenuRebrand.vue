@@ -62,15 +62,22 @@
 
     <li><hr class="todo-menu-hr"></li>
 
-    <tab-link
-      :class="scoresTabLinkClasses"
-      :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
-      :disabled-tooltip="tooltips.SCORES_AND_CERTIFICATES_AVAILABLE_LATER"
-      :condition-to-enable="scoresAndCertificatesEnabled"
-      :condition-to-complete="false"
-    >
-      <span class="btn-text-space">Find your scores & certificates</span>
-    </tab-link>
+    <li>
+      <div class="w-full text-left">
+        <button class="flex">
+            <icon
+              name="circle-o"
+              size="16"
+              color="000000"
+              class="mt-1.5"
+            />
+
+            <a href="scores/">
+              <span class="btn-text-space">Find your scores & certificates</span>
+            </a>
+        </button>
+      </div>
+    </li>
   </ul>
 </template>
 
@@ -78,6 +85,8 @@
 import { createNamespacedHelpers } from 'vuex'
 import menuMixin from 'mixins/menu'
 import tooltipsMixin from 'mixins/tooltips'
+
+import Icon from 'components/Icon'
 
 const { mapGetters } = createNamespacedHelpers('authenticated')
 
@@ -98,6 +107,7 @@ export default {
     TabLink,
     RegistrationMenu,
     TeamMenu,
+    Icon
   },
 
   computed: {

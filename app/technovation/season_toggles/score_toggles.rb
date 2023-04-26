@@ -31,6 +31,8 @@ class SeasonToggles
       def scores_disabled?
         not display_scores?
       end
+
+      alias :display_scores_disabled? :scores_disabled?
     end
   end
 end
