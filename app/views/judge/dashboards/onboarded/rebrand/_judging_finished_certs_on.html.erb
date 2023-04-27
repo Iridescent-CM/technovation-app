@@ -1,33 +1,31 @@
-<% if SeasonToggles.display_scores? %>
-  <div>
-    <div class="absolute -top-2 -right-6">
-      <span class="block mb-2 px-2 py-1 text-right text-sm font-bold tw-flag-magenta">Season close</span>
-    </div>
-
-    <h1 class="font-bold">Thank You!</h1>
-
-    <p class="mt-4">Thank you for participating in this season of Technovation Girls. We appreciate
-      your feedback and the time you spent supporting teams from around the world!
-    </p>
-
-    <p class="mt-4">
-      Did you enjoy the submissions you reviewed? Were you impressed by the work the
-      girls accomplished? We’d love to stay connected with you! We have a couple of
-      ways for you to remain involved:
-    </p>
-
-    <ul class="list-disc list-inside mt-4">
-      <li class="pl-4">
-        <%= link_to "Sign up for our newsletter", ENV.fetch("GENERAL_NEWSLETTER_URL"),
-                    class: "tw-link",
-                    target: "_blank" %>
-        to learn more about the girls you helped this season
-      </li>
-      <li class="pl-4"><a class="tw-link" href="https://technovationchallenge.org/get-started/" target="_blank">Consider mentoring</a> a team in the 2023-2024 season. Registration will open in October.</li>
-    </ul>
-
-    <p class="mt-4">
-      We hope to see you soon!
-    </p>
+<div>
+  <div class="absolute -top-2 -right-6">
+    <span class="block mb-2 px-2 py-1 text-right text-sm font-bold tw-flag-magenta">Season close</span>
   </div>
-<% end %>
+
+  <h1 class="font-bold">Thank You!</h1>
+
+  <p class="mt-4">Thank you for participating in this season of Technovation Girls. We appreciate
+    your feedback and the time you spent supporting teams from around the world!
+  </p>
+
+  <p class="mt-4">
+    Did you enjoy the submissions you reviewed? Were you impressed by the work the
+    girls accomplished? We’d love to stay connected with you! We have a couple of
+    ways for you to remain involved:
+  </p>
+
+  <ul class="list-disc list-inside mt-4">
+    <li class="pl-4">
+      <%= link_to "Sign up for our newsletter", ENV.fetch("GENERAL_NEWSLETTER_URL"),
+                  class: "tw-link",
+                  target: "_blank" %>
+      to learn more about the girls you helped this season
+    </li>
+    <li class="pl-4"><a class="tw-link" href="https://technovationchallenge.org/get-started/" target="_blank">Consider mentoring</a> a team in the 2023-2024 season. Registration will open in October.</li>
+  </ul>
+
+  <p class="mt-4">
+    We hope to see you soon!
+  </p>
+</div>
