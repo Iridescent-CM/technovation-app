@@ -15,6 +15,7 @@ module Student
       end
 
       @certificates = Certificate.none
+      @previous_certificates = current_account.certificates.past
 
       if SeasonToggles.display_scores?
         @certificates = current_account.certificates.current
