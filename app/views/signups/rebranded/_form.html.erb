@@ -4,7 +4,7 @@
   admin ||= false
 %>
 
-<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6">
+<div class="container mx-auto w-full lg:w-1/2">
   <div class="tab-content tw-active">
     <%= simple_form_for(signup, url: url) do |f| %>
       <%= render 'errors', record: signup %>
