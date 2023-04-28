@@ -16,4 +16,19 @@ namespace :jobs do
       end
     end
   end
+
+  desc "Force fail job by id"
+  task :force_fail_job_by_id, [:id, :dry_run] => :environment do |t, args|
+
+    id = args[:id]
+    dry_run = args[:dry_run] != "run"
+    puts "DRY RUN: #{dry_run ? "on" : "off"}"
+
+    job = Job.find(id)
+    puts "Updating job #{job.id} - job_id: #{job.job_id} - created_at: #{job.created_at.strftime("%B %d, %Y")}"
+    if !dry_run
+      job.update_column(:status, "failed")
+      puts "Job #{job.id} updated - Status: #{job.status}"
+    end
+  end
 end
