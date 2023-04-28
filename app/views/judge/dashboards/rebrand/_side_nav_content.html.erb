@@ -45,16 +45,18 @@
   </div>
 </div>
 
-<% if current_judge.onboarded? && SeasonToggles.judging_enabled? %>
+<% if current_judge.onboarded?%>
+  <% if SeasonToggles.judging_enabled? %>
+    <%= render 'application/templates/tw_thick_rule' %>
+
+    <div class="tw-tab-content">
+      <a id="judge-submissions-tab" href="#judge-submissions-tab-content" data-heading="Online Judging">Judge Submissions</a>
+    </div>
+  <%end %>
+
   <%= render 'application/templates/tw_thick_rule' %>
 
   <div class="tw-tab-content">
-    <a id="judge-submissions-tab" href="#judge-submissions-tab-content" data-heading="Online Judging">Judge Submissions</a>
-  </div>
-
-  <%= render 'application/templates/tw_thick_rule' %>
-
-  <div class="tw-tab-content">
-    <a id="scores-tab" href="#scores-tab-content" data-heading="Scores & Certificates">Find your scores & certificates</a>
+    <a id="scores-tab" href="#scores-tab-content" data-heading="Your Judge Certificate">Your judge certificate</a>
   </div>
 <% end %>
