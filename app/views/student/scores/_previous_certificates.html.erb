@@ -1,0 +1,39 @@
+<% if @previous_certificates.present? %>
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+          Season
+        </th>
+        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+          Team
+        </th>
+        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+          Certificate
+        </th>
+      </tr>
+    </thead>
+
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <% @previous_certificates.each do |certificate| %>
+        <tr>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <%= certificate.season %>
+          </td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <%= certificate.team.name %>
+          </td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <%= link_to "Download your certificate",
+                certificate.file_url,
+                target: "_blank",
+                class: "tw-green-btn"
+            %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>If you participated in past seasons, this is where you can view and download your certificates.</p>
+<% end %>
