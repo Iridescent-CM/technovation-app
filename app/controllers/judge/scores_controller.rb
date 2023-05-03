@@ -202,8 +202,6 @@ module Judge
         :overall_2,
         :overall_comment,
         :overall_comment_word_count,
-        :clicked_pitch_video,
-        :clicked_demo_video,
         :downloaded_source_code,
         :downloaded_business_plan,
         :judge_recusal_reason,

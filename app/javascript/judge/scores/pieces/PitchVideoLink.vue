@@ -5,7 +5,6 @@
         :href="`${submission.pitch_video_url}`"
         :data-opens-modal="`video-modal-${submission.pitch_video_id}`"
         :data-modal-fetch="submission.pitch_video_url"
-        @click="trackPitchVideoClick"
         class="text-energetic-blue flex text-3xl"
       >
         <Icon name="play-circle-o" color="0075cf"/>
@@ -30,13 +29,6 @@ import Icon from '../../../components/Icon'
 
 export default {
   computed: mapState(['score', 'submission']),
-
-  methods: {
-    async trackPitchVideoClick (event) {
-      event.preventDefault()
-      await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_pitch_video': true}})
-    },
-  },
 
   components: {
     Icon
