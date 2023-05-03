@@ -131,6 +131,10 @@ class ScoresGrid
     updated_at.strftime("%Y-%m-%d %H:%M")
   end
 
+  column :approved_at do
+    approved? ? approved_at.strftime("%Y-%m-%d %H:%M") : "-"
+  end
+
   column :view, html: true do |submission_score|
     link_to(
       web_icon("list-ul", size: 16, remote: true),
