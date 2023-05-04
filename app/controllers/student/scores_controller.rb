@@ -14,11 +14,11 @@ module Student
         end
       end
 
-      @certificates = Certificate.none
+      @certificate = Certificate.none
       @previous_certificates = current_account.certificates.past
 
       if SeasonToggles.display_scores?
-        @certificates = current_account.certificates.current
+        @certificate = current_account.certificates.highest_awarded_student_cert_for_current_season
       end
 
       render template: "student/scores/index"
