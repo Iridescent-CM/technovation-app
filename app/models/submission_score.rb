@@ -161,6 +161,14 @@ class SubmissionScore < ActiveRecord::Base
     if score.current_season? && score.incomplete? && score.judge_recusal?
       "recusal_scores_count"
     end
+  },
+  column_names: {
+    [
+      "? = ANY (submission_scores.seasons) AND " +
+        "submission_scores.completed_at IS NULL AND " +
+        "submission_scores.judge_recusal = TRUE",
+      Season.current.year.to_s
+    ] => "recusal_scores_count"
   }
 
   scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
