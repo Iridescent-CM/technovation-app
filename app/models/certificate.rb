@@ -24,10 +24,6 @@ class Certificate < ApplicationRecord
     where(team: team)
   }
 
-  def self.highest_awarded_student_cert_for_current_season
-    current.student_certs_ordered_by_highest_awarded.first
-  end
-
   def self.highest_awarded_student_certs_for_previous_seasons
     past
       .student_certs_ordered_by_highest_awarded

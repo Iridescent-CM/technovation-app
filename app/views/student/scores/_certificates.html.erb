@@ -23,9 +23,11 @@
   <%= image_tag "certificates-congrats.svg", width: 500, class: 'mx-auto my-8' %>
 
   <div class="certificates-btn-wrapper">
-      <%= link_to "Open your #{@certificate.cert_type == 'completion' ? 'quarterfinalist' : @certificate.cert_type} certificate",
-                  @certificate.file_url,
+    <% @certificates.each do |certificate| %>
+      <%= link_to "Open your #{certificate.cert_type == 'completion' ? 'quarterfinalist' : certificate.cert_type} certificate",
+                  certificate.file_url,
                   target: "_blank",
                   class: "tw-green-btn" %>
+    <% end %>
   </div>
 </div>
