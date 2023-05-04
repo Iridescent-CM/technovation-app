@@ -5,7 +5,6 @@
         :href="`${submission.demo_video_url}`"
         :data-opens-modal="`video-modal-${submission.demo_video_id}`"
         :data-modal-fetch="submission.demo_video_url"
-        @click="trackDemoVideoClick"
         class="text-energetic-blue flex text-3xl"
       >
         <icon name="play-circle-o" color="0075cf"/>
@@ -31,13 +30,6 @@ import { i18n } from '../../../utilities/i18n.js'
 
 export default {
   computed: mapState(['score', 'submission']),
-
-  methods: {
-    async trackDemoVideoClick (event) {
-      event.preventDefault()
-      await window.axios.patch(`/judge/scores/${this.score.id}`, {submission_score: {'clicked_demo_video': true}})
-    },
-  },
 
   components: {
     Icon
