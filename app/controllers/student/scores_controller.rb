@@ -15,7 +15,7 @@ module Student
       end
 
       @certificate = Certificate.none
-      @previous_certificates = current_account.certificates.past
+      @previous_certificates = current_account.certificates.highest_awarded_student_certs_for_previous_seasons
 
       if SeasonToggles.display_scores?
         @certificate = current_account.certificates.highest_awarded_student_cert_for_current_season
