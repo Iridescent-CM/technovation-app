@@ -9,6 +9,9 @@
           Team
         </th>
         <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+          Certificate Type
+        </th>
+        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
           Certificate
         </th>
       </tr>
@@ -22,6 +25,9 @@
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <%= certificate.team.name %>
+          </td>
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <%= certificate.cert_type.capitalize %>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <%= link_to "Download your certificate",

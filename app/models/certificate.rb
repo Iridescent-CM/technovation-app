@@ -24,6 +24,27 @@ class Certificate < ApplicationRecord
     where(team: team)
   }
 
+  def self.highest_awarded_student_certs_for_previous_seasons
+    past
+      .student_certs_ordered_by_highest_awarded
+      .group_by { |cert| cert.season }
+      .map { |_, certs| certs.first }
+  end
+
+  def self.student_certs_ordered_by_highest_awarded
+    all.sort do |cert_a, cert_b|
+      if cert_a.cert_type == "semifinalist" && (cert_b.cert_type == "quarterfinalist" || cert_b.cert_type == "participation") ||
+          cert_a.cert_type == "quarterfinalist" && cert_b.cert_type == "participation"
+        -1
+      elsif cert_a.cert_type == "participation" && (cert_b.cert_type == "quarterfinalist" || cert_b.cert_type == "semifinalist") ||
+          cert_a.cert_type == "quarterfinalist" && cert_b.cert_type == "semifinalist"
+        1
+      else
+        0
+      end
+    end
+  end
+
   def description
     title = cert_type.humanize.titleize
 
