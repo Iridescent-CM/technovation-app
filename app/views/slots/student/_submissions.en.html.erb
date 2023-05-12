@@ -21,11 +21,11 @@
         </div>
       </div>
     <% else %>
-      <div class="flex flex-col lg:flex-row gap-8">
-        <div class="w-full lg:w-1/2">
+      <div class="flex flex-col">
+        <div class="w-full">
           <%= render partial: feature.partial_path, locals: feature.partial_locals %>
         </div>
-        <div class="w-full lg:w-1/2 flex justify-center items-center">
+        <div class="flex justify-center items-center pt-8">
           <%= render "student/dashboards/view_submission_link",
                      current_team: current_team,
                      current_student: current_student %>
