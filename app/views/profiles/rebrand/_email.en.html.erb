@@ -1,0 +1,30 @@
+<div class="container mx-auto flex flex-col w-full lg:w-1/2">
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Change your email'} do %>
+    <%= render 'errors', record: current_profile %>
+
+    <p class="text-sm italic mb-4">
+      If you change your email address, we will send a message
+      to your inbox to confirm that you own the address.
+    </p>
+
+    <p class="text-sm italic mb-4">
+      You <span class="font-semibold">must</span> use the link in that message
+      to confirm your new email address and restore full access to this site.
+    </p>
+
+    <%= simple_form_for current_profile, url: send("#{current_scope}_profile_path", local: true) do |f| %>
+      <%= f.simple_fields_for :account, include_id: false do |a| %>
+        <%= a.input :existing_password,
+                    label: "Current password",
+                    id: "existing_password_field_email",
+                    placeholder: "Enter your password first" %>
+
+        <%= a.input :email %>
+      <% end %>
+
+      <p>
+        <%= f.submit "Change email", class: "tw-green-btn mx-auto" %>
+      </p>
+    <% end %>
+  <% end %>
+</div>
