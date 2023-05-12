@@ -1,2 +1,6 @@
 <% provide :title, "Change your email" %>
-<%= render 'profiles/email', standalone: true %>
+<% if profile.rebranded? %>
+  <%= render 'profiles/rebrand/email'%>
+<% else %>
+  <%= render 'profiles/email', standalone: true %>
+<% end %>
