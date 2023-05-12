@@ -1,0 +1,28 @@
+<% unless profile.email_confirmed? %>
+  <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-2/3">
+    <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Confirm your email'} do %>
+      <h1 class="text-xl text-center">Check your email inbox!</h1>
+
+      <div class="mt-4">
+        <p>You changed your email address and now you need to confirm it.</p>
+        <p>We sent a link to <span class="font-semibold"><%= current_account.email %></span> for you to confirm that it's yours.</p>
+        <p>Please look for it in your email inbox.</p>
+      </div>
+
+      <div class="mt-8">
+        <p class="font-semibold">Is there a problem receiving the email?</p>
+        <p>Try these steps:</p>
+        <ul class="list-disc">
+          <li class="ml-8">
+            <%= link_to "Edit the email address",
+                        public_send("#{current_scope}_profile_path", anchor: "!change-email"), class: "tw-link" %>
+            that you entered
+          </li>
+          <li class="ml-8">Check your spam folder</li>
+          <li class="ml-8">Add <span class="bg-gray-200">mailer@technovationchallenge.org</span> to your email contacts</li>
+          <li class="ml-8">Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need more help!</li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+<% end %>
