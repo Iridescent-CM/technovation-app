@@ -135,4 +135,39 @@ RSpec.feature "Student certificates" do
       expect(page).not_to have_link("View your scores and certificate")
     end
   end
+
+  context "when the student has received two certificates" do
+    let(:student) { FactoryBot.create(:student, :virtual, :on_team, :semifinalist) }
+
+    before {
+      FactoryBot.create(:certificate,
+        account: student.account,
+        team: student.team,
+        cert_type: :quarterfinalist)
+
+      FactoryBot.create(:certificate,
+        account: student.account,
+        team: student.team,
+        cert_type: :semifinalist)
+    }
+
+    scenario "the highest certificate is displayed" do
+      expect(student.certificates.current.quarterfinalist.count).to eq(1)
+      expect(student.certificates.current.semifinalist.count).to eq(1)
+
+      student.account.took_program_survey!
+      sign_in(student)
+
+      expect(page).to have_content("Congratulations, your team was a semifinalist!")
+
+      click_link("View your scores and certificate")
+      expect(page).to have_content("Congratulations, your team was a semifinalist!")
+
+      click_link("Certificates")
+
+      expect(page).to have_link(
+        "Open your semifinalist certificate"
+      )
+    end
+  end
 end
