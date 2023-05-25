@@ -37,10 +37,10 @@
                     v-for="score in scores"
                     :key="score.id">
 
-                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {{ score.submission_name }}
                     </td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td class="px-3 py-4 text-sm text-gray-500">
                       {{ score.team_name }}
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
