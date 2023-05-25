@@ -7,6 +7,11 @@ class AdminProfile < ActiveRecord::Base
 
   has_many :exports, as: :owner, dependent: :destroy
 
+  enum admin_type: %w{
+    admin
+    super_admin
+  }
+
   def authenticated?
     true
   end

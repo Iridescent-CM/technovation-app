@@ -191,7 +191,8 @@ CREATE TABLE public.admin_profiles (
     id integer NOT NULL,
     account_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    admin_type integer DEFAULT 0 NOT NULL
 );
 
 
@@ -3178,6 +3179,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230104212325'),
 ('20230112172357'),
 ('20230118232040'),
-('20230119163655');
+('20230119163655'),
+('20230525160029');
 
 
