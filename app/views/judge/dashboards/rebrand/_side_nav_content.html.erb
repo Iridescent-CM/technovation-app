@@ -1,6 +1,6 @@
 <div class="tw-tab-content">
   <a id="dashboard-tab" href="#dashboard-tab-content" data-heading="Judge Dashboard">Dashboard</a>
-  <div>
+  <div class="whitespace-nowrap">
     <% if current_judge.consent_signed? %>
       <%= web_icon(
             "check-circle",
@@ -19,7 +19,7 @@
     <% end %>
   </div>
 
-  <div>
+  <div class="whitespace-nowrap">
     <% if current_judge.training_completed? %>
       <%= web_icon(
             "check-circle",
@@ -49,14 +49,14 @@
   <% if SeasonToggles.judging_enabled? %>
     <%= render 'application/templates/tw_thick_rule' %>
 
-    <div class="tw-tab-content">
+    <div class="tw-tab-content whitespace-nowrap">
       <a id="judge-submissions-tab" href="#judge-submissions-tab-content" data-heading="Online Judging">Judge Submissions</a>
     </div>
   <%end %>
 
   <%= render 'application/templates/tw_thick_rule' %>
 
-  <div class="tw-tab-content">
+  <div class="tw-tab-content whitespace-nowrap">
     <a id="scores-tab" href="#scores-tab-content" data-heading="Your Judge Certificate">Your judge certificate</a>
   </div>
 <% end %>
