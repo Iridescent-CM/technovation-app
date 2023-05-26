@@ -41,10 +41,10 @@
                   <tr
                     v-for="submission in notStartedSubmissions"
                     :key="submission.id">
-                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                       {{ submission.app_name }}
                     </td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td class="px-3 py-4 text-sm text-gray-500">
                       {{ submission.team_name }}
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
