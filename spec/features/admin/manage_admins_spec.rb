@@ -10,7 +10,7 @@ RSpec.feature "Manage admin accounts" do
   scenario "super admins can invite a new admin to signup via email" do
     ActionMailer::Base.deliveries.clear
 
-    sign_in(:admin, admin_type: :super_admin)
+    sign_in(:admin, :super_admin)
 
     click_link "Admins"
     click_link "Setup a new admin"
