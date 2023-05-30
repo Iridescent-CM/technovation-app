@@ -22,7 +22,7 @@
         <td><%= admin.email %></td>
         <td><%= safe_time_ago_in_words(admin.last_logged_in_at, 'ago') %></td>
         <td><%= admin.admin_status.humanize %></td>
-        <td><%= admin.admin_profile.admin_type.titleize %></td>
+        <td><%= admin.admin_profile.super_admin? ? "Super Admin" : "Admin"%></td>
         <% unless Account.full_admin.one? %>
           <td>
             <%= link_to 'delete',
