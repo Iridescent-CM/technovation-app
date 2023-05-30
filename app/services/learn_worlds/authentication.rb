@@ -9,7 +9,7 @@ module LearnWorlds
     )
 
       @client = http_client.new(
-        url: "https://api-lw9.learnworlds.com",
+        url: ENV.fetch("LEARNWORLDS_API_BASE_URL"),
         headers: {
           "Lw-Client" => client_id
         }
@@ -40,9 +40,10 @@ module LearnWorlds
 
     def get_access_token
       response = client.post(
-        "/oauth2/access_token",
+        "oauth2/access_token",
         {client_id: client_id, client_secret: client_secret, grant_type: "client_credentials"}
       )
+
       response_body = JSON.parse(response.body, symbolize_names: true)
 
       if response_body[:success] == true
