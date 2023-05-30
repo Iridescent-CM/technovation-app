@@ -8,5 +8,9 @@ FactoryBot.define do
       skip_existing_password { true }
       password { SecureRandom.hex(10) }
     end
+
+    trait :super_admin do
+      super_admin { true }
+    end
   end
 end
