@@ -1,7 +1,7 @@
 module LearnWorlds
   class ApiClient
     def initialize(
-      client_id: ENV.fetch("LEARNWORLDS_CLIENT_ID"),
+      client_id: ENV.fetch("LEARNWORLDS_API_CLIENT_ID"),
       authentication_service: LearnWorlds::Authentication.new,
       http_client: Faraday,
       logger: Rails.logger,

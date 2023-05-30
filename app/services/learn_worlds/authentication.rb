@@ -1,8 +1,8 @@
 module LearnWorlds
   class Authentication
     def initialize(
-      client_id: ENV.fetch("LEARNWORLDS_CLIENT_ID"),
-      client_secret: ENV.fetch("LEARNWORLDS_CLIENT_SECRET"),
+      client_id: ENV.fetch("LEARNWORLDS_API_CLIENT_ID"),
+      client_secret: ENV.fetch("LEARNWORLDS_API_CLIENT_SECRET"),
       http_client: Faraday,
       logger: Rails.logger,
       error_notifier: Airbrake
