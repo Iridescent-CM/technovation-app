@@ -1,7 +1,7 @@
 module LearnWorlds
   class ApiClient
     def initialize(
-      client_id: ENV.fetch("LEARNWORLDS_CLIENT_ID"),
+      client_id: ENV.fetch("LEARNWORLDS_API_CLIENT_ID"),
       authentication_service: LearnWorlds::Authentication.new,
       http_client: Faraday,
       logger: Rails.logger,
@@ -9,7 +9,7 @@ module LearnWorlds
     )
 
       @client = http_client.new(
-        url: "https://api-lw9.learnworlds.com",
+        url: ENV.fetch("LEARNWORLDS_API_BASE_URL"),
         headers: {
           "Lw-Client" => client_id,
           "Authorization" => "Bearer #{authentication_service.access_token}"
@@ -21,25 +21,30 @@ module LearnWorlds
     end
 
     def sso(account:)
-      response = client.post("/sso", request_body_for(account))
+      response = client.post("sso", request_body_for(account))
       response_body = JSON.parse(response.body, symbolize_names: true)
 
       if response_body[:success] == true
         if account.learn_worlds_user_id.blank?
-          account.update_attribute(:learn_worlds_user_id, response_body[:user_id])
+          learn_worlds_user_id = response_body[:user_id]
 
-          enroll_response = client.post("/user-product", {user: response_body[:user_id], product: "beginners", type: "course", justification: "Auto-enrollment"})
+          account.update_attribute(:learn_worlds_user_id, learn_worlds_user_id)
+
+          enroll_response = client.post(
+            "v2/users/#{learn_worlds_user_id}/enrollment",
+            {productId: "beginners", productType: "course", justification: "Auto-enrollment", price: 0.00}.to_json,
+            "Content-Type" => "application/json"
+          )
+
           enroll_response_body = JSON.parse(enroll_response.body, symbolize_names: true)
 
           if enroll_response_body[:success] == true
             Result.new(success?: true, redirect_url: response_body[:url])
           else
-            enroll_response_body [:errors].each do |error|
-              error = "[LEARNWORLDS] Error performing auto-enrollment for account #{account.id} - #{error}"
+            error = "[LEARNWORLDS] Error performing auto-enrollment for account #{account.id} - #{enroll_response_body[:error]}"
 
-              logger.error(error)
-              error_notifier.notify(error)
-            end
+            logger.error(error)
+            error_notifier.notify(error)
 
             Result.new(success?: false)
           end
