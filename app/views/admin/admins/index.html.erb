@@ -1,6 +1,8 @@
 <% provide :title, "Manage Admin Staff" %>
 
-<p><%= link_to "Setup a new admin", new_admin_admin_path, class: "button" %></p>
+<% if current_admin.super_admin? %>
+  <p><%= link_to "Setup a new admin", new_admin_admin_path, class: "button" %></p>
+<% end %>
 
 <table class="datagrid">
   <thead>
@@ -8,7 +10,8 @@
       <th>Name</th>
       <th>Email</th>
       <th>Last logged in</th>
-      <th colspan="2">Status</th>
+      <th>Status</th>
+      <th colspan="2">Permissions</th>
     </tr>
   </thead>
 
@@ -19,6 +22,7 @@
         <td><%= admin.email %></td>
         <td><%= safe_time_ago_in_words(admin.last_logged_in_at, 'ago') %></td>
         <td><%= admin.admin_status.humanize %></td>
+        <td><%= admin.admin_profile.super_admin? ? "Super Admin" : "Admin"%></td>
         <% unless Account.full_admin.one? %>
           <td>
             <%= link_to 'delete',

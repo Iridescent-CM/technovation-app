@@ -1,10 +1,16 @@
 require "rails_helper"
 
 RSpec.feature "Manage admin accounts" do
-  scenario "invite a new admin to signup via email" do
+  scenario "admins are unable to invite a new admin" do
+    sign_in(:admin)
+    click_link "Admins"
+    expect(page).to_not have_link("Setup a new admin")
+  end
+
+  scenario "super admins can invite a new admin to signup via email" do
     ActionMailer::Base.deliveries.clear
 
-    sign_in(:admin)
+    sign_in(:admin, :super_admin)
 
     click_link "Admins"
     click_link "Setup a new admin"
