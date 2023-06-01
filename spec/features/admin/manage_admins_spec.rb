@@ -7,6 +7,12 @@ RSpec.feature "Manage admin accounts" do
     expect(page).to_not have_link("Setup a new admin")
   end
 
+  scenario "admins are unable to delete an admin" do
+    sign_in(:admin)
+    click_link "Admins"
+    expect(page).to_not have_link("delete")
+  end
+
   scenario "super admins can invite a new admin to signup via email" do
     ActionMailer::Base.deliveries.clear
 
@@ -48,5 +54,25 @@ RSpec.feature "Manage admin accounts" do
     click_button "Sign in"
 
     expect(current_path).to eq(admin_dashboard_path)
+  end
+
+  scenario "Delete button is not available if there is only 1 admin" do
+    sign_in(:admin, :super_admin)
+    click_link "Admins"
+    expect(page).to_not have_link("delete")
+  end
+
+  scenario "Only super admins can delete admins" do
+    admin = FactoryBot.create(:admin)
+    super_admin = FactoryBot.create(:admin, :super_admin)
+
+    sign_in(super_admin)
+    click_link "Admins"
+
+    expect(page).to have_link("delete")
+    click_link "delete", href: "/admin/admins/#{admin.id}"
+
+    expect(page).to have_content("You deleted #{admin.name}")
+    expect(page).to_not have_link("delete")
   end
 end
