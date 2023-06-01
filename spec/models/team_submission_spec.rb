@@ -537,6 +537,16 @@ RSpec.describe TeamSubmission do
     end
   end
 
+  describe "#unpublish!" do
+    let(:team_submission) { FactoryBot.create(:submission, :complete) }
+
+    it "unpublishes a submission by resetting the `published_at` field" do
+      team_submission.unpublish!
+
+      expect(team_submission.published_at).to be_blank
+    end
+  end
+
   describe "#missing_pieces" do
     let(:team_submission) { TeamSubmission.new }
 

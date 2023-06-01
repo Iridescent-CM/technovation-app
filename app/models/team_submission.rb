@@ -54,7 +54,7 @@ class TeamSubmission < ActiveRecord::Base
 
   before_validation -> {
     return if thunkable_project_url.blank?
-    
+
     self.thunkable_project_url = standardize_url(self.thunkable_project_url)
     self.demo_video_link = standardize_url(self.demo_video_link)
     self.pitch_video_link = standardize_url(self.pitch_video_link)
@@ -489,6 +489,10 @@ class TeamSubmission < ActiveRecord::Base
     team.members.each do |member|
       TeamMailer.submission_published(team, member, self).deliver_later
     end
+  end
+
+  def unpublish!
+    update(published_at: nil)
   end
 
   def awaiting_publish(scope = :student, &block)
