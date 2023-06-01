@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Manage admin accounts", js: true do
+RSpec.feature "Manage admin accounts" do
   scenario "admins are unable to invite a new admin" do
     sign_in(:admin)
     click_link "Admins"
@@ -70,9 +70,7 @@ RSpec.feature "Manage admin accounts", js: true do
     click_link "Admins"
 
     expect(page).to have_link("delete")
-    click_link "delete", href: "/admin/admins/#{admin.id}"
-
-    click_button "Yes, do it"
+    click_link "delete", href: "#{admin_admin_path(admin)}"
 
     expect(page).to have_content("You deleted #{admin.name}")
     expect(page).to_not have_link("delete")
