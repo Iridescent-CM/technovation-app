@@ -1,8 +1,9 @@
 module Admin
   class AdminsController < AdminController
+    include AdminHelper
+
     before_action :get_admins, only: [:index, :destroy]
     before_action :require_super_admin, only: [:new, :create]
-
 
     TECHNOVATION_ESTABLISHED_DATE = Date.new(2009, 1, 1)
 
@@ -31,6 +32,7 @@ module Admin
     end
 
     private
+
     def admin_account_params
       params.require(:account)
         .permit(:first_name, :last_name, :email)
@@ -43,12 +45,6 @@ module Admin
 
     def get_admins
       @admins = Account.joins(:admin_profile)
-    end
-
-    def require_super_admin
-      unless current_admin.super_admin?
-        redirect_to root_path, alert: "Only super admins are allowed to access that page"
-      end
     end
   end
 end
