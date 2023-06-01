@@ -56,7 +56,7 @@ RSpec.feature "Manage admin accounts" do
     expect(current_path).to eq(admin_dashboard_path)
   end
 
-  scenario "Delete button is not available if there is only 1 admin" do
+  scenario "Delete button is not available if there is only 1 admin with full_admin status" do
     sign_in(:admin, :super_admin)
     click_link "Admins"
     expect(page).to_not have_link("delete")
