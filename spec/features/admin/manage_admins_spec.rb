@@ -63,16 +63,19 @@ RSpec.feature "Manage admin accounts" do
   end
 
   scenario "Only super admins can delete admins" do
+    Capybara.current_driver = :selenium
+
     admin = FactoryBot.create(:admin)
     super_admin = FactoryBot.create(:admin, :super_admin)
 
     sign_in(super_admin)
     click_link "Admins"
+    page.save_screenshot("tmp/screenshots/test0.png")
 
     expect(page).to have_link("delete")
-    page.save_and_open_page
+    page.save_screenshot("tmp/screenshots/test1.png")
     click_link "delete", href: "/admin/admins/#{admin.id}"
-    page.save_and_open_page
+    page.save_screenshot("tmp/screenshots/test2.png")
 
     expect(page).to have_content("You deleted #{admin.name}")
     expect(page).to_not have_link("delete")
