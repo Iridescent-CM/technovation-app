@@ -1,7 +1,7 @@
 module Admin
   class AdminsController < AdminController
     before_action :get_admins, only: [:index, :destroy]
-    before_action :require_super_admin, only: [:new, :create]
+    before_action :require_super_admin, only: [:new, :create, :destroy]
 
 
     TECHNOVATION_ESTABLISHED_DATE = Date.new(2009, 1, 1)
