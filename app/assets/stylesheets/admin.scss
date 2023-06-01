@@ -96,6 +96,11 @@ nav {
   }
 }
 
+.edit-team-submission-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
 #admin-scores-app {
   overflow-y: scroll;
   max-height: 500px;

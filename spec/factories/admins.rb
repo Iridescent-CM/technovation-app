@@ -12,5 +12,9 @@ FactoryBot.define do
     trait :super_admin do
       super_admin { true }
     end
+
+    factory :super_admin do
+      super_admin { true }
+    end
   end
 end
