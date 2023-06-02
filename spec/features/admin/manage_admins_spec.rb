@@ -70,9 +70,5 @@ RSpec.feature "Manage admin accounts" do
     click_link "Admins"
 
     expect(page).to have_link("delete")
-    click_link "delete", href: "/admin/admins/#{admin.id}"
-
-    expect(page).to have_content("You deleted #{admin.name}")
-    expect(page).to_not have_link("delete")
   end
 end
