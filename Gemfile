@@ -3,7 +3,7 @@ ruby "3.1.2"
 
 gem "rails", "~> 6.1.0"
 
-gem "puma", "~> 3.12.6"
+gem "puma", "~> 4.3.12"
 gem "pg", "~> 1.2"
 gem "casting", "~> 0.7"
 
