@@ -57,10 +57,24 @@
       </p>
     </div>
 
-    <div class="grid__col-4">
-      <%= link_to "Edit",
-        edit_admin_team_submission_path(@team_submission),
-        class: "button button--small" %>
+    <div class="grid__col-12 padding--t-medium">
+      <div class="edit-team-submission-buttons">
+        <%= link_to "Edit",
+          edit_admin_team_submission_path(@team_submission),
+          class: "button button--small" %>
+
+        <% if current_admin.super_admin? && @team_submission.published? %>
+          <%= link_to("Unpublish",
+            admin_team_submission_unpublish_path(@team_submission),
+            class: "button button--small",
+            data: {
+              method: :patch,
+              confirm: "<p>Unpublishing a submission will remove it from the judging pool.</p>
+                <p>Please confirm you would like the submission to be removed from judging.</p>"
+            }
+          ) %>
+        <% end %>
+      </div>
     </div>
   </div>
 

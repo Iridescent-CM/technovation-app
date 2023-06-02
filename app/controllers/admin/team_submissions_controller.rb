@@ -1,7 +1,9 @@
 module Admin
   class TeamSubmissionsController < AdminController
+    include AdminHelper
     include DatagridController
 
+    before_action :require_super_admin, only: [:unpublish]
     use_datagrid with: SubmissionsGrid
 
     def show
@@ -28,7 +30,16 @@ module Admin
       end
     end
 
+    def unpublish
+      team_submission = TeamSubmission.friendly.find(params[:team_submission_id])
+      team_submission.unpublish!
+
+      redirect_back fallback_location: admin_team_submission_path(team_submission),
+        success: t("controllers.team_submissions.unpublish.success")
+    end
+
     private
+
     def grid_params
       grid = (params[:submissions_grid] ||= {}).merge(
         admin: true,

@@ -270,6 +270,7 @@ Rails.application.routes.draw do
     resources :team_submissions, except: :destroy do
       resource :judge_assignments, only: :create
       resources :screenshots, only: [:new, :create]
+      patch :unpublish
     end
     resources :team_memberships, only: [:destroy, :create]
     resources :team_locations, only: :edit
