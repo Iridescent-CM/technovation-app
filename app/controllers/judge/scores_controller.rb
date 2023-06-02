@@ -146,7 +146,7 @@ module Judge
     end
 
     def not_started_scores
-      current_judge.scores.not_started.virtual
+      current_judge.scores.current_round.not_started.virtual
         .map do |score|
         {
           id: score.id,
