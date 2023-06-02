@@ -35,7 +35,7 @@ module Admin
       team_submission.unpublish!
 
       redirect_back fallback_location: admin_team_submission_path(team_submission),
-        success: "This submisison has been successfully unpublished."
+        success: t("controllers.team_submissions.unpublish.success")
     end
 
     private

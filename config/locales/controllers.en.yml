@@ -207,3 +207,5 @@ en:
         success: "You started your team submission!"
       update:
         success: "Your progress has been saved. Keep up the good work!"
+      unpublish:
+        success: "This submission has been successfully unpublished."
