@@ -5,5 +5,6 @@ MENTOR_TYPE_OPTIONS = {
   "Industry professional" => 0,
   "Educator" => 1,
   "Parent" => 2,
-  "Past Technovation student" => 3
+  "Technovation alumnae" => 3,
+  "Postsecondary student" => 4
 }

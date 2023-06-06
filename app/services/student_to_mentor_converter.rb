@@ -27,7 +27,7 @@ class StudentToMentorConverter
     account.create_mentor_profile!({
       school_company_name: account.student_profile.school_name,
       job_title: "Technovation Alumnus",
-      mentor_type: "Past Technovation student",
+      mentor_type: "Technovation alumnae",
       former_student: true
     })
 
