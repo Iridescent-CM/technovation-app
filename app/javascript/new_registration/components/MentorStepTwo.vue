@@ -169,12 +169,7 @@ export default {
         'Non-binary',
         'Prefer not to say'
       ],
-      mentorTypeOptions: [
-        'Industry professional',
-        'Educator',
-        'Parent',
-        'Past Technovation student'
-      ],
+      mentorTypeOptions: [],
       mentorProfileExpertiseOptions: [],
       hasValidationErrors: true
     }
@@ -221,9 +216,27 @@ export default {
         })
       }
     },
+    async getMentorTypeOptions () {
+      try {
+        const response = await axios.get('/registration/mentor_types')
+
+        response.data.forEach((mentor_type) => {
+          this.mentorTypeOptions.push({
+            label: mentor_type.name,
+            value: mentor_type.id
+          })
+        })
+      }
+      catch(error) {
+        airbrake.notify({
+          error: `[REGISTRATION] Error getting mentor types - ${error.response.data}`
+        })
+      }
+    },
   },
   created() {
     this.getMentorExpertiseOptions();
+    this.getMentorTypeOptions();
   },
   props: {
     formValues: {
