@@ -5,7 +5,7 @@ module FillPdfs
     include FillPdfs
 
     def full_text
-      "For their dedication to providing valuable feedback on 5 submissions as a Certified Judge."
+      "For their dedication to providing valuable feedback on 5 submissions as a Certified Judge in the #{recipient.season} season."
     end
   end
 end
