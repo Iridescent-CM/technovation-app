@@ -27,8 +27,8 @@ class AdminProfile < ActiveRecord::Base
         "undefined method `#{method_name}' not found for #{self}"
     end
   end
+
   def make_super_admin!
     update(super_admin: true)
   end
 end
-
