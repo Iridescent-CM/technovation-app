@@ -334,6 +334,7 @@ Rails.application.routes.draw do
     resource :account, only: :create
     resources :top_companies, only: :index
     resources :expertises, only: :index
+    resources :mentor_types, only: :index
   end
 
   namespace :api do

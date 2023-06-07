@@ -59,7 +59,7 @@ class NewRegistrationController < ApplicationController
 
   def mentor_params
     {
-      mentor_type: registration_params[:mentorType],
+      mentor_type: registration_params[:mentorType].to_i,
       school_company_name: registration_params[:mentorSchoolCompanyName],
       job_title: registration_params[:mentorJobTitle],
       bio: registration_params[:mentorBio],

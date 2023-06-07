@@ -27,7 +27,7 @@ module CreateMentorProfile
       {
         school_company_name: account.student_profile.school_name,
         job_title: "Technovation Alumnus",
-        mentor_type: "Past Technovation student",
+        mentor_type: "Technovation alumnae",
       }
     end
   end

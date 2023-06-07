@@ -19,7 +19,7 @@ describe StudentToMentorConverter do
     expect(account).to receive(:create_mentor_profile!)
       .with({
         former_student: true,
-        mentor_type: "Past Technovation student",
+        mentor_type: "Technovation alumnae",
         job_title: "Technovation Alumnus",
         school_company_name: student_profile.school_name
       })
