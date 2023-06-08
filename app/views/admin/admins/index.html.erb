@@ -11,7 +11,7 @@
       <th>Email</th>
       <th>Last logged in</th>
       <th>Status</th>
-      <th colspan="2">Permissions</th>
+      <th colspan="3">Permissions</th>
     </tr>
   </thead>
 
@@ -32,6 +32,19 @@
                           method: :delete,
                           confirm: "You are DELETING #{admin.name}!",
                         } %>
+          </td>
+          <td>
+            <% if !admin.admin_profile.super_admin? %>
+              <%= link_to 'make super admin',
+                          admin_admin_make_super_admin_path(admin),
+                          class: "button button--remove-bg button--danger",
+                          data: {
+                            method: :patch,
+                            confirm: "You are UPDATING #{admin.name} to a SUPER ADMIN!",
+                          } %>
+            <% else %>
+              <p class="text-align--center">N/A</p>
+            <% end %>
           </td>
         <% end %>
       </tr>

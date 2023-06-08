@@ -240,7 +240,10 @@ Rails.application.routes.draw do
 
     resources :data_analyses, only: :show
 
-    resources :admins
+    resources :admins do
+      patch :make_super_admin
+    end
+
     get :signup, to: 'signups#new'
     patch :signups, to: 'signups#update'
 

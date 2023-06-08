@@ -3,7 +3,7 @@ module Admin
     include AdminHelper
 
     before_action :get_admins, only: [:index, :destroy]
-    before_action :require_super_admin, only: [:new, :create, :destroy]
+    before_action :require_super_admin, only: [:new, :create, :destroy, :make_super_admin]
 
     TECHNOVATION_ESTABLISHED_DATE = Date.new(2009, 1, 1)
 
@@ -25,6 +25,15 @@ module Admin
       end
     end
 
+    def make_super_admin
+      admin_profile = AdminProfile.find_by(account_id: params[:admin_id])
+      if admin_profile.make_super_admin!
+        redirect_to admin_admins_path, success: "You UPDATED #{admin_profile.account.name}"
+      else
+        redirect_to admin_admins_path, error: "Error updating #{admin_profile.account.name}"
+      end
+    end
+
     def destroy
       admin = @admins.find(params.fetch(:id))
       admin.destroy!
@@ -32,7 +41,6 @@ module Admin
     end
 
     private
-
     def admin_account_params
       params.require(:account)
         .permit(:first_name, :last_name, :email)
