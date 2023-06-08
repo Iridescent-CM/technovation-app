@@ -66,10 +66,12 @@ RSpec.feature "Manage admin accounts" do
     admin = FactoryBot.create(:admin)
     super_admin = FactoryBot.create(:admin, :super_admin)
 
-    sign_in(super_admin)
+    sign_in(:super_admin)
     click_link "Admins"
 
     expect(page).to have_link("delete")
+    click_link "delete", href: "/admin/admins/#{admin.account_id}"
+    expect(page).to have_content("You deleted #{admin.name}")
   end
 
   scenario "Admins are not able to make super admins" do
