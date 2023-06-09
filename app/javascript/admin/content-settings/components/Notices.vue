@@ -13,6 +13,7 @@
         id="season_toggles_student_dashboard_text"
         type="text"
         v-model="$store.state.student_dashboard_text"
+        :disabled="!isSuperAdmin"
       >
     </p>
 
@@ -22,6 +23,7 @@
         id="season_toggles_mentor_dashboard_text"
         type="text"
         v-model="$store.state.mentor_dashboard_text"
+        :disabled="!isSuperAdmin"
       >
     </p>
 
@@ -31,6 +33,7 @@
         id="season_toggles_judge_dashboard_text"
         type="text"
         v-model="$store.state.judge_dashboard_text"
+        :disabled="!isSuperAdmin"
       >
     </p>
 
@@ -40,14 +43,21 @@
         id="season_toggles_chapter_ambassador_dashboard_text"
         type="text"
         v-model="$store.state.chapter_ambassador_dashboard_text"
+        :disabled="!isSuperAdmin"
       >
     </p>
   </div>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: 'notices-section',
+
+  computed: {
+    ...mapGetters(['isSuperAdmin'])
+  }
 }
 </script>
 

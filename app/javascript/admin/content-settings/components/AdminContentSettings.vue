@@ -131,17 +131,17 @@
         :to="{ name: 'review' }"
       >Review</router-link>
       <button
-        v-else
+        v-else-if="isSuperAdmin"
         ref="submitButton"
         type="submit"
         class="button primary"
         @click.prevent="isProduction() ? confirmSaveSettings() : saveSettings()"
       >Save these settings</button>
-      or
       <a
         ref="cancelButton"
+        class="button secondary"
         :href="cancelButtonUrl"
-      >cancel</a>
+      >Cancel</a>
     </div>
 
     <div ref="formData"></div>
@@ -190,6 +190,7 @@ export default {
     ...mapGetters([
       'judgingEnabled',
       'formData',
+      'isSuperAdmin'
     ]),
 
     currentRoute() {

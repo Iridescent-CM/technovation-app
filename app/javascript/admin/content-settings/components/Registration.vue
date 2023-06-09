@@ -15,6 +15,7 @@
           :id="`season_toggles_${scope}_signup`"
           type="checkbox"
           v-model="$store.state[`${scope}_signup`]"
+          :disabled="!isSuperAdmin"
         >
         <label
           :for="`season_toggles_${scope}_signup`"
@@ -54,6 +55,7 @@ export default {
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'isSuperAdmin'
     ])
   },
 

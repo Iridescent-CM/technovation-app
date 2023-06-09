@@ -15,6 +15,7 @@
         id="season_toggles_display_scores"
         type="checkbox"
         v-model="$store.state.display_scores"
+        :disabled="!isSuperAdmin"
       >
       <label
         for="season_toggles_display_scores"
@@ -44,8 +45,9 @@ export default {
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'isSuperAdmin'
     ])
-  },
+  }
 }
 </script>
 
