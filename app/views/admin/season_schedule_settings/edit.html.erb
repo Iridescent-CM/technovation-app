@@ -2,8 +2,15 @@
 <h3>
   Toggle user features and content throughout the season
 </h3>
+<h5>Note: Only available to super admin</h5>
 
 <div id="admin-content-settings">
+  <div
+    ref="isSuperAdmin"
+    data-super-admin="<%= current_admin.super_admin? %>"
+  >
+  </div>
+
   <%= form_with(
         id: "season_schedule",
         scope: :season_toggles,
