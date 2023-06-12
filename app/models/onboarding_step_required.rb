@@ -28,8 +28,6 @@ class OnboardingStepRequired
       "You must pass a background check"
     when :bio_complete?
       "You must complete your personal summary"
-    when :mentor_type_complete?
-      "You must select a mentor type"
     else
       "[Error] OnboardingStepRequired#message is missing for `:#{step}`"
     end

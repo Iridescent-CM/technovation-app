@@ -207,7 +207,6 @@ class MentorProfile < ActiveRecord::Base
       :consent_signed?,
       :background_check_complete?,
       :bio_complete?,
-      :mentor_type_complete?,
     ]
 
     methods.each do |method|
@@ -217,10 +216,6 @@ class MentorProfile < ActiveRecord::Base
     end
 
     steps
-  end
-
-  def mentor_type_complete?
-    mentor_types.present?
   end
 
   def has_completed_action?(action)
@@ -364,10 +359,6 @@ class MentorProfile < ActiveRecord::Base
           consent_signed? &&
             background_check_complete? &&
                 !bio.blank?
-  end
-
-  def needs_mentor_type?
-    mentor_types.blank?
   end
 
   private
