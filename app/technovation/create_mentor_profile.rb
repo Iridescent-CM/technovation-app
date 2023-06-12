@@ -15,19 +15,19 @@ module CreateMentorProfile
         school_company_name: account.chapter_ambassador_profile
           .organization_company_name,
         job_title: account.chapter_ambassador_profile.job_title,
-        mentor_type: "Industry professional",
+        mentor_type_ids: [MentorType.find_by(name: "Industry professional")&.id]
       }
     elsif account.judge_profile.present?
       {
         school_company_name: account.judge_profile.company_name,
         job_title: account.judge_profile.job_title,
-        mentor_type: "Industry professional",
+        mentor_type_ids: [MentorType.find_by(name: "Industry professional")&.id]
       }
     else
       {
         school_company_name: account.student_profile.school_name,
         job_title: "Technovation Alumnus",
-        mentor_type: "Technovation alumnae",
+        mentor_type_ids: [MentorType.find_by(name: "Technovation alumnae")&.id]
       }
     end
   end
