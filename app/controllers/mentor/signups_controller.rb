@@ -2,6 +2,7 @@ module Mentor
   class SignupsController < ApplicationController
     def new
       @expertises ||= Expertise.all
+      @mentor_types ||= MentorType.all
 
       signup_token = get_cookie(CookieNames::SIGNUP_TOKEN)
 
@@ -36,8 +37,8 @@ module Mentor
         :bio,
         :job_title,
         :school_company_name,
-        :mentor_type,
         expertise_ids: [],
+        mentor_type_ids: [],
         account_attributes: [
           :id,
           :email,

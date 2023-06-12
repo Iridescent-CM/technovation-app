@@ -37,7 +37,7 @@ module Registration
         {
           school_company_name: attempt.school_company_name,
           job_title: attempt.job_title,
-          mentor_type: attempt.mentor_type,
+          mentor_type_ids: attempt.mentor_type_ids,
           expertise_ids: attempt.expertise_ids,
           bio: attempt.bio,
           account_attributes: account_attributes,
