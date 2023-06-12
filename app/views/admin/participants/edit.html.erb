@@ -43,6 +43,23 @@
         collection: Account.genders.keys %>
     </p>
 
+    <% if f.object.mentor_profile.present? %>
+      <%= f.fields_for :mentor_profile do |m| %>
+        <p>
+          <%= m.label :mentor_types %>
+
+          <%= m.collection_check_boxes :mentor_type_ids, MentorType.all, :id, :name,
+            checked: ->(value) { f.object.mentor_profile.mentor_types.include?(value) } do |b| %>
+
+           <%= b.check_box %>
+           <%= b.label %>
+           <br>
+         <% end %>
+        </p>
+      <% end %>
+    <% end %>
+    <br>
+
     <p>
       <%= f.label :profile_image %>
 
@@ -69,19 +86,7 @@
                                 }
                               } %>
     </p>
-
-    <% if f.object.mentor_profile.present? %>
-      <%= f.fields_for :mentor_profile do |m| %>
-        <p>
-          <%= m.label :mentor_type %>
-
-          <%= m.select :mentor_type,
-            MentorProfile.mentor_types.keys,
-            prompt: "Choose one..." %>
-        </p>
-      <% end %>
-    <% end %>
-
+    <br>
 
     <p>
       <%= f.submit "Save changes", class: "button" %>
