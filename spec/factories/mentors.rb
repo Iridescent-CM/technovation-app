@@ -4,8 +4,11 @@ FactoryBot.define do
 
     school_company_name { "FactoryBot" }
     job_title { "Engineer" }
-    mentor_type { MentorProfile.mentor_types.keys.sample }
     bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
+
+    after(:build) do |mentor_profile|
+      mentor_profile.mentor_types << FactoryBot.create(:mentor_type)
+    end
 
     transient do
       first_name { "Mentor" }
@@ -169,4 +172,3 @@ FactoryBot.define do
     factory :onboarded_mentor
   end
 end
-
