@@ -853,6 +853,38 @@ ALTER SEQUENCE public.mentor_profile_expertises_id_seq OWNED BY public.mentor_pr
 
 
 --
+-- Name: mentor_profile_mentor_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mentor_profile_mentor_types (
+    id bigint NOT NULL,
+    mentor_profile_id bigint,
+    mentor_type_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: mentor_profile_mentor_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.mentor_profile_mentor_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mentor_profile_mentor_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.mentor_profile_mentor_types_id_seq OWNED BY public.mentor_profile_mentor_types.id;
+
+
+--
 -- Name: mentor_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -869,7 +901,6 @@ CREATE TABLE public.mentor_profiles (
     virtual boolean DEFAULT true NOT NULL,
     connect_with_mentors boolean DEFAULT false NOT NULL,
     user_invitation_id bigint,
-    mentor_type integer,
     training_completed_at timestamp without time zone,
     former_student boolean DEFAULT false
 );
@@ -893,6 +924,38 @@ CREATE SEQUENCE public.mentor_profiles_id_seq
 --
 
 ALTER SEQUENCE public.mentor_profiles_id_seq OWNED BY public.mentor_profiles.id;
+
+
+--
+-- Name: mentor_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mentor_types (
+    id bigint NOT NULL,
+    name character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: mentor_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.mentor_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mentor_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.mentor_types_id_seq OWNED BY public.mentor_types.id;
 
 
 --
@@ -1840,10 +1903,24 @@ ALTER TABLE ONLY public.mentor_profile_expertises ALTER COLUMN id SET DEFAULT ne
 
 
 --
+-- Name: mentor_profile_mentor_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentor_profile_mentor_types ALTER COLUMN id SET DEFAULT nextval('public.mentor_profile_mentor_types_id_seq'::regclass);
+
+
+--
 -- Name: mentor_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentor_profiles ALTER COLUMN id SET DEFAULT nextval('public.mentor_profiles_id_seq'::regclass);
+
+
+--
+-- Name: mentor_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentor_types ALTER COLUMN id SET DEFAULT nextval('public.mentor_types_id_seq'::regclass);
 
 
 --
@@ -2141,11 +2218,27 @@ ALTER TABLE ONLY public.mentor_profile_expertises
 
 
 --
+-- Name: mentor_profile_mentor_types mentor_profile_mentor_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentor_profile_mentor_types
+    ADD CONSTRAINT mentor_profile_mentor_types_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: mentor_profiles mentor_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.mentor_profiles
     ADD CONSTRAINT mentor_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mentor_types mentor_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentor_types
+    ADD CONSTRAINT mentor_types_pkey PRIMARY KEY (id);
 
 
 --
@@ -2525,6 +2618,20 @@ CREATE INDEX index_mentor_profile_expertises_on_signup_attempt_id ON public.ment
 
 
 --
+-- Name: index_mentor_profile_mentor_types_on_mentor_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentor_profile_mentor_types_on_mentor_profile_id ON public.mentor_profile_mentor_types USING btree (mentor_profile_id);
+
+
+--
+-- Name: index_mentor_profile_mentor_types_on_mentor_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mentor_profile_mentor_types_on_mentor_type_id ON public.mentor_profile_mentor_types USING btree (mentor_type_id);
+
+
+--
 -- Name: index_mentor_profiles_on_user_invitation_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2769,6 +2876,14 @@ ALTER TABLE ONLY public.team_submissions
 
 
 --
+-- Name: mentor_profile_mentor_types fk_rails_38b0d3141a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentor_profile_mentor_types
+    ADD CONSTRAINT fk_rails_38b0d3141a FOREIGN KEY (mentor_type_id) REFERENCES public.mentor_types(id);
+
+
+--
 -- Name: regional_pitch_events_user_invitations fk_rails_3bbe8623e3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2894,6 +3009,14 @@ ALTER TABLE ONLY public.screenshots
 
 ALTER TABLE ONLY public.submission_scores
     ADD CONSTRAINT fk_rails_afdf541e79 FOREIGN KEY (judge_profile_id) REFERENCES public.judge_profiles(id);
+
+
+--
+-- Name: mentor_profile_mentor_types fk_rails_b776f096c9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mentor_profile_mentor_types
+    ADD CONSTRAINT fk_rails_b776f096c9 FOREIGN KEY (mentor_profile_id) REFERENCES public.mentor_profiles(id);
 
 
 --
@@ -3180,6 +3303,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230112172357'),
 ('20230118232040'),
 ('20230119163655'),
-('20230530190322');
+('20230530190322'),
+('20230609162008'),
+('20230609172147'),
+('20230609172434'),
+('20230609190316');
 
 
