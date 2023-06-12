@@ -113,7 +113,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   def rebranded?
     false
   end
-  
+
   def onboarded?
     account.email_confirmed? and
       approved? and
@@ -130,10 +130,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def scope_name
     "chapter_ambassador"
-  end
-
-  def needs_mentor_type?
-    false
   end
 
   private
