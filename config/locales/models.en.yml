@@ -35,6 +35,7 @@ en:
       accepting_team_invites: "Allow teams to invite me to be their mentor."
       connect_with_mentors: "Allow other mentors to contact me"
       expertise_names: "Expertise"
+      mentor_types: "Mentor types"
       virtual: "I am available to mentor teams virtually (online) from anywhere."
       job_title: "Job title"
       school_company_name: "School or company name"
