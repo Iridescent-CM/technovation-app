@@ -612,11 +612,11 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def profile_mentor_type
+  def profile_mentor_type_ids
     if mentor_profile
-      mentor_profile.mentor_type
+      mentor_profile.mentor_type_ids
     else
-      false
+      []
     end
   end
 

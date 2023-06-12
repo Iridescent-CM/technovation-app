@@ -40,8 +40,8 @@ class AccountSerializer
     account.profile_job_title
   end
 
-  attribute(:mentor_type) do |account|
-    account.profile_mentor_type
+  attribute(:mentor_type_ids) do |account|
+    account.profile_mentor_type_ids
   end
 
   attribute(:expertise_ids) do |account|
