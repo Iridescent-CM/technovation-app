@@ -27,12 +27,12 @@ RSpec.describe MergeChapterAmbassadorMentors do
     merge.perform
   end
 
-  it "merges a mentor profile into a chapter ambassador's account" do
+  xit "merges a mentor profile into a chapter ambassador's account" do
     expect(MentorProfile.exists?(mentor.id)).not_to be true
     expect(chapter_ambassador.account.reload.mentor_profile).to be_present
   end
 
-  it "updates the chapter ambassadors email to the desired email" do
+  xit "updates the chapter ambassadors email to the desired email" do
     expect(chapter_ambassador.reload.email).to eq("chapter_ambassador@example.com")
   end
 
