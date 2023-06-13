@@ -1369,7 +1369,6 @@ CREATE TABLE public.signup_attempts (
     longitude numeric(10,6),
     profile_choice integer,
     job_title character varying,
-    mentor_type integer,
     bio character varying
 );
 
@@ -3307,6 +3306,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230609162008'),
 ('20230609172147'),
 ('20230609172434'),
-('20230609190316');
+('20230609190316'),
+('20230613163115');
 
 
