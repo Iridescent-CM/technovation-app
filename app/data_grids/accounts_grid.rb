@@ -378,18 +378,18 @@ class AccountsGrid
         .where("regional_pitch_events.id #{is_is_not} NULL")
     end
 
-  filter :mentor_type,
-    :enum,
-    select: MENTOR_TYPE_OPTIONS,
-    filter_group: "common",
-    if: ->(g) {
-      scopes = g.scope_names || []
-      %w{student judge chapter_ambassador}.all? { |scope| scopes.exclude?(scope) }
-    } do |value, scope, grid|
-      scope.includes(:mentor_profile)
-        .references(:mentor_profiles)
-        .where(mentor_profiles: { mentor_type: value })
-    end
+  # filter :mentor_type,
+  #   :enum,
+  #   select: MENTOR_TYPE_OPTIONS,
+  #   filter_group: "common",
+  #   if: ->(g) {
+  #     scopes = g.scope_names || []
+  #     %w{student judge chapter_ambassador}.all? { |scope| scopes.exclude?(scope) }
+  #   } do |value, scope, grid|
+  #     scope.includes(:mentor_profile)
+  #       .references(:mentor_profiles)
+  #       .where(mentor_profiles: { mentor_type: value })
+  #   end
 
   filter :school_company_name,
     header: "School or company name (judges and mentors)",
