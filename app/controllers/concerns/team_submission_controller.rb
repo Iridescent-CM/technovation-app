@@ -178,7 +178,7 @@ module TeamSubmissionController
   def determine_layout
     if action_name == "new" ||
         action_name == "create"
-      "application"
+      "application_rebrand"
     else
       "submissions"
     end
