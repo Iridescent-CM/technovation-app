@@ -56,7 +56,11 @@ module InviteChapterAmbassador
         %w{id account_id}.include?(k.to_s)
       end
 
-      mentor_attrs = mentor_attrs.merge(bio: attrs[:bio])
+      mentor_attrs = mentor_attrs
+        .merge(bio: attrs[:bio])
+        .merge(
+          mentor_type_ids: mentor_profile.mentor_types.pluck(:id).presence || [MentorType.find_by(name: "Industry professional").id]
+        )
 
       account.create_mentor_profile!(mentor_attrs)
     end
