@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Admin UI for season toggles:", :js do
-  before { sign_in(FactoryBot.create(:admin)) }
+  before { sign_in(FactoryBot.create(:super_admin)) }
 
   scenario "toggle user signups" do
     %w{student mentor}.each do |scope|
-      
+
       SeasonToggles.disable_signup(scope)
 
       visit edit_admin_season_schedule_settings_path
