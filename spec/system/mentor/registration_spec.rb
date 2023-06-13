@@ -6,7 +6,7 @@ RSpec.describe "Register as a mentor", :js do
 
     allow(SubscribeAccountToEmailListJob).to receive(:perform_later)
 
-    set_signup_token("mentor@mentor.com")
+    set_signup_token("mentor@test.com")
 
     visit mentor_signup_path
 
@@ -20,9 +20,7 @@ RSpec.describe "Register as a mentor", :js do
     fill_in "School or company name", with: "John Hughes High"
     fill_in "Job title", with: "Janitor / Man of the Year"
 
-    MentorProfile.mentor_types.keys.shuffle.each do |mentor_type|
-      select mentor_type, from: "I am a..."
-    end
+    check "Educator"
 
     click_button "Create Your Account"
 
@@ -59,7 +57,7 @@ RSpec.describe "Register as a mentor", :js do
   end
 
   it "saves the mentor type" do
-    expect(MentorProfile.last.mentor_type).not_to be_nil
+    expect(MentorProfile.last.mentor_types).to be_present
   end
 
   it "attaches the signup attempt" do
@@ -72,7 +70,7 @@ RSpec.describe "Register as a mentor", :js do
   it "sends the welcome email" do
     mail = ActionMailer::Base.deliveries.last
     expect(mail).to be_present, "no welcome email sent"
-    expect(mail.to).to eq(["mentor@mentor.com"])
+    expect(mail.to).to eq(["mentor@test.com"])
     expect(mail.subject).to eq(
       I18n.t("registration_mailer.welcome_mentor.subject",
        season_year: Season.current.year))

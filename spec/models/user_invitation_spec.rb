@@ -20,7 +20,10 @@ RSpec.describe UserInvitation do
 
   it "validates the email against an existing chapter ambassador" do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador)
-    chapter_ambassador.account.create_mentor_profile!(FactoryBot.attributes_for(:mentor))
+    chapter_ambassador.account.create_mentor_profile!(
+      FactoryBot.attributes_for(:mentor)
+        .merge({mentor_type_ids: [MentorType.first.id]})
+    )
 
     invite = UserInvitation.new(
       profile_type: :chapter_ambassador,

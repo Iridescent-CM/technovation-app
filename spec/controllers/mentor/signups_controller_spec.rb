@@ -10,8 +10,11 @@ RSpec.describe Mentor::SignupsController do
           :mentor,
           bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
         ).merge(
+          mentor_type_ids: [MentorType.first.id]
+        ).merge(
           account_attributes: FactoryBot.attributes_for(:account)
         )
+
       }
 
       expect(flash[:success]).to eq("Welcome to Technovation!")

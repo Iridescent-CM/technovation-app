@@ -68,7 +68,7 @@ RSpec.describe "Admins invite users to signup", :js do
         select_gender(:random)
         fill_in "School or company name", with: "John Hughes High"
         fill_in "Job title", with: "Janitor / Man of the Year"
-        select "Parent", from: "I am a..."
+        check "Industry professional"
       when :judge
         select_gender(:random)
         fill_in "School or company name", with: "John Hughes High"

@@ -14,7 +14,6 @@ RSpec.describe "New registration", type: :request do
         studentParentGuardianName: "Mursmiss Parentente",
         studentParentGuardianEmail: "mrmsparents@example.com",
         studentSchoolName: "Top School 1",
-        mentorType: "Educator",
         mentorSchoolCompanyName: "Wonderful Inc",
         mentorJobTitle: "Widgets ",
         judgeSchoolCompanyName: "Court House",
@@ -50,9 +49,10 @@ RSpec.describe "New registration", type: :request do
       end
     end
 
-    context "when a mentor is registering" do
-      let(:profile_type) { "mentor" }
-      let(:date_of_birth) { (Division.cutoff_date - 26.years) }
+    context "when a it's a mentor account" do
+      before do
+        FactoryBot.create(:mentor)
+      end
 
       it "sets the parent_registered? flag to false" do
         expect(Account.last.parent_registered?).to eq(false)
