@@ -56,6 +56,16 @@
            <br>
          <% end %>
         </p>
+
+        <% if f.object.mentor_profile.errors.present? %>
+          <ul class="list--reset field_with_errors">
+            <% f.object.mentor_profile.errors.each do |error| %>
+              <li class="error">
+                <%= error.message %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
       <% end %>
     <% end %>
     <br>
