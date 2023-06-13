@@ -119,6 +119,8 @@ en:
       submit: "Submit"
 
     mentor:
+      form:
+        mentor_types: "As a mentor you may call me a..."
       join_requests:
         index:
           title: "My requests"

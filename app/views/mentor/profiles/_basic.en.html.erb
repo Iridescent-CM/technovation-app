@@ -11,7 +11,7 @@
   <dt>Job title</dt>
   <dd><%= current_mentor.job_title %></dd>
 
-  <dt>Mentor Types</dt>
+  <dt><%= t('views.mentor.form.mentor_types') %></dt>
   <dd>
     <ul>
       <% current_mentor.mentor_types.each do |mentor_type| %>

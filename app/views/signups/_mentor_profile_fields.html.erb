@@ -13,7 +13,7 @@
   <%= f.input :bio, label: "#{t('models.chapter_ambassador_profile.bio.signup_label')}" %>
 <% end %>
 
-<h4><%= t('views.signups.form.mentor_types') %></h4>
+<h4><%= t('views.mentor.form.mentor_types') %></h4>
 
 <%= f.collection_check_boxes :mentor_type_ids, @mentor_types, :id, :name do |b| %>
   <span class="inline-checkbox">
