@@ -15,13 +15,12 @@
   <%= render "team_submissions/honor_code" %>
 </div>
 
-<div class="panel panel--left">
-  <h1 class="panel__heading">
-    Your Team Photo
-  </h1>
-
-  <%= render 'teams/intro',
-    modal_id: "team_photo_desktop",
-    admin_chapter_ambassador: false,
-    team: @team %>
-</div>
+  <%= render 'team_submissions/pieces/piece',
+             submission: @team_submission,
+             title: "Your Team Photo",
+             scope: current_scope,
+             attribute: :team_photo,
+             cta_when_empty: "Upload your team photo",
+             cta_when_filled: "Change your team photo" do %>
+    <%= image_tag @team.team_photo_url, class: "grid__cell-img", id: "team-photo" %>
+  <% end %>
