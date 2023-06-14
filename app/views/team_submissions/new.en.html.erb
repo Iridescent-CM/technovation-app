@@ -1,37 +1,37 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8">
-    <div class="panel panel--left">
-      <h1><%= Season.current.year %> Technovation Honor Code</h1>
+<div class="w-full lg:w-1/2 lg:mx-auto">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: "#{Season.current.year} Technovation Honor Code"} do %>
+    <%= form_with(
+          model: @team_submission,
+          url: send("#{current_scope}_team_submissions_path", @team_submission),
+          local: true
+        ) do |f| %>
 
-      <%= form_with(
-        model: @team_submission,
-        url: send("#{current_scope}_team_submissions_path", @team_submission),
-        local: true
-      ) do |f| %>
-        <%= hidden_field_tag :team_id, params[:team_id] %>
+      <%= hidden_field_tag :team_id, params[:team_id] %>
 
-        <div class="field">
+      <div class="mx-auto">
+        <div id="honor-code">
           <%= render "team_submissions/honor_code" %>
+        </div>
 
-          <p class="scent--strong">
-            By checking the box below, you confirm that each team member
-            has read and agreed to the statements above.
+        <div class="mb-4 border-l-2 border-energetic-blue bg-blue-50 p-2">
+          <p class="text-base">
+            By checking the box below, you confirm that each team member has read and agreed to the statements above.
           </p>
+        </div>
 
+        <div class="mb-4">
           <%= f.check_box :integrity_affirmed,
-            id: :team_submission_integrity_affirmed %>
+                          id: :team_submission_integrity_affirmed %>
 
           <%= f.label :integrity_affirmed,
-            "OUR TEAM AGREES TO ABIDE BY THIS HONOR CODE",
-            for: :team_submission_integrity_affirmed %>
+                      "OUR TEAM AGREES TO ABIDE BY THIS HONOR CODE",
+                      for: :team_submission_integrity_affirmed %>
         </div>
 
-        <div class="actions">
-          <p>
-            <%= f.submit "Start now!", class: "button" %>
-          </p>
+        <div class="flex justify-center">
+          <p><%= f.submit "Start now!", class: "tw-green-btn cursor-pointer" %></p>
         </div>
-      <% end %>
-    </div>
-  </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>
