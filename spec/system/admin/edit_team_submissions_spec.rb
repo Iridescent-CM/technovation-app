@@ -72,7 +72,7 @@ RSpec.describe "Toggling editable team submissions", :js do
       check "team_submission[integrity_affirmed]"
       click_button "Start now!"
 
-      expect(page).to have_css('.button', text: "Set your project's name")
+      expect(page).to have_css('.button', text: "Upload your team photo")
 
       visit student_dashboard_path
       click_button "Submit your project"
