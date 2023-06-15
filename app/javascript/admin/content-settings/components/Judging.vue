@@ -7,6 +7,7 @@
         type="radio"
         value="off"
         v-model="$store.state.judging_round"
+        :disabled="!isSuperAdmin"
       >
       <label for="season_toggles_judging_round_off">Off</label>
       <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Before judging: Judges cannot judge'" />
@@ -17,6 +18,7 @@
         type="radio"
         value="qf"
         v-model="$store.state.judging_round"
+        :disabled="!isSuperAdmin"
       >
       <label for="season_toggles_judging_round_qf">Quarterfinals</label>
       <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Judges can now judge either virtually or their assigned submissions'" />
@@ -27,6 +29,7 @@
         type="radio"
         value="between"
         v-model="$store.state.judging_round"
+        :disabled="!isSuperAdmin"
       >
       <label for="season_toggles_judging_round_between">Between rounds</label>
       <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Judges now see the &quot;between rounds&quot; screen'" />
@@ -37,6 +40,7 @@
         type="radio"
         value="sf"
         v-model="$store.state.judging_round"
+        :disabled="!isSuperAdmin"
       >
       <label for="season_toggles_judging_round_sf">Semifinals</label>
       <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Judges can now judge semifinals submissions'" />
@@ -47,6 +51,7 @@
         type="radio"
         value="finished"
         v-model="$store.state.judging_round"
+        :disabled="!isSuperAdmin"
       >
       <label for="season_toggles_judging_round_finished">Finished</label>
       <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'After judging: judges cannot judge'" />
@@ -80,8 +85,9 @@ export default {
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'isSuperAdmin'
     ])
-  },
+  }
 }
 </script>
 

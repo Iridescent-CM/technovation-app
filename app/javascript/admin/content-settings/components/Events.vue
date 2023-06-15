@@ -15,6 +15,7 @@
         id="season_toggles_select_regional_pitch_event"
         type="checkbox"
         v-model="$store.state.select_regional_pitch_event"
+        :disabled="!isSuperAdmin"
       >
       <label
         for="season_toggles_select_regional_pitch_event"
@@ -44,8 +45,9 @@ export default {
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'isSuperAdmin'
     ])
-  },
+  }
 }
 </script>
 

@@ -171,7 +171,10 @@
       </div>
     </div>
 
-    <div class="notice warning">
+    <div
+      v-if="isSuperAdmin"
+      class="notice warning"
+    >
       The changes you are about to make are for {{ environmentName() }}.
 
       <p v-if="isProduction()">
@@ -228,8 +231,9 @@ export default {
   computed: {
     ...mapGetters([
       'judgingEnabled',
-      'formData'
+      'formData',
+      'isSuperAdmin'
     ]),
-  },
+  }
 }
 </script>

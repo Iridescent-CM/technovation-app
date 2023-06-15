@@ -1,12 +1,17 @@
 const judgingEnabled = (state) => {
-  return state.judging_round !== 'off' && state.judging_round !== 'finished'
-}
+  return state.judging_round !== "off" && state.judging_round !== "finished";
+};
+
+const isSuperAdmin = (state) => {
+  return state.is_super_admin;
+};
 
 export default {
   judgingEnabled,
+  isSuperAdmin,
 
-  formData (state) {
-    const judgingRoundEnabled = judgingEnabled(state)
+  formData(state) {
+    const judgingRoundEnabled = judgingEnabled(state);
 
     return {
       // Registration
@@ -21,8 +26,8 @@ export default {
       student_dashboard_text: state.student_dashboard_text,
       mentor_dashboard_text: state.mentor_dashboard_text,
       judge_dashboard_text: state.judge_dashboard_text,
-      chapter_ambassador_dashboard_text: state
-        .chapter_ambassador_dashboard_text,
+      chapter_ambassador_dashboard_text:
+        state.chapter_ambassador_dashboard_text,
 
       // Surveys
       student_survey_link: {
@@ -54,6 +59,6 @@ export default {
 
       // Scores & Certificates
       display_scores: Boolean(!judgingRoundEnabled && state.display_scores),
-    }
+    };
   },
-}
+};

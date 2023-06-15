@@ -15,12 +15,14 @@
           type="text"
           id="season_toggles_student_survey_link_text"
           v-model="$store.state.student_survey_link.text"
+          :disabled="!isSuperAdmin"
         >
         <input
           placeholder="URL"
           type="text"
           id="season_toggles_student_survey_link_url"
           v-model="$store.state.student_survey_link.url"
+          :disabled="!isSuperAdmin"
         >
       </p>
       <p class="margin--t-none">
@@ -29,6 +31,7 @@
           placeholder="Add more text that appears only in the popup modal"
           id="season_toggles_student_survey_link_long_desc"
           v-model="$store.state.student_survey_link.long_desc"
+          :disabled="!isSuperAdmin"
         />
       </p>
       <div class="notice info hint">
@@ -44,12 +47,14 @@
           type="text"
           id="season_toggles_mentor_survey_link_text"
           v-model="$store.state.mentor_survey_link.text"
+          :disabled="!isSuperAdmin"
         >
         <input
           placeholder="URL"
           type="text"
           id="season_toggles_mentor_survey_link_url"
           v-model="$store.state.mentor_survey_link.url"
+          :disabled="!isSuperAdmin"
         >
       </p>
       <p class="margin--t-none">
@@ -58,6 +63,7 @@
           placeholder="Add more text that appears only in the popup modal"
           id="season_toggles_mentor_survey_link_long_desc"
           v-model="$store.state.mentor_survey_link.long_desc"
+          :disabled="!isSuperAdmin"
         />
       </p>
       <div class="notice info hint">
@@ -68,8 +74,13 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: 'surveys-section',
+  computed: {
+    ...mapGetters(['isSuperAdmin'])
+  }
 }
 </script>
 

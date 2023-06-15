@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "Season controls exposed through Content & Settings tab", js: true do
-  let(:admin) { FactoryBot.create(:admin) }
+  let(:super_admin) { FactoryBot.create(:super_admin) }
 
   before do
-    sign_in(admin)
+    sign_in(super_admin)
     expect(page).to have_content("Welcome back!")
 
     visit edit_admin_season_schedule_settings_path

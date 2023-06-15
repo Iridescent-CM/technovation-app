@@ -15,6 +15,7 @@
         id="season_toggles_team_building_enabled"
         type="checkbox"
         v-model="$store.state.team_building_enabled"
+        :disabled="!isSuperAdmin"
       >
       <label
         for="season_toggles_team_building_enabled"
@@ -40,6 +41,7 @@
         id="season_toggles_team_submissions_editable"
         type="checkbox"
         v-model="$store.state.team_submissions_editable"
+        :disabled="!isSuperAdmin"
       >
       <label
         for="season_toggles_team_submissions_editable"
@@ -69,8 +71,9 @@ export default {
   computed: {
     ...mapGetters([
       'judgingEnabled',
+      'isSuperAdmin'
     ])
-  },
+  }
 }
 </script>
 
