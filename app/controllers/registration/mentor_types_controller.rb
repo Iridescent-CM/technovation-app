@@ -1,11 +1,7 @@
 module Registration
   class MentorTypesController < RegistrationController
     def index
-      mentor_types = MENTOR_TYPE_OPTIONS.map do |mentor_type, index|
-        {name: mentor_type, id: index}
-      end
-
-      render json: mentor_types
+      render json: MentorType.all.order(:order)
     end
   end
 end

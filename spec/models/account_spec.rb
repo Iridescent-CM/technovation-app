@@ -720,13 +720,6 @@ RSpec.describe Account do
       expect(profile.consent_waiver).to be_instance_of(NullConsentWaiver)
       expect(Account.onboarded_mentors).not_to include(profile.account)
     end
-
-    it "excludes type not set" do
-      profile = FactoryBot.create(:mentor, :onboarded)
-      profile.update_column(:mentor_type, nil)
-
-      expect(Account.onboarded_mentors).not_to include(profile.account)
-    end
   end
 
   describe ".onboarding_mentors" do
@@ -811,14 +804,6 @@ RSpec.describe Account do
       profile.reload
 
       expect(profile.consent_waiver).to be_instance_of(NullConsentWaiver)
-      expect(Account.onboarding_mentors).to include(profile.account)
-      expect(profile.reload).not_to be_onboarded
-    end
-
-    it "includes type not set" do
-      profile = FactoryBot.create(:mentor, :onboarded)
-      profile.update_column(:mentor_type, nil)
-
       expect(Account.onboarding_mentors).to include(profile.account)
       expect(profile.reload).not_to be_onboarded
     end

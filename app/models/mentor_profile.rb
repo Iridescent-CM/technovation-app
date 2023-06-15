@@ -3,8 +3,6 @@ class MentorProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
-  enum mentor_type: MENTOR_TYPE_OPTIONS
-
   scope :unmatched, -> {
     select("DISTINCT #{table_name}.*")
       .joins(:current_account)
@@ -92,6 +90,12 @@ class MentorProfile < ActiveRecord::Base
   has_many :expertises,
     through: :mentor_profile_expertises
 
+  has_many :mentor_profile_mentor_types,
+    dependent: :destroy
+
+  has_many :mentor_types,
+    through: :mentor_profile_mentor_types
+
   has_many :memberships,
     as: :member,
     dependent: :destroy
@@ -150,8 +154,8 @@ class MentorProfile < ActiveRecord::Base
   after_touch { current_teams.find_each(&:touch) }
 
   validates :school_company_name,
-            :job_title,
-            :mentor_type,
+    :job_title,
+    :mentor_types,
     presence: true
 
   validates :bio,
@@ -203,7 +207,6 @@ class MentorProfile < ActiveRecord::Base
       :consent_signed?,
       :background_check_complete?,
       :bio_complete?,
-      :mentor_type_complete?,
     ]
 
     methods.each do |method|
@@ -213,10 +216,6 @@ class MentorProfile < ActiveRecord::Base
     end
 
     steps
-  end
-
-  def mentor_type_complete?
-    !mentor_type.blank?
   end
 
   def has_completed_action?(action)
@@ -359,15 +358,11 @@ class MentorProfile < ActiveRecord::Base
         training_complete_or_not_required? &&
           consent_signed? &&
             background_check_complete? &&
-                !bio.blank? &&
-                  !mentor_type.blank?
-  end
-
-  def needs_mentor_type?
-    mentor_type.blank?
+                !bio.blank?
   end
 
   private
+
   def can_enable_searchable?
     onboarded?
   end

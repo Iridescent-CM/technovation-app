@@ -64,10 +64,12 @@ RSpec.configure do |config|
   config.include DataAnalyses, type: :feature
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.use_transactional_fixtures = true
+  config.global_fixtures = :all
+
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-  config.use_transactional_fixtures = true
 
   config.before(:each, type: :system) do
     driven_by :rack_test

@@ -59,11 +59,11 @@ class NewRegistrationController < ApplicationController
 
   def mentor_params
     {
-      mentor_type: registration_params[:mentorType].to_i,
       school_company_name: registration_params[:mentorSchoolCompanyName],
       job_title: registration_params[:mentorJobTitle],
       bio: registration_params[:mentorBio],
       expertise_ids: registration_params["mentorExpertises"],
+      mentor_type_ids: registration_params["mentorTypes"],
       account_attributes: account_attributes.merge({gender: registration_params[:gender]})
     }
   end
@@ -110,7 +110,8 @@ class NewRegistrationController < ApplicationController
       :mentorBio,
       :judgeSchoolCompanyName,
       :judgeJobTitle,
-      mentorExpertises: []
+      mentorExpertises: [],
+      mentorTypes: []
     )
   end
 end

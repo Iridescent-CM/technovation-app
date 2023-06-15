@@ -89,21 +89,22 @@
           @blur="checkValidation"
         />
 
-        <FormulateInput
-          name="mentorType"
-          :options="mentorTypeOptions"
-          type="select"
-          label="As a mentor you may call me a ..."
-          placeholder="Select an option"
-          validation="required"
-          :validation-messages="{ required: 'This field is required.' }"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          id="mentorType"
-          input-class="mentorSelectClass"
-        />
+        <div class="mentor-information" v-show="mentorTypeOptions.length > 0">
+          <h4 class="registration-title">As a mentor you may call me a...</h4>
 
-        <div id="mentor-information" v-show="mentorProfileExpertiseOptions.length > 0">
+          <FormulateInput
+            name="mentorTypes"
+            id="mentorTypes"
+            type="checkbox"
+            :options="mentorTypeOptions"
+            validation="required"
+            :validation-messages="{ required: 'This field is required.' }"
+            @keyup="checkValidation"
+            @blur="checkValidation"
+          />
+        </div>
+
+        <div class="mentor-information" v-show="mentorProfileExpertiseOptions.length > 0">
           <h2 class="registration-title">Skills & Interests</h2>
 
           <FormulateInput

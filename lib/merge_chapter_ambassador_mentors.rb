@@ -49,12 +49,12 @@ class MergeChapterAmbassadorMentors
           m = chapter_ambassador.build_mentor_profile({
             school_company_name: mentor.school_company_name,
             job_title: mentor.job_title,
-            mentor_type: mentor.mentor_type,
             bio: mentor.bio,
             searchable: mentor.searchable,
             accepting_team_invites: mentor.accepting_team_invites,
             virtual: mentor.virtual,
             connect_with_mentors: mentor.connect_with_mentors,
+            mentor_type_ids: mentor.mentor_types.pluck(:id).presence || [MentorType.find_by(name: "Industry professional").id]
           })
 
           m.save(validate: false)

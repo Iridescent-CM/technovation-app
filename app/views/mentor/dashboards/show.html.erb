@@ -34,8 +34,6 @@
     <% if not current_mentor.email_confirmed? %>
       <%= render 'completion_steps/confirm_changed_email',
         profile: current_mentor %>
-    <% elsif !current_session.authenticated? && current_mentor.needs_mentor_type? %>
-      <%= render 'select_mentor_type' %>
     <% else %>
       <%= render 'app' %>
     <% end %>

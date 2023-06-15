@@ -4,7 +4,7 @@ RSpec.describe "Mentors register with their location", :js do
   before do
     SeasonToggles.enable_signups!
 
-    set_signup_token("mentor@mentor.com")
+    set_signup_token("mentor@test.com")
 
     visit mentor_signup_path
 
@@ -18,9 +18,7 @@ RSpec.describe "Mentors register with their location", :js do
     fill_in "School or company name", with: "John Hughes High"
     fill_in "Job title", with: "Janitor / Man of the Year"
 
-    MentorProfile.mentor_types.keys.shuffle.each do |mentor_type|
-      select mentor_type, from: "I am a..."
-    end
+    check "Educator"
 
     click_button "Create Your Account"
 

@@ -9,15 +9,14 @@
 
 <%= f.input :job_title %>
 
-<%= f.input :mentor_type,
-  label: "I am a...",
-  collection: MentorProfile.mentor_types.keys,
-  prompt: "Choose one..." %>
-
 <% if f.object.persisted? %>
   <%= f.input :bio, label: "#{t('models.chapter_ambassador_profile.bio.signup_label')}" %>
 <% end %>
 
+<h4><%= t('views.mentor.form.mentor_types') %></h4>
+<%= f.association :mentor_types, as: :check_boxes, label: false %>
+
+<br>
 <h4><%= t('views.signups.form.skills_and_interests_html') %></h4>
 
 <%= f.collection_check_boxes :expertise_ids, @expertises, :id, :name do |b| %>

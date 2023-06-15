@@ -231,7 +231,6 @@ class Account < ActiveRecord::Base
     .where(
       "email_confirmed_at IS NOT NULL AND " +
       "mentor_profiles.bio <> '' AND " +
-      "mentor_profiles.mentor_type IS NOT NULL AND " +
       "(consent_waivers.id IS NOT NULL AND consent_waivers.voided_at IS NULL) AND " +
       "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
       "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
@@ -248,7 +247,6 @@ class Account < ActiveRecord::Base
     .where(
       "email_confirmed_at IS NULL OR " +
       "mentor_profiles.bio IS NULL OR mentor_profiles.bio = '' OR " +
-      "mentor_profiles.mentor_type IS NULL OR " +
       "(consent_waivers.id IS NULL OR consent_waivers.voided_at IS NOT NULL) OR " +
       "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
       "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
@@ -612,11 +610,11 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def profile_mentor_type
+  def profile_mentor_type_ids
     if mentor_profile
-      mentor_profile.mentor_type
+      mentor_profile.mentor_type_ids
     else
-      false
+      []
     end
   end
 

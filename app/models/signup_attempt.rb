@@ -23,7 +23,6 @@ class SignupAttempt < ActiveRecord::Base
 
   enum referred_by: REFERRED_BY_OPTIONS
   enum gender_identity: GENDER_IDENTITY_OPTIONS
-  enum mentor_type: MENTOR_TYPE_OPTIONS
 
   belongs_to :account, required: false
 

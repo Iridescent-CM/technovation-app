@@ -2,29 +2,36 @@ module Mentor
   class ProfilesController < MentorController
     include ProfileController
 
-    before_action :expertises
+    before_action :expertises, :mentor_types
 
     def profile_params
       [
         :id,
         :school_company_name,
         :job_title,
-        :mentor_type,
         :bio,
         :accepting_team_invites,
         :virtual,
         :connect_with_mentors,
-        { expertise_ids: [] },
+        {
+          expertise_ids: [],
+          mentor_type_ids: []
+        }
       ]
     end
 
     private
+
     def profile
       current_mentor
     end
 
     def expertises
       @expertises ||= Expertise.all
+    end
+
+    def mentor_types
+      @mentor_types ||= MentorType.all
     end
 
     def edit_profile_path

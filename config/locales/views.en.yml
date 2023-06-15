@@ -119,6 +119,8 @@ en:
       submit: "Submit"
 
     mentor:
+      form:
+        mentor_types: "As a mentor you may call me a..."
       join_requests:
         index:
           title: "My requests"
@@ -256,6 +258,7 @@ en:
       form:
         create_account: "Create Your Account"
         skills_and_interests_html: "Skills &amp; Interests"
+        mentor_types: "As a mentor you may call me a..."
         confirm_password: 'Confirm password'
         resend_email: "Re-Send Email"
         signing_up_email: "Your email address: %{email}"

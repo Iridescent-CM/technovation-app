@@ -2,6 +2,21 @@ require 'factory_bot_rails'
 
 ActionMailer::Base.perform_deliveries = false
 
+[
+  {name: "Industry professional", order: 1},
+  {name: "Educator", order: 2},
+  {name: "Parent", order: 3},
+  {name: "Technovation alumnae", order: 4},
+  {name: "Postsecondary student", order: 5}
+].each do |mentor_type|
+  MentorType.create(mentor_type)
+
+  puts "Created mentor type: #{mentor_type[:name]}"
+  puts ""
+  puts "============================================================="
+  puts ""
+end
+
 student = Account.find_by(email: "student@student.com").try(:student_profile)
 student_team = Team.find_by(name: "All Star Team")
 mentor = Account.find_by(email: "mentor@mentor.com").try(:mentor_profile)
@@ -134,7 +149,7 @@ if (mentor = MentorProfile.create(
     job_title: "Aerospace Engineer",
     expertise_ids: Expertise.pluck(:id)[0..1],
     bio: "Cool Colorado mentor with an adequate length of a bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    mentor_type: "Industry professional",
+    mentor_type_ids: [1]
   )).valid?
   puts "Created Mentor: #{mentor.email} with password #{mentor.email}"
   puts ""
@@ -197,7 +212,7 @@ if (mentor = MentorProfile.create(
     job_title: "Aerospace Engineer",
     expertise_ids: Expertise.pluck(:id)[0..1],
     bio: "Cool chicago mentor with an adequate length of a bio. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    mentor_type: "Industry professional",
+    mentor_type_ids: [1]
   )).valid?
   mentor.account.update_column(:profile_image, "foo/bar/baz.png")
   mentor.account.create_consent_waiver!(FactoryBot.attributes_for(:consent_waiver))

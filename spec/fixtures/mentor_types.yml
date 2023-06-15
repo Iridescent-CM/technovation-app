@@ -1,0 +1,19 @@
+industry_professonal:
+  name: Industry professional
+  order: 1
+
+educator:
+  name: Educator
+  order: 2
+
+parent:
+  name: Parent
+  order: 3
+
+technovation_alumnae:
+  name: Technovation alumnae
+  order: 4
+
+postsecondary_student:
+  name: Postsecondary student
+  order: 5

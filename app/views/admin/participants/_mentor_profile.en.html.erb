@@ -5,8 +5,14 @@
   <dt><%= t('models.mentor_profile.job_title') %></dt>
   <dd><%= profile.job_title %></dd>
 
-  <dt><%= t('models.mentor_profile.mentor_type') %></dt>
-  <dd><%= profile.mentor_type || "–" %></dd>
+  <dt><%= t('models.mentor_profile.mentor_types') %></dt>
+  <dd>
+    <ul>
+      <% profile.mentor_types.each do |mentor_type| %>
+        <li><%= mentor_type.name %></li>
+      <% end %>
+    </ul>
+  </dd>
 
   <dt><%= t('models.mentor_profile.expertise_names') %></dt>
   <dd><%= profile.expertise_names.to_sentence %></dd>

@@ -11,8 +11,14 @@
   <dt>Job title</dt>
   <dd><%= current_mentor.job_title %></dd>
 
-  <dt>Mentor type</dt>
-  <dd><%= current_mentor.mentor_type || "–" %></dd>
+  <dt><%= t('views.mentor.form.mentor_types') %></dt>
+  <dd>
+    <ul>
+      <% current_mentor.mentor_types.each do |mentor_type| %>
+        <li><%= mentor_type.name %></li>
+      <% end %>
+    </ul>
+  </dd>
 
   <dt>Skills &amp; Interests</dt>
   <dd><%= current_mentor.expertises.map(&:name).to_sentence %></dd>
