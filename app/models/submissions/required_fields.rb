@@ -82,7 +82,7 @@ end
 
 class RequiredAppNameField < RequiredField
   def blank?
-    value.blank? || value == "(no name yet)"
+    value.blank? || value == TeamSubmission::DEFAULT_APP_NAME
   end
 end
 

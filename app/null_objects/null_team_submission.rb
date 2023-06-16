@@ -14,7 +14,7 @@ class NullTeamSubmission < NullObject
   end
 
   def app_name
-    "not started"
+    TeamSubmission::DEFAULT_APP_NAME
   end
   alias :name :app_name
 

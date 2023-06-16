@@ -4,6 +4,7 @@ class TeamSubmission < ActiveRecord::Base
   MAX_SCREENSHOTS_ALLOWED = 6
   PARTICIPATION_MINIMUM_PERCENT = 50
 
+  DEFAULT_APP_NAME = "(no name yet)"
   MOBILE_APP_SUBMISSION_TYPE = "Mobile App"
   AI_PROJECT_SUBMISSION_TYPE = "AI Project"
 
@@ -472,7 +473,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def app_name
     if (self[:app_name] || "").strip.blank?
-      "(no name yet)"
+      TeamSubmission::DEFAULT_APP_NAME
     else
       self[:app_name].strip
     end
