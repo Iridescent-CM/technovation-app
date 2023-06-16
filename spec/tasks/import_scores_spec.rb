@@ -12,7 +12,7 @@ RSpec.describe "Tasks: rails import_scores" do
                                     team: team)
 
     headers = %w{team_submission_id ideation_1}
-    rows = [%w{hello-world 4}]
+    rows = [%w{hello-by-world 4}]
 
     CSV.open("./tmp/test.csv", "wb") do |csv|
       csv << headers

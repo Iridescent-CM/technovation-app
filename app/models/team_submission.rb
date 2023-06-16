@@ -642,9 +642,11 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def team_name_and_app_name
-    [
-      [:app_name, :team_name, :slug]
-    ]
+    "#{app_name} by #{team_name}"
+  end
+
+  def should_generate_new_friendly_id?
+    app_name_changed? || team.name_changed? || super
   end
 
   def copy_possible_thunkable_url
