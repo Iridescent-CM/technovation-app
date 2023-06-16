@@ -12,7 +12,7 @@ FactoryBot.define do
     end
 
     trait :live_event_eligible do
-      team_submissions { build_list :submission, 1 }
+      team_submissions { create_list :submission, 1 }
     end
 
     trait :not_live_event_eligible do
