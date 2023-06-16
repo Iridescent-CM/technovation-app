@@ -50,7 +50,7 @@ gem "country_state_select", "~> 3.0"
 
 gem "nokogiri", "~> 1.11.0"
 
-gem "friendly_id", "~> 5.4"
+gem "friendly_id", "~> 5.5"
 
 gem "bcrypt", "~> 3.1"
 
