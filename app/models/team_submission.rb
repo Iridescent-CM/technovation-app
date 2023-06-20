@@ -44,7 +44,7 @@ class TeamSubmission < ActiveRecord::Base
   acts_as_paranoid
 
   extend FriendlyId
-  friendly_id :team_name_and_app_name,
+  friendly_id :project_name_by_team_name,
     use: :scoped,
     scope: :deleted_at
 
@@ -641,7 +641,7 @@ class TeamSubmission < ActiveRecord::Base
     return url
   end
 
-  def team_name_and_app_name
+  def project_name_by_team_name
     "#{app_name} by #{team_name}"
   end
 
