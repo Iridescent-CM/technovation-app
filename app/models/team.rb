@@ -10,6 +10,8 @@ class Team < ActiveRecord::Base
 
   include PublicActivity::Common
 
+  after_commit :regenerate_team_submission_friendly_id
+
   after_commit -> {
     return false if destroyed?
 
@@ -410,6 +412,12 @@ class Team < ActiveRecord::Base
   end
 
   private
+
+  def regenerate_team_submission_friendly_id
+    if saved_change_to_name? && !submission.is_a?(NullTeamSubmission)
+      submission.update(slug: nil)
+    end
+  end
 
   def default_team_photo_url
     if Season.current.year >= 2023 && current?

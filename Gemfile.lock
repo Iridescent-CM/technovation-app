@@ -221,7 +221,7 @@ GEM
       fog-core
       nokogiri (>= 1.5.11, < 2.0.0)
     formatador (0.3.0)
-    friendly_id (5.4.2)
+    friendly_id (5.5.0)
       activerecord (>= 4.0.0)
     geocoder (1.4.9)
     gibbon (3.4.4)
@@ -576,7 +576,7 @@ DEPENDENCIES
   filestack-rails
   flag_shih_tzu (~> 0.3)
   fog-aws (~> 1.4)
-  friendly_id (~> 5.4)
+  friendly_id (~> 5.5)
   geocoder (~> 1.4.9)
   gibbon (~> 3.4.4)
   hiredis (~> 0.6)

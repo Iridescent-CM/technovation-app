@@ -18,7 +18,7 @@ module Admin
       @team_submission = TeamSubmission.friendly.find(params[:id])
 
       if @team_submission.update(team_submission_params)
-        redirect_to admin_team_submission_path,
+        redirect_to admin_team_submission_path(@team_submission),
         success: "Submission has been updated"
       else
         flash.now[:alert] = if @team_submission.errors.full_messages
