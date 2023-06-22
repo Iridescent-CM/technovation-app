@@ -1,4 +1,10 @@
 <%= javascript_tag do %>
+    function onFileSelected(file) {
+      if (file.size >  2 * 1024 * 1024) {
+          throw new Error("Image is too large. Please select a photo under 2MB.");
+      }
+    }
+
   function onFileUploadFinished(data) {
     $("#team_team_photo").val(data.url);
 
