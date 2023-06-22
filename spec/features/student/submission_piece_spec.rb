@@ -39,12 +39,11 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
-  # scenario "Set the team photo" do
-  #   click_link "Team photo"
-  #   click_link "Summary"
-  #   expect(page).to have_selector("#filestack-team-photo-form", visible: false)
-  #   expect(page).to have_button "Change Image"
-  # end
+  scenario "Set the team photo" do
+    click_link "Team photo"
+    expect(page).to have_selector("#filestack-team-photo-form", visible: false)
+    expect(page).to have_button "Change Image"
+  end
 
   scenario "Set the project description" do
     click_link "Ideation"
