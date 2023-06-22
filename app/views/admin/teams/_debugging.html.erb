@@ -63,6 +63,7 @@
           <th>Email</th>
           <th>User type</th>
           <th>Status</th>
+          <th></th>
         </tr>
       </thead>
 
@@ -79,6 +80,19 @@
             <% end %>
 
             <td><%= invite.status %></td>
+            <td>
+              <% if current_account.admin? %>
+                <%= link_to(
+                  "Delete invitation",
+                  admin_team_member_invite_path(invite),
+                  data: {
+                    method: :delete,
+                    confirm: t("controllers.invites.destroy.confirm",
+                               name: invite.invitee_name),
+                  }
+                ) %>
+            <% end %>
+          </td>
           </tr>
         <% end %>
       </tbody>
