@@ -4,9 +4,10 @@ class ConvertMentorTypeToMentorTypes < ActiveRecord::Migration[6.1]
 
     MentorProfile.find_each do |mentor_profile|
       if mentor_profile.mentor_type.present?
-        mentor_profile.mentor_types << mentor_types[mentor_profile.mentor_type]
-
-        mentor_profile.save
+        MentorProfileMentorType.create!(
+          mentor_profile_id: mentor_profile.id,
+          mentor_type_id: mentor_types[mentor_profile.mentor_type].id
+        )
       end
     end
 
