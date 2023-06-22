@@ -13,7 +13,7 @@
       url: "<%= send("#{current_scope}_team_path", @team) %>",
       data: $("#filestack-team-photo-form").serialize(),
       success: function() {
-        const teamPhoto = $("#team-photo");
+        const teamPhoto = $(".filestack-team-photo");
         teamPhoto.attr("src", filestack_client.transform(data.handle))
       }
     });

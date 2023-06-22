@@ -22,5 +22,5 @@
              attribute: :team_photo,
              cta_when_empty: "Upload your team photo",
              cta_when_filled: "Change your team photo" do %>
-    <%= image_tag @team.team_photo_url, class: "grid__cell-img", id: "team-photo" %>
+    <%= image_tag @team.team_photo_url, class: "grid__cell-img filestack-team-photo" %>
   <% end %>
