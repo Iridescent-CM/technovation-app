@@ -67,18 +67,18 @@
       </thead>
 
       <tbody>
-        <% team.team_member_invites.each do |i| %>
+        <% team.team_member_invites.each do |invite| %>
           <tr>
-            <td><%= i.id %></td>
-            <td><%= i.invitee_email %></td>
+            <td><%= invite.id %></td>
+            <td><%= invite.invitee_email %></td>
 
-            <% if i.invitee %>
-              <td><%= i.invitee_type %></td>
+            <% if invite.invitee %>
+              <td><%= invite.invitee_type %></td>
             <% else %>
               <td>Not yet registered</td>
             <% end %>
 
-            <td><%= i.status %></td>
+            <td><%= invite.status %></td>
           </tr>
         <% end %>
       </tbody>
