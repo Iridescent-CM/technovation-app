@@ -25,18 +25,5 @@
                         "Change Image",
                         id: "team-photo-filepicker",
                         class: "filestack-picker-btn",
-                        pickerOptions: {
-                          accept: ["image/jpeg", "image/jpg", "image/png"],
-                          fromSources: ["local_file_system","webcam", "url"],
-                          uploadConfig: {
-                            intelligent: true,
-                          },
-                          onFileUploadFinished: "onFileUploadFinished",
-                          storeTo: {
-                            location: "s3",
-                            container: ENV.fetch("AWS_BUCKET_NAME"),
-                            path: "uploads/team/team_photo/#{current_team.id}/",
-                            region: "us-east-1"
-                          }
-                        } %>
+                        pickerOptions: filestack_picker_options(@team) %>
 <% end %>
