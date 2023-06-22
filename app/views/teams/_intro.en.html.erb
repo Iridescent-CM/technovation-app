@@ -5,16 +5,9 @@
 %>
 
 <div class="<%= hidden_on.map { |size| "hidden-#{size}" }.join(" ") %>">
-  <%= image_tag team.team_photo_url, class: "grid__cell-img", id: "team-photo" %>
+  <%= image_tag team.team_photo_url, class: "grid__cell-img filestack-team-photo"%>
 
-  <% if @team.current? %>
+  <% if @team.current? && !admin_chapter_ambassador %>
     <%= render "filestack_uploads/team_photo_upload", current_team: @team %>
-  <% end %>
-
-  <% unless admin_chapter_ambassador %>
-    <%= render 'image_upload',
-        modal_id: modal_id,
-        heading: "Upload a team photo",
-        size: "450x300" %>
   <% end %>
 </div>
