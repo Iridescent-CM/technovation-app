@@ -1,0 +1,7 @@
+<div class="panel">
+  <h3 class="panel--heading">
+    Team Photo
+  </h3>
+  <%= image_tag @team.team_photo_url, class: "thumbnail--mdlg", id: "team-photo" %>
+  <%= render "filestack_uploads/team_photo_upload" %>
+</div>
