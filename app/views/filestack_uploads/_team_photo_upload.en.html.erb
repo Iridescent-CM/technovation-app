@@ -1,13 +1,19 @@
 <%= javascript_tag do %>
+    function onFileSelected(file) {
+      if (file.size >  2 * 1024 * 1024) {
+          throw new Error("Image is too large. Please select a photo under 2MB.");
+      }
+    }
+
   function onFileUploadFinished(data) {
     $("#team_team_photo").val(data.url);
 
     $.ajax({
       method: "PATCH",
-      url: "#{current_scope}_team_path",
+      url: "<%= send("#{current_scope}_team_path", @team) %>",
       data: $("#filestack-team-photo-form").serialize(),
       success: function() {
-        const teamPhoto = $("#team-photo");
+        const teamPhoto = $(".filestack-team-photo");
         teamPhoto.attr("src", filestack_client.transform(data.handle))
       }
     });
@@ -19,18 +25,5 @@
                         "Change Image",
                         id: "team-photo-filepicker",
                         class: "filestack-picker-btn",
-                        pickerOptions: {
-                          accept: ["image/jpeg", "image/jpg", "image/png"],
-                          fromSources: ["local_file_system","webcam", "url"],
-                          uploadConfig: {
-                            intelligent: true,
-                          },
-                          onFileUploadFinished: "onFileUploadFinished",
-                          storeTo: {
-                            location: "s3",
-                            container: ENV.fetch("AWS_BUCKET_NAME"),
-                            path: "uploads/team/team_photo/#{current_team.id}/",
-                            region: "us-east-1"
-                          }
-                        } %>
+                        pickerOptions: filestack_picker_options(@team) %>
 <% end %>

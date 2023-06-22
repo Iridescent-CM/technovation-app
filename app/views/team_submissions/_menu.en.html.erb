@@ -28,8 +28,9 @@
             "Team photo"
           ),
           send(
-            "#{current_scope}_team_path",
-            current_team
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :team_photo
           ) %>
         </li>
       </ol>

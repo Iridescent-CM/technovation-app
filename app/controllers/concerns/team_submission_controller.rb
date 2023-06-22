@@ -34,7 +34,7 @@ module TeamSubmissionController
       )
       redirect_to send("#{current_scope}_team_submission_section_path",
         @team_submission,
-        section: SubmissionSection::SECTION_NAMES[1]
+        section: SubmissionSection::SECTION_NAMES[0]
       ),
         success: t("controllers.team_submissions.create.success")
     else
