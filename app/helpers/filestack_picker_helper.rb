@@ -23,6 +23,8 @@ module FilestackPickerHelper
   def aws_path(record)
     if record.is_a?(TeamSubmission)
       "uploads/screenshot/filestack/#{record.id}/"
+    elsif record.is_a?(Team)
+      "uploads/team/team_photo/#{record.id}/"
     end
   end
 end
