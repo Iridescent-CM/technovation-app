@@ -10,7 +10,7 @@
 
     $.ajax({
       method: "PATCH",
-      url: "#{current_scope}_team_path",
+      url: "<%= send("#{current_scope}_team_path", @team) %>",
       data: $("#filestack-team-photo-form").serialize(),
       success: function() {
         const teamPhoto = $("#team-photo");
