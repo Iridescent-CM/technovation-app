@@ -2,6 +2,7 @@ module LearnWorlds
   class ApiClient
     def initialize(
       client_id: ENV.fetch("LEARNWORLDS_API_CLIENT_ID"),
+      base_url: ENV.fetch("LEARNWORLDS_API_BASE_URL"),
       authentication_service: LearnWorlds::Authentication.new,
       http_client: Faraday,
       logger: Rails.logger,
@@ -9,7 +10,7 @@ module LearnWorlds
     )
 
       @client = http_client.new(
-        url: ENV.fetch("LEARNWORLDS_API_BASE_URL"),
+        url: base_url,
         headers: {
           "Lw-Client" => client_id,
           "Authorization" => "Bearer #{authentication_service.access_token}"
