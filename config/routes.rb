@@ -171,6 +171,7 @@ Rails.application.routes.draw do
     resources :teams, only: [:show, :index, :edit, :update]
     resources :team_submissions, only: [:index, :show]
     resources :team_memberships, only: [:create, :destroy]
+    resources :team_member_invites, only: [:destroy]
 
     resources :activities, only: :index
 
