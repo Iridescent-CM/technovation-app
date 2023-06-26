@@ -22,9 +22,9 @@ RSpec.describe Account do
           let(:student_email_address) { "rose@example.com" }
           let(:parent_guardian_email_address) { "rose@example.com" }
 
-          it "is not valid and adds an error to the email attribute" do
-            expect(student_account).not_to be_valid
-            expect(student_account.errors[:email]).to include "cannot be the same as parent/guardian email address"
+          it "is valid and does not add an error to the email attribute" do
+            expect(student_account).to be_valid
+            expect(student_account.errors[:email]).to be_blank
           end
         end
 
@@ -46,9 +46,9 @@ RSpec.describe Account do
           let(:student_email_address) { "petunia@example.com" }
           let(:parent_guardian_email_address) { "petunia@example.com" }
 
-          it "is not valid and adds an error to the email attribute" do
-            expect(student_account).not_to be_valid
-            expect(student_account.errors[:email]).to include "cannot be the same as parent/guardian email address"
+          it "is valid and does not add an error to the email attribute" do
+            expect(student_account).to be_valid
+            expect(student_account.errors[:email]).to be_blank
           end
         end
 

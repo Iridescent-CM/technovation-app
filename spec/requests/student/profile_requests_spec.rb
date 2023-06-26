@@ -119,8 +119,9 @@ RSpec.describe "Student Profile Requests", type: :request do
         }
       end
 
-      it "renders the edit email address template" do
-        expect(response).to render_template("email_addresses/edit")
+      it "redirects to the student profile" do
+        expect(response).to redirect_to(student_profile_path)
+        expect(flash[:success]).to eq("You updated your account!")
       end
     end
 
