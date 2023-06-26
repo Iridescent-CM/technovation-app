@@ -545,8 +545,6 @@ class Account < ActiveRecord::Base
     ])
   }
 
-  validates_with StudentEmailValidator
-
   def self.find_with_token(token)
     find_by(auth_token: token) || ::NullAuth.new
   end

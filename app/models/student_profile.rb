@@ -246,12 +246,6 @@ class StudentProfile < ActiveRecord::Base
       errors.add(a, :blank)
     end
 
-    if (account.division.junior? || account.division.senior?) &&
-        (parent_guardian_email == account.email)
-
-      errors.add(:parent_guardian_email, :matches_student_email)
-    end
-
     validate_valid_parent_email
 
     errors.empty?
