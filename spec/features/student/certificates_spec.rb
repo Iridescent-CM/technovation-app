@@ -64,6 +64,7 @@ RSpec.feature "Student certificates" do
 
       click_link("View your scores and certificate")
       expect(page).to have_content("Congratulations, your team was a quarterfinalist!")
+      expect(page).to have_content("#Technovation#{Season.current.year}Alumna")
 
       click_link("Certificates")
       expect(page).to have_link(

@@ -72,15 +72,14 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_content("Certificates are currently unavailable.")
   end
 
-  scenario "non-onboarded judges see no certificates or badge" do
+  scenario "non-onboarded judges see no certificates when judging is set to finished" do
+    SeasonToggles.set_judging_round(:finished)
     SeasonToggles.display_scores_on!
 
     judge = FactoryBot.create(:judge)
-
-    FillPdfs.(judge.account)
     sign_in(judge)
 
-    expect(page).to have_content("To be able to judge submissions online this season, make sure to complete the items on the left: Consent Waiver and Judge Training.")
+    expect(page).to have_content("Thank you for your interest in judging this season. The season is currently finished.")
     expect(page).not_to have_link("Your judge certificate")
   end
 

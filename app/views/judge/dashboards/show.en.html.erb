@@ -14,9 +14,7 @@
            <% if current_judge.onboarded? %>
             <%= render 'judge/dashboards/onboarded/dashboard' %>
           <% else %>
-            <div class="mb-4">
-              <p>To be able to judge submissions online this season, make sure to complete the items on the left: Consent Waiver and Judge Training.</p>
-            </div>
+            <%= render 'judge/dashboards/not_onboarded/dashboard' %>
           <% end %>
         </div>
         <% if current_judge.onboarded? %>
