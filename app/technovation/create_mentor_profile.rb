@@ -27,7 +27,7 @@ module CreateMentorProfile
       {
         school_company_name: account.student_profile.school_name,
         job_title: "Technovation Alumnus",
-        mentor_type_ids: [MentorType.find_by(name: "Technovation alumnae")&.id]
+        mentor_type_ids: [MentorType.find_by(name: "Technovation alumna")&.id]
       }
     end
   end

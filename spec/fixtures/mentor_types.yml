@@ -10,8 +10,8 @@ parent:
   name: Parent
   order: 3
 
-technovation_alumnae:
-  name: Technovation alumnae
+technovation_alumna:
+  name: Technovation alumna
   order: 4
 
 postsecondary_student:
