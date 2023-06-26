@@ -3,13 +3,14 @@ module LearnWorlds
     def initialize(
       client_id: ENV.fetch("LEARNWORLDS_API_CLIENT_ID"),
       client_secret: ENV.fetch("LEARNWORLDS_API_CLIENT_SECRET"),
+      base_url: ENV.fetch("LEARNWORLDS_API_BASE_URL"),
       http_client: Faraday,
       logger: Rails.logger,
       error_notifier: Airbrake
     )
 
       @client = http_client.new(
-        url: ENV.fetch("LEARNWORLDS_API_BASE_URL"),
+        url: base_url,
         headers: {
           "Lw-Client" => client_id
         }
