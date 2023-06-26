@@ -6,7 +6,7 @@
   <% if team.submission.present? %>
     <p>
       View this team's submission:
-      <%= link_to team.submission.app_name, send("#{current_scope}_team_submission_path", team.submission)  %>
+      <%= link_to team.submission.app_name, send("#{current_scope}_team_submission_path", team.submission) %>
     </p>
 
     <%= submission_progress_bar(team.submission) %>
@@ -81,17 +81,17 @@
 
             <td><%= invite.status %></td>
             <td>
-              <% if current_account.admin? %>
-                <%= link_to(
-                  "Delete invitation",
-                  admin_team_member_invite_path(invite),
-                  data: {
-                    method: :delete,
-                    confirm: t("controllers.invites.destroy.confirm",
-                               name: invite.invitee_name),
-                  }
-                ) %>
-            <% end %>
+              <%= link_to(
+                "Delete invitation",
+                send("#{current_scope}_team_member_invite_path", invite),
+                data: {
+                  method: :delete,
+                  confirm: t(
+                    "controllers.invites.destroy.confirm",
+                    name: invite.invitee_name
+                  )
+                }
+              ) %>
           </td>
           </tr>
         <% end %>
