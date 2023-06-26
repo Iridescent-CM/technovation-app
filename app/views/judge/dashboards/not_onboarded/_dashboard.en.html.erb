@@ -1,0 +1,9 @@
+<div class="relative">
+  <% if SeasonToggles.judging_finished? %>
+      <%= render 'judge/dashboards/not_onboarded/judging_finished' %>
+  <% else %>
+    <div class="mb-4">
+      <p>To be able to judge submissions online this season, make sure to complete the items on the left: Consent Waiver and Judge Training.</p>
+    </div>
+  <% end %>
+</div>
