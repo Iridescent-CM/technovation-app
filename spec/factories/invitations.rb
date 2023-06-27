@@ -7,6 +7,14 @@ FactoryBot.define do
     trait :pending do
       status { :pending }
     end
+
+    trait :accepted do
+      status { :accepted }
+    end
+
+    trait :declined do
+      status { :declined }
+    end
   end
 
   factory :mentor_invite do
