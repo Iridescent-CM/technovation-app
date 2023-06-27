@@ -5,6 +5,9 @@ module FilestackPickerHelper
       uploadConfig: {
         intelligent: true
       },
+      customText: {
+        "Select Files to Upload": "Select Files to Upload (Max 2MB)"
+      },
       maxSize: 2 * 1024 * 1024, # 2 MB LIMIT
       fromSources: ["local_file_system"],
       onFileSelected: "onFileSelected",
