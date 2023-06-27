@@ -35,7 +35,7 @@ namespace :certificates do
   task :award_batch_direct, [:starting_id, :batch_size] => :environment do |t, args|
     accounts = Account.current
       .where("id > ?", args[:starting_id])
-      .first(args[:batch_size])
+      .first(args[:batch_size].to_i)
 
     accounts.each do |account|
       award_to(account)
