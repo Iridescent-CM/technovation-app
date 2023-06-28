@@ -269,7 +269,7 @@ class StudentProfile < ActiveRecord::Base
 
   def media_consent_signed?
     !!media_consent && media_consent.signed?
-  end  
+  end
 
   def can_search_teams?
     SeasonToggles.team_building_enabled? and
@@ -382,14 +382,6 @@ class StudentProfile < ActiveRecord::Base
         !parent_guardian_email_changed? &&
         parent_guardian_email == ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
       )
-
-    if Account.joins(:student_profile, :division)
-        .where("lower(email) = ?", parent_guardian_email.downcase)
-        .where.not(division: {name: "beginner"})
-        .any?
-
-      errors.add(:parent_guardian_email, :found_in_student_accounts)
-    end
 
     if not parent_guardian_email.match(
       /^[^@\.][\w\.\-]+(?:\+?[\w\.\-]+)?@[\w\.\-]+\w+$/
