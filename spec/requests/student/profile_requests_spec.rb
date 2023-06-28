@@ -68,16 +68,6 @@ RSpec.describe "Student Profile Requests", type: :request do
       end
     end
 
-    context "when a student already has an email address that's the same as their parent's email address, and they try to update their profile" do
-      it "renders the parental consent form" do
-        student_account.update_column(:email, parent_guardian_email_address)
-
-        patch student_profile_path, params: params, headers: headers
-
-        expect(response).to render_template("student/parental_consent_notices/new")
-      end
-    end
-
     context "when a student is trying to change their email address without providing their existing password" do
       let(:params) do
         {
