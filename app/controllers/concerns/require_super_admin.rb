@@ -1,4 +1,4 @@
-module AdminHelper
+module RequireSuperAdmin
   extend ActiveSupport::Concern
 
   private

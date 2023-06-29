@@ -1,7 +1,7 @@
 module Admin
   class TeamSubmissionsController < AdminController
-    include AdminHelper
     include DatagridController
+    include RequireSuperAdmin
 
     before_action :require_super_admin, only: [:unpublish]
     use_datagrid with: SubmissionsGrid

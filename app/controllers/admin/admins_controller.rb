@@ -1,6 +1,6 @@
 module Admin
   class AdminsController < AdminController
-    include AdminHelper
+    include RequireSuperAdmin
 
     before_action :get_admins, only: [:index, :destroy]
     before_action :require_super_admin, only: [:new, :create, :destroy, :make_super_admin]
