@@ -133,3 +133,9 @@
     <% end %>
   <% end %>
 </div>
+
+<% if @account.is_a_student? || (@account.is_a_mentor? && @account.is_not_a_judge?) %>
+  <div class="panel">
+    <%= remove_participant_button(@account) %>
+  </div>
+<% end %>

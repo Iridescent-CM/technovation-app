@@ -159,7 +159,7 @@ Rails.application.routes.draw do
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
     resources :accounts, only: :show, controller: :participants
-    resources :participants, only: [:index, :show, :edit, :update]
+    resources :participants, only: [:index, :show, :edit, :update, :destroy]
     resources :participant_sessions, only: [:show, :destroy]
 
     resources :student_conversions, only: :create

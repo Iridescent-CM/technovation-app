@@ -1,6 +1,7 @@
 module ChapterAmbassador
   class ParticipantsController < ChapterAmbassadorController
     include DatagridController
+    include Admin::DeleteParticipantConcern
 
     use_datagrid with: AccountsGrid,
 
