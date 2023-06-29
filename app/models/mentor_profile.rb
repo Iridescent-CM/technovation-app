@@ -263,6 +263,10 @@ class MentorProfile < ActiveRecord::Base
     Date.today.year - 15
   end
 
+  def type_names
+    mentor_types.flat_map(&:name)
+  end
+
   def expertise_names
     expertises.flat_map(&:name)
   end
