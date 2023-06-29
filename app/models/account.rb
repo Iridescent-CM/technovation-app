@@ -717,6 +717,10 @@ class Account < ActiveRecord::Base
           mentor_profile.present?
   end
 
+  def is_a_student?
+    student_profile.present?
+  end
+
   def is_a_judge?
     judge_profile.present?
   end
