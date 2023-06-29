@@ -42,7 +42,6 @@ es-MX:
         student_profile:
           attributes:
             parent_guardian_email:
-              found_in_student_accounts: "no puede ser igual al correo electrónico de otro estudiante"
               invalid: "parece no ser una dirección de correo válida"
               matches_student_email: "no puede ser el mismo que tu correo electrónico"
 

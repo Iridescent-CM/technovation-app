@@ -40,7 +40,6 @@ en:
         student_profile:
           attributes:
             parent_guardian_email:
-              found_in_student_accounts: "cannot match any other student's email address"
               invalid: "does not appear to be an email address"
               matches_student_email: "cannot match any other student's email address"
 
