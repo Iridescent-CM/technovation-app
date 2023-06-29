@@ -212,15 +212,7 @@
         account: @account %>
 
     <div class="panel">
-      <%= link_to(
-        "Remove #{@account.name} from Technovation Girls",
-        admin_participant_path(@account),
-        class: "button danger",
-        data: {
-          method: :delete,
-          confirm: "You are about to remove #{@account.name} from Technovation Girls!",
-        }
-      ) %>
+      <%= remove_participant_button(@account) %>
 
       <br><br>
 

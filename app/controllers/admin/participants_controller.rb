@@ -1,6 +1,7 @@
 module Admin
   class ParticipantsController < AdminController
     include DatagridController
+    include Admin::DeleteParticipantConcern
 
     helper_method :parental_consent_pending?
 
@@ -42,16 +43,6 @@ module Admin
       else
         render :edit
       end
-    end
-
-    def destroy
-      account = Account.find(params[:id])
-
-      DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
-      account.destroy
-
-      redirect_to admin_participants_path,
-        success: "#{account.name} was removed from Technovation Girls"
     end
 
     def permanently_delete
