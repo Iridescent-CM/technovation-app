@@ -19,9 +19,9 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
-  column :mentor_type do
+  column :mentor_types do
     if mentor_profile.present?
-      mentor_profile.type_names.join(", ")
+      mentor_profile.mentor_types.pluck(:name).join(",")
     else
       "-"
     end
@@ -514,7 +514,7 @@ class AccountsGrid
   filter :mentor_types,
     :enum,
     header: "Mentor Type",
-    select: proc { MentorType.all.map { |c| [c.name, c.id] } },
+    select: proc { MentorType.all.map { |m| [m.name, m.id] } },
     filter_group: "more-specific",
     html: {
       class: "and-or-field"
