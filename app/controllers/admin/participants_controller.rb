@@ -75,7 +75,8 @@ module Admin
         state_province: Array(params[:accounts_grid][:state_province]),
         season: params[:accounts_grid][:season] || Season.current.year,
         season_and_or: params[:accounts_grid][:season_and_or] ||
-                         "match_any"
+                         "match_any",
+        mentor_types: params[:accounts_grid][:mentor_types]
       )
 
       grid.merge(
