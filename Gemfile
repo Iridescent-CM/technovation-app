@@ -48,7 +48,7 @@ gem "datagrid", "~> 1.5"
 gem "simple_form", "~> 5.0"
 gem "country_state_select", "~> 3.0"
 
-gem "nokogiri", "~> 1.11.0"
+gem "nokogiri", "~> 1.14.0"
 
 gem "friendly_id", "~> 5.5"
 
