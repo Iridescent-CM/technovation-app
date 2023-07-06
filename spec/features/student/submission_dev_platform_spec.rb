@@ -53,20 +53,20 @@ RSpec.feature "Students edit submission development platform" do
     click_button "Save"
 
     expect(page).to have_css(
-      ".field_with_errors #team_submission_thunkable_project_url",
+      ".field_with_errors #team_submission_thunkable_project_url"
     )
 
     fill_in "What is the email address of your team's Thunkable account (optional)?",
       with: "our-team@thunkable.com"
 
     fill_in "What is the URL to your Thunkable project?",
-      with: "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4"
+      with: "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
 
     click_button "Save"
 
     within(".development_platform.complete") do
       expect(page).to have_content "Thunkable"
-      expect(page).to have_link "https://x.thunkable.com/projects/47d800b3aa47590210ad662249e63dd4"
+      expect(page).to have_link "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
     end
   end
 end
