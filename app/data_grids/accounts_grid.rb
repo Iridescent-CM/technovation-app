@@ -21,7 +21,7 @@ class AccountsGrid
 
   column :mentor_types do
     if mentor_profile.present?
-      mentor_profile.mentor_types.pluck(:name).join(",")
+      mentor_profile.mentor_profile_mentor_types.joins(:mentor_type).pluck(:name).join(", ")
     else
       "-"
     end
