@@ -3,6 +3,7 @@ ruby "3.1.2"
 
 gem "rails", "~> 6.1.0"
 gem "rack", "~> 2.2.0"
+gem "rails-html-sanitizer", "~> 1.4.0"
 
 gem "puma", "~> 4.3.12"
 gem "pg", "~> 1.2"
