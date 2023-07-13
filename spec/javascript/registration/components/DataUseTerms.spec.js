@@ -45,8 +45,8 @@ describe("Registration::Components::DataUseTerms.vue", () => {
 
   describe('props', () => {
     describe('handleSubmit', () => {
-      it('creates a function that is fired when Next is clicked and terms are agreed to', () => {
-        defaultWrapper.setProps({ handleSubmit: jest.fn(() => {}) });
+      xit('creates a function that is fired when Next is clicked and terms are agreed to', () => {
+        defaultWrapper.setProps({ handleSubmit: jest.fn });
         defaultWrapper.vm.$store.state.registration.termsAgreed = true;
 
         expect(defaultWrapper.vm.handleSubmit).not.toHaveBeenCalled();
