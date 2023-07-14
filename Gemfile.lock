@@ -329,7 +329,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    pdfkit (0.8.4.3.2)
+    pdfkit (0.8.7.3)
     pg (1.2.3)
     pp_sql (0.2.10)
       anbt-sql-formatter (~> 0.0.6)
@@ -598,7 +598,7 @@ DEPENDENCIES
   paranoia (~> 2.4)
   pdf-forms (~> 1.2)
   pdf-reader (~> 2.4)
-  pdfkit (= 0.8.4.3.2)
+  pdfkit (~> 0.8.7.0)
   pg (~> 1.2)
   pp_sql (~> 0.2)
   premailer-rails (~> 1.10)

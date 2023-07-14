@@ -90,7 +90,7 @@ gem "loofah", "~> 2.2"
 
 gem "dotenv-rails", "~> 2.7"
 
-gem "pdfkit", "0.8.4.3.2"
+gem "pdfkit", "~> 0.8.7.0"
 
 gem "gibbon", "~> 3.4.4"
 
