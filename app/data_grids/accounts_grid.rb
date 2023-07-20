@@ -19,6 +19,10 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :gender, header: "Gender Identity" do |account|
+    account.gender.present? ? account.gender : "-"
+  end
+
   column :mentor_types do
     if mentor_profile.present?
       mentor_profile.mentor_profile_mentor_types.joins(:mentor_type).pluck(:name).join(", ")
