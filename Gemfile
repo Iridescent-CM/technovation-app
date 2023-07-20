@@ -122,7 +122,7 @@ group :test do
 
   gem "capybara", "~> 3.37"
   gem "capybara-email", "~> 3.0"
-  gem "webdrivers"
+  gem "selenium-webdriver"
   gem "rspec-rails", "~> 5.0"
   gem "rspec-retry"
 
