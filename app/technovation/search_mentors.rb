@@ -44,11 +44,6 @@ module SearchMentors
       nearby = "Palestine"
     end
 
-    if nearby.is_a?(String)
-      geocoder = Geocoder.search(nearby).first
-      nearby = [geocoder.latitude, geocoder.longitude]
-    end
-
     mentors.joins(:account).near(nearby, miles)
   end
 end
