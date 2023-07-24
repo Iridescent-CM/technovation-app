@@ -6,8 +6,8 @@
     <div class="tw-content=-wrapper p-8">
       <section>
         <p>
-          Learn how to make your project as strong as possible by following these lessons.
-          Most participants spend around 40+ hours working on their ideas.
+          Learn how to make your project strong with these lessons.
+          Most participants spend more than 40 hours working on their ideas.
         </p>
       </section>
       <section>
@@ -21,7 +21,7 @@
       <section>
         <h1 class="mt-6"><strong>Junior and Senior Divisions</strong></h1>
         <p class="mt-3">
-          <a href="https://technovationchallenge.org/curriculum-intro/registered/new/" class="tw-green-btn"
+          <a href="https://technovationchallenge.org/curriculum-landing-page" class="tw-green-btn"
              target="_blank">
             Go to Junior/Senior Lessons
           </a>
@@ -53,7 +53,7 @@
           </li>
           <li>
             <a href="https://www.technovation.org/app-gallery/" target="_blank" class="tw-link">
-              Apps and AI Inventions from Past Teams
+              Projects from Past Teams
             </a>
           </li>
         </ul>
