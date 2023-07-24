@@ -59,7 +59,7 @@ RSpec.feature "Students edit submission development platform" do
     fill_in "What is the email address of your team's Thunkable account (optional)?",
       with: "our-team@thunkable.com"
 
-    fill_in "What is the URL to your Thunkable project?",
+    fill_in "What is the URL to your Thunkable project? detail page?",
       with: "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
 
     click_button "Save"
