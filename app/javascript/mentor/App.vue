@@ -57,9 +57,15 @@ export default {
     return {
       resourceLinks: [
         {
-          heading: 'Student Curriculum',
-          url: '/mentor/dashboard#/curriculum',
-          text: 'Open the Technovation Curriculum',
+          heading: 'Beginner Students',
+          url: 'https://beginner.technovationchallenge.org/',
+          text: 'Open the Curriculum',
+        },
+
+        {
+          heading: 'Junior and Senior Students',
+          url: 'https://technovationchallenge.org/curriculum-landing-page/',
+          text: 'Open the Curriculum',
         },
 
         {
