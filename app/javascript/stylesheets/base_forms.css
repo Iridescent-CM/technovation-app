@@ -13,10 +13,11 @@
     input[type="time"],
     input[type="search"],
     input[type="tel"],
+    input[type="file"],
     select,
     select[multiple],
     textarea {
-        @apply rounded border-gray-400 w-full focus:border-energetic-blue focus:ring-energetic-blue
+        @apply rounded border border-gray-400 w-full focus:border-energetic-blue focus:ring-energetic-blue
     }
 
     input[type="checkbox"], input[type="radio"] {
