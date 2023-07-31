@@ -1,4 +1,5 @@
 class TermsAgreementsController < ApplicationController
+  layout "application_rebrand"
   def edit
     render :edit
   end
