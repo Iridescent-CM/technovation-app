@@ -34,49 +34,48 @@
 
       <tr>
         <td class="content-block">
-          <strong>Let's get started! This is what you can do in less than 30 minutes
-            in order to start matching with teams:</strong>
+          <strong>Let's get started! This is what you can do to start matching with teams and get ready for the season, today:</strong>
 
           <ol>
             <li>
-              Finish your mentor training if you haven’t done so already!
-              You can access the training on
-              <%= link_to "your dashboard", mentor_dashboard_url, itemprop: "url" %>.
+             Check out the ‘Getting Started’ section of the
+             <%= link_to "Mentor Resource Page",
+                         "https://technovationchallenge.org/mentor-resources/",
+                         itemprop: "url" %>
+             to find the mentor pre-season checklist. The checklist includes:
+               <ul>
+                 <li>
+                   Finish your mentor training if you haven’t done so already!
+                   You can access the training on
+                   <%= link_to "your dashboard", mentor_dashboard_url, itemprop: "url" %>.
+                 </li>
+
+                 <li>
+                   <%= link_to "Sign the consent waiver", @consent_url, itemprop: "url" %>
+                 </li>
+
+                 <li>
+                   <%= link_to "Click this link", ENV.fetch("MENTOR_SLACK_SIGNUP_URL"), itemprop: "url" %>
+                   to join our online Slack community to meet mentors from around the world.
+                 </li>
+               </ul>
             </li>
 
             <li>
-              <%= link_to "Sign the consent waiver", @consent_url, itemprop: "url" %>
-            </li>
-            
-            <li>
-              <%= link_to "Click this link", ENV.fetch("MENTOR_SLACK_SIGNUP_URL"), itemprop: "url" %>
-              to join our online Slack community to meet mentors from around the world.
-            </li>
-
-            <li>
-              Check to see if you have a Chapter Ambassador by looking at the top left corner of your Technovation Dashboard. 
+              Check to see if you have a Chapter Ambassador by looking at the top left corner of your Technovation Dashboard.
               Send an email to your Chapter Ambassador for assistance in finding a team to mentor!
             </li>
 
             <li>
-              <%= link_to "Review the important dates and timeline",
-              "https://technovationchallenge.org/wp-content/uploads/2022/09/2023-ProgramTimeline_vertical.jpg",
-               itemprop: "url" %>
-              (2 minutes)
-            </li>
-
-            <li>
-              If you are a new mentor in the U.S., you will need to
+              If you are a new mentor in the United States, Canada, or India, you will need to
               <%= link_to "complete a background check", @background_check_url, itemprop: "url" %>
               (5 minutes).
               <ul>
                 <li>Returning mentors are all set for 3 years.</li>
                 <li>
-                  In other countries and territories, we will randomly select
-                  mentors to provide references and legal certifications, and to
-                  submit to background checks where possible. If you are selected,
-                  we will contact you to complete this process. You must consent
-                  to this to be allowed and verified on our site.
+                  We reserve the right to randomly select mentors in other countries and territories to provide
+                  references, legal certifications, or background checks. If you are selected, we will contact
+                  you to complete this process before you can meet with a team.
                 </li>
               </ul>
             </li>
