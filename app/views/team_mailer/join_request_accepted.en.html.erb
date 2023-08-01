@@ -25,28 +25,34 @@
       <% if @role_name.include? 'mentor' %>
         <tr>
           <td class="content-block">
-            <p>
+            <strong>
               Next steps:
               <br>
               Now that you have joined the team, it is time to introduce yourself via email. Here is an example:
-            </p>
-            <p>Hi <%= @team_name %>,</p>
-            <p>
-              It is wonderful that you have taken the initiative to join Technovation, there is a lot that we can learn together!
-              I am excited to help you along this journey and want to set up our first meeting so we can get to know each other.
-            </p>
-            <p>
-              <%= link_to "Here", "https://www.technovation.org/wp-content/uploads/2019/10/Mentorship-Communications-Parental-Consent.pdf" %>
-              is a form that will help me set-up our communication, please share this with your parents as well so we can make
-              sure that everyone is comfortable moving forward. [Share your schedule/times that you can meet and if you will meet in
-              person or virtually]. Looking forward to working with you!
-            </p>
+            </strong>
+          </td>
+        </tr>
 
-            <p>
-              Best,
-              <br>
-              <%= @first_name %>
-            </p>
+        <tr>
+          <td class="content-block">
+            <div style="padding-left: 1rem">
+              <p>Hi <%= @team_name %>,</p>
+              <p>
+                It is wonderful that you have taken the initiative to join Technovation, there is a lot that we can learn together!
+                I am excited to help you along this journey and want to set up our first meeting so we can get to know each other.
+              </p>
+              <p>
+                <%= link_to "Here", "https://www.technovation.org/wp-content/uploads/2019/10/Mentorship-Communications-Parental-Consent.pdf" %>
+                is a form that will help me set-up our communication, please share this with your parents as well so we can make
+                sure that everyone is comfortable moving forward. [Share your schedule/times that you can meet and if you will meet in
+                person or virtually]. Looking forward to working with you!
+              </p>
+              <p>
+                Best,
+                <br>
+                <%= @first_name %>
+              </p>
+            </div>
           </td>
         </tr>
       <% end %>
