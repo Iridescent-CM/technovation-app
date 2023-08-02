@@ -1,9 +1,17 @@
-<div id="vue-enable-terms-agreement-app" class="hidden">
-  <%= content_tag :div,
-    nil,
-    id: "vue-data-account-information",
-    data: {
-      current_account: AccountSerializer.new(current_account).serialized_json,
-    } %>
-  <app></app>
+<div class="w-full lg:w-3/4 mx-auto">
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Agree to our data terms'} do %>
+    <%= form_with model: @account, url: terms_agreement_path(@account), method: :patch, local: true do |f| %>
+      <div class="mb-4">
+        <%= render 'terms_agreements/terms_agreement' %>
+      </div>
+
+      <div class="text-right">
+        <label for="terms_agreement_checkbox">
+            <%= f.check_box :terms_agreed, required: true  %>
+            I agree to these data use terms
+        </label>
+        <%= f.submit "Save changes", class: "tw-green-btn inline" %>
+      </div>
+    <% end %>
+  <% end %>
 </div>
