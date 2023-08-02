@@ -1,18 +1,27 @@
 class TermsAgreementsController < ApplicationController
+  layout "application_rebrand"
   def edit
+    @account = current_account
+
+    if @account.terms_agreed?
+      redirect_to send("#{current_account.scope_name}_dashboard_path"),
+        error: t("controllers.application.unauthorized") and return
+    end
+
     render :edit
   end
 
   def update
-    account = Account.find_by(email: terms_agreement_params[:email])
-
-    account.set_terms_agreed(terms_agreement_params[:terms_agreed])
-
-    render json: AccountSerializer.new(account).serialized_json
+    if current_account.set_terms_agreed(terms_agreement_params[:terms_agreed])
+      redirect_to send("#{current_account.scope_name}_dashboard_path")
+    else
+      @account = current_account
+      render :edit
+    end
   end
 
   private
   def terms_agreement_params
-    params.permit(:terms_agreed, :email)
+    params.require(:account).permit(:terms_agreed)
   end
 end
