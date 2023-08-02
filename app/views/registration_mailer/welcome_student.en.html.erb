@@ -31,9 +31,9 @@
           how to be safe online. In Technovation Girls, you might be connected with an adult
           mentor to support you as you develop your app or AI prototype.
           Our mentors receive educational training, but we still recommend
-          that you take a few minutes to
-          <%= link_to "learn how to keep yourself safe", @safety_url %>
-          when collaborating online or meeting in person.
+          that you take a few minutes to learn how to keep yourself safe when
+          <%= link_to "collaborating online", @internet_safety_url %> or
+          <%= link_to "meeting in person.", @in_person_safety_url %>
         </td>
       </tr>
 
@@ -87,7 +87,6 @@
 
                All parts of your project must be submitted on
                <%= link_to ENV.fetch("HOST_DOMAIN"), @root_url %>
-               (submissions open in <%= @season_submissions_open_month %>)
             </li>
           </ul>
         </td>
