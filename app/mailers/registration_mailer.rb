@@ -93,7 +93,8 @@ class RegistrationMailer < ApplicationMailer
     @season_year = Season.current.year
     @root_url = root_url(mailer_token: student.mailer_token)
     @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
-    @safety_url = "http://iridescentlearning.org/internet-safety/"
+    @internet_safety_url = "https://iridescentlearning.org/internet-safety/"
+    @in_person_safety_url = "https://www.technovation.org/safety/know-your-rights/"
     @faq_url = "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation"
 
     I18n.with_locale(student.locale) do
