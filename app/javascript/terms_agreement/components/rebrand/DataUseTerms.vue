@@ -24,14 +24,14 @@
 
           <p>Technovation Girls is owned by a non-profit organization called Technovation.</p>
 
-          <h4 class="font-semibold">No advertising</h4>
+          <h4 class="font-semibold mt-4">No advertising</h4>
 
           <p>
             We will never use, share, rent, or sell your personal data to
             anyone to advertise to you, or to manipulate you.
           </p>
 
-          <h4 class="font-semibold">Your personal data</h4>
+          <h4 class="font-semibold mt-4">Your personal data</h4>
 
           <p>
             We will only use your data to help guide you through the
@@ -45,7 +45,7 @@
             process—in order for them to support you and your team during the program.
           </p>
 
-          <h4 class="font-semibold">Newsletters and informational email</h4>
+          <h4 class="font-semibold mt-4">Newsletters and informational email</h4>
 
           <p>
             You can unsubscribe from our <strong>newsletters</strong> about the
@@ -54,7 +54,7 @@
             activity, which you will continue to receive.
           </p>
 
-          <h4 class="font-semibold">Deleting your account and data</h4>
+          <h4 class="font-semibold mt-4">Deleting your account and data</h4>
 
           <p>
             You can delete your account and data, and get a copy of your data, at any time.
@@ -62,7 +62,7 @@
           </p>
 
 
-          <h4 class="font-semibold">Background Checks</h4>
+          <h4 class="font-semibold mt-4">Background Checks</h4>
 
           <p>
             Background checks are reports of your work and legal history.
