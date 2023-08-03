@@ -16,7 +16,7 @@
 import { mapState } from 'vuex'
 import Icon from '../../../components/Icon'
 
-import EnergeticContainer from "../../components/EnergeticContainer";
+import EnergeticContainer from "../../../components/rebrand/EnergeticContainer";
 import SubmissionOverview from "../SubmissionOverview";
 import JudgeRecusalPopup from '../JudgeRecusalPopup'
 

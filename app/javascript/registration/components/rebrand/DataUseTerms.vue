@@ -109,8 +109,8 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import EnergeticContainer from "../../../judge/components/EnergeticContainer";
-import ThickRule from "../../../judge/components/ThickRule";
+import EnergeticContainer from "../../../components/rebrand/EnergeticContainer";
+import ThickRule from "../../../components/rebrand/ThickRule";
 
 const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
 

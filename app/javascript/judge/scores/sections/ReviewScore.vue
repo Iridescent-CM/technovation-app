@@ -81,9 +81,9 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import EnergeticContainer from "../../components/EnergeticContainer";
+import EnergeticContainer from "../../../components/rebrand/EnergeticContainer";
 import TeamInfo from "../TeamInfo";
-import ThickRule from "../../components/ThickRule";
+import ThickRule from "../../../components/rebrand/ThickRule";
 import SectionProgressIcons from '../pieces/SectionProgressIcons'
 
 export default {
