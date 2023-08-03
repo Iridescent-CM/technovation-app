@@ -1,0 +1,7 @@
+<% provide :title, "Admin Data • Paper Parental Consent Forms" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @parental_consents_grid,
+  form_url: admin_paper_parental_consents_path,
+  model_name: "parental_consent",
+  scope: :admin %>
