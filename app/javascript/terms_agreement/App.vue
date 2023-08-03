@@ -13,7 +13,7 @@
 import { createNamespacedHelpers } from 'vuex';
 
 import { airbrake } from 'utilities/utilities'
-import DataUseTerms from 'registration/components/DataUseTerms';
+import DataUseTerms from './components/rebrand/DataUseTerms';
 
 const { mapState } = createNamespacedHelpers('registration');
 

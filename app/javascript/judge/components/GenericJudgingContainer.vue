@@ -33,8 +33,8 @@
 <script>
 import TeamInfo from "../scores/TeamInfo";
 import QuestionSection from "../scores/QuestionSection";
-import EnergeticContainer from "./EnergeticContainer";
-import ThickRule from "./ThickRule";
+import EnergeticContainer from "../../components/rebrand/EnergeticContainer";
+import ThickRule from "../../components/rebrand/ThickRule";
 import {mapState} from "vuex";
 import {getJudgingRubricLink} from "../../utilities/judge-helpers";
 

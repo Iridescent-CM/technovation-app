@@ -60,7 +60,7 @@ import { mapState } from 'vuex'
 
 import JudgeRecusalPopup from './JudgeRecusalPopup'
 import Icon from '../../components/Icon'
-import ThickRule from "../components/ThickRule";
+import ThickRule from "../../components/rebrand/ThickRule";
 import {getJudgingRubricLink} from "../../utilities/judge-helpers";
 import {getFilestackResizeUrl} from "../../utilities/filestack-helpers";
 
