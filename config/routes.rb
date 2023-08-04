@@ -68,6 +68,7 @@ Rails.application.routes.draw do
 
     resource :downloadable_parental_consent, only: :show
     resource :parental_consent_notice, only: [:new, :create]
+    resource :paper_consent_upload, only: [:update]
   end
 
   namespace :mentor do

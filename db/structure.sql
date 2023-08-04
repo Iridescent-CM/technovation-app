@@ -1051,7 +1051,12 @@ CREATE TABLE public.parental_consents (
     updated_at timestamp without time zone NOT NULL,
     newsletter_opt_in boolean,
     seasons text[] DEFAULT '{}'::text[],
-    status integer DEFAULT 0 NOT NULL
+    status integer DEFAULT 0 NOT NULL,
+    uploaded_consent_form character varying,
+    uploaded_at timestamp without time zone,
+    upload_approval_status integer DEFAULT 0,
+    upload_approved_at timestamp without time zone,
+    upload_rejected_at timestamp without time zone
 );
 
 
@@ -3308,6 +3313,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230609172434'),
 ('20230609190316'),
 ('20230613163115'),
-('20230626193226');
+('20230626193226'),
+('20230727123214');
 
 
