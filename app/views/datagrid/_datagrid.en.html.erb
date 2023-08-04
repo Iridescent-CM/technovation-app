@@ -10,7 +10,7 @@
 
   <h6>
     <%= number_with_delimiter(grid.assets.count) %>
-    <%= model_name.pluralize(grid.assets.count) %>
+    <%= model_name.humanize.downcase.pluralize(grid.assets.count) %>
     <%= verb %>
   </h6>
 

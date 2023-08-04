@@ -310,6 +310,7 @@ Rails.application.routes.draw do
     resources :score_exports, only: [:index]
 
     resource :paper_parental_consent, only: :create
+    resources :paper_parental_consents, only: [:index]
 
     resource :paper_media_consent, only: :create
 
