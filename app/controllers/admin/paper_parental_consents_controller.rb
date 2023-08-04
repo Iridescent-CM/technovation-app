@@ -6,15 +6,12 @@ module Admin
 
     def create
       student = StudentProfile.find(params[:id])
+      parental_consent = student.parental_consent
 
-      consent = ParentalConsent.where(student_profile_id: params[:id]).last
-
-      consent.update(
+      parental_consent.update(
         status: ParentalConsent.statuses[:signed],
-        electronic_signature: "ON FILE"
+        electronic_signature: ParentalConsent::PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT
       )
-
-      consent.after_signed_student_actions
 
       redirect_to admin_participant_path(student.account),
         success: "#{student.full_name} has their paper parental consent on file."
