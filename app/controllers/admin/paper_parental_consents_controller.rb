@@ -17,6 +17,20 @@ module Admin
         success: "#{student.full_name} has their paper parental consent on file."
     end
 
+    def approve
+      parental_consent = ParentalConsent.find(params[:paper_parental_consent_id])
+
+      parental_consent.update(
+        status: ParentalConsent.statuses[:signed],
+        electronic_signature: ParentalConsent::PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT,
+        upload_approved_at: Time.now,
+        upload_approval_status: ParentalConsent::PAPER_CONSENT_UPLOAD_STATUSES[:approved]
+      )
+
+      redirect_to admin_paper_parental_consents_path,
+        success: "You approved the parental consent for #{parental_consent.student_profile_full_name}."
+    end
+
     private
 
     def grid_params
