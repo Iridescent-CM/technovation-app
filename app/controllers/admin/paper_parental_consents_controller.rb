@@ -31,6 +31,18 @@ module Admin
         success: "You approved the parental consent for #{parental_consent.student_profile_full_name}."
     end
 
+    def reject
+      parental_consent = ParentalConsent.find(params[:paper_parental_consent_id])
+
+      parental_consent.update(
+        upload_rejected_at: Time.now,
+        upload_approval_status: ParentalConsent::PAPER_CONSENT_UPLOAD_STATUSES[:rejected]
+      )
+
+      redirect_to admin_paper_parental_consents_path,
+        success: "You rejected the parental consent for #{parental_consent.student_profile_full_name}."
+    end
+
     private
 
     def grid_params

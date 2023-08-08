@@ -312,6 +312,7 @@ Rails.application.routes.draw do
     resource :paper_parental_consent, only: :create
     resources :paper_parental_consents, only: [:index] do
       patch :approve
+      patch :reject
     end
 
     resource :paper_media_consent, only: :create

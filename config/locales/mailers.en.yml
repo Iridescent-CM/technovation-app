@@ -39,6 +39,10 @@ en:
     welcome_returning_judge:
       subject: "Welcome to Technovation %{season_year}!"
 
+  student_mailer:
+    parental_consent_rejected:
+      subject: Issue with parent/guardian consent form
+
   team_mailer:
     invite_member:
       greeting:
