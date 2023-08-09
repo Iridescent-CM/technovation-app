@@ -6,7 +6,7 @@ module Student
       if @parental_consent.update(parental_consent_upload_params.merge(uploaded_at: Time.now))
         redirect_to student_dashboard_path, success: "Thank you for uploading your consent form, we will review it as soon as we can."
       else
-        redirect_to student_dashboard_path, error: "The consent form needs to be an image or in PDF format. Please try again."
+        redirect_to student_dashboard_path, error: "The consent form needs to be an image or in PDF format and less than #{PaperParentalConsentUploader::MAXIMUM_UPLOAD_FILE_SIZE_IN_MEGABYTES} MB. Please try again."
       end
     end
 
