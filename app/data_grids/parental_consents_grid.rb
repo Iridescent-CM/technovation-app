@@ -9,7 +9,7 @@ class ParentalConsentsGrid
 
   column :student, mandatory: true, html: true do |parental_consent|
     link_to(
-      parental_consent.student_profile&.account&.full_name,
+      parental_consent.student_profile_full_name,
       admin_participant_path(parental_consent.student_profile&.account)
     )
   end
@@ -19,7 +19,7 @@ class ParentalConsentsGrid
   end
 
   column :email, header: "Student Email Address", mandatory: true do |parental_consent|
-    parental_consent.student_profile&.account&.email
+    parental_consent.student_profile_email
   end
 
   column :uploaded_at, header: "Uploaded On", mandatory: true do |parental_consent|
