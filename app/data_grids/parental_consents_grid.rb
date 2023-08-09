@@ -81,7 +81,7 @@ class ParentalConsentsGrid
 
   filter :season,
     :enum,
-    select: (2015..Season.current.year).to_a.reverse,
+    select: (ParentalConsent::FIRST_SEASON_FOR_UPLOADABLE_PARENTAL_CONSENT_FORMS..Season.current.year).to_a.reverse,
     filter_group: "selections",
     html: {
       class: "and-or-field"
