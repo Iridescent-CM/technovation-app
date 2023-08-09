@@ -2643,6 +2643,13 @@ CREATE INDEX index_mentor_profiles_on_user_invitation_id ON public.mentor_profil
 
 
 --
+-- Name: index_parental_consents_on_seasons_and_upload_approval_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_parental_consents_on_seasons_and_upload_approval_status ON public.parental_consents USING btree (seasons, upload_approval_status);
+
+
+--
 -- Name: index_parental_consents_on_student_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3314,6 +3321,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230609190316'),
 ('20230613163115'),
 ('20230626193226'),
-('20230727123214');
+('20230727123214'),
+('20230809190653');
 
 
