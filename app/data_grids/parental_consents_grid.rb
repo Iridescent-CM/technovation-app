@@ -14,6 +14,10 @@ class ParentalConsentsGrid
     )
   end
 
+  column :student, html: false do |parental_consent|
+    parental_consent.student_profile_full_name
+  end
+
   column :email, header: "Student Email Address", mandatory: true do |parental_consent|
     parental_consent.student_profile&.account&.email
   end
