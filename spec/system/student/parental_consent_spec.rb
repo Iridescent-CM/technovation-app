@@ -66,4 +66,17 @@ RSpec.describe "Parental consent", :js do
 
     expect(page).to have_content("can't be blank")
   end
+
+  context "when a parental consent has been rejected" do
+    it "resets the parental consent to 'pending' when a student uploads another one" do
+      student = FactoryBot.create(:onboarding_student)
+      student.parental_consent.update(upload_rejected_at: 1.day.ago)
+
+      student.parental_consent.update(uploaded_at: Time.now)
+
+      expect(student.parental_consent.upload_approval_status).to eq("pending")
+      expect(student.parental_consent.upload_rejected_at).to be_nil
+      expect(student.parental_consent.upload_approved_at).to be_nil
+    end
+  end
 end

@@ -43,6 +43,14 @@ class ParentalConsent < ActiveRecord::Base
     end
   }, on: :create
 
+  before_save -> {
+    if uploaded_at_changed?
+      self.upload_approval_status = PAPER_CONSENT_UPLOAD_STATUSES[:pending]
+      self.upload_approved_at = nil
+      self.upload_rejected_at = nil
+    end
+  }
+
   after_commit -> {
     after_signed_student_actions
     after_signed_parent_actions
