@@ -47,7 +47,7 @@
             </li>
 
             <li>
-              <a href="https://technovationchallenge.org/wp-content/uploads/2022/09/2023-ProgramTimeline_vertical.jpg" target="_blank">
+              <a href="https://technovationchallenge.org/program-timeline" target="_blank">
                 Suggested Milestones
               </a>
             </li>
