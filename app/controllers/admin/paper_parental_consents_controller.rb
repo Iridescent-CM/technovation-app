@@ -22,9 +22,9 @@ module Admin
 
       parental_consent.update(
         status: ParentalConsent.statuses[:signed],
-        electronic_signature: ParentalConsent::PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT,
+        electronic_signature: ConsentForms::PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT,
         upload_approved_at: Time.now,
-        upload_approval_status: ParentalConsent::PAPER_CONSENT_UPLOAD_STATUSES[:approved]
+        upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:approved]
       )
 
       redirect_to admin_paper_parental_consents_path,
@@ -36,7 +36,7 @@ module Admin
 
       parental_consent.update(
         upload_rejected_at: Time.now,
-        upload_approval_status: ParentalConsent::PAPER_CONSENT_UPLOAD_STATUSES[:rejected]
+        upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:rejected]
       )
 
       redirect_to admin_paper_parental_consents_path,
@@ -47,7 +47,7 @@ module Admin
 
     def grid_params
       grid = (params[:parental_consents_grid] ||= {}).merge(
-        upload_approval_status: params[:parental_consents_grid][:upload_approval_status] || ParentalConsent::PAPER_CONSENT_UPLOAD_STATUSES[:pending],
+        upload_approval_status: params[:parental_consents_grid][:upload_approval_status] || ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending],
         season: params[:parental_consents_grid][:season] || Season.current.year
       )
 
