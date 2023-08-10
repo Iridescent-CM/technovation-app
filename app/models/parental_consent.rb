@@ -49,6 +49,10 @@ class ParentalConsent < ActiveRecord::Base
     pc.saved_change_to_status and pc.signed?
   }
 
+  after_commit -> { send_parental_consent_rejection_email_to_student }, on: :update, if: ->(parental_consent) {
+    parental_consent.saved_change_to_upload_approval_status && parental_consent.upload_approval_status_rejected?
+  }
+
   after_commit -> {
     if saved_change_to_status
       student_profile.update(updated_at: Time.current)
@@ -71,6 +75,10 @@ class ParentalConsent < ActiveRecord::Base
 
   def after_signed_student_actions
     AccountMailer.confirm_next_steps(student_profile.account).deliver_later
+  end
+
+  def send_parental_consent_rejection_email_to_student
+    StudentMailer.parental_consent_rejected(student_profile.account).deliver_later
   end
 
   def after_signed_parent_actions

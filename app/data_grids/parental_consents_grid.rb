@@ -45,8 +45,18 @@ class ParentalConsentsGrid
       }
     )
 
+    reject_button = link_to(
+      "Reject",
+      admin_paper_parental_consent_reject_path(parental_consent),
+      class: "button danger small",
+      data: {
+        method: :patch,
+        confirm: "You are about to reject this parental consent"
+      }
+    )
+
     if parental_consent.upload_approval_status_pending?
-      view_button + " " + approve_button
+      view_button + " " + approve_button + " " + reject_button
     else
       view_button
     end
