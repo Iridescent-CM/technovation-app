@@ -54,5 +54,10 @@
   <%= f.label :uploaded_consent_form, "Upload parental consent form" %>
   <%= f.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
 
+  <%= f.fields_for @media_consent do |media_consent_fields| %>
+    <%= media_consent_fields.label :uploaded_consent_form, "Upload media consent form", class: "mt-8" %>
+    <%= media_consent_fields.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+  <% end %>
+
   <%= f.submit "Upload", class: "mt-4 tw-green-btn" %>
 <% end %>

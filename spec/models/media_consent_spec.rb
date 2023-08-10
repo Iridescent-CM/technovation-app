@@ -116,4 +116,22 @@ describe MediaConsent do
       end
     end
   end
+
+  describe "#uploaded?" do
+    context "when the media consent has an `uploaded_at` date" do
+      let(:media_consent) { MediaConsent.new(uploaded_at: 1.day.ago) }
+
+      it "returns true" do
+        expect(media_consent.uploaded?).to eq(true)
+      end
+    end
+
+    context "when the media consent does not have an `uploaded_at` date" do
+      let(:media_consent) { MediaConsent.new(uploaded_at: nil) }
+
+      it "returns false" do
+        expect(media_consent.uploaded?).to eq(false)
+      end
+    end
+  end
 end
