@@ -1,6 +1,7 @@
 class ParentalConsent < ActiveRecord::Base
   include Seasoned
 
+  FIRST_SEASON_FOR_UPLOADABLE_PARENTAL_CONSENT_FORMS = 2024
   PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT = "ON FILE"
   PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT = "ON FILE"
   PAPER_CONSENT_UPLOAD_STATUSES = {
@@ -41,6 +42,14 @@ class ParentalConsent < ActiveRecord::Base
       self.seasons = [Season.current.year]
     end
   }, on: :create
+
+  before_save -> {
+    if uploaded_at_changed?
+      self.upload_approval_status = PAPER_CONSENT_UPLOAD_STATUSES[:pending]
+      self.upload_approved_at = nil
+      self.upload_rejected_at = nil
+    end
+  }
 
   after_commit -> {
     after_signed_student_actions
