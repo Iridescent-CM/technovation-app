@@ -11,6 +11,14 @@ class MediaConsent < ActiveRecord::Base
   validates :electronic_signature, presence: true, on: :update, unless: :uploaded?
   validates :consent_provided, inclusion: [false, true], on: :update, if: :signed?
 
+  before_save -> {
+    if uploaded_at_changed?
+      self.upload_approval_status = ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending]
+      self.upload_approved_at = nil
+      self.upload_rejected_at = nil
+    end
+  }
+
   after_commit :send_media_conent_confirmation_email_to_parent,
     if: proc { |media_consent| media_consent.signed? }
 

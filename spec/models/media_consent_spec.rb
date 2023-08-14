@@ -134,4 +134,17 @@ describe MediaConsent do
       end
     end
   end
+
+  context "when the media consent has been rejected" do
+    it "resets the media consent to 'pending' when a student uploads another one" do
+      student = FactoryBot.create(:onboarding_student)
+      student.parental_consent.update(upload_rejected_at: 1.day.ago)
+
+      student.media_consent.update(uploaded_at: Time.now)
+
+      expect(student.media_consent.upload_approval_status).to eq("pending")
+      expect(student.media_consent.upload_rejected_at).to be_nil
+      expect(student.media_consent.upload_approved_at).to be_nil
+    end
+  end
 end
