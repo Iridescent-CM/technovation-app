@@ -50,6 +50,23 @@
     }
   }
 
+  &.gray,
+  &.button--gray {
+    background-color: gray;
+    box-shadow: 0 2px 0 darken(gray, 5);
+
+    &:active,
+    &:hover,
+    &:focus {
+      background-color: darken(gray, 5);
+    }
+
+    &:active {
+      box-shadow: 0 0 0 darken(gray, 10);
+    }
+  }
+
+
   &.button--reward {
     border-radius: 500px;
     margin: 2rem 0;
