@@ -31,15 +31,7 @@ class MediaConsentsGrid
   end
 
   column :actions, mandatory: true, html: true do |media_consent|
-    view_button = link_to(
-      "View",
-      media_consent.uploaded_consent_form.url,
-      class: "button small",
-      target: :_blank,
-      data: {turbolinks: false}
-    )
-
-    view_button
+    render "admin/paper_media_consents/actions", media_consent: media_consent
   end
 
   column :upload_approved_at, header: "Approved On" do |media_consent|
