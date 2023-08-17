@@ -5,3 +5,38 @@
   target: :_blank,
   data: {turbolinks: false}
 ) %>
+
+<% if media_consent.upload_approval_status_pending? %>
+  <%= link_to(
+    "Approve WITH CONSENT",
+    admin_paper_media_consent_approve_path(media_consent, consent_provided: true),
+    class: "button small",
+    data: {
+      method: :patch,
+      confirm: "You are about to approve this media consent WITH CONSENT"
+    }
+  ) %>
+
+  <%= link_to(
+    "Approve WITHOUT CONSENT",
+    admin_paper_media_consent_approve_path(media_consent, consent_provided: false),
+    class: "button small",
+    data: {
+      method: :patch,
+      confirm: "You are about to approve this media consent WITHOUT CONSENT"
+    }
+  ) %>
+
+  <br>
+  <%= link_to(
+    "Reject",
+    admin_paper_media_consent_reject_path(media_consent),
+    class: "button danger small",
+    style: "margin-top: 10px;",
+    data: {
+      method: :patch,
+      confirm: "You are about to reject this media consent"
+    }
+  ) %>
+
+<% end %>

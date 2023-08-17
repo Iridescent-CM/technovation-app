@@ -19,6 +19,34 @@ module Admin
       end
     end
 
+    def approve
+      media_consent = MediaConsent.find(params[:paper_media_consent_id])
+
+      media_consent.update(
+        electronic_signature: MediaConsent::ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT,
+        signed_at: Time.now,
+        consent_provided: params[:consent_provided] == "true",
+        upload_approved_at: Time.now,
+        upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:approved]
+      )
+
+      redirect_to admin_paper_media_consents_path,
+        success: "You approved the media consent for #{media_consent.student_profile_full_name}."
+    end
+
+    def reject
+      media_consent = MediaConsent.find(params[:paper_media_consent_id])
+
+      media_consent.update(
+        upload_rejected_at: Time.now,
+        upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:rejected]
+      )
+
+      redirect_to admin_paper_media_consents_path,
+        success: "You rejected the media consent for #{media_consent.student_profile_full_name}."
+    end
+
+
     private
 
     def media_consent_params
