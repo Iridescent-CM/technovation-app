@@ -31,39 +31,7 @@ class ParentalConsentsGrid
   end
 
   column :actions, mandatory: true, html: true do |parental_consent|
-    view_button = link_to(
-      "View",
-      parental_consent.uploaded_consent_form.url,
-      class: "button small",
-      target: :_blank,
-      data: {turbolinks: false}
-    )
-
-    approve_button = link_to(
-      "Approve",
-      admin_paper_parental_consent_approve_path(parental_consent),
-      class: "button small",
-      data: {
-        method: :patch,
-        confirm: "You are about to approve this parental consent"
-      }
-    )
-
-    reject_button = link_to(
-      "Reject",
-      admin_paper_parental_consent_reject_path(parental_consent),
-      class: "button danger small",
-      data: {
-        method: :patch,
-        confirm: "You are about to reject this parental consent"
-      }
-    )
-
-    if parental_consent.upload_approval_status_pending?
-      view_button + " " + approve_button + " " + reject_button
-    else
-      view_button
-    end
+    render "admin/paper_parental_consents/actions", parental_consent: parental_consent
   end
 
   column :upload_approved_at, header: "Approved On" do |parental_consent|
