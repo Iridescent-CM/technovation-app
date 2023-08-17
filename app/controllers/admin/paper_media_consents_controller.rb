@@ -10,7 +10,7 @@ module Admin
         consent = student.media_consent
         consent.update(
           consent_provided: media_consent_params[:consent],
-          electronic_signature: MediaConsent::ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT,
+          electronic_signature: ConsentForms::ELECTRONIC_SIGNATURE_FOR_A_PAPER_CONSENT,
           signed_at: DateTime.current
         )
 
@@ -23,7 +23,7 @@ module Admin
       media_consent = MediaConsent.find(params[:paper_media_consent_id])
 
       media_consent.update(
-        electronic_signature: MediaConsent::ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT,
+        electronic_signature: ConsentForms::ELECTRONIC_SIGNATURE_FOR_A_PAPER_CONSENT,
         signed_at: Time.now,
         consent_provided: params[:consent_provided] == "true",
         upload_approved_at: Time.now,

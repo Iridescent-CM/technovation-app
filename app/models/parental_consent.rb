@@ -1,9 +1,6 @@
 class ParentalConsent < ActiveRecord::Base
   include Seasoned
 
-  PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT = "ON FILE"
-  PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT = "ON FILE"
-
   # If these change, you will need to update dataclips
   enum status: %i{
     pending

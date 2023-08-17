@@ -1,6 +1,4 @@
 class MediaConsent < ActiveRecord::Base
-  ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT = "ON FILE"
-
   enum upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, _prefix: true
 
   belongs_to :student_profile
@@ -41,7 +39,7 @@ class MediaConsent < ActiveRecord::Base
   end
 
   def on_file?
-    electronic_signature === ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT
+    electronic_signature === ConsentForms::ELECTRONIC_SIGNATURE_FOR_A_PAPER_CONSENT
   end
 
   def uploaded?
