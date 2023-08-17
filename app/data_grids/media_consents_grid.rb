@@ -49,7 +49,7 @@ class MediaConsentsGrid
 
   filter :season,
     :enum,
-    select: (ParentalConsent::FIRST_SEASON_FOR_UPLOADABLE_PARENTAL_CONSENT_FORMS..Season.current.year).to_a.reverse,
+    select: (ConsentForms::FIRST_SEASON_FOR_UPLOADABLE_CONSENT_FORMS..Season.current.year).to_a.reverse,
     filter_group: "selections",
     html: {
       class: "and-or-field"
