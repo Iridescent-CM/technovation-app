@@ -1,0 +1,7 @@
+<% provide :title, "Admin Data • Paper Media Consent Forms" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @media_consents_grid,
+  form_url: admin_paper_media_consents_path,
+  model_name: "media_consent",
+  scope: :admin %>

@@ -316,6 +316,7 @@ Rails.application.routes.draw do
     end
 
     resource :paper_media_consent, only: :create
+    resources :paper_media_consents, only: [:index]
 
     resources :export_downloads, only: :update
 
