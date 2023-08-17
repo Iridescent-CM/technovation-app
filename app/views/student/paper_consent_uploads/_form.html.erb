@@ -12,52 +12,54 @@
   </div>
 <% end %>
 
-<p>
-  If your parent or guardian does not have an email address to sign the
-  permission and media consent forms online, you can upload the signed
-  forms here. Please print the forms and have your guardian sign them.
-</p>
+<% if @parental_consent.uploaded_at.blank? || @parental_consent.upload_approval_status_rejected? %>
+  <p>
+    If your parent or guardian does not have an email address to sign the
+    permission and media consent forms online, you can upload the signed
+    forms here. Please print the forms and have your guardian sign them.
+  </p>
 
-<ul class="list-disc my-6 ml-12">
-  <li>
-    <%= link_to "Parental Consent Form",
-      student_downloadable_parental_consent_path(format: :pdf),
-      target: :_blank,
-      class: "tw-link"
+  <ul class="list-disc my-6 ml-12">
+    <li>
+      <%= link_to "Parental Consent Form",
+        student_downloadable_parental_consent_path(format: :pdf),
+        target: :_blank,
+        class: "tw-link"
+      %>
+    </li>
+
+    <li>
+      <%= link_to "Media Consent Form",
+        "https://s3.amazonaws.com/curiositymachine/units/resources/TGMediaConsent.pdf",
+        target: :_blank,
+        class: "tw-link"
+      %>
+    </li>
+  </ul>
+
+  <p class="mb-6">
+    We must be able to view the signature on the final page of the form so
+    please make sure the shadow of your phone or camera does not cover the
+    signature when you photograph the page.
+
+    Please contact
+    <%= mail_to ENV.fetch("HELP_EMAIL"),
+      "support@technovation.org",
+      subject: "Parental consent signed form",
+      class:"tw-link"
     %>
-  </li>
+    with any questions.
+  </p>
 
-  <li>
-    <%= link_to "Media Consent Form",
-      "https://s3.amazonaws.com/curiositymachine/units/resources/TGMediaConsent.pdf",
-      target: :_blank,
-      class: "tw-link"
-    %>
-  </li>
-</ul>
+  <%= form_for @parental_consent, url: student_paper_consent_upload_path, html: { multipart: true } do |f| %>
+    <%= f.label :uploaded_consent_form, "Upload parental consent form" %>
+    <%= f.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
 
-<p class="mb-6">
-  We must be able to view the signature on the final page of the form so
-  please make sure the shadow of your phone or camera does not cover the
-  signature when you photograph the page.
+    <%= f.fields_for @media_consent do |media_consent_fields| %>
+      <%= media_consent_fields.label :uploaded_consent_form, "Upload media consent form", class: "mt-8" %>
+      <%= media_consent_fields.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+    <% end %>
 
-  Please contact
-  <%= mail_to ENV.fetch("HELP_EMAIL"),
-    "support@technovation.org",
-    subject: "Parental consent signed form",
-    class:"tw-link"
-  %>
-  with any questions.
-</p>
-
-<%= form_for @parental_consent, url: student_paper_consent_upload_path, html: { multipart: true } do |f| %>
-  <%= f.label :uploaded_consent_form, "Upload parental consent form" %>
-  <%= f.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
-
-  <%= f.fields_for @media_consent do |media_consent_fields| %>
-    <%= media_consent_fields.label :uploaded_consent_form, "Upload media consent form", class: "mt-8" %>
-    <%= media_consent_fields.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+    <%= f.submit "Upload", class: "mt-4 tw-green-btn" %>
   <% end %>
-
-  <%= f.submit "Upload", class: "mt-4 tw-green-btn" %>
 <% end %>
