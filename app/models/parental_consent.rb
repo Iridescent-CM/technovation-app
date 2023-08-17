@@ -4,11 +4,6 @@ class ParentalConsent < ActiveRecord::Base
   FIRST_SEASON_FOR_UPLOADABLE_PARENTAL_CONSENT_FORMS = 2024
   PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT = "ON FILE"
   PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT = "ON FILE"
-  PAPER_CONSENT_UPLOAD_STATUSES = {
-    pending: 0,
-    approved: 1,
-    rejected: 2
-  }
 
   # If these change, you will need to update dataclips
   enum status: %i{
@@ -17,7 +12,7 @@ class ParentalConsent < ActiveRecord::Base
     voided
   }
 
-  enum upload_approval_status: PAPER_CONSENT_UPLOAD_STATUSES, _prefix: true
+  enum upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, _prefix: true
 
   belongs_to :student_profile
 
@@ -45,7 +40,7 @@ class ParentalConsent < ActiveRecord::Base
 
   before_save -> {
     if uploaded_at_changed?
-      self.upload_approval_status = PAPER_CONSENT_UPLOAD_STATUSES[:pending]
+      self.upload_approval_status = ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending]
       self.upload_approved_at = nil
       self.upload_rejected_at = nil
     end

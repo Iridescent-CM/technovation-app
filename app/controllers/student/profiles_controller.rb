@@ -4,6 +4,7 @@ module Student
 
     def show
       @parental_consent = current_student.parental_consent
+      @media_consent = current_student.media_consent
     end
 
     def profile_params

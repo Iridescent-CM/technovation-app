@@ -77,7 +77,7 @@ class ParentalConsentsGrid
   filter :upload_approval_status,
     :enum,
     header: "Status",
-    select: ParentalConsent::PAPER_CONSENT_UPLOAD_STATUSES.transform_keys(&:capitalize)
+    select: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES.transform_keys(&:capitalize)
 
   filter :season,
     :enum,
