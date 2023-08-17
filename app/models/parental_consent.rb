@@ -33,6 +33,12 @@ class ParentalConsent < ActiveRecord::Base
     prefix: true
 
   before_validation -> {
+    if uploaded_consent_form_changed?
+      self.uploaded_at = Time.now
+    end
+  }
+
+  before_validation -> {
     if Array(seasons).empty?
       self.seasons = [Season.current.year]
     end

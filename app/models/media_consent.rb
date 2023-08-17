@@ -11,6 +11,12 @@ class MediaConsent < ActiveRecord::Base
   validates :electronic_signature, presence: true, on: :update, unless: :uploaded?
   validates :consent_provided, inclusion: [false, true], on: :update, if: :signed?
 
+  before_validation -> {
+    if uploaded_consent_form_changed?
+      self.uploaded_at = Time.now
+    end
+  }
+
   before_save -> {
     if uploaded_at_changed?
       self.upload_approval_status = ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending]
