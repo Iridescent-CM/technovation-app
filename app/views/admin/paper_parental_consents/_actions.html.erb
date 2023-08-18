@@ -1,0 +1,29 @@
+<%= link_to(
+  "View",
+  parental_consent.uploaded_consent_form.url,
+  class: "button small gray",
+  target: :_blank,
+  data: {turbolinks: false}
+) %>
+
+<% if parental_consent.upload_approval_status_pending? %>
+  <%= link_to(
+    "Approve",
+    admin_paper_parental_consent_approve_path(parental_consent),
+    class: "button small",
+    data: {
+      method: :patch,
+      confirm: "You are about to approve this parental consent"
+    }
+  ) %>
+
+  <%= link_to(
+    "Reject",
+    admin_paper_parental_consent_reject_path(parental_consent),
+    class: "button danger small",
+    data: {
+      method: :patch,
+      confirm: "You are about to reject this parental consent"
+    }
+  ) %>
+<% end %>

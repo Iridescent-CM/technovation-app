@@ -380,7 +380,7 @@ class StudentProfile < ActiveRecord::Base
       Division.for_account(account).name == "beginner" ||
       (
         !parent_guardian_email_changed? &&
-        parent_guardian_email == ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+        parent_guardian_email == ConsentForms::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
       )
 
     if not parent_guardian_email.match(
@@ -391,7 +391,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def reset_parent
-    return if parent_guardian_email == ParentalConsent::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+    return if parent_guardian_email == ConsentForms::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
 
     if saved_change_to_parent_guardian_email? &&
         parent_guardian_email.present?

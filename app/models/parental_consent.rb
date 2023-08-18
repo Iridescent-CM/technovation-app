@@ -1,10 +1,6 @@
 class ParentalConsent < ActiveRecord::Base
   include Seasoned
 
-  FIRST_SEASON_FOR_UPLOADABLE_PARENTAL_CONSENT_FORMS = 2024
-  PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT = "ON FILE"
-  PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT = "ON FILE"
-
   # If these change, you will need to update dataclips
   enum status: %i{
     pending
@@ -31,6 +27,12 @@ class ParentalConsent < ActiveRecord::Base
            :locale,
     to: :student_profile,
     prefix: true
+
+  before_validation -> {
+    if uploaded_consent_form_changed?
+      self.uploaded_at = Time.now
+    end
+  }
 
   before_validation -> {
     if Array(seasons).empty?

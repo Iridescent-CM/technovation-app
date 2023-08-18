@@ -1,6 +1,4 @@
 class MediaConsent < ActiveRecord::Base
-  ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT = "ON FILE"
-
   enum upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, _prefix: true
 
   belongs_to :student_profile
@@ -10,6 +8,12 @@ class MediaConsent < ActiveRecord::Base
   validates :season, presence: true
   validates :electronic_signature, presence: true, on: :update, unless: :uploaded?
   validates :consent_provided, inclusion: [false, true], on: :update, if: :signed?
+
+  before_validation -> {
+    if uploaded_consent_form_changed?
+      self.uploaded_at = Time.now
+    end
+  }
 
   before_save -> {
     if uploaded_at_changed?
@@ -22,6 +26,10 @@ class MediaConsent < ActiveRecord::Base
   after_commit :send_media_conent_confirmation_email_to_parent,
     if: proc { |media_consent| media_consent.signed? }
 
+  delegate :email, :full_name,
+    to: :student_profile,
+    prefix: true
+
   def signed?
     electronic_signature.present?
   end
@@ -31,7 +39,7 @@ class MediaConsent < ActiveRecord::Base
   end
 
   def on_file?
-    electronic_signature === ELECTRONIC_SIGNATURE_FOR_A_PAPER_MEDIA_CONSENT
+    electronic_signature === ConsentForms::ELECTRONIC_SIGNATURE_FOR_A_PAPER_CONSENT
   end
 
   def uploaded?

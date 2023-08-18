@@ -10,7 +10,7 @@ module Admin
 
       parental_consent.update(
         status: ParentalConsent.statuses[:signed],
-        electronic_signature: ParentalConsent::PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT
+        electronic_signature: ConsentForms::PARENT_GUARDIAN_NAME_FOR_A_PAPER_CONSENT
       )
 
       redirect_to admin_participant_path(student.account),
