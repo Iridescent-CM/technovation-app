@@ -46,16 +46,20 @@ module StudentHelper
                       submission.development_platform == "App Inventor" &&
                       submission.app_inventor_app_name.present? &&
                       submission.errors.attribute_names.exclude?(:app_inventor_app_name) &&
-                      submission.app_inventor_gmail.present? &&
-                      submission.errors.attribute_names.exclude?(:app_inventor_gmail)
+                      (
+                        submission.app_inventor_gmail.blank? ||
+                        submission.errors.attribute_names.exclude?(:app_inventor_gmail)
+                      )
                     ) ||
                     (
                       submission.submission_type == "Mobile App" &&
                       submission.development_platform == "Thunkable" &&
                       submission.thunkable_project_url.present? &&
                       submission.errors.attribute_names.exclude?(:thunkable_project_url) &&
-                      submission.thunkable_account_email.present? &&
-                      submission.errors.attribute_names.exclude?(:thunkable_account_email)
+                      (
+                        submission.thunkable_account_email.blank? ||
+                        submission.errors.attribute_names.exclude?(:thunkable_account_email)
+                      )
                     ) ||
                     (
                       submission.submission_type == "Mobile App" &&
@@ -69,10 +73,12 @@ module StudentHelper
                     submission.development_platform == "Thunkable" &&
                     submission.thunkable_project_url.present? &&
                     submission.errors.attribute_names.exclude?(:thunkable_project_url) &&
-                    submission.thunkable_account_email.present? &&
-                    submission.errors.attribute_names.exclude?(:thunkable_account_email) &&
                     submission.source_code_external_url.present? &&
-                    submission.errors.attribute_names.exclude?(:source_code_external_url)) ||
+                    submission.errors.attribute_names.exclude?(:source_code_external_url)) &&
+                    (
+                      submission.thunkable_account_email.blank? ||
+                      submission.errors.attribute_names.exclude?(:thunkable_account_email)
+                    ) ||
                     (
                       submission.source_code_url.present? &&
                       submission.errors.attribute_names.exclude?(:source_code_url)
