@@ -10,12 +10,12 @@
   </p>
 <% elsif SeasonToggles.team_submissions_editable? &&
         current_team.submission.only_needs_to_submit? %>
-  <p>You've done everything and you're ready to publish for the judges!</p>
+  <p class="mb-4">You've done everything and you're ready to publish for the judges!</p>
 
   <p>
     <%= link_to "Review and submit now!",
       student_published_team_submission_path(current_team.submission),
-      class: "button" %>
+      class: "tw-green-btn" %>
   </p>
 <% elsif SeasonToggles.team_submissions_editable? %>
   <%= render 'team_submissions/menu',
