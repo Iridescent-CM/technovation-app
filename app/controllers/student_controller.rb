@@ -1,5 +1,6 @@
 class StudentController < ApplicationController
   include Authenticated
+  include VerifyStudentAgeConcern
 
   layout "student"
   helper_method :current_student,

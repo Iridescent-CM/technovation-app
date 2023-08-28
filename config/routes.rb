@@ -58,6 +58,7 @@ Rails.application.routes.draw do
 
     resources :mentors, only: :show
     resources :students, only: :show
+    resource :mentor_conversion, only: [:show, :create]
 
     resources :team_member_invites, except: [:edit]
     resources :mentor_invites, only: [:create, :destroy]
