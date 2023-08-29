@@ -24,7 +24,7 @@ class Certificate < ApplicationRecord
     where(team: team)
   }
 
-  scope :previous_season_certificates, -> {
+  scope :previous_certificates, -> {
     where.not(season: Season.current.year)
   }
 
