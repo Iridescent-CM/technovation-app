@@ -346,6 +346,6 @@ RSpec.feature "Judge certificates" do
     sign_in(judge)
 
     click_link("prev-certs-tab")
-    expect(page).to have_content("f you participated in past seasons, this is where you can view and download your certificates.")
+    expect(page).to have_content("If you participated in past seasons, this is where you can view and download your certificates.")
   end
 end
