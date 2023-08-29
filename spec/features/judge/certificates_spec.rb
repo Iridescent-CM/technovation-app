@@ -12,7 +12,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:off)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
@@ -28,7 +28,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:qf)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
@@ -44,7 +44,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:sf)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
@@ -60,7 +60,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:finished)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
@@ -325,5 +325,27 @@ RSpec.feature "Judge certificates" do
       "View your certificate",
       href: judge.current_judge_advisor_certificates.last.file_url
     )
+  end
+
+  scenario "Judge can view their previous judge certificates" do
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
+    previous_certificate = FactoryBot.create(:certificate, :past, account: judge.account, cert_type: :head_judge)
+
+    FillPdfs.(judge.account)
+    sign_in(judge)
+
+    click_link("prev-certs-tab")
+    expect(page).to have_content(previous_certificate.season)
+    expect(page).to have_content(previous_certificate.cert_type.titleize)
+  end
+
+  scenario "No previous judge certificates are displayed if judge does not have previous judge certificates" do
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
+    FillPdfs.(judge.account)
+
+    sign_in(judge)
+
+    click_link("prev-certs-tab")
+    expect(page).to have_content("If you participated in past seasons, this is where you can view and download your certificates.")
   end
 end

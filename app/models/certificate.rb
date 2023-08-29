@@ -24,6 +24,10 @@ class Certificate < ApplicationRecord
     where(team: team)
   }
 
+  scope :previous_certificates, -> {
+    where.not(season: Season.current.year)
+  }
+
   def self.highest_awarded_student_certs_for_previous_seasons
     past
       .student_certs_ordered_by_highest_awarded
