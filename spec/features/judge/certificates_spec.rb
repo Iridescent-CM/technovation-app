@@ -12,7 +12,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:off)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
@@ -28,7 +28,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:qf)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
@@ -44,7 +44,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:sf)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
@@ -60,7 +60,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:finished)
     SeasonToggles.display_scores_off!
 
-    judge = FactoryBot.create(:judge,:onboarded,:general_certificate)
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
     FillPdfs.(judge.account)
     sign_in(judge)
