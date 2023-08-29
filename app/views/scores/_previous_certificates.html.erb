@@ -5,9 +5,11 @@
         <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
           Season
         </th>
-        <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-          Team
-        </th>
+        <% if current_scope == "student" %>
+          <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+            Team
+          </th>
+        <% end %>
         <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
           Certificate Type
         </th>
@@ -23,11 +25,13 @@
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <%= certificate.season %>
           </td>
+          <% if current_scope == 'student' %>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <%= certificate.team.name %>
+            </td>
+          <% end %>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <%= certificate.team.name %>
-          </td>
-          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <%= certificate.cert_type.capitalize %>
+            <%= certificate.cert_type.titleize %>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <%= link_to "Download your certificate",
