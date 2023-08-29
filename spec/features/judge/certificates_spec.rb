@@ -339,7 +339,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_content(previous_certificate.cert_type.titleize)
   end
 
-  scenario "No previous judge certificates are displayed if judge does not have previous judge certificates " do
+  scenario "No previous judge certificates are displayed if judge does not have previous judge certificates" do
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
     FillPdfs.(judge.account)
 
