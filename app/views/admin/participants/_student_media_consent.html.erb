@@ -4,7 +4,7 @@
     <% if media_consent&.consent_provided.nil? %>
       <h5>Has not completed media consent form</h5>
       <% if admin  %>
-        <%= link_to "GRANT permission",
+        <%= link_to "Create paper media consent WITH CONSENT",
           admin_paper_media_consent_path(
             id: profile.id,
             consent: true
@@ -12,12 +12,11 @@
           class: "button button--secondary",
           data: {
             method: :post,
-            confirm: "You are granting to #{full_name} " +
-            "media consent on file.",
-          } 
+            confirm: "You are creating a paper media consent WITH CONSENT for #{full_name}."
+          }
         %>
 
-        <%= link_to "Do NOT GRANT permission",
+        <%= link_to "Create paper media consent WITHOUT CONSENT",
           admin_paper_media_consent_path(
             id: profile.id,
             consent: false
@@ -25,20 +24,19 @@
           class: "button button--secondary",
           data: {
             method: :post,
-            confirm: "You are denying to #{full_name} " +
-            "media consent on file.",
-          } 
+            confirm: "You are creating a paper media consent WITHOUT CONSENT for #{full_name}."
+          }
         %>
       <% end %>
     <% else %>
       <% if media_consent&.consent_provided? %>
         <h5>
-          AGREED to media content  via 
+          AGREED to media content via
           <%= media_consent.on_file? ? "paper form" : "online form" %>
         </h5>
       <% else %>
         <h5>
-          Did NOT AGREE to media consent via 
+          Did NOT AGREE to media consent via
           <%= media_consent.on_file? ? "paper form" : "online form" %>
         </h5>
       <% end %>
