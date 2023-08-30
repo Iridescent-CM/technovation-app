@@ -97,6 +97,7 @@ export default {
     },
     async submitHandler (data) {
       const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
+      const inviteCode = new URLSearchParams(document.location.search).get('admin_permission_token')
 
       let config = {
         headers: {
@@ -106,7 +107,7 @@ export default {
       }
 
       try {
-        await axios.post('/new-registration', data, config)
+        await axios.post('/new-registration', Object.assign(data, {inviteCode}), config)
 
         switch(data.profileType) {
           case 'student':
