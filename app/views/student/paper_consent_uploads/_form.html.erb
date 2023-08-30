@@ -2,7 +2,7 @@
 
 <% if @parental_consent.uploaded_at.present? && @parental_consent.upload_approval_status_pending? %>
   <div class="container px-4 py-4 mb-8 bg-blue-100 border-l-4 border-energetic-blue">
-    <h4 class="mb-3 text-base text-gray-600">Thank you for uploading your consent form!</h2>
+    <h4 class="mb-3 text-base text-gray-600">Thank you for uploading your consent form!</h4>
 
     <p class="mb-3 text-base text-gray-500">
       We will review it as soon as possible, and you will receive
@@ -45,8 +45,8 @@
     Please contact
     <%= mail_to ENV.fetch("HELP_EMAIL"),
       "support@technovation.org",
-      subject: "Parental consent signed form",
-      class:"tw-link"
+      subject: "Parental consent form",
+      class: "tw-link"
     %>
     with any questions.
   </p>
