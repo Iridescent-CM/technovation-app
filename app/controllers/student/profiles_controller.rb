@@ -3,8 +3,8 @@ module Student
     include ProfileController
 
     def show
-      @parental_consent = current_student.parental_consent
-      @media_consent = current_student.media_consent
+      @parental_consent = current_student.parental_consents.find_or_create_by(seasons: [Season.current.year])
+      @media_consent = current_student.media_consents.find_or_create_by(season: Season.current.year)
     end
 
     def profile_params

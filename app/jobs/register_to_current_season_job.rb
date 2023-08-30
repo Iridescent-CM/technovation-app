@@ -59,16 +59,13 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       RegistrationMailer.welcome_parent(record).deliver_later
     end
 
-    if student_profile.reload.parental_consent.nil?
-      student_profile.parental_consents.create!
-    end
+    student_profile.parental_consents.find_or_create_by(seasons: [Season.current.year])
+    student_profile.media_consents.find_or_create_by(season: Season.current.year)
 
     if student_profile.reload.parental_consent.pending? &&
         !student_profile.parent_guardian_email.blank?
       ParentMailer.consent_notice(student_profile.id).deliver_later
     end
-
-    student_profile.media_consents.create(season: Season.current.year)
 
     if record.seasons.many?
       record.update(division: Division.for_account(record))
