@@ -1,33 +1,35 @@
 <div class="w-full lg:w-3/4 mx-auto">
-  <div class="inline-block mb-auto rounded-md border-solid border-4 border-energetic-blue">
-    <div class="sm-header-wrapper">
-      <p class="font-bold">Do you want to become a mentor?</p>
-    </div>
+  <div class="flex justify-center">
+    <div class="inline-block mb-auto rounded-md border-solid border-4 border-energetic-blue">
+      <div class="sm-header-wrapper">
+        <p class="font-bold">Do you want to become a mentor?</p>
+      </div>
 
-    <div class="p-6">
-      <p class="prose">
-        Thank you for participating in Technovation Girls.
-        Since you will be older than 18 on
-        <%= ImportantDates.division_cutoff.strftime("%B %e") %>,
-        you are no longer eligible to participate as a student.
-        Choose from the options below to access our alumnae resources
-        or learn more about being a mentor for a team of students.
-      </p>
+      <div class="p-6">
+        <p class="prose">
+          Thank you for participating in Technovation Girls.
+          Since you will be older than 18 on
+          <%= ImportantDates.division_cutoff.strftime("%B %e") %>,
+          you are no longer eligible to participate as a student.
+          Choose from the options below to access our alumnae resources
+          or learn more about being a mentor for a team of students.
+        </p>
 
-      <div class="flex justify-center mt-8">
-        <div>
-          <%= link_to "View Alumnae Resources",
-            "https://www.technovation.org/alumnae-community-resources/",
-            class: "tw-gray-btn mr-4"
-          %>
-        </div>
+        <div class="flex justify-center mt-8">
+          <div>
+            <%= link_to "View Alumnae Resources",
+              "https://www.technovation.org/alumnae-community-resources/",
+              class: "tw-gray-btn mr-4"
+            %>
+          </div>
 
-        <div>
-          <%= link_to "Become a Mentor",
-            student_mentor_conversion_path(account_id: current_account),
-            data: {method: :post},
-            class: "tw-green-btn"
-          %>
+          <div>
+            <%= link_to "Become a Mentor",
+              student_mentor_conversion_path(account_id: current_account),
+              data: {method: :post},
+              class: "tw-green-btn"
+            %>
+          </div>
         </div>
       </div>
     </div>
