@@ -96,6 +96,19 @@ en:
       new:
         unauthorized: "Sorry, that consent token was invalid."
 
+    paper_consent_uploads:
+      update:
+        upload_missing: You forgot to upload a consent form. Please try again.
+        parental_consent:
+          success: "Thank you for uploading your parental consent form, we will review it as soon as we can."
+          error: "The parental consent form needs to be an image or in PDF format, and less than %{max_file_size}. Please try again."
+        media_consent:
+          success: "Thank you for uploading your media consent form, we will review it as soon as we can."
+          error: "The media consent form needs to be an image or in PDF format, and less than %{max_file_size}. Please try again."
+        parental_and_media_consent:
+          success: "Thank you for uploading your consent forms, we will review them as soon as we can."
+          error: "The consent forms needs to be an image or in PDF format, and less than %{max_file_size}. Please try again."
+
     passwords:
       create:
         success: "You successfully reset your password and you've been logged in"

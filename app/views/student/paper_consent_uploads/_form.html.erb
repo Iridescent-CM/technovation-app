@@ -1,18 +1,30 @@
 <h3 class="mb-4">Uploading Consent Forms</h3>
 
-<% if @parental_consent.uploaded_at.present? && @parental_consent.upload_approval_status_pending? %>
+<% if @parental_consent.uploaded_at.present? && @parental_consent.upload_approval_status_pending? ||
+  @media_consent.uploaded_at.present? && @media_consent.upload_approval_status_pending? %>
+
+  <% if @parental_consent.uploaded_at.present? && @media_consent.uploaded_at.blank? %>
+    <% consent_form_type = "parental consent form" %>
+  <% elsif @media_consent.uploaded_at.present? && @parental_consent.uploaded_at.blank? %>
+    <% consent_form_type = "media consent form" %>
+  <% else %>
+    <% consent_form_type = "consent forms" %>
+  <% end %>
+
   <div class="container px-4 py-4 mb-8 bg-blue-100 border-l-4 border-energetic-blue">
-    <h4 class="mb-3 text-base text-gray-600">Thank you for uploading your consent form!</h2>
+    <h4 class="mb-3 text-base text-gray-600">Thank you for uploading your <%= consent_form_type %>!</h4>
 
     <p class="mb-3 text-base text-gray-500">
-      We will review it as soon as possible, and you will receive
-      an email when the form is accepted or if we need additional
-      information.
+      We will review <%= (@parental_consent.uploaded_at.present? && @media_consent.uploaded_at.present?) ? "them" : "it" %>
+      as soon as possible, and you will receive an email when the form
+      is accepted or if we need additional information.
     </p>
   </div>
 <% end %>
 
-<% if @parental_consent.uploaded_at.blank? || @parental_consent.upload_approval_status_rejected? %>
+<% if @parental_consent.uploaded_at.blank? || @parental_consent.upload_approval_status_rejected? ||
+  @media_consent.uploaded_at.blank? || @media_consent.upload_approval_status_rejected? %>
+
   <p>
     If your parent or guardian does not have an email address to sign the
     permission and media consent forms online, you can upload the signed
@@ -45,19 +57,23 @@
     Please contact
     <%= mail_to ENV.fetch("HELP_EMAIL"),
       "support@technovation.org",
-      subject: "Parental consent signed form",
-      class:"tw-link"
+      subject: "Parental consent form",
+      class: "tw-link"
     %>
     with any questions.
   </p>
 
   <%= form_for @parental_consent, url: student_paper_consent_upload_path, html: { multipart: true } do |f| %>
-    <%= f.label :uploaded_consent_form, "Upload parental consent form" %>
-    <%= f.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+    <% if @parental_consent.uploaded_at.blank? || @parental_consent.upload_approval_status_rejected? %>
+      <%= f.label :uploaded_consent_form, "Upload parental consent form" %>
+      <%= f.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+    <% end %>
 
-    <%= f.fields_for @media_consent do |media_consent_fields| %>
-      <%= media_consent_fields.label :uploaded_consent_form, "Upload media consent form", class: "mt-8" %>
-      <%= media_consent_fields.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+    <% if @media_consent.uploaded_at.blank? || @media_consent.upload_approval_status_rejected? %>
+      <%= f.fields_for @media_consent do |media_consent_fields| %>
+        <%= media_consent_fields.label :uploaded_consent_form, "Upload media consent form", class: "mt-8" %>
+        <%= media_consent_fields.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+      <% end %>
     <% end %>
 
     <%= f.submit "Upload", class: "mt-4 tw-green-btn" %>
