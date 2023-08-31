@@ -3,18 +3,42 @@ module Student
     def update
       @parental_consent = current_student.parental_consent
       @media_consent = current_student.media_consent
+      success_messages = []
+      error_messages = []
 
-      if parental_consent_params[:uploaded_consent_form].blank?
-        redirect_to student_dashboard_path, error: "You forgot to upload your parental consent form. Please try again."
-      elsif @parental_consent.update(parental_consent_params)
+      if parental_consent_params[:uploaded_consent_form].blank? && media_consent_params[:uploaded_consent_form].blank?
+        error_messages << I18n.t("controllers.paper_consent_uploads.update.upload_missing")
+      else
         if media_consent_params[:uploaded_consent_form].present?
-          @media_consent.update(media_consent_params)
+          if @media_consent.update(media_consent_params)
+            success_messages << I18n.t("controllers.paper_consent_uploads.update.media_consent.success")
+          else
+            error_messages << I18n.t("controllers.paper_consent_uploads.update.media_consent.error",
+              max_file_size: "#{PaperParentalConsentUploader::MAXIMUM_UPLOAD_FILE_SIZE_IN_MEGABYTES} MB")
+          end
         end
 
-        redirect_to student_dashboard_path, success: "Thank you for uploading your consent form, we will review it as soon as we can."
-      else
-        redirect_to student_dashboard_path, error: "The consent forms need to be an image or in PDF format, and less than #{PaperParentalConsentUploader::MAXIMUM_UPLOAD_FILE_SIZE_IN_MEGABYTES} MB. Please try again."
+        if parental_consent_params[:uploaded_consent_form].present?
+          if @parental_consent.update(parental_consent_params)
+            success_messages << I18n.t("controllers.paper_consent_uploads.update.parental_consent.success")
+          else
+            error_messages << I18n.t("controllers.paper_consent_uploads.update.parental_consent.error",
+              max_file_size: "#{PaperParentalConsentUploader::MAXIMUM_UPLOAD_FILE_SIZE_IN_MEGABYTES} MB")
+          end
+        end
       end
+
+      if success_messages.size == 2
+        success_messages = [I18n.t("controllers.paper_consent_uploads.update.parental_and_media_consent.success")]
+      end
+
+      if error_messages.size == 2
+        error_messages = [I18n.t("controllers.paper_consent_uploads.update.parental_and_media_consent.error")]
+      end
+
+      redirect_to student_dashboard_path,
+        success: success_messages.presence&.join(""),
+        error: error_messages.presence&.join("")
     end
 
     private
