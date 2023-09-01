@@ -1,4 +1,6 @@
 class NewRegistrationController < ApplicationController
+  after_action :update_invitation, only: :create
+
   layout "new_registration"
 
   def show
@@ -10,25 +12,25 @@ class NewRegistrationController < ApplicationController
   def create
     case params[:profileType]
     when "student"
-      profile = StudentProfile.new(student_params)
+      @profile = StudentProfile.new(student_params)
     when "parent"
-      profile = StudentProfile.new(parent_params)
+      @profile = StudentProfile.new(parent_params)
     when "mentor"
-      profile = MentorProfile.new(mentor_params)
+      @profile = MentorProfile.new(mentor_params)
     when "judge"
-      profile = JudgeProfile.new(judge_params)
+      @profile = JudgeProfile.new(judge_params)
     end
 
-    if profile.save
-      TeamMemberInvite.match_registrant(profile)
+    if @profile.save
+      TeamMemberInvite.match_registrant(@profile)
 
       SignIn.call(
-        profile.account,
+        @profile.account,
         self,
         enable_redirect: false
       )
     else
-      errors = ValidationErrorMessagesConverter.new(errors: profile.errors)
+      errors = ValidationErrorMessagesConverter.new(errors: @profile.errors)
 
       render json: {
         errors: errors.individual_errors,
@@ -91,6 +93,7 @@ class NewRegistrationController < ApplicationController
 
   def registration_params
     params.require(:new_registration).permit(
+      :inviteCode,
       :profileType,
       :firstName,
       :lastName,
@@ -113,5 +116,14 @@ class NewRegistrationController < ApplicationController
       mentorExpertises: [],
       mentorTypes: []
     )
+  end
+
+  def update_invitation
+    invitation = UserInvitation.find_by(admin_permission_token: params[:inviteCode])
+
+    if invitation.present?
+      invitation.update_column(:account_id, @profile.account.id)
+      invitation.registered!
+    end
   end
 end
