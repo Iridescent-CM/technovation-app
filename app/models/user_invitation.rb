@@ -102,6 +102,10 @@ class UserInvitation < ApplicationRecord
     false
   end
 
+  def pending?
+    !registered?
+  end
+
   def human_status
     case status
     when "sent", "opened"; "must sign up"
