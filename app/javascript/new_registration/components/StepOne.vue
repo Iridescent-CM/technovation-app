@@ -53,7 +53,7 @@
         @input="hasValidationErrors = false"
       />
 
-      <p v-if="this.isStudentRegistrationOpen" class="italic text-sm">
+      <p v-if="displayDivisionCutoffDescription()" class="italic text-sm">
         *As of <strong>{{ divisionCutoffDate }}</strong>.
         For example, if you turn 13 on {{ exampleStudentBirthday }}, you will need to select
         “I am registering myself and am 13-18 years old.”
@@ -209,6 +209,9 @@ export default {
         id: 'judge'
       }
     },
+    displayDivisionCutoffDescription() {
+      return (this.isStudentRegistrationOpen && typeof this.registrationInvite =='undefined') || (this.registrationInvite.isValid == true && this.registrationInvite.profileType == 'student' || this.registrationInvite.isValid == false)
+    }
   },
   computed: {
     divisionCutoffDate: divisionCutoffDateFormatted,
