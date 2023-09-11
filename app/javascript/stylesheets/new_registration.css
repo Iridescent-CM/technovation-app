@@ -53,6 +53,9 @@
     .formulate-input-group-item {
         @apply flex;
     }
+    .profile-type input[type="radio"] {
+        @apply scale-150
+    }
     .profile-type input[type="radio"].disabled {
         @apply opacity-40
     }
