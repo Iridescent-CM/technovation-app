@@ -53,8 +53,17 @@
     .formulate-input-group-item {
         @apply flex;
     }
+    .profile-type input[type="radio"].disabled {
+        @apply opacity-40
+    }
     .profile-type img {
         @apply w-28 ml-4 mr-6
+    }
+    .profile-type img.disabled {
+        @apply opacity-40
+    }
+    .profile-type span.disabled {
+        @apply text-gray-400
     }
 
     [data-classification="box"] .formulate-input-wrapper, .input-label-text {

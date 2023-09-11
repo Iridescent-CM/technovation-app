@@ -13,16 +13,17 @@ class RegistrationMailer < ApplicationMailer
 
   def admin_permission(user_invitation_id)
     invitation = UserInvitation.find(user_invitation_id)
+    invite_code = invitation.admin_permission_token
 
-    if token = invitation.admin_permission_token
-      @url = send(
-        "#{invitation.profile_type}_signup_url",
-        admin_permission_token: token
-      )
+    if invite_code.present?
+      if invitation.profile_type == "chapter_ambassador"
+        @url = chapter_ambassador_signup_url(admin_permission_token: invite_code)
+      else
+        @url = signup_url(invite_code: invite_code)
+      end
 
       mail to: invitation.email,
-           subject: t("registration_mailer.admin_permission.subject",
-                      season_year: Season.current.year) do |f|
+        subject: t("registration_mailer.admin_permission.subject", season_year: Season.current.year) do |f|
         f.html { render :confirm_email }
       end
     else

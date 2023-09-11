@@ -1,24 +1,47 @@
 <template>
   <div id="step-one">
-    <ContainerHeader header-text="Your Profile Type" />
-
+    <ContainerHeader header-text="Your Participant Type" />
     <div id="profile-type" class="form-wrapper">
-      <h2 class="registration-title">
-        Technovation Girls is a free program that empowers
-        <a href="https://www.technovation.org/diversity-equity-inclusion-statement/" target="_blank">
-          <em>girls</em>
-        </a>
-        to be leaders. How will you participate?
-      </h2>
+      <div v-if="registrationInvite.isValid == false">
+        <div class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
+          <p v-if="anyDisabledProfileTypes == false" class="text-left">
+            This invitation is no longer valid, but you can still register below.
+          </p>
+          <p v-else>
+            This invitation is no longer valid.
+          </p>
+      </div>
+      </div>
 
-      <div v-if="anyDisabledProfileTypes" class="border-l-2 border-red-700 bg-red-50 p-2 my-8">
+      <div v-if="anyDisabledProfileTypes" class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
         <p class="text-left text-sm">
           Registration is currently closed for {{ this.disabledProfileTypes }}.
         </p>
       </div>
 
-      <p class="italic text-sm text-red-500 my-4">
-      </p>
+      <div v-if="typeof registrationInvite != 'undefined'">
+        <div v-if="registrationInvite.isValid == true">
+          <h2 class="registration-title">
+            Welcome to Technovation Girls!
+          </h2>
+
+          <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
+            <p class="text-left">
+              You have been invited to join Technovation Girls as a <strong>{{ registrationInvite.friendlyProfileType }}</strong>!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div v-else>
+        <h2 class="registration-title">
+          Technovation Girls is a free program that empowers
+          <a href="https://www.technovation.org/diversity-equity-inclusion-statement/" target="_blank">
+            <em>girls</em>
+          </a>
+          to be leaders. How will you participate?
+        </h2>
+      </div>
 
       <FormulateInput
         label-position="before"
@@ -56,6 +79,7 @@ export default {
   data() {
     return {
       values: {},
+      registrationInvite: {},
       profileTypes: [],
       isStudentRegistrationOpen: false,
       isMentorRegistrationOpen: false,
@@ -66,6 +90,24 @@ export default {
     }
   },
   methods: {
+    async getRegistrationInvite() {
+      const inviteCode = new URLSearchParams(document.location.search).get('invite_code')
+
+      if (inviteCode == null) {
+        return
+      }
+
+      try {
+        const response = await axios.get(`/api/registration_invites/${inviteCode}`)
+
+        this.registrationInvite = response.data
+      }
+      catch(error) {
+        airbrake.notify({
+          error: `[REGISTRATION] Error getting registration invite details - ${error.response.data}`
+        })
+      }
+    },
     async getRegistrationSettings() {
       try {
         const response = await axios.get('/api/registration_settings')
@@ -115,28 +157,56 @@ export default {
 
       this.disabledProfileTypes = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(disabledProfiles)
     },
+    preSelectInvitedProfileType() {
+      document.getElementById(`${this.registrationInvite.profileType}`).click()
+      document.getElementById(`${this.registrationInvite.profileType}`).checked = true
+
+      this.hasValidationErrors = false
+    },
+    disableNonInvitedProfileTypes() {
+      const profileTypeRadioButtons = document.querySelectorAll(`#profile-type input[type="radio"]:not(#${this.registrationInvite.profileType}`)
+      const profileTypeImages = document.querySelectorAll(`#profile-type img:not(.${this.registrationInvite.profileType})`)
+      const profileTypeText = document.querySelectorAll(`#profile-type span:not(.${this.registrationInvite.profileType})`)
+
+      profileTypeRadioButtons.forEach(profileType => {
+        profileType.disabled = true
+        profileType.classList.add("disabled")
+      });
+
+      profileTypeImages.forEach(profileType => {
+        profileType.classList.add("disabled")
+      })
+
+      profileTypeText.forEach(profileType => {
+        profileType.classList.add("disabled")
+      })
+    },
     studentProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-student.png')}" alt=""><span class="s1-label-text">I am registering myself and am 13-18 years old*</span>`,
-        value: 'student'
+        label: `<img src="${require('signup/myTG-student.png')}" alt="" class="student"> <span class="student s1-label-text">I am registering myself and am 13-18 years old*</span>`,
+        value: 'student',
+        id: 'student'
       }
     },
     parentProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-parent.png')}" alt=""> <span class="s1-label-text">I am registering my 8-12 year old* daughter</span>`,
-        value: 'parent'
+        label: `<img src="${require('signup/myTG-parent.png')}" alt="" class="parent"> <span class="parent s1-label-text">I am registering my 8-12 year old* daughter</span>`,
+        value: 'parent',
+        id: 'parent'
       }
     },
     mentorProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will guide a team</span>`,
-          value: 'mentor'
+        label: `<img src="${require('signup/myTG-mentor.png')}" alt="" class="mentor"> <span class="mentor s1-label-text">I am over 18 years old and will guide a team</span>`,
+        value: 'mentor',
+        id: 'mentor'
       }
     },
     judgeProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-mentor.png')}" alt=""> <span class="s1-label-text">I am over 18 years old and will <span class="font-bold">judge submissions</span></span>`,
-        value: 'judge'
+        label: `<img src="${require('signup/myTG-mentor.png')}" alt="" class="judge"> <span class="judge s1-label-text">I am over 18 years old and will <span class="judge font-bold">judge submissions</span>`,
+        value: 'judge',
+        id: 'judge'
       }
     },
   },
@@ -151,10 +221,15 @@ export default {
     }
   },
   async created() {
+    await this.getRegistrationInvite()
     await this.getRegistrationSettings()
+    await this.setupProfileTypes()
+    await this.setupDisabledProfileTypes()
 
-    this.setupProfileTypes()
-    this.setupDisabledProfileTypes()
+    if (this.registrationInvite.isValid == true) {
+      this.preSelectInvitedProfileType()
+      this.disableNonInvitedProfileTypes()
+    }
   }
 }
 </script>
