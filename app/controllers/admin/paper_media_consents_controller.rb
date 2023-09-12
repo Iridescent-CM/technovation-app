@@ -15,7 +15,7 @@ module Admin
         )
 
         redirect_to admin_participant_path(student.account),
-        success: "#{student.full_name} has their media consent on file."
+          success: "#{student.full_name} has their media consent on file."
       end
     end
 
@@ -45,7 +45,6 @@ module Admin
       redirect_to admin_paper_media_consents_path,
         success: "You rejected the media consent for #{media_consent.student_profile_full_name}."
     end
-
 
     private
 
