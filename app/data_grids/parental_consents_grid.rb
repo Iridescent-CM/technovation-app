@@ -1,10 +1,10 @@
 class ParentalConsentsGrid
   include Datagrid
 
-  attr_accessor :admin
+  attr_accessor :admin, :allow_state_search
 
   scope do
-    ParentalConsent.where.not(uploaded_at: nil)
+    ParentalConsent.where.not(uploaded_at: nil).includes(student_profile: :account).references(:accounts)
   end
 
   column :student, mandatory: true, html: true do |parental_consent|
@@ -20,6 +20,18 @@ class ParentalConsentsGrid
 
   column :email, header: "Student Email Address", mandatory: true do |parental_consent|
     parental_consent.student_profile_email
+  end
+
+  column :city do |media_consent|
+    media_consent.student_profile.city
+  end
+
+  column :state_province, header: "State" do
+    FriendlySubregion.call(self, prefix: false)
+  end
+
+  column :country do
+    Carmen::Country.coded(country) || Carmen::Country.named(country)
   end
 
   column :uploaded_at, header: "Uploaded On", mandatory: true do |parental_consent|
@@ -56,6 +68,76 @@ class ParentalConsentsGrid
     },
     multiple: true do |value, scope, grid|
       scope.by_season(value)
+    end
+
+  filter :country,
+    :enum,
+    header: "Country",
+    select: ->(g) {
+      CountryStateSelect.countries_collection
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(g) { g.admin } do |values|
+      clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
+      where(clauses.join(" OR "))
+    end
+
+  filter :state_province,
+    :enum,
+    header: "State / Province",
+    select: ->(g) {
+      CS.get(g.country[0]).map { |s| [s[1], s[0]] }
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
+    scope
+      .where({"accounts.country" => grid.country})
+      .where(
+        StateClauses.for(
+          values: values,
+          countries: grid.country,
+          table_name: "accounts",
+          operator: "OR"
+        )
+      )
+  end
+
+  filter :city,
+    :enum,
+    select: ->(g) {
+      country = g.country[0]
+      state = g.state_province[0]
+      CS.get(country, state)
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
+      scope.where(
+        StateClauses.for(
+          values: grid.state_province,
+          countries: grid.country,
+          table_name: "accounts",
+          operator: "OR"
+        )
+      )
+        .where(
+          CityClauses.for(
+            values: values,
+            table_name: "accounts",
+            operator: "OR"
+          )
+        )
     end
 
   column_names_filter(
