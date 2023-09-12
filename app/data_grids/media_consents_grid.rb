@@ -38,20 +38,20 @@ class MediaConsentsGrid
     media_consent.uploaded_at.strftime("%B %e, %Y %l:%M %p")
   end
 
-  column :upload_approval_status, header: "Status", mandatory: true do |media_consent|
-    media_consent.upload_approval_status.capitalize
-  end
-
-  column :actions, mandatory: true, html: true do |media_consent|
-    render "admin/paper_media_consents/actions", media_consent: media_consent
-  end
-
   column :upload_approved_at, header: "Approved On" do |media_consent|
     media_consent.upload_approved_at&.strftime("%B %e, %Y %l:%M %p")
   end
 
   column :upload_rejected_at, header: "Rejected On" do |media_consent|
     media_consent.upload_rejected_at&.strftime("%B %e, %Y %l:%M %p")
+  end
+
+  column :upload_approval_status, header: "Status", mandatory: true do |media_consent|
+    media_consent.upload_approval_status.capitalize
+  end
+
+  column :actions, mandatory: true, html: true do |media_consent|
+    render "admin/paper_media_consents/actions", media_consent: media_consent
   end
 
   filter :upload_approval_status,

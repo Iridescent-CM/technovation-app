@@ -38,20 +38,20 @@ class ParentalConsentsGrid
     parental_consent.uploaded_at.strftime("%B %e, %Y %l:%M %p")
   end
 
-  column :upload_approval_status, header: "Status", mandatory: true do |parental_consent|
-    parental_consent.upload_approval_status.capitalize
-  end
-
-  column :actions, mandatory: true, html: true do |parental_consent|
-    render "admin/paper_parental_consents/actions", parental_consent: parental_consent
-  end
-
   column :upload_approved_at, header: "Approved On" do |parental_consent|
     parental_consent.upload_approved_at&.strftime("%B %e, %Y %l:%M %p")
   end
 
   column :upload_rejected_at, header: "Rejected On" do |parental_consent|
     parental_consent.upload_rejected_at&.strftime("%B %e, %Y %l:%M %p")
+  end
+
+  column :upload_approval_status, header: "Status", mandatory: true do |parental_consent|
+    parental_consent.upload_approval_status.capitalize
+  end
+
+  column :actions, mandatory: true, html: true do |parental_consent|
+    render "admin/paper_parental_consents/actions", parental_consent: parental_consent
   end
 
   filter :upload_approval_status,
