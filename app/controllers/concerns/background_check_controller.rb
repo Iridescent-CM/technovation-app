@@ -12,6 +12,18 @@ module BackgroundCheckController
     @status = current_profile.background_check.status
   end
 
+  def international_background_check
+    checkr_result = CustomCheckr::ApiClient.new.request_checkr_invitation("candidates", profile: current_profile)
+
+    if checkr_result.success?
+      redirect_to send("#{current_scope}_dashboard_path"),
+        success: t("controllers.background_checks.invite.success")
+    else
+      flash.now[:error] = t("controllers.background_checks.invite.error")
+      render :new
+    end
+  end
+
   def create
     @candidate = BackgroundCheckCandidate.new(candidate_params)
 
