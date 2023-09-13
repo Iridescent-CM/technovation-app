@@ -239,7 +239,9 @@ CREATE TABLE public.background_checks (
     account_id integer NOT NULL,
     status integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    invitation_id character varying,
+    invitation_status integer
 );
 
 
@@ -3328,6 +3330,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230626193226'),
 ('20230727123214'),
 ('20230809190653'),
-('20230810134239');
+('20230810134239'),
+('20230905194750');
 
 
