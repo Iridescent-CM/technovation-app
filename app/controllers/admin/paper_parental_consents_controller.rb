@@ -47,9 +47,15 @@ module Admin
 
     def grid_params
       grid = (params[:parental_consents_grid] ||= {}).merge(
-        upload_approval_status: params[:parental_consents_grid][:upload_approval_status] || ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending],
-        season: params[:parental_consents_grid][:season] || Season.current.year
+        admin: true,
+        season: params[:parental_consents_grid][:season] || Season.current.year,
+        country: Array(params[:parental_consents_grid][:country]),
+        state_province: Array(params[:parental_consents_grid][:state_province])
       )
+
+      if request.format.html?
+        grid[:upload_approval_status] = params[:parental_consents_grid][:upload_approval_status] || ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending]
+      end
 
       grid.merge(
         column_names: detect_extra_columns(grid)

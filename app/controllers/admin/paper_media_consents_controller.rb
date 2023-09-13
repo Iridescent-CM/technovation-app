@@ -15,7 +15,7 @@ module Admin
         )
 
         redirect_to admin_participant_path(student.account),
-        success: "#{student.full_name} has their media consent on file."
+          success: "#{student.full_name} has their media consent on file."
       end
     end
 
@@ -46,7 +46,6 @@ module Admin
         success: "You rejected the media consent for #{media_consent.student_profile_full_name}."
     end
 
-
     private
 
     def media_consent_params
@@ -58,9 +57,15 @@ module Admin
 
     def grid_params
       grid = (params[:media_consents_grid] ||= {}).merge(
-        upload_approval_status: params[:media_consents_grid][:upload_approval_status] || ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending],
-        season: params[:media_consents_grid][:season] || Season.current.year
+        admin: true,
+        season: params[:media_consents_grid][:season] || Season.current.year,
+        country: Array(params[:media_consents_grid][:country]),
+        state_province: Array(params[:media_consents_grid][:state_province])
       )
+
+      if request.format.html?
+        grid[:upload_approval_status] = params[:media_consents_grid][:upload_approval_status] || ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending]
+      end
 
       grid.merge(
         column_names: detect_extra_columns(grid)
