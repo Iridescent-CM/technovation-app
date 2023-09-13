@@ -1,6 +1,7 @@
 class BackgroundCheck < ActiveRecord::Base
   # If these change, you will need to update dataclips
-  enum status: %i[pending clear consider suspended canceled]
+  enum status: %i[pending clear consider suspended canceled invitation_sent]
+  enum invitation_status: %i[pending completed expired], _prefix: :invitation
 
   belongs_to :account
 
