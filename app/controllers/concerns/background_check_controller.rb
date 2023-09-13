@@ -9,7 +9,7 @@ module BackgroundCheckController
 
   def show
     BackgroundChecking.new(current_profile.background_check).execute
-    @status = current_profile.background_check.status
+    @background_check = current_profile.background_check
   end
 
   def international_background_check
