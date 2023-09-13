@@ -165,6 +165,8 @@ class MentorProfile < ActiveRecord::Base
   delegate :submitted?,
            :candidate_id,
            :report_id,
+           :invitation_id,
+           :invitation_status,
     to: :background_check,
     prefix: true,
     allow_nil: true
@@ -271,6 +273,12 @@ class MentorProfile < ActiveRecord::Base
     !!background_check_candidate_id and !!background_check_report_id
   end
 
+  def background_check_invitation_sent?
+    !!background_check_candidate_id and
+      !!background_check_invitation_id and
+        background_check.invitation_pending?
+  end
+
   def enable_searchability
     self.searchable = can_enable_searchable?
 
@@ -300,7 +308,7 @@ class MentorProfile < ActiveRecord::Base
 
   def requires_background_check?
     (account.valid? and account.age >= 18) and
-      account.country_code == "US" and
+      (account.country_code == "US" or account.country_code == "IN") and
         not (background_check.present? and background_check.clear?)
   end
 
