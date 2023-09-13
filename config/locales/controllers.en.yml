@@ -19,6 +19,11 @@ en:
         change_image_hint: "Use a size of %{size}, and a format of only .jpg, .jpeg, .gif, or .png"
         success: "You updated your account!"
 
+    background_checks:
+      invite:
+        success: "Thank you for requesting your background check invitation. Please check your email to complete your background check."
+        error: "There was an issue requesting an invite from Checkr. Please try again later, or contact us if you need assistance."
+
     consent_waivers:
       create:
         success: "Thank you for signing the consent waiver!"
