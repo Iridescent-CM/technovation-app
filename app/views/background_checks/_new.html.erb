@@ -1,5 +1,5 @@
 <% if current_account.country_code == "US" %>
-  <%= render "background_checks/us_background_check" %>
+  <%= render "background_checks/us_background_check", url: mentor_background_checks_path %>
 <% elsif current_account.country_code == "IN" %>
   <%= render "background_checks/international_background_check" %>
 <% end %>
