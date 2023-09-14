@@ -8,7 +8,13 @@ module BackgroundCheckController
   end
 
   def show
-    BackgroundChecking.new(current_profile.background_check).execute
+    if current_profile.background_check.invitation_id.present?
+      InvitationChecking.new(current_profile.background_check).execute
+    end
+
+    if current_profile.background_check.report_id.present?
+      BackgroundChecking.new(current_profile.background_check).execute
+    end
     @background_check = current_profile.background_check
   end
 
