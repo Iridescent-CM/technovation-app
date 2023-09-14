@@ -235,7 +235,7 @@ CREATE TABLE public.ar_internal_metadata (
 CREATE TABLE public.background_checks (
     id integer NOT NULL,
     candidate_id character varying NOT NULL,
-    report_id character varying NOT NULL,
+    report_id character varying,
     account_id integer NOT NULL,
     status integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -3331,6 +3331,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230727123214'),
 ('20230809190653'),
 ('20230810134239'),
-('20230905194750');
+('20230905194750'),
+('20230914204523');
 
 
