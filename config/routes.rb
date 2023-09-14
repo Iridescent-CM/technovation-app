@@ -354,6 +354,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :registration_settings, only: :index
+    resources :registration_invites, only: :show
   end
 
   resource :terms_agreement, only: [:edit, :update]

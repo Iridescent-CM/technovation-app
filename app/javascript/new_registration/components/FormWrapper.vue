@@ -97,7 +97,7 @@ export default {
     },
     async submitHandler (data) {
       const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
-      const inviteCode = new URLSearchParams(document.location.search).get('admin_permission_token')
+      const inviteCode = new URLSearchParams(document.location.search).get('invite_code')
 
       let config = {
         headers: {

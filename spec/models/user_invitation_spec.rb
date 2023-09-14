@@ -92,4 +92,37 @@ RSpec.describe UserInvitation do
     expect(invite.account).to eq(judge.account)
     expect(event.reload.judge_list).to eq([judge])
   end
+
+  describe "#pending?" do
+    let(:invite) do
+      UserInvitation.new(
+        profile_type: :student,
+        status: invite_status
+      )
+    end
+
+    context "when the invite has a status of 'sent'" do
+      let(:invite_status) { "sent" }
+
+      it "is pending" do
+        expect(invite.pending?).to eq(true)
+      end
+    end
+
+    context "when the invite has a status of 'opened'" do
+      let(:invite_status) { "opened" }
+
+      it "is pending" do
+        expect(invite.pending?).to eq(true)
+      end
+    end
+
+    context "when the invite has a status of 'registered'" do
+      let(:invite_status) { "registered" }
+
+      it "is is not pending" do
+        expect(invite.pending?).to eq(false)
+      end
+    end
+  end
 end
