@@ -22,16 +22,16 @@ class ParentalConsentsGrid
     parental_consent.student_profile_email
   end
 
-  column :city do |media_consent|
-    media_consent.student_profile.city
+  column :city do |parental_consent|
+    parental_consent.student_profile.city
   end
 
-  column :state_province, header: "State" do
-    FriendlySubregion.call(self, prefix: false)
+  column :state_province, header: "State/Province" do |parental_consent|
+    FriendlySubregion.call(parental_consent.student_profile.account, prefix: false)
   end
 
-  column :country do
-    Carmen::Country.coded(country) || Carmen::Country.named(country)
+  column :country do |parental_consent|
+    Carmen::Country.coded(parental_consent.student_profile.country) || Carmen::Country.named(parental_consent.student_profile.country)
   end
 
   column :uploaded_at, header: "Uploaded On", mandatory: true do |parental_consent|
