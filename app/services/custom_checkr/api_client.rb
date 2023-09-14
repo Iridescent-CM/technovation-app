@@ -75,7 +75,7 @@ module CustomCheckr
       if invitation_response.status == 200
         Result.new(success?: true, payload: invitation_response_body)
       else
-        error = "[CHECKR] Error requesting invitation for #{background_check.id} - #{invitation_response_body[:error]}"
+        error = "[CHECKR] Error requesting invitation for #{invitation_id} - #{invitation_response_body[:error]}"
         logger.error(error)
         error_notifier.notify(error)
 
