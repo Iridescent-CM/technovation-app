@@ -1,6 +1,17 @@
 <div class="grid grid--justify-space-around">
   <div class="grid__col-sm-8">
     <div class="panel">
+      <% if @background_check.invitation_pending? %>
+        <p>An invitation was sent to your email on <%= @background_check.created_at.strftime("%B %d, %Y") %> from Checkr.
+          <br>
+          Please check your email to accept the invitation and complete the background check through the Checkr portal.
+        </p>
+      <% elsif @background_check.invitation_completed?  %>
+        <p>
+          Thank you for completing your background check through the Checkr portal.
+        </p>
+      <% end %>
+
       <p>
         Your background check status is:
         <strong><%= @background_check.status.humanize %></strong>
