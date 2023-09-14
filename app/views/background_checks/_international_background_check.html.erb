@@ -20,7 +20,7 @@
 
           <p>
             Then, Checkr gives us a secret, randomized token to keep track of the
-            status of your background check. At no point does your actual information
+            status of your invitation request and background check. At no point does your actual information
             reach our servers.
           </p>
 
@@ -90,7 +90,9 @@
   <div class="grid__col-sm-5">
     <div class="panel">
       <h3><%= t("views.background_checks.new.international_title") %></h3>
-      <%= link_to "Request background check invitation", mentor_international_background_check_url %>
+      <%= link_to "Request background check invitation",
+                  mentor_international_background_check_url,
+                  class: "button" %>
     </div>
   </div>
 </div>
