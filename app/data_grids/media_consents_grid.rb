@@ -26,12 +26,12 @@ class MediaConsentsGrid
     media_consent.student_profile.city
   end
 
-  column :state_province, header: "State" do
-    FriendlySubregion.call(self, prefix: false)
+  column :state_province, header: "State/Province" do |media_consent|
+    FriendlySubregion.call(media_consent.student_profile.account, prefix: false)
   end
 
-  column :country do
-    Carmen::Country.coded(country) || Carmen::Country.named(country)
+  column :country do |media_consent|
+    Carmen::Country.coded(media_consent.student_profile.country) || Carmen::Country.named(media_consent.student_profile.country)
   end
 
   column :uploaded_at, header: "Uploaded On", mandatory: true do |media_consent|
