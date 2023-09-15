@@ -54,7 +54,7 @@ gem "friendly_id", "~> 5.5"
 
 gem "bcrypt", "~> 3.1"
 
-gem "sidekiq", "~> 6.4.0"
+gem "sidekiq", "~> 7.0"
 
 gem "airbrake", "~> 11.0.3"
 

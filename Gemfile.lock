@@ -402,6 +402,8 @@ GEM
       ffi (~> 1.0)
     rbtree3 (0.7.0)
     redis (4.8.1)
+    redis-client (0.17.0)
+      connection_pool
     regexp_parser (2.8.1)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
@@ -465,10 +467,11 @@ GEM
       websocket (~> 1.0)
     semantic_range (3.0.0)
     sexp_processor (4.15.3)
-    sidekiq (6.4.2)
-      connection_pool (>= 2.2.2)
-      rack (~> 2.0)
-      redis (>= 4.2.0)
+    sidekiq (7.1.4)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.14.0)
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -612,7 +615,7 @@ DEPENDENCIES
   rspec-retry
   sass-rails (~> 6.0)
   selenium-webdriver
-  sidekiq (~> 6.4.0)
+  sidekiq (~> 7.0)
   simple_form (~> 5.0)
   spring (~> 2.0)
   spring-watcher-listen (~> 2.0)
