@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.checkr-staging.com/v1/candidates
+    uri: https://api.checkr.com/v1/candidates
     body:
       encoding: UTF-8
       string: first_name=Factory&middle_name=&no_middle_name=true&last_name=Account&email=account1%40example.com&phone&zipcode=60622&dob=1986-03-30&ssn=111-11-2001&driver_license_number&driver_license_state=CA&previous_driver_license_number&previous_driver_license_state&copy_requested=false&custom_id&reports&geos&documents=%7B%0A++%22object%22%3A+%22list%22%2C%0A++%22data%22%3A+%5B%0A%0A++%5D%0A%7D&id&object&uri&created_at
@@ -54,7 +54,7 @@ http_interactions:
   recorded_at: Thu, 30 Mar 2017 15:48:27 GMT
 - request:
     method: post
-    uri: https://api.checkr-staging.com/v1/reports
+    uri: https://api.checkr.com/v1/reports
     body:
       encoding: UTF-8
       string: package=tasker_standard&candidate_id=50403c02b4d68fae6b9fdf21
