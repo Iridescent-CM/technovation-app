@@ -1,7 +1,7 @@
 class InvitationChecking
   def initialize(bg_check, options = {})
     @bg_check = bg_check
-    @invitation = CustomCheckr::ApiClient.new.retrieve_invitation(@bg_check.invitation_id)
+    @invitation = CheckrApiClient::ApiClient.new.retrieve_invitation(@bg_check.invitation_id)
     @logger = options.fetch(:logger) { Logger.new("/dev/null") }
   end
 

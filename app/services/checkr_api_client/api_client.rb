@@ -1,4 +1,4 @@
-module CustomCheckr
+module CheckrApiClient
   class ApiClient
     def initialize(
       client_id: ENV.fetch("CHECKR_API_KEY"),
