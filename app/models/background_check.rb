@@ -15,6 +15,10 @@ class BackgroundCheck < ActiveRecord::Base
     pending?
   end
 
+  def invitation_sent?
+    candidate_id.present? && invitation_id.present?
+  end
+
   class << self
     def get(resource, id)
       Checkr.request(:get, "/v1/#{resource}/#{id}")
