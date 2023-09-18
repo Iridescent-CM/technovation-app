@@ -165,6 +165,7 @@ class MentorProfile < ActiveRecord::Base
   delegate :submitted?,
            :candidate_id,
            :report_id,
+           :invitation_id,
     to: :background_check,
     prefix: true,
     allow_nil: true
@@ -300,7 +301,7 @@ class MentorProfile < ActiveRecord::Base
 
   def requires_background_check?
     (account.valid? and account.age >= 18) and
-      account.country_code == "US" and
+      (account.country_code == "US" or account.country_code == "IN") and
         not (background_check.present? and background_check.clear?)
   end
 

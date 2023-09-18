@@ -8,8 +8,26 @@ module BackgroundCheckController
   end
 
   def show
-    BackgroundChecking.new(current_profile.background_check).execute
-    @status = current_profile.background_check.status
+    if current_profile.background_check.invitation_id.present?
+      InvitationChecking.new(current_profile.background_check).execute
+    end
+
+    if current_profile.background_check.report_id.present?
+      BackgroundChecking.new(current_profile.background_check).execute
+    end
+    @background_check = current_profile.background_check
+  end
+
+  def international_background_check
+    checkr_result = CustomCheckr::ApiClient.new.request_checkr_invitation("candidates", profile: current_profile)
+
+    if checkr_result.success?
+      redirect_to send("#{current_scope}_dashboard_path"),
+        success: t("controllers.background_checks.invite.success")
+    else
+      flash.now[:error] = t("controllers.background_checks.invite.error")
+      render :new
+    end
   end
 
   def create

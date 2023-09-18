@@ -8,4 +8,5 @@ class NullBackgroundCheck < NullObject
   def consider?; false; end
   def suspended?; false; end
   def paranoid?; false; end
+  def invitation_sent?; false; end
 end
