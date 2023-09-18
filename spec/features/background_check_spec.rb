@@ -16,6 +16,7 @@ RSpec.feature "background checks" do
   end
 
   scenario "Complete a chapter ambassador background check", :vcr do
+    skip("Chapter ambassadors are not currently background checked")
     chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :geocoded)
     chapter_ambassador.background_check.destroy
     sign_in(chapter_ambassador)

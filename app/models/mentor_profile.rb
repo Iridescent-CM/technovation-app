@@ -166,7 +166,6 @@ class MentorProfile < ActiveRecord::Base
            :candidate_id,
            :report_id,
            :invitation_id,
-           :invitation_status,
     to: :background_check,
     prefix: true,
     allow_nil: true
@@ -271,12 +270,6 @@ class MentorProfile < ActiveRecord::Base
 
   def background_check_submitted?
     !!background_check_candidate_id and !!background_check_report_id
-  end
-
-  def background_check_invitation_sent?
-    !!background_check_candidate_id and
-      !!background_check_invitation_id and
-        background_check.invitation_pending?
   end
 
   def enable_searchability

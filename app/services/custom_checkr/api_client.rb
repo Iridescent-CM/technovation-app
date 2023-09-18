@@ -44,7 +44,6 @@ module CustomCheckr
         if invitation_response.status == 201
           profile.account.update(background_check_attributes: {
             candidate_id: candidate_response_body[:id],
-            report_id: "international",
             invitation_id: invitation_response_body[:id],
             invitation_status: invitation_response_body[:status],
             status: :invitation_sent
@@ -68,14 +67,26 @@ module CustomCheckr
       end
     end
 
-    # todo: get request for invitation status update from checkr
-    # def get_checkr_invitation()
-    # end
+    def retrieve_invitation(invitation_id)
+      invitation_response = connection.get("/v1/invitations/#{invitation_id}")
+
+      invitation_response_body = JSON.parse(invitation_response.body, symbolize_names: true)
+
+      if invitation_response.status == 200
+        Result.new(success?: true, payload: invitation_response_body)
+      else
+        error = "[CHECKR] Error requesting invitation for #{invitation_id} - #{invitation_response_body[:error]}"
+        logger.error(error)
+        error_notifier.notify(error)
+
+        Result.new(success?: false)
+      end
+    end
 
     private
 
     attr_reader :connection, :logger, :error_notifier
 
-    Result = Struct.new(:success?, :message, keyword_init: true)
+    Result = Struct.new(:success?, :message, :payload, keyword_init: true)
   end
 end
