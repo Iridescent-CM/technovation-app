@@ -24,6 +24,11 @@
         @next="next"
         @prev="prev"
       />
+      <ChapterAmbassadorStepTwo v-else-if="formValues.profileType === 'chapter_ambassador'"
+        :form-values="formValues"
+        @next="next"
+        @prev="prev"
+      />
       <StudentStepTwo v-else
         :form-values="formValues"
         @next="next"
@@ -50,6 +55,7 @@ import StepOne from './StepOne';
 import MentorStepTwo from './MentorStepTwo';
 import StudentStepTwo from './StudentStepTwo';
 import JudgeStepTwo from "./JudgeStepTwo";
+import ChapterAmbassadorStepTwo from "./ChapterAmbassadorStepTwo";
 import StepThree from './StepThree';
 import StepFour from './StepFour';
 
@@ -60,6 +66,7 @@ export default {
     MentorStepTwo,
     StudentStepTwo,
     JudgeStepTwo,
+    ChapterAmbassadorStepTwo,
     StepThree,
     StepFour
   },
@@ -119,6 +126,9 @@ export default {
             break
           case 'judge':
             window.location.href = '/judge/dashboard'
+            break
+          case 'chapter_ambassador':
+            window.location.href = '/pending_chapter_ambassador/dashboard'
             break
         }
       }

@@ -16,11 +16,7 @@ class RegistrationMailer < ApplicationMailer
     invite_code = invitation.admin_permission_token
 
     if invite_code.present?
-      if invitation.profile_type == "chapter_ambassador"
-        @url = chapter_ambassador_signup_url(admin_permission_token: invite_code)
-      else
-        @url = signup_url(invite_code: invite_code)
-      end
+      @url = signup_url(invite_code: invite_code)
 
       mail to: invitation.email,
         subject: t("registration_mailer.admin_permission.subject", season_year: Season.current.year) do |f|

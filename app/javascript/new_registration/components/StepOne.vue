@@ -10,7 +10,7 @@
           <p v-else>
             This invitation is no longer valid.
           </p>
-      </div>
+        </div>
       </div>
 
       <div v-if="anyDisabledProfileTypes" class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
@@ -19,7 +19,7 @@
         </p>
       </div>
 
-      <div v-if="typeof registrationInvite != 'undefined'">
+      <div v-if="Object.keys(registrationInvite).length !== 0">
         <div v-if="registrationInvite.isValid == true">
           <h2 class="registration-title">
             Welcome to Technovation Girls!
@@ -135,6 +135,10 @@ export default {
       if (this.isJudgeRegistrationOpen) {
         this.profileTypes.push(this.judgeProfileType())
       }
+
+      if (this.registrationInvite.isValid && this.registrationInvite.profileType == 'chapter_ambassador') {
+        this.profileTypes.push(this.chapterAmbassadorProfileType())
+      }
     },
     setupDisabledProfileTypes() {
       let disabledProfiles = []
@@ -207,6 +211,13 @@ export default {
         label: `<img src="${require('signup/myTG-mentor.png')}" alt="" class="judge"> <span class="judge s1-label-text">I am over 18 years old and will <span class="judge font-bold">judge submissions</span>`,
         value: 'judge',
         id: 'judge'
+      }
+    },
+    chapterAmbassadorProfileType() {
+      return {
+        label: `<img src="${require('signup/myTG-mentor.png')}" alt="" class="chapter_ambassador"> <span class="chapter_ambassador s1-label-text">Chapter Ambassador</span>`,
+        value: 'chapter_ambassador',
+        id: 'chapter_ambassador'
       }
     },
     displayDivisionCutoffDescription() {

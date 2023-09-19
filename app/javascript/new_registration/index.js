@@ -35,6 +35,9 @@ Vue.use(VueFormulate, {
       judgeAge() {
         return "You must be at least 18 years old to participate as a judge.";
       },
+      chapterAmbassadorAge() {
+        return "You must be at least 18 years old to participate as a chapter ambassador.";
+      },
     },
   },
   rules: {
@@ -42,6 +45,7 @@ Vue.use(VueFormulate, {
       verifyStudentAge({ birthday: value, division }),
     mentorAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
     judgeAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
+    chapterAmbassadorAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
   },
   slotComponents: {
     label: "CustomLabel",
