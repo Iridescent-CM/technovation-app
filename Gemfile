@@ -54,6 +54,7 @@ gem "friendly_id", "~> 5.5"
 
 gem "bcrypt", "~> 3.1"
 
+gem "redis"
 gem "sidekiq", "~> 7.0"
 
 gem "airbrake", "~> 11.0.3"
@@ -130,7 +131,6 @@ group :test do
 end
 
 group :development, :test do
-  gem "redis"
   gem "standard"
 end
 
