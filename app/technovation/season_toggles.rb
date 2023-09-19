@@ -1,3 +1,5 @@
+require "redis"
+
 require "season_toggles/signup_toggles"
 require "season_toggles/dashboard_notices"
 require "season_toggles/survey_links"
@@ -27,6 +29,7 @@ class SeasonToggles
     end
 
     private
+
     def store
       @@store ||= Redis.new(ssl_params: {verify_mode: OpenSSL::SSL::VERIFY_NONE})
     end
