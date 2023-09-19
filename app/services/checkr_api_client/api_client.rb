@@ -31,7 +31,7 @@ module CheckrApiClient
 
       candidate_response_body = JSON.parse(candidate_response.body, symbolize_names: true)
 
-      if candidate_response.status == 201
+      if candidate_response.success?
         invitation_response = connection.post("/v1/invitations") do |req|
           req.body = {
             package: "international_basic_plus",
@@ -42,8 +42,8 @@ module CheckrApiClient
 
         invitation_response_body = JSON.parse(invitation_response.body, symbolize_names: true)
 
-        if invitation_response.status == 201
-          profile.account.update(background_check_attributes: {
+        if invitation_response.success?
+          candidate.account.update(background_check_attributes: {
             candidate_id: candidate_response_body[:id],
             invitation_id: invitation_response_body[:id],
             invitation_status: invitation_response_body[:status],
@@ -73,7 +73,7 @@ module CheckrApiClient
 
       invitation_response_body = JSON.parse(invitation_response.body, symbolize_names: true)
 
-      if invitation_response.status == 200
+      if invitation_response.success?
         Result.new(success?: true, payload: invitation_response_body)
       else
         error = "[CHECKR] Error requesting invitation for #{invitation_id} - #{invitation_response_body[:error]}"
