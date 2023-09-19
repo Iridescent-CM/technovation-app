@@ -19,7 +19,7 @@ module BackgroundCheckController
   end
 
   def international_background_check
-    checkr_result = CustomCheckr::ApiClient.new.request_checkr_invitation("candidates", profile: current_profile)
+    checkr_result = CheckrApiClient::ApiClient.new.request_checkr_invitation(candidate: current_profile)
 
     if checkr_result.success?
       redirect_to send("#{current_scope}_dashboard_path"),

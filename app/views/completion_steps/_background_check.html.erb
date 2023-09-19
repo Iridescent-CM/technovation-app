@@ -4,9 +4,9 @@
 
 <% if profile.requires_background_check? %>
   <p>
-    <% if profile.background_check.invitation_sent? %>
+    <% if profile.background_check.invitation_pending? %>
       <%= t("views.profile_requirements.background_check." +
-            "links.background_check_invitation_sent.prefix") %>
+            "links.background_check_invitation_pending.prefix") %>
     <% elsif profile.background_check_submitted? %>
       <%= t("views.profile_requirements.background_check." +
             "links.background_check_submitted.prefix") %>
@@ -17,9 +17,9 @@
   </p>
 
   <div class="step-actions">
-    <% if profile.background_check.invitation_sent?%>
+    <% if profile.background_check.invitation_pending?%>
       <%= link_to t("views.profile_requirements.background_check." +
-                      "links.background_check_invitation_sent.text"),
+                      "links.background_check_invitation_pending.text"),
                   send(
                     "#{current_scope}_background_check_path",
                     profile.background_check_invitation_id

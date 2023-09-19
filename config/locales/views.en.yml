@@ -172,7 +172,7 @@ en:
         heading: "Background Check"
         label: "Pass a background check"
         links:
-          background_check_invitation_sent:
+          background_check_invitation_pending:
             prefix: "Your background check invitation has been sent to your email address."
             text: "Check Invitation status"
           background_check_submitted:

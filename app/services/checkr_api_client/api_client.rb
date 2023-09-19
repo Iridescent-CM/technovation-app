@@ -1,4 +1,4 @@
-module CustomCheckr
+module CheckrApiClient
   class ApiClient
     def initialize(
       client_id: ENV.fetch("CHECKR_API_KEY"),
@@ -18,31 +18,32 @@ module CustomCheckr
       @error_notifier = error_notifier
     end
 
-    def request_checkr_invitation(resource, profile:)
-      candidate_response = connection.post("/v1/#{resource}") do |req|
+    def request_checkr_invitation(candidate:)
+      candidate_response = connection.post("/v1/candidates") do |req|
         req.body = {
-          email: profile.account.email,
-          first_name: profile.account.first_name,
-          last_name: profile.account.last_name,
-          work_locations: [{country: profile.account.country_code}]
+          email: candidate.account.email,
+          first_name: candidate.account.first_name,
+          last_name: candidate.account.last_name,
+          dob: candidate.account.date_of_birth,
+          work_locations: [{country: candidate.account.country_code}]
         }.to_json
       end
 
       candidate_response_body = JSON.parse(candidate_response.body, symbolize_names: true)
 
-      if candidate_response.status == 201
+      if candidate_response.success?
         invitation_response = connection.post("/v1/invitations") do |req|
           req.body = {
             package: "international_basic_plus",
             candidate_id: candidate_response_body[:id],
-            work_locations: [{country: profile.account.country_code}]
+            work_locations: [{country: candidate.account.country_code}]
           }.to_json
         end
 
         invitation_response_body = JSON.parse(invitation_response.body, symbolize_names: true)
 
-        if invitation_response.status == 201
-          profile.account.update(background_check_attributes: {
+        if invitation_response.success?
+          candidate.account.update(background_check_attributes: {
             candidate_id: candidate_response_body[:id],
             invitation_id: invitation_response_body[:id],
             invitation_status: invitation_response_body[:status],
@@ -52,14 +53,14 @@ module CustomCheckr
           Result.new(success?: true)
 
         else
-          error = "[CHECKR] Error requesting invitation for #{profile.account.id} - #{invitation_response_body[:error]}"
+          error = "[CHECKR] Error requesting invitation for #{candidate.account.id} - #{invitation_response_body[:error]}"
           logger.error(error)
           error_notifier.notify(error)
 
           Result.new(success?: false)
         end
       else
-        error = "[CHECKR] Error creating candidate for #{profile.account.id} - #{candidate_response_body[:error]}"
+        error = "[CHECKR] Error creating candidate for #{candidate.account.id} - #{candidate_response_body[:error]}"
         logger.error(error)
         error_notifier.notify(error)
 
@@ -72,7 +73,7 @@ module CustomCheckr
 
       invitation_response_body = JSON.parse(invitation_response.body, symbolize_names: true)
 
-      if invitation_response.status == 200
+      if invitation_response.success?
         Result.new(success?: true, payload: invitation_response_body)
       else
         error = "[CHECKR] Error requesting invitation for #{invitation_id} - #{invitation_response_body[:error]}"
