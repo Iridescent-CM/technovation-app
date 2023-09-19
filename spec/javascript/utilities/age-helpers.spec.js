@@ -1,7 +1,6 @@
 import {
   verifyStudentAge,
-  verifyMentorAge,
-  verifyJudgeAge
+  verifyOlderThanEighteen
 } from "utilities/age-helpers.js";
 
 const currentEnv = process.env;
@@ -107,12 +106,12 @@ describe("verifyStudentAge", () => {
   });
 });
 
-describe("verifyMentorAge", () => {
+describe("verifyOlderThanEighteen", () => {
   describe("when a mentor is older than 18", () => {
     const birthday = "2000-01-01";
 
     it("returns true", () => {
-      expect(verifyMentorAge({ birthday })).toBe(true);
+      expect(verifyOlderThanEighteen({ birthday })).toBe(true);
     });
   });
 
@@ -120,25 +119,7 @@ describe("verifyMentorAge", () => {
     const birthday = "2010-01-01";
 
     it("returns false", () => {
-      expect(verifyMentorAge({ birthday })).toBe(false);
-    });
-  });
-});
-
-describe("verifyJudgeAge", () => {
-  describe("when a judge is older than 18", () => {
-    const birthday = "2000-01-01";
-
-    it("returns true", () => {
-      expect(verifyJudgeAge({ birthday })).toBe(true);
-    });
-  });
-
-  describe("when a judge is younger than 18", () => {
-    const birthday = "2010-01-01";
-
-    it("returns false", () => {
-      expect(verifyJudgeAge({ birthday })).toBe(false);
+      expect(verifyOlderThanEighteen({ birthday })).toBe(false);
     });
   });
 });

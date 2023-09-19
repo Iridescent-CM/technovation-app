@@ -5,8 +5,7 @@ import App from "./App";
 import CustomLabel from "./components/CustomLabel";
 import {
   verifyStudentAge,
-  verifyMentorAge,
-  verifyJudgeAge,
+  verifyOlderThanEighteen,
 } from "utilities/age-helpers.js";
 
 Vue.component("CustomLabel", CustomLabel);
@@ -41,8 +40,8 @@ Vue.use(VueFormulate, {
   rules: {
     studentAge: ({ value }, division) =>
       verifyStudentAge({ birthday: value, division }),
-    mentorAge: ({ value }) => verifyMentorAge({ birthday: value }),
-    judgeAge: ({ value }) => verifyJudgeAge({ birthday: value }),
+    mentorAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
+    judgeAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
   },
   slotComponents: {
     label: "CustomLabel",
