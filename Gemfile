@@ -130,6 +130,7 @@ group :test do
 end
 
 group :development, :test do
+  gem "redis"
   gem "standard"
 end
 

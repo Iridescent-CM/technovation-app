@@ -1,5 +1,3 @@
-require "redis"
-
 require "season_toggles/signup_toggles"
 require "season_toggles/dashboard_notices"
 require "season_toggles/survey_links"
