@@ -7,7 +7,7 @@ RSpec.describe "Registration invites", :js do
     sign_in(admin)
   end
 
-  %i[student mentor judge].each do |profile_type|
+  %i[student mentor judge chapter_ambassador].each do |profile_type|
     let(:email_address) { "#{profile_type}@example.com" }
 
     context "when an admin invites a #{profile_type.to_s.humanize(capitalize: false)}" do
