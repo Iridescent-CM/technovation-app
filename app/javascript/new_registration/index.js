@@ -5,8 +5,7 @@ import App from "./App";
 import CustomLabel from "./components/CustomLabel";
 import {
   verifyStudentAge,
-  verifyMentorAge,
-  verifyJudgeAge,
+  verifyOlderThanEighteen,
 } from "utilities/age-helpers.js";
 
 Vue.component("CustomLabel", CustomLabel);
@@ -36,13 +35,17 @@ Vue.use(VueFormulate, {
       judgeAge() {
         return "You must be at least 18 years old to participate as a judge.";
       },
+      chapterAmbassadorAge() {
+        return "You must be at least 18 years old to participate as a chapter ambassador.";
+      },
     },
   },
   rules: {
     studentAge: ({ value }, division) =>
       verifyStudentAge({ birthday: value, division }),
-    mentorAge: ({ value }) => verifyMentorAge({ birthday: value }),
-    judgeAge: ({ value }) => verifyJudgeAge({ birthday: value }),
+    mentorAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
+    judgeAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
+    chapterAmbassadorAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
   },
   slotComponents: {
     label: "CustomLabel",

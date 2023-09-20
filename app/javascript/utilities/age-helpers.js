@@ -28,11 +28,7 @@ function verifyStudentAge({birthday, division}) {
   }
 }
 
-function verifyMentorAge({birthday}) {
-  return (ageToday(birthday) >= 18)
-}
-
-function verifyJudgeAge({birthday}) {
+function verifyOlderThanEighteen({birthday}) {
   return (ageToday(birthday) >= 18)
 }
 
@@ -42,8 +38,7 @@ function exampleStudentBirthday() {
 
 export {
   verifyStudentAge,
-  verifyMentorAge,
-  verifyJudgeAge,
+  verifyOlderThanEighteen,
   calculateAgeByDivisionCutoffDate,
   exampleStudentBirthday
 }
