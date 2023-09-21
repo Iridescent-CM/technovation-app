@@ -10,14 +10,20 @@
 //= require submissions
 //= require dropzones
 
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("turbolinks:load", function () {
+  $("#bg-check-invite-btn").on("click", function (e) {
+    $(this).addClass("button--disabled");
+    $("#overlay").fadeIn(300);
+    $("#spinner-text").text("Processing your request...");
+  });
+
   $("#background_check_candidate_ssn").mask("999-99-9999?");
 
-  $(".show-hide").on("click", "a", function(e) {
+  $(".show-hide").on("click", "a", function (e) {
     e.preventDefault();
     const state = $(this).data("state"),
-          $that = $(e.target),
-          $fieldToObfuscate = $that.closest(".show-hide").find("input");
+      $that = $(e.target),
+      $fieldToObfuscate = $that.closest(".show-hide").find("input");
 
     if (state === "showing") {
       $that.text("Show");
@@ -30,5 +36,5 @@ document.addEventListener("turbolinks:load", function() {
     }
   });
 
-  $(".accordion").accordion()
+  $(".accordion").accordion();
 });

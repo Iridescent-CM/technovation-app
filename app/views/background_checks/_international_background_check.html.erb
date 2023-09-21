@@ -1,3 +1,5 @@
+<%= render 'application/spinner' %>
+
 <div class="grid grid--justify-center">
   <div class="grid__col-sm-6">
     <div class="grid grid--bleed">
@@ -92,7 +94,8 @@
       <h3><%= t("views.background_checks.new.international_title") %></h3>
       <%= link_to "Request background check invitation",
                   mentor_international_background_check_url,
-                  class: "button" %>
+                  class: "button",
+                  id: "bg-check-invite-btn"%>
     </div>
   </div>
 </div>
