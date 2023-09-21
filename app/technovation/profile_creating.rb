@@ -18,7 +18,6 @@ class ProfileCreating
     controller.remove_cookie(CookieNames::SIGNUP_TOKEN)
 
     AttachSignupAttemptJob.perform_later(profile.account_id)
-    AttachUserInvitationJob.perform_later(profile.account_id)
 
     case scope.to_sym
     when :student

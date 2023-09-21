@@ -88,6 +88,8 @@ RSpec.describe UserInvitation do
       account: FactoryBot.create(:account, email: "judge@judge.com")
     )
 
+    UpdateRegistrationInviteJob.perform_now(invite_code: invite.admin_permission_token, account_id: judge.account.id)
+
     expect(invite.reload).to be_registered
     expect(invite.account).to eq(judge.account)
     expect(event.reload.judge_list).to eq([judge])
