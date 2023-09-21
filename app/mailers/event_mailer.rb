@@ -26,10 +26,7 @@ class EventMailer < ApplicationMailer
 
     @url = case @invite.status
            when "sent", "opened"
-             send(
-               "#{@invite.scope_name}_signup_url",
-               admin_permission_token: @invite.admin_permission_token
-             )
+             signup_url(invite_code: @invite.admin_permission_token)
            when "registered", "past_season", "training", "ready"
              if @invite.scope_name == "student"
                student_dashboard_url(
