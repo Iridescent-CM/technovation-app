@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "Registration invites", :js do
   {
     student: "student",
-    mentor: "mentor",
     judge: "judge",
     chapter_ambassador: "chapter ambassador"
   }.each do |profile_type, friendly_profile_type|
