@@ -1,5 +1,5 @@
 class NewRegistrationController < ApplicationController
-  after_action :update_invitation, only: :create
+  after_action :update_registration_invite, only: :create
 
   layout "new_registration"
 
@@ -132,12 +132,10 @@ class NewRegistrationController < ApplicationController
     )
   end
 
-  def update_invitation
-    invitation = UserInvitation.find_by(admin_permission_token: params[:inviteCode])
-
-    if invitation.present?
-      invitation.update_column(:account_id, @profile.account.id)
-      invitation.registered!
-    end
+  def update_registration_invite
+    UpdateRegistrationInviteJob.perform_later(
+      invite_code: params[:inviteCode],
+      account_id: @profile.account.id
+    )
   end
 end
