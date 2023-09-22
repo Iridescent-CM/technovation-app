@@ -103,6 +103,7 @@
             :validation-messages="{ required: 'This field is required.' }"
             @keyup="checkValidation"
             @blur="checkValidation"
+            @input="checkValidation"
           />
         </div>
 
@@ -183,12 +184,15 @@ export default {
         document.getElementsByClassName('validation-error-message')
       ).map(element => element.innerText)
 
+      const hasMentorTypeChecked = !!(document.querySelector('[name="mentorTypes"]:checked'));
+
       if (document.getElementById('firstName').value.length === 0 ||
         document.getElementById('lastName').value.length === 0 ||
         document.getElementById('dateOfBirth').value.length === 0 ||
         document.getElementById('mentorSchoolCompanyName').value.length === 0 ||
         document.getElementById('mentorJobTitle').value.length === 0 ||
         document.getElementById('mentorBio').value.length < 100 ||
+        hasMentorTypeChecked === false ||
         validationErrorMessages.some((message) => {
           return (
             message.indexOf('years old to participate') >= 0 ||
