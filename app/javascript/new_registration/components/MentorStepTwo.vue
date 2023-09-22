@@ -90,7 +90,9 @@
         />
 
         <div class="mentor-information" v-show="mentorTypeOptions.length > 0">
-          <h4 class="registration-title">As a mentor you may call me a...</h4>
+          <h4 class="registration-title">
+            As a mentor you may call me a...<span class="formulate-required-field">*</span>
+          </h4>
 
           <FormulateInput
             name="mentorTypes"
