@@ -1,4 +1,6 @@
-import getters from 'mentor/store/getters'
+import getters from "mentor/store/getters";
+
+const backgroundCheckCountryCodes = "IN, CA, US";
 
 describe("mentor/store/getters.js", () => {
   describe("isBackgroundCheckWaived", () => {
@@ -12,10 +14,13 @@ describe("mentor/store/getters.js", () => {
             },
           },
         },
-      }
+        settings: {
+          backgroundCheckCountryCodes: backgroundCheckCountryCodes,
+        },
+      };
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
-    })
+      expect(getters.isBackgroundCheckWaived(state)).toBe(true);
+    });
 
     it("is false when currentAccount.countryCode is US", () => {
       const state = {
@@ -27,10 +32,13 @@ describe("mentor/store/getters.js", () => {
             },
           },
         },
-      }
+        settings: {
+          backgroundCheckCountryCodes: backgroundCheckCountryCodes,
+        },
+      };
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(false)
-    })
+      expect(getters.isBackgroundCheckWaived(state)).toBe(false);
+    });
 
     it("is true when currentAccount.age is under 18", () => {
       const state = {
@@ -42,36 +50,41 @@ describe("mentor/store/getters.js", () => {
             },
           },
         },
-      }
+        settings: {
+          backgroundCheckCountryCodes: backgroundCheckCountryCodes,
+        },
+      };
 
-      expect(getters.isBackgroundCheckWaived(state)).toBe(true)
-    })
-  })
+      expect(getters.isBackgroundCheckWaived(state)).toBe(true);
+    });
+  });
 
   describe("isOnTeam", () => {
-    it ("is true if the mentor has a team in currentTeams", () => {
+    it("is true if the mentor has a team in currentTeams", () => {
       const state = {
-        currentTeams: [{
-          data: {
-            id: 'db123',
+        currentTeams: [
+          {
+            data: {
+              id: "db123",
+            },
           },
-        }],
-      }
+        ],
+      };
 
-      expect(getters.isOnTeam(state)).toBeTruthy()
-    })
+      expect(getters.isOnTeam(state)).toBeTruthy();
+    });
 
-    it ("is false if the mentor has no teams in currentTeams", () => {
+    it("is false if the mentor has no teams in currentTeams", () => {
       const state = {
         currentTeams: [],
-      }
+      };
 
-      expect(getters.isOnTeam(state)).toBeFalsy()
-    })
-  })
+      expect(getters.isOnTeam(state)).toBeFalsy();
+    });
+  });
 
   describe("canJoinTeams", () => {
-    it ("is true if the currentMentor isOnboarded", () => {
+    it("is true if the currentMentor isOnboarded", () => {
       const state = {
         currentMentor: {
           data: {
@@ -80,14 +93,14 @@ describe("mentor/store/getters.js", () => {
             },
           },
         },
-      }
+      };
 
-      expect(getters.canJoinTeams(state)).toBeTruthy()
-    })
-  })
+      expect(getters.canJoinTeams(state)).toBeTruthy();
+    });
+  });
 
   describe("isOnboarded", () => {
-    it ("is true if the currentMentor isOnboarded", () => {
+    it("is true if the currentMentor isOnboarded", () => {
       const state = {
         currentMentor: {
           data: {
@@ -96,23 +109,23 @@ describe("mentor/store/getters.js", () => {
             },
           },
         },
-      }
+      };
 
-      expect(getters.isOnboarded(state)).toBeTruthy()
-    })
-  })
+      expect(getters.isOnboarded(state)).toBeTruthy();
+    });
+  });
 
   describe("canDisplayScores", () => {
     it("returns true when the display_scores setting is enabled", () => {
-      const state = { settings: { canDisplayScores: true } }
+      const state = { settings: { canDisplayScores: true } };
 
-      expect(getters.canDisplayScores(state)).toBe(true)
-    })
+      expect(getters.canDisplayScores(state)).toBe(true);
+    });
 
     it("returns false when the display_scores setting is disabled", () => {
-      const state = { settings: { canDisplayScores: false } }
+      const state = { settings: { canDisplayScores: false } };
 
-      expect(getters.canDisplayScores(state)).toBe(false)
-    })
-  })
-})
+      expect(getters.canDisplayScores(state)).toBe(false);
+    });
+  });
+});
