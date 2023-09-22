@@ -300,9 +300,14 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def requires_background_check?
-    (account.valid? and account.age >= 18) and
-      (account.country_code == "US" or account.country_code == "IN") and
-        not (background_check.present? and background_check.clear?)
+    (account.valid? && account.age >= 18) &&
+      in_background_check_country? &&
+      !(background_check.present? && background_check.clear?)
+  end
+
+  def in_background_check_country?
+    country_codes = ENV.fetch("BACKGROUND_CHECK_COUNTRY_CODES", "").split(",")
+    country_codes.include?(account.country_code)
   end
 
   def bio_complete?
