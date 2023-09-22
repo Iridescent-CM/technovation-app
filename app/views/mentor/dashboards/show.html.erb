@@ -9,7 +9,10 @@
       current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,
       consent_waiver: ConsentSerializer.new(current_mentor.consent_waiver).serialized_json,
       background_check: BackgroundCheckSerializer.new(current_mentor.background_check).serialized_json,
-      settings: { canDisplayScores: SeasonToggles.display_scores? }.to_json
+      settings: {
+        canDisplayScores: SeasonToggles.display_scores?,
+        backgroundCheckCountryCodes: ENV.fetch("BACKGROUND_CHECK_COUNTRY_CODES")
+      }.to_json
     } %>
   <app
     :profile-icons="{
