@@ -24,6 +24,11 @@
     <%= f.email_field :email, id: :user_invitation_email %>
   </div>
 
+  <div class="field">
+    <%= f.label :register_at_any_time, "Register at any time (bypass registration settings)" %>
+    <%= f.check_box :register_at_any_time %>
+  </div>
+
   <div class="actions">
     <p>
       <%= f.submit "Send invitation", class: "button" %>
