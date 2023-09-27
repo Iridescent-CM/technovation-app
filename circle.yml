@@ -17,6 +17,7 @@ jobs:
           AIRBRAKE_PROJECT_KEY: n-a
           AIRBRAKE_RAILS_ENV: test
           AWS_BUCKET_NAME: technovation-attachments-test
+          BACKGROUND_CHECK_COUNTRY_CODES: "US,IN,CA"
           BING_MAPS_API_KEY: n-a
           CAMPAIGN_MONITOR_API_KEY: n-a
           CHAPTER_AMBASSADOR_SLACK_URL: n-a

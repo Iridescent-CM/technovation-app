@@ -1,5 +1,5 @@
 <% if current_account.country_code == "US" %>
   <%= render "background_checks/us_background_check", url: url %>
-<% elsif current_account.country_code == "IN" %>
+<% else %>
   <%= render "background_checks/international_background_check" %>
 <% end %>

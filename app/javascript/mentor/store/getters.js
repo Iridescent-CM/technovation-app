@@ -69,13 +69,14 @@ export default {
   },
 
   isBackgroundCheckWaived(state) {
-    const backgroundCheckCountries = ["US", "CA", "IN"];
+    const backgroundCheckCountryCodes =
+      state.settings.backgroundCheckCountryCodes;
 
     const isBackgroundCheckCountry = digStateAttributes(
       state,
       "currentAccount",
       "countryCode",
-      (code) => backgroundCheckCountries.includes(code)
+      (code) => backgroundCheckCountryCodes.includes(code)
     );
 
     const isAgeAppropriate = digStateAttributes(
