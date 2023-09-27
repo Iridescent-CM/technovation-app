@@ -14,6 +14,8 @@ class JudgeQuestions
 
   def season_module_name
     case season
+    when 2024
+      "TwentyTwentyFour"
     when 2023
       "TwentyTwentyThree"
     when 2022
