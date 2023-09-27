@@ -1,6 +1,6 @@
 <template>
   <div id="step-one">
-    <ContainerHeader header-text="Your Participant Type" />
+    <ContainerHeader header-text="How will you participate?" />
     <div id="profile-type" class="form-wrapper">
       <div v-if="registrationInvite.isValid == false">
         <div class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
@@ -13,7 +13,7 @@
         </div>
       </div>
 
-      <div v-if="anyDisabledProfileTypes" class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
+      <div v-if="anyDisabledProfileTypes && registrationInvite.canRegisterAtAnyTime == false" class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
         <p class="text-left text-sm">
           Registration is currently closed for {{ this.disabledProfileTypes }}.
         </p>
@@ -127,12 +127,17 @@ export default {
         this.profileTypes.push(this.studentProfileType())
         this.profileTypes.push(this.parentProfileType())
       }
+      else if (this.registrationInvite.isValid && this.registrationInvite.profileType == 'student' && this.registrationInvite.canRegisterAtAnyTime == true) {
+        this.profileTypes.push(this.studentProfileType())
+      }
 
-      if (this.isMentorRegistrationOpen) {
+      if (this.isMentorRegistrationOpen ||
+        (this.registrationInvite.isValid && this.registrationInvite.profileType == 'mentor' && this.registrationInvite.canRegisterAtAnyTime == true)) {
         this.profileTypes.push(this.mentorProfileType())
       }
 
-      if (this.isJudgeRegistrationOpen) {
+      if (this.isJudgeRegistrationOpen ||
+        (this.registrationInvite.isValid && this.registrationInvite.profileType == 'judge' && this.registrationInvite.canRegisterAtAnyTime == true)) {
         this.profileTypes.push(this.judgeProfileType())
       }
 
@@ -221,7 +226,9 @@ export default {
       }
     },
     displayDivisionCutoffDescription() {
-      return (this.isStudentRegistrationOpen && typeof this.registrationInvite =='undefined') || (this.registrationInvite.isValid == true && this.registrationInvite.profileType == 'student' || this.registrationInvite.isValid == false)
+      return (this.isStudentRegistrationOpen && Object.keys(this.registrationInvite).length === 0) ||
+        (this.registrationInvite.isValid == true && this.registrationInvite.profileType == 'student') ||
+        (this.registrationInvite.isValid == false && !this.anyDisabledProfileTypes)
     }
   },
   computed: {

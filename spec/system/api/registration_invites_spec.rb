@@ -9,6 +9,7 @@ RSpec.describe "Registration Invites" do
   let(:registration_invite_validator_response) do
     double("registration_invite_validator_response",
       valid?: true,
+      register_at_any_time?: true,
       profile_type: "student",
       friendly_profile_type: "student")
   end
@@ -19,6 +20,7 @@ RSpec.describe "Registration Invites" do
     expect(JSON.parse(response.body)).to eq(
       {
         "isValid" => registration_invite_validator_response.valid?,
+        "canRegisterAtAnyTime" => registration_invite_validator_response.register_at_any_time?,
         "profileType" => registration_invite_validator_response.profile_type,
         "friendlyProfileType" => registration_invite_validator_response.friendly_profile_type
       }

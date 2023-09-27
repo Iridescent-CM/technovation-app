@@ -26,7 +26,8 @@ describe RegistrationInviteValidator do
       student?: student_invite,
       mentor?: mentor_invite,
       judge?: judge_invite,
-      chapter_ambassador?: chapter_ambassador_invite)
+      chapter_ambassador?: chapter_ambassador_invite,
+      register_at_any_time?: register_at_any_time)
   end
 
   let(:pending_invite) { false }
@@ -34,6 +35,7 @@ describe RegistrationInviteValidator do
   let(:mentor_invite) { false }
   let(:judge_invite) { false }
   let(:chapter_ambassador_invite) { false }
+  let(:register_at_any_time) { false }
 
   context "when an invite is pending" do
     let(:pending_invite) { true }
@@ -63,6 +65,14 @@ describe RegistrationInviteValidator do
         it "is not valid" do
           expect(registration_invite_validator.call.valid?).to eq(false)
         end
+
+        context "when an invite can be used at any time" do
+          let(:register_at_any_time) { true }
+
+          it "is valid" do
+            expect(registration_invite_validator.call.valid?).to eq(true)
+          end
+        end
       end
     end
 
@@ -91,6 +101,14 @@ describe RegistrationInviteValidator do
         it "is not valid" do
           expect(registration_invite_validator.call.valid?).to eq(false)
         end
+
+        context "when an invite can be used at any time" do
+          let(:register_at_any_time) { true }
+
+          it "is valid" do
+            expect(registration_invite_validator.call.valid?).to eq(true)
+          end
+        end
       end
     end
 
@@ -118,6 +136,14 @@ describe RegistrationInviteValidator do
 
         it "is not valid" do
           expect(registration_invite_validator.call.valid?).to eq(false)
+        end
+
+        context "when an invite can be used at any time" do
+          let(:register_at_any_time) { true }
+
+          it "is valid" do
+            expect(registration_invite_validator.call.valid?).to eq(true)
+          end
         end
       end
     end

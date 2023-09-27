@@ -23,6 +23,7 @@ RSpec.describe "Registration Step 1 - Selecting a Profile", :js do
       before do
         allow(SeasonToggles).to receive(:student_registration_open?).and_return(false)
       end
+
       it "does not display student registration options" do
         visit signup_path
 
