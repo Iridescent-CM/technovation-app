@@ -1,0 +1,13 @@
+<p>
+  <%= t("views.profile_requirements.background_check." +
+          "links.background_check_invitation_pending.prefix") %>
+</p>
+<div>
+  <%= link_to t("views.profile_requirements.background_check." +
+                  "links.background_check_invitation_pending.text"),
+              send(
+                "#{current_scope}_background_check_path",
+                current_profile.background_check_invitation_id
+              ),
+              class: "button" %>
+</div>
