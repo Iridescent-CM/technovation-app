@@ -3,7 +3,9 @@
 </h1>
 
 <% if profile.requires_background_check? %>
-  <p>
+  <% if @job.present? && @job.status == "queued" %>
+    <%= render "background_checks/statuses/invitation_job_queued" %>
+  <% else %>
     <% if profile.background_check.invitation_pending? %>
       <%= t("views.profile_requirements.background_check." +
             "links.background_check_invitation_pending.prefix") %>
