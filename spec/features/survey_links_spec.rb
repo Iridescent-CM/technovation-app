@@ -5,7 +5,16 @@ RSpec.feature "Survey links" do
     before do
       SeasonToggles.set_survey_link(scope, "survey", "http")
 
-      allow(ImportantDates).to receive(:new_season_switch).and_return(Date.new(2020, 1, 1))
+      new_season_switch = ImportantDates.new_season_switch
+      six_days_before_new_season_switch = new_season_switch - 6.days
+
+      if Time.now.between?(six_days_before_new_season_switch, new_season_switch)
+        Timecop.freeze(Time.local(Season.current.year - 1, 10, 15))
+      end
+    end
+
+    after do
+      Timecop.return
     end
 
     scenario "a new #{scope} waits 2 days from profile creation" do
