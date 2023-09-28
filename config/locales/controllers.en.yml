@@ -21,7 +21,7 @@ en:
 
     background_checks:
       invite:
-        success: "Thank you for requesting your background check invitation. Please check your email to complete your background check."
+        success: "Thank you for requesting your background check invitation. You will receive an email from Checkr in the next few minutes."
         error: "There was an issue requesting an invite from Checkr. Please try again later, or contact us if you need assistance."
 
     consent_waivers:
