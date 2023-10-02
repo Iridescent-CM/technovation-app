@@ -4,17 +4,19 @@
     <div id="profile-type" class="form-wrapper">
       <div v-if="registrationInvite.isValid == false">
         <div class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
-          <p v-if="anyDisabledProfileTypes == false" class="text-left">
-            This invitation is no longer valid, but you can still register below.
-          </p>
-          <p v-else>
-            This invitation is no longer valid.
+          <p class="text-left text-rose-900">
+            <span v-if="anyDisabledProfileTypes == false">
+              This invitation is no longer valid, but you can still register below.
+            </span>
+            <span v-else>
+              This invitation is no longer valid.
+            </span>
           </p>
         </div>
       </div>
 
       <div v-if="anyDisabledProfileTypes && registrationInvite.canRegisterAtAnyTime == false" class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
-        <p class="text-left text-sm">
+        <p class="text-left text-rose-900">
           Registration is currently closed for {{ this.disabledProfileTypes }}.
         </p>
       </div>
