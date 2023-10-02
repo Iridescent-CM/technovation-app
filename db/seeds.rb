@@ -7,7 +7,7 @@ ActionMailer::Base.perform_deliveries = false
   {name: "Educator", order: 2},
   {name: "Parent", order: 3},
   {name: "Technovation alumna", order: 4},
-  {name: "Postsecondary student", order: 5}
+  {name: "Postsecondary student", order: 5},
   {name: "Club Ambassador", order: 6}
 ].each do |mentor_type|
   MentorType.create(mentor_type)

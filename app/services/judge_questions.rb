@@ -14,6 +14,8 @@ class JudgeQuestions
 
   def season_module_name
     case season
+    when 2024
+      "TwentyTwentyFour"
     when 2023
       "TwentyTwentyThree"
     when 2022
@@ -26,7 +28,7 @@ class JudgeQuestions
       if season < 2020
         raise "Questions for the #{season} season don't exist! Most likely the questions could be added by looking at the commit history for `quesitons.rb`."
       else
-        raise "Questions for the #{season} season haven't been setup yet! You'll likely want to copy the previous year's queetions in '/app/services/judging/#{season - 1}/' to get them setup."
+        raise "Questions for the #{season} season haven't been setup yet! You'll likely want to copy the previous year's questions in '/app/services/judging/#{season - 1}/' to get them setup."
       end
     end
   end
