@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "Using registration invite codes", :js do
   {
     student: "student",
+    mentor: "mentor",
     judge: "judge",
     chapter_ambassador: "chapter ambassador"
   }.each do |profile_type, friendly_profile_type|
