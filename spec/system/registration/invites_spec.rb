@@ -15,6 +15,12 @@ RSpec.describe "Using registration invite codes", :js do
       friendly_profile_type: "parent"
     },
     {
+      profile_type: "mentor",
+      invite_profile_type: "mentor",
+      registration_profile_type: "mentor",
+      friendly_profile_type: "mentor"
+    },
+    {
       profile_type: "judge",
       invite_profile_type: "judge",
       registration_profile_type: "judge",
