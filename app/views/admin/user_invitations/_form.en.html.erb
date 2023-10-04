@@ -14,7 +14,7 @@
   <div class="field">
     <%= f.label :profile_type, for: :user_invitation_profile_type %>
     <%= f.select :profile_type,
-      UserInvitation.profile_types.keys.map { |k| [k.titleize, k] },
+      UserInvitation::PROFILE_TYPES,
       include_blank: true,
       id: :user_invitation_profile_type
     %>

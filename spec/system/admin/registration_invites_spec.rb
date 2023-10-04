@@ -7,15 +7,41 @@ RSpec.describe "Registration invites", :js do
     sign_in(admin)
   end
 
-  %i[student mentor judge chapter_ambassador].each do |profile_type|
-    let(:email_address) { "#{profile_type}@example.com" }
+  [
+    {
+      invite_profile_type: "student",
+      friendly_profile_type: "student",
+      select_option: "Student (Jr/Sr Division)"
+    },
+    {
+      invite_profile_type: "parent_student",
+      friendly_profile_type: "parent",
+      select_option: "Parent (Beginner Division)"
+    },
+    {
+      invite_profile_type: "mentor",
+      friendly_profile_type: "mentor",
+      select_option: "Mentor"
+    },
+    {
+      invite_profile_type: "judge",
+      friendly_profile_type: "juge",
+      select_option: "Judge"
+    },
+    {
+      invite_profile_type: "chapter_ambassador",
+      friendly_profile_type: "chapter ambassador",
+      select_option: "Chapter Ambassador"
+    }
+  ].each do |item|
+    let(:email_address) { "#{item[:invite_profile_type]}@example.com" }
 
-    context "when an admin invites a #{profile_type.to_s.humanize(capitalize: false)}" do
+    context "when an admin invites a #{item[:friendly_profile_type]}" do
       it "sends an email with a link with an invite code to register" do
         click_link "Invite users"
 
         expect {
-          select profile_type.to_s.titleize, from: "Profile type"
+          select item[:select_option], from: "Profile type"
           fill_in "Email", with: email_address
           click_button "Send invitation"
         }.to change {

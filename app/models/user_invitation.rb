@@ -4,6 +4,7 @@ class UserInvitation < ApplicationRecord
     judge
     mentor
     student
+    parent_student
   }
 
   enum status: %i{
@@ -11,6 +12,16 @@ class UserInvitation < ApplicationRecord
     opened
     registered
   }
+
+  PROFILE_TYPES = UserInvitation.profile_types.keys.map do |profile_type|
+    if profile_type == "student"
+      ["Student (Jr/Sr Division)", profile_type]
+    elsif profile_type == "parent_student"
+      ["Parent (Beginner Division)", profile_type]
+    else
+      [profile_type.titleize, profile_type]
+    end
+  end
 
   validates :profile_type, :email, presence: true
   validates :email, uniqueness: true, email: true

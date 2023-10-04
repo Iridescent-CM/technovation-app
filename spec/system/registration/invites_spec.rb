@@ -1,15 +1,36 @@
 require "rails_helper"
 
 RSpec.describe "Using registration invite codes", :js do
-  {
-    student: "student",
-    judge: "judge",
-    chapter_ambassador: "chapter ambassador"
-  }.each do |profile_type, friendly_profile_type|
-    context "when a #{friendly_profile_type} is registering using an invite code" do
+  [
+    {
+      profile_type: "student",
+      invite_profile_type: "student",
+      registration_profile_type: "student",
+      friendly_profile_type: "student"
+    },
+    {
+      profile_type: "student",
+      invite_profile_type: "parent_student",
+      registration_profile_type: "parent",
+      friendly_profile_type: "parent"
+    },
+    {
+      profile_type: "judge",
+      invite_profile_type: "judge",
+      registration_profile_type: "judge",
+      friendly_profile_type: "judge"
+    },
+    {
+      profile_type: "chapter_ambassador",
+      invite_profile_type: "chapter_ambassador",
+      registration_profile_type: "chapter_ambassador",
+      friendly_profile_type: "chapter ambassador"
+    }
+  ].each do |item|
+    context "when a #{item[:friendly_profile_type]} is registering using an invite code" do
       let(:registration_invite) {
         UserInvitation.create!(
-          profile_type: profile_type,
+          profile_type: item[:invite_profile_type],
           email: email_address,
           register_at_any_time: register_at_any_time
         )
@@ -17,31 +38,31 @@ RSpec.describe "Using registration invite codes", :js do
 
       let(:profile) {
         FactoryBot.create(
-          profile_type,
+          item[:profile_type],
           account: FactoryBot.create(:account, email: email_address)
         )
       }
-      let(:email_address) { "#{profile_type}@example.com" }
+      let(:email_address) { "#{item[:registration_profile_type]}@example.com" }
       let(:register_at_any_time) { false }
 
       context "when registration is open" do
         before do
-          SeasonToggles.enable_signup(profile_type)
+          SeasonToggles.enable_signup(item[:profile_type])
         end
 
-        it "displays a #{friendly_profile_type} invite message" do
+        it "displays a #{item[:friendly_profile_type]} invite message" do
           visit signup_path(invite_code: registration_invite.admin_permission_token)
 
-          expect(page).to have_content("You have been invited to join Technovation Girls as a #{friendly_profile_type}!")
+          expect(page).to have_content("You have been invited to join Technovation Girls as a #{item[:friendly_profile_type]}!")
         end
 
-        it "pre-selects the #{friendly_profile_type} profile type" do
+        it "pre-selects the #{item[:friendly_profile_type]} profile type" do
           visit signup_path(invite_code: registration_invite.admin_permission_token)
 
-          expect(page).to have_selector("input[type=radio]:checked##{profile_type}")
+          expect(page).to have_selector("input[type=radio]:checked##{item[:registration_profile_type]}")
         end
 
-        context "when a #{friendly_profile_type} invite code has alredy been used" do
+        context "when a #{item[:friendly_profile_type]} invite code has alredy been used" do
           before do
             registration_invite.update(
               account: profile.account,
@@ -49,7 +70,7 @@ RSpec.describe "Using registration invite codes", :js do
             )
           end
 
-          it "does not allow a #{friendly_profile_type} to use the invite code again" do
+          it "does not allow a #{item[:friendly_profile_type]} to use the invite code again" do
             visit signup_path(invite_code: registration_invite.admin_permission_token)
 
             expect(page).to have_content("This invitation is no longer valid")
@@ -57,13 +78,19 @@ RSpec.describe "Using registration invite codes", :js do
         end
       end
 
-      context "when registration is closed" do
+      it "pre-selects the invited profile type" do
+        visit signup_path(invite_code: registration_invite.admin_permission_token)
+
+        expect(page).to have_selector("input[type=radio]:checked##{profile_type}")
+      end
+
+      context "when a #{item[:friendly_profile_type]} invite code has alredy been used" do
         before do
-          SeasonToggles.registration_closed!
+          SeasonToggles.enable_signup(item[:profile_type])
         end
 
-        if profile_type != :chapter_ambassador
-          it "does not allow a #{friendly_profile_type} to register" do
+        if item[:profile_type] != "chapter_ambassador"
+          it "does not allow a #{item[:friendly_profile_type]} to register" do
             visit signup_path(invite_code: registration_invite.admin_permission_token)
 
             expect(page).to have_content("This invitation is no longer valid")
@@ -73,16 +100,16 @@ RSpec.describe "Using registration invite codes", :js do
         context "when the invitation can be used at any time" do
           let(:register_at_any_time) { true }
 
-          it "displays a #{friendly_profile_type} invite message" do
+          it "displays a #{item[:friendly_profile_type]} invite message" do
             visit signup_path(invite_code: registration_invite.admin_permission_token)
 
-            expect(page).to have_content("You have been invited to join Technovation Girls as a #{friendly_profile_type}!")
+            expect(page).to have_content("You have been invited to join Technovation Girls as a #{item[:friendly_profile_type]}!")
           end
 
-          it "pre-selects the #{friendly_profile_type} profile type" do
+          it "pre-selects the #{item[:friendly_profile_type]} profile type" do
             visit signup_path(invite_code: registration_invite.admin_permission_token)
 
-            expect(page).to have_selector("input[type=radio]:checked##{profile_type}")
+            expect(page).to have_selector("input[type=radio]:checked##{item[:registration_profile_type]}")
           end
         end
       end
