@@ -16,6 +16,7 @@ class RegistrationMailer < ApplicationMailer
     invite_code = invitation.admin_permission_token
 
     if invite_code.present?
+      @name = invitation.name
       @url = signup_url(invite_code: invite_code)
 
       mail to: invitation.email,

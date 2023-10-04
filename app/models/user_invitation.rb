@@ -148,10 +148,6 @@ class UserInvitation < ApplicationRecord
     email
   end
 
-  def name
-    "Invited judge - #{email}"
-  end
-
   def id_for_event
     if persisted?
       id

@@ -21,6 +21,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :name, for: :user_invitation_name %>
+    <%= f.text_field :name, id: :user_invitation_name, placeholder: "Optional" %>
+  </div>
+
+  <div class="field">
     <%= f.label :email, for: :user_invitation_email %>
     <%= f.email_field :email, id: :user_invitation_email %>
   </div>

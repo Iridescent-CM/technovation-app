@@ -41,6 +41,7 @@ module Admin
     def user_invitation_params
       params.require(:user_invitation).permit(
         :profile_type,
+        :name,
         :email,
         :register_at_any_time
       )
