@@ -15,13 +15,19 @@
     <%= f.label :profile_type, for: :user_invitation_profile_type %>
     <%= f.select :profile_type,
       UserInvitation.profile_types.keys.map { |k| [k.titleize, k] },
-      {},
-      id: :user_invitation_profile_type %>
+      include_blank: true,
+      id: :user_invitation_profile_type
+    %>
   </div>
 
   <div class="field">
     <%= f.label :email, for: :user_invitation_email %>
     <%= f.email_field :email, id: :user_invitation_email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :register_at_any_time, "Register at any time (bypass registration settings)" %>
+    <%= f.check_box :register_at_any_time %>
   </div>
 
   <div class="actions">
