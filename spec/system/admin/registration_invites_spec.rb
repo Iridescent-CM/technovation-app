@@ -34,6 +34,7 @@ RSpec.describe "Registration invites", :js do
       select_option: "Chapter Ambassador"
     }
   ].each do |item|
+    let(:name) { "Devin #{item[:friendly_profile_type]}" }
     let(:email_address) { "#{item[:invite_profile_type]}@example.com" }
 
     context "when an admin invites a #{item[:friendly_profile_type]}" do
@@ -42,6 +43,7 @@ RSpec.describe "Registration invites", :js do
 
         expect {
           select item[:select_option], from: "Profile type"
+          fill_in "Name", with: name
           fill_in "Email", with: email_address
           click_button "Send invitation"
         }.to change {
@@ -53,6 +55,7 @@ RSpec.describe "Registration invites", :js do
 
         invite_code = UserInvitation.last.admin_permission_token
         url = signup_url(invite_code: invite_code, host: ENV.fetch("HOST_DOMAIN"))
+        expect(mail.body).to include("Hi #{name}")
         expect(mail.body).to include("href=\"#{url}\"")
       end
     end

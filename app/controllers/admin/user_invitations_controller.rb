@@ -16,7 +16,7 @@ module Admin
       @user_invitation = UserInvitation.new(user_invitation_params)
 
       if @user_invitation.save
-        RegistrationMailer.admin_permission(@user_invitation.id)
+        RegistrationMailer.invitation(@user_invitation.id)
           .deliver_later
 
         redirect_to admin_user_invitations_path,
