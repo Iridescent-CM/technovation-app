@@ -1,12 +1,11 @@
 module Admin
   class UserInvitationsController < AdminController
-    helper_method :invitation_token
+    include DatagridController
 
-    def index
-      @user_invitation = UserInvitation.new
-      @user_invitations = UserInvitation.order('created_at desc')
-        .page(params[:page])
-    end
+    helper_method :invitation_token
+    use_datagrid with: UserInvitationsGrid
+
+    before_action :new_invitation, only: :index
 
     def new
       @user_invitation = UserInvitation.new
@@ -37,6 +36,18 @@ module Admin
     end
 
     private
+
+    def new_invitation
+      @user_invitation = UserInvitation.new
+    end
+
+    def grid_params
+      grid = params[:user_invitations_grid] ||= {}
+
+      grid.merge(
+        column_names: detect_extra_columns(grid)
+      )
+    end
 
     def user_invitation_params
       params.require(:user_invitation).permit(

@@ -1,0 +1,7 @@
+<% if registration_invite.sent? %>
+  <%= link_to "Re-send invite email",
+    admin_user_invitation_emails_path(invitation_id: registration_invite),
+    data: { method: :post },
+    class: "button small gray"
+  %>
+<% end %>
