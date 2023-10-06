@@ -68,7 +68,7 @@ RSpec.describe "Using registration invite codes", :js do
           expect(page).to have_selector("input[type=radio]:checked##{item[:registration_profile_type]}")
         end
 
-        context "when a #{item[:friendly_profile_type]} invite code has alredy been used" do
+        context "when a #{item[:friendly_profile_type]} invite code has already been used" do
           before do
             registration_invite.update(
               account: profile.account,
@@ -84,23 +84,9 @@ RSpec.describe "Using registration invite codes", :js do
         end
       end
 
-      it "pre-selects the invited profile type" do
-        visit signup_path(invite_code: registration_invite.admin_permission_token)
-
-        expect(page).to have_selector("input[type=radio]:checked##{profile_type}")
-      end
-
-      context "when a #{item[:friendly_profile_type]} invite code has alredy been used" do
+      context "when registration is closed" do
         before do
-          SeasonToggles.enable_signup(item[:profile_type])
-        end
-
-        if item[:profile_type] != "chapter_ambassador"
-          it "does not allow a #{item[:friendly_profile_type]} to register" do
-            visit signup_path(invite_code: registration_invite.admin_permission_token)
-
-            expect(page).to have_content("This invitation is no longer valid")
-          end
+          SeasonToggles.disable_signups!
         end
 
         context "when the invitation can be used at any time" do
