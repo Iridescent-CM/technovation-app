@@ -2,7 +2,6 @@ module Admin
   class UserInvitationsController < AdminController
     include DatagridController
 
-    helper_method :invitation_token
     use_datagrid with: UserInvitationsGrid
 
     before_action :new_invitation, only: :index
@@ -56,16 +55,6 @@ module Admin
         :email,
         :register_at_any_time
       )
-    end
-
-    def invitation_token
-      (GlobalInvitation.active.last || NullInvitation.new("")).token
-    end
-
-    class NullInvitation < Struct.new(:token)
-      def present?
-        false
-      end
     end
   end
 end
