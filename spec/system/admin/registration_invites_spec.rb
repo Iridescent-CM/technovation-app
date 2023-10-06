@@ -39,7 +39,7 @@ RSpec.describe "Registration invites", :js do
 
     context "when an admin invites a #{item[:friendly_profile_type]}" do
       it "sends an email with a link with an invite code to register" do
-        click_link "Invite users"
+        click_link "Registration Invites"
 
         expect {
           select item[:select_option], from: "Profile type"
@@ -63,7 +63,7 @@ RSpec.describe "Registration invites", :js do
 
   context "when an admin sends an invite" do
     it "sets the 'invited by account' to the admin who sent the invite" do
-      click_link "Invite users"
+      click_link "Registration Invites"
 
       select "Judge", from: "Profile type"
       fill_in "Email", with: "jugdge_invite@example.com"
