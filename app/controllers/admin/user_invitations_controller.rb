@@ -34,6 +34,15 @@ module Admin
       end
     end
 
+    def destroy
+      invite = UserInvitation.find(params.fetch(:id))
+
+      invite.destroy
+
+      redirect_to admin_user_invitations_path,
+        success: "You deleted the invitation to #{invite.email}"
+    end
+
     private
 
     def new_invitation
