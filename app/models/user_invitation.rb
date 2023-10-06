@@ -43,6 +43,7 @@ class UserInvitation < ApplicationRecord
   has_and_belongs_to_many :events, class_name: "RegionalPitchEvent"
   belongs_to :account, required: false
   belongs_to :current_account, -> { current }, required: false
+  belongs_to :invited_by, class_name: "Account", required: false
 
   has_many :judge_assignments, as: :assigned_judge, dependent: :destroy
   has_many :assigned_teams,

@@ -2,7 +2,7 @@ module ChapterAmbassador
   class EventAssignmentsController < ChapterAmbassadorController
     def create
       event = RegionalPitchEvent.find(assignment_params.fetch(:event_id))
-      CreateEventAssignment.(event, assignment_params)
+      CreateEventAssignment.call(event, assignment_params.merge({invited_by_id: current_ambassador.account.id}))
 
       render json: {
         flash: {

@@ -60,4 +60,16 @@ RSpec.describe "Registration invites", :js do
       end
     end
   end
+
+  context "when an admin sends an invite" do
+    it "sets the 'invited by account' to the admin who sent the invite" do
+      click_link "Invite users"
+
+      select "Judge", from: "Profile type"
+      fill_in "Email", with: "jugdge_invite@example.com"
+      click_button "Send invitation"
+
+      expect(UserInvitation.last.invited_by).to eq(admin.account)
+    end
+  end
 end

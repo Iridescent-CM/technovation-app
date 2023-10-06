@@ -119,6 +119,8 @@ class Account < ActiveRecord::Base
     class_name: "ConsentWaiver",
     dependent: :destroy
 
+  has_many :registration_invites, class_name: "UserInvitation", foreign_key: :invited_by_id
+
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 

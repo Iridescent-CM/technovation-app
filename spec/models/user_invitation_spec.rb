@@ -127,4 +127,19 @@ RSpec.describe UserInvitation do
       end
     end
   end
+
+  describe "#invited_by" do
+    let(:admin) { FactoryBot.create(:admin) }
+
+    let(:invite) do
+      UserInvitation.new(
+        profile_type: :student,
+        invited_by_id: admin.account.id
+      )
+    end
+
+    it "return the account of the person who sent the inviation" do
+      expect(invite.invited_by).to eq(admin.account)
+    end
+  end
 end

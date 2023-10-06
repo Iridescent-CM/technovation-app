@@ -1751,7 +1751,8 @@ CREATE TABLE public.user_invitations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     name character varying,
-    register_at_any_time boolean
+    register_at_any_time boolean,
+    invited_by_id integer
 );
 
 
@@ -3335,6 +3336,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230905194750'),
 ('20230914204523'),
 ('20230921190613'),
-('20230925171243');
+('20230925171243'),
+('20231005145350');
 
 

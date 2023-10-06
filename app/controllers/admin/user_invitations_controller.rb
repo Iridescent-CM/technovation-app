@@ -13,7 +13,7 @@ module Admin
     end
 
     def create
-      @user_invitation = UserInvitation.new(user_invitation_params)
+      @user_invitation = UserInvitation.new(user_invitation_params.merge({invited_by_id: current_account.id}))
 
       if @user_invitation.save
         RegistrationMailer.invitation(@user_invitation.id)
