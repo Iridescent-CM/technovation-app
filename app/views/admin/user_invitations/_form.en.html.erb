@@ -31,8 +31,10 @@
   </div>
 
   <div class="field">
-    <%= f.label :register_at_any_time, "Register at any time (bypass registration settings)" %>
-    <%= f.check_box :register_at_any_time %>
+    <span class="inline-checkbox">
+      <%= f.check_box :register_at_any_time %>
+      <%= f.label :register_at_any_time, "Register at any time (bypass registration settings)" %>
+    </span>
   </div>
 
   <div class="actions">
