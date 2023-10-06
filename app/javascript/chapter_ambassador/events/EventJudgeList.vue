@@ -83,7 +83,7 @@
                 </template>
 
                 <template v-else>
-                  {{ judge.name }}
+                  {{ judge.name == "" ? "Invited Judge" : judge.name }}
                 </template>
 
                 <ul class="list--reset list--indented font-small">
@@ -283,7 +283,7 @@
 
           form.append(
             `event_assignment[invites][${idx}][]name`,
-            judge.name
+            judge.name == null ? "" : judge.name
           )
 
           form.append(
