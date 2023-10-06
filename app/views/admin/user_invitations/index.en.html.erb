@@ -2,7 +2,7 @@
 
 <div class="grid">
   <div class="grid__col-auto grid__col--bleed-y">
-    <h1>Invite someone to register</h1>
+    <h3>Invite someone to register</h3>
 
     <div class="panel">
       <%= render 'admin/user_invitations/form',
@@ -11,8 +11,14 @@
   </div>
 </div>
 
-<%= render 'datagrid/datagrid',
-  grid: @user_invitations_grid,
-  form_url: admin_user_invitations_path,
-  model_name: "registation_invites",
-  scope: :admin %>
+<div class="grid margin--t-xlarge">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h3>Registration invites</h3>
+
+    <%= render 'datagrid/datagrid',
+      grid: @user_invitations_grid,
+      form_url: admin_user_invitations_path,
+      model_name: "registation_invites",
+      scope: :admin %>
+  </div>
+</div>

@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :profile_type, for: :user_invitation_profile_type %>
+    <%= f.label :profile_type, "Registration Type", for: :user_invitation_profile_type %>
     <%= f.select :profile_type,
       UserInvitation::PROFILE_TYPES,
       include_blank: true,
@@ -37,7 +37,7 @@
     </span>
   </div>
 
-  <div class="actions">
+  <div class="actions margin--t-xlarge">
     <p>
       <%= f.submit "Send invitation", class: "button" %>
     </p>
