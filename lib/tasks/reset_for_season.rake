@@ -19,6 +19,9 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Resetting mentor trainings"
     MentorProfile.update_all(training_completed_at: nil)
 
+    puts "Removing pending team invites to mentors"
+    TeamMemberInvite.where(invitee_type: "MentorProfile", status: "pending").delete_all
+
     puts "Resetting judge trainings"
     JudgeProfile.update_all(completed_training_at: nil)
 
