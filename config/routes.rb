@@ -10,9 +10,6 @@ Rails.application.routes.draw do
   resource :survey_completion, only: :show
 
   namespace :student do
-    get :signup, to: 'signups#new'
-    post :profiles, to: "signups#create"
-
     resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
