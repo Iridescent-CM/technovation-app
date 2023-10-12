@@ -42,7 +42,7 @@ RSpec.describe "Registration invites", :js do
         click_link "Registration Invites"
 
         expect {
-          select item[:select_option], from: "Profile type"
+          select item[:select_option], from: "Registration Type"
           fill_in "Name", with: name
           fill_in "Email", with: email_address
           click_button "Send invitation"
@@ -65,7 +65,7 @@ RSpec.describe "Registration invites", :js do
     it "sets the 'invited by account' to the admin who sent the invite" do
       click_link "Registration Invites"
 
-      select "Judge", from: "Profile type"
+      select "Judge", from: "Registration Type"
       fill_in "Email", with: "jugdge_invite@example.com"
       click_button "Send invitation"
 
