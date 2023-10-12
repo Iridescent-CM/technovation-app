@@ -207,9 +207,6 @@ Rails.application.routes.draw do
   end
 
   namespace :judge do
-    get :signup, to: 'signups#new'
-    post :profiles, to: "signups#create"
-
     resource :training_completion, only: :show
 
     resource :location_details, only: :show
