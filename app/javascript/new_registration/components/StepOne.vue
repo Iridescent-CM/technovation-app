@@ -132,6 +132,10 @@ export default {
       else if (this.registrationInvite.isValid && this.registrationInvite.profileType == 'student' && this.registrationInvite.canRegisterAtAnyTime == true) {
         this.profileTypes.push(this.studentProfileType())
       }
+      else if (this.registrationInvite.isValid && this.registrationInvite.profileType == 'parent' && this.registrationInvite.canRegisterAtAnyTime == true) {
+        this.profileTypes.push(this.parentProfileType())
+      }
+
 
       if (this.isMentorRegistrationOpen ||
         (this.registrationInvite.isValid && this.registrationInvite.profileType == 'mentor' && this.registrationInvite.canRegisterAtAnyTime == true)) {

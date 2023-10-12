@@ -1,6 +1,7 @@
 module CreateEventAssignment
   def self.call(event, assignment_params)
     invite_params = assignment_params.fetch(:invites)
+    invited_by_id = assignment_params[:invited_by_id]
 
     invite_params.each do |_, par|
       # params come in strange
@@ -13,6 +14,7 @@ module CreateEventAssignment
           email: opts[:email],
           name: opts[:name],
           profile_type: :judge,
+          invited_by_id: invited_by_id
         });
       end
 

@@ -2,53 +2,23 @@
 
 <div class="grid">
   <div class="grid__col-auto grid__col--bleed-y">
-    <h1>Invite someone to register</h1>
+    <h3>Invite someone to register</h3>
 
     <div class="panel">
       <%= render 'admin/user_invitations/form',
         invitation: @user_invitation %>
-
-      <%= render 'admin/user_invitations/existing_preview',
-        invitation: @existing %>
     </div>
-
-    <% if invitation_token.present? %>
-      <h3>Judge Invitation URL</h3>
-
-      <div class="panel">
-        <%= judge_signup_url(invitation: invitation_token) %>
-      </div>
-    <% end %>
   </div>
 </div>
 
-<div class="grid">
-  <div class="grid__col-auto">
-    <h3>Invited Users</h3>
+<div class="grid margin--t-xlarge">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h3>Registration invites</h3>
 
-    <div class="panel">
-      <table class="datagrid">
-        <thead>
-          <tr>
-            <th>Profile type</th>
-            <th>Email</th>
-            <th>Account</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @user_invitations.each do |invitation| %>
-            <tr>
-              <%= render "admin/user_invitations/user_invitation_row",
-                invitation: invitation %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-      <%= will_paginate(@user_invitations) %>
-    </div>
+    <%= render 'datagrid/datagrid',
+      grid: @user_invitations_grid,
+      form_url: admin_user_invitations_path,
+      model_name: "registation_invites",
+      scope: :admin %>
   </div>
 </div>

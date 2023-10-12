@@ -14,6 +14,13 @@ class RegistrationInviteValidator
           profile_type: "student",
           friendly_profile_type: "student"
         )
+      elsif invite.parent_student? && (SeasonToggles.student_registration_open? || invite.register_at_any_time?)
+        return Result.new(
+          valid?: true,
+          register_at_any_time?: invite.register_at_any_time?,
+          profile_type: "parent",
+          friendly_profile_type: "parent"
+        )
       elsif invite.mentor? && (SeasonToggles.mentor_registration_open? || invite.register_at_any_time?)
         return Result.new(
           valid?: true,

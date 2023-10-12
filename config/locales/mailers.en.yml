@@ -26,8 +26,8 @@ en:
       subject: "Your daughter needs permission to participate in Technovation!"
 
   registration_mailer:
-    admin_permission:
-      subject: "Technovation Girls Invitation: Sign up for your %{season_year} account"
+    invitation:
+      subject: "You have been invited to join Technovation Girls!"
     confirm_email:
       subject: "Confirm your email for Technovation %{season_year}"
     welcome_mentor:

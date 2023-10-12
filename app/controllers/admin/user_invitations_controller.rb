@@ -1,22 +1,20 @@
 module Admin
   class UserInvitationsController < AdminController
-    helper_method :invitation_token
+    include DatagridController
 
-    def index
-      @user_invitation = UserInvitation.new
-      @user_invitations = UserInvitation.order('created_at desc')
-        .page(params[:page])
-    end
+    use_datagrid with: UserInvitationsGrid
+
+    before_action :new_invitation, only: :index
 
     def new
       @user_invitation = UserInvitation.new
     end
 
     def create
-      @user_invitation = UserInvitation.new(user_invitation_params)
+      @user_invitation = UserInvitation.new(user_invitation_params.merge({invited_by_id: current_account.id}))
 
       if @user_invitation.save
-        RegistrationMailer.admin_permission(@user_invitation.id)
+        RegistrationMailer.invitation(@user_invitation.id)
           .deliver_later
 
         redirect_to admin_user_invitations_path,
@@ -36,24 +34,36 @@ module Admin
       end
     end
 
+    def destroy
+      invite = UserInvitation.find(params.fetch(:id))
+
+      invite.destroy
+
+      redirect_to admin_user_invitations_path,
+        success: "You deleted the invitation to #{invite.email}"
+    end
+
     private
+
+    def new_invitation
+      @user_invitation = UserInvitation.new
+    end
+
+    def grid_params
+      grid = params[:user_invitations_grid] ||= {}
+
+      grid.merge(
+        column_names: detect_extra_columns(grid)
+      )
+    end
 
     def user_invitation_params
       params.require(:user_invitation).permit(
         :profile_type,
+        :name,
         :email,
         :register_at_any_time
       )
-    end
-
-    def invitation_token
-      (GlobalInvitation.active.last || NullInvitation.new("")).token
-    end
-
-    class NullInvitation < Struct.new(:token)
-      def present?
-        false
-      end
     end
   end
 end

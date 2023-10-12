@@ -264,7 +264,7 @@ Rails.application.routes.draw do
     end
 
     resources :participant_sessions, only: [:show, :destroy]
-    resources :user_invitations, only: [:new, :create, :index]
+    resources :user_invitations, only: [:new, :create, :index, :destroy]
     resources :user_invitation_emails, only: :create
 
     resources :student_conversions, only: :create

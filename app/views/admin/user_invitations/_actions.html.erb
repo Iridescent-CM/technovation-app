@@ -1,0 +1,19 @@
+<% if registration_invite.sent? %>
+  <%= link_to "Re-send invite email",
+    admin_user_invitation_emails_path(invitation_id: registration_invite),
+    data: { method: :post },
+    class: "button small gray"
+  %>
+<% end %>
+
+<% if !registration_invite.registered? %>
+  <%= link_to(
+    "Delete",
+    admin_user_invitation_path(registration_invite),
+    class: "button small danger",
+    data: {
+      method: :delete,
+      confirm: "You are about to delete the invitation to #{registration_invite.email}"
+    }
+  ) %>
+<% end %>

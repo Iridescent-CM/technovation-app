@@ -24,6 +24,7 @@ describe RegistrationInviteValidator do
     instance_double(UserInvitation,
       pending?: pending_invite,
       student?: student_invite,
+      parent_student?: parent_student_invite,
       mentor?: mentor_invite,
       judge?: judge_invite,
       chapter_ambassador?: chapter_ambassador_invite,
@@ -32,6 +33,7 @@ describe RegistrationInviteValidator do
 
   let(:pending_invite) { false }
   let(:student_invite) { false }
+  let(:parent_student_invite) { false }
   let(:mentor_invite) { false }
   let(:judge_invite) { false }
   let(:chapter_ambassador_invite) { false }
@@ -56,6 +58,42 @@ describe RegistrationInviteValidator do
 
         it "sets the friendly profile type to 'student'" do
           expect(registration_invite_validator.call.friendly_profile_type).to eq("student")
+        end
+      end
+
+      context "when student registration is closed" do
+        let(:student_registration_open) { false }
+
+        it "is not valid" do
+          expect(registration_invite_validator.call.valid?).to eq(false)
+        end
+
+        context "when an invite can be used at any time" do
+          let(:register_at_any_time) { true }
+
+          it "is valid" do
+            expect(registration_invite_validator.call.valid?).to eq(true)
+          end
+        end
+      end
+    end
+
+    context "when the invite is for a parent/beginner student" do
+      let(:parent_student_invite) { true }
+
+      context "when student registration is open" do
+        let(:student_registration_open) { true }
+
+        it "is valid" do
+          expect(registration_invite_validator.call.valid?).to eq(true)
+        end
+
+        it "sets the profile type to 'parent'" do
+          expect(registration_invite_validator.call.profile_type).to eq("parent")
+        end
+
+        it "sets the friendly profile type to 'parent'" do
+          expect(registration_invite_validator.call.friendly_profile_type).to eq("parent")
         end
       end
 
