@@ -73,9 +73,6 @@ Rails.application.routes.draw do
   end
 
   namespace :mentor do
-    get :signup, to: 'signups#new'
-    post :profiles, to: "signups#create"
-
     resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
