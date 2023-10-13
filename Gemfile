@@ -12,7 +12,7 @@ gem "barnes", "~> 0.0.7"
 gem "bootsnap", require: false
 
 gem "fast_jsonapi", "~> 1.4"
-gem "httparty", "~> 0.16"
+gem "httparty", "~> 0.21.0"
 
 gem "textacular", "~> 5.1"
 
