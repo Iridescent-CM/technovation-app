@@ -5,12 +5,6 @@ RSpec.describe "Regional ambassador requests" do
     expect(get "/pending_regional_ambassador/dashboard").
       to redirect_to("/chapter_ambassador/dashboard")
 
-    expect(get "/regional_ambassador/signup").
-      to redirect_to("/chapter_ambassador/signups")
-
-    expect(post "/regional_ambassador/profiles").
-      to redirect_to("/chapter_ambassador/signups")
-
     expect(patch "/regional_ambassador/profile_details_confirmation").
       to redirect_to("/chapter_ambassador/profile_details_confirmation")
 

@@ -10,9 +10,6 @@ Rails.application.routes.draw do
   resource :survey_completion, only: :show
 
   namespace :student do
-    get :signup, to: 'signups#new'
-    post :profiles, to: "signups#create"
-
     resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
@@ -73,9 +70,6 @@ Rails.application.routes.draw do
   end
 
   namespace :mentor do
-    get :signup, to: 'signups#new'
-    post :profiles, to: "signups#create"
-
     resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
@@ -143,9 +137,6 @@ Rails.application.routes.draw do
     to: "chapter_ambassador/dashboards#show"
 
   namespace :chapter_ambassador do
-    get :signup, to: 'signups#new'
-    post :profiles, to: "signups#create"
-
     resource :profile_details_confirmation, only: [:create, :update]
 
     resource :location_details, only: :show
@@ -210,9 +201,6 @@ Rails.application.routes.draw do
   end
 
   namespace :judge do
-    get :signup, to: 'signups#new'
-    post :profiles, to: "signups#create"
-
     resource :training_completion, only: :show
 
     resource :location_details, only: :show
@@ -413,12 +401,6 @@ Rails.application.routes.draw do
 
   get "pending_regional_ambassador/dashboard",
     to: redirect("chapter_ambassador/dashboard", status: 301)
-
-  get "regional_ambassador/signup",
-    to: redirect("chapter_ambassador/signups", status: 301)
-
-  post "/regional_ambassador/profiles",
-    to: redirect("chapter_ambassador/signups", status: 308)
 
   patch "/regional_ambassador/profile_details_confirmation",
     to: redirect("chapter_ambassador/profile_details_confirmation", status: 308)
