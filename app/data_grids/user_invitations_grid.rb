@@ -62,8 +62,14 @@ class UserInvitationsGrid
     end
   end
 
-  column :invited_by, header: "Invited By", html: false do |registration_invite|
-    registration_invite.invited_by&.full_name
+  column :invited_by_profile_type, header: "Invited By Profile Type" do |registration_invite|
+    if registration_invite.invited_by&.is_admin?
+      "Admin"
+    elsif registration_invite.invited_by&.is_an_ambassador?
+      "Chapter Ambassador"
+    else
+      "-"
+    end
   end
 
   column :actions, mandatory: true, html: true do |registration_invite|
