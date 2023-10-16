@@ -27,7 +27,7 @@ gem "uglifier", "~> 3.2"
 
 gem "turbolinks", "~> 5.2"
 gem "jquery-rails", "~> 4.3"
-gem "jquery-ui-rails", "~> 6.0"
+gem "jquery-ui-rails", "~> 7.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
 gem "lodash-rails", "~> 4.17"
 gem "dropzonejs-rails", "~> 0.8"
 gem "webpacker", "~> 5.x"
