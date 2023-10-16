@@ -83,7 +83,7 @@
                 </template>
 
                 <template v-else>
-                  {{ judge.name == "" ? "Invited Judge" : judge.name }}
+                  {{ (judge.name == null || judge.name == "") ? "Invited Judge" : judge.name }}
                 </template>
 
                 <ul class="list--reset list--indented font-small">
@@ -217,9 +217,15 @@
       },
 
       removeJudge (judge) {
-        var vm = this,
-            modalHtml = judge.name + " - " + judge.email;
+        var vm = this;
+        let modalHtml = ""
 
+        if (judge.name) {
+          modalHtml = judge.name + " - " + judge.email;
+        }
+        else {
+          modalHtml = judge.email;
+        }
         modalHtml += !judge.recentlyAdded ?
           "<p><small>an email will be sent</small></p>" :
           "<p><small>NO email will be sent</small></p>";
