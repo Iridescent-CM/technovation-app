@@ -17,37 +17,12 @@ module InviteChapterAmbassador
 
     @logger.info("CREATING Approved chapter ambassador for #{attrs[:email]}")
 
-    if attempt = SignupAttempt.find_by(email: attrs[:email])
-      @logger.info("DESTROYING found SignupAttempt for #{attrs[:email]}")
-      attempt.destroy
-    end
-
-    attempt = SignupAttempt.create!(
-      email: attrs[:email],
-      password: SecureRandom.hex(17),
-      status: SignupAttempt.statuses[:temporary_password],
-    )
-
     if account = Account.where("lower(email) = ?", attrs[:email].downcase).first
       background_check = account.background_check
       mentor_profile = account.mentor_profile
       @logger.info("DESTROYING found Account for #{attrs[:email]}")
       account.destroy
     end
-
-    account = attempt.create_account!(
-      email: attrs[:email],
-      first_name: attrs[:first_name],
-      last_name: attrs[:last_name],
-      city: attrs[:city],
-      state_province: attrs[:state_province],
-      country: attrs[:country],
-      date_of_birth: attrs[:date_of_birth],
-      gender: "Prefer not to say",
-      password: SecureRandom.hex(17),
-      email_confirmed_at: Time.current,
-      skip_existing_password: true,
-    )
 
     if mentor_profile.present?
       @logger.info("ADDING found MentorProfile for #{attrs[:email]}")
@@ -82,6 +57,7 @@ module InviteChapterAmbassador
     )
 
     @logger.info("READY to invite Approved chapter ambassador: #{account.reload.email}")
-    attempt
+
+    account
   end
 end

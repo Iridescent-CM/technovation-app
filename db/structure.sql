@@ -835,8 +835,7 @@ CREATE TABLE public.mentor_profile_expertises (
     mentor_profile_id integer,
     expertise_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    signup_attempt_id bigint
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1346,64 +1345,6 @@ CREATE SEQUENCE public.screenshots_id_seq
 --
 
 ALTER SEQUENCE public.screenshots_id_seq OWNED BY public.screenshots.id;
-
-
---
--- Name: signup_attempts; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.signup_attempts (
-    id integer NOT NULL,
-    email character varying,
-    activation_token character varying NOT NULL,
-    account_id integer,
-    status integer DEFAULT 0 NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    signup_token character varying,
-    pending_token character varying,
-    password_digest character varying,
-    admin_permission_token character varying,
-    wizard_token character varying,
-    terms_agreed_at timestamp without time zone,
-    birth_year integer,
-    birth_month integer,
-    birth_day integer,
-    first_name character varying,
-    last_name character varying,
-    gender_identity integer,
-    school_company_name character varying,
-    referred_by integer,
-    referred_by_other character varying,
-    city character varying,
-    state_code character varying,
-    country_code character varying,
-    latitude numeric(10,6),
-    longitude numeric(10,6),
-    profile_choice integer,
-    job_title character varying,
-    bio character varying
-);
-
-
---
--- Name: signup_attempts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.signup_attempts_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: signup_attempts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.signup_attempts_id_seq OWNED BY public.signup_attempts.id;
 
 
 --
@@ -2008,13 +1949,6 @@ ALTER TABLE ONLY public.screenshots ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- Name: signup_attempts id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.signup_attempts ALTER COLUMN id SET DEFAULT nextval('public.signup_attempts_id_seq'::regclass);
-
-
---
 -- Name: student_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2344,14 +2278,6 @@ ALTER TABLE ONLY public.screenshots
 
 
 --
--- Name: signup_attempts signup_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.signup_attempts
-    ADD CONSTRAINT signup_attempts_pkey PRIMARY KEY (id);
-
-
---
 -- Name: student_profiles student_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2625,13 +2551,6 @@ CREATE INDEX index_mentor_profile_expertises_on_mentor_profile_id ON public.ment
 
 
 --
--- Name: index_mentor_profile_expertises_on_signup_attempt_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_mentor_profile_expertises_on_signup_attempt_id ON public.mentor_profile_expertises USING btree (signup_attempt_id);
-
-
---
 -- Name: index_mentor_profile_mentor_types_on_mentor_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2692,13 +2611,6 @@ CREATE INDEX index_saved_searches_on_searcher_type_and_searcher_id ON public.sav
 --
 
 CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING btree (team_submission_id);
-
-
---
--- Name: index_signup_attempts_on_status; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_signup_attempts_on_status ON public.signup_attempts USING btree (status);
 
 
 --
@@ -2913,14 +2825,6 @@ ALTER TABLE ONLY public.regional_pitch_events_user_invitations
 
 
 --
--- Name: mentor_profile_expertises fk_rails_4e4dd86193; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.mentor_profile_expertises
-    ADD CONSTRAINT fk_rails_4e4dd86193 FOREIGN KEY (signup_attempt_id) REFERENCES public.signup_attempts(id);
-
-
---
 -- Name: accounts fk_rails_55bc732a9a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2974,14 +2878,6 @@ ALTER TABLE ONLY public.mentor_profile_expertises
 
 ALTER TABLE ONLY public.parental_consents
     ADD CONSTRAINT fk_rails_837621b019 FOREIGN KEY (student_profile_id) REFERENCES public.student_profiles(id);
-
-
---
--- Name: signup_attempts fk_rails_86a8845c55; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.signup_attempts
-    ADD CONSTRAINT fk_rails_86a8845c55 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
@@ -3340,5 +3236,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230925171243'),
 ('20231005145350'),
 ('20231016221100');
+('20231016140526'),
+('20231017170356');
 
 

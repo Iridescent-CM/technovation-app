@@ -187,22 +187,12 @@ class TeamMailer < ApplicationMailer
   end
 
   def invite_new_student(invite)
-    attempt = SignupAttempt.create!(
-      email: invite.invitee_email,
-      password: SecureRandom.hex(17),
-      status: SignupAttempt.statuses[:temporary_password],
-    )
+    @url = signup_url
+    @team_name = invite.team_name
+    @link_text = "Signup to join this team"
 
-    if token = attempt.activation_token
-      @url = signup_url(token: token)
-      @team_name = invite.team_name
-      @link_text = "Signup to join this team"
-
-      I18n.with_locale(invite.inviter.locale) do
-        mail to: invite.invitee_email, template_name: :invite_new_student
-      end
-    else
-      raise TokenNotPresent, "Signup Attempt ID: #{attempt.id}"
+    I18n.with_locale(invite.inviter.locale) do
+      mail to: invite.invitee_email, template_name: :invite_new_student
     end
   end
 end

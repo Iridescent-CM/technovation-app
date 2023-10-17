@@ -81,10 +81,6 @@ class ProfileUpdating
       else
         account.unconfirm_changed_email!
       end
-
-      if account.saved_change_to_email? and account.signup_attempt
-        account.signup_attempt.update_column(:email, account.email)
-      end
     end
   end
 

@@ -46,9 +46,6 @@ es-MX:
       job_title: "Profesión"
       organization_company_name: "Nombre de la organización o empresa"
 
-    signup_attempt:
-      email: "Dirección de correo electrónico"
-
     student_profile:
       date_of_birth: "Fecha de nacimiento"
       parent_guardian_email: "Correo electrónico de tus padres o tutores"

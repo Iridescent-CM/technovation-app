@@ -1,15 +1,4 @@
 module SignupHelper
-  def set_signup_token(email)
-    token = FactoryBot.create(:signup_attempt, email: email).activation_token
-    visit new_signup_attempt_confirmation_path(token: token)
-  end
-
-  def set_signup_and_permission_token(email)
-    attempt = FactoryBot.create(:signup_attempt, email: email)
-    visit new_signup_attempt_confirmation_path(token: attempt.activation_token)
-    visit signup_path(admin_permission_token: attempt.admin_permission_token)
-  end
-
   def sign_up(profile_scope)
     visit signout_path
 

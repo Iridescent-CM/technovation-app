@@ -26,8 +26,6 @@ es-MX:
       subject: "¡Su hija necesita permiso para participar en Technovation!"
 
   registration_mailer:
-    confirm_email:
-      subject: "Confirma tu correo electrónico para Technovation %{season_year}"
     welcome_mentor:
       subject: "Bienvenido a Technovation %{season_year}!"
     welcome_student:

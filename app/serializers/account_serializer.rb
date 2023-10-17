@@ -60,7 +60,7 @@ class AccountSerializer
   attribute(:terms_agreed_date) do |account|
     if account.terms_agreed?
       account.terms_agreed_at.strftime("%b %e, %Y")
-    else account.signup_attempt
+    else
       "never"
     end
   end

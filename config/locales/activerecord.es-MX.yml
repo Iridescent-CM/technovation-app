@@ -29,11 +29,6 @@ es-MX:
             existing_password:
               invalid: "es necesario para cambiar tu correo electrónico o tu contraseña"
 
-        signup_attempt:
-          attributes:
-            email:
-              invalid: "parece no ser una dirección de correo válida"
-
         student_account:
           attributes:
             existing_password:

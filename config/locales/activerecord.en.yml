@@ -32,11 +32,6 @@ en:
             invitee_email:
               is_not_a_mentor: "does not belong to a mentor"
 
-        signup_attempt:
-          attributes:
-            email:
-              invalid: "doesn't appear to be an email address"
-
         student_profile:
           attributes:
             parent_guardian_email:

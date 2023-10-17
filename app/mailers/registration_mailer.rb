@@ -1,16 +1,4 @@
 class RegistrationMailer < ApplicationMailer
-  def confirm_email(signup_attempt)
-    if token = signup_attempt.activation_token
-      @url = new_signup_attempt_confirmation_url(token: token)
-
-      mail to: signup_attempt.email,
-        subject: t("registration_mailer.confirm_email.subject",
-                   season_year: Season.current.year)
-    else
-      raise TokenNotPresent, "SignupAttempt ID: #{signup_attempt.id}"
-    end
-  end
-
   def invitation(user_invitation_id)
     invitation = UserInvitation.find(user_invitation_id)
     invite_code = invitation.admin_permission_token
