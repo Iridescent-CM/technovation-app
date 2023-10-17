@@ -47,6 +47,7 @@ module CheckrApiClient
             candidate_id: candidate_response_body[:id],
             invitation_id: invitation_response_body[:id],
             invitation_status: invitation_response_body[:status],
+            invitation_url: invitation_response_body[:invitation_url],
             status: :invitation_sent
           })
 

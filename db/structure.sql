@@ -241,7 +241,8 @@ CREATE TABLE public.background_checks (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     invitation_id character varying,
-    invitation_status integer
+    invitation_status integer,
+    invitation_url character varying
 );
 
 
@@ -3337,6 +3338,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230914204523'),
 ('20230921190613'),
 ('20230925171243'),
-('20231005145350');
+('20231005145350'),
+('20231016221100');
 
 
