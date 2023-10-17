@@ -4,7 +4,16 @@
       <% if @background_check.invitation_pending? %>
         <p>An invitation was sent to your email on <%= @background_check.created_at.strftime("%B %d, %Y") %> from Checkr.
           <br>
-          Please check your email to accept the invitation and complete the background check through the Checkr portal.
+          Please check your email to accept the invitation and complete the background check through the Checkr portal
+          <% if @background_check.invitation_url.present? %>
+            <br>
+            or
+            <%= link_to "click here",
+              @background_check.invitation_url,
+              target: "_blank"
+            %>
+            to access your invitation on the Checkr portal.
+          <% end %>
         </p>
       <% elsif @background_check.invitation_completed?  %>
         <p>
