@@ -92,7 +92,6 @@ jobs:
           JUDGE_TRAINING_URL: n-a
           MAILCHIMP_API_KEY: n-a
           MAILCHIMP_LIST_ID: n-a
-          MAILGUN_PRIVATE_KEY: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a
           NEWSLETTER_URL: "https://some/other/url"
           GENERAL_NEWSLETTER_URL: "https://some/general/url"

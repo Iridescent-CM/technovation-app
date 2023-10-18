@@ -57,7 +57,6 @@ module SignupHelper
     click_button "Next"
 
     email = FactoryBot.attributes_for(:account)[:email]
-    stub_mailgun_validation(valid: true, email: email)
 
     fill_in "Email", with: email
     fill_in "Password", with: "mysecret1234"
