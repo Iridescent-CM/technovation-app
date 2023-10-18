@@ -125,7 +125,7 @@ Rails.application.routes.draw do
 
     resources :background_checks, only: [:new, :create, :show]
 
-    get "/international_background_check", to: "background_checks#international_background_check"
+    get "/background_check_invitation", to: "background_checks#background_check_invitation"
 
     resource :regional_pitch_events_team_list, only: :show
     resource :regional_pitch_event_selection, only: :create
