@@ -24,14 +24,6 @@ module BackgroundCheckController
     @background_check = current_profile.background_check
   end
 
-  def international_background_check
-    RequestCheckrBackgroundCheckInvitationJob.perform_later(candidate: current_profile)
-
-    redirect_to send("#{current_scope}_dashboard_path"),
-      success: t("controllers.background_checks.invite.success")
-
-  end
-
   def create
     @candidate = BackgroundCheckCandidate.new(candidate_params)
 
