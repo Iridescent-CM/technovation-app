@@ -1,15 +1,16 @@
 class InvitationChecking
   def initialize(
-    background_check,
+    current_profile,
     logger: Rails.logger
   )
 
-    @bg_check = background_check
+    @candidate = current_profile
+    @bg_check = current_profile.background_check
     @logger = logger
   end
 
   def execute
-    invitation = CheckrApiClient::ApiClient.new.retrieve_invitation(bg_check.invitation_id)
+    invitation = CheckrApiClient::ApiClient.new(candidate).retrieve_invitation(bg_check.invitation_id)
 
     if invitation.success?
       if invitation.payload[:status] != bg_check.invitation_status
@@ -33,5 +34,5 @@ class InvitationChecking
 
   private
 
-  attr_reader :bg_check, :logger
+  attr_reader :bg_check, :logger, :candidate
 end

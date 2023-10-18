@@ -17,6 +17,6 @@ class RequestCheckrBackgroundCheckInvitationJob < ActiveJob::Base
   end
 
   def perform(candidate:)
-    CheckrApiClient::ApiClient.new.request_checkr_invitation(candidate: candidate)
+    CheckrApiClient::ApiClient.new(candidate).request_checkr_invitation
   end
 end
