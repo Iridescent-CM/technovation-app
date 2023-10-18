@@ -177,10 +177,6 @@ class UserInvitation < ApplicationRecord
     true
   end
 
-  def to_cookie_params
-    [CookieNames::ADMIN_PERMISSION_TOKEN, admin_permission_token]
-  end
-
   def scope_name
     profile_type
   end

@@ -13,9 +13,6 @@ module SignIn
       permanent: options[:permanent]
     )
 
-    context.remove_cookie(CookieNames::SIGNUP_TOKEN)
-    context.remove_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
-
     RegisterToCurrentSeasonJob.perform_later(signin)
 
     RecordBrowserDetailsJob.perform_later(

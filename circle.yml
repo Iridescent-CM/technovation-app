@@ -21,7 +21,6 @@ jobs:
           BING_MAPS_API_KEY: n-a
           CAMPAIGN_MONITOR_API_KEY: n-a
           CHAPTER_AMBASSADOR_SLACK_URL: n-a
-          COOKIES_ADMIN_PERMISSION_TOKEN: admin_permission_token_JUNE_2018
           COOKIES_AUTH_TOKEN: auth_token_JUNE_2018
           COOKIES_GLOBAL_INVITATION_TOKEN: global_invitation_token_JUNE_2018
           COOKIES_IP_GEOLOCATION: ip_geolocation_JUNE_2018
@@ -30,8 +29,6 @@ jobs:
           COOKIES_REDIRECTED_FROM: redirected_from_JUNE_2018
           COOKIES_SESSION_TOKEN: session_token_JUNE_2018
           COOKIES_SIGNUP_EMAIL: n-a
-          COOKIES_SIGNUP_TOKEN: signup_token_JUNE_2018
-          COOKIES_SIGNUP_WIZARD_MODE: signup_wizard_mode_SEPT_2018
           DATES_CERTIFICATES_AVAILABLE_DAY: 20
           DATES_CERTIFICATES_AVAILABLE_MONTH: 6
           DATES_CERTIFICATES_AVAILABLE_YEAR: 2022
