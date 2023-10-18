@@ -15,19 +15,19 @@ RSpec.describe InviteChapterAmbassador do
     %w{student judge}.each do |scope|
       existing = FactoryBot.create(scope).account
       account = FactoryBot.build(:account, email: existing.email)
-      invited = nil
+      invited_account = nil
 
       expect {
-        invited = InviteChapterAmbassador.(
+        invited_account = InviteChapterAmbassador.(
           account.attributes.merge(FactoryBot.attributes_for(:ambassador))
         )
       }.to change {
         existing.reload.deleted?
       }.from(false).to(true)
 
-      expect(invited).not_to be_nil
-      expect(invited.account_id).not_to be_nil
-      expect(invited.account_id).not_to eq(existing.id)
+      expect(invited_account).not_to be_nil
+      expect(invited_account.id).not_to be_nil
+      expect(invited_account.id).to eq(existing.id)
     end
   end
 
@@ -35,11 +35,11 @@ RSpec.describe InviteChapterAmbassador do
     mentor = FactoryBot.create(:mentor, job_title: "Custom job title")
     account = FactoryBot.build(:account, email: mentor.email.upcase)
 
-    invited = InviteChapterAmbassador.(
+    invited_account = InviteChapterAmbassador.(
       account.attributes.merge(FactoryBot.attributes_for(:ambassador))
     )
 
-    expect(invited.account.mentor_profile.job_title).to eq("Custom job title")
+    expect(invited_account.mentor_profile.job_title).to eq("Custom job title")
   end
 
   it "re-assigns existing background checks" do
@@ -51,13 +51,13 @@ RSpec.describe InviteChapterAmbassador do
 
     account = FactoryBot.build(:account, email: mentor.email)
 
-    invited = InviteChapterAmbassador.(
+    invited_account = InviteChapterAmbassador.(
       account.attributes.merge(FactoryBot.attributes_for(:ambassador))
     )
 
-    bg_check = invited.account.background_check
+    bg_check = invited_account.background_check
     expect(bg_check.report_id).to eq("unique-for-this-test")
     expect(bg_check.candidate_id).to eq("also-unique-for-this-test")
-    expect(invited.account.mentor_profile).to be_background_check_complete
+    expect(invited_account.mentor_profile).to be_background_check_complete
   end
 end

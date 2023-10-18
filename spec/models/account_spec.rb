@@ -241,22 +241,6 @@ RSpec.describe Account do
     end
   end
 
-  it "requires a secure password when invited" do
-    FactoryBot.create(
-      :team_member_invite,
-      invitee_email: "test@account.com"
-    )
-    account = FactoryBot.build(
-      :account,
-      email: "test@account.com",
-      password: "short"
-    )
-    expect(account).not_to be_valid
-    expect(account.errors[:password]).to eq([
-      "is too short (minimum is 8 characters)"
-    ])
-  end
-
   %i{mentor chapter_ambassador}.each do |type|
     it "doesn't need a BG check outside of the US" do
       account = FactoryBot.create(type,

@@ -22,53 +22,6 @@ RSpec.describe LocationController do
     end
   end
 
-  describe "GET /registration/current_location with NullSignupAttempt" do
-    it "returns the IP geolocation result anyway" do
-      result = double(:GeocoderResult,
-        coordinates: [1.23, 4.56],
-        latitude: 1.23,
-        longitude: 4.56,
-        city: "Chicago",
-        state_code: "IL",
-        state: "Illinois",
-        country_code: "US",
-        country: "United States",
-      )
-
-      expect(Geocoder).to receive(:search) { [result] }
-
-      get "/registration/current_location"
-
-      json = JSON.parse(response.body)
-      expect(json["city"]).to eq("Chicago")
-      expect(json["state"]).to eq("Illinois")
-      expect(json["country"]).to eq("United States")
-      expect(json["country_code"]).to eq("US")
-    end
-  end
-
-  describe "PATCH /registration/location with current_attempt" do
-    include Rack::Test::Methods
-
-    it "updates the attempt's lat/lng values" do
-      attempt = FactoryBot.create(:signup_attempt, :chicago)
-
-      set_cookie("#{CookieNames::SIGNUP_TOKEN}=#{attempt.wizard_token}")
-
-      allow_any_instance_of(Registration::LocationsController).to(
-        receive(:current_attempt).and_return(attempt)
-      )
-
-      patch "/registration/location", {
-        registration_location: { city: "Los Angeles" }
-      }
-
-      expect(attempt.reload.city).to eq("Los Angeles")
-      expect(attempt.state_code).to eq("CA")
-      expect(attempt.latitude).to eq(34.052363)
-    end
-  end
-
   %w{mentor student judge admin}.each do |scope|
     context "PATCH #{scope}/locations" do
       before do

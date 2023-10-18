@@ -361,9 +361,6 @@ Rails.application.routes.draw do
   resources :teams, only: :show
   resources :team_submission_pieces, only: :show
 
-  resources :signup_attempts, only: [:create, :show, :update]
-  resources :signup_attempt_confirmations, only: :new
-
   resources :email_confirmations, only: :new
 
   resource :locale_switch, only: :create

@@ -70,15 +70,6 @@ database 'technovation-app_development' do
     }
   end
 
-  table 'signup_attempts' do
-    primary_key 'id' # composite key is also supported
-    anonymize 'activation_token',
-      'signup_token',
-      'pending_token',
-      'admin_permission_token'
-    anonymize('email') { |f| "attempt-#{f.ar_record.id}@oracle.com" }
-  end
-
   table 'teams' do
     primary_key 'id' # composite key is also supported
     anonymize('team_photo') { |_| nil }

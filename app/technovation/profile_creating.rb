@@ -17,8 +17,6 @@ class ProfileCreating
   def execute
     controller.remove_cookie(CookieNames::SIGNUP_TOKEN)
 
-    AttachSignupAttemptJob.perform_later(profile.account_id)
-
     case scope.to_sym
     when :student
       if profile.reload.parental_consent.nil?

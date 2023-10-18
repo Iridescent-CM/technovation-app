@@ -71,16 +71,6 @@ es-MX:
       create:
         success: "¡Bienvenido a Technovation Challenge!"
 
-    signup_attempts:
-      create:
-        success: "¡Gracias por empezar en Technovation!"
-      update:
-        success: "¡Bueno! Estamos intentando de nuevo con la dirección de correo electrónico actualizada"
-
-    signup_attempt_confirmations:
-      new:
-        success: "¡Gracias! ¡Tu correo electrónico está confirmado y está listo para registrarse!"
-
     student:
       join_requests:
         create:

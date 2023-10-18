@@ -49,7 +49,6 @@ class Account < ActiveRecord::Base
 
   has_one :admin_profile, dependent: :destroy
 
-  has_one :signup_attempt, dependent: :destroy
   has_one :unconfirmed_email_address, dependent: :destroy
 
   has_one :consent_waiver, -> { nonvoid }, dependent: :destroy
@@ -847,11 +846,9 @@ class Account < ActiveRecord::Base
 
   def temporary_password?
     if new_record?
-      SignupAttempt.temporary_password.where(
-        "lower(email) = ?", email.downcase
-      ).exists? || UserInvitation.exists?(email: email)
+      UserInvitation.exists?(email: email)
     else
-      super || (signup_attempt.present? && signup_attempt.temporary_password?)
+      super
     end
   end
 

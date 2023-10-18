@@ -144,16 +144,6 @@ en:
       new:
         link: "Sign up"
 
-    signup_attempts:
-      create:
-        success: "Thank you for getting started on Technovation!"
-      update:
-        success: "Okay! We are trying again with the updated email address"
-
-    signup_attempt_confirmations:
-      new:
-        success: "Thank you! Your email is confirmed and you are ready to sign up!"
-
     student:
       join_requests:
         create:

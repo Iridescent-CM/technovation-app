@@ -40,7 +40,6 @@ RSpec.configure do |config|
   config.include SignupHelper, type: :system
 
   config.include ControllerSigninHelper, type: :controller
-  config.include ControllerSignupHelper, type: :controller
 
   config.include RequestSigninHelper, type: :request
 

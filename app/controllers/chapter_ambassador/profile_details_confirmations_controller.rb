@@ -24,8 +24,6 @@ module ChapterAmbassador
           chapter_ambassador_profile_params
       )
 
-        @chapter_ambassador_profile.account.signup_attempt.registered!
-
         remove_cookie(CookieNames::ADMIN_PERMISSION_TOKEN)
         remove_cookie(CookieNames::SIGNUP_TOKEN)
 
