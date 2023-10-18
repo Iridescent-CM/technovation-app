@@ -324,8 +324,6 @@ Rails.application.routes.draw do
   namespace :public do
     resource :dashboard, only: :show
     resources :embed_codes, only: :show
-
-    get '/email_validations/new' => 'email_validations#new'
   end
 
   namespace :registration do
