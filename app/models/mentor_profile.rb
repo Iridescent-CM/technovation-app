@@ -310,6 +310,12 @@ class MentorProfile < ActiveRecord::Base
     country_codes.include?(account.country_code)
   end
 
+  def in_background_check_invitation_country?
+    country_codes = ENV.fetch("BACKGROUND_CHECK_COUNTRY_CODES", "").split(",")
+    country_codes.delete("US")
+    country_codes.include?(account.country_code)
+  end
+
   def bio_complete?
     not bio.blank?
   end
