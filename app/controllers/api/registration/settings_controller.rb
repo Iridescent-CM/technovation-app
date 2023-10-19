@@ -1,5 +1,5 @@
-module Api
-  class RegistrationSettingsController < ApplicationController
+module Api::Registration
+  class SettingsController < ActionController::API
     def index
       render json: {
         isStudentRegistrationOpen: SeasonToggles.student_registration_open?,

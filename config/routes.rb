@@ -328,12 +328,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :registration do
+      resources :settings, only: :index
+      resources :invites, only: :show
+
       resources :mentor_expertises, only: :index
       resources :mentor_types, only: :index
     end
-
-    resources :registration_settings, only: :index
-    resources :registration_invites, only: :show
   end
 
   resource :terms_agreement, only: [:edit, :update]
