@@ -208,9 +208,9 @@ export default {
     },
     async getMentorExpertiseOptions () {
       try {
-        const response = await axios.get('/registration/expertises')
+        const response = await axios.get('/api/registration/mentor_expertises')
 
-        response.data.attributes.forEach((expertise) => {
+        response.data.forEach((expertise) => {
           this.mentorProfileExpertiseOptions.push({
             label: expertise.name,
             value: expertise.id
@@ -225,7 +225,7 @@ export default {
     },
     async getMentorTypeOptions () {
       try {
-        const response = await axios.get('/registration/mentor_types')
+        const response = await axios.get('/api/registration/mentor_types')
 
         response.data.forEach((mentor_type) => {
           this.mentorTypeOptions.push({

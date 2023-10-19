@@ -326,12 +326,12 @@ Rails.application.routes.draw do
     resources :embed_codes, only: :show
   end
 
-  namespace :registration do
-    resources :expertises, only: :index
-    resources :mentor_types, only: :index
-  end
-
   namespace :api do
+    namespace :registration do
+      resources :mentor_expertises, only: :index
+      resources :mentor_types, only: :index
+    end
+
     resources :registration_settings, only: :index
     resources :registration_invites, only: :show
   end
