@@ -256,6 +256,7 @@ class Account < ActiveRecord::Base
     )
   }
 
+  after_create :create_account_created_activity
   before_update :update_division
   after_commit :update_email_list, on: :update
 
@@ -1002,6 +1003,12 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def create_account_created_activity
+    if !is_an_ambassador? && !is_admin?
+      create_activity(key: "account.create")
+    end
   end
 
   def update_division
