@@ -4,8 +4,6 @@ module Public
     layout "application_rebrand"
 
     def show
-      set_cookie(CookieNames::SIGNUP_WIZARD_MODE, true)
-
       if current_account.authenticated?
         redirect_to(
           remove_cookie(CookieNames::REDIRECTED_FROM) ||

@@ -324,27 +324,16 @@ Rails.application.routes.draw do
   namespace :public do
     resource :dashboard, only: :show
     resources :embed_codes, only: :show
-
-    get '/email_validations/new' => 'email_validations#new'
-  end
-
-  namespace :registration do
-    resource :terms_agreement, only: :create
-    resource :age, only: :create
-    resource :profile_choice, only: :create
-    resource :current_location, only: :show
-    resource :location, only: [:update, :create]
-    resource :basic_profile, only: :create
-    resource :email, only: :create
-    resource :account, only: :create
-    resources :top_companies, only: :index
-    resources :expertises, only: :index
-    resources :mentor_types, only: :index
   end
 
   namespace :api do
-    resources :registration_settings, only: :index
-    resources :registration_invites, only: :show
+    namespace :registration do
+      resources :settings, only: :index
+      resources :invites, only: :show
+
+      resources :mentor_expertises, only: :index
+      resources :mentor_types, only: :index
+    end
   end
 
   resource :terms_agreement, only: [:edit, :update]

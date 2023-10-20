@@ -100,7 +100,7 @@ export default {
       }
 
       try {
-        const response = await axios.get(`/api/registration_invites/${inviteCode}`)
+        const response = await axios.get(`/api/registration/invites/${inviteCode}`)
 
         this.registrationInvite = response.data
       }
@@ -112,7 +112,7 @@ export default {
     },
     async getRegistrationSettings() {
       try {
-        const response = await axios.get('/api/registration_settings')
+        const response = await axios.get('/api/registration/settings')
 
         this.isStudentRegistrationOpen = response.data.isStudentRegistrationOpen
         this.isMentorRegistrationOpen = response.data.isMentorRegistrationOpen

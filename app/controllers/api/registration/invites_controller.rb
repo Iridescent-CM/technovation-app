@@ -1,5 +1,5 @@
-module Api
-  class RegistrationInvitesController < ApplicationController
+module Api::Registration
+  class InvitesController < ActionController::API
     def show
       invite = RegistrationInviteValidator.new(invite_code: params[:id]).call
 

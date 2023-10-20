@@ -15,8 +15,6 @@ class ProfileCreating
   end
 
   def execute
-    controller.remove_cookie(CookieNames::SIGNUP_TOKEN)
-
     case scope.to_sym
     when :student
       if profile.reload.parental_consent.nil?

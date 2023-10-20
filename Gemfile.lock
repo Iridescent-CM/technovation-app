@@ -245,9 +245,6 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.4)
       domain_name (~> 0.5)
-    httparty (0.21.0)
-      mini_mime (>= 1.0.0)
-      multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     i18n-js (4.0.1)
@@ -280,8 +277,6 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mailgun-ruby (1.2.5)
-      rest-client (>= 2.0.2)
     main (6.2.3)
       arrayfields (~> 4.7, >= 4.7.4)
       chronic (~> 0.6, >= 0.6.2)
@@ -300,7 +295,6 @@ GEM
     minitest (5.20.0)
     msgpack (1.5.4)
     multi_json (1.15.0)
-    multi_xml (0.6.0)
     net-imap (0.3.6)
       date
       net-protocol
@@ -584,7 +578,6 @@ DEPENDENCIES
   geocoder (~> 1.6.0)
   gibbon (~> 3.4.4)
   hiredis (~> 0.6)
-  httparty (~> 0.21.0)
   i18n-js (~> 4.0)
   indefinite_article (~> 0.2)
   jquery-rails (~> 4.3)
@@ -593,7 +586,6 @@ DEPENDENCIES
   listen (~> 3.1)
   lodash-rails (~> 4.17)
   loofah (~> 2.2)
-  mailgun-ruby (~> 1.1)
   mini_magick (= 4.9.4)
   net-imap
   net-pop

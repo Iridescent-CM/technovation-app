@@ -34,10 +34,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = "./tmp/spec/examples.txt"
 
   config.include SigninHelper, type: :feature
-  config.include SignupHelper, type: :feature
-
   config.include SigninHelper, type: :system
-  config.include SignupHelper, type: :system
 
   config.include ControllerSigninHelper, type: :controller
 
@@ -47,8 +44,6 @@ RSpec.configure do |config|
   config.include SelectDateHelper, type: :system
 
   config.include VueSelectInputHelper, type: :system
-
-  config.include MailgunHelper, type: :system
 
   config.include CoordinatesHelper, type: :system
 
