@@ -25,10 +25,6 @@ class ProfileCreating
 
     Geocoding.perform(profile.account).with_save
 
-    profile.account.create_activity(
-      key: "account.create"
-    )
-
     SignIn.(
       profile.account,
       controller,
