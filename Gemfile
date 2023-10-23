@@ -58,7 +58,7 @@ gem "sidekiq", "~> 7.0"
 
 gem "airbrake", "~> 11.0.3"
 
-gem "dalli", "~> 2.7"
+gem "dalli", "~> 3.0"
 
 gem "geocoder", "~> 1.6.0"
 gem "timezone", "~> 1.3"
