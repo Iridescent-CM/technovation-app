@@ -9,4 +9,5 @@ class NullBackgroundCheck < NullObject
   def suspended?; false; end
   def paranoid?; false; end
   def invitation_pending?; false; end
+  def candidate_id; nil; end
 end

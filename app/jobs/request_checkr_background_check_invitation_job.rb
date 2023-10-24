@@ -2,7 +2,8 @@ class RequestCheckrBackgroundCheckInvitationJob < ActiveJob::Base
   queue_as :default
 
   before_enqueue do |job|
-    profile = job.arguments[0][:candidate]
+    account_id = job.arguments[0][:account_id]
+    profile = Account.find(account_id)
 
     Job.create!(
       job_id: job.job_id,
@@ -16,7 +17,8 @@ class RequestCheckrBackgroundCheckInvitationJob < ActiveJob::Base
     db_job.update_column(:status, "complete")
   end
 
-  def perform(candidate:)
-    CheckrApiClient::ApiClient.new.request_checkr_invitation(candidate: candidate)
+  def perform(account_id:)
+    candidate = Account.find(account_id)
+    CheckrApiClient::ApiClient.new(candidate: candidate).request_checkr_invitation
   end
 end

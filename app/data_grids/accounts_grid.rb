@@ -154,12 +154,24 @@ class AccountsGrid
   column :background_check, if: ->(g) {
     g.admin or Array(g.country)[0] == "US"
   } do
-    if country_code == "US" && mentor_profile.present?
+    if mentor_profile.present? && mentor_profile.in_background_check_country?
       background_check.present? ?
-        background_check.status :
+        background_check.status.humanize :
         "Not submitted"
     elsif mentor_profile.present?
       "-"
+    else
+      "-"
+    end
+  end
+
+  column :invitation_status, if: ->(g) {
+    g.admin || Array(g.country)[0] == "US"
+  } do
+    if mentor_profile.present? && mentor_profile.in_background_check_country?
+      background_check.invitation_status.present? ?
+        background_check.invitation_status.humanize :
+        "-"
     else
       "-"
     end
