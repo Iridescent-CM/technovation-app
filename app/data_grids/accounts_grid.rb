@@ -165,6 +165,18 @@ class AccountsGrid
     end
   end
 
+  column :invitation_status, if: ->(g) {
+    g.admin || Array(g.country)[0] == "US"
+  } do
+    if mentor_profile.present? && mentor_profile.in_background_check_country?
+      background_check.invitation_status.present? ?
+        background_check.invitation_status.humanize :
+        "-"
+    else
+      "-"
+    end
+  end
+
   column :parental_consent do |account, grid|
     if account.student_profile.present? && account.parental_consent(grid.season).present?
       account.parental_consent(grid.season).status
