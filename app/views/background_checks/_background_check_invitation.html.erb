@@ -70,7 +70,11 @@
       <%= link_to "Request background check invitation",
                   mentor_background_check_invitation_path,
                   class: "button",
-                  id: "bg-check-invite-btn"%>
+                  id: "bg-check-invite-btn",
+                  data:{
+                    method: :post
+                  }
+      %>
     </div>
   </div>
 </div>

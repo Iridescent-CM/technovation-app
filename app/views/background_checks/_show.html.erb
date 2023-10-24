@@ -25,7 +25,11 @@
         </p>
         <%= link_to "Request a new invitation",
                     mentor_background_check_invitation_path,
-                    class: "button button--primary" %>
+                    class: "button button--primary",
+                    data: {
+                      method: :post
+                    }
+        %>
       <% end %>
 
 
