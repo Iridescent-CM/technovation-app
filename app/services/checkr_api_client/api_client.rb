@@ -1,7 +1,7 @@
 module CheckrApiClient
   class ApiClient
     def initialize(
-      candidate,
+      candidate:,
       client_id: ENV.fetch("CHECKR_API_KEY"),
       base_url: ENV.fetch("CHECKR_API_BASE", "https://api.checkr.com"),
       logger: Rails.logger,
@@ -18,22 +18,22 @@ module CheckrApiClient
       @logger = logger
       @error_notifier = error_notifier
       @candidate = candidate
-      @candidate_id = candidate.account.background_check.candidate_id
+      @candidate_id = candidate.background_check.candidate_id
     end
 
     def request_checkr_invitation
       if candidate_id.blank?
-        create_checkr_candidate(candidate: candidate)
+        create_checkr_candidate
       end
 
       if candidate_id.present?
         invitation_response = create_checkr_invitation(
-          candidate_country_code: candidate.account.country_code,
+          candidate_country_code: candidate.country_code,
           candidate_id: candidate_id
         )
 
         if invitation_response.success?
-          candidate.account.update(background_check_attributes: {
+          candidate.update(background_check_attributes: {
             candidate_id: candidate_id,
             invitation_id: invitation_response.payload[:id],
             invitation_status: invitation_response.payload[:status],
@@ -43,14 +43,14 @@ module CheckrApiClient
 
           Result.new(success?: true)
         else
-          error = "[CHECKR] Error requesting invitation for #{candidate.account.id} - #{invitation_response.payload[:error]}"
+          error = "[CHECKR] Error requesting invitation for #{candidate.id} - #{invitation_response.payload[:error]}"
           logger.error(error)
           error_notifier.notify(error)
 
           Result.new(success?: false)
         end
       else
-        error = "[CHECKR] Error requesting invitation for #{candidate.account.id} - Candidate ID is missing."
+        error = "[CHECKR] Error requesting invitation for #{candidate.id} - Candidate ID is missing."
         logger.error(error)
         error_notifier.notify(error)
         Result.new(success?: false)
@@ -79,13 +79,13 @@ module CheckrApiClient
 
     Result = Struct.new(:success?, :message, :payload, keyword_init: true)
 
-    def create_checkr_candidate(candidate:)
+    def create_checkr_candidate
       req_body = {
-        email: candidate.account.email,
-        first_name: candidate.account.first_name,
-        last_name: candidate.account.last_name,
-        dob: candidate.account.date_of_birth,
-        work_locations: [{country: candidate.account.country_code}]
+        email: candidate.email,
+        first_name: candidate.first_name,
+        last_name: candidate.last_name,
+        dob: candidate.date_of_birth,
+        work_locations: [{country: candidate.country_code}]
       }
 
       candidate_response = post("candidates", req_body)
@@ -95,7 +95,7 @@ module CheckrApiClient
         @candidate_id = candidate_response_body[:id]
         Result.new(success?: true)
       else
-        error = "[CHECKR] Error creating candidate for #{candidate.account.id} - #{candidate_response_body[:error]}"
+        error = "[CHECKR] Error creating candidate for #{candidate.id} - #{candidate_response_body[:error]}"
         logger.error(error)
         error_notifier.notify(error)
 
