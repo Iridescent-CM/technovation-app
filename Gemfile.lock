@@ -169,7 +169,7 @@ GEM
     css_parser (1.9.0)
       addressable
     currencies (0.4.2)
-    dalli (2.7.11)
+    dalli (3.2.6)
     datagrid (1.6.3)
       rails (>= 4.0)
     date (3.3.3)
@@ -564,7 +564,7 @@ DEPENDENCIES
   counter_culture (~> 1.12)
   countries (~> 1.2)
   country_state_select (~> 3.0)
-  dalli (~> 2.7)
+  dalli (~> 3.0)
   datagrid (~> 1.5)
   dotenv-rails (~> 2.7)
   dropzonejs-rails (~> 0.8)
