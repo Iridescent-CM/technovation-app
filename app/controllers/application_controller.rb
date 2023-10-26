@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+
   include CookiesHelper
   include ForceTermsAgreement
   include ForceLocation
@@ -38,6 +40,10 @@ class ApplicationController < ActionController::Base
     else
       ::NullAuth.new
     end
+  end
+
+  def pundit_user
+    current_account
   end
 
   def current_session

@@ -20,6 +20,7 @@ gem "pdf-forms", "~> 1.2"
 gem "public_activity", "~> 1.6"
 gem "paranoia", "~> 2.4"
 gem "counter_culture", "~> 1.12"
+gem "pundit", "~> 2.0"
 
 gem "autoprefixer-rails", "~> 6.7"
 gem "uglifier", "~> 3.2"
