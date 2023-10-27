@@ -29,6 +29,10 @@ module Judge
     end
 
     def new
+      if params[:score_id].present? && params[:score_id].to_i > 0
+        authorize SubmissionScore.find(params[:score_id]), policy_class: Judge::SubmissionScorePolicy
+      end
+
       respond_to do |f|
         f.html
 
