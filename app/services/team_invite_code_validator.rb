@@ -1,4 +1,4 @@
-class TeamInviteValidator
+class TeamInviteCodeValidator
   def initialize(team_invite_code:, important_dates: ImportantDates)
     @team_invite_code = team_invite_code
     @important_dates = important_dates
