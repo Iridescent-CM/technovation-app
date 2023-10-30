@@ -6,7 +6,7 @@ class NewRegistrationController < ApplicationController
   def show
     if SeasonToggles.registration_closed?
       if params[:invite_code].present?
-        invite = RegistrationInviteValidator.new(invite_code: params[:invite_code]).call
+        invite = RegistrationInviteCodeValidator.new(invite_code: params[:invite_code]).call
 
         if !invite.valid?
           redirect_to "/", error: "This invitation is no longer valid"

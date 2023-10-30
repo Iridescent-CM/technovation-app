@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Registration Invites" do
   before do
-    allow(RegistrationInviteValidator).to receive_message_chain(:new, :call)
+    allow(RegistrationInviteCodeValidator).to receive_message_chain(:new, :call)
       .and_return(registration_invite_validator_response)
   end
 

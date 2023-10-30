@@ -1,8 +1,8 @@
 require "rails_helper"
 
-describe RegistrationInviteValidator do
-  let(:registration_invite_validator) {
-    RegistrationInviteValidator.new(invite_code: invite_code)
+describe RegistrationInviteCodeValidator do
+  let(:registration_invite_code_validator) {
+    RegistrationInviteCodeValidator.new(invite_code: invite_code)
   }
   let(:invite_code) { "12345abcde9876zyxw" }
 
@@ -49,15 +49,15 @@ describe RegistrationInviteValidator do
         let(:student_registration_open) { true }
 
         it "is valid" do
-          expect(registration_invite_validator.call.valid?).to eq(true)
+          expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
         it "sets the profile type to 'student'" do
-          expect(registration_invite_validator.call.profile_type).to eq("student")
+          expect(registration_invite_code_validator.call.profile_type).to eq("student")
         end
 
         it "sets the friendly profile type to 'student'" do
-          expect(registration_invite_validator.call.friendly_profile_type).to eq("student")
+          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("student")
         end
       end
 
@@ -65,14 +65,14 @@ describe RegistrationInviteValidator do
         let(:student_registration_open) { false }
 
         it "is not valid" do
-          expect(registration_invite_validator.call.valid?).to eq(false)
+          expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
-            expect(registration_invite_validator.call.valid?).to eq(true)
+            expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
         end
       end
@@ -85,15 +85,15 @@ describe RegistrationInviteValidator do
         let(:student_registration_open) { true }
 
         it "is valid" do
-          expect(registration_invite_validator.call.valid?).to eq(true)
+          expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
         it "sets the profile type to 'parent'" do
-          expect(registration_invite_validator.call.profile_type).to eq("parent")
+          expect(registration_invite_code_validator.call.profile_type).to eq("parent")
         end
 
         it "sets the friendly profile type to 'parent'" do
-          expect(registration_invite_validator.call.friendly_profile_type).to eq("parent")
+          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("parent")
         end
       end
 
@@ -101,14 +101,14 @@ describe RegistrationInviteValidator do
         let(:student_registration_open) { false }
 
         it "is not valid" do
-          expect(registration_invite_validator.call.valid?).to eq(false)
+          expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
-            expect(registration_invite_validator.call.valid?).to eq(true)
+            expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
         end
       end
@@ -121,15 +121,15 @@ describe RegistrationInviteValidator do
         let(:mentor_registration_open) { true }
 
         it "is valid" do
-          expect(registration_invite_validator.call.valid?).to eq(true)
+          expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
         it "sets the profile type to 'mentor'" do
-          expect(registration_invite_validator.call.profile_type).to eq("mentor")
+          expect(registration_invite_code_validator.call.profile_type).to eq("mentor")
         end
 
         it "sets the friendly profile type to 'mentor'" do
-          expect(registration_invite_validator.call.friendly_profile_type).to eq("mentor")
+          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("mentor")
         end
       end
 
@@ -137,14 +137,14 @@ describe RegistrationInviteValidator do
         let(:mentor_registration_open) { false }
 
         it "is not valid" do
-          expect(registration_invite_validator.call.valid?).to eq(false)
+          expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
-            expect(registration_invite_validator.call.valid?).to eq(true)
+            expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
         end
       end
@@ -157,15 +157,15 @@ describe RegistrationInviteValidator do
         let(:judge_registration_open) { true }
 
         it "is valid" do
-          expect(registration_invite_validator.call.valid?).to eq(true)
+          expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
         it "sets the profile type to 'judge'" do
-          expect(registration_invite_validator.call.profile_type).to eq("judge")
+          expect(registration_invite_code_validator.call.profile_type).to eq("judge")
         end
 
         it "sets the friendly profile type to 'judge'" do
-          expect(registration_invite_validator.call.friendly_profile_type).to eq("judge")
+          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("judge")
         end
       end
 
@@ -173,14 +173,14 @@ describe RegistrationInviteValidator do
         let(:judge_registration_open) { false }
 
         it "is not valid" do
-          expect(registration_invite_validator.call.valid?).to eq(false)
+          expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
-            expect(registration_invite_validator.call.valid?).to eq(true)
+            expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
         end
       end
@@ -190,15 +190,15 @@ describe RegistrationInviteValidator do
       let(:chapter_ambassador_invite) { true }
 
       it "is valid" do
-        expect(registration_invite_validator.call.valid?).to eq(true)
+        expect(registration_invite_code_validator.call.valid?).to eq(true)
       end
 
       it "sets the profile type to 'chapter_ambassador'" do
-        expect(registration_invite_validator.call.profile_type).to eq("chapter_ambassador")
+        expect(registration_invite_code_validator.call.profile_type).to eq("chapter_ambassador")
       end
 
       it "sets the friendly profile type to 'chapter ambassador'" do
-        expect(registration_invite_validator.call.friendly_profile_type).to eq("chapter ambassador")
+        expect(registration_invite_code_validator.call.friendly_profile_type).to eq("chapter ambassador")
       end
     end
   end
@@ -207,7 +207,7 @@ describe RegistrationInviteValidator do
     let(:pending_invite) { false }
 
     it "is valid" do
-      expect(registration_invite_validator.call.valid?).to eq(false)
+      expect(registration_invite_code_validator.call.valid?).to eq(false)
     end
   end
 end

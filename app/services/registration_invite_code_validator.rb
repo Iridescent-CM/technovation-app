@@ -1,4 +1,4 @@
-class RegistrationInviteValidator
+class RegistrationInviteCodeValidator
   def initialize(invite_code:)
     @invite_code = invite_code
   end

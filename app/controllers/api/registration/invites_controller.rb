@@ -1,7 +1,7 @@
 module Api::Registration
   class InvitesController < ActionController::API
     def show
-      invite = RegistrationInviteValidator.new(invite_code: params[:id]).call
+      invite = RegistrationInviteCodeValidator.new(invite_code: params[:id]).call
 
       render json: {
         isValid: invite.valid?,
