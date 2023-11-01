@@ -55,10 +55,6 @@ describe RegistrationInviteCodeValidator do
         it "sets the profile type to 'student'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("student")
         end
-
-        it "sets the friendly profile type to 'student'" do
-          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("student")
-        end
       end
 
       context "when student registration is closed" do
@@ -90,10 +86,6 @@ describe RegistrationInviteCodeValidator do
 
         it "sets the profile type to 'parent'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("parent")
-        end
-
-        it "sets the friendly profile type to 'parent'" do
-          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("parent")
         end
       end
 
@@ -127,10 +119,6 @@ describe RegistrationInviteCodeValidator do
         it "sets the profile type to 'mentor'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("mentor")
         end
-
-        it "sets the friendly profile type to 'mentor'" do
-          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("mentor")
-        end
       end
 
       context "when mentor registration is closed" do
@@ -163,10 +151,6 @@ describe RegistrationInviteCodeValidator do
         it "sets the profile type to 'judge'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("judge")
         end
-
-        it "sets the friendly profile type to 'judge'" do
-          expect(registration_invite_code_validator.call.friendly_profile_type).to eq("judge")
-        end
       end
 
       context "when judge registration is closed" do
@@ -195,10 +179,6 @@ describe RegistrationInviteCodeValidator do
 
       it "sets the profile type to 'chapter_ambassador'" do
         expect(registration_invite_code_validator.call.profile_type).to eq("chapter_ambassador")
-      end
-
-      it "sets the friendly profile type to 'chapter ambassador'" do
-        expect(registration_invite_code_validator.call.friendly_profile_type).to eq("chapter ambassador")
       end
     end
   end

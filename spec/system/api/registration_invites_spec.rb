@@ -10,8 +10,7 @@ RSpec.describe "Registration Invites" do
     double("registration_invite_validator_response",
       valid?: true,
       register_at_any_time?: true,
-      profile_type: "student",
-      friendly_profile_type: "student")
+      profile_type: "student")
   end
 
   it "returns registration invite details" do
@@ -21,8 +20,7 @@ RSpec.describe "Registration Invites" do
       {
         "isValid" => registration_invite_validator_response.valid?,
         "canRegisterAtAnyTime" => registration_invite_validator_response.register_at_any_time?,
-        "profileType" => registration_invite_validator_response.profile_type,
-        "friendlyProfileType" => registration_invite_validator_response.friendly_profile_type
+        "profileType" => registration_invite_validator_response.profile_type
       }
     )
   end

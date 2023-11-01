@@ -11,46 +11,41 @@ class RegistrationInviteCodeValidator
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "student",
-          friendly_profile_type: "student"
+          profile_type: "student"
         )
       elsif invite.parent_student? && (SeasonToggles.student_registration_open? || invite.register_at_any_time?)
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "parent",
-          friendly_profile_type: "parent"
+          profile_type: "parent"
         )
       elsif invite.mentor? && (SeasonToggles.mentor_registration_open? || invite.register_at_any_time?)
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "mentor",
-          friendly_profile_type: "mentor"
+          profile_type: "mentor"
         )
       elsif invite.judge? && (SeasonToggles.judge_registration_open? || invite.register_at_any_time?)
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "judge",
-          friendly_profile_type: "judge"
+          profile_type: "judge"
         )
       elsif invite.chapter_ambassador?
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "chapter_ambassador",
-          friendly_profile_type: "chapter ambassador"
+          profile_type: "chapter_ambassador"
         )
       end
     end
 
-    Result.new(valid?: false, register_at_any_time?: false, profile_type: "", friendly_profile_type: "")
+    Result.new(valid?: false, register_at_any_time?: false, profile_type: "")
   end
 
   private
 
-  Result = Struct.new(:valid?, :register_at_any_time?, :profile_type, :friendly_profile_type, keyword_init: true)
+  Result = Struct.new(:valid?, :register_at_any_time?, :profile_type, keyword_init: true)
 
   attr_reader :invite_code
 end
