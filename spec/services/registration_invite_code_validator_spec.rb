@@ -55,6 +55,10 @@ describe RegistrationInviteCodeValidator do
         it "sets the profile type to 'student'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("student")
         end
+
+        it "sets a success message" do
+          expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a student!")
+        end
       end
 
       context "when student registration is closed" do
@@ -64,11 +68,19 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
+        it "sets an error message" do
+          expect(registration_invite_code_validator.call.error_message).to eq("This invitation is no longer valid.")
+        end
+
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
+          end
+
+          it "sets a success message" do
+            expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a student!")
           end
         end
       end
@@ -87,6 +99,10 @@ describe RegistrationInviteCodeValidator do
         it "sets the profile type to 'parent'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("parent")
         end
+
+        it "sets a success message" do
+          expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a parent!")
+        end
       end
 
       context "when student registration is closed" do
@@ -96,11 +112,19 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
+        it "sets an error message" do
+          expect(registration_invite_code_validator.call.error_message).to eq("This invitation is no longer valid.")
+        end
+
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
+          end
+
+          it "sets a success message" do
+            expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a parent!")
           end
         end
       end
@@ -119,6 +143,10 @@ describe RegistrationInviteCodeValidator do
         it "sets the profile type to 'mentor'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("mentor")
         end
+
+        it "sets a success message" do
+          expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a mentor!")
+        end
       end
 
       context "when mentor registration is closed" do
@@ -128,11 +156,19 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
+        it "sets an error message" do
+          expect(registration_invite_code_validator.call.error_message).to eq("This invitation is no longer valid.")
+        end
+
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
+          end
+
+          it "sets a success message" do
+            expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a mentor!")
           end
         end
       end
@@ -151,6 +187,10 @@ describe RegistrationInviteCodeValidator do
         it "sets the profile type to 'judge'" do
           expect(registration_invite_code_validator.call.profile_type).to eq("judge")
         end
+
+        it "sets a success message" do
+          expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a judge!")
+        end
       end
 
       context "when judge registration is closed" do
@@ -160,11 +200,19 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(false)
         end
 
+        it "sets an error message" do
+          expect(registration_invite_code_validator.call.error_message).to eq("This invitation is no longer valid.")
+        end
+
         context "when an invite can be used at any time" do
           let(:register_at_any_time) { true }
 
           it "is valid" do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
+          end
+
+          it "sets a success message" do
+            expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a judge!")
           end
         end
       end
@@ -180,14 +228,22 @@ describe RegistrationInviteCodeValidator do
       it "sets the profile type to 'chapter_ambassador'" do
         expect(registration_invite_code_validator.call.profile_type).to eq("chapter_ambassador")
       end
+
+      it "sets a success message" do
+        expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a chapter ambassador!")
+      end
     end
   end
 
   context "when the invite is not pending" do
     let(:pending_invite) { false }
 
-    it "is valid" do
+    it "is is not valid" do
       expect(registration_invite_code_validator.call.valid?).to eq(false)
+    end
+
+    it "sets an error message" do
+      expect(registration_invite_code_validator.call.error_message).to eq("This invitation is no longer valid.")
     end
   end
 end
