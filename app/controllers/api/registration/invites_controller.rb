@@ -6,7 +6,7 @@ module Api::Registration
       render json: {
         isValid: invite.valid?,
         canRegisterAtAnyTime: invite.register_at_any_time?,
-        profileType: invite.profile_type
+        profileType: invite.registration_profile_type
       }
     end
   end

@@ -52,8 +52,8 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
-        it "sets the profile type to 'student'" do
-          expect(registration_invite_code_validator.call.profile_type).to eq("student")
+        it "sets the registration profile type to 'student'" do
+          expect(registration_invite_code_validator.call.registration_profile_type).to eq("student")
         end
 
         it "sets a success message" do
@@ -79,6 +79,10 @@ describe RegistrationInviteCodeValidator do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
 
+          it "sets the registration profile type to 'student'" do
+            expect(registration_invite_code_validator.call.registration_profile_type).to eq("student")
+          end
+
           it "sets a success message" do
             expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a student!")
           end
@@ -96,8 +100,8 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
-        it "sets the profile type to 'parent'" do
-          expect(registration_invite_code_validator.call.profile_type).to eq("parent")
+        it "sets the registration profile type to 'parent'" do
+          expect(registration_invite_code_validator.call.registration_profile_type).to eq("parent")
         end
 
         it "sets a success message" do
@@ -123,6 +127,10 @@ describe RegistrationInviteCodeValidator do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
 
+          it "sets the registration profile type to 'parent'" do
+            expect(registration_invite_code_validator.call.registration_profile_type).to eq("parent")
+          end
+
           it "sets a success message" do
             expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a parent!")
           end
@@ -140,8 +148,8 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
-        it "sets the profile type to 'mentor'" do
-          expect(registration_invite_code_validator.call.profile_type).to eq("mentor")
+        it "sets the registration profile type to 'mentor'" do
+          expect(registration_invite_code_validator.call.registration_profile_type).to eq("mentor")
         end
 
         it "sets a success message" do
@@ -167,6 +175,10 @@ describe RegistrationInviteCodeValidator do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
 
+          it "sets the registration profile type to 'mentor'" do
+            expect(registration_invite_code_validator.call.registration_profile_type).to eq("mentor")
+          end
+
           it "sets a success message" do
             expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a mentor!")
           end
@@ -184,8 +196,8 @@ describe RegistrationInviteCodeValidator do
           expect(registration_invite_code_validator.call.valid?).to eq(true)
         end
 
-        it "sets the profile type to 'judge'" do
-          expect(registration_invite_code_validator.call.profile_type).to eq("judge")
+        it "sets the registration profile type to 'judge'" do
+          expect(registration_invite_code_validator.call.registration_profile_type).to eq("judge")
         end
 
         it "sets a success message" do
@@ -211,6 +223,10 @@ describe RegistrationInviteCodeValidator do
             expect(registration_invite_code_validator.call.valid?).to eq(true)
           end
 
+          it "sets the registration profile type to 'judge'" do
+            expect(registration_invite_code_validator.call.registration_profile_type).to eq("judge")
+          end
+
           it "sets a success message" do
             expect(registration_invite_code_validator.call.success_message).to eq("You have been invited to join Technovation Girls as a judge!")
           end
@@ -225,8 +241,8 @@ describe RegistrationInviteCodeValidator do
         expect(registration_invite_code_validator.call.valid?).to eq(true)
       end
 
-      it "sets the profile type to 'chapter_ambassador'" do
-        expect(registration_invite_code_validator.call.profile_type).to eq("chapter_ambassador")
+      it "sets the registration profile type to 'chapter_ambassador'" do
+        expect(registration_invite_code_validator.call.registration_profile_type).to eq("chapter_ambassador")
       end
 
       it "sets a success message" do

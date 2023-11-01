@@ -11,46 +11,46 @@ class RegistrationInviteCodeValidator
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "student",
+          registration_profile_type: "student",
           success_message: "You have been invited to join Technovation Girls as a student!"
         )
       elsif invite.parent_student? && (SeasonToggles.student_registration_open? || invite.register_at_any_time?)
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "parent",
+          registration_profile_type: "parent",
           success_message: "You have been invited to join Technovation Girls as a parent!"
         )
       elsif invite.mentor? && (SeasonToggles.mentor_registration_open? || invite.register_at_any_time?)
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "mentor",
+          registration_profile_type: "mentor",
           success_message: "You have been invited to join Technovation Girls as a mentor!"
         )
       elsif invite.judge? && (SeasonToggles.judge_registration_open? || invite.register_at_any_time?)
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "judge",
+          registration_profile_type: "judge",
           success_message: "You have been invited to join Technovation Girls as a judge!"
         )
       elsif invite.chapter_ambassador?
         return Result.new(
           valid?: true,
           register_at_any_time?: invite.register_at_any_time?,
-          profile_type: "chapter_ambassador",
+          registration_profile_type: "chapter_ambassador",
           success_message: "You have been invited to join Technovation Girls as a chapter ambassador!"
         )
       end
     end
 
-    Result.new(valid?: false, register_at_any_time?: false, profile_type: "", error_message: "This invitation is no longer valid.")
+    Result.new(valid?: false, register_at_any_time?: false, registration_profile_type: "", error_message: "This invitation is no longer valid.")
   end
 
   private
 
-  Result = Struct.new(:valid?, :register_at_any_time?, :profile_type, :success_message, :error_message, keyword_init: true)
+  Result = Struct.new(:valid?, :register_at_any_time?, :registration_profile_type, :success_message, :error_message, keyword_init: true)
 
   attr_reader :invite_code
 end
