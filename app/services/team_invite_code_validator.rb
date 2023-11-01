@@ -17,15 +17,19 @@ class TeamInviteCodeValidator
         "mentor"
       end
 
-      Result.new(valid?: true, registration_profile_type: registration_profile_type)
+      Result.new(
+        valid?: true,
+        registration_profile_type: registration_profile_type,
+        success_message: "You have been invited to join the team \"#{invite.team_name}\"!"
+      )
     else
-      Result.new(valid?: false, registration_profile_type: "")
+      Result.new(valid?: false, registration_profile_type: "", error_message: "This invite is no longer valid.")
     end
   end
 
   private
 
-  Result = Struct.new(:valid?, :registration_profile_type, keyword_init: true)
+  Result = Struct.new(:valid?, :registration_profile_type, :success_message, :error_message, keyword_init: true)
 
   attr_reader :team_invite_code, :important_dates
 end

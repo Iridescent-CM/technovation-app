@@ -24,7 +24,8 @@ describe TeamInviteCodeValidator do
     instance_double(TeamMemberInvite,
       pending?: pending_invite,
       inviter_type: inviter_profile_type,
-      invitee_type: invitee_profile_type)
+      invitee_type: invitee_profile_type,
+      team_name: "ABCool Team")
   end
 
   let(:pending_invite) { false }
@@ -48,6 +49,10 @@ describe TeamInviteCodeValidator do
 
         it "is valid" do
           expect(team_invite_code_validator.call.valid?).to eq(true)
+        end
+
+        it "returns a success message" do
+          expect(team_invite_code_validator.call.success_message).to eq('You have been invited to join the team "ABCool Team"!')
         end
 
         context "when the invite is for a student" do
@@ -79,6 +84,10 @@ describe TeamInviteCodeValidator do
     it "is not valid" do
       expect(team_invite_code_validator.call.valid?).to eq(false)
     end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
+    end
   end
 
   context "when a team invite is not pending" do
@@ -87,6 +96,10 @@ describe TeamInviteCodeValidator do
     it "is not valid" do
       expect(team_invite_code_validator.call.valid?).to eq(false)
     end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
+    end
   end
 
   context "when a mentor made the invite" do
@@ -94,6 +107,10 @@ describe TeamInviteCodeValidator do
 
     it "is not valid" do
       expect(team_invite_code_validator.call.valid?).to eq(false)
+    end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
     end
   end
 
@@ -108,6 +125,10 @@ describe TeamInviteCodeValidator do
 
     it "is not valid" do
       expect(team_invite_code_validator.call.valid?).to eq(false)
+    end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
     end
   end
 end
