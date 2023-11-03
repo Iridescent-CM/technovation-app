@@ -24,7 +24,7 @@
 
   <%= link_to web_icon("play-circle-o", text: "Watch the #{t("submissions.demo_video")}"),
     "#",
-    class: "button button--small",
+    class: "tw-gold-btn small",
     data: {
       opens_modal: "video-modal-#{@team_submission.video_id(:demo)}",
       modal_fetch: send(
@@ -42,6 +42,8 @@
   </div>
 <% end %>
 
+<%= render 'application/templates/tw_thick_rule'%>
+
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
   title: "Pitch video",
@@ -52,7 +54,7 @@
 
   <%= link_to web_icon("play-circle-o", text: "Watch the pitch video"),
     "#",
-    class: "button button--small",
+    class: "tw-gold-btn small",
     data: {
       opens_modal: "video-modal-#{@team_submission.video_id(:pitch)}",
       modal_fetch: send(
