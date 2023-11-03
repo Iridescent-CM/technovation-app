@@ -117,6 +117,10 @@ export default {
         this.isStudentRegistrationOpen = response.data.isStudentRegistrationOpen
         this.isMentorRegistrationOpen = response.data.isMentorRegistrationOpen
         this.isJudgeRegistrationOpen = response.data.isJudgeRegistrationOpen
+        this.isChapterAmbassadorRegistrationOpen = response.data.isChapterAmbassadorRegistrationOpen
+        this.invitedRegistrationProfileType = response.data.invitedRegistrationProfileType
+        this.successMessage = response.data.successMessage
+        this.errorMessage = response.data.errorMessage
       }
       catch(error) {
         airbrake.notify({
