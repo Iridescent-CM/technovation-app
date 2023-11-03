@@ -1,26 +1,23 @@
-<div class="panel">
-  <h3 class="panel--heading">
-    <%= t("submissions.app").titlecase %>  name
-  </h3>
+<% provide :title, "Project Name" %>
 
-  <%= form_with(
-    model: @team_submission,
-    url: send("#{current_scope}_team_submission_path"),
-    local: true
-  ) do |f| %>
-    <%= hidden_field_tag :piece, piece_name %>
+<%= form_with(
+  model: @team_submission,
+  url: send("#{current_scope}_team_submission_path"),
+  local: true
+) do |f| %>
+  <%= hidden_field_tag :piece, piece_name %>
 
-    <div class="field">
-      <%= f.label :app_name, "Your #{t("submissions.app")}'s name", for: :team_submission_app_name %>
-      <%= f.text_field :app_name, id: :team_submission_app_name %>
-    </div>
+  <div class="field">
+    <%= f.label :app_name, "Your #{t("submissions.app")}'s name", for: :team_submission_app_name %>
+    <%= f.text_field :app_name, id: :team_submission_app_name %>
+  </div>
 
-    <div class="actions">
-      <p>
-        <%= f.submit "Save this name", class: "button" %>
-        or
-        <%= link_to "cancel", send("#{current_scope}_team_submission_path", @team_submission) %>
-      </p>
-    </div>
-  <% end %>
-</div>
+  <div class="actions submission-actions">
+    <p class="btn-wrapper">
+      <%= f.submit "Save this name", class: "tw-green-btn cursor-pointer" %>
+      or
+      <%= link_to "cancel", send("#{current_scope}_team_submission_path", @team_submission) %>
+    </p>
+  </div>
+<% end %>
+

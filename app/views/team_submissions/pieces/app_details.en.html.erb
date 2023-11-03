@@ -1,7 +1,6 @@
-<div class="panel">
-  <h3 class="panel--heading">Additional Information</h3>
+<% provide :title, "Additional Information" %>
 
-  <% if @team_submission.errors.full_messages.any? %>
+<% if @team_submission.errors.full_messages.any? %>
     <div class="notice notice--alert">
       Sorry, there was a problem saving your responses.<br>
       Please check the fields below.
@@ -179,9 +178,9 @@
       </div>
     </div>
 
-    <div class="actions margin--t-xlarge">
-      <p>
-        <%= f.submit "Save my responses", class: "button" %>
+    <div class="actions mt-8 submission-actions">
+      <p class="btn-wrapper">
+        <%= f.submit "Save my responses", class: "tw-green-btn cursor-pointer" %>
         or
         <%= link_to "cancel",
           send(
@@ -192,4 +191,3 @@
       </p>
     </div>
   <% end %>
-</div>
