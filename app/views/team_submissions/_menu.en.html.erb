@@ -8,7 +8,7 @@
           send("#{current_scope}_team_submission_section_path", submission, section: :start) %>
       </h1>
 
-      <ol class="list--reset">
+      <ol class="ml-4">
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
@@ -20,7 +20,6 @@
             team_submission_id: submission.id
           ) %>
         </li>
-
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
@@ -36,6 +35,8 @@
       </ol>
     </div>
 
+    <%= render 'application/templates/tw_thick_rule'%>
+
     <div class="progress__section">
       <h1>
         <%= link_to "Ideation",
@@ -46,7 +47,7 @@
           ) %>
       </h1>
 
-      <ol class="list--reset">
+      <ol class="ml-4">
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
@@ -119,6 +120,8 @@
       </ol>
     </div>
 
+    <%= render 'application/templates/tw_thick_rule'%>
+
     <div class="progress__section">
       <h1>
         <%= link_to "Pitch",
@@ -130,7 +133,7 @@
         %>
       </h1>
 
-      <ol class="list--reset">
+      <ol class="ml-4">
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
@@ -161,6 +164,8 @@
       </ol>
     </div>
 
+    <%= render 'application/templates/tw_thick_rule'%>
+
     <div class="progress__section">
       <h1>
         <%= link_to "Technical Elements",
@@ -172,7 +177,7 @@
         %>
       </h1>
 
-      <ol class="list--reset">
+      <ol class="ml-4">
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
@@ -203,6 +208,8 @@
       </ol>
     </div>
 
+    <%= render 'application/templates/tw_thick_rule'%>
+
     <div class="progress__section">
       <h1>
         <%= link_to "Entrepreneurship",
@@ -214,7 +221,7 @@
         %>
       </h1>
 
-      <ol class="list--reset">
+      <ol class="ml-4">
         <li>
           <small>
             junior and senior division teams only:
@@ -234,5 +241,21 @@
         </li>
       </ol>
     </div>
-  <% end %>
+
+    <%= render 'application/templates/tw_thick_rule'%>
+
+    <div class="progress__section">
+      <h1>
+       Submit
+      </h1>
+
+      <ol class="ml-4">
+
+        <li>
+          <%= render "team_submissions/finalize", submission: @team_submission %>
+        </li>
+      </ol>
+    </div>
+
+<% end %>
 </div>
