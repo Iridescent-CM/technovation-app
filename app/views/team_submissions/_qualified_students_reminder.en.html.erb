@@ -4,7 +4,7 @@
     Every member of <%= team.name %> is qualified to compete. Well done!
 
     <%= link_to "what is this?", "#",
-      class: "small",
+      class: "small tw-link",
       data: {
         opens_modal: "explain_qualified_students_reminder",
       } %>
@@ -63,7 +63,7 @@
     A team that is qualified to compete has students, and every
     student on the team has finished these required steps:
 
-    <ul>
+    <ul class="list-disc ml-8">
       <li>Got their parent or guardian's permission to participate</li>
       <li>Has entered a location on their account</li>
       <li>Confirmed their email, if they changed it</li>
