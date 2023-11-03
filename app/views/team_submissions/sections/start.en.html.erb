@@ -7,20 +7,21 @@
   section: :ideation
 ) %>
 
-<div class="panel panel--left">
-  <h1 class="panel__heading">
+  <h1 class="text-xl">
     <%= Season.current.year %> Technovation Honor Code
   </h1>
-
   <%= render "team_submissions/honor_code" %>
-</div>
 
-  <%= render 'team_submissions/pieces/piece',
-             submission: @team_submission,
-             title: "Your Team Photo",
-             scope: current_scope,
-             attribute: :team_photo,
-             cta_when_empty: "Upload your team photo",
-             cta_when_filled: "Change your team photo" do %>
-    <%= image_tag @team.team_photo_url, class: "grid__cell-img filestack-team-photo" %>
-  <% end %>
+  <%= render 'application/templates/tw_thick_rule' %>
+
+  <div class="flex flex-col mx-auto justify-center">
+    <%= render 'team_submissions/pieces/piece',
+               submission: @team_submission,
+               title: "Your Team Photo",
+               scope: current_scope,
+               attribute: :team_photo,
+               cta_when_empty: "Upload your team photo",
+               cta_when_filled: "Change your team photo" do %>
+    <%= image_tag @team.team_photo_url, class: "w-full lg:w-1/4" %>
+    <% end %>
+  </div>

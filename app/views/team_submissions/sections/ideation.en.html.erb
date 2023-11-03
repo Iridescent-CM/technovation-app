@@ -22,6 +22,8 @@
   cta_when_empty: "Set your #{t("submissions.app")}'s name",
   cta_when_filled: "Change your #{t("submissions.app")}'s name" %>
 
+<%= render 'application/templates/tw_thick_rule'%>
+
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
   title: "Describe Your #{t("submissions.app").titlecase}",
@@ -33,6 +35,8 @@
   <%= simple_format(@team_submission.app_description) %>
 <% end %>
 
+<%= render 'application/templates/tw_thick_rule'%>
+
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
   title: "Learning Journey",
@@ -43,6 +47,8 @@
 
   <%= simple_format(@team_submission.learning_journey) %>
 <% end %>
+
+<%= render 'application/templates/tw_thick_rule'%>
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
@@ -60,6 +66,8 @@
     <% end %>
   </div>
 <% end %>
+
+<%= render 'application/templates/tw_thick_rule'%>
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
