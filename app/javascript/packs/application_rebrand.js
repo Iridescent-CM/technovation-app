@@ -14,3 +14,4 @@ import "../stylesheets/pagination.css";
 import "../stylesheets/result_card.css";
 import "../stylesheets/filestack.css";
 import "../stylesheets/tooltip.css";
+import "../stylesheets/submissions.css";

@@ -1,0 +1,23 @@
+#submission-container label{
+    @apply font-rubik text-base mb-4;
+}
+
+#submission-container input{
+    @apply mb-0;
+}
+
+#submission-container .tw-green-btn {
+    @apply mr-0;
+}
+
+.submission-actions{
+    @apply flex flex-col items-end mt-4;
+}
+
+#submission-container .button{
+    @apply w-auto px-4 py-2 rounded bg-tg-green text-white font-medium hover:bg-tg-dark-green hover:text-gray-50 hover:cursor-pointer;
+}
+
+#submission-container .btn-wrapper{
+    @apply flex items-center gap-3 justify-end;
+}
