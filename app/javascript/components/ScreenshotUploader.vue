@@ -7,7 +7,7 @@
         They should help judges better understand your ideas.
       </p>
 
-      <button @click="uploadFile" class="button button--small">
+      <button @click="uploadFile" class="tw-green-btn small">
         + Add {{ prefix }} {{ maxFiles }} {{ object }}
       </button>
     </template>
