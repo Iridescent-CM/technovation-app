@@ -8,9 +8,9 @@
 
 <div
   id="<%= dom_id(submission) %>_<%= attribute %>"
-  class="panel submission-piece <%= completion_css_class %>"
+  class="my-8" <%= completion_css_class %>
 >
-  <h3 class="panel--heading submission-piece--name"><%= title %></h3>
+  <h3 class="font-semibold mb-4"><%= title %></h3>
 
   <div
     class="
@@ -19,29 +19,32 @@
       <%= completion_css_class %>
     "
   >
-    <% if value_is_complete %>
-      <% if yield.blank? %>
-        <p class="value"><%= submission.public_send(attribute) %></p>
+    <div class="ml-8">
+      <% if value_is_complete %>
+        <% if yield.blank? %>
+          <p class="value"><%= submission.public_send(attribute) %></p>
+        <% else %>
+          <%= yield %>
+        <% end %>
+
+        <div class="mt-4">
+          <%= link_to cta_when_filled,
+            send(base_path_name, submission, piece: attribute),
+            { class: "green-btn small" }.merge(link_options) %>
+        </div>
       <% else %>
-        <%= yield %>
+        <p class="scent">
+          There's nothing here yet, but your team can
+          update this part whenever it's ready!
+        </p>
+
+        <div class="panel--footer">
+          <%= link_to cta_when_empty,
+            send(base_path_name, submission, piece: attribute),
+            { class: "tw-gray-btn small" }.merge(link_options) %>
+        </div>
       <% end %>
 
-      <div class="panel--footer">
-        <%= link_to cta_when_filled,
-          send(base_path_name, submission, piece: attribute),
-          { class: "button small secondary" }.merge(link_options) %>
-      </div>
-    <% else %>
-      <p class="scent">
-        There's nothing here yet, but your team can
-        update this part whenever it's ready!
-      </p>
-
-      <div class="panel--footer">
-        <%= link_to cta_when_empty,
-          send(base_path_name, submission, piece: attribute),
-          { class: "button small" }.merge(link_options) %>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
