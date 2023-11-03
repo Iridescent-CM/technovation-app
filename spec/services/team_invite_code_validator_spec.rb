@@ -69,6 +69,10 @@ describe TeamInviteCodeValidator do
           it "returns 'mentor' for the registration profile type" do
             expect(team_invite_code_validator.call.registration_profile_type).to eq("mentor")
           end
+
+          it "returns a success message mentioning they've been invited to join as a mentor" do
+            expect(team_invite_code_validator.call.success_message).to eq('You have been invited to join the team "ABCool Team" as a mentor!')
+          end
         end
       end
     end

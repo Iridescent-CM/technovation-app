@@ -11,6 +11,12 @@ class NewRegistrationController < ApplicationController
         if !invite.valid?
           redirect_to "/", error: "This invitation is no longer valid"
         end
+      elsif params[:team_invite_code].present?
+        invite = TeamInviteCodeValidator.new(team_invite_code: params[:team_invite_code]).call
+
+        if !invite.valid?
+          redirect_to "/", error: "This team invitation is no longer valid"
+        end
       else
         redirect_to "/"
       end
