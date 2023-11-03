@@ -38,7 +38,7 @@ class RegistrationInviteCodeValidator
       elsif invite.chapter_ambassador?
         return Result.new(
           valid?: true,
-          register_at_any_time?: invite.register_at_any_time?,
+          register_at_any_time?: true,
           registration_profile_type: "chapter_ambassador",
           success_message: "You have been invited to join Technovation Girls as a chapter ambassador!"
         )
