@@ -3,7 +3,7 @@
 <% end %>
 
 <!DOCTYPE html>
-<html id="<%= yield :html_id %>">
+<html>
   <head>
     <%= render 'meta' %>
 
@@ -18,8 +18,6 @@
     <%= render 'favicons' %>
 
     <%= stylesheet_link_tag determine_manifest %>
-
-    <%#= stylesheet_packs_with_chunks_tag "application" %>
 
     <%= yield :additional_css %>
 
