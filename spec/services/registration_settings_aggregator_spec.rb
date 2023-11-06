@@ -154,7 +154,7 @@ describe RegistrationSettingsAggregator do
             let(:mentor_registration_open) { true }
 
             it "sets an error message indicating that the invite is invalid, but registration is still open" do
-              expect(registration_settings_aggregator.call.error_message).to eq("Sorry, this invitation is no longer valid, but you can still register as one of the profile types below.")
+              expect(registration_settings_aggregator.call.error_message).to include("Sorry, this invitation is no longer valid, but you can still join Technovation")
             end
           end
 
@@ -213,7 +213,7 @@ describe RegistrationSettingsAggregator do
             let(:mentor_registration_open) { true }
 
             it "sets an error message indicating that the invite is invalid, but registration is still open" do
-              expect(registration_settings_aggregator.call.error_message).to eq("Sorry, this invitation is no longer valid, but you can still register as one of the profile types below.")
+              expect(registration_settings_aggregator.call.error_message).to include("Sorry, this invitation is no longer valid, but you can still join Technovation")
             end
           end
 
@@ -272,7 +272,7 @@ describe RegistrationSettingsAggregator do
             let(:judge_registration_open) { true }
 
             it "sets an error message indicating that the invite is invalid, but registration is still open" do
-              expect(registration_settings_aggregator.call.error_message).to eq("Sorry, this invitation is no longer valid, but you can still register as one of the profile types below.")
+              expect(registration_settings_aggregator.call.error_message).to include("Sorry, this invitation is no longer valid, but you can still join Technovation")
             end
           end
 
@@ -323,8 +323,8 @@ describe RegistrationSettingsAggregator do
           let(:judge_registration_open) { true }
 
           it "sets an error message indicating that the invite is invalid, but registration is still open" do
-            expect(registration_settings_aggregator.call.error_message).to eq("Sorry, this invitation is no longer valid, but you can still register as one of the profile types below.")
-          end
+            expect(registration_settings_aggregator.call.error_message).to include("Sorry, this invitation is no longer valid, but you can still join Technovation")
+        end
         end
 
         context "when all registration types are closed" do
@@ -399,7 +399,7 @@ describe RegistrationSettingsAggregator do
               let(:judge_registration_open) { true }
 
               it "sets an error message indicating that the invite is invalid, but registration is still open" do
-                expect(registration_settings_aggregator.call.error_message).to eq("Sorry, this invitation is no longer valid, but you can still register as one of the profile types below.")
+                expect(registration_settings_aggregator.call.error_message).to include("Sorry, this invitation is no longer valid, but you can still join Technovation")
               end
             end
 
@@ -453,7 +453,7 @@ describe RegistrationSettingsAggregator do
               let(:judge_registration_open) { true }
 
               it "sets an error message indicating that the invite is invalid, but registration is still open" do
-                expect(registration_settings_aggregator.call.error_message).to eq("Sorry, this invitation is no longer valid, but you can still register as one of the profile types below.")
+                expect(registration_settings_aggregator.call.error_message).to include("Sorry, this invitation is no longer valid, but you can still join Technovation")
               end
             end
 

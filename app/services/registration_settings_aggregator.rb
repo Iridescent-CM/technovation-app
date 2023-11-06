@@ -53,7 +53,7 @@ class RegistrationSettingsAggregator
       registration_settings.success_message = validator_response.success_message
       registration_settings.error_message = ""
     elsif any_registration_types_open?
-      registration_settings.error_message = "Sorry, this invitation is no longer valid, but you can still register as one of the profile types below."
+      registration_settings.error_message = "Sorry, this invitation is no longer valid, but you can still join Technovation as a #{enabled_registration_types.to_sentence(two_words_connector: " or ", last_word_connector: ", or ")} below."
     else
       registration_settings.error_message = validator_response.error_message
     end
@@ -74,7 +74,7 @@ class RegistrationSettingsAggregator
       registration_settings.success_message = validator_response.success_message
       registration_settings.error_message = ""
     elsif any_registration_types_open?
-      registration_settings.error_message = "Sorry, this invitation is no longer valid, but you can still register as one of the profile types below."
+      registration_settings.error_message = "Sorry, this invitation is no longer valid, but you can still join Technovation as a #{enabled_registration_types.to_sentence(two_words_connector: " or ", last_word_connector: ", or ")} below."
     else
       registration_settings.error_message = validator_response.error_message
     end
@@ -96,10 +96,26 @@ class RegistrationSettingsAggregator
   end
 
   def any_registration_types_open?
-    registration_settings.student_registration_open? ||
-      registration_settings.parent_registration_open? ||
-      registration_settings.mentor_registration_open? ||
-      registration_settings.judge_registration_open?
+    enabled_registration_types.count >= 1
+  end
+
+  def enabled_registration_types
+    enabled_registration_types = []
+
+    if season_toggles.student_registration_open?
+      enabled_registration_types << "student"
+      enabled_registration_types << "parent"
+    end
+
+    if season_toggles.mentor_registration_open?
+      enabled_registration_types << "mentor"
+    end
+
+    if season_toggles.judge_registration_open?
+      enabled_registration_types << "judge"
+    end
+
+    enabled_registration_types
   end
 
   def disabled_registration_types
