@@ -69,6 +69,8 @@ class RegistrationSettingsAggregator
         open_registration_for("parent")
       when "mentor"
         open_registration_for("mentor")
+
+        registration_settings.invited_registration_profile_type = "mentor"
       end
 
       registration_settings.success_message = validator_response.success_message
