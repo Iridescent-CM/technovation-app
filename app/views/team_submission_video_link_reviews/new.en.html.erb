@@ -1,49 +1,44 @@
-<% video_link_text = @method == :demo_video_link ? "#{t("submissions.demo_video")} link" : @method.to_s.humanize %>
+<% video_link_text = @method == :demo_video_link ? "#{t("submissions.demo_video")} link" : @method %>
+<% provide :title, "Review your #{video_link_text.to_s.humanize }" %>
 
-<div class="panel">
-  <h3 class="panel--heading">
-    Review your <%= video_link_text %>
-  </h3>
+<%= form_with(
+  model: @team_submission,
+  url: send("#{current_scope}_team_submission_video_link_review_path", @team_submission),
+  local: true
+) do |f| %>
+  <%= hidden_field_tag :piece, @method %>
+  <%= hidden_field_tag :value, @review_value %>
 
-  <%= form_with(
-    model: @team_submission,
-    url: send("#{current_scope}_team_submission_video_link_review_path", @team_submission),
-    local: true
-  ) do |f| %>
-    <%= hidden_field_tag :piece, @method %>
-    <%= hidden_field_tag :value, @review_value %>
+  <div class="field">
+    <%=raw @team_submission.embed_code(@method, @review_value) %>
+  </div>
 
-    <div class="field">
-      <%=raw @team_submission.embed_code(@method, @review_value) %>
-    </div>
+  <div class="flash flash--info">
+    <p class="m-0">
+      Please make sure your video's sharing settings are public or unlisted!
+      If it is private, judges will not be able to view it,
+      and you may lose points or not be judged at all.
+    </p>
+    <p class="mb-0">
+      Review the area above this message.
+      If there is a problem with viewing your video,
+      you should GO BACK and fix the <%= video_link_text %>
+    </p>
+  </div>
 
-    <div class="flash flash--info">
-      <p class="margin--none">
-        Please make sure your video's sharing settings are public or unlisted!
-        If it is private, judges will not be able to view it,
-        and you may lose points or not be judged at all.
-      </p>
-      <p class="margin--b-none">
-        Review the area above this message.
-        If there is a problem with viewing your video,
-        you should GO BACK and fix the <%= video_link_text %>
-      </p>
-    </div>
+  <div class="actions submission-actions">
+    <p>
+      <%= f.submit "Save",
+        class: VideoUrl.new(@review_value).valid? ? "button" : "button disabled"
+      %>
 
-    <div class="actions">
-      <p>
-        <%= f.submit "Save",
-          class: VideoUrl.new(@review_value).valid? ? "button" : "button disabled"
-        %>
-
-        or
-        <%= link_to "go back",
-          send("edit_#{current_scope}_team_submission_path",
-            @team_submission,
-            piece: @method,
-            value: @review_value
-          ) %>
-      </p>
-    </div>
-  <% end %>
-</div>
+      or
+      <%= link_to "go back",
+        send("edit_#{current_scope}_team_submission_path",
+          @team_submission,
+          piece: @method,
+          value: @review_value
+        ) %>
+    </p>
+  </div>
+<% end %>
