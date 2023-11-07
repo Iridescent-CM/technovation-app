@@ -37,10 +37,6 @@ RSpec.feature "Student team submissions" do
     expect(current_path).to eq(
       student_team_submission_section_path(TeamSubmission.last)
     )
-    expect(page).to have_link(
-      "My Submission",
-      href: student_team_submission_path(TeamSubmission.last)
-    )
   end
 
   scenario "Start the submission from the table of contents" do
@@ -132,7 +128,6 @@ RSpec.feature "Student team submissions" do
       date_of_birth: senior_dob
     })
 
-    click_link "My Submission"
     click_link "Entrepreneurship"
 
     expect(page).to have_link(
