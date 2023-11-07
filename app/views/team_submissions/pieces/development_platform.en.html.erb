@@ -1,15 +1,12 @@
 <% embedded ||= false %>
+<% provide :title, "Submission Type" %>
 
-<div class="<%= 'panel' if !embedded %>">
+<div>
   <% if embedded %>
     <p>
       To upload your technical work,
       we need to know about your development platform first.
     </p>
-  <% else %>
-    <h3 class="panel--heading">
-      Submission Type
-    </h3>
   <% end %>
 
   <p class="scent scent--strong">
@@ -108,7 +105,7 @@
         <p class="hint">
           To get the URL to your Thunkable Project page, go to "Share" and select "Project Details Page."
           <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-"
-             target="_blank">For more information, go here.</a>
+             target="_blank" class="tw-link">For more information, go here.</a>
         </p>
       </div>
 
@@ -120,10 +117,10 @@
       </div>
     </div>
 
-    <div class="actions">
-      <p>
+    <div class="actions submission-actions">
+      <p class="btn-wrapper">
         <%= f.submit "Save",
-          class: "button" %>
+          class: "tw-green-btn cursor-pointer" %>
         or
         <%= link_to "cancel",
         send("#{current_scope}_team_submission_section_path",

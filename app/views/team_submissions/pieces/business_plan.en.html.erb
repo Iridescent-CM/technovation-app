@@ -1,11 +1,4 @@
-<div class="panel">
-  <h3 class="panel--heading">
-    <% if @team.junior? %>
-      User Adoption Plan
-    <% else %>
-      Business plan
-    <% end %>
-  </h3>
+<% provide :title, @team.junior? ? "User Adoption Plan" : "Business Plan" %>
 
   <% if @team.senior? || @team.junior? %>
     <% if @team_submission.business_plan_url_complete? %>
@@ -35,7 +28,7 @@
         <%= f.label :business_plan, "Upload your team's plan", for: :team_submission_business_plan %>
         <%= f.file_field :business_plan, id: "team_submission_business_plan" %>
         <%= f.hidden_field :business_plan_cache %>
-        <%= f.submit "Upload", class: "button" %>
+        <%= f.submit "Upload", class: "tw-green-btn" %>
       </div>
 
     <% end %>
@@ -47,10 +40,10 @@
           @team_submission,
           section: @submission_section
         ) ,
-          class: "button" %>
+          class: "tw-green-btn" %>
     </p>
 
-    <p class="after-dropzone-save">
+    <p class="after-dropzone-save flex flex-row justify-end">
       <%= link_to "cancel",
         send(
           "#{current_scope}_team_submission_section_path",
@@ -73,7 +66,8 @@
       <%= link_to(
         "here",
         "https://docs.google.com/document/d/1VWqsYbForZO5PERUUwCwkUUmlijl_pkAOvGg3WVkwSs/edit?usp=sharing",
-        target: "_blank"
+        target: "_blank",
+        class: "tw-link"
       ) %>
   <% end %>
     </p>
@@ -106,4 +100,3 @@
       )
     %>
   <% end %>
-</div>

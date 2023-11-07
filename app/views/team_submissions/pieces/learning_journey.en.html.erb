@@ -1,53 +1,52 @@
-<div class="panel">
-  <h3 class="panel--heading">Learning Journey</h3>
+<% provide :title, "Learning Journey" %>
 
-  <%= form_with(
+<%= form_with(
     model: @team_submission,
     url: send("#{current_scope}_team_submission_path"),
     local: true
   ) do |f| %>
     <%= hidden_field_tag :piece, piece_name %>
 
-    <div class="field">
-      <%= f.label :app_description,
-        "Describe your learning journey in a few sentences (200 words or less)",
-        for: :team_submission_learning_journey %>
+  <div class="field">
+    <%= f.label :app_description,
+      "Describe your learning journey in a few sentences (200 words or less)",
+      for: :team_submission_learning_journey %>
 
-      <%= f.text_area :learning_journey,
-        id: :team_submission_learning_journey,
-        data: {
-          word_count: true,
-          word_count_limit: 200,
-        },
-        rows: 6 %>
+    <%= f.text_area :learning_journey,
+      id: :team_submission_learning_journey,
+      data: {
+        word_count: true,
+        word_count_limit: 200,
+      },
+      rows: 6 %>
 
-      <p class="scent scent--strong">
-        What did your team learn (technically or otherwise)?
-        How did you overcome challenges? What resources did you use to build on (examples, tutorials, open source code)?
-      </p>
-    </div>
+    <p class="scent scent--strong">
+      What did your team learn (technically or otherwise)?
+      How did you overcome challenges? What resources did you use to build on (examples, tutorials, open source code)?
+    </p>
+  </div>
 
-    <div class="actions">
-      <p>
-        <%= f.submit "Save", class: "button" %>
-        or
-        <%= link_to "cancel",
-          send(
-            "#{current_scope}_team_submission_section_path",
-            @team_submission,
-            section: @submission_section
-          ) %>
-      </p>
+  <div class="actions submission-actions">
+    <p class="btn-wrapper">
+      <%= f.submit "Save", class: "tw-green-btn cursor-pointer" %>
+      or
+      <%= link_to "cancel",
+        send(
+          "#{current_scope}_team_submission_section_path",
+          @team_submission,
+          section: @submission_section
+        ) %>
+    </p>
 
-      <p class="scent word-counter">
-        Number of words typed:
-        <br />
-        <span class="word-count__total word-count--plenty-remaining">
-          0
-        </span>
-        /
-        <span class="word-count__limit"></span>
-      </p>
-    </div>
-  <% end %>
-</div>
+    <p class="scent word-counter">
+      Number of words typed:
+      <br />
+      <span class="word-count__total word-count--plenty-remaining">
+        0
+      </span>
+      /
+      <span class="word-count__limit"></span>
+    </p>
+  </div>
+<% end %>
+
