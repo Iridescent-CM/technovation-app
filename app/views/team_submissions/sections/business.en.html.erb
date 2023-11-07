@@ -10,13 +10,12 @@
 <div
   id="<%= dom_id(@team_submission) %>_business_plan"
   class="
-    panel
     submission-piece
     business_plan
     <%= completion_css(@team_submission, :business_plan_url) %>
   "
 >
-  <h3 class="panel--heading">
+  <h3>
     <% if @team.junior? %>
       User Adoption Plan
     <% else %>
@@ -26,7 +25,7 @@
 
   <% if @team.senior? || @team.junior? %>
     <% if @team_submission.business_plan_url_complete? %>
-      <p>
+      <p class="mb-4">
         Your team has uploaded:
         <%= link_to @team_submission.business_plan_filename,
           @team_submission.business_plan_url %>
@@ -39,7 +38,7 @@
             @team_submission,
             piece: :business_plan
           ),
-          class: "button secondary small" %>
+          class: "tw-green-btn cursor-pointer small" %>
       </div>
     <% else %>
       <p class="scent">
@@ -54,7 +53,7 @@
             @team_submission,
             piece: :business_plan
           ),
-          class: "button small" %>
+          class: "tw-gray-btn small" %>
       </div>
     <% end %>
   <% else %>

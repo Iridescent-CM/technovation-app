@@ -1,6 +1,3 @@
-<% provide :root_path, send("#{current_scope}_dashboard_path") %>
-<% provide :menu, render("#{current_scope}/navigation/global_nav") %>
-
 <% if current_session.authenticated? %>
   <% provide :session_bar, render("layouts/session_bar") %>
 <% end %>
@@ -22,6 +19,8 @@
 
     <%= stylesheet_link_tag determine_manifest %>
 
+    <%= yield :additional_css %>
+
     <%= filestack_js_include_tag %>
     <%= filestack_js_init_tag %>
 
@@ -29,83 +28,71 @@
       'data-turbolinks-track' => true %>
 
     <%= javascript_packs_with_chunks_tag "application", "submissions" %>
+    <%= javascript_packs_with_chunks_tag "application_rebrand" %>
+    <%= stylesheet_pack_tag 'application_rebrand', 'data-turbolinks-track': 'reload' %>
 
     <%= yield :js %>
   </head>
 
   <body>
-    <div class="header-container">
+    <div>
       <%= yield :session_bar %>
-
-      <%= render 'application/navigation' %>
-
-      <%= yield :subnav %>
+      <%= render 'application_rebrand/global_nav' %>
+      <%= yield :main_header %>
     </div>
 
-    <div class="main-container">
+    <div id="main-content" class="main-container bg-white pt-8">
       <%= render 'application/flash_messages' %>
 
-      <div class="grid">
-        <div class="grid__col-3 col--sticky-parent">
-          <div class="col--sticky-spacer">
-            <div class="submission__sidebar col--sticky">
-              <%= render "team_submissions/menu",
-                submission: @team_submission,
-                embedded: true %>
+      <%= yield :notifications %>
+
+      <div class="container mx-auto" id="submission-container">
+        <div class="flex flex-col lg:flex-row gap-6">
+          <div class="w-full lg:w-1/3">
+            <div class="h-auto mb-10 lg:mb-auto rounded-md border-solid border-4 border-energetic-blue">
+              <div class="bg-energetic-blue text-white p-2">
+                <p class="font-bold">Submission Checklist</p>
+              </div>
+              <div class="p-4">
+                <%= render "team_submissions/menu",
+                           submission: @team_submission,
+                           embedded: true %>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="grid__col-6 submission-pieces col--sticky-parent">
-          <div class="col--sticky-spacer">
-            <div class="col--sticky">
-              <h1><%= yield :title %></h1>
+          <%= render layout: "application/templates/dashboards/energetic_container",
+                     locals: {
+                       heading: yield(:title),
+                       class: "lg:w-auto"
+                     } do %>
 
-              <%= yield %>
+            <%= yield %>
 
-              <nav class="submission-nav">
-                <% if content_for?(:back_link) %>
-                  <%= link_to "Back: #{yield(:back_link_txt)}",
-                    yield(:back_link),
-                    data: { turbolinks: false },
-                    class: "
-                      submission-nav__back-btn
-                      button
-                      button--small
-                    " %>
-                <% else %>
-                  <span></span>
-                <% end %>
+            <nav class="submission-nav pt-8 flex flex-row space-between">
+              <% if content_for?(:back_link) %>
+                <%= link_to "Back: #{yield(:back_link_txt)}",
+                            yield(:back_link),
+                            data: { turbolinks: false },
+                            class: "submission-nav__back-btn w-auto px-4 py-2 rounded bg-tg-green text-white font-medium0"
+                %>
+              <% else %>
+                <span></span>
+              <% end %>
 
-                <% if content_for?(:next_link) %>
-                  <%= link_to "Next: #{yield(:next_link_txt)}",
-                    yield(:next_link),
-                    data: { turbolinks: false },
-                    class: "
-                      submission-nav__next-btn
-                      button
-                      button--small
-                    " %>
-                <% end %>
-              </nav>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid__col-3 col--sticky-parent">
-          <div class="col--sticky-spacer">
-            <div class="col--sticky">
-              <%= render "team_submissions/sidebar_b",
-                submission: @team_submission %>
-            </div>
-          </div>
+              <% if content_for?(:next_link) %>
+                <%= link_to "Next: #{yield(:next_link_txt)}",
+                            yield(:next_link),
+                            data: { turbolinks: false },
+                            class: "submission-nav__next-btn w-auto px-4 py-2 rounded bg-tg-green text-white font-medium" %>
+              <% end %>
+            </nav>
+          <% end %>
         </div>
       </div>
 
-      <%= render 'application/footer' %>
+     <%= render 'application_rebrand/footer' %>
     </div>
-
-    <%= render 'application/queued_jobs' %>
 
     <% if ENV.fetch("GOOGLE_ANALYTICS_ID", nil).present? %>
       <script>
@@ -114,7 +101,7 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '<% ENV.fetch("GOOGLE_ANALYTICS_ID") %>', 'auto');
+        ga('create', '<%= ENV.fetch("GOOGLE_ANALYTICS_ID") %>', 'auto');
         ga('send', 'pageview');
       </script>
     <% end %>

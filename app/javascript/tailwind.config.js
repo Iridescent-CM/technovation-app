@@ -37,6 +37,9 @@ module.exports = {
           },
         },
       },
+      fontFamily: {
+        rubik: ["Rubik", "sans-serif"],
+      },
     },
   },
   plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
