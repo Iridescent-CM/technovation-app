@@ -1,7 +1,8 @@
-<div class="panel">
-  <h3 class="panel--heading">
-    Team Photo
-  </h3>
-  <%= image_tag @team.team_photo_url, class: "thumbnail--mdlg filestack-team-photo" %>
-  <%= render "filestack_uploads/team_photo_upload" %>
+<% provide :title, "Team Photo" %>
+
+<div class="flex flex-col">
+  <%= image_tag @team.team_photo_url, class: "thumbnail--mdlg filestack-team-photo mx-auto" %>
+  <div class="mx-auto">
+    <%= render "filestack_uploads/team_photo_upload" %>
+  </div>
 </div>

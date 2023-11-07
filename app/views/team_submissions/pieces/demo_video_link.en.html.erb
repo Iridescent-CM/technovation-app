@@ -1,7 +1,5 @@
-<div class="panel">
-  <h3 class="panel--heading">
-    <%= t("submissions.demo_video").titleize %>
-  </h3>
+<% provide :title, t("submissions.demo_video").titleize %>
+
 
   <%= form_with(
     model: @team_submission,
@@ -17,9 +15,9 @@
         value: params[:value] || @team_submission.send(piece_name) %>
     </div>
 
-    <div class="actions">
-      <p>
-        <%= f.submit "Next", class: "button" %>
+    <div class="actions submission-actions">
+      <p class="btn-wrapper">
+        <%= f.submit "Next", class: "tw-green-btn cursor-pointer" %>
         or
         <%= link_to "cancel",
         send("#{current_scope}_team_submission_section_path", @team_submission, section: @submission_section) %>
@@ -33,7 +31,8 @@
     <%= link_to(
       "Beginner",
       "https://beginner.technovationchallenge.org/path-player?courseid=beginners&unit=beginners_1630333562723_0Unit",
-      target: "_blank"
+      target: "_blank",
+      class: "tw-link"
     ) %>
 
     or
@@ -41,9 +40,9 @@
     <%= link_to(
       "Junior/Senior",
       "https://technovationchallenge.org/curriculum/pitch-3-outline-your-demo-video/",
-      target: "_blank"
+      target: "_blank",
+      class: "tw-link"
     ) %>
 
     curriculum units.
   </p>
-</div>

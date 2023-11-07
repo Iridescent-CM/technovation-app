@@ -1,9 +1,6 @@
-<div class="panel">
-  <h3 class="panel--heading">
-    Technical Additions
-  </h3>
+<% provide :title, "Technical Additions" %>
 
-  <% if @team_submission.source_code_url_complete? %>
+<% if @team_submission.source_code_url_complete? %>
     <div class="field__existing-value">
       Your team has previously uploaded
       <%= link_to @team_submission.source_code_filename,
@@ -27,7 +24,10 @@
           <%= f.text_field :source_code_external_url %>
         </p>
 
-        <%= f.submit "Save", class: "button" %>
+      <div class="flex flex-row justify-end">
+        <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-4" %>
+      </div>
+
       <% end %>
     <% elsif @team_submission.submission_type == "Mobile App" %>
       <p>Mobile App source code should be submitted depending on the language used:</p>
@@ -49,7 +49,7 @@
       <% end %>
     <% elsif @team_submission.submission_type == "AI Project" %>
       <p>AI Projects should include 1 zip file that contains:</p>
-      <ul>
+      <ul class="list-disc ml-8">
         <li>Screenshot of dataset training (ML4Kids, TeachableMachine, App Inventor, etc.) or spreadsheet or link to images/sounds folder</li>
         <li>Picture(s) of prototype (cardboard model, drawings, devices)</li>
         <li>(For online inventions) Any link with demo login information</li>
@@ -65,15 +65,14 @@
           Sorry, you tried to upload an invalid file type.
         </div>
 
-        <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
+        <%= f.submit "Upload", class: "tw-green-btn source-code-uploader__submit-button" %>
       <% end %>
     <% end %>
 
     <p class="grid__cell--padding-sm-y">
       For help submitting your technical work, check
-      <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-" target="_blank">
+      <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-" target="_blank" class="tw-link">
         here
       </a>.
     </p>
   <% end %>
-</div>
