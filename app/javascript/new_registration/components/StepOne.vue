@@ -2,36 +2,23 @@
   <div id="step-one">
     <ContainerHeader header-text="How will you participate?" />
     <div id="profile-type" class="form-wrapper">
-      <div v-if="registrationInvite.isValid == false">
+      <div v-if="this.errorMessage.length > 0">
         <div class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
           <p class="text-left text-rose-900">
-            <span v-if="anyDisabledProfileTypes == false">
-              This invitation is no longer valid, but you can still register below.
-            </span>
-            <span v-else>
-              This invitation is no longer valid.
-            </span>
+            {{ this.errorMessage }}
           </p>
         </div>
       </div>
 
-      <div v-if="anyDisabledProfileTypes && registrationInvite.canRegisterAtAnyTime == false" class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
-        <p class="text-left text-rose-900">
-          Registration is currently closed for {{ this.disabledProfileTypes }}.
-        </p>
-      </div>
+      <div v-if="(this.inviteCode != null || this.teamInviteCode != null) && this.successMessage.length > 0">
+        <h2 class="registration-title">
+          Welcome to Technovation Girls!
+        </h2>
 
-      <div v-if="Object.keys(registrationInvite).length !== 0">
-        <div v-if="registrationInvite.isValid == true">
-          <h2 class="registration-title">
-            Welcome to Technovation Girls!
-          </h2>
-
-          <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
-            <p class="text-left">
-              You have been invited to join Technovation Girls as a <strong>{{ registrationInvite.friendlyProfileType }}</strong>!
-            </p>
-          </div>
+        <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
+          <p class="text-left">
+            {{ this.successMessage }}
+          </p>
         </div>
       </div>
 
@@ -81,42 +68,35 @@ export default {
   data() {
     return {
       values: {},
-      registrationInvite: {},
       profileTypes: [],
       isStudentRegistrationOpen: false,
+      isParentRegistrationOpen: false,
       isMentorRegistrationOpen: false,
       isJudgeRegistrationOpen: false,
-      anyDisabledProfileTypes: false,
-      disabledProfileTypes: '',
+      isChapterAmbassadorRegistrationOpen: false,
+      invitedRegistrationProfileType: '',
+      successMessage: '',
+      errorMessage: '',
+      inviteCode:  new URLSearchParams(document.location.search).get('invite_code'),
+      teamInviteCode: new URLSearchParams(document.location.search).get('team_invite_code'),
       hasValidationErrors: true
     }
   },
   methods: {
-    async getRegistrationInvite() {
-      const inviteCode = new URLSearchParams(document.location.search).get('invite_code')
-
-      if (inviteCode == null) {
-        return
-      }
-
-      try {
-        const response = await axios.get(`/api/registration/invites/${inviteCode}`)
-
-        this.registrationInvite = response.data
-      }
-      catch(error) {
-        airbrake.notify({
-          error: `[REGISTRATION] Error getting registration invite details - ${error.response.data}`
-        })
-      }
-    },
     async getRegistrationSettings() {
       try {
-        const response = await axios.get('/api/registration/settings')
+        const response = await axios.get('/api/registration/settings', {
+          params: { invite_code: this.inviteCode, team_invite_code: this.teamInviteCode }
+        })
 
         this.isStudentRegistrationOpen = response.data.isStudentRegistrationOpen
+        this.isParentRegistrationOpen = response.data.isParentRegistrationOpen
         this.isMentorRegistrationOpen = response.data.isMentorRegistrationOpen
         this.isJudgeRegistrationOpen = response.data.isJudgeRegistrationOpen
+        this.isChapterAmbassadorRegistrationOpen = response.data.isChapterAmbassadorRegistrationOpen
+        this.invitedRegistrationProfileType = response.data.invitedRegistrationProfileType
+        this.successMessage = response.data.successMessage
+        this.errorMessage = response.data.errorMessage
       }
       catch(error) {
         airbrake.notify({
@@ -127,61 +107,34 @@ export default {
     setupProfileTypes() {
       if (this.isStudentRegistrationOpen) {
         this.profileTypes.push(this.studentProfileType())
-        this.profileTypes.push(this.parentProfileType())
       }
-      else if (this.registrationInvite.isValid && this.registrationInvite.profileType == 'student' && this.registrationInvite.canRegisterAtAnyTime == true) {
-        this.profileTypes.push(this.studentProfileType())
-      }
-      else if (this.registrationInvite.isValid && this.registrationInvite.profileType == 'parent' && this.registrationInvite.canRegisterAtAnyTime == true) {
+
+      if (this.isParentRegistrationOpen) {
         this.profileTypes.push(this.parentProfileType())
       }
 
-
-      if (this.isMentorRegistrationOpen ||
-        (this.registrationInvite.isValid && this.registrationInvite.profileType == 'mentor' && this.registrationInvite.canRegisterAtAnyTime == true)) {
+      if (this.isMentorRegistrationOpen) {
         this.profileTypes.push(this.mentorProfileType())
       }
 
-      if (this.isJudgeRegistrationOpen ||
-        (this.registrationInvite.isValid && this.registrationInvite.profileType == 'judge' && this.registrationInvite.canRegisterAtAnyTime == true)) {
+      if (this.isJudgeRegistrationOpen) {
         this.profileTypes.push(this.judgeProfileType())
       }
 
-      if (this.registrationInvite.isValid && this.registrationInvite.profileType == 'chapter_ambassador') {
+      if (this.isChapterAmbassadorRegistrationOpen) {
         this.profileTypes.push(this.chapterAmbassadorProfileType())
       }
     },
-    setupDisabledProfileTypes() {
-      let disabledProfiles = []
-
-      if (!this.isStudentRegistrationOpen) {
-        disabledProfiles.push('students')
-      }
-
-      if (!this.isMentorRegistrationOpen) {
-        disabledProfiles.push('mentors')
-      }
-
-      if (!this.isJudgeRegistrationOpen) {
-        disabledProfiles.push('judges')
-      }
-
-      if (disabledProfiles.length > 0) {
-        this.anyDisabledProfileTypes = true
-      }
-
-      this.disabledProfileTypes = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(disabledProfiles)
-    },
     preSelectInvitedProfileType() {
-      document.getElementById(`${this.registrationInvite.profileType}`).click()
-      document.getElementById(`${this.registrationInvite.profileType}`).checked = true
+      document.getElementById(`${this.invitedRegistrationProfileType}`).click()
+      document.getElementById(`${this.invitedRegistrationProfileType}`).checked = true
 
       this.hasValidationErrors = false
     },
     disableNonInvitedProfileTypes() {
-      const profileTypeRadioButtons = document.querySelectorAll(`#profile-type input[type="radio"]:not(#${this.registrationInvite.profileType}`)
-      const profileTypeImages = document.querySelectorAll(`#profile-type img:not(.${this.registrationInvite.profileType})`)
-      const profileTypeText = document.querySelectorAll(`#profile-type span:not(.${this.registrationInvite.profileType})`)
+      const profileTypeRadioButtons = document.querySelectorAll(`#profile-type input[type="radio"]:not(#${this.invitedRegistrationProfileType}`)
+      const profileTypeImages = document.querySelectorAll(`#profile-type img:not(.${this.invitedRegistrationProfileType})`)
+      const profileTypeText = document.querySelectorAll(`#profile-type span:not(.${this.invitedRegistrationProfileType})`)
 
       profileTypeRadioButtons.forEach(profileType => {
         profileType.disabled = true
@@ -232,9 +185,7 @@ export default {
       }
     },
     displayDivisionCutoffDescription() {
-      return (this.isStudentRegistrationOpen && Object.keys(this.registrationInvite).length === 0) ||
-        (this.registrationInvite.isValid == true && this.registrationInvite.profileType == 'student') ||
-        (this.registrationInvite.isValid == false && !this.anyDisabledProfileTypes)
+      return (this.isStudentRegistrationOpen)
     }
   },
   computed: {
@@ -248,12 +199,10 @@ export default {
     }
   },
   async created() {
-    await this.getRegistrationInvite()
     await this.getRegistrationSettings()
     await this.setupProfileTypes()
-    await this.setupDisabledProfileTypes()
 
-    if (this.registrationInvite.isValid == true) {
+    if (this.invitedRegistrationProfileType.length > 0) {
       this.preSelectInvitedProfileType()
       this.disableNonInvitedProfileTypes()
     }

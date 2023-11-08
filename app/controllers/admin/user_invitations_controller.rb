@@ -11,6 +11,10 @@ module Admin
     end
 
     def create
+      if user_invitation_params[:profile_type] == "chapter_ambassador"
+        user_invitation_params.merge(register_at_any_time: true)
+      end
+
       @user_invitation = UserInvitation.new(user_invitation_params.merge({invited_by_id: current_account.id}))
 
       if @user_invitation.save

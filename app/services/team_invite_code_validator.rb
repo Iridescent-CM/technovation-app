@@ -1,4 +1,4 @@
-class TeamInviteValidator
+class TeamInviteCodeValidator
   def initialize(team_invite_code:, important_dates: ImportantDates)
     @team_invite_code = team_invite_code
     @important_dates = important_dates
@@ -11,21 +11,29 @@ class TeamInviteValidator
         (important_dates.official_start_of_season..important_dates.submission_deadline).cover?(Date.today)
 
       registration_profile_type = case invite.invitee_type
-      when "StudentProfile"
+      when "StudentProfile", nil
+        success_message = "You have been invited to join the team \"#{invite.team_name}\"!"
+
         "student"
       when "MentorProfile"
+        success_message = "You have been invited to join the team \"#{invite.team_name}\" as a mentor!"
+
         "mentor"
       end
 
-      Result.new(valid?: true, registration_profile_type: registration_profile_type)
+      Result.new(
+        valid?: true,
+        registration_profile_type: registration_profile_type,
+        success_message: success_message
+      )
     else
-      Result.new(valid?: false, registration_profile_type: "")
+      Result.new(valid?: false, registration_profile_type: "", error_message: "This invite is no longer valid.")
     end
   end
 
   private
 
-  Result = Struct.new(:valid?, :registration_profile_type, keyword_init: true)
+  Result = Struct.new(:valid?, :registration_profile_type, :success_message, :error_message, keyword_init: true)
 
   attr_reader :team_invite_code, :important_dates
 end

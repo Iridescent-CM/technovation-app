@@ -79,7 +79,7 @@ RSpec.describe "Using registration invite codes", :js do
           it "does not allow a #{item[:friendly_profile_type]} to use the invite code again" do
             visit signup_path(invite_code: registration_invite.admin_permission_token)
 
-            expect(page).to have_content("This invitation is no longer valid")
+            expect(page).to have_content("invitation is no longer valid")
           end
         end
       end

@@ -1,8 +1,8 @@
 require "rails_helper"
 
-describe TeamInviteValidator do
-  let(:team_invite_validator) {
-    TeamInviteValidator.new(team_invite_code: team_invite_code, important_dates: important_dates)
+describe TeamInviteCodeValidator do
+  let(:team_invite_code_validator) {
+    TeamInviteCodeValidator.new(team_invite_code: team_invite_code, important_dates: important_dates)
   }
   let(:team_invite_code) { "987zyxw654tsrq321" }
   let(:important_dates) {
@@ -24,7 +24,8 @@ describe TeamInviteValidator do
     instance_double(TeamMemberInvite,
       pending?: pending_invite,
       inviter_type: inviter_profile_type,
-      invitee_type: invitee_profile_type)
+      invitee_type: invitee_profile_type,
+      team_name: "ABCool Team")
   end
 
   let(:pending_invite) { false }
@@ -47,14 +48,18 @@ describe TeamInviteValidator do
         end
 
         it "is valid" do
-          expect(team_invite_validator.call.valid?).to eq(true)
+          expect(team_invite_code_validator.call.valid?).to eq(true)
+        end
+
+        it "returns a success message" do
+          expect(team_invite_code_validator.call.success_message).to eq('You have been invited to join the team "ABCool Team"!')
         end
 
         context "when the invite is for a student" do
           let(:invitee_profile_type) { "StudentProfile" }
 
           it "returns 'student' for the registration profile type" do
-            expect(team_invite_validator.call.registration_profile_type).to eq("student")
+            expect(team_invite_code_validator.call.registration_profile_type).to eq("student")
           end
         end
 
@@ -62,7 +67,11 @@ describe TeamInviteValidator do
           let(:invitee_profile_type) { "MentorProfile" }
 
           it "returns 'mentor' for the registration profile type" do
-            expect(team_invite_validator.call.registration_profile_type).to eq("mentor")
+            expect(team_invite_code_validator.call.registration_profile_type).to eq("mentor")
+          end
+
+          it "returns a success message mentioning they've been invited to join as a mentor" do
+            expect(team_invite_code_validator.call.success_message).to eq('You have been invited to join the team "ABCool Team" as a mentor!')
           end
         end
       end
@@ -77,7 +86,11 @@ describe TeamInviteValidator do
     end
 
     it "is not valid" do
-      expect(team_invite_validator.call.valid?).to eq(false)
+      expect(team_invite_code_validator.call.valid?).to eq(false)
+    end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
     end
   end
 
@@ -85,7 +98,11 @@ describe TeamInviteValidator do
     let(:pending_invite) { false }
 
     it "is not valid" do
-      expect(team_invite_validator.call.valid?).to eq(false)
+      expect(team_invite_code_validator.call.valid?).to eq(false)
+    end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
     end
   end
 
@@ -93,7 +110,11 @@ describe TeamInviteValidator do
     let(:inviter_profile_type) { "MentorProfile" }
 
     it "is not valid" do
-      expect(team_invite_validator.call.valid?).to eq(false)
+      expect(team_invite_code_validator.call.valid?).to eq(false)
+    end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
     end
   end
 
@@ -107,7 +128,11 @@ describe TeamInviteValidator do
     end
 
     it "is not valid" do
-      expect(team_invite_validator.call.valid?).to eq(false)
+      expect(team_invite_code_validator.call.valid?).to eq(false)
+    end
+
+    it "returns an error message" do
+      expect(team_invite_code_validator.call.error_message).to eq("This invite is no longer valid.")
     end
   end
 end

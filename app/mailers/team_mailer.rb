@@ -187,7 +187,7 @@ class TeamMailer < ApplicationMailer
   end
 
   def invite_new_student(invite)
-    @url = signup_url
+    @url = signup_url(team_invite_code: invite.invite_token)
     @team_name = invite.team_name
     @link_text = "Signup to join this team"
 
