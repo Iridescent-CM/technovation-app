@@ -146,7 +146,7 @@
 
         <div ref="selectRegionalPitchEventField" class="review-label">
           <p>
-            Selecting retional pitch events allowed
+            Selecting regional pitch events allowed
             <strong
               :class="{
                 on: formData.select_regional_pitch_event,
