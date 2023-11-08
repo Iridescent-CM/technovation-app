@@ -53,6 +53,9 @@ export default {
       select_regional_pitch_event: Boolean(
         !judgingRoundEnabled && state.select_regional_pitch_event
       ),
+      create_regional_pitch_event: Boolean(
+        !judgingRoundEnabled && state.create_regional_pitch_event
+      ),
 
       // Judging
       judging_round: state.judging_round,

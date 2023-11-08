@@ -96,6 +96,7 @@ describe("Admin Content & Settings - AdminContentSettings component", () => {
             },
             team_building_enabled: 1,
             select_regional_pitch_event: 0,
+            create_regional_pitch_event: 0,
             judging_round: "qf",
             display_scores: 1,
           },
@@ -145,6 +146,7 @@ describe("Admin Content & Settings - AdminContentSettings component", () => {
           team_building_enabled: 1,
           team_submissions_editable: 0,
           select_regional_pitch_event: 0,
+          create_regional_pitch_event: 0,
           judging_round: "qf",
           display_scores: 1,
         });
@@ -248,6 +250,7 @@ describe("Admin Content & Settings - AdminContentSettings component", () => {
               team_building_enabled: 1,
               team_submissions_editable: 0,
               select_regional_pitch_event: 1,
+              create_regional_pitch_event: 1,
               judging_round: "off",
               display_scores: 0,
             },
@@ -288,6 +291,7 @@ describe("Admin Content & Settings - AdminContentSettings component", () => {
           team_building_enabled: true,
           team_submissions_editable: false,
           select_regional_pitch_event: true,
+          create_regional_pitch_event: true,
           judging_round: "off",
           display_scores: false,
         });
