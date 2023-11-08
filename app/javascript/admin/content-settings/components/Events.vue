@@ -53,6 +53,18 @@
       <icon name="exclamation-circle" :size="16" color="00529B" />
       When judging is enabled, regional pitch events cannot be selected
     </div>
+
+    <p class="inline-checkbox">
+      <input
+        id="season_toggles_add_teams_to_regional_pitch_event"
+        type="checkbox"
+        v-model="$store.state.add_teams_to_regional_pitch_event"
+        :disabled="!isSuperAdmin"
+      >
+      <label
+        for="season_toggles_add_teams_to_regional_pitch_event"
+      >Adding teams to regional pitch events allowed</label>
+    </p>
   </div>
 </template>
 

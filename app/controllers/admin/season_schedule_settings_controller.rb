@@ -19,6 +19,7 @@ module Admin
         :team_submissions_editable,
         :select_regional_pitch_event,
         :create_regional_pitch_event,
+        :add_teams_to_regional_pitch_event,
         :display_scores,
         :judging_round,
         student_survey_link: [:text, :long_desc, :url],

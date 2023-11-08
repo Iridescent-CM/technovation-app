@@ -373,6 +373,38 @@ RSpec.describe SeasonToggles do
     end
   end
 
+  describe ".add_teams_to_regional_pitch_event" do
+    context "valid input" do
+      it "allows a collection of 'boolean' words and booleans" do
+        expect_good_input_works(
+          method: "add_teams_to_regional_pitch_event",
+          valid_input: valid_bools + %i[On oFf yEs nO tRue fAlse]
+        )
+      end
+
+      it "reads back a boolean from .add_teams_to_regional_pitch_event?" do
+        valid_truthy.each do |on|
+          SeasonToggles.add_teams_to_regional_pitch_event = on
+          expect(SeasonToggles.add_teams_to_regional_pitch_event?).to be true
+        end
+
+        valid_falsey.each do |off|
+          SeasonToggles.add_teams_to_regional_pitch_event = off
+          expect(SeasonToggles.add_teams_to_regional_pitch_event?).to be false
+        end
+      end
+    end
+
+    context "invalid values" do
+      it "raises an exception" do
+        expect_bad_input_raises_error(
+          method: "add_teams_to_regional_pitch_event",
+          valid_input: valid_bools.join(" | ")
+        )
+      end
+    end
+  end
+
   %i(student mentor judge chapter_ambassador).each do |scope|
     describe ".#{scope}_signup=" do
       context "valid input" do

@@ -28,6 +28,7 @@ export default {
   // Events
   select_regional_pitch_event: 0,
   create_regional_pitch_event: 0,
+  add_teams_to_regional_pitch_event: 0,
   // Judging
   judging_round: "off",
   // Scores & Certificates

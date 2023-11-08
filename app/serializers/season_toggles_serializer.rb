@@ -65,6 +65,10 @@ class SeasonTogglesSerializer
     season_toggles.create_regional_pitch_event?
   end
 
+  attribute :add_teams_to_regional_pitch_event do |season_toggles|
+    season_toggles.add_teams_to_regional_pitch_event?
+  end
+
   attribute :judging_round do |season_toggles|
     season_toggles.judging_round.to_s
   end

@@ -45,6 +45,7 @@ describe("Admin Content & Settings - Vuex store", () => {
       team_submissions_editable: 0,
       create_regional_pitch_event: 0,
       select_regional_pitch_event: 0,
+      add_teams_to_regional_pitch_event: 0,
       judging_round: "off",
       display_scores: 0,
     });

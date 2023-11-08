@@ -56,6 +56,25 @@ class SeasonToggles
       def create_regional_pitch_event?
         convert_to_bool(store.get(:create_regional_pitch_event))
       end
+
+      def add_teams_to_regional_pitch_event=(value)
+        store.set(
+          :add_teams_to_regional_pitch_event,
+          with_bool_validation(value)
+        )
+      end
+
+      def add_teams_to_regional_pitch_event_on!
+        self.add_teams_to_regional_pitch_event = "on"
+      end
+
+      def add_teams_to_regional_pitch_event_off!
+        self.add_teams_to_regional_pitch_event = "off"
+      end
+
+      def add_teams_to_regional_pitch_event?
+        convert_to_bool(store.get(:add_teams_to_regional_pitch_event))
+      end
     end
   end
 end

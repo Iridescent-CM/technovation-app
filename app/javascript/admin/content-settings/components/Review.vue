@@ -157,6 +157,20 @@
             </strong>
           </p>
         </div>
+
+        <div ref="addTeamsToRegionalPitchEventField" class="review-label">
+          <p>
+            Adding teams to regional pitch events allowed
+            <strong
+              :class="{
+                on: formData.add_teams_to_regional_pitch_event,
+                off: !formData.add_teams_to_regional_pitch_event
+              }"
+            >
+              {{ formData.add_teams_to_regional_pitch_event ? 'yes' : 'no' }}
+            </strong>
+          </p>
+        </div>
       </div>
 
       <div class="review-panel">
