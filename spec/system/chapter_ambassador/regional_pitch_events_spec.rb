@@ -21,6 +21,7 @@ RSpec.describe "Regional Pitch Events", :js do
 
       expect(page).to have_content("Add an event")
     end
+
     it "successfully creates a new event" do
       sign_in(chapter_ambassador)
 

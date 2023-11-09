@@ -3,10 +3,11 @@ require "rails_helper"
 RSpec.describe "Regional Pitch Event Judges", :js do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved) }
 
-  context "when MANAGE_EVENTS is enabled" do
+  context "when MANAGE_EVENTS is enabled and teams can be added to an event" do
     before do
       allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with("MANAGE_EVENTS", any_args).and_return(true)
+      allow(SeasonToggles).to receive(:add_teams_to_regional_pitch_event?).and_return(true)
     end
 
     it "successfully adds a judge an event" do

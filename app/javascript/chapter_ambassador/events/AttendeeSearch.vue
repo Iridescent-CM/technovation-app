@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div class="grid__col-auto grid__col--bleed-y">
-      <p>
+      <p v-if="canAddTeamsToEvents">
         <button
           class="button button--remove-bg"
           v-show="!searching"
@@ -9,6 +9,10 @@
         >
           {{ addBtnText }}
         </button>
+      </p>
+
+      <p v-else class="color--danger">
+        New teams cannot be added to events at this time.
       </p>
 
       <div
@@ -90,8 +94,10 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import debounce from "lodash/debounce"
 
+  import { airbrake } from 'utilities/utilities'
   import Icon from "../../components/Icon";
   import Attendee from "./Attendee";
   import EventBus from '../../components/EventBus';
@@ -108,6 +114,7 @@
         fetching: false,
         items: [],
         selectableItems: [],
+        canAddTeamsToEvents: false
       };
     },
 
@@ -247,7 +254,23 @@
           },
         });
       },
+      async getRegionalPitchEventSettings() {
+        try {
+          const response = await axios.get('/api/regional_pitch_events/settings')
+
+          this.canAddTeamsToEvents = response.data.canAddTeamsToEvents
+        }
+        catch(error) {
+          airbrake.notify({
+            error: `[REGIONAL PITCH EVENTS] Error getting event settings - ${error.response.data}`
+          })
+        }
+      },
     },
+
+    async created() {
+      await this.getRegionalPitchEventSettings()
+    }
   };
 </script>
 
