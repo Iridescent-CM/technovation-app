@@ -7,6 +7,8 @@ RSpec.describe "Regional Pitch Event Teams", :js do
     before do
       allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with("MANAGE_EVENTS", any_args).and_return(true)
+      allow(SeasonToggles).to receive(:create_regional_pitch_event?)
+        .and_return(true)
     end
 
     it "sucessfully adds a team to an event" do

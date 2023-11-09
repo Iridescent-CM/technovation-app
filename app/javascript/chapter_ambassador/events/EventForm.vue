@@ -1,11 +1,19 @@
 <template>
   <div id="new-event">
-    <p class="grid__cell--padding-sm">
+    <p
+    v-if="canCreateEvents"
+    class="grid__cell--padding-sm">
       <button
         class="button button--small"
         @click.prevent="active = true"
         v-if="!active"
       >+ Add an event</button>
+    </p>
+
+    <p
+    v-else
+    class="color--danger">
+      New events cannot be created at this time.
     </p>
 
     <form
@@ -154,6 +162,8 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   import DatetimeInput from "../../components/DatetimeInput";
   import Errors from '../../components/Errors';
   import EventBus from '../../components/EventBus';
@@ -161,7 +171,7 @@
 
   import Event from './Event';
 
-  import { isEmptyObject } from 'utilities/utilities';
+  import { airbrake, isEmptyObject } from 'utilities/utilities';
 
   export default {
     name: "event-form",
@@ -221,6 +231,8 @@
         eventDivision: null,
 
         showCapacity: false,
+
+        canCreateEvents: false,
       };
     },
 
@@ -499,6 +511,18 @@
           process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_MONTH + '-' +
           process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_DAY
       },
+      async getRegionalPitchEventSettings() {
+        try {
+          const response = await axios.get('/api/regional_pitch_events/settings')
+
+          this.canCreateEvents = response.data.canCreateEvents
+        }
+        catch(error) {
+          airbrake.notify({
+            error: `[REGIONAL PITCH EVENTS] Error getting event settings - ${error.response.data}`
+          })
+        }
+      },
     },
 
     mounted () {
@@ -536,6 +560,9 @@
         }
       });
     },
+    async created() {
+      await this.getRegionalPitchEventSettings()
+    }
   };
 </script>
 
