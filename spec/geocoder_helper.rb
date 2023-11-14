@@ -209,5 +209,25 @@ RSpec.configure do |config|
         }]
       )
     end
+
+    [
+      "Mumbai, Maharashtra, India",
+      "Mumbai, MH, India",
+      "Mumbai, MH, IN",
+      "Mumbai, Maharashtra, IN",
+      [19.076090, 72.877426]
+    ].each do |loc|
+      Geocoder::Lookup::Test.add_stub(
+        loc, [{
+          "coordinates" => [19.076090, 72.877426],
+          "address" => "Mumbai, Maharashtra, India",
+          "state" => "Maharashtra",
+          "city" => "Mumbai",
+          "state_code" => "MH",
+          "country" => "India",
+          "country_code" => "IN"
+        }]
+      )
+    end
   end
 end
