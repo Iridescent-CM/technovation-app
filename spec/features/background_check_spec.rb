@@ -15,7 +15,7 @@ RSpec.feature "background checks" do
     expect(mentor.reload.background_check).to be_present
   end
 
-  scenario "mentors not located in the US, India, or Canada do not need to complete one" do
+  scenario "mentors not located in the US, India, or Canada do not see a link to submit a background check" do
     mentor = FactoryBot.create(
       :mentor,
       :brazil
