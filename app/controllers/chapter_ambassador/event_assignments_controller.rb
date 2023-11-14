@@ -28,6 +28,7 @@ module ChapterAmbassador
               membership.member_type,
               membership.member_id,
               event.id,
+              team_name: attendee.name
             ).deliver_later
           end
         else
