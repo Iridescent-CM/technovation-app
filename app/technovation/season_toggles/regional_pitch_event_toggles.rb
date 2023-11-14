@@ -10,6 +10,8 @@ class SeasonToggles
       base.extend JudgingRoundDependency
       base.judging_must_be_off :select_regional_pitch_event,
         topic: "Event selection"
+      base.judging_must_be_off :create_regional_pitch_event,
+        topic: "Event creation"
     end
 
     module ClassMethods
@@ -34,6 +36,44 @@ class SeasonToggles
 
       def events_disabled?
         not select_regional_pitch_event?
+      end
+
+      def create_regional_pitch_event=(value)
+        store.set(
+          :create_regional_pitch_event,
+          with_bool_validation(value)
+        )
+      end
+
+      def create_regional_pitch_event_on!
+        self.create_regional_pitch_event = "on"
+      end
+
+      def create_regional_pitch_event_off!
+        self.create_regional_pitch_event = "off"
+      end
+
+      def create_regional_pitch_event?
+        convert_to_bool(store.get(:create_regional_pitch_event))
+      end
+
+      def add_teams_to_regional_pitch_event=(value)
+        store.set(
+          :add_teams_to_regional_pitch_event,
+          with_bool_validation(value)
+        )
+      end
+
+      def add_teams_to_regional_pitch_event_on!
+        self.add_teams_to_regional_pitch_event = "on"
+      end
+
+      def add_teams_to_regional_pitch_event_off!
+        self.add_teams_to_regional_pitch_event = "off"
+      end
+
+      def add_teams_to_regional_pitch_event?
+        convert_to_bool(store.get(:add_teams_to_regional_pitch_event))
       end
     end
   end

@@ -212,7 +212,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         expect(page).to have_content("When judging is enabled", count: 2)
 
         click_button "Events"
-        expect(page).to have_content("When judging is enabled", count: 1)
+        expect(page).to have_content("When judging is enabled", count: 2)
 
         click_button "Scores & Certificates"
         expect(page).to have_content("When judging is enabled", count: 1)
@@ -234,6 +234,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
         click_button "Events"
         expect(page).to have_unchecked_field("Selecting regional pitch events allowed", disabled: true)
+        expect(page).to have_unchecked_field("Creating regional pitch events allowed", disabled: true)
 
         click_button "Scores & Certificates"
         expect(page).to have_unchecked_field("Scores & Certificates Accessible", disabled: true)
@@ -291,6 +292,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
         click_button "Events"
         expect(page).to have_field("Selecting regional pitch events allowed", disabled: false)
+        expect(page).to have_field("Creating regional pitch events allowed", disabled: false)
 
         click_button "Scores & Certificates"
         expect(page).to have_field("Scores & Certificates Accessible", disabled: false)
@@ -309,6 +311,8 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
     click_button "Events"
     uncheck "Selecting regional pitch events allowed"
+    uncheck "Creating regional pitch events allowed"
+    uncheck "Adding teams to regional pitch events allowed"
 
     click_button "Scores & Certificates"
     uncheck "Scores & Certificates Accessible"
@@ -325,6 +329,8 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
 
     click_button "Events"
     check "Selecting regional pitch events allowed"
+    uncheck "Creating regional pitch events allowed"
+    uncheck "Adding teams to regional pitch events allowed"
 
     click_button "Scores & Certificates"
     check "Scores & Certificates Accessible"

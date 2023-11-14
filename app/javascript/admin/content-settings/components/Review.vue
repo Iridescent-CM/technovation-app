@@ -130,9 +130,23 @@
 
       <div class="review-panel">
         <h4 class="reset">Regional Pitch Events</h4>
+        <div ref="createRegionalPitchEventField" class="review-label">
+          <p>
+            Creating regional pitch events allowed
+            <strong
+              :class="{
+                on: formData.create_regional_pitch_event,
+                off: !formData.create_regional_pitch_event
+              }"
+            >
+              {{ formData.create_regional_pitch_event ? 'yes' : 'no' }}
+            </strong>
+          </p>
+        </div>
+
         <div ref="selectRegionalPitchEventField" class="review-label">
           <p>
-            Selecting retional pitch events allowed
+            Selecting regional pitch events allowed
             <strong
               :class="{
                 on: formData.select_regional_pitch_event,
@@ -140,6 +154,20 @@
               }"
             >
               {{ formData.select_regional_pitch_event ? 'yes' : 'no' }}
+            </strong>
+          </p>
+        </div>
+
+        <div ref="addTeamsToRegionalPitchEventField" class="review-label">
+          <p>
+            Adding teams to regional pitch events allowed
+            <strong
+              :class="{
+                on: formData.add_teams_to_regional_pitch_event,
+                off: !formData.add_teams_to_regional_pitch_event
+              }"
+            >
+              {{ formData.add_teams_to_regional_pitch_event ? 'yes' : 'no' }}
             </strong>
           </p>
         </div>
