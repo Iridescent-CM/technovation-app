@@ -333,6 +333,10 @@ Rails.application.routes.draw do
       resources :mentor_expertises, only: :index
       resources :mentor_types, only: :index
     end
+
+    namespace :regional_pitch_events do
+      resources :settings, only: :index
+    end
   end
 
   resource :terms_agreement, only: [:edit, :update]
