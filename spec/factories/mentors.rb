@@ -61,6 +61,12 @@ FactoryBot.define do
       country { "BR" }
     end
 
+    trait :india do
+      city { "Mumbai" }
+      state_province { "Maharashtra" }
+      country { "IN" }
+    end
+
     trait :geocoded do
       after(:create) do |m, _|
         Geocoding.perform(m.account).with_save
@@ -75,7 +81,7 @@ FactoryBot.define do
         state_province: e.state_province,
         country: e.country,
         first_name: e.first_name,
-        last_name: e.last_name || "FactoryBot",
+        last_name: e.last_name || "FactoryBot"
       }.each do |k, v|
         m.account.send("#{k}=", v)
       end
