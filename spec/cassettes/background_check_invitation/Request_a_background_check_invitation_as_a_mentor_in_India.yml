@@ -1,0 +1,186 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://us4.api.mailchimp.com/3.0/lists/49795c1e0e/members/3a1c0861c9ed9f842f80e71e16314fe9
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"engineering+factorymentor@technovation.org","merge_fields":{"BIRTHYEAR":2001,"COUNTRY":"India","FNAME":"Mentor","LNAME":"FactoryBot","NAME":"Mentor
+        FactoryBot","PARENTNAME":"","PARENTREG":"false"},"location":{"latitude":0.0,"longitude":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.5.2
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic YXBpa2V5OmM3ZWI4ZTE5ODRkNDc0NTk1NzBhNGNjOWU0NmExYTRkLXVzNA==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - application/problem+json; charset=utf-8
+      X-Request-Id:
+      - 8194f55d-72a3-a366-a1f6-9330ec8c695e
+      Link:
+      - <https://us4.api.mailchimp.com/schema/3.0/Definitions/ProblemDetailDocument.json>;
+        rel="describedBy"
+      Vary:
+      - Accept-Encoding
+      Date:
+      - Tue, 14 Nov 2023 14:57:54 GMT
+      Content-Length:
+      - '211'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"type":"https://mailchimp.com/developer/marketing/docs/errors/","title":"Resource
+        Not Found","status":404,"detail":"The requested resource could not be found.","instance":"8194f55d-72a3-a366-a1f6-9330ec8c695e"}'
+  recorded_at: Tue, 14 Nov 2023 14:57:54 GMT
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/candidates
+    body:
+      encoding: UTF-8
+      string: '{"email":"engineering+factorymentor@technovation.org","first_name":"Mentor","last_name":"FactoryBot","dob":"2001-11-14","work_locations":[{"country":"IN"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v2.5.2
+      Authorization:
+      - Basic MzdlY2E4ZmRmNDAxNGM0N2Y5MzUzNGNhMWZkODYzNTY3ZGFjNTMzMTo=
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 14 Nov 2023 14:57:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '673'
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 82601c0ed81503e9-DFW
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Origin, Accept-Encoding
+      Via:
+      - kong/2.8.3
+      Ratelimit-Limit:
+      - '1200'
+      Ratelimit-Remaining:
+      - '1199'
+      Ratelimit-Reset:
+      - '5'
+      X-Checkr-Region:
+      - eu-west-1
+      X-Content-Type-Options:
+      - nosniff
+      X-Envoy-Upstream-Service-Time:
+      - '1671'
+      X-Kong-Proxy-Latency:
+      - '13'
+      X-Kong-Upstream-Latency:
+      - '1672'
+      X-Ratelimit-Limit:
+      - '1200'
+      X-Ratelimit-Remaining:
+      - '1199'
+      X-Ratelimit-Reset:
+      - '2023-11-14T14:58:00Z'
+      X-Request-Id:
+      - 223c0d1e-17ed-9a7a-a566-03c09bcc4f67
+      Server:
+      - cloudflare
+    body:
+      encoding: UTF-8
+      string: '{"id":"41016436167e9e7f0dcee6efe0ebed","uri":"/v1/candidates/41016436167e9e7f0dcee6efe0ebed","created_at":"2023-11-14T14:57:56Z","first_name":"Mentor","last_name":"Factorybot","middle_name":null,"mother_maiden_name":null,"dob":"2001-11-14","ssn":null,"email":"engineering+factorymentor@technovation.org","zipcode":null,"phone":null,"driver_license_state":null,"driver_license_number":null,"copy_requested":false,"previous_driver_license_state":null,"previous_driver_license_number":null,"adjudication":null,"custom_id":null,"no_middle_name":false,"updated_at":"2023-11-14T14:57:56Z","locale":"en","object":"candidate","report_ids":[],"geo_ids":["212453a9f300ff10d9ad0228"]}'
+  recorded_at: Tue, 14 Nov 2023 14:57:57 GMT
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/invitations
+    body:
+      encoding: UTF-8
+      string: '{"package":"international_basic_plus","candidate_id":"41016436167e9e7f0dcee6efe0ebed","work_locations":[{"country":"IN"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v2.5.2
+      Authorization:
+      - Basic MzdlY2E4ZmRmNDAxNGM0N2Y5MzUzNGNhMWZkODYzNTY3ZGFjNTMzMTo=
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 14 Nov 2023 14:57:58 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '560'
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 82601c1d4aa1468f-DFW
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Origin, Accept-Encoding
+      Via:
+      - kong/2.8.3
+      Ratelimit-Limit:
+      - '1200'
+      Ratelimit-Remaining:
+      - '1198'
+      Ratelimit-Reset:
+      - '3'
+      X-Checkr-Region:
+      - eu-west-1
+      X-Content-Type-Options:
+      - nosniff
+      X-Envoy-Upstream-Service-Time:
+      - '924'
+      X-Kong-Proxy-Latency:
+      - '7'
+      X-Kong-Upstream-Latency:
+      - '925'
+      X-Ratelimit-Limit:
+      - '1200'
+      X-Ratelimit-Remaining:
+      - '1198'
+      X-Ratelimit-Reset:
+      - '2023-11-14T14:58:00Z'
+      X-Request-Id:
+      - 07b836b5-061f-4b34-b836-4b74ae1e9c36
+      Server:
+      - cloudflare
+    body:
+      encoding: UTF-8
+      string: '{"id":"41016493980760cf1e10ba922ca85d","status":"pending","uri":"/v1/invitations/41016493980760cf1e10ba922ca85d","invitation_url":"https://apply.checkrhq-staging.net/invite/technovation/4101645de50bfcf6459cf9cac8aa4e","completed_at":null,"deleted_at":null,"package":"international_basic_plus","created_at":"2023-11-14T14:57:58Z","expires_at":"2023-11-22T07:59:59Z","tags":[],"locale":"en","archived":false,"archived_info":{},"object":"invitation","metadata":{"work_location_0":{"country":"IN"}},"candidate_id":"41016436167e9e7f0dcee6efe0ebed","report_id":null}'
+  recorded_at: Tue, 14 Nov 2023 14:57:58 GMT
+recorded_with: VCR 6.1.0

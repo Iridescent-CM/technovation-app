@@ -15,6 +15,17 @@ RSpec.feature "background checks" do
     expect(mentor.reload.background_check).to be_present
   end
 
+  scenario "mentors not located in the US, India, or Canada do not see a link to submit a background check" do
+    mentor = FactoryBot.create(
+      :mentor,
+      :brazil
+    )
+
+    sign_in(mentor)
+
+    expect(page).not_to have_link("Submit Background Check")
+  end
+
   scenario "Complete a chapter ambassador background check", :vcr do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :geocoded)
     chapter_ambassador.background_check.destroy
