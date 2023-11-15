@@ -1,6 +1,4 @@
 class ChapterAmbassadorProfile < ActiveRecord::Base
-  attr_accessor :used_global_invitation
-
   scope :onboarded, -> {
     approved.joins(:account)
       .where("accounts.email_confirmed_at IS NOT NULL")
@@ -63,10 +61,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     [
       20980,
     ]
-  end
-
-  def used_global_invitation?
-    !!used_global_invitation
   end
 
   def provided_intro?

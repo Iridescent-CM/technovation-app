@@ -1,7 +1,5 @@
 module ChapterAmbassador
   class RegionalPitchEventsController < ChapterAmbassadorController
-    helper_method :invitation_token
-
     def index
       respond_to do |f|
         f.html { }
@@ -147,10 +145,6 @@ module ChapterAmbassador
         :capacity,
         division_ids: [],
       )
-    end
-
-    def invitation_token
-      (GlobalInvitation.active.last || NullInvitation.new("")).token
     end
 
     class NullInvitation < Struct.new(:token)

@@ -1,4 +1,4 @@
-<% if admin || signup.used_global_invitation? %>
+<% if admin %>
   <%= f.fields_for :account do |a| %>
     <%= a.input :email %>
 
@@ -22,8 +22,7 @@
 
 <%= render "signups/#{signup.scope_name}_profile_fields", f: f %>
 
-<% if signup.account.temporary_password? ||
-  signup.used_global_invitation? %>
+<% if signup.account.temporary_password? %>
   <h6 class="signup-section">
     <%= t("models.account.password") %>
   </h6>
@@ -60,9 +59,9 @@
     </div>
   <% end %>
 
-  <%= 
+  <%=
     f.button :submit,
     t('views.signups.form.create_account'),
-    class: button_class 
+    class: button_class
   %>
 <% end %>

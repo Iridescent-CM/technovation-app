@@ -1,6 +1,4 @@
 class StudentProfile < ActiveRecord::Base
-  attr_accessor :used_global_invitation
-
   acts_as_paranoid
 
   include Regioned
@@ -233,10 +231,6 @@ class StudentProfile < ActiveRecord::Base
     when "ready";       "Log in for more details"
     else; "status missing (bug)"
     end
-  end
-
-  def used_global_invitation?
-    !!used_global_invitation
   end
 
   def validate_parent_email
