@@ -13,7 +13,11 @@
       </tr>
       <tr>
         <td class="content-block">
-          A Chapter Ambassador has just removed you from the event:
+          A Chapter Ambassador has just removed your team
+          <% if @team_name.present? && @removed.class.to_s == "MentorProfile" %>
+            "<%= @team_name %>"
+          <% end %>
+          from the event:
           <strong><%= @event.name %></strong>
         </td>
       </tr>

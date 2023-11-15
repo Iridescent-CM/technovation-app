@@ -1,7 +1,8 @@
 class EventMailer < ApplicationMailer
-  def notify_removed(removed_klass_name, removed_id, event_id)
+  def notify_removed(removed_klass_name, removed_id, event_id, team_name: "")
     @removed = removed_klass_name.constantize.find(removed_id)
     @event = RegionalPitchEvent.find(event_id)
+    @team_name = team_name
 
     @ambassador_name = @event.ambassador.name
     @ambassador_email = @event.ambassador.email
