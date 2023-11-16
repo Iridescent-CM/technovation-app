@@ -1,6 +1,4 @@
 class JudgeProfile < ActiveRecord::Base
-  attr_accessor :used_global_invitation
-
   include Regioned
   regioned_source Account
 
@@ -180,10 +178,6 @@ class JudgeProfile < ActiveRecord::Base
 
   def survey_completed_without_save!
     self.survey_completed = true
-  end
-
-  def used_global_invitation?
-    !!used_global_invitation
   end
 
   def has_incomplete_scores?

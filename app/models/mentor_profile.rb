@@ -1,5 +1,4 @@
 class MentorProfile < ActiveRecord::Base
-  attr_accessor :used_global_invitation
   include Regioned
   regioned_source Account
 
@@ -254,10 +253,6 @@ class MentorProfile < ActiveRecord::Base
     when "ready";       "Log in for more details"
     else; "status missing (bug)"
     end
-  end
-
-  def used_global_invitation?
-    !!used_global_invitation
   end
 
   def youngest_birth_year

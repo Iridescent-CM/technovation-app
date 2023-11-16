@@ -106,8 +106,7 @@ class ApplicationController < ActionController::Base
       token = args[0]
     end
 
-    invite ||= UserInvitation.find_by(admin_permission_token: token) ||
-      GlobalInvitation.active.find_by!(token: token)
+    invite ||= UserInvitation.find_by(admin_permission_token: token)
 
     invite.opened!
 
@@ -119,7 +118,6 @@ class ApplicationController < ActionController::Base
     )
 
     remove_cookie(CookieNames::AUTH_TOKEN)
-    GlobalInvitation.set_if_exists(@profile, token)
     set_cookie(*invite.to_cookie_params)
   end
 

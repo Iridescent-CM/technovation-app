@@ -520,38 +520,6 @@ ALTER SEQUENCE public.exports_id_seq OWNED BY public.exports.id;
 
 
 --
--- Name: global_invitations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.global_invitations (
-    id bigint NOT NULL,
-    token character varying NOT NULL,
-    status integer DEFAULT 0 NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: global_invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.global_invitations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: global_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.global_invitations_id_seq OWNED BY public.global_invitations.id;
-
-
---
 -- Name: honor_code_agreements; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1795,13 +1763,6 @@ ALTER TABLE ONLY public.exports ALTER COLUMN id SET DEFAULT nextval('public.expo
 
 
 --
--- Name: global_invitations id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.global_invitations ALTER COLUMN id SET DEFAULT nextval('public.global_invitations_id_seq'::regclass);
-
-
---
 -- Name: honor_code_agreements id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2091,14 +2052,6 @@ ALTER TABLE ONLY public.expertises
 
 ALTER TABLE ONLY public.exports
     ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
-
-
---
--- Name: global_invitations global_invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.global_invitations
-    ADD CONSTRAINT global_invitations_pkey PRIMARY KEY (id);
 
 
 --
@@ -3235,8 +3188,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230921190613'),
 ('20230925171243'),
 ('20231005145350'),
-('20231016221100');
 ('20231016140526'),
-('20231017170356');
+('20231016221100'),
+('20231017170356'),
+('20231115134722');
 
 
