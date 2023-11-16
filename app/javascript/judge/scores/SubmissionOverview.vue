@@ -34,11 +34,17 @@
 
     <div class="mt-8 flex flex-col justify-center lg:flex-row lg:justify-between">
       <div v-if="score.incomplete">
-        <p>
+        <div v-if="judge.recusal_scores_count <= maximumNumberOfRecusals">
           <judge-recusal-popup cssClass="link-button link-button-neutral">
             I cannot judge this submission
           </judge-recusal-popup>
-        </p>
+        </div>
+
+        <div v-else>
+          <judge-recusal-exceeded-popup cssClass="link-button link-button-neutral">
+            I cannot judge this submission
+          </judge-recusal-exceeded-popup>
+        </div>
       </div>
 
       <div class="ml-auto">
@@ -59,6 +65,7 @@
 import { mapState } from 'vuex'
 
 import JudgeRecusalPopup from './JudgeRecusalPopup'
+import JudgeRecusalExceededPopup from './JudgeRecusalExceededPopup'
 import Icon from '../../components/Icon'
 import ThickRule from "../../components/rebrand/ThickRule";
 import {getJudgingRubricLink} from "../../utilities/judge-helpers";
@@ -73,6 +80,7 @@ export default {
   },
   computed: {
     ...mapState([
+      'judge',
       'team',
       'score',
       'submission',
@@ -95,11 +103,15 @@ export default {
 
     filestackResizeUrl() {
       return getFilestackResizeUrl(this.team.photo, 300)
+    },
+    maximumNumberOfRecusals() {
+      return process.env.JUDGE_MAXIMUM_NUMBER_OF_RECUSALS
     }
   },
   components: {
     Icon,
     JudgeRecusalPopup,
+    JudgeRecusalExceededPopup,
     ThickRule
   }
 }
