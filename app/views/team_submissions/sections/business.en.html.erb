@@ -31,7 +31,7 @@
           @team_submission.business_plan_url %>
       </p>
 
-      <div class="panel--footer">
+      <div>
         <%= link_to "Change your upload",
           send(
             "edit_#{current_scope}_team_submission_path",
@@ -41,12 +41,12 @@
           class: "tw-green-btn cursor-pointer small" %>
       </div>
     <% else %>
-      <p class="scent">
+      <p class="tw-hint">
         There's nothing here yet,
         but your team can update this part whenever it's ready!
       </p>
 
-      <div class="panel--footer">
+      <div>
         <%= link_to "Upload your team's plan",
           send(
             "edit_#{current_scope}_team_submission_path",
@@ -57,7 +57,7 @@
       </div>
     <% end %>
   <% else %>
-    <p class="scent--strong">
+    <p class="tw-hint-strong">
       Your team is in the
       <strong>
         <%= @team.division_name.humanize %>
@@ -65,13 +65,13 @@
       </strong>
     </p>
 
-    <p class="scent">
+    <p class="tw-hint">
       Uploading a business plan is
       <strong>not required</strong>
       in the Beginner Division.
     </p>
 
-    <p class="scent">
+    <p class="tw-hint">
       If your team has put one together, that is awesome!
       Hold onto your work and incorporate it into your pitch.
     </p>

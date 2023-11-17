@@ -33,12 +33,12 @@
             { class: "tw-green-btn small" }.merge(link_options) %>
         </div>
       <% else %>
-        <p class="scent">
+        <p class="tw-hint">
           There's nothing here yet, but your team can
           update this part whenever it's ready!
         </p>
 
-        <div class="panel--footer">
+        <div>
           <%= link_to cta_when_empty,
             send(base_path_name, submission, piece: attribute),
             { class: "tw-gray-btn small" }.merge(link_options) %>

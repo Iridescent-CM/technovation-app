@@ -49,3 +49,11 @@ html{
 .tw-flag-magenta{
     @apply text-white block p-2 text-right text-base font-bold shadow-sm bg-tg-magenta
 }
+
+.tw-hint {
+    @apply mb-4 italic text-base;
+}
+
+.tw-hint-strong {
+    @apply p-2 rounded bg-gray-100;
+}
