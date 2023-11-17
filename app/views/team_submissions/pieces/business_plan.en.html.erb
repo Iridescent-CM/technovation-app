@@ -2,7 +2,7 @@
 
   <% if @team.senior? || @team.junior? %>
     <% if @team_submission.business_plan_url_complete? %>
-      <div class="field__existing-value">
+      <div class="field-existing-value">
         Your team has previously uploaded
         <%= link_to @team_submission.business_plan_filename,
           @team_submission.business_plan_url %>
@@ -16,7 +16,7 @@
         Submit your 5 to 10 page business plan
       <% end %>
 
-      as a <strong>PDF file</strong>.
+      as a <span class="font-medium">PDF file</span>.
     </p>
 
     <%= form_with model: @team_submission,
@@ -33,7 +33,7 @@
 
     <% end %>
 
-    <p class="dropzone-save" style="display: none;">
+    <p class="dropzone-save mt-8" style="display: none;">
       <%= link_to "Save this upload",
         send(
           "#{current_scope}_team_submission_section_path",
@@ -52,13 +52,14 @@
         ) %>
     </p>
 
-    <p class="grid__cell--padding-sm-y">
+    <p class="py-2">
       <% if @team.senior? %>
         Get some help writing your business plan in the
         <%= link_to(
           "business plan curriculum unit.",
           "https://technovationchallenge.org/curriculum/entrepreneurship-9-business-plan/",
-          target: "_blank"
+          target: "_blank",
+          class: "tw-link"
         ) %>
 
     <% elsif @team.junior? %>
@@ -72,7 +73,7 @@
   <% end %>
     </p>
   <% else %>
-    <p class="scent--strong">
+    <p class="tw-hint-strong">
       Your team is in the
       <strong>
         <%= @team.division_name.humanize %>
@@ -80,13 +81,13 @@
       </strong>
     </p>
 
-    <p class="scent">
+    <p class="tw-hint">
       Uploading a business plan is
       <strong>not required</strong>
       for the Beginner Division.
     </p>
 
-    <p class="scent">
+    <p class="tw-hint">
       If your team has put one together, that is awesome!
       Hold onto your work and incorporate it into your pitch.
     </p>

@@ -15,7 +15,7 @@
         value: params[:value] || @team_submission.send(piece_name) %>
     </div>
 
-    <div class="actions submission-actions">
+    <div class="submission-actions">
       <p class="btn-wrapper">
         <%= f.submit "Next", class: "tw-green-btn cursor-pointer" %>
         or
@@ -25,7 +25,7 @@
     </div>
   <% end %>
 
-  <p class="grid__cell--padding-sm-y">
+  <p class="py-2">
   Get some help making your <%= t("submissions.demo_video") %> in the
 
     <%= link_to(

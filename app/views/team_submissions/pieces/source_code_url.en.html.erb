@@ -1,7 +1,7 @@
 <% provide :title, "Technical Additions" %>
 
 <% if @team_submission.source_code_url_complete? %>
-    <div class="field__existing-value">
+    <div class="field-existing-value">
       Your team has previously uploaded
       <%= link_to @team_submission.source_code_filename,
         @team_submission.source_code_url %>
@@ -69,7 +69,7 @@
       <% end %>
     <% end %>
 
-    <p class="grid__cell--padding-sm-y">
+    <p class="py-2">
       For help submitting your technical work, check
       <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-" target="_blank" class="tw-link">
         here
