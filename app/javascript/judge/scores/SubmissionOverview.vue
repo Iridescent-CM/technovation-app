@@ -35,7 +35,7 @@
     <div class="mt-8 flex flex-col justify-center lg:flex-row lg:justify-between">
       <div v-if="score.incomplete">
         <div v-if="judge.recusal_scores_count <= maximumNumberOfRecusals">
-          <judge-recusal-popup cssClass="link-button link-button-neutral">
+          <judge-recusal-popup cssClass="link-button link-button-neutral" :judgeRecusalCount="judge.recusal_scores_count" :maximumNumberOfRecusals="maximumNumberOfRecusals">
             I cannot judge this submission
           </judge-recusal-popup>
         </div>

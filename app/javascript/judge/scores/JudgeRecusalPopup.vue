@@ -1,5 +1,5 @@
 <template>
-  <a href="#" @click.prevent="openJudgeRecusalForm" :class="cssClass">
+  <a href="#" @click.prevent="openJudgeRecusalForm(judgeRecusalCount, maximumNumberOfRecusals)" :class="cssClass">
     <slot></slot>
   </a>
 </template>
@@ -17,11 +17,19 @@ export default {
     cssClass: {
       type: String,
       default: ''
+    },
+    judgeRecusalCount: {
+      type: Number,
+      default: 0
+    },
+    maximumNumberOfRecusals: {
+      type: String,
+      default: 0
     }
   },
 
   methods: {
-    async openJudgeRecusalForm () {
+    async openJudgeRecusalForm (judgeRecusalCount, maximumNumberOfRecusals) {
       const { value: formValues } = await Swal.fire({
         title: 'What is the reason you cannot judge this submission?',
         html: `
@@ -40,7 +48,12 @@ export default {
               <textarea id="judge-recusal-comment"></textarea>
               <div id="character-div"><span id="character-count">0</span>/50 words</div>
             </div>
+
           </div>
+        `,
+        footer: `
+          <p>${judgeRecusalCount} out of ${maximumNumberOfRecusals} recusals used</p>
+          <p id="last-recusal">${(judgeRecusalCount == maximumNumberOfRecusals - 1) ? "This will be your last recusal!" : ""}</p>
         `,
         willOpen:() =>{
           let characterCount = 0;
@@ -139,7 +152,24 @@ export default {
 
 .swal2-actions button.swal2-confirm,
 .swal2-actions button.swal2-cancel {
-  margin-bottom: 1rem;
-  font-weight: 10;
+  font-weight: 100;
+}
+
+.swal2-popup .swal2-footer {
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+
+  p {
+    font-size: 10pt;
+    font-style: italic;
+    color: #6b7280;
+  }
+
+  p#last-recusal {
+    color: #4b5563;
+    font-weight: 700;
+  }
 }
 </style>
