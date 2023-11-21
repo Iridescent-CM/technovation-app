@@ -19,7 +19,7 @@
             question.score === n ? 'selected' : ''
           ]"
           @click="updateScores(question, n)"
-          v-tooltip.top-center="explainScores(n)"
+          v-tooltip.top-center="explainScore(n)"
         >
           {{ n }}
         </li>
@@ -52,23 +52,8 @@ export default {
       })
     },
 
-    explainScores (n) {
-      return this.team.division === 'beginner' ? this.explainBeginnerScores(n) : this.explainJuniorSeniorScores(n)
-    },
-
-    explainBeginnerScores (n) {
-      switch (n) {
-        case 1:
-          return "Not there yet"
-        case 2:
-          return "Good"
-        case 3:
-          return "Amazing"
-      }
-    },
-
-    explainJuniorSeniorScores (n) {
-      switch (n) {
+    explainScore(score) {
+      switch (score) {
         case 1:
           return "Not there yet"
         case 2:
@@ -80,7 +65,7 @@ export default {
         case 5:
           return "Amazing"
       }
-    }
+    },
   }
 }
 </script>
