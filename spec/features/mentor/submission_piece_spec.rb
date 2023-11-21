@@ -219,7 +219,7 @@ RSpec.feature "Students edit submission pieces" do
     click_button "Next"
     click_button "Save"
 
-    expect(page).to have_css(".flash.flash--alert", text: "Technical and pitch video links cannot be the same! Please add a valid video link.")
+    expect(page).to have_css(".flash.flash--alert", text: "Technical and pitch videos are the same link. Please update one of the links.")
   end
 
   scenario "Upload a .pdf business plan" do
