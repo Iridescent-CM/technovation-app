@@ -1,7 +1,7 @@
 <% embedded ||= false %>
 <% provide :title, "Submission Type" %>
 
-<div>
+<div id="development-platform">
   <% if embedded %>
     <p>
       To upload your technical work,
@@ -9,7 +9,7 @@
     </p>
   <% end %>
 
-  <p class="scent scent--strong">
+  <p class="tw-hint-strong italic mb-8">
     Please indicate which type of submission this is. This will affect how you are judged.
   </p>
 
@@ -37,7 +37,7 @@
 
     </div>
 
-    <div id="mobile-app">
+    <div id="mobile-app" class="mt-8">
       <div class="field">
         <%= f.label :development_platform,
           "Which coding language did your team use?",
@@ -56,8 +56,8 @@
         id: :team_submission_development_platform %>
       </div>
 
-      <div id="app_inventor_fields">
-        <p class="scent">
+      <div id="app_inventor_fields" class="mt-8">
+        <p class="tw-hint">
           We want to ask you two questions about your use of
           App Inventor.
         </p>
@@ -77,14 +77,14 @@
       <%= f.text_field :app_inventor_gmail,
         id: :team_submission_app_inventor_gmail %>
 
-      <p class="hint">
+      <p class="tw-hint">
         We are keeping this information private; it will help us improve how
         our program works with App Inventor.
       </p>
       </div>
 
-      <div id="thunkable_fields">
-        <p class="scent">
+      <div id="thunkable_fields" class="mt-8">
+        <p class="tw-hint">
           We want to ask you two questions about your use of Thunkable.
         </p>
 
@@ -102,7 +102,7 @@
         <%= f.text_field :thunkable_project_url,
           id: :team_submission_thunkable_project_url %>
 
-        <p class="hint">
+        <p class="tw-hint">
           To get the URL to your Thunkable Project page, go to "Share" and select "Project Details Page."
           <a href="https://iridescentsupport.zendesk.com/hc/en-us/articles/360019590314-How-do-I-submit-my-source-code-"
              target="_blank" class="tw-link">For more information, go here.</a>
@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <div class="actions submission-actions">
+    <div class="submission-actions">
       <p class="btn-wrapper">
         <%= f.submit "Save",
           class: "tw-green-btn cursor-pointer" %>

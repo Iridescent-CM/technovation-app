@@ -18,6 +18,14 @@
     @apply w-auto px-4 py-2 rounded bg-tg-green text-white font-medium hover:bg-tg-dark-green hover:text-gray-50 hover:cursor-pointer;
 }
 
-#submission-container .btn-wrapper{
+#submission-container .btn-wrapper {
     @apply flex items-center gap-3 justify-end;
+}
+
+.field-existing-value {
+    @apply my-4 p-2 bg-gray-100 rounded;
+}
+
+#development-platform label {
+    @apply mt-8
 }
