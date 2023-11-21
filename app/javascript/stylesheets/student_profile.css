@@ -52,10 +52,6 @@
     @apply text-white py-2 px-4 rounded-t hover:text-energetic-blue hover:bg-white
 }
 
-.sub-nav-item:first-child{
-    @apply pl-0
-}
-
 .sub-nav-item-active{
     @apply bg-white text-energetic-blue py-2 px-4 rounded-tr-3xl font-semibold
 }
@@ -70,4 +66,16 @@
 
 .tw-dropdown-menu a, #student-nav-wrapper a{
    @apply hover:text-energetic-blue
+}
+
+#cha-social-links {
+    @apply mt-8 grid grid-cols-1 lg:grid-cols-2 gap-2;
+}
+
+#cha-social-links span {
+    @apply text-energetic-blue hover:text-tg-magenta
+}
+
+#cha-avatar img {
+    @apply max-h-80 mx-auto
 }
