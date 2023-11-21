@@ -267,8 +267,8 @@ class TeamSubmission < ActiveRecord::Base
     if demo_video_link == pitch_video_link
       errors.add(
         :base,
-        "#{I18n.t("submissions.demo_video").truncate_words(1, omission: "").capitalize}
-          and pitch video links cannot be the same! Please add a valid video link."
+        "Your #{I18n.t("submissions.demo_video").truncate_words(1, omission: "").capitalize}
+          and pitch videos are the same link. Please update one of the links."
       )
     end
   end
@@ -599,15 +599,17 @@ class TeamSubmission < ActiveRecord::Base
     video_url = VideoUrl.new(video || video_link_for(video_type))
 
     if video_url.valid?
+      height = 415
       src = "#{video_url.root}#{video_url.video_id}"
     else
+      height = "100%"
       src = "/video-link-broken.html"
     end
 
     %{<iframe
         src="#{src}"
         width="100%"
-        height="415"
+        height="#{height}"
         frameborder="0"
         allowfullscreen>
       </iframe>}.strip_heredoc

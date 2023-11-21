@@ -22,7 +22,7 @@
     <p class="mb-0">
       Review the area above this message.
       If there is a problem with viewing your video,
-      you should GO BACK and fix the <%= video_link_text %>
+      you should GO BACK and fix the <%= video_link_text.to_s.humanize %>
     </p>
   </div>
 
@@ -38,7 +38,9 @@
           @team_submission,
           piece: @method,
           value: @review_value
-        ) %>
+        ),
+        class: "tw-gray-btn"
+      %>
     </p>
   </div>
 <% end %>

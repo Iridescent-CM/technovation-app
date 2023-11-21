@@ -25,3 +25,7 @@
 .field-existing-value {
     @apply my-4 p-2 bg-gray-100 rounded;
 }
+
+#development-platform label {
+    @apply mt-8
+}
