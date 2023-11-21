@@ -64,6 +64,10 @@ class Questions
     end
 
     {
+      judge: {
+        recusal_scores_count: judge.recusal_scores_count
+      },
+
       score: {
         id: submission_score.id,
         complete: submission_score.complete?,

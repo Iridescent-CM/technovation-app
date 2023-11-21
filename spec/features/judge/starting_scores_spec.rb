@@ -68,12 +68,30 @@ RSpec.feature "starting scores", js: true do
       when_the_judge_views_the_completed_score
       then_they_see_the_overview_for_that_submission
     end
+
+    scenario "exceeding the maximum number of recusals" do
+      given_there_is_a_judge
+      and_the_judge_has_too_many_recusals
+      and_a_submission_that_needs_scoring
+
+      and_the_judge_logs_in
+      they_will_see_welcome_text_on_their_dashboard
+
+      when_the_judge_starts_a_new_score
+      and_the_judge_clicks_the_recusal_button
+      then_they_see_a_message_indicating_they_have_exceeded_the_maxiumum
+    end
   end
 
   private
 
   def given_there_is_a_judge
     @judge = FactoryBot.create(:judge, :onboarded, :virtual)
+  end
+
+  def and_the_judge_has_too_many_recusals
+    @judge.update_attribute(:recusal_scores_count, 100)
+    @judge.reload
   end
 
   def and_the_judge_logs_in
@@ -119,6 +137,11 @@ RSpec.feature "starting scores", js: true do
     click_link "Resume"
   end
 
+  def and_the_judge_clicks_the_recusal_button
+    expect(page).to have_content "I cannot judge this submission"
+    click_link "I cannot judge this submission"
+  end
+
   def when_the_judge_views_the_completed_score
     within "#finished-scores" do
       first(:link, "Review").click
@@ -149,5 +172,9 @@ RSpec.feature "starting scores", js: true do
 
   def then_they_will_see_a_way_to_start_a_new_virtual_score
     expect(page).to have_link "Start a new score"
+  end
+
+  def then_they_see_a_message_indicating_they_have_exceeded_the_maxiumum
+    expect(page).to have_content(/A judge may only recuse themselves from \d+ submissions/)
   end
 end

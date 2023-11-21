@@ -6,6 +6,10 @@ const emptyComment = {
 export default {
   problemSections: [],
 
+  judge: {
+    recusal_scores_count: 0
+  },
+
   score: {
     id: null,
     incomplete: null,

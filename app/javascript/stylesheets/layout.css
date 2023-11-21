@@ -39,7 +39,7 @@ html{
 }
 
 .tw-link-magenta{
-    @apply font-bold text-tg-magenta
+    @apply font-bold text-tg-magenta hover:text-pink-400
 }
 
 .tw-wrapper{

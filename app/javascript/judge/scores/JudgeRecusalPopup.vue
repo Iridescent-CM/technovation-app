@@ -23,7 +23,7 @@ export default {
   methods: {
     async openJudgeRecusalForm () {
       const { value: formValues } = await Swal.fire({
-        text: 'What is the reason you cannot judge this submission?',
+        title: 'What is the reason you cannot judge this submission?',
         html: `
           <div id="judge-recusal-form">
             <div>
@@ -106,6 +106,7 @@ export default {
   flex-flow: column wrap;
   align-items: flex-start;
   align-content: space-evenly;
+  margin-top: 1rem;
 
   div {
     margin-bottom: .3rem;

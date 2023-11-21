@@ -114,6 +114,7 @@ export const resetState = (state) => {
 }
 
 export const setStateFromJSON = (state, json) => {
+  state.judge = json.judge
   state.questions = json.questions
   state.team = json.team
   state.submission = json.submission
