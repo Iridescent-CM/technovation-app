@@ -103,7 +103,7 @@ module StudentHelper
     if status == :complete
       web_icon("check-circle", { class: "icon--green", text: text })
     elsif status == :not_required
-      web_icon("circle-o", { class: "not-required", text: text })
+      web_icon("check-circle", { class: "not-required", text: text })
     else
       web_icon("circle-o", { class: "icon--orange", text: text })
     end
