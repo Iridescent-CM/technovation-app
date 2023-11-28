@@ -136,7 +136,7 @@ class ScoresGrid
   end
 
   column :view, html: true do |submission_score|
-    link_to(
+    html = link_to(
       web_icon("list-ul", size: 16, remote: true),
       send("#{current_scope}_score_path", id: submission_score.id),
       data: {
@@ -144,5 +144,21 @@ class ScoresGrid
       },
       class: "view-details"
     )
+
+    html += " "
+    html += link_to(
+      web_icon("list-alt", size: 16, remote: true),
+      send("#{current_scope}_score_detail_path", id: submission_score.team_submission.id),
+      {
+        "v-tooltip" => "'Read score details'",
+        :data => {turbolinks: false}
+      }
+    )
+
+    html
+  end
+
+  column :score_details_link, html: false do |submission_score|
+    Rails.application.routes.url_helpers.url_for(controller: "admin/score_details", action: "show", id: submission_score.id)
   end
 end
