@@ -151,35 +151,35 @@ export default {
     },
     studentProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-student.png')}" alt="" class="student"> <span class="student s1-label-text">I am registering myself and am 13-18 years old*</span>`,
+        label: `<img src="${require('signup/student.png')}" alt="" class="student mb-2"> <span class="student s1-label-text">I am registering myself and am 13-18 years old*</span>`,
         value: 'student',
         id: 'student'
       }
     },
     parentProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-parent.png')}" alt="" class="parent"> <span class="parent s1-label-text">I am registering my 8-12 year old* daughter</span>`,
+        label: `<img src="${require('signup/parent.png')}" alt="" class="parent mb-2"> <span class="parent s1-label-text">I am registering my 8-12 year old* daughter</span>`,
         value: 'parent',
         id: 'parent'
       }
     },
     mentorProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-mentor.png')}" alt="" class="mentor"> <span class="mentor s1-label-text">I am over 18 years old and will guide a team</span>`,
+        label: `<img src="${require('signup/mentor.png')}" alt="" class="mentor mb-2"> <span class="mentor s1-label-text">I am over 18 years old and will guide a team</span>`,
         value: 'mentor',
         id: 'mentor'
       }
     },
     judgeProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-mentor.png')}" alt="" class="judge"> <span class="judge s1-label-text">I am over 18 years old and will <span class="judge font-bold">judge submissions</span>`,
+        label: `<img src="${require('signup/judge.png')}" alt="" class="judge mb-2"> <span class="judge s1-label-text">I am over 18 years old and will <span class="judge font-bold">judge submissions</span>`,
         value: 'judge',
         id: 'judge'
       }
     },
     chapterAmbassadorProfileType() {
       return {
-        label: `<img src="${require('signup/myTG-mentor.png')}" alt="" class="chapter_ambassador"> <span class="chapter_ambassador s1-label-text">Chapter Ambassador</span>`,
+        label: `<img src="${require('signup/chapter-ambassador.png')}" alt="" class="chapter_ambassador mb-2"> <span class="chapter_ambassador s1-label-text">Chapter Ambassador</span>`,
         value: 'chapter_ambassador',
         id: 'chapter_ambassador'
       }
