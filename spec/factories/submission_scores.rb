@@ -41,6 +41,14 @@ FactoryBot.define do
       approved_at { Time.current }
     end
 
+    trait :virtual do
+      event_type { "virtual" }
+    end
+
+    trait :live do
+      event_type { "live" }
+    end
+
     trait :score_too_low do
       after :create do |score|
         score.update_columns(seems_too_low: true,

@@ -20,11 +20,16 @@ class SubmissionScore < ActiveRecord::Base
   after_commit :update_team_score_summaries
 
   after_commit -> {
+    if event_type == "virtual"
+      update_columns(
+        completed_too_fast: detect_if_completed_too_fast,
+        completed_too_fast_repeat_offense: detect_if_too_fast_repeat_offense,
+        seems_too_low: detect_if_raw_total_seems_too_low
+      )
+    end
+
     update_columns(
-      completed_too_fast: detect_if_completed_too_fast,
-      completed_too_fast_repeat_offense: detect_if_too_fast_repeat_offense,
-      seems_too_low: detect_if_raw_total_seems_too_low,
-      approved_at: can_automatically_approve? ? Time.current : nil,
+      approved_at: can_automatically_approve? ? Time.current : nil
     )
   }, on: [:create, :update], if: :complete?
 
@@ -524,7 +529,8 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def can_automatically_approve?
-    !detect_if_too_fast_repeat_offense && !detect_if_raw_total_seems_too_low
+    event_type == "live" ||
+      !detect_if_too_fast_repeat_offense && !detect_if_raw_total_seems_too_low
   end
 
   def pending_approval?
