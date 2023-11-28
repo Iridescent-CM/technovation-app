@@ -31,6 +31,17 @@ class ScoresGrid
     scope.public_send(value)
   end
 
+  filter :live_or_virtual,
+    :enum,
+    select: -> {
+      [
+        ["Virtual scores", "virtual"],
+        ["Live event scores", "live"]
+      ]
+    } do |value, scope|
+    scope.public_send(value)
+  end
+
   scope do
     SubmissionScore.current.judge_not_deleted
       .includes({ team_submission: :team })
