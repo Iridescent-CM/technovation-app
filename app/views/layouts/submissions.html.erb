@@ -64,7 +64,7 @@
           <%= render layout: "application/templates/dashboards/energetic_container",
                      locals: {
                        heading: yield(:title),
-                       class: "lg:w-auto"
+                       css_class: "#{SeasonToggles.team_submissions_editable? ? 'w-full' : 'lg:w-3/4 mx-auto'}"
                      } do %>
 
             <%= yield %>
