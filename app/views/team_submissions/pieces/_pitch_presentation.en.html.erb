@@ -1,8 +1,6 @@
-<div class="panel">
-  <h3 class="panel--heading">
-    Pitch presentation slides
-  </h3>
+<% provide :title, "Pitch Presentation Slides" %>
 
+<div>
   <% if team.selected_regional_pitch_event.live? %>
     <% if submission.pitch_presentation_url_complete? %>
       <div class="field__existing-value">
@@ -12,7 +10,7 @@
       </div>
     <% end %>
 
-    <p class="hint">File types allowed: *.ppt, *.pptx, *.pdf</p>
+    <p class="tw-hint">File types allowed: *.ppt, *.pptx, *.pdf</p>
 
     <%= form_with model: submission,
       url: send("#{current_scope}_team_submission_path", submission, multipart: true),
@@ -32,32 +30,34 @@
       </div>
     <% end %>
 
-    <p class="dropzone-save" style="display: none;">
+    <p class="dropzone-save mt-8" style="display: none;">
       <%= link_to "Save this upload",
         send("#{current_scope}_team_submission_path", submission,
         :section,
         section: @submission_section),
-        class: "button"
+        class: "tw-green-btn"
       %>
     </p>
 
-    <p class="after-dropzone-save">
+    <p class="after-dropzone-save mt-4 flex flex-row justify-end">
       <%= link_to "cancel",
         send("#{current_scope}_team_submission_path", submission,
         :section,
         section: @submission_section),
-        class: "button"
+        class: "tw-gray-btn small"
       %>
     </p>
 
-    <p class="grid__cell--padding-sm-y">
+    <p class="py-2">
       Get some help putting your slides together in the
       <%= link_to "pitch presentation unit",
         "https://technovationchallenge.org/curriculum/pitch-4-create-a-pitch-presentation/",
-        target: "_blank" %>
+        target: "_blank",
+        class: "tw-link"
+      %>
     </p>
   <% else %>
-    <p class="scent--strong">
+    <p class="tw-hint-strong">
       No team will submit pitch presentation slides here because all
       official Regional Pitch Events are canceled due to COVID this season.
     </p>

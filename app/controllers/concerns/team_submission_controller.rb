@@ -97,7 +97,8 @@ module TeamSubmissionController
       back: request.fullpath
     )
 
-    if SeasonToggles.team_submissions_editable? or piece_name == 'pitch_presentation'
+    if SeasonToggles.team_submissions_editable? ||
+        (piece_name == "pitch_presentation" || section_name == "pitch_presentation")
       render piece_or_full_edit
     else
       notify_on_dashboard
@@ -182,6 +183,10 @@ module TeamSubmissionController
     else
       "submissions"
     end
+  end
+
+  def section_name
+    params.fetch(:section) { "" }
   end
 
   def piece_name

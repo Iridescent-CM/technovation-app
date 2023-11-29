@@ -12,7 +12,6 @@
 <div
   id="<%= dom_id(@team_submission) %>_pitch_presentation"
   class="
-    panel
     submission-piece
     <%= completion_css(
       @team_submission,
@@ -20,7 +19,7 @@
     ) %>
   "
 >
-  <h3 class="panel--heading">
+  <h3 class="font-semibold mb-4">
     Pitch presentation slides
   </h3>
 
@@ -32,22 +31,22 @@
           @team_submission.pitch_presentation_url %>
       </p>
 
-      <div class="panel--footer">
+      <div class="mt-4">
         <%= link_to "Change your upload",
           send(
             "edit_#{current_scope}_team_submission_path",
             @team_submission,
             piece: :pitch_presentation
           ),
-          class: "button secondary small" %>
+          class: "tw-gray-btn small" %>
       </div>
     <% else %>
-      <p class="scent">
+      <p class="tw-hint">
         There's nothing here yet,
         but your team can update this part whenever it's ready!
       </p>
 
-      <div class="panel--footer">
+      <div>
         <%= link_to(
           "Upload the pitch presentation slides " +
           "for your live event",
@@ -56,12 +55,12 @@
             @team_submission,
             piece: :pitch_presentation
           ),
-          class: "button small"
+          class: "tw-green-btn small"
         ) %>
       </div>
     <% end %>
   <% else %>
-    <p class="scent--strong">
+    <p class="tw-hint-strong">
       No team will submit pitch presentation slides here because all
       official Regional Pitch Events are canceled due to COVID this season.
     </p>
