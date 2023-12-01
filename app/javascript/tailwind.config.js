@@ -21,6 +21,10 @@ module.exports = {
         "tg-dark-gold": "#e5a51b",
         "tg-magenta": "#d0006f",
         "tg-orange": "#ff7500",
+        success: "#DFF2BF",
+        "success-txt": "#4F8A10",
+        alert: "#FFBABA",
+        "alert-txt": "#D8000C",
       },
       height: {
         "fit-content": "fit-content",
