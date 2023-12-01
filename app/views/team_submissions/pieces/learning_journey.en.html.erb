@@ -12,6 +12,11 @@
       "Describe your learning journey in a few sentences (200 words or less)",
       for: :team_submission_learning_journey %>
 
+    <p class="tw-hint-strong italic text-base my-4">
+      What did your team learn (technically or otherwise)?
+      How did you overcome challenges? What resources did you use to build on (examples, tutorials, open source code)?
+    </p>
+
     <%= f.text_area :learning_journey,
       id: :team_submission_learning_journey,
       data: {
@@ -20,9 +25,14 @@
       },
       rows: 6 %>
 
-    <p class="tw-hint-strong italic text-base">
-      What did your team learn (technically or otherwise)?
-      How did you overcome challenges? What resources did you use to build on (examples, tutorials, open source code)?
+    <p class="tw-hint word-counter">
+      Number of words typed:
+      <br />
+      <span class="word-count__total word-count--plenty-remaining">
+        0
+      </span>
+      /
+      <span class="word-count__limit"></span>
     </p>
   </div>
 
@@ -36,16 +46,6 @@
           @team_submission,
           section: @submission_section
         ) %>
-    </p>
-
-    <p class="tw-hint word-counter">
-      Number of words typed:
-      <br />
-      <span class="word-count__total word-count--plenty-remaining">
-        0
-      </span>
-      /
-      <span class="word-count__limit"></span>
     </p>
   </div>
 <% end %>

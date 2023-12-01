@@ -12,6 +12,12 @@
       "Describe your #{t("submissions.app")} in a few sentences (100 words or less)",
       for: :team_submission_app_description %>
 
+    <p class="tw-hint-strong text-sm italic my-4">
+      <span class="font-medium">Remember:</span>
+      only write a few sentences!
+      The judges will have a lot of these to read, so keep it short!
+    </p>
+
     <%= f.text_area :app_description,
       id: :team_submission_app_description,
       data: {
@@ -20,11 +26,16 @@
       },
       rows: 6 %>
 
-    <p class="tw-hint-strong text-sm italic">
-      <span class="font-medium">Remember:</span>
-      only write a few sentences!
-      The judges will have a lot of these to read, so keep it short!
+    <p class="tw-hint word-counter">
+      Number of words typed:
+      <br />
+      <span class="word-count__total word-count--plenty-remaining">
+        0
+      </span>
+      /
+      <span class="word-count__limit"></span>
     </p>
+
   </div>
 
   <div class="submission-actions">
@@ -39,15 +50,6 @@
         ) %>
     </p>
 
-    <p class="tw-hint word-counter">
-      Number of words typed:
-      <br />
-      <span class="word-count__total word-count--plenty-remaining">
-        0
-      </span>
-      /
-      <span class="word-count__limit"></span>
-    </p>
   </div>
 <% end %>
 
