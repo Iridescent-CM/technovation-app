@@ -1,5 +1,10 @@
 <% if current_session.authenticated? %>
   <% provide :session_bar, render("layouts/session_bar") %>
+  <% provide :global_nav_links, render('team_submissions/submission_nav_links') %>
+<% end %>
+
+<% if current_scope == "student" %>
+  <% provide :drop_down, render('student/navigation/rebrand/dropdown_nav') %>
 <% end %>
 
 <!DOCTYPE html>
