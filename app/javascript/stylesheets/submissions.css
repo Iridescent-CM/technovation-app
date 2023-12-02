@@ -1,5 +1,5 @@
 #submission-container label{
-    @apply font-rubik text-base mb-4;
+    @apply font-rubik text-base;
 }
 
 #submission-container input{
@@ -28,4 +28,21 @@
 
 #development-platform label {
     @apply mt-8
+}
+
+#submission-container .word-counter {
+    transition: background-color 2s;
+    text-align: right;
+}
+
+#submission-container .word-count__total {
+    transition: font-weight 0.2s, color 0.2s;
+}
+
+#submission-container .word-count--plenty-remaining {
+    @apply text-success-txt;
+}
+
+#submission-container .word-count--none-remaining {
+    @apply text-alert-txt font-semibold;
 }

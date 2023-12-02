@@ -1,0 +1,12 @@
+<% if current_scope == "student" %>
+  <%= link_to "Curriculum",
+              "/student/dashboard#/curriculum",
+              target: "_blank",
+              class: "tw-sm-hidden"
+  %>
+<% end %>
+
+<%= link_to "Dashboard",
+            send("#{current_scope}_dashboard_path"),
+            class: "tw-sm-hidden"
+%>

@@ -31,11 +31,11 @@
             "true": "#ai_description"
           },
         },
-        class: "width--20-percent",
+        class: "w-full lg:w-full lg:w-1/5",
         id: :team_submission_ai %>
 
-      <div id="ai_description">
-        <p class="hint margin--b-none">Please explain how:</p>
+      <div id="ai_description" class="mt-4">
+        <p class="tw-hint">Please explain how:</p>
 
         <%= f.text_area :ai_description,
           id: :team_submission_ai_description,
@@ -46,7 +46,7 @@
           },
           rows: 5 %>
 
-        <p id="ai-word-count" class="scent word-counter">
+        <p id="ai-word-count" class="tw-hint word-counter">
           Number of words typed:
           <br>
           <span class="word-count__total word-count--plenty-remaining">
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div class="field margin--t-large">
+    <div class="field mt-4">
       <%= f.label :climate_change,
         "Does your submission help solve climate change?",
         for: :team_submission_climate_change %>
@@ -71,11 +71,11 @@
             "true": "#climate_change_description"
           },
         },
-        class: "width--20-percent",
+        class: "w-full lg:w-1/5",
         id: :team_submission_climate_change %>
 
-      <div id="climate_change_description">
-        <p class="hint margin--b-none">Please explain how:</p>
+      <div id="climate_change_description" class="mt-4">
+        <p class="tw-hint">Please explain how:</p>
 
         <%= f.text_area :climate_change_description,
           id: :team_submission_climate_change_description,
@@ -86,7 +86,7 @@
           },
           rows: 5 %>
 
-        <p id="climate-change-word-count" class="scent word-counter">
+        <p id="climate-change-word-count" class="tw-hint word-counter">
           Number of words typed:
           <br>
           <span class="word-count__total word-count--plenty-remaining">
@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <div class="field margin--t-large">
+    <div class="field mt-4">
       <%= f.label :game,
         t("submissions.solves_hunger_or_food_waste_question"),
         for: :team_submission_solves_hunger_or_food_waste %>
@@ -111,11 +111,11 @@
             "true": "#solves_hunger_or_food_waste_description"
           },
         },
-        class: "width--20-percent",
+        class: "w-full lg:w-1/5",
         id: :team_submission_solves_hunger_or_food_waste %>
 
-      <div id="solves_hunger_or_food_waste_description">
-        <p class="hint margin--b-none">Please explain how:</p>
+      <div id="solves_hunger_or_food_waste_description" class="mt-4">
+        <p class="tw-hint">Please explain how:</p>
 
         <%= f.text_area :solves_hunger_or_food_waste_description,
           id: :team_submission_solves_hunger_or_food_waste_description,
@@ -126,7 +126,7 @@
           },
           rows: 5 %>
 
-        <p id="solves-hunger-or-food-waste-word-count" class="scent word-counter">
+        <p id="solves-hunger-or-food-waste-word-count" class="tw-hint word-counter">
           Number of words typed:
           <br>
           <span class="word-count__total word-count--plenty-remaining">
@@ -138,7 +138,7 @@
       </div>
     </div>
 
-    <div class="field margin--t-large">
+    <div class="field mt-4">
       <%= f.label :game,
         t("submissions.uses_open_ai_question"),
         for: :team_submission_game %>
@@ -151,11 +151,11 @@
             "true": "#uses_open_ai_description"
           },
         },
-        class: "width--20-percent",
+        class: "w-full lg:w-1/5",
         id: :team_submission_game %>
 
-      <div id="uses_open_ai_description">
-        <p class="hint margin--b-none">Please explain how:</p>
+      <div id="uses_open_ai_description" class="mt-4">
+        <p class="tw-hint">Please explain how:</p>
 
         <%= f.text_area :uses_open_ai_description,
           id: :team_submission_uses_open_ai_description,
@@ -166,7 +166,7 @@
           },
           rows: 5 %>
 
-        <p id="uses-open-ai-word-count" class="scent word-counter">
+        <p id="uses-open-ai-word-count" class="tw-hint word-counter">
           Number of words typed:
           <br>
           <span class="word-count__total word-count--plenty-remaining">
