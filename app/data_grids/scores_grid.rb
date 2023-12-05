@@ -170,6 +170,6 @@ class ScoresGrid
   end
 
   column :score_details_link, html: false do |submission_score|
-    Rails.application.routes.url_helpers.url_for(controller: "admin/score_details", action: "show", id: submission_score.id)
+    Rails.application.routes.url_helpers.url_for(controller: "admin/score_details", action: "show", id: submission_score.team_submission.id)
   end
 end
