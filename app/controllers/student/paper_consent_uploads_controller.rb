@@ -33,7 +33,10 @@ module Student
       end
 
       if error_messages.size == 2
-        error_messages = [I18n.t("controllers.paper_consent_uploads.update.parental_and_media_consent.error")]
+        error_messages = [
+          I18n.t("controllers.paper_consent_uploads.update.parental_and_media_consent.error",
+            max_file_size: "#{PaperParentalConsentUploader::MAXIMUM_UPLOAD_FILE_SIZE_IN_MEGABYTES} MB")
+        ]
       end
 
       redirect_to student_dashboard_path,
