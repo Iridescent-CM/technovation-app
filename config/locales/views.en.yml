@@ -390,6 +390,7 @@ en:
     team_submissions:
       form:
         app_description_help: "Your description should be at least 100 words."
+        additional_info_word_count_help: "Your description is too long. Please limit it to 100 words."
         source_code_external_url_help: "Please ensure that your URL is publicly available"
       show:
         title: "%{team_name}'s App"
