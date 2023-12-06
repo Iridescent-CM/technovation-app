@@ -236,17 +236,20 @@ class TeamSubmission < ActiveRecord::Base
   validates :thunkable_account_email, email: true, allow_blank: true
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
-  validates :ai_description,
-    presence: true,
-    if: ->(team_submission) { team_submission.ai? }
+  validates :ai_description, presence: true, description_word_count: true,
+            if: ->(team_submission) { team_submission.ai? }
 
-  validates :climate_change_description,
-    presence: true,
-    if: ->(team_submission) { team_submission.climate_change? }
+  validates :climate_change_description, presence: true, description_word_count: true,
+            if: ->(team_submission) { team_submission.climate_change? }
 
-  validates :game_description,
-    presence: true,
-    if: ->(team_submission) { team_submission.game? }
+  validates :game_description, presence: true, description_word_count: true,
+            if: ->(team_submission) { team_submission.game? }
+
+  validates :solves_hunger_or_food_waste_description, presence: true, description_word_count: true,
+            if: ->(team_submission) { team_submission.solves_hunger_or_food_waste? }
+
+  validates :uses_open_ai_description, presence: true, description_word_count: true,
+            if: ->(team_submission) { team_submission.uses_open_ai? }
 
   validates :pitch_video_link,
     format: {
