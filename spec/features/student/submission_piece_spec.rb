@@ -198,4 +198,57 @@ RSpec.feature "Students edit submission pieces" do
       )
     end
   end
+
+  scenario "Displays error for blank description when 'Yes' is selected for additional questions" do
+    click_link "Additional information"
+
+    select "Yes", from: "team_submission_ai"
+    select "Yes", from: "team_submission_climate_change"
+    select "Yes", from: "team_submission_solves_hunger_or_food_waste"
+    select "Yes", from: "team_submission_game"
+
+    click_button "Save my responses"
+
+    expect(page).to have_content("Sorry, there was a problem saving your responses.")
+
+    within("#ai_description") do
+      expect(page).to have_content("can't be blank")
+    end
+
+    within("#climate_change_description") do
+      expect(page).to have_content("can't be blank")
+    end
+
+    within("#solves_hunger_or_food_waste_description") do
+      expect(page).to have_content("can't be blank")
+    end
+
+    within("#uses_open_ai_description") do
+      expect(page).to have_content("can't be blank")
+    end
+  end
+
+  scenario "Displays error when description word count is over 100" do
+    click_link "Additional information"
+
+    select "Yes", from: "team_submission_ai"
+
+    fill_in "team_submission_ai_description",
+      with:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu arcu tincidunt, accumsan nisi eu,
+              varius velit. Cras ultrices nisi risus, vitae placerat ligula mattis eu. Vestibulum quis ullamcorper lectus.
+              Vivamus nec tortor ut nibh eleifend aliquam nec non nisl. Nulla sit amet blandit sem. Aliquam ac volutpat velit.
+              Duis rhoncus turpis ut tellus finibus imperdiet. Integer sagittis eleifend quam, id tempus justo porttitor vitae.
+              Pellentesque sapien ipsum, facilisis et lobortis non, pretium nec turpis. Nulla eget nulla velit. Praesent nunc 
+              lectus, cursus eu sollicitudin quis, commodo et metus. Donec et blandit lectus. Sed quam arcu, tristique vel sapien 
+              faucibus, vulputate dictum nibh. Quisque finibus rhoncus urna, eu consequat lectus."
+
+    click_button "Save my responses"
+
+    expect(page).to have_content("Sorry, there was a problem saving your responses.")
+
+    within("#ai_description") do
+      expect(page).to have_content(I18n.t('views.team_submissions.form.additional_info_word_count_help'))
+    end
+  end
 end
