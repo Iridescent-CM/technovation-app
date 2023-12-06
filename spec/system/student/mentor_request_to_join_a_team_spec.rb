@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "A mentor requesting to join a student's team", :js do
-  before { SeasonToggles.team_building_enabled = "yes" }
+  before do
+    allow(TeamMemberInvite).to receive(:students_sending_invites_enabled?).and_return(true)
+  end
 
   let(:student) { FactoryBot.create(:student, :geocoded, :on_team) }
   let!(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) }

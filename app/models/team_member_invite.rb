@@ -50,6 +50,10 @@ class TeamMemberInvite < ActiveRecord::Base
            :mailer_token,
     to: :invitee, prefix: true
 
+  def self.students_sending_invites_enabled?(important_dates: ImportantDates)
+    (important_dates.official_start_of_season..important_dates.submission_deadline).cover?(Date.today)
+  end
+
   def to_param
     invite_token
   end

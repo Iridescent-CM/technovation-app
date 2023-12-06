@@ -17,7 +17,7 @@
       team: team
     %>
 
-    <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
+    <% if TeamMemberInvite.students_sending_invites_enabled? %>
       <%= render "student/teams/pending_student_invites",
         team: team,
         preview_method: :invitee_email,
@@ -34,26 +34,28 @@
         join_requests: team.pending_student_join_requests
       %>
 
-      <div class="mt-10">
-        <%= render "application/templates/content_well" do %>
-          <h2 class="mb-2 text-lg text-gray-600">
-            Do you want more teammates?
-          </h2>
+      <% if SeasonToggles.team_building_enabled? %>
+        <div class="mt-10">
+          <%= render "application/templates/content_well" do %>
+            <h2 class="mb-2 text-lg text-gray-600">
+              Do you want more teammates?
+            </h2>
 
-          <%= form_with model: team,
-            data: { submit_on_change: true },
-            url: student_team_path(team, { format: :json }),
-            method: :patch do |f| %>
+            <%= form_with model: team,
+              data: { submit_on_change: true },
+              url: student_team_path(team, { format: :json }),
+              method: :patch do |f| %>
 
-            <%= f.check_box :accepting_student_requests,
-              id: :team_accepting_student_requests %>
+              <%= f.check_box :accepting_student_requests,
+                id: :team_accepting_student_requests %>
 
-            <%= f.label :accepting_student_requests,
-              "Allow other students to find your team and request to join",
-              for: :team_accepting_student_requests %>
+              <%= f.label :accepting_student_requests,
+                "Allow other students to find your team and request to join",
+                for: :team_accepting_student_requests %>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

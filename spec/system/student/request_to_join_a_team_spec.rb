@@ -5,7 +5,10 @@ RSpec.describe "Students request to join a team",
   vcr: {match_requests_on: [:method, :host]} do
   include ActionView::RecordIdentifier
 
-  before { SeasonToggles.team_building_enabled! }
+  before do
+    SeasonToggles.team_building_enabled!
+    allow(TeamMemberInvite).to receive(:students_sending_invites_enabled?).and_return(true)
+  end
 
   it "students already on a team don't see the link" do
     student = FactoryBot.create(:student, :on_team, :onboarded)
