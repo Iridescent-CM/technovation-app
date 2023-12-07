@@ -228,7 +228,7 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
-  scenario "Displays error when description word count is over 100" do
+  scenario "Displays error when AI description word count is over 100" do
     click_link "Additional information"
 
     select "Yes", from: "team_submission_ai"
