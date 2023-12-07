@@ -248,7 +248,7 @@ RSpec.feature "Students edit submission pieces" do
     expect(page).to have_content("Sorry, there was a problem saving your responses.")
 
     within("#ai_description") do
-      expect(page).to have_content(I18n.t('views.team_submissions.form.additional_info_word_count_help'))
+      expect(page).to have_content("Your response is too long. Please limit to 100 words.")
     end
   end
 end
