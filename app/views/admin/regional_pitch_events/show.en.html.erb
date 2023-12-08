@@ -36,53 +36,31 @@
 
             <dd><%= @event.division_names %></dd>
 
-            <dt>Teams (<%= @event.teams.count %>)</dt>
-            <dd>
-              <% @event.teams.each do |team| %>
-                <%= link_to team.name, admin_team_submission_path(team.submission) %><br>
-              <% end %>
-            </dd>
-
-            <dt>Judges (<%= @event.judge_list.size %>)</dt>
-            <dd>
-              <% @event.judge_list.each do |judge| %>
-                <% if judge.is_a?(JudgeProfile) %>
-                  <%= link_to judge.name, admin_participant_path(judge.account) %><br>
-                <% else %>
-                  <%= judge.name %><br>
-                <% end %>
-              <% end %>
-            </dd>
-          </dl>
-        </div>
-
-        <div class="grid__col-auto">
-          <dl>
             <dt>Ambassador:</dt>
 
             <dd>
               <%= link_to @event.ambassador.name,
-                admin_participant_path(@event.ambassador.account) %>
+                          admin_participant_path(@event.ambassador.account) %>
             </dd>
 
             <dt>Time:</dt>
 
             <dd>
               <%= @event.starts_at
-                .in_time_zone(@event.timezone)
-                .strftime("%A, %B %e") %>
+                        .in_time_zone(@event.timezone)
+                        .strftime("%A, %B %e") %>
 
               <br />
 
               <%= @event.starts_at
-                .in_time_zone(@event.timezone)
-                .strftime("%-I:%M%P") %>
+                        .in_time_zone(@event.timezone)
+                        .strftime("%-I:%M%P") %>
 
               &ndash;
 
               <%= @event.ends_at
-                .in_time_zone(@event.timezone)
-                .strftime("%-I:%M%P %Z") %>
+                        .in_time_zone(@event.timezone)
+                        .strftime("%-I:%M%P %Z") %>
             </dd>
 
             <dt>Address:</dt>
@@ -93,6 +71,11 @@
               <%= @event.city %>
             </dd>
 
+          </dl>
+        </div>
+
+        <div class="grid__col-auto">
+          <dl>
             <dt>Event link:</dt>
 
             <% unless @event.event_link.blank? %>
@@ -105,13 +88,7 @@
               <dd>No link provided.</dd>
             <% end %>
           </dl>
-        </div>
-      </div>
 
-      <hr />
-
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto">
           <dl>
             <dt>Created at</dt>
 
@@ -124,6 +101,87 @@
             <dd>
               <%= @event.updated_at.strftime("%Y-%m-%d %H:%M %Z") %>
             </dd>
+          </dl>
+
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto" style="overflow-x:auto;">
+          <h5>Teams (<%= @event.teams.count %>)</h5>
+
+          <% if @event.teams.any? %>
+            <table class="margin--b-xxlarge">
+              <thead>
+              <tr>
+                <th>Team</th>
+                <th>Division</th>
+                <th>Submission</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @event.teams.each do |team| %>
+                <tr>
+                  <td>
+                    <%= link_to team.name, admin_team_path(team) %>
+                  </td>
+                  <td>
+                    <%= team.division_name %>
+                  </td>
+                  <td>
+                    <%= link_to team.submission.name, admin_team_submission_path(team.submission) %>
+                  </td>
+                  <td>
+                        <span class="pill pill-<%= team.status == 'ready' ? 'green' : 'orange' %>">
+                          <%= team.human_status %>
+                        </span>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p>No teams yet.</p>
+          <% end %>
+
+          <h5>Judges (<%= @event.judge_list.size %>)</h5>
+          <% if @event.judge_list.any?  %>
+            <table>
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @event.judge_list.each do |judge| %>
+                <tr>
+                  <td>
+                    <% if judge.is_a?(JudgeProfile) %>
+                      <%= link_to judge.name, admin_participant_path(judge.account) %>
+                    <% else %>
+                      Invited Judge
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= judge.email %>
+                  </td>
+                  <td>
+                    <span class="pill pill-<%= judge.status == 'ready' ? 'green' : 'red' %>">
+                      <%= judge.human_status %>
+                    </span>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p>No judges yet.</p>
+          <% end %>
         </div>
       </div>
     </div>
