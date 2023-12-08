@@ -1,0 +1,20 @@
+.pill {
+  display: inline-block;
+  border-radius: 30px;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  font-size: 0.9rem;
+
+  &.pill-green {
+    background-color: $primary-mid;
+  }
+
+  &.pill-orange {
+    background-color: $orange;
+  }
+
+  &.pill-red {
+    background-color: $alert-txt;
+  }
+}
