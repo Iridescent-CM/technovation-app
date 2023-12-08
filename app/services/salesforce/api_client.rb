@@ -16,7 +16,7 @@ module Salesforce
       error_notifier: Airbrake
     )
 
-      if enabled
+      if ActiveModel::Type::Boolean.new.cast(enabled)
         @client = client_constructor.new(
           instance_url: instance_url,
           api_version: api_version,
