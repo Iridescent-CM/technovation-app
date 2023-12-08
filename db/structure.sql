@@ -120,7 +120,8 @@ CREATE TABLE public.accounts (
     geocoding_fixed_at timestamp without time zone,
     terms_agreed_at timestamp without time zone,
     parent_registered boolean DEFAULT false NOT NULL,
-    learn_worlds_user_id character varying
+    learn_worlds_user_id character varying,
+    salesforce_id character varying
 );
 
 
@@ -3191,6 +3192,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231016140526'),
 ('20231016221100'),
 ('20231017170356'),
-('20231115134722');
+('20231115134722'),
+('20231205164341');
 
 
