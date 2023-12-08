@@ -3,9 +3,13 @@ require "rails_helper"
 RSpec.describe Salesforce::ApiClient do
   let(:salesforce_api_client) do
     Salesforce::ApiClient.new(
-      url: salesforce_url,
-      access_token: salesforce_access_token,
-      version: salesforce_version,
+      instance_url: salesforce_instance_url,
+      api_version: salesforce_api_version,
+      client_id: salesforce_client_id,
+      client_secret: salesforce_client_secret,
+      refresh_token: salesforce_refresh_token,
+      oauth_token: salesforce_oauth_token,
+      authentication_callback: salesforce_authentication_callback,
       enabled: salesforce_enabled,
       client_constructor: client_constructor,
       logger: logger,
@@ -13,9 +17,13 @@ RSpec.describe Salesforce::ApiClient do
     )
   end
 
-  let(:salesforce_url) { "https://test-salesforce.com/" }
-  let(:salesforce_access_token) { "1234-09876-5432" }
-  let(:salesforce_version) { "60" }
+  let(:salesforce_instance_url) { "https://test-salesforce.com/" }
+  let(:salesforce_api_version) { "60" }
+  let(:salesforce_client_id) { "1234-09876-5432" }
+  let(:salesforce_client_secret) { "8766-qwerty-54321" }
+  let(:salesforce_oauth_token) { "aaaaa-bbbb-ccc" }
+  let(:salesforce_refresh_token) { "11111-22222-3333333" }
+  let(:salesforce_authentication_callback) { double("authentication_callback") }
   let(:salesforce_enabled) { true }
   let(:client_constructor) { class_double(Restforce).as_stubbed_const }
   let(:logger) { double("Logger") }
@@ -23,9 +31,13 @@ RSpec.describe Salesforce::ApiClient do
 
   before do
     allow(client_constructor).to receive(:new).with(
-      oauth_token: salesforce_access_token,
-      instance_url: salesforce_url,
-      api_version: salesforce_version
+      instance_url: salesforce_instance_url,
+      api_version: salesforce_api_version,
+      client_id: salesforce_client_id,
+      client_secret: salesforce_client_secret,
+      refresh_token: salesforce_refresh_token,
+      oauth_token: salesforce_oauth_token,
+      authentication_callback: salesforce_authentication_callback
     ).and_return(salesforce_client)
 
     allow(logger).to receive(:info)
