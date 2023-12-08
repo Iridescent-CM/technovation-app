@@ -1,7 +1,7 @@
 module Salesforce
   class ApiClient
     def initialize(
-      enabled: ENV.fetch("SALESFORCE_ENABLED", false),
+      enabled: ENV.fetch("ENABLE_SALESFORCE", false),
       instance_url: ENV.fetch("SALESFORCE_INSTANCE_URL"),
       api_version: ENV.fetch("SALESFORCE_API_VERSION"),
       client_id: ENV.fetch("SALESFORCE_CLIENT_ID"),
