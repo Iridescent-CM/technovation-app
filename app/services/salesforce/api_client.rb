@@ -16,23 +16,18 @@ module Salesforce
       error_notifier: Airbrake
     )
 
-      if ActiveModel::Type::Boolean.new.cast(enabled)
-        @client = client_constructor.new(
-          instance_url: instance_url,
-          api_version: api_version,
-          client_id: client_id,
-          client_secret: client_secret,
-          refresh_token: refresh_token,
-          oauth_token: oauth_token,
-          authentication_callback: authentication_callback
-        )
-        @logger = logger
-        @error_notifier = error_notifier
-      else
-        logger.info "[SALESFORCE DISABLED] Trying to initialize Salesforce API client"
-
-        raise "Salesforce is disabled"
-      end
+      @client = client_constructor.new(
+        instance_url: instance_url,
+        api_version: api_version,
+        client_id: client_id,
+        client_secret: client_secret,
+        refresh_token: refresh_token,
+        oauth_token: oauth_token,
+        authentication_callback: authentication_callback
+      )
+      @salesforce_enabled = ActiveModel::Type::Boolean.new.cast(enabled)
+      @logger = logger
+      @error_notifier = error_notifier
     end
 
     def add_contact(account:)
@@ -76,10 +71,14 @@ module Salesforce
 
     private
 
-    attr_reader :client, :logger, :error_notifier
+    attr_reader :client, :salesforce_enabled, :logger, :error_notifier
 
     def handle_request(&block)
-      block.call
+      if salesforce_enabled
+        block.call
+      else
+        logger.info "[SALESFORCE DISABLED] Cannot use Salesforce API client"
+      end
     rescue => error
       logger.error("[SALESFORCE] #{error}")
       error_notifier.notify("[SALESFORCE] #{error}")
