@@ -3,9 +3,13 @@ require "rails_helper"
 RSpec.describe Salesforce::ApiClient do
   let(:salesforce_api_client) do
     Salesforce::ApiClient.new(
-      url: salesforce_url,
-      access_token: salesforce_access_token,
-      version: salesforce_version,
+      instance_url: salesforce_instance_url,
+      api_version: salesforce_api_version,
+      client_id: salesforce_client_id,
+      client_secret: salesforce_client_secret,
+      refresh_token: salesforce_refresh_token,
+      oauth_token: salesforce_oauth_token,
+      authentication_callback: salesforce_authentication_callback,
       enabled: salesforce_enabled,
       client_constructor: client_constructor,
       logger: logger,
@@ -13,9 +17,13 @@ RSpec.describe Salesforce::ApiClient do
     )
   end
 
-  let(:salesforce_url) { "https://test-salesforce.com/" }
-  let(:salesforce_access_token) { "1234-09876-5432" }
-  let(:salesforce_version) { "60" }
+  let(:salesforce_instance_url) { "https://test-salesforce.com/" }
+  let(:salesforce_api_version) { "60" }
+  let(:salesforce_client_id) { "1234-09876-5432" }
+  let(:salesforce_client_secret) { "8766-qwerty-54321" }
+  let(:salesforce_oauth_token) { "aaaaa-bbbb-ccc" }
+  let(:salesforce_refresh_token) { "11111-22222-3333333" }
+  let(:salesforce_authentication_callback) { double("authentication_callback") }
   let(:salesforce_enabled) { true }
   let(:client_constructor) { class_double(Restforce).as_stubbed_const }
   let(:logger) { double("Logger") }
@@ -23,9 +31,13 @@ RSpec.describe Salesforce::ApiClient do
 
   before do
     allow(client_constructor).to receive(:new).with(
-      oauth_token: salesforce_access_token,
-      instance_url: salesforce_url,
-      api_version: salesforce_version
+      instance_url: salesforce_instance_url,
+      api_version: salesforce_api_version,
+      client_id: salesforce_client_id,
+      client_secret: salesforce_client_secret,
+      refresh_token: salesforce_refresh_token,
+      oauth_token: salesforce_oauth_token,
+      authentication_callback: salesforce_authentication_callback
     ).and_return(salesforce_client)
 
     allow(logger).to receive(:info)
@@ -37,6 +49,7 @@ RSpec.describe Salesforce::ApiClient do
   let(:account) do
     instance_double(
       Account,
+      id: 45678,
       first_name: first_name,
       last_name: last_name,
       email: email,
@@ -46,7 +59,7 @@ RSpec.describe Salesforce::ApiClient do
   let(:first_name) { "Luna" }
   let(:last_name) { "Lovegood" }
   let(:email) { "luna@example.com" }
-  let(:salesforce_id) { nil }
+  let(:salesforce_id) { 123 }
 
   describe "adding a new contact to Salesforce" do
     context "when Salesforce is enabled" do
@@ -101,12 +114,20 @@ RSpec.describe Salesforce::ApiClient do
     context "when Salesforce is disabled" do
       let(:salesforce_enabled) { false }
 
-      it "logs and raises an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Trying to initialize Salesforce API client")
+      it "logs an error" do
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Adding account #{account.id}")
 
-        expect {
-          salesforce_api_client.add_contact
-        }.to raise_error("Salesforce is disabled")
+        salesforce_api_client.add_contact(account: account)
+      end
+    end
+
+    context "when Salesforce is disabled via a 'false' string setting" do
+      let(:salesforce_enabled) { "false" }
+
+      it "logs an error" do
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Adding account #{account.id}")
+
+        salesforce_api_client.add_contact(account: account)
       end
     end
   end
@@ -165,12 +186,20 @@ RSpec.describe Salesforce::ApiClient do
     context "when Salesforce is disabled" do
       let(:salesforce_enabled) { false }
 
-      it "logs and raises an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Trying to initialize Salesforce API client")
+      it "logs an error" do
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Updating account #{account.id}")
 
-        expect {
-          salesforce_api_client.update_contact
-        }.to raise_error("Salesforce is disabled")
+        salesforce_api_client.update_contact(account: account)
+      end
+    end
+
+    context "when Salesforce is disabled via a 'false' string setting" do
+      let(:salesforce_enabled) { false }
+
+      it "logs an error" do
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Updating account #{account.id}")
+
+        salesforce_api_client.update_contact(account: account)
       end
     end
   end
@@ -224,11 +253,19 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { false }
 
       it "logs and raises an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Trying to initialize Salesforce API client")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Deleting account with Salesforce Id #{salesforce_id}")
 
-        expect {
-          salesforce_api_client.delete_contact
-        }.to raise_error("Salesforce is disabled")
+        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
+      end
+    end
+
+    context "when Salesforce is disabled via a 'false' string setting" do
+      let(:salesforce_enabled) { "false" }
+
+      it "logs an error" do
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Deleting account with Salesforce Id #{salesforce_id}")
+
+        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
       end
     end
   end

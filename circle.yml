@@ -92,10 +92,12 @@ jobs:
           JUDGE_TRAINING_URL: n-a
           MAILCHIMP_API_KEY: n-a
           MAILCHIMP_LIST_ID: n-a
-          SALESFORCE_ENABLED: 0
+          ENABLE_SALESFORCE: 0
           SALESFORCE_INSTANCE_URL: n-a
-          SALESFORCE_ACCESS_TOKEN: n-a
           SALESFORCE_API_VERSION: n-a
+          SALESFORCE_CLIENT_ID: n-a
+          SALESFORCE_CLIENT_SECRET: n-a
+          SALESFORCE_REFRESH_TOKEN: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a
           NEWSLETTER_URL: "https://some/other/url"
           GENERAL_NEWSLETTER_URL: "https://some/general/url"
