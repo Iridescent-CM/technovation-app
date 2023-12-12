@@ -14,5 +14,6 @@ class NullBackgroundCheck < NullObject
   def invitation_expired?; false; end
   def requesting_invitation?; false; end
   def error?; false; end
+  def invitation_processing?; false; end
   def candidate_id; nil; end
 end
