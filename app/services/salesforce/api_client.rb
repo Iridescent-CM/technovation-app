@@ -33,7 +33,7 @@ module Salesforce
     def add_contact(account:)
       salesforce_id = nil
 
-      handle_request do
+      handle_request "Adding account #{account.id}" do
         salesforce_id = client.create!(
           "Contact",
           FirstName: account.first_name,
@@ -49,7 +49,7 @@ module Salesforce
 
     def update_contact(account:)
       if account.salesforce_id.present?
-        handle_request do
+        handle_request "Updating account #{account.id}" do
           client.update!(
             "Contact",
             Id: account.salesforce_id,
@@ -63,7 +63,7 @@ module Salesforce
 
     def delete_contact(salesforce_id:)
       if salesforce_id.present?
-        handle_request do
+        handle_request "Deleting account with Salesforce Id #{salesforce_id}" do
           client.destroy!("Contact", salesforce_id)
         end
       end
@@ -73,15 +73,17 @@ module Salesforce
 
     attr_reader :client, :salesforce_enabled, :logger, :error_notifier
 
-    def handle_request(&block)
+    def handle_request(message, &block)
       if salesforce_enabled
-        block.call
+        begin
+          block.call
+        rescue => error
+          logger.error("[SALESFORCE] #{error}")
+          error_notifier.notify("[SALESFORCE] #{error}")
+        end
       else
-        logger.info "[SALESFORCE DISABLED] Cannot use Salesforce API client"
+        logger.info "[SALESFORCE DISABLED] #{message}"
       end
-    rescue => error
-      logger.error("[SALESFORCE] #{error}")
-      error_notifier.notify("[SALESFORCE] #{error}")
     end
   end
 end

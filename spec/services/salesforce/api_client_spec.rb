@@ -49,6 +49,7 @@ RSpec.describe Salesforce::ApiClient do
   let(:account) do
     instance_double(
       Account,
+      id: 45678,
       first_name: first_name,
       last_name: last_name,
       email: email,
@@ -114,7 +115,7 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { false }
 
       it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Cannot use Salesforce API client")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Adding account #{account.id}")
 
         salesforce_api_client.add_contact(account: account)
       end
@@ -124,7 +125,7 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { "false" }
 
       it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Cannot use Salesforce API client")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Adding account #{account.id}")
 
         salesforce_api_client.add_contact(account: account)
       end
@@ -186,7 +187,7 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { false }
 
       it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Cannot use Salesforce API client")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Updating account #{account.id}")
 
         salesforce_api_client.update_contact(account: account)
       end
@@ -196,7 +197,7 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { false }
 
       it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Cannot use Salesforce API client")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Updating account #{account.id}")
 
         salesforce_api_client.update_contact(account: account)
       end
@@ -252,9 +253,9 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { false }
 
       it "logs and raises an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Cannot use Salesforce API client")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Deleting account with Salesforce Id #{salesforce_id}")
 
-        salesforce_api_client.delete_contact(salesforce_id: 12345)
+        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
       end
     end
 
@@ -262,9 +263,9 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { "false" }
 
       it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Cannot use Salesforce API client")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Deleting account with Salesforce Id #{salesforce_id}")
 
-        salesforce_api_client.delete_contact(salesforce_id: 12345)
+        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
       end
     end
   end
