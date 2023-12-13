@@ -96,11 +96,24 @@ class ScoredSubmissionsGrid
     submission.quarterfinals_score_range
   end
 
+  column :quarterfinals_highest_to_lowest_score_difference, header: "Quarterfinals score discrepancy" do |submission|
+    if submission.scores.count >= 2
+      submission.quarterfinals_highest_to_lowest_score_difference
+    end
+  end
+
   column :semifinals_range, order: :semifinals_score_range, if: ->(g) {
     g.admin || SeasonToggles.display_scores?
   } do |submission|
     submission.semifinals_score_range
   end
+
+  column :semifinals_highest_to_lowest_score_difference, header: "Semifinals score discrepancy" do |submission|
+    if submission.scores.count >= 2
+      submission.semifinals_highest_to_lowest_score_difference
+    end
+  end
+
 
   column :quarterfinals_official_judging do |submission|
     if submission.team.selected_regional_pitch_event.live? &&

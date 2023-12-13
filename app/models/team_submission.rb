@@ -393,8 +393,10 @@ class TeamSubmission < ActiveRecord::Base
   def update_score_summaries
     update_quarterfinals_average_score
     update_quarterfinals_score_range
+    update_quarterfinals_highest_to_lowest_score_difference
     update_semifinals_average_score
     update_semifinals_score_range
+    update_semifinals_highest_to_lowest_score_difference
   end
 
   def quarterfinals_official_scores
@@ -445,6 +447,14 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def update_quarterfinals_highest_to_lowest_score_difference
+    score_totals = submission_scores.current.complete.quarterfinals.map(&:total)
+
+    if score_totals.count >= 2
+      update_column(:quarterfinals_highest_to_lowest_score_difference, score_totals.max - score_totals.min)
+    end
+  end
+
   def update_semifinals_average_score
     scores = submission_scores.current.complete.semifinals
     if scores.any?
@@ -463,6 +473,14 @@ class TeamSubmission < ActiveRecord::Base
     if scores.any?
       range = scores.max_by(&:total).total - scores.min_by(&:total).total
       update_column(:semifinals_score_range, range)
+    end
+  end
+
+  def update_semifinals_highest_to_lowest_score_difference
+    score_totals = submission_scores.current.complete.semifinals.map(&:total)
+
+    if score_totals.count >= 2
+      update_column(:semifinals_highest_to_lowest_score_difference, score_totals.max - score_totals.min)
     end
   end
 

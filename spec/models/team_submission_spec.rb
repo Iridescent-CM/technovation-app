@@ -286,6 +286,22 @@ RSpec.describe TeamSubmission do
     let(:live_judge) { FactoryBot.create(:judge_profile) }
     let(:virtual_judge) { FactoryBot.create(:judge_profile) }
 
+    describe "#quarterfinals_highest_to_lowest_score_difference" do
+      it "computes the difference between the highest score and the lowest score" do
+        [5, 35].each do |score|
+          judge = FactoryBot.create(:judge_profile)
+          judge.submission_scores.create!({
+            team_submission: sub,
+            ideation_1: score,
+            completed_at: Time.current,
+            round: :quarterfinals
+          })
+        end
+
+        expect(sub.reload.quarterfinals_highest_to_lowest_score_difference).to eq(30)
+      end
+    end
+
     describe "for offical RPE" do
       before(:each) do
         @rpe = FactoryBot.create(:event,
@@ -534,6 +550,22 @@ RSpec.describe TeamSubmission do
       end
 
       expect(sub.reload.semifinals_score_range).to eq(7)
+    end
+
+    describe "#semifinals_highest_to_lowest_score_difference" do
+      it "computes the difference between the highest score and the lowest score" do
+        [10, 30].each do |score|
+          judge = FactoryBot.create(:judge_profile)
+          judge.submission_scores.create!({
+            team_submission: sub,
+            ideation_1: score,
+            completed_at: Time.current,
+            round: :semifinals
+          })
+        end
+
+        expect(sub.reload.semifinals_highest_to_lowest_score_difference).to eq(20)
+      end
     end
   end
 

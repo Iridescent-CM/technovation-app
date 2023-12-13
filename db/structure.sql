@@ -1543,7 +1543,9 @@ CREATE TABLE public.team_submissions (
     solves_hunger_or_food_waste boolean,
     solves_hunger_or_food_waste_description character varying,
     solves_health_problem boolean,
-    solves_health_problem_description character varying
+    solves_health_problem_description character varying,
+    quarterfinals_highest_to_lowest_score_difference integer,
+    semifinals_highest_to_lowest_score_difference integer
 );
 
 
@@ -3193,6 +3195,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231016221100'),
 ('20231017170356'),
 ('20231115134722'),
-('20231205164341');
+('20231205164341'),
+('20231213133952');
 
 
