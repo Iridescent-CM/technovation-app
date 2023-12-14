@@ -76,12 +76,20 @@ class ScoresGrid
     team_submission.quarterfinals_average_score
   end
 
+  column :submission_quarterfinals_score_range do
+    team_submission.quarterfinals_score_range
+  end
+
   column :submission_unofficial_score do
     team_submission.average_unofficial_score
   end
 
   column :submission_semifinals_score do
     team_submission.semifinals_average_score
+  end
+
+  column :submission_semifinals_score_range do
+    team_submission.semifinals_score_range
   end
 
   column :complete do
