@@ -33,19 +33,20 @@ module CheckrApiClient
         )
 
         if invitation_response.success?
-          candidate.update(background_check_attributes: {
+          candidate.background_check.update(
             candidate_id: candidate_id,
             invitation_id: invitation_response.payload[:id],
             invitation_status: invitation_response.payload[:status],
             invitation_url: invitation_response.payload[:invitation_url],
-            status: :invitation_sent
-          })
+            state: :invitation_sent
+          )
 
           Result.new(success?: true)
         else
           error = "[CHECKR] Error requesting invitation for #{candidate.id} - #{invitation_response.payload[:error]}"
           logger.error(error)
           error_notifier.notify(error)
+          update_state(:error)
 
           Result.new(success?: false)
         end
@@ -53,6 +54,8 @@ module CheckrApiClient
         error = "[CHECKR] Error requesting invitation for #{candidate.id} - Candidate ID is missing."
         logger.error(error)
         error_notifier.notify(error)
+        update_state(:error)
+
         Result.new(success?: false)
       end
     end
@@ -98,6 +101,7 @@ module CheckrApiClient
         error = "[CHECKR] Error creating candidate for #{candidate.id} - #{candidate_response_body[:error]}"
         logger.error(error)
         error_notifier.notify(error)
+        update_state(:error)
 
         Result.new(success?: false)
       end
@@ -120,6 +124,12 @@ module CheckrApiClient
       connection.post("/v1/#{resource}") do |req|
         req.body = body.to_json
       end
+    end
+
+    def update_state(state)
+      candidate.update(background_check_attributes: {
+        state: state
+      })
     end
   end
 end
