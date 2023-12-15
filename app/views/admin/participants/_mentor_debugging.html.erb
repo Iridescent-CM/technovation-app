@@ -76,10 +76,10 @@
             text: profile.background_check.status
           ) %>
         <% end %>
-      <% elsif profile.country != "US" %>
+      <% elsif !profile.in_background_check_country? %>
         <%= web_icon(
           "check-circle icon-green",
-          text: "International mentor! No BG Check needed"
+          text: "BG Check not needed in this country"
         ) %>
       <% else %>
         <%= web_icon("exclamation-circle icon-red", text: "Not submitted") %>
