@@ -3,16 +3,16 @@
 </h1>
 
 <% if profile.requires_background_check? %>
-  <% if @job.present? && @job.status == "queued" %>
-    <%= render "background_checks/statuses/invitation_job_queued" %>
+  <% if profile.background_check.requesting_invitation? %>
+    <%= render "background_checks/statuses/requesting_invitation" %>
+  <% elsif profile.background_check.error? %>
+    <%= render "background_checks/statuses/invitation_error" %>
+  <% elsif profile.background_check.invitation_pending? %>
+    <%= render "background_checks/statuses/invitation_pending" %>
+  <% elsif profile.background_check_submitted? %>
+    <%= render "background_checks/statuses/bg_check_submitted" %>
   <% else %>
-    <% if profile.background_check.invitation_pending? %>
-      <%= render "background_checks/statuses/invitation_pending" %>
-    <% elsif profile.background_check_submitted? %>
-      <%= render "background_checks/statuses/bg_check_submitted" %>
-    <% else %>
-      <%= render "background_checks/statuses/bg_check_required" %>
-    <% end %>
+    <%= render "background_checks/statuses/bg_check_required" %>
   <% end %>
 <% else %>
   <%= render "background_checks/statuses/bg_check_not_required" %>
