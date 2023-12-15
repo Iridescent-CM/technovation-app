@@ -1,0 +1,15 @@
+<p>
+  There was an error processing your invitation.
+</p>
+<p>
+  Please try requesting a new invitation or contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for assistance.
+</p>
+<p>
+  <%= link_to "Request a new invitation",
+              mentor_background_check_invitation_path,
+              class: "button button--primary",
+              data: {
+                method: :post
+              }
+  %>
+</p>
