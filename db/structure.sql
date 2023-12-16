@@ -244,7 +244,8 @@ CREATE TABLE public.background_checks (
     invitation_id character varying,
     invitation_status integer,
     invitation_url character varying,
-    internal_invitation_status integer
+    internal_invitation_status integer,
+    error_message character varying
 );
 
 
@@ -3196,6 +3197,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231115134722'),
 ('20231205164341'),
 ('20231211204753'),
-('20231215163819');
-
-
+('20231215163819'),
+('20231216014610');
