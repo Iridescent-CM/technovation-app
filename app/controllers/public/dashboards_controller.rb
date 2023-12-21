@@ -14,6 +14,7 @@ module Public
     end
 
     private
+
     def last_used_scope_dashboard_path
       last_scope_used = remove_cookie(CookieNames::LAST_PROFILE_USED)
       !!last_scope_used && public_send("#{last_scope_used}_dashboard_path")

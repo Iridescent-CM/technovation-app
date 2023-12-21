@@ -25,7 +25,7 @@ RSpec.describe Student::ProfilesController do
           account_attributes: {
             id: student.account_id,
             date_of_birth: senior_dob
-          },
+          }
         }
       }
 

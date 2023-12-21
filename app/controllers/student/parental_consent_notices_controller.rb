@@ -18,6 +18,7 @@ class Student::ParentalConsentNoticesController < StudentController
   end
 
   private
+
   def profile_params
     if params.fetch(:student_profile) { false }
       params.require(:student_profile).permit(

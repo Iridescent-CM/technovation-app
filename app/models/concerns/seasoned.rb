@@ -24,9 +24,9 @@ module Seasoned
       match = opts.fetch(:match) { "match_any" }.to_s
 
       if "match_all" == match
-        where(clauses.join(' AND '))
+        where(clauses.join(" AND "))
       else
-        where(clauses.join(' OR '))
+        where(clauses.join(" OR "))
       end
     }
 
@@ -62,7 +62,7 @@ module Seasoned
 
     module ClassMethods
       def seasoning_scope(year)
-        { season: year }
+        {season: year}
       end
 
       def seasoning_scope_as_string(year)

@@ -8,6 +8,7 @@ class TeamSubmissionPiecesController < ApplicationController
   end
 
   private
+
   def current_scope
     current_account.scope_name
   end
@@ -49,15 +50,15 @@ class TeamSubmissionPiecesController < ApplicationController
 
         if submission.present?
           context.send(
-            "edit_student_team_submission_path",
+            :edit_student_team_submission_path,
             submission,
             piece: piece.name
           )
         else
-          context.send("new_student_team_submission_path")
+          context.send(:new_student_team_submission_path)
         end
       else
-        context.send("new_student_team_submission_path")
+        context.send(:new_student_team_submission_path)
       end
     end
   end
@@ -70,18 +71,18 @@ class TeamSubmissionPiecesController < ApplicationController
 
         if submission.present?
           context.send(
-            "edit_mentor_team_submission_path",
+            :edit_mentor_team_submission_path,
             submission,
             piece: piece.name
           )
         else
           context.send(
-           "new_mentor_team_submission_path",
-           team_id: team.id
+            :new_mentor_team_submission_path,
+            team_id: team.id
           )
         end
       else
-        context.send("new_mentor_team_submission_path")
+        context.send(:new_mentor_team_submission_path)
       end
     end
   end

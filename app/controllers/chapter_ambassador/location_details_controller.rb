@@ -5,7 +5,7 @@ module ChapterAmbassador
     def show
       if !current_ambassador.address_details.blank?
         redirect_to chapter_ambassador_profile_path(
-          anchor: '!location'
+          anchor: "!location"
         ) and return
       end
 
@@ -13,6 +13,7 @@ module ChapterAmbassador
     end
 
     private
+
     def current_profile
       current_ambassador
     end

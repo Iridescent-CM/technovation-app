@@ -86,7 +86,7 @@ FactoryBot.define do
         m.account.send("#{k}=", v)
       end
 
-      if m.requires_background_check? and not e.not_onboarded
+      if m.requires_background_check? and !e.not_onboarded
         # TODO: not not_onboarded :/
         m.account.build_background_check(
           FactoryBot.attributes_for(:background_check)
@@ -171,7 +171,7 @@ FactoryBot.define do
 
     trait :has_judge_profile do
       after(:create) do |mentor|
-        CreateJudgeProfile.(mentor.account)
+        CreateJudgeProfile.call(mentor.account)
       end
     end
 

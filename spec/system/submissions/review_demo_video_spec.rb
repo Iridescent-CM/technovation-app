@@ -21,7 +21,7 @@ RSpec.describe "Reviewing the demo/technical video" do
         "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg']"
       )
 
-      click_link  "go back"
+      click_link "go back"
       fill_in "Youtube", with: "https://vimeo.com/119811742"
       click_button "Next"
       expect(page).to have_xpath(
@@ -30,14 +30,14 @@ RSpec.describe "Reviewing the demo/technical video" do
 
       visit student_dashboard_path
       click_link "Pitch"
-      expect(page).to have_css('.demo_video_link.incomplete')
+      expect(page).to have_css(".demo_video_link.incomplete")
     end
 
     it "saves after the intermediary step" do
       fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       click_button "Save"
-      expect(page).to have_css('.demo_video_link.complete')
+      expect(page).to have_css(".demo_video_link.complete")
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe "Reviewing the demo/technical video" do
         "//iframe[@src='https://www.youtube.com/embed/adGebPmRjxg']"
       )
 
-      click_link  "go back"
+      click_link "go back"
       fill_in "Youtube", with: "https://vimeo.com/119811742"
       click_button "Next"
       expect(page).to have_xpath(
@@ -72,14 +72,14 @@ RSpec.describe "Reviewing the demo/technical video" do
       visit mentor_dashboard_path
       within("#find-team") { click_link "Edit this team's submission" }
       click_link "Pitch"
-      expect(page).to have_css('.demo_video_link.incomplete')
+      expect(page).to have_css(".demo_video_link.incomplete")
     end
 
     it "saves after the intermediary step" do
       fill_in "Youtube", with: "youtube.com/watch?v=adGebPmRjxg"
       click_button "Next"
       click_button "Save"
-      expect(page).to have_css('.demo_video_link.complete')
+      expect(page).to have_css(".demo_video_link.complete")
     end
   end
 end

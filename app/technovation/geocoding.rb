@@ -1,8 +1,10 @@
 class Geocoding
   private
+
   attr_reader :model, :controller
 
   public
+
   def initialize(model, controller)
     @model = model
     @controller = controller
@@ -31,18 +33,17 @@ class Geocoding
   end
 
   private
+
   module GeocodingUpdater
     def apply_geocoding_changes(controller)
-      Rails.logger.warn("Geocoding #{self.class} id:#{self.id} with invalid address") if !valid_address?
+      Rails.logger.warn("Geocoding #{self.class} id:#{id} with invalid address") if !valid_address?
 
       geocode if !valid_coordinates? || detect_location_changes?
 
       if controller
-        StoreLocation.(
-          coordinates: coordinates,
+        StoreLocation.call(coordinates: coordinates,
           account: self,
-          context: controller,
-        )
+          context: controller)
       end
     end
   end

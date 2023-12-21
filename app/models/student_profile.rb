@@ -22,7 +22,7 @@ class StudentProfile < ActiveRecord::Base
       .where("teams.id IS NULL")
   }
 
-  scope :onboarded, -> { where(onboarded: true ) }
+  scope :onboarded, -> { where(onboarded: true) }
   scope :onboarding, -> { where(onboarded: false) }
 
   has_many :memberships,
@@ -120,21 +120,20 @@ class StudentProfile < ActiveRecord::Base
   validate :parent_guardian_email, -> { validate_valid_parent_email }
 
   delegate :electronic_signature,
-           :signed_at,
+    :signed_at,
     to: :parental_consent,
     prefix: true
 
   def method_missing(method_name, *args)
     # TODO: stop using this strategy
+
+    super
+  rescue
     begin
-      super
+      account.public_send(method_name, *args)
     rescue
-      begin
-        account.public_send(method_name, *args)
-      rescue
-        raise NoMethodError,
-          "undefined method `#{method_name}' not found for #{self}"
-      end
+      raise NoMethodError,
+        "undefined method `#{method_name}' not found for #{self}"
     end
   end
 
@@ -159,7 +158,7 @@ class StudentProfile < ActiveRecord::Base
 
     methods = [
       :email_confirmed?,
-      :parental_consent_signed?,
+      :parental_consent_signed?
     ]
 
     methods.each do |method|
@@ -183,12 +182,15 @@ class StudentProfile < ActiveRecord::Base
   def job_title=(*)
     false
   end
+
   def mentor_type=(*)
     false
   end
+
   def expertise_ids=(*)
     false
   end
+
   def bio=(*)
     false
   end
@@ -196,8 +198,8 @@ class StudentProfile < ActiveRecord::Base
   def has_saved_parental_info?
     persisted? &&
       parent_guardian_email.present? &&
-        parent_guardian_name.present? &&
-          valid?
+      parent_guardian_name.present? &&
+      valid?
   end
 
   def participated?
@@ -217,25 +219,25 @@ class StudentProfile < ActiveRecord::Base
 
   def human_status
     case status
-    when "past_season"; "must log in"
-    when "registered";  "must complete onboarding"
-    when "ready";       "ready!"
+    when "past_season" then "must log in"
+    when "registered" then "must complete onboarding"
+    when "ready" then "ready!"
     else; "status missing (bug)"
     end
   end
 
   def friendly_status
     case status
-    when "past_season"; "Log in now"
-    when "registered";  "Complete your student profile"
-    when "ready";       "Log in for more details"
+    when "past_season" then "Log in now"
+    when "registered" then "Complete your student profile"
+    when "ready" then "Log in for more details"
     else; "status missing (bug)"
     end
   end
 
   def validate_parent_email
-    %i{parent_guardian_name parent_guardian_email}.select {
-      |a| send(a).blank?
+    %i[parent_guardian_name parent_guardian_email].select { |a|
+      send(a).blank?
     }.each do |a|
       errors.add(a, :blank)
     end
@@ -267,9 +269,9 @@ class StudentProfile < ActiveRecord::Base
 
   def can_search_teams?
     SeasonToggles.team_building_enabled? and
-      not is_on_team? and
-        not team_member_invites.pending.any? and
-          not join_requests.pending.any?
+      !is_on_team? and
+      !team_member_invites.pending.any? and
+      !join_requests.pending.any?
   end
 
   def is_on_team?
@@ -293,10 +295,10 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def can_join_a_team?
-    not is_on_team? and
+    !is_on_team? and
       SeasonToggles.team_building_enabled?
   end
-  alias :can_create_a_team? :can_join_a_team?
+  alias_method :can_create_a_team?, :can_join_a_team?
 
   def team
     current_teams.first or ::NullTeam.new
@@ -339,7 +341,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def onboarding?
-    not onboarded?
+    !onboarded?
   end
 
   def actions_needed
@@ -377,7 +379,7 @@ class StudentProfile < ActiveRecord::Base
         parent_guardian_email == ConsentForms::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
       )
 
-    if not parent_guardian_email.match(
+    if !parent_guardian_email.match(
       /^[^@\.][\w\.\-]+(?:\+?[\w\.\-]+)?@[\w\.\-]+\w+$/
     )
       errors.add(:parent_guardian_email, :invalid)
@@ -399,8 +401,8 @@ class StudentProfile < ActiveRecord::Base
     end
 
     if saved_change_to_parent_guardian_name? or
-         saved_change_to_parent_guardian_email? and
-           parent_guardian_email.present?
+        saved_change_to_parent_guardian_email? and
+        parent_guardian_email.present?
 
       UpdateParentOnEmailListJob.perform_later(
         student_profile_id: id,

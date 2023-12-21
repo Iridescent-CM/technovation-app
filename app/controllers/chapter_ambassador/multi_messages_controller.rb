@@ -2,7 +2,7 @@ module ChapterAmbassador
   class MultiMessagesController < ChapterAmbassadorController
     def show
       @message = current_ambassador.multi_messages.find(params[:id])
-      render 'chapter_ambassador/messages/show'
+      render "chapter_ambassador/messages/show"
     end
 
     def new
@@ -12,12 +12,12 @@ module ChapterAmbassador
         team: params[:team],
         regarding: regarding
       )
-      render 'chapter_ambassador/messages/new'
+      render "chapter_ambassador/messages/new"
     end
 
     def edit
       @message = current_ambassador.multi_messages.unsent.find(params[:id])
-      render 'chapter_ambassador/messages/edit'
+      render "chapter_ambassador/messages/edit"
     end
 
     def create
@@ -27,7 +27,7 @@ module ChapterAmbassador
         redirect_to chapter_ambassador_path(@message),
           success: "Your message is ready to send"
       else
-        render 'chapter_ambassador/messages/new'
+        render "chapter_ambassador/messages/new"
       end
     end
 
@@ -38,7 +38,7 @@ module ChapterAmbassador
         redirect_to chapter_ambassador_path(@message),
           success: "Your message is ready to send"
       else
-        render 'chapter_ambassador/messages/edit'
+        render "chapter_ambassador/messages/edit"
       end
     end
 
@@ -49,6 +49,7 @@ module ChapterAmbassador
     end
 
     private
+
     def message_params
       params.require(:multi_message).permit(
         :team,

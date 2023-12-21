@@ -24,6 +24,7 @@ module TeamSubmissionVideoLinkReviewController
   end
 
   private
+
   def video_link_params
     params.permit(:piece, :value, :id)
   end

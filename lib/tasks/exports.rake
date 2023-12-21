@@ -6,7 +6,7 @@ namespace :exports do
       type: "Mentor",
       cleared_status: "Clear",
       season: 2017,
-      country: "US",
+      country: "US"
     })
   end
 end

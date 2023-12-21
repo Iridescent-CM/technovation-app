@@ -10,10 +10,10 @@ module ChapterAmbassador
 
     def show
       @team = if params[:allow_out_of_region]
-                Team.find(params[:id])
-              else
-                Team.in_region(current_ambassador).find(params[:id])
-              end
+        Team.find(params[:id])
+      else
+        Team.in_region(current_ambassador).find(params[:id])
+      end
     end
 
     def edit
@@ -50,11 +50,11 @@ module ChapterAmbassador
             Array(params[:teams_grid][:state_province])
           end
         ),
-        season: params[:teams_grid][:season] || Season.current.year,
+        season: params[:teams_grid][:season] || Season.current.year
       )
 
       grid.merge(
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
   end

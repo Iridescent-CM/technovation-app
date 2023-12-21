@@ -13,5 +13,5 @@ REFERRED_BY_OPTIONS = {
   "Parent/family" => 8,
   "Company email" => 9,
   # 10 (Made With Code) was deleted!
-  "Other" => 11,
+  "Other" => 11
 }

@@ -12,7 +12,7 @@ RSpec.describe "Tasks: judging namespace" do
   end
 
   context "rails judging:set_contest_rank" do
-    let(:task) { Rake::Task['judging:set_contest_rank'] }
+    let(:task) { Rake::Task["judging:set_contest_rank"] }
     after(:each) { task.reenable }
 
     it "sets the specified current submissions to specified rank" do

@@ -20,7 +20,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       get :show, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :pending }
+        team_member_invite: {status: :pending}
       }
 
       expect(response).to redirect_to mentor_dashboard_path
@@ -35,7 +35,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       get :show, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :pending }
+        team_member_invite: {status: :pending}
       }
 
       expect(response).to redirect_to mentor_dashboard_path
@@ -57,7 +57,7 @@ RSpec.describe Mentor::MentorInvitesController do
     it "accepts the team member invite" do
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(invite.reload).to be_accepted
@@ -66,7 +66,7 @@ RSpec.describe Mentor::MentorInvitesController do
     it "redirects to the mentor team page" do
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(response).to redirect_to mentor_team_path(invite.team)
@@ -77,7 +77,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(response).to redirect_to mentor_dashboard_path
@@ -92,7 +92,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(response).to redirect_to mentor_dashboard_path

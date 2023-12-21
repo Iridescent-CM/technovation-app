@@ -7,7 +7,7 @@ RSpec.describe ChapterAmbassador::RegionalPitchEventsController do
 
       post :create, params: {
         format: :json,
-        regional_pitch_event: FactoryBot.attributes_for(:event),
+        regional_pitch_event: FactoryBot.attributes_for(:event)
       }
 
       event = RegionalPitchEvent.last
@@ -15,7 +15,7 @@ RSpec.describe ChapterAmbassador::RegionalPitchEventsController do
         url: chapter_ambassador_regional_pitch_event_path(
           event,
           format: :json
-        ),
+        )
       })
 
       expect(response.body).to eq(json.to_json)
@@ -32,15 +32,15 @@ RSpec.describe ChapterAmbassador::RegionalPitchEventsController do
         format: :json,
         id: event.id,
         regional_pitch_event: {
-          name: "hello world",
-        },
+          name: "hello world"
+        }
       }
 
       json = event.reload.to_list_json.merge({
         url: chapter_ambassador_regional_pitch_event_path(
           event,
           format: :json
-        ),
+        )
       })
 
       expect(response.body).to eq(json.to_json)

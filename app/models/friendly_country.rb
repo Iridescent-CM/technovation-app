@@ -8,7 +8,7 @@ class FriendlyCountry
     default_options = {
       prefix: true,
       short_code: false,
-      source: :address_details,
+      source: :address_details
     }
 
     merged_options = default_options.merge(**options)
@@ -31,7 +31,7 @@ class FriendlyCountry
   def as_short_code
     result.country_code
   end
-  alias :country_code :as_short_code
+  alias_method :country_code, :as_short_code
 
   def with_prefix
     if result.country_code
@@ -46,6 +46,7 @@ class FriendlyCountry
   end
 
   private
+
   def result(**options)
     if options[:source] == :country_code
       country = Carmen::Country.coded(record.address_details)

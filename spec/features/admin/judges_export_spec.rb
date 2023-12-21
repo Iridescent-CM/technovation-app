@@ -7,27 +7,27 @@ RSpec.describe "/admin/judges", type: :request do
     it "runs export job with grid / params" do
       admin = FactoryBot.create(:admin)
 
-      post '/signins', params: {
+      post "/signins", params: {
         account: {
           email: admin.email,
-          password: "secret1234",
-        },
+          password: "secret1234"
+        }
       }
 
       FactoryBot.create(:judge, :los_angeles, account: FactoryBot.create(:account, email: "only-me@me.com"))
       FactoryBot.create(:judge, account: FactoryBot.create(:account, email: "no_findy-email@judge.com"))
 
       url = "/admin/judges.json"
-       
+
       perform_enqueued_jobs do
         get url, params: {
           filename: "regression",
           judges_grid: {
-            name_email: "only-me",
+            name_email: "only-me"
           },
-          format: :json,
+          format: :json
         }
-      end 
+      end
       csv = File.read("tmp/regression.csv")
       expect(csv).to include("only-me@me.com")
       expect(csv).not_to include("no_findy-email@judge.com")
@@ -41,17 +41,17 @@ RSpec.describe "/admin/judges", type: :request do
       admin.saved_searches.create!(
         param_root: "judges_grid",
         name: "testing 123",
-        search_string: 'name_email="judgey"',
+        search_string: 'name_email="judgey"'
       )
 
-      post '/signins', params: {
+      post "/signins", params: {
         account: {
           email: admin.email,
-          password: "secret1234",
-        },
+          password: "secret1234"
+        }
       }
 
-      get '/admin/judges'
+      get "/admin/judges"
       expect(response).to be_ok
     end
   end

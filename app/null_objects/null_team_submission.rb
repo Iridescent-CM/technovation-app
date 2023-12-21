@@ -16,20 +16,20 @@ class NullTeamSubmission < NullObject
   def app_name
     TeamSubmission::DEFAULT_APP_NAME
   end
-  alias :name :app_name
+  alias_method :name, :app_name
 
   def quarterfinals_average_score
     0
   end
 
   def status
-    'incomplete'
+    "incomplete"
   end
 
   def complete?
     false
   end
-  alias :is_complete :complete?
+  alias_method :is_complete, :complete?
 
   def missing_pieces
     []

@@ -9,7 +9,7 @@ class BackgroundCheckCandidate
   validates :first_name, :last_name, :email, :zipcode, :date_of_birth, :ssn,
     :driver_license_state, presence: true
 
-  validates :driver_license_state, length: { minimum: 2, maximum: 2 }, format: { with: /\A[a-zA-Z]{2}\z/ }
+  validates :driver_license_state, length: {minimum: 2, maximum: 2}, format: {with: /\A[a-zA-Z]{2}\z/}
 
   def initialize(attributes = {})
     account = attributes.delete(:account)
@@ -35,7 +35,7 @@ class BackgroundCheckCandidate
         @report_id = report.id
         true
       rescue Checkr::InvalidRequestError => e
-        invalid_fields = e.message.split(' is invalid').map { |s| s.gsub(', ', '') }
+        invalid_fields = e.message.split(" is invalid").map { |s| s.gsub(", ", "") }
         apply_errors(invalid_fields)
         false
       end
@@ -43,18 +43,19 @@ class BackgroundCheckCandidate
   end
 
   private
+
   def attributes
     Hash[{
-           "first_name" => @first_name,
-           "middle_name" => @middle_name,
-           "last_name" => @last_name,
-           "email" => @email,
-           "zipcode" => @zipcode,
-           "dob" => @date_of_birth,
-           "ssn" => @ssn,
-           "driver_license_state" => @driver_license_state,
-           "copy_requested" => @copy_requested,
-         }.map { |k, v| [k, (v || "").strip] }]
+      "first_name" => @first_name,
+      "middle_name" => @middle_name,
+      "last_name" => @last_name,
+      "email" => @email,
+      "zipcode" => @zipcode,
+      "dob" => @date_of_birth,
+      "ssn" => @ssn,
+      "driver_license_state" => @driver_license_state,
+      "copy_requested" => @copy_requested
+    }.map { |k, v| [k, (v || "").strip] }]
   end
 
   def apply_errors(field_names)
@@ -68,7 +69,7 @@ class BackgroundCheckCandidate
         errors.add(:date_of_birth, "You must be at least 18 years old")
       elsif name.include?("is not a valid email address")
         errors.add(:email, :invalid)
-      elsif name.include?('dob')
+      elsif name.include?("dob")
         errors.add(:date_of_birth, :invalid)
       else
         errors.add(name.downcase, :invalid)

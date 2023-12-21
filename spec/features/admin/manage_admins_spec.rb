@@ -30,9 +30,9 @@ RSpec.feature "Manage admin accounts" do
     }.to change {
       Account.temporary_password.count
     }.from(0).to(1)
-    .and change {
-      ActionMailer::Base.deliveries.count
-    }.from(0).to(1)
+      .and change {
+             ActionMailer::Base.deliveries.count
+           }.from(0).to(1)
 
     new_admin = Account.temporary_password.last
     visit admin_signup_path(token: new_admin.admin_invitation_token)

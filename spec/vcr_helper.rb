@@ -1,7 +1,7 @@
-require 'vcr'
-require 'webmock/rspec'
+require "vcr"
+require "webmock/rspec"
 
-LOCALHOSTS = %w( localhost 127.0.0.1 0.0.0.0 )
+LOCALHOSTS = %w[localhost 127.0.0.1 0.0.0.0]
 
 VCR.configure do |config|
   config.cassette_library_dir = "spec/cassettes"
@@ -16,5 +16,4 @@ VCR.configure do |config|
     "github.com",
     "github-releases.githubusercontent.com"
   )
-
 end

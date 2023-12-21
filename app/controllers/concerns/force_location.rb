@@ -6,6 +6,7 @@ module ForceLocation
   end
 
   private
+
   def require_location
     return if request.xhr?
 
@@ -23,7 +24,7 @@ module ForceLocation
   def logged_in_and_has_profile
     current_account.authenticated? &&
       current_account.respond_to?("#{current_scope}_profile") &&
-        !!current_account.send("#{current_scope}_profile")
+      !!current_account.send("#{current_scope}_profile")
   end
 
   def valid_location

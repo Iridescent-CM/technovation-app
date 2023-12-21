@@ -6,7 +6,7 @@ module TeamSubmissionSectionController
   end
 
   def show
-    unless SeasonToggles.team_submissions_editable? or section_name == 'pitch_presentation'
+    unless SeasonToggles.team_submissions_editable? or section_name == "pitch_presentation"
       redirect_to send("#{current_scope}_dashboard_path") and return
     end
 
@@ -22,18 +22,19 @@ module TeamSubmissionSectionController
 
     set_cookie(
       CookieNames::LAST_VISITED_SUBMISSION_SECTION,
-      section_name,
+      section_name
     )
 
     render "team_submissions/sections/#{section_name}"
   end
 
   private
+
   def section_name
     name = params.fetch(:section) { "ideation" }
 
-    if name.to_s.downcase === 'marketing'
-      name = 'pitch'
+    if name.to_s.downcase === "marketing"
+      name = "pitch"
     end
 
     name

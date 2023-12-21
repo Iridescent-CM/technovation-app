@@ -11,7 +11,7 @@ class JobChannel < ApplicationCable::Channel
         "jobs:#{params[:current_profile_type]}:#{params[:current_profile_id]}",
         {
           status: job.status,
-          job_id: job.job_id,
+          job_id: job.job_id
         }
       )
     elsif export = Export.owned_by(current_profile).undownloaded.last
@@ -25,7 +25,7 @@ class JobChannel < ApplicationCable::Channel
           update_url: send(
             "#{current_user.scope_name}_export_download_path",
             export
-          ),
+          )
         }
       )
     end

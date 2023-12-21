@@ -50,7 +50,7 @@ class AmbassadorMailer < ApplicationMailer
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
-           subject: "You removed #{@team_name} from your event: #{@event.name}"
+        subject: "You removed #{@team_name} from your event: #{@event.name}"
     end
   end
 
@@ -62,7 +62,7 @@ class AmbassadorMailer < ApplicationMailer
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
-           subject: "You added #{@team_name} to your event: #{@event.name}"
+        subject: "You added #{@team_name} to your event: #{@event.name}"
     end
   end
 
@@ -74,7 +74,7 @@ class AmbassadorMailer < ApplicationMailer
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
-           subject: "#{@team_name} left your event: #{@event.name}"
+        subject: "#{@team_name} left your event: #{@event.name}"
     end
   end
 
@@ -86,7 +86,7 @@ class AmbassadorMailer < ApplicationMailer
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
-           subject: "Judge #{@judge_name} left your event: #{@event.name}"
+        subject: "Judge #{@judge_name} left your event: #{@event.name}"
     end
   end
 
@@ -98,7 +98,7 @@ class AmbassadorMailer < ApplicationMailer
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
-           subject: "#{@team_name} joined your event: #{@event.name}"
+        subject: "#{@team_name} joined your event: #{@event.name}"
     end
   end
 
@@ -110,7 +110,7 @@ class AmbassadorMailer < ApplicationMailer
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
-           subject: "Judge #{@judge_name} joined your event: #{@event.name}"
+        subject: "Judge #{@judge_name} joined your event: #{@event.name}"
     end
   end
 

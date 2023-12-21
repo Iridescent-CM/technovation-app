@@ -19,7 +19,7 @@ module Admin
 
       if @team_submission.update(team_submission_params)
         redirect_to admin_team_submission_path(@team_submission),
-        success: "Submission has been updated"
+          success: "Submission has been updated"
       else
         flash.now[:alert] = if @team_submission.errors.full_messages
           @team_submission.errors.full_messages.join(" , ")
@@ -45,11 +45,11 @@ module Admin
         admin: true,
         country: Array(params[:submissions_grid][:country]),
         state_province: Array(params[:submissions_grid][:state_province]),
-        season: params[:submissions_grid][:season] || Season.current.year,
+        season: params[:submissions_grid][:season] || Season.current.year
       )
 
       grid.merge(
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
 

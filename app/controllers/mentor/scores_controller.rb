@@ -6,7 +6,7 @@ module Mentor
       @team = @score.team
       @team_submission = @team.submission
 
-      render 'admin/scores/show'
+      render "admin/scores/show"
     end
   end
 end

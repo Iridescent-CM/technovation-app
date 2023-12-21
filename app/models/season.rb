@@ -44,6 +44,7 @@ class Season
   end
 
   private
+
   def self.current_season_year
     current_year = Time.current.year
 

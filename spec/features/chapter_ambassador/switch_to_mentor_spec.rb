@@ -1,10 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "chapter ambassadors switch to mentor mode", :js do
-
   scenario "a chapter ambassador switches to mentor mode with a mentor profile" do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
-    CreateMentorProfile.(chapter_ambassador)
+    CreateMentorProfile.call(chapter_ambassador)
 
     sign_in(chapter_ambassador)
     click_link "Mentor Mode"

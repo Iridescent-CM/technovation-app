@@ -8,25 +8,25 @@ class JoinRequest < ActiveRecord::Base
 
   scope :for_mentors, -> { where(requestor_type: "MentorProfile") }
 
-  validates :team, uniqueness: { scope: [:requestor_type, :requestor_id] }
+  validates :team, uniqueness: {scope: [:requestor_type, :requestor_id]}
 
   belongs_to :requestor, polymorphic: true
   belongs_to :team, touch: true
 
   delegate :name,
-           :team_photo_url,
-           :division_name,
-           :primary_location,
+    :team_photo_url,
+    :division_name,
+    :primary_location,
     to: :team,
     prefix: true
 
   delegate :first_name,
-           :scope_name,
-           :full_name,
-           :email,
-           :account_id,
-           :mailer_token,
-           :primary_location,
+    :scope_name,
+    :full_name,
+    :email,
+    :account_id,
+    :mailer_token,
+    :primary_location,
     to: :requestor,
     allow_nil: true,
     prefix: true
@@ -45,7 +45,7 @@ class JoinRequest < ActiveRecord::Base
     update_columns({
       accepted_at: nil,
       declined_at: nil,
-      deleted_at: nil,
+      deleted_at: nil
     })
     notify_requested_team
   end
@@ -71,7 +71,7 @@ class JoinRequest < ActiveRecord::Base
   end
 
   def pending?
-    not approved? and not declined? and not deleted?
+    !approved? and !declined? and !deleted?
   end
 
   def deleted?
@@ -99,6 +99,7 @@ class JoinRequest < ActiveRecord::Base
   end
 
   private
+
   def notify_requested_team
     team.members.each do |recipient|
       TeamMailer.join_request(recipient, self).deliver_later

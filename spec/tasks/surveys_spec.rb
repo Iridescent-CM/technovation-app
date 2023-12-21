@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Tasks: surveys namespace" do
-
   let!(:past_student_who_took) {
     Timecop.travel(1.year.ago) do
       student = FactoryBot.create(:student, :past).account
@@ -67,7 +66,7 @@ RSpec.describe "Tasks: surveys namespace" do
   }
 
   context "rails surveys:reset_all" do
-    let(:task) { Rake::Task['surveys:reset_all'] }
+    let(:task) { Rake::Task["surveys:reset_all"] }
     after(:each) { task.reenable }
 
     %w[student mentor].each do |type|
@@ -132,7 +131,7 @@ RSpec.describe "Tasks: surveys namespace" do
   end
 
   context "rails surveys:reset_students" do
-    let(:task) { Rake::Task['surveys:reset_students'] }
+    let(:task) { Rake::Task["surveys:reset_students"] }
     after(:each) { task.reenable }
 
     it "resets current students who took survey" do
@@ -209,7 +208,7 @@ RSpec.describe "Tasks: surveys namespace" do
   end
 
   context "rails surveys:reset_mentors" do
-    let(:task) { Rake::Task['surveys:reset_mentors'] }
+    let(:task) { Rake::Task["surveys:reset_mentors"] }
     after(:each) { task.reenable }
 
     it "resets current mentors who took survey" do

@@ -46,7 +46,7 @@ RSpec.describe "Students view scores", :js do
     submission = FactoryBot.create(
       :submission,
       :complete,
-      :semifinalist,
+      :semifinalist
     )
 
     FactoryBot.create(
@@ -85,7 +85,6 @@ RSpec.describe "Students view scores", :js do
     sign_in(student)
     expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
     expect(page).to have_selector(:link_or_button, "Complete Survey")
-
   end
 
   it "view SF scores page if program survey is not completed" do
@@ -106,6 +105,5 @@ RSpec.describe "Students view scores", :js do
     sign_in(student)
     expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
     expect(page).to have_selector(:link_or_button, "Complete Survey")
-
   end
 end

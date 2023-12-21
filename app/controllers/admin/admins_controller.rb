@@ -41,6 +41,7 @@ module Admin
     end
 
     private
+
     def admin_account_params
       params.require(:account)
         .permit(:first_name, :last_name, :email)

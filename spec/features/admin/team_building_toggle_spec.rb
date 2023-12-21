@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Team submissions editable toggles team roster controls" do
-
   def enable_team_building
     SeasonToggles.team_building_enabled = "on"
   end

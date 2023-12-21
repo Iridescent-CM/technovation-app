@@ -31,6 +31,7 @@ module ConsentWaiverController
   end
 
   private
+
   def valid_token?
     Account.exists?(consent_token: params.fetch(:token) { "" })
   end

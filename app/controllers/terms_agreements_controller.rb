@@ -13,6 +13,7 @@ class TermsAgreementsController < ApplicationController
   end
 
   private
+
   def terms_agreement_params
     params.permit(:terms_agreed, :email)
   end

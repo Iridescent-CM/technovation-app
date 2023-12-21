@@ -14,7 +14,7 @@ module ChapterAmbassador
       search_params.each do |k, v|
         unless v.blank?
           where_clause = "lower(unaccent(replace(#{k}, '.', ''))) = "
-          where_clause += "'#{v.downcase.strip.gsub('.', '')}'"
+          where_clause += "'#{v.downcase.strip.delete(".")}'"
 
           clauses.push(where_clause)
         end
@@ -36,11 +36,12 @@ module ChapterAmbassador
     end
 
     private
+
     def search_params
       params.require(:missing_participant_search).permit(
         :first_name,
         :last_name,
-        :email,
+        :email
       )
     end
   end

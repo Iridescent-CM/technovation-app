@@ -2,8 +2,8 @@ class StudentSubmissionLinkGuard
   attr_accessor :team, :student, :season_toggles
 
   def initialize(team:, student:, season_toggles: SeasonToggles)
-    @team           = team
-    @student        = student
+    @team = team
+    @student = student
     @season_toggles = season_toggles
   end
 

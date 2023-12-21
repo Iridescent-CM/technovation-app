@@ -49,5 +49,5 @@ task recalc_completeness: :environment do
 end
 
 def yesno(bool)
-  bool ? 'Yes' : 'No'
+  bool ? "Yes" : "No"
 end

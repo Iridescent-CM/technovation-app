@@ -324,7 +324,7 @@ describe RegistrationSettingsAggregator do
 
           it "sets an error message indicating that the invite is invalid, but registration is still open" do
             expect(registration_settings_aggregator.call.error_message).to include("Sorry, this invitation is no longer valid, but you can still join Technovation")
-        end
+          end
         end
 
         context "when all registration types are closed" do

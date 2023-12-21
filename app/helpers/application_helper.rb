@@ -1,10 +1,10 @@
 module ApplicationHelper
-  SCOPES = %w{
+  SCOPES = %w[
     student
     mentor
     judge
     chapter_ambassador
-  }
+  ]
 
   def safe_time_ago_in_words(time, postfix = nil)
     if time
@@ -44,7 +44,7 @@ module ApplicationHelper
 
   def locale_names
     I18n.available_locales.map do |locale|
-      [I18n.t('language', locale: locale), locale.to_s]
+      [I18n.t("language", locale: locale), locale.to_s]
     end
   end
 

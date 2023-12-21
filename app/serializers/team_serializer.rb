@@ -7,7 +7,6 @@ class TeamSerializer
   attributes :id, :mentor_ids, :city, :latitude, :longitude, :name,
     :pending_mentor_invite_ids, :pending_mentor_join_request_ids
 
-
   attribute(:state) do |team|
     if country = Carmen::Country.coded(team.country)
       country.subregions.coded((team.state_province || "").sub(".", ""))

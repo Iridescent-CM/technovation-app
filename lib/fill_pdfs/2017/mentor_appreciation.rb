@@ -5,8 +5,9 @@ module FillPdfs
     include FillPdfs
 
     private
+
     def pathname
-     './lib/certs/2018/regional-appreciation-mentor.pdf'
+      "./lib/certs/2018/regional-appreciation-mentor.pdf"
     end
 
     def tmp_output
@@ -18,9 +19,9 @@ module FillPdfs
       season = "throughout the #{Season.current.year} season"
 
       {
-        'Recipient Name' => participant.fullName,
-        'description 1' => region_name,
-        'description 2' => season,
+        "Recipient Name" => participant.fullName,
+        "description 1" => region_name,
+        "description 2" => season
       }
     end
   end

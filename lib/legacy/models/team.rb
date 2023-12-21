@@ -1,5 +1,5 @@
-require './lib/legacy/models/legacy_model'
-require 'aws-sdk'
+require "./lib/legacy/models/legacy_model"
+require "aws-sdk"
 
 module Legacy
   class Team < LegacyModel
@@ -9,10 +9,10 @@ module Legacy
     has_many :users, through: :team_requests
 
     has_attached_file :avatar,
-                      storage: :s3,
-                      url: ":s3_domain_url",
-                      s3_credentials: ->(a) { a.instance.s3_credentials },
-                      path: "/teams/:attachment/:id_partition/:style/:filename"
+      storage: :s3,
+      url: ":s3_domain_url",
+      s3_credentials: ->(a) { a.instance.s3_credentials },
+      path: "/teams/:attachment/:id_partition/:style/:filename"
 
     def migrated_description
       description.blank? ? "No description" : description
@@ -20,11 +20,11 @@ module Legacy
 
     def migrated_division
       case division
-      when 'ms'
+      when "ms"
         Division.junior
-      when 'hs'
+      when "hs"
         Division.senior
-      when 'x'
+      when "x"
         Division.for(users.first)
       else
         raise "division blank -- #{inspect}"
@@ -32,11 +32,11 @@ module Legacy
     end
 
     def migrated_student_ids
-      StudentAccount.where('email IN (?)', users.pluck(:email)).pluck(:id)
+      StudentAccount.where("email IN (?)", users.pluck(:email)).pluck(:id)
     end
 
     def migrated_mentor_ids
-      MentorAccount.where('email IN (?)', users.pluck(:email)).pluck(:id)
+      MentorAccount.where("email IN (?)", users.pluck(:email)).pluck(:id)
     end
   end
 end

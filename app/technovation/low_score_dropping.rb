@@ -30,6 +30,7 @@ class LowScoreDropping
   end
 
   private
+
   def scores
     @submission.public_send("#{@round}_complete_submission_scores")
   end

@@ -23,8 +23,7 @@ RSpec.describe Judge::ScoreCompletionsController do
           division_ids: Division.senior.id,
           city: "City",
           venue_address: "123 Street St.",
-          unofficial: false,
-        )
+          unofficial: false)
 
         team.regional_pitch_events << rpe
         team.save
@@ -103,7 +102,7 @@ RSpec.describe Judge::ScoreCompletionsController do
       end
     end
 
-    %w{off between finished}.each do |round|
+    %w[off between finished].each do |round|
       context round.titleize do
         before { set_judging_round(round) }
         after { reset_judging_round }
@@ -125,8 +124,7 @@ RSpec.describe Judge::ScoreCompletionsController do
             division_ids: Division.senior.id,
             city: "City",
             venue_address: "123 Street St.",
-            unofficial: false,
-          )
+            unofficial: false)
 
           team.regional_pitch_events << rpe
           team.save

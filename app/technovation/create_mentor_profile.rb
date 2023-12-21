@@ -9,6 +9,7 @@ module CreateMentorProfile
   end
 
   private
+
   def self.setup_attributes(account)
     if account.chapter_ambassador_profile.present?
       {

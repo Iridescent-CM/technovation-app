@@ -29,5 +29,5 @@ Rails.application.config.filter_parameters += [
   :address,
   :ip_address,
   :coordinates,
-  :wizard_token,
+  :wizard_token
 ]

@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.feature "Configurable dashboard text per user type" do
   before do
-    %w{judge}.each do |scope|
+    %w[judge].each do |scope|
       SeasonToggles.public_send("#{scope}_dashboard_text=", "")
     end
   end
 
-  %w{judge}.each do |scope|
+  %w[judge].each do |scope|
     scenario "#{scope} dashboard" do
       SeasonToggles.public_send(
         "#{scope}_dashboard_text=",

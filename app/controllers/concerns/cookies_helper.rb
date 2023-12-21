@@ -1,9 +1,9 @@
 module CookiesHelper
   extend ActiveSupport::Concern
 
-  def set_cookie(key, value, passed_options  = {})
+  def set_cookie(key, value, passed_options = {})
     default_options = {
-      permanent: false,
+      permanent: false
     }
 
     options = default_options.merge(passed_options)
@@ -11,12 +11,12 @@ module CookiesHelper
     if options[:permanent]
       cookies.permanent.signed[key] = {
         value: value,
-        domain: request.host,
+        domain: request.host
       }
     else
       cookies.signed[key] = {
         value: value,
-        domain: request.host,
+        domain: request.host
       }
     end
   end

@@ -33,9 +33,8 @@ RSpec.describe LearnWorlds::Authentication do
     double("mock_learn_worlds_response",
       body: {
         success: true,
-        tokenData: { access_token: "new_access_token_from_learn_worlds" }
-      }.to_json
-    )
+        tokenData: {access_token: "new_access_token_from_learn_worlds"}
+      }.to_json)
   end
 
   describe "#access_token" do

@@ -5,11 +5,10 @@ RSpec.describe ParentalConsentsController do
     it "preserves the token on a validation error" do
       student = FactoryBot.create(:onboarding_student)
 
-      patch :update, params: { id: student.parental_consent.id,
-        parental_consent: {
-          student_profile_consent_token: student.consent_token
-        }
-      }
+      patch :update, params: {id: student.parental_consent.id,
+                              parental_consent: {
+                                student_profile_consent_token: student.consent_token
+                              }}
 
       expect(assigns[:parental_consent].student_profile_consent_token).to eq(
         student.consent_token
@@ -23,12 +22,11 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty2"
       )
 
-      patch :update, params: { id: student.parental_consent.id,
-        parental_consent: FactoryBot.attributes_for(
-          :parental_consent,
-          student_profile_consent_token: student.consent_token
-        )
-      }
+      patch :update, params: {id: student.parental_consent.id,
+                              parental_consent: FactoryBot.attributes_for(
+                                :parental_consent,
+                                student_profile_consent_token: student.consent_token
+                              )}
 
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to be_present, "no copy of parental consent was sent"
@@ -43,12 +41,11 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty3"
       )
 
-      patch :update, params: { id: student.parental_consent.id,
-        parental_consent: FactoryBot.attributes_for(
-          :parental_consent,
-          student_profile_consent_token: student.consent_token
-        )
-      }
+      patch :update, params: {id: student.parental_consent.id,
+                              parental_consent: FactoryBot.attributes_for(
+                                :parental_consent,
+                                student_profile_consent_token: student.consent_token
+                              )}
 
       mail = ActionMailer::Base.deliveries[-2]
       expect(mail).to be_present,
@@ -69,11 +66,11 @@ RSpec.describe ParentalConsentsController do
 
       allow(SubscribeParentToEmailListJob).to receive(:perform_later)
 
-      patch :update, params: { id: student.parental_consent.id,
-        parental_consent: FactoryBot.attributes_for(
-          :parental_consent,
-          student_profile_consent_token: student.consent_token
-        ).merge(newsletter_opt_in: "0") }
+      patch :update, params: {id: student.parental_consent.id,
+                              parental_consent: FactoryBot.attributes_for(
+                                :parental_consent,
+                                student_profile_consent_token: student.consent_token
+                              ).merge(newsletter_opt_in: "0")}
 
       expect(SubscribeParentToEmailListJob).not_to have_received(:perform_later)
         .with(any_args)
@@ -88,11 +85,11 @@ RSpec.describe ParentalConsentsController do
 
       allow(SubscribeParentToEmailListJob).to receive(:perform_later)
 
-      patch :update, params: { id: student.parental_consent.id,
-        parental_consent: FactoryBot.attributes_for(
-          :parental_consent,
-          student_profile_consent_token: student.consent_token
-        ).merge(newsletter_opt_in: "1") }
+      patch :update, params: {id: student.parental_consent.id,
+                              parental_consent: FactoryBot.attributes_for(
+                                :parental_consent,
+                                student_profile_consent_token: student.consent_token
+                              ).merge(newsletter_opt_in: "1")}
 
       expect(SubscribeParentToEmailListJob).to have_received(:perform_later)
         .at_least(:once)
@@ -119,12 +116,11 @@ RSpec.describe ParentalConsentsController do
       student = FactoryBot.create(:onboarded_student)
 
       expect {
-        patch :update, params: { id: student.parental_consent.id,
-          parental_consent: FactoryBot.attributes_for(
-            :parental_consent,
-            student_profile_consent_token: student.consent_token
-          )
-        }
+        patch :update, params: {id: student.parental_consent.id,
+                                parental_consent: FactoryBot.attributes_for(
+                                  :parental_consent,
+                                  student_profile_consent_token: student.consent_token
+                                )}
       }.not_to change {
         ParentalConsent.nonvoid.count
       }

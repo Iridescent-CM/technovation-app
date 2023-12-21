@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Student team submissions" do
-
   before { SeasonToggles.team_submissions_editable! }
 
   let(:senior_division_age) { Division::SENIOR_DIVISION_AGE }

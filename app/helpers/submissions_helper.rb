@@ -30,18 +30,17 @@ module SubmissionsHelper
         remote: true,
         size: 12,
         color: "5ABF94",
-        text: text,
+        text: text
       ),
       url,
-      target: :_blank,
+      target: :_blank
     )
   end
 
   def format_missing_submission_pieces(submission)
     pieces = submission.missing_pieces.map(&:humanize).map(&:titlecase).join(", ")
     pieces = pieces.gsub("App Name", "Project Name")
-    pieces = pieces.gsub("App Description", "Project Description")
-    pieces
+    pieces.gsub("App Description", "Project Description")
   end
 
   def additional_question_labels(team_submission)

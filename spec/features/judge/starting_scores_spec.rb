@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "starting scores", js: true do
-
   before(:all) do
     @wait_time = Capybara.default_max_wait_time
     Capybara.default_max_wait_time = 15
@@ -101,8 +100,7 @@ RSpec.feature "starting scores", js: true do
   def and_a_submission_that_needs_scoring
     @submission = FactoryBot.create(:team_submission,
       :junior,
-      :complete
-    )
+      :complete)
   end
 
   def and_the_judge_has_a_score_in_progress_for_the_submission
@@ -110,8 +108,7 @@ RSpec.feature "starting scores", js: true do
       :in_progress,
       :quarterfinals,
       judge_profile: @judge,
-      team_submission: @submission
-    )
+      team_submission: @submission)
   end
 
   def and_the_judge_has_a_completed_score_for_the_submission
@@ -119,8 +116,7 @@ RSpec.feature "starting scores", js: true do
       :complete,
       :quarterfinals,
       judge_profile: @judge,
-      team_submission: @submission
-    )
+      team_submission: @submission)
   end
 
   def when_the_judge_views_their_judge_submissions_tab

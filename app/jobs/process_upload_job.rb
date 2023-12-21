@@ -33,8 +33,8 @@ class ProcessUploadJob < ActiveJob::Base
         submission.team.create_activity(
           trackable: account,
           key: "submission.update",
-          parameters: { piece: "source_code_url" },
-          recipient: submission,
+          parameters: {piece: "source_code_url"},
+          recipient: submission
         )
       end
     end

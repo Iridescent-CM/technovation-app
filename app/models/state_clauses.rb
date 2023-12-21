@@ -4,7 +4,7 @@ class StateClauses
       state = State.for(value, countries)
 
       "lower(unaccent(#{table_name}.state_province)) like " +
-      "'#{state.search_spec}%'"
+        "'#{state.search_spec}%'"
     }.join(" #{operator} ")
   end
 end

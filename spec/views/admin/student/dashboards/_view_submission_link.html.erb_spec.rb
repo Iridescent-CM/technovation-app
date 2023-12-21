@@ -5,7 +5,7 @@ RSpec.describe "student/dashboards/_view_submission_link.html.erb", type: :view 
     allow(StudentSubmissionLinkGuard).to receive(:new).with(team: team, student: student).and_return(submission_link_guard)
 
     render partial: "student/dashboards/view_submission_link",
-      locals: { current_team: team, current_student: student }
+      locals: {current_team: team, current_student: student}
   end
 
   let(:submission_link_guard) { instance_double(StudentSubmissionLinkGuard, display_link_to_published?: display_link_to_published) }

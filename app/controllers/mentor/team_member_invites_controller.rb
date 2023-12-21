@@ -7,8 +7,8 @@ module Mentor
         redirect_to mentor_dashboard_path,
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
       elsif invite = current_mentor.mentor_invites.pending.find_by(
-                    invite_token: params.fetch(:id)
-                  )
+        invite_token: params.fetch(:id)
+      )
         invite.update(invite_params)
         redirect_based_on_status(invite)
       else
@@ -18,6 +18,7 @@ module Mentor
     end
 
     private
+
     def redirect_based_on_status(invite)
       if invite.accepted?
         @path = mentor_team_path(invite.team)

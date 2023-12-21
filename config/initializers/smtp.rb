@@ -8,7 +8,7 @@ unless ENV["USE_DOTENV"].present? or Rails.env.development? or Rails.env.test?
       user_name: ENV.fetch("MAIL_USER"),
       password: ENV.fetch("MAIL_PASSWORD"),
       authentication: :plain,
-      enable_starttls_auto: true,
+      enable_starttls_auto: true
     }
   end
 end

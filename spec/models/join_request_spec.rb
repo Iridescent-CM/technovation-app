@@ -28,7 +28,7 @@ RSpec.describe JoinRequest do
     approve_me = FactoryBot.create(:join_request, requestor: student)
     delete_me = FactoryBot.create(:join_request, requestor: student)
 
-    JoinRequestApproved.(approve_me)
+    JoinRequestApproved.call(approve_me)
 
     expect {
       delete_me.reload
@@ -40,7 +40,7 @@ RSpec.describe JoinRequest do
     approve_me = FactoryBot.create(:join_request, requestor: mentor)
     still_pending = FactoryBot.create(:join_request, requestor: mentor)
 
-    JoinRequestApproved.(approve_me)
+    JoinRequestApproved.call(approve_me)
 
     expect(still_pending.reload).to be_pending
   end

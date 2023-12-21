@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Student::TeamsController do
-  describe 'POST #create' do
+  describe "POST #create" do
     it "creates teams for students not on a team" do
       student = FactoryBot.create(:student)
       sign_in(student)
@@ -10,7 +10,7 @@ RSpec.describe Student::TeamsController do
         post :create, params: {
           team: {
             name: "Girl Power",
-            description: "We are a great team",
+            description: "We are a great team"
           }
         }
       }.to change { Team.count }.from(0).to 1
@@ -27,7 +27,7 @@ RSpec.describe Student::TeamsController do
         post :create, params: {
           team: {
             name: "Girl Power",
-            description: "We are a great team",
+            description: "We are a great team"
           }
         }
       }.not_to change { Team.count }
@@ -48,7 +48,7 @@ RSpec.describe Student::TeamsController do
       post :create, params: {
         team: {
           name: "Girl Power",
-          description: "We are a great team",
+          description: "We are a great team"
         }
       }
 
@@ -63,7 +63,7 @@ RSpec.describe Student::TeamsController do
       post :create, params: {
         team: {
           name: "Girl Power",
-          description: "We are a great team",
+          description: "We are a great team"
         }
       }
 
@@ -81,7 +81,7 @@ RSpec.describe Student::TeamsController do
 
       sign_in(student)
 
-      get :show, params: { id: past_team.id }
+      get :show, params: {id: past_team.id}
 
       expect(response).to render_template("teams/past")
     end

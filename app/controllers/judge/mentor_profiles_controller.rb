@@ -5,7 +5,7 @@ module Judge
 
       @mentor_profile = current_judge.build_mentor_profile(
         school_company_name: current_judge.company_name,
-        job_title: current_judge.job_title,
+        job_title: current_judge.job_title
       )
     end
 
@@ -22,6 +22,7 @@ module Judge
     end
 
     private
+
     def mentor_profile_params
       params.require(:mentor_profile).permit(
         :school_company_name,

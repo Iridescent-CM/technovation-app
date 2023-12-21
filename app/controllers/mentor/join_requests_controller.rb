@@ -17,16 +17,15 @@ module Mentor
       if SeasonToggles.judging_enabled_or_between?
         redirect_to mentor_team_path(@team),
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
-      elsif
-        if join_request = current_mentor.join_requests.find_by(team: @team)
-          join_request.pending!
-        else
-          join_request = current_mentor.join_requests.create!(team: @team)
-        end
+      elsif if join_request = current_mentor.join_requests.find_by(team: @team)
+              join_request.pending!
+            else
+              join_request = current_mentor.join_requests.create!(team: @team)
+            end
 
         redirect_to mentor_join_request_path(join_request),
           success: t("controllers.mentor.join_requests.create.success",
-                    name: @team.name)
+            name: @team.name)
       end
     end
 
@@ -63,16 +62,15 @@ module Mentor
           anchor: join_request.requestor_scope_name.pluralize
         ),
           alert: t("views.team_member_invites.show.invites_disabled_by_judging")
-      elsif
-        "join_request_#{status}".camelize.constantize.(join_request)
+      elsif "join_request_#{status}".camelize.constantize.call(join_request)
 
         redirect_to params[:back] || mentor_team_path(
           join_request.team,
           anchor: join_request.requestor_scope_name.pluralize
         ),
-        success: t("controllers.mentor.join_requests.update.success",
-                  name: join_request.requestor_first_name,
-                  status: status)
+          success: t("controllers.mentor.join_requests.update.success",
+            name: join_request.requestor_first_name,
+            status: status)
       end
     end
 
@@ -88,13 +86,14 @@ module Mentor
     end
 
     private
+
     def reviewer_is_requestor?(join_request)
       current_mentor.authenticated? and current_mentor == join_request.requestor
     end
 
     def reviewer_is_unauthorized?(join_request)
       current_mentor.authenticated? and
-        not current_mentor.is_on?(join_request.team)
+        !current_mentor.is_on?(join_request.team)
     end
 
     def join_request_params

@@ -16,7 +16,7 @@ RSpec.describe "Admins reviewing teams" do
 
       expect(current_path).to eq(admin_team_path(team))
 
-      within('.onboarding_students') do
+      within(".onboarding_students") do
         expect(page).to have_content(onboarding_student.full_name)
         click_link onboarding_student.full_name
         expect(current_path).to eq(admin_participant_path(onboarding_student.account_id))

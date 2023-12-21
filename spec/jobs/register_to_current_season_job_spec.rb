@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe RegisterToCurrentSeasonJob do
-  %w{judge student mentor}.each do |scope|
+  %w[judge student mentor].each do |scope|
     it "subscribes a #{scope} to the #{scope} newsletter" do
       profile = FactoryBot.create(scope)
 
@@ -116,7 +116,7 @@ RSpec.describe RegisterToCurrentSeasonJob do
       student = FactoryBot.create(:student)
 
       student.account.update(
-        seasons: [],
+        seasons: []
       )
 
       student.parental_consents.destroy_all
@@ -272,7 +272,7 @@ RSpec.describe RegisterToCurrentSeasonJob do
     student = FactoryBot.create(:student)
 
     student.account.update(
-      seasons: [],
+      seasons: []
     )
 
     student.activities.destroy_all
@@ -290,7 +290,7 @@ RSpec.describe RegisterToCurrentSeasonJob do
     student = FactoryBot.create(:student)
 
     student.account.update(
-      seasons: [Season.current.year],
+      seasons: [Season.current.year]
     )
 
     expect {
@@ -304,7 +304,7 @@ RSpec.describe RegisterToCurrentSeasonJob do
     student = FactoryBot.create(:student)
 
     student.account.update(
-      seasons: [],
+      seasons: []
     )
 
     expect {
@@ -313,5 +313,4 @@ RSpec.describe RegisterToCurrentSeasonJob do
       student.season_registered_at
     }
   end
-
 end

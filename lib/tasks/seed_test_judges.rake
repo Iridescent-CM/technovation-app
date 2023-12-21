@@ -1,4 +1,4 @@
-require 'factory_bot'
+require "factory_bot"
 
 desc "Seed QA with test judge data for badges / certificates"
 task seed_test_judges: :environment do
@@ -31,10 +31,10 @@ task seed_test_judges: :environment do
       city: "Evanston",
       state_province: "IL",
       country: "US",
-      seasons: [Season.current.year],
+      seasons: [Season.current.year]
     },
     company_name: "Sabre",
-    job_title: "Corp. Branch Liason",
+    job_title: "Corp. Branch Liason"
   )
 
   virtual_judge.account.update_column(:profile_image, "foo/bar/baz.png")
@@ -53,10 +53,10 @@ task seed_test_judges: :environment do
       city: "Evanston",
       state_province: "IL",
       country: "US",
-      seasons: [Season.current.year],
+      seasons: [Season.current.year]
     },
     company_name: "Sabre",
-    job_title: "CEO",
+    job_title: "CEO"
   )
 
   live_judge.account.update_column(:profile_image, "foo/bar/baz.png")
@@ -71,7 +71,7 @@ task seed_test_judges: :environment do
     division_ids: Division.pluck(:id),
     city: "Chicago",
     venue_address: "100 N. LaSalle",
-    ambassador: ChapterAmbassadorProfile.all.sample,
+    ambassador: ChapterAmbassadorProfile.all.sample
   )
 
   live_judge.events << event
@@ -86,7 +86,7 @@ task seed_test_judges: :environment do
 
     score = SubmissionScore.create!(
       judge_profile: virtual_judge,
-      team_submission: team.submission,
+      team_submission: team.submission
     )
 
     score.complete!
@@ -106,7 +106,7 @@ task seed_test_judges: :environment do
 
     score = SubmissionScore.create!(
       judge_profile: live_judge,
-      team_submission: team.submission,
+      team_submission: team.submission
     )
 
     score.complete!

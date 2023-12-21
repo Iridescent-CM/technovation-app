@@ -11,6 +11,7 @@ module Admin
     end
 
     private
+
     def season_toggle_params
       params.require(:season_toggles).permit(
         *signup_scopes,
@@ -23,16 +24,16 @@ module Admin
         :display_scores,
         :judging_round,
         student_survey_link: [:text, :long_desc, :url],
-        mentor_survey_link: [:text, :long_desc, :url],
+        mentor_survey_link: [:text, :long_desc, :url]
       )
     end
 
     def signup_scopes
-      %w{student mentor judge chapter_ambassador}.map { |s| "#{s}_signup" }
+      %w[student mentor judge chapter_ambassador].map { |s| "#{s}_signup" }
     end
 
     def dashboard_text_scopes
-      %w{student mentor judge chapter_ambassador}.map { |s| "#{s}_dashboard_text" }
+      %w[student mentor judge chapter_ambassador].map { |s| "#{s}_dashboard_text" }
     end
   end
 end

@@ -7,13 +7,13 @@ module Admin
       params[:per_page] ||= 15
 
       @sort = case params.fetch(:sort) { "avg_score_desc" }
-             when "avg_score_desc"
-               "team_submissions.semifinals_average_score DESC"
-             when "avg_score_asc"
-               "team_submissions.semifinals_average_score ASC"
-             when "team_name"
-               "teams.name ASC"
-             end
+      when "avg_score_desc"
+        "team_submissions.semifinals_average_score DESC"
+      when "avg_score_asc"
+        "team_submissions.semifinals_average_score ASC"
+      when "team_name"
+        "teams.name ASC"
+      end
       @division = params[:division] ||= "senior"
 
       @submissions = get_sorted_paginated_submissions_in_requested_division
@@ -22,7 +22,7 @@ module Admin
     def show
       @team_submission = TeamSubmission.includes(
         team: :division,
-        submission_scores: { judge_profile: :account }
+        submission_scores: {judge_profile: :account}
       ).friendly.find(params[:id])
 
       @team = @team_submission.team
@@ -36,6 +36,7 @@ module Admin
     end
 
     private
+
     def get_sorted_paginated_submissions_in_requested_division(page = params[:page])
       submissions = TeamSubmission.semifinalist
         .public_send(params[:division])

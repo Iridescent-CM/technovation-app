@@ -11,32 +11,32 @@ RSpec.describe MigrateLegacySeasons do
 
   describe ".call" do
     it "converts Team seasons" do
-      MigrateLegacySeasons::TestSetup.(:team)
+      MigrateLegacySeasons::TestSetup.call(:team)
 
       team = Team.last
       team.update(seasons: [])
 
-      MigrateLegacySeasons.(:team)
+      MigrateLegacySeasons.call(:team)
       expect(team.reload.seasons).to eq([2015, 2016, 2017])
     end
 
     it "converts TeamSubmission seasons" do
-      MigrateLegacySeasons::TestSetup.(:team_submission, :junior)
+      MigrateLegacySeasons::TestSetup.call(:team_submission, :junior)
 
       submission = TeamSubmission.last
       submission.update(seasons: [])
 
-      MigrateLegacySeasons.(:team_submission)
+      MigrateLegacySeasons.call(:team_submission)
       expect(submission.reload.seasons).to eq([2015, 2016, 2017])
     end
 
     it "converts Account seasons" do
-      MigrateLegacySeasons::TestSetup.(:account)
+      MigrateLegacySeasons::TestSetup.call(:account)
 
       account = Account.last
       account.update(seasons: [])
 
-      MigrateLegacySeasons.(:account)
+      MigrateLegacySeasons.call(:account)
       expect(account.reload.seasons).to eq([2015, 2016, 2017])
     end
   end

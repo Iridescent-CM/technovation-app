@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Tasks: rails fix_submissions" do
-
   let(:output) { StringIO.new }
 
   before(:each) do
@@ -9,7 +8,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
   end
 
   after(:each) do
-    Rake::Task['fix_submissions'].reenable
+    Rake::Task["fix_submissions"].reenable
     $stdout = STDOUT
   end
 
@@ -22,7 +21,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
     students.map!(&:reload)
     expect(students).to all(be_onboarding)
 
-    Rake::Task['fix_submissions'].invoke
+    Rake::Task["fix_submissions"].invoke
 
     students.map!(&:reload)
     expect(students).to all(be_onboarded)
@@ -33,7 +32,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
     printed = FactoryBot.create(:student, :onboarded)
     printed.update_column(:onboarded, false)
 
-    Rake::Task['fix_submissions'].invoke
+    Rake::Task["fix_submissions"].invoke
 
     expect(output.string).to include(printed.id.to_s)
     expect(output.string).to include(printed.email)
@@ -48,7 +47,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
     expect(team.has_students).to be false
     expect(team).not_to be_qualified
 
-    Rake::Task['fix_submissions'].invoke
+    Rake::Task["fix_submissions"].invoke
 
     team = team.reload
     expect(team.has_students).to be true
@@ -63,7 +62,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
     expect(team.all_students_onboarded).to be false
     expect(team).not_to be_qualified
 
-    Rake::Task['fix_submissions'].invoke
+    Rake::Task["fix_submissions"].invoke
 
     team = team.reload
     expect(team.all_students_onboarded).to be true
@@ -77,7 +76,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
     printed2.update_column(:all_students_onboarded, false)
     not_printed = FactoryBot.create(:team)
 
-    Rake::Task['fix_submissions'].invoke
+    Rake::Task["fix_submissions"].invoke
 
     expect(output.string).to include(printed1.id.to_s)
     expect(output.string).to include(printed1.name)
@@ -95,7 +94,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
     expect(submission).not_to be_complete
     expect(submission).to be_only_needs_to_submit
 
-    Rake::Task['fix_submissions'].invoke
+    Rake::Task["fix_submissions"].invoke
 
     submission = submission.reload
     expect(submission).to be_published
@@ -109,7 +108,7 @@ RSpec.describe "Tasks: rails fix_submissions" do
     not_printed << FactoryBot.create(:submission, :complete)
     not_printed << FactoryBot.create(:submission, :half_complete)
 
-    Rake::Task['fix_submissions'].invoke
+    Rake::Task["fix_submissions"].invoke
 
     expect(output.string).to include(printed.app_name)
     expect(output.string).to include(printed.team_name)

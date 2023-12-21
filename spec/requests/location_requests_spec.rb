@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe LocationController do
-  %w{mentor student}.each do |scope|
+  %w[mentor student].each do |scope|
     context "POST /#{scope}/location" do
       it "saves and geocodes to the current account" do
         profile = FactoryBot.create(scope, :chicago)
@@ -22,7 +22,7 @@ RSpec.describe LocationController do
     end
   end
 
-  %w{mentor student judge admin}.each do |scope|
+  %w[mentor student judge admin].each do |scope|
     context "PATCH #{scope}/locations" do
       before do
         @account = FactoryBot.create(scope).account
@@ -31,8 +31,8 @@ RSpec.describe LocationController do
 
       it "returns 404 for invalid search data" do
         patch "/#{scope}/location", params: {
-          "#{scope}_location" => { city: "x" },
-          account_id: @account.id
+          "#{scope}_location" => {city: "x"},
+          :account_id => @account.id
         }
 
         expect(response.status).to eq(404)
@@ -40,8 +40,8 @@ RSpec.describe LocationController do
 
       it "returns OK for valid single-result search data" do
         patch "/#{scope}/location", params: {
-          "#{scope}_location" => { city: "Chicago" },
-          account_id: @account.id
+          "#{scope}_location" => {city: "Chicago"},
+          :account_id => @account.id
         }
 
         expect(response.status).to eq(200)
@@ -56,8 +56,8 @@ RSpec.describe LocationController do
 
       it "returns 300 for valid multi-result search data" do
         patch "/#{scope}/location", params: {
-          "#{scope}_location" => { city: "stub-multiple" },
-          account_id: @account.id
+          "#{scope}_location" => {city: "stub-multiple"},
+          :account_id => @account.id
         }
 
         expect(response.status).to eq(300)

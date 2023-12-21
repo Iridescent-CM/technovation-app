@@ -33,12 +33,12 @@ RSpec.describe Student::MentorSearchesController do
         :geocoded,
         virtual: false,
         city: "Los Angeles",
-        state_province: "CA",
+        state_province: "CA"
       )
 
       sign_in(FactoryBot.create(:student, :geocoded, :on_team))
 
-      get :new, params: { nearby: "anywhere", virtual_only: 1 }
+      get :new, params: {nearby: "anywhere", virtual_only: 1}
 
       expect(assigns[:mentors]).to be_empty
     end

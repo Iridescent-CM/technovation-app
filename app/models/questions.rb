@@ -173,7 +173,7 @@ class Questions
     when "demo"
       "Technical"
     when "entrepreneurship"
-      division == "senior" ? "Business Plan" : "User Adoption Plan"
+      (division == "senior") ? "Business Plan" : "User Adoption Plan"
     else
       section.titlecase
     end

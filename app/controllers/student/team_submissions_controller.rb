@@ -5,6 +5,6 @@ module Student
     include TeamSubmissionController
 
     before_action :require_onboarded,
-                  :require_current_team
+      :require_current_team
   end
 end

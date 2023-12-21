@@ -32,7 +32,7 @@ class EventsGrid
   column :city
 
   column :state_province, header: "State" do
-    FriendlySubregion.(self, prefix: false)
+    FriendlySubregion.call(self, prefix: false)
   end
 
   column :country do
@@ -64,7 +64,7 @@ class EventsGrid
 
     where("accounts.first_name ilike ? OR " +
           "accounts.last_name ilike ? ",
-          "#{first_name}%", "#{last_name}%")
+      "#{first_name}%", "#{last_name}%")
   end
 
   filter :division,
@@ -79,8 +79,8 @@ class EventsGrid
 
   filter :official,
     :enum,
-    select:["official", "unofficial"] do |value|
-      send(value)
+    select: ["official", "unofficial"] do |value|
+    send(value)
   end
 
   filter :country,
@@ -92,11 +92,11 @@ class EventsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(g) { g.admin } do |values|
       clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
-      where(clauses.join(' OR '))
+      where(clauses.join(" OR "))
     end
 
   filter :state_province,
@@ -108,19 +108,19 @@ class EventsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
-      scope
-        .where({ "accounts.country" => grid.country })
-        .where(
-          StateClauses.for(
-            values: values,
-            countries: grid.country,
-            table_name: "accounts",
-            operator: "OR"
-          )
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
+    scope
+      .where({"accounts.country" => grid.country})
+      .where(
+        StateClauses.for(
+          values: values,
+          countries: grid.country,
+          table_name: "accounts",
+          operator: "OR"
         )
+      )
   end
 
   filter :city,
@@ -133,9 +133,9 @@ class EventsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
       scope.where(
         StateClauses.for(
           values: grid.state_province,

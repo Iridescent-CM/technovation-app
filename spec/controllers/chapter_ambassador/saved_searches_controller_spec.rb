@@ -10,12 +10,12 @@ RSpec.describe ChapterAmbassador::SavedSearchesController do
         saved_search: {
           name: "my savey searchey",
           param_root: "accounts_grid",
-          search_string: "parameterized-query",
+          search_string: "parameterized-query"
         }
       }, format: :json
 
       expect(response).to render_template(
-        partial: "saved_searches/_saved_search",
+        partial: "saved_searches/_saved_search"
       )
     end
   end

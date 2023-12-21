@@ -7,7 +7,7 @@ module ProfileAttributes
     def self.generate(record)
       {
         company_name: record.school,
-        job_title: record.grade.blank? ? "Not specified" : record.grade,
+        job_title: record.grade.blank? ? "Not specified" : record.grade
       }
     end
   end
@@ -17,7 +17,7 @@ module ProfileAttributes
       {
         parent_guardian_email: record.parent_email,
         parent_guardian_name: record.parent_name,
-        school_name: record.school,
+        school_name: record.school
       }
     end
   end
@@ -31,7 +31,7 @@ module ProfileAttributes
         expertise_ids: Expertise.where(
           "LOWER(name) IN (?)",
           record.selected_expertise.map(&:to_s).map(&:humanize).map(&:downcase)
-        ).pluck(:id),
+        ).pluck(:id)
       }
     end
   end

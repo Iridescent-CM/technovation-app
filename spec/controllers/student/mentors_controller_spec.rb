@@ -7,7 +7,7 @@ RSpec.describe Student::MentorsController do
       student = FactoryBot.create(:student, :on_team)
 
       sign_in(student)
-      get :show, params: { id: mentor.id }
+      get :show, params: {id: mentor.id}
 
       expect(assigns[:mentor]).to eq(mentor)
     end

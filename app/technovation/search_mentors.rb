@@ -5,7 +5,7 @@ module SearchMentors
     mentors = MentorProfile.searchable(filter.mentor_account_id)
 
     unless filter.text.blank?
-      names = filter.text.split(' ')
+      names = filter.text.split(" ")
       mentors = mentors.joins(:account).where(
         "accounts.first_name ilike '%#{names.first}%' OR
         accounts.last_name ilike '%#{names.last}%'"
@@ -37,8 +37,8 @@ module SearchMentors
       mentors = mentors.virtual
     end
 
-    miles = filter.nearby == "anywhere" ? EARTH_CIRCUMFERENCE : 100
-    nearby = filter.nearby == "anywhere" ? filter.coordinates : filter.nearby
+    miles = (filter.nearby == "anywhere") ? EARTH_CIRCUMFERENCE : 100
+    nearby = (filter.nearby == "anywhere") ? filter.coordinates : filter.nearby
 
     if filter.country == "PS"
       nearby = "Palestine"

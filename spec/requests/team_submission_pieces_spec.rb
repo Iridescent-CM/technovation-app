@@ -43,7 +43,7 @@ RSpec.describe "GET /team_submission_pieces/:piece" do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
     submission = FactoryBot.create(
       :team_submission,
-      team: mentor.teams.first,
+      team: mentor.teams.first
     )
 
     allow_any_instance_of(ApplicationController).to receive(

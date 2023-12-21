@@ -4,8 +4,8 @@ module Mentor
       if team_id = params.fetch(:team_id) { false }
         team = current_mentor.current_teams.find(team_id)
 
-        state = FriendlySubregion.(team, prefix: false)
-        state_code = FriendlySubregion.(team, {
+        state = FriendlySubregion.call(team, prefix: false)
+        state_code = FriendlySubregion.call(team, {
           prefix: false,
           short_code: true
         })
@@ -17,11 +17,11 @@ module Mentor
           state: state,
           state_code: state_code,
           country: friendly_country.country_name,
-          country_code: friendly_country.as_short_code,
+          country_code: friendly_country.as_short_code
         }
       else
-        state = FriendlySubregion.(current_account, prefix: false)
-        state_code = FriendlySubregion.(current_account, {
+        state = FriendlySubregion.call(current_account, prefix: false)
+        state_code = FriendlySubregion.call(current_account, {
           prefix: false,
           short_code: true
         })
@@ -33,7 +33,7 @@ module Mentor
           state: state,
           state_code: state_code,
           country: friendly_country.country_name,
-          country_code: friendly_country.as_short_code,
+          country_code: friendly_country.as_short_code
         }
       end
     end

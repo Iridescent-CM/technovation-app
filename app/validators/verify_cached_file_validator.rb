@@ -7,15 +7,16 @@ class VerifyCachedFileValidator < ActiveModel::EachValidator
   end
 
   private
+
   def carrierwave_file_lost?(cache_dir, cache_file_path)
     cache_file_path.present? && !file_exists?(cache_dir, cache_file_path)
   end
 
   def file_exists?(cache_dir, cache_file_path)
-    if cache_dir[0] == '/'
-      File.exists?(File.join(cache_dir, cache_file_path))
+    if cache_dir[0] == "/"
+      File.exist?(File.join(cache_dir, cache_file_path))
     else
-      File.exists?(File.join(Rails.root, 'public', cache_dir, cache_file_path))
+      File.exist?(File.join(Rails.root, "public", cache_dir, cache_file_path))
     end
   end
 end

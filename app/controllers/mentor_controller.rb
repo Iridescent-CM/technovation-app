@@ -29,10 +29,10 @@ class MentorController < ApplicationController
         .joins(:submission)
         .where("team_submissions.id = ?", id)
         .first ||
-          raise(
-            ActiveRecord::RecordNotFound,
-            "team not found with submission id: #{id}"
-          )
+        raise(
+          ActiveRecord::RecordNotFound,
+          "team not found with submission id: #{id}"
+        )
     elsif team_id = params[:team_id]
       @current_team ||= current_mentor.teams.find(team_id)
     elsif friendly_id = params[:id]
@@ -43,20 +43,21 @@ class MentorController < ApplicationController
         .joins(:submission)
         .where("team_submissions.id = ?", submission.id)
         .first ||
-          raise(
-            ActiveRecord::RecordNotFound,
-            "team not found with submission id: #{submission.id}"
-          )
+        raise(
+          ActiveRecord::RecordNotFound,
+          "team not found with submission id: #{submission.id}"
+        )
     else
       raise(KeyError, "missing key for team_submission[id]")
     end
   end
 
   private
+
   def current_mentor
     @current_mentor ||= current_account.mentor_profile ||
       current_session.mentor_profile ||
-        ::NullProfile.new
+      ::NullProfile.new
   end
 
   def current_profile

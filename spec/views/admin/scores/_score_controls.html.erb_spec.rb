@@ -3,14 +3,18 @@ require "rails_helper"
 RSpec.describe "admin/scores/_score_controls.html.erb", type: :view do
   before do
     render partial: "admin/scores/score_controls",
-      locals: { current_account: current_account, score: score_submission }
+      locals: {current_account: current_account, score: score_submission}
   end
 
-  let(:current_account) { instance_double(Account,
-    admin?: current_account_admin) }
-  let(:score_submission) { instance_double(SubmissionScore, id: 1,
-    pending_approval?: score_submission_pending_approval,
-    deleted?: score_submission_deleted) }
+  let(:current_account) {
+    instance_double(Account,
+      admin?: current_account_admin)
+  }
+  let(:score_submission) {
+    instance_double(SubmissionScore, id: 1,
+      pending_approval?: score_submission_pending_approval,
+      deleted?: score_submission_deleted)
+  }
 
   let(:current_account_admin) { false }
   let(:score_submission_deleted) { false }

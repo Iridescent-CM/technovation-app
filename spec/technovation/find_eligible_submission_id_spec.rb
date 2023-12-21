@@ -341,7 +341,7 @@ RSpec.describe FindEligibleSubmissionId do
         contest_rank: sf_rank
       )
 
-      expect(FindEligibleSubmissionId.(judge)).to eq(submission.id)
+      expect(FindEligibleSubmissionId.call(judge)).to eq(submission.id)
     end
 
     it "chooses submissions with fewest semifinals scores" do

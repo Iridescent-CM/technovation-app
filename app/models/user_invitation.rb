@@ -1,17 +1,17 @@
 class UserInvitation < ApplicationRecord
-  enum profile_type: %i{
+  enum profile_type: %i[
     chapter_ambassador
     judge
     mentor
     student
     parent_student
-  }
+  ]
 
-  enum status: %i{
+  enum status: %i[
     sent
     opened
     registered
-  }
+  ]
 
   PROFILE_TYPES = UserInvitation.profile_types.keys.map do |profile_type|
     if profile_type == "student"
@@ -61,17 +61,17 @@ class UserInvitation < ApplicationRecord
 
   after_commit -> {
     if account = Account.left_outer_joins(
-                   :chapter_ambassador_profile
-                 )
-                 .includes(:judge_profile, :mentor_profile)
-                 .where(
-                   "chapter_ambassador_profiles.id " +
-                   "IS NULL"
-                 )
-                 .find_by(
-                   "lower(trim(both ' ' from email)) = ?",
-                   email
-                 )
+      :chapter_ambassador_profile
+    )
+        .includes(:judge_profile, :mentor_profile)
+        .where(
+          "chapter_ambassador_profiles.id " +
+          "IS NULL"
+        )
+        .find_by(
+          "lower(trim(both ' ' from email)) = ?",
+          email
+        )
 
       if mentor_profile = account.mentor_profile
         mentor_profile.update(account: nil, user_invitation: self)
@@ -120,16 +120,16 @@ class UserInvitation < ApplicationRecord
 
   def human_status
     case status
-    when "sent", "opened"; "must sign up"
-    when "registered";     "must complete training"
+    when "sent", "opened" then "must sign up"
+    when "registered" then "must complete training"
     else; "status missing (bug)"
     end
   end
 
   def friendly_status
     case status
-    when "sent", "opened"; "Sign up now"
-    when "registered";     "Complete your judge profile"
+    when "sent", "opened" then "Sign up now"
+    when "registered" then "Complete your judge profile"
     else; "status missing (bug)"
     end
   end
@@ -186,6 +186,7 @@ class UserInvitation < ApplicationRecord
   end
 
   private
+
   def inviting_existing_chapter_ambassador_to_be_a_chapter_ambassador?
     profile_type.to_s == "chapter_ambassador" and
       Account.left_outer_joins(:chapter_ambassador_profile)

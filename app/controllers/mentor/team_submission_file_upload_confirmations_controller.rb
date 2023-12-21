@@ -3,8 +3,8 @@ module Mentor
     def show
       job = ProcessUploadJob.perform_later(
         current_team.submission.id,
-        'TeamSubmission',
-        'source_code',
+        "TeamSubmission",
+        "source_code",
         params.fetch(:key),
         current_profile.account.id
       )
@@ -13,7 +13,7 @@ module Mentor
       @unprocessed_file_url = "//s3.amazonaws.com/#{params[:bucket]}/#{params[:key]}"
       @job = Job.find_by!(job_id: job.job_id)
 
-      render 'student/team_submission_file_upload_confirmations/show'
+      render "student/team_submission_file_upload_confirmations/show"
     end
   end
 end

@@ -2,7 +2,7 @@ module ResetPasswordToEmail
   def self.call(email)
     a = Account.find_by(email: email)
     a.update(skip_existing_password: true,
-                        password: email)
+      password: email)
     puts "#{a.email} password is now #{email}"
   end
 end

@@ -1,8 +1,10 @@
 class TeamRosterManaging
   private
+
   attr_reader :team, :profiles
 
   public
+
   def initialize(team, profiles)
     @team = team
     @profiles = Array(profiles)
@@ -39,9 +41,10 @@ class TeamRosterManaging
   end
 
   private
+
   module MembershipsManager
     def add_student_profile(student)
-      if not students.include?(student) and spot_available?
+      if !students.include?(student) and spot_available?
         students << student
 
         Casting.delegating(self => DivisionChooser) do
@@ -49,24 +52,24 @@ class TeamRosterManaging
         end
 
         if invite = student.team_member_invites
-                           .pending.find_by(team: self)
+            .pending.find_by(team: self)
           invite.accepted!
         end
 
         if join_request = student.join_requests
-                                 .pending.find_by(team: self)
+            .pending.find_by(team: self)
           join_request.approved!
         end
 
         student.account.create_activity(
           key: "account.join_team",
-          recipient: self,
+          recipient: self
         )
 
         update_column(:has_students, true)
       elsif students.include?(student)
         errors.add(:add_student, "Student is already on this team")
-      elsif not spot_available?
+      elsif !spot_available?
         errors.add(:add_student, "No spot available to add this student")
       end
     end
@@ -86,7 +89,7 @@ class TeamRosterManaging
 
       mentor.account.create_activity(
         key: "account.join_team",
-        recipient: self,
+        recipient: self
       )
 
       update_column(:has_mentor, true)
@@ -109,7 +112,7 @@ class TeamRosterManaging
 
       student.account.create_activity(
         key: "account.leave_team",
-        recipient: self,
+        recipient: self
       )
 
       update_column(:has_students, students.reload.any?)
@@ -128,7 +131,7 @@ class TeamRosterManaging
 
       mentor.account.create_activity(
         key: "account.leave_team",
-        recipient: self,
+        recipient: self
       )
 
       update_column(:has_mentor, mentors.reload.any?)

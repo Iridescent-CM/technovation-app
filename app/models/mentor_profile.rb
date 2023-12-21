@@ -13,18 +13,18 @@ class MentorProfile < ActiveRecord::Base
 
   scope :by_expertise_ids, ->(ids) {
     joins(:mentor_profile_expertises)
-    .preload(:mentor_profile_expertises)
-    .where("mentor_profile_expertises.expertise_id IN (?)", ids)
-    .distinct
+      .preload(:mentor_profile_expertises)
+      .where("mentor_profile_expertises.expertise_id IN (?)", ids)
+      .distinct
   }
 
   scope :by_gender_identities, ->(ids) {
     ids = ids.compact.map(&:to_i).sort
-    male_female = [Account.genders['Male'], Account.genders['Female']].sort
+    male_female = [Account.genders["Male"], Account.genders["Female"]].sort
     all_genders = Account.genders.values.sort
 
     if ids == male_female
-      ids = ids + [
+      ids += [
         Account.genders["Prefer not to say"],
         Account.genders["Non-binary"]
       ]
@@ -37,7 +37,7 @@ class MentorProfile < ActiveRecord::Base
       joins(:account)
         .where("accounts.gender IN (?) OR accounts.gender IS NULL", ids)
     elsif ids.empty?
-      where()
+      where
     else
       joins(:account).where("accounts.gender IN (?)", ids)
     end
@@ -158,13 +158,13 @@ class MentorProfile < ActiveRecord::Base
     presence: true
 
   validates :bio,
-    length: { minimum: 100 },
+    length: {minimum: 100},
     allow_blank: true
 
   delegate :submitted?,
-           :candidate_id,
-           :report_id,
-           :invitation_id,
+    :candidate_id,
+    :report_id,
+    :invitation_id,
     to: :background_check,
     prefix: true,
     allow_nil: true
@@ -206,7 +206,7 @@ class MentorProfile < ActiveRecord::Base
       :training_complete_or_not_required?,
       :consent_signed?,
       :background_check_complete?,
-      :bio_complete?,
+      :bio_complete?
     ]
 
     methods.each do |method|
@@ -239,18 +239,18 @@ class MentorProfile < ActiveRecord::Base
 
   def human_status
     case status
-    when "past_season"; "must log in"
-    when "registered";  "must complete onboarding"
-    when "ready";       "ready!"
+    when "past_season" then "must log in"
+    when "registered" then "must complete onboarding"
+    when "ready" then "ready!"
     else; "status missing (bug)"
     end
   end
 
   def friendly_status
     case status
-    when "past_season"; "Log in now"
-    when "registered";  "Complete your mentor profile"
-    when "ready";       "Log in for more details"
+    when "past_season" then "Log in now"
+    when "registered" then "Complete your mentor profile"
+    when "ready" then "Log in for more details"
     else; "status missing (bug)"
     end
   end
@@ -283,12 +283,12 @@ class MentorProfile < ActiveRecord::Base
 
   def can_join_a_team?
     onboarded? &&
-            SeasonToggles.team_building_enabled?
+      SeasonToggles.team_building_enabled?
   end
-  alias :can_create_a_team? :can_join_a_team?
+  alias_method :can_create_a_team?, :can_join_a_team?
 
   def background_check_complete?
-    return true if not requires_background_check?
+    return true if !requires_background_check?
 
     background_check.present? and
       background_check.clear?
@@ -312,7 +312,7 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def bio_complete?
-    not bio.blank?
+    !bio.blank?
   end
 
   def authenticated?
@@ -356,16 +356,16 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def onboarding?
-    not onboarded?
+    !onboarded?
   end
 
   def onboarded?
     account.present? &&
       account.email_confirmed? &&
-        training_complete_or_not_required? &&
-          consent_signed? &&
-            background_check_complete? &&
-                !bio.blank?
+      training_complete_or_not_required? &&
+      consent_signed? &&
+      background_check_complete? &&
+      !bio.blank?
   end
 
   private

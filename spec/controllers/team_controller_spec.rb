@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe TeamController do
-  %w{admin mentor student}.each do |scope|
+  %w[admin mentor student].each do |scope|
     describe "#{scope.capitalize}::TeamsController".constantize do
       describe "PATCH #update" do
         it "geocodes teams on city/state/country changes" do
           team = FactoryBot.create(:team, :geocoded)
 
-          if scope == "mentor"
-            profile = FactoryBot.create(scope, :onboarded)
+          profile = if scope == "mentor"
+            FactoryBot.create(scope, :onboarded)
           else
-            profile = FactoryBot.create(scope)
+            FactoryBot.create(scope)
           end
 
           unless scope == "admin"
@@ -23,7 +23,7 @@ RSpec.describe TeamController do
             id: team.id,
             team: {
               city: "Los Angeles",
-              state_province: "CA",
+              state_province: "CA"
             }
           }
 

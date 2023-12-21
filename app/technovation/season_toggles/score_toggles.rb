@@ -28,13 +28,13 @@ class SeasonToggles
         convert_to_bool(store.get(:display_scores))
       end
 
-      alias :display_scores_and_certs? :display_scores?
+      alias_method :display_scores_and_certs?, :display_scores?
 
       def scores_disabled?
-        not display_scores?
+        !display_scores?
       end
 
-      alias :display_scores_disabled? :scores_disabled?
+      alias_method :display_scores_disabled?, :scores_disabled?
     end
   end
 end

@@ -6,28 +6,34 @@ class ScoresGrid
   self.batch_size = 10
 
   filter :round,
-  :enum,
-  select: -> { [
-    ['Quarterfinals', 'quarterfinals'],
-    ['Semifinals', 'semifinals'],
-  ] } do |value, scope, grid|
+    :enum,
+    select: -> {
+              [
+                ["Quarterfinals", "quarterfinals"],
+                ["Semifinals", "semifinals"]
+              ]
+            } do |value, scope, grid|
     scope.public_send(value)
   end
 
   filter :deleted,
-  :enum,
-  select: -> { [
-    ['Include deleted scores', 'with_deleted'],
-    ['Only show deleted scores', 'only_deleted'],
-  ] } do |value, scope, grid|
+    :enum,
+    select: -> {
+              [
+                ["Include deleted scores", "with_deleted"],
+                ["Only show deleted scores", "only_deleted"]
+              ]
+            } do |value, scope, grid|
     scope.public_send(value)
   end
 
   filter :dropped,
-  :enum,
-  select: -> { [
-    ['Only show dropped scores', 'dropped'],
-  ] } do |value, scope, grid|
+    :enum,
+    select: -> {
+              [
+                ["Only show dropped scores", "dropped"]
+              ]
+            } do |value, scope, grid|
     scope.public_send(value)
   end
 
@@ -44,7 +50,7 @@ class ScoresGrid
 
   scope do
     SubmissionScore.current.judge_not_deleted
-      .includes({ team_submission: :team })
+      .includes({team_submission: :team})
       .references(:teams, :team_submissions)
   end
 
@@ -107,7 +113,7 @@ class ScoresGrid
   column :event_type
 
   column :country do
-    FriendlyCountry.(team)
+    FriendlyCountry.call(team)
   end
 
   column :id

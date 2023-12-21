@@ -1,4 +1,4 @@
-require './lib/legacy/models/team'
+require "./lib/legacy/models/team"
 
 module Legacy
   class TeamRequest < LegacyModel

@@ -3,7 +3,7 @@ class UpdateTrackersOfExistingTeams < ActiveRecord::Migration[5.1]
     Team.find_each do |t|
       t.update_columns(
         has_students: t.students.any?,
-        has_mentor: t.mentors.any?,
+        has_mentor: t.mentors.any?
       )
     end
   end

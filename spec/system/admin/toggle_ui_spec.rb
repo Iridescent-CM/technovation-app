@@ -4,8 +4,7 @@ RSpec.describe "Admin UI for season toggles:", :js do
   before { sign_in(FactoryBot.create(:super_admin)) }
 
   scenario "toggle user signups" do
-    %w{student mentor}.each do |scope|
-
+    %w[student mentor].each do |scope|
       SeasonToggles.disable_signup(scope)
 
       visit edit_admin_season_schedule_settings_path
@@ -24,7 +23,7 @@ RSpec.describe "Admin UI for season toggles:", :js do
   end
 
   it "set dashboard headlines" do
-    %w{student mentor judge}.each do |scope|
+    %w[student mentor judge].each do |scope|
       SeasonToggles.set_dashboard_text(scope, "")
       visit edit_admin_season_schedule_settings_path
 
@@ -43,7 +42,7 @@ RSpec.describe "Admin UI for season toggles:", :js do
   end
 
   it "set the survey links" do
-    %w{student mentor}.each do |scope|
+    %w[student mentor].each do |scope|
       SeasonToggles.set_survey_link(scope, nil, nil)
       visit edit_admin_season_schedule_settings_path
 

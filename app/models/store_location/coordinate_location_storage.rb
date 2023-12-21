@@ -11,13 +11,14 @@ module StoreLocation
 
     def cookie_value
       {
-        'ip_address'  => existing_ip,
-        'coordinates' => [account.latitude, account.longitude],
-        'overwritten_by' => 'user',
+        "ip_address" => existing_ip,
+        "coordinates" => [account.latitude, account.longitude],
+        "overwritten_by" => "user"
       }
     end
 
     private
+
     def log_label
       "OVERWRITE! LAT, LNG for IP"
     end

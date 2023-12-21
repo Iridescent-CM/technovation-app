@@ -12,9 +12,9 @@ module StoreLocation
     def maybe_run_account_updates
       if !cookie_overwritten? &&
           coordinates_valid? &&
-            account.authenticated? &&
-              coordinates_different?(account.coordinates)
-        account.latitude  = latitude
+          account.authenticated? &&
+          coordinates_different?(account.coordinates)
+        account.latitude = latitude
         account.longitude = longitude
         Geocoding.perform(account).with_save
       else
@@ -42,22 +42,23 @@ module StoreLocation
     def cookie_value
       if account.authenticated? && account.valid_coordinates?
         {
-          'ip_address'  => ip_address,
-          'coordinates' => [account.latitude, account.longitude],
-          'overwritten_by' => nil,
-          'written_by' => 'platform',
+          "ip_address" => ip_address,
+          "coordinates" => [account.latitude, account.longitude],
+          "overwritten_by" => nil,
+          "written_by" => "platform"
         }
       else
         {
-          'ip_address'  => ip_address,
-          'coordinates' => first_geocoded_result.coordinates,
-          'overwritten_by' => nil,
-          'written_by' => 'platform',
+          "ip_address" => ip_address,
+          "coordinates" => first_geocoded_result.coordinates,
+          "overwritten_by" => nil,
+          "written_by" => "platform"
         }
       end
     end
 
     private
+
     def log_label
       "LAT, LNG from IP"
     end

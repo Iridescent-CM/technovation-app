@@ -1,4 +1,4 @@
-require 'forwardable'
+require "forwardable"
 
 class TechnovationFeature
   attr_reader :feature
@@ -14,24 +14,22 @@ class TechnovationFeature
     :onboarding_steps_required_as_html_list
 
   def initialize(profile, feature_name)
-    if feature_name.is_a?(TechnovationFeature)
-      @feature = feature_name.feature
+    @feature = if feature_name.is_a?(TechnovationFeature)
+      feature_name.feature
     else
-      @feature = Feature.for(profile, feature_name)
+      Feature.for(profile, feature_name)
     end
 
     freeze
   end
 
   def explanation(status)
-    begin
-      send("explanation_for_#{status}")
-    rescue NoMethodError => e
-      if e.receiver === self
-        "[private method TechnovationFeature#explanation_for_#{status} is missing]"
-      else
-        raise e
-      end
+    send("explanation_for_#{status}")
+  rescue NoMethodError => e
+    if e.receiver === self
+      "[private method TechnovationFeature#explanation_for_#{status} is missing]"
+    else
+      raise e
     end
   end
 
@@ -44,10 +42,11 @@ class TechnovationFeature
   end
 
   def partial_locals
-    { feature: self }
+    {feature: self}
   end
 
   private
+
   def explanation_for_not_available
     if feature.disabled_by_staff?
       "Technovation staff has disabled this feature for everyone."

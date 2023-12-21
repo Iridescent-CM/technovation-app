@@ -12,7 +12,7 @@ RSpec.describe JudgeProfile do
 
     it "raises on a failed update" do
       judge = FactoryBot.create(:judge)
-      judge.update_column(:company_name, '')
+      judge.update_column(:company_name, "")
       expect {
         judge.suspend!
       }.to raise_error(ActiveRecord::RecordInvalid)
@@ -30,7 +30,7 @@ RSpec.describe JudgeProfile do
 
     it "raises on a failed update" do
       judge = FactoryBot.create(:judge)
-      judge.update_column(:company_name, '')
+      judge.update_column(:company_name, "")
       expect {
         judge.unsuspend!
       }.to raise_error(ActiveRecord::RecordInvalid)

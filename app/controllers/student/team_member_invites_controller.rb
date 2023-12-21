@@ -13,13 +13,14 @@ module Student
 
       invites_are_disabled_by_judging or
         decline_invites_that_cannot_be_accepted(invite) or
-          apply_chosen_status_to_existing_invite(invite) or
-            redirect_existing_invite_by_status or
-              redirect_back fallback_location: student_dashboard_path,
-                alert: t("controllers.application.general_error")
+        apply_chosen_status_to_existing_invite(invite) or
+        redirect_existing_invite_by_status or
+        redirect_back fallback_location: student_dashboard_path,
+          alert: t("controllers.application.general_error")
     end
 
     private
+
     def invites_are_disabled_by_judging
       if SeasonToggles.judging_enabled_or_between?
         redirect_to student_dashboard_path,
@@ -30,7 +31,7 @@ module Student
     def decline_invites_that_cannot_be_accepted(invite)
       if invite.present? and
           invite_params[:status] == "accepted" and
-            invite.cannot_be_accepted?
+          invite.cannot_be_accepted?
         invite.declined!
         redirect_to student_dashboard_path,
           alert: t("controllers.team_member_invites.update.already_on_team")
@@ -49,18 +50,18 @@ module Student
 
     def redirect_existing_invite_by_status
       if invite = current_student.team_member_invites.find_by(
-                    invite_token: params.fetch(:id)
-                  )
+        invite_token: params.fetch(:id)
+      )
         redirect_based_on_status(invite)
       end
     end
 
     def redirect_based_on_status(invite)
       if invite.accepted?
-        if current_student.onboarded?
-          @path = student_team_path(invite.team)
+        @path = if current_student.onboarded?
+          student_team_path(invite.team)
         else
-          @path = student_dashboard_path
+          student_dashboard_path
         end
 
         @msg = t("controllers.team_member_invites.update.success")

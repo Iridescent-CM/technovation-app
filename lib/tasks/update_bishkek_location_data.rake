@@ -1,7 +1,7 @@
 desc "Update Bishkek state location data"
 task :update_bishkek_state_location_data, [:dry_run] => :environment do |t, args|
   dry_run = args[:dry_run] != "run"
-  puts "DRY RUN: #{dry_run ? 'on' : 'off'}"
+  puts "DRY RUN: #{dry_run ? "on" : "off"}"
 
   accounts = Account.current.where(country: "KG")
     .where(city: "Bishkek")
@@ -22,7 +22,6 @@ task :update_bishkek_state_location_data, [:dry_run] => :environment do |t, args
       puts "----------- ??? -------------"
       puts "STATE CHANGED"
       puts "State became: `#{account.state}`"
-
     end
 
     accounts = Account.current.where(country: "KG")

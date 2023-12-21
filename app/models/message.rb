@@ -19,7 +19,7 @@ class Message < ActiveRecord::Base
   end
 
   def unsent?
-    not sent?
+    !sent?
   end
 
   def delivered!

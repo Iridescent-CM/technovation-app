@@ -3,6 +3,7 @@ module Student
     include LocationController
 
     private
+
     def db_record
       @db_record ||= if params.fetch(:team_id) { false }
         current_team

@@ -5,7 +5,7 @@ RSpec.feature "Admins view scores" do
     submission = FactoryBot.create(
       :submission,
       :junior,
-      :complete,
+      :complete
     )
 
     FactoryBot.create(
@@ -29,7 +29,7 @@ RSpec.feature "Admins view scores" do
       :submission,
       :junior,
       :complete,
-      :semifinalist,
+      :semifinalist
     )
 
     FactoryBot.create(
@@ -53,7 +53,7 @@ RSpec.feature "Admins view scores" do
     submission = FactoryBot.create(
       :submission,
       :junior,
-      :complete,
+      :complete
     )
 
     FactoryBot.create(

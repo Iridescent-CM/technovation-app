@@ -7,7 +7,7 @@ module Student
     before_action -> {
       if current_student.is_on_team?
         redirect_to student_team_path(current_student.team),
-                    alert: t("controllers.teams.create.already_on_team")
+          alert: t("controllers.teams.create.already_on_team")
       else
         true
       end
@@ -27,6 +27,7 @@ module Student
     end
 
     private
+
     def current_profile
       current_student
     end

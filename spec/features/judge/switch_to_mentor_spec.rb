@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Judges switch to mentor mode", :js do
-
   context "config ON" do
     before do
       allow(ENV).to receive(:fetch).and_call_original
@@ -15,7 +14,7 @@ RSpec.feature "Judges switch to mentor mode", :js do
 
       expect(judge.is_a_mentor?).to be_falsey
 
-      find('#global-dropdown-wrapper').click
+      find("#global-dropdown-wrapper").click
       click_link "Mentor Mode"
       expect(page).to have_link "Switch to Judge mode"
 
@@ -23,7 +22,7 @@ RSpec.feature "Judges switch to mentor mode", :js do
       expect(judge.reload.is_a_mentor?).to be_truthy
 
       click_link "Switch to Judge mode"
-      find('#global-dropdown-wrapper').click
+      find("#global-dropdown-wrapper").click
       expect(page).to have_link "Mentor Mode"
 
       expect(current_path).to eq(judge_dashboard_path)
@@ -46,4 +45,3 @@ RSpec.feature "Judges switch to mentor mode", :js do
     end
   end
 end
-    

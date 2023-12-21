@@ -54,7 +54,7 @@ module MigrateLegacySeasons
       LegacySeason.all.each do |season|
         LegacySeasonRegistration.create!({
           season: season,
-          registerable: registerable,
+          registerable: registerable
         })
       end
     end

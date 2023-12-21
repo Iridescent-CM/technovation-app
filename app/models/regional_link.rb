@@ -1,5 +1,5 @@
 class RegionalLink < ApplicationRecord
-  enum name: %i{
+  enum name: %i[
     twitter
     facebook
     youtube
@@ -10,15 +10,15 @@ class RegionalLink < ApplicationRecord
     whatsapp
     website
     whatsapp_group
-  }
+  ]
 
   belongs_to :chapter_ambassador_profile
 
   before_save -> {
     unless name == "email"
-      self.value = value.gsub('@', '')
-        .gsub(/^\+/, '')
-        .sub('http:', 'https:')
+      self.value = value.delete("@")
+        .gsub(/^\+/, "")
+        .sub("http:", "https:")
         .strip
     end
   }
@@ -34,7 +34,7 @@ class RegionalLink < ApplicationRecord
       email: "hello@technovation-region.org",
       whatsapp: "52 1 33 23 10 69 05",
       website: "https://www.example.org",
-      whatsapp_group: "https://chat.whatsapp.com/[INVITE-CODE]",
+      whatsapp_group: "https://chat.whatsapp.com/[INVITE-CODE]"
     }
   end
 
@@ -76,6 +76,7 @@ class RegionalLink < ApplicationRecord
   end
 
   private
+
   def urlify(value)
     if value.include?(name)
       "https://#{value}"
@@ -97,13 +98,13 @@ class RegionalLink < ApplicationRecord
       email: "",
       whatsapp: "api.whatsapp.com/send?phone=",
       website: "",
-      whatsapp_group: "",
+      whatsapp_group: ""
     }.with_indifferent_access
   end
 
   def detect_page_name_from_url(value, passed_options = {})
     default_options = {
-      prefix: "",
+      prefix: ""
     }
 
     options = default_options.merge(passed_options)

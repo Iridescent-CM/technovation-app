@@ -45,8 +45,7 @@ RSpec.describe LearnWorlds::ApiClient do
             success: true,
             url: "https://learnworlds-sso-url",
             user_id: "learn_worlds_user_id"
-          }.to_json
-        )
+          }.to_json)
       end
 
       it "returns a successful result" do
@@ -87,9 +86,8 @@ RSpec.describe LearnWorlds::ApiClient do
         double("mock_learn_worlds_sso_response",
           body: {
             success: false,
-            errors: ["some LearnWorlds error message"],
-          }.to_json
-        )
+            errors: ["some LearnWorlds error message"]
+          }.to_json)
       end
 
       it "logs an error" do

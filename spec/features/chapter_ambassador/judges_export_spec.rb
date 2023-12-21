@@ -7,11 +7,11 @@ RSpec.describe "/chapter_ambassador/judges", type: :request do
     it "runs export job with grid / params" do
       chapter_ambassador = FactoryBot.create(:chapter_ambassador, :los_angeles, :approved)
 
-      post '/signins', params: {
+      post "/signins", params: {
         account: {
           email: chapter_ambassador.email,
-          password: "secret1234",
-        },
+          password: "secret1234"
+        }
       }
 
       FactoryBot.create(
@@ -38,9 +38,9 @@ RSpec.describe "/chapter_ambassador/judges", type: :request do
         get url, params: {
           filename: "regression",
           judges_grid: {
-            name_email: "only-me",
+            name_email: "only-me"
           },
-          format: :json,
+          format: :json
         }
       end
 
@@ -59,17 +59,17 @@ RSpec.describe "/chapter_ambassador/judges", type: :request do
       chapter_ambassador.saved_searches.create!(
         param_root: "judges_grid",
         name: "testing 123",
-        search_string: 'name_email="judgey"',
+        search_string: 'name_email="judgey"'
       )
 
-      post '/signins', params: {
+      post "/signins", params: {
         account: {
           email: chapter_ambassador.email,
-          password: "secret1234",
-        },
+          password: "secret1234"
+        }
       }
 
-      get '/chapter_ambassador/judges'
+      get "/chapter_ambassador/judges"
       expect(response).to be_ok
     end
   end

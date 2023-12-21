@@ -24,16 +24,16 @@ class SeasonToggles
       end
 
       def team_building_disabled?
-        not team_building_enabled?
+        !team_building_enabled?
       end
-      alias :team_invites_disabled? :team_building_disabled?
-      alias :join_team_disabled?    :team_building_disabled?
-      alias :create_team_disabled?  :team_building_disabled?
+      alias_method :team_invites_disabled?, :team_building_disabled?
+      alias_method :join_team_disabled?, :team_building_disabled?
+      alias_method :create_team_disabled?, :team_building_disabled?
 
       def team_building_enabled!
         self.team_building_enabled = true
       end
-      alias :enable_team_building! :team_building_enabled!
+      alias_method :enable_team_building!, :team_building_enabled!
 
       def team_building_disabled!
         self.team_building_enabled = false
@@ -56,7 +56,7 @@ class SeasonToggles
       end
 
       def submissions_disabled?
-        not team_submissions_editable?
+        !team_submissions_editable?
       end
 
       def team_submissions_editable!

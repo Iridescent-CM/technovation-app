@@ -152,7 +152,7 @@ class TeamsGrid
   column :city
 
   column :state_province, header: "State" do
-    FriendlySubregion.(self, prefix: false)
+    FriendlySubregion.call(self, prefix: false)
   end
 
   column :country do
@@ -167,7 +167,7 @@ class TeamsGrid
     link_to(
       "view",
       send("#{current_scope}_team_path", account),
-      data: { turbolinks: false }
+      data: {turbolinks: false}
     )
   end
 
@@ -189,7 +189,7 @@ class TeamsGrid
     :enum,
     header: "Has a mentor?",
     select: [["Yes, has a mentor", "yes"],
-             ["No mentor matched yet", "no"]],
+      ["No mentor matched yet", "no"]],
     filter_group: "common" do |value|
     if value == "yes"
       matched(:mentor)
@@ -202,7 +202,7 @@ class TeamsGrid
     :enum,
     header: "Has students?",
     select: [["Yes, has students", "yes"],
-             ["No students matched yet", "no"]],
+      ["No students matched yet", "no"]],
     filter_group: "common" do |value|
     if value == "yes"
       matched(:students)
@@ -215,10 +215,10 @@ class TeamsGrid
     :enum,
     header: "All students onboarded?",
     select: [["Yes, students are onboarded", "all_students_onboarded"],
-             ["No, some students are not onboarded", "some_students_onboarding"],
-             ["No, there are no students", "no_students"]],
+      ["No, some students are not onboarded", "some_students_onboarding"],
+      ["No, there are no students", "no_students"]],
     filter_group: "common" do |value|
-      send(value)
+    send(value)
   end
 
   filter :name, filter_group: "more-specific" do |value|
@@ -230,7 +230,7 @@ class TeamsGrid
     select: (2015..Season.current.year).to_a.reverse,
     filter_group: "more-specific",
     html: {
-      class: "and-or-field",
+      class: "and-or-field"
     },
     multiple: false do |value|
     by_season(value)
@@ -245,11 +245,11 @@ class TeamsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(g) { g.admin } do |values|
       clauses = values.flatten.map { |v| "teams.country = '#{v}'" }
-      where(clauses.join(' OR '))
+      where(clauses.join(" OR "))
     end
 
   filter :state_province,
@@ -261,9 +261,9 @@ class TeamsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
       scope
         .where(country: grid.country)
         .where(
@@ -286,9 +286,9 @@ class TeamsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
       scope.where(
         StateClauses.for(
           values: grid.state_province,

@@ -18,7 +18,8 @@ RSpec.describe SubmissionScore do
       chapter_ambassador = FactoryBot.create(
         :ambassador,
         :chicago,
-        secondary_regions: ["CA, US"])
+        secondary_regions: ["CA, US"]
+      )
 
       expect(SubmissionScore.in_region(chapter_ambassador)).to contain_exactly(chi, la)
     end
@@ -63,25 +64,25 @@ RSpec.describe SubmissionScore do
 
     SubmissionScore.create!(
       judge_profile_id: judge_profile.id,
-      team_submission_id: team_submission.id,
+      team_submission_id: team_submission.id
     )
 
     expect {
       SubmissionScore.create!(
         judge_profile_id: judge_profile.id,
-        team_submission_id: team_submission.id,
+        team_submission_id: team_submission.id
       )
     }.to raise_error(ActiveRecord::RecordInvalid)
 
     expect {
       SubmissionScore.create!(
         judge_profile_id: judge_profile.id,
-        team_submission_id: second_team_submission.id,
+        team_submission_id: second_team_submission.id
       )
 
       SubmissionScore.create!(
         judge_profile_id: second_judge_profile.id,
-        team_submission_id: team_submission.id,
+        team_submission_id: team_submission.id
       )
     }.not_to raise_error
   end
@@ -139,7 +140,7 @@ RSpec.describe SubmissionScore do
       entrepreneurship_4: 3,
 
       overall_1: 3,
-      overall_2: 2,
+      overall_2: 2
     })
 
     expect(subscore.ideation_total).to eq(11)
@@ -184,7 +185,6 @@ RSpec.describe SubmissionScore do
 
   [:quarterfinals, :semifinals].each do |judging_round|
     context judging_round do
-
       let(:round) { SubmissionScore.rounds[judging_round] }
 
       it "udpates team submission average on save when complete" do
@@ -196,7 +196,7 @@ RSpec.describe SubmissionScore do
           judge_profile_id: judge_profile.id,
           team_submission_id: team_submission.id,
           ideation_1: 5,
-          round: round,
+          round: round
         )
 
         sub.complete!
@@ -215,7 +215,7 @@ RSpec.describe SubmissionScore do
           judge_profile_id: judge_profile2.id,
           team_submission_id: team_submission.id,
           ideation_1: 2,
-          round: round,
+          round: round
         )
 
         sub2.complete!
@@ -233,7 +233,7 @@ RSpec.describe SubmissionScore do
           judge_profile_id: judge_profile.id,
           team_submission_id: team_submission.id,
           ideation_1: 5,
-          round: round,
+          round: round
         )
         expect(
           team_submission.reload.public_send("#{judging_round}_average_score")
@@ -250,7 +250,8 @@ RSpec.describe SubmissionScore do
             team_submission_id: team_submission.id,
             ideation_1: 10,
             round: round,
-            completed_at: Time.current)
+            completed_at: Time.current
+          )
         }
         let!(:low_score_submission_from_random_judge) {
           SubmissionScore.create!(
@@ -258,7 +259,8 @@ RSpec.describe SubmissionScore do
             team_submission_id: team_submission.id,
             ideation_1: 5,
             round: round,
-            completed_at: Time.current)
+            completed_at: Time.current
+          )
         }
         let!(:bad_score_submission_from_judge_judy) {
           SubmissionScore.create!(
@@ -266,7 +268,8 @@ RSpec.describe SubmissionScore do
             team_submission_id: team_submission.id,
             ideation_1: 20,
             round: round,
-            completed_at: Time.current)
+            completed_at: Time.current
+          )
         }
         let!(:another_score_submission_from_judge_judy_for_another_team) {
           SubmissionScore.create!(
@@ -274,7 +277,8 @@ RSpec.describe SubmissionScore do
             team_submission_id: FactoryBot.create(:team_submission).id,
             ideation_1: 15,
             round: round,
-            completed_at: Time.current)
+            completed_at: Time.current
+          )
         }
 
         describe "deleting a score" do
@@ -286,30 +290,30 @@ RSpec.describe SubmissionScore do
             end
 
             it "updates the team's total number of completed scores" do
-              expect(team_submission.
-                public_send("complete_#{judging_round}_submission_scores_count")).to eq(2)
+              expect(team_submission
+                .public_send("complete_#{judging_round}_submission_scores_count")).to eq(2)
             end
 
             it "updates the team's total number of offical completed scores" do
-              expect(team_submission.
-                public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(2)
+              expect(team_submission
+                .public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(2)
             end
 
             it "recalculates the team's average score" do
-              expect(team_submission.
-                public_send("#{judging_round}_average_score")).to eq(7.5)
+              expect(team_submission
+                .public_send("#{judging_round}_average_score")).to eq(7.5)
             end
 
             it "recalculates the team's score range (high score minus the low score)" do
-              expect(team_submission.
-                public_send("#{judging_round}_score_range")).to eq(5)
+              expect(team_submission
+                .public_send("#{judging_round}_score_range")).to eq(5)
             end
 
             it "updates judy's total number of scored submissions" do
               judge_judy.reload
 
-              expect(judge_judy.
-                public_send("#{judging_round}_scores_count")).to eq(1)
+              expect(judge_judy
+                .public_send("#{judging_round}_scores_count")).to eq(1)
             end
           end
         end
@@ -324,30 +328,30 @@ RSpec.describe SubmissionScore do
             end
 
             it "updates the team's total number of completed scores" do
-              expect(team_submission.
-                public_send("complete_#{judging_round}_submission_scores_count")).to eq(3)
+              expect(team_submission
+                .public_send("complete_#{judging_round}_submission_scores_count")).to eq(3)
             end
 
             it "updates the team's total number of offical completed scores" do
-              expect(team_submission.
-                public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(3)
+              expect(team_submission
+                .public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(3)
             end
 
             it "recalculates the team's average score" do
-              expect(team_submission.
-                public_send("#{judging_round}_average_score")).to eq(11.67)
+              expect(team_submission
+                .public_send("#{judging_round}_average_score")).to eq(11.67)
             end
 
             it "recalculates the team's score range (high score minus the low score)" do
-              expect(team_submission.
-                public_send("#{judging_round}_score_range")).to eq(15)
+              expect(team_submission
+                .public_send("#{judging_round}_score_range")).to eq(15)
             end
 
             it "updates judy's total number of scored submissions" do
               judge_judy.reload
 
-              expect(judge_judy.
-                public_send("#{judging_round}_scores_count")).to eq(2)
+              expect(judge_judy
+                .public_send("#{judging_round}_scores_count")).to eq(2)
             end
           end
 
@@ -379,7 +383,7 @@ RSpec.describe SubmissionScore do
 
     score = SubmissionScore.create!(
       judge_profile_id: judge_profile.id,
-      team_submission_id: team_submission.id,
+      team_submission_id: team_submission.id
     )
 
     expect(score.event_type).to eq("virtual")
@@ -400,15 +404,14 @@ RSpec.describe SubmissionScore do
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
-      division_ids: Division.senior.id,
-    )
+      division_ids: Division.senior.id)
 
     judge_profile.regional_pitch_events << rpe
     judge_profile.save!
 
     score = SubmissionScore.create!(
       judge_profile_id: judge_profile.id,
-      team_submission_id: team_submission.id,
+      team_submission_id: team_submission.id
     )
 
     expect(score.event_type).to eq("live")
@@ -431,20 +434,19 @@ RSpec.describe SubmissionScore do
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
-      division_ids: Division.senior.id,
-    )
+      division_ids: Division.senior.id)
 
     judge_profile.regional_pitch_events << rpe
     judge_profile.save!
 
     score = SubmissionScore.create!(
       judge_profile_id: judge_profile.id,
-      team_submission_id: team_submission.id,
+      team_submission_id: team_submission.id
     )
 
     expect(score.event_type).to eq("live")
 
-    InvalidateExistingJudgeData.(judge_profile)
+    InvalidateExistingJudgeData.call(judge_profile)
 
     expect(score.event_type).to eq("live")
 
@@ -458,7 +460,7 @@ RSpec.describe SubmissionScore do
 
     score = SubmissionScore.create!({
       judge_profile: judge_profile,
-      team_submission: team_submission,
+      team_submission: team_submission
     })
 
     team_submission.reload
@@ -553,15 +555,14 @@ RSpec.describe SubmissionScore do
         name: "My RPE",
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id,
-      )
+        division_ids: Division.senior.id)
 
       judge_profile.regional_pitch_events << rpe
       team.regional_pitch_events << rpe
 
       score = SubmissionScore.create!(
         judge_profile_id: judge_profile.id,
-        team_submission_id: team_submission.id,
+        team_submission_id: team_submission.id
       )
 
       expect(score.event_name).to eq("My RPE")
@@ -605,8 +606,8 @@ RSpec.describe SubmissionScore do
   describe "#pending_approval?" do
     let(:score_submission) {
       FactoryBot.build_stubbed(:score,
-       completed_at: completed_at,
-       approved_at: approved_at)
+        completed_at: completed_at,
+        approved_at: approved_at)
     }
 
     context "when the score submission is complete" do

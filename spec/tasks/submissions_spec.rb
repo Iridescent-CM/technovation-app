@@ -12,7 +12,7 @@ RSpec.describe "Tasks: submissions namespace" do
   end
 
   context "rails submissions:submitted_but_incomplete" do
-    let(:task) { Rake::Task['submissions:submitted_but_incomplete'] }
+    let(:task) { Rake::Task["submissions:submitted_but_incomplete"] }
     after(:each) { task.reenable }
 
     let!(:complete) { FactoryBot.create(:submission, :complete) }

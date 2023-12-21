@@ -1,4 +1,3 @@
-# encoding: utf-8
 class ImageProcessor < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   process :fix_exif_rotation
@@ -28,14 +27,14 @@ class ImageProcessor < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-   version :thumb do
-     process :resize_to_fill => [80, 80]
-   end
+  version :thumb do
+    process resize_to_fill: [80, 80]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(bmp jpg jpeg gif png)
+    %w[bmp jpg jpeg gif png]
   end
 
   # Override the filename of the uploaded files:
@@ -45,6 +44,7 @@ class ImageProcessor < CarrierWave::Uploader::Base
   # end
 
   private
+
   def default_url_endpoint_size
     case version_name
     when :thumb

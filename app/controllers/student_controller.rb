@@ -27,6 +27,7 @@ class StudentController < ApplicationController
   end
 
   private
+
   def require_onboarded
     if current_student.onboarded?
       true
@@ -48,7 +49,7 @@ class StudentController < ApplicationController
   def current_student
     @current_student ||= current_account.student_profile ||
       current_session.student_profile ||
-        ::NullProfile.new
+      ::NullProfile.new
   end
 
   def current_profile

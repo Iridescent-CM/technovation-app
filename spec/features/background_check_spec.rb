@@ -59,7 +59,7 @@ RSpec.feature "background checks" do
         :geocoded,
         not_onboarded: true,
         date_of_birth: age.years.ago,
-        bio: "",
+        bio: ""
       )
 
       sign_in(mentor)
@@ -71,10 +71,10 @@ RSpec.feature "background checks" do
 
       fill_in "mentor_profile_bio",
         with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-              "Praesent luctus dapibus lacus vitae interdum. " +
-              "Praesent lacinia accumsan ligula, sit amet ultrices " +
-              "velit venenatis id. Duis ac nibh euismod, " +
-              "porta risus ut, molestie tortor."
+          "Praesent luctus dapibus lacus vitae interdum. " +
+          "Praesent lacinia accumsan ligula, sit amet ultrices " +
+          "velit venenatis id. Duis ac nibh euismod, " +
+          "porta risus ut, molestie tortor."
       within("[slot=bio]") { click_button "Save" }
 
       expect(mentor.reload).to be_searchable

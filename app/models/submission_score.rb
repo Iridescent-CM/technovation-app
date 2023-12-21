@@ -39,7 +39,7 @@ class SubmissionScore < ActiveRecord::Base
 
   before_create -> {
     self.seasons = [Season.current.year]
-    self.event_type ||= LiveEventJudgingEnabled.(judge_profile) ?
+    self.event_type ||= LiveEventJudgingEnabled.call(judge_profile) ?
       "live" : "virtual"
   }
 
@@ -47,12 +47,12 @@ class SubmissionScore < ActiveRecord::Base
     update_column(:dropped_at, nil)
   }
 
-  enum round: %w{
+  enum round: %w[
     quarterfinals
     semifinals
     finals
     off
-  }
+  ]
 
   enum judge_recusal_reason: {
     submission_not_in_english: "submission_not_in_english",
@@ -77,22 +77,22 @@ class SubmissionScore < ActiveRecord::Base
       [
         "submission_scores.round = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:quarterfinals]
-      ] => 'complete_quarterfinals_submission_scores_count',
+      ] => "complete_quarterfinals_submission_scores_count",
 
       [
         "submission_scores.round = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:quarterfinals]
-      ] => 'pending_quarterfinals_submission_scores_count',
+      ] => "pending_quarterfinals_submission_scores_count",
 
       [
         "submission_scores.round = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:semifinals]
-      ] => 'complete_semifinals_submission_scores_count',
+      ] => "complete_semifinals_submission_scores_count",
 
       [
         "submission_scores.round = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:semifinals]
-      ] => 'pending_semifinals_submission_scores_count'
+      ] => "pending_semifinals_submission_scores_count"
     }
 
   counter_culture :team_submission,
@@ -109,25 +109,25 @@ class SubmissionScore < ActiveRecord::Base
         "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:quarterfinals],
         true
-      ] => 'complete_quarterfinals_official_submission_scores_count',
+      ] => "complete_quarterfinals_official_submission_scores_count",
 
       [
         "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:quarterfinals],
         true
-      ] => 'pending_quarterfinals_official_submission_scores_count',
+      ] => "pending_quarterfinals_official_submission_scores_count",
 
       [
         "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NOT NULL",
         rounds[:semifinals],
         true
-      ] => 'complete_semifinals_official_submission_scores_count',
+      ] => "complete_semifinals_official_submission_scores_count",
 
       [
         "submission_scores.round = ? and submission_scores.official = ? and submission_scores.completed_at IS NULL and submission_scores.judge_recusal = FALSE",
         rounds[:semifinals],
         true
-      ] => 'pending_semifinals_official_submission_scores_count'
+      ] => "pending_semifinals_official_submission_scores_count"
     }
 
   belongs_to :judge_profile
@@ -137,44 +137,44 @@ class SubmissionScore < ActiveRecord::Base
       "quarterfinals_scores_count"
     end
   },
-  column_names: {
-    [
-      "? = ANY (submission_scores.seasons) AND " +
-      "submission_scores.completed_at IS NOT NULL AND " +
-      "submission_scores.round = ?",
-      Season.current.year.to_s,
-      rounds[:quarterfinals],
-    ] => 'quarterfinals_scores_count'
-  }
+    column_names: {
+      [
+        "? = ANY (submission_scores.seasons) AND " +
+          "submission_scores.completed_at IS NOT NULL AND " +
+          "submission_scores.round = ?",
+        Season.current.year.to_s,
+        rounds[:quarterfinals]
+      ] => "quarterfinals_scores_count"
+    }
 
   counter_culture :judge_profile, column_name: ->(score) {
     if score.current_season? && score.complete? && score.semifinals?
       "semifinals_scores_count"
     end
   },
-  column_names: {
-    [
-      "? = ANY (submission_scores.seasons) AND " +
-      "submission_scores.completed_at IS NOT NULL AND " +
-      "submission_scores.round = ?",
-      Season.current.year.to_s,
-      rounds[:semifinals],
-    ] => 'semifinals_scores_count'
-  }
+    column_names: {
+      [
+        "? = ANY (submission_scores.seasons) AND " +
+          "submission_scores.completed_at IS NOT NULL AND " +
+          "submission_scores.round = ?",
+        Season.current.year.to_s,
+        rounds[:semifinals]
+      ] => "semifinals_scores_count"
+    }
 
   counter_culture :judge_profile, column_name: ->(score) {
     if score.current_season? && score.incomplete? && score.judge_recusal?
       "recusal_scores_count"
     end
   },
-  column_names: {
-    [
-      "? = ANY (submission_scores.seasons) AND " +
-        "submission_scores.completed_at IS NULL AND " +
-        "submission_scores.judge_recusal = TRUE",
-      Season.current.year.to_s
-    ] => "recusal_scores_count"
-  }
+    column_names: {
+      [
+        "? = ANY (submission_scores.seasons) AND " +
+          "submission_scores.completed_at IS NULL AND " +
+          "submission_scores.judge_recusal = TRUE",
+        Season.current.year.to_s
+      ] => "recusal_scores_count"
+    }
 
   scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
   scope :incomplete, -> { where("submission_scores.completed_at IS NULL AND submission_scores.judge_recusal = FALSE") }
@@ -240,18 +240,18 @@ class SubmissionScore < ActiveRecord::Base
     scope: [:team_submission_id, :deleted_at]
 
   delegate :app_name,
-           :team_photo,
-           :team_name,
-           :team_division_name,
-           :team_primary_location,
-           :team_ages,
-           :submission_type,
+    :team_photo,
+    :team_name,
+    :team_division_name,
+    :team_primary_location,
+    :team_ages,
+    :submission_type,
     to: :team_submission,
     prefix: true,
     allow_nil: false
 
   delegate :team,
-           :team_division_name,
+    :team_division_name,
     to: :team_submission,
     prefix: false,
     allow_nil: false
@@ -266,10 +266,10 @@ class SubmissionScore < ActiveRecord::Base
 
   def self.average_score(round)
     if first
-      if round === :unofficial
-        method_for_average = "average_unofficial_score"
+      method_for_average = if round === :unofficial
+        "average_unofficial_score"
       else
-        method_for_average = "#{round}_average_score"
+        "#{round}_average_score"
       end
 
       first.team_submission.public_send(method_for_average)
@@ -305,7 +305,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def name
     [team_submission_app_name,
-     team_submission_team_name].join(' by ')
+      team_submission_team_name].join(" by ")
   end
 
   def event_name
@@ -313,7 +313,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def event_type_display_name
-    event_type == "live" ? "Pitch Event" : "Online"
+    (event_type == "live") ? "Pitch Event" : "Online"
   end
 
   def judge_name
@@ -355,7 +355,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def incomplete?
-    not complete?
+    !complete?
   end
 
   def complete!
@@ -364,7 +364,7 @@ class SubmissionScore < ActiveRecord::Base
 
   def drop_score!
     update(dropped_at: Time.current)
-    self.destroy
+    destroy
   end
 
   def dropped?
@@ -373,8 +373,8 @@ class SubmissionScore < ActiveRecord::Base
 
   def suspicious?
     completed_too_fast ||
-    seems_too_low ||
-    completed_too_fast_repeat_offense
+      seems_too_low ||
+      completed_too_fast_repeat_offense
   end
 
   def suspicious_reasons
@@ -440,15 +440,15 @@ class SubmissionScore < ActiveRecord::Base
   def ideation_total
     ideation_1 +
       ideation_2 +
-        ideation_3 +
-          ideation_4
+      ideation_3 +
+      ideation_4
   end
 
   def technical_total
     technical_1 +
       technical_2 +
-        technical_3 +
-          technical_4
+      technical_3 +
+      technical_4
   end
 
   def entrepreneurship_total
@@ -456,25 +456,25 @@ class SubmissionScore < ActiveRecord::Base
 
     entrepreneurship_1 +
       entrepreneurship_2 +
-        entrepreneurship_3 +
-          entrepreneurship_4
+      entrepreneurship_3 +
+      entrepreneurship_4
   end
 
   def pitch_total
     pitch_1 +
       pitch_2 +
-        pitch_3 +
-          pitch_4 +
-            pitch_5 +
-              pitch_6 +
-                pitch_7 +
-                  pitch_8
+      pitch_3 +
+      pitch_4 +
+      pitch_5 +
+      pitch_6 +
+      pitch_7 +
+      pitch_8
   end
 
   def demo_total
     demo_1 +
       demo_2 +
-        demo_3
+      demo_3
   end
 
   def overall_impression_total
@@ -492,9 +492,9 @@ class SubmissionScore < ActiveRecord::Base
 
   def status
     if !!completed_at
-      'complete'
+      "complete"
     else
-      'pending'
+      "pending"
     end
   end
 

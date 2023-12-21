@@ -51,16 +51,17 @@ class ApplicationController < ActionController::Base
 
     session_token = get_cookie(CookieNames::SESSION_TOKEN)
 
-    if !!session_token
-      @current_session = Account.find_by(
+    @current_session = if !!session_token
+      Account.find_by(
         session_token: get_cookie(CookieNames::SESSION_TOKEN)
       ) || ::NullAuth.new
     else
-      @current_session = ::NullAuth.new
+      ::NullAuth.new
     end
   end
 
   private
+
   def region_account
     if current_session.authenticated?
       current_session
@@ -113,7 +114,7 @@ class ApplicationController < ActionController::Base
     @profile = instance_variable_set(
       "@#{scope}_profile",
       "#{scope}_profile".camelize.constantize.new(
-        account_attributes: { email: invite.email },
+        account_attributes: {email: invite.email}
       )
     )
 

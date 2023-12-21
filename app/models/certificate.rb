@@ -20,7 +20,7 @@ class Certificate < ApplicationRecord
     where(cert_type: MENTOR_CERTIFICATE_TYPES.keys)
   }
 
-  scope :for_team, -> (team) {
+  scope :for_team, ->(team) {
     where(team: team)
   }
 

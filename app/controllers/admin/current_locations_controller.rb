@@ -1,14 +1,14 @@
 module Admin
   class CurrentLocationsController < AdminController
     def show
-      if account_id = params.fetch(:account_id) { false }
-        record = Account.find(account_id)
+      record = if account_id = params.fetch(:account_id) { false }
+        Account.find(account_id)
       else
-        record = Team.find(params.fetch(:team_id))
+        Team.find(params.fetch(:team_id))
       end
 
-      state = FriendlySubregion.(record, prefix: false)
-      state_code = FriendlySubregion.(record, {
+      state = FriendlySubregion.call(record, prefix: false)
+      state_code = FriendlySubregion.call(record, {
         prefix: false,
         short_code: true
       })
@@ -20,7 +20,7 @@ module Admin
         state: state,
         state_code: state_code,
         country: friendly_country.country_name,
-        country_code: friendly_country.as_short_code,
+        country_code: friendly_country.as_short_code
       }
     end
   end

@@ -1,4 +1,4 @@
-require 'fill_pdfs'
+require "fill_pdfs"
 
 class CertificateJob < ActiveJob::Base
   queue_as :default
@@ -10,7 +10,7 @@ class CertificateJob < ActiveJob::Base
     Job.create!(
       job_id: job.job_id,
       status: "queued",
-      owner: owner,
+      owner: owner
     )
   end
 
@@ -19,17 +19,17 @@ class CertificateJob < ActiveJob::Base
       recipient = CertificateRecipient.from_state(job.arguments.first)
 
       if recipient.certificate_issued?
-        #FIXME: using .last here is still a bit risky
+        # FIXME: using .last here is still a bit risky
         cert = recipient.certificates.last
         db_job.update_columns(
           status: "complete",
           payload: {
-            fileUrl: cert.file_url,
-          },
+            fileUrl: cert.file_url
+          }
         )
       else
         db_job.update_columns(
-          status: "failed",
+          status: "failed"
         )
       end
     end

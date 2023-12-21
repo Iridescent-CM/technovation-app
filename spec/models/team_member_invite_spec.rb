@@ -5,8 +5,8 @@ RSpec.describe TeamMemberInvite do
     original_invite = FactoryBot.create(:team_member_invite)
 
     invite = FactoryBot.build(:team_member_invite,
-                               team_id: original_invite.team_id,
-                               invitee_email: original_invite.invitee_email)
+      team_id: original_invite.team_id,
+      invitee_email: original_invite.invitee_email)
 
     expect(invite).not_to be_valid
     expect(invite.errors[:invitee_email]).to eq(["has already been invited by your team."])
@@ -16,8 +16,8 @@ RSpec.describe TeamMemberInvite do
     original_invite = FactoryBot.create(:team_member_invite, status: :accepted)
 
     invite = FactoryBot.build(:team_member_invite,
-                               team_id: original_invite.team_id,
-                               invitee_email: original_invite.invitee_email)
+      team_id: original_invite.team_id,
+      invitee_email: original_invite.invitee_email)
 
     expect(invite).to be_valid
   end

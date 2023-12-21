@@ -3,11 +3,9 @@ module LocationStorageController
 
   included do
     before_action -> {
-      StoreLocation.(
-        ip_address: request.remote_ip,
+      StoreLocation.call(ip_address: request.remote_ip,
         context: self,
-        account: current_account,
-      )
+        account: current_account)
     }
   end
 end

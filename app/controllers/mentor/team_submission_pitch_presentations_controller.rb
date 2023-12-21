@@ -2,15 +2,16 @@ module Mentor
   class TeamSubmissionPitchPresentationsController < MentorController
     def new
       do_new
-      render 'student/team_submission_pitch_presentations/new'
+      render "student/team_submission_pitch_presentations/new"
     end
 
     def edit
       do_new
-      render 'student/team_submission_pitch_presentations/new'
+      render "student/team_submission_pitch_presentations/new"
     end
 
     private
+
     def do_new
       @submission = current_team.submission
 

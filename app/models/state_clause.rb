@@ -3,6 +3,6 @@ class StateClause
     state = State.for(value, countries)
 
     "lower(unaccent(#{table_name}.state_province)) like " +
-    "'#{state.search_name}%'"
+      "'#{state.search_name}%'"
   end
 end

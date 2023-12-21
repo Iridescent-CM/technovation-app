@@ -10,20 +10,20 @@ RSpec.describe MentorProfileSerializer do
     end
 
     it "sends user to training first" do
-      expect(next_onboarding_step).to eq('mentor-training')
+      expect(next_onboarding_step).to eq("mentor-training")
     end
 
     it "then to the consent waiver" do
       mentor.complete_training!
 
-      expect(next_onboarding_step).to eq('consent-waiver')
+      expect(next_onboarding_step).to eq("consent-waiver")
     end
 
     it "then the background check, if required" do
       mentor.complete_training!
       FactoryBot.create(:consent_waiver, account: mentor.account)
 
-      expect(next_onboarding_step).to eq('background-check')
+      expect(next_onboarding_step).to eq("background-check")
     end
 
     it "then the bio" do
@@ -31,7 +31,7 @@ RSpec.describe MentorProfileSerializer do
       FactoryBot.create(:consent_waiver, account: mentor.account)
       FactoryBot.create(:background_check, account: mentor.account)
 
-      expect(next_onboarding_step).to eq('bio')
+      expect(next_onboarding_step).to eq("bio")
     end
   end
 end

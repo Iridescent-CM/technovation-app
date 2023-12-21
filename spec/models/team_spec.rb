@@ -15,11 +15,10 @@ RSpec.describe Team do
 
     student = team.students.sample
     student.update({
-      parental_consents_attributes: { 0 => {
-          id: student.parental_consent.id,
-          status: :pending,
-        },
-      },
+      parental_consents_attributes: {0 => {
+        id: student.parental_consent.id,
+        status: :pending
+      }}
     })
 
     expect(team.reload).not_to be_qualified
@@ -77,7 +76,7 @@ RSpec.describe Team do
       account_attributes: {
         id: older_student.account_id,
         date_of_birth: junior_dob
-      },
+      }
     })
 
     expect(team.reload.division).to eq(Division.junior)
@@ -144,9 +143,9 @@ RSpec.describe Team do
 
     it "uses only country outside the US" do
       team = FactoryBot.create(:team,
-                                city: "Salvador",
-                                state_province: "Bahia",
-                                country: "BR")
+        city: "Salvador",
+        state_province: "Bahia",
+        country: "BR")
       expect(team.region_division_name).to eq("BR,junior")
     end
 
@@ -170,7 +169,7 @@ RSpec.describe Team do
         account_attributes: {
           id: member.account_id,
           date_of_birth: senior_dob
-        },
+        }
       })
 
       expect(team.reload.region_division_name).to eq("US_IL,junior")
@@ -213,7 +212,7 @@ RSpec.describe Team do
 
     TeamUpdating.execute(team, {
       city: "Los Angeles",
-      state_province: "CA",
+      state_province: "CA"
     })
 
     team.reload
@@ -226,7 +225,7 @@ RSpec.describe Team do
     TeamUpdating.execute(team, {
       city: "Salvador",
       state_province: "Bahia",
-      country: "BR",
+      country: "BR"
     })
 
     team.reload
@@ -302,16 +301,16 @@ RSpec.describe Team do
   end
 
   it "deletes itself, pending requests/invites when " +
-     "membership decrements to zero" do
+    "membership decrements to zero" do
     team = FactoryBot.create(:team)
 
     team.team_member_invites.create!(
       invitee_email: "will@delete.com",
-      inviter: FactoryBot.create(:mentor, :onboarded),
+      inviter: FactoryBot.create(:mentor, :onboarded)
     )
 
     team.join_requests.create!(
-      requestor: FactoryBot.create(:student),
+      requestor: FactoryBot.create(:student)
     )
 
     team.members.each do |m|

@@ -80,7 +80,7 @@ RSpec.xfeature "Invite a member to a team" do
     within("#find-team #team_#{mentor.current_teams.first.id}") do
       click_link mentor.team_names.first
     end
-    
+
     fill_in "team_member_invite[invitee_email]", with: "complete@student.com"
     click_button "Send invite"
 

@@ -9,7 +9,7 @@ RSpec.describe "Chapter ambassador/Data Analysis requests" do
       sign_in(:chapter_ambassador)
       get chapter_ambassador_data_analysis_path(:returning_students)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([1, 0])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([1, 0])
     end
 
     it "counts new students to the current season" do
@@ -18,7 +18,7 @@ RSpec.describe "Chapter ambassador/Data Analysis requests" do
       sign_in(:chapter_ambassador)
       get chapter_ambassador_data_analysis_path(:returning_students)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([0, 1])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([0, 1])
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.describe "Chapter ambassador/Data Analysis requests" do
       sign_in(:chapter_ambassador)
       get chapter_ambassador_data_analysis_path(:returning_mentors)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([1, 0])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([1, 0])
     end
 
     it "counts new mentors to the current season" do
@@ -39,7 +39,7 @@ RSpec.describe "Chapter ambassador/Data Analysis requests" do
       sign_in(:chapter_ambassador)
       get chapter_ambassador_data_analysis_path(:returning_mentors)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([0, 1])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([0, 1])
     end
   end
 end

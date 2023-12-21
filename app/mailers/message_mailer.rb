@@ -17,8 +17,8 @@ class MessageMailer < ApplicationMailer
 
     I18n.with_locale(recipient.locale) do
       mail to: recipient.email,
-           from: message.sender.email,
-           subject: message.subject
+        from: message.sender.email,
+        subject: message.subject
     end
   end
 end

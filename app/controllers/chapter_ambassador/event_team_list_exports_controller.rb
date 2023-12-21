@@ -5,7 +5,7 @@ module ChapterAmbassador
         current_ambassador.id,
         params.fetch(:id),
         self.class.name,
-        "teams",
+        "teams"
       )
       render json: {}
     end

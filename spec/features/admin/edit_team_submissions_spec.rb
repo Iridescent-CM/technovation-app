@@ -31,7 +31,7 @@ RSpec.feature "Toggling editable team submissions" do
         check "team_submission[integrity_affirmed]"
         click_button "Start now!"
 
-        expect(page).to have_css('.tw-gray-btn', text: "Upload your team photo")
+        expect(page).to have_css(".tw-gray-btn", text: "Upload your team photo")
 
         visit mentor_dashboard_path
 

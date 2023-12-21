@@ -6,11 +6,12 @@ module ChapterAmbassador
       [
         :organization_company_name,
         :job_title,
-        :bio,
+        :bio
       ]
     end
 
     private
+
     def profile
       current_ambassador
     end

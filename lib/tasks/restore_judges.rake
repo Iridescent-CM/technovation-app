@@ -1,4 +1,3 @@
-
 # May 11, 2018 backup:
 #
 # email: "aouahab@jobrouter.fr",
@@ -15,15 +14,15 @@ task restore_judges: :environment do
     accounts = JSON.parse(File.read("./lib/restore_accounts.json"))
 
     accounts.each do |json|
-      pwd_digest = json.delete('password_digest')
+      pwd_digest = json.delete("password_digest")
       judge_profile_json = json.delete("judge_profile")
       original_profile_id = judge_profile_json.delete("original_id")
 
-      account = AccountFromJudgeRestoreJson.(json)
-      profile = JudgeProfileFromRestoreJson.(account, judge_profile_json)
+      account = AccountFromJudgeRestoreJson.call(json)
+      profile = JudgeProfileFromRestoreJson.call(account, judge_profile_json)
 
       account.skip_existing_password = true
-      account.password = 'somethingwaltminusbear'
+      account.password = "somethingwaltminusbear"
       account.save!
       account.update_column(:password_digest, pwd_digest)
 

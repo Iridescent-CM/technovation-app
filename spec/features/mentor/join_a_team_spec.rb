@@ -8,7 +8,7 @@ RSpec.feature "Mentors join a team" do
   before { SeasonToggles.team_building_enabled! }
 
   let!(:available_team) { FactoryBot.create(:team, :geocoded) }
-    # Default is in Chicago
+  # Default is in Chicago
 
   let(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) } # City is Chicago
 
@@ -16,7 +16,7 @@ RSpec.feature "Mentors join a team" do
 
   scenario "request to join a team" do
     Timecop.freeze(day_before_qfs) do
-      within('#find-team') { click_link "Find a team" }
+      within("#find-team") { click_link "Find a team" }
 
       click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"
@@ -36,12 +36,12 @@ RSpec.feature "Mentors join a team" do
     Timecop.freeze(day_before_qfs) do
       join_request = JoinRequest.create!({
         requestor: mentor,
-        team: available_team,
+        team: available_team
       })
 
       join_request.deleted!
 
-      within('#find-team') { click_link "Find a team" }
+      within("#find-team") { click_link "Find a team" }
 
       click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"
@@ -56,7 +56,7 @@ RSpec.feature "Mentors join a team" do
     Timecop.freeze(day_before_qfs) do
       join_request = JoinRequest.create!({
         requestor: mentor,
-        team: available_team,
+        team: available_team
       })
 
       visit mentor_dashboard_path

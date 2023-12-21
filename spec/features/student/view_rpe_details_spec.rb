@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Students view rpe details", js: true do
-
   context "Student's team is registered for an RPE" do
     before do
       @rpe = FactoryBot.create(:rpe)

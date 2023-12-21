@@ -15,7 +15,7 @@ class SeasonToggles
       end
 
       define_singleton_method("#{key}?") do
-        not judging_enabled? and super()
+        !judging_enabled? and super()
       end
     end
 

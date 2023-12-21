@@ -5,9 +5,9 @@ class ProcessPitchPresentationJob < ActiveJob::Base
     submission = TeamSubmission.find(submission_id)
     url = "http://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/#{key}"
     pitch_presentation = submission.pitch_presentation ||
-                           submission.create_pitch_presentation!
+      submission.create_pitch_presentation!
     pitch_presentation.update({
-      remote_uploaded_file_url: url,
+      remote_uploaded_file_url: url
     })
   end
 end

@@ -1,4 +1,4 @@
-require '_dev/spoof_ip'
+require "_dev/spoof_ip"
 
 Rails.application.configure do
   config.middleware.use(SpoofIp, ENV.fetch("DEV_SPOOF_IP") { "127.0.0.1" })
@@ -17,12 +17,12 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
+  if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.seconds.to_i}"
     }
   else
     config.action_controller.perform_caching = false

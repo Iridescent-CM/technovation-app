@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :regional_pitch_event,
     aliases: [:event, :rpe],
     class: RegionalPitchEvent do
-
     ambassador
 
     name { "RPE" }

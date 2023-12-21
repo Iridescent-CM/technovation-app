@@ -8,6 +8,7 @@ class SurveyCompletionsController < ApplicationController
   end
 
   private
+
   def current_scope
     current_account.scope_name
   end

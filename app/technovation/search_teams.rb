@@ -1,4 +1,4 @@
-require 'will_paginate/array'
+require "will_paginate/array"
 
 module SearchTeams
   EARTH_CIRCUMFERENCE = 24_901
@@ -14,25 +14,25 @@ module SearchTeams
     teams = teams.where(division: divisions)
 
     teams = case filter.has_mentor
-            when true
-              teams.joins(:mentors)
-            when false
-              teams.joins(:mentors).where("memberships.member_id IS NULL")
-            else
-              teams
-            end
+    when true
+      teams.joins(:mentors)
+    when false
+      teams.joins(:mentors).where("memberships.member_id IS NULL")
+    else
+      teams
+    end
 
     teams = case filter.scope
-            when "student"
-              teams.accepting_student_requests
-            when "mentor"
-              teams.accepting_mentor_requests
-            else
-              teams
-            end
+    when "student"
+      teams.accepting_student_requests
+    when "mentor"
+      teams.accepting_mentor_requests
+    else
+      teams
+    end
 
-    miles = filter.nearby == "anywhere" ? EARTH_CIRCUMFERENCE : 100
-    nearby = filter.nearby == "anywhere" ? filter.location : filter.nearby
+    miles = (filter.nearby == "anywhere") ? EARTH_CIRCUMFERENCE : 100
+    nearby = (filter.nearby == "anywhere") ? filter.location : filter.nearby
 
     if filter.country == "PS"
       nearby = "Palestine"
@@ -42,6 +42,6 @@ module SearchTeams
   end
 
   def self.use_search_index(filter)
-    not filter.text.blank? or filter.spot_available
+    !filter.text.blank? or filter.spot_available
   end
 end

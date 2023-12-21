@@ -12,5 +12,5 @@ class Membership < ActiveRecord::Base
     to: :member,
     prefix: true
 
-  validates :member_id, uniqueness: { scope: [:team_id, :member_type] }
+  validates :member_id, uniqueness: {scope: [:team_id, :member_type]}
 end

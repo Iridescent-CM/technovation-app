@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.xfeature "Students invite mentors to join their team" do
-  before { SeasonToggles.team_building_enabled="yes" }
+  before { SeasonToggles.team_building_enabled = "yes" }
 
   let(:student) { FactoryBot.create(:student, :geocoded, :on_team) }
   let!(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) }

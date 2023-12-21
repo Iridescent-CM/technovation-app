@@ -2,40 +2,50 @@ require "rails_helper"
 
 RSpec.describe "viewing score details page" do
   let!(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved, :chicago) }
-  let!(:team) { FactoryBot.create(:team, :chicago, name: 'Ravenclaw') }
-  let!(:team_submission) { FactoryBot.create(:team_submission,
-    :complete,
-    :semifinalist,
-    :chicago,
-    team: team) }
-  let!(:complete_quarterfinal_score) { FactoryBot.create(:score,
-    :complete,
-    :quarterfinals,
-    :minimum_auto_approved_total,
-    :approved,
-    :chicago,
-    team_submission: team_submission) }
-  let!(:incomplete_quarterfinal_score) { FactoryBot.create(:score,
-    :incomplete,
-    :quarterfinals,
-    :minimum_auto_approved_total,
-    :approved,
-    :chicago,
-    team_submission: team_submission) }
-  let!(:complete_semifinal_score) { FactoryBot.create(:score,
-    :complete,
-    :semifinals,
-    :minimum_auto_approved_total,
-    :approved,
-    :chicago,
-    team_submission: team_submission) }
-  let!(:incomplete_semifinal_score) { FactoryBot.create(:score,
-    :incomplete,
-    :semifinals,
-    :minimum_auto_approved_total,
-    :approved,
-    :chicago,
-    team_submission: team_submission) }
+  let!(:team) { FactoryBot.create(:team, :chicago, name: "Ravenclaw") }
+  let!(:team_submission) {
+    FactoryBot.create(:team_submission,
+      :complete,
+      :semifinalist,
+      :chicago,
+      team: team)
+  }
+  let!(:complete_quarterfinal_score) {
+    FactoryBot.create(:score,
+      :complete,
+      :quarterfinals,
+      :minimum_auto_approved_total,
+      :approved,
+      :chicago,
+      team_submission: team_submission)
+  }
+  let!(:incomplete_quarterfinal_score) {
+    FactoryBot.create(:score,
+      :incomplete,
+      :quarterfinals,
+      :minimum_auto_approved_total,
+      :approved,
+      :chicago,
+      team_submission: team_submission)
+  }
+  let!(:complete_semifinal_score) {
+    FactoryBot.create(:score,
+      :complete,
+      :semifinals,
+      :minimum_auto_approved_total,
+      :approved,
+      :chicago,
+      team_submission: team_submission)
+  }
+  let!(:incomplete_semifinal_score) {
+    FactoryBot.create(:score,
+      :incomplete,
+      :semifinals,
+      :minimum_auto_approved_total,
+      :approved,
+      :chicago,
+      team_submission: team_submission)
+  }
 
   context "when the 'display_scores' setting is turned off" do
     before do
@@ -150,7 +160,6 @@ RSpec.describe "viewing score details page" do
         end
       end
     end
-
   end
 
   context "when the 'display_scores' setting is turned on" do

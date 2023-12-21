@@ -64,7 +64,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
-
   config.before(:each, type: :system) do
     driven_by :rack_test
   end
@@ -92,7 +91,7 @@ RSpec.configure do |config|
       end
 
       begin
-        STDERR.puts page.driver.browser.manage.logs.get(:browser)
+        warn page.driver.browser.manage.logs.get(:browser)
       rescue
         # not all drivers support browser logs, just keep quiet here
       end

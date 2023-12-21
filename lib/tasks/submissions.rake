@@ -6,7 +6,7 @@ namespace :submissions do
     ids = []
     TeamSubmission.current.complete.find_each do |sub|
       if !sub.complete?
-        ids << sub.id 
+        ids << sub.id
         puts "#{sub.id}: #{sub.friendly_id}"
       end
     end
@@ -15,7 +15,7 @@ namespace :submissions do
   end
 
   desc "Unsubmits submissions specified by id(s)"
-  task :unsubmit! => :environment do |t, args|
+  task unsubmit!: :environment do |t, args|
     TeamSubmission.current.where(id: args.extras).update(published_at: nil)
   end
 end

@@ -4,7 +4,7 @@ module Student
       @mentor_invite = MentorInvite.new(mentor_invite_params)
 
       if @mentor_invite.save
-        redirect_to student_team_path(@mentor_invite.team, { anchor: "mentors" }),
+        redirect_to student_team_path(@mentor_invite.team, {anchor: "mentors"}),
           success: t("controllers.team_member_invites.create.success")
       else
         redirect_back fallback_location: student_dashboard_path,
@@ -21,10 +21,11 @@ module Student
 
       redirect_back fallback_location: student_dashboard_path,
         success: t("controllers.invites.destroy.success",
-                   name: @invite.invitee_name)
+          name: @invite.invitee_name)
     end
 
     private
+
     def mentor_invite_params
       params.require(:mentor_invite).permit(:invitee_email).tap do |p|
         p[:inviter] = current_student

@@ -34,6 +34,7 @@ module BackgroundCheckController
   end
 
   private
+
   def candidate_params
     params.require(:background_check_candidate).permit(
       :first_name,

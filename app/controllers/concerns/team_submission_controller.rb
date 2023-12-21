@@ -12,30 +12,29 @@ module TeamSubmissionController
 
   def new
     SeasonToggles.team_submissions(
-      open:   -> { respond_according_to_presence },
-      closed: -> { notify_on_dashboard },
+      open: -> { respond_according_to_presence },
+      closed: -> { notify_on_dashboard }
     )
   end
 
   def create
     @team_submission = if current_team.submission.present?
-                          current_team.submission
-                        else
-                          current_team.team_submissions.build(
-                            team_submission_params
-                          )
-                        end
+      current_team.submission
+    else
+      current_team.team_submissions.build(
+        team_submission_params
+      )
+    end
 
     if @team_submission.save
       current_team.create_activity(
         trackable: current_account,
         key: "submission.create",
-        recipient: @team_submission,
+        recipient: @team_submission
       )
       redirect_to send("#{current_scope}_team_submission_section_path",
         @team_submission,
-        section: SubmissionSection::SECTION_NAMES[0]
-      ),
+        section: SubmissionSection::SECTION_NAMES[0]),
         success: t("controllers.team_submissions.create.success")
     else
       render "team_submissions/new"
@@ -43,7 +42,7 @@ module TeamSubmissionController
   end
 
   def edit
-    unless SeasonToggles.team_submissions_editable? or piece_name == 'pitch_presentation'
+    unless SeasonToggles.team_submissions_editable? or piece_name == "pitch_presentation"
       redirect_to send("#{current_scope}_dashboard_path") and return
     end
 
@@ -71,7 +70,7 @@ module TeamSubmissionController
       begin
         render "team_submissions/pieces/#{piece_name}"
       rescue ActionView::MissingTemplate,
-              ActionController::ParameterMissing
+        ActionController::ParameterMissing
         redirect_to send("#{current_scope}_team_submission_path", @team_submission)
       end
     else
@@ -115,12 +114,12 @@ module TeamSubmissionController
     elsif team_submission_params[:demo_video_link]
       handle_video_link_review(@team_submission, :demo_video_link)
     elsif @team_submission.update(team_submission_params)
-      if request.xhr? && team_submission_params[:pitch_presentation]
-        piece_name = "pitch_presentation"
+      piece_name = if request.xhr? && team_submission_params[:pitch_presentation]
+        "pitch_presentation"
       elsif request.xhr? && team_submission_params[:business_plan]
-        piece_name = "business_plan"
+        "business_plan"
       else
-        piece_name = params.fetch(:piece, "")
+        params.fetch(:piece, "")
       end
 
       if @team_submission.saved_change_to_app_name?
@@ -130,8 +129,8 @@ module TeamSubmissionController
       current_team.create_activity(
         trackable: current_account,
         key: "submission.update",
-        parameters: { piece: piece_name },
-        recipient: @team_submission,
+        parameters: {piece: piece_name},
+        recipient: @team_submission
       )
 
       if request.xhr?
@@ -139,20 +138,19 @@ module TeamSubmissionController
       else
         redirect_to send("#{current_scope}_team_submission_section_path",
           @team_submission,
-          section: SubmissionSection.new(piece_name, self)
-        ),
+          section: SubmissionSection.new(piece_name, self)),
           success: t("controllers.team_submissions.update.success")
       end
     else
       redirect_to send("edit_#{current_scope}_team_submission_path",
         @team_submission,
         piece: params[:piece],
-        attributes: @team_submission.attributes.to_json,
-      )
+        attributes: @team_submission.attributes.to_json)
     end
   end
 
   private
+
   def handle_screenshots_update(submission)
     team_submission_params[:screenshots].each_with_index do |id, i|
       screenshot = submission.screenshots.find(id)
@@ -162,8 +160,8 @@ module TeamSubmissionController
     current_team.create_activity(
       trackable: current_account,
       key: "submission.update",
-      parameters: { piece: "screenshots" },
-      recipient: submission,
+      parameters: {piece: "screenshots"},
+      recipient: submission
     )
 
     render json: {}
@@ -173,7 +171,7 @@ module TeamSubmissionController
     @team_submission = submission
     @method = method
     @review_value = team_submission_params[method]
-    render 'team_submission_video_link_reviews/new'
+    render "team_submission_video_link_reviews/new"
   end
 
   def determine_layout
@@ -254,12 +252,12 @@ module TeamSubmissionController
         screenshots: [],
         screenshots_attributes: [
           :id,
-          :image,
-        ],
+          :image
+        ]
       )
     else
       params.require(:team_submission).permit(
-        :pitch_presentation,
+        :pitch_presentation
       )
     end
   end

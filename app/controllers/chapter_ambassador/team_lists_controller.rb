@@ -6,7 +6,7 @@ module ChapterAmbassador
       attendees = Attendees.for(
         event: event,
         type: :team,
-        context: self,
+        context: self
       )
 
       render json: AttendeesSerializer.new(attendees, is_collection: true).serialized_json

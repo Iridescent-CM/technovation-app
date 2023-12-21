@@ -3,6 +3,7 @@ module Admin
     include LocationController
 
     private
+
     def db_record
       @db_record ||= if account_id = params.fetch(:account_id) { false }
         Account.find(account_id)

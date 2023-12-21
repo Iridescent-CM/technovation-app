@@ -1,10 +1,10 @@
 module SignIn
   def self.call(signin, context, options = {})
     signin_options = {
-      message: I18n.translate('controllers.signins.create.success'),
+      message: I18n.translate("controllers.signins.create.success"),
       redirect_to: after_signin_path(signin, context),
       enable_redirect: true,
-      permanent: false,
+      permanent: false
     }.merge(options)
 
     context.set_cookie(
@@ -36,11 +36,12 @@ module SignIn
   end
 
   private
+
   def self.after_signin_path(signin, context)
     last_profile_used = context.remove_cookie(CookieNames::LAST_PROFILE_USED)
 
     if last_profile_used and
-        not signin.public_send("#{last_profile_used}_profile").present?
+        !signin.public_send("#{last_profile_used}_profile").present?
       last_profile_used = nil
     end
 

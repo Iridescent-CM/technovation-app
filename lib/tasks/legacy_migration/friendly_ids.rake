@@ -2,7 +2,7 @@ namespace :legacy_migration do
   desc "Migrate the team friendly IDs for legacy support"
   task friendly_ids: :environment do
     ActiveRecord::Base.transaction do
-      require './lib/legacy/models/team'
+      require "./lib/legacy/models/team"
 
       Legacy::Team.find_each do |legacy_team|
         team = ::Team.find_by(name: legacy_team.name)

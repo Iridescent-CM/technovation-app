@@ -65,7 +65,7 @@ RSpec.describe "Regional Pitch Event Teams", :js do
     end
 
     it "successfully removes a team from an event" do
-      team  = FactoryBot.create(:team, :senior, :live_event_eligible, name: "Team LMNO")
+      team = FactoryBot.create(:team, :senior, :live_event_eligible, name: "Team LMNO")
       event = FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
       expect(RegionalPitchEvent.count).to be_present
       expect(Team.count).to be_present

@@ -47,14 +47,13 @@ module ChapterAmbassador
     end
 
     private
+
     def message_params
       params.require(:message).permit(
         :recipient_type,
         :recipient_id,
-
         :regarding_type,
         :regarding_id,
-
         :subject,
         :body
       )

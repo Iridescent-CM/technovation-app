@@ -14,13 +14,13 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
-      SeasonToggles.select_regional_pitch_event="on"
+      SeasonToggles.select_regional_pitch_event = "on"
       visit path
       expect(page).to have_link("Select an Event")
     end
 
     scenario "Toggled off" do
-      SeasonToggles.select_regional_pitch_event="off"
+      SeasonToggles.select_regional_pitch_event = "off"
       visit path
       expect(page).not_to have_link("Select an Event")
     end
@@ -39,13 +39,13 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
-      SeasonToggles.select_regional_pitch_event="on"
+      SeasonToggles.select_regional_pitch_event = "on"
       visit path
       expect(page).to have_css(".button", text: "Select an Event")
     end
 
     scenario "Toggled off" do
-      SeasonToggles.select_regional_pitch_event="off"
+      SeasonToggles.select_regional_pitch_event = "off"
       visit path
       expect(page).not_to have_css(".button", text: "Select an Event")
     end
@@ -66,13 +66,13 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     end
 
     scenario "Toggled on" do
-      SeasonToggles.select_regional_pitch_event="on"
+      SeasonToggles.select_regional_pitch_event = "on"
       visit path
       expect(page).to have_css(".button", text: "Select Events")
     end
 
     scenario "Toggled off" do
-      SeasonToggles.select_regional_pitch_event="off"
+      SeasonToggles.select_regional_pitch_event = "off"
       visit path
       expect(page).not_to have_css(".button", text: "Select Events")
     end

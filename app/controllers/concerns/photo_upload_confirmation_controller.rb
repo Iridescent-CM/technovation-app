@@ -7,7 +7,7 @@ module PhotoUploadConfirmationController
       upload.model_name,
       upload.field_name,
       params.fetch(:key),
-      current_account.id,
+      current_account.id
     )
 
     flash.now[:success] = upload.success_msg
@@ -26,6 +26,7 @@ module PhotoUploadConfirmationController
   end
 
   private
+
   def upload
     "photo_upload_confirmation_controller/#{photo_name}_upload".camelize
       .constantize.new(self)
@@ -98,8 +99,7 @@ module PhotoUploadConfirmationController
     def redirect_url
       @context.send("#{@scope}_team_photo_upload_confirmation_url",
         team_id: model_id,
-        back: @context.send("#{@scope}_team_path", @model)
-      )
+        back: @context.send("#{@scope}_team_path", @model))
     end
 
     def size

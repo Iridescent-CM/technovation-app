@@ -25,8 +25,8 @@ module ScreenshotController
     current_team.create_activity(
       trackable: current_account,
       key: "submission.update",
-      parameters: { piece: "screenshots" },
-      recipient: submission,
+      parameters: {piece: "screenshots"},
+      recipient: submission
     )
 
     if request.xhr?
@@ -47,8 +47,8 @@ module ScreenshotController
       current_team.create_activity(
         trackable: current_account,
         key: "submission.update",
-        parameters: { piece: "screenshots" },
-        recipient: screenshot.team_submission,
+        parameters: {piece: "screenshots"},
+        recipient: screenshot.team_submission
       )
       render json: {}
     else
@@ -57,6 +57,7 @@ module ScreenshotController
   end
 
   private
+
   def screenshot_params
     params.require(:team_submission).permit(:image)
   end

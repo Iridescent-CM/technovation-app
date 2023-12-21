@@ -8,7 +8,7 @@ RSpec.describe Admin::StudentConversionsController do
     before do
       sign_in(:admin)
 
-      post :create, params: { student_profile_id: student_profile.id }
+      post :create, params: {student_profile_id: student_profile.id}
       account.reload
     end
 

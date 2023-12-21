@@ -7,6 +7,7 @@ module Judge
     end
 
     private
+
     def current_profile
       current_judge
     end

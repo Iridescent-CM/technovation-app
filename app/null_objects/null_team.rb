@@ -6,7 +6,7 @@ class NullTeam < NullObject
   end
 
   def name
-    '::NullTeam'
+    "::NullTeam"
   end
 
   def division_name
@@ -90,11 +90,11 @@ class NullTeam < NullObject
   end
 
   def country
-    ''
+    ""
   end
 
   def address_details
-    ''
+    ""
   end
 
   def season

@@ -22,7 +22,7 @@ RSpec.describe "Admins checking on submissions" do
       click_link "Teams"
       click_link "view"
 
-      within('.submission .bar-graph') do
+      within(".submission .bar-graph") do
         expect(page).to have_content("100% completed")
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe "Admins checking on submissions" do
 
       expect(current_path).to eq(admin_team_submission_path(submission))
 
-      within('.panel h3') do
+      within(".panel h3") do
         expect(page).to have_content(submission.team_name)
 
         click_link submission.team_name

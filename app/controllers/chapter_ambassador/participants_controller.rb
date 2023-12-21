@@ -12,16 +12,17 @@ module ChapterAmbassador
 
     def show
       @account = if params[:allow_out_of_region]
-                   Account.find(params[:id])
-                 else
-                   Account.in_region(current_ambassador).find(params[:id])
-                 end
+        Account.find(params[:id])
+      else
+        Account.in_region(current_ambassador).find(params[:id])
+      end
 
       @teams = Team.current.in_region(current_ambassador)
       @season_flag = SeasonFlag.new(@account)
     end
 
     private
+
     def grid_params
       grid = (params[:accounts_grid] ||= {}).merge(
         admin: false,
@@ -36,11 +37,11 @@ module ChapterAmbassador
         ),
         season: params[:accounts_grid][:season] || Season.current.year,
         season_and_or: params[:accounts_grid][:season_and_or] ||
-                         "match_any",
+                         "match_any"
       )
 
       grid.merge(
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
   end

@@ -89,13 +89,12 @@ RSpec.describe ResetVulnerablePasswords do
       }
     end
 
-
     it "affects ONLY accounts signed up between Oct 1 2018 and Nov 13, 2018" do
       profiles = [:student, :judge, :mentor, :chapter_ambassador]
 
       my_dates = [
         Time.new(2018, 9, 30),
-        Time.new(2018, 11, 14),
+        Time.new(2018, 11, 14)
       ]
 
       profile = FactoryBot.create(
@@ -125,7 +124,7 @@ RSpec.describe ResetVulnerablePasswords do
         account: FactoryBot.create(
           :account,
           password: "somethingelsenotemail!!",
-          created_at: dates.sample,
+          created_at: dates.sample
         )
       )
 
@@ -160,9 +159,9 @@ RSpec.describe ResetVulnerablePasswords do
       }.to change {
         Export.count
       }.from(0).to(1)
-      .and change {
-        ActionMailer::Base.deliveries.count
-      }.from(0).to(2)
+        .and change {
+               ActionMailer::Base.deliveries.count
+             }.from(0).to(2)
 
       expect(
         ActionMailer::Base.deliveries.flat_map(&:to)

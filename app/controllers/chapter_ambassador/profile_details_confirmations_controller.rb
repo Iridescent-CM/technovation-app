@@ -18,22 +18,19 @@ module ChapterAmbassador
       )
 
       if ProfileUpdating.execute(
-          @chapter_ambassador_profile,
-          :chapter_ambassador,
-          chapter_ambassador_profile_params
+        @chapter_ambassador_profile,
+        :chapter_ambassador,
+        chapter_ambassador_profile_params
       )
 
-        SignIn.(
-          @chapter_ambassador_profile.account,
-          self,
-          message: "Thank you! Welcome to Technovation!"
-        )
+        SignIn.call(@chapter_ambassador_profile.account, self, message: "Thank you! Welcome to Technovation!")
       else
         render "chapter_ambassador/signups/new"
       end
     end
 
     private
+
     def chapter_ambassador_profile_params
       params.require(:chapter_ambassador_profile).permit(
         :id,
@@ -47,7 +44,7 @@ module ChapterAmbassador
           :email,
           :date_of_birth,
           :gender,
-          :password,
+          :password
         ]
       ).tap do |tapped|
         tapped[:status] = :approved

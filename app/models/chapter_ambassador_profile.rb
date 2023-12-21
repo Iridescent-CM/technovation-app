@@ -20,7 +20,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   after_update :after_status_changed, if: :saved_change_to_status?
 
-  enum status: %i{pending approved declined spam}
+  enum status: %i[pending approved declined spam]
 
   validates :organization_company_name,
     :job_title,
@@ -42,33 +42,31 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   }, allow_destroy: true
 
   delegate :submitted?,
-           :candidate_id,
-           :report_id,
+    :candidate_id,
+    :report_id,
     to: :background_check,
     prefix: true,
     allow_nil: true
 
   def method_missing(method_name, *args)
-    begin
-      account.public_send(method_name, *args)
-    rescue
-      raise NoMethodError,
-        "undefined method `#{method_name}' not found for #{self}"
-    end
+    account.public_send(method_name, *args)
+  rescue
+    raise NoMethodError,
+      "undefined method `#{method_name}' not found for #{self}"
   end
 
   def self.staff_test_account_ids
     [
-      20980,
+      20980
     ]
   end
 
   def provided_intro?
-    not intro_summary.blank?
+    !intro_summary.blank?
   end
 
   def needs_intro_prompt?
-    not self.class.staff_test_account_ids.include?(account_id) and
+    !self.class.staff_test_account_ids.include?(account_id) and
       intro_summary.blank?
   end
 
@@ -78,7 +76,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def requires_background_check?
     country_code == "US" and
-      not background_check_complete?
+      !background_check_complete?
   end
 
   def profile_complete?
@@ -86,19 +84,19 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def bio_complete?
-    not bio.blank?
+    !bio.blank?
   end
 
   def region_name
     return unless Country[country]
 
     if country_code == "US"
-      Country[country_code].states.fetch(state_province) { {} }['name']
+      Country[country_code].states.fetch(state_province) { {} }["name"]
     else
       Country[country].name
     end
   end
-  alias :primary_region :region_name
+  alias_method :primary_region, :region_name
 
   def other_regions
     secondary_regions
@@ -111,11 +109,11 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   def onboarded?
     account.email_confirmed? and
       approved? and
-        background_check_complete?
+      background_check_complete?
   end
 
   def onboarding?
-    not onboarded?
+    !onboarded?
   end
 
   def authenticated?
@@ -127,6 +125,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   private
+
   def after_status_changed
     if approved?
       SubscribeAccountToEmailListJob.perform_later(

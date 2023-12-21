@@ -14,7 +14,7 @@ RSpec.describe SeasonToggles do
       # judging is turned off, but passed after the dependent setting
       SeasonToggles.configure({
         select_regional_pitch_event: true,
-        judging_round: :off,
+        judging_round: :off
       })
 
       # dependent setting was set correctly
@@ -52,7 +52,7 @@ RSpec.describe SeasonToggles do
     it "cannot be true when judging is enabled" do
       SeasonToggles.configure({
         team_submissions_editable: true,
-        judging_round: :qf,
+        judging_round: :qf
       })
       expect(SeasonToggles.team_submissions_editable?).to be false
     end
@@ -62,7 +62,7 @@ RSpec.describe SeasonToggles do
     it "cannot be true when judging is enabled" do
       SeasonToggles.configure({
         team_building_enabled: true,
-        judging_round: :qf,
+        judging_round: :qf
       })
       expect(SeasonToggles.team_building_enabled?).to be false
     end
@@ -72,20 +72,19 @@ RSpec.describe SeasonToggles do
     it "cannot be true when judging is enabled" do
       SeasonToggles.configure({
         display_scores: true,
-        judging_round: :qf,
+        judging_round: :qf
       })
       expect(SeasonToggles.display_scores?).to be false
     end
   end
 
-
-  %w{mentor student}.each do |scope|
+  %w[mentor student].each do |scope|
     describe ".#{scope}_survey_link=" do
       it "takes a hash and returns values" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
           long_desc: "Longer description for modal content",
-          url: "https://google.com",
+          url: "https://google.com"
         })
 
         expect(SeasonToggles.survey_link(scope, "text"))
@@ -174,7 +173,7 @@ RSpec.describe SeasonToggles do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
           long_desc: "Longer description for modal content",
-          url: "https://example.com?uid=[uid_value]",
+          url: "https://example.com?uid=[uid_value]"
         })
 
         account = FactoryBot.create(:student).account
@@ -188,7 +187,7 @@ RSpec.describe SeasonToggles do
       it "returns true if the text and url are present" do
         SeasonToggles.public_send("#{scope}_survey_link=", {
           text: "Hello World",
-          url: "https://google.com",
+          url: "https://google.com"
         })
 
         expect(SeasonToggles.survey_link_available?(scope)).to be true
@@ -199,10 +198,10 @@ RSpec.describe SeasonToggles do
       end
 
       it "returns false if the text or url are blank" do
-        [{ url: "https://google.com" },
-         { text: "Hello, World" },
-         { text: "", url: "https://..." },
-         { text: "hello...", url: "" }].each do |bad|
+        [{url: "https://google.com"},
+          {text: "Hello, World"},
+          {text: "", url: "https://..."},
+          {text: "hello...", url: ""}].each do |bad|
           SeasonToggles.public_send("#{scope}_survey_link=", bad)
           expect(SeasonToggles.survey_link_available?(scope)).to be false
         end
@@ -216,7 +215,7 @@ RSpec.describe SeasonToggles do
         expect_good_input_works(
           method: :judging_round,
           valid_input: valid_judging_rounds +
-            %i{QF SF qF Sf QuarteRfinals quaRter_fiNals sEmifinals sEmi_finals oFf}
+            %i[QF SF qF Sf QuarteRfinals quaRter_fiNals sEmifinals sEmi_finals oFf]
         )
       end
 
@@ -287,7 +286,7 @@ RSpec.describe SeasonToggles do
       it "raises an exception" do
         expect_bad_input_raises_error(
           method: :judging_round,
-          valid_input: valid_judging_rounds.join(' | ')
+          valid_input: valid_judging_rounds.join(" | ")
         )
       end
     end
@@ -298,18 +297,18 @@ RSpec.describe SeasonToggles do
       it "allows a collection of 'boolean' words and booleans" do
         expect_good_input_works(
           method: "select_regional_pitch_event",
-          valid_input: valid_bools + %i{On oFf yEs nO tRue fAlse}
+          valid_input: valid_bools + %i[On oFf yEs nO tRue fAlse]
         )
       end
 
       it "reads back a boolean from .select_regional_pitch_event?" do
         valid_truthy.each do |on|
-          SeasonToggles.select_regional_pitch_event=on
+          SeasonToggles.select_regional_pitch_event = on
           expect(SeasonToggles.select_regional_pitch_event?).to be true
         end
 
         valid_falsey.each do |off|
-          SeasonToggles.select_regional_pitch_event=off
+          SeasonToggles.select_regional_pitch_event = off
           expect(SeasonToggles.select_regional_pitch_event?).to be false
         end
       end
@@ -317,7 +316,7 @@ RSpec.describe SeasonToggles do
       it "cannot be true while judging is enabled" do
         SeasonToggles.configure({
           select_regional_pitch_event: true,
-          judging_round: :sf,
+          judging_round: :sf
         })
         expect(SeasonToggles.select_regional_pitch_event?).to be false
       end
@@ -327,7 +326,7 @@ RSpec.describe SeasonToggles do
       it "raises an exception" do
         expect_bad_input_raises_error(
           method: "select_regional_pitch_event",
-          valid_input: valid_bools.join(' | ')
+          valid_input: valid_bools.join(" | ")
         )
       end
     end
@@ -405,13 +404,13 @@ RSpec.describe SeasonToggles do
     end
   end
 
-  %i(student mentor judge chapter_ambassador).each do |scope|
+  %i[student mentor judge chapter_ambassador].each do |scope|
     describe ".#{scope}_signup=" do
       context "valid input" do
         it "allows a collection of 'boolean' words and booleans" do
           expect_good_input_works(
             method: "#{scope}_signup",
-            valid_input: valid_bools + %i{On oFf yEs nO tRue fAlse}
+            valid_input: valid_bools + %i[On oFf yEs nO tRue fAlse]
           )
         end
 
@@ -423,12 +422,12 @@ RSpec.describe SeasonToggles do
           expect(SeasonToggles.signup_enabled?(scope)).to be false
         end
 
-        next unless %i{student mentor}.include?(scope)
+        next unless %i[student mentor].include?(scope)
         context "student, mentor" do
           it "cannot be true while judging is enabled" do
             SeasonToggles.configure({
               "#{scope}_signup" => true,
-              judging_round: :Qf,
+              :judging_round => :Qf
             })
             expect(SeasonToggles.signup_enabled?(scope)).to be false
           end
@@ -439,7 +438,7 @@ RSpec.describe SeasonToggles do
         it "raises an exception" do
           expect_bad_input_raises_error(
             method: "#{scope}_signup",
-            valid_input: valid_bools.join(' | ')
+            valid_input: valid_bools.join(" | ")
           )
         end
       end

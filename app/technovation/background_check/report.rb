@@ -22,7 +22,7 @@ class BackgroundCheck::Report
       :reports,
       {
         package: "tasker_standard",
-        candidate_id: candidate_id,
+        candidate_id: candidate_id
       }
     )
     @id = resp.fetch(:id)

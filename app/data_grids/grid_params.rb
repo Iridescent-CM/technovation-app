@@ -25,7 +25,7 @@ module GridParams
       ),
 
       current_account: profile.account,
-      current_judging_round: String(round),
+      current_judging_round: String(round)
     )
   end
 end

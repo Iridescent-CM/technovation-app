@@ -8,6 +8,7 @@ module Admin
     end
 
     private
+
     def chapter_ambassador_status_params
       params.require(:chapter_ambassador_profile).permit(:status)
     end

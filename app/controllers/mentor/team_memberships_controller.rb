@@ -5,15 +5,15 @@ module Mentor
 
       membership = team.memberships.find_by(
         member_type: params.fetch(:member_type) { "MentorProfile" },
-        member_id: params.fetch(:member_id),
+        member_id: params.fetch(:member_id)
       )
 
-      if CanRemoveTeamMember.(current_account, membership.member)
+      if CanRemoveTeamMember.call(current_account, membership.member)
         TeamRosterManaging.remove(team, membership.member)
 
         redirect_to mentor_dashboard_path,
           success: t("controllers.team_memberships.destroy.success",
-                    name: team.name)
+            name: team.name)
       else
         redirect_to mentor_dashboard_path,
           error: "You don't have permission to remove that person."

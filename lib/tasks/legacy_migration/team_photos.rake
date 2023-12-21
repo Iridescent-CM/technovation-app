@@ -1,8 +1,8 @@
 namespace :legacy_migration do
   desc "Re-upload team paperclip photos to carrierwave"
   task team_photos: :environment do
-    require './lib/legacy/models/team'
-    require 'open-uri'
+    require "./lib/legacy/models/team"
+    require "open-uri"
 
     Legacy::Team.find_each do |legacy_team|
       url = "http:#{legacy_team.avatar.url(:original)}"

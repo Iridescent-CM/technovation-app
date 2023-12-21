@@ -9,7 +9,7 @@ class RequestSerializer
 
   attribute :urls do |request|
     {
-      patch: Rails.application.routes.url_helpers.admin_request_path(request),
+      patch: Rails.application.routes.url_helpers.admin_request_path(request)
     }
   end
 end

@@ -51,7 +51,6 @@ task update_portugal_state_province_data: :environment do
   ]
 
   Account.where(id: setubal_account_ids).update_all(state_province: "Setubal", country: "PT")
-
 end
 
 desc "Update accounts in Portugal to have the correct city location data"

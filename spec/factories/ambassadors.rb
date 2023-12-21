@@ -3,7 +3,7 @@ FactoryBot.define do
     :ambassador,
     :chapter_ambassador,
     :ambassador_account,
-    :chapter_ambassador_account,
+    :chapter_ambassador_account
   ] do
     organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
@@ -50,7 +50,7 @@ FactoryBot.define do
         state_province: e.state_province,
         country: e.country,
         first_name: e.first_name,
-        skip_existing_password: true,
+        skip_existing_password: true
       }.each do |k, v|
         r.account.send("#{k}=", v)
       end
@@ -84,7 +84,7 @@ FactoryBot.define do
 
     trait :has_judge_profile do
       after(:create) do |ambassador|
-        CreateJudgeProfile.(ambassador.account)
+        CreateJudgeProfile.call(ambassador.account)
       end
     end
   end

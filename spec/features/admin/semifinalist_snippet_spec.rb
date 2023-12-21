@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "getting the semifinalist blog post snippet" do
-
   context "in different formats" do
     it "renders plaintext" do
       admin = FactoryBot.create(:admin)

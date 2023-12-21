@@ -3,12 +3,12 @@ require "season_toggles/judging_round_dependency"
 
 class SeasonToggles
   module SignupToggles
-    SCOPES = %w{
+    SCOPES = %w[
       student
       mentor
       judge
       chapter_ambassador
-    }
+    ]
 
     def self.included(base)
       base.extend BooleanToggler
@@ -69,7 +69,7 @@ class SeasonToggles
       end
 
       def signup_disabled?(scope)
-        not signup_enabled?(scope)
+        !signup_enabled?(scope)
       end
     end
   end

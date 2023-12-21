@@ -113,7 +113,6 @@ RSpec.describe StudentSubmissionLinkGuard do
           expect(submission_link_guard.display_link_to_published?).to eq(false)
         end
       end
-
     end
 
     context "when submissions are editable" do

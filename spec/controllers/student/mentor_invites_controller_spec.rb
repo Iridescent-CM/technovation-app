@@ -7,11 +7,11 @@ RSpec.describe Student::MentorInvitesController do
 
     before do
       sign_in(student)
-      request.env['HTTP_REFERER'] = '/'
+      request.env["HTTP_REFERER"] = "/"
       post :create, params: {
         mentor_invite: {
           team_id: student.team_id,
-          invitee_email: mentor.email,
+          invitee_email: mentor.email
         }
       }
     end

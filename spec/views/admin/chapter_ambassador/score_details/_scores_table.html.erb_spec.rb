@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "chapter_ambassador/score_details/_scores_table.html.erb", type: :view do
   before do
     render partial: "chapter_ambassador/score_details/scores_table",
-      locals: { scores: scores, current_account: current_account, current_scope: current_scope }
+      locals: {scores: scores, current_account: current_account, current_scope: current_scope}
   end
 
   let(:scores) { [score_submission] }
@@ -27,8 +27,10 @@ RSpec.describe "chapter_ambassador/score_details/_scores_table.html.erb", type: 
   let(:score_submission_deleted) { false }
   let(:score_submission_dropped) { false }
 
-  let(:current_account) { instance_double(Account,
-    admin?: current_account_admin) }
+  let(:current_account) {
+    instance_double(Account,
+      admin?: current_account_admin)
+  }
   let(:current_account_admin) { false }
 
   let(:current_scope) { "chapter_ambassador" }

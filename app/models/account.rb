@@ -5,14 +5,14 @@ class Account < ActiveRecord::Base
   JUDGE_BLOCKLISTED_ACCOUNT_IDS = [
     43662,
     29481,
-    46986,
+    46986
   ]
 
-  enum admin_status: %w{
+  enum admin_status: %w[
     not_admin
     temporary_password
     full_admin
-  }
+  ]
 
   acts_as_paranoid
 
@@ -133,10 +133,10 @@ class Account < ActiveRecord::Base
 
     sql = "accounts.first_name ILIKE '#{fname}%'"
 
-    if fname != lname
-      sql += " AND "
+    sql += if fname != lname
+      " AND "
     else
-      sql += " OR "
+      " OR "
     end
 
     sql += "accounts.last_name ILIKE '#{lname}%'"
@@ -144,19 +144,19 @@ class Account < ActiveRecord::Base
     where(sql += "OR accounts.email ILIKE '#{sanitized}%'")
   }
 
-  scope :completed_training, -> () {
+  scope :completed_training, -> {
     includes(:judge_profile)
       .references(:judge_profiles)
       .where.not("judge_profiles.completed_training_at" => nil)
   }
 
-  scope :incomplete_training, -> () {
+  scope :incomplete_training, -> {
     includes(:judge_profile)
       .references(:judge_profiles)
       .where("judge_profiles.completed_training_at" => nil)
   }
 
-  scope :mentor_training_required, -> () {
+  scope :mentor_training_required, -> {
     includes(:mentor_profile)
       .references(:mentor_profiles)
       .where(
@@ -166,7 +166,7 @@ class Account < ActiveRecord::Base
       )
   }
 
-  scope :mentor_training_complete_or_not_required, -> () {
+  scope :mentor_training_complete_or_not_required, -> {
     includes(:mentor_profile)
       .references(:mentor_profiles)
       .where(
@@ -190,70 +190,70 @@ class Account < ActiveRecord::Base
 
   scope :mentors_pending_teams, -> {
     includes(mentor_profile: [:pending_mentor_invites, :pending_join_requests])
-    .references(:mentor_profiles, :team_member_invites, :join_requests)
-    .where(
-      "mentor_profiles.id IS NOT NULL AND " +
-      "(team_member_invites.id IS NOT NULL AND " +
-      "team_member_invites.status = ?) OR " +
-      "(join_requests.id IS NOT NULL AND " +
-      "join_requests.accepted_at IS NULL AND  " +
-      "join_requests.declined_at IS NULL)",
-      TeamMemberInvite.statuses[:pending]
-    )
+      .references(:mentor_profiles, :team_member_invites, :join_requests)
+      .where(
+        "mentor_profiles.id IS NOT NULL AND " +
+        "(team_member_invites.id IS NOT NULL AND " +
+        "team_member_invites.status = ?) OR " +
+        "(join_requests.id IS NOT NULL AND " +
+        "join_requests.accepted_at IS NULL AND  " +
+        "join_requests.declined_at IS NULL)",
+        TeamMemberInvite.statuses[:pending]
+      )
   }
 
   scope :mentors_pending_invites, -> {
     includes(mentor_profile: :pending_mentor_invites)
-    .references(:mentor_profiles, :team_member_invites)
-    .where(
-      "mentor_profiles.id IS NOT NULL AND " +
-      "(team_member_invites.id IS NOT NULL AND " +
-      "team_member_invites.status = ?)",
-      TeamMemberInvite.statuses[:pending]
-    )
+      .references(:mentor_profiles, :team_member_invites)
+      .where(
+        "mentor_profiles.id IS NOT NULL AND " +
+        "(team_member_invites.id IS NOT NULL AND " +
+        "team_member_invites.status = ?)",
+        TeamMemberInvite.statuses[:pending]
+      )
   }
 
   scope :mentors_pending_requests, -> {
     includes(mentor_profile: :pending_join_requests)
-    .references(:mentor_profiles, :join_requests)
-    .where(
-      "mentor_profiles.id IS NOT NULL AND " +
-      "(join_requests.id IS NOT NULL AND " +
-      "join_requests.accepted_at IS NULL AND  " +
-      "join_requests.declined_at IS NULL)"
-    )
+      .references(:mentor_profiles, :join_requests)
+      .where(
+        "mentor_profiles.id IS NOT NULL AND " +
+        "(join_requests.id IS NOT NULL AND " +
+        "join_requests.accepted_at IS NULL AND  " +
+        "join_requests.declined_at IS NULL)"
+      )
   }
 
   scope :onboarded_mentors, -> {
     joins(:mentor_profile)
-    .includes(:background_check, :consent_waiver)
-    .references(:background_checks, :consent_waivers)
-    .where("mentor_profiles.id IS NOT NULL")
-    .where(
-      "email_confirmed_at IS NOT NULL AND " +
-      "mentor_profiles.bio <> '' AND " +
-      "(consent_waivers.id IS NOT NULL AND consent_waivers.voided_at IS NULL) AND " +
-      "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
-      "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
-      ImportantDates.mentor_training_required_since,
-      BackgroundCheck.statuses[:clear]
-    )
+      .includes(:background_check, :consent_waiver)
+      .references(:background_checks, :consent_waivers)
+      .where("mentor_profiles.id IS NOT NULL")
+      .where(
+        "email_confirmed_at IS NOT NULL AND " +
+        "mentor_profiles.bio <> '' AND " +
+        "(consent_waivers.id IS NOT NULL AND consent_waivers.voided_at IS NULL) AND " +
+        "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
+        "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
+        ImportantDates.mentor_training_required_since,
+        BackgroundCheck.statuses[:clear]
+      )
   }
 
   scope :onboarding_mentors, -> {
     joins(:mentor_profile)
-    .references(:mentor_profiles)
-    .includes(:background_check, :consent_waiver)
-    .references(:background_checks, :consent_waivers)
-    .where(
-      "email_confirmed_at IS NULL OR " +
-      "mentor_profiles.bio IS NULL OR mentor_profiles.bio = '' OR " +
-      "(consent_waivers.id IS NULL OR consent_waivers.voided_at IS NOT NULL) OR " +
-      "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
-      "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
-      ImportantDates.mentor_training_required_since,
-      BackgroundCheck.statuses[:clear]
-    )
+      .references(:mentor_profiles)
+      .includes(:background_check, :consent_waiver)
+      .references(:background_checks, :consent_waivers)
+      .where(
+        "email_confirmed_at IS NULL OR " +
+        "mentor_profiles.bio IS NULL OR mentor_profiles.bio = '' OR " +
+        "(consent_waivers.id IS NULL OR consent_waivers.voided_at IS NOT NULL) OR " +
+        "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
+        "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
+        ImportantDates.mentor_training_required_since,
+        BackgroundCheck.statuses[:clear]
+      )
   }
 
   after_create :create_account_created_activity
@@ -293,7 +293,7 @@ class Account < ActiveRecord::Base
   end
 
   def virtual_event?
-    #FIXME: this method doesn't feel right at all
+    # FIXME: this method doesn't feel right at all
     judge_profile.present? && judge_profile.regional_pitch_events.any? { |e| e.virtual? }
   end
 
@@ -303,7 +303,7 @@ class Account < ActiveRecord::Base
       state_province: nil,
       country: nil,
       latitude: nil,
-      longitude: nil,
+      longitude: nil
     )
   end
 
@@ -384,7 +384,6 @@ class Account < ActiveRecord::Base
     student_ids = unscoped.distinct
       .joins(student_profile: :current_teams).pluck(:id)
 
-
     left_outer_joins(:judge_profile, :chapter_ambassador_profile)
       .where("judge_profiles.id IS NULL AND chapter_ambassador_profiles.id IS NULL")
       .where.not(id: mentor_ids + student_ids)
@@ -399,7 +398,7 @@ class Account < ActiveRecord::Base
 
     left_outer_joins(student_profile: :parental_consents)
       .where("student_profiles.id IS NOT NULL")
-      .where(season_clauses.join(' AND '))
+      .where(season_clauses.join(" AND "))
       .where(
         "parental_consents.status = ?",
         ParentalConsent.statuses[:signed]
@@ -415,7 +414,7 @@ class Account < ActiveRecord::Base
 
     left_outer_joins(student_profile: :parental_consents)
       .where("student_profiles.id IS NOT NULL")
-      .where(season_clauses.join(' OR '))
+      .where(season_clauses.join(" OR "))
   }
 
   scope :consent_signed, -> {
@@ -474,7 +473,7 @@ class Account < ActiveRecord::Base
   }
 
   scope :by_division, ->(division) {
-    left_outer_joins(:division,:student_profile)
+    left_outer_joins(:division, :student_profile)
       .where("student_profiles.id IS NOT NULL")
       .where("divisions.id IS NOT NULL")
       .where("divisions.name = ?", Division.names[division])
@@ -543,7 +542,7 @@ class Account < ActiveRecord::Base
   validate -> {
     errors.add(:email, :taken) if Account.where.not(id: id).exists?([
       "replace(email, '.', '') = ?",
-      email.gsub(".", "")
+      email.delete(".")
     ])
   }
 
@@ -656,7 +655,7 @@ class Account < ActiveRecord::Base
   def avatar_url
     profile_image_url
   end
-  alias :avatar :avatar_url
+  alias_method :avatar, :avatar_url
 
   def took_survey!
     update(survey_completed_at: Time.current)
@@ -691,7 +690,7 @@ class Account < ActiveRecord::Base
   def reminded_about_survey!
     update_columns(
       reminded_about_survey_at: Time.current,
-      reminded_about_survey_count: reminded_about_survey_count + 1,
+      reminded_about_survey_count: reminded_about_survey_count + 1
     )
   end
 
@@ -713,10 +712,10 @@ class Account < ActiveRecord::Base
   end
 
   def can_be_a_judge?
-    not student_profile.present? and
-      not JUDGE_BLOCKLISTED_ACCOUNT_IDS.include?(id) and
-        chapter_ambassador_profile.present? or
-          mentor_profile.present?
+    !student_profile.present? and
+      !JUDGE_BLOCKLISTED_ACCOUNT_IDS.include?(id) and
+      chapter_ambassador_profile.present? or
+      mentor_profile.present?
   end
 
   def is_a_judge?
@@ -724,7 +723,7 @@ class Account < ActiveRecord::Base
   end
 
   def is_not_a_judge?
-    not judge_profile.present?
+    !judge_profile.present?
   end
 
   def is_a_mentor?
@@ -734,7 +733,7 @@ class Account < ActiveRecord::Base
   def is_an_ambassador?
     chapter_ambassador_profile.present?
   end
-  alias :is_chapter_ambassador? :is_an_ambassador?
+  alias_method :is_chapter_ambassador?, :is_an_ambassador?
 
   def is_admin?
     admin_profile.present?
@@ -789,7 +788,7 @@ class Account < ActiveRecord::Base
   end
 
   def full_name
-    [first_name, last_name].join(' ')
+    [first_name, last_name].join(" ")
   end
 
   def oldest_birth_year
@@ -865,7 +864,7 @@ class Account < ActiveRecord::Base
     if module_name and module_name === "judge"
       "judge"
     elsif chapter_ambassador_profile.present? and
-            chapter_ambassador_profile.approved?
+        chapter_ambassador_profile.approved?
       "chapter_ambassador"
     elsif mentor_profile.present?
       "mentor"
@@ -910,7 +909,7 @@ class Account < ActiveRecord::Base
   def set_terms_agreed(bool)
     value = bool ? Time.current : nil
     self.terms_agreed_at = value
-    self.save
+    save
   end
 
   def teams
@@ -946,7 +945,7 @@ class Account < ActiveRecord::Base
   end
 
   def team_region_division_names
-    team_keys = teams.current.map(&:cache_key).join('/')
+    team_keys = teams.current.map(&:cache_key).join("/")
 
     Rails.cache.fetch("#{team_keys}/team_region_division_names") do
       teams.current.map(&:region_division_name).uniq
@@ -958,8 +957,8 @@ class Account < ActiveRecord::Base
       self.city = geo.city
       self.state_province = geo.state_code
       country = Country.find_country_by_name(geo.country_code) ||
-                  Country.find_country_by_alpha3(geo.country_code) ||
-                    Country.find_country_by_alpha2(geo.country_code)
+        Country.find_country_by_alpha3(geo.country_code) ||
+        Country.find_country_by_alpha2(geo.country_code)
       self.country = country && country.alpha2
     end
   end
@@ -979,6 +978,7 @@ class Account < ActiveRecord::Base
   end
 
   private
+
   def self.survey_reminder_max_times
     2
   end
@@ -990,7 +990,7 @@ class Account < ActiveRecord::Base
   def changes_require_password?
     !!!skip_existing_password &&
       !!!inviting_new_admin &&
-        (persisted? && (email_is_changing? || changing_password?))
+      (persisted? && (email_is_changing? || changing_password?))
   end
 
   def changing_password?
@@ -1046,10 +1046,10 @@ class Account < ActiveRecord::Base
       )
       .where(query)
 
-    if address_details.blank?
-      account = results.first
+    account = if address_details.blank?
+      results.first
     else
-      account = results
+      results
         .near(
           address_details,
           SearchMentors::EARTH_CIRCUMFERENCE

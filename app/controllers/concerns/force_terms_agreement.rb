@@ -6,6 +6,7 @@ module ForceTermsAgreement
   end
 
   private
+
   def require_terms_agreement
     return if request.xhr?
 
@@ -20,7 +21,7 @@ module ForceTermsAgreement
   def logged_in_and_has_profile
     current_account.authenticated? &&
       current_account.respond_to?("#{current_scope}_profile") &&
-        !!current_account.send("#{current_scope}_profile")
+      !!current_account.send("#{current_scope}_profile")
   end
 
   def on_data_agreement_form

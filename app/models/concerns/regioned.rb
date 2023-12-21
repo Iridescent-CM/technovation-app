@@ -4,11 +4,11 @@ module Regioned
   included do
     scope :in_region, ->(ambassador) {
       regioned_scope = if regioned_through_assoc
-                         includes(region_source)
-                           .references(region_source_table)
-                       else
-                         self
-                       end
+        includes(region_source)
+          .references(region_source_table)
+      else
+        self
+      end
 
       regioned_scope.where(
         primary_query(ambassador) +
@@ -27,9 +27,9 @@ module Regioned
 
       if regions.any?
         " OR " +
-        regions.map { |region|
-          construct_query(region)
-        }.join(" OR ")
+          regions.map { |region|
+            construct_query(region)
+          }.join(" OR ")
       else
         ""
       end
@@ -38,8 +38,8 @@ module Regioned
     def construct_query(source)
       if source.country_code == "US"
         "(#{region_source_table}.country = 'US' AND " +
-        "#{region_source_table}.state_province " +
-        "= '#{source.state_code}')"
+          "#{region_source_table}.state_province " +
+          "= '#{source.state_code}')"
       else
         "(#{region_source_table}.country = '#{source.country_code}')"
       end
@@ -64,7 +64,7 @@ module Regioned
 
       define_singleton_method :region_source do
         if opts[:through]
-          { opts[:through] => klass.model_name.element }
+          {opts[:through] => klass.model_name.element}
         else
           klass.model_name.element
         end
@@ -92,7 +92,7 @@ module Regioned
 
     class SecondaryRegion
       attr_reader :state_code, :country_code
-      alias :state_province :state_code
+      alias_method :state_province, :state_code
 
       def initialize(region)
         @state_code = region.split(", ").first

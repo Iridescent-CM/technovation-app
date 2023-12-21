@@ -12,8 +12,8 @@ Airbrake.configure do |c|
   # project_key navigate to your project's General Settings and copy the values
   # from the right sidebar.
   # https://github.com/airbrake/airbrake-ruby#project_id--project_key
-  c.project_id = ENV.fetch('AIRBRAKE_PROJECT_ID')
-  c.project_key = ENV.fetch('AIRBRAKE_PROJECT_KEY')
+  c.project_id = ENV.fetch("AIRBRAKE_PROJECT_ID")
+  c.project_key = ENV.fetch("AIRBRAKE_PROJECT_KEY")
 
   # Configures the root directory of your project. Expects a String or a
   # Pathname, which represents the path to your project. Providing this option
@@ -41,8 +41,7 @@ Airbrake.configure do |c|
   # environments.
   # NOTE: This option *does not* work if you don't set the 'environment' option.
   # https://github.com/airbrake/airbrake-ruby#ignore_environments
-  c.ignore_environments = %w(test development beta)
-
+  c.ignore_environments = %w[test development beta]
 
   # A list of parameters that should be filtered out of what is sent to
   # Airbrake. By default, all "password" attributes will have their contents
@@ -57,23 +56,23 @@ end
 # Thread.abort_on_exception = ['test', 'development'].include?(Rails.env)
 
 Airbrake.add_filter do |notice|
- ignored = %w{
-   ActiveRecord::RecordNotFound
-   ActiveJob::DeserializationError
-   Net::SMTPFatalError
-   ActionController::InvalidAuthenticityToken
-   ActiveRecord::RecordInvalid
-   Net::SMTPSyntaxError
-   SignalException
-   ActionController::UnknownFormat
- }
+  ignored = %w[
+    ActiveRecord::RecordNotFound
+    ActiveJob::DeserializationError
+    Net::SMTPFatalError
+    ActionController::InvalidAuthenticityToken
+    ActiveRecord::RecordInvalid
+    Net::SMTPSyntaxError
+    SignalException
+    ActionController::UnknownFormat
+  ]
 
   if notice[:errors].any? do |error|
-                      ignored.include?(error[:type]) ||
-                        error[:message].include?(
-                          "An SMTP To address is required to send a message."
-                        )
-                    end
+       ignored.include?(error[:type]) ||
+           error[:message].include?(
+             "An SMTP To address is required to send a message."
+           )
+     end
     notice.ignore!
   end
 end

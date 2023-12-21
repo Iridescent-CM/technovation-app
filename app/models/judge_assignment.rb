@@ -10,9 +10,9 @@ class JudgeAssignment < ActiveRecord::Base
   belongs_to :team
   belongs_to :assigned_judge, polymorphic: true
 
-    # deprecated, use polymorphic
+  # deprecated, use polymorphic
   belongs_to :judge_profile, required: false
-    # deprecated
+  # deprecated
 
   delegate :name,
     to: :team,

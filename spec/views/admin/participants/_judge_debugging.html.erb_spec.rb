@@ -3,13 +3,12 @@ require "rails_helper"
 RSpec.describe "admin/participants/_judge_debugging.html.erb", type: :view do
   before do
     render partial: "admin/participants/judge_debugging",
-      locals: { current_account: current_account, profile: current_profile }
+      locals: {current_account: current_account, profile: current_profile}
   end
 
   let(:current_account) do
     instance_double(Account,
-      is_admin?: current_account_is_admin
-    )
+      is_admin?: current_account_is_admin)
   end
   let(:current_account_is_admin) { false }
 
@@ -24,8 +23,7 @@ RSpec.describe "admin/participants/_judge_debugging.html.erb", type: :view do
       browser_name: "Mosiac",
       browser_version: "1.0",
       os_name: "Windows 3.1",
-      os_version: "3.1",
-    )
+      os_version: "3.1")
   end
   let(:judge_suspended) { false }
 

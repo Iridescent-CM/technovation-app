@@ -12,7 +12,7 @@ RSpec.describe Student::JoinRequestsController do
     it "redirects and displays alert if judging is enabled or between rounds" do
       SeasonToggles.judging_round = :qf
 
-      post :new, params: { team_id: team.id }
+      post :new, params: {team_id: team.id}
 
       expect(response).to redirect_to student_team_path(team)
       expect(flash[:alert]).to eq(
@@ -39,7 +39,7 @@ RSpec.describe Student::JoinRequestsController do
     it "redirects and displays alert if judging is enabled or between rounds" do
       SeasonToggles.judging_round = :qf
 
-      post :show, params: { id: join_request.review_token }
+      post :show, params: {id: join_request.review_token}
 
       expect(response).to redirect_to student_team_path(
         team,
@@ -73,7 +73,7 @@ RSpec.describe Student::JoinRequestsController do
     end
 
     it "emails all members" do
-      post :create, params: { team_id: team.id }
+      post :create, params: {team_id: team.id}
 
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to be_present, "no join request email sent"
@@ -91,17 +91,17 @@ RSpec.describe Student::JoinRequestsController do
 
     it "redirects gracefully on dupe" do
       expect {
-        post :create, params: { team_id: team.id }
-        post :create, params: { team_id: team.id }
+        post :create, params: {team_id: team.id}
+        post :create, params: {team_id: team.id}
       }.to change { JoinRequest.count }.by(1)
 
-      expect(response).to redirect_to(student_dashboard_path(anchor: '/find-team'))
+      expect(response).to redirect_to(student_dashboard_path(anchor: "/find-team"))
     end
 
     it "redirects and displays alert if judging is enabled or between rounds" do
       SeasonToggles.judging_round = :qf
 
-      post :create, params: { team_id: team.id }
+      post :create, params: {team_id: team.id}
 
       expect(response).to redirect_to student_team_path(team)
       expect(flash[:alert]).to eq(
@@ -136,7 +136,7 @@ RSpec.describe Student::JoinRequestsController do
         ActionMailer::Base.deliveries.clear
         put :update, params: {
           id: join_request.review_token,
-          join_request: { status: :approved },
+          join_request: {status: :approved}
         }
       end
 
@@ -176,7 +176,7 @@ RSpec.describe Student::JoinRequestsController do
         ActionMailer::Base.deliveries.clear
         put :update, params: {
           id: join_request.review_token,
-          join_request: { status: :declined },
+          join_request: {status: :declined}
         }
       end
 
@@ -210,7 +210,7 @@ RSpec.describe Student::JoinRequestsController do
       it "redirects and displays alert if approved" do
         put :update, params: {
           id: join_request.review_token,
-          join_request: { status: :approved },
+          join_request: {status: :approved}
         }
 
         expect(response).to redirect_to student_team_path(
@@ -226,7 +226,7 @@ RSpec.describe Student::JoinRequestsController do
       it "redirects and displays alert if denied" do
         put :update, params: {
           id: join_request.review_token,
-          join_request: { status: :declined },
+          join_request: {status: :declined}
         }
 
         expect(response).to redirect_to student_team_path(

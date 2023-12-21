@@ -1,11 +1,11 @@
-require 'sidekiq/web'
-require 'admin_constraint'
+require "sidekiq/web"
+require "admin_constraint"
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
-  mount ActionCable.server => '/cable', constraints: AdminConstraint.new
+  mount Sidekiq::Web => "/sidekiq", :constraints => AdminConstraint.new
+  mount ActionCable.server => "/cable", :constraints => AdminConstraint.new
 
-  get '/sidekiq' => 'signins#new'
+  get "/sidekiq" => "signins#new"
 
   resource :survey_completion, only: :show
 
@@ -228,7 +228,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root to: 'dashboards#show'
+    root to: "dashboards#show"
     resource :dashboard, only: :show
 
     resources :data_analyses, only: :show
@@ -237,8 +237,8 @@ Rails.application.routes.draw do
       patch :make_super_admin
     end
 
-    get :signup, to: 'signups#new'
-    patch :signups, to: 'signups#update'
+    get :signup, to: "signups#new"
+    patch :signups, to: "signups#update"
 
     resources :job_statuses, only: :show
 
@@ -318,7 +318,7 @@ Rails.application.routes.draw do
 
     resources :certificates, only: [:index, :show, :create, :destroy]
 
-    get '/semifinalist_snippet', to: 'semifinalist_snippet#show'
+    get "/semifinalist_snippet", to: "semifinalist_snippet#show"
   end
 
   namespace :public do
@@ -361,21 +361,21 @@ Rails.application.routes.draw do
 
   get "learnworlds", to: "learn_worlds#sso"
 
-  get '/general_info/get_started_with_thunkable', to: 'thunkable#show'
+  get "/general_info/get_started_with_thunkable", to: "thunkable#show"
 
-  get 'login', to: 'signins#new', as: :login
-  get 'signin', to: 'signins#new', as: :signin
+  get "login", to: "signins#new", as: :login
+  get "signin", to: "signins#new", as: :signin
 
   get "signup", to: "new_registration#show", as: :signup
-  post '/new-registration', to: 'new_registration#create'
+  post "/new-registration", to: "new_registration#create"
 
-  match 'logout',
-    to: 'signins#destroy',
+  match "logout",
+    to: "signins#destroy",
     as: :logout,
     via: [:get, :delete]
 
-  match 'signout',
-    to: 'signins#destroy',
+  match "signout",
+    to: "signins#destroy",
     as: :signout,
     via: [:get, :delete]
 
