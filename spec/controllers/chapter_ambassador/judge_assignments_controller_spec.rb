@@ -31,11 +31,11 @@ RSpec.describe ChapterAmbassador::JudgeAssignmentsController do
         judge_assignment: {
           judge_id: judge.id,
           team_id: team1.id,
-          model_scope: "JudgeProfile",
-        },
+          model_scope: "JudgeProfile"
+        }
       }
 
-      teams = GatherAssignedTeams.(judge)
+      teams = GatherAssignedTeams.call(judge)
       expect(teams).to contain_exactly(team1, team3)
     end
   end
@@ -72,11 +72,11 @@ RSpec.describe ChapterAmbassador::JudgeAssignmentsController do
         judge_assignment: {
           judge_id: judge.id,
           team_id: team1.id,
-          model_scope: "JudgeProfile",
-        },
+          model_scope: "JudgeProfile"
+        }
       }
 
-      teams = GatherAssignedTeams.(judge)
+      teams = GatherAssignedTeams.call(judge)
       expect(teams).to contain_exactly(team1, team3)
 
       score = SubmissionScore.create!(
@@ -88,14 +88,14 @@ RSpec.describe ChapterAmbassador::JudgeAssignmentsController do
         judge_assignment: {
           judge_id: judge.id,
           team_id: team1.id,
-          model_scope: "JudgeProfile",
-        },
+          model_scope: "JudgeProfile"
+        }
       }
 
       expect(score.reload).to be_deleted
       expect(judge.submission_scores).to be_empty
 
-      teams = GatherAssignedTeams.(judge)
+      teams = GatherAssignedTeams.call(judge)
       expect(teams.map(&:id)).to contain_exactly(team1.id, team2.id, team3.id)
 
       SeasonToggles.set_judging_round(:off)
@@ -103,9 +103,10 @@ RSpec.describe ChapterAmbassador::JudgeAssignmentsController do
   end
 
   private
+
   def create_event_assignment(event:, teams: [], judges: [])
-    CreateEventAssignment.(event, ActionController::Parameters.new({
-      invites: BuildKludgyVueParams.(teams, judges),
+    CreateEventAssignment.call(event, ActionController::Parameters.new({
+      invites: BuildKludgyVueParams.call(teams, judges)
     }))
   end
 end

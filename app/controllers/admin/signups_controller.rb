@@ -1,13 +1,13 @@
 module Admin
   class SignupsController < ApplicationController
-    layout 'admin'
+    layout "admin"
 
     def new
       @account = Account.temporary_password.find_by(admin_invitation_token: params.fetch(:token))
 
       if !@account
         redirect_to root_path,
-         alert: "You are not allowed to be there" and return
+          alert: "You are not allowed to be there" and return
       else
         remove_cookie(CookieNames::AUTH_TOKEN)
         set_cookie(CookieNames::AUTH_TOKEN, @account.auth_token)
@@ -30,6 +30,7 @@ module Admin
     end
 
     private
+
     def admin_password_params
       params.require(:account).permit(:password).tap do |permitted_params|
         permitted_params[:skip_existing_password] = true

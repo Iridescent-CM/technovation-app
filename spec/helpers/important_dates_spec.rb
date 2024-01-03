@@ -9,9 +9,9 @@ RSpec.describe ImportantDates do
 
     it "is the application configured time zone regardless of user time zone" do
       [
-        'Alaska',
-        'London',
-        'Tokyo',
+        "Alaska",
+        "London",
+        "Tokyo"
       ].each do |zone|
         Time.use_zone(zone) do
           expect(ImportantDates.rpe_officiality_finalized.time_zone.name).to eq(Rails.configuration.time_zone)

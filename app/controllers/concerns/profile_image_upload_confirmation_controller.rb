@@ -4,7 +4,7 @@ module ProfileImageUploadConfirmationController
   def show
     ProcessUploadJob.perform_later(
       current_account.id,
-      'Account',
+      "Account",
       "profile_image",
       params.fetch(:key)
     )

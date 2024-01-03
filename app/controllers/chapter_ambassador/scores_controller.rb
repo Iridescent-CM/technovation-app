@@ -7,7 +7,7 @@ module ChapterAmbassador
       html_scope: ->(scope, user, params) {
         scored_submissions_grid = params.fetch(:scored_submissions_grid) { {} }
 
-        if not scored_submissions_grid[:by_event].blank?
+        if !scored_submissions_grid[:by_event].blank?
           scope.page(params[:page])
         elsif SeasonToggles.display_scores?
           scope.in_region(user).page(params[:page])
@@ -17,24 +17,25 @@ module ChapterAmbassador
       },
 
       csv_scope: "->(scope, user, params) { " +
-          "if not params[:by_event].blank?; scope; " +
-          "elsif SeasonToggles.display_scores?; scope.in_region(user); " +
-          "else; scope.live.in_region(user); end " +
+        "if not params[:by_event].blank?; scope; " +
+        "elsif SeasonToggles.display_scores?; scope.in_region(user); " +
+        "else; scope.live.in_region(user); end " +
         "}"
 
     def show
       @score = SubmissionScore.find(params.fetch(:id))
-      render 'admin/scores/show'
+      render "admin/scores/show"
     end
 
     private
+
     def grid_params
       grid = params[:scored_submissions_grid] ||= {}
 
-      if SeasonToggles.display_scores?
-        round = grid.fetch(:round) { 'quarterfinals' }
+      round = if SeasonToggles.display_scores?
+        grid.fetch(:round) { "quarterfinals" }
       else
-        round = 'quarterfinals'
+        "quarterfinals"
       end
 
       grid.merge(
@@ -50,7 +51,7 @@ module ChapterAmbassador
         ),
         current_account: current_account,
         round: round,
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
   end

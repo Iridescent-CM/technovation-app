@@ -59,7 +59,7 @@ RSpec.feature "Edit account spec" do
     expect(page).to have_content("New School")
   end
 
-  %i{mentor chapter_ambassador}.each do |scope|
+  %i[mentor chapter_ambassador].each do |scope|
     scenario "edit #{scope} bio" do
       sign_out
       profile = FactoryBot.create(scope)
@@ -71,13 +71,13 @@ RSpec.feature "Edit account spec" do
 
       fill_in "#{scope}_profile[bio]",
         with: "Lorem ipsum dolor sit amet, " +
-              "consectetur adipiscing elit. " +
-              "Phasellus ut diam vel felis fringilla amet."
+          "consectetur adipiscing elit. " +
+          "Phasellus ut diam vel felis fringilla amet."
 
       click_button "Save"
 
       expect(page).to have_css(
-        'dd',
+        "dd",
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet."
       )
     end

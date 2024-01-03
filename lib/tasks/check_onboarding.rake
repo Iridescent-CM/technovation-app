@@ -26,8 +26,8 @@ task check_onboarding: :environment do
   StudentProfile.current.onboarded.includes(:signed_parental_consent, :account).find_each do |student|
     logger.info "checking Student##{student.id}"
     if student.signed_parental_consent.blank? or
-         student.account.email_confirmed_at.blank? or
-           !student.account.valid_coordinates?
+        student.account.email_confirmed_at.blank? or
+        !student.account.valid_coordinates?
       logger.error "Student##{student.id} FAILED"
       logger.error "Student##{student.id} parental consent is not signed" if student.signed_parental_consent.blank?
       logger.error "Student##{student.id} email is not confirmed" if student.account.email_confirmed_at.blank?
@@ -43,8 +43,8 @@ task check_onboarding: :environment do
     failed = nil
     if team.students.any? do |student|
       if student.signed_parental_consent.blank? or
-           student.account.email_confirmed_at.blank? or
-             !student.account.valid_coordinates?
+          student.account.email_confirmed_at.blank? or
+          !student.account.valid_coordinates?
         failed = student
         true
       else
@@ -65,8 +65,8 @@ task check_onboarding: :environment do
   StudentProfile.current.onboarding.includes(:signed_parental_consent, :account).find_each do |student|
     logger.info "checking Student##{student.id}"
     unless student.signed_parental_consent.blank? or
-             student.account.email_confirmed_at.blank? or
-               !student.account.valid_coordinates?
+        student.account.email_confirmed_at.blank? or
+        !student.account.valid_coordinates?
       logger.error "Student##{student.id} FAILED"
       logger.error "Student##{student.id} parental consent is signed" unless student.signed_parental_consent.blank?
       logger.error "Student##{student.id} email is confirmed" unless student.account.email_confirmed_at.blank?
@@ -80,10 +80,10 @@ task check_onboarding: :environment do
   Team.current.some_students_onboarding.includes(students: [:signed_parental_consent, :account]).references(:memberships).find_each do |team|
     logger.info "checking Team##{team.id}"
     failed = nil
-    if not team.students.any? do |student|
+    if !team.students.any? do |student|
       if student.signed_parental_consent.blank? or
-           student.account.email_confirmed_at.blank? or
-             !student.account.valid_coordinates?
+          student.account.email_confirmed_at.blank? or
+          !student.account.valid_coordinates?
         true
       else
         failed = student

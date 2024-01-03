@@ -2,11 +2,11 @@ class ParentalConsent < ActiveRecord::Base
   include Seasoned
 
   # If these change, you will need to update dataclips
-  enum status: %i{
+  enum status: %i[
     pending
     signed
     voided
-  }
+  ]
 
   enum upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, _prefix: true
 
@@ -21,10 +21,10 @@ class ParentalConsent < ActiveRecord::Base
   validates :electronic_signature, presence: true, if: :signed?
 
   delegate :email,
-           :first_name,
-           :full_name,
-           :consent_token,
-           :locale,
+    :first_name,
+    :full_name,
+    :consent_token,
+    :locale,
     to: :student_profile,
     prefix: true
 
@@ -77,7 +77,7 @@ class ParentalConsent < ActiveRecord::Base
   def voided?
     seasons != [Season.current.year]
   end
-  alias void? voided?
+  alias_method :void?, :voided?
 
   def after_signed_student_actions
     AccountMailer.confirm_next_steps(student_profile.account).deliver_later

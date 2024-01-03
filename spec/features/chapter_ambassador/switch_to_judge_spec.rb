@@ -28,7 +28,7 @@ feature "chapter ambassadors switch to judge mode from chapter ambassador dashbo
       expect(page).to have_text("Judging Rubric")
       expect(current_path).to eq(judge_dashboard_path)
 
-      find('#global-dropdown-wrapper').click
+      find("#global-dropdown-wrapper").click
       click_link "Chapter Ambassador Mode"
       expect(page).to have_text("Technovation Ambassador")
       expect(current_path).to eq(chapter_ambassador_dashboard_path)

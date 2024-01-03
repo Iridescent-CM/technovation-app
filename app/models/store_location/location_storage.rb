@@ -5,13 +5,13 @@ module StoreLocation
         StoreLocation::IPLocationStorage.new(
           options.fetch(:ip_address),
           options.fetch(:account) { ::NullAccount.new },
-          options.fetch(:context),
+          options.fetch(:context)
         )
       elsif options.fetch(:coordinates) { false }
         StoreLocation::CoordinateLocationStorage.new(
           options.fetch(:coordinates),
           options.fetch(:account),
-          options.fetch(:context),
+          options.fetch(:context)
         )
       else
         raise ArgumentError,
@@ -19,7 +19,7 @@ module StoreLocation
       end
     end
 
-    attr_reader  :account, :context, :cookie_name
+    attr_reader :account, :context, :cookie_name
 
     def execute
       if should_execute?
@@ -34,7 +34,7 @@ module StoreLocation
         [
           "[StoreLocation #execute #{status}]",
           log_label,
-          log_message(get_or_set_value),
+          log_message(get_or_set_value)
         ].join(" - ")
       )
     end
@@ -46,11 +46,12 @@ module StoreLocation
     end
 
     private
+
     def log_message(value)
       [
         "[Account##{account.id}]",
         "[SOURCE #{source}]",
-        "[COOKIE #{String(value)}]",
+        "[COOKIE #{String(value)}]"
       ].join(" ")
     end
 
@@ -63,21 +64,21 @@ module StoreLocation
     end
 
     def existing_coordinates
-      existing_value && existing_value['coordinates']
+      existing_value && existing_value["coordinates"]
     end
 
     def existing_ip
-      existing_value && existing_value['ip_address']
+      existing_value && existing_value["ip_address"]
     end
 
     def coordinates_valid?
       existing_coordinates &&
         String(existing_coordinates) != "[0.0, 0.0]" &&
-          String(existing_coordinates) != "[nil, nil]"
+        String(existing_coordinates) != "[nil, nil]"
     end
 
     def cookie_overwritten?
-      !!cookie_value['overwritten_by']
+      !!cookie_value["overwritten_by"]
     end
   end
 end

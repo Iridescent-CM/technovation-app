@@ -15,11 +15,11 @@ Rails.application.configure do
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.hour.seconds.to_i}"
+    "Cache-Control" => "public, max-age=#{1.hour.seconds.to_i}"
   }
 
   # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
@@ -43,7 +43,7 @@ Rails.application.configure do
 
   # Have email links point to capybara server
   config.action_mailer.default_url_options = {
-    host: 'localhost',
+    host: "localhost",
     port: 31337
   }
 end

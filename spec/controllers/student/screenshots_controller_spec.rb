@@ -6,14 +6,14 @@ RSpec.describe Student::ScreenshotsController do
       student = FactoryBot.create(:student, :on_team)
       team_submission = FactoryBot.create(
         :team_submission,
-        team: student.team,
+        team: student.team
       )
       screenshot = team_submission.screenshots.create!
 
       sign_in(student)
 
       expect {
-        delete :destroy, params: { id: screenshot.id }
+        delete :destroy, params: {id: screenshot.id}
       }.to change { Screenshot.count }.by(-1)
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Student::ScreenshotsController do
       student = FactoryBot.create(:student, :on_team)
       team_submission = FactoryBot.create(
         :team_submission,
-        team: student.team,
+        team: student.team
       )
       team_submission.screenshots.create!
 
@@ -32,7 +32,7 @@ RSpec.describe Student::ScreenshotsController do
       sign_in(student)
 
       expect {
-        delete :destroy, params: { id: other.id }
+        delete :destroy, params: {id: other.id}
       }.not_to change { Screenshot.count }
     end
   end

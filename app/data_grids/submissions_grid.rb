@@ -38,11 +38,11 @@ class SubmissionsGrid
   column :source_code_url
 
   column :business_plan_url do
-    team.senior? ? self.business_plan_url : "-"
+    team.senior? ? business_plan_url : "-"
   end
 
   column :adoption_plan_url do
-    team.junior? ? self.business_plan_url : "-"
+    team.junior? ? business_plan_url : "-"
   end
 
   column :pitch_presentation_url
@@ -69,10 +69,10 @@ class SubmissionsGrid
     order: "teams.name",
     html: true do |sub|
     link_to(
-        "#{request.base_url}#{project_path(sub)}",
-        project_path(sub),
-        target: :_blank,
-        data: { turbolinks: false }
+      "#{request.base_url}#{project_path(sub)}",
+      project_path(sub),
+      target: :_blank,
+      data: {turbolinks: false}
     )
   end
 
@@ -140,7 +140,7 @@ class SubmissionsGrid
   end
 
   column :state_province, header: "State" do
-    FriendlySubregion.(team, prefix: false)
+    FriendlySubregion.call(team, prefix: false)
   end
 
   column :country do
@@ -375,7 +375,7 @@ class SubmissionsGrid
     data: {
       placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
       scope.where("teams.country = ?", grid.country)
         .where(
           StateClauses.for(
@@ -399,7 +399,7 @@ class SubmissionsGrid
     data: {
       placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
       scope.where(
         StateClauses.for(
           values: grid.state_province,

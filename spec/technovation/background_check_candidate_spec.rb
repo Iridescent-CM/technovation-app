@@ -12,7 +12,7 @@ RSpec.describe BackgroundCheck::Candidate, :vcr do
       dob: "1983-06-01",
       ssn: "111-11-2001",
       driver_liscence_number: "F1112001",
-      driver_license_state: "CA",
+      driver_license_state: "CA"
     })
 
     candidate.submit

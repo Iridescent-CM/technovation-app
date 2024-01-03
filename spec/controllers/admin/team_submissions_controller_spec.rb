@@ -6,7 +6,7 @@ RSpec.describe Admin::TeamSubmissionsController do
       sign_in(:admin)
 
       expect {
-        get :index, format: :json, params: { submissions_grid: {} }
+        get :index, format: :json, params: {submissions_grid: {}}
       }.to change { Export.count }.by(1)
     end
   end

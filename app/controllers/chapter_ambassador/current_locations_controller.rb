@@ -1,8 +1,8 @@
 module ChapterAmbassador
   class CurrentLocationsController < ChapterAmbassadorController
     def show
-      state = FriendlySubregion.(current_account, prefix: false)
-      state_code = FriendlySubregion.(current_account, {
+      state = FriendlySubregion.call(current_account, prefix: false)
+      state_code = FriendlySubregion.call(current_account, {
         prefix: false,
         short_code: true
       })
@@ -14,7 +14,7 @@ module ChapterAmbassador
         state: state,
         state_code: state_code,
         country: friendly_country.country_name,
-        country_code: friendly_country.as_short_code,
+        country_code: friendly_country.as_short_code
       }
     end
   end

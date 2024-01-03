@@ -1,8 +1,10 @@
 class ProfileUpdating
   private
+
   attr_reader :profile, :account, :scope
 
   public
+
   def initialize(profile, scope = nil)
     @profile = profile
     @account = profile.account
@@ -35,6 +37,7 @@ class ProfileUpdating
   end
 
   private
+
   def perform_mentor_updates
   end
 

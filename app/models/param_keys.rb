@@ -12,7 +12,7 @@ class ParamKeys
   def to_permitted_params_list
     [
       permitted_param_array_args,
-      permitted_param_hash_args(convert_empty_to_nil: true),
+      permitted_param_hash_args(convert_empty_to_nil: true)
     ].flatten.compact
   end
 
@@ -29,19 +29,20 @@ class ParamKeys
   end
 
   private
+
   def permitted_param_array_args
     map { |k| k.permit_format ? nil : k.original_name }.compact
   end
 
   def permitted_param_hash_args(opts = {})
-    default_options = { convert_empty_to_nil: false }
+    default_options = {convert_empty_to_nil: false}
     options = default_options.merge(opts)
 
     hsh = {}
     each do |k|
-     k.permit_format ?
-        hsh[k.original_name] = k.permit_format :
-        false
+      k.permit_format ?
+         hsh[k.original_name] = k.permit_format :
+         false
     end
 
     if hsh.empty? && options[:convert_empty_to_nil]

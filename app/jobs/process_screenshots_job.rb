@@ -14,7 +14,7 @@ class ProcessScreenshotsJob < ActiveJob::Base
     Array(keys).each do |key|
       url = "http://s3.amazonaws.com/#{ENV.fetch("AWS_BUCKET_NAME")}/#{key}"
       record.screenshots.create!({
-        remote_image_url: url,
+        remote_image_url: url
       })
     end
   end

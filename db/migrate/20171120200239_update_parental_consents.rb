@@ -20,10 +20,12 @@ class UpdateParentalConsents < ActiveRecord::Migration[5.1]
 
       StudentProfile.find_each do |student|
         student.seasons.each do |season|
-          student.parental_consents.create!({
-            status: :pending,
-            seasons: Array(season),
-          }) if student.parental_consents.by_season(season).empty?
+          if student.parental_consents.by_season(season).empty?
+            student.parental_consents.create!({
+              status: :pending,
+              seasons: Array(season)
+            })
+          end
         end
       end
 
@@ -33,7 +35,7 @@ class UpdateParentalConsents < ActiveRecord::Migration[5.1]
 
       if consented_count2 != consented_count and
           unconsented_count2 != unconsented_count and
-            total != total2
+          total != total2
         raise "Counts are wrong"
       end
     end

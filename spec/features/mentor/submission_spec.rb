@@ -38,7 +38,7 @@ RSpec.feature "Student team submissions" do
 
     expect(current_path).to eq(
       mentor_team_submission_section_path(
-        TeamSubmission.last,
+        TeamSubmission.last
       )
     )
   end
@@ -47,7 +47,7 @@ RSpec.feature "Student team submissions" do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_junior_team)
     submission = FactoryBot.create(
       :team_submission,
-      team: mentor.teams.first,
+      team: mentor.teams.first
     )
 
     sign_in(mentor)
@@ -158,7 +158,7 @@ RSpec.feature "Student team submissions" do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_junior_team)
     submission = FactoryBot.create(
       :team_submission,
-      team: mentor.teams.first,
+      team: mentor.teams.first
     )
 
     sign_in(mentor)
@@ -167,7 +167,7 @@ RSpec.feature "Student team submissions" do
     click_link "Regional events"
 
     expect(page).not_to have_link(
-      "Upload the pitch presentation slides for your live event",
+      "Upload the pitch presentation slides for your live event"
     )
 
     expect(page).to have_content(

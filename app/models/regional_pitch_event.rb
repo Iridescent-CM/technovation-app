@@ -5,7 +5,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   regioned_source Account, through: :ambassador
 
   after_validation -> {
-    AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.(self)
+    AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.call(self)
   }
 
   after_update -> {
@@ -16,7 +16,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   }
 
   after_create -> {
-    RegisterToCurrentSeasonJob.perform_later(self);
+    RegisterToCurrentSeasonJob.perform_later(self)
   }
 
   scope :unofficial, -> { where(unofficial: true) }
@@ -57,16 +57,16 @@ class RegionalPitchEvent < ActiveRecord::Base
   has_many :multi_messages, as: :regarding
 
   validates :name,
-            :starts_at,
-            :ends_at,
-            :division_ids,
-            :city,
-            :venue_address,
+    :starts_at,
+    :ends_at,
+    :division_ids,
+    :city,
+    :venue_address,
     presence: true
 
   delegate :state_province,
-           :country,
-           :timezone,
+    :country,
+    :timezone,
     to: :ambassador,
     prefix: false
 
@@ -113,7 +113,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def official?
-    not unofficial?
+    !unofficial?
   end
 
   def judge_list
@@ -145,7 +145,7 @@ class RegionalPitchEvent < ActiveRecord::Base
       event_link: event_link,
       capacity: capacity,
       officiality: officiality,
-      errors: {},
+      errors: {}
     }
   end
 
@@ -159,10 +159,10 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def date_time
     [starts_at.in_time_zone(timezone).strftime("%a %b %e, %-I:%M%P"),
-     "-",
-     ends_at.in_time_zone(timezone).strftime("%-I:%M%P"),
-     "TZ:",
-     ambassador.timezone].join(' ')
+      "-",
+      ends_at.in_time_zone(timezone).strftime("%-I:%M%P"),
+      "TZ:",
+      ambassador.timezone].join(" ")
   end
 
   def day
@@ -175,8 +175,8 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def time
     [starts_at.in_time_zone(timezone).strftime("%-k:%M"),
-     "-",
-     ends_at.in_time_zone(timezone).strftime("%-k:%M")].join(" ")
+      "-",
+      ends_at.in_time_zone(timezone).strftime("%-k:%M")].join(" ")
   end
 
   def live?
@@ -188,7 +188,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def at_team_capacity?
-    if (capacity.nil? || capacity.to_i == 0)
+    if capacity.nil? || capacity.to_i == 0
       false
     else
       teams.length.to_i >= capacity.to_i
@@ -196,7 +196,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def name_with_friendly_country_prefix
-    "#{FriendlyCountry.(ambassador.account)} - #{name}"
+    "#{FriendlyCountry.call(ambassador.account)} - #{name}"
   end
 
   def update_teams_count(team = nil)
@@ -225,7 +225,7 @@ class JudgeProfileEventScope < EventScope
         )
     else
       scope.current
-        .joins(ambassador:  :account)
+        .joins(ambassador: :account)
         .where("accounts.country = ?", record.country_code)
     end
   end

@@ -7,28 +7,27 @@ RSpec.feature "Chapter Ambassador views scores" do
   end
 
   context "after scores set to display" do
-
     before do
       SeasonToggles.display_scores_on!
     end
 
     scenario "chapter ambassador can't pick finals scores, as there is no such thing" do
       click_link "Scores"
-      options = page.find("[name='scored_submissions_grid[round]']").all('option')
+      options = page.find("[name='scored_submissions_grid[round]']").all("option")
       expect(options.map(&:value)).not_to include("finals")
     end
 
     scenario "can view virtual QF scores" do
       submission = FactoryBot.create(
         :submission,
-        :complete,
+        :complete
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
       click_link "Scores"
       within_results_page_with("#team_submission_#{submission.id}") do
-        find('a.view-details').click
+        find("a.view-details").click
       end
 
       expect(page).to have_content("View score")
@@ -38,7 +37,7 @@ RSpec.feature "Chapter Ambassador views scores" do
       submission = FactoryBot.create(
         :submission,
         :complete,
-        :semifinalist,
+        :semifinalist
       )
 
       FactoryBot.create(
@@ -48,9 +47,9 @@ RSpec.feature "Chapter Ambassador views scores" do
         team_submission: submission
       )
 
-      visit chapter_ambassador_scores_path(scored_submissions_grid: { round: :semifinals })
+      visit chapter_ambassador_scores_path(scored_submissions_grid: {round: :semifinals})
       within_results_page_with("#team_submission_#{submission.id}") do
-        find('a.view-details').click
+        find("a.view-details").click
       end
 
       expect(page).to have_content("View score")
@@ -60,7 +59,7 @@ RSpec.feature "Chapter Ambassador views scores" do
       submission = FactoryBot.create(
         :submission,
         :complete,
-        :semifinalist,
+        :semifinalist
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -76,7 +75,7 @@ RSpec.feature "Chapter Ambassador views scores" do
       expect(page).to have_selector(".semifinals_average")
 
       within_results_page_with("#team_submission_#{submission.id}") do
-        find('a.view-details').click
+        find("a.view-details").click
       end
 
       expect(page).to have_content("Semifinals average")
@@ -84,7 +83,6 @@ RSpec.feature "Chapter Ambassador views scores" do
   end
 
   context "before scores set to display" do
-
     before do
       SeasonToggles.display_scores_off!
     end
@@ -92,7 +90,7 @@ RSpec.feature "Chapter Ambassador views scores" do
     scenario "can view live QF scores" do
       submission = FactoryBot.create(
         :submission,
-        :complete,
+        :complete
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -103,7 +101,7 @@ RSpec.feature "Chapter Ambassador views scores" do
 
       click_link "Scores"
       within_results_page_with("#team_submission_#{submission.id}") do
-        find('a.view-details').click
+        find("a.view-details").click
       end
 
       expect(page).to have_content("View score")
@@ -112,7 +110,7 @@ RSpec.feature "Chapter Ambassador views scores" do
     scenario "can not view virtual QF scores" do
       submission = FactoryBot.create(
         :submission,
-        :complete,
+        :complete
       )
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -126,7 +124,7 @@ RSpec.feature "Chapter Ambassador views scores" do
       submission = FactoryBot.create(
         :submission,
         :complete,
-        :semifinalist,
+        :semifinalist
       )
 
       rpe = FactoryBot.create(:rpe)
@@ -146,7 +144,7 @@ RSpec.feature "Chapter Ambassador views scores" do
       expect(page).to have_no_selector(".semifinals_average")
 
       within_results_page_with("#team_submission_#{submission.id}") do
-        find('a.view-details').click
+        find("a.view-details").click
       end
 
       expect(page).not_to have_content("Semifinals average")
@@ -157,7 +155,7 @@ RSpec.feature "Chapter Ambassador views scores" do
     submission = FactoryBot.create(
       :submission,
       :junior,
-      :complete,
+      :complete
     )
 
     FactoryBot.create(

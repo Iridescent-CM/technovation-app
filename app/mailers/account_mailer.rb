@@ -8,7 +8,7 @@ class AccountMailer < ApplicationMailer
       token = account.unconfirmed_email_address.confirmation_token
     end
 
-    if not token.blank?
+    if !token.blank?
       @url = new_email_confirmation_url(token: token)
       I18n.with_locale(account.locale) do
         mail to: account.email
@@ -29,7 +29,7 @@ class AccountMailer < ApplicationMailer
       token = account.password_reset_token
     end
 
-    if not token.blank?
+    if !token.blank?
       @url = new_password_url(token: token)
       I18n.with_locale(account.locale) do
         mail to: account.email

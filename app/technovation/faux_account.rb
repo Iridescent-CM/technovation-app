@@ -1,5 +1,4 @@
 class FauxAccount
-
   def initialize(real_account: Account.new, methods_with_return_values: {})
     @real_account = real_account
 
@@ -11,7 +10,7 @@ class FauxAccount
   end
 
   def method_missing(method, *_args, &_block)
-    real_account.respond_to?(method) ?  nil : super
+    real_account.respond_to?(method) ? nil : super
   end
 
   private

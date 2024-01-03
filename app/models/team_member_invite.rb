@@ -1,5 +1,5 @@
 class TeamMemberInvite < ActiveRecord::Base
-  enum status: %i{pending accepted declined deleted}
+  enum status: %i[pending accepted declined deleted]
 
   scope :for_students, -> {
     where("invitee_type IS NULL OR invitee_type = ?", "StudentProfile")
@@ -20,8 +20,8 @@ class TeamMemberInvite < ActiveRecord::Base
 
   validate -> {
     if self.class.exists?(invitee_email: invitee_email,
-                          team_id: team_id,
-                          status: self.class.statuses[:pending])
+      team_id: team_id,
+      status: self.class.statuses[:pending])
       errors.add(:invitee_email, :taken)
     end
   }, on: :create
@@ -45,9 +45,9 @@ class TeamMemberInvite < ActiveRecord::Base
   delegate :name, to: :team, prefix: true
 
   delegate :first_name,
-           :last_name,
-           :scope_name,
-           :mailer_token,
+    :last_name,
+    :scope_name,
+    :mailer_token,
     to: :invitee, prefix: true
 
   def to_param
@@ -74,7 +74,7 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   def cannot_be_accepted?
-    not can_be_accepted?
+    !can_be_accepted?
   end
 
   def self.match_registrant(profile)
@@ -84,11 +84,12 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   private
+
   def set_invitee
     self.invitee_email = invitee_email.strip.downcase
     if student = StudentProfile.joins(:account)
-                   .where("lower(trim(both ' ' from accounts.email)) = ?", invitee_email)
-                   .first
+        .where("lower(trim(both ' ' from accounts.email)) = ?", invitee_email)
+        .first
       self.invitee = student
     end
   end
@@ -98,7 +99,7 @@ class TeamMemberInvite < ActiveRecord::Base
   end
 
   def correct_invitee_type
-    if Account.where("lower(email) = ?", invitee_email.downcase).any? { |a| not a.student_profile.present? }
+    if Account.where("lower(email) = ?", invitee_email.downcase).any? { |a| !a.student_profile.present? }
       errors.add(:invitee_email, :is_not_a_student)
     end
   end

@@ -8,11 +8,12 @@ module Mentor
     end
 
     private
+
     def create_judge_mentor_on_dashboard
       return if current_session.authenticated?
-        # Chapter ambassador/Admin Logged in as someone else
+      # Chapter ambassador/Admin Logged in as someone else
 
-      if CreateMentorProfile.(current_account)
+      if CreateMentorProfile.call(current_account)
         flash.now[:success] = t(
           "controllers.mentor.dashboards.show.mentor_profile_created"
         )

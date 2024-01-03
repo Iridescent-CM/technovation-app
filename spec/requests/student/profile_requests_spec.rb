@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Student Profile Requests", type: :request do
   let(:student_account) { FactoryBot.create(:account, email: student_email_address) }
-  let(:student_email_address) { "harry@example.com"  }
+  let(:student_email_address) { "harry@example.com" }
   let(:student_profile) {
     FactoryBot.create(:student_profile, :geocoded,
       account: student_account,
@@ -19,21 +19,21 @@ RSpec.describe "Student Profile Requests", type: :request do
       patch student_profile_path, params: params, headers: headers
     end
 
-    let(:headers) { { "ACCEPT" => "text/html" } }
+    let(:headers) { {"ACCEPT" => "text/html"} }
     let(:params) do
-      { student_profile: {
-        account_attributes: { id: student_account.id }
-      } }
+      {student_profile: {
+        account_attributes: {id: student_account.id}
+      }}
     end
 
     context "when the :setting_location param is present, and country and latitude are both blank" do
       let(:params) do
         {
-          setting_location: { bing: "bong" },
+          setting_location: {bing: "bong"},
           student_profile: {
-            account_attributes: { id: student_account.id,
-                                  country: "",
-                                  latitude: "" }
+            account_attributes: {id: student_account.id,
+                                 country: "",
+                                 latitude: ""}
           }
         }
       end
@@ -51,7 +51,7 @@ RSpec.describe "Student Profile Requests", type: :request do
       end
 
       context "when it's an HTML request" do
-        let(:headers) { { "ACCEPT" => "text/html" } }
+        let(:headers) { {"ACCEPT" => "text/html"} }
 
         it "redirects to the student profile page" do
           expect(response).to redirect_to("/student/profile")
@@ -59,7 +59,7 @@ RSpec.describe "Student Profile Requests", type: :request do
       end
 
       context "when it's a JSON request" do
-        let(:headers) { {  "ACCEPT" => "application/json" } }
+        let(:headers) { {"ACCEPT" => "application/json"} }
 
         it "returns a success message in JSON format" do
           expect(response.body).to include("You updated your account!")
@@ -72,8 +72,8 @@ RSpec.describe "Student Profile Requests", type: :request do
       let(:params) do
         {
           student_profile: {
-            account_attributes: { id: student_account.id,
-                                  email: "harry2.0@example.com" }
+            account_attributes: {id: student_account.id,
+                                 email: "harry2.0@example.com"}
           }
         }
       end
@@ -87,8 +87,8 @@ RSpec.describe "Student Profile Requests", type: :request do
       let(:params) do
         {
           student_profile: {
-            account_attributes: { id: student_account.id,
-                                  password: "mugglesftw" }
+            account_attributes: {id: student_account.id,
+                                 password: "mugglesftw"}
           }
         }
       end
@@ -102,9 +102,9 @@ RSpec.describe "Student Profile Requests", type: :request do
       let(:params) do
         {
           student_profile: {
-            account_attributes: { id: student_account.id,
-                                  email: parent_guardian_email_address,
-                                  existing_password: "secret1234" }
+            account_attributes: {id: student_account.id,
+                                 email: parent_guardian_email_address,
+                                 existing_password: "secret1234"}
           }
         }
       end
@@ -119,9 +119,9 @@ RSpec.describe "Student Profile Requests", type: :request do
       let(:params) do
         {
           student_profile: {
-            account_attributes: { id: student_account.id,
-                                  first_name: "",
-                                  last_name: "" }
+            account_attributes: {id: student_account.id,
+                                 first_name: "",
+                                 last_name: ""}
           }
         }
       end

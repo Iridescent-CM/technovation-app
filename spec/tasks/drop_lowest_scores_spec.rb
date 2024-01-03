@@ -11,7 +11,7 @@ RSpec.describe "drop_lowest_scores" do
     $stdout = STDOUT
   end
 
-  let(:task) { Rake::Task['drop_lowest_scores'] }
+  let(:task) { Rake::Task["drop_lowest_scores"] }
   after(:each) { task.reenable }
 
   let(:task_args) { [round, minimum_score_count, dry_run].map(&:to_s) }
@@ -70,13 +70,13 @@ RSpec.describe "drop_lowest_scores" do
   }
 
   context "run for quarterfinals, count 1" do
-    let(:round) { 'qf' }
+    let(:round) { "qf" }
     let(:minimum_score_count) { 1 }
 
-    context "dry run on" do 
+    context "dry run on" do
       let(:dry_run) { nil }
       before(:each) { task.invoke(*task_args) }
-      
+
       it "reports dry run on" do
         expect(output.string).to include("DRY RUN: on")
       end
@@ -96,8 +96,8 @@ RSpec.describe "drop_lowest_scores" do
       end
     end
 
-    context "dry run off" do 
-      let(:dry_run) { 'run' }
+    context "dry run off" do
+      let(:dry_run) { "run" }
       before(:each) { task.invoke(*task_args) }
 
       it "reports dry run off" do
@@ -121,7 +121,7 @@ RSpec.describe "drop_lowest_scores" do
   end
 
   context "run for quarterfinals, count 4" do
-    let(:round) { 'qf' }
+    let(:round) { "qf" }
     let(:minimum_score_count) { 4 }
 
     context "dry run on" do
@@ -140,7 +140,7 @@ RSpec.describe "drop_lowest_scores" do
     end
 
     context "dry run off" do
-      let(:dry_run) { 'run' }
+      let(:dry_run) { "run" }
       before(:each) { task.invoke(*task_args) }
 
       it "reports submissions skipped for not enough scores" do
@@ -156,11 +156,11 @@ RSpec.describe "drop_lowest_scores" do
   end
 
   context "run a second time for quarterfinals, count 1" do
-    let(:round) { 'qf' }
+    let(:round) { "qf" }
     let(:minimum_score_count) { 1 }
 
     before(:each) {
-      task.invoke(round, minimum_score_count, 'run')
+      task.invoke(round, minimum_score_count, "run")
       task.reenable
       output.rewind
 
@@ -182,7 +182,7 @@ RSpec.describe "drop_lowest_scores" do
     end
 
     context "dry run off" do
-      let(:dry_run) { 'run' }
+      let(:dry_run) { "run" }
 
       it "reports submissions already dropped scores" do
         expect(output.string).to include("SKIP already dropped score for Submission##{quarterfinalist_submission_1.id}")
@@ -197,13 +197,13 @@ RSpec.describe "drop_lowest_scores" do
   end
 
   context "run for semifinals, count 1" do
-    let(:round) { 'sf' }
+    let(:round) { "sf" }
     let(:minimum_score_count) { 1 }
 
-    context "dry run on" do 
+    context "dry run on" do
       let(:dry_run) { nil }
       before(:each) { task.invoke(*task_args) }
-      
+
       it "reports dry run on" do
         expect(output.string).to include("DRY RUN: on")
       end
@@ -224,8 +224,8 @@ RSpec.describe "drop_lowest_scores" do
       end
     end
 
-    context "dry run off" do 
-      let(:dry_run) { 'run' }
+    context "dry run off" do
+      let(:dry_run) { "run" }
       before(:each) { task.invoke(*task_args) }
 
       it "reports dry run on" do

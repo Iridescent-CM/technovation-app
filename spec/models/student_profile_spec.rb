@@ -55,7 +55,7 @@ RSpec.describe StudentProfile do
         current_unmatched_student.teams.create!({
           division: Division.for(current_unmatched_student),
           name: "Last year",
-          seasons: [Season.current.year - 1],
+          seasons: [Season.current.year - 1]
         })
       end
 
@@ -73,7 +73,7 @@ RSpec.describe StudentProfile do
         student.teams.create!({
           division: Division.for(student),
           name: "Last year",
-          seasons: [Season.current.year - 1],
+          seasons: [Season.current.year - 1]
         })
       end
 
@@ -83,7 +83,7 @@ RSpec.describe StudentProfile do
         student.teams.create!({
           division: Division.for(student),
           name: "Two years ago",
-          seasons: [Season.current.year - 2],
+          seasons: [Season.current.year - 2]
         })
       end
 

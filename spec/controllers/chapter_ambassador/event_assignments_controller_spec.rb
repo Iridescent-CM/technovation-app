@@ -18,14 +18,14 @@ RSpec.describe ChapterAmbassador::EventAssignmentsController do
         post_create(
           invites: {
             teams: [team1, team2],
-            judges: judge,
+            judges: judge
           },
           event: event1
         )
 
         post_create(
           invites: {
-            judges: judge,
+            judges: judge
           },
           event: event2
         )
@@ -38,12 +38,13 @@ RSpec.describe ChapterAmbassador::EventAssignmentsController do
   end
 
   private
-  def post_create(invites: {}, event:)
+
+  def post_create(event:, invites: {})
     post :create, params: {
       event_assignment: {
-        invites: BuildKludgyVueParams.(invites[:teams], invites[:judges]),
-        event_id: event.id,
-      },
+        invites: BuildKludgyVueParams.call(invites[:teams], invites[:judges]),
+        event_id: event.id
+      }
     }
   end
 end

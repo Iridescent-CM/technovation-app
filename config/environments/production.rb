@@ -1,5 +1,5 @@
 Rails.application.configure do
-   config.webpacker.check_yarn_integrity = false  # Settings specified here will take precedence over those in config/application.rb.
+  config.webpacker.check_yarn_integrity = false  # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
   config.cache_classes = !ENV["USE_DOTENV"].present?
@@ -11,12 +11,12 @@ Rails.application.configure do
   config.eager_load = !ENV["USE_DOTENV"].present?
 
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = ENV["USE_DOTENV"].present?
+  config.consider_all_requests_local = ENV["USE_DOTENV"].present?
   config.action_controller.perform_caching = !ENV["USE_DOTENV"].present?
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
   config.public_file_server.headers = {
     "Cache-Control" => "public, s-maxage=31536000, maxage=15552000",
     "Expires" => "#{1.year.from_now.to_formatted_s(:rfc822)}"
@@ -52,7 +52,7 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -82,7 +82,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -90,18 +90,18 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: ENV.fetch("HOST_DOMAIN") }
+  config.action_mailer.default_url_options = {host: ENV.fetch("HOST_DOMAIN")}
 
-  protocol = ENV.fetch("FORCE_SSL") { "true" } === "true" ? "https://" : "http://"
+  protocol = (ENV.fetch("FORCE_SSL") { "true" } === "true") ? "https://" : "http://"
 
   config.action_mailer.asset_host = "#{protocol}#{ENV.fetch("HOST_DOMAIN")}"
-  config.action_controller.asset_host = "#{protocol}#{ENV.fetch('HOST_DOMAIN')}"
+  config.action_controller.asset_host = "#{protocol}#{ENV.fetch("HOST_DOMAIN")}"
 
-  config.cache_store = :mem_cache_store, ENV.fetch("MEMCACHEDCLOUD_SERVERS").split(','), {
+  config.cache_store = :mem_cache_store, ENV.fetch("MEMCACHEDCLOUD_SERVERS").split(","), {
     username: ENV.fetch("MEMCACHEDCLOUD_USERNAME"),
     password: ENV.fetch("MEMCACHEDCLOUD_PASSWORD"),
     namespace: "Technovation",
     expires_in: 1.day,
-    compress: true,
+    compress: true
   }
 end

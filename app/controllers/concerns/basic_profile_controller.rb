@@ -22,15 +22,16 @@ module BasicProfileController
     if ProfileUpdating.execute(profile, profile_params)
       render json: AccountSerializer.new(current_account).serialized_json
     else
-      render json: { errors: profile.errors }, status: :unprocessessable_entity
+      render json: {errors: profile.errors}, status: :unprocessessable_entity
     end
   end
 
   private
+
   def profile_params
     params_safelist.to_update_hash(
       given: hashed_params,
-      fallback: profile,
+      fallback: profile
     ).merge(account_attributes)
   end
 
@@ -43,10 +44,10 @@ module BasicProfileController
         last_name: hashed_params.fetch(:last_name) { current_account.last_name },
 
         referred_by_other: hashed_params.fetch(:referred_by_other) { current_account.referred_by_other },
-        referred_by: hashed_params.fetch(:referred_by) { current_account.referred_by},
+        referred_by: hashed_params.fetch(:referred_by) { current_account.referred_by },
 
-        gender: hashed_params.fetch(:gender_identity) { current_account.gender },
-      },
+        gender: hashed_params.fetch(:gender_identity) { current_account.gender }
+      }
     }
   end
 
@@ -61,7 +62,7 @@ module BasicProfileController
       :referred_by,
       :referred_by_other,
       :gender_identity,
-      *params_safelist.to_permitted_params_list,
+      *params_safelist.to_permitted_params_list
     )
   end
 

@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class ScoreImporting
   def initialize(import_options)
@@ -9,7 +9,7 @@ class ScoreImporting
     @score_repo = import_options.fetch(:scores) { SubmissionScore }
     @sub_repo = import_options.fetch(:submissions) { TeamSubmission }
     @account_repo = import_options.fetch(:accounts) { Account }
-    @logger = import_options.fetch(:logger) { Logger.new('/dev/null') }
+    @logger = import_options.fetch(:logger) { Logger.new("/dev/null") }
   end
 
   def import_scores
@@ -26,6 +26,7 @@ class ScoreImporting
   end
 
   private
+
   def initialize_attrs(row)
     attrs = row.to_h
     attrs.each do |k, v|

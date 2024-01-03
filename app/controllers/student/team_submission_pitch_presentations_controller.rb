@@ -10,6 +10,7 @@ module Student
     end
 
     private
+
     def do_new
       @submission = current_team.submission
 

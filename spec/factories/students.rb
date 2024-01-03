@@ -150,7 +150,7 @@ FactoryBot.define do
         city: e.city,
         state_province: e.state_province,
         country: e.country,
-        date_of_birth: e.date_of_birth,
+        date_of_birth: e.date_of_birth
       }.each do |k, v|
         s.account.send("#{k}=", v)
       end

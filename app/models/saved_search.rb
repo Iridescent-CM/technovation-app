@@ -1,4 +1,4 @@
-require 'uri'
+require "uri"
 
 class SavedSearch < ApplicationRecord
   belongs_to :searcher, polymorphic: true
@@ -6,14 +6,14 @@ class SavedSearch < ApplicationRecord
   validates :param_root, presence: true
 
   validates :name, :search_string, presence: true,
-    uniqueness: { scope: [:param_root, :searcher_type, :searcher_id] }
+    uniqueness: {scope: [:param_root, :searcher_type, :searcher_id]}
 
   scope :for_param_root, ->(root_name) {
     where(param_root: root_name)
   }
 
   before_validation -> {
-    self.search_string = search_string.gsub('&&', '')
+    self.search_string = search_string.gsub("&&", "")
   }
 
   def self.default_or_saved_search_params?(params, root, searcher)
@@ -59,7 +59,7 @@ class SavedSearch < ApplicationRecord
     fixed = hash_pairs.inject { |a, b| a.merge(b) { |*i| i[1, 2] } }
 
     fixed.each do |k, v|
-      fixed[k] = v.is_a?(Array) ? v.flatten: v
+      fixed[k] = v.is_a?(Array) ? v.flatten : v
     end
 
     fixed

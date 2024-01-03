@@ -1,5 +1,5 @@
 Dotenv.require_keys(
-  %W(
+  %W[
     ADMIN_EMAIL
     AIRBRAKE_PROJECT_ID
     AIRBRAKE_PROJECT_KEY
@@ -83,5 +83,5 @@ Dotenv.require_keys(
     PARENT_CONSENT_PDF
     PDFTK_PATH
     REDIS_URL
-  )
+  ]
 )

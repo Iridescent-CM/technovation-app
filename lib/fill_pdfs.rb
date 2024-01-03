@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'pdf_forms'
+require "pdf_forms"
 
-Dir[Rails.root.join('lib/fill_pdfs/*.rb')].each { |f| require f }
+Dir[Rails.root.join("lib/fill_pdfs/*.rb")].each { |f| require f }
 
 module FillPdfs
   def self.pdftk_wrapper
@@ -41,10 +41,10 @@ module FillPdfs
     generator_klass = generator_klass_name.camelize.safe_constantize
 
     generator = if !!generator_klass
-                  generator_klass.new(recipient, certificate_type)
-                else
-                  GenericPDFFiller.new(recipient, certificate_type)
-                end
+      generator_klass.new(recipient, certificate_type)
+    else
+      GenericPDFFiller.new(recipient, certificate_type)
+    end
 
     generator.generate_certificate
   end
@@ -67,8 +67,9 @@ module FillPdfs
   end
 
   private
+
   def field_values
-    Hash[ pdf.fields.map { |f| [f.name, get_value(recipient, f.name)] } ]
+    Hash[pdf.fields.map { |f| [f.name, get_value(recipient, f.name)] }]
   end
 
   def pdf
@@ -99,7 +100,7 @@ module FillPdfs
     attrs = {
       file: file,
       season: season,
-      cert_type: type.to_sym,
+      cert_type: type.to_sym
     }
 
     attrs.merge!(team: team) if team.present?
@@ -109,7 +110,7 @@ module FillPdfs
 
   def get_value(recipient, field_name)
     if ["full_text"].include?(field_name)
-      self.public_send(field_name)
+      public_send(field_name)
     else
       recipient.public_send(field_name)
     end

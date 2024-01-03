@@ -72,6 +72,7 @@ class SearchFilter < Struct.new(:filter_options)
   end
 
   private
+
   def from_search_filter(key)
     filter_options.fetch(:search_filter) {
       {}

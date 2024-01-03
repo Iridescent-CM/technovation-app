@@ -12,7 +12,7 @@ RSpec.feature "Mentors view scores" do
     submission = FactoryBot.create(
       :submission,
       :complete,
-      team: team,
+      team: team
     )
 
     FactoryBot.create(:submission_score, :complete, team_submission: submission)
@@ -33,7 +33,7 @@ RSpec.feature "Mentors view scores" do
       :submission,
       :complete,
       :semifinalist,
-      team: team,
+      team: team
     )
 
     FactoryBot.create(

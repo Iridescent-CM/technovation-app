@@ -6,9 +6,9 @@ RSpec.describe Job do
 
     job = Job.create!(
       owner: owner,
-      payload: { custom: "field data" }
+      payload: {custom: "field data"}
     )
 
-    expect(job.payload).to eq({ "custom" => "field data" })
+    expect(job.payload).to eq({"custom" => "field data"})
   end
 end

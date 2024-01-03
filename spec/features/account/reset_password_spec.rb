@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Reset your forgotten password" do
   before do
-    scope = %i{mentor student chapter_ambassador}.sample
+    scope = %i[mentor student chapter_ambassador].sample
 
     FactoryBot.create(
       scope,

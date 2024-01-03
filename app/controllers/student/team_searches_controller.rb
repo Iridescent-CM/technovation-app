@@ -10,17 +10,18 @@ module Student
       end
 
       @search_filter = SearchFilter.new(search_params)
-      @teams = SearchTeams.(@search_filter).paginate(page: search_params[:page])
+      @teams = SearchTeams.call(@search_filter).paginate(page: search_params[:page])
     end
 
     private
+
     def search_params
       params.permit(
         :utf8,
         :page,
         :nearby,
         :text,
-        division_enums: [],
+        division_enums: []
       ).tap do |h|
         if h[:nearby].blank?
           params[:nearby] = h[:nearby] = current_account.address_details

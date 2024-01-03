@@ -6,7 +6,7 @@ class ParentalConsentsController < ApplicationController
   end
 
   def new
-    if student.present? and not student.consent_signed?
+    if student.present? and !student.consent_signed?
       redirect_to edit_parental_consent_path(student.parental_consent)
     elsif student.present? and student.consent_signed?
       redirect_to parental_consent_path(student.parental_consent),
@@ -49,6 +49,7 @@ class ParentalConsentsController < ApplicationController
   end
 
   private
+
   def student(opts = {})
     opts[:token] ||= params.fetch(:token) { "" }
     @student ||= StudentProfile.joins(:account)
@@ -59,7 +60,7 @@ class ParentalConsentsController < ApplicationController
     params.require(:parental_consent).permit(
       :student_profile_consent_token,
       :electronic_signature,
-      :newsletter_opt_in,
+      :newsletter_opt_in
     ).tap do |tapped|
       tapped[:status] = :signed
     end

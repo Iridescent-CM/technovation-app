@@ -4,7 +4,7 @@ class PasswordsController < ApplicationController
   def new
     @password = Password.find_by(token: params.fetch(:token))
     unless @password.valid?
-      return redirect_to new_password_reset_path, alert: alert_message(@password)
+      redirect_to new_password_reset_path, alert: alert_message(@password)
     end
   end
 
@@ -12,14 +12,14 @@ class PasswordsController < ApplicationController
     @password = Password.new(password_params)
     if @password.valid?
       @password.perform
-      SignIn.(@password.account, self,
-              message: t("controllers.passwords.create.success"))
+      SignIn.call(@password.account, self, message: t("controllers.passwords.create.success"))
     else
       render :new
     end
   end
 
   private
+
   def alert_message(password)
     if password.errors.attribute_names.include?(:expires_at)
       t("controllers.passwords.new.expired")

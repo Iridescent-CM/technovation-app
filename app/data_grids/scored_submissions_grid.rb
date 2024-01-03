@@ -26,7 +26,7 @@ class ScoredSubmissionsGrid
   end
 
   column :state_province, header: "State" do
-    FriendlySubregion.(team, prefix: false)
+    FriendlySubregion.call(team, prefix: false)
   end
 
   column :team_name, mandatory: true, html: false
@@ -104,7 +104,7 @@ class ScoredSubmissionsGrid
 
   column :quarterfinals_official_judging do |submission|
     if submission.team.selected_regional_pitch_event.live? &&
-         submission.team.selected_regional_pitch_event.official?
+        submission.team.selected_regional_pitch_event.official?
       "live"
     else
       "virtual"
@@ -113,12 +113,12 @@ class ScoredSubmissionsGrid
 
   column :view, mandatory: true, html: true do |submission, grid|
     html = link_to(
-      web_icon('list-ul', size: 16, remote: true),
+      web_icon("list-ul", size: 16, remote: true),
       send("#{current_scope}_score_detail_path", id: submission.id),
       {
-        class: "view-details",
+        :class => "view-details",
         "v-tooltip" => "'Read score details'",
-        data: { turbolinks: false }
+        :data => {turbolinks: false}
       }
     )
 
@@ -126,12 +126,12 @@ class ScoredSubmissionsGrid
       html += " "
 
       html += link_to(
-        web_icon('photo', size: 16, remote: true),
+        web_icon("photo", size: 16, remote: true),
         project_path(submission),
-        class: "open-public",
+        :class => "open-public",
         "v-tooltip" => "'Open public page'",
-        target: :_blank,
-        data: { turbolinks: false }
+        :target => :_blank,
+        :data => {turbolinks: false}
       )
     else
       html
@@ -150,23 +150,23 @@ class ScoredSubmissionsGrid
     team.students.collect(&:name).join(",")
   end
 
-  column :student_1_name, if: ->(grid) { grid.admin }  do
+  column :student_1_name, if: ->(grid) { grid.admin } do
     team.students.first&.name
   end
 
-  column :student_2_name, if: ->(grid) { grid.admin }  do
+  column :student_2_name, if: ->(grid) { grid.admin } do
     team.students.second&.name
   end
 
-  column :student_3_name, if: ->(grid) { grid.admin }  do
+  column :student_3_name, if: ->(grid) { grid.admin } do
     team.students.third&.name
   end
 
-  column :student_4_name, if: ->(grid) { grid.admin }  do
+  column :student_4_name, if: ->(grid) { grid.admin } do
     team.students.fourth&.name
   end
 
-  column :student_5_name, if: ->(grid) { grid.admin }  do
+  column :student_5_name, if: ->(grid) { grid.admin } do
     team.students.fifth&.name
   end
 
@@ -174,23 +174,23 @@ class ScoredSubmissionsGrid
     team.students.collect(&:email).join(",")
   end
 
-  column :student_1_email, if: ->(grid) { grid.admin }  do
+  column :student_1_email, if: ->(grid) { grid.admin } do
     team.students.first&.email
   end
 
-  column :student_2_email, if: ->(grid) { grid.admin }  do
+  column :student_2_email, if: ->(grid) { grid.admin } do
     team.students.second&.email
   end
 
-  column :student_3_email, if: ->(grid) { grid.admin }  do
+  column :student_3_email, if: ->(grid) { grid.admin } do
     team.students.third&.email
   end
 
-  column :student_4_email, if: ->(grid) { grid.admin }  do
+  column :student_4_email, if: ->(grid) { grid.admin } do
     team.students.fourth&.email
   end
 
-  column :student_5_email, if: ->(grid) { grid.admin }  do
+  column :student_5_email, if: ->(grid) { grid.admin } do
     team.students.fifth&.email
   end
 
@@ -198,23 +198,23 @@ class ScoredSubmissionsGrid
     team.students.collect(&:parent_guardian_name).join(",")
   end
 
-  column :student_1_parent, if: ->(grid) { grid.admin }  do
+  column :student_1_parent, if: ->(grid) { grid.admin } do
     team.students.first&.parent_guardian_name
   end
 
-  column :student_2_parent, if: ->(grid) { grid.admin }  do
+  column :student_2_parent, if: ->(grid) { grid.admin } do
     team.students.second&.parent_guardian_name
   end
 
-  column :student_3_parent, if: ->(grid) { grid.admin }  do
+  column :student_3_parent, if: ->(grid) { grid.admin } do
     team.students.third&.parent_guardian_name
   end
 
-  column :student_4_parent, if: ->(grid) { grid.admin }  do
+  column :student_4_parent, if: ->(grid) { grid.admin } do
     team.students.fourth&.parent_guardian_name
   end
 
-  column :student_5_parent, if: ->(grid) { grid.admin }  do
+  column :student_5_parent, if: ->(grid) { grid.admin } do
     team.students.fifth&.parent_guardian_name
   end
 
@@ -222,23 +222,23 @@ class ScoredSubmissionsGrid
     team.students.collect(&:parent_guardian_email).join(",")
   end
 
-  column :student_1_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_1_parent_email, if: ->(grid) { grid.admin } do
     team.students.first&.parent_guardian_email
   end
 
-  column :student_2_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_2_parent_email, if: ->(grid) { grid.admin } do
     team.students.second&.parent_guardian_email
   end
 
-  column :student_3_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_3_parent_email, if: ->(grid) { grid.admin } do
     team.students.third&.parent_guardian_email
   end
 
-  column :student_4_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_4_parent_email, if: ->(grid) { grid.admin } do
     team.students.fourth&.parent_guardian_email
   end
 
-  column :student_5_parent_email, if: ->(grid) { grid.admin }  do
+  column :student_5_parent_email, if: ->(grid) { grid.admin } do
     team.students.fifth&.parent_guardian_email
   end
 
@@ -285,23 +285,27 @@ class ScoredSubmissionsGrid
   end
 
   filter :round,
-  :enum,
-  select: -> { [
-    ["Quarterfinals", "quarterfinals"],
-    ["Semifinals", "semifinals"]
-  ] } do |value, scope, grid|
+    :enum,
+    select: -> {
+              [
+                ["Quarterfinals", "quarterfinals"],
+                ["Semifinals", "semifinals"]
+              ]
+            } do |value, scope, grid|
     mod = grid.complete.present? ? grid.complete : "all"
     assoc = "#{value}_#{mod}_submission_scores".to_sym
     scope.joins(assoc)
   end
 
   filter :division,
-  :enum,
-  select: -> { [
-    ["Senior", "senior"],
-    ["Junior", "junior"],
-    ["Beginner", "beginner"]
-  ]} do |value, scope, grid|
+    :enum,
+    select: -> {
+              [
+                ["Senior", "senior"],
+                ["Junior", "junior"],
+                ["Beginner", "beginner"]
+              ]
+            } do |value, scope, grid|
     scope.public_send(value)
   end
 
@@ -314,9 +318,9 @@ class ScoredSubmissionsGrid
         .map { |e| [e.name, e.id] }
     },
     if: ->(g) { g.admin or RegionalPitchEvent.visible_to(g.current_account).any? } do |value, scope, grid|
-      scope.includes(team: :events)
-        .references(:regional_pitch_events)
-        .where("regional_pitch_events.id = ?", value)
+    scope.includes(team: :events)
+      .references(:regional_pitch_events)
+      .where("regional_pitch_events.id = ?", value)
   end
 
   filter :team_or_submission_name do |value|
@@ -335,24 +339,24 @@ class ScoredSubmissionsGrid
       ["Live event scores", "live"]
     ],
     filter_group: "common" do |value, scope, grid|
-      mod = grid.complete.present? ? grid.complete : "all"
-      assoc = "#{value}_#{mod}_submission_scores".to_sym
-      scope.joins(assoc)
+    mod = grid.complete.present? ? grid.complete : "all"
+    assoc = "#{value}_#{mod}_submission_scores".to_sym
+    scope.joins(assoc)
   end
 
   filter :submission_contest_rank,
     :enum,
     select: TeamSubmission.contest_ranks.keys,
     filter_group: "common" do |value, scope, grid|
-      scope.public_send(value)
+    scope.public_send(value)
   end
 
   filter :complete,
-  :enum,
-  select: [
-    ["Complete scores", "complete"],
-    ["Incomplete scores", "incomplete"]
-  ] do |value, scope, grid|
+    :enum,
+    select: [
+      ["Complete scores", "complete"],
+      ["Incomplete scores", "incomplete"]
+    ] do |value, scope, grid|
     scope.joins("#{grid.round}_#{value}_submission_scores".to_sym)
   end
 
@@ -369,7 +373,7 @@ class ScoredSubmissionsGrid
     },
     if: ->(g) { g.admin } do |values|
       clauses = values.flatten.map { |v| "teams.country = '#{v}'" }
-      where(clauses.join(' OR '))
+      where(clauses.join(" OR "))
     end
 
   filter :state_province,
@@ -381,9 +385,9 @@ class ScoredSubmissionsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
       scope.where("teams.country = ?", grid.country)
         .where(
           StateClauses.for(
@@ -405,9 +409,9 @@ class ScoredSubmissionsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
       scope.where(
         StateClauses.for(
           values: grid.state_province,

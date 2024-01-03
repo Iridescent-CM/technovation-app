@@ -2,11 +2,13 @@ require "rails_helper"
 
 RSpec.describe "Admin assigning a judge to a submission" do
   let(:team_submission) { FactoryBot.create(:submission, :complete) }
-  let!(:score) { FactoryBot.create(
-    :submission_score,
-    :complete,
-    team_submission: team_submission
-  ) }
+  let!(:score) {
+    FactoryBot.create(
+      :submission_score,
+      :complete,
+      team_submission: team_submission
+    )
+  }
 
   let(:judge) { FactoryBot.create(:judge) }
 

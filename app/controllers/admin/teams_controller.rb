@@ -23,6 +23,7 @@ module Admin
     end
 
     private
+
     def team_params
       params.require(:team).permit(
         :name,
@@ -39,11 +40,11 @@ module Admin
         admin: true,
         country: Array(params[:teams_grid][:country]),
         state_province: Array(params[:teams_grid][:state_province]),
-        season: params[:teams_grid][:season] || Season.current.year,
+        season: params[:teams_grid][:season] || Season.current.year
       )
 
       grid.merge(
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
   end

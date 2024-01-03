@@ -15,6 +15,7 @@ module ChapterAmbassador
     end
 
     private
+
     def grid_params
       grid = (params[:submissions_grid] ||= {}).merge(
         admin: false,
@@ -27,11 +28,11 @@ module ChapterAmbassador
             Array(params[:submissions_grid][:state_province])
           end
         ),
-        season: params[:submissions_grid][:season] || Season.current.year,
+        season: params[:submissions_grid][:season] || Season.current.year
       )
 
       grid.merge(
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
   end

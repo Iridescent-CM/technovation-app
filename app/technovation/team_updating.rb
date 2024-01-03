@@ -1,8 +1,10 @@
 class TeamUpdating
   private
+
   attr_reader :team, :updater
 
   public
+
   def initialize(team, updater)
     @team = team
     @updater = updater
@@ -52,6 +54,7 @@ class TeamUpdating
     end
 
     private
+
     def us_state_changed?
       country_code == "US" and saved_change_to_state_province?
     end

@@ -6,7 +6,7 @@ class RequiredFields
   def initialize(submission)
     @submission = submission
 
-    @fields = %i(
+    @fields = %i[
       app_name
       app_description
       learning_journey
@@ -15,7 +15,7 @@ class RequiredFields
       demo_video_link
       screenshots
       source_code_url
-    ).map do |field|
+    ].map do |field|
       RequiredField.for(submission, field)
     end
 
@@ -30,7 +30,7 @@ class RequiredFields
     fields.each(&block)
   end
 
-  alias :size :count
+  alias_method :size, :count
 end
 
 class RequiredField
@@ -62,7 +62,7 @@ class RequiredField
   end
 
   def complete?
-    not blank?
+    !blank?
   end
 
   def blank?

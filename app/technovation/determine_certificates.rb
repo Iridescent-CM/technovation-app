@@ -2,9 +2,11 @@ require "./app/constants/badge_levels"
 
 class DetermineCertificates
   private
+
   attr_reader :account
 
   public
+
   def initialize(account, options = {})
     @account = account
   end
@@ -24,10 +26,11 @@ class DetermineCertificates
       needed += needed_recipients(certificate_type)
     end
 
-    return needed
+    needed
   end
 
   private
+
   def season
     Season.current.year
   end
@@ -44,9 +47,9 @@ class DetermineCertificates
     return false if !@account.student?
 
     team = @account.student_profile.team
-    return !team.nil? &&
+    !team.nil? &&
       team.submission.complete? &&
-        team.submission.quarterfinalist?
+      team.submission.quarterfinalist?
   end
 
   def needed_quarterfinalist_recipients
@@ -61,7 +64,7 @@ class DetermineCertificates
     return false if !@account.student?
 
     team = @account.student_profile.team
-    return !team.nil? && team.submission.qualifies_for_participation?
+    !team.nil? && team.submission.qualifies_for_participation?
   end
 
   def needed_participation_recipients
@@ -76,7 +79,7 @@ class DetermineCertificates
     return false if !@account.student?
 
     team = @account.student_profile.team
-    return !team.nil? && team.submission.semifinalist?
+    !team.nil? && team.submission.semifinalist?
   end
 
   def needed_semifinalist_recipients
@@ -94,8 +97,8 @@ class DetermineCertificates
 
   def needed_mentor_appreciation_recipients
     @account.mentor_profile.teams.by_season(season).select { |team|
-      !@account.appreciation_certificates.by_season(season).for_team(team).any? && 
-      team.submission.percent_complete > 50
+      !@account.appreciation_certificates.by_season(season).for_team(team).any? &&
+        team.submission.percent_complete > 50
     }.map { |team|
       CertificateRecipient.new(:mentor_appreciation, @account, team: team)
     }

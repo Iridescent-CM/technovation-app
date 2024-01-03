@@ -6,14 +6,14 @@ RSpec.describe SearchMentors do
     SearchFilter.new({
       nearby: "anywhere",
       coordinates: searcher.coordinates,
-      female_only: female_only,
+      female_only: female_only
     })
   end
   let(:female_only) { "0" }
   let(:onboarded_mentor) { FactoryBot.create(:mentor, :onboarded) }
 
   it "returns an onboarded mentor" do
-    expect(SearchMentors.(search_filter)).to include(onboarded_mentor)
+    expect(SearchMentors.call(search_filter)).to include(onboarded_mentor)
   end
 
   context "gender identity filter" do
@@ -26,7 +26,7 @@ RSpec.describe SearchMentors do
       let(:female_only) { "0" }
 
       it "finds all gender identities" do
-        results = SearchMentors.(search_filter)
+        results = SearchMentors.call(search_filter)
         expect(results).to include(male)
         expect(results).to include(female)
         expect(results).to include(non_binary)
@@ -38,7 +38,7 @@ RSpec.describe SearchMentors do
       let(:female_only) { "1" }
 
       it "finds only female" do
-        results = SearchMentors.(search_filter)
+        results = SearchMentors.call(search_filter)
         expect(results).to include(female)
         expect(results).not_to include(male)
         expect(results).not_to include(non_binary)

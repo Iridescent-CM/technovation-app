@@ -7,7 +7,13 @@ class LocaleSwitchesController < ApplicationController
   end
 
   private
-  def current_scope; end
-  def save_redirected_path; end
-  def unauthorized!; end
+
+  def current_scope
+  end
+
+  def save_redirected_path
+  end
+
+  def unauthorized!
+  end
 end

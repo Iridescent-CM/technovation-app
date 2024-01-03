@@ -20,6 +20,7 @@ class PasswordResetsController < ApplicationController
   end
 
   private
+
   def password_reset_params
     params.require(:password_reset).permit(:email)
   end

@@ -80,7 +80,7 @@ FactoryBot.define do
       attrs = {
         city: e.city,
         state_province: e.state_province,
-        country: e.country,
+        country: e.country
       }
 
       if e.onboarded
@@ -90,14 +90,14 @@ FactoryBot.define do
 
       attrs.merge(
         skip_existing_password: true,
-        first_name: e.first_name,
+        first_name: e.first_name
       ).each do |k, v|
         j.account.send("#{k}=", v)
       end
 
       if e.onboarded
         j.account.build_consent_waiver({
-          electronic_signature: "test",
+          electronic_signature: "test"
         })
       end
 

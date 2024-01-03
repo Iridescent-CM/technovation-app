@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Consent waivers" do
-
   let(:mentor) do
     mentor = FactoryBot.create(:mentor)
     mentor.consent_waiver.destroy
@@ -11,7 +10,7 @@ RSpec.feature "Consent waivers" do
   before { sign_in mentor }
 
   scenario "invalid token" do
-    [{ }, { token: "bad" }].each do |bad_token_params|
+    [{}, {token: "bad"}].each do |bad_token_params|
       visit new_mentor_consent_waiver_path(bad_token_params)
       expect(current_path).to eq(mentor_dashboard_path)
       expect(page).to have_content("Sorry, that consent token was invalid.")
@@ -26,7 +25,7 @@ RSpec.feature "Consent waivers" do
 
     expect(current_path).to eq(mentor_consent_waivers_path)
     expect(page).to have_css(
-      '.consent_waiver_electronic_signature .error',
+      ".consent_waiver_electronic_signature .error",
       text: "can't be blank"
     )
   end

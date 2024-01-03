@@ -25,7 +25,7 @@ class CertificateRecipient
   end
 
   def region
-    FriendlyCountry.(account, prefix: false)
+    FriendlyCountry.call(account, prefix: false)
   end
 
   def [](fieldName)
@@ -58,12 +58,12 @@ class CertificateRecipient
     end
   end
 
-  def ==(o)
-    o.class == self.class && o.state == self.state
+  def ==(other)
+    other.class == self.class && other.state == state
   end
 
   def state
-    return [
+    [
       @certificate_type.to_s,
       @account.id,
       @team.nil? ? nil : @team.id,
@@ -76,13 +76,10 @@ class CertificateRecipient
 
     certificate_type = certificate_type.to_sym
     account = Account.find(account_id)
-    if team_id
-      team = Team.find(team_id)
-    else
-      team = nil
+    team = if team_id
+      Team.find(team_id)
     end
 
     new(certificate_type, account, team: team, season: season)
   end
-
 end

@@ -11,7 +11,7 @@ RSpec.describe "Parental consent", :js do
     click_button "Send the form"
 
     expect(page).to have_css(
-      '.error',
+      ".error",
       text: "does not appear to be an email address"
     )
 
@@ -20,13 +20,13 @@ RSpec.describe "Parental consent", :js do
     click_button "Send the form"
 
     expect(page).to have_css(
-      '.error',
+      ".error",
       text: "does not appear to be an email address"
     )
   end
 
   it "handles invalid tokens" do
-    [{ }, { token: "bad" }].each do |bad_token_params|
+    [{}, {token: "bad"}].each do |bad_token_params|
       visit edit_parental_consent_path(bad_token_params)
       expect(current_path).to eq(root_path)
       expect(page).to have_content("Sorry, that consent token was invalid.")
@@ -42,7 +42,7 @@ RSpec.describe "Parental consent", :js do
 
     expect(current_path).to eq(parental_consent_path(student.parental_consent))
     expect(page).to have_css(
-      '.parental_consent_electronic_signature .error',
+      ".parental_consent_electronic_signature .error",
       text: "can't be blank"
     )
   end

@@ -24,12 +24,12 @@ module ChapterAmbassador
           trackable_user_ids,
           "Account",
           trackable_team_ids,
-          "Team",
-        )
-        .page(params[:page])
+          "Team")
+          .page(params[:page])
       }
 
     private
+
     def grid_params
       params[:activities_grid] ||= {}
     end

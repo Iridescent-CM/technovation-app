@@ -23,8 +23,8 @@ module Admin
 
         redirect_to admin_user_invitations_path,
           success: "You invited " +
-                   @user_invitation.profile_type.titleize +
-                   ": #{@user_invitation.email} to sign up"
+            @user_invitation.profile_type.titleize +
+            ": #{@user_invitation.email} to sign up"
       else
         if @user_invitation.errors[:email].any? { |e|
              e.include?("taken")

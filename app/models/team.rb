@@ -78,7 +78,7 @@ class Team < ActiveRecord::Base
   def in_event?(event)
     selected_regional_pitch_event == event
   end
-  alias :attending_event? :in_event?
+  alias_method :attending_event?, :in_event?
 
   scope :not_staff, -> {
     where.not("teams.name ilike ?", "%staff test%")
@@ -103,19 +103,19 @@ class Team < ActiveRecord::Base
       location: [
         city,
         state_province,
-        country_code,
+        country_code
       ].join(", "),
       scope: self.class.model_name,
       status: status,
       human_status: human_status,
-      status_explained: status_explained,
+      status_explained: status_explained
     }
   end
 
   def status
     if submission.complete? and qualified?
       "ready"
-    elsif not submission.complete? and qualified?
+    elsif !submission.complete? and qualified?
       "submission_incomplete"
     else
       "unqualified"
@@ -124,9 +124,9 @@ class Team < ActiveRecord::Base
 
   def human_status
     case status
-    when "ready";                 "ready!"
-    when "submission_incomplete"; "submission in progress"
-    when "unqualified";           "not qualified"
+    when "ready" then "ready!"
+    when "submission_incomplete" then "submission in progress"
+    when "unqualified" then "not qualified"
     else; "status missing (bug)"
     end
   end
@@ -135,13 +135,13 @@ class Team < ActiveRecord::Base
     case status
     when "ready"
       "#{name} finished their submission and " +
-      "all members are qualified"
+        "all members are qualified"
     when "submission_incomplete"
       "#{name} is qualified to compete and needs " +
-      "to finish their submission"
+        "to finish their submission"
     when "unqualified"
       "One or more students on #{name} has not finished " +
-      "completing their registration"
+        "completing their registration"
     end
   end
 
@@ -310,7 +310,7 @@ class Team < ActiveRecord::Base
   def selected_regional_pitch_event
     regional_pitch_events.last or VirtualRegionalPitchEvent.new
   end
-  alias :event :selected_regional_pitch_event
+  alias_method :event, :selected_regional_pitch_event
 
   def live_event?
     selected_regional_pitch_event.live?
@@ -325,16 +325,16 @@ class Team < ActiveRecord::Base
   def selected_regional_pitch_event_name
     selected_regional_pitch_event.name
   end
-  alias :event_name :selected_regional_pitch_event_name
+  alias_method :event_name, :selected_regional_pitch_event_name
 
   def region_name
-    if %w{Brasil Brazil}.include?(state_province || "")
+    if %w[Brasil Brazil].include?(state_province || "")
       "Brazil"
     elsif country_code == "US"
       state = Country["US"].states[state_province.strip]
-      (state && state['name']) || state_province
+      (state && state["name"]) || state_province
     else
-      FriendlyCountry.(self)
+      FriendlyCountry.call(self)
     end
   end
 
@@ -389,7 +389,7 @@ class Team < ActiveRecord::Base
   end
 
   def past?
-    not current?
+    !current?
   end
 
   def invited_mentor?(mentor)
@@ -400,7 +400,7 @@ class Team < ActiveRecord::Base
   end
 
   def unassigned?
-    not assigned?
+    !assigned?
   end
 
   def assigned?

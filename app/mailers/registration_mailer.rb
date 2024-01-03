@@ -35,7 +35,7 @@ class RegistrationMailer < ApplicationMailer
     I18n.with_locale(account.locale) do
       mail to: account.email,
         subject: t("registration_mailer.welcome_mentor.subject",
-                   season_year: Season.current.year)
+          season_year: Season.current.year)
     end
   end
 
@@ -50,7 +50,7 @@ class RegistrationMailer < ApplicationMailer
     I18n.with_locale(account.locale) do
       mail to: account.email,
         subject: t("registration_mailer.welcome_judge.subject",
-                   season_year: Season.current.year)
+          season_year: Season.current.year)
     end
   end
 
@@ -85,7 +85,7 @@ class RegistrationMailer < ApplicationMailer
     I18n.with_locale(student.locale) do
       mail to: student.email,
         subject: t("registration_mailer.welcome_student.subject",
-                   season_year: @season_year)
+          season_year: @season_year)
     end
   end
 

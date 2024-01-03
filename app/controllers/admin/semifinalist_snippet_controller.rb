@@ -27,7 +27,6 @@ module Admin
     private
 
     class Section
-
       attr_reader :id, :columns, :toc
 
       def initialize(id, submissions)
@@ -56,7 +55,7 @@ module Admin
         entries.sort.each do |entry|
           if subs_in_left_column < (total_subs / 2)
             left_col << entry
-            subs_in_left_column = subs_in_left_column + entry.submissions.count
+            subs_in_left_column += entry.submissions.count
           else
             right_col << entry
           end
@@ -76,21 +75,17 @@ module Admin
       def group_by_country(submissions)
         submissions
           .group_by(&:country)
-          .map { |k, v| [k.nil? ? '' : k, v] }
+          .map { |k, v| [k.nil? ? "" : k, v] }
           .to_h
       end
     end
 
     class Entry
-
       attr_reader :friendly_name, :country_code, :submissions
 
       def initialize(country_code, submissions = [])
-        @friendly_name = FriendlyCountry.(
-          OpenStruct.new(address_details: country_code),
-          prefix: false,
-          source: :country_code,
-        )
+        @friendly_name = FriendlyCountry.call(OpenStruct.new(address_details: country_code), prefix: false,
+          source: :country_code)
         @country_code = country_code
         @submissions = submissions.sort_by { |sub| sub.team_name.downcase }
       end

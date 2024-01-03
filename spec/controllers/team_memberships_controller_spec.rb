@@ -29,14 +29,14 @@ RSpec.describe "Team Memberships Controllers" do
 
         sign_in(older_student)
 
-        delete :destroy, params: { id: team.id, member_id: older_student.id }
+        delete :destroy, params: {id: team.id, member_id: older_student.id}
 
         expect(team.reload).to be_junior
       end
     end
   end
 
-  %w{chapter_ambassador admin}.each do |scope|
+  %w[chapter_ambassador admin].each do |scope|
     describe "#{scope.camelize}::TeamMembershipsController".constantize do
       describe "DELETE #destroy" do
         it "reconsiders divisions" do
@@ -61,7 +61,7 @@ RSpec.describe "Team Memberships Controllers" do
           delete :destroy, params: {
             id: team.id,
             member_id: older_student.id,
-            member_type: "StudentProfile",
+            member_type: "StudentProfile"
           }
 
           expect(team.reload).to be_junior

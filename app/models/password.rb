@@ -43,6 +43,7 @@ class Password
   end
 
   private
+
   def not_expired
     if !!expires_at and expires_at < Time.current
       errors.add(:expires_at, :expired)

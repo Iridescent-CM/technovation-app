@@ -7,19 +7,19 @@ module FriendlySubregion
       (record.state_province.nil? or record.state_province.strip == "")
 
     country = Carmen::Country.coded(record.country) ||
-                Carmen::Country.named(record.country)
+      Carmen::Country.named(record.country)
 
     return record.state_province.strip if country.blank?
     return record.state_province.strip if country.subregions.empty?
 
     subregion = country.subregions.coded(record.state_province) ||
-                  country.subregions.named(record.state_province)
+      country.subregions.named(record.state_province)
 
     return record.state_province.strip if subregion.blank?
 
     default_options = {
       prefix: true,
-      short_code: false,
+      short_code: false
     }
 
     merged_options = default_options.merge(options)

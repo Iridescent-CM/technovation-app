@@ -25,10 +25,11 @@ module ChapterAmbassador
     end
 
     private
+
     def location_params
       params.require(:account).permit(
         :city,
-        :state_province,
+        :state_province
       ).tap do |tapped|
         if current_ambassador.country_code == "US"
           tapped[:state_province] = current_ambassador.state_province

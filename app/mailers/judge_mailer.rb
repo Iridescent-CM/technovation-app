@@ -54,7 +54,7 @@ class JudgeMailer < ApplicationMailer
     I18n.with_locale(@judge.locale) do
       mail to: @judge.email,
         subject: "You are invited to judge a Technovation event: " +
-                 @event.name
+          @event.name
     end
   end
 end

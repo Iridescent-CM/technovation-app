@@ -15,10 +15,10 @@ RSpec.describe Student::TeamMemberInvitesController do
     before do
       sign_in(student)
 
-      post :create, params: { team_member_invite: {
+      post :create, params: {team_member_invite: {
         invitee_email: "some@student.com",
-        team_id: student.team_id,
-      } }
+        team_id: student.team_id
+      }}
     end
 
     it "sets the invitee email" do
@@ -43,10 +43,10 @@ RSpec.describe Student::TeamMemberInvitesController do
     it "sets the invitee to an existing account" do
       existing = FactoryBot.create(:student, :geocoded)
 
-      post :create, params: { team_member_invite: {
+      post :create, params: {team_member_invite: {
         invitee_email: existing.email,
-        team_id: student.team_id,
-      } }
+        team_id: student.team_id
+      }}
 
       expect(invite.invitee).to eq(existing)
     end
@@ -68,7 +68,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     it "accepts the team member invite" do
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(invite.reload).to be_accepted
@@ -77,7 +77,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     it "redirects to the student team page" do
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(response).to redirect_to student_team_path(invite.team)
@@ -89,7 +89,7 @@ RSpec.describe Student::TeamMemberInvitesController do
 
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(response).to redirect_to student_dashboard_path
@@ -104,7 +104,7 @@ RSpec.describe Student::TeamMemberInvitesController do
 
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(response).to redirect_to student_dashboard_path
@@ -119,7 +119,7 @@ RSpec.describe Student::TeamMemberInvitesController do
 
       put :update, params: {
         id: invite.invite_token,
-        team_member_invite: { status: :accepted }
+        team_member_invite: {status: :accepted}
       }
 
       expect(response).to redirect_to student_dashboard_path

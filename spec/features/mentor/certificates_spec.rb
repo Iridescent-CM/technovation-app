@@ -45,7 +45,7 @@ RSpec.feature "Mentor certificates" do
     FactoryBot.create(:team_submission, :complete, team: team_b)
 
     expect {
-      FillPdfs.(mentor.account)
+      FillPdfs.call(mentor.account)
     }.to change {
       mentor.certificates.current.mentor_appreciation.count
     }.from(0).to(2)

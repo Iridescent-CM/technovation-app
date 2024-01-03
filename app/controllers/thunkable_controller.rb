@@ -1,6 +1,6 @@
 class ThunkableController < ApplicationController
   before_action :unauthenticated!, if: -> {
-    not current_account.authenticated?
+    !current_account.authenticated?
   }
 
   def show
@@ -8,6 +8,7 @@ class ThunkableController < ApplicationController
   end
 
   private
+
   def unauthenticated!
     save_redirected_path
 

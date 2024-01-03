@@ -14,6 +14,7 @@ module ChapterAmbassador
     end
 
     private
+
     def introduction_params
       params.require(:chapter_ambassador_profile).permit(
         :program_name,
@@ -23,8 +24,8 @@ module ChapterAmbassador
           :_destroy,
           :name,
           :value,
-          :custom_label,
-        ],
+          :custom_label
+        ]
       )
     end
   end

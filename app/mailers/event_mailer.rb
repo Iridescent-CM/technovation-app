@@ -7,7 +7,7 @@ class EventMailer < ApplicationMailer
     @ambassador_name = @event.ambassador.name
     @ambassador_email = @event.ambassador.email
 
-    subject = %w(Account JudgeProfile UserInvitation).include?(
+    subject = %w[Account JudgeProfile UserInvitation].include?(
       removed_klass_name
     ) ?
       "You have been removed from a Technovation event" :
@@ -26,27 +26,26 @@ class EventMailer < ApplicationMailer
     @ambassador_email = @event.ambassador.email
 
     @url = case @invite.status
-           when "sent", "opened"
-             signup_url(invite_code: @invite.admin_permission_token)
-           when "registered", "past_season", "training", "ready"
-             if @invite.scope_name == "student"
-               student_dashboard_url(
-                 mailer_token: @invite.mailer_token,
-                 anchor: "/events"
-               )
-             else
-               send(
-                 "#{@invite.scope_name}_dashboard_url",
-                 mailer_token: @invite.mailer_token
-               )
-             end
-           else
-             raise ArgumentError,
-               "#{@invite.status} is an unsupported @invite status"
-           end
+    when "sent", "opened"
+      signup_url(invite_code: @invite.admin_permission_token)
+    when "registered", "past_season", "training", "ready"
+      if @invite.scope_name == "student"
+        student_dashboard_url(
+          mailer_token: @invite.mailer_token,
+          anchor: "/events"
+        )
+      else
+        send(
+          "#{@invite.scope_name}_dashboard_url",
+          mailer_token: @invite.mailer_token
+        )
+      end
+    else
+      raise ArgumentError,
+        "#{@invite.status} is an unsupported @invite status"
+    end
 
-
-    subject = %w(Account JudgeProfile UserInvitation).include?(
+    subject = %w[Account JudgeProfile UserInvitation].include?(
       invite_klass_name
     ) ?
       "You are invited to judge a Technovation Girls event" :

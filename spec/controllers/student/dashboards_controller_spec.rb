@@ -8,19 +8,19 @@ RSpec.describe Student::DashboardsController do
         sign_in(student)
         cookie =
 
-        expect {
-          get :show
-        }.to change {
-          cookie = controller.get_cookie(CookieNames::IP_GEOLOCATION)
-          cookie && cookie['ip_address']
-        }.to(
-          request.remote_ip
-        ).and change {
-          cookie = controller.get_cookie(CookieNames::IP_GEOLOCATION)
-          cookie && cookie['coordinates']
-        }.to(
-          [student.latitude, student.longitude]
-        )
+          expect {
+            get :show
+          }.to change {
+            cookie = controller.get_cookie(CookieNames::IP_GEOLOCATION)
+            cookie && cookie["ip_address"]
+          }.to(
+            request.remote_ip
+          ).and change {
+            cookie = controller.get_cookie(CookieNames::IP_GEOLOCATION)
+            cookie && cookie["coordinates"]
+          }.to(
+            [student.latitude, student.longitude]
+          )
       end
     end
 

@@ -24,6 +24,7 @@ class JudgeController < ApplicationController
   end
 
   private
+
   def current_judge
     @current_judge ||= current_account.judge_profile ||
       current_session.judge_profile

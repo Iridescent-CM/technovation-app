@@ -6,7 +6,7 @@ require "capybara/email/rspec"
 require "rspec/retry"
 require "pundit/rspec"
 
-Dir[Dir.pwd + '/spec/no_rails_support/**/*.rb'].each { |f| require f }
+Dir[Dir.pwd + "/spec/no_rails_support/**/*.rb"].each { |f| require f }
 
 include TestHelpers
 

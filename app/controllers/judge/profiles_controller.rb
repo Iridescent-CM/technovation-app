@@ -10,11 +10,12 @@ module Judge
         :industry_other,
         :skills,
         :degree,
-        :survey_completed,
+        :survey_completed
       ]
     end
 
     private
+
     def profile
       current_judge
     end

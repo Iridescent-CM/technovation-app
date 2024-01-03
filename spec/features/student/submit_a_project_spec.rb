@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Student submits a project", :js do
-
   before { SeasonToggles.team_submissions_editable! }
 
   scenario "unable to submit prior to completing the submission" do
@@ -40,7 +39,7 @@ RSpec.feature "Student submits a project", :js do
 
   def given_there_is_a_team_with_an_incomplete_submission
     @submission = FactoryBot.create(:submission, :complete, :junior)
-    @submission.update(app_name: '')
+    @submission.update(app_name: "")
   end
 
   def given_there_is_a_team_with_a_complete_submission

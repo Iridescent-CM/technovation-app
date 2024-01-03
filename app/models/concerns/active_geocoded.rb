@@ -13,7 +13,7 @@ module ActiveGeocoded
   def detect_location_changes?
     detect_city_changes? ||
       detect_country_changes? ||
-        detect_country_code_changes?
+      detect_country_code_changes?
   end
 
   def detect_city_changes?
@@ -23,13 +23,13 @@ module ActiveGeocoded
   def detect_country_changes?
     respond_to?(:saved_change_to_country?) &&
       (saved_change_to_country? || country_changed?) &&
-        !country_was.blank?
+      !country_was.blank?
   end
 
   def detect_country_code_changes?
     respond_to?(:saved_change_to_country_code?) &&
       (saved_change_to_country_code? || country_code_changed?) &&
-        !country_code_was.blank?
+      !country_code_was.blank?
   end
 
   def fix_state_country_formatting
@@ -38,7 +38,7 @@ module ActiveGeocoded
     end
 
     if self[:state_province] && self[:state_province].length > 4
-      self.state_province = FriendlySubregion.(self, short_code: true)
+      self.state_province = FriendlySubregion.call(self, short_code: true)
     end
 
     if self[:country_code] && self[:country_code].length > 3
@@ -46,7 +46,7 @@ module ActiveGeocoded
     end
 
     if self[:state_code] && self[:state_code].length > 3
-      self.state_code = FriendlySubregion.(self, short_code: true)
+      self.state_code = FriendlySubregion.call(self, short_code: true)
     end
   end
 
@@ -63,7 +63,7 @@ module ActiveGeocoded
     end
 
     if self[:state_province] && self[:state_province].length > 4
-      columns[:state_province] = FriendlySubregion.(self, short_code: true)
+      columns[:state_province] = FriendlySubregion.call(self, short_code: true)
     end
 
     if self[:country_code] && self[:country_code].length > 3
@@ -71,7 +71,7 @@ module ActiveGeocoded
     end
 
     if self[:state_code] && self[:state_code].length > 3
-      columns[:state_code] = FriendlySubregion.(self, short_code: true)
+      columns[:state_code] = FriendlySubregion.call(self, short_code: true)
     end
 
     update_columns(columns)
@@ -93,7 +93,7 @@ module ActiveGeocoded
     coordinates.length == 2 &&
       coordinates.all? { |c| !c.nil? && String(c) != "0.0" }
   end
-  alias coordinates_valid? valid_coordinates?
+  alias_method :coordinates_valid?, :valid_coordinates?
 
   def valid_address?
     !city.blank? && !country_code.blank?
@@ -103,19 +103,19 @@ module ActiveGeocoded
     [
       city,
       state,
-      country,
-    ].reject(&:blank?).join(', ')
+      country
+    ].reject(&:blank?).join(", ")
   end
-  alias :address_details :primary_location
-  alias :location :primary_location
+  alias_method :address_details, :primary_location
+  alias_method :location, :primary_location
 
   def state_province
     self[:state_province] || self[:state_code]
   end
-  alias :state_code :state_province
+  alias_method :state_code, :state_province
 
   def state
-    FriendlySubregion.(self, prefix: false)
+    FriendlySubregion.call(self, prefix: false)
   end
 
   def country_code
@@ -133,16 +133,24 @@ module ActiveGeocoded
       me = OpenStruct.new(address_details: [city, state_for_country, country].join(", "))
       FriendlyCountry.new(me).country_name
     else
-      super rescue country_code
+      begin
+        super
+      rescue
+        country_code
+      end
     end
   end
 
   def state_code=(code)
-    super rescue self.state_province = code
+    super
+  rescue
+    self.state_province = code
   end
 
   def country_code=(code)
-    super rescue self.country = code
+    super
+  rescue
+    self.country = code
   end
 
   def update_address_details_from_reverse_geocoding(results)
@@ -156,7 +164,7 @@ module ActiveGeocoded
     address_details = [
       result.city,
       result.state,
-      result.country,
+      result.country
     ].reject(&:blank?).join(", ")
 
     geo = OpenStruct.new(address_details: address_details)

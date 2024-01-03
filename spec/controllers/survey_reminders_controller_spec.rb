@@ -1,6 +1,6 @@
 require "rails_helper"
 
-%i{mentor student}.each do |scope|
+%i[mentor student].each do |scope|
   RSpec.describe "#{scope.to_s.capitalize}::SurveyRemindersController".constantize do
     describe "POST #create" do
       it "requires authentication" do

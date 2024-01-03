@@ -10,8 +10,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       prepare_student_for_current_season(record)
     end
 
-    prepare_mentor_for_current_season(record)  if is_mentor?(record)
-    prepare_judge_for_current_season(record)   if is_judge?(record)
+    prepare_mentor_for_current_season(record) if is_mentor?(record)
+    prepare_judge_for_current_season(record) if is_judge?(record)
 
     record_registration_activity(record) if record.respond_to?(:create_activity)
   end
@@ -36,12 +36,12 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
   def update_season_data_with_resets(record)
     update_data = {
-      seasons: (record.seasons << Season.current.year),
+      seasons: (record.seasons << Season.current.year)
     }
 
     if record.respond_to?(:season_registered_at)
       update_data = update_data.merge({
-        season_registered_at: Time.current,
+        season_registered_at: Time.current
       })
     end
 
@@ -101,7 +101,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def record_registration_activity(record)
     key_name = record.class.name.underscore
     activity_key = "#{key_name}.register_current_season"
-    activity_options = { key: activity_key }
+    activity_options = {key: activity_key}
 
     unless record.activities.where(activity_options).exists?
       record.create_activity(activity_options)

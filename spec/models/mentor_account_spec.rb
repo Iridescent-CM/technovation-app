@@ -8,14 +8,14 @@ RSpec.describe MentorProfile do
     it "should include all teams" do
       mentor = FactoryBot.create(:mentor, :onboarded)
       t1 = FactoryBot.create(:team,
-                              city: "Los Angeles",
-                              state_province: "CA")
+        city: "Los Angeles",
+        state_province: "CA")
 
       student = t1.students.first
 
       ProfileUpdating.execute(student, account_attributes: {
         id: student.account_id,
-        date_of_birth: senior_dob,
+        date_of_birth: senior_dob
       })
 
       TeamRosterManaging.add(t1, mentor)
@@ -32,13 +32,13 @@ RSpec.describe MentorProfile do
     it "should not contain duplicates" do
       mentor = FactoryBot.create(:mentor, :onboarded)
       t1 = FactoryBot.create(:team,
-                              city: "Los Angeles",
-                              state_province: "CA")
+        city: "Los Angeles",
+        state_province: "CA")
       TeamRosterManaging.add(t1, mentor)
 
       t2 = FactoryBot.create(:team,
-                              city: "Los Angeles",
-                              state_province: "CA")
+        city: "Los Angeles",
+        state_province: "CA")
       TeamRosterManaging.add(t2, mentor)
 
       [t1, t2].each do |team|
@@ -46,7 +46,7 @@ RSpec.describe MentorProfile do
 
         ProfileUpdating.execute(student, account_attributes: {
           id: student.account_id,
-          date_of_birth: senior_dob,
+          date_of_birth: senior_dob
         })
       end
 

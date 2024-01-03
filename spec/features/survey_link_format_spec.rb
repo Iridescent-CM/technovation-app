@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Survey link formatting", :js do
-  %i{mentor student}.each do |scope|
+  %i[mentor student].each do |scope|
     scenario "custom variables for #{scope}s are filled in dynamically" do
       url = "https://www.example.com/some/path"
       url += "?email=[email_value]"
@@ -17,7 +17,7 @@ RSpec.feature "Survey link formatting", :js do
       SeasonToggles.set_survey_link(
         scope,
         "Short headline",
-        url,
+        url
       )
 
       profile_without_team = FactoryBot.create("onboarded_#{scope}", :geocoded)
@@ -26,8 +26,8 @@ RSpec.feature "Survey link formatting", :js do
 
       expected_url = "https://www.example.com/some/path"
       expected_url += "?email=#{account.email}"
-      expected_url += "&country=#{FriendlyCountry.(account)}"
-      expected_url += "&state=#{FriendlySubregion.(account)}"
+      expected_url += "&country=#{FriendlyCountry.call(account)}"
+      expected_url += "&state=#{FriendlySubregion.call(account)}"
       expected_url += "&name=#{account.full_name}"
       expected_url += "&city=#{account.city}"
       expected_url += "&age=#{account.age}"
@@ -43,8 +43,8 @@ RSpec.feature "Survey link formatting", :js do
 
       expected_url = "https://www.example.com/some/path"
       expected_url += "?email=#{account.email}"
-      expected_url += "&country=#{FriendlyCountry.(account)}"
-      expected_url += "&state=#{FriendlySubregion.(account)}"
+      expected_url += "&country=#{FriendlyCountry.call(account)}"
+      expected_url += "&state=#{FriendlySubregion.call(account)}"
       expected_url += "&name=#{account.full_name}"
       expected_url += "&city=#{account.city}"
       expected_url += "&age=#{account.age}"

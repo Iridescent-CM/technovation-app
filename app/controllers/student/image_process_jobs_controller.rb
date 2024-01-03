@@ -5,7 +5,7 @@ module Student
         current_team.submission,
         params.fetch(:keys)
       )
-      render json: { status_url: student_job_status_url(job.job_id) }
+      render json: {status_url: student_job_status_url(job.job_id)}
     end
   end
 end

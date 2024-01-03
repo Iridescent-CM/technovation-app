@@ -18,16 +18,16 @@ class SeasonToggles
       def select_regional_pitch_event=(value)
         store.set(
           :select_regional_pitch_event,
-          with_bool_validation(value),
+          with_bool_validation(value)
         )
       end
 
       def select_regional_pitch_event_on!
-        self.select_regional_pitch_event = 'on'
+        self.select_regional_pitch_event = "on"
       end
 
       def select_regional_pitch_event_off!
-        self.select_regional_pitch_event = 'off'
+        self.select_regional_pitch_event = "off"
       end
 
       def select_regional_pitch_event?
@@ -35,7 +35,7 @@ class SeasonToggles
       end
 
       def events_disabled?
-        not select_regional_pitch_event?
+        !select_regional_pitch_event?
       end
 
       def create_regional_pitch_event=(value)

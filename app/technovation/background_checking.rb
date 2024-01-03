@@ -1,15 +1,15 @@
 class BackgroundChecking
-  def initialize(bg_check, options={})
+  def initialize(bg_check, options = {})
     @bg_check = bg_check
     @report = options.fetch(:report) {
       BackgroundCheck::Report.retrieve(bg_check.report_id)
     }
-    @logger = options.fetch(:logger) { Logger.new('/dev/null') }
+    @logger = options.fetch(:logger) { Logger.new("/dev/null") }
   end
 
   def execute
     if @report.present?
-      report_result = @report.adjudication == "engaged" ? "clear" : @report.result
+      report_result = (@report.adjudication == "engaged") ? "clear" : @report.result
 
       if report_result != @bg_check.status
         case report_result

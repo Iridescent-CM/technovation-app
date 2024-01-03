@@ -11,8 +11,8 @@ RSpec.describe SigninsController do
         post :create, params: {
           account: {
             email: student.email,
-            password: "secret1234",
-          },
+            password: "secret1234"
+          }
         }
 
         expect(student.reload.last_logged_in_at.to_i).to eq(time.to_i)
@@ -28,12 +28,11 @@ RSpec.describe SigninsController do
         )
       )
 
-
       post :create, params: {
         account: {
           email: "capitalletters@gmail.com",
-          password: "secret1234",
-        },
+          password: "secret1234"
+        }
       }
 
       expect(response).to redirect_to(student_dashboard_path)
@@ -51,8 +50,8 @@ RSpec.describe SigninsController do
       post :create, params: {
         account: {
           email: "dotsigno.red@gmail.com",
-          password: "secret1234",
-        },
+          password: "secret1234"
+        }
       }
 
       expect(response).to redirect_to(student_dashboard_path)
@@ -76,8 +75,8 @@ RSpec.describe SigninsController do
       post :create, params: {
         account: {
           email: student.email,
-          password: "secret1234",
-        },
+          password: "secret1234"
+        }
       }
 
       mail = ActionMailer::Base.deliveries.last
@@ -89,7 +88,7 @@ RSpec.describe SigninsController do
 
       ActionMailer::Base.deliveries.clear
 
-      post :create, params: { account: { email: student.email, password: student.password } }
+      post :create, params: {account: {email: student.email, password: student.password}}
 
       expect(ActionMailer::Base.deliveries).to be_empty, "another one was sent"
     end

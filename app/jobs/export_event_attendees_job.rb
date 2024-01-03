@@ -1,4 +1,4 @@
-require 'uri'
+require "uri"
 
 class ExportEventAttendeesJob < ActiveJob::Base
   include Rails.application.routes.url_helpers
@@ -49,9 +49,10 @@ class ExportEventAttendeesJob < ActiveJob::Base
   end
 
   private
+
   def prepare_judge_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w{name email company status explanation number\ of\ assigned\ teams assigned\ teams}
+      csv << %w[name email company status explanation number\ of\ assigned\ teams assigned\ teams]
       event.judge_list.each do |item|
         assigned_teams = item.assigned_teams_for_event(event).to_a
           .map { |team| team.name }
@@ -71,7 +72,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_team_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w{team submission division percent\ complete presentation city state\ or\ region country student\ emails mentor\ emails parent\ emails}
+      csv << %w[team submission division percent\ complete presentation city state\ or\ region country student\ emails mentor\ emails parent\ emails]
       event.teams.each do |item|
         student_emails = item.students.to_a.map { |student| student.email }
         mentor_emails = item.mentors.to_a.map { |mentor| mentor.email }
@@ -99,7 +100,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
     channel = "jobs:#{profile.class.name}:#{profile.id}"
     data = {
       status: job.status,
-      job_id: job.job_id,
+      job_id: job.job_id
     }
 
     if job.status == "complete"
@@ -111,7 +112,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
         update_url: send(
           "#{profile.account.scope_name}_export_download_path",
           export
-        ),
+        )
       })
     end
 

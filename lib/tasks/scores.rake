@@ -3,10 +3,10 @@ namespace :scores do
   task default_nil_to_zero: :environment do
     SubmissionScore.find_each do |score|
       score.attributes.each do |k, v|
-        next if k.match(/comment/)
+        next if /comment/.match?(k)
         next if k == "id"
-        next if k.match(/_at$/)
-        next if k.match(/_id$/)
+        next if /_at$/.match?(k)
+        next if /_id$/.match?(k)
         score[k] = 0 if v.nil?
       end
 
@@ -36,7 +36,7 @@ namespace :scores do
   end
 
   task report_on_deleted: :environment do
-    puts %w{
+    puts %w[
       id
       complete?
       created\ at
@@ -55,18 +55,18 @@ namespace :scores do
       judge\ account\ deleted?
       judge/team\ virtual\ mismatch?
       event\ mismatch?
-    }.to_csv
+    ].to_csv
 
     SubmissionScore.current.only_deleted.find_each do |score|
-      distance_in_minutes = ((score.deleted_at - score.created_at)/60.0).round
+      distance_in_minutes = ((score.deleted_at - score.created_at) / 60.0).round
 
       distance_in_words = case distance_in_minutes
-        when 0 then "less than 1 minute"
-        when 2...45 then "#{distance_in_minutes} minutes"
-        when 45...90 then "about an hour"
-        when 90...1440 then "about #{(distance_in_minutes / 60.0).round} hours"
-        when 1440...2520 then "about a day"
-        else "about #{(distance_in_minutes / 1440.0).round} days"
+      when 0 then "less than 1 minute"
+      when 2...45 then "#{distance_in_minutes} minutes"
+      when 45...90 then "about an hour"
+      when 90...1440 then "about #{(distance_in_minutes / 60.0).round} hours"
+      when 1440...2520 then "about a day"
+      else "about #{(distance_in_minutes / 1440.0).round} days"
       end
 
       sub = TeamSubmission.with_deleted.find(score.team_submission_id)
@@ -76,20 +76,20 @@ namespace :scores do
       judge_account = Account.with_deleted.find(judge_profile.account_id)
 
       virtual_mismatch = if team_rpe.virtual? && judge_profile.live_event?
-          "yes"
-        elsif team_rpe.live? && team_rpe.official? && !judge_profile.live_event?
-          "yes"
-        else
-          "no"
-        end
+        "yes"
+      elsif team_rpe.live? && team_rpe.official? && !judge_profile.live_event?
+        "yes"
+      else
+        "no"
+      end
 
       event_mismatch = if team_rpe.virtual? and !judge_profile.live_event?
-          "no"
-        elsif judge_profile.regional_pitch_events.include?(team_rpe)
-          "no"
-        else
-          "yes"
-        end
+        "no"
+      elsif judge_profile.regional_pitch_events.include?(team_rpe)
+        "no"
+      else
+        "yes"
+      end
 
       event_official_status = if sub.deleted_at.nil? && team.deleted_at.nil?
         score.event_official_status
@@ -99,28 +99,28 @@ namespace :scores do
 
       puts [
         score.id,
-        score.complete? ? 'yes' : 'no',
+        score.complete? ? "yes" : "no",
         score.created_at,
         score.deleted_at,
         distance_in_words,
         distance_in_minutes,
-        score.approved? ? 'yes' : 'no',
-        team.deleted_at.nil? ? 'no' : 'yes',
-        sub.deleted_at.nil? ? 'no' : 'yes',
+        score.approved? ? "yes" : "no",
+        team.deleted_at.nil? ? "no" : "yes",
+        sub.deleted_at.nil? ? "no" : "yes",
         sub.team_name,
         sub.app_name,
         team_rpe.name,
         event_official_status,
         judge_account.email,
-        judge_profile.live_event? ? 'yes' : 'no',
-        judge_account.deleted_at.nil? ? 'no' : 'yes',
+        judge_profile.live_event? ? "yes" : "no",
+        judge_account.deleted_at.nil? ? "no" : "yes",
         virtual_mismatch,
         event_mismatch
       ].to_csv
     end
   end
 
-  desc 'soft delete incomplete submission score by judge profile id'
+  desc "soft delete incomplete submission score by judge profile id"
   task :soft_delete!, [:judge_profile_id] => :environment do |t, args|
     puts "Soft deleting submission scores for judge profile id: #{args[:judge_profile_id]}"
     SubmissionScore.current.where(judge_profile_id: args[:judge_profile_id]).destroy_all

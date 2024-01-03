@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   include Authenticated
 
-  layout 'admin'
+  layout "admin"
 
   helper_method :current_admin
 
@@ -23,6 +23,7 @@ class AdminController < ApplicationController
   end
 
   private
+
   def current_admin
     @current_admin ||= current_account.admin_profile
   end

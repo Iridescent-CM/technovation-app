@@ -9,14 +9,14 @@ class ConvertAssignedJudgesToPolymorphism < ActiveRecord::Migration[5.1]
     judges.find_each do |j|
       j.update_columns({
         assigned_judge_type: "JudgeProfile",
-        assigned_judge_id: j.judge_profile_id,
+        assigned_judge_id: j.judge_profile_id
       })
     end
 
     invites.find_each do |i|
       i.update_columns({
         assigned_judge_type: "UserInvitation",
-        assigned_judge_id: i.user_invitation_id,
+        assigned_judge_id: i.user_invitation_id
       })
     end
 

@@ -13,7 +13,7 @@ module Mentor
 
       if @invite.invitee and @invite.invitee != current_profile
         signin = @invite.invitee.account
-        SignIn.(signin, self, redirect_to: [:mentor_mentor_invite_path, @invite])
+        SignIn.call(signin, self, redirect_to: [:mentor_mentor_invite_path, @invite])
       else
         render template: "team_member_invites/show_#{@invite.status}"
       end
@@ -23,8 +23,8 @@ module Mentor
       if SeasonToggles.judging_enabled_or_between?
         redirect_when_invites_are_disabled_by_judging
       elsif invite = current_mentor.mentor_invites.pending.find_by(
-                    invite_token: params.fetch(:id)
-                  )
+        invite_token: params.fetch(:id)
+      )
         invite.update(invite_params)
         redirect_based_on_status(invite)
       else
@@ -53,6 +53,7 @@ module Mentor
     end
 
     private
+
     def redirect_when_invites_are_disabled_by_judging
       redirect_to mentor_dashboard_path,
         alert: t("views.team_member_invites.show.invites_disabled_by_judging")

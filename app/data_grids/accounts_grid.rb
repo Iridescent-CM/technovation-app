@@ -103,11 +103,11 @@ class AccountsGrid
     scope.includes(
       :chapter_ambassador_profile,
       :mentor_profile,
-      :judge_profile,
+      :judge_profile
     ).references(
       :chapter_ambassador_profiles,
       :mentor_profiles,
-      :judge_profiles,
+      :judge_profiles
     ).order(
       "chapter_ambassador_profiles.organization_company_name, " +
       "mentor_profiles.school_company_name, " +
@@ -235,7 +235,7 @@ class AccountsGrid
   column :city
 
   column :state_province, header: "State" do |account, _grid|
-    FriendlySubregion.(account, prefix: false)
+    FriendlySubregion.call(account, prefix: false)
   end
 
   column :country do |account, _grid|
@@ -266,15 +266,15 @@ class AccountsGrid
     html = link_to(
       "view",
       send("#{current_scope}_participant_path", account),
-      data: { turbolinks: false }
+      data: {turbolinks: false}
     )
 
     if grid.admin
       html += " | "
 
       html += link_to(
-        'login',
-        admin_participant_session_path(account),
+        "login",
+        admin_participant_session_path(account)
       )
     end
 
@@ -287,7 +287,7 @@ class AccountsGrid
     select: [["Senior", "senior"], ["Junior", "junior"], ["Beginner", "beginner"]],
     filter_group: "common",
     html: {
-      class: "and-or-field",
+      class: "and-or-field"
     } do |value|
     by_division(value)
   end
@@ -296,14 +296,14 @@ class AccountsGrid
     :enum,
     header: "Team matchng (students & mentors only)",
     select: [
-      ['Matched with a team', 'matched'],
-      ['Unmatched', 'unmatched'],
-      ['Mentors who have not answered invites from teams', 'mentors_pending_invites'],
-      ['Mentors with open join requests to teams', 'mentors_pending_requests'],
+      ["Matched with a team", "matched"],
+      ["Unmatched", "unmatched"],
+      ["Mentors who have not answered invites from teams", "mentors_pending_invites"],
+      ["Mentors with open join requests to teams", "mentors_pending_requests"]
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{judge chapter_ambassador} & (g.scope_names || [])).empty?
+      (%w[judge chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.send(value)
     end
@@ -311,31 +311,31 @@ class AccountsGrid
   filter :onboarded_students,
     :enum,
     select: [
-      ['Yes, fully onboarded', 'onboarded'],
-      ['No, still onboarding', 'onboarding'],
+      ["Yes, fully onboarded", "onboarded"],
+      ["No, still onboarding", "onboarding"]
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{judge mentor chapter_ambassador} & (g.scope_names || [])).empty?
+      (%w[judge mentor chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.includes(:student_profile)
         .references(:student_profiles)
         .where(
-        "student_profiles.id IS NOT NULL AND " +
-        "student_profiles.onboarded = ?",
-         value == 'onboarded' ? true : false
-      )
+          "student_profiles.id IS NOT NULL AND " +
+          "student_profiles.onboarded = ?",
+          value == "onboarded"
+        )
     end
 
   filter :onboarded_mentors,
     :enum,
     select: [
-      ['Yes, fully onboarded', 'onboarded'],
-      ['No, still onboarding', 'onboarding'],
+      ["Yes, fully onboarded", "onboarded"],
+      ["No, still onboarding", "onboarding"]
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{judge student chapter_ambassador} & (g.scope_names || [])).empty?
+      (%w[judge student chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.send("#{value}_mentors")
     end
@@ -343,50 +343,50 @@ class AccountsGrid
   filter :onboarded_judges,
     :enum,
     select: [
-      ['Yes, fully onboarded', 'onboarded'],
-      ['No, still onboarding', 'onboarding'],
+      ["Yes, fully onboarded", "onboarded"],
+      ["No, still onboarding", "onboarding"]
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{student mentor chapter_ambassador} & (g.scope_names || [])).empty?
+      (%w[student mentor chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.includes(:judge_profile)
         .references(:judge_profiles)
         .where("judge_profiles.id IS NOT NULL")
         .where(
           "judge_profiles.onboarded = ?",
-           value == 'onboarded' ? true : false
+          value == "onboarded"
         )
     end
 
   filter :suspended_judges,
     :enum,
     select: [
-      ['Yes, suspended', 'suspended'],
-      ['No, not suspended', 'active'],
+      ["Yes, suspended", "suspended"],
+      ["No, not suspended", "active"]
     ],
     filter_group: "common",
     if: ->(g) {
       g.admin &&
-        (%w{student mentor chapter_ambassador} & (g.scope_names || [])).empty?
+        (%w[student mentor chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.includes(:judge_profile)
         .references(:judge_profiles)
         .where("judge_profiles.id IS NOT NULL")
-        .where("judge_profiles.suspended = ?", value == 'suspended')
+        .where("judge_profiles.suspended = ?", value == "suspended")
     end
 
   filter :virtual_or_live,
     :enum,
     select: [
-      ['Virtual judges', 'virtual'],
-      ['Live event judges', 'live'],
+      ["Virtual judges", "virtual"],
+      ["Live event judges", "live"]
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w{student mentor chapter_ambassador} & (g.scope_names || [])).empty?
+      (%w[student mentor chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      is_is_not = value === "virtual" ? "IS" : "IS NOT"
+      is_is_not = (value === "virtual") ? "IS" : "IS NOT"
 
       scope.includes(judge_profile: :events)
         .references(:judge_profiles, :regional_pitch_events)
@@ -399,9 +399,9 @@ class AccountsGrid
     filter_group: "common" do |value, scope|
       scope
         .includes(:mentor_profile)
-          .references(:mentor_profiles)
+        .references(:mentor_profiles)
         .includes(:judge_profile)
-          .references(:judge_profiles)
+        .references(:judge_profiles)
         .where(
           "mentor_profiles.school_company_name ILIKE ? OR " +
           "judge_profiles.company_name ILIKE ?",
@@ -413,13 +413,13 @@ class AccountsGrid
   filter :name_email,
     header: "Name or Email",
     filter_group: "more-specific" do |value|
-      names = value.strip.downcase.split(' ').map { |n|
+      names = value.strip.downcase.split(" ").map { |n|
         I18n.transliterate(n).gsub("'", "''")
       }
       fuzzy_search({
         first_name: names.first,
         last_name: names.last || names.first,
-        email: names.first,
+        email: names.first
       }, false) # false enables OR search
     end
 
@@ -476,7 +476,7 @@ class AccountsGrid
     select: (2015..Season.current.year).to_a.reverse,
     filter_group: "more-specific",
     html: {
-      class: "and-or-field",
+      class: "and-or-field"
     },
     multiple: true do |value, scope, grid|
     scope.by_season(value, match: grid.season_and_or)
@@ -487,7 +487,7 @@ class AccountsGrid
     header: "Season options:",
     select: [
       ["Match any season", "match_any"],
-      ["Match all seasons", "match_all"],
+      ["Match all seasons", "match_all"]
     ],
     filter_group: "more-specific" do |_, scope|
     scope
@@ -497,14 +497,14 @@ class AccountsGrid
     :enum,
     header: "Profile type",
     select: [
-      ['Students', 'student'],
-      ['Mentors', 'mentor'],
-      ['Judges', 'judge'],
-      ['Chapter Ambassadors', 'chapter_ambassador'],
+      ["Students", "student"],
+      ["Mentors", "mentor"],
+      ["Judges", "judge"],
+      ["Chapter Ambassadors", "chapter_ambassador"]
     ],
     filter_group: "more-specific",
     html: {
-      class: "and-or-field",
+      class: "and-or-field"
     },
     multiple: true do |values|
       clauses = values.flatten.map do |v|
@@ -523,8 +523,8 @@ class AccountsGrid
       references = values.flatten.map { |v| "#{v}_profiles" }
 
       includes(*includes)
-      .references(*references)
-      .where(clauses.join(' OR '))
+        .references(*references)
+        .where(clauses.join(" OR "))
     end
 
   filter :mentor_types,
@@ -550,11 +550,11 @@ class AccountsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(g) { g.admin } do |values|
       clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
-      where(clauses.join(' OR '))
+      where(clauses.join(" OR "))
     end
 
   filter :state_province,
@@ -566,16 +566,16 @@ class AccountsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
       scope.where(country: grid.country)
         .where(
           StateClauses.for(
             values: values,
             countries: grid.country,
-            table_name: 'accounts',
-            operator: 'OR'
+            table_name: "accounts",
+            operator: "OR"
           )
         )
     end
@@ -590,9 +590,9 @@ class AccountsGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
       scope.where(
         StateClauses.for(
           values: grid.state_province[0],

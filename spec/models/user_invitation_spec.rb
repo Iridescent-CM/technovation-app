@@ -9,7 +9,7 @@ RSpec.describe UserInvitation do
 
     invite = UserInvitation.new(
       profile_type: :student,
-      email: "  Hello@WORLD.com     ",
+      email: "  Hello@WORLD.com     "
     )
 
     expect(invite).not_to be_valid
@@ -36,7 +36,7 @@ RSpec.describe UserInvitation do
     )
   end
 
-  %i{student mentor judge}.each do |type|
+  %i[student mentor judge].each do |type|
     it "validates email against existing mentor if the type is #{type}" do
       mentor = FactoryBot.create(:mentor, :onboarded)
 
@@ -57,7 +57,7 @@ RSpec.describe UserInvitation do
 
     invite = UserInvitation.new(
       profile_type: :chapter_ambassador,
-      email: mentor.email,
+      email: mentor.email
     )
 
     expect(invite).to be_valid
@@ -68,7 +68,7 @@ RSpec.describe UserInvitation do
 
     invite = UserInvitation.new(
       profile_type: :chapter_ambassador,
-      email: judge.email,
+      email: judge.email
     )
 
     expect(invite).to be_valid
@@ -80,7 +80,7 @@ RSpec.describe UserInvitation do
     invite = UserInvitation.create!(
       profile_type: :judge,
       email: "judge@judge.com",
-      event_ids: [event.id],
+      event_ids: [event.id]
     )
 
     judge = FactoryBot.create(

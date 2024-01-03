@@ -6,46 +6,46 @@ class SeasonTogglesSerializer
   end
 
   attribute :student_signup do |season_toggles|
-    season_toggles.signup_enabled?('student')
+    season_toggles.signup_enabled?("student")
   end
 
   attribute :mentor_signup do |season_toggles|
-    season_toggles.signup_enabled?('mentor')
+    season_toggles.signup_enabled?("mentor")
   end
 
   attribute :judge_signup do |season_toggles|
-    season_toggles.signup_enabled?('judge')
+    season_toggles.signup_enabled?("judge")
   end
 
   attribute :student_dashboard_text do |season_toggles|
-    season_toggles.dashboard_text('student')
+    season_toggles.dashboard_text("student")
   end
 
   attribute :mentor_dashboard_text do |season_toggles|
-    season_toggles.dashboard_text('mentor')
+    season_toggles.dashboard_text("mentor")
   end
 
   attribute :judge_dashboard_text do |season_toggles|
-    season_toggles.dashboard_text('judge')
+    season_toggles.dashboard_text("judge")
   end
 
   attribute :chapter_ambassador_dashboard_text do |season_toggles|
-    season_toggles.dashboard_text('chapter_ambassador')
+    season_toggles.dashboard_text("chapter_ambassador")
   end
 
   attribute :student_survey_link do |season_toggles|
     {
-      text: season_toggles.survey_link('student', :text),
-      url: season_toggles.survey_link('student', :url),
-      long_desc: season_toggles.survey_link('student', :long_desc)
+      text: season_toggles.survey_link("student", :text),
+      url: season_toggles.survey_link("student", :url),
+      long_desc: season_toggles.survey_link("student", :long_desc)
     }
   end
 
   attribute :mentor_survey_link do |season_toggles|
     {
-      text: season_toggles.survey_link('mentor', :text),
-      url: season_toggles.survey_link('mentor', :url),
-      long_desc: season_toggles.survey_link('mentor', :long_desc)
+      text: season_toggles.survey_link("mentor", :text),
+      url: season_toggles.survey_link("mentor", :url),
+      long_desc: season_toggles.survey_link("mentor", :long_desc)
     }
   end
 

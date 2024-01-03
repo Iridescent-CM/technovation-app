@@ -18,7 +18,7 @@ RSpec.describe Admin::ParticipantsController do
         account: FactoryBot.create(
           :account,
           email: "student@testing.com",
-          date_of_birth: junior_dob,
+          date_of_birth: junior_dob
         )
       )
       team = FactoryBot.create(:team)
@@ -29,15 +29,15 @@ RSpec.describe Admin::ParticipantsController do
       patch :update, params: {
         id: student.account_id,
         account: {
-          date_of_birth: senior_dob,
-        },
+          date_of_birth: senior_dob
+        }
       }
 
       expect(team.reload.division_name).to eq("senior")
     end
   end
 
-  %w{student mentor judge chapter_ambassador}.each do |scope|
+  %w[student mentor judge chapter_ambassador].each do |scope|
     it "updates the email list when the email address on the account is changed" do
       profile = FactoryBot.create(
         scope,
@@ -52,8 +52,8 @@ RSpec.describe Admin::ParticipantsController do
       patch :update, params: {
         id: profile.account_id,
         account: {
-          email: "new@email.com",
-        },
+          email: "new@email.com"
+        }
       }
 
       expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
@@ -71,8 +71,8 @@ RSpec.describe Admin::ParticipantsController do
       patch :update, params: {
         id: profile.account_id,
         account: {
-          first_name: "someone cool",
-        },
+          first_name: "someone cool"
+        }
       }
 
       expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
@@ -90,8 +90,8 @@ RSpec.describe Admin::ParticipantsController do
       patch :update, params: {
         id: profile.account_id,
         account: {
-          last_name: "someone really cool",
-        },
+          last_name: "someone really cool"
+        }
       }
 
       expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)

@@ -27,7 +27,7 @@ RSpec.describe ExportJob do
           city: ["", "Salvador"],
           column_names: ["", "city", "state_province"],
           scope_names: ["", "chapter_ambassador"],
-          season: ["", "2018"],
+          season: ["", "2018"]
         },
         "ChapterAmbassador::ParticipantsController",
         "->(scope, user, params) { scope.in_region(user) }",
@@ -43,7 +43,7 @@ RSpec.describe ExportJob do
         city: ["Salvador"],
         column_names: ["city", "state_province"],
         scope_names: ["chapter_ambassador"],
-        season: ["2018"],
+        season: ["2018"]
       }
 
       expect(AccountsGrid).to have_received(:new).with(expected_params)

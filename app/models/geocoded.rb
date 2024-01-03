@@ -1,6 +1,6 @@
 class Geocoded
   attr_accessor :id, :city, :state_code, :state, :country, :country_code,
-   :latitude, :longitude
+    :latitude, :longitude
 
   def initialize(geocoder_result, query = nil)
     @id = SecureRandom.hex(4)
@@ -17,6 +17,7 @@ class Geocoded
   end
 
   private
+
   def set_city(geocoder_result, query)
     @city = geocoder_result.city
 
@@ -32,8 +33,8 @@ class Geocoded
   def set_country(geocoder_result)
     code = geocoder_result.country_code
     country_result = Country.find_country_by_name(code) ||
-                      Country.find_country_by_alpha3(code) ||
-                        Country.find_country_by_alpha2(code)
+      Country.find_country_by_alpha3(code) ||
+      Country.find_country_by_alpha2(code)
 
     @country_code = country_result && country_result.alpha2
     @country = country_result && country_result.name
@@ -57,12 +58,12 @@ class Geocoded
       lng_west: 34.2675,
       lat_south: 29.4534,
       lng_east: 35.895,
-      lat_north: 33.3356,
+      lat_north: 33.3356
     }
 
     lat > bbox[:lat_south] &&
       lat < bbox[:lat_north] &&
-        lng < bbox[:lng_east] &&
-          lng > bbox[:lng_west]
+      lng < bbox[:lng_east] &&
+      lng > bbox[:lng_west]
   end
 end

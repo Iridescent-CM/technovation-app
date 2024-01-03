@@ -54,21 +54,21 @@ module DatagridController
         passed_filename = params[:filename]
 
         filename = if passed_filename.blank?
-                    default_export_filename
-                  else
-                    "#{passed_filename}"
-                  end
+          default_export_filename
+        else
+          "#{passed_filename}"
+        end
 
         # TODO tests fail into the else case if
         # I don't do this check twice ... what
         filters = if grid_params.is_a?(ActionController::Parameters)
-                    grid_params.to_unsafe_h
-                  elsif grid_params.is_a?(ActionController::Parameters)
-                    grid_params.to_unsafe_h
-                  else
-                    ActionController::Parameters.new(grid_params)
-                      .to_unsafe_h
-                  end
+          grid_params.to_unsafe_h
+        elsif grid_params.is_a?(ActionController::Parameters)
+          grid_params.to_unsafe_h
+        else
+          ActionController::Parameters.new(grid_params)
+            .to_unsafe_h
+        end
 
         ExportJob.perform_later(
           current_profile.id,
@@ -98,6 +98,7 @@ module DatagridController
   end
 
   private
+
   def modify_html_scope(scope)
     self.class.html_scope_modifier.call(scope, current_profile, params)
   end
@@ -110,23 +111,23 @@ module DatagridController
     columns = Array(grid_params[:column_names]).flatten.map(&:to_s)
 
     if Array(grid_params[:country]).many?
-      columns = columns | ["country"]
+      columns |= ["country"]
     end
 
-    if not Array(grid_params[:state_province]).one? and
+    if !Array(grid_params[:state_province]).one? and
         (Array(grid_params[:state_province]).many? or
           Array(grid_params[:country]).one?)
-      columns = columns | ["state_province"]
+      columns |= ["state_province"]
     end
 
     if Array(grid_params[:city]).any? or
         Array(grid_params[:state_province]).one?
-      columns = columns | ["city"]
+      columns |= ["city"]
     end
 
     if Array(grid_params[:profile_type]).many? or
         grid_params[:team_matching].present?
-      columns = columns | ["profile_type"]
+      columns |= ["profile_type"]
     end
 
     columns
@@ -152,20 +153,20 @@ module DatagridController
     passed_filename = params[:filename].sub(".#{format}", "")
 
     filename = if passed_filename.blank?
-                 default_export_filename(format)
-               else
-                 "#{passed_filename}.#{format}"
-               end
+      default_export_filename(format)
+    else
+      "#{passed_filename}.#{format}"
+    end
 
     send_data collection.public_send("to_#{format}"),
       type: "text/csv",
-      disposition: 'inline',
+      disposition: "inline",
       filename: filename
   end
 
   def default_export_filename(format = nil)
     root = "technovation-#{param_root.sub("_grid", "")}"
-    "#{root}-#{Time.current}#{'.' + format.to_s if format}"
+    "#{root}-#{Time.current}#{"." + format.to_s if format}"
   end
 
   def csv_export_supported?(grid)

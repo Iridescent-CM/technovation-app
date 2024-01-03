@@ -7,11 +7,11 @@ class SeasonToggles
       base.extend ClassMethods
     end
 
-    VALID_QF_JUDGING_ROUNDS = %w{qf quarter_finals quarterfinals}
-    VALID_SF_JUDGING_ROUNDS = %w{sf semi_finals semifinals}
+    VALID_QF_JUDGING_ROUNDS = %w[qf quarter_finals quarterfinals]
+    VALID_SF_JUDGING_ROUNDS = %w[sf semi_finals semifinals]
     VALID_JUDGING_ROUNDS = VALID_QF_JUDGING_ROUNDS +
-                           VALID_SF_JUDGING_ROUNDS +
-                           %w{off between finished}
+      VALID_SF_JUDGING_ROUNDS +
+      %w[off between finished]
 
     module ClassMethods
       def judging_round=(value)
@@ -23,18 +23,18 @@ class SeasonToggles
 
         if !!opts[:full_name]
           case round
-          when 'qf'; 'quarterfinals'
-          when 'sf'; 'semifinals'
-          else;      round
+          when "qf" then "quarterfinals"
+          when "sf" then "semifinals"
+          else; round
           end
         else
           round
         end
       end
-      alias :current_judging_round :judging_round
+      alias_method :current_judging_round, :judging_round
 
       def current_round_deadline(judge)
-        if LiveEventJudgingEnabled.(judge)
+        if LiveEventJudgingEnabled.call(judge)
           ImportantDates.live_quarterfinals_judging_ends
             .strftime("%B %-d at 5pm (Pacific Daylight Time)").html_safe
         elsif quarterfinals?
@@ -51,7 +51,7 @@ class SeasonToggles
       def judging_off?
         judging_round == "off"
       end
-      alias :before_judging? :judging_off?
+      alias_method :before_judging?, :judging_off?
 
       def between_rounds?
         judging_round == "between"
@@ -62,13 +62,13 @@ class SeasonToggles
       end
 
       def quarterfinals_or_earlier?
-        return true if quarterfinals? || before_judging?
+        true if quarterfinals? || before_judging?
       end
 
       def pitch_presentation_needed?(team)
         quarterfinals_or_earlier? &&
           !team_submissions_editable? &&
-            team.live_event?
+          team.live_event?
       end
 
       def set_judging_round(name)
@@ -90,12 +90,12 @@ class SeasonToggles
       def quarterfinals_judging?
         VALID_QF_JUDGING_ROUNDS.include?(judging_round)
       end
-      alias :quarterfinals? :quarterfinals_judging?
+      alias_method :quarterfinals?, :quarterfinals_judging?
 
       def semifinals_judging?
         VALID_SF_JUDGING_ROUNDS.include?(judging_round)
       end
-      alias :semifinals? :semifinals_judging?
+      alias_method :semifinals?, :semifinals_judging?
 
       def with_judging_round_validation(value)
         if VALID_JUDGING_ROUNDS.include?(value.to_s.downcase)
@@ -103,7 +103,7 @@ class SeasonToggles
         else
           raise_invalid_input_error(
             actual: value,
-            expected: VALID_JUDGING_ROUNDS.join(' | ')
+            expected: VALID_JUDGING_ROUNDS.join(" | ")
           )
         end
       end

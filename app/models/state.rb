@@ -43,7 +43,7 @@ class KenyaState < State
       "28" => "mombasa",
       "30" => "nairobi",
       "31" => "nakuru",
-      "44" => "uasin",
+      "44" => "uasin"
     }
   end
 end
@@ -76,7 +76,7 @@ class MexicoState < State
       "GUA" => "gto",
       "HID" => "hgo",
       "NLE" => "n.l.",
-      "SLP" => "s.l.p.",
+      "SLP" => "s.l.p."
     }
   end
 end
@@ -84,7 +84,7 @@ end
 class IndiaState < State
   def format_map
     {
-      "TG" => "telangana",
+      "TG" => "telangana"
     }
   end
 end

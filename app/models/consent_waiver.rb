@@ -7,8 +7,8 @@ class ConsentWaiver < ActiveRecord::Base
   validates :electronic_signature, presence: true
 
   delegate :full_name,
-           :scope_name,
-           :consent_token,
+    :scope_name,
+    :consent_token,
     to: :account,
     prefix: true
 
@@ -35,7 +35,7 @@ class ConsentWaiver < ActiveRecord::Base
   end
 
   def signed?
-    not voided?
+    !voided?
   end
 
   def void!
@@ -45,5 +45,5 @@ class ConsentWaiver < ActiveRecord::Base
   def voided?
     !!voided_at
   end
-  alias void? voided?
+  alias_method :void?, :voided?
 end

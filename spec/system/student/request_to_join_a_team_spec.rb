@@ -70,10 +70,10 @@ RSpec.describe "Students request to join a team",
     before { allow(Season).to receive(:current).and_return(current_season) }
 
     let!(:team) { FactoryBot.create(:team, :with_mentor) }
-      # Default is in Chicago
+    # Default is in Chicago
 
     let!(:student) { FactoryBot.create(:student, :onboarded) }
-      # Default Chicago
+    # Default Chicago
 
     before do
       Timecop.freeze(day_before_qfs)
@@ -141,7 +141,7 @@ RSpec.describe "Students request to join a team",
         team,
         mailer_token: JoinRequest.last.requestor_mailer_token,
         host: ENV["HOST_DOMAIN"],
-        port: ENV["HOST_DOMAIN"].split(':')[1]
+        port: ENV["HOST_DOMAIN"].split(":")[1]
       )
 
       expect(mail.body.to_s).to include("href=\"#{url}\"")

@@ -1,77 +1,77 @@
-require 'data-anonymization'
+require "data-anonymization"
 require "bcrypt"
 
-database 'technovation-app_development' do
+database "technovation-app_development" do
   strategy DataAnon::Strategy::Blacklist
 
-  source_db adapter: 'postgresql',
-    database: 'technovation-app_development'
+  source_db adapter: "postgresql",
+    database: "technovation-app_development"
 
-  table 'accounts' do
-    primary_key 'id' # composite key is also supported
+  table "accounts" do
+    primary_key "id" # composite key is also supported
     anonymize(
-      'date_of_birth',
-      'auth_token',
-      'consent_token',
-      'profile_image',
-      'last_login_ip'
+      "date_of_birth",
+      "auth_token",
+      "consent_token",
+      "profile_image",
+      "last_login_ip"
     )
-    anonymize('first_name').using FieldStrategy::RandomFirstName.new
-    anonymize('last_name').using FieldStrategy::RandomLastName.new
-    anonymize('profile_image') { |_| nil }
-    anonymize('email') { |f| "user-#{f.ar_record.id}@oracle.com" }
-    anonymize('password_digest') { |_|
+    anonymize("first_name").using FieldStrategy::RandomFirstName.new
+    anonymize("last_name").using FieldStrategy::RandomLastName.new
+    anonymize("profile_image") { |_| nil }
+    anonymize("email") { |f| "user-#{f.ar_record.id}@oracle.com" }
+    anonymize("password_digest") { |_|
       BCrypt::Password.create("secret1234")
     }
   end
 
-  table 'student_profiles' do
-    primary_key 'id' # composite key is also supported
-    anonymize 'parent_guardian_name'
-    anonymize('parent_guardian_email') {
-      |f| "parent-#{f.ar_record.id}@oracle.com"
+  table "student_profiles" do
+    primary_key "id" # composite key is also supported
+    anonymize "parent_guardian_name"
+    anonymize("parent_guardian_email") { |f|
+      "parent-#{f.ar_record.id}@oracle.com"
     }
   end
 
-  table 'mentor_profiles' do
-    primary_key 'id' # composite key is also supported
-    anonymize('bio') { |_| "Sanitized bio" }
+  table "mentor_profiles" do
+    primary_key "id" # composite key is also supported
+    anonymize("bio") { |_| "Sanitized bio" }
   end
 
-  table 'chapter_ambassador_profiles' do
-    primary_key 'id' # composite key is also supported
-    anonymize('bio') { |_| "Sanitized bio" }
+  table "chapter_ambassador_profiles" do
+    primary_key "id" # composite key is also supported
+    anonymize("bio") { |_| "Sanitized bio" }
   end
 
-  table 'background_checks' do
-    primary_key 'id' # composite key is also supported
-    anonymize 'candidate_id', 'report_id'
+  table "background_checks" do
+    primary_key "id" # composite key is also supported
+    anonymize "candidate_id", "report_id"
   end
 
-  table 'consent_waivers' do
-    primary_key 'id' # composite key is also supported
-    anonymize 'electronic_signature'
+  table "consent_waivers" do
+    primary_key "id" # composite key is also supported
+    anonymize "electronic_signature"
   end
 
-  table 'parental_consents' do
-    primary_key 'id' # composite key is also supported
-    anonymize 'electronic_signature'
+  table "parental_consents" do
+    primary_key "id" # composite key is also supported
+    anonymize "electronic_signature"
   end
 
-  table 'honor_code_agreements' do
-    primary_key 'id' # composite key is also supported
-    anonymize 'electronic_signature'
+  table "honor_code_agreements" do
+    primary_key "id" # composite key is also supported
+    anonymize "electronic_signature"
   end
 
-  table 'team_member_invites' do
-    primary_key 'id' # composite key is also supported
-    anonymize('invitee_email') { |f|
+  table "team_member_invites" do
+    primary_key "id" # composite key is also supported
+    anonymize("invitee_email") { |f|
       "invitee-#{f.ar_record.id}@oracle.com"
     }
   end
 
-  table 'teams' do
-    primary_key 'id' # composite key is also supported
-    anonymize('team_photo') { |_| nil }
+  table "teams" do
+    primary_key "id" # composite key is also supported
+    anonymize("team_photo") { |_| nil }
   end
 end

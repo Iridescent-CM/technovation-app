@@ -125,7 +125,7 @@ RSpec.describe Account do
   it "removes current certificates if the name is changed" do
     account = FactoryBot.create(:judge, :certified_certificate).account
 
-    FillPdfs.(account)
+    FillPdfs.call(account)
 
     expect {
       account.update(first_name: "Change")
@@ -133,7 +133,7 @@ RSpec.describe Account do
       account.reload.current_certified_judge_certificates.count
     }.from(1).to(0)
 
-    FillPdfs.(account)
+    FillPdfs.call(account)
 
     expect {
       account.update(last_name: "Change!!!")
@@ -222,7 +222,8 @@ RSpec.describe Account do
       chapter_ambassador = FactoryBot.create(
         :ambassador,
         :chicago,
-        secondary_regions: ["CA, US"])
+        secondary_regions: ["CA, US"]
+      )
 
       expect(Account.in_region(chapter_ambassador))
         .to contain_exactly(chi, la, chapter_ambassador.account)
@@ -235,18 +236,18 @@ RSpec.describe Account do
   end
 
   it "returns a NullTeams for accounts that can't be on teams" do
-    %w{judge chapter_ambassador}.each do |type|
+    %w[judge chapter_ambassador].each do |type|
       profile = FactoryBot.create(type)
       expect(profile.account.teams.current).to eq(Team.none)
     end
   end
 
-  %i{mentor chapter_ambassador}.each do |type|
+  %i[mentor chapter_ambassador].each do |type|
     it "doesn't need a BG check outside of the US" do
       account = FactoryBot.create(type,
-                                   city: "Salvador",
-                                   state_province: "Bahia",
-                                   country: "BR")
+        city: "Salvador",
+        state_province: "Bahia",
+        country: "BR")
       expect(account).to be_background_check_complete
     end
   end
@@ -338,7 +339,7 @@ RSpec.describe Account do
     )
     expect(account.team_region_division_names).to match_array(
       ["US_IL,junior",
-       "US_CA,junior"]
+        "US_CA,junior"]
     )
   end
 
@@ -599,7 +600,7 @@ RSpec.describe Account do
       )
 
       FactoryBot.create(:onboarded_student)
-        # consented student
+      # consented student
 
       results = Account.not_parental_consented(Season.current.year - 1)
 

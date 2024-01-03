@@ -16,7 +16,7 @@ class ActionRequired
 
   def message
     case action
-    when :join_team; "You must join a team first"
+    when :join_team then "You must join a team first"
     else
       "[Error] ActionRequired#message is missing for `:#{action}`"
     end

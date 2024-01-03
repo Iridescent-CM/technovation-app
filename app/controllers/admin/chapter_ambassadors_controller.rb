@@ -7,14 +7,14 @@ module Admin
 
       chapter_ambassadors = Account.joins(:chapter_ambassador_profile)
         .where("chapter_ambassador_profiles.status = ?",
-               ChapterAmbassadorProfile.statuses[params.fetch(:status)])
+          ChapterAmbassadorProfile.statuses[params.fetch(:status)])
 
       unless params[:text].blank?
         results = chapter_ambassadors.search({
           query: {
             query_string: {
               query: params[:text]
-            },
+            }
           },
           from: 0,
           size: 10_000

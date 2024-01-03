@@ -5,12 +5,13 @@ module FillPdfs
     include FillPdfs
 
     private
+
     def pathname
-      './lib/certs/2018/regional-grand-prize.pdf'
+      "./lib/certs/2018/regional-grand-prize.pdf"
     end
 
     def tmp_output
-      "./tmp/#{Season.current.year}-Regional-Grand-Prize-#{participant['id']}.pdf"
+      "./tmp/#{Season.current.year}-Regional-Grand-Prize-#{participant["id"]}.pdf"
     end
   end
 end

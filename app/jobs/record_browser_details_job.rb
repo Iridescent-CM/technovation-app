@@ -7,7 +7,7 @@ class RecordBrowserDetailsJob < ActiveJob::Base
     attrs = {}
 
     if remote_ip != account.last_login_ip
-      attrs.merge!({ last_login_ip: remote_ip })
+      attrs.merge!({last_login_ip: remote_ip})
     end
 
     if browser.name != account.browser_name
@@ -15,7 +15,7 @@ class RecordBrowserDetailsJob < ActiveJob::Base
         browser_name: browser.name,
         browser_version: browser.version,
         os_name: browser.platform.name,
-        os_version: browser.platform.version,
+        os_version: browser.platform.version
       })
     end
     account.update(attrs)

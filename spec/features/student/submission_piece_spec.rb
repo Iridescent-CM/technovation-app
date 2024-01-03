@@ -239,8 +239,8 @@ RSpec.feature "Students edit submission pieces" do
               varius velit. Cras ultrices nisi risus, vitae placerat ligula mattis eu. Vestibulum quis ullamcorper lectus.
               Vivamus nec tortor ut nibh eleifend aliquam nec non nisl. Nulla sit amet blandit sem. Aliquam ac volutpat velit.
               Duis rhoncus turpis ut tellus finibus imperdiet. Integer sagittis eleifend quam, id tempus justo porttitor vitae.
-              Pellentesque sapien ipsum, facilisis et lobortis non, pretium nec turpis. Nulla eget nulla velit. Praesent nunc 
-              lectus, cursus eu sollicitudin quis, commodo et metus. Donec et blandit lectus. Sed quam arcu, tristique vel sapien 
+              Pellentesque sapien ipsum, facilisis et lobortis non, pretium nec turpis. Nulla eget nulla velit. Praesent nunc
+              lectus, cursus eu sollicitudin quis, commodo et metus. Donec et blandit lectus. Sed quam arcu, tristique vel sapien
               faucibus, vulputate dictum nibh. Quisque finibus rhoncus urna, eu consequat lectus."
 
     click_button "Save my responses"

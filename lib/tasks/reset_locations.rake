@@ -7,7 +7,7 @@ namespace :utils do
 
     RegionalPitchEvent.find_each do |r|
       r.update({
-        city: %w{Guadalajara Mexico\ City Puerto\ Vallarta Cancun Tijuana}.sample,
+        city: %w[Guadalajara Mexico\ City Puerto\ Vallarta Cancun Tijuana].sample
       })
 
       puts "Reset RPE #{r.name} to #{r.city}"
@@ -16,7 +16,7 @@ namespace :utils do
     Team.find_each do |t|
       t.update({
         latitude: nil,
-        longitude: nil,
+        longitude: nil
       })
 
       puts "Reset Team #{t.name} to nil lat/lng"
@@ -28,7 +28,7 @@ namespace :utils do
         state_province: "Jalisco",
         country: "MX",
         latitude: nil,
-        longitude: nil,
+        longitude: nil
       })
 
       puts "Reset Account #{a.email} to #{a.city}"

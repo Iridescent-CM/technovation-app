@@ -29,12 +29,12 @@ class CertificatesGrid
 
   column :view, html: true do |certificate|
     link_to(
-      web_icon('file-pdf-o', size: 16, remote: true),
+      web_icon("file-pdf-o", size: 16, remote: true),
       admin_certificate_path(certificate),
       {
-        class: "view-details",
+        :class => "view-details",
         "v-tooltip" => "'View certificate'",
-        data: { turbolinks: false }
+        :data => {turbolinks: false}
       }
     )
   end
@@ -64,7 +64,7 @@ class CertificatesGrid
     select: (2015..Season.current.year).to_a.reverse,
     filter_group: "selections",
     html: {
-      class: "and-or-field",
+      class: "and-or-field"
     },
     multiple: true do |value, scope, grid|
       scope.by_season(value)

@@ -1,16 +1,15 @@
-require './lib/legacy/models/team_request'
-require 'aws-sdk'
+require "./lib/legacy/models/team_request"
+require "aws-sdk"
 
 module Legacy
   class User < LegacyModel
     include FlagShihTzu
 
     has_attached_file :avatar,
-                      storage: :s3,
-                      url: ':s3_domain_url',
-                      s3_credentials: ->(a) { a.instance.s3_credentials },
-                      path: "/users/:attachment/:id_partition/:style/:filename"
-
+      storage: :s3,
+      url: ":s3_domain_url",
+      s3_credentials: ->(a) { a.instance.s3_credentials },
+      path: "/users/:attachment/:id_partition/:style/:filename"
 
     enum role: [:student, :mentor, :coach, :judge]
 
@@ -46,20 +45,20 @@ module Legacy
     end
 
     EXPERTISES = [
-      {sym: :science, abbr: 'Sci'},
-      {sym: :engineering, abbr: 'Eng'},
-      {sym: :project_management, abbr: 'PM'},
-      {sym: :finance, abbr: 'Fin'},
-      {sym: :marketing, abbr: 'Mktg'},
-      {sym: :design, abbr: 'Dsn'},
+      {sym: :science, abbr: "Sci"},
+      {sym: :engineering, abbr: "Eng"},
+      {sym: :project_management, abbr: "PM"},
+      {sym: :finance, abbr: "Fin"},
+      {sym: :marketing, abbr: "Mktg"},
+      {sym: :design, abbr: "Dsn"}
     ]
 
     has_flags 1 => EXPERTISES[0][:sym],
-              2 => EXPERTISES[1][:sym],
-              3 => EXPERTISES[2][:sym],
-              4 => EXPERTISES[3][:sym],
-              5 => EXPERTISES[4][:sym],
-              6 => EXPERTISES[5][:sym],
-              :column => 'expertise'
+      2 => EXPERTISES[1][:sym],
+      3 => EXPERTISES[2][:sym],
+      4 => EXPERTISES[3][:sym],
+      5 => EXPERTISES[4][:sym],
+      6 => EXPERTISES[5][:sym],
+      :column => "expertise"
   end
 end

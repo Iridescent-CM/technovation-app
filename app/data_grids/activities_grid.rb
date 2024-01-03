@@ -45,7 +45,7 @@ class ActivitiesGrid
   end
 
   column :activity, mandatory: true do
-    HumanizedActivity.(key, parameters)
+    HumanizedActivity.call(key, parameters)
   end
 
   column :target, mandatory: true do |activity|
@@ -103,7 +103,7 @@ class ActivitiesGrid
     select: [
       "Account",
       "Team",
-      "Submission",
+      "Submission"
     ] do |option|
       if option == "Submission"
         where(trackable_type: "Account")
@@ -126,7 +126,7 @@ class ActivitiesGrid
       ["Team was updated", "team.update"],
       ["Team registered for season", "team.register_current_season"],
       ["Submission was created", "submission.create"],
-      ["Submission was updated", "submission.update"],
+      ["Submission was updated", "submission.update"]
     ]
 
   column_names_filter(

@@ -1,7 +1,7 @@
-require './lib/remove_empty_teams'
+require "./lib/remove_empty_teams"
 
 class DeleteEmptyTeams < ActiveRecord::Migration[5.1]
   def up
-    RemoveEmptyTeams.(Logger.new(STDOUT))
+    RemoveEmptyTeams.call(Logger.new(STDOUT))
   end
 end

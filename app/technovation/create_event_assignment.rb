@@ -15,11 +15,11 @@ module CreateEventAssignment
           name: opts[:name],
           profile_type: :judge,
           invited_by_id: invited_by_id
-        });
+        })
       end
 
       unless invite.events.include?(event)
-        InvalidateExistingJudgeData.(invite)
+        InvalidateExistingJudgeData.call(invite)
         invite.events << event
       end
 
@@ -31,14 +31,14 @@ module CreateEventAssignment
             EventMailer.invite(
               membership.member_type,
               membership.member_id,
-              event.id,
+              event.id
             ).deliver_later
           end
         else
           EventMailer.invite(
             opts[:scope],
             invite.id,
-            event.id,
+            event.id
           ).deliver_later
         end
       end

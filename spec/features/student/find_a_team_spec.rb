@@ -28,17 +28,17 @@ RSpec.feature "Students find a team" do
     describe do
       it "browse nearby teams" do
         team = FactoryBot.create(:team, :geocoded) # Default is in Chicago
-  
+
         faraway_team = FactoryBot.create(
           :team,
           :geocoded,
           city: "Los Angeles",
           state_province: "CA"
         )
-    
+
         within(".sub-nav-wrapper") { click_link "Find a team" }
 
-        find(:css, "#location_type_nearme").click()
+        find(:css, "#location_type_nearme").click
 
         expect(page).to have_css(".vue-search-result")
       end

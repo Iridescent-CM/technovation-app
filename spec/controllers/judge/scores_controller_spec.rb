@@ -26,7 +26,7 @@ RSpec.describe Judge::ScoresController do
           request.accept = "application/json"
           get :new
         }.to change { judge.scores.current_round.count }.from(0).to(1)
-        .and change { submission.reload.submission_scores_count }.from(nil).to(1)
+          .and change { submission.reload.submission_scores_count }.from(nil).to(1)
       end
     end
 
@@ -36,10 +36,10 @@ RSpec.describe Judge::ScoresController do
 
       it "sets up a score as opened by the judge at current time" do
         current_rank = if SeasonToggles.semifinals?
-                        :semifinalist
-                      else
-                        :quarterfinalist
-                      end
+          :semifinalist
+        else
+          :quarterfinalist
+        end
 
         team = FactoryBot.create(:team)
 
@@ -58,7 +58,7 @@ RSpec.describe Judge::ScoresController do
           request.accept = "application/json"
           get :new
         }.to change { judge.scores.current_round.count }.from(0).to(1)
-        .and change { submission.reload.submission_scores_count }.from(nil).to(1)
+          .and change { submission.reload.submission_scores_count }.from(nil).to(1)
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe Judge::ScoresController do
       end
     end
 
-    %w{off between finished}.each do |round|
+    %w[off between finished].each do |round|
       context round.titleize do
         it "prevents score" do
           team = FactoryBot.create(:team)
@@ -115,7 +115,7 @@ RSpec.describe Judge::ScoresController do
   end
 
   describe "GET #edit" do
-    %w{between finished}.each do |round|
+    %w[between finished].each do |round|
       context round.titleize do
         it "prevents virtual score edits" do
           team = FactoryBot.create(:team)
@@ -164,8 +164,7 @@ RSpec.describe Judge::ScoresController do
             division_ids: Division.senior.id,
             city: "City",
             venue_address: "123 Street St.",
-            unofficial: false,
-          )
+            unofficial: false)
 
           team.regional_pitch_events << rpe
           team.save
@@ -245,8 +244,7 @@ RSpec.describe Judge::ScoresController do
             division_ids: Division.senior.id,
             city: "City",
             venue_address: "123 Street St.",
-            unofficial: false,
-          )
+            unofficial: false)
 
           team.regional_pitch_events << rpe
           team.save

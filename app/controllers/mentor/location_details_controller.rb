@@ -7,6 +7,7 @@ module Mentor
     end
 
     private
+
     def current_profile
       current_mentor
     end

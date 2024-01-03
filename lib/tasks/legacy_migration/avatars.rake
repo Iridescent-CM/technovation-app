@@ -1,8 +1,8 @@
 namespace :legacy_migration do
   desc "Re-upload user paperclip avatars to carrierwave"
   task avatars: :environment do
-    require './lib/legacy/models/user'
-    require 'open-uri'
+    require "./lib/legacy/models/user"
+    require "open-uri"
 
     Legacy::User.find_each do |user|
       url = "https:#{user.avatar.url(:original)}"

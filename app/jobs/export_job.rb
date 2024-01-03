@@ -1,4 +1,4 @@
-require 'uri'
+require "uri"
 
 class ExportJob < ActiveJob::Base
   include Rails.application.routes.url_helpers
@@ -46,10 +46,10 @@ class ExportJob < ActiveJob::Base
     context_klass = context_name.constantize
 
     params.each do |k, v|
-      if v.is_a?(Array)
-        params[k] = v.reject(&:blank?)
+      params[k] = if v.is_a?(Array)
+        v.reject(&:blank?)
       else
-        params[k] = v
+        v
       end
     end
 
@@ -74,11 +74,12 @@ class ExportJob < ActiveJob::Base
   end
 
   private
+
   def broadcast(job, profile)
     channel = "jobs:#{profile.class.name}:#{profile.id}"
     data = {
       status: job.status,
-      job_id: job.job_id,
+      job_id: job.job_id
     }
 
     if job.status == "complete"
@@ -90,7 +91,7 @@ class ExportJob < ActiveJob::Base
         update_url: send(
           "#{profile.account.scope_name}_export_download_path",
           export
-        ),
+        )
       })
     end
 

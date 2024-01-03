@@ -21,7 +21,7 @@ module TeamController
         back: request.fullpath
       )
     elsif @team.past?
-      render 'teams/past'
+      render "teams/past"
     end
   end
 
@@ -50,11 +50,11 @@ module TeamController
       respond_to do |format|
         format.json {
           render json: {
-            flash: {
-              success: t("controllers.teams.update.success"),
-            },
-          },
-          status: 200
+                   flash: {
+                     success: t("controllers.teams.update.success")
+                   }
+                 },
+            status: 200
         }
 
         format.html {
@@ -66,12 +66,12 @@ module TeamController
       respond_to do |format|
         format.json {
           render json: {
-            flash: {
-              alert: t("controllers.teams.update.failure"),
-              errors: @team.errors.full_messages,
-            },
-          },
-          status: 422
+                   flash: {
+                     alert: t("controllers.teams.update.failure"),
+                     errors: @team.errors.full_messages
+                   }
+                 },
+            status: 422
         }
 
         format.html {
@@ -82,6 +82,7 @@ module TeamController
   end
 
   private
+
   def team_params
     params.require(:team).permit(
       :name,
@@ -92,7 +93,7 @@ module TeamController
       :accepting_mentor_requests,
       :city,
       :state_province,
-      :country,
+      :country
     ).tap do |tapped|
       unless params.fetch(:id) { false }
         tapped[:division] = Division.for(current_profile)

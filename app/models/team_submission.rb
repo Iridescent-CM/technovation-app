@@ -56,9 +56,9 @@ class TeamSubmission < ActiveRecord::Base
   before_validation -> {
     return if thunkable_project_url.blank?
 
-    self.thunkable_project_url = standardize_url(self.thunkable_project_url)
-    self.demo_video_link = standardize_url(self.demo_video_link)
-    self.pitch_video_link = standardize_url(self.pitch_video_link)
+    self.thunkable_project_url = standardize_url(thunkable_project_url)
+    self.demo_video_link = standardize_url(demo_video_link)
+    self.pitch_video_link = standardize_url(pitch_video_link)
   }
 
   before_commit -> {
@@ -211,7 +211,7 @@ class TeamSubmission < ActiveRecord::Base
 
   validates :thunkable_project_url,
     absence: {
-      message: 'Cannot add a Thunkable project URL when App Inventor selected as the development platform.'
+      message: "Cannot add a Thunkable project URL when App Inventor selected as the development platform."
     },
     if: ->(s) { s.development_platform == "App Inventor" }
 
@@ -221,7 +221,7 @@ class TeamSubmission < ActiveRecord::Base
 
   validates :app_inventor_app_name,
     absence: {
-      message: 'Cannot add an App Inventor app name when Thunkable selected as the development platform.'
+      message: "Cannot add an App Inventor app name when Thunkable selected as the development platform."
     },
     if: ->(s) { s.development_platform == "Thunkable" }
 
@@ -237,19 +237,19 @@ class TeamSubmission < ActiveRecord::Base
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
   validates :ai_description, presence: true, max_word_count: true,
-            if: ->(team_submission) { team_submission.ai? }
+    if: ->(team_submission) { team_submission.ai? }
 
   validates :climate_change_description, presence: true, max_word_count: true,
-            if: ->(team_submission) { team_submission.climate_change? }
+    if: ->(team_submission) { team_submission.climate_change? }
 
   validates :game_description, presence: true, max_word_count: true,
-            if: ->(team_submission) { team_submission.game? }
+    if: ->(team_submission) { team_submission.game? }
 
   validates :solves_hunger_or_food_waste_description, presence: true, max_word_count: true,
-            if: ->(team_submission) { team_submission.solves_hunger_or_food_waste? }
+    if: ->(team_submission) { team_submission.solves_hunger_or_food_waste? }
 
   validates :uses_open_ai_description, presence: true, max_word_count: true,
-            if: ->(team_submission) { team_submission.uses_open_ai? }
+    if: ->(team_submission) { team_submission.uses_open_ai? }
 
   validates :pitch_video_link,
     format: {
@@ -264,7 +264,7 @@ class TeamSubmission < ActiveRecord::Base
     allow_blank: true
 
   validate :demo_and_pitch_video_links_are_different, on: :update,
-           if: ->(s) { s.demo_video_link.present? || s.pitch_video_link.present? }
+    if: ->(s) { s.demo_video_link.present? || s.pitch_video_link.present? }
 
   def demo_and_pitch_video_links_are_different
     if demo_video_link == pitch_video_link
@@ -333,7 +333,7 @@ class TeamSubmission < ActiveRecord::Base
       .find_all(&:blank?)
       .map(&:method_name)
       .map(&:to_s)
-      .map { |piece| piece == "screenshots" ? "images" : piece }
+      .map { |piece| (piece == "screenshots") ? "images" : piece }
 
     missing_pieces << "submitting" if incomplete?
 
@@ -481,7 +481,7 @@ class TeamSubmission < ActiveRecord::Base
       self[:app_name].strip
     end
   end
-  alias :name :app_name
+  alias_method :name, :app_name
 
   def published?
     !!published_at
@@ -500,25 +500,25 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def awaiting_publish(scope = :student, &block)
-    if scope.to_s != 'public' and not published?
+    if scope.to_s != "public" and !published?
       yield
     end
   end
 
   def already_published(scope = :student, &block)
-    if scope.to_s != 'public' and published?
+    if scope.to_s != "public" and published?
       yield
     end
   end
 
   def incomplete?
-    not complete?
+    !complete?
   end
 
   def complete?
     RequiredFields.new(self).all?(&:complete?) && !!published_at
   end
-  alias :is_complete :complete?
+  alias_method :is_complete, :complete?
 
   def published!
     update(published_at: Time.current)
@@ -530,7 +530,7 @@ class TeamSubmission < ActiveRecord::Base
       required_fields = RequiredFields.new(self)
 
       total_needed = required_fields.size.to_f + 1
-        # + 1 === publishing / submitting is now required
+      # + 1 === publishing / submitting is now required
 
       published = complete? ? 1 : 0
 
@@ -577,10 +577,10 @@ class TeamSubmission < ActiveRecord::Base
   def app_inventor?
     send("App Inventor?")
   end
-  alias app_inventor_2? app_inventor?
+  alias_method :app_inventor_2?, :app_inventor?
 
   def thunkable?
-    send("Thunkable?")
+    send(:Thunkable?)
   end
 
   def additional_questions?
@@ -609,13 +609,13 @@ class TeamSubmission < ActiveRecord::Base
       src = "/video-link-broken.html"
     end
 
-    %{<iframe
+    %(<iframe
         src="#{src}"
         width="100%"
         height="#{height}"
         frameborder="0"
         allowfullscreen>
-      </iframe>}.strip_heredoc
+      </iframe>).strip_heredoc
   end
 
   def video_id(video_type)
@@ -643,7 +643,7 @@ class TeamSubmission < ActiveRecord::Base
       url = "https://" + url
     end
 
-    return url
+    url
   end
 
   def project_name_by_team_name

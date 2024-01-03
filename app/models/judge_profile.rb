@@ -2,7 +2,7 @@ class JudgeProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
-  enum industry: %i(
+  enum industry: %i[
     Science
     Technology
     Engineering
@@ -11,7 +11,7 @@ class JudgeProfile < ActiveRecord::Base
     Marketing
     Entrepreneurship
     Other
-  )
+  ]
 
   acts_as_paranoid
 
@@ -80,13 +80,13 @@ class JudgeProfile < ActiveRecord::Base
   has_many :scores, -> { current }, class_name: "SubmissionScore"
 
   has_many :current_complete_scores, -> { current.complete },
-   class_name: "SubmissionScore"
+    class_name: "SubmissionScore"
 
   has_many :completed_scores, -> { complete_with_dropped },
-   class_name: "SubmissionScore"
+    class_name: "SubmissionScore"
 
   has_many :current_completed_scores, -> { current.complete_with_dropped },
-   class_name: "SubmissionScore"
+    class_name: "SubmissionScore"
 
   has_many :current_quarterfinals_complete_scores,
     -> { current.complete.quarterfinals },
@@ -99,8 +99,8 @@ class JudgeProfile < ActiveRecord::Base
     to: :account,
     prefix: false
 
-  def method_missing(method_name, *args, &block)
-    account.public_send(method_name, *args, &block)
+  def method_missing(method_name, ...)
+    account.public_send(method_name, ...)
   end
 
   def is_team?
@@ -127,9 +127,9 @@ class JudgeProfile < ActiveRecord::Base
 
   def human_status
     case status
-    when "past_season"; "must log in"
-    when "registered";  "must complete onboarding"
-    when "ready";       "ready!"
+    when "past_season" then "must log in"
+    when "registered" then "must complete onboarding"
+    when "ready" then "ready!"
     else; "status missing (bug)"
     end
   end
@@ -149,9 +149,9 @@ class JudgeProfile < ActiveRecord::Base
 
   def friendly_status
     case status
-    when "past_season"; "Log in now"
-    when "registered";  "Complete your judge profile"
-    when "ready";       "Log in for more details"
+    when "past_season" then "Log in now"
+    when "registered" then "Complete your judge profile"
+    when "ready" then "Log in for more details"
     else; "status missing (bug)"
     end
   end
@@ -201,7 +201,7 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def assigned_teams_for_event(event)
-    assigned_teams.where(:id => event.teams.pluck(:id))
+    assigned_teams.where(id: event.teams.pluck(:id))
   end
 
   def authenticated?
@@ -209,7 +209,7 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   def onboarding?
-    not onboarded?
+    !onboarded?
   end
 
   def scope_name
@@ -223,7 +223,7 @@ class JudgeProfile < ActiveRecord::Base
   def can_be_marked_onboarded?
     account &&
       account.email_confirmed? &&
-        consent_signed? &&
-          training_completed?
+      consent_signed? &&
+      training_completed?
   end
 end

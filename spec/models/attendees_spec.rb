@@ -14,7 +14,7 @@ RSpec.describe Attendees do
         type: "team",
         context: FakeController.new,
         ambassador: chapter_ambassador,
-        event: event,
+        event: event
       )
 
       expect(results.count).to be 1
@@ -29,7 +29,7 @@ RSpec.describe Attendees do
         type: "account",
         context: FakeController.new,
         ambassador: chapter_ambassador,
-        event: event,
+        event: event
       )
 
       expect(results.count).to be 1
@@ -47,7 +47,7 @@ RSpec.describe Attendees do
         query: "invi",
         context: FakeController.new,
         ambassador: chapter_ambassador,
-        event: event,
+        event: event
       )
 
       expect(results.count).to be 1
@@ -60,7 +60,7 @@ RSpec.describe Attendees do
         query: "invite@me.com",
         context: FakeController.new,
         ambassador: chapter_ambassador,
-        event: event,
+        event: event
       )
 
       expect(results.count).to be 1

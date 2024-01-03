@@ -1,6 +1,5 @@
 module Mailchimp
   class MailingList
-
     def initialize(
       client_constructor: Gibbon::Request,
       api_key: ENV.fetch("MAILCHIMP_API_KEY"),
@@ -70,7 +69,7 @@ module Mailchimp
       end
     end
 
-    def body_for(account, profile_type="", additonal_options={})
+    def body_for(account, profile_type = "", additonal_options = {})
       {
         email_address: account.email,
         merge_fields: {
@@ -83,8 +82,8 @@ module Mailchimp
           PARENTREG: account.parent_registered?.to_s
         }
       }.merge(location_for(account))
-       .merge(tags_for(profile_type))
-       .merge(additonal_options)
+        .merge(tags_for(profile_type))
+        .merge(additonal_options)
     end
 
     def location_for(account)

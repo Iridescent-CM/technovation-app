@@ -45,7 +45,7 @@ RSpec.describe MentorProfile do
         current_unmatched_mentor.teams.create!({
           division: Division.for(current_unmatched_mentor),
           name: "Last year",
-          seasons: [Season.current.year - 1],
+          seasons: [Season.current.year - 1]
         })
       end
 
@@ -63,7 +63,7 @@ RSpec.describe MentorProfile do
         mentor.teams.create!({
           division: Division.for(mentor),
           name: "Last year",
-          seasons: [Season.current.year - 1],
+          seasons: [Season.current.year - 1]
         })
       end
 
@@ -73,7 +73,7 @@ RSpec.describe MentorProfile do
         mentor.teams.create!({
           division: Division.for(mentor),
           name: "Two years ago",
-          seasons: [Season.current.year - 2],
+          seasons: [Season.current.year - 2]
         })
       end
 

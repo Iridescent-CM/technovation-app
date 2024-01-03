@@ -43,7 +43,7 @@ RSpec.describe DetermineCertificates do
     it "awards nothing if equivalent certificate exists" do
       student = FactoryBot.create(:student, :half_complete_submission)
 
-      FillPdfs.(student.account)
+      FillPdfs.call(student.account)
 
       expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
       expect(DetermineCertificates.new(student.account).needed).to be_empty
@@ -55,8 +55,7 @@ RSpec.describe DetermineCertificates do
       FactoryBot.create(:certificate,
         account: student.account,
         team: student.team,
-        cert_type: :quarterfinalist
-      )
+        cert_type: :quarterfinalist)
 
       expect(DetermineCertificates.new(student.account).eligible_types).to contain_exactly("participation")
       expect(DetermineCertificates.new(student.account).needed).to be_empty
@@ -76,18 +75,18 @@ RSpec.describe DetermineCertificates do
       team_submissions = mentor.current_teams.select do |team|
         team.submission.complete?
       end
-      
-      expected = team_submissions.map do |team| 
-        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: team) 
+
+      expected = team_submissions.map do |team|
+        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: team)
       end
       expect(DetermineCertificates.new(mentor.account).needed).to match_array(expected)
     end
   end
 
-  context "when the team's submission is less 50% complete" do 
+  context "when the team's submission is less 50% complete" do
     it "does not award a mentor appreciation certificate" do
       mentor = FactoryBot.create(:mentor, number_of_teams: 1)
-      
+
       expect(DetermineCertificates.new(mentor.account).needed).to be_empty
     end
 
@@ -113,7 +112,7 @@ RSpec.describe DetermineCertificates do
         FactoryBot.create(:score, :complete, judge_profile: user.account.judge_profile)
       end
 
-      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w{mentor_appreciation certified_judge})
+      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w[mentor_appreciation certified_judge])
     end
   end
 
@@ -267,8 +266,7 @@ RSpec.describe DetermineCertificates do
 
       FactoryBot.create(:certificate,
         account: judge.account,
-        cert_type: :head_judge
-      )
+        cert_type: :head_judge)
 
       expect(DetermineCertificates.new(judge.account).needed).to be_empty
     end

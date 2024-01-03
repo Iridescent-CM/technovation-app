@@ -33,6 +33,5 @@ module Student
 
       render "student/scores/score_details"
     end
-
   end
 end

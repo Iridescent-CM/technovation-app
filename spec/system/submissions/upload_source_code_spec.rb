@@ -1,12 +1,12 @@
 require "rails_helper"
 
 RSpec.describe "Uploading technical work to submissions", :js do
-  %i{student mentor}.each do |scope|
+  %i[student mentor].each do |scope|
     before do
       SeasonToggles.team_submissions_editable!
 
       user = FactoryBot.create(scope, :onboarded, :on_team)
-      user.teams.first.create_submission!({ integrity_affirmed: true })
+      user.teams.first.create_submission!({integrity_affirmed: true})
 
       visit "/logout"
       sign_in(user)
@@ -34,9 +34,9 @@ RSpec.describe "Uploading technical work to submissions", :js do
           context "and a valid file is uploaded" do
             it "allows the form to be submitted without issue" do
               click_link "Technical Additions"
-              expect(page).to have_css('input[type=file]')
+              expect(page).to have_css("input[type=file]")
 
-              ['aia', 'apk', 'zip'].each do |good_file|
+              ["aia", "apk", "zip"].each do |good_file|
                 attach_file(
                   "file",
                   File.absolute_path("./spec/support/uploads/example.#{good_file}"),
@@ -52,7 +52,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
           context "and an invalid file is uploaded" do
             it "allows the form to be submitted without issue" do
               click_link "Technical Additions"
-              expect(page).to have_css('input[type=file]')
+              expect(page).to have_css("input[type=file]")
 
               attach_file(
                 "file",
@@ -74,13 +74,13 @@ RSpec.describe "Uploading technical work to submissions", :js do
           TeamSubmission.last.update!({
             development_platform: "Thunkable",
             thunkable_account_email: "our-team@thunkable.com",
-            thunkable_project_url: url,
+            thunkable_project_url: url
           })
         end
 
         it "displays a text field with the URL filled in" do
           click_link "Technical Additions"
-          expect(page).not_to have_css('input[type=file]')
+          expect(page).not_to have_css("input[type=file]")
           expect(page).to have_xpath("//input[@type='text' and @value='#{url}']")
         end
       end

@@ -9,7 +9,7 @@ RSpec.describe RemoveEmptyTeams do
 
       team_with_members = FactoryBot.create(:team) # has members by default
 
-      RemoveEmptyTeams.()
+      RemoveEmptyTeams.call
 
       expect(empty_team.reload).to be_deleted
       expect(Team.all).to eq([team_with_members])

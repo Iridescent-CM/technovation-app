@@ -30,23 +30,22 @@ class Attendee
       base_links[:self] = context.send(
         "chapter_ambassador_#{record.ambassador_route_key}_path",
         record,
-        { allow_out_of_region: true },
+        {allow_out_of_region: true}
       )
     end
 
     if record.respond_to?(:submission)
       base_links = base_links.merge({
         submission: context.send(
-          "chapter_ambassador_team_submission_path",
+          :chapter_ambassador_team_submission_path,
           record.submission,
-          { allow_out_of_region: true },
-        ),
+          {allow_out_of_region: true}
+        )
       })
     end
 
     base_links
   end
-
 
   def division
     if record.respond_to?(:division_name)
@@ -57,7 +56,7 @@ class Attendee
   def submission
     if record.respond_to?(:submission)
       {
-        name: record.submission.app_name,
+        name: record.submission.app_name
       }
     end
   end
@@ -74,7 +73,7 @@ class Attendee
 
     {
       team_ids: team_ids,
-      judge_ids: judge_ids,
+      judge_ids: judge_ids
     }
   end
 

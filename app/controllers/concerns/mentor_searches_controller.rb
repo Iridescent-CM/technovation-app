@@ -6,11 +6,12 @@ module MentorSearchesController
 
     @expertises = Expertise.all
 
-    @mentors = SearchMentors.(@search_filter)
+    @mentors = SearchMentors.call(@search_filter)
       .paginate(page: search_params[:page])
   end
 
   private
+
   def search_params
     params.permit(
       :utf8,
@@ -22,7 +23,7 @@ module MentorSearchesController
       :text,
       search_filter: {
         expertise_ids: []
-      },
+      }
     ).tap do |h|
       if h[:nearby].blank?
         params[:nearby] = h[:nearby] = current_account.address_details
@@ -42,7 +43,7 @@ module MentorSearchesController
 
       params[:search_filter] ||=
         h[:search_filter] ||=
-          { expertise_ids: [] }
+          {expertise_ids: []}
 
       if h[:search_filter][:expertise_ids].blank?
         params[:search_filter][:expertise_ids] =

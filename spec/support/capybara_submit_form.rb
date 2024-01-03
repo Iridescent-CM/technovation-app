@@ -6,7 +6,7 @@ end
 
 class Capybara::RackTest::Node
   def submit_form!
-    Capybara::RackTest::Form.new(driver, self.native).submit({})
+    Capybara::RackTest::Form.new(driver, native).submit({})
   end
 end
 

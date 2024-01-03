@@ -4,7 +4,7 @@ module HandleGeocoderSearch
     controller = options[:controller]
     geocoder_query = GeocoderQuery.new(options[:query])
 
-    if geocoder_query.country_code == 'PS'
+    if geocoder_query.country_code == "PS"
       handle_palestine_search(db_record, geocoder_query, controller)
     else
       handle_search(db_record, geocoder_query, controller)
@@ -12,21 +12,21 @@ module HandleGeocoderSearch
   end
 
   private
+
   def self.handle_search(db_record, geocoder_query, controller)
     geocoded_results = GeocodedResults.new(
       search_geocoder(geocoder_query),
       geocoder_query
     )
 
-
     results = handle_possible_insert_of_palestine_multi_result(geocoded_results)
 
     if results.one?
       handle_one_result(db_record, results.first, controller)
     elsif results.many?
-      return { results: results }, :multiple_choices
+      [{results: results}, :multiple_choices]
     elsif results.none?
-      return {}, :not_found
+      [{}, :not_found]
     end
   end
 
@@ -52,14 +52,14 @@ module HandleGeocoderSearch
       country: "State of Palestine",
       country_code: "PS",
       latitude: 30,
-      longitude: 35,
+      longitude: 35
     )
 
     geocoded = Geocoded.new(object)
 
     geocode_db_record(db_record, geocoded, controller)
 
-    return { results: [geocoded] }, :ok
+    [{results: [geocoded]}, :ok]
   end
 
   def self.search_geocoder(geocoder_query)
@@ -81,7 +81,7 @@ module HandleGeocoderSearch
       status_code = :not_found
     end
 
-    return { results: [Geocoded.new(db_record)] }, status_code
+    [{results: [Geocoded.new(db_record)]}, status_code]
   end
 
   def self.geocode_db_record(db_record, geocoded, controller)
@@ -98,8 +98,8 @@ module HandleGeocoderSearch
         geocoded = Geocoded.new(result, query)
 
         if !geocoded.valid?
-          data = (result.data['geocodePoints'] || [{}]).first['coordinates']
-          data ||= result.data.fetch('geometry') { { 'location' => {} } }['location'].values
+          data = (result.data["geocodePoints"] || [{}]).first["coordinates"]
+          data ||= result.data.fetch("geometry") { {"location" => {}} }["location"].values
 
           if my_result = Geocoder.search(data, lookup: :google).first
             geocoded = Geocoded.new(my_result)
@@ -130,17 +130,18 @@ module HandleGeocoderSearch
     end
 
     def to_s
-      [city, state, country_code].compact.join(', ')
+      [city, state, country_code].compact.join(", ")
     end
 
     private
+
     def get_country_code
       if country && country.match(/palestine/i)
         "PS"
       else
         country_result = Country.find_country_by_name(country) ||
-                          Country.find_country_by_alpha3(country) ||
-                            Country.find_country_by_alpha2(country)
+          Country.find_country_by_alpha3(country) ||
+          Country.find_country_by_alpha2(country)
         country_result && country_result.alpha2
       end
     end

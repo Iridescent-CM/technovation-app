@@ -14,7 +14,7 @@ RSpec.describe Admin::TeamMembershipsController do
 
       post :create, params: {
         team_id: team.id,
-        account_id: mentor.account_id,
+        account_id: mentor.account_id
       }
 
       expect(team.reload.mentors).to eq([mentor])
@@ -25,7 +25,7 @@ RSpec.describe Admin::TeamMembershipsController do
 
       post :create, params: {
         team_id: team.id,
-        account_id: student.account_id,
+        account_id: student.account_id
       }
 
       expect(team.reload.students).to include(student)

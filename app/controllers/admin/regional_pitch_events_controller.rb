@@ -21,6 +21,7 @@ module Admin
     end
 
     private
+
     def regional_pitch_event_params
       params.require(:regional_pitch_event).permit(:unofficial)
     end
@@ -33,7 +34,7 @@ module Admin
       )
 
       grid.merge(
-        column_names: detect_extra_columns(grid),
+        column_names: detect_extra_columns(grid)
       )
     end
 

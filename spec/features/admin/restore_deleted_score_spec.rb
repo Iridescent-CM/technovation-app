@@ -24,8 +24,9 @@ RSpec.describe "Admins restoring a deleted score", type: :feature do
       judge_profile_id: FactoryBot.create(:judge).id,
       team_submission_id: FactoryBot.create(:submission, :complete).id,
       ideation_1: 20,
-      round: 'quarterfinals',
-      completed_at: Time.current)
+      round: "quarterfinals",
+      completed_at: Time.current
+    )
 
     submission_score.delete
   end

@@ -10,7 +10,7 @@ class AddTeamToRegionalEvent
         "This team cannot attend the event as it is currently full"
     end
 
-    InvalidateExistingJudgeData.(team)
+    InvalidateExistingJudgeData.call(team)
 
     event.teams << team
 
@@ -25,15 +25,16 @@ class AddTeamToRegionalEvent
       incompatible_teams = event.teams.includes(
         :regional_pitch_events,
         :division,
-        team_submissions: :submission_scores,
+        team_submissions: :submission_scores
       ).where.not("divisions.id" => event.division_ids)
 
-      incompatible_teams.each { |t| InvalidateExistingJudgeData.(t) }
+      incompatible_teams.each { |t| InvalidateExistingJudgeData.call(t) }
 
       incompatible_teams
     end
   end
 
   class IncompatibleDivisionError < StandardError; end
+
   class EventAtTeamCapacityError < StandardError; end
 end

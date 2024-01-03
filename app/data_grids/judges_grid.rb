@@ -34,13 +34,13 @@ class JudgesGrid
   end
 
   column :semifinals_scores_count,
-  header: "Complete Semifinals Scores",
+    header: "Complete Semifinals Scores",
     order: "judge_profiles.semifinals_scores_count" do |asset, grid|
     asset.judge_profile.semifinals_scores_count
   end
 
   column :recusals_count,
-  header: "Recusals",
+    header: "Recusals",
     order: "judge_profiles.recusal_scores_count" do |asset, grid|
     asset.judge_profile.recusal_scores_count
   end
@@ -92,7 +92,7 @@ class JudgesGrid
   column :city
 
   column :state_province, header: "State" do
-    FriendlySubregion.(self, prefix: false)
+    FriendlySubregion.call(self, prefix: false)
   end
 
   column :country do
@@ -117,31 +117,31 @@ class JudgesGrid
     link_to(
       "view",
       send("#{current_scope}_participant_path", account),
-      data: { turbolinks: false }
+      data: {turbolinks: false}
     )
   end
 
   filter :onboarded,
     :enum,
     select: [
-      ['Yes, fully onboarded', 'onboarded'],
-      ['No, still onboarding', 'onboarding'],
+      ["Yes, fully onboarded", "onboarded"],
+      ["No, still onboarding", "onboarding"]
     ],
     filter_group: "common" do |value, scope, grid|
       scope.where(
         "judge_profiles.onboarded = ?",
-         value == 'onboarded' ? true : false
+        value == "onboarded"
       )
     end
 
   filter :has_mentor_profile,
     :enum,
     select: [
-      ['Yes, is also a mentor', 'yes'],
-      ['No', 'no'],
+      ["Yes, is also a mentor", "yes"],
+      ["No", "no"]
     ],
     filter_group: "common" do |value, scope, grid|
-      is_is_not = value === 'yes' ? "IS NOT" : "IS"
+      is_is_not = (value === "yes") ? "IS NOT" : "IS"
 
       scope.left_outer_joins(:mentor_profile).where(
         "mentor_profiles.id #{is_is_not} NULL"
@@ -157,27 +157,27 @@ class JudgesGrid
         .map { |e| [e.name, e.id] }
     },
     if: ->(g) { g.admin or RegionalPitchEvent.visible_to(g.current_account).any? } do |value|
-      where("regional_pitch_events.id = ?", value)
+    where("regional_pitch_events.id = ?", value)
   end
 
   filter :season,
     :enum,
     select: (2015..Season.current.year).to_a.reverse,
     html: {
-      class: "and-or-field",
+      class: "and-or-field"
     },
     multiple: true do |value, scope, grid|
-      scope.by_season(value)
+    scope.by_season(value)
   end
 
   filter :virtual_or_live,
     :enum,
     select: [
-      ['Virtual judges', 'virtual'],
-      ['Live event judges', 'live'],
+      ["Virtual judges", "virtual"],
+      ["Live event judges", "live"]
     ],
     filter_group: "common" do |value, scope, grid|
-      is_is_not = value === "virtual" ? "IS" : "IS NOT"
+      is_is_not = (value === "virtual") ? "IS" : "IS NOT"
 
       scope.where("regional_pitch_events.id #{is_is_not} NULL")
     end
@@ -185,14 +185,14 @@ class JudgesGrid
   filter :name_email,
     header: "Name or Email",
     filter_group: "common" do |value, scope, grid|
-      names = value.strip.downcase.split(' ').map { |n|
+      names = value.strip.downcase.split(" ").map { |n|
         I18n.transliterate(n).gsub("'", "''")
       }
       scope.fuzzy_search({
-          first_name: names.first,
-          last_name: names.last || names.first,
-          email: names.first,
-        }, false)
+        first_name: names.first,
+        last_name: names.last || names.first,
+        email: names.first
+      }, false)
         .left_outer_joins(:judge_profile)
         .left_outer_joins(judge_profile: :regional_pitch_events)
         .where("judge_profiles.id IS NOT NULL")
@@ -207,11 +207,11 @@ class JudgesGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
     if: ->(g) { g.admin } do |values|
       clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
-      where(clauses.join(' OR '))
+      where(clauses.join(" OR "))
     end
 
   filter :state_province,
@@ -223,16 +223,16 @@ class JudgesGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByState.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
       scope.where(country: grid.country)
         .where(
           StateClauses.for(
             values: values,
             countries: grid.country,
-            table_name: 'accounts',
-            operator: 'OR'
+            table_name: "accounts",
+            operator: "OR"
           )
         )
     end
@@ -247,9 +247,9 @@ class JudgesGrid
     filter_group: "more-specific",
     multiple: true,
     data: {
-      placeholder: "Select or start typing...",
+      placeholder: "Select or start typing..."
     },
-    if: ->(grid) { GridCanFilterByCity.(grid) } do |values, scope, grid|
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
       scope.where(
         StateClauses.for(
           values: grid.state_province[0],

@@ -11,7 +11,7 @@ RSpec.feature "Student creates a team" do
     within(".sub-nav-wrapper") { click_link "Create your team" }
     fill_in "Team name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
-                        thing: I18n.t("models.team.class_name"))
+      thing: I18n.t("models.team.class_name"))
 
     expect(Team.last.city).to eq(student.city)
   end
@@ -29,7 +29,7 @@ RSpec.feature "Student creates a team" do
     within(".sub-nav-wrapper") { click_link "Create your team" }
     fill_in "Team name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
-                        thing: I18n.t("models.team.class_name"))
+      thing: I18n.t("models.team.class_name"))
 
     expect(page).to have_content("Your team has been created")
   end
@@ -46,7 +46,7 @@ RSpec.feature "Student creates a team" do
     within(".sub-nav-wrapper") { click_link "Create your team" }
     fill_in "Team name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
-                        thing: I18n.t("models.team.class_name"))
+      thing: I18n.t("models.team.class_name"))
 
     expect(page).to have_content("has already been taken")
   end

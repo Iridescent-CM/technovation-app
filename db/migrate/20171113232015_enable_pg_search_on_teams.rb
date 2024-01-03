@@ -4,6 +4,6 @@ class EnablePgSearchOnTeams < ActiveRecord::Migration[5.1]
       :name,
       name: "trgm_team_name_indx",
       using: :gist,
-      order: { name: :gist_trgm_ops }
+      order: {name: :gist_trgm_ops}
   end
 end

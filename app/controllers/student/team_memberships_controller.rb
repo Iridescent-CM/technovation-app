@@ -4,7 +4,7 @@ module Student
       team = current_student.teams.find(params.fetch(:id))
       member = current_student.team.students.find(params.fetch(:member_id))
 
-      if CanRemoveTeamMember.(current_account, member)
+      if CanRemoveTeamMember.call(current_account, member)
         TeamRosterManaging.remove(team, member)
 
         if member == current_student

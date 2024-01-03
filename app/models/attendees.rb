@@ -17,10 +17,10 @@ class Attendees
     if ambassador.present?
       scope = model.live_event_eligible(event)
 
-      if expand_search
-        records = scope.by_query(query)
+      records = if expand_search
+        scope.by_query(query)
       else
-        records = scope.in_region(ambassador)
+        scope.in_region(ambassador)
       end
     else
       assoc = type.to_s.underscore.downcase.pluralize
@@ -29,7 +29,7 @@ class Attendees
 
     if records.empty? and
         type.to_s === "account" and
-          not query.blank?
+        !query.blank?
       table_name = "user_invitations"
       sort_column = :email
       records = UserInvitation.judge.by_query(query)
@@ -37,7 +37,7 @@ class Attendees
       if records.empty?
         invite = UserInvitation.new(
           profile_type: :judge,
-          email: query,
+          email: query
         )
 
         if invite.valid?
@@ -46,29 +46,29 @@ class Attendees
       end
     end
 
-    if records.is_a?(Array)
-      records = records
+    records = if records.is_a?(Array)
+      records
         .sort { |a, b|
           a.public_send(sort_column).downcase <=> b.public_send(sort_column).downcase
         }.to_a
     else
-      records = records.order(Arel.sql("lower(unaccent(#{table_name}.#{sort_column}))")).to_a
+      records.order(Arel.sql("lower(unaccent(#{table_name}.#{sort_column}))")).to_a
     end
 
     if exclude_event_attendees
       records = records.reject { |attendee| attendee.in_event?(event) }
     end
 
-    if type.to_s === "account" and not query.blank? and
-      !records.select { |attendee| attendee.email == query }.any?
-          invite = UserInvitation.new(
-            profile_type: :judge,
-            email: query,
-          )
+    if type.to_s === "account" and !query.blank? and
+        !records.select { |attendee| attendee.email == query }.any?
+      invite = UserInvitation.new(
+        profile_type: :judge,
+        email: query
+      )
 
-          if invite.valid?
-            records.unshift(invite)
-          end
+      if invite.valid?
+        records.unshift(invite)
+      end
     end
 
     new(records, event, context)

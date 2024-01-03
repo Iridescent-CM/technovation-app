@@ -8,7 +8,7 @@ module ChapterAmbassador
           redirect_to(
             chapter_ambassador_dashboard_path(
               anchor: "!chapter-ambassador-info",
-              anchoring_to_info: true,
+              anchoring_to_info: true
             )
           ) and return
         end
@@ -30,8 +30,7 @@ module ChapterAmbassador
             trackable_user_ids,
             "Account",
             trackable_team_ids,
-            "Team"
-          )
+            "Team")
           .order("created_at desc")
           .first(20)
 

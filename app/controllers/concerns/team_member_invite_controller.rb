@@ -11,19 +11,13 @@ module TeamMemberInviteController
         alert: t("views.team_member_invites.show.invites_disabled_by_judging")
     elsif @invite.invitee and @invite.invitee != current_profile
       signin = @invite.invitee.account
-      SignIn.(
-        signin,
-        self,
-        redirect_to: "#{current_scope}_team_member_invite_path"
-      )
-    else
-      if current_scope == "student" && @invite.status == "pending"
-        @team = @invite.team
+      SignIn.call(signin, self, redirect_to: "#{current_scope}_team_member_invite_path")
+    elsif current_scope == "student" && @invite.status == "pending"
+      @team = @invite.team
 
-        render "team_member_invites/rebrand/show_pending"
-      else
-        render template: "team_member_invites/show_#{@invite.status}"
-      end
+      render "team_member_invites/rebrand/show_pending"
+    else
+      render template: "team_member_invites/show_#{@invite.status}"
     end
   end
 
@@ -46,17 +40,15 @@ module TeamMemberInviteController
           success: t("controllers.team_member_invites.create.success")
         )
       end
-    else
-      if current_scope == "student"
-        @team = current_profile.teams.find(@team_member_invite.team.id)
-        @mentor_invite = MentorInvite.new(team_id: @team.id)
-        @uploader = ImageDirectUploader.new
+    elsif current_scope == "student"
+      @team = current_profile.teams.find(@team_member_invite.team.id)
+      @mentor_invite = MentorInvite.new(team_id: @team.id)
+      @uploader = ImageDirectUploader.new
 
-        flash.now[:error] = t("controllers.team_member_invites.create.failure")
-        render "student/teams/show"
-      else
-        render :new
-      end
+      flash.now[:error] = t("controllers.team_member_invites.create.failure")
+      render "student/teams/show"
+    else
+      render :new
     end
   end
 
@@ -71,9 +63,9 @@ module TeamMemberInviteController
         @invite.destroy
         redirect_to send("#{current_scope}_team_path",
           @invite.team,
-          { anchor: "students" }),
-        success: t("controllers.invites.destroy.success",
-                   name: @invite.invitee_name)
+          {anchor: "students"}),
+          success: t("controllers.invites.destroy.success",
+            name: @invite.invitee_name)
       else
         redirect_to send("#{current_scope}_dashboard_path"),
           notice: t("controllers.invites.destroy.not_found")
@@ -85,6 +77,7 @@ module TeamMemberInviteController
   end
 
   private
+
   def team_member_invite_params
     params.require(:team_member_invite).permit(
       :invitee_email,

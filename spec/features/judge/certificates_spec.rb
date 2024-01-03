@@ -14,7 +14,7 @@ RSpec.feature "Judge certificates" do
 
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     sign_in(judge)
 
     click_link("dashboard-tab")
@@ -30,7 +30,7 @@ RSpec.feature "Judge certificates" do
 
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     sign_in(judge)
 
     click_link("dashboard-tab")
@@ -46,7 +46,7 @@ RSpec.feature "Judge certificates" do
 
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     sign_in(judge)
 
     click_link("dashboard-tab")
@@ -62,7 +62,7 @@ RSpec.feature "Judge certificates" do
 
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     sign_in(judge)
 
     click_link("dashboard-tab")
@@ -93,7 +93,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:finished)
     SeasonToggles.display_scores_on!
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     sign_in(judge)
 
     expect(page).to have_content(
@@ -130,7 +130,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:finished)
     SeasonToggles.display_scores_on!
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     judge.suspend!
 
     sign_in(judge)
@@ -145,7 +145,7 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.set_judging_round(:finished)
     SeasonToggles.display_scores_on!
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     judge.account.judge_certificates.destroy_all
 
     sign_in(judge)
@@ -163,7 +163,7 @@ RSpec.feature "Judge certificates" do
       SeasonToggles.display_scores_on!
 
       expect {
-        FillPdfs.(judge.account)
+        FillPdfs.call(judge.account)
       }.to not_change {
         judge.current_general_judge_certificates.count
       }.and not_change {
@@ -180,32 +180,32 @@ RSpec.feature "Judge certificates" do
   end
 
   scenario "judge with 5 completed current scores" do
-      SeasonToggles.set_judging_round(:sf)
+    SeasonToggles.set_judging_round(:sf)
 
-      judge = FactoryBot.create(:judge, :onboarded, number_of_scores: 5)
+    judge = FactoryBot.create(:judge, :onboarded, number_of_scores: 5)
 
-      SeasonToggles.set_judging_round(:finished)
-      SeasonToggles.display_scores_on!
+    SeasonToggles.set_judging_round(:finished)
+    SeasonToggles.display_scores_on!
 
-      expect {
-        FillPdfs.(judge.account)
-      }.to change {
-        judge.current_certified_judge_certificates.count
-      }.from(0).to(1).and not_change {
-        judge.current_general_judge_certificates.count
-      }.and not_change {
-        judge.current_head_judge_certificates.count
-      }.and not_change {
-        judge.current_judge_advisor_certificates.count
-      }
+    expect {
+      FillPdfs.call(judge.account)
+    }.to change {
+      judge.current_certified_judge_certificates.count
+    }.from(0).to(1).and not_change {
+      judge.current_general_judge_certificates.count
+    }.and not_change {
+      judge.current_head_judge_certificates.count
+    }.and not_change {
+      judge.current_judge_advisor_certificates.count
+    }
 
-      sign_in(judge)
-      click_link "Your judge certificate"
-      expect(page).to have_css("#judge-certificate")
-      expect(page).to have_link(
-        "View your certificate",
-        href: judge.current_certified_judge_certificates.last.file_url
-      )
+    sign_in(judge)
+    click_link "Your judge certificate"
+    expect(page).to have_css("#judge-certificate")
+    expect(page).to have_link(
+      "View your certificate",
+      href: judge.current_certified_judge_certificates.last.file_url
+    )
   end
 
   Array(6..10).each do |n|
@@ -218,15 +218,15 @@ RSpec.feature "Judge certificates" do
       SeasonToggles.display_scores_on!
 
       expect {
-        FillPdfs.(judge.account)
+        FillPdfs.call(judge.account)
       }.to change {
         judge.current_head_judge_certificates.count
       }.from(0).to(1)
-      .and not_change {
-        judge.current_certified_judge_certificates.count
-      }.and not_change {
-        judge.current_general_judge_certificates.count
-      }
+        .and not_change {
+               judge.current_certified_judge_certificates.count
+             }.and not_change {
+                     judge.current_general_judge_certificates.count
+                   }
 
       sign_in(judge)
       expect(page).to have_css("#judge-certificate")
@@ -246,17 +246,17 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.display_scores_on!
 
     expect {
-      FillPdfs.(judge.account)
+      FillPdfs.call(judge.account)
     }.to change {
       judge.current_judge_advisor_certificates.count
     }.from(0).to(1)
-    .and not_change {
-      judge.current_head_judge_certificates.count
-    }.and not_change {
-      judge.current_certified_judge_certificates.count
-    }.and not_change {
-      judge.current_general_judge_certificates.count
-    }
+      .and not_change {
+             judge.current_head_judge_certificates.count
+           }.and not_change {
+                   judge.current_certified_judge_certificates.count
+                 }.and not_change {
+                         judge.current_general_judge_certificates.count
+                       }
 
     sign_in(judge)
     click_link "Your judge certificate"
@@ -276,17 +276,17 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.display_scores_on!
 
     expect {
-      FillPdfs.(judge.account)
+      FillPdfs.call(judge.account)
     }.to change {
       judge.current_head_judge_certificates.count
     }.from(0).to(1)
-    .and not_change {
-      judge.current_judge_advisor_certificates.count
-    }.and not_change {
-      judge.current_certified_judge_certificates.count
-    }.and not_change {
-      judge.current_general_judge_certificates.count
-    }
+      .and not_change {
+             judge.current_judge_advisor_certificates.count
+           }.and not_change {
+                   judge.current_certified_judge_certificates.count
+                 }.and not_change {
+                         judge.current_general_judge_certificates.count
+                       }
 
     sign_in(judge)
     click_link "Your judge certificate"
@@ -306,17 +306,17 @@ RSpec.feature "Judge certificates" do
     SeasonToggles.display_scores_on!
 
     expect {
-      FillPdfs.(judge.account)
+      FillPdfs.call(judge.account)
     }.to change {
       judge.current_judge_advisor_certificates.count
     }.from(0).to(1)
-    .and not_change {
-      judge.current_head_judge_certificates.count
-    }.and not_change {
-      judge.current_certified_judge_certificates.count
-    }.and not_change {
-      judge.current_general_judge_certificates.count
-    }
+      .and not_change {
+             judge.current_head_judge_certificates.count
+           }.and not_change {
+                   judge.current_certified_judge_certificates.count
+                 }.and not_change {
+                         judge.current_general_judge_certificates.count
+                       }
 
     sign_in(judge)
     click_link "Your judge certificate"
@@ -331,7 +331,7 @@ RSpec.feature "Judge certificates" do
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
     previous_certificate = FactoryBot.create(:certificate, :past, account: judge.account, cert_type: :head_judge)
 
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
     sign_in(judge)
 
     click_link("prev-certs-tab")
@@ -341,7 +341,7 @@ RSpec.feature "Judge certificates" do
 
   scenario "No previous judge certificates are displayed if judge does not have previous judge certificates" do
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
-    FillPdfs.(judge.account)
+    FillPdfs.call(judge.account)
 
     sign_in(judge)
 

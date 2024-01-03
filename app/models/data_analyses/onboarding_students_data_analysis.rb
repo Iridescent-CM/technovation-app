@@ -1,12 +1,12 @@
 module DataAnalyses
   class OnboardingStudentsDataAnalysis < DataAnalysis
     def init_data
-      if user.is_admin?
-        @students = Account.current
+      @students = if user.is_admin?
+        Account.current
           .left_outer_joins(:student_profile)
           .where("student_profiles.id IS NOT NULL")
       else
-        @students = Account.current
+        Account.current
           .left_outer_joins(:student_profile)
           .where("student_profiles.id IS NOT NULL")
           .in_region(user)
@@ -18,21 +18,21 @@ module DataAnalyses
 
     def totals
       {
-        students: number_with_delimiter(@students.count),
+        students: number_with_delimiter(@students.count)
       }
     end
 
     def labels
       [
         "Fully onboarded - #{show_percentage(@onboarded, @students)}",
-        "Not fully onboarded - #{show_percentage(@not_onboarded, @students)}",
+        "Not fully onboarded - #{show_percentage(@not_onboarded, @students)}"
       ]
     end
 
     def data
       [
         @onboarded.count,
-        @not_onboarded.count,
+        @not_onboarded.count
       ]
     end
 
@@ -41,16 +41,14 @@ module DataAnalyses
         url_helper.public_send("#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["student"],
-            onboarded_students: :onboarded,
-          }
-        ),
+            onboarded_students: :onboarded
+          }),
 
         url_helper.public_send("#{user.scope_name}_participants_path",
           accounts_grid: {
             scope_names: ["student"],
-            onboarded_students: :onboarding,
-          }
-        ),
+            onboarded_students: :onboarding
+          })
       ]
     end
   end

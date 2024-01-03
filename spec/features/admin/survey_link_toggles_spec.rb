@@ -15,7 +15,7 @@ RSpec.feature "Set survey links and link text", :js do
 
       sign_in(user)
 
-      expect(current_path).to eq(public_send("student_dashboard_path"))
+      expect(current_path).to eq(public_send(:student_dashboard_path))
       expect(page).to have_link("link text", href: "google.com", count: 2)
 
       expect(page).to have_css(".swal2-modal")
@@ -30,9 +30,9 @@ RSpec.feature "Set survey links and link text", :js do
 
       sign_in(user)
 
-      expect(current_path).to eq(public_send("student_dashboard_path"))
+      expect(current_path).to eq(public_send(:student_dashboard_path))
 
-      find('#global-dropdown-wrapper').click
+      find("#global-dropdown-wrapper").click
       expect(page).to have_link("link text", href: "google.com", count: 2)
 
       expect(page).not_to have_css(".swal2-modal")
@@ -53,7 +53,7 @@ RSpec.feature "Set survey links and link text", :js do
 
       sign_in(mentor)
 
-      expect(current_path).to eq(public_send("mentor_dashboard_path"))
+      expect(current_path).to eq(public_send(:mentor_dashboard_path))
       expect(page).to have_link("link text", href: "google.com", count: 2)
 
       expect(page).to have_css(".swal2-modal")
@@ -68,12 +68,10 @@ RSpec.feature "Set survey links and link text", :js do
 
       sign_in(mentor)
 
-      expect(current_path).to eq(public_send("mentor_dashboard_path"))
+      expect(current_path).to eq(public_send(:mentor_dashboard_path))
       expect(page).to have_link("link text", href: "google.com", count: 1)
 
       expect(page).not_to have_css(".swal2-modal")
     end
   end
 end
-
-

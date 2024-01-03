@@ -5,13 +5,13 @@ class ResetActivities < ActiveRecord::Migration[5.1]
     Account.current.find_each do |account|
       account.create_activity(
         key: "account.create",
-        created_at: account.created_at,
+        created_at: account.created_at
       )
 
       if account.updated_at != account.created_at
         account.create_activity(
           key: "account.update",
-          created_at: account.updated_at,
+          created_at: account.updated_at
         )
       end
     end

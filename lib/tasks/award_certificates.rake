@@ -8,7 +8,7 @@ def award_to(account)
     certificates.eligible_types.map { |t| t.humanize.titleize }.join(", ")
   puts "\t#{certificates.needed.count} certificate(s) needed"
 
-  FillPdfs.(account)
+  FillPdfs.call(account)
 end
 
 def job_for(account)
@@ -43,7 +43,7 @@ namespace :certificates do
   end
 
   desc "Award certificates to all current accounts"
-  task :award_all_direct => :environment do
+  task award_all_direct: :environment do
     accounts = Account.current.order(id: :asc)
 
     accounts.each do |account|
@@ -69,7 +69,7 @@ namespace :certificates do
   end
 
   desc "Create certificate jobs for all current accounts"
-  task :award_all_jobs => :environment do
+  task award_all_jobs: :environment do
     accounts = Account.current.order(id: :asc)
 
     accounts.each do |account|

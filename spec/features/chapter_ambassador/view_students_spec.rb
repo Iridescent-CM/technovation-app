@@ -12,7 +12,7 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     expect(page).to have_css(
       ".flag.flag--season.flag-season--new",
       text: "New student"
-     )
+    )
   end
 
   scenario "viewing a past student" do
@@ -26,7 +26,7 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     expect(page).to have_css(
       ".flag.flag--season.flag-season--past",
       text: "Past student"
-     )
+    )
   end
 
   scenario "viewing a returning student" do
@@ -40,6 +40,6 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     expect(page).to have_css(
       ".flag.flag--season.flag-season--returning",
       text: "Returning student"
-     )
+    )
   end
 end

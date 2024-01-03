@@ -1,6 +1,6 @@
 def reset_day?
   Date.today.month == Season::START_MONTH and
-      Date.today.day == Season::START_DAY
+    Date.today.day == Season::START_DAY
 end
 
 desc "Reset data for the new season on season start date every year"

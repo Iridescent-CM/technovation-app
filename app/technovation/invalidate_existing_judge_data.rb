@@ -6,12 +6,11 @@ class InvalidateExistingJudgeData
       participant.events.destroy_all
     end
 
-
     if opts.fetch(:removing) { false }
       event = opts.fetch(:event)
 
       event_scores_by_this_judge = SubmissionScore
-        .includes(team_submission: { team: :events })
+        .includes(team_submission: {team: :events})
         .references(:regional_pitch_events)
         .where(judge_profile_id: participant.id)
         .where("regional_pitch_events.id = ?", event.id)

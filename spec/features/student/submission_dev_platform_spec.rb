@@ -8,7 +8,7 @@ RSpec.feature "Students edit submission development platform" do
 
     FactoryBot.create(
       :team_submission,
-      team: student.team,
+      team: student.team
     )
 
     sign_in(student)
@@ -28,7 +28,7 @@ RSpec.feature "Students edit submission development platform" do
     click_button "Save"
 
     expect(page).to have_css(
-      ".field_with_errors #team_submission_app_inventor_app_name",
+      ".field_with_errors #team_submission_app_inventor_app_name"
     )
 
     fill_in "What is your App Inventor Project Name?", with: "my_exact_app_name"

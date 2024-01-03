@@ -8,6 +8,7 @@ module Mentor
     end
 
     private
+
     def events_available_to(submission)
       @events_available ||= {}
 
@@ -17,8 +18,8 @@ module Mentor
 
     def can_select_live_event?(team)
       SeasonToggles.select_regional_pitch_event? and
-        not team.live_event? and
-          events_available_to(team.submission).any?
+        !team.live_event? and
+        events_available_to(team.submission).any?
     end
   end
 end

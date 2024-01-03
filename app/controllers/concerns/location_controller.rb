@@ -12,32 +12,31 @@ module LocationController
   end
 
   def update
-    data, status = HandleGeocoderSearch.({
+    data, status = HandleGeocoderSearch.call({
       db_record: db_record,
       query: location_params,
-      controller: self,
+      controller: self
     })
 
     render json: data, status: status
   end
 
   private
+
   def location_params
     params.require("#{current_scope}_location")
       .permit(:city, :state, :country, :token)
   end
 
   def db_record
+    current_account.authenticated? ?
+      current_account :
+      raise("try current_attempt")
+  rescue
     begin
-      current_account.authenticated? ?
-        current_account :
-        raise("try current_attempt")
+      current_attempt
     rescue
-      begin
-        current_attempt
-      rescue
-        false
-      end
+      false
     end
   end
 end

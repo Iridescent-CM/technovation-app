@@ -14,9 +14,10 @@ class BackgroundCheck::Candidate
   end
 
   private
+
   def default_attributes
     {
-      no_middle_name: true,
+      no_middle_name: true
     }
   end
 end

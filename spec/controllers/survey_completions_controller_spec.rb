@@ -7,7 +7,7 @@ RSpec.describe SurveyCompletionsController do
       expect(response).to redirect_to(signin_path)
     end
 
-    %i{student mentor}.each do |scope|
+    %i[student mentor].each do |scope|
       it "tracks the #{scope} as having taken the survey" do
         user = FactoryBot.create(scope)
         sign_in(user)

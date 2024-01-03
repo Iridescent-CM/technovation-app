@@ -8,7 +8,7 @@ RSpec.describe "Admin/Data Analysis requests" do
       sign_in(:admin)
       get admin_data_analysis_path(:top_countries)
 
-      expect(JSON.parse(response.body)['data']['attributes']['labels']).to eq(["United States"])
+      expect(JSON.parse(response.body)["data"]["attributes"]["labels"]).to eq(["United States"])
     end
   end
 
@@ -20,7 +20,7 @@ RSpec.describe "Admin/Data Analysis requests" do
       sign_in(:admin)
       get admin_data_analysis_path(:returning_students)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([1, 0])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([1, 0])
     end
 
     it "counts new students to the current season" do
@@ -29,7 +29,7 @@ RSpec.describe "Admin/Data Analysis requests" do
       sign_in(:admin)
       get admin_data_analysis_path(:returning_students)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([0, 1])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([0, 1])
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe "Admin/Data Analysis requests" do
       sign_in(:admin)
       get admin_data_analysis_path(:returning_mentors)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([1, 0])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([1, 0])
     end
 
     it "counts new mentors to the current season" do
@@ -50,7 +50,7 @@ RSpec.describe "Admin/Data Analysis requests" do
       sign_in(:admin)
       get admin_data_analysis_path(:returning_mentors)
 
-      expect(JSON.parse(response.body)['data']['attributes']['data']).to eq([0, 1])
+      expect(JSON.parse(response.body)["data"]["attributes"]["data"]).to eq([0, 1])
     end
   end
 end

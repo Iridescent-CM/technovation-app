@@ -24,7 +24,7 @@ class TeamMailer < ApplicationMailer
     I18n.with_locale(@member.locale) do
       mail to: @member.email,
         subject: "Your Chapter Ambassador has removed #{@team.name} " +
-                 "from the regional pitch event: #{@event.name}"
+          "from the regional pitch event: #{@event.name}"
     end
   end
 
@@ -113,8 +113,8 @@ class TeamMailer < ApplicationMailer
 
     I18n.with_locale(recipient.locale) do
       mail to: recipient.email,
-          subject: I18n.translate("team_mailer.join_request.subject",
-                                  role_name: join_request.requestor_scope_name)
+        subject: I18n.translate("team_mailer.join_request.subject",
+          role_name: join_request.requestor_scope_name)
     end
   end
 
@@ -135,6 +135,7 @@ class TeamMailer < ApplicationMailer
   end
 
   private
+
   def join_request_status(status, type, join_request)
     @first_name = join_request.requestor_first_name
     @team_name = join_request.team_name

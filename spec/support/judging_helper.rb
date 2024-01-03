@@ -1,6 +1,6 @@
 module JudgingHelper
   def set_judging_round(round)
-    @original_round =  SeasonToggles.judging_round
+    @original_round = SeasonToggles.judging_round
     SeasonToggles.set_judging_round(round)
   end
 

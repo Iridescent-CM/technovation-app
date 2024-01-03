@@ -22,13 +22,13 @@ namespace :teams do
   desc "Remove orphaned teams from RPEs no longer in their division"
   task make_orphaned_virtual: :environment do
     Team.current.includes(:regional_pitch_events,
-                          team_submissions: :submission_scores).find_each do |t|
+      team_submissions: :submission_scores).find_each do |t|
       if t.selected_regional_pitch_event.live? and
-          not t.selected_regional_pitch_event.division_ids.include?(t.division.id)
+          !t.selected_regional_pitch_event.division_ids.include?(t.division.id)
 
         event_name = t.selected_regional_pitch_event_name
 
-        InvalidateExistingJudgeData.(t)
+        InvalidateExistingJudgeData.call(t)
 
         puts "Removed #{t.name} from #{event_name}"
       end
@@ -39,50 +39,54 @@ namespace :teams do
   task location_data_dump: :environment do
     puts "Exporting data..."
 
-    filename =  "./#{Season.current.year}-team-locations-dump.csv"
+    filename = "./#{Season.current.year}-team-locations-dump.csv"
 
-    CSV.open(filename, 'wb') do |csv|
-      csv << %w{
+    CSV.open(filename, "wb") do |csv|
+      csv << %w[
         Team\ name
         Team\ state/province
         Members\ state/province
         Team\ country
         Members\ country
         Submission\ status
-      }
+      ]
 
-      Team.current.includes(memberships: { member: :account }).find_each do |team|
+      Team.current.includes(memberships: {member: :account}).find_each do |team|
         row = [team.name]
 
         states = team.members.collect(&:state_province).compact
-        countries = team.members.flat_map(&:account).collect { |a| FriendlyCountry.(a) }.compact
+        countries = team.members.flat_map(&:account).collect { |a| FriendlyCountry.call(a) }.compact
 
         next if [team.state_province] == states.uniq and
-                  [FriendlyCountry.(team)] == countries.uniq
+          [FriendlyCountry.call(team)] == countries.uniq
 
-        row <<  team.state_province
+        row << team.state_province
 
         members_state_entry = if states.uniq.count != states.count
-                                state_counts = states.inject(Hash.new(0)) { |h, v| h[v] += 1; h }
-                                states.max_by { |v| state_counts[v] }
-                              else
-                                states.join(', ')
-                              end
+          state_counts = states.each_with_object(Hash.new(0)) { |v, h|
+            h[v] += 1
+          }
+          states.max_by { |v| state_counts[v] }
+        else
+          states.join(", ")
+        end
 
         members_country_entry = if countries.uniq.count != countries.count
-                                  country_counts = countries.inject(Hash.new(0)) { |h, v| h[v] += 1; h }
-                                  countries.max_by { |v| country_counts[v] }
-                                else
-                                  countries.join(', ')
-                                end
+          country_counts = countries.each_with_object(Hash.new(0)) { |v, h|
+            h[v] += 1
+          }
+          countries.max_by { |v| country_counts[v] }
+        else
+          countries.join(", ")
+        end
 
         next if members_state_entry == team.state_province and
-                  members_country_entry == FriendlyCountry.(team)
+          members_country_entry == FriendlyCountry.call(team)
 
         puts "Exporting Team##{team.id} location information"
 
         row << members_state_entry
-        row << FriendlyCountry.(team)
+        row << FriendlyCountry.call(team)
         row << members_country_entry
         row << team.submission.status
 

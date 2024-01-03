@@ -5,6 +5,7 @@ module Mentor
     before_action :require_onboarded
 
     private
+
     def require_onboarded
       if current_mentor.onboarded?
         true

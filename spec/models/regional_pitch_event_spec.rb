@@ -9,7 +9,7 @@ RSpec.describe RegionalPitchEvent do
     it "is pending before finalization point" do
       [
         finalization_point - 1.day,
-        finalization_point - 1.minute,
+        finalization_point - 1.minute
       ].each do |point|
         Timecop.freeze(point) do
           expect(official_rpe.officiality).to be :pending
@@ -22,7 +22,7 @@ RSpec.describe RegionalPitchEvent do
       [
         finalization_point,
         finalization_point + 1.minute,
-        finalization_point + 1.day,
+        finalization_point + 1.day
       ].each do |point|
         Timecop.freeze(point) do
           expect(official_rpe.officiality).to be :official
@@ -33,15 +33,15 @@ RSpec.describe RegionalPitchEvent do
 
     it "is independent of user time zone" do
       Timecop.freeze(finalization_point) do
-        west_zone = Time.find_zone('International Date Line West')
+        west_zone = Time.find_zone("International Date Line West")
         app_zone = Time.zone
-        east_zone = Time.find_zone('Samoa')
+        east_zone = Time.find_zone("Samoa")
 
         expect(west_zone).to be < app_zone
         expect(app_zone).to be < east_zone
 
-        west = Time.use_zone('International Date Line West') { official_rpe.officiality }
-        east = Time.use_zone('Samoa') { official_rpe.officiality }
+        west = Time.use_zone("International Date Line West") { official_rpe.officiality }
+        east = Time.use_zone("Samoa") { official_rpe.officiality }
 
         expect(west).to eq(east)
       end
@@ -84,7 +84,7 @@ RSpec.describe RegionalPitchEvent do
     rpe = FactoryBot.create(:event, :senior)
 
     expect {
-      AddTeamToRegionalEvent.(rpe, team)
+      AddTeamToRegionalEvent.call(rpe, team)
     }.to raise_error(AddTeamToRegionalEvent::IncompatibleDivisionError)
 
     expect(rpe.reload.teams).to be_empty
@@ -95,7 +95,7 @@ RSpec.describe RegionalPitchEvent do
     rpe = FactoryBot.create(:event, :junior, :junior_at_team_capacity)
 
     expect {
-      AddTeamToRegionalEvent.(rpe, team)
+      AddTeamToRegionalEvent.call(rpe, team)
     }.to raise_error(AddTeamToRegionalEvent::EventAtTeamCapacityError)
 
     expect(rpe.teams.length).to eq(1)
@@ -113,7 +113,7 @@ RSpec.describe RegionalPitchEvent do
     rpe = FactoryBot.create(:event, :senior)
 
     expect {
-      AddTeamToRegionalEvent.(rpe, team)
+      AddTeamToRegionalEvent.call(rpe, team)
     }.to change { rpe.reload.teams_count }.from(0).to(1)
 
     live_judge.regional_pitch_events << rpe

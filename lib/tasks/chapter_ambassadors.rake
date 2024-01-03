@@ -5,8 +5,8 @@ namespace :chapter_ambassadors do
 
     filename = "./#{Season.current.year}-chapter-ambassador-dump.csv"
 
-    CSV.open(filename, 'wb') do |csv|
-      csv << %w{
+    CSV.open(filename, "wb") do |csv|
+      csv << %w[
         User\ Email
         User\ Country
         User\ State/province
@@ -15,7 +15,7 @@ namespace :chapter_ambassadors do
         Chapter\ Ambassador\ Country
         Chapter\ Ambassador\ State/province
         Chapter\ Ambassador\ City
-      }
+      ]
 
       [
         Account.current.joins(:student_profile),

@@ -53,4 +53,3 @@ RSpec.describe "Resetting for season" do
     end
   end
 end
-

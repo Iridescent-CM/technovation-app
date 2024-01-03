@@ -7,11 +7,10 @@ RSpec.describe FillPdfs do
     FactoryBot.create(:certificate,
       cert_type: :quarterfinalist,
       account: student.account,
-      team: student.team
-    )
+      team: student.team)
 
     expect {
-      FillPdfs.(student.account)
+      FillPdfs.call(student.account)
     }.not_to change {
       student.certificates.current.quarterfinalist.count
     }
@@ -21,7 +20,7 @@ RSpec.describe FillPdfs do
     judge = FactoryBot.create(:judge)
 
     expect {
-      FillPdfs.(judge.account)
+      FillPdfs.call(judge.account)
     }.not_to change {
       judge.certificates.count
     }
