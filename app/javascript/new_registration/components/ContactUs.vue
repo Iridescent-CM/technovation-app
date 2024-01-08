@@ -18,6 +18,7 @@
         <a href="mailto:support@technovation.org" class="site-link">Contact</a>
         <a href="https://www.technovation.org/terms-of-use/" class="site-link">Terms of Use</a>
         <a href="https://www.technovation.org/news-events/" class="site-link">Press</a>
+        <a href="https://www.technovation.org/corporate-partners/" class="site-link">Partners</a>
         <a href="https://www.technovation.org/privacy-policy/" class="site-link">Privacy Policy</a>
         <a href="https://www.technovation.org/donate-today/" class="site-link">Donate</a>
       </div>
