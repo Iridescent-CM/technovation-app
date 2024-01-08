@@ -9,6 +9,7 @@
         <p class="font-bold text-2xl"><%= chapter_ambassador.full_name %></p>
         <p class="font-bold"><%= chapter_ambassador.program_name %> Chapter Ambassador</p>
         <p class="mt-8"><%= chapter_ambassador.intro_summary %></p>
+
         <div id="cha-social-links">
           <% chapter_ambassador.regional_links.each do |link| %>
             <span>
@@ -20,7 +21,12 @@
             </span>
           <% end %>
         </div>
+
+        <%= link_to "View other nearby chapters on our chapter map!",
+                    "https://www.google.com/maps/d/viewer?mid=1iNTtG9RMwX6S8qyQiWq27JYIIU6dYkd4&hl=en_US&ll=16.477516426989585%2C-30.326061099999947&z=2",
+                    class: "inline-block mt-8 tw-link" %>
       </div>
     </div>
   </div>
 <% end %>
+
