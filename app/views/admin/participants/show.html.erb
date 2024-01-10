@@ -181,6 +181,9 @@
       </div>
     <% end %>
 
+    <%= render 'admin/participants/profile_activity',
+        profile_activity: @profile_activity %>
+
     <% if parental_consent_pending? %>
       <div class="panel">
         <h5>

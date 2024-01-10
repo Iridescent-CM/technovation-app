@@ -6,12 +6,18 @@ module ProfileController
   end
 
   def update
+    account_performing_update = if session[:admin_account_id_performing_impersonation].present?
+      Account.find(session[:admin_account_id_performing_impersonation])
+    else
+      current_account
+    end
+
     if !!params[:setting_location] &&
         permitted_params[:account_attributes][:country].blank? &&
         permitted_params[:account_attributes][:latitude].blank?
       profile.account.errors.add(:country, :blank)
       render "location_details/show"
-    elsif ProfileUpdating.execute(profile, permitted_params)
+    elsif ProfileUpdating.execute(profile, permitted_params, account_performing_update: account_performing_update)
       respond_to do |format|
         format.json {
           render json: {
@@ -23,11 +29,11 @@ module ProfileController
         }
 
         format.html {
-          redirect_to send("#{current_scope}_profile_path"),
+          redirect_to send(:"#{current_scope}_profile_path"),
             success: t("controllers.accounts.update.success")
         }
       end
-    elsif profile.errors["account.password"].any? or
+    elsif profile.errors["account.password"].any? ||
         profile.errors["account.existing_password"].any?
       if profile.account.email_changed?
         render "email_addresses/edit"
@@ -38,8 +44,8 @@ module ProfileController
       render "email_addresses/edit"
     elsif profile.errors["parent_guardian_email"].any?
       render "student/parental_consent_notices/new"
-    elsif profile.errors["account.city"].any? or
-        profile.errors["account.state_province"].any? or
+    elsif profile.errors["account.city"].any? ||
+        profile.errors["account.state_province"].any? ||
         profile.errors["account.country"].any?
       render "location_details/show"
     else
