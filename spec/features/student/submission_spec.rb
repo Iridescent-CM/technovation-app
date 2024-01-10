@@ -122,10 +122,14 @@ RSpec.feature "Student team submissions" do
 
     expect(page).to have_content("User Adoption Plan")
 
-    ProfileUpdating.execute(student, :student, account_attributes: {
-      id: student.account_id,
-      date_of_birth: senior_dob
-    })
+    ProfileUpdating.execute(
+      student,
+      :student,
+      {account_attributes: {
+        id: student.account_id,
+        date_of_birth: senior_dob
+      }}
+    )
 
     click_link "Entrepreneurship"
 

@@ -269,11 +269,15 @@ RSpec.describe FindEligibleSubmissionId do
 
         judges_team = FactoryBot.create(:team)
 
-        judges_team.students.each do |s|
-          ProfileUpdating.execute(s, account_attributes: {
-            id: s.account_id,
-            date_of_birth: senior_dob
-          })
+        judges_team.students.each do |student|
+          ProfileUpdating.execute(
+            student,
+            nil,
+            {account_attributes: {
+              id: student.account_id,
+              date_of_birth: senior_dob
+            }}
+          )
         end
 
         judge.teams << judges_team
@@ -460,11 +464,15 @@ RSpec.describe FindEligibleSubmissionId do
 
         judges_team = FactoryBot.create(:team)
 
-        judges_team.students.each do |s|
-          ProfileUpdating.execute(s, account_attributes: {
-            id: s.account_id,
-            date_of_birth: senior_dob
-          })
+        judges_team.students.each do |student|
+          ProfileUpdating.execute(
+            student,
+            nil,
+            {account_attributes: {
+              id: student.account_id,
+              date_of_birth: senior_dob
+            }}
+          )
         end
 
         judge.teams << judges_team

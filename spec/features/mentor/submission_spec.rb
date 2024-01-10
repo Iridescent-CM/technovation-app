@@ -135,10 +135,14 @@ RSpec.feature "Student team submissions" do
     expect(page).to have_content("User Adoption Plan")
 
     student = mentor.teams.first.students.first
-    ProfileUpdating.execute(student, :student, account_attributes: {
-      id: student.account_id,
-      date_of_birth: senior_dob
-    })
+    ProfileUpdating.execute(
+      student,
+      :student,
+      {account_attributes: {
+        id: student.account_id,
+        date_of_birth: senior_dob
+      }}
+    )
 
     visit mentor_dashboard_path
     within("#find-team") { click_link "Edit this team's submission" }
