@@ -1,5 +1,8 @@
 module Admin
   class ParticipantSessionsController < AdminController
+    before_action :set_admin_id_performing_impersonation, only: :show
+    before_action :delete_admin_id_performing_impersonation, only: :destroy
+
     def show
       participant = Account.find(params[:id])
       participant.regenerate_session_token
@@ -19,6 +22,18 @@ module Admin
       participant.regenerate_session_token
       remove_cookie(CookieNames::SESSION_TOKEN)
       redirect_to admin_participant_path(participant)
+    end
+
+    private
+
+    def set_admin_id_performing_impersonation
+      if current_account.admin?
+        session[:admin_account_id_performing_impersonation] = current_account.id
+      end
+    end
+
+    def delete_admin_id_performing_impersonation
+      session.delete(:admin_account_id_performing_impersonation)
     end
   end
 end
