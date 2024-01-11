@@ -23,6 +23,21 @@
       >Forming teams allowed</label>
     </p>
 
+    <div style="background-color: #f5f5f5; padding: 12px 8px; margin-bottom: 12px; font-size: 1rem;">
+      <p>"Forming teams allowed" enables:</p>
+      <ul style="margin-top: 0; font-size: 1rem;">
+        <li>Creating teams</li>
+        <li>Team invites</li>
+        <li>Team join requests</li>
+        <li>The checkbox for "Allow other students to find our team and request to join us"</li>
+      </ul>
+    </div>
+
+    <p class="notice info hint">
+      <icon name="exclamation-circle" :size="16" color="00529B" />
+      Please note that when the "Forming teams allowed" box is checked, students can invite people to register and join their team even if registration is closed.
+    </p>
+
     <div v-if="judgingEnabled" class="notice info hint user-notice">
       <icon name="exclamation-circle" :size="16" color="00529B" />
       When judging is enabled, teams cannot be formed
