@@ -58,6 +58,6 @@ module TechnovationApp
       only: %r{^/student/downloadable_parental_consent}
 
     config.active_record.schema_format = :sql
-    config.active_record.yaml_column_permitted_classes = [Symbol]
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeZone, ActiveSupport::TimeWithZone]
   end
 end

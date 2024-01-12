@@ -1,33 +1,71 @@
-<tr>
-  <% if activity.trackable %>
-    <td>
-      <%= image_tag activity.trackable.profile_image_url,
-        class: "thumbnail-xs" %>
-    </td>
+<% if current_account.is_admin? %>
+  <div style="font-size: 1rem;">
+    <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #f3f4f6;">
+      <div>
+        <% if activity.owner.present? %>
+          <%= link_to activity.owner.name,
+            admin_participant_path(activity.owner),
+            data: { turbolinks: false } %>
+        <% else %>
+          <%= link_to activity.trackable.name,
+            admin_participant_path(activity.trackable),
+            data: { turbolinks: false } %>
+        <% end %>
+      </div>
 
-    <td><%= activity.trackable.scope_name.humanize %></td>
+      <p style="margin: 0; font-size: 0.875rem; color: #6B7280;">
+        <%= activity.created_at.strftime("%B %d, %Y %l:%M:%S %p") %>
+      </p>
+    </div>
 
-    <td>
-      <%= link_to activity.trackable.name,
-        send("#{current_scope}_participant_path", activity.trackable),
-        data: { turbolinks: false } %>
-    </td>
-  <% else %>
-    <td>–</td>
-    <td>–</td>
-  <% end %>
+    <ul>
+      <% if activity.parameters[:changes].present? %>
+        <% activity.parameters[:changes].each do |key, changes| %>
+          <li><%= t(key) %></li>
 
-  <td>updated their profile</td>
+          <ul style="list-style: circle;">
+            <li><%= changes.first %></li>
+            <li><%= changes.last %></li>
+          </ul>
+        <% end %>
+      <% else %>
+        <li>Profile updated</li>
+      <% end %>
+    </ul>
+  </div>
 
-  <% if activity.recipient %>
-    <td>
-      <%= link_to activity.recipient.name,
-        send("#{current_scope}_participant_path", activity.trackable),
-        data: { turbolinks: false } %>
-    </td>
-  <% else %>
-    <td>–</td>
-  <% end %>
+<% else %>
+  <tr>
+    <% if activity.trackable %>
+      <td>
+        <%= image_tag activity.trackable.profile_image_url,
+          class: "thumbnail-xs" %>
+      </td>
 
-  <td><%= time_ago_in_words(activity.created_at) %> ago</td>
-</tr>
+      <td><%= activity.trackable.scope_name.humanize %></td>
+
+      <td>
+        <%= link_to activity.trackable.name,
+          send("#{current_scope}_participant_path", activity.trackable),
+          data: { turbolinks: false } %>
+      </td>
+    <% else %>
+      <td>–</td>
+      <td>–</td>
+    <% end %>
+
+    <td>updated their profile</td>
+
+    <% if activity.recipient %>
+      <td>
+        <%= link_to activity.recipient.name,
+          send("#{current_scope}_participant_path", activity.trackable),
+          data: { turbolinks: false } %>
+      </td>
+    <% else %>
+      <td>–</td>
+    <% end %>
+
+    <td><%= time_ago_in_words(activity.created_at) %> ago</td>
+  </tr>
+<% end %>

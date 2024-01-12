@@ -17,7 +17,7 @@ gem "textacular", "~> 5.1"
 
 gem "pdf-forms", "~> 1.2"
 
-gem "public_activity", "~> 1.6"
+gem "public_activity", "~> 2.0"
 gem "paranoia", "~> 2.4"
 gem "counter_culture", "~> 1.12"
 gem "pundit", "~> 2.0"

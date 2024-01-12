@@ -13,10 +13,14 @@ RSpec.describe MentorProfile do
 
       student = t1.students.first
 
-      ProfileUpdating.execute(student, account_attributes: {
-        id: student.account_id,
-        date_of_birth: senior_dob
-      })
+      ProfileUpdating.execute(
+        student,
+        nil,
+        {account_attributes: {
+          id: student.account_id,
+          date_of_birth: senior_dob
+        }}
+      )
 
       TeamRosterManaging.add(t1, mentor)
 
@@ -44,10 +48,14 @@ RSpec.describe MentorProfile do
       [t1, t2].each do |team|
         student = team.students.first
 
-        ProfileUpdating.execute(student, account_attributes: {
-          id: student.account_id,
-          date_of_birth: senior_dob
-        })
+        ProfileUpdating.execute(
+          student,
+          nil,
+          {account_attributes: {
+            id: student.account_id,
+            date_of_birth: senior_dob
+          }}
+        )
       end
 
       expect(mentor.team_region_division_names).to match_array(["US_CA,senior"])

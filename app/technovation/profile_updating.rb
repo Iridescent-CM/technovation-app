@@ -1,22 +1,28 @@
 class ProfileUpdating
-  private
-
-  attr_reader :profile, :account, :scope
-
-  public
-
-  def initialize(profile, scope = nil)
+  def initialize(profile, scope = nil, account_performing_update: profile.account)
     @profile = profile
     @account = profile.account
     @scope = (scope || account.scope_name).to_s.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")
+    @account_performing_update = account_performing_update
   end
 
-  def self.execute(profile, scope = nil, attrs)
-    new(profile, scope).update(attrs)
+  def self.execute(profile, scope = nil, attrs, account_performing_update: profile.account)
+    new(profile, scope, account_performing_update: account_performing_update).update(attrs)
   end
 
   def update(attributes)
     if profile.update(attributes)
+
+      profile.account.create_activity(
+        key: "account.update",
+        owner: account_performing_update,
+        params: {
+          changes: proc do |_, model_instance|
+            model_instance.saved_changes.to_hash.except("updated_at")
+          end
+        }
+      )
+
       perform_callbacks
       true
     else
@@ -29,11 +35,10 @@ class ProfileUpdating
     perform_avatar_changes_updates
     Geocoding.perform(account)
 
-    send("perform_#{scope}_updates")
+    send(:"perform_#{scope}_updates")
 
     profile.save
     account.save
-    account.create_activity(key: "account.update")
   end
 
   private
@@ -102,4 +107,8 @@ class ProfileUpdating
       end
     end
   end
+
+  private
+
+  attr_reader :profile, :account, :scope, :account_performing_update
 end

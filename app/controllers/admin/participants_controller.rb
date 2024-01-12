@@ -14,6 +14,7 @@ module Admin
       @season_flag = SeasonFlag.new(@account)
       @certificates = @account.current_certificates
       @needed_certificates = DetermineCertificates.new(@account).needed
+      @profile_activity = @account.activities.where(key: "account.update").order(created_at: :asc)
     end
 
     def edit
@@ -22,7 +23,7 @@ module Admin
 
     def update
       @account = Account.find(params.fetch(:id))
-      profile = @account.send("#{@account.scope_name}_profile")
+      profile = @account.send(:"#{@account.scope_name}_profile")
 
       profile_params = account_params.delete(
         "#{@account.scope_name}_profile"
@@ -35,7 +36,8 @@ module Admin
       if ProfileUpdating.execute(
         profile,
         @account.scope_name,
-        profile_params
+        profile_params,
+        account_performing_update: current_account
       )
         redirect_to admin_participant_path(@account),
           success: "You updated #{@account.full_name}'s account"

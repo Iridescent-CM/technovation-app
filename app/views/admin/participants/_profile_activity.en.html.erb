@@ -1,0 +1,16 @@
+<h4 class="reset">Profile Activity</h4>
+
+<div class="panel">
+  <div class="grid">
+    <% if profile_activity.present? %>
+    <div class="grid__col-12" style="height: 400px; overflow-y: scroll;">
+      <%= render_activity(profile_activity) %>
+    </div>
+  <% else %>
+    <div class="grid__col-12">
+      <p>No activity to display.</p>
+    </div>
+  <% end %>
+  </div>
+</div>
+
