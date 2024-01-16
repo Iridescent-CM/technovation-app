@@ -10,9 +10,9 @@ class NullBackgroundCheck < NullObject
   def paranoid?; false; end
   def invitation_status; nil; end
   def invitation_pending?; false; end
-  def requesting_invitation?; false; end
   def invitation_completed?; false; end
   def invitation_expired?; false; end
+  def requesting_invitation?; false; end
   def error?; false; end
   def candidate_id; nil; end
 end
