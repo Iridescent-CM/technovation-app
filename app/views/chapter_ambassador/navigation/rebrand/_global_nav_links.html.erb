@@ -1,0 +1,5 @@
+<% if current_account.can_switch_to_mentor? %>
+  <%= link_to "Mentor Mode", mentor_dashboard_path,
+              class: "tw-sm-hidden"
+  %>
+<% end %>
