@@ -4,7 +4,6 @@
 //= require accordion
 //= require char-counter
 //= require saved-searches
-//= require student-dropdown
 
 document.addEventListener("turbolinks:load", function() {
   $("select.enum_filter").chosen({
