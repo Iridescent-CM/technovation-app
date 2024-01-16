@@ -133,9 +133,6 @@ Rails.application.routes.draw do
     resources :scores, only: :show
   end
 
-  get "pending_chapter_ambassador/dashboard",
-    to: "chapter_ambassador/dashboards#show"
-
   namespace :chapter_ambassador do
     resource :profile_details_confirmation, only: [:create, :update]
 
