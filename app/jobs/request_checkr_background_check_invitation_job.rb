@@ -14,7 +14,7 @@ class RequestCheckrBackgroundCheckInvitationJob < ActiveJob::Base
     bg_check = BackgroundCheck.find_or_create_by!(account: profile)
     bg_check.update_columns(
       status: :invitation_required,
-      state: :requesting_invitation
+      internal_invitation_status: :requesting_invitation
     )
   end
 
