@@ -1,5 +1,5 @@
 <% if current_ambassador.onboarding? %>
-  <%= render "chapter_ambassador/dashboards/onboarding" %>
+  <%= render "chapter_ambassador/chapter_admin/onboarding" %>
 <% else %>
   <div class="grid tabs tabs--vertical">
     <div class="grid__col-sm-3 col--sticky-parent">
@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <%= render 'chapter_ambassador/dashboards/menu' %>
+          <%= render 'chapter_ambassador/chapter_admin/menu' %>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your local program introduction to access this section</p>
             <% else %>
-              <%= render "chapter_ambassador/dashboards/students" %>
+              <%= render "chapter_ambassador/chapter_admin/students" %>
             <% end %>
           </div>
 
@@ -44,7 +44,7 @@
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your local program introduction to access this section</p>
             <% else %>
-              <%= render "chapter_ambassador/dashboards/mentors" %>
+              <%= render "chapter_ambassador/chapter_admin/mentors" %>
             <% end %>
           </div>
 
@@ -52,7 +52,7 @@
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your local program introduction to access this section</p>
             <% else %>
-              <%= render "chapter_ambassador/dashboards/inactivity" %>
+              <%= render "chapter_ambassador/chapter_admin/inactivity" %>
             <% end %>
           </div>
 
@@ -60,7 +60,7 @@
             <% if current_ambassador.needs_intro_prompt? %>
               <p>Please fill in your local program introduction to access this section</p>
             <% else %>
-              <%= render 'chapter_ambassador/dashboards/activity_feed' %>
+              <%= render 'chapter_ambassador/chapter_admin/activity_feed' %>
             <% end %>
           </div>
 
@@ -80,7 +80,7 @@
           </div>
 
           <div class="tabs__tab-content" id="resources">
-            <%= render "chapter_ambassador/dashboards/info_sidebar" %>
+            <%= render "chapter_ambassador/chapter_admin/info_sidebar" %>
           </div>
         </div>
       </div>
