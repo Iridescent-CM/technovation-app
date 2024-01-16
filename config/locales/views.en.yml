@@ -119,6 +119,10 @@ en:
         consent_no: "I do not grant permission"
       submit: "Submit"
 
+    chapter_ambassadors:
+      navigation:
+        chapter_admin_activity: "Chapter Admin Activity"
+
     mentor:
       form:
         mentor_types: "As a mentor you may call me a..."
