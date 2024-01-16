@@ -23,7 +23,15 @@ module CheckrApiClient
 
     def request_checkr_invitation
       if candidate_id.blank?
-        create_checkr_candidate
+        candidate_resp = create_checkr_candidate
+        candidate_resp_body = JSON.parse(candidate_resp.body, symbolize_names: true)
+
+        if candidate_resp.success?
+          @candidate_id = candidate_resp_body[:id]
+        else
+          error = candidate_resp_body[:error].join(", ")
+          handle_error(error)
+        end
       end
 
       if candidate_id.present?
