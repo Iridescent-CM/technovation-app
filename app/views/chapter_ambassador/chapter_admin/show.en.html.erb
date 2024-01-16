@@ -1,0 +1,89 @@
+<% if current_ambassador.onboarding? %>
+  <%= render "chapter_ambassador/dashboards/onboarding" %>
+<% else %>
+  <div class="grid tabs tabs--vertical">
+    <div class="grid__col-sm-3 col--sticky-parent">
+      <div class="col--sticky-spacer">
+        <div class="col--sticky">
+          <div class="grid__cell clearfix">
+            <%= image_tag current_ambassador.profile_image_url,
+              class: "grid__cell-img thumbnail-md thumbnail-no-float" %>
+
+            <div>
+              <h6 class="small reset">
+                <%= current_ambassador.full_name %>
+              </h6>
+
+              <%= link_to "edit profile",
+                chapter_ambassador_profile_path,
+                class: "small" %>
+            </div>
+          </div>
+
+          <%= render 'chapter_ambassador/dashboards/menu' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs__content grid__col-sm-9 col--sticky-parent">
+      <div class="col--sticky-spacer">
+        <div class="col--sticky">
+          <div class="tabs__tab-content" id="students">
+            <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
+
+            <% if current_ambassador.needs_intro_prompt? %>
+              <p>Please fill in your local program introduction to access this section</p>
+            <% else %>
+              <%= render "chapter_ambassador/dashboards/students" %>
+            <% end %>
+          </div>
+
+          <div class="tabs__tab-content" id="mentors">
+            <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
+
+            <% if current_ambassador.needs_intro_prompt? %>
+              <p>Please fill in your local program introduction to access this section</p>
+            <% else %>
+              <%= render "chapter_ambassador/dashboards/mentors" %>
+            <% end %>
+          </div>
+
+          <div class="tabs__tab-content" id="inactivity">
+            <% if current_ambassador.needs_intro_prompt? %>
+              <p>Please fill in your local program introduction to access this section</p>
+            <% else %>
+              <%= render "chapter_ambassador/dashboards/inactivity" %>
+            <% end %>
+          </div>
+
+          <div class="tabs__tab-content" id="recent-activity">
+            <% if current_ambassador.needs_intro_prompt? %>
+              <p>Please fill in your local program introduction to access this section</p>
+            <% else %>
+              <%= render 'chapter_ambassador/dashboards/activity_feed' %>
+            <% end %>
+          </div>
+
+          <div class="tabs__tab-content" id="chapter-ambassador-info">
+            <% if current_ambassador.needs_intro_prompt? %>
+              <h4>Promote your program to your area</h4>
+              <%= render "chapter_ambassador/introductions/form", chapter_ambassador_dashboard: true %>
+            <% else %>
+              <%= render "dashboards/chapter_ambassador_intro", chapter_ambassador_dashboard: true %>
+
+              <p>
+                <%= link_to "Edit your introduction",
+                  edit_chapter_ambassador_introduction_path,
+                  class: "button secondary small" %>
+              </p>
+            <% end %>
+          </div>
+
+          <div class="tabs__tab-content" id="resources">
+            <%= render "chapter_ambassador/dashboards/info_sidebar" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
