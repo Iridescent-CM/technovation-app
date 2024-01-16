@@ -143,6 +143,7 @@ Rails.application.routes.draw do
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
 
+    resource :chapter_admin, only: :show, controller: "chapter_admin"
     resource :dashboard, only: :show
     resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
