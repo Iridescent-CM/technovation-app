@@ -1,0 +1,11 @@
+<%= link_to t('views.application.dashboard'),
+  chapter_ambassador_dashboard_path,
+  class: al(chapter_ambassador_dashboard_path) %>
+
+<%= link_to t('views.application.my_profile'),
+  chapter_ambassador_profile_path,
+  class: al(chapter_ambassador_profile_path) %>
+
+<%= link_to t('views.application.signout'),
+  logout_path,
+  data: { method: :delete } %>
