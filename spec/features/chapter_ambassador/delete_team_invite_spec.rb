@@ -5,6 +5,7 @@ RSpec.feature "Chapter Ambsssadors deleting a team invite", :js do
 
   before do
     sign_in(:chapter_ambassador, :approved)
+    visit(chapter_ambassador_chapter_admin_path)
   end
 
   scenario "Deleting a pending invite and displaying a confirmation message" do

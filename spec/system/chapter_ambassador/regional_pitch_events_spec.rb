@@ -17,6 +17,8 @@ RSpec.describe "Regional Pitch Events", :js do
 
     it "displays an 'Add an event' button" do
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
+
       click_link "Events"
 
       expect(page).to have_content("Add an event")
@@ -24,6 +26,7 @@ RSpec.describe "Regional Pitch Events", :js do
 
     it "successfully creates a new event" do
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       click_button "Add an event"
@@ -60,6 +63,8 @@ RSpec.describe "Regional Pitch Events", :js do
 
     before do
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
+
       click_link "Events"
     end
 
@@ -77,6 +82,7 @@ RSpec.describe "Regional Pitch Events", :js do
     expect(RegionalPitchEvent.count).to be > 0
 
     sign_in(chapter_ambassador)
+    visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Events"
     find("img[alt='edit']").click
@@ -94,6 +100,7 @@ RSpec.describe "Regional Pitch Events", :js do
     expect(RegionalPitchEvent.count).to be > 0
 
     sign_in(chapter_ambassador)
+    visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Events"
     find("img[alt='remove']").click

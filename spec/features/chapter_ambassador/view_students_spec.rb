@@ -5,6 +5,8 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     student = FactoryBot.create(:student)
 
     sign_in(:ambassador, :approved)
+    visit(chapter_ambassador_chapter_admin_path)
+
     click_link "Participants"
     within("tr#account_#{student.account_id}") { click_link "view" }
 
@@ -19,6 +21,7 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     student = FactoryBot.create(:student, :past)
 
     sign_in(:ambassador, :approved)
+    visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Participants"
     visit chapter_ambassador_participant_path(student.account)
@@ -33,6 +36,7 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     student = FactoryBot.create(:student, :returning)
 
     sign_in(:ambassador, :approved)
+    visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Participants"
     visit chapter_ambassador_participant_path(student.account)
