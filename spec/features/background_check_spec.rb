@@ -30,6 +30,8 @@ RSpec.feature "background checks" do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :geocoded)
     chapter_ambassador.background_check.destroy
     sign_in(chapter_ambassador)
+    visit(chapter_ambassador_chapter_admin_path)
+
     click_link "Submit Background Check"
 
     fill_in "Zipcode", with: 60622
