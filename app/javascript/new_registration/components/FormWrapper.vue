@@ -128,7 +128,7 @@ export default {
             window.location.href = '/judge/dashboard'
             break
           case 'chapter_ambassador':
-            window.location.href = '/pending_chapter_ambassador/dashboard'
+            window.location.href = '/chapter_ambassador/dashboard'
             break
         }
       }
