@@ -863,8 +863,7 @@ class Account < ActiveRecord::Base
     # TODO: this doesn't work well for accounts with multiple scopes
     if module_name and module_name === "judge"
       "judge"
-    elsif chapter_ambassador_profile.present? and
-        chapter_ambassador_profile.approved?
+    elsif chapter_ambassador_profile.present?
       "chapter_ambassador"
     elsif mentor_profile.present?
       "mentor"
@@ -874,8 +873,6 @@ class Account < ActiveRecord::Base
       "judge"
     elsif admin_profile.present?
       "admin"
-    elsif chapter_ambassador_profile.present?
-      "#{chapter_ambassador_profile.status}_chapter_ambassador"
     else
       "public"
     end
