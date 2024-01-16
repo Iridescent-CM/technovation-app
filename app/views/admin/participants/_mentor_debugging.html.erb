@@ -47,7 +47,7 @@
                   "exclamation-circle icon-red",
                   text: profile.background_check.invitation_status
                 ) %>
-        <% elsif  profile.background_check.error? %>
+        <% elsif profile.background_check.error? %>
           <%= web_icon(
                 "exclamation-circle icon-red",
                 text: profile.background_check.error_message.present? ? "Error from Checkr: #{profile.background_check.error_message}" : "No error message recorded. Review Checkr logs."
