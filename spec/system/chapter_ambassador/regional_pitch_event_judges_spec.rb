@@ -17,6 +17,7 @@ RSpec.describe "Regional Pitch Event Judges", :js do
       expect(Team.count).to be_present
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       find("img[alt='edit judges']").click
@@ -42,6 +43,7 @@ RSpec.describe "Regional Pitch Event Judges", :js do
       event.judges = [judge]
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       find("img[alt='edit judges']").click
@@ -66,6 +68,7 @@ RSpec.describe "Regional Pitch Event Judges", :js do
 
     it "does not display the 'Edit Judges' icon/link" do
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       expect(page).not_to have_css("img[alt='edit judges']")

@@ -6,6 +6,7 @@ RSpec.describe "chapter ambassador convert students to mentors" do
       student = FactoryBot.create(:student, date_of_birth: 17.years.ago)
       chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Participants"
       within("#account_#{student.account_id}") do
@@ -21,6 +22,7 @@ RSpec.describe "chapter ambassador convert students to mentors" do
       student = FactoryBot.create(:student, date_of_birth: 18.years.ago)
       chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Participants"
 

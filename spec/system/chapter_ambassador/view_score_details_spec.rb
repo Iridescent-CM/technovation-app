@@ -62,6 +62,7 @@ RSpec.describe "viewing score details page" do
       context "when the chapter ambassador views the main scores page" do
         before do
           sign_in(chapter_ambassador)
+          visit(chapter_ambassador_chapter_admin_path)
 
           click_link "Scores"
         end
@@ -75,6 +76,7 @@ RSpec.describe "viewing score details page" do
       context "when the chapter ambassador views the score details page for the team who attended the RPE" do
         before do
           sign_in(chapter_ambassador)
+          visit(chapter_ambassador_chapter_admin_path)
 
           click_link "Scores"
           within "#team_submission_#{team_submission.id}" do
@@ -127,6 +129,7 @@ RSpec.describe "viewing score details page" do
         context "when the chapter ambassador views the score details page for the team who attended the RPE" do
           before do
             sign_in(chapter_ambassador)
+            visit(chapter_ambassador_chapter_admin_path)
 
             click_link "Scores"
             within "#team_submission_#{team_submission.id}" do
@@ -150,6 +153,7 @@ RSpec.describe "viewing score details page" do
       context "when the chapter ambassador views the main scores page" do
         before do
           sign_in(chapter_ambassador)
+          visit(chapter_ambassador_chapter_admin_path)
 
           click_link "Scores"
         end
@@ -170,6 +174,7 @@ RSpec.describe "viewing score details page" do
     context "when the chapter ambassador views the main scores page" do
       before do
         sign_in(chapter_ambassador)
+        visit(chapter_ambassador_chapter_admin_path)
 
         click_link "Scores"
       end
@@ -183,6 +188,7 @@ RSpec.describe "viewing score details page" do
     context "when the chapter ambassador views the score details page for the team" do
       before do
         sign_in(chapter_ambassador)
+        visit(chapter_ambassador_chapter_admin_path)
 
         click_link "Scores"
         within "#team_submission_#{team_submission.id}" do
@@ -241,6 +247,7 @@ RSpec.describe "viewing score details page" do
       context "when the chapter ambassador views the score details page for that team" do
         before do
           sign_in(chapter_ambassador)
+          visit(chapter_ambassador_chapter_admin_path)
 
           click_link "Scores"
           within "#team_submission_#{team_submission.id}" do

@@ -59,6 +59,7 @@ RSpec.feature "Admins impersonating other accounts" do
     click_link "Login as #{chapter_ambassador.full_name}"
     expect(current_path).to eq(chapter_ambassador_dashboard_path)
 
+    visit(chapter_ambassador_chapter_admin_path)
     click_link "My Account"
     expect(current_path).to eq(chapter_ambassador_profile_path)
 
