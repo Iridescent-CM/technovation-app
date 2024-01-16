@@ -11,6 +11,7 @@ RSpec.feature "Chapter ambassadors viewing regional activity" do
 
     chapter_ambassador = FactoryBot.create(:ambassador, :geocoded, :approved)
     sign_in(chapter_ambassador)
+    visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Activity"
 
