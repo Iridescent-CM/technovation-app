@@ -19,6 +19,7 @@
 //= require chosen-init
 //= require flash-msgs
 //= require tabs
+//= require dropdown_nav
 //= require student-dropdown
 //= require rebrand-tabs
 //= require image-uploaders
