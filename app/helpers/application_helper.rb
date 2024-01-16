@@ -17,7 +17,9 @@ module ApplicationHelper
   def determine_manifest
     namespace = controller_path.split("/").first
 
-    if current_account.authenticated? and SCOPES.include?(namespace)
+    if namespace == "chapter_ambassador" && controller_path.split("/").second == "dashboards"
+      :student
+    elsif current_account.authenticated? && SCOPES.include?(namespace)
       namespace
     elsif current_account.authenticated?
       current_account.scope_name

@@ -1,0 +1,15 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'Onboarding Checklist'} do%>
+    <div class="p-6" id="tab-wrapper">
+      <%= render 'chapter_ambassador/dashboards/rebrand/side_nav_content' %>
+    </div>
+  <% end %>
+
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Chapter Ambassador Dashboard'} do %>
+    <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
+      <div id="information-details">
+
+      </div>
+    </div>
+  <% end %>
+</div>
