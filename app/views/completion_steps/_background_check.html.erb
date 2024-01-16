@@ -6,7 +6,7 @@
   <% if profile.background_check.requesting_invitation? %>
     <%= render "background_checks/statuses/requesting_invitation" %>
   <% elsif profile.background_check.error? %>
-    <%= render "background_checks/statuses/invitation_error" %>
+    <%= render "background_checks/statuses/error" %>
   <% elsif profile.background_check.invitation_pending? %>
     <%= render "background_checks/statuses/invitation_pending" %>
   <% elsif profile.background_check_submitted? %>
