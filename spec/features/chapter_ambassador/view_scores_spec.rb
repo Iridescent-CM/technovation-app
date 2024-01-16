@@ -4,6 +4,8 @@ RSpec.feature "Chapter Ambassador views scores" do
   before do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
     sign_in(chapter_ambassador)
+
+    visit(chapter_ambassador_chapter_admin_path)
   end
 
   context "after scores set to display" do
