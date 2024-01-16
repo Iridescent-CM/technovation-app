@@ -11,6 +11,7 @@ feature "chapter ambassadors switch to judge mode from chapter ambassador dashbo
       chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :has_judge_profile)
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       expect(chapter_ambassador.is_a_judge?).to be_truthy
 
@@ -23,6 +24,7 @@ feature "chapter ambassadors switch to judge mode from chapter ambassador dashbo
       chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :has_judge_profile)
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Judge Mode"
       expect(page).to have_text("Judging Rubric")
@@ -30,7 +32,7 @@ feature "chapter ambassadors switch to judge mode from chapter ambassador dashbo
 
       find("#global-dropdown-wrapper").click
       click_link "Chapter Ambassador Mode"
-      expect(page).to have_text("Technovation Ambassador")
+      expect(page).to have_text("Chapter Ambassador Dashboard")
       expect(current_path).to eq(chapter_ambassador_dashboard_path)
     end
 
