@@ -4,5 +4,7 @@
   </div>
   <% if current_scope == 'judge' %>
     <%= render 'judge/navigation/rebrand/tg_sub_nav' %>
+  <% elsif current_scope == 'chapter_ambassador' %>
+    <%= render 'chapter_ambassador/navigation/rebrand/tg_sub_nav' %>
   <% end %>
 </div>
