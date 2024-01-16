@@ -25,6 +25,7 @@ RSpec.describe "Regional Pitch Event Teams", :js do
       expect(Team.count).to be_present
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       find("img[alt='edit teams']").click
@@ -49,6 +50,7 @@ RSpec.describe "Regional Pitch Event Teams", :js do
       expect(Team.count).to be_present
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       find("img[alt='edit teams']").click
@@ -71,6 +73,7 @@ RSpec.describe "Regional Pitch Event Teams", :js do
       expect(Team.count).to be_present
       event.teams = [team]
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       find("img[alt='edit teams']").click
@@ -95,6 +98,8 @@ RSpec.describe "Regional Pitch Event Teams", :js do
 
       it "displays an 'ADD TEAMS' button" do
         sign_in(chapter_ambassador)
+        visit(chapter_ambassador_chapter_admin_path)
+
         click_link "Events"
         find("img[alt='edit teams']").click
 
@@ -109,6 +114,8 @@ RSpec.describe "Regional Pitch Event Teams", :js do
         FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
 
         sign_in(chapter_ambassador)
+        visit(chapter_ambassador_chapter_admin_path)
+
         click_link "Events"
         find("img[alt='edit teams']").click
       end
@@ -131,6 +138,7 @@ RSpec.describe "Regional Pitch Event Teams", :js do
 
     it "does not display the 'Edit Teams' icon/link" do
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Events"
       expect(page).not_to have_css("img[alt='edit teams']")

@@ -9,6 +9,8 @@ RSpec.feature "Remove an onboarding student" do
     TeamRosterManaging.add(team, student)
 
     sign_in(chapter_ambassador)
+    visit(chapter_ambassador_chapter_admin_path)
+
     click_link "Teams"
     click_link "view"
 
