@@ -244,7 +244,7 @@ CREATE TABLE public.background_checks (
     invitation_id character varying,
     invitation_status integer,
     invitation_url character varying,
-    internal_invitation_status integer,
+    state integer,
     error_message character varying
 );
 
