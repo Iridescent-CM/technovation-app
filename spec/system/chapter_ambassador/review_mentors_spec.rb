@@ -9,6 +9,8 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
       trained = FactoryBot.create(:mentor, :onboarded)
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
+
       click_link "Participants"
 
       within("#account_#{untrained.account_id}") do
@@ -33,6 +35,7 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
       )
 
       sign_in(chapter_ambassador)
+      visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Participants"
 
