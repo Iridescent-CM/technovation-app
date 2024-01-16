@@ -1,0 +1,35 @@
+<ul>
+  <li class="md:hidden">
+    <%= link_to "About", "https://www.technovation.org/about/", target: :_blank %>
+  </li>
+
+  <% if current_account.can_switch_to_mentor? %>
+    <li class="md:hidden">
+      <%= link_to "Mentor Mode", mentor_dashboard_path %>
+    </li>
+  <% end %>
+
+  <li>
+    <%= link_to t('views.application.dashboard'),
+      chapter_ambassador_dashboard_path,
+      class: al(chapter_ambassador_dashboard_path) %>
+  </li>
+
+  <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+    <li>
+      <%= link_to SeasonToggles.survey_link(current_scope, "text"),
+        SeasonToggles.survey_link(
+          current_scope, "url",
+          format_url: true,
+          account: current_account
+        ),
+        target: :_blank %>
+    </li>
+  <% end %>
+
+  <% if current_account.authenticated? %>
+    <li>
+      <%= link_to t('views.application.signout'), signout_path, class: 'text-sm' %>
+    </li>
+  <% end %>
+</ul>

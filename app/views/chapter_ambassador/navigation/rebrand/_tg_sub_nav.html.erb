@@ -1,0 +1,13 @@
+<div class="sub-nav-wrapper w-full lg:w-3/4 mx-auto">
+  <nav class="list-reset flex">
+
+    <%= link_to t("views.application.dashboards.menu.dashboard"),
+                chapter_ambassador_dashboard_path,
+                class: al(chapter_ambassador_dashboard_path) + " sub-nav-item"%>
+
+    <%= link_to t("views.chapter_ambassadors.navigation.chapter_admin_activity"),
+                chapter_ambassador_chapter_admin_path,
+                class: al(chapter_ambassador_chapter_admin_path) + " sub-nav-item"%>
+  </nav>
+</div>
+
