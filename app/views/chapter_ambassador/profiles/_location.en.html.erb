@@ -1,19 +1,29 @@
-<h3>Your location</h3>
+<div id="location" class="tw-blue-lg-container">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Your Location</p>
+  </div>
 
-<% if current_ambassador.address_details.blank? %>
-  <p>
-    <%= link_to "Set your location",
-      chapter_ambassador_location_details_path(
-        return_to: chapter_ambassador_profile_path(anchor: '!location')
-      ),
-      class: "button" %>
-  </p>
-<% else %>
-  <p><%= current_ambassador.address_details %></p>
+  <div id="location-wrapper" class="p-6">
+    <div id="location-details" class="flex-col space-y-6">
+      <div class="mb-8">
+        <% if current_ambassador.address_details.blank? %>
+          <p>
+            <%= link_to "Set your location",
+              chapter_ambassador_location_details_path(
+                return_to: chapter_ambassador_profile_path(anchor: '!location')
+              ),
+              class: "button" %>
+          </p>
+        <% else %>
+          <p><%= current_ambassador.address_details %></p>
 
-  <p class="hint">
-    Chapter Ambassadors cannot edit their own location.
-    <br />
-    Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
-  </p>
-<% end %>
+          <p class="hint">
+            Chapter Ambassadors cannot edit their own location.
+            <br>
+            Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

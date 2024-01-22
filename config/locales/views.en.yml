@@ -126,6 +126,7 @@ en:
     chapter_ambassadors:
       navigation:
         chapter_admin_activity: "Chapter Admin Activity"
+        my_profile: "My Profile"
 
     mentor:
       form:
