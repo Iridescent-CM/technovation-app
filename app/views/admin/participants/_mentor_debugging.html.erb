@@ -32,6 +32,41 @@
       <% end %>
     </dd>
 
+    <dt>
+      Background Check Invitation Status
+    </dt>
+    <dd>
+      <% if profile.background_check && profile.in_background_check_invitation_country? %>
+        <% if profile.background_check.invitation_completed? %>
+          <%= web_icon(
+                "check-circle icon-green",
+                text: profile.background_check.invitation_status
+              ) %>
+        <% elsif profile.background_check.invitation_expired? %>
+            <%= web_icon(
+                  "exclamation-circle icon-red",
+                  text: profile.background_check.invitation_status
+                ) %>
+        <% elsif profile.background_check.error? %>
+          <%= web_icon(
+                "exclamation-circle icon-red",
+                text: profile.background_check.error_message.present? ? "Error from Checkr: #{profile.background_check.error_message}" : "No error message recorded. Review Checkr logs."
+              ) %>
+        <% else %>
+          <%= web_icon(
+                "check-circle icon--orange",
+                text: profile.background_check.invitation_status
+              ) %>
+        <% end %>
+      <% else %>
+        <%= web_icon(
+              "check-circle",
+              text: "BG Check not needed in this country"
+            ) %>
+      <% end %>
+    </dd>
+
+
     <dt>Background check</dt>
     <dd>
       <% if profile.background_check %>
@@ -46,10 +81,10 @@
             text: profile.background_check.status
           ) %>
         <% end %>
-      <% elsif profile.country != "US" %>
+      <% elsif !profile.in_background_check_country? %>
         <%= web_icon(
           "check-circle icon-green",
-          text: "International mentor! No BG Check needed"
+          text: "BG Check not needed in this country"
         ) %>
       <% else %>
         <%= web_icon("exclamation-circle icon-red", text: "Not submitted") %>

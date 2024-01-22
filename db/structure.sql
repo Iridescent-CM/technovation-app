@@ -235,7 +235,7 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.background_checks (
     id integer NOT NULL,
-    candidate_id character varying NOT NULL,
+    candidate_id character varying,
     report_id character varying,
     account_id integer NOT NULL,
     status integer DEFAULT 0 NOT NULL,
@@ -243,7 +243,9 @@ CREATE TABLE public.background_checks (
     updated_at timestamp without time zone NOT NULL,
     invitation_id character varying,
     invitation_status integer,
-    invitation_url character varying
+    invitation_url character varying,
+    internal_invitation_status integer,
+    error_message text
 );
 
 
@@ -3193,6 +3195,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231016221100'),
 ('20231017170356'),
 ('20231115134722'),
-('20231205164341');
-
-
+('20231205164341'),
+('20231211204753'),
+('20231215163819'),
+('20231216014610');

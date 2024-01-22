@@ -10,6 +10,12 @@ class RequestCheckrBackgroundCheckInvitationJob < ActiveJob::Base
       status: "queued",
       owner: profile
     )
+
+    bg_check = BackgroundCheck.find_or_create_by!(account: profile)
+    bg_check.update_columns(
+      status: :invitation_required,
+      internal_invitation_status: :requesting_invitation
+    )
   end
 
   after_perform do |job|
