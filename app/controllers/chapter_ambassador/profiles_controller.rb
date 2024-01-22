@@ -2,6 +2,8 @@ module ChapterAmbassador
   class ProfilesController < ChapterAmbassadorController
     include ProfileController
 
+    layout "chapter_ambassador_dashboard"
+
     def profile_params
       [
         :organization_company_name,

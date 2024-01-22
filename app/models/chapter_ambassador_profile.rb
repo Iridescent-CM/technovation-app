@@ -103,7 +103,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def rebranded?
-    false
+    true
   end
 
   def onboarded?
