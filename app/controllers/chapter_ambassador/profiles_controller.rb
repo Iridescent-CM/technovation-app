@@ -2,7 +2,7 @@ module ChapterAmbassador
   class ProfilesController < ChapterAmbassadorController
     include ProfileController
 
-    layout "chapter_ambassador_dashboard"
+    layout "chapter_ambassador_rebrand"
 
     def profile_params
       [
