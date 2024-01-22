@@ -1,29 +1,44 @@
-<dl>
-  <dt>Name</dt>
-  <dd><%= current_ambassador.full_name %></dd>
+<div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Basic Information</p>
+  </div>
 
-  <dt>Region</dt>
-  <dd><%= current_ambassador.region_name %></dd>
+  <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
+    <div id="information-details">
+      <dl>
+        <dt>Name</dt>
+        <dd><%= current_ambassador.full_name %></dd>
 
-  <dt>Occupation</dt>
+        <dt>Occupation</dt>
+        <dd>
+          <%= current_ambassador.job_title %> at
+          <%= current_ambassador.organization_company_name %>
+          </dd>
 
-  <dd>
-    <%= current_ambassador.job_title %> at 
-    <%= current_ambassador.organization_company_name %>
-  </dd>
+        <dt>Age</dt>
+        <dd><%= current_ambassador.age %></dd>
 
-  <dt>Age</dt>
-  <dd><%= current_ambassador.age %></dd>
+        <dt>Gender identity</dt>
+        <dd><%= current_ambassador.gender || "Not specified" %></dd>
 
-  <dt>Gender identity</dt>
-  <dd><%= current_ambassador.gender || "Not specified" %></dd>
+        <dt>Personal summary</dt>
+        <dd><%= simple_format h(current_ambassador.bio) %></dd>
+      </dl>
 
-  <dt>Personal summary</dt>
-  <dd><%= simple_format h(current_ambassador.bio) %></dd>
-</dl>
+      <p>
+        <%= link_to "Change your basic profile details",
+                    edit_profile_path,
+                    class: "tw-green-btn" %>
+      </p>
+    </div>
 
-<p>
-  <%= link_to "Change your basic profile details",
-    edit_profile_path,
-    class: "button" %>
-</p>
+    <div id="profile-picture" class="flex flex-col items-center self-start mb-4">
+      <div>
+        <%= render 'profiles/filestack_profile_image_tag' %>
+      </div>
+      <div>
+        <%= render 'profiles/filestack_profile_image_upload' %>
+      </div>
+    </div>
+  </div>
+</div>
