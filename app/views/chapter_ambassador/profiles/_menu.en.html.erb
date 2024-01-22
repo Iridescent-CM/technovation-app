@@ -1,51 +1,29 @@
-<ul class="tabs__menu" data-closed="true">
-  <li class="hidden-sm hidden-md hidden-lg tabs__menu-link">
-    <button
-      role="button"
-      class="tabs__menu-button"
-      data-tab-id="avatar"
-    >
-      Profile image
-    </button>
-  </li>
+<div id="profile-settings" class="h-auto mb-10 lg:mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+    <p class="font-bold">Profile Settings</p>
+  </div>
 
-  <li class="tabs__menu-link">
-    <button
-      role="button"
-      class="tabs__menu-button"
-      data-tab-id="basic"
-    >
-      Basic
-    </button>
-  </li>
+  <div id="tab-wrapper" class="p-6">
+    <div class="tw-tab-content">
+      <a class="tw-active active-tab" id="basic-info-tab" href="#basic-tab-content">Basic Information</a>
+    </div>
 
-  <li class="tabs__menu-link">
-    <button
-      role="button"
-      class="tabs__menu-button"
-      data-tab-id="location"
-    >
-      Location
-    </button>
-  </li>
+    <div class="tw-thick-rule"></div>
 
-  <li class="tabs__menu-link">
-    <button
-      role="button"
-      class="tabs__menu-button"
-      data-tab-id="change-email"
-    >
-      Change email
-    </button>
-  </li>
+    <div class="tw-tab-content">
+      <a id="location-tab" href="#location-tab-content">Location</a>
+    </div>
 
-  <li class="tabs__menu-link">
-    <button
-      role="button"
-      class="tabs__menu-button"
-      data-tab-id="change-password"
-    >
-      Change password
-    </button>
-  </li>
-</ul>
+    <div class="tw-thick-rule"></div>
+
+    <div class="tw-tab-content">
+      <a id="email-tab" href="#email-tab-content">Change Email</a>
+    </div>
+
+    <div class="tw-thick-rule"></div>
+
+    <div class="tw-tab-content">
+      <a id="pw-tab" href="#pw-tab-content" >Change Password</a>
+    </div>
+  </div>
+</div>
