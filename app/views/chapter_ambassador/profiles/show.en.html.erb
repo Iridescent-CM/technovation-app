@@ -1,52 +1,23 @@
 <% provide :title, "My profile" %>
 
-<div id="chapter-ambassador-profile-tabs" class="grid tabs tabs--vertical">
-  <div class="grid__col-sm-3 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="hidden-xs hidden-xxs">
-          <h3><%= current_ambassador.full_name %></h3>
-          <%= image_tag current_ambassador.profile_image_url,
-                        id: "main-profile-image",
-                        class: "grid__cell-img og-style-filestack-img" %>
-          <div>
-            <%= render 'profiles/filestack_profile_image_upload' %>
-          </div>
-        </div>
+<div class="container mx-auto flex flex-col lg:flex-row justify-center gap-6 student-tab-container">
+  <%= render 'chapter_ambassador/profiles/menu' %>
 
-        <%= render 'chapter_ambassador/profiles/menu' %>
-      </div>
+  <div class="tab">
+    <div id="basic-tab-content" class="tab-content tw-active">
+      <%= render 'chapter_ambassador/profiles/basic' %>
     </div>
-  </div>
 
-  <div class="tabs__content grid__col-sm-9 col--sticky-parent">
-    <div class="col--sticky-spacer">
-      <div class="col--sticky">
-        <div class="tabs__tab-content" id="basic">
-          <%= render 'chapter_ambassador/profiles/basic' %>
-        </div>
+    <div id="location-tab-content" class="tab-content">
+      <%= render 'chapter_ambassador/profiles/location' %>
+    </div>
 
-        <div class="hidden-sm hidden-md hidden-lg tabs__tab-content" id="avatar">
-          <div>
-            <%= render 'profiles/filestack_profile_image_tag' %>
-          </div>
-          <div>
-            <%= render 'profiles/filestack_profile_image_upload' %>
-          </div>
-        </div>
+    <div id="email-tab-content" class="tab-content">
+      <%= render 'chapter_ambassador/profiles/email' %>
+    </div>
 
-        <div class="tabs__tab-content" id="location">
-          <%= render 'chapter_ambassador/profiles/location' %>
-        </div>
-
-        <div class="tabs__tab-content" id="change-email">
-          <%= render 'profiles/email' %>
-        </div>
-
-        <div class="tabs__tab-content" id="change-password">
-          <%= render 'profiles/password' %>
-        </div>
-      </div>
+    <div id="pw-tab-content" class="tab-content">
+      <%= render 'profiles/rebrand/password' %>
     </div>
   </div>
 </div>
