@@ -1,6 +1,6 @@
 module ChapterAmbassador
   class DashboardsController < ChapterAmbassadorController
-    layout "chapter_ambassador_dashboard"
+    layout "chapter_ambassador_rebrand"
 
     def show
     end
