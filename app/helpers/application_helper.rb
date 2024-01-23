@@ -32,7 +32,7 @@ module ApplicationHelper
   def al(identifiers)
     decoded_path = CGI.escape(request.fullpath)
 
-    if Array(identifiers).any? { |i| decoded_path.include?(i) }
+    if Array(identifiers).any? { |i| decoded_path.include?(CGI.escape(i)) }
       "active"
     else
       ""
@@ -88,11 +88,11 @@ module ApplicationHelper
     end
   end
 
-  def fa_icon(*args)
+  def fa_icon(*args) # standard:disable all
     ActiveSupport::Deprecation.warn(
       "#fa_icon is deprecated. Please use #web_icon"
     )
-    web_icon(*args)
+    web_icon(*args) # standard:disable all
   end
 
   def determine_homepage_content
