@@ -130,6 +130,24 @@
         } %>
     </p>
   <% end %>
+
+  <% unless profile.chapter_ambassador_profile.present? %>
+    <hr>
+    <p>
+      <%= profile.name %> does not have a Chapter Ambassador profile. By clicking the button below, <%= profile.name %> will have a Chapter Ambassador profile in addition to a Mentor profile.
+    </p>
+
+    <p>
+      <%= link_to "Add Chapter Ambassador profile",
+                  admin_chapter_ambassador_profile_additions_path(account_id: profile.account_id),
+                  class: 'button',
+                  data: {
+                    method: :post,
+                    confirm: "Add a Chapter Ambassador profile for #{profile.name}?" +
+                      "<p>They will now have a Mentor profile and a Chapter Ambassador profile</p>",
+                  } %>
+    </p>
+  <% end %>
 </div>
 
 <h4 class="reset">Environment information</h4>
