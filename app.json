@@ -4,6 +4,13 @@
   "website": "https://my.technovationchallenge.org",
   "repository": "https://github.com/Iridescent-CM/technovation-app",
   "logo": "https://technovationchallenge.org/wp-content/uploads/2016/09/cropped-P-TM-fullcolor-light.png",
+  "environments": {
+    "review": {
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  },
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate tmp:cache:clear assets:clean airbrake:deploy"
   },
@@ -12,8 +19,9 @@
     "RACK_ENV": "production",
     "RAILS_SERVE_STATIC_FILES": "true"
   },
+  "image": "heroku/nodejs-yarn,heroku/ruby",
   "addons": ["heroku-postgresql"],
   "engines": {
-    "yarn": "1.5.1"
+    "yarn": "1.22.15"
   }
 }
