@@ -18,7 +18,7 @@ module ApplicationHelper
     namespace = controller_path.split("/").first
     path = controller_path.split("/").second
 
-    if namespace == "chapter_ambassador" && (path == "dashboards" || path == "profiles")
+    if namespace == "chapter_ambassador" && (path == "dashboards" || path == "profiles" || path == "location_details")
       :student
     elsif current_account.authenticated? && SCOPES.include?(namespace)
       namespace
