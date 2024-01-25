@@ -1,4 +1,4 @@
-<div id="location" class="tw-blue-lg-container">
+<div id="location" class="tw-blue-lg-container" >
   <div class="sm-header-wrapper ">
     <p class="font-bold">Your Location</p>
   </div>
@@ -6,24 +6,22 @@
   <div id="location-wrapper" class="p-6">
     <div id="location-details" class="flex-col space-y-6">
       <div class="mb-8">
-        <% if current_ambassador.address_details.blank? %>
-          <p>
-            <%= link_to "Set your location",
-              chapter_ambassador_location_details_path(
-                return_to: chapter_ambassador_profile_path(anchor: '!location')
-              ),
-              class: "button" %>
-          </p>
-        <% else %>
+        <% if current_account.valid_address? %>
+          <p class="font-bold">Your current location</p>
           <p><%= current_ambassador.address_details %></p>
-
-          <p class="hint">
-            Chapter Ambassadors cannot edit their own location.
-            <br>
-            Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
-          </p>
+        <% else %>
+          <p class="font-bold">Your don't have a location set yet</p>
         <% end %>
       </div>
+
+      <p>
+        <%= link_to current_account.valid_address? ? "Change your location" : "Set your location",
+          chapter_ambassador_location_details_path(
+            return_to: chapter_ambassador_profile_path(anchor: '!location')
+          ),
+          class: "tw-green-btn"
+        %>
+      </p>
     </div>
   </div>
 </div>
