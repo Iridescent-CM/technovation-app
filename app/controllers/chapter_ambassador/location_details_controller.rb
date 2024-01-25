@@ -2,13 +2,9 @@ module ChapterAmbassador
   class LocationDetailsController < ChapterAmbassadorController
     helper_method :current_profile
 
-    def show
-      if !current_ambassador.address_details.blank?
-        redirect_to chapter_ambassador_profile_path(
-          anchor: "!location"
-        ) and return
-      end
+    layout "chapter_ambassador_rebrand"
 
+    def show
       render template: "location_details/show"
     end
 
