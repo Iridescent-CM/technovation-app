@@ -268,6 +268,10 @@ Rails.application.routes.draw do
       resource :judge_assignments, only: :create
       resources :screenshots, only: [:new, :create]
       patch :unpublish
+
+      collection do
+        patch :bulk_publish
+      end
     end
     resources :team_memberships, only: [:destroy, :create]
     resources :team_locations, only: :edit

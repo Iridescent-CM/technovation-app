@@ -94,6 +94,24 @@ FactoryBot.define do
       association(:team, factory: [:team, :senior])
     end
 
+    trait :only_needs_to_submit do
+      app_name { "Submission name" }
+      app_description { "Submission description" }
+      learning_journey { "Learning journey description" }
+      pitch_video_link { "http://example.com/pitch" }
+      demo_video_link { "http://example.com/demo" }
+      submission_type { "Mobile App" }
+      development_platform { "Swift or XCode" }
+
+      after(:create) do |team_submission|
+        team_submission.update_column(:source_code, "source_code.zip")
+        team_submission.update_column(:business_plan, "business_plan.pdf")
+        team_submission.update_column(:pitch_presentation, "slides.pdf")
+        team_submission.screenshots.create!
+        team_submission.screenshots.create!
+      end
+    end
+
     trait :complete do
       app_name { "Submission name" }
       app_description { "Submission description" }
