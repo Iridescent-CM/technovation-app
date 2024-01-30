@@ -1,0 +1,15 @@
+<p>
+  There was an error processing your invitation.
+</p>
+<p class="mb-4">
+  Please try requesting a new invitation or contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for assistance.
+</p>
+<p>
+  <%= link_to "Request a new invitation",
+              send("#{current_scope}_background_check_invitation_path"),
+              class: "tw-green-btn",
+              data: {
+                method: :post
+              }
+  %>
+</p>
