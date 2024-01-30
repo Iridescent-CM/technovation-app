@@ -1,0 +1,130 @@
+<div class="mx-auto w-full lg:w-2/3">
+  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: "Background Check Status"} do %>
+    <% if @background_check.invitation_pending? %>
+      <p class="mb-2">An invitation was sent to your email on <%= @background_check.created_at.strftime("%B %d, %Y") %> from Checkr.</p>
+      <p class="mb-2">
+        Please check your email to accept the invitation and complete the background check through the Checkr portal
+        <% if @background_check.invitation_url.present? %>
+          <br>
+          or
+          <%= link_to "click here",
+            @background_check.invitation_url,
+            target: "_blank", class: "tw-link"
+          %>
+          to access your invitation on the Checkr portal.
+        <% end %>
+      </p>
+    <% elsif @background_check.invitation_completed?  %>
+      <p>Thank you for completing your background check through the Checkr portal.</p>
+    <% elsif @background_check.invitation_expired? %>
+      <p class="mb-4">Your background check invitation has expired. You can request a new invitation by clicking the button below.</p>
+      <%= link_to "Request a new invitation",
+                  send("#{current_scope}_background_check_invitation_path"),
+                  class: "tw-green-btn",
+                  data: {
+                    method: :post
+                  }
+      %>
+    <% end %>
+
+    <p class="mt-8 mb-4">
+      Your background check status is:
+      <span class="font-medium"><%= @background_check.status.humanize %></span>
+    </p>
+
+    <div class="inline-block w-full py-2 align-middle">
+      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left font-semibold text-gray-900 sm:pl-6">Status</th>
+              <th scope="col" class="px-3 py-3.5 text-left font-semibold text-gray-900">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+            <tr>
+              <td class="py-4 pl-4 pr-3 sm:pl-6">
+                Invitation Required
+              </td>
+              <td class="px-3 py-4 text-gray-500">
+                A background check invitation was sent to your email from Checkr.
+                Please accept the invitation and complete the background check through the Checkr portal.
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 pl-4 pr-3 sm:pl-6">
+                Pending
+              </td>
+              <td class="px-3 py-4 text-gray-500">
+                Your report hasn't completed yet.
+                Refresh this page later to check again.
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 pl-4 pr-3 sm:pl-6">
+                Consider
+              </td>
+              <td class="px-3 py-4 text-gray-500">
+                Your background check has issues.
+                Technovation staff will look into your report,
+                and may be in contact with you to clear things up.
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 pl-4 pr-3 sm:pl-6">
+                Clear
+              </td>
+              <td class="px-3 py-4 text-gray-500">
+                Your background check has cleared,
+                and you will gain further access to the site.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-8 mb-8">
+      <p class="font-medium">While your background check is being processed:</p>
+      <div class="ml-4">
+        <p class="mb-2">
+          Based on historical data,
+          <%= link_to "Checkr reports",
+          "https://checkr.com", class: "tw-link" %>
+          are usually completed within 4-7 business days.
+        </p>
+        <p>
+          Checkr may email you for your help with identity verification to complete your report.
+        </p>
+        <p class="mb-2">
+          For example, Checkr has asked previous mentors to provide a scan
+          of their driver's licence. Technovation cannot offer help with this,
+          and you should consult the staff at Checkr.
+        </p>
+        <p>
+          You can use the
+          <%= link_to "Checkr Applicant Portal",
+            "//applicant.checkr.com",
+            target: "_blank", class: "tw-link" %>
+          to get status updates on your report
+          and to download a copy when it's complete.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <p class="font-medium">After your background check is complete:</p>
+      <div class="ml-4">
+        <p>
+          You will receive an <span class="font-medium">email from us</span>
+          only if your background check has cleared.
+        </p>
+        <p>
+          If you checked the box for a report from Checkr,
+          you will receive an <span class="font-medium">email from Checkr</span>
+          regardless of the status of your background check.
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
