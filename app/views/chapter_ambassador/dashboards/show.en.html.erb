@@ -6,9 +6,10 @@
   <% end %>
 
   <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Chapter Ambassador Dashboard'} do %>
-    <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
-      <div id="information-details">
-
+    <div class="tab">
+      <div id="background-check-tab-content" class="tab-content">
+        <%= render 'completion_steps/rebrand/background_check',
+                   profile: current_ambassador %>
       </div>
     </div>
   <% end %>
