@@ -3,7 +3,6 @@ module Mentor
     include LocationStorageController
 
     def show
-      @job = current_mentor.jobs.queued.first
       @current_teams = current_mentor.teams.current.order("teams.name")
     end
 
