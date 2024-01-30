@@ -1,43 +1,5 @@
 <% provide :title, "Admin Data • Team Submissions" %>
 
-<% if current_admin.super_admin? %>
-  <div class="grid">
-    <div class="grid__col-auto grid__col--bleed">
-      <div class="panel">
-        <h4>Publish Submissions Only Needing to Submit</h3>
-
-        <% if SeasonToggles.judging_enabled? %>
-          <p>Submissions can't be published when judging is enabled.</p>
-        <% elsif @submissions_only_needing_to_submit.length > 0 %>
-          <p>This will move submissions that are <em>complete</em> and <em>have not yet been submitted</em> to the submitted status.</p>
-
-          <ul style="height: 150px; overflow-y: scroll;">
-            <% @submissions_only_needing_to_submit.each do |submission| %>
-              <li>
-                <%= link_to(submission.app_name, admin_team_submission_path(submission)) %> by
-                <%= link_to(submission.team.name, admin_team_path(submission.team)) %>
-              </li>
-            <% end %>
-          </ul>
-
-          <%= link_to(
-            "Publish",
-            bulk_publish_admin_team_submissions_path(submission_ids: @submissions_only_needing_to_submit.pluck(:id)),
-            class: "button danger",
-            data: {
-              method: :patch,
-              confirm: "You are about to publish #{@submissions_only_needing_to_submit.length} submissions"
-            }
-          ) %>
-
-        <% else %>
-          <p>There aren't any submissions needing to be published at this time.</p>
-        <% end %>
-      </div>
-    </div>
-  </div>
-<% end %>
-
 <%= render 'datagrid/datagrid',
   grid: @submissions_grid,
   form_url: admin_team_submissions_path,

@@ -270,9 +270,11 @@ Rails.application.routes.draw do
       patch :unpublish
 
       collection do
+        get :bulk_publish
         patch :bulk_publish
       end
     end
+
     resources :team_memberships, only: [:destroy, :create]
     resources :team_locations, only: :edit
     resources :team_submission_certificates, only: :update

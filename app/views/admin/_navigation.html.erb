@@ -25,6 +25,13 @@
       data: { turbolinks: false },
       class: al(admin_team_submissions_path) %>
 
+    <% if current_admin.super_admin? %>
+      <%= link_to "Publish Submissions",
+        bulk_publish_admin_team_submissions_path,
+        data: { turbolinks: false },
+        class: al(bulk_publish_admin_team_submissions_path) %>
+    <% end %>
+
     <%= link_to "Events",
       admin_events_path,
       class: al(admin_events_path) %>

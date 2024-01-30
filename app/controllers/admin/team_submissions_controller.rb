@@ -3,8 +3,8 @@ module Admin
     include AdminHelper
     include DatagridController
 
-    before_action :require_super_admin, only: [:unpublish]
-    before_action :get_submissions_only_needing_to_submit, only: [:index]
+    before_action :require_super_admin, only: [:unpublish, :bulk_publish]
+    before_action :get_submissions_only_needing_to_submit, only: [:bulk_publish]
 
     use_datagrid with: SubmissionsGrid
 
@@ -41,17 +41,20 @@ module Admin
     end
 
     def bulk_publish
-      published_count = 0
+      if params[:submission_ids].present?
+        published_count = 0
 
-      Array(params[:submission_ids]).each do |submission_id|
-        submission = TeamSubmission.friendly.find(submission_id)
+        Array(params[:submission_ids]).each do |submission_id|
+          submission = TeamSubmission.friendly.find(submission_id)
 
-        if SubmissionPublisher.new(submission: submission).call.success?
-          published_count += 1
+          if SubmissionPublisher.new(submission: submission).call.success?
+            published_count += 1
+          end
         end
-      end
 
-      redirect_to admin_team_submissions_path, success: "Successfully published #{published_count} submissions"
+        redirect_back fallback_location: admin_team_submissions_path,
+          success: "Successfully published #{published_count} submissions"
+      end
     end
 
     private
