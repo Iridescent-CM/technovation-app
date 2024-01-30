@@ -1,22 +1,18 @@
 module BackgroundCheckInvitationController
   extend ActiveSupport::Concern
 
-  included do
-    before_action :verify_background_check_invitation_required, only: [:create_invitation]
-  end
-
   def create_invitation
-    RequestCheckrBackgroundCheckInvitationJob.perform_later(account_id: current_account.id)
 
-    redirect_to send("#{current_scope}_dashboard_path"),
-      success: t("controllers.background_checks.invite.success")
-  end
+    result = CheckrApiClient::BackgroundCheckInvitationValidator.new(account: current_account, current_profile_type: current_profile_type).call
 
-  private
-
-  def verify_background_check_invitation_required
-    unless current_profile.in_background_check_invitation_country? &&
-        (current_profile.background_check.blank? || current_profile.background_check.invitation_expired? || current_profile.background_check.error?)
+    if result.error?
+      redirect_to send("#{current_scope}_dashboard_path"),
+        alert: result.error_message
+    elsif result.requires_background_check_invitation?
+      RequestCheckrBackgroundCheckInvitationJob.perform_later(account_id: current_account.id)
+      redirect_to send("#{current_scope}_dashboard_path"),
+        success: t("controllers.background_checks.invite.success")
+    else
       redirect_to send("#{current_scope}_dashboard_path"),
         alert: t("controllers.application.unauthorized")
     end
