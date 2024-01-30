@@ -90,6 +90,7 @@ en:
       new:
         title: "Pass a background check"
         international_title: "Get started"
+        invitation_title: "Request a background check invitation"
 
     join_requests:
       form:
