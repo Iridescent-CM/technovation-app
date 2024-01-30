@@ -44,6 +44,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   delegate :submitted?,
     :candidate_id,
     :report_id,
+    :invitation_id,
     to: :background_check,
     prefix: true,
     allow_nil: true
@@ -71,12 +72,11 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def background_check_complete?
-    country_code != "US" or !!background_check && background_check.clear?
+    !!background_check && background_check.clear?
   end
 
   def requires_background_check?
-    country_code == "US" and
-      !background_check_complete?
+    !background_check_complete?
   end
 
   def in_background_check_country?
