@@ -25,7 +25,7 @@
       data: { turbolinks: false },
       class: al(admin_team_submissions_path) %>
 
-    <% if current_admin.super_admin? %>
+    <% if current_profile.try(:super_admin?) %>
       <%= link_to "Publish Submissions",
         bulk_publish_admin_team_submissions_path,
         data: { turbolinks: false },
