@@ -25,7 +25,7 @@ module CheckrApiClient
 
     Result = Struct.new(:requires_background_check_invitation?, :error?, :error_message, keyword_init: true)
 
-    attr_reader :account, :current_profile_type
+    attr_reader :account
 
   end
 end
