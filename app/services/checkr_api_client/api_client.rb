@@ -94,7 +94,7 @@ module CheckrApiClient
 
     def create_checkr_invitation(candidate_country_code:, candidate_id:)
       req_body = {
-        package: "international_basic_plus",
+        package: determine_package(candidate_country_code),
         candidate_id: candidate_id,
         work_locations: [{country: candidate_country_code}]
       }
@@ -117,6 +117,10 @@ module CheckrApiClient
       log_error_msg = "[CHECKR] Error for account #{candidate.id} - #{error}"
       logger.error(log_error_msg)
       error_notifier.notify(log_error_msg)
+    end
+
+    def determine_package(candidate_country_code)
+      candidate_country_code == "US" ? "tasker_standard" : "international_basic_plus"
     end
   end
 end
