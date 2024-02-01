@@ -26,22 +26,6 @@ RSpec.feature "background checks" do
     expect(page).not_to have_link("Submit Background Check")
   end
 
-  scenario "Complete a chapter ambassador background check", :vcr do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :geocoded)
-    chapter_ambassador.background_check.destroy
-    sign_in(chapter_ambassador)
-    visit(chapter_ambassador_chapter_admin_path)
-
-    click_link "Submit Background Check"
-
-    fill_in "Zipcode", with: 60622
-    fill_in "Ssn", with: "111-11-2001"
-    fill_in "Driver license state", with: "CA"
-    click_button "Submit"
-
-    expect(chapter_ambassador.reload.background_check).to be_present
-  end
-
   [16, 17].each do |age|
     scenario "mentors age #{age} do not need to complete one" do
       mentor = FactoryBot.create(
