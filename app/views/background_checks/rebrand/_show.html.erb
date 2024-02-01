@@ -1,5 +1,5 @@
 <div class="mx-auto w-full lg:w-2/3">
-  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: "Background Check Status"} do %>
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: "Background Check Status"} do %>
     <% if @background_check.invitation_pending? %>
       <p class="mb-2">An invitation was sent to your email on <%= @background_check.created_at.strftime("%B %d, %Y") %> from Checkr.</p>
       <p class="mb-2">
