@@ -1,8 +1,7 @@
 module CheckrApiClient
   class BackgroundCheckInvitationValidator
-    def initialize(account:, current_profile_type:)
+    def initialize(account:)
       @account = account
-      @current_profile_type = current_profile_type
     end
 
     def call
@@ -13,16 +12,14 @@ module CheckrApiClient
         )
       end
 
-      case current_profile_type
-      when "ChapterAmbassadorProfile"
+      if account.is_chapter_ambassador?
         requires_background_check_invitation = account.chapter_ambassador_profile.requires_background_check?
-      when "MentorProfile"
+      elsif account.is_a_mentor?
         requires_background_check_invitation = account.mentor_profile.requires_background_check_invitation?
       end
 
       Result.new(requires_background_check_invitation?: requires_background_check_invitation)
     end
-
 
     private
 
