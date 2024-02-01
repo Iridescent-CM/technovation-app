@@ -3,7 +3,7 @@ module BackgroundCheckInvitationController
 
   def create_invitation
 
-    result = CheckrApiClient::BackgroundCheckInvitationValidator.new(account: current_account, current_profile_type: current_profile_type).call
+    result = CheckrApiClient::BackgroundCheckInvitationValidator.new(account: current_account).call
 
     if result.error?
       redirect_to send("#{current_scope}_dashboard_path"),
