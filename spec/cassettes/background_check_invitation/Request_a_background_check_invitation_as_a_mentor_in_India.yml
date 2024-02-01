@@ -45,7 +45,7 @@ http_interactions:
   recorded_at: Thu, 01 Feb 2024 22:38:43 GMT
 - request:
     method: post
-    uri: https://api.checkr-staging.com/v1/candidates
+    uri: https://api.checkr.com/v1/candidates
     body:
       encoding: UTF-8
       string: '{"email":"engineering+factorymentor@technovation.org","first_name":"Mentor","last_name":"FactoryBot","dob":"2002-02-01","work_locations":[{"country":"IN"}]}'
@@ -107,7 +107,7 @@ http_interactions:
   recorded_at: Thu, 01 Feb 2024 22:38:46 GMT
 - request:
     method: post
-    uri: https://api.checkr-staging.com/v1/invitations
+    uri: https://api.checkr.com/v1/invitations
     body:
       encoding: UTF-8
       string: '{"package":"international_basic_plus","candidate_id":"41016415c809397416b4f1614278f5","work_locations":[{"country":"IN"}]}'
