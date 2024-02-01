@@ -300,10 +300,6 @@ class MentorProfile < ActiveRecord::Base
       !(background_check.present? && background_check.clear?)
   end
 
-  def background_check_invitation_expired_or_error?
-    background_check.invitation_expired? || background_check.error?
-  end
-
   def requires_background_check_invitation?
     in_background_check_invitation_country? &&
       !background_check_complete? || background_check_invitation_expired_or_error?
@@ -382,4 +378,8 @@ class MentorProfile < ActiveRecord::Base
   def can_enable_searchable?
     onboarded?
   end
+end
+
+def background_check_invitation_expired_or_error?
+  background_check.invitation_expired? || background_check.error?
 end
