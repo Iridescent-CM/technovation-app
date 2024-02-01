@@ -91,7 +91,7 @@ http_interactions:
   recorded_at: Thu, 01 Feb 2024 22:42:59 GMT
 - request:
     method: post
-    uri: https://api.checkr-staging.com/v1/candidates
+    uri: https://api.checkr.com/v1/candidates
     body:
       encoding: UTF-8
       string: '{"email":"engineering+factorycha@technovation.org","first_name":"Chapter
@@ -155,7 +155,7 @@ http_interactions:
   recorded_at: Thu, 01 Feb 2024 22:43:01 GMT
 - request:
     method: post
-    uri: https://api.checkr-staging.com/v1/invitations
+    uri: https://api.checkr.com/v1/invitations
     body:
       encoding: UTF-8
       string: '{"package":"tasker_standard","candidate_id":"acd0aa2f309607d101489584","work_locations":[{"country":"US"}]}'
