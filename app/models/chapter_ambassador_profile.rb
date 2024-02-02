@@ -10,6 +10,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   }
 
   belongs_to :account
+  belongs_to :chapter
   accepts_nested_attributes_for :account
   validates_associated :account
 
@@ -49,8 +50,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     prefix: true,
     allow_nil: true
 
-  def method_missing(method_name, *args)
-    account.public_send(method_name, *args)
+  def method_missing(method_name, *args) # standard:disable all
+    account.public_send(method_name, *args) # standard:disable all
   rescue
     raise NoMethodError,
       "undefined method `#{method_name}' not found for #{self}"
