@@ -1,0 +1,69 @@
+<div class="mx-auto w-full lg:w-2/3">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: "Background Check"} do %>
+    <div class="mb-4">
+      <p class="font-medium"><strong>Background Check Process</strong></p>
+
+      <p class="mb-4">
+        Technovation uses
+        <%= link_to "Checkr", "https://checkr.com/product/screenings/",
+                    rel: "noopener noreferrer",
+                    target: "_blank", class: "tw-link"%>,
+        a third-party screening service, to conduct our background checks.
+        We complete these checks for mentors as a safety measure before
+        they are able to match with a Technovation team.
+      </p>
+
+      <p class="mb-4">
+        After you click the “Request background check invitation” button, you will
+        receive an email invitation from Checkr with a link to their site. You will
+        be prompted on the Checkr site to provide the information required by your
+        country in order to perform a criminal background check. After submitting your
+        information, you can visit the
+        <%= link_to "Checkr Applicant Portal",
+                    "//applicant.checkr_api_client.com",
+                    target: "_blank", class: "tw-link" %>
+        to review the status of your check. Some checks may take up to 7-10 business days to complete.
+      </p>
+
+      <p>
+        You will receive an email from us when your background check clears. Once your
+        background check has cleared, you will be able to match with an existing Technovation
+        team or create a new team.
+      </p>
+    </div>
+
+    <div class="mb-8">
+      <p class="font-semibold">Security Information</p>
+
+      <p class="mb-4">
+        You will enter all personally identifiable information needed to complete the background
+        check on the secure Checkr website. Technovation will not view or store this information
+        in our application. More information about Checkr’s security and data privacy is available
+        <%= link_to "on their site",
+                    "https://checkr.com/trust-and-security",
+                    target: "_blank", class: "tw-link" %>.
+      </p>
+
+      <p class="mb-4">
+        Checkr provides Technovation a secret, randomized token to keep track of the status of your
+        invitation request and background check. We view this information by logging into our administrative
+        Checkr dashboard. None of your information will be stored on our servers.
+      </p>
+
+      <p>
+        Please contact us at <%= mail_to ENV.fetch("HELP_EMAIL") %> with any questions or feedback.
+      </p>
+    </div>
+
+    <div class="flex flex-row">
+      <%= link_to "Request background check invitation",
+                  send("#{current_scope}_background_check_invitation_path"),
+                  class: "tw-green-btn mx-auto",
+                  id: "bg-check-invite-btn",
+                  data:{
+                    method: :post
+                  }
+      %>
+    </div>
+  <% end %>
+</div>
