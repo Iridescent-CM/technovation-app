@@ -353,7 +353,8 @@ CREATE TABLE public.chapter_ambassador_profiles (
     bio text,
     intro_summary text,
     secondary_regions character varying[] DEFAULT '{}'::character varying[],
-    program_name character varying
+    program_name character varying,
+    chapter_id bigint
 );
 
 
@@ -2462,6 +2463,13 @@ CREATE INDEX index_certificates_on_team_id ON public.certificates USING btree (t
 
 
 --
+-- Name: index_chapter_ambassador_profiles_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_ambassador_profiles_on_chapter_id ON public.chapter_ambassador_profiles USING btree (chapter_id);
+
+
+--
 -- Name: index_chapter_ambassador_profiles_on_status; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2866,6 +2874,14 @@ ALTER TABLE ONLY public.certificates
 
 
 --
+-- Name: chapter_ambassador_profiles fk_rails_793dbc1d27; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_ambassador_profiles
+    ADD CONSTRAINT fk_rails_793dbc1d27 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
 -- Name: join_requests fk_rails_7fd972d7ce; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3253,9 +3269,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231215163819'),
 ('20231216014610'),
 ('20240202203152');
+('20240202203636');
 ('20240206173222'),
 ('20240208195151');
 ('20240312195853');
->>>>>>> fa4f35392 (Chore: Add new chapter model)
 
 
