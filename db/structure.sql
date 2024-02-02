@@ -377,6 +377,40 @@ ALTER SEQUENCE public.chapter_ambassador_profiles_id_seq OWNED BY public.chapter
 
 
 --
+-- Name: chapters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapters (
+    id bigint NOT NULL,
+    name character varying,
+    summary text,
+    organization_name character varying,
+    city character varying,
+    state_province character varying,
+    country character varying
+);
+
+
+--
+-- Name: chapters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
+
+
+--
 -- Name: consent_waivers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1738,6 +1772,13 @@ ALTER TABLE ONLY public.chapter_ambassador_profiles ALTER COLUMN id SET DEFAULT 
 
 
 --
+-- Name: chapters id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.chapters_id_seq'::regclass);
+
+
+--
 -- Name: consent_waivers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2023,6 +2064,14 @@ ALTER TABLE ONLY public.certificates
 
 ALTER TABLE ONLY public.chapter_ambassador_profiles
     ADD CONSTRAINT chapter_ambassador_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapters chapters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
 
 
 --
@@ -3198,4 +3247,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231205164341'),
 ('20231211204753'),
 ('20231215163819'),
-('20231216014610');
+('20231216014610'),
+('20240202203152');
+
+
