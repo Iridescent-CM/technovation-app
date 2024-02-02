@@ -10,7 +10,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   }
 
   belongs_to :account
-  belongs_to :chapter
+  belongs_to :chapter, optional: true
   accepts_nested_attributes_for :account
   validates_associated :account
 
