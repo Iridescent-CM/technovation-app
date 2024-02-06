@@ -1,11 +1,27 @@
 nav {
-    font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-#global-nav-wrapper > a{
-    @apply mx-4 hover:text-energetic-blue;
+#global-nav-wrapper > a {
+  @apply mx-4 hover:text-energetic-blue;
 }
 
-.tw-dropdown-menu li{
-    @apply py-2
+.tw-dropdown-menu li {
+  @apply py-2;
+}
+
+.tw-dropdown-menu a {
+  @apply hover:text-energetic-blue;
+}
+
+.sub-nav-item {
+  @apply text-white py-2 px-4 rounded-tr-3xl border-x border-transparent hover:text-energetic-blue hover:bg-white hover:border-x hover:border-slate-200;
+}
+
+.sub-nav-item:hover {
+  @apply text-energetic-blue bg-white border-x border-slate-200 shadow-inner;
+}
+
+.sub-nav-item.active {
+  @apply bg-white text-energetic-blue py-2 px-4 rounded-tr-3xl font-semibold;
 }
