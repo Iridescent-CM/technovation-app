@@ -9,7 +9,7 @@ module Judging
             field: :project_details_1,
             worth: 5,
             text: %(
-              Is our 100 word problem/project description clear and compelling?
+               Is our 100 word problem/project description compelling and does it clearly state the problem and solution?
             )
           ),
 
@@ -51,8 +51,8 @@ module Judging
             field: :pitch_4,
             worth: 5,
             text: %(
-              Do we explain why the selected technology (AI prototype or mobile app)
-              is the best tool to solve the problem?
+              Do we explain why the selected technology (AI prototype or mobile app) is the
+              best tool to solve the problem and how it is a better solution compared to what already exists?
             )
           ),
 
@@ -62,39 +62,8 @@ module Judging
             field: :pitch_5,
             worth: 5,
             text: %(
-              Do we show how it is a better solution compared to what already exists?
-            )
-          ),
-
-          Question.new(
-            idx: 6,
-            section: "pitch",
-            field: :pitch_6,
-            worth: 5,
-            text: %(
               Do we explain how we will make sure the solution will only have a
               positive impact on direct or indirect users and the planet?
-            )
-          ),
-
-          Question.new(
-            idx: 7,
-            section: "pitch",
-            field: :pitch_7,
-            worth: 5,
-            text: %(
-              Do we explain user feedback on the problem and solution and
-              show how we made changes based on the feedback?
-            )
-          ),
-
-          Question.new(
-            idx: 8,
-            section: "pitch",
-            field: :pitch_8,
-            worth: 5,
-            text: %(
-              Do we explain future goals and plans for the project?
             )
           ),
 
@@ -116,7 +85,8 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we explain the coding we did for 1 or 2 important parts of our app, other than the login screen?
+             Do we explain how the app was tested with users,  what feedback was given, and how it
+             affected the features of the app?
             )
           ),
 
@@ -125,6 +95,17 @@ module Judging
             section: "demo",
             submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
             field: :demo_3,
+            worth: 5,
+            text: %(
+              Do we explain the coding we did for 1 or 2 important parts of our app, other than the login screen?
+            )
+          ),
+
+          Question.new(
+            idx: 4,
+            section: "demo",
+            submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
+            field: :demo_4,
             worth: 5,
             text: %(
               Do we show what doesn’t work yet and/or share future app features?
@@ -138,8 +119,8 @@ module Judging
             field: :demo_1,
             worth: 5,
             text: %(
-              Do we show what AI model we built and trained,
-              including explaining what data we gathered and trained model with?
+              Do we show what AI model we have built and trained, including explaining
+              what data we gathered and trained the model with?
             )
           ),
 
@@ -150,8 +131,8 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we show the invention we built or prototyped?
-              Do we explain how we built it? Do we show the parts that work?
+              Do we explain how the prototype was tested with users, what feedback
+              was given, and how it affected the features of the prototype?
             )
           ),
 
@@ -160,6 +141,17 @@ module Judging
             section: "demo",
             submission_type: TeamSubmission::AI_PROJECT_SUBMISSION_TYPE,
             field: :demo_3,
+            worth: 5,
+            text: %(
+              Do we show what invention we have built or prototyped, explaining how we built it, and how it works?
+            )
+          ),
+
+          Question.new(
+            idx: 4,
+            section: "demo",
+            submission_type: TeamSubmission::AI_PROJECT_SUBMISSION_TYPE,
+            field: :demo_4,
             worth: 5,
             text: %(
               Do we show what doesn’t work yet and/or share future prototype features?
@@ -172,8 +164,8 @@ module Judging
             field: :entrepreneurship_1,
             worth: 5,
             text: %(
-              Do we clearly explain our company, product description,
-              and relevant research accompanied by supporting graphics?
+              Do we clearly explain our company and product description in a
+              well-written document accompanied by supporting graphics?
             )
           ),
 
@@ -183,8 +175,8 @@ module Judging
             field: :entrepreneurship_2,
             worth: 5,
             text: %(
-              Do we show how many users have already tested our
-              app or invention, and the feedback provided?
+              Do we show what market research the team has conducted to
+              identify target users and main competitors?
             )
           ),
 
@@ -194,8 +186,8 @@ module Judging
             field: :entrepreneurship_3,
             worth: 5,
             text: %(
-              Do we explain how we will get new users to use our
-              app or invention in its first year?
+              Do we explain the marketing plan for how the team will get new users
+              to use our app or invention in its first year?
             )
           ),
 
@@ -205,8 +197,7 @@ module Judging
             field: :entrepreneurship_4,
             worth: 5,
             text: %(
-              Do we show realistic financial plans for starting and
-              sustaining our business into the future?
+              Do we show financial plans for starting the business and why they are realistic?
             )
           ),
 
@@ -227,7 +218,7 @@ module Judging
             field: :ideation_2,
             worth: 5,
             text: %(
-              Do we describe how we overcame challenges?
+              Do we describe how we overcame technical or non-technical challenges?
             )
           )
         ]
