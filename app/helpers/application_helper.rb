@@ -17,8 +17,15 @@ module ApplicationHelper
   def determine_manifest
     namespace = controller_path.split("/").first
     path = controller_path.split("/").second
+    rebranded_chapter_ambassador_sections = %w[
+      background_checks
+      chapter_ambassador
+      dashboards
+      location_details
+      profiles
+    ]
 
-    if namespace == "chapter_ambassador" && (path == "dashboards" || path == "profiles" || path == "location_details" || path == "background_checks")
+    if namespace == "chapter_ambassador" && rebranded_chapter_ambassador_sections.include?(path)
       :chapter_ambassador_rebrand
     elsif current_account.authenticated? && SCOPES.include?(namespace)
       namespace
