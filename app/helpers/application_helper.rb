@@ -19,7 +19,7 @@ module ApplicationHelper
     path = controller_path.split("/").second
 
     if namespace == "chapter_ambassador" && (path == "dashboards" || path == "profiles" || path == "location_details" || path == "background_checks")
-      :student
+      :chapter_ambassador_rebrand
     elsif current_account.authenticated? && SCOPES.include?(namespace)
       namespace
     elsif current_account.authenticated?
