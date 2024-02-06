@@ -19,7 +19,7 @@ RSpec.feature "scoring submissions", js: true do
     and_scores_the_technical_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 39
+    then_the_review_page_displays_a_perfect_score_of 50
     and_then_submits_the_score
   end
 
@@ -34,7 +34,7 @@ RSpec.feature "scoring submissions", js: true do
     and_scores_the_entrepreneurship_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 80
+    then_the_review_page_displays_a_perfect_score_of 70
     and_then_submits_the_score
   end
 
@@ -49,7 +49,7 @@ RSpec.feature "scoring submissions", js: true do
     and_scores_the_entrepreneurship_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 90
+    then_the_review_page_displays_a_perfect_score_of 80
     and_then_submits_the_score
   end
 
@@ -131,8 +131,7 @@ RSpec.feature "scoring submissions", js: true do
   end
 
   def click_highest_score_bubble
-    highest_score = @submission.beginner_division? ? "3" : "5"
-    highest_score_bubble = all("#judge-scores-app li.score-value", text: "#{highest_score}")
+    highest_score_bubble = all("#judge-scores-app li.score-value", text: "5")
     highest_score_bubble.each(&:click)
   end
 
