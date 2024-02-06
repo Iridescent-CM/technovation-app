@@ -9,7 +9,7 @@ module Judging
             field: :project_details_1,
             worth: 5,
             text: %(
-              Is our 100 word problem/project description clear and compelling?
+              Is our 100 word problem/project description compelling and does it clearly state the problem and solution?
             )
           ),
 
@@ -55,36 +55,6 @@ module Judging
           ),
 
           Question.new(
-            idx: 5,
-            section: "pitch",
-            field: :pitch_5,
-            worth: 5,
-            text: %(
-              Do we explain how we got user feedback on the problem and solution?
-            )
-          ),
-
-          Question.new(
-            idx: 6,
-            section: "pitch",
-            field: :pitch_6,
-            worth: 5,
-            text: %(
-              Do we show how we made changes to the project based on user feedback?
-            )
-          ),
-
-          Question.new(
-            idx: 7,
-            section: "pitch",
-            field: :pitch_7,
-            worth: 5,
-            text: %(
-              Do we explain future goals and plans for the project?
-            )
-          ),
-
-          Question.new(
             idx: 1,
             section: "demo",
             submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
@@ -102,7 +72,7 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we explain the coding we did for 1 or 2 important parts of our app, other than the login screen?
+              Do we explain how the app was tested with users, what feedback was given, and how it affected the features of the app?
             )
           ),
 
@@ -111,6 +81,17 @@ module Judging
             section: "demo",
             submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
             field: :demo_3,
+            worth: 5,
+            text: %(
+              Do we explain the coding we did for 1 or 2 important parts of our app, other than the login screen?
+            )
+          ),
+
+          Question.new(
+            idx: 4,
+            section: "demo",
+            submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
+            field: :demo_4,
             worth: 5,
             text: %(
               Do we show what doesn’t work yet and/or share future app features?
@@ -124,8 +105,7 @@ module Judging
             field: :demo_1,
             worth: 5,
             text: %(
-              Do we show what AI model we built and trained,
-              including explaining what data we gathered and trained model with?
+             Do we show what AI model we have built and trained, including explaining what data we gathered and trained the model with?
             )
           ),
 
@@ -136,8 +116,7 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we show the invention we built or prototyped?
-              Do we explain how we built it? Do we show the parts that work?
+              Do we explain how the prototype was tested with users, what feedback was given, and how it affected the features of the prototype?
             )
           ),
 
@@ -148,7 +127,18 @@ module Judging
             field: :demo_3,
             worth: 5,
             text: %(
-              Do we show what doesn’t work yet and/or share future prototype features?
+              Do we show what invention we have built or prototyped, explaining how we built it, and how it works?
+            )
+          ),
+
+          Question.new(
+            idx: 4,
+            section: "demo",
+            submission_type: TeamSubmission::AI_PROJECT_SUBMISSION_TYPE,
+            field: :demo_4,
+            worth: 5,
+            text: %(
+              Do we show what doesn’t work yet  and/or share future prototype features?
             )
           ),
 
@@ -158,20 +148,10 @@ module Judging
             field: :ideation_1,
             worth: 5,
             text: %(
-              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
+              Do we share what we learned and the challenges we overcame through a combination of words and pictures (e.g. screenshots, prototypes)?
               Do we share any technical sources used/remixed and/or our favorite technical resource?
             )
           ),
-
-          Question.new(
-            idx: 2,
-            section: "ideation",
-            field: :ideation_2,
-            worth: 5,
-            text: %(
-              Do we describe how we overcame challenges?
-            )
-          )
         ]
       end
     end
