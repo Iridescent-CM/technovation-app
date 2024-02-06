@@ -1,59 +1,86 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Rubik:wght@400;500;600;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Rubik:wght@400;500;600;700;900&display=swap");
 
 .rubik {
-    font-family: 'RUBIK', sans-serif;
+  font-family: "RUBIK", sans-serif;
 }
 
 .poppins {
-    font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-html{
-    @apply bg-white
+html {
+  @apply bg-white;
 }
 
 .tg-green-stripes {
-    background: repeating-linear-gradient(
+  background: repeating-linear-gradient(
     45deg,
-    #5FBC4A,
-    #5FBC4A 10px,
+    #5fbc4a,
+    #5fbc4a 10px,
     #43b02a 10px,
     #43b02a 26px
-    );
+  );
 }
 
 .tw-grid {
-    @apply grid
+  @apply grid;
 }
 
-.tw-thick-rule{
-    @apply bg-energetic-blue h-1 my-2 w-60;
+.tw-thick-rule {
+  @apply bg-energetic-blue h-1 my-2 w-60;
 }
 
-.tw-green-input{
-   @apply px-4 py-2 rounded bg-tg-green text-white font-medium cursor-pointer
+.tw-green-input {
+  @apply px-4 py-2 rounded bg-tg-green text-white font-medium cursor-pointer;
 }
 
-.tw-link{
-    @apply font-bold text-energetic-blue hover:text-tg-magenta
+.tw-link {
+  @apply font-bold text-energetic-blue hover:text-tg-magenta;
 }
 
-.tw-link-magenta{
-    @apply font-bold text-tg-magenta hover:text-pink-400
+.tw-link-magenta {
+  @apply font-bold text-tg-magenta hover:text-pink-400;
 }
 
-.tw-wrapper{
-    @apply container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4
+.tw-wrapper {
+  @apply container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4;
 }
 
-.tw-flag-magenta{
-    @apply text-white block p-2 text-right text-base font-bold shadow-sm bg-tg-magenta
+.tw-flag-magenta {
+  @apply text-white block p-2 text-right text-base font-bold shadow-sm bg-tg-magenta;
 }
 
 .tw-hint {
-    @apply mb-4 italic text-base;
+  @apply mb-4 italic text-base;
 }
 
 .tw-hint-strong {
-    @apply p-2 rounded bg-gray-100;
+  @apply p-2 rounded bg-gray-100;
 }
+
+.tw-sm-hidden {
+  @apply hidden;
+}
+
+.sm-header-wrapper {
+  @apply bg-energetic-blue text-white p-2;
+}
+
+@screen md {
+  .tw-sm-hidden {
+    @apply block;
+  }
+}
+
+.tw-blue-lg-container {
+  @apply h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue;
+}
+
+.tw-lg-container-wrapper {
+  @apply p-6 flex flex-col-reverse lg:flex-row;
+}
+
+.tw-flex-basis-33 {
+  flex-basis: 33.333333%;
+}
+
