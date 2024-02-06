@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "viewing score details page" do
   let!(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved, :chicago) }
-  let!(:team) { FactoryBot.create(:team, :chicago, name: "Ravenclaw") }
+  let!(:team) { FactoryBot.create(:team, :chicago, :senior, name: "Ravenclaw") }
   let!(:team_submission) {
     FactoryBot.create(:team_submission,
       :complete,
