@@ -1,7 +1,3 @@
-
-#student-nav-wrapper > a {
-  @apply mx-4;
-}
 #cha-student-intro-wrapper,
 .tw-dropdown-menu {
   display: none;
