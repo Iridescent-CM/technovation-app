@@ -1,33 +1,7 @@
-.tw-sm-hidden {
-  @apply hidden;
-}
 
 #student-nav-wrapper > a {
   @apply mx-4;
 }
-
-.sm-header-wrapper {
-  @apply bg-energetic-blue text-white p-2;
-}
-
-@screen md {
-  .tw-sm-hidden {
-    @apply block;
-  }
-}
-
-.tw-blue-lg-container {
-  @apply h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue;
-}
-
-.tw-lg-container-wrapper {
-  @apply p-6 flex flex-col-reverse lg:flex-row;
-}
-
-.tw-flex-basis-33 {
-  flex-basis: 33.333333%;
-}
-
 #cha-student-intro-wrapper,
 .tw-dropdown-menu {
   display: none;
