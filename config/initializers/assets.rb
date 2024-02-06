@@ -17,6 +17,7 @@ Rails.application.config.assets.precompile += %w[
   public.css
   admin.css
   chapter_ambassador.css
+  chapter_ambassador_rebrand.css
   student.css
   mentor.css
   judge.css
@@ -26,6 +27,7 @@ Rails.application.config.assets.precompile += %w[
   public.js
   admin.js
   chapter_ambassador.js
+  chapter_ambassador_rebrand.js
   student.js
   mentor.js
   judge.js
