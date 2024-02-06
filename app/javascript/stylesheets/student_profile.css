@@ -48,18 +48,6 @@
   @apply p-6 flex flex-col-reverse lg:flex-row;
 }
 
-.sub-nav-item {
-  @apply text-white py-2 px-4 rounded-tr-3xl border-x border-transparent hover:text-energetic-blue hover:bg-white hover:border-x hover:border-slate-200;
-}
-
-.sub-nav-item:hover {
-  @apply text-energetic-blue bg-white border-x border-slate-200 shadow-inner;
-}
-
-.sub-nav-item.active {
-  @apply bg-white text-energetic-blue py-2 px-4 rounded-tr-3xl font-semibold;
-}
-
 .tw-flex-basis-33 {
   flex-basis: 33.333333%;
 }
@@ -67,11 +55,6 @@
 #cha-student-intro-wrapper,
 .tw-dropdown-menu {
   display: none;
-}
-
-.tw-dropdown-menu a,
-#student-nav-wrapper a {
-  @apply hover:text-energetic-blue;
 }
 
 #cha-social-links {
