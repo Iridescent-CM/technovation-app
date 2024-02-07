@@ -1,17 +1,16 @@
 module Admin
   class BackgroundChecksController < AdminController
-    def index
-      params[:status] = "pending" if params[:status].blank?
-      params[:page] = 1 if params[:page].blank?
-      params[:per_page] = 15 if params[:per_page].blank?
+    include DatagridController
+    use_datagrid with: BackgroundChecksGrid
 
-      @background_checks = BackgroundCheck.send(params[:status])
-        .page(params[:page].to_i)
-        .per_page(params[:per_page].to_i)
+    private
 
-      if @background_checks.empty?
-        @background_checks = @background_checks.page(1)
-      end
+    def grid_params
+      grid = params[:background_checks_grid] ||= {}
+
+      grid.merge(
+        column_names: detect_extra_columns(grid)
+      )
     end
   end
 end
