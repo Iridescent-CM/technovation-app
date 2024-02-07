@@ -8,14 +8,10 @@ class BackgroundChecksGrid
   end
 
   column :account, mandatory: true, html: true do |background_check|
-    if background_check.account.present?
-      link_to(
-        background_check.account.full_name,
-        admin_participant_path(background_check.account)
-      )
-    else
-      "-"
-    end
+    link_to(
+      background_check.account.full_name,
+      admin_participant_path(background_check.account)
+    )
   end
 
   column :profile_type, header: "Profile Type" do |background_check|
