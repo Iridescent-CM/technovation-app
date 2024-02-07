@@ -23,7 +23,6 @@ RSpec.feature "Admin view background check datagrid", js: true do
   end
 
   scenario "Clicking on admin background checks link displays a datagrid of all background checks" do
-    page.save_and_open_page
     expect(page).to have_content("#{@all_mentors.size} background checks found")
 
     @all_mentors.each do |mentor|
