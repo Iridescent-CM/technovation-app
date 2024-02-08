@@ -58,6 +58,7 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 CREATE TYPE public.judge_recusal_from_submission_reason AS ENUM (
     'submission_not_in_english',
     'knows_team',
+    'content_does_not_belong_to_team',
     'other'
 );
 
@@ -3200,4 +3201,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231211204753'),
 ('20231215163819'),
 ('20231216014610'),
-('20240206173222');
+('20240206173222'),
+('20240208195151');
+
+

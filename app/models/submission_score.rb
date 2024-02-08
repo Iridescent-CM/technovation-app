@@ -57,6 +57,7 @@ class SubmissionScore < ActiveRecord::Base
   enum judge_recusal_reason: {
     submission_not_in_english: "submission_not_in_english",
     knows_team: "knows_team",
+    content_does_not_belong_to_team: "content_does_not_belong_to_team",
     other: "other"
   }
 
@@ -256,8 +257,8 @@ class SubmissionScore < ActiveRecord::Base
     prefix: false,
     allow_nil: false
 
-  def self.from_csv(attrs, *args)
-    create!(attrs, *args)
+  def self.from_csv(attrs, *args) # standard:disable all
+    create!(attrs, *args) # standard:disable all
   end
 
   def self.judging_round(name)
@@ -418,7 +419,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def total_for_section(section_name)
-    public_send("#{section_name}_total")
+    public_send(:"#{section_name}_total")
   end
 
   def total_points_for_section(division, section_name)
@@ -426,7 +427,7 @@ class SubmissionScore < ActiveRecord::Base
   end
 
   def comment_for_section(section_name)
-    public_send("#{section_name}_comment")
+    public_send(:"#{section_name}_comment")
   end
 
   def raw_total
