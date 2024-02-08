@@ -1,8 +1,6 @@
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render layout: 'application/templates/dashboards/side_nav', locals: { heading: 'Onboarding Checklist'} do%>
-    <div class="p-4" id="tab-wrapper">
-      <%= render 'chapter_ambassador/dashboards/rebrand/side_nav_content' %>
-    </div>
+  <%= render layout: "application/templates/dashboards/side_nav", locals: { heading: "Onboarding Checklist" } do%>
+      <%= render "chapter_ambassador/dashboards/rebrand/side_nav_content" %>
   <% end %>
 
   <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Chapter Ambassador Dashboard'} do %>

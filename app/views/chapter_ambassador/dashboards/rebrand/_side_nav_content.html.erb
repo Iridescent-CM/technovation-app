@@ -1,58 +1,31 @@
-<nav id="chapter-ambassador-onboarding" aria-label="Progress">
-  <ol role="list" class="overflow-hidden">
-    <li class="mb-6">
-      <!-- Complete Step -->
-      <div class="tw-tab-content">
-        <a id="background-check-tab" href="#background-check-tab-content" data-heading="Background Check" class="group flex items-center hover:text-tg-green">
-          <span class="flex h-9 items-center">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-tg-green">
-              <svg class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-              </svg>
-            </span>
-          </span>
-          <span class="ml-4 text-sm font-medium">Background Check</span>
-        </a>
-      </div>
-    </li>
+  <nav class="p-4" aria-label="Progress">
+    <ol role="list" class="space-y-6 mb-6 overflow-hidden">
+      <%= render "application/templates/todo_item",
+        name: "Background Check",
+        url: "#",
+        is_complete: current_ambassador.background_check_complete?,
+        is_active_item: false
+      %>
 
-    <li class="mb-6">
-      <!-- Current Step -->
-      <a href="#" class="group flex items-center hover:text-tg-green" aria-current="step">
-        <span class="flex h-9 items-center" aria-hidden="true">
-          <span class=" flex h-6 w-6 items-center justify-center rounded-full border-2 border-tg-green bg-white">
-            <span class="h-2.5 w-2.5 rounded-full bg-tg-green"></span>
-          </span>
-        </span>
+      <%= render "application/templates/todo_item",
+        name: "Chapter Ambassador Training",
+        url: "#",
+        is_complete: false,
+        is_active_item: false
+      %>
 
-        <span class="ml-4 text-sm font-medium">Chapter Ambassador Training</span>
-      </a>
-    </li>
+      <%= render "application/templates/todo_item",
+        name: "Memorandum of Understanding",
+        url: "#",
+        is_complete: false,
+        is_active_item: false
+      %>
 
-    <li class="mb-6">
-      <!-- Upcoming Step -->
-      <a href="#" class="group flex items-center hover:text-tg-green">
-        <span class="flex h-9 items-center" aria-hidden="true">
-          <span class=" flex h-6 w-6 items-center justify-center rounded-full border-2 border-gray-300 bg-white hover:border-tg-green">
-            <span class="h-2.5 w-2.5 rounded-full bg-transparent hover:text-tg-green"></span>
-          </span>
-        </span>
-
-        <span class="ml-4 text-sm font-medium">Memorandum of Understanding</span>
-      </a>
-    </li>
-
-    <li class="mb-4">
-      <!-- Upcoming Step -->
-      <a href="#" class="group flex items-center hover:text-tg-green">
-        <span class="flex h-9 items-center" aria-hidden="true">
-          <span class=" flex h-6 w-6 items-center justify-center rounded-full border-2 border-gray-300 bg-white group-hover:border-gray-400">
-            <span class="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"></span>
-          </span>
-        </span>
-
-        <span class="ml-4 text-sm font-medium">Program Profile</span>
-      </a>
-    </li>
-  </ol>
-</nav>
+      <%= render "application/templates/todo_item",
+        name: "Program Profile",
+        url: "#",
+        is_complete: false,
+        is_active_item: false
+      %>
+    </ol>
+  </nav>
