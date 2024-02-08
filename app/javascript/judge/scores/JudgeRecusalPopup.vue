@@ -43,6 +43,10 @@ export default {
               <label for="knows-team">I know this team or mentor</label>
             </div>
             <div>
+              <input type="radio" id="content-does-not-belong-to-team" name="judge-recusal-reason" value="content_does_not_belong_to_team">
+              <label for="content-does-not-belong-to-team">Content doesn't belong to the team</label>
+            </div>
+            <div>
               <input type="radio" id="other" name="judge-recusal-reason" value="other">
               <label for="other">Other</label>
               <textarea id="judge-recusal-comment"></textarea>
