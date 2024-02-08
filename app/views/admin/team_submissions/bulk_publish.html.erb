@@ -5,8 +5,10 @@
     <div class="panel">
       <h4>Publish Submissions Only Needing to Submit</h3>
 
-      <% if SeasonToggles.judging_enabled? %>
-        <p>Submissions can't be published when judging is enabled.</p>
+      <% if SeasonToggles.team_submissions_editable? %>
+        <p>Submissions can only be published when editing submissions is turned off.</p>
+      <% elsif SeasonToggles.judging_enabled? %>
+        <p>Submissions can't be published when judging is turned on.</p>
       <% elsif @submissions_only_needing_to_submit.length > 0 %>
         <p>This will move submissions that are <em>complete</em> and <em>have not yet been submitted</em> to the submitted status.</p>
 

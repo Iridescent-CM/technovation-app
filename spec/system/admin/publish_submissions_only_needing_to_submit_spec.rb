@@ -2,9 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Publishing submissions that only need to submit", :js do
   before do
+    allow(SeasonToggles).to receive(:team_submissions_editable?).and_return(team_submissions_editable)
     allow(SeasonToggles).to receive(:judging_enabled?).and_return(judging_enabled)
   end
 
+  let(:team_submissions_editable) { false }
   let(:judging_enabled) { false }
 
   context "as a super admin" do
@@ -16,7 +18,8 @@ RSpec.describe "Publishing submissions that only need to submit", :js do
       expect(page).to have_link("Publish Submissions")
     end
 
-    context "when judging isn't enabled" do
+    context "when editing submissions and juding is turned off" do
+      let(:team_submissions_editable) { false }
       let(:judging_enabled) { false }
 
       it "displays a section to publish submissions that only need to submit" do
@@ -60,13 +63,23 @@ RSpec.describe "Publishing submissions that only need to submit", :js do
       end
     end
 
-    context "when juding is enabled" do
-      let(:judging_enabled) { true }
+    context "when editing submissions is turned on" do
+      let(:team_submissions_editable) { true }
 
-      it "displays a message indicating submissions can't be published when juding is enabled" do
+      it "displays a message indicating when submissions can be published" do
         click_link "Publish Submissions"
 
-        expect(page).to have_text("Submissions can't be published when judging is enabled.")
+        expect(page).to have_text("Submissions can only be published when editing submissions is turned off.")
+      end
+    end
+
+    context "when juding is turned on" do
+      let(:judging_enabled) { true }
+
+      it "displays a message indicating when submissions can be published" do
+        click_link "Publish Submissions"
+
+        expect(page).to have_text("Submissions can't be published when judging is turned on.")
       end
     end
   end
