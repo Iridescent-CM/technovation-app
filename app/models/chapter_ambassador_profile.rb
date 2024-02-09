@@ -79,6 +79,14 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
       !background_check_complete?
   end
 
+  def in_background_check_country?
+    country_code == "US"
+  end
+
+  def in_background_check_invitation_country?
+    false
+  end
+
   def profile_complete?
     bio_complete?
   end

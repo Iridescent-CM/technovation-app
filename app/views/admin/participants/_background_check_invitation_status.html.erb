@@ -1,0 +1,32 @@
+<% if profile.in_background_check_invitation_country? %>
+  <% if profile.background_check.invitation_completed? %>
+    <%= web_icon(
+          "check-circle icon-green",
+          text: profile.background_check.invitation_status.humanize
+        ) %>
+  <% elsif profile.background_check.invitation_expired? %>
+    <%= web_icon(
+          "exclamation-circle icon-red",
+          text: profile.background_check.invitation_status.humanize
+        ) %>
+    <br>
+    <span class="hint">
+      The background check invitation has expired. Participant must request a new invitation.
+    </span>
+  <% elsif profile.background_check.error? %>
+    <%= web_icon(
+          "exclamation-circle icon-red",
+          text: profile.background_check.error_message.present? ? "Error from Checkr: #{profile.background_check.error_message}" : "No error message recorded. Review Checkr logs."
+        ) %>
+  <% else %>
+    <%= web_icon(
+          "exclamation-circle icon--orange",
+          text: profile.background_check.invitation_status.humanize
+        ) %>
+  <% end %>
+<% else %>
+  <%= web_icon(
+        "check-circle",
+        text: "Background check invitation not required in this country"
+      ) %>
+<% end %>
