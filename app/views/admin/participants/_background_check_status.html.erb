@@ -1,0 +1,23 @@
+<% if profile.in_background_check_country? %>
+  <% if profile.background_check.clear? %>
+    <%= web_icon(
+          "check-circle icon-green",
+          text: profile.background_check.status.humanize
+        ) %>
+  <% elsif profile.background_check.present? %>
+    <%= web_icon(
+          "exclamation-circle icon-red",
+          text: profile.background_check.status.humanize
+        ) %>
+  <% else %>
+    <%= web_icon(
+          "exclamation-circle icon-red",
+          text: "Not submitted"
+        ) %>
+  <% end %>
+<% else %>
+  <%= web_icon(
+        "check-circle",
+        text: "Background check not required in this country"
+      ) %>
+<% end %>

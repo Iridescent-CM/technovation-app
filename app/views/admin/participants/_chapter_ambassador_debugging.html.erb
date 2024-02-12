@@ -8,6 +8,20 @@
             profile.os_name,
             profile.os_version].compact.join(' - ') %>
       </dd>
+
+      <dt>
+        Background Check Invitation Status
+      </dt>
+      <dd>
+        <%= render 'admin/participants/background_check_invitation_status',
+                   profile: @account.chapter_ambassador_profile %>
+      </dd>
+
+      <dt>Background Check</dt>
+      <dd>
+        <%= render 'admin/participants/background_check_status',
+                   profile: @account.chapter_ambassador_profile %>
+      </dd>
     <% end %>
 
     <dt>Status</dt>
