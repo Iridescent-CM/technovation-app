@@ -1,14 +1,6 @@
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render layout: "application/templates/dashboards/side_nav", locals: { heading: "Onboarding Checklist" } do%>
-      <%= render "chapter_ambassador/dashboards/rebrand/side_nav_content" %>
-  <% end %>
+  <%= render "chapter_ambassador/dashboards/onboarding/side_nav" %>
 
-  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Chapter Ambassador Dashboard'} do %>
-    <div class="tab">
-      <div id="background-check-tab-content" class="tab-content">
-        <%= render 'completion_steps/rebrand/background_check',
-                   profile: current_ambassador %>
-      </div>
-    </div>
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Chapter Ambassador Dashboard" } do %>
   <% end %>
 </div>
