@@ -172,7 +172,8 @@ Rails.application.routes.draw do
 
     resource :profile_image_upload_confirmation, only: :show
 
-    resources :background_checks, only: [:new, :create, :show]
+    resource :background_check, only: :show
+    resources :background_checks, only: [:new, :create]
     post "/background_check_invitation", to: "background_checks#create_invitation"
 
     resources :events, controller: :regional_pitch_events
