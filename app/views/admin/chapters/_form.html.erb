@@ -1,0 +1,11 @@
+<%= form_with model: @chapter, url: admin_chapters_path, local: true do |f| %>
+  <%= render 'errors', record: @chapter %>
+
+  <p>
+    <%= f.label :organization_name, for: :organization_name %>
+    <%= f.text_field :organization_name, id: :organization_name, required: true  %>
+  </p>
+
+  <%= f.submit "Add", class: "button" %> or <%= link_to 'cancel', admin_chapters_path %>
+
+<% end %>
