@@ -265,7 +265,7 @@ class AccountsGrid
   column :actions, mandatory: true, html: true do |account, grid|
     html = link_to(
       "view",
-      send("#{current_scope}_participant_path", account),
+      send(:"#{current_scope}_participant_path", account),
       data: {turbolinks: false}
     )
 
@@ -337,7 +337,7 @@ class AccountsGrid
     if: ->(g) {
       (%w[judge student chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      scope.send("#{value}_mentors")
+      scope.send(:"#{value}_mentors")
     end
 
   filter :onboarded_judges,
