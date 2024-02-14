@@ -514,6 +514,9 @@ class AccountsGrid
           sql_str += " AND chapter_ambassador_profiles.status = #{
             ChapterAmbassadorProfile.statuses[:approved]
           }"
+          sql_str += " OR chapter_ambassador_profiles.status = #{
+            ChapterAmbassadorProfile.statuses[:pending]
+          }"
         end
 
         sql_str
