@@ -9,7 +9,9 @@ RSpec.feature "Admins managing chapters", :js do
     visit admin_chapters_path
     click_link "Setup a new chapter"
 
-    fill_in "Organization name", with: "Hello World"
+    fill_in "organization_name", with: "Hello World"
+    expect(page).to have_field("organization_name", with: "Hello World")
+
     click_button "Add"
 
     expect(page).to have_content("Hello World")
