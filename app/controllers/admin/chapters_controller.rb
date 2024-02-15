@@ -1,8 +1,7 @@
 module Admin
   class ChaptersController < AdminController
-    def index
-      @chapters = Chapter.all
-    end
+    include DatagridController
+    use_datagrid with: ChaptersGrid
 
     def show
       @chapter = Chapter.find(params[:id])
@@ -28,6 +27,14 @@ module Admin
       params.require(:chapter).permit(
         :id,
         :organization_name
+      )
+    end
+
+    def grid_params
+      grid = params[:chapters_grid] ||= {}
+
+      grid.merge(
+        column_names: detect_extra_columns(grid)
       )
     end
   end
