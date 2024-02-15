@@ -1,23 +1,15 @@
-<h1>View Chapters</h1>
+<div class="grid margin--t-xlarge">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h3>View Chapters</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="panel">
+      <p><%= link_to "Setup a new chapter", new_admin_chapter_path, class: "button" %></p>
+    </div>
 
-  <tbody>
-    <% @chapters.each do |chapter| %>
-      <tr>
-        <td><%= link_to chapter.organization_name, admin_chapter_path(chapter) %></td>
-<!--        <td><%#= link_to 'Edit', edit_admin_chapter_path(admin_chapter) %></td>-->
-<!--        <td><%#= link_to 'Destroy', admin_chapter, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<p><%= link_to "Setup a new chapter", new_admin_chapter_path, class: "button" %></p>
+    <%= render 'datagrid/datagrid',
+               grid: @chapters_grid,
+               form_url: admin_chapters_path,
+               model_name: "chapter",
+               scope: :admin %>
+  </div>
+</div>
