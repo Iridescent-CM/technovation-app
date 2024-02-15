@@ -1,5 +1,33 @@
-<h1>Organization Name</h1>
-<h1><%= @chapter.organization_name %></h1>
+<div class="grid__cell--padding-sm-x">
+  <%= link_to "View Chapters", admin_chapters_path, class: "button button--small" %>
+</div>
 
-<p>Please use the invite button below to invite a user to be the Chapter Ambassador for this chapter.</p>
-<%= link_to "Invite a chapter ambassador PLACEHOLDER", class: "button" %>
+<div class="grid grid--justify-center">
+  <div class="grid__col-12">
+    <div class="panel">
+      <h3><%= @chapter.name.present? ? @chapter.name : "NOT SET" %></h3>
+      <dl>
+        <dt>Organization Name</dt>
+        <dd><%= @chapter.organization_name %></dd>
+
+        <dt>Location</dt>
+        <dd>------</dd>
+
+        <dt>Ambassador</dt>
+        <dd>------</dd>
+
+        <dt>Program Summary</dt>
+        <dd>------</dd>
+
+        <dt>Program Links</dt>
+        <dd>------</dd>
+      </dl>
+
+
+      <p>Please use the invite button below to invite a user to be the Chapter Ambassador for this chapter.</p>
+      <%= link_to "Invite a chapter ambassador PLACEHOLDER", class: "button" %>
+    </div>
+  </div>
+</div>
+
+
