@@ -1,0 +1,7 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "chapter_ambassador/dashboards/onboarding/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Chapter Ambassador Training and Quiz" } do %>
+    <%= render "completion_steps/rebrand/training_completion", profile: current_ambassador %>
+<% end %>
+</div>
