@@ -23,6 +23,7 @@ module ApplicationHelper
       dashboards
       location_details
       profiles
+      training_completions
     ]
 
     if namespace == "chapter_ambassador" && rebranded_chapter_ambassador_sections.include?(path)
