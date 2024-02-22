@@ -1,0 +1,68 @@
+<div class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue" >
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Media Consent</p>
+  </div>
+
+  <div class="p-6" >
+    <% if @media_consent.uploaded_at.present? %>
+      <% if @media_consent.upload_approval_status_pending? %>
+        <div class="container px-4 py-4 mb-8 bg-blue-100 border-l-4 border-energetic-blue">
+          <h4 class="mb-3 text-base text-gray-600">Thank you for uploading your media consent form!</h4>
+
+          <p class="mb-3 text-base text-gray-500">
+            We will review it as soon as possible, and you will receive an email when the form
+            is accepted or if we need additional information.
+          </p>
+        </div>
+      <% elsif @media_consent.upload_approval_status_approved? %>
+        <div class="notice notice--success">
+          We have a copy of your media consent form, thank you!
+        </div>
+      <% end %>
+    <% end %>
+
+
+    <% if @media_consent.uploaded_at.blank? || @media_consent.upload_approval_status_rejected? %>
+      <p>
+        You can upload a signed media consent form here.
+        Please print the form and have your parent or guardian sign it.
+      </p>
+
+      <ul class="list-disc my-6 ml-12">
+        <li>
+          <%= link_to "Media Consent Form",
+            "https://s3.amazonaws.com/curiositymachine/units/resources/TGMediaConsent.pdf",
+            target: :_blank,
+            class: "tw-link"
+          %>
+        </li>
+      </ul>
+
+      <p class="mb-6">
+        We must be able to view the signature on the final page of the form so
+        please make sure the shadow of your phone or camera does not cover the
+        signature when you photograph the page.
+
+        Please contact
+        <%= mail_to ENV.fetch("HELP_EMAIL"),
+          "support@technovation.org",
+          subject: "Media consent form",
+          class: "tw-link"
+        %>
+        with any questions.
+      </p>
+
+      <%= form_for @parental_consent, url: student_paper_consent_upload_path, html: { multipart: true } do |f| %>
+        <% if @media_consent.uploaded_at.blank? || @media_consent.upload_approval_status_rejected? %>
+          <%= f.fields_for @media_consent do |media_consent_fields| %>
+            <%= media_consent_fields.label :uploaded_consent_form, "Upload media consent form", class: "mt-8" %>
+            <%= media_consent_fields.file_field :uploaded_consent_form, label: "Upload your", class: "tw-file-upload" %>
+          <% end %>
+        <% end %>
+
+        <%= f.submit "Upload", class: "mt-4 tw-green-btn" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
