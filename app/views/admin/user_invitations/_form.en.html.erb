@@ -20,6 +20,11 @@
     %>
   </div>
 
+  <div id="chapter" class="field margin--b-large" style="display: none;">
+    <%= f.label :chapter_id, "Chapter", for: :chapter_id %>
+    <%= f.collection_select(:chapter_id, Chapter.all.order(organization_name: :asc), :id, :organization_name) %>
+  </div>
+
   <div class="field">
     <%= f.label :name, "Name (displayed in the invite email)", for: :user_invitation_name %>
     <%= f.text_field :name, id: :user_invitation_name, placeholder: "Optional" %>
