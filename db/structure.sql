@@ -1769,7 +1769,8 @@ CREATE TABLE public.user_invitations (
     updated_at timestamp without time zone NOT NULL,
     name character varying,
     register_at_any_time boolean,
-    invited_by_id integer
+    invited_by_id integer,
+    chapter_id bigint
 );
 
 
@@ -2817,6 +2818,13 @@ CREATE INDEX index_unconfirmed_email_addresses_on_account_id ON public.unconfirm
 
 
 --
+-- Name: index_user_invitations_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USING btree (chapter_id);
+
+
+--
 -- Name: pitch_events_team_ids; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2963,6 +2971,14 @@ ALTER TABLE ONLY public.mentor_profile_mentor_types
 
 ALTER TABLE ONLY public.regional_pitch_events_user_invitations
     ADD CONSTRAINT fk_rails_3bbe8623e3 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
+
+
+--
+-- Name: user_invitations fk_rails_4e77e2e432; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_invitations
+    ADD CONSTRAINT fk_rails_4e77e2e432 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
 
 
 --
@@ -3404,6 +3420,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240202203636'),
 ('20240206173222'),
 ('20240208195151'),
+('20240221211159');
 ('20240312195853'),
 ('20240321122732'),
 ('20240321122808'),
