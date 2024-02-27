@@ -14,6 +14,10 @@ class BackgroundChecksGrid
     )
   end
 
+  column :account, html: false do |background_check|
+    background_check.account.full_name
+  end
+
   column :profile_type, header: "Profile Type" do |background_check|
     background_check.account.scope_name.titleize
   end
