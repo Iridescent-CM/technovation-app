@@ -1,5 +1,6 @@
 class NewRegistrationController < ApplicationController
   after_action :update_registration_invite, only: :create
+  after_action :assign_chapter_ambassador_to_chapter, only: :create
 
   layout "new_registration"
 
@@ -147,9 +148,20 @@ class NewRegistrationController < ApplicationController
   end
 
   def update_registration_invite
-    UpdateRegistrationInviteJob.perform_later(
-      invite_code: params[:inviteCode],
-      account_id: @profile.account.id
-    )
+    if params[:inviteCode].present?
+      UpdateRegistrationInviteJob.perform_now(
+        invite_code: params[:inviteCode],
+        account_id: @profile.account.id
+      )
+    end
+  end
+
+  def assign_chapter_ambassador_to_chapter
+    if params[:inviteCode].present? && params[:profileType] == "chapter_ambassador"
+      AssignChapterAmbassadorToChapterJob.perform_later(
+        invite_code: params[:inviteCode],
+        chapter_ambassador_profile_id: @profile.id
+      )
+    end
   end
 end
