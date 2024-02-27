@@ -66,7 +66,8 @@ module Admin
         :profile_type,
         :name,
         :email,
-        :register_at_any_time
+        :register_at_any_time,
+        :chapter_id
       )
     end
   end
