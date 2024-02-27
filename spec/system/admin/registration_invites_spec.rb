@@ -26,7 +26,7 @@ RSpec.describe "Registration invites", :js do
     },
     {
       invite_profile_type: "judge",
-      friendly_profile_type: "juge",
+      friendly_profile_type: "judge",
       select_option: "Judge"
     },
     {
