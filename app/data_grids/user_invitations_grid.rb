@@ -72,6 +72,17 @@ class UserInvitationsGrid
     end
   end
 
+  column :chapter, html: true do |registration_invite|
+    if registration_invite.chapter.present?
+      link_to(
+        registration_invite.chapter.organization_name,
+        admin_chapter_path(registration_invite.chapter)
+      )
+    else
+      "-"
+    end
+  end
+
   column :actions, mandatory: true, html: true do |registration_invite|
     render "admin/user_invitations/actions", registration_invite: registration_invite
   end
