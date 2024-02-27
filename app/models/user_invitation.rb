@@ -25,6 +25,7 @@ class UserInvitation < ApplicationRecord
 
   validates :profile_type, :email, presence: true
   validates :email, uniqueness: true, email: true
+  validates :chapter, presence: true, if: -> { profile_type == "chapter_ambassador" }
 
   validate ->(invitation) {
     if inviting_existing_chapter_ambassador_to_be_a_chapter_ambassador?
@@ -44,6 +45,7 @@ class UserInvitation < ApplicationRecord
   belongs_to :account, required: false
   belongs_to :current_account, -> { current }, required: false
   belongs_to :invited_by, class_name: "Account", required: false
+  belongs_to :chapter, required: false
 
   has_many :judge_assignments, as: :assigned_judge, dependent: :destroy
   has_many :assigned_teams,

@@ -4,8 +4,12 @@ RSpec.feature "Chapter ambassadors registering", :js do
   let(:chapter_ambassado_registration_invite) {
     UserInvitation.create!(
       profile_type: :chapter_ambassador,
-      email: "chapter_ambassador_invite@example.com"
+      email: "chapter_ambassador_invite@example.com",
+      chapter_id: chapter.id
     )
+  }
+  let(:chapter) {
+    FactoryBot.create(:chapter)
   }
 
   before do
