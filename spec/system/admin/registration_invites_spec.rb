@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Registration invites", :js do
   let(:admin) { FactoryBot.create(:admin) }
+  let!(:chapter) { FactoryBot.create(:chapter) }
 
   before do
     sign_in(admin)
@@ -45,6 +46,7 @@ RSpec.describe "Registration invites", :js do
           select item[:select_option], from: "Registration Type"
           fill_in "Name", with: name
           fill_in "Email", with: email_address
+
           click_button "Send invitation"
         }.to change {
           UserInvitation.sent.count

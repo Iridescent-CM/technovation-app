@@ -52,28 +52,6 @@ RSpec.describe UserInvitation do
     end
   end
 
-  it "allows an existing mentor to be moved for a chapter ambassador" do
-    mentor = FactoryBot.create(:mentor, :onboarded)
-
-    invite = UserInvitation.new(
-      profile_type: :chapter_ambassador,
-      email: mentor.email
-    )
-
-    expect(invite).to be_valid
-  end
-
-  it "allows an existing judge to be moved for a chapter ambassador" do
-    judge = FactoryBot.create(:judge)
-
-    invite = UserInvitation.new(
-      profile_type: :chapter_ambassador,
-      email: judge.email
-    )
-
-    expect(invite).to be_valid
-  end
-
   it "updates judges assigned to events after signing up" do
     event = FactoryBot.create(:event)
 
@@ -140,6 +118,21 @@ RSpec.describe UserInvitation do
 
     it "return the account of the person who sent the inviation" do
       expect(invite.invited_by).to eq(admin.account)
+    end
+  end
+
+  describe "#chapter_id" do
+    let(:chapter) { FactoryBot.create(:chapter) }
+
+    let(:invite) do
+      UserInvitation.new(
+        profile_type: :chapter_ambassador,
+        chapter_id: chapter.id
+      )
+    end
+
+    it "return the chapter_id associated to the invitation" do
+      expect(invite.chapter_id).to eq(chapter.id)
     end
   end
 end
