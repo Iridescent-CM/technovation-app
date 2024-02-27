@@ -71,17 +71,23 @@ document.addEventListener("turbolinks:load", function () {
     });
   });
 
-  const invitationProfileType = document.getElementById("user_invitation_profile_type");
+  const invitationProfileType = document.getElementById(
+    "user_invitation_profile_type"
+  );
 
   if (invitationProfileType) {
     invitationProfileType.addEventListener("change", () => {
-      const registerAtAnyTime = document.getElementById("user_invitation_register_at_any_time");
+      const registerAtAnyTime = document.getElementById(
+        "user_invitation_register_at_any_time"
+      );
+      const chapterSelect = document.getElementById("chapter");
 
       if (invitationProfileType.value == "chapter_ambassador") {
+        chapterSelect.style.display = "block";
         registerAtAnyTime.checked = true;
         registerAtAnyTime.disabled = true;
-      }
-      else {
+      } else {
+        chapterSelect.style.display = "none";
         registerAtAnyTime.checked = false;
         registerAtAnyTime.disabled = false;
       }
