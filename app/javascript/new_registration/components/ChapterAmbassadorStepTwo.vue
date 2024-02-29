@@ -86,6 +86,16 @@
           disabled="true"
         />
 
+        <FormulateInput
+          name="chapterAmbassadorOrganizationStatus"
+          :options="organizationStatusOptions"
+          type="select"
+          @keyup="checkValidation"
+          @blur="checkValidation"
+          label="Status with Organization"
+          id="organizationStatus"
+          input-class="ChapterAmbassadorSelectClass"
+        />
       </div>
     </div>
 
@@ -124,6 +134,10 @@ export default {
         'Non-binary',
         'Prefer not to say'
       ],
+      organizationStatusOptions: {
+        employee: 'Employee',
+        volunteer: 'Volunteer'
+      },
       hasValidationErrors: true
     }
   },
