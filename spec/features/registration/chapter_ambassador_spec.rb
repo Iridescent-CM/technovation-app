@@ -31,7 +31,6 @@ RSpec.feature "Chapter ambassadors registering", :js do
     select "Prefer not to say", from: "Gender Identity"
     fill_in "Birthday", with: 32.years.ago
     fill_in "Job Title", with: "Kindness spreader"
-    fill_in "chapterAmbassadorBio", with: "I am always brimming with hope, happiness, and positivity. I am the kind of bear that will tell you everything's going to be all right in the end. I see the silver lining around every dark cloud, and know that no matter how dire a situation may seem, there's always chance to make things better."
     click_button "Next"
 
     expect(page).to have_content("Data Use Terms")
