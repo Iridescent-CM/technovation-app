@@ -1,5 +1,10 @@
 <% if profile.in_background_check_invitation_country? %>
-  <% if profile.background_check.invitation_completed? %>
+  <% if profile.background_check.invitation_pending? %>
+    <%= web_icon(
+          "exclamation-circle icon--orange",
+          text:  profile.background_check.invitation_status.humanize
+        ) %>
+ <% elsif profile.background_check.invitation_completed? %>
     <%= web_icon(
           "check-circle icon-green",
           text: profile.background_check.invitation_status.humanize
@@ -18,10 +23,15 @@
           "exclamation-circle icon-red",
           text: profile.background_check.error_message.present? ? "Error from Checkr: #{profile.background_check.error_message}" : "No error message recorded. Review Checkr logs."
         ) %>
+  <% elsif profile.background_check.blank?  %>
+    <%= web_icon(
+          "exclamation-circle icon--orange",
+          text: "Background check invitation not yet requested"
+        ) %>
   <% else %>
     <%= web_icon(
           "exclamation-circle icon--orange",
-          text: profile.background_check.invitation_status.humanize
+          text:  "Error - please contact the dev team"
         ) %>
   <% end %>
 <% else %>
