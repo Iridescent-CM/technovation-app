@@ -98,7 +98,6 @@ class NewRegistrationController < ApplicationController
   def chapter_ambassador_params
     {
       job_title: registration_params[:chapterAmbassadorJobTitle],
-      bio: registration_params[:chapterAmbassadorBio],
       account_attributes: account_attributes.merge({gender: registration_params[:gender]})
     }
   end
