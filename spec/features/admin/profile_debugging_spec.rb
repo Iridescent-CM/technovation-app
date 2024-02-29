@@ -106,4 +106,24 @@ RSpec.feature "When an admin is debugging a profile" do
     expect(page).to have_content("Background check invitation not required in this country")
     expect(page).to have_content("Background check not required in this country")
   end
+
+  scenario "they view the background check invitation status in the mentor debugging section of a mentor based in India who has not requested a background check invitation" do
+    mentor = FactoryBot.create(
+      :mentor,
+      :india
+    )
+
+    mentor.background_check.destroy
+
+    sign_in(:admin)
+
+    click_link "Participants"
+
+    within_results_page_with("#account_#{mentor.account_id}") do
+      click_link "view"
+    end
+
+    expect(page).to have_content("Background check invitation not yet requested")
+    expect(page).to have_css(".web-icon-text", text: "Not submitted")
+  end
 end
