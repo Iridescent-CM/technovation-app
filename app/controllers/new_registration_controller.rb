@@ -101,7 +101,6 @@ class NewRegistrationController < ApplicationController
 
   def chapter_ambassador_params
     {
-      organization_company_name: registration_params[:chapterAmbassadorOrganizationCompanyName],
       job_title: registration_params[:chapterAmbassadorJobTitle],
       bio: registration_params[:chapterAmbassadorBio],
       account_attributes: account_attributes.merge({gender: registration_params[:gender]})
@@ -144,7 +143,6 @@ class NewRegistrationController < ApplicationController
       :mentorBio,
       :judgeSchoolCompanyName,
       :judgeJobTitle,
-      :chapterAmbassadorOrganizationCompanyName,
       :chapterAmbassadorJobTitle,
       :chapterAmbassadorBio,
       mentorExpertises: [],
