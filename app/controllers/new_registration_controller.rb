@@ -98,6 +98,7 @@ class NewRegistrationController < ApplicationController
   def chapter_ambassador_params
     {
       job_title: registration_params[:chapterAmbassadorJobTitle],
+      organization_status: registration_params[:chapterAmbassadorOrganizationStatus],
       account_attributes: account_attributes.merge({gender: registration_params[:gender]})
     }
   end
@@ -139,6 +140,7 @@ class NewRegistrationController < ApplicationController
       :judgeJobTitle,
       :chapterAmbassadorJobTitle,
       :chapterAmbassadorBio,
+      :chapterAmbassadorOrganizationStatus,
       mentorExpertises: [],
       mentorTypes: []
     )
