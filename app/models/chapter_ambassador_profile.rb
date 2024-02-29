@@ -23,10 +23,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   enum status: %i[pending approved declined spam]
 
-  validates :organization_company_name,
-    :job_title,
-    :bio,
-    presence: true
+  validates :job_title, :bio, presence: true
 
   has_many :saved_searches, as: :searcher
 
