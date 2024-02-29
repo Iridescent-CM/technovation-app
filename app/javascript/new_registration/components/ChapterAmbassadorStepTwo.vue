@@ -66,18 +66,6 @@
         />
 
         <FormulateInput
-          name="chapterAmbassadorOrganizationCompanyName"
-          id="chapterAmbassadorOrganizationCompanyName"
-          type="text"
-          label="Company Name"
-          placeholder="Company Name"
-          validation="required"
-          validation-name="Company name"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-        />
-
-        <FormulateInput
           name="chapterAmbassadorJobTitle"
           id="chapterAmbassadorJobTitle"
           type="text"
@@ -153,7 +141,6 @@ export default {
       if (document.getElementById('firstName').value.length === 0 ||
         document.getElementById('lastName').value.length === 0 ||
         document.getElementById('dateOfBirth').value.length === 0 ||
-        document.getElementById('chapterAmbassadorOrganizationCompanyName').value.length === 0 ||
         document.getElementById('chapterAmbassadorJobTitle').value.length === 0 ||
         document.getElementById('chapterAmbassadorBio').value.length < 100 ||
         validationErrorMessages.some((message) => {

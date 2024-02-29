@@ -345,7 +345,7 @@ ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 CREATE TABLE public.chapter_ambassador_profiles (
     id integer NOT NULL,
-    organization_company_name character varying NOT NULL,
+    organization_company_name character varying,
     job_title character varying NOT NULL,
     account_id integer NOT NULL,
     status integer DEFAULT 0 NOT NULL,
@@ -3414,6 +3414,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240206173222'),
 ('20240208195151'),
 ('20240221211159');
+('20240229195416');
 ('20240312195853'),
 ('20240321122732'),
 ('20240321122808'),
