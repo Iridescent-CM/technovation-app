@@ -76,25 +76,6 @@
           @keyup="checkValidation"
           @blur="checkValidation"
         />
-
-        <div class="chapter-ambassador-information">
-          <h2 class="registration-title">Set your personal summary</h2>
-
-          <p class="text-left pb-2">
-            Add a description of yourself to your profile to help students get to know you.
-            Entering at least 100 characters is required.
-            You can change this later.<span class="formulate-required-field">*</span>
-          </p>
-          <FormulateInput
-            name="chapterAmbassadorBio"
-            id="chapterAmbassadorBio"
-            type="textarea"
-            validation="required|min:100,length"
-            validation-name="Personal summary"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-          />
-        </div>
       </div>
     </div>
 
@@ -142,7 +123,6 @@ export default {
         document.getElementById('lastName').value.length === 0 ||
         document.getElementById('dateOfBirth').value.length === 0 ||
         document.getElementById('chapterAmbassadorJobTitle').value.length === 0 ||
-        document.getElementById('chapterAmbassadorBio').value.length < 100 ||
         validationErrorMessages.some((message) => {
           return (
             message.indexOf('years old to participate') >= 0 ||
