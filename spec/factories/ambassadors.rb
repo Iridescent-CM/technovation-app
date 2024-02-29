@@ -7,6 +7,7 @@ FactoryBot.define do
   ] do
     organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
+    organization_status { "employee" }
     bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
 
     account
