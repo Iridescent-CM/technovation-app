@@ -76,6 +76,16 @@
           @keyup="checkValidation"
           @blur="checkValidation"
         />
+
+        <FormulateInput
+          name="chapterOrganizationName"
+          id="chapterOrganizationName"
+          type="text"
+          label="Organization"
+          readOnly="true"
+          disabled="true"
+        />
+
       </div>
     </div>
 
@@ -89,6 +99,9 @@
 </template>
 
 <script>
+import axios from "axios"
+
+import { airbrake } from "utilities/utilities"
 import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
@@ -104,6 +117,7 @@ export default {
   },
   data () {
     return {
+      inviteCode:  new URLSearchParams(document.location.search).get('invite_code'),
       genderOptions: [
         'Female',
         'Male',
@@ -114,6 +128,20 @@ export default {
     }
   },
   methods: {
+    async getOrganizationName() {
+      try {
+        const response = await axios.get('/api/registration/chapter_organization_name', {
+          params: { invite_code: this.inviteCode }
+        })
+
+        document.getElementById("chapterOrganizationName").value = response.data.chapterOrganizationName
+      }
+      catch(error) {
+        airbrake.notify({
+          error: `[REGISTRATION] Error getting chapter organization name - ${error.response.data}`
+        })
+      }
+    },
     checkValidation() {
       const validationErrorMessages = Array.from(
         document.getElementsByClassName('validation-error-message')
@@ -142,6 +170,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  async created() {
+    await this.getOrganizationName()
   }
 }
 </script>
