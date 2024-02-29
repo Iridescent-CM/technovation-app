@@ -22,6 +22,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   after_update :after_status_changed, if: :saved_change_to_status?
 
   enum status: %i[pending approved declined spam]
+  enum organization_status: {
+    employee: "employee",
+    volunteer: "volunteer"
+  }
 
   validates :job_title, presence: true
 
