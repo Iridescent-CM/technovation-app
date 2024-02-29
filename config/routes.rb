@@ -342,6 +342,8 @@ Rails.application.routes.draw do
 
       resources :mentor_expertises, only: :index
       resources :mentor_types, only: :index
+
+      resource :chapter_organization_name, only: :show
     end
 
     namespace :regional_pitch_events do
