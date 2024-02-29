@@ -96,6 +96,15 @@
           id="organizationStatus"
           input-class="ChapterAmbassadorSelectClass"
         />
+
+        <FormulateInput
+          name="chapterAmbassadorPhoneNumber"
+          id="chapterAmbassadorPhoneNumber"
+          type="tel"
+          label="Phone Number (optional)"
+          @keyup="checkValidation"
+          @blur="checkValidation"
+        />
       </div>
     </div>
 

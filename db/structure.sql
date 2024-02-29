@@ -365,7 +365,8 @@ CREATE TABLE public.chapter_ambassador_profiles (
     secondary_regions character varying[] DEFAULT '{}'::character varying[],
     program_name character varying,
     chapter_id bigint,
-    organization_status public.chapter_ambassador_organization_status
+    organization_status public.chapter_ambassador_organization_status,
+    phone_number character varying
 );
 
 
@@ -3301,7 +3302,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240208195151'),
 ('20240221211159'),
 ('20240229195416'),
-('20240229200318');
+('20240229200318'),
+('20240229201836');
 ('20240312195853');
 
 
