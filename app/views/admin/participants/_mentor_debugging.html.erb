@@ -86,7 +86,7 @@
     </p>
   <% end %>
 
-  <% unless profile.chapter_ambassador_profile.present? %>
+  <% if current_account.is_admin? && !profile.chapter_ambassador_profile.present? %>
     <hr>
     <p>
       <%= profile.name %> does not have a Chapter Ambassador profile. By clicking the button below, <%= profile.name %> will have a Chapter Ambassador profile in addition to a Mentor profile.
