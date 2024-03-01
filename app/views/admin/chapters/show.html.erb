@@ -1,9 +1,5 @@
-<div class="grid__cell--padding-sm-x">
-  <%= link_to "View Chapters", admin_chapters_path, class: "button button--small" %>
-</div>
-
 <div class="grid grid--justify-center">
-  <div class="grid__col-12">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
     <div class="panel">
       <h3><%= @chapter.name.present? ? @chapter.name : "NOT SET" %></h3>
       <dl>
@@ -13,18 +9,33 @@
         <dt>Location</dt>
         <dd>------</dd>
 
-        <dt>Ambassador</dt>
-        <dd>------</dd>
-
         <dt>Program Summary</dt>
         <dd>------</dd>
 
         <dt>Program Links</dt>
         <dd>------</dd>
       </dl>
+    </div>
+  </div>
+</div>
 
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h3>
+      Chapter Ambassadors
+    </h3>
 
-      <p>Please use the invite button below to invite a user to be the Chapter Ambassador for this chapter.</p>
+    <div class="panel">
+      <ul>
+        <% @chapter.chapter_ambassador_profiles.each do |chapter_ambassador| %>
+          <li>
+            <%= link_to chapter_ambassador.full_name, admin_participant_path(chapter_ambassador.account) %>
+          </li>
+        <% end %>
+      </ul>
+
+      <p>Please use the invite button below to invite someone to be the Chapter Ambassador for this chapter.</p>
+
       <%= link_to "Invite a chapter ambassador PLACEHOLDER", class: "button" %>
     </div>
   </div>
