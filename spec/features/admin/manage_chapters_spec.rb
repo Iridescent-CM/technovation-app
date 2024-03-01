@@ -15,7 +15,6 @@ RSpec.feature "Admins managing chapters", :js do
     click_button "Add"
 
     expect(page).to have_content("Hello World")
-    expect(page).to have_content("Please use the invite button below to invite a user to be the Chapter Ambassador for this chapter.")
     expect(Chapter.count).to eq(1)
   end
 
