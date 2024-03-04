@@ -1,5 +1,4 @@
 module CheckrApiClient
-
   class SyncBackgroundCheck
     def initialize(account:)
       @account = account
