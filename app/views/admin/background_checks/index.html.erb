@@ -1,5 +1,16 @@
 <div class="grid margin--t-xlarge">
   <div class="grid__col-auto grid__col--bleed-y">
+    <h3>Sync with Checkr</h3>
+    <div class="panel">
+      <p>Clicking the button below will update all background check statuses on our platform.</p>
+      <p>If a background check is cleared in this process, the participant will receive the "Background check cleared" automated email from our platform.</p>
+      <%= button_to "Sync with Checkr", admin_background_check_syncs_path, class: "appy-button" %>
+    </div>
+  </div>
+</div>
+
+<div class="grid margin--t-xlarge">
+  <div class="grid__col-auto grid__col--bleed-y">
     <h3>Background Checks</h3>
     <%= render 'datagrid/datagrid',
                grid: @background_checks_grid,
