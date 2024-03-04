@@ -36,6 +36,7 @@ RSpec.describe "Admin add chapter ambassador profile to an account" do
       chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, intro_summary: "Here is my intro summary!")
 
       sign_in(chapter_ambassador)
+      click_link "Chapter Admin Activity"
       click_link "Participants"
 
       visit chapter_ambassador_participant_path(mentor.account)
