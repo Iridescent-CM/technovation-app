@@ -285,6 +285,7 @@ Rails.application.routes.draw do
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
+    resources :background_check_syncs, only: :create
 
     resources :events,
       controller: :regional_pitch_events,
