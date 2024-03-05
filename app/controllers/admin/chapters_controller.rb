@@ -6,6 +6,7 @@ module Admin
     def show
       @chapter = Chapter.find(params[:id])
       @chapter_invite = UserInvitation.new
+      @pending_chapter_invites = UserInvitation.pending.where(chapter_id: params[:id])
     end
 
     def new
