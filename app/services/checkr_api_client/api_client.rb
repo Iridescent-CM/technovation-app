@@ -85,7 +85,6 @@ module CheckrApiClient
         email: candidate.email,
         first_name: candidate.first_name,
         last_name: candidate.last_name,
-        dob: candidate.date_of_birth,
         work_locations: [{country: candidate.country_code}]
       }
 
