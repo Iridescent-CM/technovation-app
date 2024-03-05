@@ -260,7 +260,9 @@ Rails.application.routes.draw do
     resources :student_conversions, only: :create
     resources :mentor_to_judge_conversions, only: :create
     resources :chapter_ambassador_profile_additions, only: :create
-    resources :chapters, only: [:new, :create, :index, :show]
+    resources :chapters, only: [:new, :create, :index, :show] do
+      resources :invites, only: :create, controller: "chapter_invites"
+    end
 
     resources :chapter_ambassador_status, only: :update
 
