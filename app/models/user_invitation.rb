@@ -104,6 +104,10 @@ class UserInvitation < ApplicationRecord
     where("lower(unaccent(email)) ILIKE '#{sanitized.downcase}%'")
   }
 
+  scope :pending, -> {
+    where.not(status: :registered)
+  }
+
   def submission_scores
     SubmissionScore.none
   end
