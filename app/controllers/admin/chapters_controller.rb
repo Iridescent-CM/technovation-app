@@ -5,6 +5,7 @@ module Admin
 
     def show
       @chapter = Chapter.find(params[:id])
+      @chapter_invite = UserInvitation.new
     end
 
     def new
