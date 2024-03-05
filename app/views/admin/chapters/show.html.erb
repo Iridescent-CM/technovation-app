@@ -34,6 +34,18 @@
         <% end %>
       </ul>
 
+      <% if @pending_chapter_invites.present? %>
+        <h4>Pending Invitations</h4>
+
+        <ul>
+          <% @pending_chapter_invites.each do |invite| %>
+            <li>
+              <strong><%= invite.name %></strong> <%= invite.email %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
       <h4>Invite a Chapter Ambassador to this Chapter</h4>
       <%= simple_form_for @chapter_invite, url: admin_chapter_invites_path(@chapter), local: true do |f| %>
         <% if @chapter_invite.errors.any? %>
