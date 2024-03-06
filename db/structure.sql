@@ -52,6 +52,16 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 
 
 --
+-- Name: chapter_ambassador_organization_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.chapter_ambassador_organization_status AS ENUM (
+    'employee',
+    'volunteer'
+);
+
+
+--
 -- Name: judge_recusal_from_submission_reason; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -344,7 +354,7 @@ ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 CREATE TABLE public.chapter_ambassador_profiles (
     id integer NOT NULL,
-    organization_company_name character varying NOT NULL,
+    organization_company_name character varying,
     job_title character varying NOT NULL,
     account_id integer NOT NULL,
     status integer DEFAULT 0 NOT NULL,
@@ -354,7 +364,9 @@ CREATE TABLE public.chapter_ambassador_profiles (
     intro_summary text,
     secondary_regions character varying[] DEFAULT '{}'::character varying[],
     program_name character varying,
-    chapter_id bigint
+    chapter_id bigint,
+    organization_status public.chapter_ambassador_organization_status,
+    phone_number character varying
 );
 
 
@@ -3286,6 +3298,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240202203636'),
 ('20240206173222'),
 ('20240208195151'),
-('20240221211159');
+('20240221211159'),
+('20240229195416'),
+('20240229200318'),
+('20240229201836');
 
 
