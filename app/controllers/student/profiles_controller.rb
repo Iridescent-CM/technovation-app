@@ -11,7 +11,8 @@ module Student
       [
         :parent_guardian_email,
         :parent_guardian_name,
-        :school_name
+        :school_name,
+        :chapter
       ]
     end
 
