@@ -9,20 +9,20 @@
         <dt>Name</dt>
         <dd><%= current_ambassador.full_name %></dd>
 
-        <dt>Occupation</dt>
-        <dd>
-          <%= current_ambassador.job_title %> at
-          <%= current_ambassador.organization_company_name %>
-          </dd>
-
         <dt>Age</dt>
         <dd><%= current_ambassador.age %></dd>
 
-        <dt>Gender identity</dt>
+        <dt>Gender Identity</dt>
         <dd><%= current_ambassador.gender || "Not specified" %></dd>
 
-        <dt>Personal summary</dt>
-        <dd><%= simple_format h(current_ambassador.bio) %></dd>
+        <dt>Job Title</dt>
+        <dd><%= current_ambassador.job_title %></dd>
+
+        <dt>Status with <%= current_ambassador.chapter&.organization_name.presence || "Organization" %></dt>
+        <dd><%= current_ambassador.organization_status&.humanize %></dd>
+
+        <dt>Phone Number</dt>
+        <dd><%= current_ambassador.phone_number.presence || "-" %></dd>
       </dl>
 
       <p>
