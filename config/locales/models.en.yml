@@ -58,6 +58,8 @@ en:
         signup_label: "Tell us about yourself"
       job_title: "Job title"
       organization_company_name: "Organization/company name"
+      organization_status: "Status with %{organization_name}"
+      phone_number: "Phone Number"
 
     student_profile:
       date_of_birth: "Date of Birth"
