@@ -4,10 +4,25 @@
     collection: Account.genders.keys %>
 <% end %>
 
-<%= f.input :organization_company_name,
-  label: t("models.chapter_ambassador_profile.organization_company_name") %>
-
 <%= f.input :job_title,
-  label: t("models.chapter_ambassador_profile.job_title") %>
+  label: t("models.chapter_ambassador_profile.job_title"),
+  :label_html => { :class => "mt-4" } %>
 
-<%= f.input :bio, label: t("models.chapter_ambassador_profile.bio.signup_label") %>
+<%= f.label :organization_status,
+  t("models.chapter_ambassador_profile.organization_status",
+    organization_name: f.object.chapter&.organization_name.presence || "Organization")
+%>
+
+<%= f.select :organization_status,
+  options_for_select(
+    ChapterAmbassadorProfile.organization_statuses.map { |k,v|
+      [k.humanize, v]
+    },
+    selected: f.object.organization_status
+  )
+%>
+
+<%= f.input :phone_number,
+  label: t("models.chapter_ambassador_profile.phone_number"),
+  :label_html => { :class => "mt-4"  }
+%>
