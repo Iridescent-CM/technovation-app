@@ -1,7 +1,13 @@
 <dl class="profile-info">
-  <dt><%= t('models.chapter_ambassador_profile.organization_company_name') %></dt>
-  <dd><%= profile.organization_company_name %></dd>
-
-  <dt><%= t('models.mentor_profile.job_title') %></dt>
+  <dt><%= t("models.mentor_profile.job_title") %></dt>
   <dd><%= profile.job_title %></dd>
+
+  <dt>
+    <%= t("models.chapter_ambassador_profile.organization_status",
+      organization_name: profile.chapter&.organization_name.presence || "Organization") %>
+  </dt>
+  <dd><%= profile.organization_status&.humanize || "-" %></dd>
+
+  <dt><%= t("models.chapter_ambassador_profile.phone_number") %></dt>
+  <dd><%= profile.phone_number.presence || "-" %></dd>
 </dl>
