@@ -1,37 +1,43 @@
 <template>
-  <a href="#" @click.prevent="openJudgeRecusalForm(judgeRecusalCount, maximumNumberOfRecusals)" :class="cssClass">
+  <a
+    href="#"
+    @click.prevent="
+      openJudgeRecusalForm(judgeRecusalCount, maximumNumberOfRecusals)
+    "
+    :class="cssClass"
+  >
     <slot></slot>
   </a>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
-import { mapState } from 'vuex'
+import Swal from "sweetalert2";
+import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(['score'])
+    ...mapState(["score"]),
   },
 
   props: {
     cssClass: {
       type: String,
-      default: ''
+      default: "",
     },
     judgeRecusalCount: {
       type: Number,
-      default: 0
+      default: 0,
     },
     maximumNumberOfRecusals: {
       type: String,
-      default: 0
-    }
+      default: 0,
+    },
   },
 
   methods: {
-    async openJudgeRecusalForm (judgeRecusalCount, maximumNumberOfRecusals) {
+    async openJudgeRecusalForm(judgeRecusalCount, maximumNumberOfRecusals) {
       const { value: formValues } = await Swal.fire({
-        title: 'What is the reason you cannot judge this submission?',
+        title: "What is the reason you cannot judge this submission?",
         html: `
           <div id="judge-recusal-form">
             <div>
@@ -57,64 +63,94 @@ export default {
         `,
         footer: `
           <p>${judgeRecusalCount} out of ${maximumNumberOfRecusals} recusals used</p>
-          <p id="last-recusal">${(judgeRecusalCount == maximumNumberOfRecusals - 1) ? "This will be your last recusal!" : ""}</p>
+          <p id="last-recusal">${
+            judgeRecusalCount == maximumNumberOfRecusals - 1
+              ? "This will be your last recusal!"
+              : ""
+          }</p>
         `,
-        willOpen:() =>{
+        willOpen: () => {
           let characterCount = 0;
-          const commentBoxEl = document.querySelector('#judge-recusal-comment');
-          const characterCountEl = document.querySelector('#character-count');
+          const commentBoxEl = document.querySelector("#judge-recusal-comment");
+          const characterCountEl = document.querySelector("#character-count");
 
-          commentBoxEl.addEventListener('keyup',() =>{
+          commentBoxEl.addEventListener("keyup", () => {
             Swal.resetValidationMessage();
             let currentCommentText = commentBoxEl.value.trim();
 
-            if(currentCommentText !== ""){
+            if (currentCommentText !== "") {
               characterCount = currentCommentText.split(" ").length;
             } else {
               characterCount = 0;
             }
 
             characterCountEl.innerHTML = characterCount.toString();
-
           });
         },
         preConfirm: () => {
-          const judgeRecusalReason = document.querySelector('input[name="judge-recusal-reason"]:checked').value
-          const judgeRecusalComment = document.getElementById('judge-recusal-comment').value
-          const judgeRecusalCommentWordCount = judgeRecusalComment.trim().split(" ").length
+          const judgeRecusalReason = document.querySelector(
+            'input[name="judge-recusal-reason"]:checked'
+          ).value;
+          const judgeRecusalComment = document.getElementById(
+            "judge-recusal-comment"
+          ).value;
+          const judgeRecusalCommentWordCount = judgeRecusalComment
+            .trim()
+            .split(" ").length;
 
-          if (judgeRecusalReason === 'other' && judgeRecusalComment.trim() === '') {
-            Swal.showValidationMessage('Please add a reason for recusing yourself. Comment must be at least 3 words.')
-          } else if (judgeRecusalReason === 'other' && judgeRecusalCommentWordCount < 3 || judgeRecusalCommentWordCount > 50){
-            Swal.showValidationMessage('Comment must be between 3 and 50 words')
-          } else if ( judgeRecusalReason !== 'other' && judgeRecusalComment.trim() !== '' && judgeRecusalCommentWordCount < 3 || judgeRecusalCommentWordCount > 50) {
-            Swal.showValidationMessage('Comment must be between 3 and 50 words')
+          if (
+            judgeRecusalReason === "other" &&
+            judgeRecusalComment.trim() === ""
+          ) {
+            Swal.showValidationMessage(
+              "Please add a reason for recusing yourself. Comment must be at least 5 words."
+            );
+          } else if (
+            (judgeRecusalReason === "other" &&
+              judgeRecusalCommentWordCount < 5) ||
+            judgeRecusalCommentWordCount > 50
+          ) {
+            Swal.showValidationMessage(
+              "Comment must be between 5 and 50 words"
+            );
+          } else if (
+            (judgeRecusalReason !== "other" &&
+              judgeRecusalComment.trim() !== "" &&
+              judgeRecusalCommentWordCount < 3) ||
+            judgeRecusalCommentWordCount > 50
+          ) {
+            Swal.showValidationMessage(
+              "Comment must be between 5 and 50 words"
+            );
           }
 
-          return { judgeRecusalReason, judgeRecusalComment }
+          return { judgeRecusalReason, judgeRecusalComment };
         },
-        confirmButtonText: 'Remove me from this submission',
-        confirmButtonColor: '#3FA428',
+        confirmButtonText: "Remove me from this submission",
+        confirmButtonColor: "#3FA428",
         showCancelButton: true,
-        cancelButtonText: 'I want to go back and try judging',
+        cancelButtonText: "I want to go back and try judging",
         focusConfirm: false,
         reverseButtons: true,
-        width: '45%'
-      })
+        width: "45%",
+      });
 
       if (formValues) {
-        await window.axios.patch(`/judge/scores/${this.score.id}/judge_recusal`, {
-          submission_score: {
-            judge_recusal_reason: formValues.judgeRecusalReason,
-            judge_recusal_comment: formValues.judgeRecusalComment
+        await window.axios.patch(
+          `/judge/scores/${this.score.id}/judge_recusal`,
+          {
+            submission_score: {
+              judge_recusal_reason: formValues.judgeRecusalReason,
+              judge_recusal_comment: formValues.judgeRecusalComment,
+            },
           }
-        })
+        );
 
-        window.location.href = '/judge/dashboard'
+        window.location.href = "/judge/dashboard";
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -126,23 +162,24 @@ export default {
   margin-top: 1rem;
 
   div {
-    margin-bottom: .3rem;
+    margin-bottom: 0.3rem;
     text-align: left;
   }
 
-  #character-div, #character-div span {
+  #character-div,
+  #character-div span {
     font-size: 10pt;
   }
 
   #judge-recusal-comment {
     display: inline;
     width: 100%;
-    padding: .2rem;
-    margin-top: .4rem;
-    margin-bottom: .4rem;
+    padding: 0.2rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
   }
 
-  #character-div{
+  #character-div {
     justify-content: flex-end;
     display: flex;
     width: 50%;
@@ -150,7 +187,8 @@ export default {
   }
 }
 
-.swal2-content, .swal2-actions {
+.swal2-content,
+.swal2-actions {
   width: 100%;
 }
 
