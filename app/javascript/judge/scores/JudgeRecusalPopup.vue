@@ -116,7 +116,7 @@ export default {
           } else if (
             (judgeRecusalReason !== "other" &&
               judgeRecusalComment.trim() !== "" &&
-              judgeRecusalCommentWordCount < 3) ||
+              judgeRecusalCommentWordCount < 5) ||
             judgeRecusalCommentWordCount > 50
           ) {
             Swal.showValidationMessage(
