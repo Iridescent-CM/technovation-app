@@ -75,6 +75,8 @@ class StudentProfile < ActiveRecord::Base
     class_name: "Account",
     required: false
 
+  belongs_to :chapter, optional: true
+
   has_many :parental_consents, dependent: :destroy
   has_one :parental_consent, -> { current }, dependent: :destroy
   accepts_nested_attributes_for :parental_consents
