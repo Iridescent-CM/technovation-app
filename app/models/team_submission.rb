@@ -251,6 +251,9 @@ class TeamSubmission < ActiveRecord::Base
   validates :uses_open_ai_description, presence: true, max_word_count: true,
     if: ->(team_submission) { team_submission.uses_open_ai? }
 
+  validates :solves_education_description, presence: true, max_word_count: true,
+            if: ->(team_submission) { team_submission.solves_education? }
+
   validates :pitch_video_link,
     format: {
       with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/
