@@ -18,7 +18,7 @@
 
     <dt>Parental Consent</dt>
     <dd>
-      <% if profile.consent_signed? %>
+      <% if profile.parental_consent_signed? %>
         <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
       <% else %>
         <%= web_icon("exclamation-circle icon-red",
