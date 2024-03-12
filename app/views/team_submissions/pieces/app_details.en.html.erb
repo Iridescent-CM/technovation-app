@@ -178,6 +178,46 @@
       </div>
     </div>
 
+    <div class="field mt-4">
+      <%= f.label :education,
+        t("submissions.solves_education_question"),
+        for: :team_submission_solves_education %>
+
+      <%= f.select :solves_education,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        data: {
+          toggles: {
+            "true": "#solves_education_description"
+          },
+        },
+        class: "w-full lg:w-1/5",
+        id: :team_submission_solves_education %>
+
+      <div id="solves_education_description" class="mt-4">
+        <p class="tw-hint">Please explain how:</p>
+
+        <%= f.text_area :solves_education_description,
+          id: :team_submission_solves_education_description,
+          data: {
+            word_count: true,
+            word_count_limit: 100,
+            word_count_details_container: "solves-education-word-count"
+          },
+          rows: 5 %>
+
+        <p id="solves-education-word-count" class="tw-hint word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+            0
+          </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
+      </div>
+    </div>
+
     <div class="actions mt-8 submission-actions">
       <p class="btn-wrapper">
         <%= f.submit "Save my responses", class: "tw-green-btn cursor-pointer" %>
