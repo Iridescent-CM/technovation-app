@@ -52,7 +52,7 @@ module SubmissionsHelper
     when 2023
       [:ai, :climate_change, :solves_hunger_or_food_waste, :uses_open_ai]
     when 2024
-      [:ai, :climate_change, :solves_hunger_or_food_waste, :uses_open_ai]
+      [:ai, :climate_change, :solves_hunger_or_food_waste, :uses_open_ai, :solves_education]
     end
   end
 end
