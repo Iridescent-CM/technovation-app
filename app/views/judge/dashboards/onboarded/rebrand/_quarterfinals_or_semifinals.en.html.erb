@@ -6,6 +6,10 @@
   <% end %>
 </div>
 
+<div>
+  <%= render 'judge/dashboards/rebrand/important_dates' %>
+</div>
+
 <% if CanStartNewScore.(current_judge) %>
   <p class="mb-4">Click on the button below to open a submission and start scoring.</p>
   <p class="mb-8">
@@ -14,7 +18,6 @@
                 class: "md-link-button link-button-success",
                 data: { turbolinks: false } %>
   </p>
-  <%= render 'judge/dashboards/rebrand/important_dates' %>
 <% elsif @scores_in_progress.present? %>
   You have <%=  pluralize( @scores_in_progress.count, 'score' ) %> in progress.
   View the submissions tab to continue scoring.
