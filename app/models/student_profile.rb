@@ -124,13 +124,13 @@ class StudentProfile < ActiveRecord::Base
     to: :parental_consent,
     prefix: true
 
-  def method_missing(method_name, *args)
+  def method_missing(method_name, *args) # standard:disable all
     # TODO: stop using this strategy
 
     super
   rescue
     begin
-      account.public_send(method_name, *args)
+      account.public_send(method_name, *args) # standard:disable all
     rescue
       raise NoMethodError,
         "undefined method `#{method_name}' not found for #{self}"
@@ -259,8 +259,8 @@ class StudentProfile < ActiveRecord::Base
     pending_team_invitations.detect { |i| i.team == team }
   end
 
-  def parental_consent_signed?
-    !!parental_consent && parental_consent.signed?
+  def parental_consent_signed?(season = Season.current.year)
+    parental_consents.by_season(season).any?(&:signed?)
   end
 
   def media_consent_signed?
@@ -363,7 +363,7 @@ class StudentProfile < ActiveRecord::Base
 
   def can_be_marked_onboarded?
     account.present? &&
-      signed_parental_consent.present? &&
+      parental_consent_signed? &&
       !account.email_confirmed_at.blank? &&
       account.valid_coordinates? &&
       account.terms_agreed_at?
