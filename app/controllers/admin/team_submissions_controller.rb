@@ -95,6 +95,8 @@ module Admin
         :solves_hunger_or_food_waste_description,
         :uses_open_ai,
         :uses_open_ai_description,
+        :solves_education,
+        :solves_education_description,
         :app_inventor_gmail,
         :source_code,
         :contest_rank,
