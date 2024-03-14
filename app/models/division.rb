@@ -57,7 +57,7 @@ class Division < ActiveRecord::Base
     divisions = Membership.where(
       team: team,
       member_type: "StudentProfile"
-    ).map(&:member).collect { |student_profile| for_account(student_profile.account) }
+    ).map(&:member).compact.collect { |student_profile| for_account(student_profile.account) }
 
     return none_assigned_yet if divisions.blank?
 

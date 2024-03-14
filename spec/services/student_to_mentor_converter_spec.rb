@@ -13,6 +13,7 @@ describe StudentToMentorConverter do
     allow(account).to receive(:update_columns)
     allow(student_profile).to receive(:delete)
     allow(student_profile).to receive_message_chain(:join_requests, :pending, :delete_all)
+    allow(student_profile).to receive_message_chain(:memberships, :delete_all)
   end
 
   it "creates a mentor profile (that's marked as being a former student)" do
@@ -38,6 +39,12 @@ describe StudentToMentorConverter do
 
   it "deletes any pending join requests" do
     expect(student_profile).to receive_message_chain(:join_requests, :pending, :delete_all)
+
+    student_to_mentor_converter.call
+  end
+
+  it "deletes any team memberships" do
+    expect(student_profile).to receive_message_chain(:memberships, :delete_all)
 
     student_to_mentor_converter.call
   end
