@@ -1,20 +1,34 @@
 <div class="grid grid--justify-center">
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
     <div class="panel">
-      <h3><%= @chapter.name.present? ? @chapter.name : "NOT SET" %></h3>
-      <dl>
-        <dt>Organization Name</dt>
-        <dd><%= @chapter.organization_name %></dd>
+      <div class="grid__col-4">
+        <h3><%= @chapter.name.presence || "TBD" %></h3>
 
-        <dt>Location</dt>
-        <dd>------</dd>
+        <dl>
+          <dt>Organization</dt>
+          <dd><%= @chapter.organization_name %></dd>
 
-        <dt>Program Summary</dt>
-        <dd>------</dd>
+          <dt>Location</dt>
+          <dd><%= @chapter.address_details.presence || "-" %></dd>
 
-        <dt>Program Links</dt>
-        <dd>------</dd>
-      </dl>
+          <dt>Chapter Links</dt>
+          <dd>
+            <ul>
+              <li></li>
+            </ul>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="grid__col-12 grid__col--bleed-y">
+        <dl>
+          <dt>Summary</dt>
+
+          <dd>
+            <%= simple_format h(@chapter.summary.presence || "-") %>
+          </dd>
+        </dl>
+      </div>
     </div>
   </div>
 </div>
