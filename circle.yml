@@ -200,6 +200,13 @@ jobs:
             - "32:c4:d8:7f:60:e0:56:7d:e9:ee:f5:04:e1:9c:2d:4e"
 
       - deploy:
+          name: Deploy Preview to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "preview" ]; then
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-preview.git preview:master
+            fi
+
+      - deploy:
           name: Deploy QA to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "qa" ]; then
@@ -220,6 +227,11 @@ general:
       - master
 
 deployment:
+  preview:
+    branch: preview
+    heroku:
+      appname: technovation-preview
+
   qa:
     branch: qa
     heroku:
