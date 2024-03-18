@@ -10,7 +10,7 @@ FactoryBot.define do
     organization_status { "employee" }
     bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
 
-    account
+    account { association :account, meets_minimum_age_requirement: true }
 
     transient do
       city { "Chicago" }
@@ -51,9 +51,10 @@ FactoryBot.define do
         state_province: e.state_province,
         country: e.country,
         first_name: e.first_name,
-        skip_existing_password: true
+        skip_existing_password: true,
+        meets_minimum_age_requirement: true
       }.each do |k, v|
-        r.account.send("#{k}=", v)
+        r.account.send(:"#{k}=", v)
       end
 
       unless r.background_check.present?
