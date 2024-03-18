@@ -28,8 +28,8 @@ RSpec.feature "Chapter ambassadors registering", :js do
 
     fill_in "First Name", with: "Hopeful Heart"
     fill_in "Last Name", with: "Bear"
+    check "I confirm that I am 18 years or older"
     select "Prefer not to say", from: "Gender Identity"
-    fill_in "Birthday", with: 32.years.ago
     fill_in "Job Title", with: "Kindness spreader"
     click_button "Next"
 
