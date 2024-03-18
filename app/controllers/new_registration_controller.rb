@@ -104,7 +104,10 @@ class NewRegistrationController < ApplicationController
       job_title: registration_params[:chapterAmbassadorJobTitle],
       organization_status: registration_params[:chapterAmbassadorOrganizationStatus],
       phone_number: registration_params[:chapterAmbassadorPhoneNumber],
-      account_attributes: account_attributes.merge({gender: registration_params[:gender]})
+      account_attributes: account_attributes.merge({
+        gender: registration_params[:gender],
+        meets_minimum_age_requirement: registration_params[:meetsMinimumAgeRequirement]
+      })
     }
   end
 
