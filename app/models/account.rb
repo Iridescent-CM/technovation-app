@@ -258,8 +258,7 @@ class Account < ActiveRecord::Base
   }
 
   after_create :create_account_created_activity
-  before_update :update_division, if: -> { !is_a_judge? }
-
+  before_update :update_division, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   after_commit :update_email_list, on: :update
 
   after_commit -> {
@@ -501,7 +500,7 @@ class Account < ActiveRecord::Base
   before_create do
     self.email_confirmed_at = Time.current
     self.icon_path = ActionController::Base.helpers.asset_path("placeholders/avatars/#{rand(1..24)}.svg")
-    self.division = Division.for_account(self) if !is_a_judge?
+    self.division = Division.for_account(self) if !is_a_judge? && !is_chapter_ambassador?
   end
 
   validates :email,
@@ -538,8 +537,8 @@ class Account < ActiveRecord::Base
     }
 
   validates :first_name, :last_name, presence: true
-  validates :date_of_birth, presence: true, if: -> { !is_a_judge? }
-  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { is_a_judge? && new_record? }
+  validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? }
+  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? && new_record?) && is_chapter_ambassador? }
 
   validates :gender, presence: true, if: -> { not_student? }
 
