@@ -86,6 +86,48 @@ RSpec.describe Account do
         end
       end
     end
+
+    describe "date of birth" do
+      context "for chapter ambassadors" do
+        let(:chapter_ambassador) {
+          FactoryBot.create(:chapter_ambassador,
+            account: FactoryBot.build(:account, date_of_birth: date_of_birth))
+        }
+
+        context "when the chapter ambassador doesn't have a date of birth" do
+          let(:date_of_birth) { nil }
+
+          it "is valid" do
+            expect(chapter_ambassador).to be_valid
+          end
+        end
+      end
+    end
+
+    describe "meets minimum age requirement" do
+      context "for chapter ambassadors" do
+        let(:chapter_ambassador) {
+          FactoryBot.build_stubbed(:chapter_ambassador,
+            account: FactoryBot.build_stubbed(:account, meets_minimum_age_requirement: meets_minimum_age_requirement))
+        }
+
+        context "when the chapter ambassador meets the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { true }
+
+          it "is valid" do
+            expect(chapter_ambassador).to be_valid
+          end
+        end
+
+        context "when the chapter ambassador does not meet the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { false }
+
+          it "is not valid" do
+            expect(chapter_ambassador).not_to be_valid
+          end
+        end
+      end
+    end
   end
 
   it "formats the country as a short code before validating" do
