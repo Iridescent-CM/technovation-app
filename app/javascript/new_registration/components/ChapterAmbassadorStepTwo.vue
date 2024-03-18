@@ -35,6 +35,18 @@
         </div>
 
         <FormulateInput
+          name="meetsMinimumAgeRequirement"
+          id="meetsMinimumAgeRequirement"
+          type="checkbox"
+          label="I confirm that I am 18 years or older"
+          validation="required"
+          :validation-messages="{ required: 'You must be 18 years or older in order to become a Chapter Ambassador' }"
+          @keyup="checkValidation"
+          @blur="checkValidation"
+          @input="checkValidation"
+        />
+
+        <FormulateInput
           name="gender"
           :options="genderOptions"
           type="select"
@@ -46,23 +58,6 @@
           label="Gender Identity"
           id="genderIdentity"
           input-class="ChapterAmbassadorSelectClass"
-        />
-
-        <FormulateInput
-          name="dateOfBirth"
-          id="dateOfBirth"
-          type="date"
-          label="Birthday"
-          placeholder="Birthday"
-          validation="required|chapter_ambassador_age|after:01/01/1900|before:01/01/2020"
-          :validation-messages="{
-            after: 'Please enter a valid birthday.',
-            before: 'Please enter a valid birthday.'
-          }"
-          validation-name="Birthday"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          @change="checkValidation"
         />
 
         <FormulateInput
@@ -172,12 +167,11 @@ export default {
 
       if (document.getElementById('firstName').value.length === 0 ||
         document.getElementById('lastName').value.length === 0 ||
-        document.getElementById('dateOfBirth').value.length === 0 ||
+        !document.getElementById('meetsMinimumAgeRequirement').checked ||
         document.getElementById('chapterAmbassadorJobTitle').value.length === 0 ||
         validationErrorMessages.some((message) => {
           return (
             message.indexOf('years old to participate') >= 0 ||
-            message.indexOf('Please enter a valid birthday') >= 0 ||
             message.indexOf('Personal summary must be at least') >= 0
           )
         })) {
