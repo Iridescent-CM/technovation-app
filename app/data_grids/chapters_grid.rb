@@ -9,12 +9,16 @@ class ChaptersGrid
 
   column :name, header: "Chapters (Program Name)", mandatory: true, html: true do |chapter|
     link_to(
-      chapter.name.present? ? chapter.name : "-",
+      chapter.name.presence || "-",
       admin_chapter_path(chapter)
     )
   end
 
-  column :organization_name, header: "Organization", mandatory: true, html: true
+  column :name, header: "Chapters (Program Name)", html: false do |chapter|
+    chapter.name.presence || "-"
+  end
+
+  column :organization_name, header: "Organization", mandatory: true
 
   filter :program_name do |value|
     where("name ilike ?",
