@@ -24,16 +24,18 @@
       <%= f.text_field :email %>
     </p>
 
-    <p>
-      <%= f.label :date_of_birth %>
-      <%= f.date_select :date_of_birth,
-        {
-          prompt: true,
-          start_year: Season.current.year,
-          end_year: Season.current.year - 100,
-        },
-        class: "chosen dob_field" %>
-    </p>
+    <% if !f.object.is_chapter_ambassador? %>
+      <p>
+        <%= f.label :date_of_birth %>
+        <%= f.date_select :date_of_birth,
+          {
+            prompt: true,
+            start_year: Season.current.year,
+            end_year: Season.current.year - 100,
+          },
+          class: "chosen dob_field" %>
+      </p>
+    <% end %>
 
     <p>
       <%= f.label :gender,
