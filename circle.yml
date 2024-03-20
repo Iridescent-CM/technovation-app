@@ -203,7 +203,7 @@ jobs:
           name: Deploy Preview to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "preview" ]; then
-              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-preview.git preview:master
+              git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-preview.git preview:master
             fi
 
       - deploy:
