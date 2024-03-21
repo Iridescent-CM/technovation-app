@@ -538,8 +538,7 @@ class Account < ActiveRecord::Base
 
   validates :first_name, :last_name, presence: true
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? }
-  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? && new_record?) && is_chapter_ambassador? }
-
+  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador?) && new_record? }
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
