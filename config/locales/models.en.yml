@@ -28,6 +28,11 @@ en:
       requestor_type: "Type of member"
       status: "Status"
 
+    judge_profile:
+      company_name: "Company name"
+      job_title: "Job title"
+      judge_types: "Judge types"
+
     mentor:
       expertise_names: "Expertise"
 
