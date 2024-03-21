@@ -24,6 +24,7 @@ module ApplicationHelper
       location_details
       profiles
       training_completions
+      mous
     ]
 
     if namespace == "chapter_ambassador" && rebranded_chapter_ambassador_sections.include?(path)
