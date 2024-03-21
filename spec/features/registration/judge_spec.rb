@@ -19,6 +19,7 @@ RSpec.feature "Judges registering", :js do
     fill_in "Birthday", with: 41.years.ago
     fill_in "Company Name", with: "Care-a-Lot"
     fill_in "Job Title", with: "Class clown"
+    check "Educator"
     click_button "Next"
 
     expect(page).to have_content("Data Use Terms")

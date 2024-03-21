@@ -668,6 +668,38 @@ ALTER SEQUENCE public.judge_assignments_id_seq OWNED BY public.judge_assignments
 
 
 --
+-- Name: judge_profile_judge_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.judge_profile_judge_types (
+    id bigint NOT NULL,
+    judge_profile_id bigint,
+    judge_type_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: judge_profile_judge_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.judge_profile_judge_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: judge_profile_judge_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.judge_profile_judge_types_id_seq OWNED BY public.judge_profile_judge_types.id;
+
+
+--
 -- Name: judge_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -722,6 +754,38 @@ CREATE TABLE public.judge_profiles_regional_pitch_events (
     judge_profile_id integer,
     regional_pitch_event_id integer
 );
+
+
+--
+-- Name: judge_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.judge_types (
+    id bigint NOT NULL,
+    name character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: judge_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.judge_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: judge_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.judge_types_id_seq OWNED BY public.judge_types.id;
 
 
 --
@@ -1798,10 +1862,24 @@ ALTER TABLE ONLY public.judge_assignments ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: judge_profile_judge_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_judge_types ALTER COLUMN id SET DEFAULT nextval('public.judge_profile_judge_types_id_seq'::regclass);
+
+
+--
 -- Name: judge_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.judge_profiles ALTER COLUMN id SET DEFAULT nextval('public.judge_profiles_id_seq'::regclass);
+
+
+--
+-- Name: judge_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_types ALTER COLUMN id SET DEFAULT nextval('public.judge_types_id_seq'::regclass);
 
 
 --
@@ -2094,11 +2172,27 @@ ALTER TABLE ONLY public.judge_assignments
 
 
 --
+-- Name: judge_profile_judge_types judge_profile_judge_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_judge_types
+    ADD CONSTRAINT judge_profile_judge_types_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: judge_profiles judge_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.judge_profiles
     ADD CONSTRAINT judge_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: judge_types judge_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_types
+    ADD CONSTRAINT judge_types_pkey PRIMARY KEY (id);
 
 
 --
@@ -2469,6 +2563,20 @@ CREATE INDEX index_judge_assignments_on_team_id ON public.judge_assignments USIN
 
 
 --
+-- Name: index_judge_profile_judge_types_on_judge_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_profile_judge_types_on_judge_profile_id ON public.judge_profile_judge_types USING btree (judge_profile_id);
+
+
+--
+-- Name: index_judge_profile_judge_types_on_judge_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_profile_judge_types_on_judge_type_id ON public.judge_profile_judge_types USING btree (judge_type_id);
+
+
+--
 -- Name: index_judge_profiles_on_recusal_scores_count; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2745,6 +2853,14 @@ ALTER TABLE ONLY public.judge_assignments
 
 
 --
+-- Name: judge_profile_judge_types fk_rails_246badf43f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_judge_types
+    ADD CONSTRAINT fk_rails_246badf43f FOREIGN KEY (judge_profile_id) REFERENCES public.judge_profiles(id);
+
+
+--
 -- Name: regional_pitch_events_teams fk_rails_24f0c96e18; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2870,6 +2986,14 @@ ALTER TABLE ONLY public.unconfirmed_email_addresses
 
 ALTER TABLE ONLY public.mentor_profiles
     ADD CONSTRAINT fk_rails_9a3cf8d620 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: judge_profile_judge_types fk_rails_9ad24ddcf6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_judge_types
+    ADD CONSTRAINT fk_rails_9ad24ddcf6 FOREIGN KEY (judge_type_id) REFERENCES public.judge_types(id);
 
 
 --
@@ -3205,6 +3329,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231216014610'),
 ('20240206173222'),
 ('20240208195151'),
-('20240312195853');
+('20240312195853'),
+('20240321122732'),
+('20240321122808'),
+('20240321123201');
 
 
