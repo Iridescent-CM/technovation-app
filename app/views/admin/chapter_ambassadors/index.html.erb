@@ -1,0 +1,11 @@
+<div class="grid margin--t-xlarge">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h3>View Chapter Ambassadors</h3>
+
+      <%= render 'datagrid/datagrid',
+                 grid: @chapter_ambassadors_grid,
+                 form_url: admin_chapter_ambassadors_path,
+                 model_name: "chapter_ambassador",
+                 scope: :admin %>
+  </div>
+</div>
