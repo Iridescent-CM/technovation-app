@@ -266,6 +266,8 @@ Rails.application.routes.draw do
       resources :invites, only: :create, controller: "chapter_invites"
     end
 
+    resources :chapter_ambassadors, only: :index
+
     resources :chapter_ambassador_status, only: :update
 
     resources :profile_locations, only: :edit
