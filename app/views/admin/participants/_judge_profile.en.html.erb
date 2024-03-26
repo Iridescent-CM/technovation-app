@@ -4,4 +4,13 @@
 
   <dt><%= t('models.judge_profile.job_title') %></dt>
   <dd><%= profile.job_title %></dd>
+
+  <dt><%= t('models.judge_profile.judge_types') %></dt>
+  <dd>
+    <ul>
+      <% profile.judge_types.each do |judge_type| %>
+        <li><%= judge_type.name %></li>
+      <% end %>
+    </ul>
+  </dd>
 </dl>

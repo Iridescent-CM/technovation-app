@@ -63,6 +63,12 @@ class JudgeProfile < ActiveRecord::Base
   belongs_to :user_invitation,
     required: false
 
+  has_many :judge_profile_judge_types,
+    dependent: :destroy
+
+  has_many :judge_types,
+    through: :judge_profile_judge_types
+
   has_and_belongs_to_many :regional_pitch_events, -> { current }
   has_and_belongs_to_many :events, -> { current },
     class_name: "RegionalPitchEvent"

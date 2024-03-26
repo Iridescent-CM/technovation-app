@@ -88,6 +88,24 @@
           @keyup="checkValidation"
           @blur="checkValidation"
         />
+
+        <div class="judge-information" v-show="judgeTypeOptions.length > 0">
+          <h4 class="registration-title">
+            As a judge you may call me a...<span class="formulate-required-field">*</span>
+          </h4>
+
+          <FormulateInput
+            name="judgeTypes"
+            id="judgeTypes"
+            type="checkbox"
+            :options="judgeTypeOptions"
+            validation="required"
+            :validation-messages="{ required: 'This field is required.' }"
+            @keyup="checkValidation"
+            @blur="checkValidation"
+            @input="checkValidation"
+          />
+        </div>
       </div>
     </div>
 
@@ -125,6 +143,7 @@ export default {
         'Non-binary',
         'Prefer not to say'
       ],
+      judgeTypeOptions: [],
       hasValidationErrors: true
     }
   },
@@ -134,11 +153,14 @@ export default {
         document.getElementsByClassName('validation-error-message')
       ).map(element => element.innerText)
 
+      const hasjudgeTypeChecked = !!(document.querySelector('[name="judgeTypes"]:checked'));
+
       if (document.getElementById('firstName').value.length === 0 ||
         document.getElementById('lastName').value.length === 0 ||
         document.getElementById('dateOfBirth').value.length === 0 ||
         document.getElementById('judgeSchoolCompanyName').value.length === 0 ||
         document.getElementById('judgeJobTitle').value.length === 0 ||
+        hasjudgeTypeChecked === false ||
         validationErrorMessages.some((message) => {
           return (
             message.indexOf('years old to participate') >= 0 ||
@@ -151,6 +173,26 @@ export default {
         this.hasValidationErrors = false
       }
     },
+    async getJudgeTypeOptions () {
+      try {
+        const response = await axios.get('/api/registration/judge_types')
+
+        response.data.forEach((judge_type) => {
+          this.judgeTypeOptions.push({
+            label: judge_type.name,
+            value: judge_type.id
+          })
+        })
+      }
+      catch(error) {
+        airbrake.notify({
+          error: `[REGISTRATION] Error getting judge types - ${error.response.data}`
+        })
+      }
+    },
+  },
+  created() {
+    this.getJudgeTypeOptions();
   },
   props: {
     formValues: {

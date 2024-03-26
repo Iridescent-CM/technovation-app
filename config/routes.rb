@@ -339,6 +339,8 @@ Rails.application.routes.draw do
 
       resources :mentor_expertises, only: :index
       resources :mentor_types, only: :index
+
+      resources :judge_types, only: :index
     end
 
     namespace :regional_pitch_events do

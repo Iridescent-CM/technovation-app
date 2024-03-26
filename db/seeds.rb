@@ -18,6 +18,21 @@ ActionMailer::Base.perform_deliveries = false
   puts ""
 end
 
+[
+  {name: "Educator", order: 1},
+  {name: "Industry professional", order: 2},
+  {name: "Postsecondary student", order: 3},
+  {name: "Parent", order: 4},
+  {name: "Technovation alumna", order: 5}
+].each do |judge_type|
+  JudgeType.create(judge_type)
+
+  puts "Created judge type: #{judge_type[:name]}"
+  puts ""
+  puts "============================================================="
+  puts ""
+end
+
 student = Account.find_by(email: "student@student.com").try(:student_profile)
 student_team = Team.find_by(name: "All Star Team")
 mentor = Account.find_by(email: "mentor@mentor.com").try(:mentor_profile)
