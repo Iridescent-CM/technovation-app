@@ -178,6 +178,8 @@ Rails.application.routes.draw do
 
     resource :training_completion, only: :show
 
+    resource :mou, only: :show
+
     resources :events, controller: :regional_pitch_events
 
     resources :regional_pitch_events
