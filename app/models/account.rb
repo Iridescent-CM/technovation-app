@@ -41,7 +41,7 @@ class Account < ActiveRecord::Base
   has_one :chapter_ambassador_profile, dependent: :destroy
 
   ChapterAmbassadorProfile.statuses.keys.each do |status|
-    has_one "#{status}_chapter_ambassador_profile".to_sym,
+    has_one :"#{status}_chapter_ambassador_profile",
       -> { send(status) },
       class_name: "ChapterAmbassadorProfile",
       dependent: :destroy
@@ -257,7 +257,8 @@ class Account < ActiveRecord::Base
   }
 
   after_create :create_account_created_activity
-  before_update :update_division
+  before_update :update_division, if: -> { !is_a_judge? }
+
   after_commit :update_email_list, on: :update
 
   after_commit -> {
@@ -499,7 +500,7 @@ class Account < ActiveRecord::Base
   before_create do
     self.email_confirmed_at = Time.current
     self.icon_path = ActionController::Base.helpers.asset_path("placeholders/avatars/#{rand(1..24)}.svg")
-    self.division = Division.for_account(self)
+    self.division = Division.for_account(self) if !is_a_judge?
   end
 
   validates :email,
@@ -535,7 +536,9 @@ class Account < ActiveRecord::Base
       if: -> { !full_admin? && !not_admin? }
     }
 
-  validates :date_of_birth, :first_name, :last_name, presence: true
+  validates :first_name, :last_name, presence: true
+  validates :date_of_birth, presence: true, if: -> { !is_a_judge? }
+  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { is_a_judge? && new_record? }
 
   validates :gender, presence: true, if: -> { not_student? }
 
@@ -852,11 +855,11 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def type_name(*args)
+  def type_name(*args) # standard:disable all
     ActiveSupport::Deprecation.warn(
       "Account#type_name is deprecated. Use View helper #current_scope (preferred) or Account#scope_name if absolutely necessary"
     )
-    scope_name(*args)
+    scope_name(*args) # standard:disable all
   end
 
   def scope_name(module_name = nil)

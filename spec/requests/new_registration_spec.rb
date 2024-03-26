@@ -7,6 +7,7 @@ RSpec.describe "New registration", type: :request do
       new_registration: {
         firstName: "Barbara",
         lastName: "Barburry",
+        meetsMinimumAgeRequirement: true,
         dateOfBirth: date_of_birth,
         gender: "Non-binary",
         email: "personxyz@example.com",

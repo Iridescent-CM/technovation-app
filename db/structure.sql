@@ -78,7 +78,7 @@ CREATE TABLE public.accounts (
     auth_token character varying NOT NULL,
     first_name character varying NOT NULL,
     last_name character varying NOT NULL,
-    date_of_birth date NOT NULL,
+    date_of_birth date,
     city character varying,
     state_province character varying,
     country character varying,
@@ -122,7 +122,8 @@ CREATE TABLE public.accounts (
     terms_agreed_at timestamp without time zone,
     parent_registered boolean DEFAULT false NOT NULL,
     learn_worlds_user_id character varying,
-    salesforce_id character varying
+    salesforce_id character varying,
+    meets_minimum_age_requirement boolean
 );
 
 
@@ -3332,6 +3333,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240312195853'),
 ('20240321122732'),
 ('20240321122808'),
-('20240321123201');
+('20240321123201'),
+('20240326155545');
 
 

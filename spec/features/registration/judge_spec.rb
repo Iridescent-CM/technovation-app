@@ -15,8 +15,9 @@ RSpec.feature "Judges registering", :js do
 
     fill_in "First Name", with: "Funshine"
     fill_in "Last Name", with: "Bear"
-    select "Prefer not to say", from: "Gender Identity"
+    check "I confirm that I am 18 years or older"
     fill_in "Birthday", with: 41.years.ago
+    select "Prefer not to say", from: "Gender Identity"
     fill_in "Company Name", with: "Care-a-Lot"
     fill_in "Job Title", with: "Class clown"
     check "Educator"

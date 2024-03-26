@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :judge_profile, aliases: [:judge, :judge_account] do
-    account
+    account { association :account, meets_minimum_age_requirement: true }
 
     company_name { "FactoryBot" }
     job_title { "Engineer" }
@@ -80,7 +80,8 @@ FactoryBot.define do
       attrs = {
         city: e.city,
         state_province: e.state_province,
-        country: e.country
+        country: e.country,
+        meets_minimum_age_requirement: true
       }
 
       if e.onboarded
@@ -92,7 +93,7 @@ FactoryBot.define do
         skip_existing_password: true,
         first_name: e.first_name
       ).each do |k, v|
-        j.account.send("#{k}=", v)
+        j.account.send(:"#{k}=", v)
       end
 
       if e.onboarded
