@@ -26,7 +26,7 @@
     },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.vue$": "<rootDir>/node_modules/vue-jest"
+      "^.+\\.vue$": "@vue/vue2-jest"
     }
   },
   "dependencies": {
@@ -71,6 +71,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.3",
+    "@vue/vue2-jest": "26.0.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.1.0",
     "dotenv": "^8.2.0",
@@ -80,7 +81,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
     "prettier": "2.7.1",
-    "vue-jest": "^3.0.6",
     "webpack-dev-server": "^3.11.2"
   }
 }
