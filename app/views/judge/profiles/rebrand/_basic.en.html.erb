@@ -8,7 +8,7 @@
       <dd><%= current_judge.gender || "Not specified" %></dd>
 
       <dt>Birthdate</dt>
-      <dd><%= current_judge.date_of_birth.strftime("%B %e, %Y") %></dd>
+      <dd><%= current_judge.date_of_birth&.strftime("%B %e, %Y").presence || "-" %></dd>
 
       <dt>Company name</dt>
       <dd><%= current_judge.company_name %></dd>

@@ -91,7 +91,10 @@ class NewRegistrationController < ApplicationController
       company_name: registration_params[:judgeSchoolCompanyName],
       job_title: registration_params[:judgeJobTitle],
       judge_type_ids: registration_params["judgeTypes"],
-      account_attributes: account_attributes.merge({gender: registration_params[:gender]})
+      account_attributes: account_attributes.merge({
+        gender: registration_params[:gender],
+        meets_minimum_age_requirement: registration_params[:meetsMinimumAgeRequirement]
+      })
     }
   end
 
@@ -124,6 +127,7 @@ class NewRegistrationController < ApplicationController
       :firstName,
       :lastName,
       :dateOfBirth,
+      :meetsMinimumAgeRequirement,
       :gender,
       :email,
       :password,

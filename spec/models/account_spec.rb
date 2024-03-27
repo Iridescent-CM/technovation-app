@@ -86,6 +86,70 @@ RSpec.describe Account do
         end
       end
     end
+
+    describe "date of birth" do
+      context "for judges" do
+        let(:judge) {
+          FactoryBot.create(:judge,
+            account: FactoryBot.build(:account, date_of_birth: date_of_birth))
+        }
+
+        context "when a judge doesn't have a date of birth" do
+          let(:date_of_birth) { nil }
+
+          it "is valid" do
+            expect(judge).to be_valid
+          end
+        end
+      end
+    end
+
+    describe "meets minimum age requirement" do
+      context "for new a judge" do
+        let(:judge_account) {
+          Account.new(
+            first_name: "Carla",
+            last_name: "Caracara",
+            email: "ccara55@example.com",
+            password: "abc1239876",
+            gender: "Non-binary",
+            judge_profile: JudgeProfile.new,
+            meets_minimum_age_requirement: meets_minimum_age_requirement
+          )
+        }
+
+        context "when a new judge meets the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { true }
+
+          it "is valid" do
+            expect(judge_account).to be_valid
+          end
+        end
+
+        context "when a new judge does not meet the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { false }
+
+          it "is not valid" do
+            expect(judge_account).not_to be_valid
+          end
+        end
+      end
+
+      context "for existing judges" do
+        let(:judge) {
+          FactoryBot.create(:judge,
+            account: FactoryBot.create(:account, meets_minimum_age_requirement: meets_minimum_age_requirement))
+        }
+
+        context "when an existing judge does not meet the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { false }
+
+          it "is valid" do
+            expect(judge).to be_valid
+          end
+        end
+      end
+    end
   end
 
   it "formats the country as a short code before validating" do
