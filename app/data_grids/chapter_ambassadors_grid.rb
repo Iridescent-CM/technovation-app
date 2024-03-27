@@ -7,20 +7,14 @@ class ChapterAmbassadorsGrid
     Account.includes(:chapter_ambassador_profile).where.not(chapter_ambassador_profiles: {id: nil}).order(id: :desc)
   end
 
-  column :name, header: "Chapters (Program Name)", mandatory: true, html: true do |account|
+  column :name, header: "Chapters (Program Name)", mandatory: true do |account|
     if account.chapter_ambassador_profile.chapter.present?
-      link_to(
-        account.chapter_ambassador_profile.chapter.name.presence || "-",
-        admin_chapter_path(account.chapter_ambassador_profile.chapter)
-      )
-    else
-      "No chapter"
-    end
-  end
-
-  column :chapter, header: "Chapter(Program Name)", html: false do |account|
-    if account.chapter_ambassador_profile.chapter.present?
-      account.chapter_ambassador_profile.chapter.name.presence || "-"
+      format(account.name) do
+        link_to(
+          account.chapter_ambassador_profile.chapter.name.presence || "-",
+          admin_chapter_path(account.chapter_ambassador_profile.chapter)
+        )
+      end
     else
       "No chapter"
     end
@@ -30,15 +24,7 @@ class ChapterAmbassadorsGrid
     if account.chapter_ambassador_profile.chapter.present?
       account.chapter_ambassador_profile.chapter.organization_name.presence || "-"
     else
-      "No chapter"
-    end
-  end
-
-  column :organization_name, header: "Organization Name", html: false do |account|
-    if account.chapter_ambassador_profile.chapter.present?
-      account.chapter_ambassador_profile.chapter.organization_name.presence || "-"
-    else
-      "No chapter"
+      "No organization"
     end
   end
 
@@ -118,7 +104,6 @@ class ChapterAmbassadorsGrid
     multiple: true do |value, scope, grid|
     scope.by_season(value)
   end
-
 
   filter :name_email,
     header: "Name or Email",
