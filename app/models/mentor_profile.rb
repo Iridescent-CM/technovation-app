@@ -169,8 +169,8 @@ class MentorProfile < ActiveRecord::Base
     prefix: true,
     allow_nil: true
 
-  def method_missing(method_name, *args)
-    account.public_send(method_name, *args)
+  def method_missing(method_name, *args) # standard:disable all
+    account.public_send(method_name, *args) # standard:disable all
   end
 
   def training_required?
@@ -295,7 +295,7 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def requires_background_check?
-    (account.valid? && account.age >= 18) &&
+    (account.valid? && (account.date_of_birth.present? && account.age >= 18 || account.meets_minimum_age_requirement?)) &&
       in_background_check_country? &&
       !(background_check.present? && background_check.clear?)
   end
