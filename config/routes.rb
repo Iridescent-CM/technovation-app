@@ -144,6 +144,7 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
     resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
+    resource :chapter_profile, only: :show, controller: "chapter_profile"
 
     resource :introduction, only: [:edit, :update]
 
