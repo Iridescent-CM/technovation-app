@@ -4,10 +4,6 @@ module ChapterAmbassador
 
     layout "chapter_ambassador_rebrand"
 
-    def show
-      render template: "location_details/show"
-    end
-
     private
 
     def current_profile
