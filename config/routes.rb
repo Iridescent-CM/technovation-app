@@ -136,7 +136,6 @@ Rails.application.routes.draw do
   namespace :chapter_ambassador do
     resource :profile_details_confirmation, only: [:create, :update]
 
-    resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
 
@@ -144,7 +143,11 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
     resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
+
     resource :chapter_profile, only: :show, controller: "chapter_profile"
+    resource :public_information, only: :show, controller: "public_information"
+    resource :location_details, only: :show
+    resource :program_information, only: :show, controller: "program_information"
 
     resource :introduction, only: [:edit, :update]
 
