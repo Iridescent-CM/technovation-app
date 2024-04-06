@@ -24,6 +24,8 @@ module ApplicationHelper
       dashboards
       location_details
       profiles
+      program_information
+      public_information
       training_completions
       mous
     ]
