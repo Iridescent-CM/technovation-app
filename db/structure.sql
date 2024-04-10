@@ -402,7 +402,8 @@ CREATE TABLE public.chapters (
     organization_name character varying,
     city character varying,
     state_province character varying,
-    country character varying
+    country character varying,
+    primary_chapter_ambassador_profile_id bigint
 );
 
 
@@ -2492,6 +2493,13 @@ CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambas
 
 
 --
+-- Name: index_chapters_on_primary_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_primary_chapter_ambassador_profile_id ON public.chapters USING btree (primary_chapter_ambassador_profile_id);
+
+
+--
 -- Name: index_consent_waivers_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3047,6 +3055,14 @@ ALTER TABLE ONLY public.admin_profiles
 
 
 --
+-- Name: chapters fk_rails_c992deae53; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_c992deae53 FOREIGN KEY (primary_chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
+
+
+--
 -- Name: certificates fk_rails_ddedb55856; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3324,6 +3340,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240305223902'),
 ('20240312195853'),
 ('20240318172542'),
-('20240318201053');
-
-
+('20240318201053'),
+('20240410211016');
