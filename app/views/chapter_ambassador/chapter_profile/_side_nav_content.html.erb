@@ -2,9 +2,23 @@
     <ol role="list" class="space-y-6 mb-6 overflow-hidden">
       <%= render "application/templates/completion_step",
         name: "Public Info",
-        url: nil,
-        is_complete: nil,
-        is_active_item: nil
+        url: chapter_ambassador_public_information_path,
+        is_complete: false,
+        is_active_item: al(chapter_ambassador_public_information_path).present?
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Chapter Location",
+        url: chapter_ambassador_location_details_path,
+        is_complete: false,
+        is_active_item: al(chapter_ambassador_location_details_path).present?
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Program Info",
+        url: chapter_ambassador_program_information_path,
+        is_complete: false,
+        is_active_item: al(chapter_ambassador_program_information_path).present?
       %>
     </ol>
   </nav>
