@@ -146,7 +146,7 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :edit, :update]
 
     resource :chapter_profile, only: :show, controller: "chapter_profile"
-    resource :public_information, only: :show, controller: "public_information"
+    resource :public_information, only: [:show, :edit, :update], controller: "public_information"
     resource :chapter_location, only: :show
     resource :program_information, only: :show, controller: "program_information"
 
