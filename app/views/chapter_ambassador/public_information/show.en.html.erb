@@ -21,7 +21,12 @@
           <p class="mb-4">Program Links here</p>
 
           <p class="font-semibold">Primary Contact Visibility</p>
-          <p>Primary contact here</p>
+          <% if current_ambassador.chapter.has_primary_contact? %>
+            <p>Primary contact here</p>
+          <% else %>
+            <p>Please select a primary chapter ambassador</p>
+          <% end %>
+
           <p class="text-sm italic mb-4">This Chapter Ambassador is the primary contact displayed to students and mentors</p>
 
           <p class="font-semibold">Public Map Visibility</p>
