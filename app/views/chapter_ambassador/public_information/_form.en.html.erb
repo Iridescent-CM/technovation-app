@@ -1,0 +1,44 @@
+<%= simple_form_for current_ambassador.chapter,
+  url: chapter_ambassador_public_information_path do |f| %>
+
+  <div class="mb-4">
+    <%= f.label :organization_name %>
+    <p class="text-base ml-3"><%= current_chapter.organization_name %></p>
+    <p class="text-sm italic ml-3">Pre-set by Technovation HQ. Not editable.</p>
+  </div>
+
+  <%= f.label :name, "Chapter Name" %>
+  <%= f.text_field :name %>
+
+  <%= f.input :summary,
+              label: "Program summary",
+              as: :text,
+              input_html: {
+                rows: 3,
+              } %>
+
+  <div class="flex flex-col lg:flex-row justify-between mb-4">
+    <span class="text-sm italic">
+      Give your participants a short introduction to your program.
+      Use up to 280 characters.
+    </span>
+
+    <%= content_tag :span,
+                    data: {
+                      keep_count_of: "#chapter_summary",
+                      down_from: 280,
+                    } do %>
+      <span><%= (f.object.summary || "").length %></span>
+
+      <span>
+        <%= "character".pluralize((f.object.summary || "").length) %>
+      </span>
+    <% end %>
+  </div>
+
+  <p class="mt-8">
+    <%= f.submit "Save", class: "tw-green-btn" %>
+      or
+    <%= link_to 'cancel', chapter_ambassador_public_information_path %>
+  </p>
+<% end %>
