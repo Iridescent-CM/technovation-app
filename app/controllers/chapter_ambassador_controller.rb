@@ -2,7 +2,7 @@ class ChapterAmbassadorController < ApplicationController
   include Authenticated
 
   helper_method :current_ambassador,
-    :current_profile
+    :current_profile, :current_chapter
 
   before_action -> {
     set_last_profile_used("chapter_ambassador")
@@ -34,6 +34,10 @@ class ChapterAmbassadorController < ApplicationController
   def current_ambassador
     @current_ambassador ||= current_account.chapter_ambassador_profile ||
       current_session.chapter_ambassador_profile
+  end
+
+  def current_chapter
+    current_ambassador&.chapter
   end
 
   def chapter_ambassador
