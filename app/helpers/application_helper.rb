@@ -20,6 +20,7 @@ module ApplicationHelper
     rebranded_chapter_ambassador_sections = %w[
       background_checks
       chapter_ambassador
+      chapter_locations
       chapter_profile
       dashboards
       location_details
