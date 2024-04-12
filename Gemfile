@@ -64,7 +64,7 @@ gem "dalli", "~> 3.0"
 gem "geocoder", "~> 1.6.0"
 gem "timezone", "~> 1.3"
 
-gem "carrierwave", "~> 1.2"
+gem "carrierwave", "~> 2.0"
 gem "mini_magick", "4.9.4"
 gem "fog-aws", "~> 1.4"
 gem "carrierwave_direct", "~> 0.0"
