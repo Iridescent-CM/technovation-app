@@ -402,7 +402,8 @@ CREATE TABLE public.chapters (
     organization_name character varying,
     city character varying,
     state_province character varying,
-    country character varying
+    country character varying,
+    primary_contact_id bigint
 );
 
 
@@ -2586,6 +2587,13 @@ CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambas
 
 
 --
+-- Name: index_chapters_on_primary_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree (primary_contact_id);
+
+
+--
 -- Name: index_consent_waivers_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3122,6 +3130,14 @@ ALTER TABLE ONLY public.submission_scores
 
 
 --
+-- Name: chapters fk_rails_b047a2142a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_b047a2142a FOREIGN KEY (primary_contact_id) REFERENCES public.chapter_ambassador_profiles(id);
+
+
+--
 -- Name: mentor_profile_mentor_types fk_rails_b776f096c9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3448,17 +3464,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240202203636'),
 ('20240206173222'),
 ('20240208195151'),
-('20240221211159');
-('20240229195416');
-('20240229200318');
-('20240229201836');
-('20240305223902');
+('20240221211159'),
+('20240229195416'),
+('20240229200318'),
+('20240229201836'),
+('20240305223902'),
 ('20240312195853'),
 ('20240318172542'),
-('20240318201053');
+('20240318201053'),
 ('20240321122732'),
 ('20240321122808'),
 ('20240321123201'),
 ('20240326155545'),
+('20240415201850'),
 ('20240702145233');
-
