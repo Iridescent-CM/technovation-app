@@ -19,6 +19,7 @@ module ChapterAmbassador
       params.require(:chapter).permit(
         :name,
         :summary,
+        :primary_contact_id,
         regional_links_attributes: [
           :id,
           :_destroy,
