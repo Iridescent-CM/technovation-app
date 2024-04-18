@@ -45,6 +45,13 @@ FactoryBot.define do
       end
     end
 
+    trait :assigned_to_chapter do
+      before(:create) do |c|
+        chapter = FactoryBot.create(:chapter)
+        c.chapter_id = chapter.id
+      end
+    end
+
     before(:create) do |r, e|
       {
         city: e.city,
