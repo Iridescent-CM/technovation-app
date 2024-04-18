@@ -403,7 +403,11 @@ CREATE TABLE public.chapters (
     city character varying,
     state_province character varying,
     country character varying,
-    primary_contact_id bigint
+    primary_contact_id bigint,
+    legal_contact_full_name character varying,
+    legal_contact_email_address character varying,
+    legal_contact_phone_number character varying,
+    legal_contact_job_title character varying
 );
 
 
@@ -3469,4 +3473,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240321122808'),
 ('20240321123201'),
 ('20240326155545'),
-('20240415201850');
+('20240415201850'),
+('20240418152235');
+
+
