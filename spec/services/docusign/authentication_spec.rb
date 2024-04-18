@@ -44,12 +44,14 @@ RSpec.describe Docusign::Authentication do
 
   let(:mock_docusign_response) do
     double("mock_docusign_response",
+      success?: docusign_response_successful,
       body: {
         access_token: access_token,
         refresh_token: refresh_token
       }.to_json)
   end
 
+  let(:docusign_response_successful) { true }
   let(:access_token) { "Ix7v24C_ACCESS_TOKEN_l2sXnTmn" }
   let(:refresh_token) { "UxW8Bx_REFRESH_TOKEN_2FaPnbe" }
   let(:cached_access_token) { nil }
@@ -69,6 +71,22 @@ RSpec.describe Docusign::Authentication do
 
       it "returns an access token" do
         expect(docusign_authentication.access_token).to eq(access_token)
+      end
+
+      context "when the DocuSign response is not successful" do
+        let(:docusign_response_successful) { false }
+
+        it "logs an error" do
+          expect(logger).to receive(:error).with("[DOCUSIGN] Error getting an access token - ")
+
+          docusign_authentication.access_token
+        end
+
+        it "sends an error to Airbrake" do
+          expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error getting an access token - ")
+
+          docusign_authentication.access_token
+        end
       end
     end
 
@@ -90,6 +108,22 @@ RSpec.describe Docusign::Authentication do
 
       it "returns an access token" do
         expect(docusign_authentication.access_token).to eq(access_token)
+      end
+
+      context "when the DocuSign response is not successful" do
+        let(:docusign_response_successful) { false }
+
+        it "logs an error" do
+          expect(logger).to receive(:error).with("[DOCUSIGN] Error getting an access token - ")
+
+          docusign_authentication.access_token
+        end
+
+        it "sends an error to Airbrake" do
+          expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error getting an access token - ")
+
+          docusign_authentication.access_token
+        end
       end
     end
 
