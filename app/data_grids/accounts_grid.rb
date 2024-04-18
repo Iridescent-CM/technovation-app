@@ -39,6 +39,14 @@ class AccountsGrid
     end
   end
 
+  column :judge_types do
+    if judge_profile.present?
+      judge_profile.judge_profile_judge_types.joins(:judge_type).pluck(:name).join(", ")
+    else
+      "-"
+    end
+  end
+
   column :judge_industry do
     if judge_profile.present?
       judge_profile.industry_text
@@ -539,6 +547,20 @@ class AccountsGrid
     scope.includes(mentor_profile: :mentor_types)
       .references(:mentor_profiles, :mentor_profile_mentor_types)
       .where(mentor_profile_mentor_types: {mentor_type_id: values})
+  end
+
+  filter :judge_types,
+    :enum,
+    header: "Judge Type",
+    select: proc { JudgeType.all.map { |j| [j.name, j.id] } },
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: true do |values, scope|
+    scope.includes(judge_profile: :judge_types)
+      .references(:judge_profile, :judge_profile_judge_types)
+      .where(judge_profile_judge_types: {judge_type_id: values})
   end
 
   filter :country,
