@@ -16,6 +16,11 @@
           <dt>Location</dt>
           <dd><%= @chapter.address_details.presence || "-" %></dd>
 
+          <dt>Public Map Visibility</dt>
+          <dd>
+            <%= @chapter.visible_on_map? ?  "Display on map" : "Do not display on map"%>
+          </dd>
+
           <dt>Chapter Links</dt>
           <dd>
             <ul>
