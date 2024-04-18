@@ -403,7 +403,8 @@ CREATE TABLE public.chapters (
     city character varying,
     state_province character varying,
     country character varying,
-    primary_contact_id bigint
+    primary_contact_id bigint,
+    visible_on_map boolean DEFAULT true
 );
 
 
@@ -3469,4 +3470,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240321122808'),
 ('20240321123201'),
 ('20240326155545'),
-('20240415201850');
+('20240415201850'),
+('20240417195826');
