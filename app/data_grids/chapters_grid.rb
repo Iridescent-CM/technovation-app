@@ -30,6 +30,10 @@ class ChaptersGrid
       "#{value}%")
   end
 
+  filter(:visible_on_map, :xboolean)
+
+  column :visible_on_map, header: "Visible on map"
+
   column :actions, mandatory: true, html: true do |chapter|
     render "admin/chapters/actions", chapter: chapter
   end
