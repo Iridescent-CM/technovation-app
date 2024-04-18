@@ -71,7 +71,7 @@ module Docusign
     def process_response(response)
       response_body = JSON.parse(response.body, symbolize_names: true)
 
-      if response_body[:access_token].present?
+      if response.success?
         Rails.cache.write(:docusign_refresh_token, response_body[:refresh_token])
 
         Result.new(success?: true, access_token: response_body[:access_token])
