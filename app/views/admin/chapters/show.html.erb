@@ -38,61 +38,8 @@
   </div>
 </div>
 
-<div class="grid">
-  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
-    <h3>
-      Chapter Ambassadors
-    </h3>
-
-    <div class="panel">
-      <ul>
-        <% @chapter.chapter_ambassador_profiles.each do |chapter_ambassador| %>
-          <li>
-            <%= link_to chapter_ambassador.full_name, admin_participant_path(chapter_ambassador.account) %>
-          </li>
-        <% end %>
-      </ul>
-
-      <% if @pending_chapter_invites.present? %>
-        <h4>Pending Invitations</h4>
-
-        <ul>
-          <% @pending_chapter_invites.each do |invite| %>
-            <li>
-              <strong><%= invite.name %></strong> <%= invite.email %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <h4>Invite a Chapter Ambassador to this Chapter</h4>
-      <%= simple_form_for @chapter_invite, url: admin_chapter_invites_path(@chapter), local: true do |f| %>
-        <% if @chapter_invite.errors.any? %>
-          <div class="notice notice--error">
-            <ul class="reset">
-              <% @chapter_invite.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <div class="field">
-          <%= f.label :name, "Name (displayed in the invite email)", for: :user_invitation_name %>
-          <%= f.text_field :name, id: :user_invitation_name, placeholder: "Optional" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :email, for: :user_invitation_email %>
-          <%= f.email_field :email, id: :user_invitation_email %>
-        </div>
-
-        <div class="actions margin--t-xlarge">
-          <%= f.submit "Send invitation", class: "button" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-
+<%= render "chapter_ambassadors",
+  chapter: @chapter,
+  pending_chapter_invites: @pending_chapter_invites,
+  chapter_invite: @chapter_invite
+%>
