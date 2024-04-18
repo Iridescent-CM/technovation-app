@@ -20,6 +20,7 @@ module ChapterAmbassador
         :name,
         :summary,
         :primary_contact_id,
+        :visible_on_map,
         regional_links_attributes: [
           :id,
           :_destroy,
