@@ -22,7 +22,13 @@ module Docusign
       @error_notifier = error_notifier
     end
 
-    def send_memorandum_of_understanding(full_name:, email_address:, organization_name:)
+    def send_memorandum_of_understanding(
+      full_name:,
+      email_address:,
+      organization_name:,
+      job_title: nil
+    )
+
       response = client.post(
         "v2.1/accounts/#{api_account_id}/envelopes",
         {
@@ -72,11 +78,12 @@ module Docusign
                   },
                   {
                     anchorString: "Title:",
-                    anchorXOffset: 22,
-                    anchorYOffset: -15,
+                    anchorXOffset: 30,
+                    anchorYOffset: -11,
                     font: "Georgia",
                     fontSize: "Size12",
                     required: false,
+                    value: job_title,
                     width: 155
                   }
                 ],
