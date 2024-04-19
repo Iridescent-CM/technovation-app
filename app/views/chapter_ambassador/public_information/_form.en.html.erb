@@ -48,9 +48,31 @@
     <p class="text-sm italic mb-4">This Chapter Ambassador is the primary contact displayed to students and mentors</p>
   </div>
 
+  <div>
+    <%= f.label :visible_on_map, "Public Map Visibility" %>
+
+    <p class="text-base">
+      By default, this chapter will be included on the publicly visible
+      chapter map on the Technovation website. We will include
+      the following information:
+    </p>
+
+    <ul class="list-disc text-base mb-4">
+      <li class="ml-8">Chapter Name</li>
+      <li class="ml-8">Name of the chapter ambassador set as the primary contact</li>
+      <li class="ml-8">Address of the organization headquarters</li>
+      <li class="ml-8">The first link set in the program links section</li>
+    </ul>
+
+    <%= f.input :visible_on_map,
+                as: :radio_buttons,
+                collection: [["Yes, display my chapter information", true], ["No, do not display my chapter information", false]],
+                label: false %>
+  </div>
+
   <p class="mt-8">
     <%= f.submit "Save", class: "tw-green-btn" %>
       or
-    <%= link_to 'cancel', chapter_ambassador_public_information_path %>
+    <%= link_to "cancel", chapter_ambassador_public_information_path %>
   </p>
 <% end %>
