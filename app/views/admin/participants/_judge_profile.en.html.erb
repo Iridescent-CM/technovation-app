@@ -7,10 +7,14 @@
 
   <dt><%= t('models.judge_profile.judge_types') %></dt>
   <dd>
-    <ul>
-      <% profile.judge_types.each do |judge_type| %>
-        <li><%= judge_type.name %></li>
-      <% end %>
-    </ul>
+    <% if profile.judge_types.any? %>
+      <ul>
+        <% profile.judge_types.each do |judge_type| %>
+          <li><%= judge_type.name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      No judge types selected
+    <% end %>
   </dd>
 </dl>

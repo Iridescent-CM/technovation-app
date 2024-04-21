@@ -99,6 +99,33 @@
     <% end %>
     <br>
 
+    <% if f.object.judge_profile.present? %>
+      <%= f.fields_for :judge_profile do |m| %>
+        <p>
+          <%= m.label :judge_types %>
+
+          <%= m.collection_check_boxes :judge_type_ids, JudgeType.all, :id, :name,
+            checked: ->(value) { f.object.judge_profile.judge_types.include?(value) } do |b| %>
+
+           <%= b.check_box %>
+           <%= b.label %>
+           <br>
+         <% end %>
+        </p>
+
+        <% if f.object.judge_profile.errors.present? %>
+          <ul class="list--reset field_with_errors">
+            <% f.object.judge_profile.errors.each do |error| %>
+              <li class="error">
+                <%= error.message %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+    <br>
+
     <p>
       <%= f.label :profile_image %>
 
