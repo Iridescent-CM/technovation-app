@@ -9,3 +9,8 @@
   label: "School or company name" %>
 
 <%= f.input :job_title %>
+
+<div class="mb-8">
+  <h4 class="text-base"><%= t('views.judge.form.judge_types') %></h4>
+  <%= f.association :judge_types, as: :check_boxes, label: false %>
+</div>

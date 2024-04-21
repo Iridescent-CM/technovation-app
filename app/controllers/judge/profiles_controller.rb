@@ -10,7 +10,8 @@ module Judge
         :industry_other,
         :skills,
         :degree,
-        :survey_completed
+        :survey_completed,
+        judge_type_ids: []
       ]
     end
 

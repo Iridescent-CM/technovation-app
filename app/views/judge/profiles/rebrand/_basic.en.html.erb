@@ -15,6 +15,19 @@
 
       <dt>Job title</dt>
       <dd><%= current_judge.job_title %></dd>
+
+      <dt>Judge Type</dt>
+      <dd>
+        <% if current_judge.judge_types.any? %>
+          <ul class="list-disc">
+            <% current_judge.judge_types.each do |judge_type| %>
+              <li class="ml-8"><%= judge_type.name %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          No judge types selected
+        <% end %>
+      </dd>
     </dl>
 
     <span class="mt-8">
