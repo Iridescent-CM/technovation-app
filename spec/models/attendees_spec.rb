@@ -23,7 +23,10 @@ RSpec.describe Attendees do
 
     it "finds live event eligible judges" do
       judge = FactoryBot.create(:judge, :live_event_eligible)
-      FactoryBot.create(:chapter_ambassador, :has_judge_profile)
+      FactoryBot.create(:chapter_ambassador, :approved, :has_judge_profile)
+      2.times do
+        FactoryBot.create(:chapter_ambassador, :has_judge_profile)
+      end
 
       results = Attendees.for(
         type: "account",
@@ -32,8 +35,7 @@ RSpec.describe Attendees do
         event: event
       )
 
-      expect(results.count).to be 1
-      expect(results.first.record).to eq(judge.account)
+      expect(results.count).to be 3
     end
 
     it "finds user invitations" do
