@@ -20,10 +20,19 @@
           <dd><%= chapter.legal_contact_job_title %></dd>
         </dl>
 
-        <%= link_to "Edit",
-          edit_admin_chapter_path(@chapter),
-          class: "button"
-        %>
+        <div style="display: flex; justify-content: flex-start; column-gap: 2rem;" >
+          <div>
+          <%= link_to "Edit",
+            edit_admin_chapter_path(@chapter),
+            class: "button"
+          %></div>
+
+          <%= button_to "Send MOU",
+            admin_chapter_memorandum_of_understanding_path(@chapter),
+            method: "post",
+            class: "button"
+            %>
+      </div>
       <% else %>
         <%= render "edit_legal_contact_form", chapter: @chapter %>
       <% end %>
