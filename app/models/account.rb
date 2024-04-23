@@ -184,7 +184,8 @@ class Account < ActiveRecord::Base
         "judge_profiles.id IS NOT NULL AND " +
         # temporary fix, see: https://github.com/Iridescent-CM/technovation-app/issues/2111
         # "mentor_profiles.id IS NULL AND " +
-        "chapter_ambassador_profiles.id IS NULL"
+        "(chapter_ambassador_profiles.id IS NULL OR " +
+        "chapter_ambassador_profiles.status = #{ChapterAmbassadorProfile.statuses[:pending]})"
       )
   }
 
