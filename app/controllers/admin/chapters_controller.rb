@@ -29,10 +29,14 @@ module Admin
 
     def update
       @chapter = Chapter.find(params[:id])
+      @chapter_invite = UserInvitation.new
+      @pending_chapter_invites = UserInvitation.pending.where(chapter_id: params[:id])
 
       if @chapter.update(chapter_params)
         redirect_to admin_chapter_path(@chapter), success: "Chapter details were updated successfully."
       else
+        flash.now[:error] = "There was an issue updating this chapter, please check below."
+
         render :show
       end
     end

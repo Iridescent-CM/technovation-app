@@ -2,7 +2,7 @@
   <% if chapter.errors.any? %>
     <div class="notice notice--error">
       <ul class="reset">
-        <% chapter_invite.errors.full_messages.each do |msg| %>
+        <% chapter.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
