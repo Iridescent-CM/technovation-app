@@ -19,6 +19,12 @@
           <dt>Job Title</dt>
           <dd><%= chapter.legal_contact_job_title %></dd>
         </dl>
+
+        <%= button_to "Send MOU",
+          admin_chapter_memorandum_of_understanding_path(@chapter),
+          method: "post",
+          class: "button"
+        %>
       <% else %>
         <%= simple_form_for chapter, url: admin_chapter_path(chapter), local: true do |f| %>
           <% if chapter.errors.any? %>
