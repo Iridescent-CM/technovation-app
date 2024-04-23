@@ -23,6 +23,10 @@ module Admin
       end
     end
 
+    def edit
+      @chapter = Chapter.find(params[:id])
+    end
+
     def update
       @chapter = Chapter.find(params[:id])
 
