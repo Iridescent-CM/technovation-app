@@ -102,6 +102,10 @@ en:
         message: "Review their profile and respond below"
         missing: "Sorry, but this request appears to be missing."
 
+    judge:
+      form:
+        judge_types: "As a judge you may call me a..."
+
     parental_consents:
       new:
         submit: "I agree"
