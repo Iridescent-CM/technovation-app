@@ -19,6 +19,11 @@
           <dt>Job Title</dt>
           <dd><%= chapter.legal_contact_job_title %></dd>
         </dl>
+
+        <%= link_to "Edit",
+          edit_admin_chapter_path(@chapter),
+          class: "button"
+        %>
       <% else %>
         <%= render "edit_legal_contact_form", chapter: @chapter %>
       <% end %>
