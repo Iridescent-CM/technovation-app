@@ -124,7 +124,7 @@ module Docusign
       if response.success?
         Result.new(success?: true)
       else
-        error = "[DOCUSIGN] Error sending MOU - #{response_body[:error]}"
+        error = "[DOCUSIGN] Error sending MOU - #{response_body[:message]}"
 
         logger.error(error)
         error_notifier.notify(error)
