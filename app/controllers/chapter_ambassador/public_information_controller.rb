@@ -8,7 +8,7 @@ module ChapterAmbassador
         redirect_to chapter_ambassador_public_information_path,
                   success: "You updated your chapter public information!"
       else
-        flash.now[:alert] = "Error updating chapter details. Please try again later."
+        flash.now[:alert] = "Error updating chapter details."
         render :edit
       end
     end
