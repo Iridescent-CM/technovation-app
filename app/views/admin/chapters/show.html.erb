@@ -8,6 +8,9 @@
           <dt>Organization</dt>
           <dd><%= @chapter.organization_name %></dd>
 
+          <dt>Organization Headquarters Location</dt>
+          <dd><%= @chapter.organization_headquarters_location.presence || "Not Set" %></dd>
+
           <dt>Primary Contact</dt>
           <dd>
             <%= @chapter.primary_contact.present? ? (link_to @chapter.primary_contact.full_name, admin_participant_path(@chapter.primary_contact.account)) : "Not Set" %>
