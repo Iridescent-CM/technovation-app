@@ -757,7 +757,9 @@ class Account < ActiveRecord::Base
     if is_an_ambassador?
       true
     elsif is_a_judge?
-      !!ENV.fetch("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", false)
+      !!ENV.fetch("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", false) ||
+        SeasonToggles.mentor_signup? ||
+        (!SeasonToggles.mentor_signup? && is_a_mentor?)
     else
       false
     end
