@@ -6,6 +6,8 @@ class Chapter < ActiveRecord::Base
   has_many :student_profiles
   has_many :registration_invites, class_name: "UserInvitation"
 
+  validates :summary, length: {maximum: 280}
+
   validates :legal_contact_email_address,
     email: true,
     if: -> { legal_contact_email_address.present? }
