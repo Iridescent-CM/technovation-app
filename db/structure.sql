@@ -408,7 +408,8 @@ CREATE TABLE public.chapters (
     legal_contact_full_name character varying,
     legal_contact_email_address character varying,
     legal_contact_phone_number character varying,
-    legal_contact_job_title character varying
+    legal_contact_job_title character varying,
+    organization_headquarters_location character varying
 );
 
 
@@ -3484,6 +3485,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240415201850'),
 ('20240417195826'),
 ('20240418152235'),
+('20240424214507'),
 ('20240702145233');
-
-
