@@ -2,11 +2,15 @@ module ChapterAmbassador
   class PublicInformationController < ChapterAmbassadorController
     layout "chapter_ambassador_rebrand"
 
+    def edit
+      current_chapter.chapter_links.build
+    end
+
     def update
       @chapter = current_ambassador.chapter
       if @chapter.update(public_information_params)
         redirect_to chapter_ambassador_public_information_path,
-                  success: "You updated your chapter public information!"
+          success: "You updated your chapter public information!"
       else
         flash.now[:alert] = "Error updating chapter details."
         render :edit
@@ -21,7 +25,7 @@ module ChapterAmbassador
         :summary,
         :primary_contact_id,
         :visible_on_map,
-        regional_links_attributes: [
+        chapter_links_attributes: [
           :id,
           :_destroy,
           :name,
