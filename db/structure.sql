@@ -1222,7 +1222,8 @@ CREATE TABLE public.regional_links (
     value character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    custom_label character varying
+    custom_label character varying,
+    chapter_id bigint
 );
 
 
@@ -2754,6 +2755,13 @@ CREATE INDEX index_regional_links_on_chapter_ambassador_profile_id ON public.reg
 
 
 --
+-- Name: index_regional_links_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_regional_links_on_chapter_id ON public.regional_links USING btree (chapter_id);
+
+
+--
 -- Name: index_regional_pitch_events_on_division_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3200,6 +3208,14 @@ ALTER TABLE ONLY public.admin_profiles
 
 
 --
+-- Name: regional_links fk_rails_ca99b2153e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.regional_links
+    ADD CONSTRAINT fk_rails_ca99b2153e FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
 -- Name: certificates fk_rails_ddedb55856; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3486,4 +3502,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240417195826'),
 ('20240418152235'),
 ('20240424214507'),
+('20240425120120'),
 ('20240702145233');
+
+
