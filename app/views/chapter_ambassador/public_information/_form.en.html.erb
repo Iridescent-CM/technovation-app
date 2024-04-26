@@ -49,6 +49,21 @@
   </div>
 
   <div>
+    <h3 class="mb-4">Chapter Links</h3>
+
+    <%= f.simple_fields_for :chapter_links do |r| %>
+      <%= render "chapter_ambassador/chapter/public_information/chapter_link_fields", f: r %>
+    <% end %>
+
+    <div class="links">
+      <%= link_to_add_association "+ Add another link", f,
+        :chapter_links,
+        partial: "chapter_ambassador/chapter/public_information/chapter_link_fields",
+        class: "tw-gray-btn" %>
+    </div>
+  </div>
+
+  <div>
     <%= f.label :visible_on_map, "Public Map Visibility" %>
 
     <p class="text-base">
