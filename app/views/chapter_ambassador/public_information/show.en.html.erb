@@ -18,7 +18,21 @@
           <p class="mb-4"><%= current_ambassador.chapter.summary.presence || "Not set" %></p>
 
           <p class="font-semibold">Program Links</p>
-          <p class="mb-4">Program Links here</p>
+            <% if current_chapter.chapter_links.present? %>
+              <ul class="mb-8">
+                <% current_chapter.chapter_links.each do |link| %>
+                  <li class="mt-1 mb-2">
+                    <% if link.name == "email" %>
+                      <%= mail_to link.value, web_icon("envelope-o", text: link.value), class: "tw-link" %>
+                    <% else %>
+                      <%= link_to web_icon(link.icon, text: link.display_text), link.url, class: "tw-link" %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p class="mb-4">No links to display</p>
+            <% end %>
 
           <p class="font-semibold">Primary Contact Visibility</p>
           <%= current_chapter.primary_contact&.full_name.presence || "Please select a primary contact" %>
