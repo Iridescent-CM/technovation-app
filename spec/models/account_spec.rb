@@ -908,12 +908,46 @@ RSpec.describe Account do
       before do
         allow(ENV).to receive(:fetch).and_call_original
         allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
+
+        allow(SeasonToggles).to receive(:mentor_signup?)
+          .and_return(mentor_signup_enabled)
       end
+
+      let(:mentor_signup_enabled) { false }
 
       it "allows chapter ambassadors" do
         expect(FactoryBot.create(:student).can_switch_to_mentor?).to be false
         expect(FactoryBot.create(:judge).can_switch_to_mentor?).to be false
         expect(FactoryBot.create(:chapter_ambassador).can_switch_to_mentor?).to be true
+      end
+
+      context "when mentor registration is open" do
+        let(:mentor_signup_enabled) { true }
+
+        it "allows judges to switch to mentor mode" do
+          expect(FactoryBot.create(:judge).can_switch_to_mentor?).to eq(true)
+        end
+      end
+
+      context "when mentor registration is closed" do
+        let(:mentor_signup_enabled) { false }
+
+        context "when a judge has a mentor profile" do
+          let(:judge) { FactoryBot.create(:judge) }
+          let!(:judge_mentor_profile) { FactoryBot.create(:mentor, account: judge.account) }
+
+          it "allows that judge to switch to mentor mode" do
+            expect(judge.can_switch_to_mentor?).to eq(true)
+          end
+        end
+
+        context "when a judge does not have a mentor profile" do
+          let(:judge) { FactoryBot.create(:judge, mentor: false) }
+
+          it "does not allow that judge to switch to mentor mode" do
+            expect(judge.can_switch_to_mentor?).to eq(false)
+          end
+        end
       end
     end
 
