@@ -58,6 +58,7 @@ gem "redis"
 gem "sidekiq", "~> 7.0"
 
 gem "airbrake", "~> 11.0.3"
+gem "scout_apm"
 
 gem "dalli", "~> 3.0"
 
