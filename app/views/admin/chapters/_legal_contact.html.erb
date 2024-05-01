@@ -5,7 +5,11 @@
     </h3>
 
     <div class="panel">
-      <% if chapter.legal_contact_full_name.present? %>
+      <% if chapter.legal_contact_full_name.present? ||
+          chapter.legal_contact_email_address.present? ||
+          chapter.legal_contact_phone_number.present? ||
+          chapter.legal_contact_job_title.present?
+      %>
         <dl>
           <dt>Name</dt>
           <dd><%= chapter.legal_contact_full_name %></dd>
