@@ -27,6 +27,22 @@ class JudgesGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :judge_types do
+    if judge_profile.present?
+      judge_profile.judge_profile_judge_types.joins(:judge_type).pluck(:name).join(", ")
+    else
+      "-"
+    end
+  end
+
+  column :virtual_or_live do
+    if judge_profile.present?
+      judge_profile.live_event? ? "Live" : "Virtual"
+    else
+      "-"
+    end
+  end
+
   column :quarterfinals_scores_count,
     header: "Complete Quarterfinals Scores",
     order: "judge_profiles.quarterfinals_scores_count" do |asset, grid|
