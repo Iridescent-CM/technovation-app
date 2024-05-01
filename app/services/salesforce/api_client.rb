@@ -3,6 +3,7 @@ module Salesforce
     def initialize(
       enabled: ENV.fetch("ENABLE_SALESFORCE", false),
       instance_url: ENV.fetch("SALESFORCE_INSTANCE_URL"),
+      host: ENV.fetch("SALESFORCE_HOST"),
       api_version: ENV.fetch("SALESFORCE_API_VERSION"),
       client_id: ENV.fetch("SALESFORCE_CLIENT_ID"),
       client_secret: ENV.fetch("SALESFORCE_CLIENT_SECRET"),
@@ -18,6 +19,7 @@ module Salesforce
 
       @client = client_constructor.new(
         instance_url: instance_url,
+        host: host,
         api_version: api_version,
         client_id: client_id,
         client_secret: client_secret,
