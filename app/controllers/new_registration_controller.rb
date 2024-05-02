@@ -153,9 +153,11 @@ class NewRegistrationController < ApplicationController
   end
 
   def update_registration_invite
-    UpdateRegistrationInviteJob.perform_later(
-      invite_code: params[:inviteCode],
-      account_id: @profile.account.id
-    )
+    if params[:inviteCode].present?
+      UpdateRegistrationInviteJob.perform_later(
+        invite_code: params[:inviteCode],
+        account_id: @profile.account.id
+      )
+    end
   end
 end
