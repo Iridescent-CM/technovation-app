@@ -27,6 +27,22 @@ class JudgesGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :judge_types do
+    if judge_profile.present?
+      judge_profile.judge_profile_judge_types.joins(:judge_type).pluck(:name).join(", ")
+    else
+      "-"
+    end
+  end
+
+  column :virtual_or_live do
+    if judge_profile.present?
+      judge_profile.live_event? ? "Live" : "Virtual"
+    else
+      "-"
+    end
+  end
+
   column :quarterfinals_scores_count,
     header: "Complete Quarterfinals Scores",
     order: "judge_profiles.quarterfinals_scores_count" do |asset, grid|
@@ -132,7 +148,21 @@ class JudgesGrid
         "judge_profiles.onboarded = ?",
         value == "onboarded"
       )
-    end
+  end
+
+  filter :judge_types,
+         :enum,
+         header: "Judge Type",
+         select: proc { JudgeType.all.map { |j| [j.name, j.id] } },
+         filter_group: "more-specific",
+         html: {
+           class: "and-or-field"
+         },
+         multiple: true do |values, scope|
+    scope.includes(judge_profile: :judge_types)
+         .references(:judge_profile, :judge_profile_judge_types)
+         .where(judge_profile_judge_types: {judge_type_id: values})
+  end
 
   filter :has_mentor_profile,
     :enum,
