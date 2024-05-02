@@ -4,6 +4,7 @@ RSpec.describe Salesforce::ApiClient do
   let(:salesforce_api_client) do
     Salesforce::ApiClient.new(
       instance_url: salesforce_instance_url,
+      host: salesforce_host,
       api_version: salesforce_api_version,
       client_id: salesforce_client_id,
       client_secret: salesforce_client_secret,
@@ -18,6 +19,7 @@ RSpec.describe Salesforce::ApiClient do
   end
 
   let(:salesforce_instance_url) { "https://test-salesforce.com/" }
+  let(:salesforce_host) { "test.salesforce.com" }
   let(:salesforce_api_version) { "60" }
   let(:salesforce_client_id) { "1234-09876-5432" }
   let(:salesforce_client_secret) { "8766-qwerty-54321" }
@@ -32,6 +34,7 @@ RSpec.describe Salesforce::ApiClient do
   before do
     allow(client_constructor).to receive(:new).with(
       instance_url: salesforce_instance_url,
+      host: salesforce_host,
       api_version: salesforce_api_version,
       client_id: salesforce_client_id,
       client_secret: salesforce_client_secret,
