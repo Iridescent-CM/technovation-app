@@ -542,10 +542,6 @@ CREATE TABLE public.chapters (
     country character varying,
     primary_contact_id bigint,
     visible_on_map boolean DEFAULT true,
-    legal_contact_full_name character varying,
-    legal_contact_email_address character varying,
-    legal_contact_phone_number character varying,
-    legal_contact_job_title character varying,
     organization_headquarters_location character varying
 );
 
@@ -992,6 +988,21 @@ CREATE TABLE public.low_income_estimates (
     updated_at timestamp(6) without time zone NOT NULL
 );
 
+--
+-- Name: legal_contacts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.legal_contacts (
+    id bigint NOT NULL,
+    chapter_id bigint,
+    full_name character varying NOT NULL,
+    email_address character varying NOT NULL,
+    phone_number character varying,
+    job_title character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
 
 --
 -- Name: low_income_estimates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
@@ -1006,10 +1017,30 @@ CREATE SEQUENCE public.low_income_estimates_id_seq
 
 
 --
+-- Name: legal_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.legal_contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
 -- Name: low_income_estimates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
+
 ALTER SEQUENCE public.low_income_estimates_id_seq OWNED BY public.low_income_estimates.id;
+
+--
+-- Name: legal_contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+
+ALTER SEQUENCE public.legal_contacts_id_seq OWNED BY public.legal_contacts.id;
 
 
 --
@@ -2309,6 +2340,13 @@ ALTER TABLE ONLY public.low_income_estimates ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: legal_contacts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts ALTER COLUMN id SET DEFAULT nextval('public.legal_contacts_id_seq'::regclass);
+
+
+--
 -- Name: media_consents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2702,6 +2740,14 @@ ALTER TABLE ONLY public.judge_types
 
 ALTER TABLE ONLY public.low_income_estimates
     ADD CONSTRAINT low_income_estimates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: legal_contacts legal_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts
+    ADD CONSTRAINT legal_contacts_pkey PRIMARY KEY (id);
 
 
 --
@@ -3193,6 +3239,13 @@ CREATE INDEX index_judge_profiles_on_recusal_scores_count ON public.judge_profil
 --
 
 CREATE INDEX index_judge_profiles_on_user_invitation_id ON public.judge_profiles USING btree (user_invitation_id);
+
+
+--
+-- Name: index_legal_contacts_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_legal_contacts_on_chapter_id ON public.legal_contacts USING btree (chapter_id);
 
 
 --
@@ -3843,6 +3896,14 @@ ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
 
 
 --
+-- Name: legal_contacts fk_rails_e57ad14bd5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts
+    ADD CONSTRAINT fk_rails_e57ad14bd5 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
 -- Name: background_checks fk_rails_f5be68f7c1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4140,4 +4201,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240513150037'),
 ('20240513182351'),
 ('20240513182546'),
-('20240513182837');
+('20240502192037'),
+('20240503184829');
+
+
