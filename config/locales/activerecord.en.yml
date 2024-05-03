@@ -17,6 +17,10 @@ en:
               not_found: "wasn't found in our database"
 
   activerecord:
+    attributes:
+      legal_contact:
+        full_name: "Name"
+
     errors:
       models:
         account:

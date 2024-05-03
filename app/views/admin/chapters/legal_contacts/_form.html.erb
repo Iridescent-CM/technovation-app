@@ -1,0 +1,35 @@
+<%= simple_form_for legal_contact, url: admin_chapter_legal_contact_path(chapter, legal_contact), local: true do |f| %>
+  <% if legal_contact.errors.any? %>
+    <div class="notice notice--error">
+      <ul class="reset">
+        <% legal_contact.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :full_name, "Name" %>
+    <%= f.text_field :full_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email_address, "Email" %>
+    <%= f.text_field :email_address %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone_number, "Phone Number" %>
+    <%= f.text_field :phone_number %>
+  </div>
+
+  <div class="field">
+    <%= f.label :job_title, "Job Title" %>
+    <%= f.text_field :job_title %>
+  </div>
+
+  <div class="actions margin--t-xlarge">
+    <%= f.submit legal_contact.persisted? ? "Update" : "Save", class: "button" %>
+  </div>
+<% end %>
