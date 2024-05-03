@@ -5,43 +5,37 @@
     </h3>
 
     <div class="panel">
-      <% if chapter.legal_contact_full_name.present? ||
-          chapter.legal_contact_email_address.present? ||
-          chapter.legal_contact_phone_number.present? ||
-          chapter.legal_contact_job_title.present?
-      %>
+      <% if chapter.legal_contact.present? %>
         <dl>
           <dt>Name</dt>
-          <dd><%= chapter.legal_contact_full_name %></dd>
+          <dd><%= chapter.legal_contact.full_name %></dd>
 
           <dt>Email</dt>
-          <dd><%= chapter.legal_contact_email_address %></dd>
+          <dd><%= chapter.legal_contact.email_address %></dd>
 
           <dt>Phone Number</dt>
-          <dd><%= chapter.legal_contact_phone_number %></dd>
+          <dd><%= chapter.legal_contact.phone_number.presence || "-" %></dd>
 
           <dt>Job Title</dt>
-          <dd><%= chapter.legal_contact_job_title %></dd>
+          <dd><%= chapter.legal_contact.job_title.presence || "-" %></dd>
         </dl>
 
         <div style="display: flex; justify-content: flex-start; column-gap: 2rem;" >
           <div>
             <%= link_to "Edit",
-              edit_admin_chapter_path(@chapter),
+              edit_admin_chapter_legal_contact_path(@chapter),
               class: "button"
             %>
           </div>
 
-          <% if chapter.legal_contact_email_address.present? %>
-            <%= button_to "Send MOU",
-              admin_chapter_memorandum_of_understanding_path(@chapter),
-              method: "post",
-              class: "button"
-            %>
-          <% end %>
+          <%= button_to "Send MOU",
+            admin_chapter_memorandum_of_understanding_path(@chapter),
+            method: "post",
+            class: "button"
+          %>
         </div>
       <% else %>
-        <%= render "edit_legal_contact_form", chapter: @chapter %>
+        <%= render "admin/chapters/legal_contacts/form", chapter: @chapter, legal_contact: @chapter.build_legal_contact %>
       <% end %>
     </div>
   </div>
