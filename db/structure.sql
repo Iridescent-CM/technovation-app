@@ -392,6 +392,44 @@ ALTER SEQUENCE public.chapter_ambassador_profiles_id_seq OWNED BY public.chapter
 
 
 --
+-- Name: chapter_program_information; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information (
+    id bigint NOT NULL,
+    chapter_id bigint,
+    child_safeguarding_policy_and_process text,
+    team_structure text,
+    external_partnerships text,
+    start_date date,
+    launch_date date,
+    program_model text,
+    number_of_low_income_or_underserved_calculation text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_program_information_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_id_seq OWNED BY public.chapter_program_information.id;
+
+
+--
 -- Name: chapters; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1864,6 +1902,13 @@ ALTER TABLE ONLY public.chapter_ambassador_profiles ALTER COLUMN id SET DEFAULT 
 
 
 --
+-- Name: chapter_program_information id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_id_seq'::regclass);
+
+
+--
 -- Name: chapters id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2170,6 +2215,14 @@ ALTER TABLE ONLY public.certificates
 
 ALTER TABLE ONLY public.chapter_ambassador_profiles
     ADD CONSTRAINT chapter_ambassador_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_program_information chapter_program_information_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT chapter_program_information_pkey PRIMARY KEY (id);
 
 
 --
@@ -2591,6 +2644,13 @@ CREATE INDEX index_chapter_ambassador_profiles_on_chapter_id ON public.chapter_a
 --
 
 CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambassador_profiles USING btree (status);
+
+
+--
+-- Name: index_chapter_program_information_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_program_information_on_chapter_id ON public.chapter_program_information USING btree (chapter_id);
 
 
 --
@@ -3241,6 +3301,14 @@ ALTER TABLE ONLY public.teams
 
 
 --
+-- Name: chapter_program_information fk_rails_ff5375610f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_ff5375610f FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -3495,6 +3563,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240417195826'),
 ('20240418152235'),
 ('20240424214507'),
-('20240425120120');
-
-
+('20240425120120'),
+('20240502005925');
