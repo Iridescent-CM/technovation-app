@@ -476,6 +476,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    scout_apm (5.3.8)
+      parser
     selenium-webdriver (4.12.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -630,6 +632,7 @@ DEPENDENCIES
   rspec-rails (~> 5.0)
   rspec-retry
   sass-rails (~> 6.0)
+  scout_apm
   selenium-webdriver
   sidekiq (~> 7.0)
   simple_form (~> 5.0)
