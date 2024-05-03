@@ -84,3 +84,7 @@ html {
   flex-basis: 33.333333%;
 }
 
+.custom-simpleform-date {
+  @apply flex flex-row justify-between items-center;
+}
+
