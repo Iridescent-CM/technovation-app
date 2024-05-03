@@ -405,10 +405,6 @@ CREATE TABLE public.chapters (
     country character varying,
     primary_contact_id bigint,
     visible_on_map boolean DEFAULT true,
-    legal_contact_full_name character varying,
-    legal_contact_email_address character varying,
-    legal_contact_phone_number character varying,
-    legal_contact_job_title character varying,
     organization_headquarters_location character varying
 );
 
@@ -841,6 +837,41 @@ CREATE SEQUENCE public.judge_types_id_seq
 --
 
 ALTER SEQUENCE public.judge_types_id_seq OWNED BY public.judge_types.id;
+
+
+--
+-- Name: legal_contacts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.legal_contacts (
+    id bigint NOT NULL,
+    chapter_id bigint,
+    full_name character varying NOT NULL,
+    email_address character varying NOT NULL,
+    phone_number character varying,
+    job_title character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: legal_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.legal_contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: legal_contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.legal_contacts_id_seq OWNED BY public.legal_contacts.id;
 
 
 --
@@ -1948,6 +1979,13 @@ ALTER TABLE ONLY public.judge_types ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: legal_contacts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts ALTER COLUMN id SET DEFAULT nextval('public.legal_contacts_id_seq'::regclass);
+
+
+--
 -- Name: media_consents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2266,6 +2304,14 @@ ALTER TABLE ONLY public.judge_profiles
 
 ALTER TABLE ONLY public.judge_types
     ADD CONSTRAINT judge_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: legal_contacts legal_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts
+    ADD CONSTRAINT legal_contacts_pkey PRIMARY KEY (id);
 
 
 --
@@ -2675,6 +2721,13 @@ CREATE INDEX index_judge_profiles_on_recusal_scores_count ON public.judge_profil
 --
 
 CREATE INDEX index_judge_profiles_on_user_invitation_id ON public.judge_profiles USING btree (user_invitation_id);
+
+
+--
+-- Name: index_legal_contacts_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_legal_contacts_on_chapter_id ON public.legal_contacts USING btree (chapter_id);
 
 
 --
@@ -3225,6 +3278,14 @@ ALTER TABLE ONLY public.business_plans
 
 
 --
+-- Name: legal_contacts fk_rails_e57ad14bd5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts
+    ADD CONSTRAINT fk_rails_e57ad14bd5 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
 -- Name: background_checks fk_rails_f5be68f7c1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3495,6 +3556,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240417195826'),
 ('20240418152235'),
 ('20240424214507'),
-('20240425120120');
+('20240425120120'),
+('20240502192037'),
+('20240503184829');
 
 
