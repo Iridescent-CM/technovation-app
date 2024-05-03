@@ -11,7 +11,7 @@ module Admin
       )
 
       redirect_to admin_chapter_path(@chapter),
-        success: "Successfully scheduled job to send MOU to #{@chapter.legal_contact_full_name}"
+        success: "Successfully scheduled job to send MOU to #{@chapter.legal_contact.full_name}"
     end
   end
 end
