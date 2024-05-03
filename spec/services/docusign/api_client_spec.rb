@@ -20,6 +20,19 @@ RSpec.describe Docusign::ApiClient do
   let(:logger) { instance_double(ActiveSupport::Logger, error: true) }
   let(:error_notifier) { double("Airbrake") }
 
+  let(:legal_contact) do
+    instance_double(LegalContact,
+      full_name: "Summer Skycedar",
+      email_address: "summerhawk@example.com",
+      job_title: "Counselor",
+      chapter: chapter)
+  end
+
+  let(:chapter) do
+    instance_double(Chapter,
+      organization_name: "Thunder Mountain")
+  end
+
   before do
     allow(http_client).to receive(:new).with(
       url: base_url,
@@ -41,13 +54,10 @@ RSpec.describe Docusign::ApiClient do
         enveloperId: "333-4444-55555-666666"
       }.to_json)
   end
+
   let(:docusign_response_successful) { true }
 
   describe "#send_memorandum_of_understanding" do
-    let(:full_name) { "Summer Skycedar" }
-    let(:email_address) { "summerhawk@example.com" }
-    let(:organization_name) { "Thunder Mountain" }
-
     it "makes a call to the 'envelopes' endpoint and includes the api_account_id in the URL" do
       expect(http_client_instance).to receive(:post).with(
         "v2.1/accounts/#{api_account_id}/envelopes",
@@ -55,9 +65,7 @@ RSpec.describe Docusign::ApiClient do
       )
 
       docusign_api_client.send_memorandum_of_understanding(
-        full_name: full_name,
-        email_address: email_address,
-        organization_name: organization_name
+        legal_contact: legal_contact
       )
     end
 
@@ -66,9 +74,7 @@ RSpec.describe Docusign::ApiClient do
 
       it "returns a successful result" do
         result = docusign_api_client.send_memorandum_of_understanding(
-          full_name: full_name,
-          email_address: email_address,
-          organization_name: organization_name
+          legal_contact: legal_contact
         )
 
         expect(result.success?).to eq(true)
@@ -82,9 +88,7 @@ RSpec.describe Docusign::ApiClient do
         expect(logger).to receive(:error).with("[DOCUSIGN] Error sending MOU - ")
 
         docusign_api_client.send_memorandum_of_understanding(
-          full_name: full_name,
-          email_address: email_address,
-          organization_name: organization_name
+          legal_contact: legal_contact
         )
       end
 
@@ -92,17 +96,13 @@ RSpec.describe Docusign::ApiClient do
         expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending MOU - ")
 
         docusign_api_client.send_memorandum_of_understanding(
-          full_name: full_name,
-          email_address: email_address,
-          organization_name: organization_name
+          legal_contact: legal_contact
         )
       end
 
       it "returns an unsuccessful result" do
         result = docusign_api_client.send_memorandum_of_understanding(
-          full_name: full_name,
-          email_address: email_address,
-          organization_name: organization_name
+          legal_contact: legal_contact
         )
 
         expect(result.success?).to eq(false)
