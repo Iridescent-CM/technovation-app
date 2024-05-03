@@ -7,6 +7,7 @@ class Chapter < ActiveRecord::Base
   has_many :chapter_links, class_name: "RegionalLink"
   has_many :student_profiles
   has_many :registration_invites, class_name: "UserInvitation"
+  has_one :chapter_program_information
 
   accepts_nested_attributes_for :chapter_links, reject_if: ->(attrs) {
     attrs.reject { |k, _| k.to_s == "custom_label" }.values.any?(&:blank?)
