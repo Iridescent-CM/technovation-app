@@ -1,12 +1,11 @@
 class SendMemorandumOfUnderstandingJob < ActiveJob::Base
   queue_as :default
 
-  def perform(full_name:, email_address:, organization_name:, job_title: nil)
+  def perform(chapter_id:)
+    chapter = Chapter.find(chapter_id)
+
     Docusign::ApiClient.new.send_memorandum_of_understanding(
-      full_name: full_name,
-      email_address: email_address,
-      organization_name: organization_name,
-      job_title: job_title
+      legal_contact: chapter.legal_contact
     )
   end
 end
