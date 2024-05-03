@@ -22,21 +22,15 @@ module Docusign
       @error_notifier = error_notifier
     end
 
-    def send_memorandum_of_understanding(
-      full_name:,
-      email_address:,
-      organization_name:,
-      job_title: nil
-    )
-
+    def send_memorandum_of_understanding(legal_contact:)
       response = client.post(
         "v2.1/accounts/#{api_account_id}/envelopes",
         {
           templateId: ENV.fetch("DOCUSIGN_MEMORANDUM_OF_UNDERSTANDING_TEMPLATE_ID"),
           templateRoles: [
             {
-              name: full_name,
-              email: email_address,
+              name: legal_contact.full_name,
+              email: legal_contact.email_address,
               roleName: "signer",
               tabs: {
                 textTabs: [
@@ -48,7 +42,7 @@ module Docusign
                     fontSize: "Size10",
                     italic: true,
                     underline: true,
-                    value: full_name,
+                    value: legal_contact.full_name,
                     width: 100,
                     height: 23,
                     xPosition: 394,
@@ -61,7 +55,7 @@ module Docusign
                     fontSize: "Size10",
                     italic: true,
                     underline: true,
-                    value: organization_name,
+                    value: legal_contact.chapter.organization_name,
                     width: 12,
                     height: 23,
                     xPosition: 98,
@@ -73,7 +67,7 @@ module Docusign
                     anchorYOffset: -11,
                     font: "Georgia",
                     fontSize: "Size12",
-                    value: organization_name,
+                    value: legal_contact.chapter.organization_name,
                     width: 200
                   },
                   {
@@ -83,7 +77,7 @@ module Docusign
                     font: "Georgia",
                     fontSize: "Size12",
                     required: false,
-                    value: job_title,
+                    value: legal_contact.job_title,
                     width: 155
                   }
                 ],
