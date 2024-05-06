@@ -1,46 +1,40 @@
 require "rails_helper"
 
-RSpec.feature "Judges switch to mentor mode", :js do
-  context "config ON" do
+RSpec.feature "Judges switching to mentor mode", :js do
+  let(:judge) { FactoryBot.create(:judge, :onboarded) }
+
+  context "when ENABLE_MENTOR_MODE_FOR_ALL_JUDGES is enabled" do
     before do
       allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(true)
+      allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", any_args).and_return(true)
     end
 
-    scenario "judges can switch to mentor profile" do
-      judge = FactoryBot.create(:judge, :onboarded)
-
+    scenario "displaying the mentor mode link" do
       sign_in(judge)
 
-      expect(judge.is_a_mentor?).to be_falsey
+      expect(page).to have_link("Mentor Mode")
+    end
 
-      find("#global-dropdown-wrapper").click
+    scenario "creating a new mentor profile for the judge" do
+      sign_in(judge)
+      expect(judge.is_a_mentor?).to eq(false)
+
       click_link "Mentor Mode"
-      expect(page).to have_link "Switch to Judge mode"
+      expect(page).to have_content("Mentor Dashboard")
 
-      expect(current_path).to eq(mentor_dashboard_path)
-      expect(judge.reload.is_a_mentor?).to be_truthy
-
-      click_link "Switch to Judge mode"
-      find("#global-dropdown-wrapper").click
-      expect(page).to have_link "Mentor Mode"
-
-      expect(current_path).to eq(judge_dashboard_path)
+      expect(judge.reload.is_a_mentor?).to eq(true)
     end
   end
 
-  context "config OFF" do
+  context "when ENABLE_MENTOR_MODE_FOR_ALL_JUDGES is disabled" do
     before do
       allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
+      allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", any_args).and_return(false)
     end
 
-    scenario "judges do not see mentor mode link" do
-      judge = FactoryBot.create(:judge, :onboarded)
-
+    scenario "not displaying the mentor mode link" do
       sign_in(judge)
 
-      expect(current_path).to eq(judge_dashboard_path)
       expect(page).not_to have_link("Mentor Mode")
     end
   end

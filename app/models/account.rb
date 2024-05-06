@@ -747,7 +747,7 @@ class Account < ActiveRecord::Base
     if is_an_ambassador?
       !!ENV.fetch("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", false) && is_a_judge?
     elsif is_a_mentor?
-      !!ENV.fetch("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", false)
+      !!ENV.fetch("ENABLE_JUDGE_MODE_FOR_ALL_MENTORS", false)
     else
       false
     end
@@ -757,9 +757,8 @@ class Account < ActiveRecord::Base
     if is_an_ambassador?
       true
     elsif is_a_judge?
-      !!ENV.fetch("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", false) ||
-        SeasonToggles.mentor_signup? ||
-        (!SeasonToggles.mentor_signup? && is_a_mentor?)
+      !!ENV.fetch("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", false) ||
+        !!ENV.fetch("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE", false) && is_a_mentor?
     else
       false
     end
