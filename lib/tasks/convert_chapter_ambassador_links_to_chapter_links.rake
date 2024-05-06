@@ -3,6 +3,7 @@ task convert_chapter_ambassador_links_to_chapter_links: :environment do
   chapter_ambassadors_with_chapter_links = ChapterAmbassadorProfile
     .joins(:account, :regional_links)
     .where.not(chapter: nil)
+    .distinct
 
   if chapter_ambassadors_with_chapter_links.present?
     chapter_ambassadors_with_chapter_links.find_each do |chapter_ambassador|
