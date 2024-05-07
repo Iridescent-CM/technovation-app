@@ -43,7 +43,8 @@ module ChapterAmbassador
         :launch_date,
         :program_model,
         :number_of_low_income_or_underserved_calculation,
-        :program_length_id
+        :program_length_id,
+        :participant_count_estimate_id
       )
     end
   end
