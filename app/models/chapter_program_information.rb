@@ -3,4 +3,5 @@ class ChapterProgramInformation < ActiveRecord::Base
 
   belongs_to :chapter
   belongs_to :program_length
+  belongs_to :participant_count_estimate
 end
