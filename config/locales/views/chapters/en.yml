@@ -13,7 +13,7 @@ en:
       meeting_time_question: When do you plan to hold meetings for your participants?
       program_length_question: How long are you planning to run your Technovation program?
       meeting_facilitator_question: Who will facilitate the meetings for your students?
-      number_of_participants_question: How many participants do you anticipate serving with the program this year?
+      participant_count_estimate_question: How many participants do you anticipate serving with the program this year?
       number_of_low_income_or_underserved_question: What percentage of the participants you plan to serve are low-income and/or under-resourced?
       number_of_low_income_or_underserved_calculation_question: Please describe how you identified the percentage of low-income or under-resourced students for the previous question. Include any relevant information about your students' communities.
       number_of_low_income_or_underserved_calculation_description: "Ex: Free/reduced lunch data, household income data, firsthand knowledge etc."
