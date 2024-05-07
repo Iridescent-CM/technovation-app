@@ -69,6 +69,15 @@
   </div>
 
   <div class="mb-8">
+    <%= f.association :program_length,
+                      collection: ProgramLength.all,
+                      as: :select,
+                      label_method: :length,
+                      label: t("chapters.program_information.program_length_question"),
+                      prompt: "Select a Program Length" %>
+  </div>
+
+  <div class="mb-8">
     <%= f.label :number_of_low_income_or_underserved_calculation,
                 t("chapters.program_information.number_of_low_income_or_underserved_calculation_question"),
                 for: :number_of_low_income_or_underserved_calculation %>
