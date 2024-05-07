@@ -49,6 +49,13 @@
   </div>
 
   <div class="mb-4">
+    <p class="font-semibold"><%= t("chapters.program_information.participant_count_estimate_question") %></p>
+    <p>
+      <%= current_chapter.chapter_program_information.participant_count_estimate&.range.presence || raw('<span class="text-red-500">Missing</span>')%>
+    </p>
+  </div>
+
+  <div class="mb-4">
     <p class="font-semibold"><%= t("chapters.program_information.number_of_low_income_or_underserved_calculation_question") %></p>
     <p>
       <%= current_chapter.chapter_program_information.number_of_low_income_or_underserved_calculation.presence || raw('<span class="text-red-500">Missing</span>')%>
