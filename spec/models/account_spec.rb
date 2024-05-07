@@ -859,10 +859,10 @@ RSpec.describe Account do
   end
 
   describe "#can_switch_to_judge?" do
-    describe "when config is off" do
+    describe "when all judge mode config settings are disabled" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_JUDGE_MODE_FOR_ALL_MENTORS", any_args).and_return(false)
         allow(ENV).to receive(:fetch).with("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
@@ -873,10 +873,10 @@ RSpec.describe Account do
       end
     end
 
-    describe "when mentor config is on" do
+    describe "when ENABLE_JUDGE_MODE_FOR_ALL_MENTORS is enabled" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(1)
+        allow(ENV).to receive(:fetch).with("ENABLE_JUDGE_MODE_FOR_ALL_MENTORS", any_args).and_return(1)
         allow(ENV).to receive(:fetch).with("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
@@ -890,7 +890,7 @@ RSpec.describe Account do
     describe "when chapter ambassador config is on" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_JUDGE_MODE_FOR_ALL_MENTORS", any_args).and_return(false)
         allow(ENV).to receive(:fetch).with("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", any_args).and_return(1)
       end
 
@@ -904,10 +904,17 @@ RSpec.describe Account do
   end
 
   describe "#can_switch_to_mentor?" do
-    describe "when config is off" do
+    let(:judge_only_account) { FactoryBot.create(:judge) }
+    let(:judge_with_mentor_profile) { FactoryBot.create(:judge) }
+    let!(:associate_mentor_profile_to_judge_mentor_account) do
+      FactoryBot.create(:mentor, account: judge_with_mentor_profile.account)
+    end
+
+    describe "when all mentor mode config settings are disabled" do
       before do
         allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_FOR_ALL_JUDGESk", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE", any_args).and_return(false)
 
         allow(SeasonToggles).to receive(:mentor_signup?)
           .and_return(mentor_signup_enabled)
@@ -921,46 +928,44 @@ RSpec.describe Account do
         expect(FactoryBot.create(:chapter_ambassador).can_switch_to_mentor?).to be true
       end
 
-      context "when mentor registration is open" do
-        let(:mentor_signup_enabled) { true }
+      context "when ENABLE_MENTOR_MODE_FOR_ALL_JUDGES is enabled" do
+        before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", any_args).and_return(1)
+        end
 
-        it "allows judges to switch to mentor mode" do
-          expect(FactoryBot.create(:judge).can_switch_to_mentor?).to eq(true)
+        it "allows judges and chapter ambassadors" do
+          expect(FactoryBot.create(:student).can_switch_to_mentor?).to be false
+          expect(FactoryBot.create(:judge).can_switch_to_mentor?).to be true
+          expect(FactoryBot.create(:chapter_ambassador).can_switch_to_mentor?).to be true
+        end
+
+        it "allows all judges to switch to mentor mode" do
+          expect(judge_only_account.can_switch_to_mentor?).to eq(true)
+          expect(judge_with_mentor_profile.can_switch_to_mentor?).to eq(true)
         end
       end
 
-      context "when mentor registration is closed" do
-        let(:mentor_signup_enabled) { false }
+      context "when ENABLE_MENTOR_MODE_FOR_ALL_JUDGES is disabled" do
+        before do
+          allow(ENV).to receive(:fetch).and_call_original
+          allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", any_args).and_return(false)
+        end
 
-        context "when a judge has a mentor profile" do
-          let(:judge) { FactoryBot.create(:judge) }
-          let!(:judge_mentor_profile) { FactoryBot.create(:mentor, account: judge.account) }
+        context "when ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE is enabled" do
+          before do
+            allow(ENV).to receive(:fetch).and_call_original
+            allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE", any_args).and_return(1)
+          end
 
-          it "allows that judge to switch to mentor mode" do
-            expect(judge.can_switch_to_mentor?).to eq(true)
+          it "allows that judges who already have a mentor profile to switch to mentor mode" do
+            expect(judge_with_mentor_profile.can_switch_to_mentor?).to eq(true)
+          end
+
+          it "does not allow judge-only accounts to switch to mentor mode" do
+            expect(judge_only_account.can_switch_to_mentor?).to eq(false)
           end
         end
-
-        context "when a judge does not have a mentor profile" do
-          let(:judge) { FactoryBot.create(:judge, mentor: false) }
-
-          it "does not allow that judge to switch to mentor mode" do
-            expect(judge.can_switch_to_mentor?).to eq(false)
-          end
-        end
-      end
-    end
-
-    describe "when mentor config is on" do
-      before do
-        allow(ENV).to receive(:fetch).and_call_original
-        allow(ENV).to receive(:fetch).with("ENABLE_SWITCH_BETWEEN_JUDGE_AND_MENTOR", any_args).and_return(1)
-      end
-
-      it "allows judges and chapter ambassadors" do
-        expect(FactoryBot.create(:student).can_switch_to_mentor?).to be false
-        expect(FactoryBot.create(:judge).can_switch_to_mentor?).to be true
-        expect(FactoryBot.create(:chapter_ambassador).can_switch_to_mentor?).to be true
       end
     end
   end
