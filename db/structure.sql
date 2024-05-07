@@ -407,7 +407,8 @@ CREATE TABLE public.chapter_program_information (
     number_of_low_income_or_underserved_calculation text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    program_length_id bigint
+    program_length_id bigint,
+    participant_count_estimate_id bigint
 );
 
 
@@ -1215,6 +1216,38 @@ CREATE SEQUENCE public.parental_consents_id_seq
 --
 
 ALTER SEQUENCE public.parental_consents_id_seq OWNED BY public.parental_consents.id;
+
+
+--
+-- Name: participant_count_estimates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.participant_count_estimates (
+    id bigint NOT NULL,
+    range character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: participant_count_estimates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.participant_count_estimates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: participant_count_estimates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.participant_count_estimates_id_seq OWNED BY public.participant_count_estimates.id;
 
 
 --
@@ -2088,6 +2121,13 @@ ALTER TABLE ONLY public.parental_consents ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: participant_count_estimates id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participant_count_estimates ALTER COLUMN id SET DEFAULT nextval('public.participant_count_estimates_id_seq'::regclass);
+
+
+--
 -- Name: pitch_presentations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2430,6 +2470,14 @@ ALTER TABLE ONLY public.multi_messages
 
 ALTER TABLE ONLY public.parental_consents
     ADD CONSTRAINT parental_consents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: participant_count_estimates participant_count_estimates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participant_count_estimates
+    ADD CONSTRAINT participant_count_estimates_pkey PRIMARY KEY (id);
 
 
 --
@@ -2981,6 +3029,13 @@ CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USI
 
 
 --
+-- Name: participant_count_estimate_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX participant_count_estimate_id ON public.chapter_program_information USING btree (participant_count_estimate_id);
+
+
+--
 -- Name: pitch_events_team_ids; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3135,6 +3190,14 @@ ALTER TABLE ONLY public.mentor_profile_mentor_types
 
 ALTER TABLE ONLY public.regional_pitch_events_user_invitations
     ADD CONSTRAINT fk_rails_3bbe8623e3 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
+
+
+--
+-- Name: chapter_program_information fk_rails_41d22ed899; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_41d22ed899 FOREIGN KEY (participant_count_estimate_id) REFERENCES public.participant_count_estimates(id);
 
 
 --
@@ -3637,4 +3700,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240507200320'),
 ('20240507200453'),
 ('20240507202124'),
+('20240507213257'),
+('20240507213510'),
+('20240507213707'),
 ('20240702145233');
+
+
