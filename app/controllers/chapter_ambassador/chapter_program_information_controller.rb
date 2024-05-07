@@ -42,7 +42,8 @@ module ChapterAmbassador
         :start_date,
         :launch_date,
         :program_model,
-        :number_of_low_income_or_underserved_calculation
+        :number_of_low_income_or_underserved_calculation,
+        :program_length_id
       )
     end
   end
