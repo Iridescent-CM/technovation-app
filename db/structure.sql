@@ -406,7 +406,8 @@ CREATE TABLE public.chapter_program_information (
     program_model text,
     number_of_low_income_or_underserved_calculation text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    program_length_id bigint
 );
 
 
@@ -1250,6 +1251,38 @@ ALTER SEQUENCE public.pitch_presentations_id_seq OWNED BY public.pitch_presentat
 
 
 --
+-- Name: program_lengths; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.program_lengths (
+    id bigint NOT NULL,
+    length character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: program_lengths_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.program_lengths_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: program_lengths_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.program_lengths_id_seq OWNED BY public.program_lengths.id;
+
+
+--
 -- Name: regional_links; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2063,6 +2096,13 @@ ALTER TABLE ONLY public.pitch_presentations ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
+-- Name: program_lengths id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_lengths ALTER COLUMN id SET DEFAULT nextval('public.program_lengths_id_seq'::regclass);
+
+
+--
 -- Name: regional_links id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2402,6 +2442,14 @@ ALTER TABLE ONLY public.pitch_presentations
 
 
 --
+-- Name: program_lengths program_lengths_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_lengths
+    ADD CONSTRAINT program_lengths_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: regional_links regional_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2651,6 +2699,13 @@ CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambas
 --
 
 CREATE INDEX index_chapter_program_information_on_chapter_id ON public.chapter_program_information USING btree (chapter_id);
+
+
+--
+-- Name: index_chapter_program_information_on_program_length_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_program_information_on_program_length_id ON public.chapter_program_information USING btree (program_length_id);
 
 
 --
@@ -3049,6 +3104,14 @@ ALTER TABLE ONLY public.regional_pitch_events_teams
 
 ALTER TABLE ONLY public.divisions_regional_pitch_events
     ADD CONSTRAINT fk_rails_285ce9b10b FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
+
+
+--
+-- Name: chapter_program_information fk_rails_30f8030d7a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_30f8030d7a FOREIGN KEY (program_length_id) REFERENCES public.program_lengths(id);
 
 
 --
@@ -3572,5 +3635,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240424214507'),
 ('20240425120120'),
 ('20240502005925'),
+('20240507200320'),
+('20240507200453'),
+('20240507202124'),
 ('20240702145233');
-
