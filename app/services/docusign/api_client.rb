@@ -116,6 +116,13 @@ module Docusign
       response_body = JSON.parse(response.body, symbolize_names: true)
 
       if response.success?
+        legal_contact.documents.create(
+          full_name: legal_contact.full_name,
+          email_address: legal_contact.email_address,
+          active: true,
+          docusign_envelope_id: response_body[:envelopeId]
+        )
+
         Result.new(success?: true)
       else
         error = "[DOCUSIGN] Error sending MOU - #{response_body[:message]}"
