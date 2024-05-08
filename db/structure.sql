@@ -642,6 +642,44 @@ CREATE TABLE public.divisions_regional_pitch_events (
 
 
 --
+-- Name: documents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.documents (
+    id bigint NOT NULL,
+    full_name character varying NOT NULL,
+    email_address character varying NOT NULL,
+    signer_type character varying,
+    signer_id bigint,
+    active boolean,
+    signed_at timestamp without time zone,
+    season_signed smallint,
+    docusign_envelope_id character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.documents_id_seq OWNED BY public.documents.id;
+
+
+--
 -- Name: expertises; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2270,6 +2308,13 @@ ALTER TABLE ONLY public.divisions ALTER COLUMN id SET DEFAULT nextval('public.di
 
 
 --
+-- Name: documents id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.documents ALTER COLUMN id SET DEFAULT nextval('public.documents_id_seq'::regclass);
+
+
+--
 -- Name: expertises id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2660,6 +2705,14 @@ ALTER TABLE ONLY public.consent_waivers
 
 ALTER TABLE ONLY public.divisions
     ADD CONSTRAINT divisions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: documents documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.documents
+    ADD CONSTRAINT documents_pkey PRIMARY KEY (id);
 
 
 --
@@ -3169,6 +3222,20 @@ CREATE INDEX index_cpi_mt_on_chapter_program_information_id ON public.chapter_pr
 --
 
 CREATE INDEX index_cpi_ot_on_chapter_program_information_id ON public.chapter_program_information_organization_types USING btree (chapter_program_information_id);
+
+
+--
+-- Name: index_documents_on_docusign_envelope_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_documents_on_docusign_envelope_id ON public.documents USING btree (docusign_envelope_id);
+
+
+--
+-- Name: index_documents_on_signer; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_documents_on_signer ON public.documents USING btree (signer_type, signer_id);
 
 
 --
@@ -4211,6 +4278,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240513182837'),
 ('20240502192037'),
 ('20240503184829'),
+('20240506124949'),
 ('20240702145233');
 
 
