@@ -34,6 +34,8 @@ RSpec.describe Docusign::ApiClient do
   end
 
   before do
+    allow(legal_contact).to receive_message_chain(:documents, :create)
+
     allow(http_client).to receive(:new).with(
       url: base_url,
       headers: {
@@ -71,6 +73,14 @@ RSpec.describe Docusign::ApiClient do
 
     context "when the DocuSign response is successful" do
       let(:docusign_response_successful) { true }
+
+      it "creates a new document for the legal contact" do
+        expect(legal_contact).to receive_message_chain(:documents, :create)
+
+        docusign_api_client.send_memorandum_of_understanding(
+          legal_contact: legal_contact
+        )
+      end
 
       it "returns a successful result" do
         result = docusign_api_client.send_memorandum_of_understanding(
