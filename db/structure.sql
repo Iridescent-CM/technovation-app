@@ -408,7 +408,8 @@ CREATE TABLE public.chapter_program_information (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     program_length_id bigint,
-    participant_count_estimate_id bigint
+    participant_count_estimate_id bigint,
+    low_income_estimate_id bigint
 );
 
 
@@ -881,6 +882,38 @@ CREATE SEQUENCE public.judge_types_id_seq
 --
 
 ALTER SEQUENCE public.judge_types_id_seq OWNED BY public.judge_types.id;
+
+
+--
+-- Name: low_income_estimates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.low_income_estimates (
+    id bigint NOT NULL,
+    percentage character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: low_income_estimates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.low_income_estimates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: low_income_estimates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.low_income_estimates_id_seq OWNED BY public.low_income_estimates.id;
 
 
 --
@@ -2058,6 +2091,13 @@ ALTER TABLE ONLY public.judge_types ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: low_income_estimates id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.low_income_estimates ALTER COLUMN id SET DEFAULT nextval('public.low_income_estimates_id_seq'::regclass);
+
+
+--
 -- Name: media_consents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2398,6 +2438,14 @@ ALTER TABLE ONLY public.judge_profiles
 
 ALTER TABLE ONLY public.judge_types
     ADD CONSTRAINT judge_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: low_income_estimates low_income_estimates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.low_income_estimates
+    ADD CONSTRAINT low_income_estimates_pkey PRIMARY KEY (id);
 
 
 --
@@ -2746,6 +2794,13 @@ CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambas
 --
 
 CREATE INDEX index_chapter_program_information_on_chapter_id ON public.chapter_program_information USING btree (chapter_id);
+
+
+--
+-- Name: index_chapter_program_information_on_low_income_estimate_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_program_information_on_low_income_estimate_id ON public.chapter_program_information USING btree (low_income_estimate_id);
 
 
 --
@@ -3266,6 +3321,14 @@ ALTER TABLE ONLY public.parental_consents
 
 
 --
+-- Name: chapter_program_information fk_rails_8d148a7c2c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_8d148a7c2c FOREIGN KEY (low_income_estimate_id) REFERENCES public.low_income_estimates(id);
+
+
+--
 -- Name: mentor_profile_expertises fk_rails_9231fb852d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3695,4 +3758,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240507202124'),
 ('20240507213257'),
 ('20240507213510'),
-('20240507213707');
+('20240507213707'),
+('20240508141732'),
+('20240508144836'),
+('20240508145108');
