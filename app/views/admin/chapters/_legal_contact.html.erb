@@ -28,11 +28,13 @@
             %>
           </div>
 
-          <%= button_to "Send MOU",
-            admin_chapter_memorandum_of_understanding_path(@chapter),
-            method: "post",
-            class: "button"
-          %>
+          <% if @chapter.legal_document.blank? %>
+            <%= button_to "Send MOU",
+              admin_chapter_memorandum_of_understanding_path(@chapter),
+              method: "post",
+              class: "button"
+            %>
+        <% end %>
         </div>
       <% else %>
         <%= render "admin/chapters/legal_contacts/form", chapter: @chapter, legal_contact: @chapter.build_legal_contact %>
