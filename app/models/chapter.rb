@@ -16,4 +16,8 @@ class Chapter < ActiveRecord::Base
   }, allow_destroy: true
 
   validates :summary, length: {maximum: 280}
+
+  def legal_document
+    legal_contact&.legal_document
+  end
 end
