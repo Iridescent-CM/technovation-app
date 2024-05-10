@@ -23,7 +23,9 @@ module ChapterAmbassador
     end
 
     def update
-      if current_chapter.chapter_program_information.update(chapter_program_information_params)
+      @chapter_program_information = current_chapter.chapter_program_information
+
+      if @chapter_program_information.update(chapter_program_information_params)
         redirect_to chapter_ambassador_chapter_program_information_path,
                     success: "You updated your chapter program information!"
       else
