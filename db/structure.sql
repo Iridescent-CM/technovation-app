@@ -1257,7 +1257,6 @@ ALTER SEQUENCE public.pitch_presentations_id_seq OWNED BY public.pitch_presentat
 CREATE TABLE public.program_lengths (
     id bigint NOT NULL,
     length character varying,
-    "order" integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
