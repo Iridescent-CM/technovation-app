@@ -2210,6 +2210,37 @@ ALTER SEQUENCE public.user_invitations_id_seq OWNED BY public.user_invitations.i
 
 
 --
+-- Name: webhook_payloads; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.webhook_payloads (
+    id bigint NOT NULL,
+    body text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: webhook_payloads_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.webhook_payloads_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: webhook_payloads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.webhook_payloads_id_seq OWNED BY public.webhook_payloads.id;
+
+
+--
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2585,6 +2616,13 @@ ALTER TABLE ONLY public.unconfirmed_email_addresses ALTER COLUMN id SET DEFAULT 
 --
 
 ALTER TABLE ONLY public.user_invitations ALTER COLUMN id SET DEFAULT nextval('public.user_invitations_id_seq'::regclass);
+
+
+--
+-- Name: webhook_payloads id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.webhook_payloads ALTER COLUMN id SET DEFAULT nextval('public.webhook_payloads_id_seq'::regclass);
 
 
 --
@@ -3033,6 +3071,14 @@ ALTER TABLE ONLY public.unconfirmed_email_addresses
 
 ALTER TABLE ONLY public.user_invitations
     ADD CONSTRAINT user_invitations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: webhook_payloads webhook_payloads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.webhook_payloads
+    ADD CONSTRAINT webhook_payloads_pkey PRIMARY KEY (id);
 
 
 --
@@ -4270,6 +4316,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240513182546'),
 ('20240502192037'),
 ('20240503184829'),
-('20240506124949');
+('20240506124949'),
+('20240508171216');
 
 
