@@ -368,6 +368,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :webhooks do
+    resource :docusign, only: :create, controller: "docusign"
+  end
+
   resource :terms_agreement, only: [:edit, :update]
 
   resources :password_resets, only: [:new, :create]
