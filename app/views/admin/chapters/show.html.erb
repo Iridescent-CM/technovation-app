@@ -1,39 +1,46 @@
 <div class="grid grid--justify-center">
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
     <div class="panel">
-      <div class="grid__col-4">
-        <h3><%= @chapter.name.presence || "TBD" %></h3>
+      <div class="grid">
+        <div class="grid__col-12">
+          <h3><%= @chapter.name.presence || "TBD" %></h3>
+        </div>
 
-        <dl>
-          <dt>Organization</dt>
-          <dd><%= @chapter.organization_name %></dd>
+        <div class="grid__col-6">
+          <dl>
+            <dt>Organization</dt>
+            <dd><%= @chapter.organization_name %></dd>
 
-          <dt>Organization Headquarters Location</dt>
-          <dd><%= @chapter.organization_headquarters_location.presence || "Not Set" %></dd>
+            <dt>Organization Headquarters Location</dt>
+            <dd><%= @chapter.organization_headquarters_location.presence || "Not Set" %></dd>
 
-          <dt>Primary Contact</dt>
-          <dd>
-            <%= @chapter.primary_contact.present? ? (link_to @chapter.primary_contact.full_name, admin_participant_path(@chapter.primary_contact.account)) : "Not Set" %>
-          </dd>
+            <dt>Primary Contact</dt>
+            <dd>
+              <%= @chapter.primary_contact.present? ? (link_to @chapter.primary_contact.full_name, admin_participant_path(@chapter.primary_contact.account)) : "Not Set" %>
+            </dd>
 
-          <dt>Location</dt>
-          <dd><%= @chapter.address_details.presence || "-" %></dd>
+            <dt>Location</dt>
+            <dd><%= @chapter.address_details.presence || "-" %></dd>
 
-          <dt>Public Map Visibility</dt>
-          <dd>
-            <%= @chapter.visible_on_map? ?  "Display on map" : "Do not display on map" %>
-          </dd>
+            <dt>Public Map Visibility</dt>
+            <dd>
+              <%= @chapter.visible_on_map? ?  "Display on map" : "Do not display on map" %>
+            </dd>
 
-          <dt>Chapter Links</dt>
-          <dd>
-            <ul>
-              <li></li>
-            </ul>
-          </dd>
-        </dl>
+            <dt>Chapter Links</dt>
+            <dd>
+              <ul>
+                <li></li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="grid__col-6">
+        </div>
       </div>
 
-      <div class="grid__col-12 grid__col--bleed-y">
+      <div class="grid__col-12">
         <dl>
           <dt>Summary</dt>
 
