@@ -1,0 +1,2 @@
+class WebhookPayload < ApplicationRecord
+end
