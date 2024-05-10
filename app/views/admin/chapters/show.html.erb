@@ -37,6 +37,24 @@
         </div>
 
         <div class="grid__col-6">
+          <dl>
+            <dt>MOU</dt>
+            <dd>
+              <% if @chapter.legal_contact.present? %>
+                <% if @chapter.legal_document.present? %>
+                  <% if @chapter.legal_document.signed? %>
+                    Signed <%= @chapter.legal_document.signed_at.strftime("%b %d, %Y") %>
+                  <% else %>
+                    Not signed
+                  <% end %>
+                <% else %>
+                  Not sent
+                <% end %>
+              <% else %>
+                Not sent (no legal contact has been setup yet)
+              <% end %>
+            </dd>
+          </dl>
         </div>
       </div>
 
