@@ -45,7 +45,8 @@ module ChapterAmbassador
         :number_of_low_income_or_underserved_calculation,
         :program_length_id,
         :participant_count_estimate_id,
-        :low_income_estimate_id
+        :low_income_estimate_id,
+        organization_type_ids: []
       )
     end
   end
