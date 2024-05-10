@@ -69,6 +69,33 @@
   </div>
 
   <div class="mb-8">
+    <%= f.association :program_length,
+                      collection: ProgramLength.all,
+                      as: :select,
+                      label_method: :length,
+                      label: t("chapters.program_information.program_length_question"),
+                      prompt: "Select a Program Length" %>
+  </div>
+
+  <div class="mb-8">
+    <%= f.association :participant_count_estimate,
+                      collection: ParticipantCountEstimate.all,
+                      as: :select,
+                      label_method: :range,
+                      label: t("chapters.program_information.participant_count_estimate_question"),
+                      prompt: "Select an option" %>
+  </div>
+
+  <div class="mb-8">
+    <%= f.association :low_income_estimate,
+                      collection: LowIncomeEstimate.all,
+                      as: :select,
+                      label_method: :percentage,
+                      label: t("chapters.program_information.number_of_low_income_or_underserved_question"),
+                      prompt: "Select a percentage" %>
+  </div>
+
+  <div class="mb-8">
     <%= f.label :number_of_low_income_or_underserved_calculation,
                 t("chapters.program_information.number_of_low_income_or_underserved_calculation_question"),
                 for: :number_of_low_income_or_underserved_calculation %>

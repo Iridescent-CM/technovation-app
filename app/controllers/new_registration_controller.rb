@@ -166,6 +166,7 @@ class NewRegistrationController < ApplicationController
     end
   end
 
+
   def assign_chapter_ambassador_to_chapter
     if params[:inviteCode].present? && params[:profileType] == "chapter_ambassador"
       AssignChapterAmbassadorToChapterJob.perform_later(
