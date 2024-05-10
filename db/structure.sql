@@ -433,6 +433,38 @@ ALTER SEQUENCE public.chapter_program_information_id_seq OWNED BY public.chapter
 
 
 --
+-- Name: chapter_program_information_organization_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information_organization_types (
+    id bigint NOT NULL,
+    chapter_program_information_id bigint,
+    organization_type_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_program_information_organization_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_organization_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_organization_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_organization_types_id_seq OWNED BY public.chapter_program_information_organization_types.id;
+
+
+--
 -- Name: chapters; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1208,6 +1240,38 @@ CREATE SEQUENCE public.multi_messages_id_seq
 --
 
 ALTER SEQUENCE public.multi_messages_id_seq OWNED BY public.multi_messages.id;
+
+
+--
+-- Name: organization_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.organization_types (
+    id bigint NOT NULL,
+    name character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: organization_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.organization_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: organization_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.organization_types_id_seq OWNED BY public.organization_types.id;
 
 
 --
@@ -2007,6 +2071,13 @@ ALTER TABLE ONLY public.chapter_program_information ALTER COLUMN id SET DEFAULT 
 
 
 --
+-- Name: chapter_program_information_organization_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_organization_types_id_seq'::regclass);
+
+
+--
 -- Name: chapters id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2151,6 +2222,13 @@ ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.mes
 --
 
 ALTER TABLE ONLY public.multi_messages ALTER COLUMN id SET DEFAULT nextval('public.multi_messages_id_seq'::regclass);
+
+
+--
+-- Name: organization_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.organization_types ALTER COLUMN id SET DEFAULT nextval('public.organization_types_id_seq'::regclass);
 
 
 --
@@ -2337,6 +2415,14 @@ ALTER TABLE ONLY public.chapter_ambassador_profiles
 
 
 --
+-- Name: chapter_program_information_organization_types chapter_program_information_organization_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types
+    ADD CONSTRAINT chapter_program_information_organization_types_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: chapter_program_information chapter_program_information_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2513,6 +2599,14 @@ ALTER TABLE ONLY public.multi_messages
 
 
 --
+-- Name: organization_types organization_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.organization_types
+    ADD CONSTRAINT organization_types_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: parental_consents parental_consents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2654,6 +2748,13 @@ ALTER TABLE ONLY public.unconfirmed_email_addresses
 
 ALTER TABLE ONLY public.user_invitations
     ADD CONSTRAINT user_invitations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX chapter_program_information_id ON public.chapter_program_information_organization_types USING btree (chapter_program_information_id);
 
 
 --
@@ -3084,6 +3185,13 @@ CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USI
 
 
 --
+-- Name: organization_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX organization_type_id ON public.chapter_program_information_organization_types USING btree (organization_type_id);
+
+
+--
 -- Name: participant_count_estimate_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3168,6 +3276,14 @@ CREATE UNIQUE INDEX uniq_students_accounts ON public.student_profiles USING btre
 
 
 --
+-- Name: chapter_program_information_organization_types fk_rails_0d8e315484; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types
+    ADD CONSTRAINT fk_rails_0d8e315484 FOREIGN KEY (organization_type_id) REFERENCES public.organization_types(id);
+
+
+--
 -- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3237,6 +3353,14 @@ ALTER TABLE ONLY public.team_submissions
 
 ALTER TABLE ONLY public.mentor_profile_mentor_types
     ADD CONSTRAINT fk_rails_38b0d3141a FOREIGN KEY (mentor_type_id) REFERENCES public.mentor_types(id);
+
+
+--
+-- Name: chapter_program_information_organization_types fk_rails_38f0326fd3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types
+    ADD CONSTRAINT fk_rails_38f0326fd3 FOREIGN KEY (chapter_program_information_id) REFERENCES public.chapter_program_information(id);
 
 
 --
@@ -3769,5 +3893,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240508141732'),
 ('20240508144836'),
 ('20240508145108'),
+('20240509222317'),
+('20240509222533'),
+('20240509222711'),
 ('20240702145233');
 
