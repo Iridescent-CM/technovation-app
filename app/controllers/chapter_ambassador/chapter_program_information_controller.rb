@@ -23,7 +23,9 @@ module ChapterAmbassador
     end
 
     def update
-      if current_chapter.chapter_program_information.update(chapter_program_information_params)
+      @chapter_program_information = current_chapter.chapter_program_information
+
+      if @chapter_program_information.update(chapter_program_information_params)
         redirect_to chapter_ambassador_chapter_program_information_path,
                     success: "You updated your chapter program information!"
       else
@@ -45,7 +47,8 @@ module ChapterAmbassador
         :number_of_low_income_or_underserved_calculation,
         :program_length_id,
         :participant_count_estimate_id,
-        :low_income_estimate_id
+        :low_income_estimate_id,
+        organization_type_ids: []
       )
     end
   end
