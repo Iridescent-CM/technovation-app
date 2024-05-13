@@ -433,6 +433,70 @@ ALTER SEQUENCE public.chapter_program_information_id_seq OWNED BY public.chapter
 
 
 --
+-- Name: chapter_program_information_meeting_facilitators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information_meeting_facilitators (
+    id bigint NOT NULL,
+    chapter_program_information_id bigint,
+    meeting_facilitator_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_meeting_facilitators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_meeting_facilitators_id_seq OWNED BY public.chapter_program_information_meeting_facilitators.id;
+
+
+--
+-- Name: chapter_program_information_meeting_times; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information_meeting_times (
+    id bigint NOT NULL,
+    chapter_program_information_id bigint,
+    meeting_time_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_program_information_meeting_times_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_meeting_times_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_meeting_times_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_meeting_times_id_seq OWNED BY public.chapter_program_information_meeting_times.id;
+
+
+--
 -- Name: chapter_program_information_organization_types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -986,6 +1050,70 @@ CREATE SEQUENCE public.media_consents_id_seq
 --
 
 ALTER SEQUENCE public.media_consents_id_seq OWNED BY public.media_consents.id;
+
+
+--
+-- Name: meeting_facilitators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.meeting_facilitators (
+    id bigint NOT NULL,
+    name character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: meeting_facilitators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.meeting_facilitators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: meeting_facilitators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.meeting_facilitators_id_seq OWNED BY public.meeting_facilitators.id;
+
+
+--
+-- Name: meeting_times; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.meeting_times (
+    id bigint NOT NULL,
+    "time" character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: meeting_times_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.meeting_times_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: meeting_times_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.meeting_times_id_seq OWNED BY public.meeting_times.id;
 
 
 --
@@ -2071,6 +2199,20 @@ ALTER TABLE ONLY public.chapter_program_information ALTER COLUMN id SET DEFAULT 
 
 
 --
+-- Name: chapter_program_information_meeting_facilitators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_meeting_facilitators_id_seq'::regclass);
+
+
+--
+-- Name: chapter_program_information_meeting_times id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_meeting_times_id_seq'::regclass);
+
+
+--
 -- Name: chapter_program_information_organization_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2173,6 +2315,20 @@ ALTER TABLE ONLY public.low_income_estimates ALTER COLUMN id SET DEFAULT nextval
 --
 
 ALTER TABLE ONLY public.media_consents ALTER COLUMN id SET DEFAULT nextval('public.media_consents_id_seq'::regclass);
+
+
+--
+-- Name: meeting_facilitators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_facilitators ALTER COLUMN id SET DEFAULT nextval('public.meeting_facilitators_id_seq'::regclass);
+
+
+--
+-- Name: meeting_times id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_times ALTER COLUMN id SET DEFAULT nextval('public.meeting_times_id_seq'::regclass);
 
 
 --
@@ -2415,6 +2571,22 @@ ALTER TABLE ONLY public.chapter_ambassador_profiles
 
 
 --
+-- Name: chapter_program_information_meeting_facilitators chapter_program_information_meeting_facilitators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
+    ADD CONSTRAINT chapter_program_information_meeting_facilitators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_program_information_meeting_times chapter_program_information_meeting_times_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times
+    ADD CONSTRAINT chapter_program_information_meeting_times_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: chapter_program_information_organization_types chapter_program_information_organization_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2540,6 +2712,22 @@ ALTER TABLE ONLY public.low_income_estimates
 
 ALTER TABLE ONLY public.media_consents
     ADD CONSTRAINT media_consents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: meeting_facilitators meeting_facilitators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_facilitators
+    ADD CONSTRAINT meeting_facilitators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: meeting_times meeting_times_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_times
+    ADD CONSTRAINT meeting_times_pkey PRIMARY KEY (id);
 
 
 --
@@ -2919,6 +3107,20 @@ CREATE INDEX index_consent_waivers_on_account_id ON public.consent_waivers USING
 
 
 --
+-- Name: index_cpi_mf_on_chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cpi_mf_on_chapter_program_information_id ON public.chapter_program_information_meeting_facilitators USING btree (chapter_program_information_id);
+
+
+--
+-- Name: index_cpi_mt_on_chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cpi_mt_on_chapter_program_information_id ON public.chapter_program_information_meeting_times USING btree (chapter_program_information_id);
+
+
+--
 -- Name: index_cpi_ot_on_chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3178,6 +3380,20 @@ CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USI
 
 
 --
+-- Name: meeting_facilitator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX meeting_facilitator_id ON public.chapter_program_information_meeting_facilitators USING btree (meeting_facilitator_id);
+
+
+--
+-- Name: meeting_time_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX meeting_time_id ON public.chapter_program_information_meeting_times USING btree (meeting_time_id);
+
+
+--
 -- Name: organization_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3266,6 +3482,14 @@ CREATE UNIQUE INDEX uniq_mentors_accounts ON public.mentor_profiles USING btree 
 --
 
 CREATE UNIQUE INDEX uniq_students_accounts ON public.student_profiles USING btree (account_id);
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators fk_rails_04ff66b53d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
+    ADD CONSTRAINT fk_rails_04ff66b53d FOREIGN KEY (chapter_program_information_id) REFERENCES public.chapter_program_information(id);
 
 
 --
@@ -3517,6 +3741,22 @@ ALTER TABLE ONLY public.chapters
 
 
 --
+-- Name: chapter_program_information_meeting_times fk_rails_b3eaf5a58a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times
+    ADD CONSTRAINT fk_rails_b3eaf5a58a FOREIGN KEY (chapter_program_information_id) REFERENCES public.chapter_program_information(id);
+
+
+--
+-- Name: chapter_program_information_meeting_times fk_rails_b66230ffb6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times
+    ADD CONSTRAINT fk_rails_b66230ffb6 FOREIGN KEY (meeting_time_id) REFERENCES public.meeting_times(id);
+
+
+--
 -- Name: mentor_profile_mentor_types fk_rails_b776f096c9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3594,6 +3834,14 @@ ALTER TABLE ONLY public.certificates
 
 ALTER TABLE ONLY public.business_plans
     ADD CONSTRAINT fk_rails_de87026bfd FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators fk_rails_f261bac187; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
+    ADD CONSTRAINT fk_rails_f261bac187 FOREIGN KEY (meeting_facilitator_id) REFERENCES public.meeting_facilitators(id);
 
 
 --
@@ -3888,4 +4136,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240508145108'),
 ('20240509222317'),
 ('20240509222533'),
-('20240509222711');
+('20240509222711'),
+('20240513145452'),
+('20240513145812'),
+('20240513150037'),
+('20240513182351'),
+('20240513182546'),
+('20240513182837');
