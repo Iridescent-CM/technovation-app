@@ -75,6 +75,14 @@
   </div>
 
   <div class="mb-8">
+    <%= f.association :meeting_times,
+                      as: :check_boxes,
+                      label_method: :time,
+                      label: t("chapters.program_information.meeting_time_question") %>
+  </div>
+
+
+  <div class="mb-8">
     <%= f.association :program_length,
                       collection: ProgramLength.all,
                       as: :select,
@@ -82,6 +90,13 @@
                       required: false,
                       label: t("chapters.program_information.program_length_question"),
                       prompt: "Select a Program Length" %>
+  </div>
+
+  <div class="mb-8">
+    <%= f.association :meeting_facilitators,
+                      as: :check_boxes,
+                      label_method: :name,
+                      label: t("chapters.program_information.meeting_facilitator_question") %>
   </div>
 
   <div class="mb-8">
