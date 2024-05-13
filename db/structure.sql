@@ -2751,13 +2751,6 @@ ALTER TABLE ONLY public.user_invitations
 
 
 --
--- Name: chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX chapter_program_information_id ON public.chapter_program_information_organization_types USING btree (chapter_program_information_id);
-
-
---
 -- Name: events_invites_event_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2923,6 +2916,13 @@ CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree
 --
 
 CREATE INDEX index_consent_waivers_on_account_id ON public.consent_waivers USING btree (account_id);
+
+
+--
+-- Name: index_cpi_ot_on_chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cpi_ot_on_chapter_program_information_id ON public.chapter_program_information_organization_types USING btree (chapter_program_information_id);
 
 
 --
