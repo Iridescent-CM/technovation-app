@@ -48,7 +48,9 @@ module ChapterAmbassador
         :program_length_id,
         :participant_count_estimate_id,
         :low_income_estimate_id,
-        organization_type_ids: []
+        organization_type_ids: [],
+        meeting_time_ids: [],
+        meeting_facilitator_ids: []
       )
     end
   end
