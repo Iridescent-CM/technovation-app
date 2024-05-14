@@ -1,6 +1,6 @@
 en:
-  chapters:
-    program_information:
+  chapter:
+    chapter_program_information:
       organization_type_question: "Is your organization a:"
       child_safeguarding_policy_and_process_question: What is your child safeguarding policy and process?
       child_safeguarding_policy_and_process_description: Please describe if/how you conduct background checks, hold child protection trainings, safety reporting process, etc. If your policies are available online, please share the links.
