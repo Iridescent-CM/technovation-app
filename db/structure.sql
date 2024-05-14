@@ -1059,7 +1059,6 @@ ALTER SEQUENCE public.media_consents_id_seq OWNED BY public.media_consents.id;
 CREATE TABLE public.meeting_facilitators (
     id bigint NOT NULL,
     name character varying,
-    "order" integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -1091,7 +1090,6 @@ ALTER SEQUENCE public.meeting_facilitators_id_seq OWNED BY public.meeting_facili
 CREATE TABLE public.meeting_times (
     id bigint NOT NULL,
     "time" character varying,
-    "order" integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
