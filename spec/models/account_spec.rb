@@ -914,7 +914,7 @@ RSpec.describe Account do
       before do
         allow(ENV).to receive(:fetch).and_call_original
         allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_FOR_ALL_JUDGESk", any_args).and_return(false)
-        allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE", any_args).and_return(false)
+        allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_MENTOR_PROFILE", any_args).and_return(false)
 
         allow(SeasonToggles).to receive(:mentor_signup?)
           .and_return(mentor_signup_enabled)
@@ -952,10 +952,10 @@ RSpec.describe Account do
           allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", any_args).and_return(false)
         end
 
-        context "when ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE is enabled" do
+        context "when ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_MENTOR_PROFILE is enabled" do
           before do
             allow(ENV).to receive(:fetch).and_call_original
-            allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE", any_args).and_return(1)
+            allow(ENV).to receive(:fetch).with("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_MENTOR_PROFILE", any_args).and_return(1)
           end
 
           it "allows that judges who already have a mentor profile to switch to mentor mode" do

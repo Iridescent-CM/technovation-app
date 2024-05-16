@@ -758,7 +758,7 @@ class Account < ActiveRecord::Base
       true
     elsif is_a_judge?
       !!ENV.fetch("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", false) ||
-        !!ENV.fetch("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_JUDGE_PROFILE", false) && is_a_mentor?
+        !!ENV.fetch("ENABLE_MENTOR_MODE_ONLY_FOR_JUDGES_WITH_EXISTING_MENTOR_PROFILE", false) && is_a_mentor?
     else
       false
     end
