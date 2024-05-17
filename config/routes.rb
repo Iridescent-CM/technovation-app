@@ -272,6 +272,7 @@ Rails.application.routes.draw do
       resource :legal_contact, only: [:new, :create, :edit, :update], controller: "chapters/legal_contacts"
       resource :memorandum_of_understanding, only: :create, controller: "chapter_memorandum_of_understanding"
       resources :invites, only: :create, controller: "chapter_invites"
+      resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
     end
 
     resources :chapter_ambassadors, only: :index
