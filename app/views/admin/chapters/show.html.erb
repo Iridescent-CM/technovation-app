@@ -33,6 +33,16 @@
                 <li></li>
               </ul>
             </dd>
+
+            <dt>Chapter Program Information</dt>
+            <dd>
+              <%if @chapter.chapter_program_information.present? %>
+                <%= link_to "View Responses",
+                            admin_chapter_chapter_program_information_path(@chapter)%>
+              <% else %>
+                  <p>Not filled out</p>
+              <% end %>
+            </dd>
           </dl>
         </div>
 
