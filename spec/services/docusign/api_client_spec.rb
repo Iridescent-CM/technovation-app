@@ -20,22 +20,7 @@ RSpec.describe Docusign::ApiClient do
   let(:logger) { instance_double(ActiveSupport::Logger, error: true) }
   let(:error_notifier) { double("Airbrake") }
 
-  let(:legal_contact) do
-    instance_double(LegalContact,
-      full_name: "Summer Skycedar",
-      email_address: "summerhawk@example.com",
-      job_title: "Counselor",
-      chapter: chapter)
-  end
-
-  let(:chapter) do
-    instance_double(Chapter,
-      organization_name: "Thunder Mountain")
-  end
-
   before do
-    allow(legal_contact).to receive_message_chain(:documents, :create)
-
     allow(http_client).to receive(:new).with(
       url: base_url,
       headers: {
@@ -60,6 +45,23 @@ RSpec.describe Docusign::ApiClient do
   let(:docusign_response_successful) { true }
 
   describe "#send_memorandum_of_understanding" do
+    let(:legal_contact) do
+      instance_double(LegalContact,
+        full_name: "Summer Skycedar",
+        email_address: "summerhawk@example.com",
+        job_title: "Counselor",
+        chapter: chapter)
+    end
+
+    let(:chapter) do
+      instance_double(Chapter,
+        organization_name: "Thunder Mountain")
+    end
+
+    before do
+      allow(legal_contact).to receive_message_chain(:documents, :create)
+    end
+
     it "makes a call to the 'envelopes' endpoint and includes the api_account_id in the URL" do
       expect(http_client_instance).to receive(:post).with(
         "v2.1/accounts/#{api_account_id}/envelopes",
@@ -95,7 +97,7 @@ RSpec.describe Docusign::ApiClient do
       let(:docusign_response_successful) { false }
 
       it "logs an error" do
-        expect(logger).to receive(:error).with("[DOCUSIGN] Error sending MOU - ")
+        expect(logger).to receive(:error).with("[DOCUSIGN] Error sending document - ")
 
         docusign_api_client.send_memorandum_of_understanding(
           legal_contact: legal_contact
@@ -103,7 +105,7 @@ RSpec.describe Docusign::ApiClient do
       end
 
       it "sends an error to Airbrake" do
-        expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending MOU - ")
+        expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
 
         docusign_api_client.send_memorandum_of_understanding(
           legal_contact: legal_contact
