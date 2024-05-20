@@ -5,8 +5,8 @@
 
 // FIXES VENDOR BUG:
 // https://github.com/tsechingho/chosen-rails/issues/97#issuecomment-365472872
-$chosen-sprite: image-url('chosen-sprite.png');
-$chosen-sprite-retina: image-url('chosen-sprite@2x.png');
+$chosen-sprite: image-url("chosen-sprite.png");
+$chosen-sprite-retina: image-url("chosen-sprite@2x.png");
 
 @import "chosen";
 @import "sweetalert2";
@@ -57,7 +57,8 @@ nav {
     opacity: 0.5;
     transition: 0.2s opacity;
 
-    &.active, &:hover {
+    &.active,
+    &:hover {
       opacity: 1;
       color: black;
     }
@@ -89,7 +90,8 @@ nav {
 }
 
 .profile-info {
-  dt, dd {
+  dt,
+  dd {
     max-width: 500px;
     text-overflow: ellipsis;
     overflow: hidden;
