@@ -82,8 +82,8 @@ module Judge
     def judge_recusal
       score = current_judge.submission_scores.find(params[:score_id])
 
-      if score.update(score_params.merge({judge_recusal: true}))
-        flash[:success] = "You have been sucessfully recused from this submission"
+      if score.update(score_params.merge({judge_recusal: true, completed_at: nil, approved_at: nil}))
+        flash[:success] = "You have been successfully recused from this submission"
       else
         flash[:error] = "There was a problem, please try again"
       end

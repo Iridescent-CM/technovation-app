@@ -177,7 +177,7 @@ class SubmissionScore < ActiveRecord::Base
       ] => "recusal_scores_count"
     }
 
-  scope :complete, -> { where("submission_scores.completed_at IS NOT NULL") }
+  scope :complete, -> { where("submission_scores.completed_at IS NOT NULL AND submission_scores.judge_recusal = FALSE") }
   scope :incomplete, -> { where("submission_scores.completed_at IS NULL AND submission_scores.judge_recusal = FALSE") }
   scope :complete_and_incomplete_without_recused, -> { where("submission_scores.judge_recusal = FALSE") }
 
