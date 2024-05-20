@@ -112,3 +112,11 @@ nav {
     margin: 0 0 1rem;
   }
 }
+
+.copy-to-clipboard {
+  color: #94a3b8;
+
+  &:hover {
+    color: #334155;
+  }
+}

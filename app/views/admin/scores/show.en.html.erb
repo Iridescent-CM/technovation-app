@@ -26,15 +26,42 @@
       %>
     </h3>
 
-    <h4><span>Score</span> <%= @score.total %> / <%= @score.total_possible %></h4>
+    <h4>
+      <span>Score</span> <%= @score.total %> / <%= @score.total_possible %>
+      <%= render partial: "copy_to_clipboard",
+        locals: {
+          text_to_copy: "#{@score.total}/#{@score.total_possible}"
+        }
+      %>
+    </h4>
 
     <% if is_privileged %>
-      <h4><span>Judge </span>
+      <h4>
+        <span>Judge</span>
         <%= link_to @score.judge_name,
                     send("#{current_scope}_participant_path", @score.judge_profile.account_id),
                     data: { turbolinks: false }
         %>
+
+      <%= render partial: "copy_to_clipboard",
+        locals: {
+          text_to_copy: @score.judge_name
+        }
+      %>
       </h4>
+
+      <% if current_account.admin? %>
+        <h5>
+          <span>Judge email address</span>
+          <%= @score.judge_profile.email %>
+
+          <%= render partial: "copy_to_clipboard",
+            locals: {
+              text_to_copy: @score.judge_profile.email
+            }
+          %>
+        </h5>
+      <% end %>
     <% end %>
 
     <h5>
