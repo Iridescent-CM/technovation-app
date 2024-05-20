@@ -29,6 +29,9 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   validates :job_title, presence: true
 
+  has_one :legal_document, -> { where(active: true) }, class_name: "Document", as: :signer
+  has_many :documents, as: :signer
+
   has_many :saved_searches, as: :searcher
 
   has_many :exports, as: :owner, dependent: :destroy
@@ -64,6 +67,14 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     ]
   end
 
+  def full_name
+    account.full_name
+  end
+
+  def email_address
+    account.email
+  end
+
   def provided_intro?
     !intro_summary.blank?
   end
@@ -95,6 +106,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def bio_complete?
     !bio.blank?
+  end
+
+  def legal_document_signed?
+    legal_document&.signed?
   end
 
   def region_name

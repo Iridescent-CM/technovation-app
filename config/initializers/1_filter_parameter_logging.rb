@@ -7,6 +7,7 @@ Rails.application.config.filter_parameters += [
   :ssn,
   :drivers_license_number,
   :email,
+  :email_address,
   :last_name,
   :parent_guardian_name,
   :parent_guardian_email,
