@@ -17,7 +17,7 @@
       <%= render "application/templates/completion_step",
         name: "Memorandum of Understanding",
         url: chapter_ambassador_mou_path,
-        is_complete: false,
+        is_complete: current_ambassador.legal_document_signed?,
         is_active_item: al(chapter_ambassador_mou_path).present?
       %>
 

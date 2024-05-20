@@ -47,8 +47,13 @@
   </ol>
 </div>
 
-<div class="text-center">
-  <%= link_to "Review and Sign",
-              "/",
-              class: "tw-green-btn" %>
-</div>
+<% if current_ambassador.legal_document.present? %>
+  <p>The Memorandum of Understanding has been sent to you, if you have not received it or you are experiences issues, please reach out to <%= mail_to ENV.fetch("HELP_EMAIL") %>.</p>
+<% else %>
+  <div class="text-center">
+    <%= button_to "Review and Sign",
+      chapter_ambassador_legal_agreement_path,
+      method: "post",
+      class: "tw-green-btn" %>
+  </div>
+<% end %>
