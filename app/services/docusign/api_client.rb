@@ -29,6 +29,13 @@ module Docusign
       )
     end
 
+    def send_chapter_ambassador_legal_agreement(chapter_ambassador_profile:)
+      send_document_to(
+        signer: chapter_ambassador_profile,
+        params: params_for_chapter_ambassador_profile(chapter_ambassador_profile)
+      )
+    end
+
     private
 
     attr_reader :client, :api_account_id, :logger, :error_notifier
@@ -117,6 +124,85 @@ module Docusign
                   required: false,
                   value: legal_contact.job_title,
                   width: 155
+                }
+              ],
+              signHereTabs: [
+                {
+                  anchorString: "Signature:",
+                  anchorXOffset: 65,
+                  anchorYOffset: -7
+                }
+              ],
+              dateSignedTabs: [
+                {
+                  anchorString: "Date:",
+                  anchorXOffset: 30,
+                  anchorYOffset: -10,
+                  font: "Georgia",
+                  fontSize: "Size12"
+                }
+              ],
+              fullNameTabs: [
+                {
+                  anchorString: "Name:",
+                  anchorXOffset: 35,
+                  anchorYOffset: -9,
+                  font: "Georgia",
+                  fontSize: "Size12"
+                }
+              ]
+            }
+          }
+        ],
+        status: "sent"
+      }.to_json
+    end
+
+    def params_for_chapter_ambassador_profile(chapter_ambassador_profile)
+      {
+        templateId: ENV.fetch("DOCUSIGN_CHAPTER_AMBASSADOR_LEGAL_AGREEMENT_TEMPLATE_ID"),
+        templateRoles: [
+          {
+            name: chapter_ambassador_profile.full_name,
+            email: chapter_ambassador_profile.email_address,
+            roleName: "signer",
+            tabs: {
+              textTabs: [
+                {
+                  documentId: 1,
+                  pageNumber: 1,
+                  required: true,
+                  font: "Georgia",
+                  fontSize: "Size10",
+                  italic: true,
+                  underline: true,
+                  value: chapter_ambassador_profile.full_name,
+                  width: 100,
+                  height: 23,
+                  xPosition: 394,
+                  yPosition: 152
+                },
+                {
+                  documentId: 1,
+                  pageNumber: 1,
+                  font: "Georgia",
+                  fontSize: "Size10",
+                  italic: true,
+                  underline: true,
+                  value: chapter_ambassador_profile.chapter.organization_name,
+                  width: 12,
+                  height: 23,
+                  xPosition: 98,
+                  yPosition: 180
+                },
+                {
+                  anchorString: "Name of Organization (if applicable):",
+                  anchorXOffset: 190,
+                  anchorYOffset: -11,
+                  font: "Georgia",
+                  fontSize: "Size12",
+                  value: chapter_ambassador_profile.chapter.organization_name,
+                  width: 200
                 }
               ],
               signHereTabs: [
