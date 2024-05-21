@@ -49,7 +49,7 @@ RSpec.describe "Using registration invite codes", :js do
           UserInvitation.create!(
             profile_type: item[:invite_profile_type],
             email: email_address,
-            register_at_any_time: register_at_any_time,
+            register_at_any_time: register_at_any_time
           )
         }
       end
@@ -65,7 +65,7 @@ RSpec.describe "Using registration invite codes", :js do
 
       after :each do
         UserInvitation.delete_all
-        Chapter.delete_all
+        Chapter.destroy_all
       end
 
       context "when registration is open" do
