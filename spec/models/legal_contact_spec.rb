@@ -31,4 +31,26 @@ RSpec.describe LegalContact do
       end
     end
   end
+
+  describe "#seasons_legal_agreement_is_valid_for" do
+    let(:legal_contact) do
+      FactoryBot.create(:legal_contact, season_legal_document_signed: season_legal_document_signed)
+    end
+
+    context "when the legal agreement has been signed" do
+      let(:season_legal_document_signed) { 2023 }
+
+      it "returns an array of seasons the legal agreement is valid for (the season it was signed plus two additional seasons)" do
+        expect(legal_contact.seasons_legal_agreement_is_valid_for).to eq([2023, 2024, 2025])
+      end
+    end
+
+    context "when the legal agreement has not been signed" do
+      let(:season_legal_document_signed) { nil }
+
+      it "returns an empty array" do
+        expect(legal_contact.seasons_legal_agreement_is_valid_for).to eq([])
+      end
+    end
+  end
 end
