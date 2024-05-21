@@ -76,6 +76,15 @@
                 Not sent (no legal contact has been setup yet)
               <% end %>
             </dd>
+
+            <dt>Seasons MOU Valid For</dt>
+            <dd>
+              <% if @chapter.legal_document.present? %>
+                <%= @chapter.seasons_legal_agreement_is_valid_for.to_sentence %>
+              <% else %>
+                -
+              <% end %>
+            </dd>
           </dl>
         </div>
       </div>

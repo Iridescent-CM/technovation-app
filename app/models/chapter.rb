@@ -17,6 +17,8 @@ class Chapter < ActiveRecord::Base
 
   validates :summary, length: {maximum: 280}
 
+  delegate :seasons_legal_agreement_is_valid_for, to: :legal_contact
+
   def legal_document
     legal_contact&.legal_document
   end
