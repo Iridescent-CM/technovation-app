@@ -1,7 +1,7 @@
 module ChapterAmbassador
   class LegalAgreementsController < ChapterAmbassadorController
     def create
-      SendChapterAmbassadorLegalAgreementJob.perform_now(
+      SendChapterAmbassadorLegalAgreementJob.perform_later(
         chapter_ambassador_profile_id: current_ambassador.id
       )
 
