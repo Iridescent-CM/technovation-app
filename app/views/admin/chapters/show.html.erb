@@ -29,9 +29,21 @@
 
             <dt>Chapter Links</dt>
             <dd>
-              <ul>
-                <li></li>
-              </ul>
+              <% if @chapter.chapter_links.present? %>
+                <ul style="list-style: none; padding: 0;">
+                  <% @chapter.chapter_links.each do |link| %>
+                    <li>
+                      <% if link.name == "email" %>
+                        <%= mail_to link.value, web_icon(link.icon, text: link.value), style: "font-weight: lighter; color: black;" %>
+                      <% else %>
+                        <%= link_to web_icon(link.icon, text: link.value), link.value, style: "font-weight: lighter; color: black;" %>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                -
+              <% end %>
             </dd>
 
             <dt>Chapter Program Information</dt>
