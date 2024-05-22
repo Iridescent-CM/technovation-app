@@ -52,12 +52,16 @@
 
   <div class="mb-8">
     <%= f.input :start_date,
-                label: t("chapter.chapter_program_information.start_date_question") %>
+                label: t("chapter.chapter_program_information.start_date_question"),
+                include_blank: true,
+                prompt: true %>
   </div>
 
   <div class="mb-8">
     <%= f.input :launch_date,
-                label: t("chapter.chapter_program_information.launch_date_question") %>
+                label: t("chapter.chapter_program_information.launch_date_question"),
+                include_blank: true,
+                prompt: true %>
   </div>
 
   <div class="mb-8">
@@ -143,3 +147,4 @@
     </p>
   </div >
 <% end %>
+
