@@ -99,10 +99,10 @@ $(document).ajaxSend(function (_, xhr) {
   );
 });
 
-async function copyToClipboard(textToCopy) {
+const copyToClipboard = async (textToCopy) => {
   try {
     await navigator.clipboard.writeText(textToCopy);
   } catch (error) {
     console.error("Failed to copy content to clipboard: ", error);
   }
-}
+};
