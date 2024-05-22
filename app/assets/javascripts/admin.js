@@ -98,11 +98,3 @@ $(document).ajaxSend(function (_, xhr) {
     $('meta[name="csrf-token"]').attr("content")
   );
 });
-
-const copyToClipboard = async (textToCopy) => {
-  try {
-    await navigator.clipboard.writeText(textToCopy);
-  } catch (error) {
-    console.error("Failed to copy content to clipboard: ", error);
-  }
-};
