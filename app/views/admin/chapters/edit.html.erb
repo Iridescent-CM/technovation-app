@@ -5,9 +5,16 @@
     </h1>
 
     <div class="panel">
-      <h3>Legal Contact</h3>
+      <%= simple_form_for @chapter, url: admin_chapter_path(@chapter) do |f| %>
+        <%= f.input :organization_name %>
+        <%= f.input :name, label: "Chapter Name" %>
+        <%= f.input :summary, label: "Chapter Summary" %>
+        <%= f.input :organization_headquarters_location %>
+        <%= f.input :visible_on_map, as: :boolean, label: "Public Map Visibility" %>
 
-      <%= render "edit_legal_contact_form", chapter: @chapter %>
+        <br>
+        <%= f.submit "Update", class: "button" %>
+      <% end %>
     </div>
   </div>
 </div>
