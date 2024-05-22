@@ -98,6 +98,12 @@
           </dd>
         </dl>
       </div>
+
+      <%= button_to "Edit Chapter",
+        edit_admin_chapter_path(@chapter),
+        method: "get",
+        class: "button"
+      %>
     </div>
   </div>
 </div>

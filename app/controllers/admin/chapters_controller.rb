@@ -23,12 +23,30 @@ module Admin
       end
     end
 
+    def edit
+      @chapter = Chapter.find(params.fetch(:id))
+    end
+
+    def update
+      @chapter = Chapter.find(params.fetch(:id))
+
+      if @chapter.update(chapter_params)
+        redirect_to admin_chapter_path(@chapter), success: "Chapter updated successfully."
+      else
+        render :edit
+      end
+    end
+
     private
 
     def chapter_params
       params.require(:chapter).permit(
         :id,
-        :organization_name
+        :organization_name,
+        :name,
+        :summary,
+        :organization_headquarters_location,
+        :visible_on_map
       )
     end
 
