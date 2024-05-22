@@ -17,6 +17,22 @@ class Chapter < ActiveRecord::Base
 
   validates :summary, length: {maximum: 280}
 
+  scope :signed_legal_agreements, -> {
+    joins(legal_contact: :documents)
+      .where("documents.active = TRUE AND documents.signed_at IS NOT NULL")
+  }
+
+  scope :not_signed_legal_agreements, -> {
+    joins(legal_contact: :documents)
+      .where("documents.active = TRUE AND documents.signed_at IS NULL")
+  }
+
+  scope :not_sent_legal_agreements, -> {
+    left_joins(legal_contact: :documents)
+      .where("documents.active != TRUE OR documents.active IS NULL")
+      .where("documents.id IS NULL")
+  }
+
   delegate :seasons_legal_agreement_is_valid_for, to: :legal_contact
 
   def legal_document

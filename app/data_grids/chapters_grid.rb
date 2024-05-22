@@ -30,6 +30,19 @@ class ChaptersGrid
       "#{value}%")
   end
 
+  filter :legal_agreement_status,
+    :enum,
+    select: ["Signed", "Not signed", "Not sent"] do |value|
+      case value
+      when "Signed"
+        signed_legal_agreements
+      when "Not signed"
+        not_signed_legal_agreements
+      when "Not sent"
+        not_sent_legal_agreements
+      end
+    end
+
   filter(:visible_on_map, :xboolean)
 
   column :legal_agreement_status do
