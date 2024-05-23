@@ -66,15 +66,19 @@ class ScoredSubmissionsGrid
     end
   end
 
+  column :events do |submission|
+    submission.team.events.pluck(:name).join("; ")
+  end
+
   column :complete_scores, mandatory: true do |asset, grid|
     asset.public_send(
-      "complete_#{grid.round}_official_submission_scores_count"
+      :"complete_#{grid.round}_official_submission_scores_count"
     )
   end
 
   column :incomplete_scores, mandatory: true do |asset, grid|
     asset.public_send(
-      "pending_#{grid.round}_official_submission_scores_count"
+      :"pending_#{grid.round}_official_submission_scores_count"
     )
   end
 
