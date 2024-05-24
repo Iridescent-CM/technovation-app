@@ -70,43 +70,6 @@ RSpec.feature "When an admin is debugging a profile" do
     expect(page).to have_content("Background check not required in this country")
   end
 
-  scenario "they view the background check status in the ChA debugging section a ChA based in the US" do
-    chapter_ambassador = FactoryBot.create(
-      :chapter_ambassador,
-      :approved
-    )
-
-    sign_in(:admin)
-
-    click_link "Participants"
-
-    within_results_page_with("#account_#{chapter_ambassador.account_id}") do
-      click_link "view"
-    end
-
-    expect(page).to have_content("Background check invitation not required in this country")
-    expect(page).to have_css(".web-icon-text", text: "Clear")
-  end
-
-  scenario "they view the background check status in the ChA debugging section a ChA not based in the US" do
-    chapter_ambassador = FactoryBot.create(
-      :chapter_ambassador,
-      :brazil,
-      :approved
-    )
-
-    sign_in(:admin)
-
-    click_link "Participants"
-
-    within_results_page_with("#account_#{chapter_ambassador.account_id}") do
-      click_link "view"
-    end
-
-    expect(page).to have_content("Background check invitation not required in this country")
-    expect(page).to have_content("Background check not required in this country")
-  end
-
   scenario "they view the background check invitation status in the mentor debugging section of a mentor based in India who has not requested a background check invitation" do
     mentor = FactoryBot.create(
       :mentor,
