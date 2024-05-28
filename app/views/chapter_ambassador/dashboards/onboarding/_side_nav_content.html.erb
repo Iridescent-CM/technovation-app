@@ -22,10 +22,10 @@
       %>
 
       <%= render "application/templates/completion_step",
-        name: "Program Profile",
-        url: "#",
+        name: "Community Connections",
+        url: chapter_ambassador_community_connections_path,
         is_complete: false,
-        is_active_item: false
+        is_active_item: al(chapter_ambassador_community_connections_path).present?
       %>
     </ol>
   </nav>
