@@ -22,6 +22,7 @@ module ApplicationHelper
       chapter_ambassador
       chapter_locations
       chapter_profile
+      community_connections
       dashboards
       location_details
       profiles
