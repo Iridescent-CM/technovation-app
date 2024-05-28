@@ -1,0 +1,45 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "chapter_ambassador/dashboards/onboarding/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Community Connections" } do %>
+    <div>
+      <p class="mb-4">
+        Check out all our resources for running the Technovation program on the
+        <%= link_to "Ambassador Resource Page",
+                    ENV.fetch("CHAPTER_AMBASSADOR_RESOURCE_PAGE_URL"),
+                    class: "tw-link" %>!
+      </p>
+
+      <p class="mb-4">
+        Join Technovation’s global community of ambassadors to stay connected and up-to-date with the
+        latest news and best practices.
+      </p>
+
+      <p class="mb-4">
+        We have added you to our email list to receive information about training, program deadlines,
+        and other relevant information to support leading a Technovation chapter.
+      </p>
+
+      <p>
+        You can also join our Global Community of Ambassadors by participating in the following groups:
+      </p>
+      <ul class="list-disc">
+        <li class="ml-8">
+          Join out global ambassador's
+          <%= link_to "LinkedIn Group",
+                      ENV.fetch("CHAPTER_AMBASSADOR_LINKEDIN_GROUP_URL"),
+                      class: "tw-link"%>!
+        </li>
+        <li class="ml-8">
+          Connect with other ambassadors and mentors on our
+          <%= link_to "Slack group",
+                      ENV.fetch("CHAPTER_AMBASSADOR_SLACK_URL"),
+                      class: "tw-link" %>!
+        </li>
+        <li class="ml-8">
+          Join our Whatsapp group and join a regional community (Coming soon)
+        </li>
+      </ul>
+    </div>
+  <% end %>
+</div>

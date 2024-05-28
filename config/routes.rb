@@ -150,6 +150,7 @@ Rails.application.routes.draw do
     resource :chapter_location, only: [:show, :edit, :update]
     resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
     resource :legal_agreement, only: :create
+    resource :community_connections, only: :show
 
     resource :introduction, only: [:edit, :update]
 
