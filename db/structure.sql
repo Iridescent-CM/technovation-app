@@ -367,7 +367,8 @@ CREATE TABLE public.chapter_ambassador_profiles (
     program_name character varying,
     chapter_id bigint,
     organization_status public.chapter_ambassador_organization_status,
-    phone_number character varying
+    phone_number character varying,
+    viewed_community_connections boolean DEFAULT false NOT NULL
 );
 
 
@@ -4325,6 +4326,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240513182351'),
 ('20240513182546'),
 ('20240513182837'),
+('20240529011028'),
 ('20240702145233');
 
 
