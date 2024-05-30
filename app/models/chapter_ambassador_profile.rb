@@ -108,6 +108,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     !bio.blank?
   end
 
+  def community_connections_viewed?
+    viewed_community_connections
+  end
+
   def legal_document_signed?
     legal_document&.signed?
   end

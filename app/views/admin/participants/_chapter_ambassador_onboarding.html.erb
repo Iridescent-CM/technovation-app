@@ -1,7 +1,7 @@
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
     <h4 class="reset">Required onboarding steps:</h4>
     <p class="hint">
-      Chapter Ambassasdors must complete these items to be considered onboarded:
+      Chapter Ambassadors must complete these items to be considered onboarded:
     </p>
 
     <dl>
@@ -24,7 +24,7 @@
                 <% if chapter_ambassador.background_check.invitation_expired? %>
                   <p class="hint margin--b-none">
                     The background check invitation has expired. Participant must request a new invitation.
-                  </span>
+                  </p>
                 <% end %>
               <% else %>
                 <p class="hint margin--b-none">
@@ -80,9 +80,19 @@
         </div>
       </dd>
 
-      <dt>Review Community Page</dt>
+      <dt>Viewed Community Connections Page</dt>
       <dd>
-        <%= web_icon("exclamation-circle icon-red", text: "Incomplete") %>
+        <% if chapter_ambassador.community_connections_viewed? %>
+          <div>
+            <%= web_icon("check-circle icon-green") %>
+            Viewed community connections
+          </div>
+        <% else %>
+          <div>
+            <%= web_icon("exclamation-circle icon-red") %>
+            Not viewed
+          </div>
+        <% end %>
       </dd>
     </dl>
 
