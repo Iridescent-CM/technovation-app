@@ -242,6 +242,37 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: availability_slots; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.availability_slots (
+    id bigint NOT NULL,
+    "time" character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: availability_slots_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.availability_slots_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: availability_slots_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.availability_slots_id_seq OWNED BY public.availability_slots.id;
+
+
+--
 -- Name: background_checks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -564,6 +595,70 @@ CREATE SEQUENCE public.chapters_id_seq
 --
 
 ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
+
+
+--
+-- Name: community_connection_availability_slots; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.community_connection_availability_slots (
+    id bigint NOT NULL,
+    community_connection_id bigint,
+    availability_slot_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: community_connection_availability_slots_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.community_connection_availability_slots_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: community_connection_availability_slots_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.community_connection_availability_slots_id_seq OWNED BY public.community_connection_availability_slots.id;
+
+
+--
+-- Name: community_connections; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.community_connections (
+    id bigint NOT NULL,
+    topic_sharing_response text,
+    chapter_ambassador_profile_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: community_connections_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.community_connections_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: community_connections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.community_connections_id_seq OWNED BY public.community_connections.id;
 
 
 --
@@ -2262,6 +2357,13 @@ ALTER TABLE ONLY public.admin_profiles ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: availability_slots id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.availability_slots ALTER COLUMN id SET DEFAULT nextval('public.availability_slots_id_seq'::regclass);
+
+
+--
 -- Name: background_checks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2322,6 +2424,20 @@ ALTER TABLE ONLY public.chapter_program_information_organization_types ALTER COL
 --
 
 ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.chapters_id_seq'::regclass);
+
+
+--
+-- Name: community_connection_availability_slots id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots ALTER COLUMN id SET DEFAULT nextval('public.community_connection_availability_slots_id_seq'::regclass);
+
+
+--
+-- Name: community_connections id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connections ALTER COLUMN id SET DEFAULT nextval('public.community_connections_id_seq'::regclass);
 
 
 --
@@ -2658,6 +2774,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: availability_slots availability_slots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.availability_slots
+    ADD CONSTRAINT availability_slots_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: background_checks background_checks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2727,6 +2851,22 @@ ALTER TABLE ONLY public.chapter_program_information
 
 ALTER TABLE ONLY public.chapters
     ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: community_connection_availability_slots community_connection_availability_slots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots
+    ADD CONSTRAINT community_connection_availability_slots_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: community_connections community_connections_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connections
+    ADD CONSTRAINT community_connections_pkey PRIMARY KEY (id);
 
 
 --
@@ -3173,6 +3313,13 @@ CREATE INDEX index_activities_on_trackable_id_and_trackable_type ON public.activ
 
 
 --
+-- Name: index_as_on_as_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_as_on_as_id ON public.community_connection_availability_slots USING btree (availability_slot_id);
+
+
+--
 -- Name: index_background_checks_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3184,6 +3331,13 @@ CREATE INDEX index_background_checks_on_account_id ON public.background_checks U
 --
 
 CREATE INDEX index_business_plans_on_team_submission_id ON public.business_plans USING btree (team_submission_id);
+
+
+--
+-- Name: index_ccas_on_cc_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ccas_on_cc_id ON public.community_connection_availability_slots USING btree (community_connection_id);
 
 
 --
@@ -3240,6 +3394,13 @@ CREATE INDEX index_chapter_program_information_on_program_length_id ON public.ch
 --
 
 CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree (primary_contact_id);
+
+
+--
+-- Name: index_community_connections_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_community_connections_on_chapter_ambassador_profile_id ON public.community_connections USING btree (chapter_ambassador_profile_id);
 
 
 --
@@ -3664,6 +3825,14 @@ ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
 
 
 --
+-- Name: community_connection_availability_slots fk_rails_0b8f604e0a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots
+    ADD CONSTRAINT fk_rails_0b8f604e0a FOREIGN KEY (community_connection_id) REFERENCES public.community_connections(id);
+
+
+--
 -- Name: chapter_program_information_organization_types fk_rails_0d8e315484; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3800,6 +3969,14 @@ ALTER TABLE ONLY public.consent_waivers
 
 
 --
+-- Name: community_connections fk_rails_714931f495; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connections
+    ADD CONSTRAINT fk_rails_714931f495 FOREIGN KEY (chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
+
+
+--
 -- Name: certificates fk_rails_75edbeede4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3885,6 +4062,14 @@ ALTER TABLE ONLY public.mentor_profiles
 
 ALTER TABLE ONLY public.judge_profile_judge_types
     ADD CONSTRAINT fk_rails_9ad24ddcf6 FOREIGN KEY (judge_type_id) REFERENCES public.judge_types(id);
+
+
+--
+-- Name: community_connection_availability_slots fk_rails_9e00216d41; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots
+    ADD CONSTRAINT fk_rails_9e00216d41 FOREIGN KEY (availability_slot_id) REFERENCES public.availability_slots(id);
 
 
 --
@@ -4326,6 +4511,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240513182351'),
 ('20240513182546'),
 ('20240513182837'),
+('20240527201537'),
+('20240528203743'),
+('20240528203908'),
+('20240528204229'),
 ('20240529011028'),
 ('20240702145233');
 
