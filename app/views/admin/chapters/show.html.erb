@@ -36,7 +36,7 @@
                       <% if link.name == "email" %>
                         <%= mail_to link.value, web_icon(link.icon, text: link.value), style: "font-weight: lighter; color: black;" %>
                       <% else %>
-                        <%= link_to web_icon(link.icon, text: link.value), link.value, style: "font-weight: lighter; color: black;" %>
+                        <%= link_to web_icon(link.icon, text: link.value), link.url, style: "font-weight: lighter; color: black;" %>
                       <% end %>
                     </li>
                   <% end %>
