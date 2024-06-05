@@ -138,9 +138,9 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def onboarded?
-    account.email_confirmed? and
-      approved? and
-      background_check_complete?
+    account.email_confirmed? &&
+      background_check_complete? &&
+      legal_document_signed?
   end
 
   def onboarding?
