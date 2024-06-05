@@ -38,4 +38,32 @@ class Chapter < ActiveRecord::Base
   def legal_document
     legal_contact&.legal_document
   end
+
+  def onboarded?
+    legal_document_signed? &&
+      chapter_info_complete? &&
+      location_complete? &&
+      program_info_complete?
+  end
+
+  def legal_document_signed?
+    legal_document&.signed?
+  end
+
+  def chapter_info_complete?
+    [
+      name,
+      summary,
+      primary_contact,
+      chapter_links
+    ].all?(&:present?)
+  end
+
+  def location_complete?
+    organization_headquarters_location.present?
+  end
+
+  def program_info_complete?
+    chapter_program_information.complete?
+  end
 end
