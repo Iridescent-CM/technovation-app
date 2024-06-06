@@ -64,6 +64,6 @@ class Chapter < ActiveRecord::Base
   end
 
   def program_info_complete?
-    chapter_program_information.complete?
+    chapter_program_information&.complete?
   end
 end
