@@ -1,5 +1,7 @@
 module ChapterAmbassador
   class CommunityConnectionsController < ChapterAmbassadorController
+    skip_before_action :require_chapter_and_chapter_ambassador_onboarded
+
     layout "chapter_ambassador_rebrand"
 
     after_action :update_viewed_community_connections, only: :show
@@ -13,7 +15,7 @@ module ChapterAmbassador
 
       if @community_connection.save
         redirect_to chapter_ambassador_community_connections_path,
-                    success: "You updated your community connection responses!"
+          success: "You updated your community connection responses!"
       else
         flash.now[:alert] = "Error updating community connection responses."
         render :new
@@ -29,7 +31,7 @@ module ChapterAmbassador
 
       if @community_connection.update(community_connection_params)
         redirect_to chapter_ambassador_community_connections_path,
-                    success: "You updated your community connection responses!"
+          success: "You updated your community connection responses!"
       else
         flash.now[:alert] = "Error updating community connection responses."
         render :edit
