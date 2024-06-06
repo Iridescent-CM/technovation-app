@@ -59,6 +59,19 @@ class ChapterAmbassadorsGrid
     FriendlyCountry.new(self).country_name
   end
 
+  column :availability do
+    availability_slots = chapter_ambassador_profile.community_connection&.community_connection_availability_slots
+    if availability_slots&.any?
+      availability_slots.joins(:availability_slot).pluck(:time).join(", ")
+    else
+      "-"
+    end
+  end
+
+  column :topics_to_share do
+    chapter_ambassador_profile&.community_connection&.topic_sharing_response.presence || "-"
+  end
+
   column :actions, mandatory: true, html: true do |account|
     link_to(
       "view",
@@ -79,6 +92,21 @@ class ChapterAmbassadorsGrid
       scope.left_outer_joins(:mentor_profile).where(
         "mentor_profiles.id #{is_is_not} NULL"
       )
+  end
+
+  filter :availability,
+         :enum,
+         header: "Availability",
+         select: proc { AvailabilitySlot.all.map { |slot| [slot.time, slot.id] } },
+         filter_group: "more-specific",
+         html: {
+           class: "and-or-field"
+         },
+         multiple: true do |values, scope|
+    scope
+      .includes(chapter_ambassador_profile: {community_connection: :community_connection_availability_slots})
+      .references(:community_connection_availability_slots)
+      .where(community_connection_availability_slots: {availability_slot_id: values})
   end
 
   filter :assigned_to_chapter,
