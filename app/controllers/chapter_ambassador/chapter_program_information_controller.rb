@@ -1,5 +1,7 @@
 module ChapterAmbassador
   class ChapterProgramInformationController < ChapterAmbassadorController
+    skip_before_action :require_chapter_and_chapter_ambassador_onboarded
+
     layout "chapter_ambassador_rebrand"
 
     def new
@@ -11,7 +13,7 @@ module ChapterAmbassador
 
       if @chapter_program_information.save
         redirect_to chapter_ambassador_chapter_program_information_path,
-                    success: "You updated your chapter program information!"
+          success: "You updated your chapter program information!"
       else
         flash.now[:alert] = "Error updating chapter program information."
         render :new
@@ -27,7 +29,7 @@ module ChapterAmbassador
 
       if @chapter_program_information.update(chapter_program_information_params)
         redirect_to chapter_ambassador_chapter_program_information_path,
-                    success: "You updated your chapter program information!"
+          success: "You updated your chapter program information!"
       else
         flash.now[:alert] = "Error updating chapter program information."
         render :edit
