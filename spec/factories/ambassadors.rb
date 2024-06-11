@@ -11,6 +11,7 @@ FactoryBot.define do
     bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
 
     account { association :account, meets_minimum_age_requirement: true }
+    association :chapter
 
     transient do
       city { "Chicago" }
@@ -46,9 +47,15 @@ FactoryBot.define do
     end
 
     trait :assigned_to_chapter do
-      before(:create) do |c|
+      before(:create) do |chapter_ambassador|
         chapter = FactoryBot.create(:chapter)
-        c.chapter_id = chapter.id
+        chapter_ambassador.chapter_id = chapter.id
+      end
+    end
+
+    trait :not_assigned_to_chapter do
+      before(:create) do |chapter_ambassador|
+        chapter_ambassador.chapter_id = nil
       end
     end
 
@@ -71,10 +78,16 @@ FactoryBot.define do
       unless r.consent_signed?
         r.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
+
+      r.build_legal_document(FactoryBot.attributes_for(:document, :signed))
     end
 
     after(:create) do |r, e|
       ProfileCreating.execute(r, FakeController.new)
+
+      if r.chapter.present?
+        r.chapter.update(primary_contact: r)
+      end
     end
 
     trait :approved do
