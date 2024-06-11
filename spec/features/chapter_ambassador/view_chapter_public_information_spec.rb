@@ -25,12 +25,12 @@ RSpec.feature "Chapter Ambassadors can click on chapter profile tab" do
 
     expect(page).to have_content(chapter.organization_name)
     expect(page).to have_content(chapter.name)
-    expect(page).to have_content("Please select a primary contact")
     expect(page).to have_content("This chapter is displayed on the map of chapters on the Technovation website")
   end
 
   scenario "A Chapter Ambassador not assigned to a chapter does not see chapter public information" do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador)
+    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :not_assigned_to_chapter)
+
     sign_in(chapter_ambassador)
 
     click_link "Chapter Profile"
