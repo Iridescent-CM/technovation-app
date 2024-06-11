@@ -10,7 +10,8 @@ FactoryBot.define do
     after(:create) do |legal_contact, evaluator|
       create(:legal_document,
         signer: legal_contact,
-        season_signed: evaluator.season_legal_document_signed)
+        season_signed: evaluator.season_legal_document_signed,
+        signed_at: Time.now)
     end
   end
 end
