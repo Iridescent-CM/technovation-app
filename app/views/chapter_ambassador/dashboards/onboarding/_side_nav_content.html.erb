@@ -24,7 +24,7 @@
       <%= render "application/templates/completion_step",
         name: "Community Connections",
         url: chapter_ambassador_community_connections_path,
-        is_complete: current_ambassador.community_connections_viewed?,
+        is_complete: current_ambassador.viewed_community_connections?,
         is_active_item: al(chapter_ambassador_community_connections_path).present?
       %>
     </ol>
