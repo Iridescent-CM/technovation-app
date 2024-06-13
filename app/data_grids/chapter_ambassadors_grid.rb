@@ -72,6 +72,10 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile&.community_connection&.topic_sharing_response.presence || "-"
   end
 
+  column :training_checkpoint do
+    chapter_ambassador_profile.training_completed? ? "Yes" : "No"
+  end
+
   column :actions, mandatory: true, html: true do |account|
     link_to(
       "view",
