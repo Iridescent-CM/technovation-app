@@ -9,6 +9,7 @@ FactoryBot.define do
     job_title { "Engineer" }
     organization_status { "employee" }
     bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
+    viewed_community_connections { true }
 
     account { association :account, meets_minimum_age_requirement: true }
     association :chapter
