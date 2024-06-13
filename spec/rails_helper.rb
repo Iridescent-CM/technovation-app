@@ -57,6 +57,8 @@ RSpec.configure do |config|
   config.include WebMock::API
   config.include DataAnalyses, type: :feature
 
+  config.include SurveyMonkeyHelper
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
   config.global_fixtures = :all
