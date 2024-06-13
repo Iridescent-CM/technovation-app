@@ -136,7 +136,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   def onboarded?
     account.email_confirmed? &&
       background_check_complete? &&
-      legal_document_signed?
+      legal_document_signed? &&
+      viewed_community_connections?
   end
 
   def onboarding?
