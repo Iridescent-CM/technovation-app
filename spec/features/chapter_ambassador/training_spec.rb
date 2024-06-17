@@ -16,6 +16,6 @@ RSpec.feature "Chapter Ambassador can complete training checkpoint" do
     visit chapter_ambassador_training_path
 
     expect(page).to have_text("Click the link below to proceed to the training checkpoint.")
-    expect(page).to have_link("Training Checkpoint", href: chapter_ambassador_training_checkpoint_link(chapter_ambassador.account))
+    expect(page).to have_link("Training Checkpoint", href: external_chapter_ambassador_training_checkpoint_link(chapter_ambassador.account))
   end
 end
