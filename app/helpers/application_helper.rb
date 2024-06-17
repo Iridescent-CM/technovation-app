@@ -22,15 +22,15 @@ module ApplicationHelper
       chapter_ambassador
       chapter_locations
       chapter_profile
+      chapter_program_information
       community_connections
       dashboards
       location_details
-      profiles
-      chapter_program_information
-      public_information
-      trainings
-      training_completions
       mous
+      profiles
+      public_information
+      training_completions
+      trainings
     ]
 
     if namespace == "chapter_ambassador" && rebranded_chapter_ambassador_sections.include?(path)
