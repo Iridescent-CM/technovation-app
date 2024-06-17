@@ -313,7 +313,7 @@ class AccountsGrid
     if: ->(g) {
       (%w[judge chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      scope.send(value)
+      scope.send(value).includes(:chapter_ambassador_profile)
     end
 
   filter :onboarded_students,
