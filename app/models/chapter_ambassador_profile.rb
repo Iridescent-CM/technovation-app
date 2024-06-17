@@ -110,6 +110,18 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     !bio.blank?
   end
 
+  def training_completed?
+    training_completed_at.present?
+  end
+
+  def complete_training!
+    update(training_completed_at: Time.current)
+  end
+
+  def community_connections_viewed?
+    viewed_community_connections
+  end
+
   def legal_document_signed?
     legal_document&.signed?
   end
