@@ -1,0 +1,19 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "chapter_ambassador/dashboards/onboarding/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Chapter Ambassador Training and Checkpoint" } do %>
+    <% if current_ambassador.training_completed? %>
+      <p>
+        Thank you for completing the checkpoint. You can view correct answers here.
+      </p>
+    <% else %>
+      <p>
+        Click the link below to proceed to the training checkpoint.
+        Please take the checkpoint to complete this step of onboarding.
+      </p>
+      <%= link_to "Training Checkpoint",
+                  chapter_ambassador_training_checkpoint_link(current_account),
+                  class: "tw-green-btn", target: "_blank" %>
+    <% end %>
+  <% end %>
+</div>
