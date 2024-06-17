@@ -28,6 +28,7 @@ module ApplicationHelper
       profiles
       chapter_program_information
       public_information
+      trainings
       training_completions
       mous
     ]
