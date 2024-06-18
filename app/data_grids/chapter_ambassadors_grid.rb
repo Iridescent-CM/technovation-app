@@ -127,6 +127,16 @@ class ChapterAmbassadorsGrid
       )
     end
 
+  filter :onboarded,
+    :enum,
+    select: [
+      ["Yes, fully onboarded", true],
+      ["No, still onboarding", false]
+    ],
+    filter_group: "common" do |value, scope, grid|
+      scope.where(chapter_ambassador_profiles: {onboarded: value})
+    end
+
   filter :season,
     :enum,
     select: (2015..Season.current.year).to_a.reverse,
