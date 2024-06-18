@@ -151,6 +151,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     account.email_confirmed? &&
       background_check_complete? &&
       legal_document_signed? &&
+      training_completed? &&
       viewed_community_connections?
   end
 
