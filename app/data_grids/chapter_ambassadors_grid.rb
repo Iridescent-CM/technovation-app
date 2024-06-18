@@ -79,7 +79,7 @@ class ChapterAmbassadorsGrid
   column :actions, mandatory: true, html: true do |account|
     link_to(
       "view",
-      send("#{current_scope}_participant_path", account),
+      send(:"#{current_scope}_participant_path", account),
       data: {turbolinks: false}
     )
   end
@@ -96,22 +96,22 @@ class ChapterAmbassadorsGrid
       scope.left_outer_joins(:mentor_profile).where(
         "mentor_profiles.id #{is_is_not} NULL"
       )
-  end
+    end
 
   filter :availability,
-         :enum,
-         header: "Availability",
-         select: proc { AvailabilitySlot.all.map { |slot| [slot.time, slot.id] } },
-         filter_group: "more-specific",
-         html: {
-           class: "and-or-field"
-         },
-         multiple: true do |values, scope|
-    scope
-      .includes(chapter_ambassador_profile: {community_connection: :community_connection_availability_slots})
-      .references(:community_connection_availability_slots)
-      .where(community_connection_availability_slots: {availability_slot_id: values})
-  end
+    :enum,
+    header: "Availability",
+    select: proc { AvailabilitySlot.all.map { |slot| [slot.time, slot.id] } },
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: true do |values, scope|
+      scope
+        .includes(chapter_ambassador_profile: {community_connection: :community_connection_availability_slots})
+        .references(:community_connection_availability_slots)
+        .where(community_connection_availability_slots: {availability_slot_id: values})
+    end
 
   filter :assigned_to_chapter,
     :enum,
@@ -125,7 +125,7 @@ class ChapterAmbassadorsGrid
       scope.left_outer_joins(:chapter_ambassador_profile).where(
         "chapter_ambassador_profiles.chapter_id #{is_is_not} NULL"
       )
-  end
+    end
 
   filter :season,
     :enum,
