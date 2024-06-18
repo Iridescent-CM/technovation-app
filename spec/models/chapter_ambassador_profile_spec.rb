@@ -98,6 +98,16 @@ RSpec.describe ChapterAmbassadorProfile do
           end
         end
 
+        context "when training has not been completed" do
+          before do
+            chapter_ambassador_profile.update(training_completed_at: false)
+          end
+
+          it "returns false" do
+            expect(chapter_ambassador_profile.onboarded?).to eq(false)
+          end
+        end
+
         context "when the community connections page has not been viewed" do
           before do
             chapter_ambassador_profile.update(viewed_community_connections: false)
