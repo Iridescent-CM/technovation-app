@@ -21,4 +21,17 @@ RSpec.describe Document do
       end
     end
   end
+
+  context "callbacks" do
+    let(:document) { FactoryBot.create(:document, signer: chapter_ambassador) }
+    let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
+
+    context "#after_update" do
+      it "makes a call to update the chapter ambassador's onboarding status when the document is updated" do
+        expect(chapter_ambassador).to receive(:update_onboarding_status)
+
+        document.update(signed_at: Time.now)
+      end
+    end
+  end
 end

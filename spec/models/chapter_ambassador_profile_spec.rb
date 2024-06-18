@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe ChapterAmbassadorProfile do
-  let(:chapter_ambassador_profile) { FactoryBot.create(:chapter_ambassador_profile) }
+  let(:chapter_ambassador_profile) do
+    FactoryBot.create(:chapter_ambassador_profile, viewed_community_connections: true)
+  end
 
   describe "#full_name" do
     it "returns the full name on the account" do
@@ -37,61 +39,74 @@ RSpec.describe ChapterAmbassadorProfile do
     end
   end
 
-  describe "#onboarded?" do
-    before do
-      allow(chapter_ambassador_profile).to receive(:account)
-        .and_return(account)
+  context "callbacks" do
+    context "#after_update" do
+      describe "updating the onboarded status" do
+        before do
+          allow(chapter_ambassador_profile).to receive(:account)
+            .and_return(account)
 
-      allow(account).to receive(:background_check)
-        .and_return(background_check)
+          allow(account).to receive(:background_check)
+            .and_return(background_check)
 
-      allow(chapter_ambassador_profile).to receive(:legal_document)
-        .and_return(legal_document)
+          allow(chapter_ambassador_profile).to receive(:legal_document)
+            .and_return(legal_document)
+        end
 
-      allow(chapter_ambassador_profile).to receive(:viewed_community_connections?)
-        .and_return(viewed_community_connections)
-    end
+        let(:account) { instance_double(Account, email_confirmed?: email_address_confirmed, marked_for_destruction?: false, valid?: true) }
+        let(:email_address_confirmed) { true }
+        let(:background_check) { instance_double(BackgroundCheck, clear?: background_check_cleared) }
+        let(:background_check_cleared) { true }
+        let(:legal_document) { instance_double(Document, signed?: legal_document_signed) }
+        let(:legal_document_signed) { true }
 
-    let(:account) { instance_double(Account, email_confirmed?: email_address_confirmed) }
-    let(:email_address_confirmed) { true }
-    let(:background_check) { instance_double(BackgroundCheck, clear?: background_check_cleared) }
-    let(:background_check_cleared) { true }
-    let(:legal_document) { instance_double(Document, signed?: legal_document_signed) }
-    let(:legal_document_signed) { true }
-    let(:viewed_community_connections) { true }
+        context "when all onboarding steps have been completed" do
+          let(:email_address_confirmed) { true }
+          let(:background_check_cleared) { true }
+          let(:legal_document_signed) { true }
 
-    context "when all onboarding steps have been completed" do
-      let(:email_address_confirmed) { true }
-      let(:background_check_cleared) { true }
-      let(:legal_document_signed) { true }
-      let(:viewed_community_connections) { true }
+          before do
+            chapter_ambassador_profile.update(viewed_community_connections: true)
+          end
 
-      it "returns true" do
-        expect(chapter_ambassador_profile.onboarded?).to eq(true)
-      end
-    end
+          it "returns true" do
+            expect(chapter_ambassador_profile.onboarded?).to eq(true)
+          end
+        end
 
-    context "when the background check has not been cleared" do
-      let(:background_check_cleared) { false }
+        context "when the background check has not been cleared" do
+          let(:background_check_cleared) { false }
 
-      it "returns false" do
-        expect(chapter_ambassador_profile.onboarded?).to eq(false)
-      end
-    end
+          before do
+            chapter_ambassador_profile.save
+          end
 
-    context "when the legal document has not been signed" do
-      let(:legal_document_signed) { false }
+          it "returns false" do
+            expect(chapter_ambassador_profile.onboarded?).to eq(false)
+          end
+        end
 
-      it "returns false" do
-        expect(chapter_ambassador_profile.onboarded?).to eq(false)
-      end
-    end
+        context "when the legal document has not been signed" do
+          let(:legal_document_signed) { false }
 
-    context "when the community connections page has not been viewed" do
-      let(:viewed_community_connections) { false }
+          before do
+            chapter_ambassador_profile.save
+          end
 
-      it "returns false" do
-        expect(chapter_ambassador_profile.onboarded?).to eq(false)
+          it "returns false" do
+            expect(chapter_ambassador_profile.onboarded?).to eq(false)
+          end
+        end
+
+        context "when the community connections page has not been viewed" do
+          before do
+            chapter_ambassador_profile.update(viewed_community_connections: false)
+          end
+
+          it "returns false" do
+            expect(chapter_ambassador_profile.onboarded?).to eq(false)
+          end
+        end
       end
     end
   end

@@ -48,6 +48,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     attrs.reject { |k, _| k.to_s == "custom_label" }.values.any?(&:blank?)
   }, allow_destroy: true
 
+  after_update :update_onboarding_status
+
   delegate :submitted?,
     :candidate_id,
     :report_id,
@@ -145,7 +147,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     true
   end
 
-  def onboarded?
+  def can_be_marked_onboarded?
     account.email_confirmed? &&
       background_check_complete? &&
       legal_document_signed? &&
@@ -162,6 +164,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def scope_name
     "chapter_ambassador"
+  end
+
+  def update_onboarding_status
+    update_column(:onboarded, can_be_marked_onboarded?)
   end
 
   private
