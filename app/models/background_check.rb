@@ -6,6 +6,8 @@ class BackgroundCheck < ActiveRecord::Base
 
   belongs_to :account
 
+  after_update :update_chapter_ambassador_onboarding_status
+
   after_destroy -> {
     account.mentor_profile.disable_searchability
   }, if: -> {
@@ -23,6 +25,14 @@ class BackgroundCheck < ActiveRecord::Base
 
     def post(resource, attributes)
       Checkr.request(:post, "/v1/#{resource}", attributes)
+    end
+  end
+
+  private
+
+  def update_chapter_ambassador_onboarding_status
+    if account.chapter_ambassador_profile.present?
+      account.chapter_ambassador_profile.update_onboarding_status
     end
   end
 end
