@@ -4,7 +4,7 @@ class ChapterAmbassadorsGrid
   self.batch_size = 10
 
   scope do
-    Account.includes(:chapter_ambassador_profile).where.not(chapter_ambassador_profiles: {id: nil}).order(id: :desc)
+    Account.includes(:chapter_ambassador_profile, chapter_ambassador_profile: :chapter).where.not(chapter_ambassador_profiles: {id: nil}).order(id: :desc)
   end
 
   column :name, header: "Chapters (Program Name)", mandatory: true do |account|
