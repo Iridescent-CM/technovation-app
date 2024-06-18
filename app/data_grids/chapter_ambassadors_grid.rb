@@ -37,6 +37,10 @@ class ChapterAmbassadorsGrid
     gender.presence || "-"
   end
 
+  column :onboarded do
+    chapter_ambassador_profile.onboarded? ? "yes" : "no"
+  end
+
   column :phone_number do
     chapter_ambassador_profile.phone_number.presence || "-"
   end
