@@ -19,4 +19,17 @@ RSpec.describe BackgroundCheck do
       end
     end
   end
+
+  context "callbacks" do
+    let(:background_check) { FactoryBot.create(:background_check, account: chapter_ambassador.account) }
+    let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
+
+    context "#after_update" do
+      it "makes a call to update the chapter ambassador's onboarding status when the background check is updated" do
+        expect(chapter_ambassador).to receive(:update_onboarding_status)
+
+        background_check.update(status: "clear")
+      end
+    end
+  end
 end
