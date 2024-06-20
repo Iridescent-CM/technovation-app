@@ -15,7 +15,7 @@
                 id: "training-modal-#{module_number}" do %>
 
   <div class="modal-content">
-    <iframe class="w-full" height="315" src="<%= ENV.fetch("CHAPTER_AMBASSADOR_TRAINING_SLIDES_MODULE_#{module_number}_URL", "")%>"
+    <iframe class="w-full" height="315" src="<%= external_chapter_ambassador_training_module_link(module_number) %>"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
