@@ -1,6 +1,18 @@
 require "rails_helper"
 
 RSpec.describe ChapterProgramInformation do
+  context "callbacks" do
+    let(:chapter_program_information) { FactoryBot.create(:chapter_program_information) }
+
+    context "#after_update" do
+      it "makes a call to update the chapter's onboarding status when program information is updated" do
+        expect(chapter_program_information.chapter).to receive(:update_onboarding_status)
+
+        chapter_program_information.update(organization_types: [OrganizationType.new(name: "NGO")])
+      end
+    end
+  end
+
   describe "#complete?" do
     let(:chapter_program_information) do
       ChapterProgramInformation.new(

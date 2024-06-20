@@ -576,7 +576,8 @@ CREATE TABLE public.chapters (
     country character varying,
     primary_contact_id bigint,
     visible_on_map boolean DEFAULT true,
-    organization_headquarters_location character varying
+    organization_headquarters_location character varying,
+    onboarded boolean DEFAULT false
 );
 
 
@@ -4520,6 +4521,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240529011028'),
 ('20240605033203'),
 ('20240614132749'),
+('20240620151755'),
 ('20240702145233');
 
 
