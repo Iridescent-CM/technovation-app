@@ -183,7 +183,7 @@ Rails.application.routes.draw do
     resources :background_checks, only: [:new, :create]
     post "/background_check_invitation", to: "background_checks#create_invitation"
 
-    resource :training, only: :show
+    resources :trainings, only: :index
     resource :training_completion, only: :show
 
     resource :mou, only: :show
