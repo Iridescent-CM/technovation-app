@@ -15,6 +15,8 @@ class Chapter < ActiveRecord::Base
     attrs.reject { |k, _| k.to_s == "custom_label" }.values.any?(&:blank?)
   }, allow_destroy: true
 
+  after_update :update_onboarding_status
+
   validates :summary, length: {maximum: 280}
 
   scope :signed_legal_agreements, -> {
@@ -39,11 +41,15 @@ class Chapter < ActiveRecord::Base
     legal_contact&.legal_document
   end
 
-  def onboarded?
+  def can_be_marked_onboarded?
     legal_document_signed? &&
       chapter_info_complete? &&
       location_complete? &&
       program_info_complete?
+  end
+
+  def update_onboarding_status
+    update_column(:onboarded, can_be_marked_onboarded?)
   end
 
   def legal_document_signed?

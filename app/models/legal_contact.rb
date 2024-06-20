@@ -16,4 +16,8 @@ class LegalContact < ActiveRecord::Base
       []
     end
   end
+
+  def update_onboarding_status
+    chapter.update_onboarding_status
+  end
 end
