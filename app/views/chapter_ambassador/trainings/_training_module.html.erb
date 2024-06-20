@@ -1,0 +1,24 @@
+<li>
+  <%= link_to "Training Module #{module_number}: #{module_title}", '#',
+              data: {
+                opens_modal: "training-modal-#{module_number}",
+              }
+  %>
+</li>
+
+<%= content_tag :div,
+                class: "modal",
+                data: {
+                  heading: "Training Module #{module_number}: #{module_title}",
+                  module_number: module_number,
+                },
+                id: "training-modal-#{module_number}" do %>
+
+  <div class="modal-content">
+    <iframe class="w-full" height="315" src="<%= ENV.fetch("CHAPTER_AMBASSADOR_TRAINING_SLIDES_MODULE_#{module_number}_URL", "")%>"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+    </iframe>
+  </div>
+<% end %>
