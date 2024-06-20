@@ -6,7 +6,7 @@ module ChapterAmbassador
 
     def show
       current_ambassador.complete_training!
-      redirect_to chapter_ambassador_training_path,
+      redirect_to chapter_ambassador_trainings_path,
         success: "Thank you for completing the checkpoint!"
     end
 
