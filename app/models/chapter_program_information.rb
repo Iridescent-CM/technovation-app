@@ -15,6 +15,8 @@ class ChapterProgramInformation < ActiveRecord::Base
   has_many :chapter_program_information_meeting_facilitators, dependent: :destroy
   has_many :meeting_facilitators, through: :chapter_program_information_meeting_facilitators
 
+  after_update -> { chapter.update_onboarding_status }
+
   def complete?
     [
       child_safeguarding_policy_and_process,

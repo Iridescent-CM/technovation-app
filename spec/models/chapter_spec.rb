@@ -10,79 +10,100 @@ RSpec.describe Chapter do
     end
   end
 
-  describe "#onboarded?" do
-    let(:chapter) do
-      Chapter.new(
-        name: chapter_name,
-        summary: chapter_summary,
-        organization_headquarters_location: organization_headquarters_location,
-        primary_contact: chapter_primary_contact,
-        chapter_links: chapter_links
-      )
-    end
+  context "callbacks" do
+    context "#after_update" do
+      describe "updating the onboarded status" do
+        let(:chapter) { FactoryBot.create(:chapter, primary_contact: chapter_ambassador) }
+        let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
 
-    let(:chapter_name) { "Sample Chapter" }
-    let(:chapter_summary) { "Sample chapter summary." }
-    let(:organization_headquarters_location) { "Sample HQ" }
-    let(:chapter_primary_contact) { ChapterAmbassadorProfile.new }
-    let(:chapter_links) { [RegionalLink.new] }
+        before do
+          allow(chapter).to receive(:legal_document)
+            .and_return(legal_document)
+          allow(chapter).to receive(:chapter_program_information)
+            .and_return(chapter_program_information)
+        end
 
-    before do
-      allow(chapter).to receive(:legal_document)
-        .and_return(legal_document)
-      allow(chapter).to receive(:chapter_program_information)
-        .and_return(chapter_program_information)
-    end
+        let(:legal_document) { instance_double(Document, signed?: legal_document_signed) }
+        let(:legal_document_signed) { true }
+        let(:chapter_program_information) { instance_double(ChapterProgramInformation, complete?: program_info_complete) }
+        let(:program_info_complete) { true }
 
-    let(:legal_document) { instance_double(Document, signed?: legal_document_signed) }
-    let(:legal_document_signed) { true }
-    let(:chapter_program_information) { instance_double(ChapterProgramInformation, complete?: program_info_complete) }
-    let(:program_info_complete) { true }
+        context "when all onboarding steps have been completed" do
+          let(:legal_document_signed) { true }
+          let(:program_info_complete) { true }
 
-    context "when all onboarding steps have been completed" do
-      let(:chapter_name) { "Technovation Osaka" }
-      let(:chapter_summary) { "Our awesome chapter." }
-      let(:organization_headquarters_location) { "Osaka, Japan" }
-      let(:chapter_primary_contact) { ChapterAmbassadorProfile.new }
-      let(:chapter_links) { [RegionalLink.new] }
-      let(:legal_document_signed) { true }
-      let(:program_info_complete) { true }
+          before do
+            chapter.save
+          end
 
-      it "returns true" do
-        expect(chapter.onboarded?).to eq(true)
-      end
-    end
+          it "returns true" do
+            expect(chapter.onboarded?).to eq(true)
+          end
+        end
 
-    context "when the legal document has not been signed" do
-      let(:legal_document_signed) { false }
+        context "when the legal document has not been signed" do
+          let(:legal_document_signed) { false }
 
-      it "returns false" do
-        expect(chapter.onboarded?).to eq(false)
-      end
-    end
+          before do
+            chapter.save
+          end
 
-    context "when the chapter info is incomplete" do
-      let(:chapter_name) { nil }
-      let(:chapter_summary) { nil }
+          it "returns false" do
+            expect(chapter.onboarded?).to eq(false)
+          end
+        end
 
-      it "returns false" do
-        expect(chapter.onboarded?).to eq(false)
-      end
-    end
+        context "when the chapter's name is missing" do
+          before do
+            chapter.update(name: nil)
+          end
 
-    context "when the chapter's HQ location is missing" do
-      let(:organization_headquarters_location) { nil }
+          it "returns false" do
+            expect(chapter.onboarded?).to eq(false)
+          end
+        end
 
-      it "returns false" do
-        expect(chapter.onboarded?).to eq(false)
-      end
-    end
+        context "when the chapter's summary is missing" do
+          before do
+            chapter.update(summary: nil)
+          end
 
-    context "when the program info is incomplete" do
-      let(:program_info_complete) { false }
+          it "returns false" do
+            expect(chapter.onboarded?).to eq(false)
+          end
+        end
 
-      it "returns false" do
-        expect(chapter.onboarded?).to eq(false)
+        context "when the chapter has no chapter links" do
+          before do
+            chapter.update(chapter_links: [])
+          end
+
+          it "returns false" do
+            expect(chapter.onboarded?).to eq(false)
+          end
+        end
+
+        context "when the chapter's HQ location is missing" do
+          before do
+            chapter.update(organization_headquarters_location: nil)
+          end
+
+          it "returns false" do
+            expect(chapter.onboarded?).to eq(false)
+          end
+        end
+
+        context "when the chapter's program info is incomplete" do
+          let(:program_info_complete) { false }
+
+          before do
+            chapter.save
+          end
+
+          it "returns false" do
+            expect(chapter.onboarded?).to eq(false)
+          end
+        end
       end
     end
   end
