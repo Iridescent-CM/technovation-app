@@ -59,6 +59,40 @@ class ChaptersGrid
 
   column :visible_on_map, header: "Visible on map"
 
+  column :start_date, header: "Program Start Date" do
+    chapter_program_information&.start_date&.strftime("%m-%d-%Y")
+  end
+
+  column :meeting_times do
+    meeting_times = chapter_program_information&.meeting_times
+    if meeting_times&.any?
+      meeting_times.pluck(:time).join(", ")
+    else
+      "-"
+    end
+  end
+
+  column :program_length do
+    chapter_program_information&.program_length&.length.presence || "-"
+  end
+
+  column :meeting_facilitators do
+    meeting_facilitators = chapter_program_information&.meeting_facilitators
+    if meeting_facilitators&.any?
+      meeting_facilitators.pluck(:name).join(", ")
+    else
+      "-"
+    end
+  end
+
+  column :participant_count_estimate, header: "Estimated Participation" do
+    chapter_program_information&.participant_count_estimate&.range.presence || "-"
+  end
+
+  column :low_income_estimate, header: "Percent Underresourced" do
+    chapter_program_information&.low_income_estimate&.percentage.presence || "-"
+  end
+
   column :actions, mandatory: true, html: true do |chapter|
     render "admin/chapters/actions", chapter: chapter
   end
