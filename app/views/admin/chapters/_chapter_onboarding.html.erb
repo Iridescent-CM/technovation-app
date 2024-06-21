@@ -1,0 +1,87 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h3>
+      Chapter Onboarding
+    </h3>
+
+    <div class="panel">
+      <dl>
+        <dt>Sign Legal Agreement</dt>
+        <dd>
+          <div style="display: flex;">
+            <% if chapter.legal_document_signed? %>
+              <%= web_icon("check-circle icon-green") %>
+              <div>
+                Complete
+
+                <p class="hint margin--b-none">
+                  Signed <%= chapter.legal_document.signed_at.strftime("%b %d, %Y") %>
+                </p>
+              </div>
+            <% else %>
+              <%= web_icon("exclamation-circle icon-red") %>
+              <div>
+                Incomplete
+
+                <p class="hint margin--b-none">
+                  <% if chapter.legal_contact.blank? %>
+                    Not sent (no legal contact has been setup yet)
+                    <% elsif chapter.legal_document.blank? %>
+                    Not sent
+                  <% else %>
+                    Not signed
+                  <% end %>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </dd>
+
+        <dt>Complete Public Info</dt>
+        <dd>
+          <% if chapter.chapter_info_complete? %>
+            <div>
+              <%= web_icon("check-circle icon-green") %>
+              Complete
+            </div>
+          <% else %>
+            <div>
+              <%= web_icon("exclamation-circle icon-red") %>
+              Incomplete
+            </div>
+          <% end %>
+        </dd>
+
+        <dt>Complete Chapter Location</dt>
+        <dd>
+          <% if chapter.location_complete? %>
+            <div>
+              <%= web_icon("check-circle icon-green") %>
+              Complete
+            </div>
+          <% else %>
+            <div>
+              <%= web_icon("exclamation-circle icon-red") %>
+              Incomplete
+            </div>
+          <% end %>
+        </dd>
+
+        <dt>Complete Program Info</dt>
+        <dd>
+          <% if chapter.program_info_complete? %>
+            <div>
+              <%= web_icon("check-circle icon-green") %>
+              Complete
+            </div>
+          <% else %>
+            <div>
+              <%= web_icon("exclamation-circle icon-red") %>
+              Incomplete
+            </div>
+          <% end %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
