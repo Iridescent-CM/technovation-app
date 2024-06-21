@@ -108,6 +108,10 @@
   </div>
 </div>
 
+<%= render "admin/chapters/chapter_onboarding",
+  chapter: @chapter
+%>
+
 <%= render "admin/chapters/chapter_ambassadors",
   chapter: @chapter,
   pending_chapter_invites: @pending_chapter_invites,
