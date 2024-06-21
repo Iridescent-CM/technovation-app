@@ -60,7 +60,7 @@ class ChaptersGrid
   column :visible_on_map, header: "Visible on map"
 
   column :start_date, header: "Program Start Date" do
-    chapter_program_information&.start_date&.strftime("%m-%d-%Y")
+    chapter_program_information&.start_date&.strftime("%m-%d-%Y").presence || "-"
   end
 
   column :meeting_times do
