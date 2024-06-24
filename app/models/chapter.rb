@@ -42,10 +42,10 @@ class Chapter < ActiveRecord::Base
   end
 
   def can_be_marked_onboarded?
-    legal_document_signed? &&
+    !!(legal_document_signed? &&
       chapter_info_complete? &&
       location_complete? &&
-      program_info_complete?
+      program_info_complete?)
   end
 
   def update_onboarding_status
@@ -53,7 +53,7 @@ class Chapter < ActiveRecord::Base
   end
 
   def legal_document_signed?
-    legal_document&.signed?
+    !!legal_document&.signed?
   end
 
   def chapter_info_complete?
