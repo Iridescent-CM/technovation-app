@@ -109,20 +109,32 @@ RSpec.describe Chapter do
   end
 
   describe "#legal_document_signed?" do
-    before do
-      allow(chapter).to receive_message_chain(:legal_document, :signed?).and_return(legal_document_signed)
-    end
+    context "when a legal document exists" do
+      before do
+        allow(chapter).to receive_message_chain(:legal_document, :signed?).and_return(legal_document_signed)
+      end
 
-    context "when the legal document has been signed" do
-      let(:legal_document_signed) { true }
+      context "when the legal document has been signed" do
+        let(:legal_document_signed) { true }
 
-      it "returns true" do
-        expect(chapter.legal_document_signed?).to eq(true)
+        it "returns true" do
+          expect(chapter.legal_document_signed?).to eq(true)
+        end
+      end
+
+      context "when the legal document has not been signed" do
+        let(:legal_document_signed) { false }
+
+        it "returns false" do
+          expect(chapter.legal_document_signed?).to eq(false)
+        end
       end
     end
 
-    context "when the legal document has not been signed" do
-      let(:legal_document_signed) { false }
+    context "when a legal document doesn't exist" do
+      before do
+        allow(chapter).to receive(:legal_document).and_return(nil)
+      end
 
       it "returns false" do
         expect(chapter.legal_document_signed?).to eq(false)
