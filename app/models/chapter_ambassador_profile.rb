@@ -148,11 +148,11 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def can_be_marked_onboarded?
-    account.email_confirmed? &&
+    !!(account.email_confirmed? &&
       background_check_complete? &&
       legal_document_signed? &&
       training_completed? &&
-      viewed_community_connections?
+      viewed_community_connections?)
   end
 
   def onboarding?
