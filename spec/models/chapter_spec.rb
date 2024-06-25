@@ -155,13 +155,13 @@ RSpec.describe Chapter do
     let(:chapter_name) { "Sample Chapter" }
     let(:chapter_summary) { "Sample chapter summary." }
     let(:chapter_primary_contact) { ChapterAmbassadorProfile.new }
-    let(:chapter_links) { [RegionalLink.new] }
+    let(:chapter_links) { [ChapterLink.new] }
 
     context "when all of the chapter info has been completed" do
       let(:chapter_name) { "Technovation Tokyo" }
       let(:chapter_summary) { "We are Technovation Tokyo." }
       let(:chapter_primary_contact) { ChapterAmbassadorProfile.new }
-      let(:chapter_links) { [RegionalLink.new] }
+      let(:chapter_links) { [ChapterLink.new] }
 
       it "returns true" do
         expect(chapter.chapter_info_complete?).to eq(true)

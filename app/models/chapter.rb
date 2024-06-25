@@ -7,7 +7,7 @@ class Chapter < ActiveRecord::Base
   has_one :chapter_program_information, dependent: :destroy
 
   has_many :chapter_ambassador_profiles
-  has_many :chapter_links, class_name: "RegionalLink", dependent: :destroy
+  has_many :chapter_links, dependent: :destroy
   has_many :student_profiles
   has_many :registration_invites, class_name: "UserInvitation", dependent: :destroy
 

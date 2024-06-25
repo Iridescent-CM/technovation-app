@@ -1,4 +1,4 @@
-class RegionalLink < ApplicationRecord
+class ChapterLink < ApplicationRecord
   enum name: %i[
     twitter
     facebook

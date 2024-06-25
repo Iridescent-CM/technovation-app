@@ -426,6 +426,41 @@ ALTER SEQUENCE public.chapter_ambassador_profiles_id_seq OWNED BY public.chapter
 
 
 --
+-- Name: chapter_links; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_links (
+    id bigint NOT NULL,
+    chapter_ambassador_profile_id bigint,
+    name integer,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    custom_label character varying,
+    chapter_id bigint
+);
+
+
+--
+-- Name: chapter_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_links_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_links_id_seq OWNED BY public.chapter_links.id;
+
+
+--
 -- Name: chapter_program_information; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1705,41 +1740,6 @@ ALTER SEQUENCE public.program_lengths_id_seq OWNED BY public.program_lengths.id;
 
 
 --
--- Name: regional_links; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.regional_links (
-    id bigint NOT NULL,
-    chapter_ambassador_profile_id bigint,
-    name integer,
-    value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    custom_label character varying,
-    chapter_id bigint
-);
-
-
---
--- Name: regional_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.regional_links_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: regional_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.regional_links_id_seq OWNED BY public.regional_links.id;
-
-
---
 -- Name: regional_pitch_events; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2395,6 +2395,13 @@ ALTER TABLE ONLY public.chapter_ambassador_profiles ALTER COLUMN id SET DEFAULT 
 
 
 --
+-- Name: chapter_links id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_links ALTER COLUMN id SET DEFAULT nextval('public.chapter_links_id_seq'::regclass);
+
+
+--
 -- Name: chapter_program_information id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2647,13 +2654,6 @@ ALTER TABLE ONLY public.program_lengths ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
--- Name: regional_links id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.regional_links ALTER COLUMN id SET DEFAULT nextval('public.regional_links_id_seq'::regclass);
-
-
---
 -- Name: regional_pitch_events id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2814,6 +2814,14 @@ ALTER TABLE ONLY public.certificates
 
 ALTER TABLE ONLY public.chapter_ambassador_profiles
     ADD CONSTRAINT chapter_ambassador_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_links chapter_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_links
+    ADD CONSTRAINT chapter_links_pkey PRIMARY KEY (id);
 
 
 --
@@ -3105,14 +3113,6 @@ ALTER TABLE ONLY public.program_lengths
 
 
 --
--- Name: regional_links regional_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.regional_links
-    ADD CONSTRAINT regional_links_pkey PRIMARY KEY (id);
-
-
---
 -- Name: regional_pitch_events regional_pitch_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3372,6 +3372,20 @@ CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambas
 
 
 --
+-- Name: index_chapter_links_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_links_on_chapter_ambassador_profile_id ON public.chapter_links USING btree (chapter_ambassador_profile_id);
+
+
+--
+-- Name: index_chapter_links_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_links_on_chapter_id ON public.chapter_links USING btree (chapter_id);
+
+
+--
 -- Name: index_chapter_program_information_on_chapter_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3593,20 +3607,6 @@ CREATE INDEX index_parental_consents_on_seasons_and_upload_approval_status ON pu
 --
 
 CREATE INDEX index_parental_consents_on_student_profile_id ON public.parental_consents USING btree (student_profile_id);
-
-
---
--- Name: index_regional_links_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_regional_links_on_chapter_ambassador_profile_id ON public.regional_links USING btree (chapter_ambassador_profile_id);
-
-
---
--- Name: index_regional_links_on_chapter_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_regional_links_on_chapter_id ON public.regional_links USING btree (chapter_id);
 
 
 --
@@ -4124,10 +4124,10 @@ ALTER TABLE ONLY public.mentor_profile_mentor_types
 
 
 --
--- Name: regional_links fk_rails_b88e121da0; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: chapter_links fk_rails_b88e121da0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.regional_links
+ALTER TABLE ONLY public.chapter_links
     ADD CONSTRAINT fk_rails_b88e121da0 FOREIGN KEY (chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
 
 
@@ -4172,10 +4172,10 @@ ALTER TABLE ONLY public.admin_profiles
 
 
 --
--- Name: regional_links fk_rails_ca99b2153e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: chapter_links fk_rails_ca99b2153e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.regional_links
+ALTER TABLE ONLY public.chapter_links
     ADD CONSTRAINT fk_rails_ca99b2153e FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
 
 
@@ -4522,6 +4522,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240605033203'),
 ('20240614132749'),
 ('20240620151755'),
+('20240625173653'),
 ('20240702145233');
 
 

@@ -40,11 +40,11 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   has_many :messages, as: :sender
   has_many :multi_messages, as: :sender
 
-  has_many :regional_links, dependent: :destroy
+  has_many :chapter_links, dependent: :destroy
 
   has_one :community_connection
 
-  accepts_nested_attributes_for :regional_links, reject_if: ->(attrs) {
+  accepts_nested_attributes_for :chapter_links, reject_if: ->(attrs) {
     attrs.reject { |k, _| k.to_s == "custom_label" }.values.any?(&:blank?)
   }, allow_destroy: true
 
