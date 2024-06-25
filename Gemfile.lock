@@ -111,6 +111,9 @@ GEM
       msgpack (~> 1.2)
     browser (2.7.1)
     builder (3.2.4)
+    bullet (7.1.6)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     capybara (3.39.2)
       addressable
       matrix
@@ -529,6 +532,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (2.2.0)
+    uniform_notifier (1.16.0)
     vcr (6.1.0)
     web-console (3.7.0)
       actionview (>= 5.0)
@@ -567,6 +571,7 @@ DEPENDENCIES
   bcrypt (~> 3.1)
   bootsnap
   browser (~> 2.5)
+  bullet
   capybara (~> 3.0)
   capybara-email (~> 3.0)
   carmen (~> 1.1)
