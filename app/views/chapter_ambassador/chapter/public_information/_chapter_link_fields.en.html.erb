@@ -2,7 +2,7 @@
   <div class="mr-8">
     <%= f.input :name,
       label: "Type",
-      collection: RegionalLink.names.keys.map { |k| [k.humanize, k] },
+      collection: ChapterLink.names.keys.map { |k| [k.humanize, k] },
       prompt: "Choose type...",
       label_html: { class: "text-sm" }
     %>
@@ -12,7 +12,7 @@
     <%= f.input :value,
       label: "URL or username",
       input_html: {
-        data: RegionalLink.link_name_placeholders
+        data: ChapterLink.link_name_placeholders
       }
     %>
 
