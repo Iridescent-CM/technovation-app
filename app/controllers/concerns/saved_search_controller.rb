@@ -23,6 +23,10 @@ module SavedSearchController
       "#{current_scope}_score_exports_path"
     when "scored_submissions_grid"
       "#{current_scope}_scores_path"
+    when "chapters_grid"
+      "#{current_scope}_chapters_path"
+    when "chapter_ambassadors_grid"
+      "#{current_scope}_chapter_ambassadors_path"
     else
       raise "Param root #{@saved_search.param_root} not supported"
     end
