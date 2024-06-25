@@ -4,9 +4,9 @@
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Public Info" } do %>
 
     <div>
-      <p class="mb-4">This information will be publicly visible to students, mentors, and visitors to the Technovation website.</p>
-
       <% if current_chapter.present? %>
+        <p class="mb-4">This information will be publicly visible to students, mentors, and visitors to the Technovation website.</p>
+
         <div class="ml-8">
           <p class="font-semibold">Organization <span class="text-sm italic">(Pre-set by admin)</span></p>
           <p class="mb-4"><%= current_chapter.organization_name.presence || "Not set" %></p>
