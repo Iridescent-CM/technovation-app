@@ -152,8 +152,6 @@ Rails.application.routes.draw do
     resource :legal_agreement, only: :create
     resource :community_connections, only: [:show, :new, :create, :edit, :update]
 
-    resource :introduction, only: [:edit, :update]
-
     resources :job_statuses, only: :show
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
