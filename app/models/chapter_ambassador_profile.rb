@@ -83,11 +83,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     !intro_summary.blank?
   end
 
-  def needs_intro_prompt?
-    !self.class.staff_test_account_ids.include?(account_id) and
-      intro_summary.blank?
-  end
-
   def background_check_complete?
     !!background_check && background_check.clear?
   end
