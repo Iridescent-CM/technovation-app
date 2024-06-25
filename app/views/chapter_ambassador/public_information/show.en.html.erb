@@ -9,13 +9,13 @@
       <% if current_chapter.present? %>
         <div class="ml-8">
           <p class="font-semibold">Organization <span class="text-sm italic">(Pre-set by admin)</span></p>
-          <p class="mb-4"><%= current_ambassador.chapter.organization_name.presence || "Not set" %></p>
+          <p class="mb-4"><%= current_chapter.organization_name.presence || "Not set" %></p>
 
           <p class="font-semibold">Chapter Name</p>
-          <p class="mb-4"><%= current_ambassador.chapter.name.presence || "Not set" %></p>
+          <p class="mb-4"><%= current_chapter.name.presence || "Not set" %></p>
 
           <p class="font-semibold">Program Summary</p>
-          <p class="mb-4"><%= current_ambassador.chapter.summary.presence || "Not set" %></p>
+          <p class="mb-4"><%= current_chapter.summary.presence || "Not set" %></p>
 
           <p class="font-semibold">Program Links</p>
             <% if current_chapter.chapter_links.present? %>
