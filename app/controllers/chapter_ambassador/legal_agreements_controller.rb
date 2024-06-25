@@ -1,5 +1,7 @@
 module ChapterAmbassador
   class LegalAgreementsController < ChapterAmbassadorController
+    skip_before_action :require_chapter_and_chapter_ambassador_onboarded
+
     def create
       SendChapterAmbassadorLegalAgreementJob.perform_later(
         chapter_ambassador_profile_id: current_ambassador.id
