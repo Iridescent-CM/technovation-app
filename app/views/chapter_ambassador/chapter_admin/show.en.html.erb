@@ -31,52 +31,21 @@
           <div class="tabs__tab-content" id="students">
             <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
 
-            <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your local program introduction to access this section</p>
-            <% else %>
-              <%= render "chapter_ambassador/chapter_admin/students" %>
-            <% end %>
+            <%= render "chapter_ambassador/chapter_admin/students" %>
           </div>
 
           <div class="tabs__tab-content" id="mentors">
             <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
 
-            <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your local program introduction to access this section</p>
-            <% else %>
-              <%= render "chapter_ambassador/chapter_admin/mentors" %>
-            <% end %>
+            <%= render "chapter_ambassador/chapter_admin/mentors" %>
           </div>
 
           <div class="tabs__tab-content" id="inactivity">
-            <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your local program introduction to access this section</p>
-            <% else %>
-              <%= render "chapter_ambassador/chapter_admin/inactivity" %>
-            <% end %>
+            <%= render "chapter_ambassador/chapter_admin/inactivity" %>
           </div>
 
           <div class="tabs__tab-content" id="recent-activity">
-            <% if current_ambassador.needs_intro_prompt? %>
-              <p>Please fill in your local program introduction to access this section</p>
-            <% else %>
-              <%= render 'chapter_ambassador/chapter_admin/activity_feed' %>
-            <% end %>
-          </div>
-
-          <div class="tabs__tab-content" id="chapter-ambassador-info">
-            <% if current_ambassador.needs_intro_prompt? %>
-              <h4>Promote your program to your area</h4>
-              <%= render "chapter_ambassador/introductions/form", chapter_ambassador_dashboard: true %>
-            <% else %>
-              <%= render "dashboards/chapter_ambassador_intro", chapter_ambassador_dashboard: true %>
-
-              <p>
-                <%= link_to "Edit your introduction",
-                  edit_chapter_ambassador_introduction_path,
-                  class: "button secondary small" %>
-              </p>
-            <% end %>
+            <%= render 'chapter_ambassador/chapter_admin/activity_feed' %>
           </div>
 
           <div class="tabs__tab-content" id="resources">
