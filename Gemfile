@@ -112,6 +112,7 @@ group :development do
   gem "web-console", "~> 3.7"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
+  gem "bullet"
 end
 
 group :test do
