@@ -24,6 +24,6 @@ RSpec.feature "Chapter Ambassador Training" do
     visit chapter_ambassador_trainings_path
 
     expect(page).to have_text("Please review the following training modules.")
-    expect(page).to have_selector("a[href='#'][data-opens-modal='training-modal-1']", text: "Training Module 1: Program Overview")
+    expect(page).to have_selector("a[href='#'][data-opens-modal='training-modal-1']", text: "Training Module 1: What's New!")
   end
 end
