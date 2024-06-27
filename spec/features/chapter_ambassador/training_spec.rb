@@ -15,9 +15,15 @@ RSpec.feature "Chapter Ambassador Training" do
   end
 
   scenario "Visiting the training endpoint when training hasn't been completed displays a link to take the training" do
-    visit chapter_ambassador_training_path
-
-    expect(page).to have_text("Click the link below to proceed to the training checkpoint.")
+    visit chapter_ambassador_trainings_path
+    expect(page).to have_text("Please take the checkpoint to complete this step of onboarding.")
     expect(page).to have_link("Training Checkpoint", href: external_chapter_ambassador_training_checkpoint_link(chapter_ambassador.account))
+  end
+
+  scenario "Visiting the training endpoint when training hasn't been completed displays a link to view the training modal" do
+    visit chapter_ambassador_trainings_path
+
+    expect(page).to have_text("Please review the following training modules.")
+    expect(page).to have_selector("a[href='#'][data-opens-modal='training-modal-1']", text: "Training Module 1: What's New!")
   end
 end

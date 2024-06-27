@@ -10,4 +10,8 @@ module ExternalResourceHelper
 
     "#{base_url}?#{params.to_query}"
   end
+
+  def external_chapter_ambassador_training_module_link(module_number)
+    ENV.fetch("CHAPTER_AMBASSADOR_TRAINING_MODULE_#{module_number}_URL", "")
+  end
 end
