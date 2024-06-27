@@ -17,6 +17,15 @@ class ChaptersGrid
       "#{value}%")
   end
 
+  filter(:onboarded,
+    :enum,
+    select: [
+      ["Yes, fully onboarded", true],
+      ["No, still onboarding", false]
+    ]) do |value|
+      where(onboarded: value)
+    end
+
   filter :legal_agreement_status,
     :enum,
     select: ["Signed", "Not signed", "Not sent"] do |value|
@@ -70,6 +79,10 @@ class ChaptersGrid
     else
       "-"
     end
+  end
+
+  column :onboarded do
+    onboarded? ? "yes" : "no"
   end
 
   column :legal_agreement_status do
