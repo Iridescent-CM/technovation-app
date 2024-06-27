@@ -99,31 +99,31 @@ class ChaptersGrid
 
   column :visible_on_map, header: "Visible on map"
 
-  column :child_safeguarding_policy_and_process do
+  column :child_safeguarding_policy_and_process, preload: :chapter_program_information do
     chapter_program_information&.child_safeguarding_policy_and_process.presence || "-"
   end
 
-  column :team_structure do
+  column :team_structure, preload: :chapter_program_information do
     chapter_program_information&.team_structure.presence || "-"
   end
 
-  column :external_partnerships do
+  column :external_partnerships, preload: :chapter_program_information do
     chapter_program_information&.external_partnerships.presence || "-"
   end
 
-  column :start_date, header: "Program start date" do
+  column :start_date, header: "Program start date", preload: :chapter_program_information do
     chapter_program_information&.start_date&.strftime("%m-%d-%Y").presence || "-"
   end
 
-  column :launch_date do
+  column :launch_date, preload: :chapter_program_information do
     chapter_program_information&.launch_date&.strftime("%m-%d-%Y").presence || "-"
   end
 
-  column :program_model do
+  column :program_model, preload: :chapter_program_information do
     chapter_program_information&.program_model.presence || "-"
   end
 
-  column :meeting_times do
+  column :meeting_times, preload: :chapter_program_information do
     meeting_times = chapter_program_information&.meeting_times
     if meeting_times&.any?
       meeting_times.pluck(:time).join(", ")
@@ -132,11 +132,11 @@ class ChaptersGrid
     end
   end
 
-  column :program_length do
+  column :program_length, preload: :chapter_program_information do
     chapter_program_information&.program_length&.length.presence || "-"
   end
 
-  column :meeting_facilitators do
+  column :meeting_facilitators, preload: :chapter_program_information do
     meeting_facilitators = chapter_program_information&.meeting_facilitators
     if meeting_facilitators&.any?
       meeting_facilitators.pluck(:name).join(", ")
@@ -145,15 +145,15 @@ class ChaptersGrid
     end
   end
 
-  column :participant_count_estimate, header: "Estimated participation" do
+  column :participant_count_estimate, header: "Estimated participation", preload: :chapter_program_information do
     chapter_program_information&.participant_count_estimate&.range.presence || "-"
   end
 
-  column :low_income_estimate, header: "Percent underresourced" do
+  column :low_income_estimate, header: "Percent underresourced", preload: :chapter_program_information do
     chapter_program_information&.low_income_estimate&.percentage.presence || "-"
   end
 
-  column :number_of_low_income_or_underserved_calculation do
+  column :number_of_low_income_or_underserved_calculation, preload: :chapter_program_information do
     chapter_program_information&.number_of_low_income_or_underserved_calculation.presence || "-"
   end
 
