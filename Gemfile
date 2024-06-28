@@ -101,7 +101,7 @@ gem "net-smtp", require: false
 gem "net-imap", require: false
 gem "net-pop", require: false
 
-gem "rexml"
+gem "rexml", "~> 3.2.0"
 
 group :development do
   gem "pp_sql", "~> 0.2", require: false
