@@ -1,0 +1,38 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "chapter_ambassador/chapter_profile/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Chapter Affiliation Agreement" } do %>
+    <% if current_chapter.present? %>
+      <% if current_chapter.legal_document_signed? %>
+        <p>
+          Your legal contact has signed the Chapter Affiliation Agreement!
+        </p>
+      <% else %>
+        <p class="mb-8">
+          <span class="italic"><%= current_chapter.organization_name %> </span>working with this chapter must sign a Chapter Affiliation Agreement before
+          Chapter Ambassadors are able to access administrative activity for the chapter.
+        </p>
+        <p>
+          <span class="font-medium">Legal Contact:</span>
+          <% if current_chapter.legal_contact.blank? %>
+            No legal contact has been setup yet
+          <% else %>
+            <%= current_chapter.legal_contact.full_name %>
+          <% end %>
+        </p>
+        <p>
+          <span class="font-medium">Chapter Affiliation Agreement Status:</span>
+          <% if current_chapter.legal_contact.blank? %>
+            Not sent (no legal contact has been setup yet)
+          <% elsif current_chapter.legal_document.blank? %>
+            Not sent
+          <% else %>
+            Not signed
+          <% end %>
+        </p>
+      <% end %>
+    <% else %>
+      <p>You are not associated with a chapter. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
+    <% end %>
+  <% end %>
+</div>
