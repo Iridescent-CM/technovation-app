@@ -3,6 +3,35 @@
 
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
     <dl>
+      <dt>Chapter Onboarding Status</dt>
+      <dd>
+          <span class="hint">
+            Chapter Ambassadors must also complete the Chapter onboarding process to access Chapter Admin Activity.
+          </span>
+        <% if profile&.chapter.present? %>
+          <% if profile.chapter.onboarded? %>
+            <div>
+              <%= web_icon("check-circle icon-green") %>
+              Complete
+            </div>
+          <% else %>
+            <div>
+              <%= web_icon("exclamation-circle icon-red") %>
+              Chapter not onboarded.
+              <%= link_to "View details",
+                          admin_chapter_path(profile.chapter) %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>Chapter Ambassador not assigned to a chapter</p>
+        <% end %>
+      </dd>
+    </dl>
+    <hr style="height: 1px; width: 100%;">
+  </div>
+
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <dl>
       <% unless profile.account.mentor_profile.present? %>
         <dt>Browser / OS Info</dt>
         <dd>
