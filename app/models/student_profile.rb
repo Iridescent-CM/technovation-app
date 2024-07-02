@@ -371,6 +371,10 @@ class StudentProfile < ActiveRecord::Base
       account.terms_agreed_at?
   end
 
+  def is_assigned_to_chapter?
+    chapter.present?
+  end
+
   private
 
   def validate_valid_parent_email

@@ -232,4 +232,8 @@ class JudgeProfile < ActiveRecord::Base
       consent_signed? &&
       training_completed?
   end
+
+  def is_assigned_to_chapter?
+    false
+  end
 end
