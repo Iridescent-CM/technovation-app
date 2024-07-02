@@ -2599,6 +2599,13 @@ CREATE UNIQUE INDEX index_media_consents_on_student_profile_id_and_season ON pub
 
 
 --
+-- Name: index_memberships_on_member_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_memberships_on_member_type ON public.memberships USING btree (member_type);
+
+
+--
 -- Name: index_memberships_on_member_type_and_member_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3334,6 +3341,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240321122732'),
 ('20240321122808'),
 ('20240321123201'),
-('20240326155545');
+('20240326155545'),
+('20240702145233');
 
 
