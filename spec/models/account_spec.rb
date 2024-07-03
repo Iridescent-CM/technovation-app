@@ -102,6 +102,21 @@ RSpec.describe Account do
           end
         end
       end
+
+      context "for chapter ambassadors" do
+        let(:chapter_ambassador) {
+          FactoryBot.create(:chapter_ambassador,
+            account: FactoryBot.build(:account, date_of_birth: date_of_birth))
+        }
+
+        context "when the chapter ambassador doesn't have a date of birth" do
+          let(:date_of_birth) { nil }
+
+          it "is valid" do
+            expect(chapter_ambassador).to be_valid
+          end
+        end
+      end
     end
 
     describe "meets minimum age requirement" do
@@ -146,6 +161,51 @@ RSpec.describe Account do
 
           it "is valid" do
             expect(judge).to be_valid
+          end
+        end
+      end
+
+      context "for new chapter ambassadors" do
+        let(:chapter_ambassador_account) {
+          Account.new(
+            first_name: "Barbara",
+            last_name: "Builder",
+            email: "BarbB123@example.com",
+            password: "123abc456",
+            gender: "Non-binary",
+            chapter_ambassador_profile: ChapterAmbassadorProfile.new,
+            meets_minimum_age_requirement: meets_minimum_age_requirement
+          )
+        }
+
+        context "when a new chapter ambassador meets the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { true }
+
+          it "is valid" do
+            expect(chapter_ambassador_account).to be_valid
+          end
+        end
+
+        context "when a new chapter ambassador does not meet the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { false }
+
+          it "is not valid" do
+            expect(chapter_ambassador_account).not_to be_valid
+          end
+        end
+      end
+
+      context "for existing chapter ambassadors" do
+        let(:chapter_ambassador) {
+          FactoryBot.create(:chapter_ambassador,
+            account: FactoryBot.create(:account, meets_minimum_age_requirement: meets_minimum_age_requirement))
+        }
+
+        context "when an existing chapter ambassador does not meet the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { false }
+
+          it "is valid" do
+            expect(chapter_ambassador).to be_valid
           end
         end
       end

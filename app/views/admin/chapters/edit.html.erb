@@ -1,0 +1,20 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h1>
+      Edit Chapter
+    </h1>
+
+    <div class="panel">
+      <%= simple_form_for @chapter, url: admin_chapter_path(@chapter) do |f| %>
+        <%= f.input :organization_name %>
+        <%= f.input :name, label: "Chapter Name" %>
+        <%= f.input :summary, label: "Chapter Summary" %>
+        <%= f.input :organization_headquarters_location %>
+        <%= f.input :visible_on_map, as: :boolean, label: "Public Map Visibility" %>
+
+        <br>
+        <%= f.submit "Update", class: "button" %>
+      <% end %>
+    </div>
+  </div>
+</div>

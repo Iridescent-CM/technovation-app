@@ -21,6 +21,7 @@ jobs:
           BING_MAPS_API_KEY: n-a
           CAMPAIGN_MONITOR_API_KEY: n-a
           CHAPTER_AMBASSADOR_SLACK_URL: n-a
+          CHAPTER_AMBASSADOR_TRAINING_CHECKPOINT_BASE_URL: "https://some/base-url"
           COOKIES_AUTH_TOKEN: auth_token_JUNE_2018
           COOKIES_IP_GEOLOCATION: ip_geolocation_JUNE_2018
           COOKIES_LAST_PROFILE_USED: last_profile_used_JUNE_2018
@@ -78,6 +79,9 @@ jobs:
           DATES_VIRTUAL_QUARTERFINALS_ENDS_DAY: 20
           DATES_VIRTUAL_QUARTERFINALS_ENDS_MONTH: 5
           DATES_VIRTUAL_QUARTERFINALS_ENDS_YEAR: 2022
+          DOCUSIGN_MEMORANDUM_OF_UNDERSTANDING_TEMPLATE_ID: n-a
+          DOCUSIGN_CHAPTER_AMBASSADOR_LEGAL_AGREEMENT_TEMPLATE_ID: n-a
+          DOCUSIGN_HMAC_SECRET_KEY: n-a
           ENABLE_HOMEPAGE_BANNER: true
           FINALISTS_URL: "https://some/url"
           FILESTACK_API_KEY: n-a
@@ -201,6 +205,13 @@ jobs:
             - "32:c4:d8:7f:60:e0:56:7d:e9:ee:f5:04:e1:9c:2d:4e"
 
       - deploy:
+          name: Deploy Preview to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "preview" ]; then
+              git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-preview.git preview:master
+            fi
+
+      - deploy:
           name: Deploy QA to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "qa" ]; then
@@ -221,6 +232,11 @@ general:
       - master
 
 deployment:
+  preview:
+    branch: preview
+    heroku:
+      appname: technovation-preview
+
   qa:
     branch: qa
     heroku:

@@ -4,8 +4,12 @@ RSpec.feature "Chapter ambassadors registering", :js do
   let(:chapter_ambassado_registration_invite) {
     UserInvitation.create!(
       profile_type: :chapter_ambassador,
-      email: "chapter_ambassador_invite@example.com"
+      email: "chapter_ambassador_invite@example.com",
+      chapter_id: chapter.id
     )
+  }
+  let(:chapter) {
+    FactoryBot.create(:chapter)
   }
 
   before do
@@ -24,11 +28,9 @@ RSpec.feature "Chapter ambassadors registering", :js do
 
     fill_in "First Name", with: "Hopeful Heart"
     fill_in "Last Name", with: "Bear"
+    check "I confirm that I am 18 years or older"
     select "Prefer not to say", from: "Gender Identity"
-    fill_in "Birthday", with: 32.years.ago
-    fill_in "Company Name", with: "Care-a-Lot Inc."
     fill_in "Job Title", with: "Kindness spreader"
-    fill_in "chapterAmbassadorBio", with: "I am always brimming with hope, happiness, and positivity. I am the kind of bear that will tell you everything's going to be all right in the end. I see the silver lining around every dark cloud, and know that no matter how dire a situation may seem, there's always chance to make things better."
     click_button "Next"
 
     expect(page).to have_content("Data Use Terms")

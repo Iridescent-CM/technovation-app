@@ -16,8 +16,27 @@ module ApplicationHelper
 
   def determine_manifest
     namespace = controller_path.split("/").first
+    path = controller_path.split("/").second
+    rebranded_chapter_ambassador_sections = %w[
+      background_checks
+      chapter_affiliation_agreements
+      chapter_ambassador
+      chapter_locations
+      chapter_profile
+      chapter_program_information
+      community_connections
+      dashboards
+      location_details
+      mous
+      profiles
+      public_information
+      training_completions
+      trainings
+    ]
 
-    if current_account.authenticated? and SCOPES.include?(namespace)
+    if namespace == "chapter_ambassador" && rebranded_chapter_ambassador_sections.include?(path)
+      :chapter_ambassador_rebrand
+    elsif current_account.authenticated? && SCOPES.include?(namespace)
       namespace
     elsif current_account.authenticated?
       current_account.scope_name
@@ -29,7 +48,7 @@ module ApplicationHelper
   def al(identifiers)
     decoded_path = CGI.escape(request.fullpath)
 
-    if Array(identifiers).any? { |i| decoded_path.include?(i) }
+    if Array(identifiers).any? { |i| decoded_path.include?(CGI.escape(i)) }
       "active"
     else
       ""
@@ -85,11 +104,11 @@ module ApplicationHelper
     end
   end
 
-  def fa_icon(*args)
+  def fa_icon(*args) # standard:disable all
     ActiveSupport::Deprecation.warn(
       "#fa_icon is deprecated. Please use #web_icon"
     )
-    web_icon(*args)
+    web_icon(*args) # standard:disable all
   end
 
   def determine_homepage_content

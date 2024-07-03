@@ -1,0 +1,31 @@
+  <nav class="p-4" aria-label="Progress">
+    <ol role="list" class="space-y-6 mb-6 overflow-hidden">
+      <%= render "application/templates/completion_step",
+                 name: "Chapter Affiliation Agreement",
+                 url: chapter_ambassador_chapter_affiliation_agreement_path,
+                 is_complete: current_ambassador.chapter&.legal_document_signed?,
+                 is_active_item: al(chapter_ambassador_chapter_affiliation_agreement_path).present?
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Public Info",
+        url: chapter_ambassador_public_information_path,
+        is_complete: current_ambassador.chapter&.chapter_info_complete?,
+        is_active_item: al(chapter_ambassador_public_information_path).present?
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Chapter Location",
+        url: chapter_ambassador_chapter_location_path,
+        is_complete: current_ambassador.chapter&.location_complete?,
+        is_active_item: al(chapter_ambassador_chapter_location_path).present?
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Program Info",
+        url: chapter_ambassador_chapter_program_information_path,
+        is_complete: current_ambassador.chapter&.program_info_complete?,
+        is_active_item: al(chapter_ambassador_chapter_program_information_path).present?
+      %>
+    </ol>
+  </nav>

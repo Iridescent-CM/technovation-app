@@ -52,6 +52,16 @@ COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
 
 
 --
+-- Name: chapter_ambassador_organization_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.chapter_ambassador_organization_status AS ENUM (
+    'employee',
+    'volunteer'
+);
+
+
+--
 -- Name: judge_recusal_from_submission_reason; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -232,6 +242,37 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: availability_slots; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.availability_slots (
+    id bigint NOT NULL,
+    "time" character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: availability_slots_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.availability_slots_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: availability_slots_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.availability_slots_id_seq OWNED BY public.availability_slots.id;
+
+
+--
 -- Name: background_checks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -345,7 +386,7 @@ ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 CREATE TABLE public.chapter_ambassador_profiles (
     id integer NOT NULL,
-    organization_company_name character varying NOT NULL,
+    organization_company_name character varying,
     job_title character varying NOT NULL,
     account_id integer NOT NULL,
     status integer DEFAULT 0 NOT NULL,
@@ -354,7 +395,13 @@ CREATE TABLE public.chapter_ambassador_profiles (
     bio text,
     intro_summary text,
     secondary_regions character varying[] DEFAULT '{}'::character varying[],
-    program_name character varying
+    program_name character varying,
+    chapter_id bigint,
+    organization_status public.chapter_ambassador_organization_status,
+    phone_number character varying,
+    viewed_community_connections boolean DEFAULT false NOT NULL,
+    training_completed_at timestamp without time zone,
+    onboarded boolean DEFAULT false
 );
 
 
@@ -376,6 +423,280 @@ CREATE SEQUENCE public.chapter_ambassador_profiles_id_seq
 --
 
 ALTER SEQUENCE public.chapter_ambassador_profiles_id_seq OWNED BY public.chapter_ambassador_profiles.id;
+
+
+--
+-- Name: chapter_links; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_links (
+    id bigint NOT NULL,
+    chapter_ambassador_profile_id bigint,
+    name integer,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    custom_label character varying,
+    chapter_id bigint
+);
+
+
+--
+-- Name: chapter_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_links_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_links_id_seq OWNED BY public.chapter_links.id;
+
+
+--
+-- Name: chapter_program_information; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information (
+    id bigint NOT NULL,
+    chapter_id bigint,
+    child_safeguarding_policy_and_process text,
+    team_structure text,
+    external_partnerships text,
+    start_date date,
+    launch_date date,
+    program_model text,
+    number_of_low_income_or_underserved_calculation text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    program_length_id bigint,
+    participant_count_estimate_id bigint,
+    low_income_estimate_id bigint
+);
+
+
+--
+-- Name: chapter_program_information_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_id_seq OWNED BY public.chapter_program_information.id;
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information_meeting_facilitators (
+    id bigint NOT NULL,
+    chapter_program_information_id bigint,
+    meeting_facilitator_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_meeting_facilitators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_meeting_facilitators_id_seq OWNED BY public.chapter_program_information_meeting_facilitators.id;
+
+
+--
+-- Name: chapter_program_information_meeting_times; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information_meeting_times (
+    id bigint NOT NULL,
+    chapter_program_information_id bigint,
+    meeting_time_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_program_information_meeting_times_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_meeting_times_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_meeting_times_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_meeting_times_id_seq OWNED BY public.chapter_program_information_meeting_times.id;
+
+
+--
+-- Name: chapter_program_information_organization_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_program_information_organization_types (
+    id bigint NOT NULL,
+    chapter_program_information_id bigint,
+    organization_type_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_program_information_organization_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_program_information_organization_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_program_information_organization_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_program_information_organization_types_id_seq OWNED BY public.chapter_program_information_organization_types.id;
+
+
+--
+-- Name: chapters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapters (
+    id bigint NOT NULL,
+    name character varying,
+    summary text,
+    organization_name character varying,
+    city character varying,
+    state_province character varying,
+    country character varying,
+    primary_contact_id bigint,
+    visible_on_map boolean DEFAULT true,
+    organization_headquarters_location character varying,
+    onboarded boolean DEFAULT false
+);
+
+
+--
+-- Name: chapters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
+
+
+--
+-- Name: community_connection_availability_slots; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.community_connection_availability_slots (
+    id bigint NOT NULL,
+    community_connection_id bigint,
+    availability_slot_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: community_connection_availability_slots_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.community_connection_availability_slots_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: community_connection_availability_slots_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.community_connection_availability_slots_id_seq OWNED BY public.community_connection_availability_slots.id;
+
+
+--
+-- Name: community_connections; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.community_connections (
+    id bigint NOT NULL,
+    topic_sharing_response text,
+    chapter_ambassador_profile_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: community_connections_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.community_connections_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: community_connections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.community_connections_id_seq OWNED BY public.community_connections.id;
 
 
 --
@@ -452,6 +773,44 @@ CREATE TABLE public.divisions_regional_pitch_events (
     division_id integer,
     regional_pitch_event_id integer
 );
+
+
+--
+-- Name: documents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.documents (
+    id bigint NOT NULL,
+    full_name character varying NOT NULL,
+    email_address character varying NOT NULL,
+    signer_type character varying,
+    signer_id bigint,
+    active boolean,
+    signed_at timestamp without time zone,
+    season_signed smallint,
+    docusign_envelope_id character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.documents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: documents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.documents_id_seq OWNED BY public.documents.id;
 
 
 --
@@ -790,6 +1149,73 @@ ALTER SEQUENCE public.judge_types_id_seq OWNED BY public.judge_types.id;
 
 
 --
+-- Name: legal_contacts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.legal_contacts (
+    id bigint NOT NULL,
+    chapter_id bigint,
+    full_name character varying NOT NULL,
+    email_address character varying NOT NULL,
+    phone_number character varying,
+    job_title character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: legal_contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.legal_contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: legal_contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.legal_contacts_id_seq OWNED BY public.legal_contacts.id;
+
+
+--
+-- Name: low_income_estimates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.low_income_estimates (
+    id bigint NOT NULL,
+    percentage character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: low_income_estimates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.low_income_estimates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: low_income_estimates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.low_income_estimates_id_seq OWNED BY public.low_income_estimates.id;
+
+
+--
 -- Name: media_consents; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -827,6 +1253,68 @@ CREATE SEQUENCE public.media_consents_id_seq
 --
 
 ALTER SEQUENCE public.media_consents_id_seq OWNED BY public.media_consents.id;
+
+
+--
+-- Name: meeting_facilitators; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.meeting_facilitators (
+    id bigint NOT NULL,
+    name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: meeting_facilitators_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.meeting_facilitators_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: meeting_facilitators_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.meeting_facilitators_id_seq OWNED BY public.meeting_facilitators.id;
+
+
+--
+-- Name: meeting_times; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.meeting_times (
+    id bigint NOT NULL,
+    "time" character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: meeting_times_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.meeting_times_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: meeting_times_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.meeting_times_id_seq OWNED BY public.meeting_times.id;
 
 
 --
@@ -1084,6 +1572,37 @@ ALTER SEQUENCE public.multi_messages_id_seq OWNED BY public.multi_messages.id;
 
 
 --
+-- Name: organization_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.organization_types (
+    id bigint NOT NULL,
+    name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: organization_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.organization_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: organization_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.organization_types_id_seq OWNED BY public.organization_types.id;
+
+
+--
 -- Name: parental_consents; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1125,6 +1644,38 @@ ALTER SEQUENCE public.parental_consents_id_seq OWNED BY public.parental_consents
 
 
 --
+-- Name: participant_count_estimates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.participant_count_estimates (
+    id bigint NOT NULL,
+    range character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: participant_count_estimates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.participant_count_estimates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: participant_count_estimates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.participant_count_estimates_id_seq OWNED BY public.participant_count_estimates.id;
+
+
+--
 -- Name: pitch_presentations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1158,25 +1709,22 @@ ALTER SEQUENCE public.pitch_presentations_id_seq OWNED BY public.pitch_presentat
 
 
 --
--- Name: regional_links; Type: TABLE; Schema: public; Owner: -
+-- Name: program_lengths; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.regional_links (
+CREATE TABLE public.program_lengths (
     id bigint NOT NULL,
-    chapter_ambassador_profile_id bigint,
-    name integer,
-    value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    custom_label character varying
+    length character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
 --
--- Name: regional_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: program_lengths_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.regional_links_id_seq
+CREATE SEQUENCE public.program_lengths_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1185,10 +1733,10 @@ CREATE SEQUENCE public.regional_links_id_seq
 
 
 --
--- Name: regional_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: program_lengths_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.regional_links_id_seq OWNED BY public.regional_links.id;
+ALTER SEQUENCE public.program_lengths_id_seq OWNED BY public.program_lengths.id;
 
 
 --
@@ -1397,7 +1945,8 @@ CREATE TABLE public.student_profiles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     onboarded boolean DEFAULT false,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    chapter_id bigint
 );
 
 
@@ -1734,7 +2283,8 @@ CREATE TABLE public.user_invitations (
     updated_at timestamp without time zone NOT NULL,
     name character varying,
     register_at_any_time boolean,
-    invited_by_id integer
+    invited_by_id integer,
+    chapter_id bigint
 );
 
 
@@ -1758,6 +2308,37 @@ ALTER SEQUENCE public.user_invitations_id_seq OWNED BY public.user_invitations.i
 
 
 --
+-- Name: webhook_payloads; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.webhook_payloads (
+    id bigint NOT NULL,
+    body text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: webhook_payloads_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.webhook_payloads_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: webhook_payloads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.webhook_payloads_id_seq OWNED BY public.webhook_payloads.id;
+
+
+--
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1776,6 +2357,13 @@ ALTER TABLE ONLY public.activities ALTER COLUMN id SET DEFAULT nextval('public.a
 --
 
 ALTER TABLE ONLY public.admin_profiles ALTER COLUMN id SET DEFAULT nextval('public.admin_profiles_id_seq'::regclass);
+
+
+--
+-- Name: availability_slots id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.availability_slots ALTER COLUMN id SET DEFAULT nextval('public.availability_slots_id_seq'::regclass);
 
 
 --
@@ -1807,6 +2395,62 @@ ALTER TABLE ONLY public.chapter_ambassador_profiles ALTER COLUMN id SET DEFAULT 
 
 
 --
+-- Name: chapter_links id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_links ALTER COLUMN id SET DEFAULT nextval('public.chapter_links_id_seq'::regclass);
+
+
+--
+-- Name: chapter_program_information id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_id_seq'::regclass);
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_meeting_facilitators_id_seq'::regclass);
+
+
+--
+-- Name: chapter_program_information_meeting_times id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_meeting_times_id_seq'::regclass);
+
+
+--
+-- Name: chapter_program_information_organization_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_organization_types_id_seq'::regclass);
+
+
+--
+-- Name: chapters id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.chapters_id_seq'::regclass);
+
+
+--
+-- Name: community_connection_availability_slots id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots ALTER COLUMN id SET DEFAULT nextval('public.community_connection_availability_slots_id_seq'::regclass);
+
+
+--
+-- Name: community_connections id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connections ALTER COLUMN id SET DEFAULT nextval('public.community_connections_id_seq'::regclass);
+
+
+--
 -- Name: consent_waivers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1818,6 +2462,13 @@ ALTER TABLE ONLY public.consent_waivers ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 ALTER TABLE ONLY public.divisions ALTER COLUMN id SET DEFAULT nextval('public.divisions_id_seq'::regclass);
+
+
+--
+-- Name: documents id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.documents ALTER COLUMN id SET DEFAULT nextval('public.documents_id_seq'::regclass);
 
 
 --
@@ -1884,10 +2535,38 @@ ALTER TABLE ONLY public.judge_types ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: legal_contacts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts ALTER COLUMN id SET DEFAULT nextval('public.legal_contacts_id_seq'::regclass);
+
+
+--
+-- Name: low_income_estimates id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.low_income_estimates ALTER COLUMN id SET DEFAULT nextval('public.low_income_estimates_id_seq'::regclass);
+
+
+--
 -- Name: media_consents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.media_consents ALTER COLUMN id SET DEFAULT nextval('public.media_consents_id_seq'::regclass);
+
+
+--
+-- Name: meeting_facilitators id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_facilitators ALTER COLUMN id SET DEFAULT nextval('public.meeting_facilitators_id_seq'::regclass);
+
+
+--
+-- Name: meeting_times id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_times ALTER COLUMN id SET DEFAULT nextval('public.meeting_times_id_seq'::regclass);
 
 
 --
@@ -1940,10 +2619,24 @@ ALTER TABLE ONLY public.multi_messages ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: organization_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.organization_types ALTER COLUMN id SET DEFAULT nextval('public.organization_types_id_seq'::regclass);
+
+
+--
 -- Name: parental_consents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.parental_consents ALTER COLUMN id SET DEFAULT nextval('public.parental_consents_id_seq'::regclass);
+
+
+--
+-- Name: participant_count_estimates id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participant_count_estimates ALTER COLUMN id SET DEFAULT nextval('public.participant_count_estimates_id_seq'::regclass);
 
 
 --
@@ -1954,10 +2647,10 @@ ALTER TABLE ONLY public.pitch_presentations ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- Name: regional_links id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: program_lengths id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.regional_links ALTER COLUMN id SET DEFAULT nextval('public.regional_links_id_seq'::regclass);
+ALTER TABLE ONLY public.program_lengths ALTER COLUMN id SET DEFAULT nextval('public.program_lengths_id_seq'::regclass);
 
 
 --
@@ -2045,6 +2738,13 @@ ALTER TABLE ONLY public.user_invitations ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: webhook_payloads id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.webhook_payloads ALTER COLUMN id SET DEFAULT nextval('public.webhook_payloads_id_seq'::regclass);
+
+
+--
 -- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2074,6 +2774,14 @@ ALTER TABLE ONLY public.admin_profiles
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: availability_slots availability_slots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.availability_slots
+    ADD CONSTRAINT availability_slots_pkey PRIMARY KEY (id);
 
 
 --
@@ -2109,6 +2817,70 @@ ALTER TABLE ONLY public.chapter_ambassador_profiles
 
 
 --
+-- Name: chapter_links chapter_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_links
+    ADD CONSTRAINT chapter_links_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators chapter_program_information_meeting_facilitators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
+    ADD CONSTRAINT chapter_program_information_meeting_facilitators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_program_information_meeting_times chapter_program_information_meeting_times_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times
+    ADD CONSTRAINT chapter_program_information_meeting_times_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_program_information_organization_types chapter_program_information_organization_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types
+    ADD CONSTRAINT chapter_program_information_organization_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_program_information chapter_program_information_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT chapter_program_information_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapters chapters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: community_connection_availability_slots community_connection_availability_slots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots
+    ADD CONSTRAINT community_connection_availability_slots_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: community_connections community_connections_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connections
+    ADD CONSTRAINT community_connections_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: consent_waivers consent_waivers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2122,6 +2894,14 @@ ALTER TABLE ONLY public.consent_waivers
 
 ALTER TABLE ONLY public.divisions
     ADD CONSTRAINT divisions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: documents documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.documents
+    ADD CONSTRAINT documents_pkey PRIMARY KEY (id);
 
 
 --
@@ -2197,11 +2977,43 @@ ALTER TABLE ONLY public.judge_types
 
 
 --
+-- Name: legal_contacts legal_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts
+    ADD CONSTRAINT legal_contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: low_income_estimates low_income_estimates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.low_income_estimates
+    ADD CONSTRAINT low_income_estimates_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: media_consents media_consents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.media_consents
     ADD CONSTRAINT media_consents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: meeting_facilitators meeting_facilitators_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_facilitators
+    ADD CONSTRAINT meeting_facilitators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: meeting_times meeting_times_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_times
+    ADD CONSTRAINT meeting_times_pkey PRIMARY KEY (id);
 
 
 --
@@ -2261,11 +3073,27 @@ ALTER TABLE ONLY public.multi_messages
 
 
 --
+-- Name: organization_types organization_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.organization_types
+    ADD CONSTRAINT organization_types_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: parental_consents parental_consents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.parental_consents
     ADD CONSTRAINT parental_consents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: participant_count_estimates participant_count_estimates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.participant_count_estimates
+    ADD CONSTRAINT participant_count_estimates_pkey PRIMARY KEY (id);
 
 
 --
@@ -2277,11 +3105,11 @@ ALTER TABLE ONLY public.pitch_presentations
 
 
 --
--- Name: regional_links regional_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: program_lengths program_lengths_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.regional_links
-    ADD CONSTRAINT regional_links_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.program_lengths
+    ADD CONSTRAINT program_lengths_pkey PRIMARY KEY (id);
 
 
 --
@@ -2389,6 +3217,14 @@ ALTER TABLE ONLY public.user_invitations
 
 
 --
+-- Name: webhook_payloads webhook_payloads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.webhook_payloads
+    ADD CONSTRAINT webhook_payloads_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: events_invites_event_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2480,6 +3316,13 @@ CREATE INDEX index_activities_on_trackable_id_and_trackable_type ON public.activ
 
 
 --
+-- Name: index_as_on_as_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_as_on_as_id ON public.community_connection_availability_slots USING btree (availability_slot_id);
+
+
+--
 -- Name: index_background_checks_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2491,6 +3334,13 @@ CREATE INDEX index_background_checks_on_account_id ON public.background_checks U
 --
 
 CREATE INDEX index_business_plans_on_team_submission_id ON public.business_plans USING btree (team_submission_id);
+
+
+--
+-- Name: index_ccas_on_cc_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ccas_on_cc_id ON public.community_connection_availability_slots USING btree (community_connection_id);
 
 
 --
@@ -2508,6 +3358,13 @@ CREATE INDEX index_certificates_on_team_id ON public.certificates USING btree (t
 
 
 --
+-- Name: index_chapter_ambassador_profiles_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_ambassador_profiles_on_chapter_id ON public.chapter_ambassador_profiles USING btree (chapter_id);
+
+
+--
 -- Name: index_chapter_ambassador_profiles_on_status; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2515,10 +3372,94 @@ CREATE INDEX index_chapter_ambassador_profiles_on_status ON public.chapter_ambas
 
 
 --
+-- Name: index_chapter_links_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_links_on_chapter_ambassador_profile_id ON public.chapter_links USING btree (chapter_ambassador_profile_id);
+
+
+--
+-- Name: index_chapter_links_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_links_on_chapter_id ON public.chapter_links USING btree (chapter_id);
+
+
+--
+-- Name: index_chapter_program_information_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_program_information_on_chapter_id ON public.chapter_program_information USING btree (chapter_id);
+
+
+--
+-- Name: index_chapter_program_information_on_low_income_estimate_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_program_information_on_low_income_estimate_id ON public.chapter_program_information USING btree (low_income_estimate_id);
+
+
+--
+-- Name: index_chapter_program_information_on_program_length_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_program_information_on_program_length_id ON public.chapter_program_information USING btree (program_length_id);
+
+
+--
+-- Name: index_chapters_on_primary_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree (primary_contact_id);
+
+
+--
+-- Name: index_community_connections_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_community_connections_on_chapter_ambassador_profile_id ON public.community_connections USING btree (chapter_ambassador_profile_id);
+
+
+--
 -- Name: index_consent_waivers_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_consent_waivers_on_account_id ON public.consent_waivers USING btree (account_id);
+
+
+--
+-- Name: index_cpi_mf_on_chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cpi_mf_on_chapter_program_information_id ON public.chapter_program_information_meeting_facilitators USING btree (chapter_program_information_id);
+
+
+--
+-- Name: index_cpi_mt_on_chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cpi_mt_on_chapter_program_information_id ON public.chapter_program_information_meeting_times USING btree (chapter_program_information_id);
+
+
+--
+-- Name: index_cpi_ot_on_chapter_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_cpi_ot_on_chapter_program_information_id ON public.chapter_program_information_organization_types USING btree (chapter_program_information_id);
+
+
+--
+-- Name: index_documents_on_docusign_envelope_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_documents_on_docusign_envelope_id ON public.documents USING btree (docusign_envelope_id);
+
+
+--
+-- Name: index_documents_on_signer; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_documents_on_signer ON public.documents USING btree (signer_type, signer_id);
 
 
 --
@@ -2592,6 +3533,13 @@ CREATE INDEX index_judge_profiles_on_user_invitation_id ON public.judge_profiles
 
 
 --
+-- Name: index_legal_contacts_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_legal_contacts_on_chapter_id ON public.legal_contacts USING btree (chapter_id);
+
+
+--
 -- Name: index_media_consents_on_student_profile_id_and_season; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2662,13 +3610,6 @@ CREATE INDEX index_parental_consents_on_student_profile_id ON public.parental_co
 
 
 --
--- Name: index_regional_links_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_regional_links_on_chapter_ambassador_profile_id ON public.regional_links USING btree (chapter_ambassador_profile_id);
-
-
---
 -- Name: index_regional_pitch_events_on_division_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2687,6 +3628,13 @@ CREATE INDEX index_saved_searches_on_searcher_type_and_searcher_id ON public.sav
 --
 
 CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING btree (team_submission_id);
+
+
+--
+-- Name: index_student_profiles_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_student_profiles_on_chapter_id ON public.student_profiles USING btree (chapter_id);
 
 
 --
@@ -2757,6 +3705,41 @@ CREATE INDEX index_teams_on_legacy_id ON public.teams USING btree (legacy_id);
 --
 
 CREATE INDEX index_unconfirmed_email_addresses_on_account_id ON public.unconfirmed_email_addresses USING btree (account_id);
+
+
+--
+-- Name: index_user_invitations_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USING btree (chapter_id);
+
+
+--
+-- Name: meeting_facilitator_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX meeting_facilitator_id ON public.chapter_program_information_meeting_facilitators USING btree (meeting_facilitator_id);
+
+
+--
+-- Name: meeting_time_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX meeting_time_id ON public.chapter_program_information_meeting_times USING btree (meeting_time_id);
+
+
+--
+-- Name: organization_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX organization_type_id ON public.chapter_program_information_organization_types USING btree (organization_type_id);
+
+
+--
+-- Name: participant_count_estimate_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX participant_count_estimate_id ON public.chapter_program_information USING btree (participant_count_estimate_id);
 
 
 --
@@ -2837,6 +3820,30 @@ CREATE UNIQUE INDEX uniq_students_accounts ON public.student_profiles USING btre
 
 
 --
+-- Name: chapter_program_information_meeting_facilitators fk_rails_04ff66b53d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
+    ADD CONSTRAINT fk_rails_04ff66b53d FOREIGN KEY (chapter_program_information_id) REFERENCES public.chapter_program_information(id);
+
+
+--
+-- Name: community_connection_availability_slots fk_rails_0b8f604e0a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots
+    ADD CONSTRAINT fk_rails_0b8f604e0a FOREIGN KEY (community_connection_id) REFERENCES public.community_connections(id);
+
+
+--
+-- Name: chapter_program_information_organization_types fk_rails_0d8e315484; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types
+    ADD CONSTRAINT fk_rails_0d8e315484 FOREIGN KEY (organization_type_id) REFERENCES public.organization_types(id);
+
+
+--
 -- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2885,6 +3892,14 @@ ALTER TABLE ONLY public.divisions_regional_pitch_events
 
 
 --
+-- Name: chapter_program_information fk_rails_30f8030d7a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_30f8030d7a FOREIGN KEY (program_length_id) REFERENCES public.program_lengths(id);
+
+
+--
 -- Name: team_submissions fk_rails_34e7653c32; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2901,11 +3916,35 @@ ALTER TABLE ONLY public.mentor_profile_mentor_types
 
 
 --
+-- Name: chapter_program_information_organization_types fk_rails_38f0326fd3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_organization_types
+    ADD CONSTRAINT fk_rails_38f0326fd3 FOREIGN KEY (chapter_program_information_id) REFERENCES public.chapter_program_information(id);
+
+
+--
 -- Name: regional_pitch_events_user_invitations fk_rails_3bbe8623e3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.regional_pitch_events_user_invitations
     ADD CONSTRAINT fk_rails_3bbe8623e3 FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
+
+
+--
+-- Name: chapter_program_information fk_rails_41d22ed899; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_41d22ed899 FOREIGN KEY (participant_count_estimate_id) REFERENCES public.participant_count_estimates(id);
+
+
+--
+-- Name: user_invitations fk_rails_4e77e2e432; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_invitations
+    ADD CONSTRAINT fk_rails_4e77e2e432 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
 
 
 --
@@ -2933,11 +3972,27 @@ ALTER TABLE ONLY public.consent_waivers
 
 
 --
+-- Name: community_connections fk_rails_714931f495; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connections
+    ADD CONSTRAINT fk_rails_714931f495 FOREIGN KEY (chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
+
+
+--
 -- Name: certificates fk_rails_75edbeede4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.certificates
     ADD CONSTRAINT fk_rails_75edbeede4 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: chapter_ambassador_profiles fk_rails_793dbc1d27; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_ambassador_profiles
+    ADD CONSTRAINT fk_rails_793dbc1d27 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
 
 
 --
@@ -2962,6 +4017,14 @@ ALTER TABLE ONLY public.mentor_profile_expertises
 
 ALTER TABLE ONLY public.parental_consents
     ADD CONSTRAINT fk_rails_837621b019 FOREIGN KEY (student_profile_id) REFERENCES public.student_profiles(id);
+
+
+--
+-- Name: chapter_program_information fk_rails_8d148a7c2c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_8d148a7c2c FOREIGN KEY (low_income_estimate_id) REFERENCES public.low_income_estimates(id);
 
 
 --
@@ -3005,6 +4068,14 @@ ALTER TABLE ONLY public.judge_profile_judge_types
 
 
 --
+-- Name: community_connection_availability_slots fk_rails_9e00216d41; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.community_connection_availability_slots
+    ADD CONSTRAINT fk_rails_9e00216d41 FOREIGN KEY (availability_slot_id) REFERENCES public.availability_slots(id);
+
+
+--
 -- Name: screenshots fk_rails_9f5eed79ce; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3021,6 +4092,30 @@ ALTER TABLE ONLY public.submission_scores
 
 
 --
+-- Name: chapters fk_rails_b047a2142a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_b047a2142a FOREIGN KEY (primary_contact_id) REFERENCES public.chapter_ambassador_profiles(id);
+
+
+--
+-- Name: chapter_program_information_meeting_times fk_rails_b3eaf5a58a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times
+    ADD CONSTRAINT fk_rails_b3eaf5a58a FOREIGN KEY (chapter_program_information_id) REFERENCES public.chapter_program_information(id);
+
+
+--
+-- Name: chapter_program_information_meeting_times fk_rails_b66230ffb6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_times
+    ADD CONSTRAINT fk_rails_b66230ffb6 FOREIGN KEY (meeting_time_id) REFERENCES public.meeting_times(id);
+
+
+--
 -- Name: mentor_profile_mentor_types fk_rails_b776f096c9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3029,10 +4124,10 @@ ALTER TABLE ONLY public.mentor_profile_mentor_types
 
 
 --
--- Name: regional_links fk_rails_b88e121da0; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: chapter_links fk_rails_b88e121da0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.regional_links
+ALTER TABLE ONLY public.chapter_links
     ADD CONSTRAINT fk_rails_b88e121da0 FOREIGN KEY (chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
 
 
@@ -3053,6 +4148,14 @@ ALTER TABLE ONLY public.submission_scores
 
 
 --
+-- Name: student_profiles fk_rails_c18d1e4562; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.student_profiles
+    ADD CONSTRAINT fk_rails_c18d1e4562 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
 -- Name: regional_pitch_events fk_rails_c377215e38; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3066,6 +4169,14 @@ ALTER TABLE ONLY public.regional_pitch_events
 
 ALTER TABLE ONLY public.admin_profiles
     ADD CONSTRAINT fk_rails_c70dd3b9e0 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: chapter_links fk_rails_ca99b2153e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_links
+    ADD CONSTRAINT fk_rails_ca99b2153e FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
 
 
 --
@@ -3085,6 +4196,22 @@ ALTER TABLE ONLY public.business_plans
 
 
 --
+-- Name: legal_contacts fk_rails_e57ad14bd5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.legal_contacts
+    ADD CONSTRAINT fk_rails_e57ad14bd5 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
+-- Name: chapter_program_information_meeting_facilitators fk_rails_f261bac187; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information_meeting_facilitators
+    ADD CONSTRAINT fk_rails_f261bac187 FOREIGN KEY (meeting_facilitator_id) REFERENCES public.meeting_facilitators(id);
+
+
+--
 -- Name: background_checks fk_rails_f5be68f7c1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3098,6 +4225,14 @@ ALTER TABLE ONLY public.background_checks
 
 ALTER TABLE ONLY public.teams
     ADD CONSTRAINT fk_rails_f5e3e59211 FOREIGN KEY (division_id) REFERENCES public.divisions(id);
+
+
+--
+-- Name: chapter_program_information fk_rails_ff5375610f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_program_information
+    ADD CONSTRAINT fk_rails_ff5375610f FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
 
 
 --
@@ -3335,13 +4470,59 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231211204753'),
 ('20231215163819'),
 ('20231216014610'),
+('20240202203152'),
+('20240202203636'),
 ('20240206173222'),
 ('20240208195151'),
+('20240221211159'),
+('20240229195416'),
+('20240229200318'),
+('20240229201836'),
+('20240305223902'),
 ('20240312195853'),
+('20240318172542'),
+('20240318201053'),
 ('20240321122732'),
 ('20240321122808'),
 ('20240321123201'),
 ('20240326155545'),
+('20240415201850'),
+('20240417195826'),
+('20240418152235'),
+('20240424214507'),
+('20240425120120'),
+('20240502005925'),
+('20240502192037'),
+('20240503184829'),
+('20240506124949'),
+('20240507200320'),
+('20240507200453'),
+('20240507202124'),
+('20240507213257'),
+('20240507213510'),
+('20240507213707'),
+('20240508141732'),
+('20240508144836'),
+('20240508145108'),
+('20240508171216'),
+('20240509222317'),
+('20240509222533'),
+('20240509222711'),
+('20240513145452'),
+('20240513145812'),
+('20240513150037'),
+('20240513182351'),
+('20240513182546'),
+('20240513182837'),
+('20240527201537'),
+('20240528203743'),
+('20240528203908'),
+('20240528204229'),
+('20240529011028'),
+('20240605033203'),
+('20240614132749'),
+('20240620151755'),
+('20240625173653'),
 ('20240702145233');
 
 

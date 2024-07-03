@@ -1,0 +1,37 @@
+<div class="flex nested-fields regional-links-fields placeholder-updaters">
+  <div class="mr-8">
+    <%= f.input :name,
+      label: "Type",
+      collection: ChapterLink.names.keys.map { |k| [k.humanize, k] },
+      prompt: "Choose type...",
+      label_html: { class: "text-sm" }
+    %>
+  </div>
+
+  <div>
+    <%= f.input :value,
+      label: "URL or username",
+      input_html: {
+        data: ChapterLink.link_name_placeholders
+      }
+    %>
+
+    <%= f.input :custom_label,
+      label: false,
+      wrapper_html: {
+        class: "custom_label",
+        style: "#{'display: none;' if f.object.custom_label.blank?}",
+      },
+      input_html: {
+        placeholder: "Display text; ex: Join the mentor whatsapp group!",
+      }
+    %>
+  </div>
+
+  <div class="pt-8 ml-3">
+    <%= link_to_remove_association(
+      web_icon("close", class: "icon-red"), f,
+      class: "destroyable-link--destroy"
+    ) %>
+  </div>
+</div>

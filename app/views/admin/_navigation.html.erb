@@ -66,9 +66,21 @@
       admin_user_invitations_path,
       class: al(admin_user_invitations_path) %>
 
+    <%= link_to "Background Checks",
+      admin_background_checks_path,
+      class: al(admin_background_checks_path) %>
+
     <%= link_to "Admins",
       admin_admins_path,
       class: al(admin_admins_path) %>
+
+    <%= link_to "Chapters",
+                admin_chapters_path,
+      class: al(admin_chapters_path) %>
+
+    <%= link_to "Chapter Ambassadors",
+                admin_chapter_ambassadors_path,
+      class: al(admin_chapter_ambassadors_path) %>
 
     <%= link_to "Background jobs",
       "/sidekiq",

@@ -24,16 +24,18 @@
       <%= f.text_field :email %>
     </p>
 
-    <p>
-      <%= f.label :date_of_birth %>
-      <%= f.date_select :date_of_birth,
-        {
-          prompt: true,
-          start_year: Season.current.year,
-          end_year: Season.current.year - 100,
-        },
-        class: "chosen dob_field" %>
-    </p>
+    <% if !f.object.is_chapter_ambassador? %>
+      <p>
+        <%= f.label :date_of_birth %>
+        <%= f.date_select :date_of_birth,
+          {
+            prompt: true,
+            start_year: Season.current.year,
+            end_year: Season.current.year - 100,
+          },
+          class: "chosen dob_field" %>
+      </p>
+    <% end %>
 
     <p>
       <%= f.label :gender,
@@ -66,6 +68,33 @@
             <% end %>
           </ul>
         <% end %>
+      <% end %>
+    <% end %>
+
+    <% if f.object.student_profile.present? %>
+      <%= f.fields_for :student_profile do |s| %>
+        <p>
+          <%= s.label :chapter_id, "Assign to Chapter", for: :chapter_id %>
+
+          <%= s.collection_select(
+                :chapter_id,
+                Chapter.all.order(organization_name: :asc),
+                :id,
+                :organization_name,
+                include_blank: 'None',
+                selected: @account.student_profile.try(:chapter_id)
+              ) %>
+        </p>
+      <% end %>
+
+      <% if f.object.student_profile.errors.present? %>
+        <ul class="list--reset field_with_errors">
+          <% f.object.student_profile.errors.each do |error| %>
+            <li class="error">
+              <%= error.message %>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
     <% end %>
     <br>

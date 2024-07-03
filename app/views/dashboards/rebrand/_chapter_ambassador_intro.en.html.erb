@@ -11,7 +11,7 @@
         <p class="mt-8"><%= chapter_ambassador.intro_summary %></p>
 
         <div id="cha-social-links">
-          <% chapter_ambassador.regional_links.each do |link| %>
+          <% chapter_ambassador.chapter_links.each do |link| %>
             <span>
               <% if link.name == "email" %>
                 <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>

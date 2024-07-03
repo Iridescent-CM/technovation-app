@@ -1,0 +1,121 @@
+<div class="grid grid--justify-center">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <div class="panel">
+      <div class="grid">
+        <div class="grid__col-12">
+          <h3><%= @chapter.name.presence || "TBD" %></h3>
+        </div>
+
+        <div class="grid__col-6">
+          <dl>
+            <dt>Organization</dt>
+            <dd><%= @chapter.organization_name %></dd>
+
+            <dt>Organization Headquarters Location</dt>
+            <dd><%= @chapter.organization_headquarters_location.presence || "Not Set" %></dd>
+
+            <dt>Primary Contact</dt>
+            <dd>
+              <%= @chapter.primary_contact.present? ? (link_to @chapter.primary_contact.full_name, admin_participant_path(@chapter.primary_contact.account)) : "Not Set" %>
+            </dd>
+
+            <dt>Location</dt>
+            <dd><%= @chapter.address_details.presence || "-" %></dd>
+
+            <dt>Public Map Visibility</dt>
+            <dd>
+              <%= @chapter.visible_on_map? ?  "Display on map" : "Do not display on map" %>
+            </dd>
+
+            <dt>Chapter Links</dt>
+            <dd>
+              <% if @chapter.chapter_links.present? %>
+                <ul style="list-style: none; padding: 0;">
+                  <% @chapter.chapter_links.each do |link| %>
+                    <li>
+                      <% if link.name == "email" %>
+                        <%= mail_to link.value, web_icon(link.icon, text: link.value), style: "font-weight: lighter; color: black;" %>
+                      <% else %>
+                        <%= link_to web_icon(link.icon, text: link.value), link.url, style: "font-weight: lighter; color: black;" %>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                -
+              <% end %>
+            </dd>
+
+            <dt>Chapter Program Information</dt>
+            <dd>
+              <%if @chapter.chapter_program_information.present? %>
+                <%= link_to "View Responses",
+                            admin_chapter_chapter_program_information_path(@chapter)%>
+              <% else %>
+                  <p>Not filled out</p>
+              <% end %>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="grid__col-6">
+          <dl>
+            <dt>MOU</dt>
+            <dd>
+              <% if @chapter.legal_contact.present? %>
+                <% if @chapter.legal_document.present? %>
+                  <% if @chapter.legal_document.signed? %>
+                    Signed <%= @chapter.legal_document.signed_at.strftime("%b %d, %Y") %>
+                  <% else %>
+                    Not signed
+                  <% end %>
+                <% else %>
+                  Not sent
+                <% end %>
+              <% else %>
+                Not sent (no legal contact has been setup yet)
+              <% end %>
+            </dd>
+
+            <dt>Seasons MOU Valid For</dt>
+            <dd>
+              <% if @chapter.legal_document.present? %>
+                <%= @chapter.seasons_legal_agreement_is_valid_for.to_sentence %>
+              <% else %>
+                -
+              <% end %>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="grid__col-12">
+        <dl>
+          <dt>Summary</dt>
+
+          <dd>
+            <%= simple_format h(@chapter.summary.presence || "-") %>
+          </dd>
+        </dl>
+      </div>
+
+      <%= button_to "Edit Chapter",
+        edit_admin_chapter_path(@chapter),
+        method: "get",
+        class: "button"
+      %>
+    </div>
+  </div>
+</div>
+
+<%= render "admin/chapters/chapter_onboarding",
+  chapter: @chapter
+%>
+
+<%= render "admin/chapters/chapter_ambassadors",
+  chapter: @chapter,
+  pending_chapter_invites: @pending_chapter_invites,
+  chapter_invite: @chapter_invite
+%>
+
+<%= render "admin/chapters/legal_contact", chapter: @chapter %>

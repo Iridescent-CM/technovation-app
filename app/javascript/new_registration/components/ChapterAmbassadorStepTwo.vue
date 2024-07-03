@@ -35,6 +35,18 @@
         </div>
 
         <FormulateInput
+          name="meetsMinimumAgeRequirement"
+          id="meetsMinimumAgeRequirement"
+          type="checkbox"
+          label="I confirm that I am 18 years or older"
+          validation="required"
+          :validation-messages="{ required: 'You must be 18 years or older in order to become a Chapter Ambassador' }"
+          @keyup="checkValidation"
+          @blur="checkValidation"
+          @input="checkValidation"
+        />
+
+        <FormulateInput
           name="gender"
           :options="genderOptions"
           type="select"
@@ -49,35 +61,6 @@
         />
 
         <FormulateInput
-          name="dateOfBirth"
-          id="dateOfBirth"
-          type="date"
-          label="Birthday"
-          placeholder="Birthday"
-          validation="required|chapter_ambassador_age|after:01/01/1900|before:01/01/2020"
-          :validation-messages="{
-            after: 'Please enter a valid birthday.',
-            before: 'Please enter a valid birthday.'
-          }"
-          validation-name="Birthday"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          @change="checkValidation"
-        />
-
-        <FormulateInput
-          name="chapterAmbassadorOrganizationCompanyName"
-          id="chapterAmbassadorOrganizationCompanyName"
-          type="text"
-          label="Company Name"
-          placeholder="Company Name"
-          validation="required"
-          validation-name="Company name"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-        />
-
-        <FormulateInput
           name="chapterAmbassadorJobTitle"
           id="chapterAmbassadorJobTitle"
           type="text"
@@ -89,24 +72,34 @@
           @blur="checkValidation"
         />
 
-        <div class="chapter-ambassador-information">
-          <h2 class="registration-title">Set your personal summary</h2>
+        <FormulateInput
+          name="chapterOrganizationName"
+          id="chapterOrganizationName"
+          type="text"
+          label="Organization"
+          readOnly="true"
+          disabled="true"
+        />
 
-          <p class="text-left pb-2">
-            Add a description of yourself to your profile to help students get to know you.
-            Entering at least 100 characters is required.
-            You can change this later.<span class="formulate-required-field">*</span>
-          </p>
-          <FormulateInput
-            name="chapterAmbassadorBio"
-            id="chapterAmbassadorBio"
-            type="textarea"
-            validation="required|min:100,length"
-            validation-name="Personal summary"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-          />
-        </div>
+        <FormulateInput
+          name="chapterAmbassadorOrganizationStatus"
+          :options="organizationStatusOptions"
+          type="select"
+          @keyup="checkValidation"
+          @blur="checkValidation"
+          label="Status with Organization"
+          id="organizationStatus"
+          input-class="ChapterAmbassadorSelectClass"
+        />
+
+        <FormulateInput
+          name="chapterAmbassadorPhoneNumber"
+          id="chapterAmbassadorPhoneNumber"
+          type="tel"
+          label="Phone Number (optional)"
+          @keyup="checkValidation"
+          @blur="checkValidation"
+        />
       </div>
     </div>
 
@@ -120,6 +113,9 @@
 </template>
 
 <script>
+import axios from "axios"
+
+import { airbrake } from "utilities/utilities"
 import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
@@ -135,16 +131,35 @@ export default {
   },
   data () {
     return {
+      inviteCode:  new URLSearchParams(document.location.search).get('invite_code'),
       genderOptions: [
         'Female',
         'Male',
         'Non-binary',
         'Prefer not to say'
       ],
+      organizationStatusOptions: {
+        employee: 'Employee',
+        volunteer: 'Volunteer'
+      },
       hasValidationErrors: true
     }
   },
   methods: {
+    async getOrganizationName() {
+      try {
+        const response = await axios.get('/api/registration/chapter_organization_name', {
+          params: { invite_code: this.inviteCode }
+        })
+
+        document.getElementById("chapterOrganizationName").value = response.data.chapterOrganizationName
+      }
+      catch(error) {
+        airbrake.notify({
+          error: `[REGISTRATION] Error getting chapter organization name - ${error.response.data}`
+        })
+      }
+    },
     checkValidation() {
       const validationErrorMessages = Array.from(
         document.getElementsByClassName('validation-error-message')
@@ -152,14 +167,11 @@ export default {
 
       if (document.getElementById('firstName').value.length === 0 ||
         document.getElementById('lastName').value.length === 0 ||
-        document.getElementById('dateOfBirth').value.length === 0 ||
-        document.getElementById('chapterAmbassadorOrganizationCompanyName').value.length === 0 ||
+        !document.getElementById('meetsMinimumAgeRequirement').checked ||
         document.getElementById('chapterAmbassadorJobTitle').value.length === 0 ||
-        document.getElementById('chapterAmbassadorBio').value.length < 100 ||
         validationErrorMessages.some((message) => {
           return (
             message.indexOf('years old to participate') >= 0 ||
-            message.indexOf('Please enter a valid birthday') >= 0 ||
             message.indexOf('Personal summary must be at least') >= 0
           )
         })) {
@@ -175,6 +187,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  async created() {
+    await this.getOrganizationName()
   }
 }
 </script>

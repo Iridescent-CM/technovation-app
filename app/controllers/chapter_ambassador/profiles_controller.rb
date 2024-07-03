@@ -2,11 +2,15 @@ module ChapterAmbassador
   class ProfilesController < ChapterAmbassadorController
     include ProfileController
 
+    skip_before_action :require_chapter_and_chapter_ambassador_onboarded
+
+    layout "chapter_ambassador_rebrand"
+
     def profile_params
       [
-        :organization_company_name,
         :job_title,
-        :bio
+        :organization_status,
+        :phone_number
       ]
     end
 

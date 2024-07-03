@@ -133,21 +133,25 @@ Rails.application.routes.draw do
     resources :scores, only: :show
   end
 
-  get "pending_chapter_ambassador/dashboard",
-    to: "chapter_ambassador/dashboards#show"
-
   namespace :chapter_ambassador do
     resource :profile_details_confirmation, only: [:create, :update]
 
-    resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
+    resource :location_details, only: :show
 
+    resource :chapter_admin, only: :show, controller: "chapter_admin"
     resource :dashboard, only: :show
     resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
 
-    resource :introduction, only: [:edit, :update]
+    resource :chapter_profile, only: :show, controller: "chapter_profile"
+    resource :chapter_affiliation_agreement, only: :show
+    resource :public_information, only: [:show, :edit, :update], controller: "public_information"
+    resource :chapter_location, only: [:show, :edit, :update]
+    resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
+    resource :legal_agreement, only: :create
+    resource :community_connections, only: [:show, :new, :create, :edit, :update]
 
     resources :job_statuses, only: :show
 
@@ -174,7 +178,14 @@ Rails.application.routes.draw do
 
     resource :profile_image_upload_confirmation, only: :show
 
-    resources :background_checks, only: [:new, :create, :show]
+    resource :background_check, only: :show
+    resources :background_checks, only: [:new, :create]
+    post "/background_check_invitation", to: "background_checks#create_invitation"
+
+    resources :trainings, only: :index
+    resource :training_completion, only: :show
+
+    resource :mou, only: :show
 
     resources :events, controller: :regional_pitch_events
 
@@ -258,6 +269,14 @@ Rails.application.routes.draw do
     resources :student_conversions, only: :create
     resources :mentor_to_judge_conversions, only: :create
     resources :chapter_ambassador_profile_additions, only: :create
+    resources :chapters do
+      resource :legal_contact, only: [:new, :create, :edit, :update], controller: "chapters/legal_contacts"
+      resource :memorandum_of_understanding, only: :create, controller: "chapter_memorandum_of_understanding"
+      resources :invites, only: :create, controller: "chapter_invites"
+      resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
+    end
+
+    resources :chapter_ambassadors, only: :index
 
     resources :chapter_ambassador_status, only: :update
 
@@ -282,6 +301,7 @@ Rails.application.routes.draw do
 
     resources :background_checks, only: :index
     resources :background_check_sweeps, only: :create
+    resources :background_check_syncs, only: :create
 
     resources :events,
       controller: :regional_pitch_events,
@@ -341,11 +361,17 @@ Rails.application.routes.draw do
       resources :mentor_types, only: :index
 
       resources :judge_types, only: :index
+
+      resource :chapter_organization_name, only: :show
     end
 
     namespace :regional_pitch_events do
       resources :settings, only: :index
     end
+  end
+
+  namespace :webhooks do
+    resource :docusign, only: :create, controller: "docusign"
   end
 
   resource :terms_agreement, only: [:edit, :update]

@@ -7,9 +7,13 @@ FactoryBot.define do
   ] do
     organization_company_name { "FactoryBot" }
     job_title { "Engineer" }
+    organization_status { "employee" }
     bio { "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut diam vel felis fringilla amet." }
+    training_completed_at { Time.now }
+    viewed_community_connections { true }
 
-    account
+    account { association :account, meets_minimum_age_requirement: true }
+    association :chapter
 
     transient do
       city { "Chicago" }
@@ -44,15 +48,33 @@ FactoryBot.define do
       end
     end
 
+    trait :assigned_to_chapter do
+      before(:create) do |chapter_ambassador|
+        chapter = FactoryBot.create(:chapter)
+        chapter_ambassador.chapter_id = chapter.id
+      end
+    end
+
+    trait :not_assigned_to_chapter do
+      before(:create) do |chapter_ambassador|
+        chapter_ambassador.chapter_id = nil
+      end
+    end
+
+    trait :training_not_completed do
+      training_completed_at { nil }
+    end
+
     before(:create) do |r, e|
       {
         city: e.city,
         state_province: e.state_province,
         country: e.country,
         first_name: e.first_name,
-        skip_existing_password: true
+        skip_existing_password: true,
+        meets_minimum_age_requirement: true
       }.each do |k, v|
-        r.account.send("#{k}=", v)
+        r.account.send(:"#{k}=", v)
       end
 
       unless r.background_check.present?
@@ -62,10 +84,16 @@ FactoryBot.define do
       unless r.consent_signed?
         r.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
+
+      r.build_legal_document(FactoryBot.attributes_for(:document, :signed))
     end
 
     after(:create) do |r, e|
       ProfileCreating.execute(r, FakeController.new)
+
+      if r.chapter.present?
+        r.chapter.update(primary_contact: r)
+      end
     end
 
     trait :approved do

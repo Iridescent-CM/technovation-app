@@ -10,6 +10,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   }
 
   belongs_to :account
+  belongs_to :chapter, optional: true
   accepts_nested_attributes_for :account
   validates_associated :account
 
@@ -21,11 +22,15 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   after_update :after_status_changed, if: :saved_change_to_status?
 
   enum status: %i[pending approved declined spam]
+  enum organization_status: {
+    employee: "employee",
+    volunteer: "volunteer"
+  }
 
-  validates :organization_company_name,
-    :job_title,
-    :bio,
-    presence: true
+  validates :job_title, presence: true
+
+  has_one :legal_document, -> { where(active: true) }, class_name: "Document", as: :signer
+  has_many :documents, as: :signer
 
   has_many :saved_searches, as: :searcher
 
@@ -35,21 +40,26 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   has_many :messages, as: :sender
   has_many :multi_messages, as: :sender
 
-  has_many :regional_links, dependent: :destroy
+  has_many :chapter_links, dependent: :destroy
 
-  accepts_nested_attributes_for :regional_links, reject_if: ->(attrs) {
+  has_one :community_connection
+
+  accepts_nested_attributes_for :chapter_links, reject_if: ->(attrs) {
     attrs.reject { |k, _| k.to_s == "custom_label" }.values.any?(&:blank?)
   }, allow_destroy: true
+
+  after_update :update_onboarding_status
 
   delegate :submitted?,
     :candidate_id,
     :report_id,
+    :invitation_id,
     to: :background_check,
     prefix: true,
     allow_nil: true
 
-  def method_missing(method_name, *args)
-    account.public_send(method_name, *args)
+  def method_missing(method_name, *args) # standard:disable all
+    account.public_send(method_name, *args) # standard:disable all
   rescue
     raise NoMethodError,
       "undefined method `#{method_name}' not found for #{self}"
@@ -61,22 +71,24 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     ]
   end
 
+  def full_name
+    account.full_name
+  end
+
+  def email_address
+    account.email
+  end
+
   def provided_intro?
     !intro_summary.blank?
   end
 
-  def needs_intro_prompt?
-    !self.class.staff_test_account_ids.include?(account_id) and
-      intro_summary.blank?
-  end
-
   def background_check_complete?
-    country_code != "US" or !!background_check && background_check.clear?
+    !!background_check && background_check.clear?
   end
 
   def requires_background_check?
-    country_code == "US" and
-      !background_check_complete?
+    !background_check_complete?
   end
 
   def in_background_check_country?
@@ -95,6 +107,22 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     !bio.blank?
   end
 
+  def training_completed?
+    training_completed_at.present?
+  end
+
+  def complete_training!
+    update(training_completed_at: Time.current)
+  end
+
+  def community_connections_viewed?
+    viewed_community_connections
+  end
+
+  def legal_document_signed?
+    legal_document&.signed?
+  end
+
   def region_name
     return unless Country[country]
 
@@ -111,13 +139,15 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def rebranded?
-    false
+    true
   end
 
-  def onboarded?
-    account.email_confirmed? and
-      approved? and
-      background_check_complete?
+  def can_be_marked_onboarded?
+    !!(account.email_confirmed? &&
+      background_check_complete? &&
+      legal_document_signed? &&
+      training_completed? &&
+      viewed_community_connections?)
   end
 
   def onboarding?
@@ -130,6 +160,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def scope_name
     "chapter_ambassador"
+  end
+
+  def update_onboarding_status
+    update_column(:onboarded, can_be_marked_onboarded?)
   end
 
   private

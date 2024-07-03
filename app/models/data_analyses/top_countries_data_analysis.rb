@@ -77,7 +77,7 @@ module DataAnalyses
       [
         @top_students.keys.map { |country_code|
           url_helper.public_send(
-            "#{user.scope_name}_participants_path",
+            :"#{user.scope_name}_participants_path",
             accounts_grid: {
               scope_names: ["student"],
               country: [country_code]
@@ -87,7 +87,7 @@ module DataAnalyses
 
         @top_mentors.keys.map { |country_code|
           url_helper.public_send(
-            "#{user.scope_name}_participants_path",
+            :"#{user.scope_name}_participants_path",
             accounts_grid: {
               scope_names: ["mentor"],
               country: [country_code]
@@ -97,7 +97,7 @@ module DataAnalyses
 
         @top_judges.keys.map { |country_code|
           url_helper.public_send(
-            "#{user.scope_name}_participants_path",
+            :"#{user.scope_name}_participants_path",
             accounts_grid: {
               scope_names: ["judge"],
               country: [country_code]

@@ -1,0 +1,48 @@
+<% standalone ||= false %>
+
+<% if standalone %>
+  <div class="grid grid--justify-space-around">
+    <div class="grid__col-sm-8 panel">
+<% end %>
+
+<div id="change-email" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Change Your Email</p>
+  </div>
+
+  <%= render 'errors', record: current_profile %>
+
+  <div id="change-email-wrapper" class="p-6">
+    <div id="email-details">
+      <p class="hint">
+        If you change your email address, we will send a message
+        to your inbox to confirm that you own the address.
+      </p>
+
+      <p class="hint">
+        You <strong>must</strong> use the link in that message
+        to confirm your new email address and restore full access to this site.
+      </p>
+
+      <%= simple_form_for current_profile, url: send("#{current_scope}_profile_path", local: true) do |f| %>
+        <%= f.simple_fields_for :account, include_id: false do |a| %>
+          <%= a.input :existing_password,
+            label: "Current password",
+            id: "existing_password_field_email",
+            placeholder: "Enter your password first" %>
+
+          <%= a.input :email %>
+        <% end %>
+
+        <p>
+          <%= f.submit "Change email", class: "tw-green-btn" %>
+        </p>
+    </div>
+  </div>
+<% end %>
+</div>
+
+<% if standalone %>
+  </div>
+</div>
+<% end %>

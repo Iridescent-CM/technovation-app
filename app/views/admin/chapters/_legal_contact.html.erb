@@ -1,0 +1,44 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h3>
+      Legal Contact
+    </h3>
+
+    <div class="panel">
+      <% if chapter.legal_contact.present? %>
+        <dl>
+          <dt>Name</dt>
+          <dd><%= chapter.legal_contact.full_name %></dd>
+
+          <dt>Email</dt>
+          <dd><%= chapter.legal_contact.email_address %></dd>
+
+          <dt>Phone Number</dt>
+          <dd><%= chapter.legal_contact.phone_number.presence || "-" %></dd>
+
+          <dt>Job Title</dt>
+          <dd><%= chapter.legal_contact.job_title.presence || "-" %></dd>
+        </dl>
+
+        <div style="display: flex; justify-content: flex-start; column-gap: 2rem;" >
+          <div>
+            <%= link_to "Edit",
+              edit_admin_chapter_legal_contact_path(@chapter),
+              class: "button"
+            %>
+          </div>
+
+          <% if @chapter.legal_document.blank? %>
+            <%= button_to "Send MOU",
+              admin_chapter_memorandum_of_understanding_path(@chapter),
+              method: "post",
+              class: "button"
+            %>
+        <% end %>
+        </div>
+      <% else %>
+        <%= render "admin/chapters/legal_contacts/form", chapter: @chapter, legal_contact: @chapter.build_legal_contact %>
+      <% end %>
+    </div>
+  </div>
+</div>

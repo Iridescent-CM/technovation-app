@@ -1,5 +1,6 @@
 class NewRegistrationController < ApplicationController
   after_action :update_registration_invite, only: :create
+  after_action :assign_chapter_ambassador_to_chapter, only: :create
 
   layout "new_registration"
 
@@ -100,10 +101,13 @@ class NewRegistrationController < ApplicationController
 
   def chapter_ambassador_params
     {
-      organization_company_name: registration_params[:chapterAmbassadorOrganizationCompanyName],
       job_title: registration_params[:chapterAmbassadorJobTitle],
-      bio: registration_params[:chapterAmbassadorBio],
-      account_attributes: account_attributes.merge({gender: registration_params[:gender]})
+      organization_status: registration_params[:chapterAmbassadorOrganizationStatus],
+      phone_number: registration_params[:chapterAmbassadorPhoneNumber],
+      account_attributes: account_attributes.merge({
+        gender: registration_params[:gender],
+        meets_minimum_age_requirement: registration_params[:meetsMinimumAgeRequirement]
+      })
     }
   end
 
@@ -143,9 +147,10 @@ class NewRegistrationController < ApplicationController
       :mentorBio,
       :judgeSchoolCompanyName,
       :judgeJobTitle,
-      :chapterAmbassadorOrganizationCompanyName,
       :chapterAmbassadorJobTitle,
       :chapterAmbassadorBio,
+      :chapterAmbassadorOrganizationStatus,
+      :chapterAmbassadorPhoneNumber,
       mentorExpertises: [],
       mentorTypes: [],
       judgeTypes: []
@@ -157,6 +162,16 @@ class NewRegistrationController < ApplicationController
       UpdateRegistrationInviteJob.perform_later(
         invite_code: params[:inviteCode],
         account_id: @profile.account.id
+      )
+    end
+  end
+
+
+  def assign_chapter_ambassador_to_chapter
+    if params[:inviteCode].present? && params[:profileType] == "chapter_ambassador"
+      AssignChapterAmbassadorToChapterJob.perform_later(
+        invite_code: params[:inviteCode],
+        chapter_ambassador_profile_id: @profile.id
       )
     end
   end

@@ -1,0 +1,59 @@
+<p class="mb-4">
+  The Memorandum of Understanding serves as the formal agreement between Technovation and you,
+  as the Chapter Ambassador representing a non-profit organization with whom Technovation is working.
+</p>
+
+<p class="mb-8">Please confirm that you have read each of these policies and then click the link
+  to sign the Memorandum of Understanding.
+</p>
+
+<div class="ml-8 mb-8">
+  <ol role="list" class="space-y-4">
+    <%= render "application/templates/sub_checklist_item",
+               name: "Non-Disclosure Agreement",
+               url: "#",
+               is_complete: false
+    %>
+
+    <%= render "application/templates/sub_checklist_item",
+               name: "Brand Guidelines",
+               url: "#",
+               is_complete: false
+    %>
+
+    <%= render "application/templates/sub_checklist_item",
+               name: "Social Media Admin Agreement",
+               url: "#",
+               is_complete: false
+    %>
+
+    <%= render "application/templates/sub_checklist_item",
+               name: "Social Media Policy",
+               url: "#",
+               is_complete: false
+    %>
+
+    <%= render "application/templates/sub_checklist_item",
+               name: "Technovation Code of Conduct",
+               url: "#",
+               is_complete: true
+    %>
+
+    <%= render "application/templates/sub_checklist_item",
+               name: "Reviewed Safety Page",
+               url: "#",
+               is_complete: false
+    %>
+  </ol>
+</div>
+
+<% if current_ambassador.legal_document.present? %>
+  <p>The Memorandum of Understanding has been sent to you, if you have not received it or you are experiences issues, please reach out to <%= mail_to ENV.fetch("HELP_EMAIL") %>.</p>
+<% else %>
+  <div class="text-center">
+    <%= button_to "Review and Sign",
+      chapter_ambassador_legal_agreement_path,
+      method: "post",
+      class: "tw-green-btn" %>
+  </div>
+<% end %>

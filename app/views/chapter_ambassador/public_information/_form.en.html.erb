@@ -1,0 +1,93 @@
+<%= simple_form_for current_chapter,
+  url: chapter_ambassador_public_information_path do |f| %>
+
+  <div class="mb-4">
+    <%= f.label :organization_name %>
+    <p class="text-base ml-3"><%= current_chapter.organization_name %></p>
+    <p class="text-sm italic ml-3">Pre-set by Technovation HQ. Not editable.</p>
+  </div>
+
+  <%= f.label :name, "Chapter Name" %>
+  <%= f.text_field :name %>
+
+  <%= f.input :summary,
+              label: "Program summary",
+              as: :text,
+              input_html: {
+                rows: 3,
+              } %>
+
+  <div class="flex flex-col lg:flex-row justify-between mb-4">
+    <span class="text-sm italic">
+      Give your participants a short introduction to your program.
+      Use up to 280 characters.
+    </span>
+
+    <%= content_tag :span,
+                    data: {
+                      keep_count_of: "#chapter_summary",
+                      down_from: 280,
+                    } do %>
+      <span><%= (f.object.summary || "").length %></span>
+
+      <span>
+        <%= "character".pluralize((f.object.summary || "").length) %>
+      </span>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.input :primary_contact_id,
+                collection: current_chapter.chapter_ambassador_profiles,
+                prompt: "Select a primary contact",
+                label: "Primary Contact",
+                value_method: :id,
+                label_method: :full_name,
+                selected: current_chapter.primary_contact&.id %>
+
+    <p class="text-sm italic mb-4">This Chapter Ambassador is the primary contact displayed to students and mentors</p>
+  </div>
+
+  <div>
+    <h3 class="mb-4">Chapter Links</h3>
+
+    <%= f.simple_fields_for :chapter_links do |r| %>
+      <%= render "chapter_ambassador/chapter/public_information/chapter_link_fields", f: r %>
+    <% end %>
+
+    <div class="links">
+      <%= link_to_add_association "+ Add another link", f,
+        :chapter_links,
+        partial: "chapter_ambassador/chapter/public_information/chapter_link_fields",
+        class: "tw-gray-btn" %>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mt-8 mb-4">Public Map Visibility</h3>
+
+    <p class="text-base">
+      By default, this chapter will be included on the publicly visible
+      chapter map on the Technovation website. We will include
+      the following information:
+    </p>
+
+    <ul class="list-disc text-base mb-4">
+      <li class="ml-8">Chapter Name</li>
+      <li class="ml-8">Name of the chapter ambassador set as the primary contact</li>
+      <li class="ml-8">Address of the organization headquarters</li>
+      <li class="ml-8">The first link set in the program links section</li>
+    </ul>
+
+    <%= f.input :visible_on_map,
+                as: :radio_buttons,
+                collection: [["Yes, display my chapter information", true], ["No, do not display my chapter information", false]],
+                label: false %>
+  </div>
+
+  <p class="mt-8">
+    <%= f.submit "Save", class: "tw-green-btn" %>
+      or
+    <%= link_to "cancel", chapter_ambassador_public_information_path %>
+  </p>
+<% end %>

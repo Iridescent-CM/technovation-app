@@ -2,12 +2,15 @@ class ChapterAmbassadorController < ApplicationController
   include Authenticated
 
   helper_method :current_ambassador,
-    :current_profile
+    :current_profile, :current_chapter
 
   before_action -> {
     set_last_profile_used("chapter_ambassador")
     params.permit!
   }, if: -> { current_ambassador.authenticated? }
+
+  before_action :require_chapter_and_chapter_ambassador_onboarded,
+    if: -> { current_ambassador.authenticated? }
 
   around_action :set_time_zone,
     if: -> { current_ambassador.authenticated? }
@@ -36,11 +39,22 @@ class ChapterAmbassadorController < ApplicationController
       current_session.chapter_ambassador_profile
   end
 
+  def current_chapter
+    @current_chapter ||= current_ambassador.chapter || ::NullChapter.new
+  end
+
   def chapter_ambassador
     current_ambassador
   end
 
   def current_profile_type
     "ChapterAmbassadorProfile"
+  end
+
+  def require_chapter_and_chapter_ambassador_onboarded
+    unless current_ambassador.chapter&.onboarded? && current_ambassador.onboarded?
+      redirect_to chapter_ambassador_dashboard_path,
+        error: "You must complete all onboarding steps before accessing Chapter Admin Activity."
+    end
   end
 end

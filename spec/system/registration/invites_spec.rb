@@ -34,13 +34,25 @@ RSpec.describe "Using registration invite codes", :js do
     }
   ].each do |item|
     context "when a #{item[:friendly_profile_type]} is registering using an invite code" do
-      let(:registration_invite) {
-        UserInvitation.create!(
-          profile_type: item[:invite_profile_type],
-          email: email_address,
-          register_at_any_time: register_at_any_time
-        )
-      }
+      if item[:profile_type] == "chapter_ambassador"
+        let(:registration_invite) {
+          UserInvitation.create!(
+            profile_type: item[:invite_profile_type],
+            email: email_address,
+            register_at_any_time: register_at_any_time,
+            chapter_id: chapter.id
+          )
+        }
+        let(:chapter) { FactoryBot.create(:chapter) }
+      else
+        let(:registration_invite) {
+          UserInvitation.create!(
+            profile_type: item[:invite_profile_type],
+            email: email_address,
+            register_at_any_time: register_at_any_time
+          )
+        }
+      end
 
       let(:profile) {
         FactoryBot.create(
@@ -50,6 +62,12 @@ RSpec.describe "Using registration invite codes", :js do
       }
       let(:email_address) { "#{item[:registration_profile_type]}@example.com" }
       let(:register_at_any_time) { false }
+
+      after :each do
+        UserInvitation.delete_all
+        ChapterAmbassadorProfile.update_all(chapter_id: nil)
+        Chapter.destroy_all
+      end
 
       context "when registration is open" do
         before do
@@ -112,9 +130,11 @@ RSpec.describe "Using registration invite codes", :js do
     let(:chapter_ambassado_registration_invite) {
       UserInvitation.create!(
         profile_type: :chapter_ambassador,
-        email: "chapter_ambassador_invite@example.com"
+        email: "chapter_ambassador_invite@example.com",
+        chapter_id: chapter.id
       )
     }
+    let(:chapter) { FactoryBot.create(:chapter) }
 
     context "when visiting the registration page with a chapter ambassador invite code" do
       before do

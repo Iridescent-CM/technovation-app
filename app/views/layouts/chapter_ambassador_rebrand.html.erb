@@ -1,0 +1,6 @@
+<% provide :root_path, chapter_ambassador_dashboard_path %>
+<% provide :global_nav_links, render('chapter_ambassador/navigation/rebrand/global_nav_links') %>
+<% provide :drop_down, render('chapter_ambassador/navigation/rebrand/dropdown_nav') %>
+<% provide :main_header, render('application/templates/tg_green_header', heading: "Technovation Girls") %>
+
+<%= render template: "layouts/application_rebrand" %>

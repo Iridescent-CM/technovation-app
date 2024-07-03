@@ -83,20 +83,40 @@
             profile: @account.public_send("#{@account.scope_name}_profile")
           ) %>
 
+          <% if @account.student_profile %>
+            <dl class="chapter-info">
+              <% if  @account.student_profile.chapter.present? %>
+                <dt>Chapter (Program name)</dt>
+                <dd>
+                  <%= link_to(
+                        @account.student_profile.chapter.name.presence || "Chapter program name not set",
+                        admin_chapter_path(@account.student_profile.chapter)
+                     ) %>
+                </dd>
+
+                <dt>Chapter Organization</dt>
+                <dd>
+                  <%= @account.student_profile.chapter.organization_name.presence || "Organization name not set" %>
+                </dd>
+              <% else %>
+                <dt>Chapter</dt>
+                <dd>Not assigned to a chapter</dd>
+              <% end %>
+            </dl>
+          <% end %>
+
           <%= link_to 'Edit participant',
             edit_admin_participant_path(@account),
             class: "button secondary small" %>
         </div>
 
-        <% if @account.chapter_ambassador_profile || @account.mentor_profile %>
+        <% if @account.mentor_profile %>
           <div class="grid__col-12 grid__col--bleed-y">
             <dl>
               <dt><%= t('models.profile.bio') %></dt>
 
               <dd>
-                <%= simple_format h((
-                  @account.chapter_ambassador_profile || @account.mentor_profile
-                ).bio) %>
+                <%= simple_format h(@account.mentor_profile.bio) %>
               </dd>
             </dl>
           </div>

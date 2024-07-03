@@ -1,0 +1,15 @@
+<div class="grid margin--t-xlarge">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h3>View Chapters</h3>
+
+    <div class="panel">
+      <p><%= link_to "Setup a new chapter", new_admin_chapter_path, class: "button" %></p>
+    </div>
+
+    <%= render 'datagrid/datagrid',
+               grid: @chapters_grid,
+               form_url: admin_chapters_path,
+               model_name: "chapter",
+               scope: :admin %>
+  </div>
+</div>
