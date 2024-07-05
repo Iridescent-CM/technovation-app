@@ -304,6 +304,8 @@ class AccountsGrid
     :enum,
     header: "Team matchng (students & mentors only)",
     select: [
+      ["Mentors matched with a team", "mentors_matched_with_a_team"],
+      ["Students matched with a team", "students_matched_with_a_team"],
       ["Matched with a team", "matched"],
       ["Unmatched", "unmatched"],
       ["Mentors who have not answered invites from teams", "mentors_pending_invites"],
@@ -313,7 +315,7 @@ class AccountsGrid
     if: ->(g) {
       (%w[judge chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
-      scope.send(value).includes(:mentor_profile, :chapter_ambassador_profile)
+      scope.send(value)
     end
 
   filter :onboarded_students,
