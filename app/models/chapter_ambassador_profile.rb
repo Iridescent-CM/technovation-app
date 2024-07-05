@@ -166,10 +166,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     update_column(:onboarded, can_be_marked_onboarded?)
   end
 
-  def is_assigned_to_chapter?
-    chapter.present?
-  end
-
   private
 
   def after_status_changed

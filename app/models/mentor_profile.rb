@@ -373,10 +373,6 @@ class MentorProfile < ActiveRecord::Base
       !bio.blank?
   end
 
-  def is_assigned_to_chapter?
-    false
-  end
-
   private
 
   def can_enable_searchable?
