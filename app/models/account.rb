@@ -234,8 +234,8 @@ class Account < ActiveRecord::Base
         "email_confirmed_at IS NOT NULL AND " +
         "mentor_profiles.bio <> '' AND " +
         "(consent_waivers.id IS NOT NULL AND consent_waivers.voided_at IS NULL) AND " +
-        "(training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
-        "((country = 'US' AND background_checks.status = ?) OR country != 'US')",
+        "(mentor_profiles.training_completed_at IS NOT NULL OR date(season_registered_at) < ?) AND " +
+        "((accounts.country = 'US' AND background_checks.status = ?) OR accounts.country != 'US')",
         ImportantDates.mentor_training_required_since,
         BackgroundCheck.statuses[:clear]
       )
@@ -250,8 +250,8 @@ class Account < ActiveRecord::Base
         "email_confirmed_at IS NULL OR " +
         "mentor_profiles.bio IS NULL OR mentor_profiles.bio = '' OR " +
         "(consent_waivers.id IS NULL OR consent_waivers.voided_at IS NOT NULL) OR " +
-        "(training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
-        "(country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
+        "(mentor_profiles.training_completed_at IS NULL and date(season_registered_at) >= ?) OR " +
+        "(accounts.country = 'US' AND (background_checks.status != ? OR background_checks.status IS NULL))",
         ImportantDates.mentor_training_required_since,
         BackgroundCheck.statuses[:clear]
       )
@@ -376,6 +376,14 @@ class Account < ActiveRecord::Base
       .joins(student_profile: :current_teams).pluck(:id)
 
     where(id: mentor_ids + student_ids)
+  }
+
+  scope :mentors_matched_with_a_team, -> {
+    joins(mentor_profile: :current_teams).includes(:mentor_profile, :chapter_ambassador_profile)
+  }
+
+  scope :students_matched_with_a_team, -> {
+    joins(student_profile: :current_teams).includes(:student_profile, :mentor_profile, :chapter_ambassador_profile)
   }
 
   scope :unmatched, -> {
