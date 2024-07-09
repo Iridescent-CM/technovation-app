@@ -44,14 +44,6 @@ module Salesforce
       end
     end
 
-    def delete_contact(salesforce_id:)
-      if salesforce_id.present?
-        handle_request "Deleting account with Salesforce Id #{salesforce_id}" do
-          client.destroy!("Contact", salesforce_id)
-        end
-      end
-    end
-
     private
 
     attr_reader :client, :salesforce_enabled, :logger, :error_notifier
