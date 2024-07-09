@@ -55,23 +55,23 @@ RSpec.describe Salesforce::ApiClient do
       id: 45678,
       first_name: first_name,
       last_name: last_name,
-      email: email,
-      salesforce_id: salesforce_id
+      email: email
     )
   end
   let(:first_name) { "Luna" }
   let(:last_name) { "Lovegood" }
   let(:email) { "luna@example.com" }
-  let(:salesforce_id) { 123 }
 
   describe "adding a new contact to Salesforce" do
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
     end
 
-    it "calls the create! method to create a new contact in Salesforce" do
-      expect(salesforce_client).to receive(:create!).with(
+    it "calls the upsert! method to create a new contact in Salesforce" do
+      expect(salesforce_client).to receive(:upsert!).with(
         "Contact",
+        "External_Id__c",
+        External_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
         Email: account.email
@@ -80,23 +80,9 @@ RSpec.describe Salesforce::ApiClient do
       salesforce_api_client.add_contact(account: account)
     end
 
-    context "when create! was successful" do
+    context "when the upsert! was unsuccessful" do
       before do
-        allow(salesforce_client).to receive(:create!).and_return(salesforce_id)
-      end
-
-      let(:salesforce_id) { "789122654" }
-
-      it "saves the Salesforce ID to the account" do
-        expect(account).to receive(:update_attribute).with(:salesforce_id, salesforce_id)
-
-        salesforce_api_client.add_contact(account: account)
-      end
-    end
-
-    context "when create! was unsuccessful" do
-      before do
-        allow(salesforce_client).to receive(:create!).and_raise(error_message)
+        allow(salesforce_client).to receive(:upsert!).and_raise(error_message)
       end
 
       let(:error_message) { "ADD CONTACT ERROR" }
@@ -140,47 +126,34 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { true }
     end
 
-    context "when the account has a salesforce_id" do
-      let(:salesforce_id) { "9876fghij54321" }
+    it "calls the upsert! method to update the contact in Salesforce" do
+      expect(salesforce_client).to receive(:upsert!).with(
+        "Contact",
+        "External_Id__c",
+        External_Id__c: account.id,
+        FirstName: account.first_name,
+        LastName: account.last_name,
+        Email: account.email
+      )
 
-      it "calls the update! method to update the contact in Salesforce" do
-        expect(salesforce_client).to receive(:update!).with(
-          "Contact",
-          Id: account.salesforce_id,
-          FirstName: account.first_name,
-          LastName: account.last_name,
-          Email: account.email
-        )
+      salesforce_api_client.update_contact(account: account)
+    end
+
+    context "when the upsert! was unsuccessful" do
+      before do
+        allow(salesforce_client).to receive(:upsert!).and_raise(error_message)
+      end
+
+      let(:error_message) { "UPDATE ERROR" }
+
+      it "logs the error" do
+        expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
 
         salesforce_api_client.update_contact(account: account)
       end
 
-      context "when update! was unsuccessful" do
-        before do
-          allow(salesforce_client).to receive(:update!).and_raise(error_message)
-        end
-
-        let(:error_message) { "UPDATE ERROR" }
-
-        it "logs the error" do
-          expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
-
-          salesforce_api_client.update_contact(account: account)
-        end
-
-        it "notifies the error_notifier with the error" do
-          expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
-
-          salesforce_api_client.update_contact(account: account)
-        end
-      end
-    end
-
-    context "when the account does not have salesforce_id" do
-      let(:salesforce_id) { nil }
-
-      it "does not call the update! method" do
-        expect(salesforce_client).not_to receive(:update!)
+      it "notifies the error_notifier with the error" do
+        expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
 
         salesforce_api_client.update_contact(account: account)
       end

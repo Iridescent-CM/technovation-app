@@ -33,33 +33,14 @@ module Salesforce
     end
 
     def add_contact(account:)
-      salesforce_id = nil
-
       handle_request "Adding account #{account.id}" do
-        salesforce_id = client.create!(
-          "Contact",
-          FirstName: account.first_name,
-          LastName: account.last_name,
-          Email: account.email
-        )
-      end
-
-      if salesforce_id.present?
-        account.update_attribute(:salesforce_id, salesforce_id)
+        upsert_contact(account: account)
       end
     end
 
     def update_contact(account:)
-      if account.salesforce_id.present?
-        handle_request "Updating account #{account.id}" do
-          client.update!(
-            "Contact",
-            Id: account.salesforce_id,
-            FirstName: account.first_name,
-            LastName: account.last_name,
-            Email: account.email
-          )
-        end
+      handle_request "Updating account #{account.id}" do
+        upsert_contact(account: account)
       end
     end
 
@@ -74,6 +55,17 @@ module Salesforce
     private
 
     attr_reader :client, :salesforce_enabled, :logger, :error_notifier
+
+    def upsert_contact(account:)
+      client.upsert!(
+        "Contact",
+        "External_Id__c",
+        External_Id__c: account.id,
+        FirstName: account.first_name,
+        LastName: account.last_name,
+        Email: account.email
+      )
+    end
 
     def handle_request(message, &block)
       if salesforce_enabled
