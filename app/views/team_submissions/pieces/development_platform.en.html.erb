@@ -20,23 +20,6 @@
   ) do |f| %>
     <%= hidden_field_tag :piece, piece_name %>
 
-    <div class="field">
-      <%= f.label :submission_type,
-        "Submission type",
-        for: :team_submission_submission_type %>
-
-      <%= f.select :submission_type,
-        TeamSubmission::SUBMISSION_TYPES,
-        { include_blank: true },
-        data: {
-          toggles: {
-            "Mobile App": "#mobile-app"
-          },
-        },
-        id: :team_submission_submission_type %>
-
-    </div>
-
     <div id="mobile-app" class="mt-8">
       <div class="field">
         <%= f.label :development_platform,

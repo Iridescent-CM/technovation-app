@@ -19,9 +19,6 @@ RSpec.feature "Students edit submission development platform" do
   end
 
   scenario "Choose App Inventor" do
-    select "Mobile App",
-      from: "Submission type"
-
     select "App Inventor",
       from: "Which coding language did your team use?"
 
@@ -44,9 +41,6 @@ RSpec.feature "Students edit submission development platform" do
   end
 
   scenario "Choose Thunkable" do
-    select "Mobile App",
-      from: "Submission type"
-
     select "Thunkable",
       from: "Which coding language did your team use?"
 
