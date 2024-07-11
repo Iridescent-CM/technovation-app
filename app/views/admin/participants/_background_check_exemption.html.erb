@@ -1,5 +1,4 @@
 <% if profile.requires_background_check? %>
-  <h6>Grant background check exemption</h6>
   <p>
     <%= profile.name %> is in a country that requires a background check. By clicking the button below, <%= profile.name %> will be exempt from the background check requirement.
   </p>
@@ -15,7 +14,6 @@
                 } %>
   </p>
 <% elsif profile.background_check_exemption? %>
-    <h6>Revoke background check exemption</h6>
     <p>
       <%= profile.name %> is in a country that requires a background check. They currently have a background check exemption. <br>
       By clicking the button below, you will revoke the background check exemption and they will be required to complete a background check.

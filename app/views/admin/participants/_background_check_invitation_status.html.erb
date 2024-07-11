@@ -1,5 +1,10 @@
 <% if profile.in_background_check_invitation_country? %>
-  <% if profile.background_check.invitation_pending? %>
+  <% if profile.account.background_check_exemption? %>
+    <%= web_icon(
+          "check-circle icon-green",
+          text: "Background check exempt"
+        ) %>
+  <% elsif profile.background_check.invitation_pending? %>
     <%= web_icon(
           "exclamation-circle icon--orange",
           text:  profile.background_check.invitation_status.humanize
