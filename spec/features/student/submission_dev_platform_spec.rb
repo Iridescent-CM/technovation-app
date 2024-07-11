@@ -15,7 +15,7 @@ RSpec.feature "Students edit submission development platform" do
 
     click_link "My Submission"
     click_link "Technical Elements"
-    click_link "Select your submission type"
+    click_link "Select your coding language"
   end
 
   scenario "Choose App Inventor" do
