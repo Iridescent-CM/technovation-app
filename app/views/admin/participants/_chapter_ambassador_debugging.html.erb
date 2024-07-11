@@ -3,8 +3,7 @@
 
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
     <% if current_account.is_admin? && (profile.requires_background_check? || profile.background_check_exemption?) %>
-      <%= render 'admin/participants/background_check_exemption',
-                 profile: profile %>
+      <%= render "admin/participants/background_check_exemption", profile: profile %>
       <hr style="height: 1px; width: 100%;">
     <% end %>
 
