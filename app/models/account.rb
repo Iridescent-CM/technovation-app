@@ -260,6 +260,7 @@ class Account < ActiveRecord::Base
   after_create :create_account_created_activity
   before_update :update_division, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   after_commit :update_email_list, on: :update
+  after_update :update_chapter_ambassador_onboarding_status
 
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
