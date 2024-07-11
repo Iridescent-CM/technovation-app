@@ -133,7 +133,8 @@ CREATE TABLE public.accounts (
     parent_registered boolean DEFAULT false NOT NULL,
     learn_worlds_user_id character varying,
     salesforce_id character varying,
-    meets_minimum_age_requirement boolean
+    meets_minimum_age_requirement boolean,
+    background_check_exemption boolean DEFAULT false NOT NULL
 );
 
 
@@ -4523,6 +4524,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240614132749'),
 ('20240620151755'),
 ('20240625173653'),
-('20240702145233');
+('20240702145233'),
+('20240708200855');
 
 
