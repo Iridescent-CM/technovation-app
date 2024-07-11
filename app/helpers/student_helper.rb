@@ -40,9 +40,7 @@ module StudentHelper
     when :screenshots
       :complete if submission.screenshots.many?
     when :development_platform
-      if submission.submission_type == "AI Project" ||
-          (
-            submission.submission_type == "Mobile App" &&
+      if (
             submission.development_platform == "App Inventor" &&
             submission.app_inventor_app_name.present? &&
             submission.errors.attribute_names.exclude?(:app_inventor_app_name) &&
@@ -52,7 +50,7 @@ module StudentHelper
             )
           ) ||
           (
-            submission.submission_type == "Mobile App" &&
+
             submission.development_platform == "Thunkable" &&
             submission.thunkable_project_url.present? &&
             submission.errors.attribute_names.exclude?(:thunkable_project_url) &&
@@ -62,7 +60,7 @@ module StudentHelper
             )
           ) ||
           (
-            submission.submission_type == "Mobile App" &&
+
             submission.development_platform == "Other"
           )
 
