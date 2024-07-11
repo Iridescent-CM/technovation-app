@@ -51,8 +51,8 @@ module Salesforce
     def upsert_contact(account:)
       client.upsert!(
         "Contact",
-        "External_Id__c",
-        External_Id__c: account.id,
+        "Platform_Id__c",
+        Platform_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
         Email: account.email

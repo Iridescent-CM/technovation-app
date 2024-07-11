@@ -70,8 +70,8 @@ RSpec.describe Salesforce::ApiClient do
     it "calls the upsert! method to create a new contact in Salesforce" do
       expect(salesforce_client).to receive(:upsert!).with(
         "Contact",
-        "External_Id__c",
-        External_Id__c: account.id,
+        "Platform_Id__c",
+        Platform_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
         Email: account.email
@@ -129,8 +129,8 @@ RSpec.describe Salesforce::ApiClient do
     it "calls the upsert! method to update the contact in Salesforce" do
       expect(salesforce_client).to receive(:upsert!).with(
         "Contact",
-        "External_Id__c",
-        External_Id__c: account.id,
+        "Platform_Id__c",
+        Platform_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
         Email: account.email
