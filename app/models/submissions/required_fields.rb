@@ -58,7 +58,7 @@ class RequiredField
   end
 
   def invalidate!
-    submission.public_send("#{method_name}=", nil)
+    submission.public_send(:"#{method_name}=", nil)
   end
 
   def complete?
