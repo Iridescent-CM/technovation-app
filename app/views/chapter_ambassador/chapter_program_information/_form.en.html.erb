@@ -109,7 +109,7 @@
 
   <div class="mb-8">
     <%= f.association :participant_count_estimate,
-                      collection: ParticipantCountEstimate.all,
+                      collection: ParticipantCountEstimate.all.order(:order),
                       as: :select,
                       label_method: :range,
                       required: false,
