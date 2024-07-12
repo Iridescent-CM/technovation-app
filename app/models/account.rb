@@ -997,10 +997,18 @@ class Account < ActiveRecord::Base
   end
 
   def chapter_program_name
-    current_chapter.name.presence || "Chapter program name not set"
+    current_chapter.name
   end
 
   def chapter_organization_name
+    current_chapter.organization_name
+  end
+
+  def friendly_chapter_program_name
+    current_chapter.name.presence || "Chapter program name not set"
+  end
+
+  def friendly_chapter_organization_name
     current_chapter.organization_name.presence || "Organization name not set"
   end
 
