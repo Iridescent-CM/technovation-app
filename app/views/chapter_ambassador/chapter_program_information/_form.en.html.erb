@@ -52,6 +52,8 @@
 
   <div class="mb-8">
     <%= f.input :start_date,
+                start_year: Date.today.year ,
+                end_year: Date.today.year + 1,
                 label: t("chapter.chapter_program_information.start_date_question"),
                 include_blank: true,
                 prompt: true %>
@@ -59,6 +61,8 @@
 
   <div class="mb-8">
     <%= f.input :launch_date,
+                start_year: Date.today.year,
+                end_year: Date.today.year + 1,
                 label: t("chapter.chapter_program_information.launch_date_question"),
                 include_blank: true,
                 prompt: true %>
