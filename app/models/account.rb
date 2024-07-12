@@ -987,7 +987,36 @@ class Account < ActiveRecord::Base
       !(mentor_profile.present? or judge_profile.present?)
   end
 
+  def assigned_to_chapter?
+    current_profile.respond_to?(:chapter) &&
+      current_profile&.chapter.present?
+  end
+
+  def current_chapter
+    current_profile.chapter
+  end
+
+  def chapter_program_name
+    current_chapter.name
+  end
+
+  def chapter_organization_name
+    current_chapter.organization_name
+  end
+
+  def friendly_chapter_program_name
+    current_chapter.name.presence || "Chapter program name not set"
+  end
+
+  def friendly_chapter_organization_name
+    current_chapter.organization_name.presence || "Organization name not set"
+  end
+
   private
+
+  def current_profile
+    public_send("#{scope_name}_profile")
+  end
 
   def self.survey_reminder_max_times
     2
