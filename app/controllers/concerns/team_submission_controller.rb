@@ -32,7 +32,7 @@ module TeamSubmissionController
         key: "submission.create",
         recipient: @team_submission
       )
-      redirect_to send("#{current_scope}_team_submission_section_path",
+      redirect_to send(:"#{current_scope}_team_submission_section_path",
         @team_submission,
         section: SubmissionSection::SECTION_NAMES[0]),
         success: t("controllers.team_submissions.create.success")
@@ -43,7 +43,7 @@ module TeamSubmissionController
 
   def edit
     unless SeasonToggles.team_submissions_editable? or piece_name == "pitch_presentation"
-      redirect_to send("#{current_scope}_dashboard_path") and return
+      redirect_to send(:"#{current_scope}_dashboard_path") and return
     end
 
     @team_submission = current_team.submission
@@ -51,7 +51,7 @@ module TeamSubmissionController
 
     if params[:attributes]
       JSON.parse(params[:attributes]).each do |k, v|
-        @team_submission.public_send("#{k}=", v)
+        @team_submission.public_send(:"#{k}=", v)
       end
 
       @team_submission.valid?
@@ -61,7 +61,7 @@ module TeamSubmissionController
 
     @source_code_uploader = FileUploader.new
     @source_code_uploader.success_action_redirect = send(
-      "#{current_scope}_team_submission_file_upload_confirmation_url",
+      :"#{current_scope}_team_submission_file_upload_confirmation_url",
       team_id: @team.id,
       back: request.fullpath
     )
@@ -71,10 +71,10 @@ module TeamSubmissionController
         render "team_submissions/pieces/#{piece_name}"
       rescue ActionView::MissingTemplate,
         ActionController::ParameterMissing
-        redirect_to send("#{current_scope}_team_submission_path", @team_submission)
+        redirect_to send(:"#{current_scope}_team_submission_path", @team_submission)
       end
     else
-      redirect_to send("new_#{current_scope}_team_submissions_path")
+      redirect_to send(:"new_#{current_scope}_team_submissions_path")
     end
   end
 
@@ -84,14 +84,14 @@ module TeamSubmissionController
 
     @uploader = ImageDirectUploader.new
     @uploader.success_action_redirect = send(
-      "#{current_scope}_team_photo_upload_confirmation_url",
+      :"#{current_scope}_team_photo_upload_confirmation_url",
       team_id: @team.id,
       back: request.fullpath
     )
 
     @source_code_uploader = FileUploader.new
     @source_code_uploader.success_action_redirect = send(
-      "#{current_scope}_team_submission_file_upload_confirmation_url",
+      :"#{current_scope}_team_submission_file_upload_confirmation_url",
       team_id: @team.id,
       back: request.fullpath
     )
@@ -136,13 +136,13 @@ module TeamSubmissionController
       if request.xhr?
         render json: {}
       else
-        redirect_to send("#{current_scope}_team_submission_section_path",
+        redirect_to send(:"#{current_scope}_team_submission_section_path",
           @team_submission,
           section: SubmissionSection.new(piece_name, self)),
           success: t("controllers.team_submissions.update.success")
       end
     else
-      redirect_to send("edit_#{current_scope}_team_submission_path",
+      redirect_to send(:"edit_#{current_scope}_team_submission_path",
         @team_submission,
         piece: params[:piece],
         attributes: @team_submission.attributes.to_json)
@@ -192,13 +192,13 @@ module TeamSubmissionController
   end
 
   def notify_on_dashboard
-    redirect_to send("#{current_scope}_dashboard_path"),
+    redirect_to send(:"#{current_scope}_dashboard_path"),
       alert: "Sorry, submissions are not editable at this time"
   end
 
   def respond_according_to_presence
     if current_team.submission.present?
-      redirect_to send("#{current_scope}_team_submission_path", current_team.submission)
+      redirect_to send(:"#{current_scope}_team_submission_path", current_team.submission)
     else
       @team_submission = current_team.team_submissions.build
       render "team_submissions/new"
@@ -244,7 +244,6 @@ module TeamSubmissionController
         :solves_education_description,
         :demo_video_link,
         :pitch_video_link,
-        :submission_type,
         :development_platform_other,
         :development_platform,
         :app_inventor_app_name,

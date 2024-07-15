@@ -11,13 +11,10 @@ RSpec.feature "Mentors edit submission development platform" do
 
     within("#find-team") { click_link "Edit this team's submission" }
     click_link "Technical Elements"
-    click_link "Select your submission type"
+    click_link "Select your coding language"
   end
 
   scenario "Choose App Inventor" do
-    select "Mobile App",
-      from: "Submission type"
-
     select "App Inventor",
       from: "Which coding language did your team use?"
 
@@ -42,9 +39,6 @@ RSpec.feature "Mentors edit submission development platform" do
   end
 
   scenario "Choose Thunkable" do
-    select "Mobile App",
-      from: "Submission type"
-
     select "Thunkable",
       from: "Which coding language did your team use?"
 

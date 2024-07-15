@@ -99,7 +99,7 @@ RSpec.feature "Student team submissions" do
     click_link "Technical Elements"
 
     expect(page).to have_link(
-      "Select your submission type",
+      "Select your coding language",
       href: edit_mentor_team_submission_path(
         submission,
         piece: :development_platform

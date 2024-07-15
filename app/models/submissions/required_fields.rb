@@ -58,7 +58,7 @@ class RequiredField
   end
 
   def invalidate!
-    submission.public_send("#{method_name}=", nil)
+    submission.public_send(:"#{method_name}=", nil)
   end
 
   def complete?
@@ -88,7 +88,6 @@ end
 
 class RequiredDevPlatformField < RequiredField
   def invalidate!
-    submission.submission_type = nil
     submission.development_platform = nil
     submission.development_platform_other = nil
     submission.app_inventor_app_name = nil

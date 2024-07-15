@@ -1,5 +1,5 @@
 <% embedded ||= false %>
-<% provide :title, "Submission Type" %>
+<% provide :title, "Coding Language" %>
 
 <div id="development-platform">
   <% if embedded %>
@@ -10,7 +10,7 @@
   <% end %>
 
   <p class="tw-hint-strong italic mb-8">
-    Please indicate which type of submission this is. This will affect how you are judged.
+    Please indicate which type of coding language you used. This will affect how you are judged.
   </p>
 
   <%= form_with(
@@ -19,23 +19,6 @@
     local: true
   ) do |f| %>
     <%= hidden_field_tag :piece, piece_name %>
-
-    <div class="field">
-      <%= f.label :submission_type,
-        "Submission type",
-        for: :team_submission_submission_type %>
-
-      <%= f.select :submission_type,
-        TeamSubmission::SUBMISSION_TYPES,
-        { include_blank: true },
-        data: {
-          toggles: {
-            "Mobile App": "#mobile-app"
-          },
-        },
-        id: :team_submission_submission_type %>
-
-    </div>
 
     <div id="mobile-app" class="mt-8">
       <div class="field">
