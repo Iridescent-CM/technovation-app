@@ -1083,6 +1083,8 @@ class Account < ActiveRecord::Base
       :last_name,
       :email,
       :date_of_birth,
+      :city,
+      :state_province,
       :country
     ].any? { |attr| saved_change_to_attribute?(attr) }
   end

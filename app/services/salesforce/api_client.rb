@@ -55,7 +55,13 @@ module Salesforce
         Platform_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
-        Email: account.email
+        Email: account.email,
+        Birthdate: account.date_of_birth,
+        MailingCity: account.city,
+        MailingState: account.state_province,
+        MailingCountry: account.country,
+        Parent__c: account.student_profile&.parent_guardian_name,
+        Parent_Guardian_Email__c: account.student_profile&.parent_guardian_email
       )
     end
 

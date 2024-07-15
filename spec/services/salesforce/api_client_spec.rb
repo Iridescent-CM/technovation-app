@@ -55,12 +55,30 @@ RSpec.describe Salesforce::ApiClient do
       id: 45678,
       first_name: first_name,
       last_name: last_name,
-      email: email
+      email: email,
+      date_of_birth: date_of_birth,
+      city: city,
+      state_province: state_province,
+      country: country,
+      student_profile: student_profile
     )
   end
   let(:first_name) { "Luna" }
   let(:last_name) { "Lovegood" }
   let(:email) { "luna@example.com" }
+  let(:date_of_birth) { 20.years.ago }
+  let(:city) { "Ottery St Catchpole" }
+  let(:state_province) { "Devon" }
+  let(:country) { "England" }
+  let(:student_profile) do
+    instance_double(
+      StudentProfile,
+      parent_guardian_name: parent_guardian_name,
+      parent_guardian_email: parent_guardian_email
+    )
+  end
+  let(:parent_guardian_name) { "Pandora Lovegood" }
+  let(:parent_guardian_email) { "pandora@example.com" }
 
   describe "adding a new contact to Salesforce" do
     context "when Salesforce is enabled" do
@@ -74,7 +92,13 @@ RSpec.describe Salesforce::ApiClient do
         Platform_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
-        Email: account.email
+        Email: account.email,
+        Birthdate: account.date_of_birth,
+        MailingCity: account.city,
+        MailingState: account.state_province,
+        MailingCountry: account.country,
+        Parent__c: account.student_profile.parent_guardian_name,
+        Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
       )
 
       salesforce_api_client.add_contact(account: account)
@@ -133,7 +157,13 @@ RSpec.describe Salesforce::ApiClient do
         Platform_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
-        Email: account.email
+        Email: account.email,
+        Birthdate: account.date_of_birth,
+        MailingCity: account.city,
+        MailingState: account.state_province,
+        MailingCountry: account.country,
+        Parent__c: account.student_profile.parent_guardian_name,
+        Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
       )
 
       salesforce_api_client.update_contact(account: account)
