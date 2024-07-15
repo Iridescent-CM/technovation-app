@@ -198,11 +198,8 @@ RSpec.describe StudentProfile do
         parent_guardian_email: "parenttrap@example.com"
       )
 
-      expect(UpdateParentOnEmailListJob).to receive(:perform_later)
-        .with(
-          student_profile_id: student_profile.id,
-          currently_subscribed_as: student_profile.parent_guardian_email
-        )
+      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+        .with(account_id: student_profile.account.id)
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
     end
@@ -219,11 +216,8 @@ RSpec.describe StudentProfile do
         parent_guardian_email: "oldparentemail@example.com"
       )
 
-      expect(UpdateParentOnEmailListJob).not_to receive(:perform_later)
-        .with(
-          student_profile_id: student_profile.id,
-          currently_subscribed_as: student_profile.parent_guardian_email
-        )
+      expect(UpdateAccountOnEmailListJob).not_to receive(:perform_later)
+        .with(account_id: student_profile.account.id)
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
     end

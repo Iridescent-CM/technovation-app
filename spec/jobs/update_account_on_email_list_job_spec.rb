@@ -13,9 +13,6 @@ RSpec.describe UpdateAccountOnEmailListJob do
     expect(Salesforce::ApiClient).to receive_message_chain(:new, :update_contact)
       .with(account: account)
 
-    UpdateAccountOnEmailListJob.perform_now(
-      account_id: account.id,
-      currently_subscribed_as: currently_subscribed_as
-    )
+    UpdateAccountOnEmailListJob.perform_now(account_id: account.id)
   end
 end

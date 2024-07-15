@@ -57,10 +57,7 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
-        .with(
-          account_id: profile.account_id,
-          currently_subscribed_as: "old@oldtime.com"
-        )
+        .with(account_id: profile.account_id)
     end
 
     it "updates the email list when the first name on the account is changed" do
@@ -76,10 +73,7 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
-        .with(
-          account_id: profile.account_id,
-          currently_subscribed_as: profile.account.email
-        )
+        .with(account_id: profile.account_id)
     end
 
     it "updates the email list when the last name on the account is changed" do
@@ -95,10 +89,7 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(UpdateAccountOnEmailListJob).to have_received(:perform_later)
-        .with(
-          account_id: profile.account_id,
-          currently_subscribed_as: profile.account.email
-        )
+        .with(account_id: profile.account_id)
     end
   end
 end

@@ -1073,10 +1073,7 @@ class Account < ActiveRecord::Base
 
   def update_email_list
     if any_email_list_fields_changed?
-      UpdateAccountOnEmailListJob.perform_later(
-        account_id: id,
-        currently_subscribed_as: email_before_last_save
-      )
+      UpdateAccountOnEmailListJob.perform_later(account_id: id)
     end
   end
 

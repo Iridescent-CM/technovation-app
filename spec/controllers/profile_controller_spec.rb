@@ -15,10 +15,7 @@ require "rails_helper"
 
     it "updates newsletters with a change to the #{scope} address" do
       expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-        .with(
-          account_id: profile.account_id,
-          currently_subscribed_as: profile.account.email
-        )
+        .with(account_id: profile.account_id)
 
       patch :update, params: {
         "#{scope}_profile" => {
@@ -34,10 +31,7 @@ require "rails_helper"
 
     it "updates #{scope} newsletters with changes to first name" do
       expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-        .with(
-          account_id: profile.account_id,
-          currently_subscribed_as: profile.account.email
-        )
+        .with(account_id: profile.account_id)
 
       patch :update, params: {
         "#{scope}_profile" => {
@@ -51,10 +45,7 @@ require "rails_helper"
 
     it "updates #{scope} newsletters with changes to last name" do
       expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-        .with(
-          account_id: profile.account_id,
-          currently_subscribed_as: profile.account.email
-        )
+        .with(account_id: profile.account_id)
 
       patch :update, params: {
         "#{scope}_profile" => {
@@ -90,8 +81,8 @@ require "rails_helper"
 
       if scope != "student"
         expect(response).to redirect_to send(
-          "#{scope}_location_details_path",
-          return_to: send("#{scope}_dashboard_path")
+          :"#{scope}_location_details_path",
+          return_to: send(:"#{scope}_dashboard_path")
         )
       end
     end
