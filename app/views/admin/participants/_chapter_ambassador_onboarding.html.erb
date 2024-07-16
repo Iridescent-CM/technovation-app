@@ -8,12 +8,9 @@
       <dt>Complete Background Check</dt>
       <dd>
         <div style="display: flex;">
-          <% if chapter_ambassador.account.background_check_exemption? %>
+          <% if chapter_ambassador.background_check_exempt_or_complete? %>
             <%= web_icon("check-circle icon-green") %>
-            <div>Background check exempt</div>
-          <% elsif chapter_ambassador.background_check.clear? %>
-            <%= web_icon("check-circle icon-green") %>
-            <div>Complete</div>
+            <div><%= chapter_ambassador.background_check_complete? ? "Complete" : "Background check exempt" %></div>
           <% else %>
             <%= web_icon("exclamation-circle icon-red") %>
             <div>
