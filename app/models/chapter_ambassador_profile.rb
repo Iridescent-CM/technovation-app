@@ -83,14 +83,20 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     !intro_summary.blank?
   end
 
-  def background_check_complete?
-    return true unless requires_background_check?
+  def background_check_exempt_or_complete?
+    background_check_exempt? || background_check_complete?
+  end
 
+  def background_check_complete?
     background_check.present? && background_check.clear?
   end
 
+  def background_check_exempt?
+    account.background_check_exemption?
+  end
+
   def requires_background_check?
-    !(background_check.present? && background_check.clear? || account.background_check_exemption?)
+    !background_check_exempt? && !background_check_complete?
   end
 
   def in_background_check_country?
