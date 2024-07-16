@@ -3,7 +3,7 @@ module Admin
     def grant
       @account = Account.find(params[:participant_id])
 
-      if @account.grant_background_check_exemption!
+      if @account.grant_background_check_exemption
         redirect_to admin_participant_path(@account),
           success: "Background check exemption granted"
       else
@@ -15,7 +15,7 @@ module Admin
     def revoke
       @account = Account.find(params[:participant_id])
 
-      if @account.revoke_background_check_exemption!
+      if @account.revoke_background_check_exemption
         redirect_to admin_participant_path(@account),
           success: "Background check exemption revoked"
       else

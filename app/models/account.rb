@@ -1012,11 +1012,11 @@ class Account < ActiveRecord::Base
     current_chapter.organization_name.presence || "Organization name not set"
   end
 
-  def grant_background_check_exemption!
+  def grant_background_check_exemption
     update(background_check_exemption: true)
   end
 
-  def revoke_background_check_exemption!
+  def revoke_background_check_exemption
     update(background_check_exemption: false)
   end
 
