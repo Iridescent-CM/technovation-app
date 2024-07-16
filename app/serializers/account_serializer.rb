@@ -6,7 +6,7 @@ class AccountSerializer
 
   attributes :name, :email, :date_of_birth, :age, :city, :state, :country, :state_code,
     :country_code, :latitude, :longitude, :first_name, :last_name, :gender,
-    :referred_by, :referred_by_other, :avatar_url
+    :referred_by, :referred_by_other, :avatar_url, :background_check_exemption
 
   attribute(:api_root) do |account|
     "#{account.scope_name}"

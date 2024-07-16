@@ -260,6 +260,7 @@ class Account < ActiveRecord::Base
   after_create :create_account_created_activity
   before_update :update_division, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   after_commit :update_email_list, on: :update
+  after_update :update_chapter_ambassador_onboarding_status
 
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
@@ -1010,6 +1011,20 @@ class Account < ActiveRecord::Base
 
   def friendly_chapter_organization_name
     current_chapter.organization_name.presence || "Organization name not set"
+  end
+
+  def grant_background_check_exemption
+    update(background_check_exemption: true)
+  end
+
+  def revoke_background_check_exemption
+    update(background_check_exemption: false)
+  end
+
+  def update_chapter_ambassador_onboarding_status
+    if chapter_ambassador_profile.present?
+      chapter_ambassador_profile.update_onboarding_status
+    end
   end
 
   private

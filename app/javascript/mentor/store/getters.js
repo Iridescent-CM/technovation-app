@@ -85,7 +85,14 @@ export default {
       "age",
       (age) => parseInt(age) >= 18
     );
-    return !isBackgroundCheckCountry || !isAgeAppropriate;
+
+    const isExempt = digStateAttributes(
+      state,
+      "currentAccount",
+      "backgroundCheckExemption"
+    );
+
+    return !isBackgroundCheckCountry || !isAgeAppropriate || isExempt;
   },
 
   isOnTeam(state) {

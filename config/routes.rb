@@ -260,6 +260,10 @@ Rails.application.routes.draw do
 
     resources :participants do
       delete "permanently_delete"
+      resource :background_check_exemption, only: [] do
+        patch :grant
+        patch :revoke
+      end
     end
 
     resources :participant_sessions, only: [:show, :destroy]

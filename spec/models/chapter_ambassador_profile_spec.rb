@@ -53,7 +53,7 @@ RSpec.describe ChapterAmbassadorProfile do
             .and_return(legal_document)
         end
 
-        let(:account) { instance_double(Account, email_confirmed?: email_address_confirmed, marked_for_destruction?: false, valid?: true) }
+        let(:account) { instance_double(Account, email_confirmed?: email_address_confirmed, marked_for_destruction?: false, valid?: true,  background_check_exemption?: false) }
         let(:email_address_confirmed) { true }
         let(:background_check) { instance_double(BackgroundCheck, clear?: background_check_cleared) }
         let(:background_check_cleared) { true }

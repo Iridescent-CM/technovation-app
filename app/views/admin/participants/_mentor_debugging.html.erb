@@ -65,6 +65,12 @@
     </dd>
   </dl>
 
+  <% if current_account.is_admin? && (profile.requires_background_check? || profile.background_check_exemption?) %>
+    <hr>
+    <%= render 'admin/participants/background_check_exemption',
+               profile: @account.mentor_profile %>
+  <% end %>
+
   <% if ENV.fetch("CONVERT_MENTORS") { false } and profile.current_teams.none? %>
     <hr />
 

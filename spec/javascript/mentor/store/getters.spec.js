@@ -11,6 +11,7 @@ describe("mentor/store/getters.js", () => {
             attributes: {
               countryCode: "BR",
               age: 18,
+              backgroundCheckExemption: false,
             },
           },
         },
@@ -22,13 +23,14 @@ describe("mentor/store/getters.js", () => {
       expect(getters.isBackgroundCheckWaived(state)).toBe(true);
     });
 
-    it("is false when currentAccount.countryCode is US", () => {
+    it("is false when currentAccount.countryCode is US and currentAccount.backgroundCheckExeption is false", () => {
       const state = {
         currentAccount: {
           data: {
             attributes: {
               countryCode: "US",
               age: 18,
+              backgroundCheckExemption: false,
             },
           },
         },
@@ -47,6 +49,26 @@ describe("mentor/store/getters.js", () => {
             attributes: {
               countryCode: "US",
               age: "17",
+              backgroundCheckExemption: false,
+            },
+          },
+        },
+        settings: {
+          backgroundCheckCountryCodes: backgroundCheckCountryCodes,
+        },
+      };
+
+      expect(getters.isBackgroundCheckWaived(state)).toBe(true);
+    });
+
+    it("is true when currentAccount.backgroundCheckExemption is true", () => {
+      const state = {
+        currentAccount: {
+          data: {
+            attributes: {
+              countryCode: "US",
+              age: "17",
+              backgroundCheckExemption: true,
             },
           },
         },
