@@ -25,10 +25,14 @@ RSpec.describe "Uploading technical work to submissions", :js do
     end
 
     context "when development platform has been entered" do
-      ["Swift or XCode", "Thunkable Classic"].each do |platform|
+      ["App Inventor", "Other"].each do |platform|
         context "and development platform (#{platform}) is not Thunkable" do
           before do
-            TeamSubmission.last.update!(submission_type: 1, development_platform: platform)
+            if platform == "App Inventor"
+              TeamSubmission.last.update!(development_platform: platform, app_inventor_app_name: "Test")
+            else
+              TeamSubmission.last.update!(development_platform: platform)
+            end
           end
 
           context "and a valid file is uploaded" do
@@ -36,7 +40,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
               click_link "Technical Additions"
               expect(page).to have_css("input[type=file]")
 
-              ["aia", "apk", "zip"].each do |good_file|
+              ["aia", "zip"].each do |good_file|
                 attach_file(
                   "file",
                   File.absolute_path("./spec/support/uploads/example.#{good_file}"),
