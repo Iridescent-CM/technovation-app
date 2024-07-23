@@ -790,7 +790,8 @@ CREATE TABLE public.documents (
     season_signed smallint,
     docusign_envelope_id character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    voided_at timestamp without time zone
 );
 
 
@@ -4526,7 +4527,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240625173653'),
 ('20240702145233'),
 ('20240708200855'),
+('20240709133548'),
 ('20240712182156'),
-('20240719141738');
+('20240719141738'),
+('20240722174124');
 
 

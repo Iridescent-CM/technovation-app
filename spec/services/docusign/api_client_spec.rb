@@ -203,4 +203,66 @@ RSpec.describe Docusign::ApiClient do
       end
     end
   end
+
+  describe "#void_document" do
+    let(:document) { instance_double(Document, docusign_envelope_id: "tyuip-876-cvbn") }
+
+    before do
+      allow(http_client_instance).to receive(:put).and_return(mock_docusign_response)
+      allow(document).to receive(:update)
+    end
+
+    let(:mock_docusign_response) do
+      double("mock_docusign_response",
+        success?: docusign_response_successful,
+        body: {
+          enveloperId: "333-4444-55555-666666"
+        }.to_json)
+    end
+
+    let(:docusign_response_successful) { true }
+
+    context "when the DocuSign response is successful" do
+      let(:docusign_response_successful) { true }
+
+      it "updates the document to be inactive and adds a 'voided at' timestamp" do
+        Timecop.freeze(Time.now) do
+          expect(document).to receive(:update).with(
+            active: false,
+            voided_at: Time.now
+          )
+
+          docusign_api_client.void_document(document)
+        end
+      end
+
+      it "returns a successful result" do
+        result = docusign_api_client.void_document(document)
+
+        expect(result.success?).to eq(true)
+      end
+    end
+
+    context "when the DocuSign response is not successful" do
+      let(:docusign_response_successful) { false }
+
+      it "logs an error" do
+        expect(logger).to receive(:error).with("[DOCUSIGN] Error voiding document - ")
+
+        docusign_api_client.void_document(document)
+      end
+
+      it "sends an error to Airbrake" do
+        expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error voiding document - ")
+
+        docusign_api_client.void_document(document)
+      end
+
+      it "returns an unsuccessful result" do
+        result = docusign_api_client.void_document(document)
+
+        expect(result.success?).to eq(false)
+      end
+    end
+  end
 end

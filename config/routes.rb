@@ -275,7 +275,9 @@ Rails.application.routes.draw do
     resources :chapter_ambassador_profile_additions, only: :create
     resources :chapters do
       resource :legal_contact, only: [:new, :create, :edit, :update], controller: "chapters/legal_contacts"
-      resource :memorandum_of_understanding, only: :create, controller: "chapter_memorandum_of_understanding"
+      resource :memorandum_of_understanding, only: :create, controller: "chapter_memorandum_of_understanding" do
+        patch :void
+      end
       resources :invites, only: :create, controller: "chapter_invites"
       resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
     end
