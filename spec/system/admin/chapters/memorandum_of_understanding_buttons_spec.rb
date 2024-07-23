@@ -23,7 +23,7 @@ RSpec.describe "Admin MOU buttons" do
 
     context "when the legal contact's MOU has not been signed" do
       before do
-        legal_contact.legal_document.update_column(:signed_at, nil)
+        legal_contact.legal_document.update_columns(signed_at: nil, status: "sent")
       end
 
       it "displays a 'Void MOU' button" do

@@ -23,8 +23,45 @@ RSpec.describe Document do
   end
 
   context "callbacks" do
-    let(:document) { FactoryBot.create(:document, signer: signer) }
+    let(:document) do
+      FactoryBot.create(:document,
+        signer: signer,
+        sent_at: sent_at,
+        signed_at: signed_at,
+        voided_at: voided_at)
+    end
     let(:signer) { FactoryBot.create(:chapter_ambassador) }
+    let(:sent_at) { nil }
+    let(:signed_at) { nil }
+    let(:voided_at) { nil }
+
+    context "#before_update" do
+      describe "#status" do
+        context "when a document has been sent" do
+          let(:sent_at) { Time.now }
+
+          it "returns 'sent'" do
+            expect(document.status).to eq("sent")
+          end
+        end
+
+        context "when a document has been signed" do
+          let(:signed_at) { Time.now }
+
+          it "returns 'signed'" do
+            expect(document.status).to eq("signed")
+          end
+        end
+
+        context "when a document has been voided" do
+          let(:voided_at) { Time.now }
+
+          it "returns 'voided'" do
+            expect(document.status).to eq("voided")
+          end
+        end
+      end
+    end
 
     context "#after_update" do
       it "makes a call to update the signer's onboarding status when the document is updated" do
