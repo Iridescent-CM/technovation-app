@@ -53,6 +53,7 @@ class TeamSubmission < ActiveRecord::Base
   before_validation :reset_development_platform_fields_for_app_inventor
   before_validation :reset_development_platform_fields_for_thunkable
   before_validation :reset_development_platform_fields_for_other_platforms
+  before_validation :reset_development_platform_fields_for_scratch
 
   before_validation -> {
     return if thunkable_project_url.blank?
@@ -236,6 +237,8 @@ class TeamSubmission < ActiveRecord::Base
   validates :app_inventor_gmail, email: true, allow_blank: true
   validates :thunkable_account_email, email: true, allow_blank: true
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
+
+  validates :scratch_project_url, scratch_share_url: true, allow_blank: true
 
   validates :ai_description, presence: true, max_word_count: true,
     if: ->(team_submission) { team_submission.ai? }
@@ -700,6 +703,7 @@ class TeamSubmission < ActiveRecord::Base
   def reset_development_platform_fields_for_thunkable
     if development_platform == "Thunkable"
       self.development_platform_other = nil
+      self.scratch_project_url = nil
     end
   end
 
@@ -709,6 +713,17 @@ class TeamSubmission < ActiveRecord::Base
       self.thunkable_project_url = nil
       self.app_inventor_app_name = nil
       self.app_inventor_gmail = nil
+      self.scratch_project_url = nil
+    end
+  end
+
+  def reset_development_platform_fields_for_scratch
+    if development_platform == "Scratch"
+      self.thunkable_account_email = nil
+      self.thunkable_project_url = nil
+      self.app_inventor_app_name = nil
+      self.app_inventor_gmail = nil
+      self.development_platform_other = nil
     end
   end
 end
