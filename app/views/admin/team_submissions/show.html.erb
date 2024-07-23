@@ -175,6 +175,12 @@
                 Email: <%= @team_submission.app_inventor_gmail %>
               </li>
             </ul>
+          <% elsif @team_submission.scratch? %>
+            <ul>
+              <li class="overflow-wrap--break-word">
+                Project URL: <%= link_to nil, @team_submission.scratch_project_url, :target => "_blank" %>
+              </li>
+            </ul>
           <% elsif @team_submission.thunkable? %>
             <ul>
               <li>
