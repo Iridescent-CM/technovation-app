@@ -30,171 +30,176 @@ RSpec.describe Docusign::ApiClient do
       }
     ).and_return(http_client_instance)
 
-    allow(http_client_instance).to receive(:post).and_return(mock_docusign_response)
     allow(error_notifier).to receive(:notify)
   end
 
-  let(:mock_docusign_response) do
-    double("mock_docusign_response",
-      success?: docusign_response_successful,
-      body: {
-        enveloperId: "333-4444-55555-666666"
-      }.to_json)
-  end
-
-  let(:docusign_response_successful) { true }
-
-  describe "#send_memorandum_of_understanding" do
-    let(:legal_contact) do
-      instance_double(LegalContact,
-        full_name: "Summer Skycedar",
-        email_address: "summerhawk@example.com",
-        job_title: "Counselor",
-        chapter: chapter)
-    end
-
-    let(:chapter) do
-      instance_double(Chapter,
-        organization_name: "Thunder Mountain")
-    end
-
+  context "sending documents" do
     before do
-      allow(legal_contact).to receive_message_chain(:documents, :create)
+      allow(http_client_instance).to receive(:post).and_return(mock_docusign_response)
     end
 
-    it "makes a call to the 'envelopes' endpoint and includes the api_account_id in the URL" do
-      expect(http_client_instance).to receive(:post).with(
-        "v2.1/accounts/#{api_account_id}/envelopes",
-        anything
-      )
-
-      docusign_api_client.send_memorandum_of_understanding(
-        legal_contact: legal_contact
-      )
+    let(:mock_docusign_response) do
+      double("mock_docusign_response",
+        success?: docusign_response_successful,
+        body: {
+          enveloperId: "333-4444-55555-666666"
+        }.to_json)
     end
 
-    context "when the DocuSign response is successful" do
-      let(:docusign_response_successful) { true }
+    let(:docusign_response_successful) { true }
 
-      it "creates a new document for the legal contact" do
-        expect(legal_contact).to receive_message_chain(:documents, :create)
+    describe "#send_memorandum_of_understanding" do
+      let(:legal_contact) do
+        instance_double(LegalContact,
+          full_name: "Summer Skycedar",
+          email_address: "summerhawk@example.com",
+          job_title: "Counselor",
+          chapter: chapter)
+      end
+
+      let(:chapter) do
+        instance_double(Chapter,
+          organization_name: "Thunder Mountain")
+      end
+
+      before do
+        allow(legal_contact).to receive_message_chain(:documents, :create)
+      end
+
+      it "makes a call to the 'envelopes' endpoint and includes the api_account_id in the URL" do
+        expect(http_client_instance).to receive(:post).with(
+          "v2.1/accounts/#{api_account_id}/envelopes",
+          anything
+        )
 
         docusign_api_client.send_memorandum_of_understanding(
           legal_contact: legal_contact
         )
       end
 
-      it "returns a successful result" do
-        result = docusign_api_client.send_memorandum_of_understanding(
-          legal_contact: legal_contact
-        )
+      context "when the DocuSign response is successful" do
+        let(:docusign_response_successful) { true }
 
-        expect(result.success?).to eq(true)
+        it "creates a new document for the legal contact" do
+          expect(legal_contact).to receive_message_chain(:documents, :create)
+
+          docusign_api_client.send_memorandum_of_understanding(
+            legal_contact: legal_contact
+          )
+        end
+
+        it "returns a successful result" do
+          result = docusign_api_client.send_memorandum_of_understanding(
+            legal_contact: legal_contact
+          )
+
+          expect(result.success?).to eq(true)
+        end
+      end
+
+      context "when the DocuSign response is not successful" do
+        let(:docusign_response_successful) { false }
+
+        it "logs an error" do
+          expect(logger).to receive(:error).with("[DOCUSIGN] Error sending document - ")
+
+          docusign_api_client.send_memorandum_of_understanding(
+            legal_contact: legal_contact
+          )
+        end
+
+        it "sends an error to Airbrake" do
+          expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
+
+          docusign_api_client.send_memorandum_of_understanding(
+            legal_contact: legal_contact
+          )
+        end
+
+        it "returns an unsuccessful result" do
+          result = docusign_api_client.send_memorandum_of_understanding(
+            legal_contact: legal_contact
+          )
+
+          expect(result.success?).to eq(false)
+        end
       end
     end
 
-    context "when the DocuSign response is not successful" do
-      let(:docusign_response_successful) { false }
-
-      it "logs an error" do
-        expect(logger).to receive(:error).with("[DOCUSIGN] Error sending document - ")
-
-        docusign_api_client.send_memorandum_of_understanding(
-          legal_contact: legal_contact
-        )
+    describe "#send_chapter_ambassador_legal_agreement" do
+      let(:chapter_ambassador_profile) do
+        instance_double(ChapterAmbassadorProfile,
+          full_name: "Kodi Skycedar",
+          email_address: "kodibear@example.com",
+          chapter: chapter)
       end
 
-      it "sends an error to Airbrake" do
-        expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
-
-        docusign_api_client.send_memorandum_of_understanding(
-          legal_contact: legal_contact
-        )
+      let(:chapter) do
+        instance_double(Chapter,
+          organization_name: "Caterpillar Camp")
       end
 
-      it "returns an unsuccessful result" do
-        result = docusign_api_client.send_memorandum_of_understanding(
-          legal_contact: legal_contact
-        )
-
-        expect(result.success?).to eq(false)
+      before do
+        allow(chapter_ambassador_profile).to receive_message_chain(:documents, :create)
       end
-    end
-  end
 
-  describe "#send_chapter_ambassador_legal_agreement" do
-    let(:chapter_ambassador_profile) do
-      instance_double(ChapterAmbassadorProfile,
-        full_name: "Kodi Skycedar",
-        email_address: "kodibear@example.com",
-        chapter: chapter)
-    end
-
-    let(:chapter) do
-      instance_double(Chapter,
-        organization_name: "Caterpillar Camp")
-    end
-
-    before do
-      allow(chapter_ambassador_profile).to receive_message_chain(:documents, :create)
-    end
-
-    it "makes a call to the 'envelopes' endpoint and includes the api_account_id in the URL" do
-      expect(http_client_instance).to receive(:post).with(
-        "v2.1/accounts/#{api_account_id}/envelopes",
-        anything
-      )
-
-      docusign_api_client.send_chapter_ambassador_legal_agreement(
-        chapter_ambassador_profile: chapter_ambassador_profile
-      )
-    end
-
-    context "when the DocuSign response is successful" do
-      let(:docusign_response_successful) { true }
-
-      it "creates a new document for the legal contact" do
-        expect(chapter_ambassador_profile).to receive_message_chain(:documents, :create)
+      it "makes a call to the 'envelopes' endpoint and includes the api_account_id in the URL" do
+        expect(http_client_instance).to receive(:post).with(
+          "v2.1/accounts/#{api_account_id}/envelopes",
+          anything
+        )
 
         docusign_api_client.send_chapter_ambassador_legal_agreement(
           chapter_ambassador_profile: chapter_ambassador_profile
         )
       end
 
-      it "returns a successful result" do
-        result = docusign_api_client.send_chapter_ambassador_legal_agreement(
-          chapter_ambassador_profile: chapter_ambassador_profile
-        )
+      context "when the DocuSign response is successful" do
+        let(:docusign_response_successful) { true }
 
-        expect(result.success?).to eq(true)
-      end
-    end
+        it "creates a new document for the legal contact" do
+          expect(chapter_ambassador_profile).to receive_message_chain(:documents, :create)
 
-    context "when the DocuSign response is not successful" do
-      let(:docusign_response_successful) { false }
+          docusign_api_client.send_chapter_ambassador_legal_agreement(
+            chapter_ambassador_profile: chapter_ambassador_profile
+          )
+        end
 
-      it "logs an error" do
-        expect(logger).to receive(:error).with("[DOCUSIGN] Error sending document - ")
+        it "returns a successful result" do
+          result = docusign_api_client.send_chapter_ambassador_legal_agreement(
+            chapter_ambassador_profile: chapter_ambassador_profile
+          )
 
-        docusign_api_client.send_chapter_ambassador_legal_agreement(
-          chapter_ambassador_profile: chapter_ambassador_profile
-        )
-      end
-
-      it "sends an error to Airbrake" do
-        expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
-
-        docusign_api_client.send_chapter_ambassador_legal_agreement(
-          chapter_ambassador_profile: chapter_ambassador_profile
-        )
+          expect(result.success?).to eq(true)
+        end
       end
 
-      it "returns an unsuccessful result" do
-        result = docusign_api_client.send_chapter_ambassador_legal_agreement(
-          chapter_ambassador_profile: chapter_ambassador_profile
-        )
+      context "when the DocuSign response is not successful" do
+        let(:docusign_response_successful) { false }
 
-        expect(result.success?).to eq(false)
+        it "logs an error" do
+          expect(logger).to receive(:error).with("[DOCUSIGN] Error sending document - ")
+
+          docusign_api_client.send_chapter_ambassador_legal_agreement(
+            chapter_ambassador_profile: chapter_ambassador_profile
+          )
+        end
+
+        it "sends an error to Airbrake" do
+          expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
+
+          docusign_api_client.send_chapter_ambassador_legal_agreement(
+            chapter_ambassador_profile: chapter_ambassador_profile
+          )
+        end
+
+        it "returns an unsuccessful result" do
+          result = docusign_api_client.send_chapter_ambassador_legal_agreement(
+            chapter_ambassador_profile: chapter_ambassador_profile
+          )
+
+          expect(result.success?).to eq(false)
+        end
       end
     end
   end
