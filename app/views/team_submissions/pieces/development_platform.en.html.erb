@@ -27,7 +27,7 @@
           for: :team_submission_development_platform %>
 
         <%= f.select :development_platform,
-        TeamSubmission::DEVELOPMENT_PLATFORMS,
+                     TeamSubmission.development_platform_options(@team_submission),
         { include_blank: true },
         data: {
           toggles: {

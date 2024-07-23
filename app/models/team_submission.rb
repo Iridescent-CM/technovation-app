@@ -18,7 +18,8 @@ class TeamSubmission < ActiveRecord::Base
   ACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
     "App Inventor" => 0,
     "Thunkable" => 6,
-    "Other" => 5
+    "Other" => 5,
+    "Scratch" => 8
   }
 
   INACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
@@ -577,6 +578,11 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def self.development_platform_options(team_submission)
+    ACTIVE_DEVELOPMENT_PLATFORMS_ENUM.keys
+      .reject { |platform| platform == "Scratch" && !team_submission.beginner_division? }
+  end
+
   def app_inventor?
     send("App Inventor?")
   end
@@ -584,6 +590,10 @@ class TeamSubmission < ActiveRecord::Base
 
   def thunkable?
     send(:Thunkable?)
+  end
+
+  def scratch?
+    send(:Scratch?)
   end
 
   def additional_questions?

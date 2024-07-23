@@ -46,9 +46,7 @@
         <div>
           <h6>Technical</h6>
           <%= f.input :development_platform,
-            collection: TeamSubmission::DEVELOPMENT_PLATFORMS %>
-          <%= f.input :submission_type,
-            collection: TeamSubmission::SUBMISSION_TYPES %>
+            collection: TeamSubmission.development_platform_options(@team_submission) %>
           <%= f.input :development_platform_other %>
           <%= f.input :learning_journey %>
           <%= f.input :app_inventor_app_name %>
