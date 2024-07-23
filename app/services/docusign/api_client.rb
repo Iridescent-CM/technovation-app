@@ -83,6 +83,7 @@ module Docusign
           full_name: signer.full_name,
           email_address: signer.email_address,
           active: true,
+          sent_at: Time.now,
           docusign_envelope_id: response_body[:envelopeId]
         )
 
