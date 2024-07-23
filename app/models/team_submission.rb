@@ -572,12 +572,10 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def development_platform_text
-    if submission_type == MOBILE_APP_SUBMISSION_TYPE && development_platform != "Other"
-      "#{submission_type} - #{development_platform}"
-    elsif submission_type == MOBILE_APP_SUBMISSION_TYPE && development_platform == "Other"
-      "#{submission_type} - #{development_platform} - #{development_platform_other}"
+    if development_platform == "Other"
+      "#{development_platform} - #{development_platform_other}"
     else
-      submission_type
+      development_platform
     end
   end
 
