@@ -247,9 +247,9 @@ module TeamSubmissionController
         :development_platform_other,
         :development_platform,
         :app_inventor_app_name,
-        :app_inventor_gmail,
         :thunkable_project_url,
         :thunkable_account_email,
+        :scratch_project_url,
         screenshots: [],
         screenshots_attributes: [
           :id,
