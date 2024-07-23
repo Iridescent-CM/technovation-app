@@ -6,6 +6,10 @@ class Document < ActiveRecord::Base
 
   enum status: {sent: "sent", signed: "signed", voided: "voided"}
 
+  def sent?
+    sent_at.present?
+  end
+
   private
 
   def set_status

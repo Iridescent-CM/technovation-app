@@ -1,8 +1,26 @@
 require "rails_helper"
 
 RSpec.describe Document do
-  let(:document) { Document.new(signed_at: signed_at) }
-  let(:signed_at) { Time.now }
+  let(:document) { Document.new(sent_at: sent_at) }
+  let(:sent_at) { Time.now }
+
+  describe "#sent?" do
+    context "when the document has a sent_at timestamp" do
+      let(:sent_at) { 1.day.ago }
+
+      it "returns true" do
+        expect(document.sent?).to eq(true)
+      end
+    end
+
+    context "when the document does not have a sent_at timestamp" do
+      let(:sent_at) { nil }
+
+      it "returns false" do
+        expect(document.sent?).to eq(false)
+      end
+    end
+  end
 
   context "callbacks" do
     let(:document) do
