@@ -132,13 +132,8 @@ CREATE TABLE public.accounts (
     terms_agreed_at timestamp without time zone,
     parent_registered boolean DEFAULT false NOT NULL,
     learn_worlds_user_id character varying,
-<<<<<<< HEAD
-    salesforce_id character varying,
     meets_minimum_age_requirement boolean,
     background_check_exemption boolean DEFAULT false NOT NULL
-=======
-    meets_minimum_age_requirement boolean
->>>>>>> 36c6f0949 (Chore: Remove salesforce_id column from accounts table)
 );
 
 
