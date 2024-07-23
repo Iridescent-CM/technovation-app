@@ -55,7 +55,8 @@ RSpec.describe TeamSubmission do
       expect(TeamSubmission::ACTIVE_DEVELOPMENT_PLATFORMS_ENUM).to eq({
         "App Inventor" => 0,
         "Thunkable" => 6,
-        "Other" => 5
+        "Other" => 5,
+        "Scratch" => 8
       })
     end
   end
@@ -82,7 +83,8 @@ RSpec.describe TeamSubmission do
         "C++" => 3,
         "PhoneGap/Apache Cordova" => 4,
         "Other" => 5,
-        "Thunkable Classic" => 7
+        "Thunkable Classic" => 7,
+        "Scratch" => 8
       })
     end
   end
@@ -92,7 +94,8 @@ RSpec.describe TeamSubmission do
       expect(TeamSubmission::DEVELOPMENT_PLATFORMS).to eq([
         "App Inventor",
         "Thunkable",
-        "Other"
+        "Other",
+        "Scratch"
       ])
     end
   end
