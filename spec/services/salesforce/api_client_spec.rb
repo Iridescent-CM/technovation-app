@@ -56,47 +56,57 @@ RSpec.describe Salesforce::ApiClient do
       first_name: first_name,
       last_name: last_name,
       email: email,
-      salesforce_id: salesforce_id
+      date_of_birth: date_of_birth,
+      city: city,
+      state_province: state_province,
+      country: country,
+      student_profile: student_profile
     )
   end
   let(:first_name) { "Luna" }
   let(:last_name) { "Lovegood" }
   let(:email) { "luna@example.com" }
-  let(:salesforce_id) { 123 }
+  let(:date_of_birth) { 20.years.ago }
+  let(:city) { "Ottery St Catchpole" }
+  let(:state_province) { "Devon" }
+  let(:country) { "England" }
+  let(:student_profile) do
+    instance_double(
+      StudentProfile,
+      parent_guardian_name: parent_guardian_name,
+      parent_guardian_email: parent_guardian_email
+    )
+  end
+  let(:parent_guardian_name) { "Pandora Lovegood" }
+  let(:parent_guardian_email) { "pandora@example.com" }
 
   describe "adding a new contact to Salesforce" do
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
     end
 
-    it "calls the create! method to create a new contact in Salesforce" do
-      expect(salesforce_client).to receive(:create!).with(
+    it "calls the upsert! method to create a new contact in Salesforce" do
+      expect(salesforce_client).to receive(:upsert!).with(
         "Contact",
+        "Platform_Id__c",
+        Platform_Id__c: account.id,
         FirstName: account.first_name,
         LastName: account.last_name,
-        Email: account.email
+        Email: account.email,
+        Birthdate: account.date_of_birth,
+        MailingCity: account.city,
+        MailingState: account.state_province,
+        MailingCountry: account.country,
+        Parent__c: account.student_profile.parent_guardian_name,
+        Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
       )
 
       salesforce_api_client.add_contact(account: account)
     end
 
-    context "when create! was successful" do
+    context "when the upsert! was unsuccessful" do
       before do
-        allow(salesforce_client).to receive(:create!).and_return(salesforce_id)
-      end
-
-      let(:salesforce_id) { "789122654" }
-
-      it "saves the Salesforce ID to the account" do
-        expect(account).to receive(:update_attribute).with(:salesforce_id, salesforce_id)
-
-        salesforce_api_client.add_contact(account: account)
-      end
-    end
-
-    context "when create! was unsuccessful" do
-      before do
-        allow(salesforce_client).to receive(:create!).and_raise(error_message)
+        allow(salesforce_client).to receive(:upsert!).and_raise(error_message)
       end
 
       let(:error_message) { "ADD CONTACT ERROR" }
@@ -140,47 +150,40 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { true }
     end
 
-    context "when the account has a salesforce_id" do
-      let(:salesforce_id) { "9876fghij54321" }
+    it "calls the upsert! method to update the contact in Salesforce" do
+      expect(salesforce_client).to receive(:upsert!).with(
+        "Contact",
+        "Platform_Id__c",
+        Platform_Id__c: account.id,
+        FirstName: account.first_name,
+        LastName: account.last_name,
+        Email: account.email,
+        Birthdate: account.date_of_birth,
+        MailingCity: account.city,
+        MailingState: account.state_province,
+        MailingCountry: account.country,
+        Parent__c: account.student_profile.parent_guardian_name,
+        Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
+      )
 
-      it "calls the update! method to update the contact in Salesforce" do
-        expect(salesforce_client).to receive(:update!).with(
-          "Contact",
-          Id: account.salesforce_id,
-          FirstName: account.first_name,
-          LastName: account.last_name,
-          Email: account.email
-        )
+      salesforce_api_client.update_contact(account: account)
+    end
+
+    context "when the upsert! was unsuccessful" do
+      before do
+        allow(salesforce_client).to receive(:upsert!).and_raise(error_message)
+      end
+
+      let(:error_message) { "UPDATE ERROR" }
+
+      it "logs the error" do
+        expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
 
         salesforce_api_client.update_contact(account: account)
       end
 
-      context "when update! was unsuccessful" do
-        before do
-          allow(salesforce_client).to receive(:update!).and_raise(error_message)
-        end
-
-        let(:error_message) { "UPDATE ERROR" }
-
-        it "logs the error" do
-          expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
-
-          salesforce_api_client.update_contact(account: account)
-        end
-
-        it "notifies the error_notifier with the error" do
-          expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
-
-          salesforce_api_client.update_contact(account: account)
-        end
-      end
-    end
-
-    context "when the account does not have salesforce_id" do
-      let(:salesforce_id) { nil }
-
-      it "does not call the update! method" do
-        expect(salesforce_client).not_to receive(:update!)
+      it "notifies the error_notifier with the error" do
+        expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
 
         salesforce_api_client.update_contact(account: account)
       end
@@ -203,72 +206,6 @@ RSpec.describe Salesforce::ApiClient do
         expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Updating account #{account.id}")
 
         salesforce_api_client.update_contact(account: account)
-      end
-    end
-  end
-
-  describe "deleting a contact in Salesforce" do
-    context "when Salesforce is enabled" do
-      let(:salesforce_enabled) { true }
-    end
-
-    context "when the account has a salesforce_id" do
-      let(:salesforce_id) { "rstuv34567wxy" }
-
-      it "calls the destroy! method to delete the contact in Salesforce" do
-        expect(salesforce_client).to receive(:destroy!).with("Contact", salesforce_id)
-
-        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
-      end
-
-      context "when destroy! was unsuccessful" do
-        before do
-          allow(salesforce_client).to receive(:destroy!).and_raise(error_message)
-        end
-
-        let(:error_message) { "DESTROY ERROR" }
-
-        it "logs the error" do
-          expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
-
-          salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
-        end
-
-        it "notifies the error_notifier with the error" do
-          expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
-
-          salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
-        end
-      end
-    end
-
-    context "when the account does not have salesforce_id" do
-      let(:salesforce_id) { nil }
-
-      it "does not call the destroy! method" do
-        expect(salesforce_client).not_to receive(:destroy!)
-
-        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
-      end
-    end
-
-    context "when Salesforce is disabled" do
-      let(:salesforce_enabled) { false }
-
-      it "logs and raises an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Deleting account with Salesforce Id #{salesforce_id}")
-
-        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
-      end
-    end
-
-    context "when Salesforce is disabled via a 'false' string setting" do
-      let(:salesforce_enabled) { "false" }
-
-      it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Deleting account with Salesforce Id #{salesforce_id}")
-
-        salesforce_api_client.delete_contact(salesforce_id: salesforce_id)
       end
     end
   end

@@ -1040,10 +1040,7 @@ RSpec.describe Account do
 
       it "makes a call to update the email list" do
         expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-          .with(
-            account_id: account.id,
-            currently_subscribed_as: account.email
-          )
+          .with(account_id: account.id)
 
         account.save
       end
@@ -1056,10 +1053,7 @@ RSpec.describe Account do
 
       it "makes a call to update the email list" do
         expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-          .with(
-            account_id: account.id,
-            currently_subscribed_as: account.email
-          )
+          .with(account_id: account.id)
 
         account.save
       end
@@ -1075,10 +1069,7 @@ RSpec.describe Account do
 
       it "makes a call to update the email list" do
         expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-          .with(
-            account_id: account.id,
-            currently_subscribed_as: current_email_address
-          )
+          .with(account_id: account.id)
 
         account.save
       end
@@ -1091,10 +1082,7 @@ RSpec.describe Account do
 
       it "makes a call to update the email list" do
         expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-          .with(
-            account_id: account.id,
-            currently_subscribed_as: account.email
-          )
+          .with(account_id: account.id)
 
         account.save
       end
@@ -1109,10 +1097,7 @@ RSpec.describe Account do
 
       it "makes a call to update the email list" do
         expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
-          .with(
-            account_id: account.id,
-            currently_subscribed_as: account.email
-          )
+          .with(account_id: account.id)
 
         account.save
       end

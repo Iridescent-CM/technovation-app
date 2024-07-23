@@ -402,14 +402,9 @@ class StudentProfile < ActiveRecord::Base
       ParentMailer.consent_notice(id).deliver_later
     end
 
-    if saved_change_to_parent_guardian_name? or
-        saved_change_to_parent_guardian_email? and
-        parent_guardian_email.present?
-
-      UpdateParentOnEmailListJob.perform_later(
-        student_profile_id: id,
-        currently_subscribed_as: parent_guardian_email_before_last_save
-      )
+    if saved_change_to_parent_guardian_name? ||
+        (saved_change_to_parent_guardian_email? && parent_guardian_email.present?)
+      UpdateAccountOnEmailListJob.perform_later(account_id: account.id)
     end
   end
 end
