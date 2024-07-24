@@ -105,6 +105,7 @@ module Admin
         :source_code_cache,
         :thunkable_project_url,
         :thunkable_account_email,
+        :scratch_project_url,
         screenshots_attributes: [:id, :_destroy]
       )
     end

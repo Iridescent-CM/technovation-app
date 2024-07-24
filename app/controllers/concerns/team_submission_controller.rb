@@ -250,6 +250,7 @@ module TeamSubmissionController
         :app_inventor_gmail,
         :thunkable_project_url,
         :thunkable_account_email,
+        :scratch_project_url,
         screenshots: [],
         screenshots_attributes: [
           :id,

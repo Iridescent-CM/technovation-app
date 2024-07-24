@@ -21,24 +21,26 @@
   attribute: :development_platform,
   cta_when_empty: "Select your coding language",
   cta_when_filled: "Change your selection" do %>
-
-  <% if @team_submission.developed_on?("Other") %>
-    <p>
-      <%= @team_submission.development_platform_other %>
-    </p>
-  <% else %>
-    <p>
-      <%= @team_submission.development_platform %>
-    </p>
-  <% end %>
+  <p>
+    <%= @team_submission.development_platform %>
+    <% if @team_submission.developed_on?("Other") %>
+      <span>
+        - <%= @team_submission.development_platform_other %>
+      </span>
+    <% end %>
+  </p>
 
   <% if @team_submission.developed_on?("Thunkable") %>
-    <%= @team_submission.development_platform_text %>
-
     <p>
       Project url:
       <%= link_to @team_submission.thunkable_project_url,
       @team_submission.thunkable_project_url %>
+    </p>
+  <% elsif @team_submission.developed_on?("Scratch") %>
+    <p>
+      Project url:
+      <%= link_to @team_submission.scratch_project_url,
+      @team_submission.scratch_project_url %>
     </p>
   <% end %>
 <% end %>
@@ -57,6 +59,12 @@
       Project url:
       <%= link_to @team_submission.thunkable_project_url,
         @team_submission.thunkable_project_url %>
+    </p>
+  <% elsif @team_submission.developed_on?("Scratch")%>
+    <p>
+      Project url:
+      <%= link_to @team_submission.scratch_project_url,
+                  @team_submission.scratch_project_url %>
     </p>
   <% else %>
     <p>

@@ -27,13 +27,14 @@
           for: :team_submission_development_platform %>
 
         <%= f.select :development_platform,
-        TeamSubmission::DEVELOPMENT_PLATFORMS,
+                     TeamSubmission.development_platform_options(@team_submission),
         { include_blank: true },
         data: {
           toggles: {
             "App Inventor": "#app_inventor_fields",
             "Thunkable": "#thunkable_fields",
             "Other": "#other",
+            "Scratch": "#scratch_fields"
           },
         },
         id: :team_submission_development_platform %>
@@ -98,6 +99,26 @@
 
         <%= f.text_field :development_platform_other %>
       </div>
+    </div>
+
+    <div id="scratch_fields" class="mt-8">
+      <p class="tw-hint">
+        We want to ask you one question about your use of
+        Scratch.
+      </p>
+
+      <%= f.label :scratch_project_url,
+                  "What is the URL for your Scratch project page?",
+                  for: :team_submission_scratch_project_url %>
+
+      <%= f.text_field :scratch_project_url,
+                       id: :team_submission_scratch_project_url %>
+
+      <p class="tw-hint">
+        Enter the Scratch project page URL. To create a project page, click the orange
+        "Share" button in your Scratch project. Then when the project page appears,
+        click the Copy Link button. This is the URL you will enter here.
+      </p>
     </div>
 
     <div class="submission-actions">

@@ -18,7 +18,8 @@ class TeamSubmission < ActiveRecord::Base
   ACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
     "App Inventor" => 0,
     "Thunkable" => 6,
-    "Other" => 5
+    "Other" => 5,
+    "Scratch" => 8
   }
 
   INACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
@@ -52,6 +53,7 @@ class TeamSubmission < ActiveRecord::Base
   before_validation :reset_development_platform_fields_for_app_inventor
   before_validation :reset_development_platform_fields_for_thunkable
   before_validation :reset_development_platform_fields_for_other_platforms
+  before_validation :reset_development_platform_fields_for_scratch
 
   before_validation -> {
     return if thunkable_project_url.blank?
@@ -77,8 +79,8 @@ class TeamSubmission < ActiveRecord::Base
       Rails.logger.warn("Published submission id=#{id} is missing required fields.")
     end
 
-    if source_code_external_url.blank?
-      columns[:source_code_external_url] = copy_possible_thunkable_url
+    if developed_on?("Thunkable") || developed_on?("Scratch")
+      columns[:source_code_external_url] = copy_possible_thunkable_or_scratch_url
     end
 
     columns[:percent_complete] = calculate_percent_complete
@@ -235,6 +237,8 @@ class TeamSubmission < ActiveRecord::Base
   validates :app_inventor_gmail, email: true, allow_blank: true
   validates :thunkable_account_email, email: true, allow_blank: true
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
+
+  validates :scratch_project_url, scratch_share_url: true, allow_blank: true
 
   validates :ai_description, presence: true, max_word_count: true,
     if: ->(team_submission) { team_submission.ai? }
@@ -568,13 +572,16 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def development_platform_text
-    if submission_type == MOBILE_APP_SUBMISSION_TYPE && development_platform != "Other"
-      "#{submission_type} - #{development_platform}"
-    elsif submission_type == MOBILE_APP_SUBMISSION_TYPE && development_platform == "Other"
-      "#{submission_type} - #{development_platform} - #{development_platform_other}"
+    if development_platform == "Other"
+      "#{development_platform} - #{development_platform_other}"
     else
-      submission_type
+      development_platform
     end
+  end
+
+  def self.development_platform_options(team_submission)
+    ACTIVE_DEVELOPMENT_PLATFORMS_ENUM.keys
+      .reject { |platform| platform == "Scratch" && !team_submission.beginner_division? }
   end
 
   def app_inventor?
@@ -584,6 +591,10 @@ class TeamSubmission < ActiveRecord::Base
 
   def thunkable?
     send(:Thunkable?)
+  end
+
+  def scratch?
+    send(:Scratch?)
   end
 
   def additional_questions?
@@ -657,9 +668,11 @@ class TeamSubmission < ActiveRecord::Base
     app_name_changed? || team.name_changed? || super
   end
 
-  def copy_possible_thunkable_url
-    if developed_on?("Thunkable") && !saved_change_to_source_code_external_url
+  def copy_possible_thunkable_or_scratch_url
+    if developed_on?("Thunkable")
       thunkable_project_url
+    elsif developed_on?("Scratch")
+      scratch_project_url
     end
   end
 
@@ -690,6 +703,7 @@ class TeamSubmission < ActiveRecord::Base
   def reset_development_platform_fields_for_thunkable
     if development_platform == "Thunkable"
       self.development_platform_other = nil
+      self.scratch_project_url = nil
     end
   end
 
@@ -699,6 +713,17 @@ class TeamSubmission < ActiveRecord::Base
       self.thunkable_project_url = nil
       self.app_inventor_app_name = nil
       self.app_inventor_gmail = nil
+      self.scratch_project_url = nil
+    end
+  end
+
+  def reset_development_platform_fields_for_scratch
+    if development_platform == "Scratch"
+      self.thunkable_account_email = nil
+      self.thunkable_project_url = nil
+      self.app_inventor_app_name = nil
+      self.app_inventor_gmail = nil
+      self.development_platform_other = nil
     end
   end
 end
