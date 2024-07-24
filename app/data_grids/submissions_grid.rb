@@ -141,10 +141,7 @@ class SubmissionsGrid
   end
 
   column :development_platform do
-    if development_platform_text.present?
-      platform = development_platform_text
-      platform.downcase.starts_with?("mobile") ? platform : ""
-    end
+    development_platform_text.presence || "-"
   end
 
   column :state_province, header: "State" do
