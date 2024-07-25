@@ -10,6 +10,6 @@ class FileProcessor < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w[aia apk zip csv pdf ppt pptx]
+    %w[aia apk zip csv pdf ppt pptx sb3]
   end
 end
