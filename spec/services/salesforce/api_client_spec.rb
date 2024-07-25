@@ -80,12 +80,12 @@ RSpec.describe Salesforce::ApiClient do
   let(:parent_guardian_name) { "Pandora Lovegood" }
   let(:parent_guardian_email) { "pandora@example.com" }
 
-  describe "adding a new contact to Salesforce" do
+  describe "#upsert_contact_info_for" do
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
     end
 
-    it "calls the upsert! method to create a new contact in Salesforce" do
+    it "calls the upsert! method to upsert a new contact in Salesforce" do
       expect(salesforce_client).to receive(:upsert!).with(
         "Contact",
         "Platform_Participant_Id__c",
@@ -101,7 +101,7 @@ RSpec.describe Salesforce::ApiClient do
         Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
       )
 
-      salesforce_api_client.add_contact(account: account)
+      salesforce_api_client.upsert_contact_info_for(account: account)
     end
 
     context "when the upsert! was unsuccessful" do
@@ -109,18 +109,18 @@ RSpec.describe Salesforce::ApiClient do
         allow(salesforce_client).to receive(:upsert!).and_raise(error_message)
       end
 
-      let(:error_message) { "ADD CONTACT ERROR" }
+      let(:error_message) { "UPSERT CONTACT ERROR" }
 
       it "logs the error" do
         expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
 
-        salesforce_api_client.add_contact(account: account)
+        salesforce_api_client.upsert_contact_info_for(account: account)
       end
 
       it "notifies the error_notifier with the error" do
         expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
 
-        salesforce_api_client.add_contact(account: account)
+        salesforce_api_client.upsert_contact_info_for(account: account)
       end
     end
 
@@ -128,9 +128,9 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { false }
 
       it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Adding account #{account.id}")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Upserting account #{account.id}")
 
-        salesforce_api_client.add_contact(account: account)
+        salesforce_api_client.upsert_contact_info_for(account: account)
       end
     end
 
@@ -138,74 +138,9 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { "false" }
 
       it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Adding account #{account.id}")
+        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Upserting account #{account.id}")
 
-        salesforce_api_client.add_contact(account: account)
-      end
-    end
-  end
-
-  describe "updating a contact in Salesforce" do
-    context "when Salesforce is enabled" do
-      let(:salesforce_enabled) { true }
-    end
-
-    it "calls the upsert! method to update the contact in Salesforce" do
-      expect(salesforce_client).to receive(:upsert!).with(
-        "Contact",
-        "Platform_Participant_Id__c",
-        Platform_Participant_Id__c: account.id,
-        FirstName: account.first_name,
-        LastName: account.last_name,
-        Email: account.email,
-        Birthdate: account.date_of_birth,
-        MailingCity: account.city,
-        MailingState: account.state_province,
-        MailingCountry: account.country,
-        Parent__c: account.student_profile.parent_guardian_name,
-        Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
-      )
-
-      salesforce_api_client.update_contact(account: account)
-    end
-
-    context "when the upsert! was unsuccessful" do
-      before do
-        allow(salesforce_client).to receive(:upsert!).and_raise(error_message)
-      end
-
-      let(:error_message) { "UPDATE ERROR" }
-
-      it "logs the error" do
-        expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
-
-        salesforce_api_client.update_contact(account: account)
-      end
-
-      it "notifies the error_notifier with the error" do
-        expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
-
-        salesforce_api_client.update_contact(account: account)
-      end
-    end
-
-    context "when Salesforce is disabled" do
-      let(:salesforce_enabled) { false }
-
-      it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Updating account #{account.id}")
-
-        salesforce_api_client.update_contact(account: account)
-      end
-    end
-
-    context "when Salesforce is disabled via a 'false' string setting" do
-      let(:salesforce_enabled) { false }
-
-      it "logs an error" do
-        expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Updating account #{account.id}")
-
-        salesforce_api_client.update_contact(account: account)
+        salesforce_api_client.upsert_contact_info_for(account: account)
       end
     end
   end

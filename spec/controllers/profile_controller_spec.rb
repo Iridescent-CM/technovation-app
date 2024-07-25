@@ -10,11 +10,11 @@ require "rails_helper"
 
     before do
       sign_in(profile)
-      allow(UpdateAccountOnEmailListJob).to receive(:perform_later)
+      allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
     end
 
-    it "updates newsletters with a change to the #{scope} address" do
-      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+    it "updates #{scope} contact info in the CRM when their location is changed" do
+      expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
         .with(account_id: profile.account_id)
 
       patch :update, params: {
@@ -29,8 +29,8 @@ require "rails_helper"
       }
     end
 
-    it "updates #{scope} newsletters with changes to first name" do
-      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+    it "updates #{scope} contact info in the CRM when their first name is changed" do
+      expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
         .with(account_id: profile.account_id)
 
       patch :update, params: {
@@ -43,8 +43,8 @@ require "rails_helper"
       }
     end
 
-    it "updates #{scope} newsletters with changes to last name" do
-      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+    it "updates #{scope} contact info in the CRM when their last name is changed" do
+      expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
         .with(account_id: profile.account_id)
 
       patch :update, params: {
