@@ -27,7 +27,6 @@
 
       <%=
         [
-          submission.submission_type,
           submission.development_platform,
           submission.development_platform_other
         ].delete_if(&:blank?).join(" - ")
