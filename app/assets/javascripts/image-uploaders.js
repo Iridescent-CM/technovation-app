@@ -97,7 +97,7 @@ function isValidSourceCodeFile () {
     'application/vnd.android.package-archive', //apk
   ];
 
-  var validFileExtensions = ['.aia', '.apk', '.zip'];
+  var validFileExtensions = ['.aia', '.apk', '.zip', '.sb3'];
 
   for (var i = 0; i < fileInput.files.length; i += 1) {
     var file = fileInput.files[i];
