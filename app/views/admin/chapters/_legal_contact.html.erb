@@ -34,7 +34,13 @@
               method: "post",
               class: "button"
             %>
-        <% end %>
+          <% elsif !@chapter.legal_document_signed? %>
+            <%= button_to "Void MOU",
+              void_admin_chapter_memorandum_of_understanding_path(@chapter),
+              method: "patch",
+              class: "button"
+            %>
+          <% end %>
         </div>
       <% else %>
         <%= render "admin/chapters/legal_contacts/form", chapter: @chapter, legal_contact: @chapter.build_legal_contact %>

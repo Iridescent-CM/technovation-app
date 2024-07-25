@@ -62,6 +62,17 @@ CREATE TYPE public.chapter_ambassador_organization_status AS ENUM (
 
 
 --
+-- Name: document_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.document_status AS ENUM (
+    'sent',
+    'signed',
+    'voided'
+);
+
+
+--
 -- Name: judge_recusal_from_submission_reason; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -790,7 +801,10 @@ CREATE TABLE public.documents (
     season_signed smallint,
     docusign_envelope_id character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    voided_at timestamp without time zone,
+    sent_at timestamp without time zone,
+    status public.document_status
 );
 
 
@@ -4526,7 +4540,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240625173653'),
 ('20240702145233'),
 ('20240708200855'),
+('20240709133548'),
 ('20240712182156'),
-('20240719141738');
+('20240719141738'),
+('20240722174124'),
+('20240723134333'),
+('20240723134706');
 
 

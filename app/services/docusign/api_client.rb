@@ -36,6 +36,34 @@ module Docusign
       )
     end
 
+    def void_document(document)
+      response = client.put(
+        "v2.1/accounts/#{api_account_id}/envelopes/#{document.docusign_envelope_id}",
+        {
+          status: "voided",
+          voidedReason: "Voided via TG Platform"
+        }.to_json
+      )
+
+      response_body = JSON.parse(response.body, symbolize_names: true)
+
+      if response.success?
+        document.update(
+          active: false,
+          voided_at: Time.now
+        )
+
+        Result.new(success?: true)
+      else
+        error = "[DOCUSIGN] Error voiding document - #{response_body[:message]}"
+
+        logger.error(error)
+        error_notifier.notify(error)
+
+        Result.new(success?: false, message: "There was an error trying to void a document, please check the logs for more info.")
+      end
+    end
+
     private
 
     attr_reader :client, :api_account_id, :logger, :error_notifier
@@ -55,6 +83,7 @@ module Docusign
           full_name: signer.full_name,
           email_address: signer.email_address,
           active: true,
+          sent_at: Time.now,
           docusign_envelope_id: response_body[:envelopeId]
         )
 

@@ -14,7 +14,7 @@ RSpec.feature "Chapter Ambassadors view the chapter affiliation agreement tab" d
   end
 
   scenario "A Chapter Ambassador assigned to a chapter with a sent (not signed) chapter affiliation agreement" do
-    chapter.legal_contact.legal_document.update(signed_at: nil)
+    chapter.legal_contact.legal_document.update(sent_at: Time.now, signed_at: nil)
 
     chapter_ambassador = FactoryBot.create(:chapter_ambassador, chapter: chapter)
 
@@ -54,5 +54,4 @@ RSpec.feature "Chapter Ambassadors view the chapter affiliation agreement tab" d
 
     expect(page).to have_content("You are not associated with a chapter. Please contact support@technovation.org for support.")
   end
-
 end
