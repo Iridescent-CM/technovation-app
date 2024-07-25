@@ -94,7 +94,6 @@ gem "dotenv-rails", "~> 2.7"
 
 gem "pdfkit", "~> 0.8.7.0"
 
-gem "gibbon", "~> 3.4.4"
 gem "restforce", "~> 7.0.0"
 
 gem "net-smtp", require: false
