@@ -36,7 +36,7 @@
       <%= link_to @team_submission.thunkable_project_url,
       @team_submission.thunkable_project_url %>
     </p>
-  <% elsif @team_submission.developed_on?("Scratch") %>
+  <% elsif @team_submission.developed_on?("Scratch") && @team_submission.scratch_project_url.present? %>
     <p>
       Project url:
       <%= link_to @team_submission.scratch_project_url,
