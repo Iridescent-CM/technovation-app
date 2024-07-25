@@ -738,13 +738,19 @@ class TeamSubmission < ActiveRecord::Base
   def reset_development_platform_fields_for_app_inventor
     if development_platform == "App Inventor"
       self.development_platform_other = nil
+      self.thunkable_account_email = nil
+      self.thunkable_project_url = nil
+      self.scratch_project_url = nil
     end
   end
 
   def reset_development_platform_fields_for_thunkable
     if development_platform == "Thunkable"
+      self.remove_source_code! if source_code.present?
       self.development_platform_other = nil
       self.scratch_project_url = nil
+      self.app_inventor_app_name = nil
+      self.app_inventor_gmail = nil
     end
   end
 
