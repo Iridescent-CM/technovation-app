@@ -192,13 +192,13 @@ RSpec.describe StudentProfile do
   context "when the parent/guardian email address has been updated" do
     let(:new_parent_guardian_email_address) { "acoolparent@example.com" }
 
-    it "updates the parent/guardian on our email list" do
+    it "updates the parent/guardian in the CRM" do
       student_profile = FactoryBot.create(
         :student_profile,
         parent_guardian_email: "parenttrap@example.com"
       )
 
-      expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+      expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
         .with(account_id: student_profile.account.id)
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
@@ -210,13 +210,13 @@ RSpec.describe StudentProfile do
       ConsentForms::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
     end
 
-    it "does not update the parent/guardian on our email list" do
+    it "does not update the parent/guardian in the CRM" do
       student_profile = FactoryBot.create(
         :student_profile,
         parent_guardian_email: "oldparentemail@example.com"
       )
 
-      expect(UpdateAccountOnEmailListJob).not_to receive(:perform_later)
+      expect(CRM::UpsertContactInfoJob).not_to receive(:perform_later)
         .with(account_id: student_profile.account.id)
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)

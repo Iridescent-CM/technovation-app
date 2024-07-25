@@ -32,14 +32,8 @@ module Salesforce
       @error_notifier = error_notifier
     end
 
-    def add_contact(account:)
-      handle_request "Adding account #{account.id}" do
-        upsert_contact(account: account)
-      end
-    end
-
-    def update_contact(account:)
-      handle_request "Updating account #{account.id}" do
+    def upsert_contact_info_for(account:)
+      handle_request "Upserting account #{account.id}" do
         upsert_contact(account: account)
       end
     end
