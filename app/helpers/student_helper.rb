@@ -74,4 +74,14 @@ module StudentHelper
       web_icon("circle-o", {class: "icon--orange", text: text})
     end
   end
+
+  def link_to_download_or_open_project(submission)
+    if submission.developed_on?("Thunkable")
+      submission.thunkable_project_url
+    elsif submission.developed_on?("Scratch")
+      submission.source_code.present? ? submission.source_code_url : submission.scratch_project_url
+    elsif submission.developed_on?("Other") || submission.developed_on?("App Inventor")
+      submission.source_code_url
+    end
+  end
 end
