@@ -51,7 +51,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def prepare_student_for_current_season(record)
     student_profile = record.student_profile
 
-    subscribe_to_newsletter(record, :student)
+    setup_account_in_crm_for_current_season(record, :student)
 
     if student_profile.division.junior? || student_profile.division.senior?
       RegistrationMailer.welcome_student(record).deliver_later
@@ -75,7 +75,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_mentor_for_current_season(record)
-    subscribe_to_newsletter(record, :mentor)
+    setup_account_in_crm_for_current_season(record, :mentor)
 
     RegistrationMailer.welcome_mentor(record.id).deliver_later
 
@@ -84,7 +84,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_judge_for_current_season(record)
-    subscribe_to_newsletter(record, :judge)
+    setup_account_in_crm_for_current_season(record, :judge)
 
     if SeasonToggles.judge_registration_open?
       if record.returning?
@@ -108,8 +108,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     end
   end
 
-  def subscribe_to_newsletter(record, profile_type)
-    SubscribeAccountToEmailListJob.perform_later(
+  def setup_account_in_crm_for_current_season(record, profile_type)
+    CRM::SetupAccountForCurrentSeasonJob.perform_later(
       account_id: record.id,
       profile_type: profile_type.to_s
     )

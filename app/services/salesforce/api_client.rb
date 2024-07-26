@@ -32,6 +32,31 @@ module Salesforce
       @error_notifier = error_notifier
     end
 
+    def setup_account_for_current_season(account:, profile_type:)
+      salesforce_contact_id = nil
+
+      handle_request "Upserting account #{account.id}" do
+        salesforce_contact_id = upsert_contact(account: account)
+      end
+
+      handle_request "Setting up account (#{account.id}) for current season" do
+        client.insert!(
+          "Program_Participant__c",
+          {
+            Contact__c: salesforce_contact_id,
+            Platform_Participant_Id__c: account.id,
+            Year__c: Season.current.year,
+            Type__c: profile_type
+          }.merge(
+            initial_program_participant_info_for(
+              profile_type: profile_type,
+              account: account
+            )
+          )
+        )
+      end
+    end
+
     def upsert_contact_info_for(account:)
       handle_request "Upserting account #{account.id}" do
         upsert_contact(account: account)
@@ -57,6 +82,21 @@ module Salesforce
         Parent__c: account.student_profile&.parent_guardian_name,
         Parent_Guardian_Email__c: account.student_profile&.parent_guardian_email
       )
+    end
+
+    def initial_program_participant_info_for(profile_type:, account:)
+      case profile_type
+      when "student"
+        {
+          TG_Division__c: "#{account.division.name} Division"
+        }
+      when "mentor"
+        {
+          Mentor_Type__c: account.mentor_profile.mentor_types.pluck(:name).join(";")
+        }
+      else
+        {}
+      end
     end
 
     def handle_request(message, &block)
