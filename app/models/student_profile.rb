@@ -404,7 +404,7 @@ class StudentProfile < ActiveRecord::Base
 
     if saved_change_to_parent_guardian_name? ||
         (saved_change_to_parent_guardian_email? && parent_guardian_email.present?)
-      CRM::UpsertContactInfoJob.perform_later(account_id: account.id)
+      Crm::UpsertContactInfoJob.perform_later(account_id: account.id)
     end
   end
 end

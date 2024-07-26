@@ -64,7 +64,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty4"
       )
 
-      allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
+      allow(Crm::UpsertContactInfoJob).to receive(:perform_later)
 
       patch :update, params: {id: student.parental_consent.id,
                               parental_consent: FactoryBot.attributes_for(
@@ -72,7 +72,7 @@ RSpec.describe ParentalConsentsController do
                                 student_profile_consent_token: student.consent_token
                               ).merge(newsletter_opt_in: "0")}
 
-      expect(CRM::UpsertContactInfoJob).not_to have_received(:perform_later)
+      expect(Crm::UpsertContactInfoJob).not_to have_received(:perform_later)
         .with(any_args)
     end
 
@@ -83,7 +83,7 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty"
       )
 
-      allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
+      allow(Crm::UpsertContactInfoJob).to receive(:perform_later)
 
       patch :update, params: {id: student.parental_consent.id,
                               parental_consent: FactoryBot.attributes_for(
@@ -91,7 +91,7 @@ RSpec.describe ParentalConsentsController do
                                 student_profile_consent_token: student.consent_token
                               ).merge(newsletter_opt_in: "1")}
 
-      expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
+      expect(Crm::UpsertContactInfoJob).to have_received(:perform_later)
         .at_least(:once)
         .with(account_id: student.account.id)
     end

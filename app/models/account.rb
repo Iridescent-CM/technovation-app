@@ -1073,7 +1073,7 @@ class Account < ActiveRecord::Base
 
   def update_crm_contact_info
     if any_crm_contact_info_fileds_changed?
-      CRM::UpsertContactInfoJob.perform_later(account_id: id)
+      Crm::UpsertContactInfoJob.perform_later(account_id: id)
     end
   end
 

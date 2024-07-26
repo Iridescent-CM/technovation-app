@@ -1039,7 +1039,7 @@ RSpec.describe Account do
       end
 
       it "makes a call to update their contact info in the CRM" do
-        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+        expect(Crm::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1052,7 +1052,7 @@ RSpec.describe Account do
       end
 
       it "makes a call to update their contact info in the CRM" do
-        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+        expect(Crm::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1068,7 +1068,7 @@ RSpec.describe Account do
       end
 
       it "makes a call to update their contact info in the CRM" do
-        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+        expect(Crm::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1081,7 +1081,7 @@ RSpec.describe Account do
       end
 
       it "makes a call to update their contact info in the CRM" do
-        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+        expect(Crm::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1096,7 +1096,7 @@ RSpec.describe Account do
       end
 
       it "makes a call to update their contact info in the CRM" do
-        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+        expect(Crm::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save

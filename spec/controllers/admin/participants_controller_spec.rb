@@ -47,7 +47,7 @@ RSpec.describe Admin::ParticipantsController do
         )
       )
 
-      allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
+      allow(Crm::UpsertContactInfoJob).to receive(:perform_later)
 
       patch :update, params: {
         id: profile.account_id,
@@ -56,14 +56,14 @@ RSpec.describe Admin::ParticipantsController do
         }
       }
 
-      expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
+      expect(Crm::UpsertContactInfoJob).to have_received(:perform_later)
         .with(account_id: profile.account_id)
     end
 
     it "updates their contact info in the CRM when the first name on the account is changed" do
       profile = FactoryBot.create(scope)
 
-      allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
+      allow(Crm::UpsertContactInfoJob).to receive(:perform_later)
 
       patch :update, params: {
         id: profile.account_id,
@@ -72,14 +72,14 @@ RSpec.describe Admin::ParticipantsController do
         }
       }
 
-      expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
+      expect(Crm::UpsertContactInfoJob).to have_received(:perform_later)
         .with(account_id: profile.account_id)
     end
 
     it "updates their contact info in the CRM when the last name on the account is changed" do
       profile = FactoryBot.create(scope)
 
-      allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
+      allow(Crm::UpsertContactInfoJob).to receive(:perform_later)
 
       patch :update, params: {
         id: profile.account_id,
@@ -88,7 +88,7 @@ RSpec.describe Admin::ParticipantsController do
         }
       }
 
-      expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
+      expect(Crm::UpsertContactInfoJob).to have_received(:perform_later)
         .with(account_id: profile.account_id)
     end
   end

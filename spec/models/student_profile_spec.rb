@@ -198,7 +198,7 @@ RSpec.describe StudentProfile do
         parent_guardian_email: "parenttrap@example.com"
       )
 
-      expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+      expect(Crm::UpsertContactInfoJob).to receive(:perform_later)
         .with(account_id: student_profile.account.id)
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
@@ -216,7 +216,7 @@ RSpec.describe StudentProfile do
         parent_guardian_email: "oldparentemail@example.com"
       )
 
-      expect(CRM::UpsertContactInfoJob).not_to receive(:perform_later)
+      expect(Crm::UpsertContactInfoJob).not_to receive(:perform_later)
         .with(account_id: student_profile.account.id)
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
