@@ -234,7 +234,7 @@ class TeamSubmission < ActiveRecord::Base
     },
     allow_blank: true
 
-  validates :app_inventor_gmail, email: true, gmail: true, allow_blank: true
+  validates :app_inventor_gmail, email: true, allow_blank: true
 
   validates :thunkable_account_email, email: true, allow_blank: true
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
