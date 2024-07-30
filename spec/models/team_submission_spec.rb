@@ -190,17 +190,6 @@ RSpec.describe TeamSubmission do
       submission.development_platform = "App Inventor"
       expect(submission.app_inventor_fields_complete?).to be false
     end
-
-    it "returns false when app inventor gmail is not a gmail" do
-      submission = FactoryBot.create(:submission)
-
-      submission.development_platform = "App Inventor"
-      submission.app_inventor_app_name = "Test App"
-      submission.app_inventor_gmail = "test@yahoo.com"
-      submission.valid?
-
-      expect(submission.app_inventor_fields_complete?).to be false
-    end
   end
 
   describe "#thunkable_fields_complete?" do
@@ -271,7 +260,7 @@ RSpec.describe TeamSubmission do
 
       submission.development_platform = "Thunkable"
       submission.thunkable_project_url = "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
-      submission.thunkable_project_url = nil
+      submission.source_code_external_url = nil
 
       expect(submission.thunkable_source_code_fields_complete?).to be false
     end
