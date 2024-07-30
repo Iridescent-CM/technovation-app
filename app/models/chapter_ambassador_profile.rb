@@ -19,8 +19,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     foreign_key: "account_id",
     required: false
 
-  after_update :after_status_changed, if: :saved_change_to_status?
-
   enum status: %i[pending approved declined spam]
   enum organization_status: {
     employee: "employee",
@@ -172,18 +170,5 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def update_onboarding_status
     update_column(:onboarded, can_be_marked_onboarded?)
-  end
-
-  private
-
-  def after_status_changed
-    if approved?
-      SubscribeAccountToEmailListJob.perform_later(
-        account_id: account.id,
-        profile_type: "chapter ambassador"
-      )
-    else
-      DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
-    end
   end
 end

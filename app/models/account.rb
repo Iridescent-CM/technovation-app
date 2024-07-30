@@ -259,7 +259,7 @@ class Account < ActiveRecord::Base
 
   after_create :create_account_created_activity
   before_update :update_division, if: -> { !is_a_judge? && !is_chapter_ambassador? }
-  after_commit :update_email_list, on: :update
+  after_commit :update_crm_contact_info, on: :update
   after_update :update_chapter_ambassador_onboarding_status
 
   after_commit -> {
@@ -1071,13 +1071,13 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def update_email_list
-    if any_email_list_fields_changed?
-      UpdateAccountOnEmailListJob.perform_later(account_id: id)
+  def update_crm_contact_info
+    if any_crm_contact_info_fileds_changed?
+      CRM::UpsertContactInfoJob.perform_later(account_id: id)
     end
   end
 
-  def any_email_list_fields_changed?
+  def any_crm_contact_info_fileds_changed?
     [
       :first_name,
       :last_name,

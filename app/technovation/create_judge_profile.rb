@@ -2,7 +2,6 @@ module CreateJudgeProfile
   def self.call(account)
     if account.can_be_a_judge? && account.is_not_a_judge?
       create_judge_profile(account)
-      AddProfileTypeToAccountOnEmailListJob.perform_later(profile_type: "judge", account_id: account.id)
 
       true
     else

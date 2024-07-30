@@ -49,7 +49,6 @@ module Admin
     def destroy
       account = Account.find(params[:id])
 
-      DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
       account.destroy
 
       redirect_to admin_participants_path,
@@ -59,7 +58,6 @@ module Admin
     def permanently_delete
       account = Account.find(params[:participant_id])
 
-      DeleteAccountFromEmailListJob.perform_later(email_address: account.email)
       ConsentWaiver.find_by(account_id: account.id)&.delete
 
       account.really_destroy!

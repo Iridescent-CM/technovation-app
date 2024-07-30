@@ -12,6 +12,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
     prepare_mentor_for_current_season(record) if is_mentor?(record)
     prepare_judge_for_current_season(record) if is_judge?(record)
+    prepare_chapter_ambassador_for_current_season(record) if is_chapter_ambassador?(record)
 
     record_registration_activity(record) if record.respond_to?(:create_activity)
   end
@@ -34,6 +35,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     record.respond_to?(:judge_profile) && record.judge_profile.present?
   end
 
+  def is_chapter_ambassador?(record)
+    record.respond_to?(:chapter_ambassador_profile) && record.chapter_ambassador_profile.present?
+  end
+
   def update_season_data_with_resets(record)
     update_data = {
       seasons: (record.seasons << Season.current.year)
@@ -51,7 +56,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   def prepare_student_for_current_season(record)
     student_profile = record.student_profile
 
-    subscribe_to_newsletter(record, :student)
+    setup_account_in_crm_for_current_season(record, :student)
 
     if student_profile.division.junior? || student_profile.division.senior?
       RegistrationMailer.welcome_student(record).deliver_later
@@ -75,7 +80,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_mentor_for_current_season(record)
-    subscribe_to_newsletter(record, :mentor)
+    setup_account_in_crm_for_current_season(record, :mentor)
 
     RegistrationMailer.welcome_mentor(record.id).deliver_later
 
@@ -84,7 +89,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def prepare_judge_for_current_season(record)
-    subscribe_to_newsletter(record, :judge)
+    setup_account_in_crm_for_current_season(record, :judge)
 
     if SeasonToggles.judge_registration_open?
       if record.returning?
@@ -98,6 +103,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     record.judge_profile.save # fire commit hooks, if needed
   end
 
+  def prepare_chapter_ambassador_for_current_season(record)
+    setup_account_in_crm_for_current_season(record, "chapter ambassador")
+  end
+
   def record_registration_activity(record)
     key_name = record.class.name.underscore
     activity_key = "#{key_name}.register_current_season"
@@ -108,8 +117,8 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     end
   end
 
-  def subscribe_to_newsletter(record, profile_type)
-    SubscribeAccountToEmailListJob.perform_later(
+  def setup_account_in_crm_for_current_season(record, profile_type)
+    CRM::SetupAccountForCurrentSeasonJob.perform_later(
       account_id: record.id,
       profile_type: profile_type.to_s
     )

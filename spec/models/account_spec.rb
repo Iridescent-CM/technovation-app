@@ -1038,8 +1038,8 @@ RSpec.describe Account do
         account.first_name = "Carol"
       end
 
-      it "makes a call to update the email list" do
-        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+      it "makes a call to update their contact info in the CRM" do
+        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1051,8 +1051,8 @@ RSpec.describe Account do
         account.last_name = "Baskins"
       end
 
-      it "makes a call to update the email list" do
-        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+      it "makes a call to update their contact info in the CRM" do
+        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1067,8 +1067,8 @@ RSpec.describe Account do
         account.email = "carol@example.com"
       end
 
-      it "makes a call to update the email list" do
-        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+      it "makes a call to update their contact info in the CRM" do
+        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1080,8 +1080,8 @@ RSpec.describe Account do
         account.date_of_birth = 25.years.ago
       end
 
-      it "makes a call to update the email list" do
-        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+      it "makes a call to update their contact info in the CRM" do
+        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save
@@ -1095,8 +1095,8 @@ RSpec.describe Account do
         account.country = "Brazil"
       end
 
-      it "makes a call to update the email list" do
-        expect(UpdateAccountOnEmailListJob).to receive(:perform_later)
+      it "makes a call to update their contact info in the CRM" do
+        expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
           .with(account_id: account.id)
 
         account.save

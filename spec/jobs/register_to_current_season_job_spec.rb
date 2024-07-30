@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe RegisterToCurrentSeasonJob do
   %w[judge student mentor].each do |scope|
-    it "subscribes a #{scope} to the #{scope} newsletter" do
+    it "sets up the #{scope} account in the CRM" do
       profile = FactoryBot.create(scope)
 
       profile.account.update(seasons: [])
 
-      expect(SubscribeAccountToEmailListJob).to receive(:perform_later).with(
+      expect(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later).with(
         account_id: profile.account.id,
         profile_type: scope
       )
