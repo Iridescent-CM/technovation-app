@@ -614,8 +614,8 @@ class TeamSubmission < ActiveRecord::Base
 
   def scratch_fields_complete?
     developed_on?("Scratch") &&
-      scratch_project_url.present? &&
-      errors.attribute_names.exclude?(:scratch_project_url)
+      (scratch_project_url.blank? ||
+        scratch_project_url.present? && errors.attribute_names.exclude?(:scratch_project_url))
   end
 
   def other_fields_complete?
@@ -629,7 +629,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def scratch_source_code_fields_complete?
     scratch_fields_complete? &&
-      source_code_external_url_fields_complete?
+      (source_code_external_url_fields_complete? || source_code.present?)
   end
 
   def source_code_external_url_fields_complete?
