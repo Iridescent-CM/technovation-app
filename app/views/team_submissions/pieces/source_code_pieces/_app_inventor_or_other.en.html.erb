@@ -1,0 +1,25 @@
+<p>Source code should be submitted depending on the language used:</p>
+<ul>
+  <li><em>.aia</em> file (MIT App Inventor) OR <em>.zip</em> file (other languages)</li>
+</ul>
+<br>
+
+<p>AI Projects should include 1 zip file that contains:</p>
+<ul class="list-disc ml-8">
+  <li>Screenshot of dataset training (ML4Kids, TeachableMachine, App Inventor, etc.) or spreadsheet or link to images/sounds folder</li>
+  <li>Picture(s) of prototype (cardboard model, drawings, devices)</li>
+  <li>For online inventions - Any link with demo login information</li>
+</ul>
+<br>
+
+<%= direct_upload_form_for source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
+  <input type="hidden" name="utf8">
+  <%= f.label :file, "Upload your technical work" %>
+  <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
+
+  <div class="flash flash--alert source-code-uploader__error hidden">
+    Sorry, you tried to upload an invalid file type.
+  </div>
+
+  <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
+<% end %>

@@ -9,86 +9,22 @@
   <% end %>
 
   <% if @team_submission.development_platform.blank? %>
-    <%= render template: 'team_submissions/pieces/development_platform',
+    <%= render template: "team_submissions/pieces/development_platform",
       locals: {
         submission: @team_submission,
         embedded: true,
       } %>
   <% else %>
     <% if @team_submission.developed_on?("Thunkable") %>
-      <%= form_with model: @team_submission,
-        url: send("#{current_scope}_team_submission_url", @team_submission),
-        local: true do |f| %>
-        <p>
-          <%= f.label :source_code_external_url %>
-          <%= f.text_field :source_code_external_url %>
-        </p>
-
-      <div class="flex flex-row justify-end">
-        <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-4" %>
-      </div>
-
-      <% end %>
+      <%= render "team_submissions/pieces/source_code_pieces/thunkable",
+        submission: @team_submission %>
     <% elsif @team_submission.developed_on?("App Inventor") ||  @team_submission.developed_on?("Other") %>
-      <p>Source code should be submitted depending on the language used:</p>
-      <ul>
-        <li><em>.aia</em> file (MIT App Inventor) OR <em>.zip</em> file (other languages)</li>
-      </ul>
-      <br>
-
-      <p>AI Projects should include 1 zip file that contains:</p>
-      <ul class="list-disc ml-8">
-        <li>Screenshot of dataset training (ML4Kids, TeachableMachine, App Inventor, etc.) or spreadsheet or link to images/sounds folder</li>
-        <li>Picture(s) of prototype (cardboard model, drawings, devices)</li>
-        <li>For online inventions - Any link with demo login information</li>
-      </ul>
-      <br>
-
-      <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
-        <input type="hidden" name="utf8">
-        <%= f.label :file, "Upload your technical work" %>
-        <%= f.file_field :file, accept: ".aia,.zip", class: 'source-code-uploader__file' %>
-
-        <div class="flash flash--alert source-code-uploader__error hidden">
-          Sorry, you tried to upload an invalid file type.
-        </div>
-
-        <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
-      <% end %>
+      <%= render "team_submissions/pieces/source_code_pieces/app_inventor_or_other",
+        source_code_uploader: @source_code_uploader %>
     <% elsif @team_submission.developed_on?("Scratch") %>
-      <% if @team_submission.source_code_external_url.present? %>
-        <%= form_with model: @team_submission,
-                      url: send("#{current_scope}_team_submission_url", @team_submission),
-                      local: true do |f| %>
-          <p>
-            <%= f.label :source_code_external_url %>
-            <%= f.text_field :source_code_external_url %>
-          </p>
-
-          <div class="flex flex-row justify-end">
-            <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-4" %>
-          </div>
-        <% end %>
-      <% else %>
-        <p>Source code should be submitted depending on the language used:</p>
-        <p>
-          If you used a Scratch environment other than the scratch.mit.edu website, you will
-          save your project to your computer, and then upload that file in this section.
-          The file will have a .sb3 file extension name.
-        </p>
-        <br>
-        <%= direct_upload_form_for @source_code_uploader, html: { multipart: true, class: 'source-code-uploader' } do |f| %>
-          <input type="hidden" name="utf8">
-          <%= f.label :file, "Upload your technical work" %>
-          <%= f.file_field :file, accept: ".sb3", class: 'source-code-uploader__file' %>
-
-          <div class="flash flash--alert source-code-uploader__error hidden">
-            Sorry, you tried to upload an invalid file type.
-          </div>
-
-          <%= f.submit "Upload", class: "button source-code-uploader__submit-button" %>
-        <% end %>
-      <% end %>
+      <%= render "team_submissions/pieces/source_code_pieces/scratch",
+        submission: @team_submission,
+        source_code_uploader: @source_code_uploader %>
     <% end %>
 
     <p class="py-2">

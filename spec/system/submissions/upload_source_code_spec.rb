@@ -88,6 +88,49 @@ RSpec.describe "Uploading technical work to submissions", :js do
           expect(page).to have_xpath("//input[@type='text' and @value='#{url}']")
         end
       end
+
+      context "and development platform is Scratch" do
+        context "and the scratch project url has been filled in" do
+          let(:url) { "https://scratch.mit.edu/projects/694700505" }
+
+          before do
+            TeamSubmission.last.update!({
+              development_platform: "Scratch",
+              scratch_project_url: url
+            })
+          end
+
+          it "displays a text field with the URL filled in" do
+            click_link "Technical Additions"
+            expect(page).not_to have_css("input[type=file]")
+            expect(page).to have_xpath("//input[@type='text' and @value='#{url}']")
+          end
+        end
+
+        context "and the scratch project url has not been filled in" do
+          before do
+            TeamSubmission.last.update!({
+              development_platform: "Scratch",
+              scratch_project_url: nil
+            })
+          end
+
+          it "allows an sb3 file to be uploaded" do
+            click_link "Technical Additions"
+            expect(page).to have_css("input[type=file]")
+
+            attach_file(
+              "file",
+              File.absolute_path("./spec/support/uploads/example.sb3"),
+              class: "source-code-uploader__file"
+            )
+
+            expect(page).to have_selector(".source-code-uploader__error", visible: false)
+            expect(page).to have_button("Upload", disabled: false)
+
+          end
+        end
+      end
     end
 
     context "when development platform has not been entered" do

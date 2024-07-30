@@ -597,6 +597,45 @@ class TeamSubmission < ActiveRecord::Base
     send(:Scratch?)
   end
 
+  def app_inventor_fields_complete?
+    developed_on?("App Inventor") &&
+      app_inventor_app_name.present? &&
+      errors.attribute_names.exclude?(:app_inventor_app_name) &&
+      (app_inventor_gmail.blank? || errors.attribute_names.exclude?(:app_inventor_gmail))
+  end
+
+  def thunkable_fields_complete?
+    developed_on?("Thunkable") &&
+      thunkable_project_url.present? &&
+      errors.attribute_names.exclude?(:thunkable_project_url) &&
+      (thunkable_account_email.blank? || errors.attribute_names.exclude?(:thunkable_account_email))
+  end
+
+  def scratch_fields_complete?
+    developed_on?("Scratch") &&
+      scratch_project_url.present? &&
+      errors.attribute_names.exclude?(:scratch_project_url)
+  end
+
+  def other_fields_complete?
+    developed_on?("Other")
+  end
+
+  def thunkable_source_code_fields_complete?
+    thunkable_fields_complete? &&
+      source_code_external_url_fields_complete?
+  end
+
+  def scratch_source_code_fields_complete?
+    scratch_fields_complete? &&
+      source_code_external_url_fields_complete?
+  end
+
+  def source_code_external_url_fields_complete?
+    source_code_external_url.present? &&
+      errors.attribute_names.exclude?(:source_code_external_url)
+  end
+
   def additional_questions?
     seasons.last >= 2021
   end

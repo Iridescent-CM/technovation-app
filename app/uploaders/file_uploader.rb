@@ -7,7 +7,7 @@ class FileUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w[aia zip csv ppt pdf pptx]
+    %w[aia zip csv ppt pdf pptx sb3]
   end
 
   # Override the directory where uploaded files will be stored.

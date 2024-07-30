@@ -40,48 +40,16 @@ module StudentHelper
     when :screenshots
       :complete if submission.screenshots.many?
     when :development_platform
-      if (
-            submission.development_platform == "App Inventor" &&
-            submission.app_inventor_app_name.present? &&
-            submission.errors.attribute_names.exclude?(:app_inventor_app_name) &&
-            (
-              submission.app_inventor_gmail.blank? ||
-              submission.errors.attribute_names.exclude?(:app_inventor_gmail)
-            )
-          ) ||
-          (
-
-            submission.development_platform == "Thunkable" &&
-            submission.thunkable_project_url.present? &&
-            submission.errors.attribute_names.exclude?(:thunkable_project_url) &&
-            (
-              submission.thunkable_account_email.blank? ||
-              submission.errors.attribute_names.exclude?(:thunkable_account_email)
-            )
-          ) ||
-          (
-
-            submission.development_platform == "Other"
-          )
-
+      if submission.app_inventor_fields_complete? ||
+          submission.thunkable_fields_complete? ||
+          submission.scratch_fields_complete? ||
+          submission.other_fields_complete?
         :complete
       end
     when :source_code, :source_code_url
-      if (submission.submission_type == "Mobile App" &&
-          submission.development_platform == "Thunkable" &&
-          submission.thunkable_project_url.present? &&
-          submission.errors.attribute_names.exclude?(:thunkable_project_url) &&
-          submission.source_code_external_url.present? &&
-          submission.errors.attribute_names.exclude?(:source_code_external_url)) &&
-          (
-            submission.thunkable_account_email.blank? ||
-            submission.errors.attribute_names.exclude?(:thunkable_account_email)
-          ) ||
-          (
-            submission.source_code_url.present? &&
-            submission.errors.attribute_names.exclude?(:source_code_url)
-          )
-
+      if submission.thunkable_source_code_fields_complete? ||
+          submission.scratch_source_code_fields_complete? ||
+          submission.source_code_url_complete?
         :complete
       end
     when :business_plan
@@ -104,6 +72,16 @@ module StudentHelper
       web_icon("check-circle", {class: "not-required", text: text})
     else
       web_icon("circle-o", {class: "icon--orange", text: text})
+    end
+  end
+
+  def link_to_download_or_open_project(submission)
+    if submission.developed_on?("Thunkable")
+      submission.thunkable_project_url
+    elsif submission.developed_on?("Scratch")
+      submission.source_code.present? ? submission.source_code_url : submission.scratch_project_url
+    elsif submission.developed_on?("Other") || submission.developed_on?("App Inventor")
+      submission.source_code_url
     end
   end
 end
