@@ -64,7 +64,7 @@ RSpec.feature "Students edit submission development platform" do
     end
   end
 
-  scenario "Choose Scrach" do
+  scenario "Choose Scratch" do
     select "Scratch",
       from: "Which coding language did your team use?"
 
