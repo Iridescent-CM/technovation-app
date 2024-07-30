@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Students edit submission development platform" do
-  let(:student) { FactoryBot.create(:student, :on_team, :geocoded) }
+  let(:student) { FactoryBot.create(:student, :on_team, :geocoded, :beginner) }
 
   before do
     SeasonToggles.team_submissions_editable!
@@ -61,6 +61,29 @@ RSpec.feature "Students edit submission development platform" do
     within(".development_platform.complete") do
       expect(page).to have_content "Thunkable"
       expect(page).to have_link "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
+    end
+  end
+
+  scenario "Choose Scrach" do
+    select "Scratch",
+      from: "Which coding language did your team use?"
+
+    click_button "Save"
+
+    expect(page).not_to have_css(
+      ".field_with_errors #team_submission_scratch_project_url"
+    )
+
+    click_link "Change your selection"
+
+    fill_in "What is the URL for your Scratch project page?",
+      with: "https://scratch.mit.edu/projects/12345"
+
+    click_button "Save"
+
+    within(".development_platform.complete") do
+      expect(page).to have_content "Scratch"
+      expect(page).to have_link "https://scratch.mit.edu/projects/12345"
     end
   end
 end
