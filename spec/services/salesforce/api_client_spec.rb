@@ -187,4 +187,43 @@ RSpec.describe Salesforce::ApiClient do
       end
     end
   end
+
+  describe "#update_program_info" do
+    before do
+      allow(salesforce_client).to receive(:query).and_return(program_participants)
+      allow(salesforce_client).to receive(:insert!)
+    end
+
+    let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
+    let(:program_participant_id) { 42555 }
+
+    context "when Salesforce is enabled" do
+      let(:salesforce_enabled) { true }
+
+      it "calls the update! method to create a new contact in Salesforce" do
+        expect(salesforce_client).to receive(:update!)
+
+        salesforce_api_client.update_program_info
+      end
+
+      context "when setting up a mentor" do
+        let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+        let(:account) { mentor_profile.account }
+        let(:profile_type) { "mentor" }
+
+        it "calls update! method to update the 'program participant' info for the mentor" do
+          expect(salesforce_client).to receive(:update!).with(
+            "Program_Participant__c",
+            {
+              Id: program_participant_id,
+              Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
+              Mentor_Team_Status__c: "Not On Team"
+            }
+          )
+
+          salesforce_api_client.update_program_info
+        end
+      end
+    end
+  end
 end
