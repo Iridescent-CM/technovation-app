@@ -235,6 +235,7 @@ class TeamSubmission < ActiveRecord::Base
     allow_blank: true
 
   validates :app_inventor_gmail, email: true, allow_blank: true
+
   validates :thunkable_account_email, email: true, allow_blank: true
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
@@ -613,8 +614,8 @@ class TeamSubmission < ActiveRecord::Base
 
   def scratch_fields_complete?
     developed_on?("Scratch") &&
-      scratch_project_url.present? &&
-      errors.attribute_names.exclude?(:scratch_project_url)
+      (scratch_project_url.blank? ||
+        scratch_project_url.present? && errors.attribute_names.exclude?(:scratch_project_url))
   end
 
   def other_fields_complete?
@@ -628,7 +629,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def scratch_source_code_fields_complete?
     scratch_fields_complete? &&
-      source_code_external_url_fields_complete?
+      (source_code_external_url_fields_complete? || source_code.present?)
   end
 
   def source_code_external_url_fields_complete?

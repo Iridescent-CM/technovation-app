@@ -50,6 +50,26 @@ RSpec.describe TeamSubmission do
     expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4")
   end
 
+  it "validates the scratch URL" do
+    submission = FactoryBot.create(:submission, :complete)
+
+    submission.scratch_project_url = "https://google.com"
+    expect(submission).not_to be_valid
+
+    submission.scratch_project_url = "https://scratch.com"
+    expect(submission).not_to be_valid
+
+    submission.scratch_project_url = "https://scratch.com/something"
+    expect(submission).not_to be_valid
+
+    submission.scratch_project_url = "https://scratch.com/not-projects/something"
+    expect(submission).not_to be_valid
+
+    submission.scratch_project_url = "https://scratch.mit.edu/projects/12345"
+    expect(submission).to be_valid
+    expect(submission.scratch_project_url).to eq("https://scratch.mit.edu/projects/12345")
+  end
+
   describe "ACTIVE_DEVELOPMENT_PLATFORMS_ENUM" do
     it "returns a list of active development platforms (in Rails enum format)" do
       expect(TeamSubmission::ACTIVE_DEVELOPMENT_PLATFORMS_ENUM).to eq({
@@ -112,6 +132,9 @@ RSpec.describe TeamSubmission do
 
       submission.development_platform = "Thunkable"
       expect(submission.developed_on?("Thunkable")).to be true
+
+      submission.development_platform = "Scratch"
+      expect(submission.developed_on?("Scratch")).to be true
     end
   end
 
@@ -140,6 +163,128 @@ RSpec.describe TeamSubmission do
       it "returns true" do
         expect(submission.additional_questions?).to eq(true)
       end
+    end
+  end
+
+  describe "#app_inventor_fields_complete?" do
+    it "returns true when app inventor name is complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "App Inventor"
+      submission.app_inventor_app_name = "Test App"
+      expect(submission.app_inventor_fields_complete?).to be true
+    end
+
+    it "returns true when app inventor name and app inventor gmail is complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "App Inventor"
+      submission.app_inventor_app_name = "Test App"
+      submission.app_inventor_gmail = "test@gmail.com"
+      expect(submission.app_inventor_fields_complete?).to be true
+    end
+
+    it "returns false when app inventor app name is missing" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "App Inventor"
+      expect(submission.app_inventor_fields_complete?).to be false
+    end
+  end
+
+  describe "#thunkable_fields_complete?" do
+    it "returns true when all thunkable fields are complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Thunkable"
+      submission.thunkable_project_url = "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
+      expect(submission.thunkable_fields_complete?).to be true
+    end
+
+    it "returns false when thunkable project url is missing" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Thunkable"
+      expect(submission.thunkable_fields_complete?).to be false
+    end
+  end
+
+  describe "#scratch_fields_complete?" do
+    it "returns true when only scratch development platform is selected" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Scratch"
+      expect(submission.scratch_fields_complete?).to be true
+    end
+
+    it "returns true when all scratch fields are complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Scratch"
+      submission.scratch_project_url = "https://scratch.mit.edu/projects/12345"
+      expect(submission.scratch_fields_complete?).to be true
+    end
+
+    it "returns false when scratch project url is present but the url is invalid" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Scratch"
+      submission.scratch_project_url = "https://scratch.mit.edu/12345"
+      submission.valid?
+      expect(submission.scratch_fields_complete?).to be false
+    end
+  end
+
+  describe "#other_fields_complete?" do
+    it "returns true when all thunkable fields are complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Other"
+      expect(submission.other_fields_complete?).to be true
+    end
+  end
+
+  describe "#thunkable_source_code_fields_complete?" do
+    it "returns true when thunkable project url is complete and all source code external fields are complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Thunkable"
+      submission.thunkable_project_url = "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
+      submission.source_code_external_url = "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
+
+      expect(submission.thunkable_source_code_fields_complete?).to be true
+    end
+
+    it "returns false when thunkable project url is complete and all source code external fields are incomplete " do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Thunkable"
+      submission.thunkable_project_url = "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
+      submission.source_code_external_url = nil
+
+      expect(submission.thunkable_source_code_fields_complete?).to be false
+    end
+  end
+
+  describe "#scratch_source_code_fields_complete?" do
+    it "returns true when scratch project url is complete and all source code external fields are complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Scratch"
+      submission.scratch_project_url = "https://scratch.mit.edu/projects/12345"
+      submission.source_code_external_url = "https://scratch.mit.edu/projects/12345"
+
+      expect(submission.scratch_source_code_fields_complete?).to be true
+    end
+
+    it "returns false when scratch project url is complete and all source code external fields are incomplete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Scratch"
+      submission.scratch_project_url = "https://scratch.mit.edu/projects/12345"
+      submission.source_code_external_url = nil
+
+      expect(submission.scratch_source_code_fields_complete?).to be false
     end
   end
 
