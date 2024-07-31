@@ -195,31 +195,44 @@ RSpec.describe Salesforce::ApiClient do
     end
 
     let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
-    let(:program_participant_id) { 42555 }
 
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
 
-      it "calls the update! method to create a new contact in Salesforce" do
-        expect(salesforce_client).to receive(:update!)
+      context "when a program participant record exists in Salesforce" do
+        let(:program_participant_id) { 42555 }
 
-        salesforce_api_client.update_program_info
+        it "calls update! to update program participant info in Salesforce" do
+          expect(salesforce_client).to receive(:update!)
+
+          salesforce_api_client.update_program_info
+        end
+
+        context "when setting up a mentor" do
+          let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+          let(:account) { mentor_profile.account }
+          let(:profile_type) { "mentor" }
+
+          it "calls update! to update the 'program participant' info for the mentor" do
+            expect(salesforce_client).to receive(:update!).with(
+              "Program_Participant__c",
+              {
+                Id: program_participant_id,
+                Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
+                Mentor_Team_Status__c: "Not On Team"
+              }
+            )
+
+            salesforce_api_client.update_program_info
+          end
+        end
       end
 
-      context "when setting up a mentor" do
-        let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
-        let(:account) { mentor_profile.account }
-        let(:profile_type) { "mentor" }
+      context "when a program participant record doesn't exist in Salesforce" do
+        let(:program_participant_id) { nil }
 
-        it "calls update! method to update the 'program participant' info for the mentor" do
-          expect(salesforce_client).to receive(:update!).with(
-            "Program_Participant__c",
-            {
-              Id: program_participant_id,
-              Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
-              Mentor_Team_Status__c: "Not On Team"
-            }
-          )
+        it "does not call update! to update program participant info in Salesforce" do
+          expect(salesforce_client).not_to receive(:update!)
 
           salesforce_api_client.update_program_info
         end
