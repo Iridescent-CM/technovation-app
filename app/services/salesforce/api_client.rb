@@ -66,12 +66,14 @@ module Salesforce
       program_participant_id = client.query("select Id from Program_Participant__c where Platform_Participant_Id__c = #{account.id} and Type__c = '#{profile_type}' and Year__c = '#{season}'").first.Id
 
       if program_participant_id.present?
-        client.update!(
-          "Program_Participant__c",
-          {
-            Id: program_participant_id
-          }.merge(program_participant_info)
-        )
+        handle_request "Updating program participant info for #{account.id}" do
+          client.update!(
+            "Program_Participant__c",
+            {
+              Id: program_participant_id
+            }.merge(program_participant_info)
+          )
+        end
       end
     end
 
