@@ -23,6 +23,10 @@ RSpec.configure do |config|
   config.verbose_retry = true
   config.default_retry_count = 2
   config.exceptions_to_retry = [Net::ReadTimeout]
+
+  config.before(:each) do
+    allow(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+  end
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change

@@ -63,6 +63,22 @@ module Salesforce
       end
     end
 
+    def update_program_info_for(account:, profile_type:, season: Season.current.year)
+      program_participant_id = client.query("select Id from Program_Participant__c where Platform_Participant_Id__c = #{account.id} and Type__c = '#{profile_type}' and Year__c = '#{season}'").first.Id
+
+      client.update!(
+        "Program_Participant__c",
+        {
+          Id: program_participant_id
+        }.merge(
+          program_participant_info_for(
+            profile_type: profile_type,
+            account: account
+          )
+        )
+      )
+    end
+
     private
 
     attr_reader :client, :salesforce_enabled, :logger, :error_notifier
@@ -92,6 +108,18 @@ module Salesforce
         }
       when "mentor"
         {
+          Mentor_Type__c: account.mentor_profile.mentor_types.pluck(:name).join(";")
+        }
+      else
+        {}
+      end
+    end
+
+    def program_participant_info_for(profile_type:, account:)
+      case profile_type
+      when "mentor"
+        {
+          Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team",
           Mentor_Type__c: account.mentor_profile.mentor_types.pluck(:name).join(";")
         }
       else

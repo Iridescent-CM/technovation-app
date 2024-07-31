@@ -93,7 +93,8 @@ class MentorProfile < ActiveRecord::Base
     dependent: :destroy
 
   has_many :mentor_types,
-    through: :mentor_profile_mentor_types
+    through: :mentor_profile_mentor_types,
+    dependent: :destroy
 
   has_many :memberships,
     as: :member,
@@ -383,3 +384,4 @@ end
 def background_check_invitation_expired_or_error?
   background_check.invitation_expired? || background_check.error?
 end
+
