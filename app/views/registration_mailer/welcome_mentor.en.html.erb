@@ -13,9 +13,10 @@
           Technovation mentors are an integral part of the Technovation Girls program,
           thank you for joining us! We know from experience that Technovation Girls get
           the most out of this program when they have an encouraging and supportive mentor
-          on their team.  When possible, find another friend or co-worker to join you in
-          supporting a team; it will help the girls to have more than one person to turn to
-          for questions and meetings. Thank you in advance for all that you do!
+          on their team. To make the most out of the process for you, we encourage you to
+          find a friend or co-worker to join you in supporting a team. It will help the
+          girls to have more than one person to turn to for questions and meetings.
+          Thank you in advance for all that you do!
         </td>
       </tr>
 
@@ -23,12 +24,14 @@
         <td class="content-block">
           Technovation Girls is the world's largest global tech competition
           and program offered by Technovation. We are a community of 6,000+ mentors
-          from around the world. We maintain this community by using a free
-          communication tool called Slack where you can connect with other mentors,
-          share resources, ask questions, and stay informed. We also provide newsletters
-          from Technovation to keep you and your team informed throughout the season so be
-          sure to check your email. Check your profile to connect with your local Chapter
-          Ambassador, they can help you find a team to work with and provide support during the season.
+          from around the world. We support this community by using a free
+          communication tool called Slack; you can connect with other mentors,
+          share resources, ask questions, and stay informed.
+          <%= link_to "Click this link to join today!", ENV.fetch("MENTOR_SLACK_SIGNUP_URL"), itemprop: "url" %>
+          We also send newsletters from Technovation to keep you informed throughout
+          the season, so be sure to check your email. Check your profile to see if there
+          is a local Chapter Ambassador in your area. If so, they can provide additional
+          support during the season, and help you connect with a team.
         </td>
       </tr>
 
@@ -42,7 +45,7 @@
              <%= link_to "Mentor Resource Page",
                          "https://technovationchallenge.org/mentor-resources/",
                          itemprop: "url" %>
-             to find the mentor pre-season checklist. The checklist includes:
+             to find the mentor pre-season checklist. The checklist includes the following tasks:
                <ul>
                  <li>
                    Finish your mentor training if you haven’t done so already!
@@ -86,7 +89,7 @@
               <%= link_to "complete a background check", @background_check_url, itemprop: "url" %>
               (5 minutes).
               <ul>
-                <li>Returning mentors are all set for 3 years.</li>
+                <li>Returning mentors only complete background checks every three years.</li>
                 <li>
                   We reserve the right to randomly select mentors in other countries and territories to provide
                   references, legal certifications, or background checks. If you are selected, we will contact

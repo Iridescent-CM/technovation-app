@@ -24,11 +24,11 @@
 
       <tr>
         <td class="content-block">
-          Girls work in teams (of 1 to 5) to build a mobile app or AI project to solve
+          Girls work in teams (of 1 to 5) to build a mobile app or web app to solve
           the problem they have identified. Girls can be supported by mentors and guided
           by our curriculum. Parents are encouraged to take an active role in mentoring
-          or supporting their daughters especially in the Beginner Division. In April,
-          teams submit their app of AI prototype, pitch, and other
+          or supporting their daughters especially in the Beginner Division. At the end of the program,
+          teams submit their app or web app, pitch, and other
           <%= link_to "submission materials", "https://technovationchallenge.org/submission-guidelines/" %>
           online. Judges from around the world provide written feedback to teams to help them make
           their ideas even better in the future! In some locations, teams are also eligible
@@ -38,7 +38,7 @@
 
       <tr>
         <td class="content-block">
-          After all of the submissions have been judged, finalist teams are invited to pitch their
+          After all the submissions have been judged, finalist teams are invited to pitch their
           ideas live to finalist judges to see who will win a special prize.
         </td>
       </tr>
@@ -57,8 +57,7 @@
           <ul>
             <li>How to identify and solve a problem</li>
             <li>
-              New technology: How to code and create a mobile app or create and train an AI-powered
-              machine learning model that can interact with the user
+              New technology: How to code and use AI to create web and mobile apps
             </li>
             <li>What it takes to bring an idea or business to life!</li>
           </ul>
@@ -69,7 +68,7 @@
         <td class="content-block">
           <strong>Your daughter will&hellip;</strong>
           <ul>
-            <li>Develop a mobile app prototype or AI project</li>
+            <li>Develop a mobile or web app prototype</li>
             <li>
               Work with other girls and one or more parents and/or mentors to find the best approach
               to solving their chosen problem taking constraints into account
@@ -85,28 +84,9 @@
           <strong>How you can support your daughter and her team</strong>
           <ul>
             <li>
-              <strong>Stay informed:</strong>
-              You’ll get emails from Technovation from now
-              until April with details about how to support your daughter at different points in the
-              season, so stay tuned! Make sure to also review the
-              <%= link_to "Parent Resource" , "https://technovationchallenge.org/parent-resources/"%>
-              page for more tips and information.
-            </li>
-            <li>
-              <strong>Offer encouragement and support:</strong>
-              Through Technovation Girls, girls undertake a big project and are expected to learn
-              how to work as a team, collaborate on a project, and divide work fairly. Share your experience and
-              advice for staying motivated through tough times, managing disagreements, addressing frustration,
-              and communicating clearly.
-            </li>
-            <li>
-              <strong>Mentor your daughter’s team:</strong>
-              In the Beginner Division, parents are encouraged to actively mentor their daughter and
-              their team. If you have time to spend an hour a week learning and helping to guide your daughter and
-              her team through the curriculum, you won’t regret it! Spending time doing something meaningful as
-              a family like Technovation Girls is special and has proven benefits for all.  If you will be mentoring your
-              daughter’s team, please also create an additional Mentor account (use a different email address or the +
-              sign, example: youraddress+mentor@gmail.com) to be able to access mentor training and support.
+              Check out the Parent Resource page
+              <%= link_to "here" , "https://technovationchallenge.org/parent-resources/"%>
+              for ideas on supporting your daughter and her team.
             </li>
           </ul>
         </td>
@@ -127,7 +107,7 @@
           <strong>Internet safety and digital literacy:</strong>
           Technovation Girls is a program with online components, and we want to make sure your daughter knows
           how to be safe online. In Technovation Girls, you can look for another adult mentor to support
-          your daughter’s team develop their app or AI prototype through our platform. Our mentors complete a
+          your daughter’s team develop their app through our platform. Our mentors complete a
           mandatory training and sign a volunteer agreement, but we still recommend that you discuss
           <%= link_to "how to keep yourself safe", @safety_url %>
           with your daughter when collaborating online.
@@ -154,6 +134,15 @@
           </strong>
 
           <ul>
+            <li>
+              <strong>
+                <%= @official_start_of_season %>:
+                Official Season Launch
+              </strong>
+
+              You can now register your team and get started
+            </li>
+
             <li>
               <strong>
                 <%= @team_registration_deadline %>:

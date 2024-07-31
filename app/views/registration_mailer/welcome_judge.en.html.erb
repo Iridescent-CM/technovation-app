@@ -12,31 +12,32 @@
         <td class="content-block">
           Technovation judges are an integral part of the Technovation Girls program,
           thank you for joining us! Technovation Girls is the world's largest global
-          tech competition and program offered by Technovation. The time and effort
-          that you are dedicating as a volunteer goes a long way in helping young changemakers
-          solve real problems in their community.
+          tech competition. The time and effort that you are dedicating as a volunteer goes
+          a long way in the learning journey of young changemakers who solve real
+          problems in their community.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
           You are a part of a community of 4,000+ judges from
-          around the world scoring and giving feedback to almost 2,000 projects!
+          around the world scoring and giving feedback to over 3,000 projects!
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
           We stay connected to this community using a free communication tool called Slack.
-          You can connect with other judges, ask questions, and stay informed.
-          We also provide newsletters from Technovation to keep you motivated and up to date on progress
+          You can connect with other judges, ask questions, and stay informed,
+          <%= link_to "click this link to join.", ENV.fetch("JUDGE_SLACK_SIGNUP_URL"), itemprop: "url" %>
+          We also send newsletters from Technovation to keep you motivated and up to date on progress
           throughout judging.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          <strong>Let's get started! This is what you can do in under 40 minutes to start getting submissions to review:</strong>
+          <strong>Let's get started! This is what you can do in under 1 hour to start getting submissions to review:</strong>
 
           <ol>
             <li>
@@ -60,7 +61,7 @@
 
       <tr>
         <td class="content-block">
-          You are now all set to start <%= link_to "scoring", judge_dashboard_url, itemprop: "url" %>
+          You are now ready to start <%= link_to "scoring", judge_dashboard_url, itemprop: "url" %>
           when quarterfinals judging opens in May or when semifinals judging opens in June.
         </td>
       </tr>

@@ -78,7 +78,8 @@ class RegistrationMailer < ApplicationMailer
     @season_year = Season.current.year
     @root_url = root_url(mailer_token: student.mailer_token)
     @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
-    @internet_safety_url = "https://iridescentlearning.org/internet-safety/"
+    @educational_training_url = "https://technovationchallenge.org/mentor-resources/"
+    @internet_safety_url = "https://www.technovation.org/safety/internet-safety-training/"
     @in_person_safety_url = "https://www.technovation.org/safety/know-your-rights/"
     @faq_url = "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation"
 
@@ -99,7 +100,7 @@ class RegistrationMailer < ApplicationMailer
     @root_url = root_url(mailer_token: student.mailer_token)
     @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
     @technovation_url = "http://technovationchallenge.org/about/"
-    @safety_url = "http://iridescentlearning.org/internet-safety/"
+    @safety_url = "https://www.technovation.org/safety/internet-safety-training/"
     @faq_url = "https://iridescentsupport.zendesk.com/hc/en-us/categories/115000091348-Technovation"
 
     I18n.with_locale(student.locale) do

@@ -29,9 +29,10 @@
 
           Technovation Girls is a program with online components, and we want to make sure you know
           how to be safe online. In Technovation Girls, you might be connected with an adult
-          mentor to support you as you develop your app or AI prototype.
-          Our mentors receive educational training, but we still recommend
-          that you take a few minutes to learn how to keep yourself safe when
+          mentor to support you as you develop your project.
+          Our mentors receive
+          <%= link_to "educational training", @educational_training_url %>,
+          but we still recommend you take a few minutes to learn how to keep yourself safe when
           <%= link_to "collaborating online", @internet_safety_url %> or
           <%= link_to "meeting in person.", @in_person_safety_url %>
         </td>
@@ -60,6 +61,15 @@
           </strong>
 
           <ul>
+            <li>
+              <strong>
+                <%= @official_start_of_season %>:
+                Official Season Launch
+              </strong>
+
+              You can now register your team and get started
+            </li>
+
             <li>
               <strong>
                 <%= @team_registration_deadline %>:
