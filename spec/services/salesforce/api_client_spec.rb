@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe Salesforce::ApiClient do
   let(:salesforce_api_client) do
     Salesforce::ApiClient.new(
+      account: account,
+      profile_type: profile_type,
       instance_url: salesforce_instance_url,
       host: salesforce_host,
       api_version: salesforce_api_version,
@@ -65,6 +67,7 @@ RSpec.describe Salesforce::ApiClient do
       mentor_profile: mentor_profile
     )
   end
+  let(:profile_type) { "student" }
   let(:first_name) { "Luna" }
   let(:last_name) { "Lovegood" }
   let(:email) { "luna@example.com" }
@@ -102,7 +105,7 @@ RSpec.describe Salesforce::ApiClient do
     allow(mentor_types).to receive(:pluck).and_return(["Technovation alumna"])
   end
 
-  describe "#upsert_contact_info_for" do
+  describe "#upsert_contact_info" do
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
     end
@@ -123,7 +126,7 @@ RSpec.describe Salesforce::ApiClient do
         Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
       )
 
-      salesforce_api_client.upsert_contact_info_for(account: account)
+      salesforce_api_client.upsert_contact_info
     end
 
     context "when the upsert! was unsuccessful" do
@@ -136,13 +139,13 @@ RSpec.describe Salesforce::ApiClient do
       it "logs the error" do
         expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
 
       it "notifies the error_notifier with the error" do
         expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
     end
 
@@ -152,7 +155,7 @@ RSpec.describe Salesforce::ApiClient do
       it "logs an error" do
         expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Upserting account #{account.id}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
     end
 
@@ -162,7 +165,7 @@ RSpec.describe Salesforce::ApiClient do
       it "logs an error" do
         expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Upserting account #{account.id}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
     end
   end
@@ -182,13 +185,13 @@ RSpec.describe Salesforce::ApiClient do
       it "calls the upsert! method to create a new contact in Salesforce" do
         expect(salesforce_client).to receive(:upsert!)
 
-        salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
+        salesforce_api_client.setup_account_for_current_season
       end
 
       it "calls the insert! method to create a new 'program participant' in Salesforce" do
         expect(salesforce_client).to receive(:insert!)
 
-        salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
+        salesforce_api_client.setup_account_for_current_season
       end
 
       context "when setting up a student" do
@@ -206,7 +209,7 @@ RSpec.describe Salesforce::ApiClient do
             }
           )
 
-          salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
+          salesforce_api_client.setup_account_for_current_season
         end
       end
 
@@ -225,7 +228,7 @@ RSpec.describe Salesforce::ApiClient do
             }
           )
 
-          salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
+          salesforce_api_client.setup_account_for_current_season
         end
       end
     end

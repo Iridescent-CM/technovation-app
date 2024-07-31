@@ -4,6 +4,8 @@ class CRM::UpsertContactInfoJob < ActiveJob::Base
   def perform(account_id:)
     account = Account.find(account_id)
 
-    Salesforce::ApiClient.new.upsert_contact_info_for(account: account)
+    Salesforce::ApiClient
+      .new(account: account)
+      .upsert_contact_info
   end
 end

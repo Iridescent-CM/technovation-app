@@ -4,9 +4,11 @@ class CRM::SetupAccountForCurrentSeasonJob < ActiveJob::Base
   def perform(account_id:, profile_type:)
     account = Account.find(account_id)
 
-    Salesforce::ApiClient.new.setup_account_for_current_season(
-      account: account,
-      profile_type: profile_type
-    )
+    Salesforce::ApiClient
+      .new(
+        account: account,
+        profile_type: profile_type
+      )
+      .setup_account_for_current_season
   end
 end

@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe CRM::UpdateProgramInfoJob do
-  let(:account) { instance_double(Account, id: 9461) }
+RSpec.describe CRM::SetupAccountForCurrentSeasonJob do
+  let(:account) { instance_double(Account, id: 278) }
   let(:profile_type) { "student" }
 
   before do
@@ -12,7 +12,7 @@ RSpec.describe CRM::UpdateProgramInfoJob do
   let(:salesforce_api_client) { instance_double(Salesforce::ApiClient) }
 
   before do
-    allow(salesforce_api_client).to receive(:update_program_info)
+    allow(salesforce_api_client).to receive(:setup_account_for_current_season)
   end
 
   it "creates a new Salesforce API client service" do
@@ -21,16 +21,16 @@ RSpec.describe CRM::UpdateProgramInfoJob do
       profile_type: profile_type
     )
 
-    CRM::UpdateProgramInfoJob.perform_now(
+    CRM::SetupAccountForCurrentSeasonJob.perform_now(
       account_id: account.id,
       profile_type: "student"
     )
   end
 
   it "calls the Salesforce API client service method that will update the account's program info" do
-    expect(salesforce_api_client).to receive(:update_program_info)
+    expect(salesforce_api_client).to receive(:setup_account_for_current_season)
 
-    CRM::UpdateProgramInfoJob.perform_now(
+    CRM::SetupAccountForCurrentSeasonJob.perform_now(
       account_id: account.id,
       profile_type: "student"
     )

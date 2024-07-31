@@ -1,6 +1,8 @@
 module Salesforce
   class ApiClient
     def initialize(
+      account:,
+      profile_type: nil,
       enabled: ENV.fetch("ENABLE_SALESFORCE", false),
       instance_url: ENV.fetch("SALESFORCE_INSTANCE_URL"),
       host: ENV.fetch("SALESFORCE_HOST"),
@@ -17,6 +19,8 @@ module Salesforce
       error_notifier: Airbrake
     )
 
+      @account = account
+      @profile_type = profile_type
       @client = client_constructor.new(
         instance_url: instance_url,
         host: host,
@@ -32,11 +36,11 @@ module Salesforce
       @error_notifier = error_notifier
     end
 
-    def setup_account_for_current_season(account:, profile_type:)
+    def setup_account_for_current_season
       salesforce_contact_id = nil
 
       handle_request "Upserting account #{account.id}" do
-        salesforce_contact_id = upsert_contact(account: account)
+        salesforce_contact_id = upsert_contact
       end
 
       handle_request "Setting up account (#{account.id}) for current season" do
@@ -47,43 +51,33 @@ module Salesforce
             Platform_Participant_Id__c: account.id,
             Year__c: Season.current.year,
             Type__c: profile_type
-          }.merge(
-            initial_program_participant_info_for(
-              profile_type: profile_type,
-              account: account
-            )
-          )
+          }.merge(initial_program_participant_info)
         )
       end
     end
 
-    def upsert_contact_info_for(account:)
+    def upsert_contact_info
       handle_request "Upserting account #{account.id}" do
-        upsert_contact(account: account)
+        upsert_contact
       end
     end
 
-    def update_program_info_for(account:, profile_type:, season: Season.current.year)
+    def update_program_info(season: Season.current.year)
       program_participant_id = client.query("select Id from Program_Participant__c where Platform_Participant_Id__c = #{account.id} and Type__c = '#{profile_type}' and Year__c = '#{season}'").first.Id
 
       client.update!(
         "Program_Participant__c",
         {
           Id: program_participant_id
-        }.merge(
-          program_participant_info_for(
-            profile_type: profile_type,
-            account: account
-          )
-        )
+        }.merge(program_participant_info)
       )
     end
 
     private
 
-    attr_reader :client, :salesforce_enabled, :logger, :error_notifier
+    attr_reader :account, :profile_type, :client, :salesforce_enabled, :logger, :error_notifier
 
-    def upsert_contact(account:)
+    def upsert_contact
       client.upsert!(
         "Contact",
         "Platform_Participant_Id__c",
@@ -100,7 +94,7 @@ module Salesforce
       )
     end
 
-    def initial_program_participant_info_for(profile_type:, account:)
+    def initial_program_participant_info
       case profile_type
       when "student"
         {
@@ -115,7 +109,7 @@ module Salesforce
       end
     end
 
-    def program_participant_info_for(profile_type:, account:)
+    def program_participant_info
       case profile_type
       when "mentor"
         {
