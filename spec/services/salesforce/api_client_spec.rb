@@ -51,59 +51,9 @@ RSpec.describe Salesforce::ApiClient do
   end
 
   let(:salesforce_client) { double("SalesforceClent") }
-  let(:account) do
-    instance_double(
-      Account,
-      id: 45678,
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      date_of_birth: date_of_birth,
-      city: city,
-      state_province: state_province,
-      country: country,
-      student_profile: student_profile,
-      division: student_division,
-      mentor_profile: mentor_profile
-    )
-  end
+  let(:student_profile) { FactoryBot.build(:student_profile) }
+  let(:account) { student_profile.account }
   let(:profile_type) { "student" }
-  let(:first_name) { "Luna" }
-  let(:last_name) { "Lovegood" }
-  let(:email) { "luna@example.com" }
-  let(:date_of_birth) { 20.years.ago }
-  let(:city) { "Ottery St Catchpole" }
-  let(:state_province) { "Devon" }
-  let(:country) { "England" }
-  let(:student_profile) do
-    instance_double(
-      StudentProfile,
-      parent_guardian_name: parent_guardian_name,
-      parent_guardian_email: parent_guardian_email
-    )
-  end
-  let(:parent_guardian_name) { "Pandora Lovegood" }
-  let(:parent_guardian_email) { "pandora@example.com" }
-
-  let(:student_division) do
-    instance_double(Division,
-      name: "Senior")
-  end
-  let(:mentor_profile) do
-    instance_double(
-      MentorProfile,
-      mentor_types: mentor_types
-    )
-  end
-  let(:mentor_types) do
-    [
-      instance_double(MentorType, name: "Technovation alumna")
-    ]
-  end
-
-  before do
-    allow(mentor_types).to receive(:pluck).and_return(["Technovation alumna"])
-  end
 
   describe "#upsert_contact_info" do
     context "when Salesforce is enabled" do
@@ -195,6 +145,8 @@ RSpec.describe Salesforce::ApiClient do
       end
 
       context "when setting up a student" do
+        let(:student_profile) { FactoryBot.build(:student_profile) }
+        let(:account) { student_profile.account }
         let(:profile_type) { "student" }
 
         it "calls the insert! method to create a new 'program participant' record and includes student info" do
@@ -205,7 +157,7 @@ RSpec.describe Salesforce::ApiClient do
               Platform_Participant_Id__c: account.id,
               Year__c: Season.current.year,
               Type__c: profile_type,
-              TG_Division__c: "#{student_division.name} Division"
+              TG_Division__c: "#{student_profile.division.name} Division"
             }
           )
 
@@ -214,6 +166,8 @@ RSpec.describe Salesforce::ApiClient do
       end
 
       context "when setting up a mentor" do
+        let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+        let(:account) { mentor_profile.account }
         let(:profile_type) { "mentor" }
 
         it "calls the insert! method to create a new 'program participant' record and includes mentor info" do
@@ -224,7 +178,7 @@ RSpec.describe Salesforce::ApiClient do
               Platform_Participant_Id__c: account.id,
               Year__c: Season.current.year,
               Type__c: profile_type,
-              Mentor_Type__c: mentor_types.pluck(:name).join(";")
+              Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";")
             }
           )
 
