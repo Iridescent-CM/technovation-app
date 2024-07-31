@@ -112,10 +112,11 @@ module Salesforce
     def program_participant_info
       case profile_type
       when "mentor"
-        {
-          Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team",
-          Mentor_Type__c: account.mentor_profile.mentor_types.pluck(:name).join(";")
-        }
+        initial_program_participant_info.merge(
+          {
+            Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team"
+          }
+        )
       else
         {}
       end
