@@ -74,7 +74,7 @@
         Based on historical data,
         <%= link_to "Checkr reports",
         "http://checkr.com" %>
-        are usually completed within 4-7 business days.
+        are usually completed within 4-7 business days but may take longer depending on the country where you are located.
       </p>
 
       <p>
@@ -83,9 +83,10 @@
       </p>
 
       <p>
-        For example, Checkr has asked previous mentors to provide a scan
-        of their driver's licence. Technovation cannot offer help with this,
-        and you should consult the staff at Checkr.
+        For example, Checkr has asked previous
+        <%= current_scope == "mentor" ? "mentors" : "Chapter Ambassadors" %>
+        to provide a scan of their driver's license. Technovation cannot offer
+        help with this, and you should consult the staff at Checkr.
       </p>
 
       <p>
