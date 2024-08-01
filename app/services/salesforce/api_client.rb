@@ -1,5 +1,7 @@
 module Salesforce
   class ApiClient
+    include Rails.application.routes.url_helpers
+
     def initialize(
       account:,
       profile_type: nil,
@@ -117,6 +119,15 @@ module Salesforce
 
     def program_participant_info
       case profile_type
+      when "student"
+        submission = account.student_profile.team.submission
+
+        {
+          Pitch_Video__c: submission.pitch_video_link,
+          Project_Link__c: submission.present? ? project_url(submission) : "",
+          Submitted_Project__c: submission.published_at.present? ? "Submitted" : "Did Not Submit",
+          Team_Name__c: account.student_profile.team.name
+        }
       when "mentor"
         initial_program_participant_info.merge(
           {

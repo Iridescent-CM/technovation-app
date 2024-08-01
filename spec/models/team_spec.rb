@@ -432,4 +432,58 @@ RSpec.describe Team do
     end
     expect(team.reload).not_to be_has_mentor
   end
+
+  context "callbacks" do
+    let(:team) { FactoryBot.create(:team) }
+
+    describe "#after_commit" do
+      context "when there are students on the team" do
+        let(:student) { FactoryBot.create(:student) }
+
+        before do
+          TeamRosterManaging.add(team, student)
+        end
+
+        context "when CRM fields are being updated" do
+          context "when team name is being updated" do
+            it "calls the job to update the student's program info" do
+              expect(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+
+              team.update(
+                name: "New team name"
+              )
+            end
+          end
+        end
+
+        context "when a non-CRM field is being updated" do
+          it "does not call the job to update the student's program info" do
+            expect(CRM::UpdateProgramInfoJob).not_to receive(:perform_later)
+
+            team.update(
+              description: "My team description"
+            )
+          end
+        end
+      end
+
+      context "when there aren't any students on the team" do
+        before do
+          team.memberships = []
+          team.save!
+          team.reload
+        end
+
+        context "when a CRM field is being updated" do
+          it "does not call the job to update the student's program info" do
+            expect(CRM::UpdateProgramInfoJob).not_to receive(:perform_later)
+
+            team.update(
+              name: "My awesome team name"
+            )
+          end
+        end
+      end
+    end
+  end
 end

@@ -69,6 +69,7 @@ class TeamSubmission < ActiveRecord::Base
     self.game_description = "" if game.blank?
   }
 
+  after_commit :update_student_info_in_crm
   after_commit -> { RegisterToCurrentSeasonJob.perform_now(self) },
     on: :create
 
@@ -257,7 +258,7 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(team_submission) { team_submission.uses_open_ai? }
 
   validates :solves_education_description, presence: true, max_word_count: true,
-            if: ->(team_submission) { team_submission.solves_education? }
+    if: ->(team_submission) { team_submission.solves_education? }
 
   validates :pitch_video_link,
     format: {
@@ -296,8 +297,8 @@ class TeamSubmission < ActiveRecord::Base
     to: :team,
     prefix: true
 
-  def self.from_param(*args)
-    friendly.find(*args)
+  def self.from_param(*args) # standard:disable all
+    friendly.find(*args) # standard:disable all
   end
 
   %i[
@@ -310,7 +311,7 @@ class TeamSubmission < ActiveRecord::Base
     business_plan_url
     pitch_presentation_url
   ].each do |piece|
-    define_method("#{piece}_complete?") do
+    define_method(:"#{piece}_complete?") do
       !public_send(piece).blank?
     end
   end
@@ -646,8 +647,8 @@ class TeamSubmission < ActiveRecord::Base
     business_plan
     pitch_presentation
   ].each do |piece|
-    define_method("#{piece}_filename") do
-      url = send("#{piece}_url")
+    define_method(:"#{piece}_filename") do
+      url = send(:"#{piece}_url")
       File.basename(url)
     end
   end
@@ -765,5 +766,25 @@ class TeamSubmission < ActiveRecord::Base
       self.app_inventor_gmail = nil
       self.development_platform_other = nil
     end
+  end
+
+  def update_student_info_in_crm
+    if any_crm_fileds_changed? && team.students.present?
+      team.students.each do |student|
+        CRM::UpdateProgramInfoJob.perform_later(
+          account_id: student.account.id,
+          profile_type: "student",
+          season: seasons.last || Season.current.year
+        )
+      end
+    end
+  end
+
+  def any_crm_fileds_changed?
+    [
+      :app_name,
+      :published_at,
+      :pitch_video_link
+    ].any? { |attr| saved_change_to_attribute?(attr) }
   end
 end

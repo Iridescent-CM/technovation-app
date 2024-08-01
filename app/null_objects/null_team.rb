@@ -6,7 +6,7 @@ class NullTeam < NullObject
   end
 
   def name
-    "::NullTeam"
+    ""
   end
 
   def division_name

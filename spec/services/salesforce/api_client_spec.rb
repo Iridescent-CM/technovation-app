@@ -210,7 +210,7 @@ RSpec.describe Salesforce::ApiClient do
           salesforce_api_client.update_program_info
         end
 
-        context "when setting up a mentor" do
+        context "when updating a mentor's program info" do
           let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
           let(:account) { mentor_profile.account }
           let(:profile_type) { "mentor" }
@@ -222,6 +222,27 @@ RSpec.describe Salesforce::ApiClient do
                 Id: program_participant_id,
                 Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
                 Mentor_Team_Status__c: "Not On Team"
+              }
+            )
+
+            salesforce_api_client.update_program_info
+          end
+        end
+
+        context "when updating a student's program info" do
+          let(:student_profile) { FactoryBot.create(:student_profile, :on_team, :submitted) }
+          let(:account) { student_profile.account }
+          let(:profile_type) { "student" }
+
+          it "calls update! to update the 'program participant' info for the student" do
+            expect(salesforce_client).to receive(:update!).with(
+              "Program_Participant__c",
+              {
+                Id: program_participant_id,
+                Pitch_Video__c: student_profile.team.submission.pitch_video_link,
+                Project_Link__c: Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: student_profile.team.submission),
+                Submitted_Project__c: "Submitted",
+                Team_Name__c: student_profile.team.name
               }
             )
 

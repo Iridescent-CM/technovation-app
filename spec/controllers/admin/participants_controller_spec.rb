@@ -57,7 +57,7 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
-        .with(account_id: profile.account_id)
+        .with(account_id: profile.account_id).at_least(:once)
     end
 
     it "updates their contact info in the CRM when the first name on the account is changed" do
@@ -73,7 +73,7 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
-        .with(account_id: profile.account_id)
+        .with(account_id: profile.account_id).at_least(:once)
     end
 
     it "updates their contact info in the CRM when the last name on the account is changed" do
@@ -89,7 +89,7 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
-        .with(account_id: profile.account_id)
+        .with(account_id: profile.account_id).at_least(:once)
     end
   end
 end

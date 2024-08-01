@@ -11,6 +11,7 @@ class Team < ActiveRecord::Base
   include PublicActivity::Common
 
   after_commit :regenerate_team_submission_friendly_id
+  after_commit :update_student_info_in_crm
 
   after_commit -> {
     return false if destroyed?
@@ -425,5 +426,23 @@ class Team < ActiveRecord::Base
     else
       ActionController::Base.helpers.asset_path("placeholders/team-missing.jpg")
     end
+  end
+
+  def update_student_info_in_crm
+    if any_crm_fields_changed? && students.present?
+      students.each do |student|
+        CRM::UpdateProgramInfoJob.perform_later(
+          account_id: student.account.id,
+          profile_type: "student",
+          season: seasons.last || Season.current.year
+        )
+      end
+    end
+  end
+
+  def any_crm_fields_changed?
+    [
+      :name
+    ].any? { |attr| saved_change_to_attribute?(attr) }
   end
 end

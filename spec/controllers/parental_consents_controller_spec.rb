@@ -64,16 +64,13 @@ RSpec.describe ParentalConsentsController do
         parent_guardian_name: "parenty4"
       )
 
-      allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
-
       patch :update, params: {id: student.parental_consent.id,
                               parental_consent: FactoryBot.attributes_for(
                                 :parental_consent,
                                 student_profile_consent_token: student.consent_token
                               ).merge(newsletter_opt_in: "0")}
 
-      expect(CRM::UpsertContactInfoJob).not_to have_received(:perform_later)
-        .with(any_args)
+      expect(CRM::UpsertContactInfoJob).not_to receive(:perform_later)
     end
 
     it "allows parents to opt in to the newsletter (sent via our CRM)" do

@@ -25,6 +25,8 @@ RSpec.configure do |config|
   config.exceptions_to_retry = [Net::ReadTimeout]
 
   config.before(:each) do
+    allow(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
+    allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
     allow(CRM::UpdateProgramInfoJob).to receive(:perform_later)
   end
 end
