@@ -1030,7 +1030,7 @@ class Account < ActiveRecord::Base
   private
 
   def current_profile
-    public_send("#{scope_name}_profile")
+    public_send(:"#{scope_name}_profile")
   end
 
   def self.survey_reminder_max_times
@@ -1072,12 +1072,12 @@ class Account < ActiveRecord::Base
   end
 
   def update_crm_contact_info
-    if any_crm_contact_info_fileds_changed?
+    if any_crm_fileds_changed?
       CRM::UpsertContactInfoJob.perform_later(account_id: id)
     end
   end
 
-  def any_crm_contact_info_fileds_changed?
+  def any_crm_fileds_changed?
     [
       :first_name,
       :last_name,
