@@ -195,11 +195,13 @@ RSpec.describe Salesforce::ApiClient do
     end
 
     let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
+    let(:program_participant_id) { 19533 }
 
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
 
       context "when a program participant record exists in Salesforce" do
+        let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
         let(:program_participant_id) { 42555 }
 
         it "calls update! to update program participant info in Salesforce" do
@@ -229,7 +231,7 @@ RSpec.describe Salesforce::ApiClient do
       end
 
       context "when a program participant record doesn't exist in Salesforce" do
-        let(:program_participant_id) { nil }
+        let(:program_participants) { nil }
 
         it "does not call update! to update program participant info in Salesforce" do
           expect(salesforce_client).not_to receive(:update!)
