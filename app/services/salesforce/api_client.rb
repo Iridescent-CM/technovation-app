@@ -63,6 +63,8 @@ module Salesforce
     end
 
     def update_program_info(season: Season.current.year)
+      return if season != Season.current.year
+
       program_participant_record = client.query("select Id from Program_Participant__c where Platform_Participant_Id__c = #{account.id} and Type__c = '#{profile_type}' and Year__c = '#{season}'")
 
       if program_participant_record.present?

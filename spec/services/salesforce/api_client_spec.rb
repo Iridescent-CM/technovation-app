@@ -239,6 +239,16 @@ RSpec.describe Salesforce::ApiClient do
           salesforce_api_client.update_program_info
         end
       end
+
+      context "when the season provided isn't for the current season" do
+        let(:season) { 2000 }
+
+        it "does not call update! to update program participant info in Salesforce" do
+          expect(salesforce_client).not_to receive(:update!)
+
+          salesforce_api_client.update_program_info(season: season)
+        end
+      end
     end
   end
 end

@@ -35,4 +35,19 @@ RSpec.describe CRM::UpdateProgramInfoJob do
       profile_type: "student"
     )
   end
+
+  context "when a season is provided" do
+    let(:season) { Season.new(2020).year }
+
+    it "calls the Salesforce API client service and includes the provided year" do
+      expect(salesforce_api_client).to receive(:update_program_info)
+        .with(season: season)
+
+      CRM::UpdateProgramInfoJob.perform_now(
+        account_id: account.id,
+        profile_type: "student",
+        season: season
+      )
+    end
+  end
 end
