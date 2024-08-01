@@ -1,47 +1,48 @@
 <p class="mb-4">
-  The Memorandum of Understanding serves as the formal agreement between Technovation and you,
-  as the Chapter Ambassador representing a non-profit organization with whom Technovation is working.
+  The Chapter Volunteer Agreement serves as the formal agreement between
+  Technovation and you, as the Chapter Ambassador representing an
+  organization with whom Technovation is working.
 </p>
 
-<p class="mb-8">Please confirm that you have read each of these policies and then click the link
-  to sign the Memorandum of Understanding.
+<p class="mb-8">
+  Please confirm that you have read all guidelines and policies below,
+  and then click the link to sign the Chapter Volunteer Agreement.
 </p>
 
 <div class="ml-8 mb-8">
   <ol role="list" class="space-y-4">
     <%= render "application/templates/sub_checklist_item",
                name: "Non-Disclosure Agreement",
-               url: "#",
+               url: ENV.fetch("CHAPTER_AMBASSADOR_NON_DISCLOSURE_AGREEMENT_URL"),
+               new_tab: true,
                is_complete: false
     %>
 
     <%= render "application/templates/sub_checklist_item",
                name: "Brand Guidelines",
-               url: "#",
+               url: ENV.fetch("CHAPTER_AMBASSADOR_BRAND_GUIDELINES_URL"),
+               new_tab: true,
                is_complete: false
     %>
 
     <%= render "application/templates/sub_checklist_item",
-               name: "Social Media Admin Agreement",
-               url: "#",
+               name: "Social Media Guidelines",
+               url: ENV.fetch("CHAPTER_AMBASSADOR_SOCIAL_MEDIA_GUIDELINES_URL"),
+               new_tab: true,
                is_complete: false
     %>
 
     <%= render "application/templates/sub_checklist_item",
-               name: "Social Media Policy",
-               url: "#",
+               name: "Code of Conduct",
+               url: ENV.fetch("CHAPTER_AMBASSADOR_CODE_OF_CONDUCT_URL"),
+               new_tab: true,
                is_complete: false
     %>
 
     <%= render "application/templates/sub_checklist_item",
-               name: "Technovation Code of Conduct",
-               url: "#",
-               is_complete: true
-    %>
-
-    <%= render "application/templates/sub_checklist_item",
-               name: "Reviewed Safety Page",
-               url: "#",
+               name: "Safety Page",
+               url: ENV.fetch("CHAPTER_AMBASSADOR_SAFETY_PAGE_URL"),
+               new_tab: true,
                is_complete: false
     %>
   </ol>
