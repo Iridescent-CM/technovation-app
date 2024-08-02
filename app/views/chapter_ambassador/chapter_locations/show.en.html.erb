@@ -7,12 +7,6 @@
         <p class="mb-4">This information will be publicly visible to students, mentors, and visitors to the Technovation website.</p>
 
         <div class="ml-8">
-          <p class="font-semibold">Country</p>
-          <p class="mb-2">
-            <%= current_chapter.country.presence || "Not set" %>
-            <span class="text-sm italic">(pre-set by HQ)</span>
-          </p>
-
           <p class="font-semibold">Organization Headquarters Location</p>
           <p class="text-sm italic">
             The city entered for the organization headquarters will be used to map the location of your chapter.
@@ -21,29 +15,15 @@
 
           <p class="font-semibold">Location Served by Chapter</p>
           <p class="mb-2">
-            <% if current_chapter.country.present? %>
-              Your chapter's current location is set to <span class="font-semibold"><%= current_chapter.country %></span>.
-              <br>
-              When students from that country register,
-              they will see your chapter in the list of chapters available to them.
-              If you are working only in specific regions, please select those from the drop-down
-              list in order to provide a more accurate location. Your chapter will only be
-              displayed to students registering in those regions
-            <% else %>
-              Your chapter's location is not currently set.
-              Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.
-            <% end  %>
+              Your chapter is currently serving this location:
+              <span class="font-medium">
+                <%= "#{current_ambassador.state}, #{current_ambassador.country}" %>
+              </span>
           </p>
-
-          <p class="font-semibold">Selected Region</p>
-          <p class="mb-4"><%= current_chapter.state_province.presence || "Not set" %></p>
-
-          <p class="font-semibold">Selected City</p>
-          <p class="mb-4"><%= current_chapter.city.presence || "Not set" %></p>
         </div>
 
         <div class="w-full lg:w-1/3 flex mt-8 mx-auto">
-          <%= link_to "Update chapter location",
+          <%= link_to "Update organization headquarters",
                       edit_chapter_ambassador_chapter_location_path,
                       class: "tw-green-btn mx-auto" %>
         </div>
