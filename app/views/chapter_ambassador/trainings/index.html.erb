@@ -3,9 +3,11 @@
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Chapter Ambassador Training and Checkpoint" } do %>
     <% if current_ambassador.training_completed? %>
-      <p>
+      <p class="mb-4">
         Thank you for completing the checkpoint. You can view correct answers here.
       </p>
+
+      <%= render "chapter_ambassador/trainings/training_module_list" %>
     <% else %>
       <p class="mb-4">
         Please review the following training modules. This information will help you lead your chapter this season!
