@@ -11,7 +11,7 @@ RSpec.feature "Chapter ambassadors edit chapter location" do
   end
 
   scenario "Chapter ambassador edits organization headquarters location" do
-    click_link "Update chapter location"
+    click_link "Update organization headquarters"
 
     fill_in "chapter_organization_headquarters_location", with: "123 Main St, USA"
     click_button "Save"
