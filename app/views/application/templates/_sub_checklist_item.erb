@@ -1,5 +1,7 @@
+<% new_tab ||= false %>
+
 <li>
-  <a href="<%= url  %>" class="group flex items-center hover:text-gray-900">
+  <a href="<%= url %>" class="group flex items-center hover:text-gray-900" target="<%= new_tab ? '_blank' : '_self' %>"  >
     <span class="flex items-center" aria-hidden="true">
       <% if is_complete %>
         <span class="flex h-6 w-6 items-center justify-center rounded-full bg-tg-green">
