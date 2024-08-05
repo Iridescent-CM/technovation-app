@@ -13,6 +13,10 @@ class NullTeamSubmission < NullObject
     ::Screenshot.none
   end
 
+  def pitch_video_link
+    ""
+  end
+
   def app_name
     TeamSubmission::DEFAULT_APP_NAME
   end
@@ -30,6 +34,10 @@ class NullTeamSubmission < NullObject
     false
   end
   alias_method :is_complete, :complete?
+
+  def published_at
+    nil
+  end
 
   def missing_pieces
     []

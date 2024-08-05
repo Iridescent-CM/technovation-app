@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe Salesforce::ApiClient do
   let(:salesforce_api_client) do
     Salesforce::ApiClient.new(
+      account: account,
+      profile_type: profile_type,
       instance_url: salesforce_instance_url,
       host: salesforce_host,
       api_version: salesforce_api_version,
@@ -49,60 +51,79 @@ RSpec.describe Salesforce::ApiClient do
   end
 
   let(:salesforce_client) { double("SalesforceClent") }
-  let(:account) do
-    instance_double(
-      Account,
-      id: 45678,
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      date_of_birth: date_of_birth,
-      city: city,
-      state_province: state_province,
-      country: country,
-      student_profile: student_profile,
-      division: student_division,
-      mentor_profile: mentor_profile
-    )
-  end
-  let(:first_name) { "Luna" }
-  let(:last_name) { "Lovegood" }
-  let(:email) { "luna@example.com" }
-  let(:date_of_birth) { 20.years.ago }
-  let(:city) { "Ottery St Catchpole" }
-  let(:state_province) { "Devon" }
-  let(:country) { "England" }
-  let(:student_profile) do
-    instance_double(
-      StudentProfile,
-      parent_guardian_name: parent_guardian_name,
-      parent_guardian_email: parent_guardian_email
-    )
-  end
-  let(:parent_guardian_name) { "Pandora Lovegood" }
-  let(:parent_guardian_email) { "pandora@example.com" }
+  let(:student_profile) { FactoryBot.build(:student_profile) }
+  let(:account) { student_profile.account }
+  let(:profile_type) { "student" }
 
-  let(:student_division) do
-    instance_double(Division,
-      name: "Senior")
-  end
-  let(:mentor_profile) do
-    instance_double(
-      MentorProfile,
-      mentor_types: mentor_types
-    )
-  end
-  let(:mentor_types) do
-    [
-      instance_double(MentorType, name: "Technovation alumna")
-    ]
+  describe "#setup_account_for_current_season" do
+    before do
+      allow(salesforce_client).to receive(:upsert!).and_return(salesforce_contact_id)
+      allow(salesforce_client).to receive(:insert!)
+    end
+
+    let(:salesforce_contact_id) { 192837 }
+    let(:profile_type) { "student" }
+
+    context "when Salesforce is enabled" do
+      let(:salesforce_enabled) { true }
+
+      it "calls the upsert! method to create a new contact in Salesforce" do
+        expect(salesforce_client).to receive(:upsert!)
+
+        salesforce_api_client.setup_account_for_current_season
+      end
+
+      it "calls the insert! method to create a new 'program participant' in Salesforce" do
+        expect(salesforce_client).to receive(:insert!)
+
+        salesforce_api_client.setup_account_for_current_season
+      end
+
+      context "when setting up a student" do
+        let(:student_profile) { FactoryBot.build(:student_profile) }
+        let(:account) { student_profile.account }
+        let(:profile_type) { "student" }
+
+        it "calls the insert! method to create a new 'program participant' record and includes student info" do
+          expect(salesforce_client).to receive(:insert!).with(
+            "Program_Participant__c",
+            {
+              Contact__c: salesforce_contact_id,
+              Platform_Participant_Id__c: account.id,
+              Year__c: Season.current.year,
+              Type__c: profile_type,
+              TG_Division__c: "#{student_profile.division.name} Division"
+            }
+          )
+
+          salesforce_api_client.setup_account_for_current_season
+        end
+      end
+
+      context "when setting up a mentor" do
+        let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+        let(:account) { mentor_profile.account }
+        let(:profile_type) { "mentor" }
+
+        it "calls the insert! method to create a new 'program participant' record and includes mentor info" do
+          expect(salesforce_client).to receive(:insert!).with(
+            "Program_Participant__c",
+            {
+              Contact__c: salesforce_contact_id,
+              Platform_Participant_Id__c: account.id,
+              Year__c: Season.current.year,
+              Type__c: profile_type,
+              Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";")
+            }
+          )
+
+          salesforce_api_client.setup_account_for_current_season
+        end
+      end
+    end
   end
 
-  before do
-    allow(mentor_types).to receive(:pluck).and_return(["Technovation alumna"])
-  end
-
-  describe "#upsert_contact_info_for" do
+  describe "#upsert_contact_info" do
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
     end
@@ -123,7 +144,7 @@ RSpec.describe Salesforce::ApiClient do
         Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
       )
 
-      salesforce_api_client.upsert_contact_info_for(account: account)
+      salesforce_api_client.upsert_contact_info
     end
 
     context "when the upsert! was unsuccessful" do
@@ -136,13 +157,13 @@ RSpec.describe Salesforce::ApiClient do
       it "logs the error" do
         expect(logger).to receive(:error).with("[SALESFORCE] #{error_message}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
 
       it "notifies the error_notifier with the error" do
         expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
     end
 
@@ -152,7 +173,7 @@ RSpec.describe Salesforce::ApiClient do
       it "logs an error" do
         expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Upserting account #{account.id}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
     end
 
@@ -162,70 +183,91 @@ RSpec.describe Salesforce::ApiClient do
       it "logs an error" do
         expect(logger).to receive(:info).with("[SALESFORCE DISABLED] Upserting account #{account.id}")
 
-        salesforce_api_client.upsert_contact_info_for(account: account)
+        salesforce_api_client.upsert_contact_info
       end
     end
   end
 
-  describe "#setup_account_for_current_season" do
+  describe "#update_program_info" do
     before do
-      allow(salesforce_client).to receive(:upsert!).and_return(salesforce_contact_id)
+      allow(salesforce_client).to receive(:query).and_return(program_participants)
       allow(salesforce_client).to receive(:insert!)
     end
 
-    let(:salesforce_contact_id) { 192837 }
-    let(:profile_type) { "student" }
+    let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
+    let(:program_participant_id) { 19533 }
 
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
 
-      it "calls the upsert! method to create a new contact in Salesforce" do
-        expect(salesforce_client).to receive(:upsert!)
+      context "when a program participant record exists in Salesforce" do
+        let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
+        let(:program_participant_id) { 42555 }
 
-        salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
-      end
+        it "calls update! to update program participant info in Salesforce" do
+          expect(salesforce_client).to receive(:update!)
 
-      it "calls the insert! method to create a new 'program participant' in Salesforce" do
-        expect(salesforce_client).to receive(:insert!)
+          salesforce_api_client.update_program_info
+        end
 
-        salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
-      end
+        context "when updating a mentor's program info" do
+          let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+          let(:account) { mentor_profile.account }
+          let(:profile_type) { "mentor" }
 
-      context "when setting up a student" do
-        let(:profile_type) { "student" }
+          it "calls update! to update the 'program participant' info for the mentor" do
+            expect(salesforce_client).to receive(:update!).with(
+              "Program_Participant__c",
+              {
+                Id: program_participant_id,
+                Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
+                Mentor_Team_Status__c: "Not On Team"
+              }
+            )
 
-        it "calls the insert! method to create a new 'program participant' record and includes student info" do
-          expect(salesforce_client).to receive(:insert!).with(
-            "Program_Participant__c",
-            {
-              Contact__c: salesforce_contact_id,
-              Platform_Participant_Id__c: account.id,
-              Year__c: Season.current.year,
-              Type__c: profile_type,
-              TG_Division__c: "#{student_division.name} Division"
-            }
-          )
+            salesforce_api_client.update_program_info
+          end
+        end
 
-          salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
+        context "when updating a student's program info" do
+          let(:student_profile) { FactoryBot.create(:student_profile, :on_team, :submitted) }
+          let(:account) { student_profile.account }
+          let(:profile_type) { "student" }
+
+          it "calls update! to update the 'program participant' info for the student" do
+            expect(salesforce_client).to receive(:update!).with(
+              "Program_Participant__c",
+              {
+                Id: program_participant_id,
+                Pitch_Video__c: student_profile.team.submission.pitch_video_link,
+                Project_Link__c: Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: student_profile.team.submission),
+                Submitted_Project__c: "Submitted",
+                Team_Name__c: student_profile.team.name
+              }
+            )
+
+            salesforce_api_client.update_program_info
+          end
         end
       end
 
-      context "when setting up a mentor" do
-        let(:profile_type) { "mentor" }
+      context "when a program participant record doesn't exist in Salesforce" do
+        let(:program_participants) { nil }
 
-        it "calls the insert! method to create a new 'program participant' record and includes mentor info" do
-          expect(salesforce_client).to receive(:insert!).with(
-            "Program_Participant__c",
-            {
-              Contact__c: salesforce_contact_id,
-              Platform_Participant_Id__c: account.id,
-              Year__c: Season.current.year,
-              Type__c: profile_type,
-              Mentor_Type__c: mentor_types.pluck(:name).join(";")
-            }
-          )
+        it "does not call update! to update program participant info in Salesforce" do
+          expect(salesforce_client).not_to receive(:update!)
 
-          salesforce_api_client.setup_account_for_current_season(account: account, profile_type: profile_type)
+          salesforce_api_client.update_program_info
+        end
+      end
+
+      context "when the season provided isn't for the current season" do
+        let(:season) { 2000 }
+
+        it "does not call update! to update program participant info in Salesforce" do
+          expect(salesforce_client).not_to receive(:update!)
+
+          salesforce_api_client.update_program_info(season: season)
         end
       end
     end

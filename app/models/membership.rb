@@ -13,4 +13,17 @@ class Membership < ActiveRecord::Base
     prefix: true
 
   validates :member_id, uniqueness: {scope: [:team_id, :member_type]}
+
+  after_commit :update_mentor_info_in_crm
+
+  private
+
+  def update_mentor_info_in_crm
+    if member_type == "MentorProfile"
+      CRM::UpdateProgramInfoJob.perform_later(
+        account_id: member.account.id,
+        profile_type: "mentor"
+      )
+    end
+  end
 end
