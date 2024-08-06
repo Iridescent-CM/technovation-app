@@ -7,115 +7,55 @@
         <h2 class="registration-title">Judge Information</h2>
 
         <div class="formulate-input-wrapper name-group">
-          <FormulateInput
-            name="firstName"
-            id="firstName"
-            type="text"
-            label="First Name"
-            placeholder="First Name"
-            validation="required"
-            validation-name="First name"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-            class="flex-grow pr-2"
-          />
+          <FormulateInput name="firstName" id="firstName" type="text" label="First Name" placeholder="First Name"
+            validation="required" validation-name="First name" @keyup="checkValidation" @blur="checkValidation"
+            class="flex-grow pr-2" />
 
-          <FormulateInput
-            name="lastName"
-            id="lastName"
-            type="text"
-            label="Last Name"
-            placeholder="Last Name"
-            validation="required"
-            validation-name="Last name"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-            class="flex-grow pl-2"
-          />
+          <FormulateInput name="lastName" id="lastName" type="text" label="Last Name" placeholder="Last Name"
+            validation="required" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation"
+            class="flex-grow pl-2" />
         </div>
 
-        <FormulateInput
-          name="meetsMinimumAgeRequirement"
-          id="meetsMinimumAgeRequirement"
-          type="checkbox"
-          label="I confirm that I am 18 years or older"
-          validation="required"
+        <FormulateInput name="meetsMinimumAgeRequirement" id="meetsMinimumAgeRequirement" type="checkbox"
+          label="I confirm that I am 18 years or older" validation="required"
           :validation-messages="{ required: 'You must be 18 years or older in order to be a judge' }"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          @input="checkValidation"
-        />
+          @keyup="checkValidation" @blur="checkValidation" @input="checkValidation" />
 
-        <FormulateInput
-          name="dateOfBirth"
-          id="dateOfBirth"
-          type="date"
-          label="Birthday"
-          placeholder="Birthday"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          @change="checkValidation"
-        />
+        <FormulateInput name="dateOfBirth" id="dateOfBirth" type="date" label="Birthday" placeholder="Birthday"
+          @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
 
         <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
           We use date of birth as a way to gain insight into who volunteers to judge.<br>
           This info is optional.
         </p>
 
-        <FormulateInput
-          name="gender"
-          :options="genderOptions"
-          type="select"
-          placeholder="Select an option"
-          validation="required"
-          validation-name="Gender identity"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          label="Gender Identity"
-          id="genderIdentity"
-          input-class="mentorSelectClass"
-        />
+        <FormulateInput name="phoneNumber" id="phoneNumber" type="tel" label="Phone Number (optional)"
+          @keyup="checkValidation" @blur="checkValidation" />
 
-        <FormulateInput
-          name="judgeSchoolCompanyName"
-          id="judgeSchoolCompanyName"
-          type="text"
-          label="Company Name"
-          placeholder="Company Name"
-          validation="required"
-          validation-name="Company name"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-        />
+        <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
+          Your phone number will be shared with the Technovation Ambassador for your region and may be used to contact you
+          regarding volunteer opportunities. Providing your phone number is optional.
+        </p>
 
-        <FormulateInput
-          name="judgeJobTitle"
-          id="judgeJobTitle"
-          type="text"
-          label="Job Title"
-          placeholder="Job Title"
-          validation="required"
-          validation-name="Job title"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-        />
+        <FormulateInput name="gender" :options="genderOptions" type="select" placeholder="Select an option"
+          validation="required" validation-name="Gender identity" @keyup="checkValidation" @blur="checkValidation"
+          label="Gender Identity" id="genderIdentity" input-class="mentorSelectClass" />
+
+        <FormulateInput name="judgeSchoolCompanyName" id="judgeSchoolCompanyName" type="text" label="Company Name"
+          placeholder="Company Name" validation="required" validation-name="Company name" @keyup="checkValidation"
+          @blur="checkValidation" />
+
+        <FormulateInput name="judgeJobTitle" id="judgeJobTitle" type="text" label="Job Title" placeholder="Job Title"
+          validation="required" validation-name="Job title" @keyup="checkValidation" @blur="checkValidation" />
 
         <div class="judge-information" v-show="judgeTypeOptions.length > 0">
           <h4 class="registration-title">
             As a judge you may call me a...<span class="formulate-required-field">*</span>
           </h4>
 
-          <FormulateInput
-            name="judgeTypes"
-            id="judgeTypes"
-            type="checkbox"
-            :options="judgeTypeOptions"
-            validation="required"
-            :validation-messages="{ required: 'This field is required.' }"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-            @input="checkValidation"
-          />
+          <FormulateInput name="judgeTypes" id="judgeTypes" type="checkbox" :options="judgeTypeOptions"
+            validation="required" :validation-messages="{ required: 'This field is required.' }" @keyup="checkValidation"
+            @blur="checkValidation" @input="checkValidation" />
         </div>
       </div>
     </div>
@@ -123,7 +63,7 @@
     <ReferredBy />
 
     <div class="registration-btn-wrapper">
-      <PreviousButton @prev="$emit('prev')"/>
+      <PreviousButton @prev="$emit('prev')" />
       <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
     </div>
   </div>
@@ -146,7 +86,7 @@ export default {
     PreviousButton,
     NextButton
   },
-  data () {
+  data() {
     return {
       genderOptions: [
         'Female',
@@ -177,7 +117,7 @@ export default {
         this.hasValidationErrors = false
       }
     },
-    async getJudgeTypeOptions () {
+    async getJudgeTypeOptions() {
       try {
         const response = await axios.get('/api/registration/judge_types')
 
@@ -188,7 +128,7 @@ export default {
           })
         })
       }
-      catch(error) {
+      catch (error) {
         airbrake.notify({
           error: `[REGISTRATION] Error getting judge types - ${error.response.data}`
         })

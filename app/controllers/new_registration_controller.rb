@@ -83,7 +83,10 @@ class NewRegistrationController < ApplicationController
       bio: registration_params[:mentorBio],
       expertise_ids: registration_params["mentorExpertises"],
       mentor_type_ids: registration_params["mentorTypes"],
-      account_attributes: account_attributes.merge({gender: registration_params[:gender]})
+      account_attributes: account_attributes.merge({
+        phone_number: registration_params[:phoneNumber],
+        gender: registration_params[:gender]
+      })
     }
   end
 
@@ -93,6 +96,7 @@ class NewRegistrationController < ApplicationController
       job_title: registration_params[:judgeJobTitle],
       judge_type_ids: registration_params["judgeTypes"],
       account_attributes: account_attributes.merge({
+        phone_number: registration_params[:phoneNumber],
         gender: registration_params[:gender],
         meets_minimum_age_requirement: registration_params[:meetsMinimumAgeRequirement]
       })
@@ -103,8 +107,8 @@ class NewRegistrationController < ApplicationController
     {
       job_title: registration_params[:chapterAmbassadorJobTitle],
       organization_status: registration_params[:chapterAmbassadorOrganizationStatus],
-      phone_number: registration_params[:chapterAmbassadorPhoneNumber],
       account_attributes: account_attributes.merge({
+        phone_number: registration_params[:phoneNumber],
         gender: registration_params[:gender],
         meets_minimum_age_requirement: registration_params[:meetsMinimumAgeRequirement]
       })
@@ -132,6 +136,7 @@ class NewRegistrationController < ApplicationController
       :lastName,
       :dateOfBirth,
       :meetsMinimumAgeRequirement,
+      :phoneNumber,
       :gender,
       :email,
       :password,
@@ -150,7 +155,6 @@ class NewRegistrationController < ApplicationController
       :chapterAmbassadorJobTitle,
       :chapterAmbassadorBio,
       :chapterAmbassadorOrganizationStatus,
-      :chapterAmbassadorPhoneNumber,
       mentorExpertises: [],
       mentorTypes: [],
       judgeTypes: []
@@ -165,7 +169,6 @@ class NewRegistrationController < ApplicationController
       )
     end
   end
-
 
   def assign_chapter_ambassador_to_chapter
     if params[:inviteCode].present? && params[:profileType] == "chapter_ambassador"
