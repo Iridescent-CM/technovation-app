@@ -9,7 +9,9 @@
         <small><slot name="judge-switch-link" /></small>
       </div>
 
-      <div slot="chapter-ambassador-intro"><slot name="chapter-ambassador-intro" /></div>
+      <div slot="chapter-ambassador-intro">
+        <slot name="chapter-ambassador-intro" />
+      </div>
     </dashboard-header>
 
     <div class="tabs tabs--vertical tabs--css-only tabs--content-first grid">
@@ -42,93 +44,99 @@
 </template>
 
 <script>
-import DashboardMenu from './DashboardMenu'
-import DashboardHeader from './DashboardHeader'
+import DashboardMenu from "./DashboardMenu";
+import DashboardHeader from "./DashboardHeader";
 
 export default {
-  name: 'app',
+  name: "app",
 
   components: {
     DashboardMenu,
     DashboardHeader,
   },
 
-  data () {
+  data() {
     return {
       resourceLinks: [
         {
-          heading: 'Beginner Students',
-          url: 'https://beginner.technovationchallenge.org/',
-          text: 'Open the Curriculum',
+          heading: "Beginner Students",
+          url: "https://beginner.technovationchallenge.org/",
+          text: "Open the Curriculum",
         },
 
         {
-          heading: 'Junior and Senior Students',
-          url: 'https://technovationchallenge.org/curriculum-landing-page/',
-          text: 'Open the Curriculum',
+          heading: "Junior Students",
+          url: "https://technovationchallenge.org/curriculum-landing-page/",
+          text: "Open the Curriculum",
         },
 
         {
-          heading: 'Mentor Curriculum',
-          url: 'https://technovationchallenge.org/mentor-curriculum/',
-          text: 'Open the Curriculum',
+          heading: "Senior Students",
+          url: "https://technovationchallenge.org/curriculum-landing-page/",
+          text: "Open the Curriculum",
         },
 
         {
-          heading: 'Mentor Resources',
-          url: 'https://technovationchallenge.org/mentor-resources/',
-          text: 'Learn more about mentoring',
+          heading: "Mentor Curriculum",
+          url: "https://technovationchallenge.org/mentor-curriculum/",
+          text: "Open the Curriculum",
         },
 
         {
-          heading: 'Safety Information',
-          url: 'https://www.technovation.org/safety/',
-          text: 'Stay Safe Online',
+          heading: "Mentor Resources",
+          url: "https://technovationchallenge.org/mentor-resources/",
+          text: "Learn more about mentoring",
         },
 
         {
-          heading: 'Help Technovation Improve!',
+          heading: "Safety Information",
+          url: "https://www.technovation.org/safety/",
+          text: "Stay Safe Online",
+        },
+
+        {
+          heading: "Help Technovation Improve!",
           url: this.surveyLink,
           text: this.surveyLinkText,
           isSurveyLink: true,
         },
 
         {
-          heading: 'Submission Guide',
-          url: 'https://www.technovationchallenge.org/submission-guidelines/',
-          text: 'Read the Submission Guidelines',
+          heading: "Submission Guide",
+          url: "https://www.technovationchallenge.org/submission-guidelines/",
+          text: "Read the Submission Guidelines",
         },
 
         {
-          heading: 'Competition Judging Rubrics',
-          url: 'https://www.technovationchallenge.org/judging-rubric/',
-          text: 'Read the Judging Rubrics',
+          heading: "Competition Judging Rubrics",
+          url: "https://www.technovationchallenge.org/judging-rubric/",
+          text: "Read the Judging Rubrics",
         },
       ],
-    }
+    };
   },
 
   props: {
     surveyLink: {
       type: String,
       required: false,
-      default: '',
+      default: "",
     },
 
     surveyLinkText: {
       type: String,
       required: false,
-      default: '',
+      default: "",
     },
 
     profileIcons: {
       type: Object,
-      default () {
+      default() {
         return {
-          profileIconMentor: '',
-          profileIconMentorMale: '',
-          profileIconStudent: '',
-        }
+          profileIconMentor: "",
+          profileIconMentorMale: "",
+          profileIconStudent: "",
+        };
       },
     },
 
@@ -144,8 +152,7 @@ export default {
       default: false,
     },
   },
-}
+};
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

@@ -52,6 +52,11 @@
         with any questions.
       </p>
 
+      <p class="mb-6 italic">
+        Any consent form submitted that does not contain a signature will not be accepted
+        and you will be asked to submit a new form.
+      </p>
+
       <%= form_for @parental_consent, url: student_paper_consent_upload_path, html: { multipart: true } do |f| %>
         <% if @media_consent.uploaded_at.blank? || @media_consent.upload_approval_status_rejected? %>
           <%= f.fields_for @media_consent do |media_consent_fields| %>
