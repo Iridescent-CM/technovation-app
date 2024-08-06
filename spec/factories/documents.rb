@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :document, aliases: [:chapter_affiliation_agreement] do
+  factory :document, aliases: [:chapter_affiliation_agreement, :legal_agreement] do
     full_name { "FactoryBot Document Signer" }
     sequence(:email_address) { |n| "document-signer-#{n}@example.com" }
     active { true }

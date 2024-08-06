@@ -26,8 +26,8 @@ module ApplicationHelper
       chapter_program_information
       community_connections
       dashboards
+      legal_agreements
       location_details
-      mous
       profiles
       public_information
       training_completions

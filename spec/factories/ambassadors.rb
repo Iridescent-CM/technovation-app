@@ -85,7 +85,7 @@ FactoryBot.define do
         r.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
 
-      r.build_legal_document(FactoryBot.attributes_for(:document, :signed))
+      r.build_legal_agreement(FactoryBot.attributes_for(:document, :signed))
     end
 
     after(:create) do |r, e|

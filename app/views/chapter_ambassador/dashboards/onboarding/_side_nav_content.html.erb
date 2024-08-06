@@ -15,10 +15,10 @@
       %>
 
       <%= render "application/templates/completion_step",
-        name: "Memorandum of Understanding",
-        url: chapter_ambassador_mou_path,
-        is_complete: current_ambassador.legal_document_signed?,
-        is_active_item: al(chapter_ambassador_mou_path).present?
+        name: "Legal Agreement",
+        url: chapter_ambassador_legal_agreement_path,
+        is_complete: current_ambassador.legal_agreement_signed?,
+        is_active_item: al(chapter_ambassador_legal_agreement_path).present?
       %>
 
       <%= render "application/templates/completion_step",
