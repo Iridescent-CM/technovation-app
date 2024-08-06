@@ -28,15 +28,15 @@
             %>
           </div>
 
-          <% if @chapter.legal_document.blank? %>
-            <%= button_to "Send MOU",
-              admin_chapter_memorandum_of_understanding_path(@chapter),
+          <% if @chapter.affiliation_agreement.blank? %>
+            <%= button_to "Send Chapter Affiliation Agreement",
+              admin_chapter_affiliation_agreement_path(@chapter),
               method: "post",
               class: "button"
             %>
-          <% elsif !@chapter.legal_document_signed? %>
-            <%= button_to "Void MOU",
-              void_admin_chapter_memorandum_of_understanding_path(@chapter),
+          <% elsif !@chapter.affiliation_agreement_signed? %>
+            <%= button_to "Void Chapter Affiliation Agreement",
+              void_admin_chapter_affiliation_agreement_path(@chapter),
               method: "patch",
               class: "button"
             %>

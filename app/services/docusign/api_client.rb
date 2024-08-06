@@ -22,7 +22,7 @@ module Docusign
       @error_notifier = error_notifier
     end
 
-    def send_memorandum_of_understanding(legal_contact:)
+    def send_chapter_affiliation_agreement(legal_contact:)
       send_document_to(
         signer: legal_contact,
         params: params_for_legal_contact(legal_contact)
@@ -100,7 +100,7 @@ module Docusign
 
     def params_for_legal_contact(legal_contact)
       {
-        templateId: ENV.fetch("DOCUSIGN_MEMORANDUM_OF_UNDERSTANDING_TEMPLATE_ID"),
+        templateId: ENV.fetch("DOCUSIGN_CHAPTER_AFFILIATION_AGREEMENT_TEMPLATE_ID"),
         templateRoles: [
           {
             name: legal_contact.full_name,

@@ -20,30 +20,30 @@ class Chapter < ActiveRecord::Base
 
   validates :summary, length: {maximum: 280}
 
-  scope :signed_legal_agreements, -> {
+  scope :signed_affiliation_agreements, -> {
     joins(legal_contact: :documents)
       .where("documents.active = TRUE AND documents.signed_at IS NOT NULL")
   }
 
-  scope :not_signed_legal_agreements, -> {
+  scope :not_signed_affiliation_agreements, -> {
     joins(legal_contact: :documents)
       .where("documents.active = TRUE AND documents.signed_at IS NULL")
   }
 
-  scope :not_sent_legal_agreements, -> {
+  scope :not_sent_affiliation_agreements, -> {
     left_joins(legal_contact: :documents)
       .where("documents.active != TRUE OR documents.active IS NULL")
       .where("documents.id IS NULL")
   }
 
-  delegate :seasons_legal_agreement_is_valid_for, to: :legal_contact
+  delegate :seasons_chapter_affiliation_agreement_is_valid_for, to: :legal_contact
 
-  def legal_document
-    legal_contact&.legal_document
+  def affiliation_agreement
+    legal_contact&.chapter_affiliation_agreement
   end
 
   def can_be_marked_onboarded?
-    !!(legal_document_signed? &&
+    !!(affiliation_agreement_signed? &&
       chapter_info_complete? &&
       location_complete? &&
       program_info_complete?)
@@ -53,8 +53,8 @@ class Chapter < ActiveRecord::Base
     update_column(:onboarded, can_be_marked_onboarded?)
   end
 
-  def legal_document_signed?
-    !!legal_document&.signed?
+  def affiliation_agreement_signed?
+    !!affiliation_agreement&.signed?
   end
 
   def chapter_info_complete?

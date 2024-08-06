@@ -4,13 +4,13 @@ FactoryBot.define do
     sequence(:email_address) { |n| "legal-contact-#{n}@example.com" }
 
     transient do
-      season_legal_document_signed { 2026 }
+      season_chapter_affiliation_agreement_signed { 2026 }
     end
 
     after(:create) do |legal_contact, evaluator|
-      create(:legal_document,
+      create(:chapter_affiliation_agreement,
         signer: legal_contact,
-        season_signed: evaluator.season_legal_document_signed,
+        season_signed: evaluator.season_chapter_affiliation_agreement_signed,
         signed_at: Time.now)
     end
   end

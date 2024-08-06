@@ -4,9 +4,9 @@ RSpec.describe Chapter do
   let(:chapter) { FactoryBot.build(:chapter) }
 
   describe "delegations" do
-    it "delegates #seasons_legal_agreement_is_valid_for to the legal contact" do
-      expect(chapter.seasons_legal_agreement_is_valid_for)
-        .to eq(chapter.legal_contact.seasons_legal_agreement_is_valid_for)
+    it "delegates #seasons_chapter_affiliation_agreement_is_valid_for to the legal contact" do
+      expect(chapter.seasons_chapter_affiliation_agreement_is_valid_for)
+        .to eq(chapter.legal_contact.seasons_chapter_affiliation_agreement_is_valid_for)
     end
   end
 
@@ -72,19 +72,19 @@ RSpec.describe Chapter do
         let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
 
         before do
-          allow(chapter).to receive(:legal_document)
-            .and_return(legal_document)
+          allow(chapter).to receive(:affiliation_agreement)
+            .and_return(affiliation_agreement)
           allow(chapter).to receive(:chapter_program_information)
             .and_return(chapter_program_information)
         end
 
-        let(:legal_document) { instance_double(Document, signed?: legal_document_signed) }
-        let(:legal_document_signed) { true }
+        let(:affiliation_agreement) { instance_double(Document, signed?: affiliation_agreement_signed) }
+        let(:affiliation_agreement_signed) { true }
         let(:chapter_program_information) { instance_double(ChapterProgramInformation, complete?: program_info_complete) }
         let(:program_info_complete) { true }
 
         context "when all onboarding steps have been completed" do
-          let(:legal_document_signed) { true }
+          let(:affiliation_agreement_signed) { true }
           let(:program_info_complete) { true }
 
           before do
@@ -96,8 +96,8 @@ RSpec.describe Chapter do
           end
         end
 
-        context "when the legal document has not been signed" do
-          let(:legal_document_signed) { false }
+        context "when the affiliation agreement has not been signed" do
+          let(:affiliation_agreement_signed) { false }
 
           before do
             chapter.save
@@ -163,36 +163,36 @@ RSpec.describe Chapter do
     end
   end
 
-  describe "#legal_document_signed?" do
-    context "when a legal document exists" do
+  describe "#affiliation_agreement_signed?" do
+    context "when an affiliation agreement exists" do
       before do
-        allow(chapter).to receive_message_chain(:legal_document, :signed?).and_return(legal_document_signed)
+        allow(chapter).to receive_message_chain(:affiliation_agreement, :signed?).and_return(affiliation_agreement_signed)
       end
 
-      context "when the legal document has been signed" do
-        let(:legal_document_signed) { true }
+      context "when the affiliation agreement has been signed" do
+        let(:affiliation_agreement_signed) { true }
 
         it "returns true" do
-          expect(chapter.legal_document_signed?).to eq(true)
+          expect(chapter.affiliation_agreement_signed?).to eq(true)
         end
       end
 
-      context "when the legal document has not been signed" do
-        let(:legal_document_signed) { false }
+      context "when the affiliation agreement has not been signed" do
+        let(:affiliation_agreement_signed) { false }
 
         it "returns false" do
-          expect(chapter.legal_document_signed?).to eq(false)
+          expect(chapter.affiliation_agreement_signed?).to eq(false)
         end
       end
     end
 
-    context "when a legal document doesn't exist" do
+    context "when an affiliation agreement doesn't exist" do
       before do
-        allow(chapter).to receive(:legal_document).and_return(nil)
+        allow(chapter).to receive(:affiliation_agreement).and_return(nil)
       end
 
       it "returns false" do
-        expect(chapter.legal_document_signed?).to eq(false)
+        expect(chapter.affiliation_agreement_signed?).to eq(false)
       end
     end
   end

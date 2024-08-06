@@ -3,7 +3,7 @@
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Chapter Affiliation Agreement" } do %>
     <% if current_chapter.present? %>
-      <% if current_chapter.legal_document_signed? %>
+      <% if current_chapter.affiliation_agreement_signed? %>
         <p>
           Your legal contact has signed the Chapter Affiliation Agreement!
         </p>
@@ -24,7 +24,7 @@
           <span class="font-medium">Chapter Affiliation Agreement Status:</span>
           <% if current_chapter.legal_contact.blank? %>
             Not sent (no legal contact has been setup yet)
-          <% elsif current_chapter.legal_document.blank? %>
+          <% elsif current_chapter.affiliation_agreement.blank? %>
             Not sent
           <% else %>
             Not signed

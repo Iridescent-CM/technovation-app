@@ -60,12 +60,12 @@
 
         <div class="grid__col-6">
           <dl>
-            <dt>MOU</dt>
+            <dt>Chapter Affiliation Agreement</dt>
             <dd>
               <% if @chapter.legal_contact.present? %>
-                <% if @chapter.legal_document.present? %>
-                  <% if @chapter.legal_document.signed? %>
-                    Signed <%= @chapter.legal_document.signed_at.strftime("%b %d, %Y") %>
+                <% if @chapter.affiliation_agreement.present? %>
+                  <% if @chapter.affiliation_agreement_signed? %>
+                    Signed <%= @chapter.affiliation_agreement.signed_at.strftime("%b %d, %Y") %>
                   <% else %>
                     Not signed
                   <% end %>
@@ -77,10 +77,10 @@
               <% end %>
             </dd>
 
-            <dt>Seasons MOU Valid For</dt>
+            <dt>Seasons Chapter Affiliation Agreement Valid For</dt>
             <dd>
-              <% if @chapter.legal_document.present? %>
-                <%= @chapter.seasons_legal_agreement_is_valid_for.to_sentence %>
+              <% if @chapter.affiliation_agreement.present? %>
+                <%= @chapter.seasons_chapter_affiliation_agreement_is_valid_for.to_sentence %>
               <% else %>
                 -
               <% end %>
