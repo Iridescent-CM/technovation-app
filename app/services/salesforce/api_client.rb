@@ -124,7 +124,12 @@ module Salesforce
         }
       when "mentor"
         {
-          Mentor_Type__c: account.mentor_profile.mentor_types.pluck(:name).join(";")
+          Mentor_Type__c: account
+            .mentor_profile
+            .mentor_types
+            .pluck(:name)
+            .delete_if { |mentor_type| mentor_type == "Club Ambassador" }
+            .join(";")
         }
       else
         {}
@@ -143,9 +148,13 @@ module Salesforce
           Team_Name__c: account.student_profile.team.name
         }
       when "mentor"
+        mentor_profile = account.mentor_profile
+
         initial_program_participant_info.merge(
           {
-            Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team"
+            Mentor_Team_Status__c: mentor_profile.current_teams.present? ? "On Team" : "Not On Team",
+            Mentor_Role__c: mentor_profile.mentor_types.pluck(:name).include?("Club Ambassador") ? "Club Ambassador" : ""
+
           }
         )
       else
