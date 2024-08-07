@@ -119,30 +119,19 @@ module Docusign
                   value: legal_contact.full_name,
                   width: 100,
                   height: 23,
-                  xPosition: 394,
-                  yPosition: 152
+                  xPosition: 398,
+                  yPosition: 176
                 },
                 {
-                  documentId: 1,
-                  pageNumber: 1,
+                  anchorString: "with offices in",
+                  anchorXOffset: 67,
+                  anchorYOffset: -10,
                   font: "Georgia",
                   fontSize: "Size10",
                   italic: true,
                   underline: true,
                   value: legal_contact.chapter.organization_name,
-                  width: 12,
-                  height: 23,
-                  xPosition: 98,
-                  yPosition: 180
-                },
-                {
-                  anchorString: "Name of Organization (if applicable):",
-                  anchorXOffset: 190,
-                  anchorYOffset: -11,
-                  font: "Georgia",
-                  fontSize: "Size12",
-                  value: legal_contact.chapter.organization_name,
-                  width: 200
+                  width: 150
                 },
                 {
                   anchorString: "Title:",
@@ -159,14 +148,14 @@ module Docusign
                 {
                   anchorString: "Signature:",
                   anchorXOffset: 65,
-                  anchorYOffset: -7
+                  anchorYOffset: 10
                 }
               ],
               dateSignedTabs: [
                 {
                   anchorString: "Date:",
                   anchorXOffset: 30,
-                  anchorYOffset: -10,
+                  anchorYOffset: -8,
                   font: "Georgia",
                   fontSize: "Size12"
                 }
@@ -175,7 +164,7 @@ module Docusign
                 {
                   anchorString: "Name:",
                   anchorXOffset: 35,
-                  anchorYOffset: -9,
+                  anchorYOffset: -8,
                   font: "Georgia",
                   fontSize: "Size12"
                 }
