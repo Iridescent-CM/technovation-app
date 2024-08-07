@@ -80,6 +80,14 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile.training_completed? ? "Yes" : "No"
   end
 
+  column :remaining_onboarding_tasks do
+    chapter_ambassador_profile.incomplete_onboarding_tasks.to_sentence
+  end
+
+  column :completed_onboarding_tasks do
+    chapter_ambassador_profile.complete_onboarding_tasks.to_sentence
+  end
+
   column :actions, mandatory: true, html: true do |account|
     link_to(
       "view",
