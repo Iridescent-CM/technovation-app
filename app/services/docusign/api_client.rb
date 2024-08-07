@@ -208,8 +208,8 @@ module Docusign
                   value: chapter_ambassador_profile.full_name,
                   width: 100,
                   height: 23,
-                  xPosition: 394,
-                  yPosition: 152
+                  xPosition: 397,
+                  yPosition: 173
                 },
                 {
                   documentId: 1,
@@ -221,23 +221,14 @@ module Docusign
                   value: chapter_ambassador_profile.chapter.organization_name,
                   width: 12,
                   height: 23,
-                  xPosition: 98,
-                  yPosition: 180
-                },
-                {
-                  anchorString: "Name of Organization (if applicable):",
-                  anchorXOffset: 190,
-                  anchorYOffset: -11,
-                  font: "Georgia",
-                  fontSize: "Size12",
-                  value: chapter_ambassador_profile.chapter.organization_name,
-                  width: 200
+                  xPosition: 65,
+                  yPosition: 200
                 }
               ],
               signHereTabs: [
                 {
-                  anchorString: "Signature:",
-                  anchorXOffset: 65,
+                  anchorString: "Signed:",
+                  anchorXOffset: 55,
                   anchorYOffset: -7
                 }
               ],
