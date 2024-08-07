@@ -36,7 +36,9 @@
           @keyup="checkValidation" @blur="checkValidation" label="Status with Organization" id="organizationStatus"
           input-class="ChapterAmbassadorSelectClass" />
 
-        <FormulateInput name="phoneNumber" id="phoneNumber" type="tel" label="Phone Number (optional)"
+        <FormulateInput name="phoneNumber" id="phoneNumber" type="tel"
+          :validation="[['matches', /^[\+\(\s.\-\/\d\)]{5,30}$/]]"
+          :validation-messages="{ matches: 'Phone number is invalid.' }" label="Phone Number (optional)"
           @keyup="checkValidation" @blur="checkValidation" />
       </div>
     </div>
@@ -107,6 +109,11 @@ export default {
         document.getElementById('lastName').value.length === 0 ||
         !document.getElementById('meetsMinimumAgeRequirement').checked ||
         document.getElementById('chapterAmbassadorJobTitle').value.length === 0 ||
+        (document.getElementById('phoneNumber').value.length > 0 &&
+          validationErrorMessages.some((message) => {
+            return message.indexOf('Phone number is invalid') >= 0
+          })
+        ) ||
         validationErrorMessages.some((message) => {
           return (
             message.indexOf('years old to participate') >= 0 ||

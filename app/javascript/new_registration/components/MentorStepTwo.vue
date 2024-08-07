@@ -26,7 +26,9 @@
             before: 'Please enter a valid birthday.'
           }" validation-name="Birthday" @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
 
-        <FormulateInput name="phoneNumber" id="phoneNumber" type="tel" label="Phone Number (optional)"
+        <FormulateInput name="phoneNumber" id="phoneNumber" type="tel"
+          :validation="[['matches', /^[\+\(\s.\-\/\d\)]{5,30}$/]]"
+          :validation-messages="{ matches: 'Phone number is invalid.' }" label="Phone Number (optional)"
           @keyup="checkValidation" @blur="checkValidation" />
 
         <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
@@ -125,6 +127,11 @@ export default {
         document.getElementById('mentorSchoolCompanyName').value.length === 0 ||
         document.getElementById('mentorJobTitle').value.length === 0 ||
         document.getElementById('mentorBio').value.length < 100 ||
+        (document.getElementById('phoneNumber').value.length > 0 &&
+          validationErrorMessages.some((message) => {
+            return message.indexOf('Phone number is invalid') >= 0
+          })
+        ) ||
         hasMentorTypeChecked === false ||
         validationErrorMessages.some((message) => {
           return (

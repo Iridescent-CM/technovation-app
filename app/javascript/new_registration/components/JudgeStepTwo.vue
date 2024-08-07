@@ -29,7 +29,9 @@
           This info is optional.
         </p>
 
-        <FormulateInput name="phoneNumber" id="phoneNumber" type="tel" label="Phone Number (optional)"
+        <FormulateInput name="phoneNumber" id="phoneNumber" type="tel"
+          :validation="[['matches', /^[\+\(\s.\-\/\d\)]{5,30}$/]]"
+          :validation-messages="{ matches: 'Phone number is invalid.' }" label="Phone Number (optional)"
           @keyup="checkValidation" @blur="checkValidation" />
 
         <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
@@ -111,6 +113,11 @@ export default {
         !document.getElementById('meetsMinimumAgeRequirement').checked ||
         document.getElementById('judgeSchoolCompanyName').value.length === 0 ||
         document.getElementById('judgeJobTitle').value.length === 0 ||
+        (document.getElementById('phoneNumber').value.length > 0 &&
+          validationErrorMessages.some((message) => {
+            return message.indexOf('Phone number is invalid') >= 0
+          })
+        ) ||
         hasjudgeTypeChecked === false) {
         this.hasValidationErrors = true
       } else {
