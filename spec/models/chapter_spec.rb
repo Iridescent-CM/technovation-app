@@ -10,6 +10,61 @@ RSpec.describe Chapter do
     end
   end
 
+  describe "#incomplete_onboarding_tasks" do
+    before do
+      allow(chapter).to receive(:legal_document_signed?).and_return(true)
+      allow(chapter).to receive(:chapter_info_complete?).and_return(true)
+      allow(chapter).to receive(:location_complete?).and_return(true)
+      allow(chapter).to receive(:program_info_complete?).and_return(true)
+    end
+
+    context "when all required onboarding tasks have been completed" do
+      it "returns returns an empty array" do
+        expect(chapter.incomplete_onboarding_tasks).to be_empty
+      end
+    end
+
+    context "when the chapter affiliation has not been signed" do
+      before do
+        allow(chapter).to receive(:legal_document_signed?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Chapter Affiliation Agreement'" do
+        expect(chapter.incomplete_onboarding_tasks).to contain_exactly("Chapter Affiliation Agreement")
+      end
+    end
+
+    context "when the public info has not been completed" do
+      before do
+        allow(chapter).to receive(:chapter_info_complete?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Public Info'" do
+        expect(chapter.incomplete_onboarding_tasks).to contain_exactly("Public Info")
+      end
+    end
+
+    context "when chapter location is not complete" do
+      before do
+        allow(chapter).to receive(:location_complete?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Chapter Location'" do
+        expect(chapter.incomplete_onboarding_tasks).to contain_exactly("Chapter Location")
+      end
+    end
+
+    context "when program info is not complete" do
+      before do
+        allow(chapter).to receive(:program_info_complete?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Program Info'" do
+        expect(chapter.incomplete_onboarding_tasks).to contain_exactly("Program Info")
+      end
+    end
+  end
+
   context "callbacks" do
     context "#after_update" do
       describe "updating the onboarded status" do

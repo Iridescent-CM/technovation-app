@@ -39,6 +39,61 @@ RSpec.describe ChapterAmbassadorProfile do
     end
   end
 
+  describe "#incomplete_onboarding_tasks" do
+    before do
+      allow(chapter_ambassador_profile).to receive(:background_check_exempt_or_complete?).and_return(true)
+      allow(chapter_ambassador_profile).to receive(:training_completed?).and_return(true)
+      allow(chapter_ambassador_profile).to receive(:legal_document_signed?).and_return(true)
+      allow(chapter_ambassador_profile).to receive(:viewed_community_connections?).and_return(true)
+    end
+
+    context "when all required onboarding tasks have been completed" do
+      it "returns returns an empty array" do
+        expect(chapter_ambassador_profile.incomplete_onboarding_tasks).to be_empty
+      end
+    end
+
+    context "when the background check is incomplete" do
+      before do
+        allow(chapter_ambassador_profile).to receive(:background_check_exempt_or_complete?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Background Check'" do
+        expect(chapter_ambassador_profile.incomplete_onboarding_tasks).to contain_exactly("Background Check")
+      end
+    end
+
+    context "when the training is incomplete" do
+      before do
+        allow(chapter_ambassador_profile).to receive(:training_completed?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Chapter Ambassador Training'" do
+        expect(chapter_ambassador_profile.incomplete_onboarding_tasks).to contain_exactly("Chapter Ambassador Training")
+      end
+    end
+
+    context "when the legal agreement has not been signed" do
+      before do
+        allow(chapter_ambassador_profile).to receive(:legal_document_signed?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Legal Agreement'" do
+        expect(chapter_ambassador_profile.incomplete_onboarding_tasks).to contain_exactly("Legal Agreement")
+      end
+    end
+
+    context "when the community connections page has not been viewed" do
+      before do
+        allow(chapter_ambassador_profile).to receive(:viewed_community_connections?).and_return(false)
+      end
+
+      it "returns returns an array that contains 'Community Connections'" do
+        expect(chapter_ambassador_profile.incomplete_onboarding_tasks).to contain_exactly("Community Connections")
+      end
+    end
+  end
+
   context "callbacks" do
     context "#after_update" do
       describe "updating the onboarded status" do
