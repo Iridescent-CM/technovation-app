@@ -1,5 +1,7 @@
 class Chapter < ActiveRecord::Base
   include ActiveGeocoded
+  include OnboardingTasksConcern
+
 
   belongs_to :primary_contact, class_name: "ChapterAmbassadorProfile", foreign_key: "primary_contact_id", optional: true
 

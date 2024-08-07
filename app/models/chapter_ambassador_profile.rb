@@ -1,4 +1,6 @@
 class ChapterAmbassadorProfile < ActiveRecord::Base
+  include OnboardingTasksConcern
+
   scope :onboarded, -> {
     approved.joins(:account)
       .where("accounts.email_confirmed_at IS NOT NULL")
