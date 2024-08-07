@@ -11,11 +11,16 @@
   </p>
 
   <ul class="mb-3 text-base text-gray-500 list-disc ml-8">
-    <li>
-      <%= chapter_ambassador.incomplete_onboarding_tasks.to_sentence %>
-    </li>
-    <li>
-      <%= current_chapter.incomplete_onboarding_tasks.to_sentence %>
-    </li>
+    <% unless current_ambassador.incomplete_onboarding_tasks.empty? %>
+      <li>
+        <%= chapter_ambassador.incomplete_onboarding_tasks.to_sentence %>
+      </li>
+    <% end %>
+
+    <% unless current_chapter.incomplete_onboarding_tasks.empty? %>
+      <li>
+        <%=  current_chapter.incomplete_onboarding_tasks.to_sentence  %>
+      </li>
+    <%  end %>
   </ul>
 </div>
