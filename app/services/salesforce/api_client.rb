@@ -89,17 +89,31 @@ module Salesforce
       client.upsert!(
         "Contact",
         "Platform_Participant_Id__c",
-        Platform_Participant_Id__c: account.id,
-        FirstName: account.first_name,
-        LastName: account.last_name,
-        Email: account.email,
-        Birthdate: account.date_of_birth,
-        MailingCity: account.city,
-        MailingState: account.state_province,
-        MailingCountry: account.country,
-        Parent__c: account.student_profile&.parent_guardian_name,
-        Parent_Guardian_Email__c: account.student_profile&.parent_guardian_email
+        {
+          Platform_Participant_Id__c: account.id,
+          FirstName: account.first_name,
+          LastName: account.last_name,
+          npe01__AlternateEmail__c: account.email,
+          MailingCity: account.city,
+          MailingState: account.state_province,
+          MailingCountry: account.country
+        }.merge(additional_contact_info)
       )
+    end
+
+    def additional_contact_info
+      case profile_type
+      when "student"
+        student_profile = account.student_profile
+
+        {
+          Birthdate: account.date_of_birth,
+          Parent__c: student_profile.parent_guardian_name,
+          Parent_Guardian_Email__c: student_profile.parent_guardian_email
+        }
+      else
+        {}
+      end
     end
 
     def initial_program_participant_info
