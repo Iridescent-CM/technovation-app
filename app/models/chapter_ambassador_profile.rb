@@ -1,4 +1,6 @@
 class ChapterAmbassadorProfile < ActiveRecord::Base
+  include OnboardingTasksConcern
+
   scope :onboarded, -> {
     approved.joins(:account)
       .where("accounts.email_confirmed_at IS NOT NULL")
@@ -127,6 +129,15 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def legal_document_signed?
     legal_document&.signed?
+  end
+
+  def required_onboarding_tasks
+    {
+      "Background Check" => background_check_exempt_or_complete?,
+      "Chapter Ambassador Training" => training_completed?,
+      "Legal Agreement" => legal_document_signed?,
+      "Community Connections" => viewed_community_connections?
+    }
   end
 
   def region_name

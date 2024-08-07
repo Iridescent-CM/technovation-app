@@ -54,7 +54,7 @@ class ChapterAmbassadorController < ApplicationController
   def require_chapter_and_chapter_ambassador_onboarded
     unless current_ambassador.chapter&.onboarded? && current_ambassador.onboarded?
       redirect_to chapter_ambassador_dashboard_path,
-        error: "You must complete all onboarding steps before accessing Chapter Admin Activity."
+        error: "You must complete all onboarding tasks before accessing Chapter Admin Activity."
     end
   end
 end

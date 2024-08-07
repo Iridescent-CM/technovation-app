@@ -1,5 +1,6 @@
 class Chapter < ActiveRecord::Base
   include ActiveGeocoded
+  include OnboardingTasksConcern
 
   belongs_to :primary_contact, class_name: "ChapterAmbassadorProfile", foreign_key: "primary_contact_id", optional: true
 
@@ -72,4 +73,14 @@ class Chapter < ActiveRecord::Base
   def program_info_complete?
     chapter_program_information&.complete?
   end
+
+  def required_onboarding_tasks
+    {
+      "Chapter Affiliation Agreement" => legal_document_signed?,
+      "Public Info" => chapter_info_complete?,
+      "Chapter Location" => location_complete?,
+      "Program Info" => program_info_complete?
+    }
+  end
 end
+

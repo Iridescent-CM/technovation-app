@@ -1,3 +1,8 @@
+<% if current_chapter.present? &&
+  ( !current_ambassador.onboarded? || !current_chapter.onboarded? ) %>
+  <%= render "chapter_ambassador/profiles/welcome_message_with_required_steps" %>
+<% end %>
+
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
   <%= render "chapter_ambassador/chapter_profile/side_nav" %>
 
