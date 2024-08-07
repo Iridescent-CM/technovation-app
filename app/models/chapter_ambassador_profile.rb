@@ -131,6 +131,15 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     legal_document&.signed?
   end
 
+  def required_onboarding_tasks
+    {
+      "Background Check" => background_check_exempt_or_complete?,
+      "Chapter Ambassador Training" => training_completed?,
+      "Legal Agreement" => legal_document_signed?,
+      "Community Connections" => viewed_community_connections?
+    }
+  end
+
   def region_name
     return unless Country[country]
 

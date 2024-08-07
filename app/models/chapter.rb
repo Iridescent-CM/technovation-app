@@ -74,4 +74,14 @@ class Chapter < ActiveRecord::Base
   def program_info_complete?
     chapter_program_information&.complete?
   end
+
+  def required_onboarding_tasks
+    {
+      "Chapter Affiliation Agreement" => legal_document_signed?,
+      "Public Info" => chapter_info_complete?,
+      "Chapter Location" => location_complete?,
+      "Program Info" => program_info_complete?
+    }
+  end
 end
+
