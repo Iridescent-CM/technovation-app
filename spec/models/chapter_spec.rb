@@ -12,7 +12,7 @@ RSpec.describe Chapter do
 
   describe "#incomplete_onboarding_tasks" do
     before do
-      allow(chapter).to receive(:legal_document_signed?).and_return(true)
+      allow(chapter).to receive(:affiliation_agreement_signed?).and_return(true)
       allow(chapter).to receive(:chapter_info_complete?).and_return(true)
       allow(chapter).to receive(:location_complete?).and_return(true)
       allow(chapter).to receive(:program_info_complete?).and_return(true)
@@ -26,7 +26,7 @@ RSpec.describe Chapter do
 
     context "when the chapter affiliation has not been signed" do
       before do
-        allow(chapter).to receive(:legal_document_signed?).and_return(false)
+        allow(chapter).to receive(:affiliation_agreement_signed?).and_return(false)
       end
 
       it "returns returns an array that contains 'Chapter Affiliation Agreement'" do

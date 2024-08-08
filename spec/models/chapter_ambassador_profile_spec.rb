@@ -43,7 +43,7 @@ RSpec.describe ChapterAmbassadorProfile do
     before do
       allow(chapter_ambassador_profile).to receive(:background_check_exempt_or_complete?).and_return(true)
       allow(chapter_ambassador_profile).to receive(:training_completed?).and_return(true)
-      allow(chapter_ambassador_profile).to receive(:legal_document_signed?).and_return(true)
+      allow(chapter_ambassador_profile).to receive(:legal_agreement_signed?).and_return(true)
       allow(chapter_ambassador_profile).to receive(:viewed_community_connections?).and_return(true)
     end
 
@@ -75,7 +75,7 @@ RSpec.describe ChapterAmbassadorProfile do
 
     context "when the legal agreement has not been signed" do
       before do
-        allow(chapter_ambassador_profile).to receive(:legal_document_signed?).and_return(false)
+        allow(chapter_ambassador_profile).to receive(:legal_agreement_signed?).and_return(false)
       end
 
       it "returns returns an array that contains 'Legal Agreement'" do

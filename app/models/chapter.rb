@@ -76,11 +76,10 @@ class Chapter < ActiveRecord::Base
 
   def required_onboarding_tasks
     {
-      "Chapter Affiliation Agreement" => legal_document_signed?,
+      "Chapter Affiliation Agreement" => affiliation_agreement_signed?,
       "Public Info" => chapter_info_complete?,
       "Chapter Location" => location_complete?,
       "Program Info" => program_info_complete?
     }
   end
 end
-
