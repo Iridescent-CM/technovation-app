@@ -90,14 +90,15 @@
           Based on historical data,
           <%= link_to "Checkr reports",
           "https://checkr.com", class: "tw-link" %>
-          are usually completed within 4-7 business days.
+          are usually completed within 4-7 business days but may take longer depending on the country where you are located.
         </p>
         <p>
           Checkr may email you for your help with identity verification to complete your report.
         </p>
         <p class="mb-2">
-          For example, Checkr has asked previous mentors to provide a scan
-          of their driver's licence. Technovation cannot offer help with this,
+          For example, Checkr has asked previous
+          <%= current_scope == "mentor" ? "mentors" : "Chapter Ambassadors" %>
+          to provide a scan of their driver's license. Technovation cannot offer help with this,
           and you should consult the staff at Checkr.
         </p>
         <p>
