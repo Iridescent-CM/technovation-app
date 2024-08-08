@@ -27,7 +27,7 @@
           }" validation-name="Birthday" @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
 
         <FormulateInput name="phoneNumber" id="phoneNumber" type="tel"
-          :validation="[['matches', /^[\+\(\s.\-\/\d\)]{5,30}$/]]"
+          :validation="[['matches', /^([\+\(\s.\-\/\d]{5,30}|)$/]]"
           :validation-messages="{ matches: 'Phone number is invalid.' }" label="Phone Number (optional)"
           @keyup="checkValidation" @blur="checkValidation" />
 
