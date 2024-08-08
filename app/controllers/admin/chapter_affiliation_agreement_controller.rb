@@ -3,10 +3,15 @@ module Admin
     def create
       @chapter = Chapter.find(params[:chapter_id])
 
-      SendChapterAffiliationAgreementJob.perform_later(chapter_id: @chapter.id)
+      if @chapter.affiliation_agreement.present?
+        redirect_to admin_chapter_path(@chapter),
+          error: "This legal contact already has an active affiliation agreement."
+      else
+        SendChapterAffiliationAgreementJob.perform_later(chapter_id: @chapter.id)
 
-      redirect_to admin_chapter_path(@chapter),
-        success: "Successfully scheduled job to send a Chapter Affiliation Agreement to #{@chapter.legal_contact.full_name}"
+        redirect_to admin_chapter_path(@chapter),
+          success: "Successfully scheduled job to send a Chapter Affiliation Agreement to #{@chapter.legal_contact.full_name}"
+      end
     end
 
     def void
