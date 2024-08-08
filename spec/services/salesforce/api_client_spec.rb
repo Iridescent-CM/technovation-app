@@ -128,23 +128,51 @@ RSpec.describe Salesforce::ApiClient do
       let(:salesforce_enabled) { true }
     end
 
-    it "calls the upsert! method to upsert a new contact in Salesforce" do
-      expect(salesforce_client).to receive(:upsert!).with(
-        "Contact",
-        "Platform_Participant_Id__c",
-        Platform_Participant_Id__c: account.id,
-        FirstName: account.first_name,
-        LastName: account.last_name,
-        Email: account.email,
-        Birthdate: account.date_of_birth,
-        MailingCity: account.city,
-        MailingState: account.state_province,
-        MailingCountry: account.country,
-        Parent__c: account.student_profile.parent_guardian_name,
-        Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
-      )
+    context "when upserting a student" do
+      let(:student_profile) { FactoryBot.build(:student_profile) }
+      let(:account) { student_profile.account }
+      let(:profile_type) { "student" }
 
-      salesforce_api_client.upsert_contact_info
+      it "calls the upsert! method to upsert the student's contact in Salesforce" do
+        expect(salesforce_client).to receive(:upsert!).with(
+          "Contact",
+          "Platform_Participant_Id__c",
+          Platform_Participant_Id__c: account.id,
+          FirstName: account.first_name,
+          LastName: account.last_name,
+          npe01__AlternateEmail__c: account.email,
+          Birthdate: account.date_of_birth,
+          MailingCity: account.city,
+          MailingState: account.state_province,
+          MailingCountry: account.country,
+          Parent__c: account.student_profile.parent_guardian_name,
+          Parent_Guardian_Email__c: account.student_profile.parent_guardian_email
+        )
+
+        salesforce_api_client.upsert_contact_info
+      end
+    end
+
+    context "when upserting a mentor" do
+      let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+      let(:account) { mentor_profile.account }
+      let(:profile_type) { "mentor" }
+
+      it "calls the upsert! method to upsert the mentor's contact in Salesforce" do
+        expect(salesforce_client).to receive(:upsert!).with(
+          "Contact",
+          "Platform_Participant_Id__c",
+          Platform_Participant_Id__c: account.id,
+          FirstName: account.first_name,
+          LastName: account.last_name,
+          npe01__AlternateEmail__c: account.email,
+          MailingCity: account.city,
+          MailingState: account.state_province,
+          MailingCountry: account.country
+        )
+
+        salesforce_api_client.upsert_contact_info
+      end
     end
 
     context "when the upsert! was unsuccessful" do
@@ -221,11 +249,34 @@ RSpec.describe Salesforce::ApiClient do
               {
                 Id: program_participant_id,
                 Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
+                Mentor_Role__c: "",
                 Mentor_Team_Status__c: "Not On Team"
               }
             )
 
             salesforce_api_client.update_program_info
+          end
+
+          context "when a mentor is a club ambassador" do
+            before do
+              mentor_profile.mentor_types = []
+              mentor_profile.mentor_types << FactoryBot.create(:mentor_type, name: "Club Ambassador")
+              mentor_profile.save
+            end
+
+            it "calls update! to update the 'program participant' info for the mentor, sets mentor role to club ambassador and does not include club ambassador as a mentor type" do
+              expect(salesforce_client).to receive(:update!).with(
+                "Program_Participant__c",
+                {
+                  Id: program_participant_id,
+                  Mentor_Type__c: "",
+                  Mentor_Role__c: "Club Ambassador",
+                  Mentor_Team_Status__c: "Not On Team"
+                }
+              )
+
+              salesforce_api_client.update_program_info
+            end
           end
         end
 

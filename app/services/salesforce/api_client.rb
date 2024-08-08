@@ -89,17 +89,31 @@ module Salesforce
       client.upsert!(
         "Contact",
         "Platform_Participant_Id__c",
-        Platform_Participant_Id__c: account.id,
-        FirstName: account.first_name,
-        LastName: account.last_name,
-        Email: account.email,
-        Birthdate: account.date_of_birth,
-        MailingCity: account.city,
-        MailingState: account.state_province,
-        MailingCountry: account.country,
-        Parent__c: account.student_profile&.parent_guardian_name,
-        Parent_Guardian_Email__c: account.student_profile&.parent_guardian_email
+        {
+          Platform_Participant_Id__c: account.id,
+          FirstName: account.first_name,
+          LastName: account.last_name,
+          npe01__AlternateEmail__c: account.email,
+          MailingCity: account.city,
+          MailingState: account.state_province,
+          MailingCountry: account.country
+        }.merge(additional_contact_info)
       )
+    end
+
+    def additional_contact_info
+      case profile_type
+      when "student"
+        student_profile = account.student_profile
+
+        {
+          Birthdate: account.date_of_birth,
+          Parent__c: student_profile.parent_guardian_name,
+          Parent_Guardian_Email__c: student_profile.parent_guardian_email
+        }
+      else
+        {}
+      end
     end
 
     def initial_program_participant_info
@@ -110,7 +124,12 @@ module Salesforce
         }
       when "mentor"
         {
-          Mentor_Type__c: account.mentor_profile.mentor_types.pluck(:name).join(";")
+          Mentor_Type__c: account
+            .mentor_profile
+            .mentor_types
+            .pluck(:name)
+            .delete_if { |mentor_type| mentor_type == "Club Ambassador" }
+            .join(";")
         }
       else
         {}
@@ -129,9 +148,13 @@ module Salesforce
           Team_Name__c: account.student_profile.team.name
         }
       when "mentor"
+        mentor_profile = account.mentor_profile
+
         initial_program_participant_info.merge(
           {
-            Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team"
+            Mentor_Team_Status__c: mentor_profile.current_teams.present? ? "On Team" : "Not On Team",
+            Mentor_Role__c: mentor_profile.mentor_types.pluck(:name).include?("Club Ambassador") ? "Club Ambassador" : ""
+
           }
         )
       else
