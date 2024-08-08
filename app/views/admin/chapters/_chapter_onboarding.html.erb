@@ -6,16 +6,16 @@
 
     <div class="panel">
       <dl>
-        <dt>Sign Legal Agreement</dt>
+        <dt>Sign Chapter Affiliation Agreement</dt>
         <dd>
           <div style="display: flex;">
-            <% if chapter.legal_document_signed? %>
+            <% if chapter.affiliation_agreement_signed? %>
               <%= web_icon("check-circle icon-green") %>
               <div>
                 Complete
 
                 <p class="hint margin--b-none">
-                  Signed <%= chapter.legal_document.signed_at.strftime("%b %d, %Y") %>
+                  Signed <%= chapter.affiliation_agreement.signed_at.strftime("%b %d, %Y") %>
                 </p>
               </div>
             <% else %>
@@ -26,7 +26,7 @@
                 <p class="hint margin--b-none">
                   <% if chapter.legal_contact.blank? %>
                     Not sent (no legal contact has been setup yet)
-                    <% elsif chapter.legal_document.blank? %>
+                    <% elsif chapter.affiliation_agreement.blank? %>
                     Not sent
                   <% else %>
                     Not signed

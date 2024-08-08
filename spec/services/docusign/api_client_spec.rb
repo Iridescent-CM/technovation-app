@@ -48,7 +48,7 @@ RSpec.describe Docusign::ApiClient do
 
     let(:docusign_response_successful) { true }
 
-    describe "#send_memorandum_of_understanding" do
+    describe "#send_chapter_affiliation_agreement" do
       let(:legal_contact) do
         instance_double(LegalContact,
           full_name: "Summer Skycedar",
@@ -72,7 +72,7 @@ RSpec.describe Docusign::ApiClient do
           anything
         )
 
-        docusign_api_client.send_memorandum_of_understanding(
+        docusign_api_client.send_chapter_affiliation_agreement(
           legal_contact: legal_contact
         )
       end
@@ -83,13 +83,13 @@ RSpec.describe Docusign::ApiClient do
         it "creates a new document for the legal contact" do
           expect(legal_contact).to receive_message_chain(:documents, :create)
 
-          docusign_api_client.send_memorandum_of_understanding(
+          docusign_api_client.send_chapter_affiliation_agreement(
             legal_contact: legal_contact
           )
         end
 
         it "returns a successful result" do
-          result = docusign_api_client.send_memorandum_of_understanding(
+          result = docusign_api_client.send_chapter_affiliation_agreement(
             legal_contact: legal_contact
           )
 
@@ -103,7 +103,7 @@ RSpec.describe Docusign::ApiClient do
         it "logs an error" do
           expect(logger).to receive(:error).with("[DOCUSIGN] Error sending document - ")
 
-          docusign_api_client.send_memorandum_of_understanding(
+          docusign_api_client.send_chapter_affiliation_agreement(
             legal_contact: legal_contact
           )
         end
@@ -111,13 +111,13 @@ RSpec.describe Docusign::ApiClient do
         it "sends an error to Airbrake" do
           expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
 
-          docusign_api_client.send_memorandum_of_understanding(
+          docusign_api_client.send_chapter_affiliation_agreement(
             legal_contact: legal_contact
           )
         end
 
         it "returns an unsuccessful result" do
-          result = docusign_api_client.send_memorandum_of_understanding(
+          result = docusign_api_client.send_chapter_affiliation_agreement(
             legal_contact: legal_contact
           )
 

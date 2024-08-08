@@ -62,13 +62,13 @@
       <dt>Sign Legal Agreement</dt>
       <dd>
         <div style="display: flex;">
-          <% if chapter_ambassador.legal_document_signed? %>
+          <% if chapter_ambassador.legal_agreement_signed? %>
             <%= web_icon("check-circle icon-green") %>
             <div>
               Complete
 
               <p class="hint margin--b-none">
-                Signed <%= chapter_ambassador.legal_document.signed_at.strftime("%b %d, %Y") %>
+                Signed <%= chapter_ambassador.legal_agreement.signed_at.strftime("%b %d, %Y") %>
               </p>
             </div>
           <% else %>
@@ -76,7 +76,7 @@
             <div>
               Incomplete
 
-              <% if chapter_ambassador.legal_document.blank? %>
+              <% if chapter_ambassador.legal_agreement.blank? %>
                 <p class="hint margin--b-none">
                   Not sent
                 </p>

@@ -26,16 +26,16 @@ class ChaptersGrid
       where(onboarded: value)
     end
 
-  filter :legal_agreement_status,
+  filter :affiliation_agreement_status,
     :enum,
     select: ["Signed", "Not signed", "Not sent"] do |value|
       case value
       when "Signed"
-        signed_legal_agreements
+        signed_affiliation_agreements
       when "Not signed"
-        not_signed_legal_agreements
+        not_signed_affiliation_agreements
       when "Not sent"
-        not_sent_legal_agreements
+        not_sent_affiliation_agreements
       end
     end
 
@@ -85,16 +85,16 @@ class ChaptersGrid
     onboarded? ? "yes" : "no"
   end
 
-  column :legal_agreement_status do
-    if legal_document.present?
-      legal_document.signed? ? "Signed" : "Not signed"
+  column :affiliation_agreement_status do
+    if affiliation_agreement.present?
+      affiliation_agreement_signed? ? "Signed" : "Not signed"
     else
       "Not sent"
     end
   end
 
-  column :legal_agreement_valid_for do
-    legal_contact&.seasons_legal_agreement_is_valid_for&.join(", ")
+  column :affiliation_agreement_valid_for do
+    legal_contact&.seasons_chapter_affiliation_agreement_is_valid_for&.join(", ")
   end
 
   column :visible_on_map, header: "Visible on map"

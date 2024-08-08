@@ -150,7 +150,7 @@ Rails.application.routes.draw do
     resource :public_information, only: [:show, :edit, :update], controller: "public_information"
     resource :chapter_location, only: [:show, :edit, :update]
     resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
-    resource :legal_agreement, only: :create
+    resource :legal_agreement, only: [:show, :create]
     resource :community_connections, only: [:show, :new, :create, :edit, :update]
 
     resources :job_statuses, only: :show
@@ -184,8 +184,6 @@ Rails.application.routes.draw do
 
     resources :trainings, only: :index
     resource :training_completion, only: :show
-
-    resource :mou, only: :show
 
     resources :events, controller: :regional_pitch_events
 
@@ -275,7 +273,7 @@ Rails.application.routes.draw do
     resources :chapter_ambassador_profile_additions, only: :create
     resources :chapters do
       resource :legal_contact, only: [:new, :create, :edit, :update], controller: "chapters/legal_contacts"
-      resource :memorandum_of_understanding, only: :create, controller: "chapter_memorandum_of_understanding" do
+      resource :affiliation_agreement, only: :create, controller: "chapter_affiliation_agreement" do
         patch :void
       end
       resources :invites, only: :create, controller: "chapter_invites"

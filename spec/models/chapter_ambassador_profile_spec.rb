@@ -17,16 +17,16 @@ RSpec.describe ChapterAmbassadorProfile do
     end
   end
 
-  describe "#legal_document_signed?" do
+  describe "#legal_agreement_signed?" do
     before do
-      allow(chapter_ambassador_profile).to receive_message_chain(:legal_document, :signed?).and_return(document_signed)
+      allow(chapter_ambassador_profile).to receive_message_chain(:legal_agreement, :signed?).and_return(document_signed)
     end
 
     context "when the legal document has been signed" do
       let(:document_signed) { true }
 
       it "returns true" do
-        expect(chapter_ambassador_profile.legal_document_signed?).to eq(true)
+        expect(chapter_ambassador_profile.legal_agreement_signed?).to eq(true)
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe ChapterAmbassadorProfile do
       let(:document_signed) { false }
 
       it "returns false" do
-        expect(chapter_ambassador_profile.legal_document_signed?).to eq(false)
+        expect(chapter_ambassador_profile.legal_agreement_signed?).to eq(false)
       end
     end
   end
@@ -104,21 +104,21 @@ RSpec.describe ChapterAmbassadorProfile do
           allow(account).to receive(:background_check)
             .and_return(background_check)
 
-          allow(chapter_ambassador_profile).to receive(:legal_document)
-            .and_return(legal_document)
+          allow(chapter_ambassador_profile).to receive(:legal_agreement)
+            .and_return(legal_agreement)
         end
 
-        let(:account) { instance_double(Account, email_confirmed?: email_address_confirmed, marked_for_destruction?: false, valid?: true,  background_check_exemption?: false) }
+        let(:account) { instance_double(Account, email_confirmed?: email_address_confirmed, marked_for_destruction?: false, valid?: true, background_check_exemption?: false) }
         let(:email_address_confirmed) { true }
         let(:background_check) { instance_double(BackgroundCheck, clear?: background_check_cleared) }
         let(:background_check_cleared) { true }
-        let(:legal_document) { instance_double(Document, signed?: legal_document_signed) }
-        let(:legal_document_signed) { true }
+        let(:legal_agreement) { instance_double(Document, signed?: legal_agreement_signed) }
+        let(:legal_agreement_signed) { true }
 
         context "when all onboarding steps have been completed" do
           let(:email_address_confirmed) { true }
           let(:background_check_cleared) { true }
-          let(:legal_document_signed) { true }
+          let(:legal_agreement_signed) { true }
 
           before do
             chapter_ambassador_profile.update(viewed_community_connections: true)
@@ -142,7 +142,7 @@ RSpec.describe ChapterAmbassadorProfile do
         end
 
         context "when the legal document has not been signed" do
-          let(:legal_document_signed) { false }
+          let(:legal_agreement_signed) { false }
 
           before do
             chapter_ambassador_profile.save

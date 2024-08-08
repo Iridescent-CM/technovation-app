@@ -22,7 +22,7 @@ module Docusign
       @error_notifier = error_notifier
     end
 
-    def send_memorandum_of_understanding(legal_contact:)
+    def send_chapter_affiliation_agreement(legal_contact:)
       send_document_to(
         signer: legal_contact,
         params: params_for_legal_contact(legal_contact)
@@ -100,7 +100,7 @@ module Docusign
 
     def params_for_legal_contact(legal_contact)
       {
-        templateId: ENV.fetch("DOCUSIGN_MEMORANDUM_OF_UNDERSTANDING_TEMPLATE_ID"),
+        templateId: ENV.fetch("DOCUSIGN_CHAPTER_AFFILIATION_AGREEMENT_TEMPLATE_ID"),
         templateRoles: [
           {
             name: legal_contact.full_name,
@@ -119,30 +119,19 @@ module Docusign
                   value: legal_contact.full_name,
                   width: 100,
                   height: 23,
-                  xPosition: 394,
-                  yPosition: 152
+                  xPosition: 398,
+                  yPosition: 176
                 },
                 {
-                  documentId: 1,
-                  pageNumber: 1,
+                  anchorString: "with offices in",
+                  anchorXOffset: 67,
+                  anchorYOffset: -10,
                   font: "Georgia",
                   fontSize: "Size10",
                   italic: true,
                   underline: true,
                   value: legal_contact.chapter.organization_name,
-                  width: 12,
-                  height: 23,
-                  xPosition: 98,
-                  yPosition: 180
-                },
-                {
-                  anchorString: "Name of Organization (if applicable):",
-                  anchorXOffset: 190,
-                  anchorYOffset: -11,
-                  font: "Georgia",
-                  fontSize: "Size12",
-                  value: legal_contact.chapter.organization_name,
-                  width: 200
+                  width: 150
                 },
                 {
                   anchorString: "Title:",
@@ -159,14 +148,14 @@ module Docusign
                 {
                   anchorString: "Signature:",
                   anchorXOffset: 65,
-                  anchorYOffset: -7
+                  anchorYOffset: 10
                 }
               ],
               dateSignedTabs: [
                 {
                   anchorString: "Date:",
                   anchorXOffset: 30,
-                  anchorYOffset: -10,
+                  anchorYOffset: -8,
                   font: "Georgia",
                   fontSize: "Size12"
                 }
@@ -175,7 +164,7 @@ module Docusign
                 {
                   anchorString: "Name:",
                   anchorXOffset: 35,
-                  anchorYOffset: -9,
+                  anchorYOffset: -8,
                   font: "Georgia",
                   fontSize: "Size12"
                 }
@@ -208,8 +197,8 @@ module Docusign
                   value: chapter_ambassador_profile.full_name,
                   width: 100,
                   height: 23,
-                  xPosition: 394,
-                  yPosition: 152
+                  xPosition: 397,
+                  yPosition: 173
                 },
                 {
                   documentId: 1,
@@ -221,23 +210,14 @@ module Docusign
                   value: chapter_ambassador_profile.chapter.organization_name,
                   width: 12,
                   height: 23,
-                  xPosition: 98,
-                  yPosition: 180
-                },
-                {
-                  anchorString: "Name of Organization (if applicable):",
-                  anchorXOffset: 190,
-                  anchorYOffset: -11,
-                  font: "Georgia",
-                  fontSize: "Size12",
-                  value: chapter_ambassador_profile.chapter.organization_name,
-                  width: 200
+                  xPosition: 65,
+                  yPosition: 200
                 }
               ],
               signHereTabs: [
                 {
-                  anchorString: "Signature:",
-                  anchorXOffset: 65,
+                  anchorString: "Signed:",
+                  anchorXOffset: 55,
                   anchorYOffset: -7
                 }
               ],

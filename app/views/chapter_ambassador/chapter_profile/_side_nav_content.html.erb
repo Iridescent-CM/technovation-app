@@ -3,7 +3,7 @@
       <%= render "application/templates/completion_step",
                  name: "Chapter Affiliation Agreement",
                  url: chapter_ambassador_chapter_affiliation_agreement_path,
-                 is_complete: current_ambassador.chapter&.legal_document_signed?,
+                 is_complete: current_ambassador.chapter&.affiliation_agreement_signed?,
                  is_active_item: al(chapter_ambassador_chapter_affiliation_agreement_path).present?
       %>
 
