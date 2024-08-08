@@ -143,7 +143,7 @@ module Docusign
                   anchorYOffset: -11,
                   font: "Georgia",
                   fontSize: "Size12",
-                  required: false,
+                  required: true,
                   value: legal_contact.job_title,
                   width: 155
                 }
