@@ -4,7 +4,7 @@ module ExternalResourceHelper
 
     params = {
       uid_value: account.id,
-      full_name_value: "#{account.first_name} #{account.last_name}",
+      full_name_value: account.full_name,
       email_value: account.email,
       organization_value: account.chapter_ambassador_profile.chapter.organization_name,
       city_value: account.city,
