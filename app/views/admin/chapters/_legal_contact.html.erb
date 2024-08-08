@@ -32,13 +32,15 @@
             <%= button_to "Send Chapter Affiliation Agreement",
               admin_chapter_affiliation_agreement_path(@chapter),
               method: "post",
-              class: "button"
+              class: "button",
+              onclick: "this.disabled=true; this.form.submit();"
             %>
           <% elsif !@chapter.affiliation_agreement_signed? %>
             <%= button_to "Void Chapter Affiliation Agreement",
               void_admin_chapter_affiliation_agreement_path(@chapter),
               method: "patch",
-              class: "button"
+              class: "button",
+              onclick: "this.disabled=true; this.form.submit();"
             %>
           <% end %>
         </div>
