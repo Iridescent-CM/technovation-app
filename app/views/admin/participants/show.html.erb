@@ -43,6 +43,12 @@
             <dt><%= t('models.account.email') %></dt>
             <dd><%= mail_to @account.email %></dd>
 
+
+            <% if !@account.student_profile %>
+              <dt><%= t('models.account.phone_number') %></dt>
+              <dd><%= @account.phone_number.presence || "-" %></dd>
+            <% end %>
+
             <dt><%= t('models.account.age') %></dt>
             <dd>
               <%= @account.date_of_birth.present? ? @account.age : "-" %>

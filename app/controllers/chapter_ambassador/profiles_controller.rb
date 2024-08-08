@@ -9,8 +9,7 @@ module ChapterAmbassador
     def profile_params
       [
         :job_title,
-        :organization_status,
-        :phone_number
+        :organization_status
       ]
     end
 

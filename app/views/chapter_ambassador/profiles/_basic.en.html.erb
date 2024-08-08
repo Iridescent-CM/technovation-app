@@ -17,9 +17,6 @@
 
         <dt>Status with <%= current_ambassador.chapter&.organization_name.presence || "Organization" %></dt>
         <dd><%= current_ambassador.organization_status&.humanize %></dd>
-
-        <dt>Phone Number</dt>
-        <dd><%= current_ambassador.phone_number.presence || "-" %></dd>
       </dl>
 
       <p>

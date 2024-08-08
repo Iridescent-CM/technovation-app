@@ -7,7 +7,4 @@
       organization_name: profile.chapter&.organization_name.presence || "Organization") %>
   </dt>
   <dd><%= profile.organization_status&.humanize || "-" %></dd>
-
-  <dt><%= t("models.chapter_ambassador_profile.phone_number") %></dt>
-  <dd><%= profile.phone_number.presence || "-" %></dd>
 </dl>

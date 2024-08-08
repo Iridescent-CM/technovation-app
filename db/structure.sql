@@ -144,7 +144,8 @@ CREATE TABLE public.accounts (
     parent_registered boolean DEFAULT false NOT NULL,
     learn_worlds_user_id character varying,
     meets_minimum_age_requirement boolean,
-    background_check_exemption boolean DEFAULT false NOT NULL
+    background_check_exemption boolean DEFAULT false NOT NULL,
+    phone_number character varying
 );
 
 
@@ -409,7 +410,6 @@ CREATE TABLE public.chapter_ambassador_profiles (
     program_name character varying,
     chapter_id bigint,
     organization_status public.chapter_ambassador_organization_status,
-    phone_number character varying,
     viewed_community_connections boolean DEFAULT false NOT NULL,
     training_completed_at timestamp without time zone,
     onboarded boolean DEFAULT false
@@ -4545,6 +4545,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240719141738'),
 ('20240722174124'),
 ('20240723134333'),
-('20240723134706');
+('20240723134706'),
+('20240806155230'),
+('20240806155409');
 
 
