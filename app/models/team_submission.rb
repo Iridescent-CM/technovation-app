@@ -741,7 +741,6 @@ class TeamSubmission < ActiveRecord::Base
       self.thunkable_account_email = nil
       self.thunkable_project_url = nil
       self.scratch_project_url = nil
-      self.remove_source_code! if source_code.present?
     end
   end
 
@@ -767,7 +766,6 @@ class TeamSubmission < ActiveRecord::Base
 
   def reset_development_platform_fields_for_scratch
     if development_platform == "Scratch"
-      self.remove_source_code! if source_code.present?
       self.thunkable_account_email = nil
       self.thunkable_project_url = nil
       self.app_inventor_app_name = nil
