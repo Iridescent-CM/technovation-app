@@ -741,6 +741,7 @@ class TeamSubmission < ActiveRecord::Base
       self.thunkable_account_email = nil
       self.thunkable_project_url = nil
       self.scratch_project_url = nil
+      self.remove_source_code! if source_code.present?
     end
   end
 
