@@ -59,7 +59,8 @@ RSpec.describe Docusign::ApiClient do
 
       let(:chapter) do
         instance_double(Chapter,
-          organization_name: "Thunder Mountain")
+          organization_name: "Thunder Mountain",
+          location: "")
       end
 
       before do
