@@ -102,8 +102,10 @@ class RequiredSourceCodeField < RequiredField
   end
 
   def blank?
-    if submission.developed_on?("Thunkable") || submission.developed_on?("Scratch")
+    if submission.developed_on?("Thunkable")
       submission.source_code_external_url.blank?
+    elsif submission.developed_on?("Scratch")
+      submission.source_code_external_url.blank? && submission.source_code.blank?
     else
       value.blank?
     end
