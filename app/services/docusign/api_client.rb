@@ -134,8 +134,11 @@ module Docusign
                   fontSize: "Size10",
                   italic: true,
                   underline: true,
+                  required: true,
+                  tabId: "location",
+                  tabLabel: "location",
                   value: truncate(chapter.location, length: 30),
-                  width: 150
+                  width: 165
                 },
                 {
                   anchorString: "Title:",
@@ -144,6 +147,8 @@ module Docusign
                   font: "Georgia",
                   fontSize: "Size12",
                   required: true,
+                  tabId: "title",
+                  tabLabel: "title",
                   value: legal_contact.job_title,
                   width: 155
                 }
