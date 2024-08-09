@@ -28,18 +28,22 @@
             %>
           </div>
 
-          <% if @chapter.affiliation_agreement.blank? %>
-            <%= button_to "Send Chapter Affiliation Agreement",
-              admin_chapter_affiliation_agreement_path(@chapter),
-              method: "post",
-              class: "button"
-            %>
-          <% elsif !@chapter.affiliation_agreement_signed? %>
-            <%= button_to "Void Chapter Affiliation Agreement",
-              void_admin_chapter_affiliation_agreement_path(@chapter),
-              method: "patch",
-              class: "button"
-            %>
+          <% if params[:affiliation_agreement_job_scheduled].blank? %>
+            <% if @chapter.affiliation_agreement.blank? %>
+              <%= button_to "Send Chapter Affiliation Agreement",
+                admin_chapter_affiliation_agreement_path(@chapter),
+                method: "post",
+                class: "button",
+                onclick: "this.disabled=true; this.form.submit();"
+              %>
+            <% elsif !@chapter.affiliation_agreement_signed? %>
+              <%= button_to "Void Chapter Affiliation Agreement",
+                void_admin_chapter_affiliation_agreement_path(@chapter),
+                method: "patch",
+                class: "button",
+                onclick: "this.disabled=true; this.form.submit();"
+              %>
+            <% end %>
           <% end %>
         </div>
       <% else %>

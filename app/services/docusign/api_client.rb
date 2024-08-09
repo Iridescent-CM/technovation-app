@@ -1,5 +1,7 @@
 module Docusign
   class ApiClient
+    include ActionView::Helpers::TextHelper
+
     def initialize(
       api_account_id: ENV.fetch("DOCUSIGN_API_ACCOUNT_ID"),
       base_url: ENV.fetch("DOCUSIGN_API_BASE_URL"),
@@ -99,6 +101,8 @@ module Docusign
     end
 
     def params_for_legal_contact(legal_contact)
+      chapter = legal_contact.chapter
+
       {
         templateId: ENV.fetch("DOCUSIGN_CHAPTER_AFFILIATION_AGREEMENT_TEMPLATE_ID"),
         templateRoles: [
@@ -116,11 +120,11 @@ module Docusign
                   fontSize: "Size10",
                   italic: true,
                   underline: true,
-                  value: legal_contact.full_name,
+                  value: chapter.organization_name,
                   width: 100,
                   height: 23,
                   xPosition: 398,
-                  yPosition: 176
+                  yPosition: 175
                 },
                 {
                   anchorString: "with offices in",
@@ -130,7 +134,7 @@ module Docusign
                   fontSize: "Size10",
                   italic: true,
                   underline: true,
-                  value: legal_contact.chapter.organization_name,
+                  value: truncate(chapter.location, length: 30),
                   width: 150
                 },
                 {
@@ -139,7 +143,7 @@ module Docusign
                   anchorYOffset: -11,
                   font: "Georgia",
                   fontSize: "Size12",
-                  required: false,
+                  required: true,
                   value: legal_contact.job_title,
                   width: 155
                 }

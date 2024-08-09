@@ -55,6 +55,8 @@
     <%= button_to "Review and Sign",
       chapter_ambassador_legal_agreement_path,
       method: "post",
-      class: "tw-green-btn" %>
+      class: "tw-green-btn",
+      onclick: "this.disabled=true; this.form.submit();"
+    %>
   </div>
 <% end %>

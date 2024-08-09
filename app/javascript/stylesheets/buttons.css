@@ -46,6 +46,10 @@ a.link-button-neutral,
   @apply bg-tg-dark-green text-gray-50;
 }
 
+.tw-green-btn:disabled {
+  @apply opacity-50 text-gray-50 pointer-events-none;
+}
+
 .tw-gray-btn {
   @apply px-4 py-2 rounded bg-gray-200 text-gray-600;
 }
