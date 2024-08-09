@@ -113,6 +113,7 @@ RSpec.describe Salesforce::ApiClient do
               Platform_Participant_Id__c: account.id,
               Year__c: Season.current.year,
               Type__c: profile_type,
+              Mentor_Role__c: "",
               Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";")
             }
           )
