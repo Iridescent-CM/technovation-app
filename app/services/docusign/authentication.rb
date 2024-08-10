@@ -1,5 +1,8 @@
 module Docusign
   class Authentication
+    ACCESS_TOKEN_CACHE_NAME = "#{ENV.fetch("HOST_DOMAIN", "UNKNOWN_HOST")}_DOCUSIGN_ACCESS_TOKEN"
+    REFRESH_TOKEN_CACHE_NAME = "#{ENV.fetch("HOST_DOMAIN", "UNKNOWN_HOST")}_DOCUSIGN_REFRESH_TOKEN"
+
     def initialize(
       integration_id: ENV.fetch("DOCUSIGN_INTEGRATION_ID"),
       client_secret: ENV.fetch("DOCUSIGN_CLIENT_SECRET"),
@@ -22,10 +25,10 @@ module Docusign
     end
 
     def access_token(force_cache_refresh: false)
-      Rails.cache.fetch(:docusign_access_token, force: force_cache_refresh) do
+      Rails.cache.fetch(ACCESS_TOKEN_CACHE_NAME, force: force_cache_refresh) do
         result = if authorization_code.present?
           get_access_token_from_authorization_code
-        elsif Rails.cache.read(:docusign_refresh_token).present?
+        elsif Rails.cache.read(REFRESH_TOKEN_CACHE_NAME).present?
           get_access_token_from_refresh_token
         else
           error = "[DOCUSIGN] An authorization code or refresh token is required to obtain an access token"
@@ -62,7 +65,7 @@ module Docusign
     def get_access_token_from_refresh_token
       response = client.post(
         "oauth/token",
-        {grant_type: "refresh_token", refresh_token: Rails.cache.read(:docusign_refresh_token)}
+        {grant_type: "refresh_token", refresh_token: Rails.cache.read(REFRESH_TOKEN_CACHE_NAME)}
       )
 
       process_response(response)
@@ -72,7 +75,7 @@ module Docusign
       response_body = JSON.parse(response.body, symbolize_names: true)
 
       if response.success?
-        Rails.cache.write(:docusign_refresh_token, response_body[:refresh_token])
+        Rails.cache.write(REFRESH_TOKEN_CACHE_NAME, response_body[:refresh_token])
 
         Result.new(success?: true, access_token: response_body[:access_token])
       else
