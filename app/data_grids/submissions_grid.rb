@@ -9,6 +9,10 @@ class SubmissionsGrid
     TeamSubmission.includes(:team).references(:teams)
   end
 
+  column :submission_id, header: "Submission ID", if: ->(grid) { grid.admin } do
+    id
+  end
+
   column :division, mandatory: true do
     team.division_name.humanize
   end
