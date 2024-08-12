@@ -2,6 +2,7 @@ module CreateJudgeProfile
   def self.call(account)
     if account.can_be_a_judge? && account.is_not_a_judge?
       create_judge_profile(account)
+      setup_judge_profile_in_crm(account.id)
 
       true
     else
@@ -26,5 +27,12 @@ module CreateJudgeProfile
     account.create_judge_profile!(attrs)
   end
 
-  private_class_method :create_judge_profile
+  def self.setup_judge_profile_in_crm(account_id)
+    CRM::SetupAccountForCurrentSeasonJob.perform_later(
+      account_id: account_id,
+      profile_type: "judge"
+    )
+  end
+
+  private_class_method :create_judge_profile, :setup_judge_profile_in_crm
 end
