@@ -18,8 +18,6 @@ class Chapter < ActiveRecord::Base
 
   after_update :update_onboarding_status
 
-  validates :summary, length: {maximum: 280}
-
   scope :signed_affiliation_agreements, -> {
     joins(legal_contact: :documents)
       .where("documents.active = TRUE AND documents.signed_at IS NOT NULL")
