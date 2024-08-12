@@ -6,6 +6,8 @@ class ChapterAmbassadorProfileAddition
   def call
     if account.mentor_profile.present?
       create_chapter_ambassador_profile
+      setup_chapter_ambassador_profile_in_crm
+
       Result.new(success?: true, message: {success: "#{account.name} now has a Chapter Ambassador profile"})
     else
       Result.new(success?: false, message: {error: "This account does not have a mentor profile"})
@@ -27,5 +29,12 @@ class ChapterAmbassadorProfileAddition
       job_title: account.mentor_profile.job_title,
       bio: account.mentor_profile.bio
     })
+  end
+
+  def setup_chapter_ambassador_profile_in_crm
+    CRM::SetupAccountForCurrentSeasonJob.perform_later(
+      account_id: account.id,
+      profile_type: "chapter ambassador"
+    )
   end
 end
