@@ -4,7 +4,7 @@ describe StudentToMentorConverter do
   let(:student_to_mentor_converter) {
     StudentToMentorConverter.new(account: account)
   }
-  let(:account) { double(Account, name: "Fizzy Izzy") }
+  let(:account) { double(Account, id: 5, name: "Fizzy Izzy") }
   let(:student_profile) { instance_double(StudentProfile, school_name: "Slytherin") }
 
   before do
@@ -14,6 +14,8 @@ describe StudentToMentorConverter do
     allow(student_profile).to receive(:delete)
     allow(student_profile).to receive_message_chain(:join_requests, :pending, :delete_all)
     allow(student_profile).to receive_message_chain(:memberships, :delete_all)
+
+    allow(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
   end
 
   it "creates a mentor profile (that's marked as being a former student)" do
@@ -51,6 +53,16 @@ describe StudentToMentorConverter do
 
   it "deletes the student profile on the account" do
     expect(account).to receive_message_chain(:student_profile, :delete)
+
+    student_to_mentor_converter.call
+  end
+
+  it "calls the job that will setup the new mentor profile in the CRM" do
+    expect(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
+      .with(
+        account_id: account.id,
+        profile_type: "mentor"
+      )
 
     student_to_mentor_converter.call
   end
