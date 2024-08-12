@@ -6,7 +6,7 @@ module ExternalResourceHelper
       uid_value: account.id,
       full_name_value: account.full_name,
       email_value: account.email,
-      organization_value: account.chapter_ambassador_profile.chapter.organization_name,
+      organization_value: account.chapter_ambassador_profile.chapter&.organization_name,
       city_value: account.city,
       state_province_value: account.state_province,
       country_value: account.country
