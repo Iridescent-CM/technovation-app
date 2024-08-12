@@ -1,8 +1,11 @@
 module CreateMentorProfile
-  def self.call(account, **options)
-    if account.can_be_a_mentor?(**options)
+  def self.call(account, **options) # standard:disable all
+    if account.can_be_a_mentor?(**options)  # standard:disable all
+
       attrs = setup_attributes(account)
       account.create_mentor_profile!(attrs)
+      setup_mentor_profile_in_crm(account.id)
+
     else
       false
     end
@@ -31,5 +34,12 @@ module CreateMentorProfile
         mentor_type_ids: [MentorType.find_by(name: "Technovation alumna")&.id]
       }
     end
+  end
+
+  def self.setup_mentor_profile_in_crm(account_id)
+    CRM::SetupAccountForCurrentSeasonJob.perform_later(
+      account_id: account_id,
+      profile_type: "mentor"
+    )
   end
 end
