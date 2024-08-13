@@ -20,13 +20,13 @@
   <div class="flex flex-col lg:flex-row justify-between mb-4">
     <span class="text-sm italic">
       Give your participants a short introduction to your program.
-      Use up to 280 characters.
+      Use up to 1000 characters.
     </span>
 
     <%= content_tag :span,
                     data: {
                       keep_count_of: "#chapter_summary",
-                      down_from: 280,
+                      down_from: 1000,
                     } do %>
       <span><%= (f.object.summary || "").length %></span>
 
