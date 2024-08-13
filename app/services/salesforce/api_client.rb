@@ -45,16 +45,18 @@ module Salesforce
         salesforce_contact_id = upsert_contact
       end
 
-      handle_request "Setting up account (#{account.id}) for current season" do
-        client.insert!(
-          "Program_Participant__c",
-          {
-            Contact__c: salesforce_contact_id,
-            Platform_Participant_Id__c: account.id,
-            Year__c: Season.current.year,
-            Type__c: profile_type
-          }.merge(initial_program_participant_info)
-        )
+      if salesforce_contact_id.present?
+        handle_request "Setting up account (#{account.id}) for current season" do
+          client.insert!(
+            "Program_Participant__c",
+            {
+              Contact__c: salesforce_contact_id,
+              Platform_Participant_Id__c: account.id,
+              Year__c: Season.current.year,
+              Type__c: profile_type
+            }.merge(initial_program_participant_info)
+          )
+        end
       end
     end
 
