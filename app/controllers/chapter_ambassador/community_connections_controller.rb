@@ -4,7 +4,9 @@ module ChapterAmbassador
 
     layout "chapter_ambassador_rebrand"
 
-    after_action :update_viewed_community_connections, only: :show
+    after_action :update_viewed_community_connections,
+      only: :show,
+      if: -> { current_chapter.present? }
 
     def new
       @community_connection = current_ambassador.build_community_connection
