@@ -6,7 +6,7 @@ module ChapterAmbassador
 
     after_action :update_viewed_community_connections,
       only: :show,
-      if: -> { current_ambassador.chapter.present? }
+      if: -> { current_chapter.present? }
 
     def new
       @community_connection = current_ambassador.build_community_connection

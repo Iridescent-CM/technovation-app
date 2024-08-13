@@ -2,7 +2,7 @@
   <%= render "chapter_ambassador/dashboards/onboarding/side_nav" %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Legal Agreement" } do %>
-    <% if current_ambassador.chapter.present? %>
+    <% if current_chapter.present? %>
       <%= render "completion_steps/rebrand/legal_agreement", profile: current_ambassador %>
     <% else %>
       <p>You are not associated with a chapter. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>

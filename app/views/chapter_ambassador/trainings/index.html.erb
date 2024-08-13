@@ -2,7 +2,7 @@
   <%= render "chapter_ambassador/dashboards/onboarding/side_nav" %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Chapter Ambassador Training and Checkpoint" } do %>
-    <% if current_ambassador.chapter.present? %>
+    <% if current_chapter.present? %>
       <% if current_ambassador.training_completed? %>
         <p class="mb-4">
           Thank you for completing the checkpoint. You can view correct answers here.
