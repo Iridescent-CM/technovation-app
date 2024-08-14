@@ -20,7 +20,8 @@ module Admin
     def grid_params
       grid = params[:chapter_ambassadors_grid] ||= {}
       grid.merge(
-        column_names: detect_extra_columns(grid)
+        column_names: detect_extra_columns(grid),
+        season: params[:chapter_ambassadors_grid][:season] || Season.current.year
       )
     end
   end
