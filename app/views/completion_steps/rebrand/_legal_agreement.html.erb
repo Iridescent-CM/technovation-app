@@ -48,7 +48,7 @@
   </ol>
 </div>
 
-<% if current_ambassador.legal_agreement.present? %>
+<% if params[:legal_agreement_sent].present? || current_ambassador.legal_agreement.present? %>
   <p>The Legal Agreement has been sent to you, if you have not received it or you are experiences issues, please reach out to <%= mail_to ENV.fetch("HELP_EMAIL") %>.</p>
 <% else %>
   <div class="text-center">
