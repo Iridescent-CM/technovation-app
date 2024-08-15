@@ -120,18 +120,21 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def setup_account_in_crm_for_current_season(record, profile_type)
-    if ENV.fetch("ACTIVE_JOB_BACKEND") == "inline"
-      CRM::SetupAccountForCurrentSeasonJob.perform_later(
-        account_id: record.id,
-        profile_type: profile_type.to_s
-      )
-    else
-      CRM::SetupAccountForCurrentSeasonJob.set(wait: @@crm_job_wait_time.seconds).perform_later(
-        account_id: record.id,
-        profile_type: profile_type.to_s
-      )
+    crm_job.perform_later(
+      account_id: record.id,
+      profile_type: profile_type.to_s
+    )
 
-      @@crm_job_wait_time += 30
+    @@crm_job_wait_time += 30
+  end
+
+  private
+
+  def crm_job
+    if ENV.fetch("ACTIVE_JOB_BACKEND", "inline") == "inline"
+      CRM::SetupAccountForCurrentSeasonJob
+    else
+      CRM::SetupAccountForCurrentSeasonJob.set(wait: @@crm_job_wait_time.seconds)
     end
   end
 end
