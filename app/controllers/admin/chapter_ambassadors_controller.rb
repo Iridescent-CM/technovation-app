@@ -21,7 +21,7 @@ module Admin
       grid = params[:chapter_ambassadors_grid] ||= {}
       grid.merge(
         column_names: detect_extra_columns(grid),
-        season: params[:chapter_ambassadors_grid][:season] || Season.current.year
+        season: params[:chapter_ambassadors_grid].present? ? params[:chapter_ambassadors_grid][:season] : Season.current.year
       )
     end
   end
