@@ -1027,11 +1027,11 @@ class Account < ActiveRecord::Base
     end
   end
 
-  private
-
   def current_profile
     public_send(:"#{scope_name}_profile")
   end
+
+  private
 
   def self.survey_reminder_max_times
     2

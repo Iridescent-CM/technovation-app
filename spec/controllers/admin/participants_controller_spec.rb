@@ -92,4 +92,25 @@ RSpec.describe Admin::ParticipantsController do
         .with(account_id: profile.account_id).at_least(:once)
     end
   end
+
+  %w[student chapter_ambassador].each do |scope|
+    it "updates the associated chapter for a #{scope} profile when a chapter is assigned" do
+      profile = FactoryBot.create(scope,
+        account: FactoryBot.create(
+          :account,
+          email: "#{scope}-testy-email@email.com"
+        ))
+
+      chapter = FactoryBot.create(:chapter)
+
+      patch :update, params: {
+        id: profile.account_id,
+        account: {
+          "#{scope}_profile": {chapter_id: chapter.id}
+        }
+      }
+
+      expect(profile.reload.chapter).to eq(chapter)
+    end
+  end
 end
