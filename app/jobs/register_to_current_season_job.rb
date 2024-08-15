@@ -1,6 +1,8 @@
 class RegisterToCurrentSeasonJob < ActiveJob::Base
   queue_as :default
 
+  @@crm_job_wait_time = 0
+
   def perform(record)
     return false if already_registered_for_season?(record)
 
@@ -118,9 +120,21 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
   end
 
   def setup_account_in_crm_for_current_season(record, profile_type)
-    CRM::SetupAccountForCurrentSeasonJob.perform_later(
+    crm_job.perform_later(
       account_id: record.id,
       profile_type: profile_type.to_s
     )
+
+    @@crm_job_wait_time += 30
+  end
+
+  private
+
+  def crm_job
+    if ENV.fetch("ACTIVE_JOB_BACKEND", "inline") == "inline"
+      CRM::SetupAccountForCurrentSeasonJob
+    else
+      CRM::SetupAccountForCurrentSeasonJob.set(wait: @@crm_job_wait_time.seconds)
+    end
   end
 end
