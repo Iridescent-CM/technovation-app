@@ -71,8 +71,8 @@
       <% end %>
     <% end %>
 
-    <% if f.object.student_profile.present? %>
-      <%= f.fields_for :student_profile do |s| %>
+    <% if f.object.student_profile.present? || f.object.chapter_ambassador_profile.present? %>
+      <%= f.fields_for f.object.current_profile do |s| %>
         <p>
           <%= s.label :chapter_id, "Assign to Chapter", for: :chapter_id %>
 
@@ -81,15 +81,14 @@
                 Chapter.all.order(organization_name: :asc),
                 :id,
                 :organization_name,
-                include_blank: 'None',
-                selected: @account.student_profile.try(:chapter_id)
+                include_blank: 'None'
               ) %>
         </p>
       <% end %>
 
-      <% if f.object.student_profile.errors.present? %>
+      <% if f.object.current_profile.errors.present? %>
         <ul class="list--reset field_with_errors">
-          <% f.object.student_profile.errors.each do |error| %>
+          <% f.object.current_profile.errors.each do |error| %>
             <li class="error">
               <%= error.message %>
             </li>
