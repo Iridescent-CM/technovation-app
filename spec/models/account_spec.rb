@@ -7,6 +7,7 @@ RSpec.describe Account do
     allow(Season).to receive(:current).and_return(season_with_templates)
   end
 
+
   context "validations" do
     describe "student email address validations" do
       let!(:student_profile) {
