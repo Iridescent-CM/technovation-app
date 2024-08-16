@@ -101,9 +101,9 @@ module Admin
         :profile_image,
         :profile_image_cache,
         :password,
-        mentor_profile: {},
+        mentor_profile_attributes: [:id, mentor_type_ids: []],
         student_profile: {},
-        judge_profile: {},
+        judge_profile_attributes: [:id, judge_type_ids: []],
         chapter_ambassador_profile: {}
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
