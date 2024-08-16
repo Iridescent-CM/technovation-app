@@ -115,5 +115,11 @@ FactoryBot.define do
         CreateJudgeProfile.call(ambassador.account)
       end
     end
+
+    trait :has_mentor_profile do
+      after(:create) do |ambassador|
+        CreateMentorProfile.call(ambassador.account)
+      end
+    end
   end
 end
