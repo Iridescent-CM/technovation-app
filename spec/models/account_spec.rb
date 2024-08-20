@@ -128,7 +128,10 @@ RSpec.describe Account do
             email: "ccara55@example.com",
             password: "abc1239876",
             gender: "Non-binary",
-            judge_profile: JudgeProfile.new,
+            judge_profile: JudgeProfile.new(
+              job_title: "VIP",
+              company_name: "VIC"
+            ),
             meets_minimum_age_requirement: meets_minimum_age_requirement
           )
         }

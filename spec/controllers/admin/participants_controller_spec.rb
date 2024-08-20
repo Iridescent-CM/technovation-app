@@ -113,4 +113,50 @@ RSpec.describe Admin::ParticipantsController do
       expect(profile.reload.chapter).to eq(chapter)
     end
   end
+
+  it "updates the associated chapter for a combo chapter ambassador/judge account when a chapter is assigned" do
+    chapter_ambassador = FactoryBot.create(
+      :chapter_ambassador_profile,
+      :not_assigned_to_chapter,
+      :has_judge_profile,
+      account: FactoryBot.create(
+        :account,
+        email: "cha-judge@email.com"
+      )
+    )
+
+    chapter = FactoryBot.create(:chapter)
+
+    patch :update, params: {
+      id: chapter_ambassador.account_id,
+      account: {
+        chapter_ambassador_profile: {chapter_id: chapter.id}
+      }
+    }
+
+    expect(chapter_ambassador.reload.chapter).to eq(chapter)
+  end
+
+  it "updates the associated chapter for a combo chapter ambassador/mentor account when a chapter is assigned" do
+    chapter_ambassador = FactoryBot.create(
+      :chapter_ambassador_profile,
+      :not_assigned_to_chapter,
+      :has_mentor_profile,
+      account: FactoryBot.create(
+        :account,
+        email: "cha-mentor@email.com"
+      )
+    )
+
+    chapter = FactoryBot.create(:chapter)
+
+    patch :update, params: {
+      id: chapter_ambassador.account_id,
+      account: {
+        chapter_ambassador_profile: {chapter_id: chapter.id}
+      }
+    }
+
+    expect(chapter_ambassador.reload.chapter).to eq(chapter)
+  end
 end
