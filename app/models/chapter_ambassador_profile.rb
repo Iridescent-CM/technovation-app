@@ -161,7 +161,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def can_be_marked_onboarded?
     !!(account.email_confirmed? &&
-      background_check_complete? &&
+      background_check_exempt_or_complete? &&
       legal_agreement_signed? &&
       training_completed? &&
       viewed_community_connections?)
