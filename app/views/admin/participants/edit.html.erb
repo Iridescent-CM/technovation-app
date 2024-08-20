@@ -72,10 +72,10 @@
     <br>
 
     <% if f.object.judge_profile.present? %>
-      <%= f.fields_for :judge_profile do |m| %>
+      <%= f.fields_for :judge_profile do |j| %>
         <p>
-          <%= m.label :judge_types %>
-          <%= m.collection_check_boxes :judge_type_ids, JudgeType.all, :id, :name,
+          <%= j.label :judge_types %>
+          <%= j.collection_check_boxes :judge_type_ids, JudgeType.all, :id, :name,
                                        checked: ->(value) { f.object.judge_profile.judge_types.include?(value) } do |b| %>
             <%= b.check_box %>
             <%= b.label %>
