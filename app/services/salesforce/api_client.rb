@@ -189,6 +189,8 @@ module Salesforce
     def handle_request(message, &block)
       if salesforce_enabled
         begin
+          logger.error("[SALESFORCE] #{message}")
+
           block.call
         rescue => error
           logger.error("[SALESFORCE] #{error}")
