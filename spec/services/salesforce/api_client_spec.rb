@@ -293,6 +293,7 @@ RSpec.describe Salesforce::ApiClient do
               "Program_Participant__c",
               {
                 Id: program_participant_id,
+                TG_Division__c: "#{student_profile.division.name} Division",
                 Pitch_Video__c: student_profile.team.submission.pitch_video_link,
                 Project_Link__c: Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: student_profile.team.submission),
                 Submitted_Project__c: "Submitted",
@@ -318,7 +319,7 @@ RSpec.describe Salesforce::ApiClient do
 
         it "calls query to get the contact info from Salesforce" do
           expect(salesforce_client).to receive(:query)
-            .with("select Id from Contact__c where Platform_Participant_Id__c = #{account.id}")
+            .with("select Id from Contact where Platform_Participant_Id__c = #{account.id}")
 
           salesforce_api_client.upsert_program_info
         end

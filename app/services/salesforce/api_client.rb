@@ -39,31 +39,18 @@ module Salesforce
     end
 
     def setup_account_for_current_season
-      salesforce_contact_id = nil
-
-      handle_request "Upserting account #{account.id}" do
-        salesforce_contact_id = upsert_contact
-      end
+      salesforce_contact_id = upsert_contact
 
       if salesforce_contact_id.present?
-        handle_request "Setting up account (#{account.id}) for current season" do
-          client.insert!(
-            "Program_Participant__c",
-            {
-              Contact__c: salesforce_contact_id,
-              Platform_Participant_Id__c: account.id,
-              Year__c: Season.current.year,
-              Type__c: profile_type
-            }.merge(initial_program_participant_info)
-          )
-        end
+        create_program_participant_for(
+          contact_id: salesforce_contact_id,
+          program_participant_info: initial_program_participant_info
+        )
       end
     end
 
     def upsert_contact_info
-      handle_request "Upserting account #{account.id}" do
-        upsert_contact
-      end
+      upsert_contact
     end
 
     def upsert_program_info(season: Season.current.year)
@@ -76,7 +63,7 @@ module Salesforce
           program_participant_id: program_participant_record.first.Id
         )
       else
-        contact_record = client.query("select Id from Contact__c where Platform_Participant_Id__c = #{account.id}")
+        contact_record = client.query("select Id from Contact where Platform_Participant_Id__c = #{account.id}")
 
         if contact_record.present?
           create_program_participant_for(
@@ -92,20 +79,22 @@ module Salesforce
     attr_reader :account, :profile_type, :client, :salesforce_enabled, :logger, :error_notifier
 
     def upsert_contact
-      client.upsert!(
-        "Contact",
-        "Platform_Participant_Id__c",
-        {
-          Platform_Participant_Id__c: account.id,
-          FirstName: account.first_name,
-          LastName: account.last_name,
-          npe01__AlternateEmail__c: account.email,
-          npe01__Preferred_Email__c: "Alternate",
-          MailingCity: account.city,
-          MailingState: account.state_province,
-          MailingCountry: account.country
-        }.merge(additional_contact_info)
-      )
+      handle_request "Upserting account #{account.id}" do
+        client.upsert!(
+          "Contact",
+          "Platform_Participant_Id__c",
+          {
+            Platform_Participant_Id__c: account.id,
+            FirstName: account.first_name,
+            LastName: account.last_name,
+            npe01__AlternateEmail__c: account.email,
+            npe01__Preferred_Email__c: "Alternate",
+            MailingCity: account.city,
+            MailingState: account.state_province,
+            MailingCountry: account.country
+          }.merge(additional_contact_info)
+        )
+      end
     end
 
     def create_program_participant_for(contact_id:, program_participant_info:)
@@ -178,12 +167,14 @@ module Salesforce
       when "student"
         submission = account.student_profile.team.submission
 
-        {
-          Pitch_Video__c: submission.pitch_video_link,
-          Project_Link__c: submission.present? ? project_url(submission) : "",
-          Submitted_Project__c: submission.published_at.present? ? "Submitted" : "Did Not Submit",
-          Team_Name__c: account.student_profile.team.name
-        }
+        initial_program_participant_info.merge(
+          {
+            Pitch_Video__c: submission.pitch_video_link,
+            Project_Link__c: submission.present? ? project_url(submission) : "",
+            Submitted_Project__c: submission.published_at.present? ? "Submitted" : "Did Not Submit",
+            Team_Name__c: account.student_profile.team.name
+          }
+        )
       when "mentor"
         initial_program_participant_info.merge(
           {
