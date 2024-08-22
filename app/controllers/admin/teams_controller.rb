@@ -40,7 +40,7 @@ module Admin
         admin: true,
         country: Array(params[:teams_grid][:country]),
         state_province: Array(params[:teams_grid][:state_province]),
-        season: params[:teams_grid][:season] || Season.current.year
+        season: params[:teams_grid].present? ? params[:teams_grid][:season] : Season.current.year
       )
 
       grid.merge(
