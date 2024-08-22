@@ -66,18 +66,22 @@ module Salesforce
       end
     end
 
-    def update_program_info(season: Season.current.year)
+    def upsert_program_info(season: Season.current.year)
       return if season != Season.current.year
 
       program_participant_record = client.query("select Id from Program_Participant__c where Platform_Participant_Id__c = #{account.id} and Type__c = '#{profile_type}' and Year__c = '#{season}'")
 
       if program_participant_record.present?
-        handle_request "Updating program participant info for #{account.id}" do
-          client.update!(
-            "Program_Participant__c",
-            {
-              Id: program_participant_record.first.Id
-            }.merge(program_participant_info)
+        update_program_participant_for(
+          program_participant_id: program_participant_record.first.Id
+        )
+      else
+        contact_record = client.query("select Id from Contact__c where Platform_Participant_Id__c = #{account.id}")
+
+        if contact_record.present?
+          create_program_participant_for(
+            contact_id: contact_record.first.Id,
+            program_participant_info: program_participant_info
           )
         end
       end
@@ -102,6 +106,31 @@ module Salesforce
           MailingCountry: account.country
         }.merge(additional_contact_info)
       )
+    end
+
+    def create_program_participant_for(contact_id:, program_participant_info:)
+      handle_request "Creating #{profile_type} program participant info for account #{account.id}" do
+        client.insert!(
+          "Program_Participant__c",
+          {
+            Contact__c: contact_id,
+            Platform_Participant_Id__c: account.id,
+            Year__c: Season.current.year,
+            Type__c: profile_type
+          }.merge(program_participant_info)
+        )
+      end
+    end
+
+    def update_program_participant_for(program_participant_id:)
+      handle_request "Updating #profile_type} program participant info for #{account.id}" do
+        client.update!(
+          "Program_Participant__c",
+          {
+            Id: program_participant_id
+          }.merge(program_participant_info)
+        )
+      end
     end
 
     def additional_contact_info

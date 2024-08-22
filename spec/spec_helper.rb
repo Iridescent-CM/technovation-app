@@ -27,7 +27,7 @@ RSpec.configure do |config|
   config.before(:each) do
     allow(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
     allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
-    allow(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+    allow(CRM::UpsertProgramInfoJob).to receive(:perform_later)
   end
 end
 

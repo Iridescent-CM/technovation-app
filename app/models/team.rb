@@ -431,7 +431,7 @@ class Team < ActiveRecord::Base
   def update_student_info_in_crm
     if any_crm_fields_changed? && students.present?
       students.each do |student|
-        CRM::UpdateProgramInfoJob.perform_later(
+        CRM::UpsertProgramInfoJob.perform_later(
           account_id: student.account.id,
           profile_type: "student",
           season: seasons.last || Season.current.year

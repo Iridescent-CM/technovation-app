@@ -50,7 +50,7 @@ RSpec.describe Salesforce::ApiClient do
     allow(error_notifier).to receive(:notify)
   end
 
-  let(:salesforce_client) { double("SalesforceClent") }
+  let(:salesforce_client) { double("SalesforceClient") }
   let(:student_profile) { FactoryBot.build(:student_profile) }
   let(:account) { student_profile.account }
   let(:profile_type) { "student" }
@@ -219,26 +219,26 @@ RSpec.describe Salesforce::ApiClient do
     end
   end
 
-  describe "#update_program_info" do
+  describe "#upsert_program_info" do
     before do
-      allow(salesforce_client).to receive(:query).and_return(program_participants)
+      allow(salesforce_client).to receive(:query).and_return(salesforce_program_participants)
       allow(salesforce_client).to receive(:insert!)
     end
 
-    let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
+    let(:salesforce_program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
     let(:program_participant_id) { 19533 }
 
     context "when Salesforce is enabled" do
       let(:salesforce_enabled) { true }
 
       context "when a program participant record exists in Salesforce" do
-        let(:program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
+        let(:salesforce_program_participants) { [double("salesforce_program_participant", Id: program_participant_id)] }
         let(:program_participant_id) { 42555 }
 
         it "calls update! to update program participant info in Salesforce" do
           expect(salesforce_client).to receive(:update!)
 
-          salesforce_api_client.update_program_info
+          salesforce_api_client.upsert_program_info
         end
 
         context "when updating a mentor's program info" do
@@ -257,7 +257,7 @@ RSpec.describe Salesforce::ApiClient do
               }
             )
 
-            salesforce_api_client.update_program_info
+            salesforce_api_client.upsert_program_info
           end
 
           context "when a mentor is a club ambassador" do
@@ -278,7 +278,7 @@ RSpec.describe Salesforce::ApiClient do
                 }
               )
 
-              salesforce_api_client.update_program_info
+              salesforce_api_client.upsert_program_info
             end
           end
         end
@@ -300,18 +300,53 @@ RSpec.describe Salesforce::ApiClient do
               }
             )
 
-            salesforce_api_client.update_program_info
+            salesforce_api_client.upsert_program_info
           end
         end
       end
 
       context "when a program participant record doesn't exist in Salesforce" do
-        let(:program_participants) { nil }
+        let(:salesforce_program_participants) { nil }
+
+        before do
+          allow(salesforce_client).to receive(:query).twice.and_return(salesforce_program_participants, salesforce_contacts)
+          allow(salesforce_client).to receive(:insert!)
+          allow(salesforce_client).to receive(:update!)
+        end
+
+        let(:salesforce_contacts) { [double("SalesforceContact", Id: 9365119)] }
+
+        it "calls query to get the contact info from Salesforce" do
+          expect(salesforce_client).to receive(:query)
+            .with("select Id from Contact__c where Platform_Participant_Id__c = #{account.id}")
+
+          salesforce_api_client.upsert_program_info
+        end
+
+        context "when a Salesforce contact exists" do
+          let(:salesforce_contacts) { [double("SalesforceContact", Id: 15243)] }
+
+          it "calls insert! to insert program participant info in Salesforce" do
+            expect(salesforce_client).to receive(:insert!)
+
+            salesforce_api_client.upsert_program_info
+          end
+        end
+
+        context "when a Salesforce contact does not exist" do
+          let(:salesforce_contacts) { nil }
+
+          it "does not call insert! to insert program participant info in Salesforce" do
+            expect(salesforce_client).not_to receive(:insert!)
+
+            salesforce_api_client.upsert_program_info
+          end
+        end
 
         it "does not call update! to update program participant info in Salesforce" do
           expect(salesforce_client).not_to receive(:update!)
 
-          salesforce_api_client.update_program_info
+          salesforce_api_client.upsert_program_info
         end
       end
 
@@ -321,7 +356,7 @@ RSpec.describe Salesforce::ApiClient do
         it "does not call update! to update program participant info in Salesforce" do
           expect(salesforce_client).not_to receive(:update!)
 
-          salesforce_api_client.update_program_info(season: season)
+          salesforce_api_client.upsert_program_info(season: season)
         end
       end
     end
