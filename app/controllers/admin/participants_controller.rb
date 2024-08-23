@@ -73,7 +73,7 @@ module Admin
         admin: true,
         country: Array(params[:accounts_grid][:country]),
         state_province: Array(params[:accounts_grid][:state_province]),
-        season: params[:accounts_grid][:season] || Season.current.year,
+        season: params[:accounts_grid].present? ? params[:accounts_grid][:season] : Season.current.year,
         season_and_or: params[:accounts_grid][:season_and_or] ||
                          "match_any",
         mentor_types: params[:accounts_grid][:mentor_types]

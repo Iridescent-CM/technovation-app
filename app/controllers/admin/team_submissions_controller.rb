@@ -64,7 +64,7 @@ module Admin
         admin: true,
         country: Array(params[:submissions_grid][:country]),
         state_province: Array(params[:submissions_grid][:state_province]),
-        season: params[:submissions_grid][:season] || Season.current.year
+        season: params[:submissions_grid].present? ? params[:submissions_grid][:season] : Season.current.year
       )
 
       grid.merge(
