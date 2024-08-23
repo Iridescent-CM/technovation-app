@@ -29,7 +29,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   validates :job_title, presence: true
 
-  has_one :legal_agreement, -> { where(active: true) }, class_name: "Document", as: :signer
+  has_one :chapter_volunteer_agreement, -> { where(active: true) }, class_name: "Document", as: :signer
   has_many :documents, as: :signer
 
   has_many :saved_searches, as: :searcher
@@ -127,15 +127,15 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     viewed_community_connections
   end
 
-  def legal_agreement_signed?
-    legal_agreement&.signed?
+  def chapter_volunteer_agreement_signed?
+    chapter_volunteer_agreement&.signed?
   end
 
   def required_onboarding_tasks
     {
       "Background Check" => background_check_exempt_or_complete?,
       "Chapter Ambassador Training" => training_completed?,
-      "Legal Agreement" => legal_agreement_signed?,
+      "Chapter Volunteer Agreement" => chapter_volunteer_agreement_signed?,
       "Community Connections" => viewed_community_connections?
     }
   end
@@ -162,7 +162,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   def can_be_marked_onboarded?
     !!(account.email_confirmed? &&
       background_check_exempt_or_complete? &&
-      legal_agreement_signed? &&
+      chapter_volunteer_agreement_signed? &&
       training_completed? &&
       viewed_community_connections?)
   end

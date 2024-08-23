@@ -31,7 +31,7 @@ module Docusign
       )
     end
 
-    def send_chapter_ambassador_legal_agreement(chapter_ambassador_profile:)
+    def send_chapter_volunteer_agreement(chapter_ambassador_profile:)
       send_document_to(
         signer: chapter_ambassador_profile,
         params: params_for_chapter_ambassador_profile(chapter_ambassador_profile)
@@ -187,7 +187,7 @@ module Docusign
 
     def params_for_chapter_ambassador_profile(chapter_ambassador_profile)
       {
-        templateId: ENV.fetch("DOCUSIGN_CHAPTER_AMBASSADOR_LEGAL_AGREEMENT_TEMPLATE_ID"),
+        templateId: ENV.fetch("DOCUSIGN_CHAPTER_VOLUNTEER_AGREEMENT_TEMPLATE_ID"),
         templateRoles: [
           {
             name: chapter_ambassador_profile.full_name,

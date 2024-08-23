@@ -24,9 +24,9 @@ module ApplicationHelper
       chapter_locations
       chapter_profile
       chapter_program_information
+      chapter_volunteer_agreements
       community_connections
       dashboards
-      legal_agreements
       location_details
       profiles
       public_information

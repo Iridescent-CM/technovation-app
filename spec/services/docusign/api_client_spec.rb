@@ -127,7 +127,7 @@ RSpec.describe Docusign::ApiClient do
       end
     end
 
-    describe "#send_chapter_ambassador_legal_agreement" do
+    describe "#send_chapter_volunteer_agreement" do
       let(:chapter_ambassador_profile) do
         instance_double(ChapterAmbassadorProfile,
           full_name: "Kodi Skycedar",
@@ -150,7 +150,7 @@ RSpec.describe Docusign::ApiClient do
           anything
         )
 
-        docusign_api_client.send_chapter_ambassador_legal_agreement(
+        docusign_api_client.send_chapter_volunteer_agreement(
           chapter_ambassador_profile: chapter_ambassador_profile
         )
       end
@@ -161,13 +161,13 @@ RSpec.describe Docusign::ApiClient do
         it "creates a new document for the legal contact" do
           expect(chapter_ambassador_profile).to receive_message_chain(:documents, :create)
 
-          docusign_api_client.send_chapter_ambassador_legal_agreement(
+          docusign_api_client.send_chapter_volunteer_agreement(
             chapter_ambassador_profile: chapter_ambassador_profile
           )
         end
 
         it "returns a successful result" do
-          result = docusign_api_client.send_chapter_ambassador_legal_agreement(
+          result = docusign_api_client.send_chapter_volunteer_agreement(
             chapter_ambassador_profile: chapter_ambassador_profile
           )
 
@@ -181,7 +181,7 @@ RSpec.describe Docusign::ApiClient do
         it "logs an error" do
           expect(logger).to receive(:error).with("[DOCUSIGN] Error sending document - ")
 
-          docusign_api_client.send_chapter_ambassador_legal_agreement(
+          docusign_api_client.send_chapter_volunteer_agreement(
             chapter_ambassador_profile: chapter_ambassador_profile
           )
         end
@@ -189,13 +189,13 @@ RSpec.describe Docusign::ApiClient do
         it "sends an error to Airbrake" do
           expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
 
-          docusign_api_client.send_chapter_ambassador_legal_agreement(
+          docusign_api_client.send_chapter_volunteer_agreement(
             chapter_ambassador_profile: chapter_ambassador_profile
           )
         end
 
         it "returns an unsuccessful result" do
-          result = docusign_api_client.send_chapter_ambassador_legal_agreement(
+          result = docusign_api_client.send_chapter_volunteer_agreement(
             chapter_ambassador_profile: chapter_ambassador_profile
           )
 
