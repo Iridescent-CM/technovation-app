@@ -212,6 +212,98 @@ RSpec.describe TeamSubmission do
     end
   end
 
+  describe "#app_details" do
+    let(:submission) { FactoryBot.create(:submission) }
+
+    context "when all additional questions are false" do
+      it "returns false" do
+        expect(submission.app_details).to eq(false)
+      end
+    end
+
+    context "when only ai is true" do
+      before do
+        submission.update(ai: true, ai_description: "some description")
+      end
+
+      it "returns true" do
+        expect(submission.app_details).to eq(true)
+      end
+    end
+
+    context "when only climate change is true" do
+      before do
+        submission.update(climate_change: true, climate_change_description: "some description")
+      end
+
+      it "returns true" do
+        expect(submission.app_details).to eq(true)
+      end
+    end
+
+    context "when only game is true" do
+      before do
+        submission.update(game: true, game_description: "some ai description")
+      end
+
+      it "returns true" do
+        expect(submission.app_details).to eq(true)
+      end
+    end
+
+    context "when only uses open ai is true" do
+      before do
+        submission.update(uses_open_ai: true, uses_open_ai_description: "some ai description")
+      end
+
+      it "returns true" do
+        expect(submission.app_details).to eq(true)
+      end
+    end
+
+    context "when only solves education is true" do
+      before do
+        submission.update(solves_education: true, solves_education_description: "some ai description")
+      end
+
+      it "returns true" do
+        expect(submission.app_details).to eq(true)
+      end
+    end
+
+    context "when only uses gadgets is true" do
+      before do
+        submission.update(uses_gadgets: true)
+      end
+
+      it "returns true" do
+        expect(submission.app_details).to eq(true)
+      end
+    end
+
+    context "when all additional questions are true" do
+      before do
+        submission.update(
+          ai: true,
+          ai_description: "Some description",
+          climate_change: true,
+          climate_change_description: "Some description",
+          game: true,
+          game_description: "Some description",
+          uses_open_ai: true,
+          uses_open_ai_description: "Some description",
+          solves_education: true,
+          solves_education_description: "Some description",
+          uses_gadgets: true
+        )
+      end
+
+      it "returns true" do
+        expect(submission.app_details).to eq(true)
+      end
+    end
+  end
+
   describe "#additional_questions?" do
     let(:submission) { TeamSubmission.new(seasons: [season]) }
 
@@ -233,6 +325,14 @@ RSpec.describe TeamSubmission do
 
     context "when the season is 2022" do
       let(:season) { "2022" }
+
+      it "returns true" do
+        expect(submission.additional_questions?).to eq(true)
+      end
+    end
+
+    context "when the season is 2025" do
+      let(:season) { "2025" }
 
       it "returns true" do
         expect(submission.additional_questions?).to eq(true)
