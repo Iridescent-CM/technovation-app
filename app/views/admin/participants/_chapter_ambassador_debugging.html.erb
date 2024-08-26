@@ -1,39 +1,41 @@
 <div class="panel">
-  <%= render "chapter_ambassador_onboarding", chapter_ambassador: profile %>
+  <% if current_account.admin? %>
+    <%= render "admin/participants/chapter_ambassador_onboarding", chapter_ambassador: profile %>
 
-  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
-    <% if current_account.is_admin? && (profile.requires_background_check? || profile.background_check_exemption?) %>
-      <%= render "admin/participants/background_check_exemption", profile: profile %>
-      <hr style="height: 1px; width: 100%;">
-    <% end %>
+    <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+      <% if current_account.is_admin? && (profile.requires_background_check? || profile.background_check_exemption?) %>
+        <%= render "admin/participants/background_check_exemption", profile: profile %>
+        <hr style="height: 1px; width: 100%;">
+      <% end %>
 
-    <dl>
-      <dt>Chapter Onboarding Status</dt>
-      <dd>
+      <dl>
+        <dt>Chapter Onboarding Status</dt>
+        <dd>
           <span class="hint">
             Chapter Ambassadors must also complete the Chapter onboarding process to access Chapter Admin Activity.
           </span>
-        <% if profile&.chapter.present? %>
-          <% if profile.chapter.onboarded? %>
-            <div>
-              <%= web_icon("check-circle icon-green") %>
-              Complete
-            </div>
-          <% else %>
-            <div>
-              <%= web_icon("exclamation-circle icon-red") %>
-              Chapter not onboarded.
-              <%= link_to "View details",
-                          admin_chapter_path(profile.chapter) %>
+          <% if profile&.chapter.present? %>
+            <% if profile.chapter.onboarded? %>
+              <div>
+                <%= web_icon("check-circle icon-green") %>
+                Complete
+              </div>
+            <% else %>
+              <div>
+                <%= web_icon("exclamation-circle icon-red") %>
+                Chapter not onboarded.
+                <%= link_to "View details",
+                admin_chapter_path(profile.chapter) %>
             </div>
           <% end %>
         <% else %>
           <p>Chapter Ambassador not assigned to a chapter</p>
         <% end %>
-      </dd>
-    </dl>
-    <hr style="height: 1px; width: 100%;">
-  </div>
+        </dd>
+      </dl>
+      <hr style="height: 1px; width: 100%;">
+    </div>
+  <% end %>
 
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
     <dl>
@@ -46,22 +48,6 @@
               profile.os_version].compact.join(' - ') %>
         </dd>
       <% end %>
-
-      <dt>Status</dt>
-
-      <dd>
-        <%= form_with model: profile,
-          url: admin_chapter_ambassador_status_path(profile),
-          local: true do |f| %>
-
-          <%= f.select :status,
-            ChapterAmbassadorProfile.statuses.keys.map { |k| [k.humanize, k] } %>
-
-          <p>
-            <%= f.submit "Change status", class: "button small" %>
-          </p>
-        <% end %>
-      </dd>
     </dl>
   </div>
 </div>
