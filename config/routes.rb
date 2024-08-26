@@ -150,7 +150,7 @@ Rails.application.routes.draw do
     resource :public_information, only: [:show, :edit, :update], controller: "public_information"
     resource :chapter_location, only: [:show, :edit, :update]
     resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
-    resource :legal_agreement, only: [:show, :create]
+    resource :chapter_volunteer_agreement, only: [:show, :create]
     resource :community_connections, only: [:show, :new, :create, :edit, :update]
 
     resources :job_statuses, only: :show

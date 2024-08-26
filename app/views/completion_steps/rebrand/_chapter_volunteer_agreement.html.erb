@@ -48,12 +48,12 @@
   </ol>
 </div>
 
-<% if params[:legal_agreement_sent].present? || current_ambassador.legal_agreement.present? %>
-  <p>The Legal Agreement has been sent to you, if you have not received it or you are experiences issues, please reach out to <%= mail_to ENV.fetch("HELP_EMAIL") %>.</p>
+<% if params[:chapter_volunteer_agreement_sent].present? || current_ambassador.chapter_volunteer_agreement.present? %>
+  <p>The Chapter Volunteer Agreement has been sent to you, if you have not received it or you are experiences issues, please reach out to <%= mail_to ENV.fetch("HELP_EMAIL") %>.</p>
 <% else %>
   <div class="text-center">
     <%= button_to "Review and Sign",
-      chapter_ambassador_legal_agreement_path,
+      chapter_ambassador_chapter_volunteer_agreement_path,
       method: "post",
       class: "tw-green-btn",
       onclick: "this.disabled=true; this.form.submit();"
