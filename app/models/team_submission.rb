@@ -67,6 +67,7 @@ class TeamSubmission < ActiveRecord::Base
     self.ai_description = "" if ai.blank?
     self.climate_change_description = "" if climate_change.blank?
     self.game_description = "" if game.blank?
+    self.gadget_types = [] unless uses_gadgets?
   }
 
   after_commit :update_student_info_in_crm
@@ -356,7 +357,12 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def app_details
-    !ai.nil? || !climate_change.nil? || !game.nil?
+    !ai.nil? ||
+      !climate_change.nil? ||
+      !game.nil? ||
+      !uses_open_ai.nil? ||
+      !solves_education.nil? ||
+      !uses_gadgets.nil?
   end
 
   def team_photo_uploaded?
