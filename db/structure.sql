@@ -24,6 +24,20 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 
 --
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track planning and execution statistics of all SQL statements executed';
+
+
+--
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -895,6 +909,38 @@ CREATE SEQUENCE public.exports_id_seq
 --
 
 ALTER SEQUENCE public.exports_id_seq OWNED BY public.exports.id;
+
+
+--
+-- Name: gadget_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gadget_types (
+    id bigint NOT NULL,
+    name character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: gadget_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.gadget_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gadget_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.gadget_types_id_seq OWNED BY public.gadget_types.id;
 
 
 --
@@ -2116,6 +2162,38 @@ ALTER SEQUENCE public.team_member_invites_id_seq OWNED BY public.team_member_inv
 
 
 --
+-- Name: team_submission_gadget_types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.team_submission_gadget_types (
+    id bigint NOT NULL,
+    team_submission_id bigint,
+    gadget_type_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: team_submission_gadget_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.team_submission_gadget_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: team_submission_gadget_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.team_submission_gadget_types_id_seq OWNED BY public.team_submission_gadget_types.id;
+
+
+--
 -- Name: team_submissions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2178,7 +2256,9 @@ CREATE TABLE public.team_submissions (
     solves_health_problem_description character varying,
     solves_education boolean,
     solves_education_description character varying,
-    scratch_project_url character varying
+    scratch_project_url character varying,
+    uses_gadgets boolean,
+    uses_gadgets_description character varying
 );
 
 
@@ -2501,6 +2581,13 @@ ALTER TABLE ONLY public.exports ALTER COLUMN id SET DEFAULT nextval('public.expo
 
 
 --
+-- Name: gadget_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gadget_types ALTER COLUMN id SET DEFAULT nextval('public.gadget_types_id_seq'::regclass);
+
+
+--
 -- Name: honor_code_agreements id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2725,6 +2812,13 @@ ALTER TABLE ONLY public.team_member_invites ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
+-- Name: team_submission_gadget_types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.team_submission_gadget_types ALTER COLUMN id SET DEFAULT nextval('public.team_submission_gadget_types_id_seq'::regclass);
+
+
+--
 -- Name: team_submissions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2933,6 +3027,14 @@ ALTER TABLE ONLY public.expertises
 
 ALTER TABLE ONLY public.exports
     ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gadget_types gadget_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gadget_types
+    ADD CONSTRAINT gadget_types_pkey PRIMARY KEY (id);
 
 
 --
@@ -3197,6 +3299,14 @@ ALTER TABLE ONLY public.submission_scores
 
 ALTER TABLE ONLY public.team_member_invites
     ADD CONSTRAINT team_member_invites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: team_submission_gadget_types team_submission_gadget_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.team_submission_gadget_types
+    ADD CONSTRAINT team_submission_gadget_types_pkey PRIMARY KEY (id);
 
 
 --
@@ -3702,6 +3812,20 @@ CREATE INDEX index_team_member_invites_on_status ON public.team_member_invites U
 
 
 --
+-- Name: index_team_submission_gadget_types_on_gadget_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_team_submission_gadget_types_on_gadget_type_id ON public.team_submission_gadget_types USING btree (gadget_type_id);
+
+
+--
+-- Name: index_team_submission_gadget_types_on_team_submission_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_team_submission_gadget_types_on_team_submission_id ON public.team_submission_gadget_types USING btree (team_submission_id);
+
+
+--
 -- Name: index_team_submissions_on_judge_recusal_count; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3979,6 +4103,14 @@ ALTER TABLE ONLY public.regional_pitch_events_user_invitations
 
 
 --
+-- Name: team_submission_gadget_types fk_rails_69b9473c55; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.team_submission_gadget_types
+    ADD CONSTRAINT fk_rails_69b9473c55 FOREIGN KEY (gadget_type_id) REFERENCES public.gadget_types(id);
+
+
+--
 -- Name: consent_waivers fk_rails_6dd1d3738c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3992,6 +4124,14 @@ ALTER TABLE ONLY public.consent_waivers
 
 ALTER TABLE ONLY public.community_connections
     ADD CONSTRAINT fk_rails_714931f495 FOREIGN KEY (chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
+
+
+--
+-- Name: team_submission_gadget_types fk_rails_7528bbfcc1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.team_submission_gadget_types
+    ADD CONSTRAINT fk_rails_7528bbfcc1 FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
 
 
 --
@@ -4547,6 +4687,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240723134333'),
 ('20240723134706'),
 ('20240806155230'),
-('20240806155409');
+('20240806155409'),
+('20240819184734'),
+('20240819184824'),
+('20240819191052'),
+('20240822181726');
 
 
