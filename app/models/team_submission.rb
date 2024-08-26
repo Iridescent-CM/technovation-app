@@ -202,6 +202,12 @@ class TeamSubmission < ActiveRecord::Base
     -> { current.live.complete },
     class_name: "SubmissionScore"
 
+  has_many :team_submission_gadget_types,
+           dependent: :destroy
+
+  has_many :gadget_types,
+           through: :team_submission_gadget_types
+
   validate -> {
     unless integrity_affirmed?
       errors.add(:integrity_affirmed, :accepted)
