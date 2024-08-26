@@ -46,5 +46,18 @@ RSpec.describe SubmissionsHelper do
         expect(additional_question_labels(submission)).to include(:solves_education)
       end
     end
+
+    context "when the season is 2025" do
+      let(:season) { [2025] }
+
+      it "returns :ai, :climate_change, :solves_hunger_or_food_waste, :uses_open_ai, :solves_education, :uses_gadgets" do
+        expect(additional_question_labels(submission)).to include(:ai)
+        expect(additional_question_labels(submission)).to include(:climate_change)
+        expect(additional_question_labels(submission)).to include(:solves_hunger_or_food_waste)
+        expect(additional_question_labels(submission)).to include(:uses_open_ai)
+        expect(additional_question_labels(submission)).to include(:solves_education)
+        expect(additional_question_labels(submission)).to include(:uses_gadgets)
+      end
+    end
   end
 end
