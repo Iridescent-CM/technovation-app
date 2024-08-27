@@ -34,11 +34,17 @@ RSpec.describe LegalContact do
 
   describe "#seasons_chapter_affiliation_agreement_is_valid_for" do
     let(:legal_contact) do
-      FactoryBot.create(:legal_contact, season_chapter_affiliation_agreement_signed: season_chapter_affiliation_agreement_signed)
+      FactoryBot.create(
+        :legal_contact,
+        season_chapter_affiliation_agreement_signed: season_chapter_affiliation_agreement_signed,
+        season_chapter_affiliation_agreement_expires: season_chapter_affiliation_agreement_expires
+      )
     end
+    let(:season_chapter_affiliation_agreement_expires) { nil }
 
     context "when the Chapter Affiliation Agreement has been signed" do
       let(:season_chapter_affiliation_agreement_signed) { 2023 }
+      let(:season_chapter_affiliation_agreement_expires) { 2025 }
 
       it "returns an array of seasons the Chapter Affiliation Agreement is valid for (the season it was signed plus two additional seasons)" do
         expect(legal_contact.seasons_chapter_affiliation_agreement_is_valid_for).to eq([2023, 2024, 2025])

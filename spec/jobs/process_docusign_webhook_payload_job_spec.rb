@@ -20,7 +20,13 @@ RSpec.describe ProcessDocusignWebhookPayloadJob do
   let(:docusign_envelope_id) { "xyz32a1b-c456-789d-ql2s-987654s3210t" }
   let(:docusign_envelope_status) { "completed" }
   let(:docusign_envelope_completed_at) { "2024-05-07T16:19:54.58Z" }
-  let(:document) { double(Document, id: 2, docusign_envelope_id: docusign_envelope_id) }
+  let(:document) do
+    double(Document,
+      id: 2,
+      docusign_envelope_id: docusign_envelope_id,
+      signer_type: signer_type)
+  end
+  let(:signer_type) { "ChapterAmbassadorProfile" }
   let(:profile_type) { "student" }
   let(:logger) { instance_double(ActiveSupport::Logger, error: true) }
   let(:error_notifier) { double("Airbrake") }
@@ -31,8 +37,14 @@ RSpec.describe ProcessDocusignWebhookPayloadJob do
   end
 
   context "when a document exists and the DocuSign envelope has been been completed" do
-    let(:document) { double(Document, id: 2, docusign_envelope_id: docusign_envelope_id) }
+    let(:document) do
+      double(Document,
+        id: 2,
+        docusign_envelope_id: docusign_envelope_id,
+        signer_type: signer_type)
+    end
     let(:docusign_envelope_status) { "completed" }
+    let(:signer_type) { "ChapterAmbassadorProfile" }
 
     before do
       allow(webhook_payload).to receive(:delete)
@@ -43,12 +55,30 @@ RSpec.describe ProcessDocusignWebhookPayloadJob do
       expect(document).to receive(:update)
         .with(
           signed_at: docusign_envelope_completed_at,
-          season_signed: Season.current.year
+          season_signed: Season.current.year,
+          season_expires: nil
         )
 
       ProcessDocusignWebhookPayloadJob.perform_now(
         webhook_payload_id: webhook_payload.id
       )
+    end
+
+    context "when a legal contact is the person who signed the document" do
+      let(:signer_type) { "LegalContact" }
+
+      it "updates the document record and includes the season it will expire" do
+        expect(document).to receive(:update)
+          .with(
+            signed_at: docusign_envelope_completed_at,
+            season_signed: Season.current.year,
+            season_expires: Season.current.year + LegalContact::NUMBER_OF_SEASONS_CHAPTER_AFFILIATION_AGREEMENT_IS_VALID_FOR - 1
+          )
+
+        ProcessDocusignWebhookPayloadJob.perform_now(
+          webhook_payload_id: webhook_payload.id
+        )
+      end
     end
 
     it "deletes the webhook payload record" do
