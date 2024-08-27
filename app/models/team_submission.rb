@@ -63,11 +63,15 @@ class TeamSubmission < ActiveRecord::Base
     self.pitch_video_link = standardize_url(pitch_video_link)
   }
 
-  before_commit -> {
+  before_save -> {
     self.ai_description = "" if ai.blank?
     self.climate_change_description = "" if climate_change.blank?
     self.game_description = "" if game.blank?
-    self.gadget_types = [] unless uses_gadgets?
+    self.solves_education_description = "" if solves_education.blank?
+    if uses_gadgets.blank?
+      self.gadget_types = []
+      self.uses_gadgets_description = ""
+    end
   }
 
   after_commit :update_student_info_in_crm
