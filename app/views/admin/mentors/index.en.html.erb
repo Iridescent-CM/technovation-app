@@ -1,0 +1,8 @@
+<% provide :title, "Admin Data • Mentors" %>
+<h3>View Mentors</h3>
+
+<%= render 'datagrid/datagrid',
+  grid: @mentors_grid,
+  form_url: admin_mentors_path,
+  model_name: "mentor",
+  scope: :admin %>
