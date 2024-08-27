@@ -79,7 +79,7 @@
 
             <dt>Seasons Chapter Affiliation Agreement Valid For</dt>
             <dd>
-              <% if @chapter.affiliation_agreement.present? %>
+              <% if @chapter.affiliation_agreement.present? && @chapter.seasons_chapter_affiliation_agreement_is_valid_for.present? %>
                 <%= @chapter.seasons_chapter_affiliation_agreement_is_valid_for.to_sentence %>
               <% else %>
                 -
