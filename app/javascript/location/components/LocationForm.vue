@@ -1,29 +1,22 @@
 <template>
-  <form
-    class="simple_form"
-    @submit.prevent="handleSubmit"
-  >
-
+  <form class="simple_form" @submit.prevent="handleSubmit">
     <div v-if="!isStudent && !isJudge && !isChA" class="panel__top-bar">
-      Confirm {{ subjectPossessive }} fregion
+      Confirm {{ subjectPossessive }} region
     </div>
 
     <div id="location-change" class="tw-blue-lg-container">
-      <div v-if="isStudent || isJudge || isChA" class="sm-header-wrapper bg-energetic-blue text-white p-2">
+      <div
+        v-if="isStudent || isJudge || isChA"
+        class="sm-header-wrapper bg-energetic-blue text-white p-2"
+      >
         <p class="font-bold">Confirm {{ subjectPossessive }} region</p>
       </div>
 
-      <div
-        v-if="isNotFound"
-        class="flash flash--error"
-      >
+      <div v-if="isNotFound" class="flash flash--error">
         We're sorry, but we cannot find a region with that information.
       </div>
 
-      <div
-        v-if="suggestions.length"
-        class="flash"
-      >
+      <div v-if="suggestions.length" class="flash">
         We couldn't match exact results to the information that you gave us.<br />
         Select a result below, or try the form fields again.
       </div>
@@ -69,8 +62,12 @@
           <div ref="suggestionsTable">
             <div class="Rtable Rtable--3cols">
               <div class="Rtable-cell padding--t-b-none"><h6>City</h6></div>
-              <div class="Rtable-cell padding--t-b-none"><h6>State / Province</h6></div>
-              <div class="Rtable-cell padding--t-b-none"><h6>Country / Territory</h6></div>
+              <div class="Rtable-cell padding--t-b-none">
+                <h6>State / Province</h6>
+              </div>
+              <div class="Rtable-cell padding--t-b-none">
+                <h6>Country / Territory</h6>
+              </div>
             </div>
 
             <div
@@ -94,9 +91,7 @@
           </div>
         </template>
 
-        <div
-          v-show="!savedLocation"
-        >
+        <div v-show="!savedLocation">
           <template v-if="countryConfirmed || country !== 'Israel'">
             <label for="location_country">Country / Territory</label>
 
@@ -120,7 +115,8 @@
                   value="Israel"
                   v-model="country"
                   @click="confirmCountry('Israel')"
-                /> Israel
+                />
+                Israel
               </label>
             </p>
 
@@ -132,12 +128,15 @@
                   value="Palestine"
                   v-model="country"
                   @click="confirmCountry('Palestine')"
-                /> Palestine
+                />
+                Palestine
               </label>
             </p>
           </template>
 
-          <label for="location_state">State / Province {{ optionalStateLabel }}</label>
+          <label for="location_state"
+            >State / Province {{ optionalStateLabel }}</label
+          >
 
           <input
             type="text"
@@ -198,11 +197,11 @@
 </template>
 
 <script>
-import LocationResult from '../models/LocationResult'
-import HttpStatusCodes from '../../constants/HttpStatusCodes'
+import LocationResult from "../models/LocationResult";
+import HttpStatusCodes from "../../constants/HttpStatusCodes";
 
 export default {
-  data () {
+  data() {
     return {
       city: "",
       state: "",
@@ -212,14 +211,14 @@ export default {
       savedLocation: null,
       searching: false,
       status: null,
-    }
+    };
   },
 
   props: {
     wizardToken: {
       type: String,
       required: false,
-      default: '',
+      default: "",
     },
 
     accountId: {
@@ -270,286 +269,315 @@ export default {
     },
   },
 
-  created () {
+  created() {
     if (this.value) {
-      this.city = this.value.city
-      this.state = this.value.state
-      this.country = this.value.country
+      this.city = this.value.city;
+      this.state = this.value.state;
+      this.country = this.value.country;
     } else {
       window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
-        this.city = data.city
-        this.state = data.state
-        this.country = data.country
-      })
+        this.city = data.city;
+        this.state = data.state;
+        this.country = data.country;
+      });
     }
   },
 
   computed: {
-    countryDetectedInStateOptionalList () {
-      if (!this.country || !this.country.length)
-        return false
+    countryDetectedInStateOptionalList() {
+      if (!this.country || !this.country.length) return false;
 
-      return this.country.match(/^\s*(hong\s*kong|hk)\s*$/i) ||
-              this.country.match(/^\s*(palestine|ps)\s*/i) ||
-                this.country.match(/^\s*(india|ind?)\s*$/i) ||
-                  this.country.match(/^\s*(taiwan,?.*|tw)\s*$/i)
+      return (
+        this.country.match(/^\s*(hong\s*kong|hk)\s*$/i) ||
+        this.country.match(/^\s*(palestine|ps)\s*/i) ||
+        this.country.match(/^\s*(india|ind?)\s*$/i) ||
+        this.country.match(/^\s*(taiwan,?.*|tw)\s*$/i)
+      );
     },
 
-    optionalStateLabel () {
+    optionalStateLabel() {
+      if (this.countryDetectedInStateOptionalList) return "(Optional)";
+
+      return "";
+    },
+
+    optionalStatePlaceholder() {
       if (this.countryDetectedInStateOptionalList)
-        return '(Optional)'
+        return "In your area, it's okay if this field is blank.";
 
-      return ''
+      return "";
     },
 
-    optionalStatePlaceholder () {
-      if (this.countryDetectedInStateOptionalList)
-        return "In your area, it's okay if this field is blank."
-
-      return ''
-    },
-
-    cancelText () {
+    cancelText() {
       if (this.savedLocation) {
-        return 'change region'
+        return "change region";
       } else {
-        return 'cancel'
+        return "cancel";
       }
     },
 
-    submitText () {
+    submitText() {
       if (this.savedLocation) {
-        return 'Confirm'
+        return "Confirm";
       } else {
-        return 'Next'
+        return "Next";
       }
     },
 
-    subjectPossessive () {
+    subjectPossessive() {
       if (this.accountId) {
-        return "this person's"
+        return "this person's";
       } else if (this.teamId) {
-        return "this team's"
+        return "this team's";
       } else {
-        return 'your'
+        return "your";
       }
     },
 
-    isNotFound () {
-      return this.status === HttpStatusCodes.NOT_FOUND
+    isNotFound() {
+      return this.status === HttpStatusCodes.NOT_FOUND;
     },
 
-    formHasInput () {
-      return (this.city && this.city.length) ||
-              (this.state && this.state.length) ||
-                (this.country && this.country.length)
+    formHasInput() {
+      return (
+        (this.city && this.city.length) ||
+        (this.state && this.state.length) ||
+        (this.country && this.country.length)
+      );
     },
 
-    isStudent () {
-      return this.scopeName === "student"
+    isStudent() {
+      return this.scopeName === "student";
     },
 
-    isJudge () {
-      return this.scopeName === "judge"
+    isJudge() {
+      return this.scopeName === "judge";
     },
 
-    isChA () {
-      return this.scopeName === "chapter_ambassador"
+    isChA() {
+      return this.scopeName === "chapter_ambassador";
     },
 
-    getCurrentLocationEndpoint () {
-      return this._getEndpoint('current_location')
+    getCurrentLocationEndpoint() {
+      return this._getEndpoint("current_location");
     },
 
-    patchLocationEndpoint () {
-      return this._getEndpoint('location')
+    patchLocationEndpoint() {
+      return this._getEndpoint("location");
     },
 
-    params () {
-      const rootParamName = `${this.scopeName}_location`
-      let params = {}
+    params() {
+      const rootParamName = `${this.scopeName}_location`;
+      let params = {};
 
       params[rootParamName] = {
         city: this.city,
         state: this.state,
         country: this.country,
         token: this.wizardToken,
-      }
+      };
 
-      return params
+      return params;
     },
 
-    showCancel () {
-      return this.showFinalCancel || this.savedLocation
+    showCancel() {
+      return this.showFinalCancel || this.savedLocation;
     },
   },
 
   watch: {
-    status (newStatus) {
-      switch(newStatus) {
+    status(newStatus) {
+      switch (newStatus) {
         case HttpStatusCodes.NOT_FOUND:
-          console.warn('geocoding results not found')
-          this.$refs.countryField.focus()
+          console.warn("geocoding results not found");
+          this.$refs.countryField.focus();
         default:
-          // no op
+        // no op
       }
     },
 
-    city (value) {
-      this.$emit('input', Object.assign({}, {
-        city: value,
-        state: this.state,
-        country: this.country,
-      }))
+    city(value) {
+      this.$emit(
+        "input",
+        Object.assign(
+          {},
+          {
+            city: value,
+            state: this.state,
+            country: this.country,
+          }
+        )
+      );
     },
 
-    state (value) {
-      this.$emit('input', Object.assign({}, {
-        city: this.city,
-        state: value,
-        country: this.country,
-      }))
+    state(value) {
+      this.$emit(
+        "input",
+        Object.assign(
+          {},
+          {
+            city: this.city,
+            state: value,
+            country: this.country,
+          }
+        )
+      );
     },
 
-    country (value) {
-      this.$emit('input', Object.assign({}, {
-        city: this.city,
-        state: this.state,
-        country: value,
-      }))
+    country(value) {
+      this.$emit(
+        "input",
+        Object.assign(
+          {},
+          {
+            city: this.city,
+            state: this.state,
+            country: value,
+          }
+        )
+      );
     },
   },
 
   methods: {
-    handleSubmit () {
+    handleSubmit() {
       if (this.savedLocation) {
-        this.saveLocation()
+        this.saveLocation();
       } else if (!this.formHasInput) {
-        this.handleErrorResponse({ response: { status: 404 } })
+        this.handleErrorResponse({ response: { status: 404 } });
       } else {
-        this.resetMeta()
-        this.searching = true
+        this.resetMeta();
+        this.searching = true;
 
-        window.axios.patch(this.patchLocationEndpoint, this.params)
+        window.axios
+          .patch(this.patchLocationEndpoint, this.params)
           .then(({ status, data }) => {
-            this.handleOKResponse(status, data)
-          }).catch(err => {
-            this.handleErrorResponse(err)
+            this.handleOKResponse(status, data);
           })
+          .catch((err) => {
+            this.handleErrorResponse(err);
+          });
       }
     },
 
-    saveLocation () {
-      window.axios.post(this.patchLocationEndpoint, this.params)
+    saveLocation() {
+      window.axios
+        .post(this.patchLocationEndpoint, this.params)
         .then(() => {
-          this.handleConfirm()
-        }).catch(err => {
-          console.error(err)
+          this.handleConfirm();
         })
+        .catch((err) => {
+          console.error(err);
+        });
     },
 
-    handleCancel () {
+    handleCancel() {
       if (this.savedLocation) {
-        this.resetMeta()
+        this.resetMeta();
         this.$nextTick(() => {
-          this.$refs.countryField.focus()
-        })
+          this.$refs.countryField.focus();
+        });
       } else {
         // for when we do showFinalCancel
-        history.back()
+        history.back();
       }
     },
 
-    handleSuggestionClick (suggestion) {
-      this.searching = true
-      this.city = suggestion.city
-      this.state = suggestion.state
-      this.confirmCountry(suggestion.country)
-      this.saveLocation()
+    handleSuggestionClick(suggestion) {
+      this.searching = true;
+      this.city = suggestion.city;
+      this.state = suggestion.state;
+      this.confirmCountry(suggestion.country);
+      this.saveLocation();
     },
 
-    handleOKResponse (status, data) {
-      this.searching = false
-      this.status = status
-      this.savedLocation = new LocationResult(data.results[0])
-      this.city = this.savedLocation.city
-      this.state = this.savedLocation.state
-      this.confirmCountry(this.savedLocation.country)
+    handleOKResponse(status, data) {
+      this.searching = false;
+      this.status = status;
+      this.savedLocation = new LocationResult(data.results[0]);
+      this.city = this.savedLocation.city;
+      this.state = this.savedLocation.state;
+      this.confirmCountry(this.savedLocation.country);
     },
 
-    handleErrorResponse (err) {
-      this.searching = false
-      this.status = err.response.status
+    handleErrorResponse(err) {
+      this.searching = false;
+      this.status = err.response.status;
 
       if (this.status === HttpStatusCodes.MULTIPLE_CHOICES) {
-        this.suggestions = err.response.data.results.map(result => {
-          return new LocationResult(result)
-        })
+        this.suggestions = err.response.data.results.map((result) => {
+          return new LocationResult(result);
+        });
 
-        const countrySensitivityList = ['Israel', 'Palestine, State of']
+        const countrySensitivityList = ["Israel", "Palestine, State of"];
 
-        const countries = this.suggestions.map(l => l.country)
-        const matched = countries.filter(c => c === this.country)[0]
+        const countries = this.suggestions.map((l) => l.country);
+        const matched = countries.filter((c) => c === this.country)[0];
 
         if (
           this.countryConfirmed &&
-            matched && matched.length &&
-              countries.length === countrySensitivityList.length &&
-                countries.sort().every((value, index) => value === countrySensitivityList.sort()[index])
+          matched &&
+          matched.length &&
+          countries.length === countrySensitivityList.length &&
+          countries
+            .sort()
+            .every(
+              (value, index) => value === countrySensitivityList.sort()[index]
+            )
         ) {
           const result = {
-            id: Math.floor(Math.random()*16777215).toString(16),
+            id: Math.floor(Math.random() * 16777215).toString(16),
             city: this.city,
             state: this.state,
             country: matched,
-          }
+          };
 
-          this.suggestions = []
-          this.handleOKResponse(200, { results: [result] })
+          this.suggestions = [];
+          this.handleOKResponse(200, { results: [result] });
         }
       }
     },
 
-    confirmCountry (country) {
-      this.country = country
-      this.countryConfirmed = true
+    confirmCountry(country) {
+      this.country = country;
+      this.countryConfirmed = true;
     },
 
-    resetAll () {
-      this.resetForm()
-      this.resetMeta()
+    resetAll() {
+      this.resetForm();
+      this.resetMeta();
 
       this.$nextTick(() => {
-        this.$refs.countryField.focus()
-      })
+        this.$refs.countryField.focus();
+      });
     },
 
-    resetForm () {
-      this.city = ""
-      this.state = ""
-      this.country = ""
+    resetForm() {
+      this.city = "";
+      this.state = "";
+      this.country = "";
     },
 
-    resetMeta () {
-      this.suggestions = []
-      this.savedLocation = null
-      this.status = null
-      this.searching = false
+    resetMeta() {
+      this.suggestions = [];
+      this.savedLocation = null;
+      this.status = null;
+      this.searching = false;
     },
 
-    _getEndpoint (pathPart) {
-      const endpointRoot = `/${this.scopeName}/${pathPart}`
+    _getEndpoint(pathPart) {
+      const endpointRoot = `/${this.scopeName}/${pathPart}`;
 
       if (this.accountId) {
-        return `${endpointRoot}?account_id=${this.accountId}`
+        return `${endpointRoot}?account_id=${this.accountId}`;
       } else if (this.teamId) {
-        return `${endpointRoot}?team_id=${this.teamId}`
+        return `${endpointRoot}?team_id=${this.teamId}`;
       } else {
-        return endpointRoot
+        return endpointRoot;
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -568,7 +596,7 @@ label:not(:first-child) {
   transition: background-color 0.2s;
 
   &:hover {
-    background: rgba(135, 206, 235, 0.7)
+    background: rgba(135, 206, 235, 0.7);
   }
 
   .Rtable-cell {
@@ -578,10 +606,12 @@ label:not(:first-child) {
 
 .Rtable-cell {
   flex-grow: 1;
-  width: 100%;  // Default to full width
+  width: 100%; // Default to full width
   overflow: hidden; // Or flex might break
   list-style: none;
 }
 
-.Rtable--3cols > .Rtable-cell  { width: 33.33%!important; }
+.Rtable--3cols > .Rtable-cell {
+  width: 33.33% !important;
+}
 </style>

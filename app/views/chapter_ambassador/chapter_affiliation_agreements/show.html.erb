@@ -15,7 +15,8 @@
         <p>
           <span class="font-medium">Legal Contact:</span>
           <% if current_chapter.legal_contact.blank? %>
-            No legal contact has been setup yet
+            No legal contact has been added yet.
+            Please contact your Technovation point of contact to set up your legal contact.
           <% else %>
             <%= current_chapter.legal_contact.full_name %>
           <% end %>
