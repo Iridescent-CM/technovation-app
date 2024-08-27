@@ -246,13 +246,13 @@
             </div>
           <% end %>
         </div>
-      </div>
 
-      <div id="uses_gadgets_description" class="mt-4" style="display: <%= @team_submission.uses_gadgets_description.present? ? 'block' : 'none' %>;">
-        <p class="tw-hint">Please specify other gadgets:</p>
+        <div id="uses_gadgets_description" class="mt-4" style="display: <%= @team_submission.uses_gadgets_description.present? ? 'block' : 'none' %>;">
+          <p class="tw-hint">Please specify other gadgets:</p>
 
-        <%= f.text_field :uses_gadgets_description,
-                        id: :team_submission_uses_gadgets_description %>
+          <%= f.text_field :uses_gadgets_description,
+                          id: :team_submission_uses_gadgets_description %>
+        </div>
       </div>
     </div>
 
