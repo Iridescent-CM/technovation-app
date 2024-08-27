@@ -267,6 +267,9 @@ class TeamSubmission < ActiveRecord::Base
   validates :solves_education_description, presence: true, max_word_count: true,
     if: ->(team_submission) { team_submission.solves_education? }
 
+  validates :gadget_type_ids, presence: {message: "At least one gadget type must be selected"},
+            if: ->(team_submission) { team_submission.uses_gadgets? }
+
   validates :pitch_video_link,
     format: {
       with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/
