@@ -326,6 +326,8 @@ Rails.application.routes.draw do
       patch :unsuspend
     end
 
+    resources :mentors, only: :index
+
     resources :score_details, only: :show
     resources :submission_score_restorations, only: :update
 

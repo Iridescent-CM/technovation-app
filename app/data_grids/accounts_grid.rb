@@ -302,7 +302,7 @@ class AccountsGrid
 
   filter :team_matching,
     :enum,
-    header: "Team matchng (students & mentors only)",
+    header: "Team matching (students & mentors only)",
     select: [
       ["Mentors matched with a team", "mentors_matched_with_a_team"],
       ["Students matched with a team", "students_matched_with_a_team"],
