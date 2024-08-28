@@ -40,7 +40,7 @@ RSpec.feature "Chapter Ambassadors view the chapter affiliation agreement tab" d
     click_link "Chapter Affiliation Agreement"
 
     expect(page).to have_content("#{chapter.organization_name} working with this chapter")
-    expect(page).to have_content("Legal Contact: No legal contact has been setup yet")
+    expect(page).to have_content("Legal Contact: No legal contact has been added yet")
     expect(page).to have_content("Chapter Affiliation Agreement Status: Not sent (no legal contact has been setup yet)")
   end
 
