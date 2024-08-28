@@ -447,7 +447,7 @@ RSpec.describe Team do
         context "when CRM fields are being updated" do
           context "when team name is being updated" do
             it "calls the job to update the student's program info" do
-              expect(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+              expect(CRM::UpsertProgramInfoJob).to receive(:perform_later)
 
               team.update(
                 name: "New team name"
@@ -458,7 +458,7 @@ RSpec.describe Team do
 
         context "when a non-CRM field is being updated" do
           it "does not call the job to update the student's program info" do
-            expect(CRM::UpdateProgramInfoJob).not_to receive(:perform_later)
+            expect(CRM::UpsertProgramInfoJob).not_to receive(:perform_later)
 
             team.update(
               description: "My team description"
@@ -476,7 +476,7 @@ RSpec.describe Team do
 
         context "when a CRM field is being updated" do
           it "does not call the job to update the student's program info" do
-            expect(CRM::UpdateProgramInfoJob).not_to receive(:perform_later)
+            expect(CRM::UpsertProgramInfoJob).not_to receive(:perform_later)
 
             team.update(
               name: "My awesome team name"

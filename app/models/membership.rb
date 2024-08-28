@@ -20,7 +20,7 @@ class Membership < ActiveRecord::Base
 
   def update_mentor_info_in_crm
     if member_type == "MentorProfile"
-      CRM::UpdateProgramInfoJob.perform_later(
+      CRM::UpsertProgramInfoJob.perform_later(
         account_id: member.account.id,
         profile_type: "mentor"
       )

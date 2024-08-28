@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CRM::UpdateProgramInfoJob do
+RSpec.describe CRM::UpsertProgramInfoJob do
   let(:account) { instance_double(Account, id: 9461) }
   let(:profile_type) { "student" }
 
@@ -12,7 +12,7 @@ RSpec.describe CRM::UpdateProgramInfoJob do
   let(:salesforce_api_client) { instance_double(Salesforce::ApiClient) }
 
   before do
-    allow(salesforce_api_client).to receive(:update_program_info)
+    allow(salesforce_api_client).to receive(:upsert_program_info)
   end
 
   it "creates a new Salesforce API client service" do
@@ -21,16 +21,16 @@ RSpec.describe CRM::UpdateProgramInfoJob do
       profile_type: profile_type
     )
 
-    CRM::UpdateProgramInfoJob.perform_now(
+    CRM::UpsertProgramInfoJob.perform_now(
       account_id: account.id,
       profile_type: "student"
     )
   end
 
   it "calls the Salesforce API client service method that will update the account's program info" do
-    expect(salesforce_api_client).to receive(:update_program_info)
+    expect(salesforce_api_client).to receive(:upsert_program_info)
 
-    CRM::UpdateProgramInfoJob.perform_now(
+    CRM::UpsertProgramInfoJob.perform_now(
       account_id: account.id,
       profile_type: "student"
     )
@@ -40,10 +40,10 @@ RSpec.describe CRM::UpdateProgramInfoJob do
     let(:season) { Season.new(2020).year }
 
     it "calls the Salesforce API client service and includes the provided year" do
-      expect(salesforce_api_client).to receive(:update_program_info)
+      expect(salesforce_api_client).to receive(:upsert_program_info)
         .with(season: season)
 
-      CRM::UpdateProgramInfoJob.perform_now(
+      CRM::UpsertProgramInfoJob.perform_now(
         account_id: account.id,
         profile_type: "student",
         season: season

@@ -7,7 +7,7 @@ RSpec.describe MentorProfileMentorType do
   context "callbacks" do
     describe "#after_commit" do
       it "calls the job to update the mentor's program info in the CRM" do
-        expect(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+        expect(CRM::UpsertProgramInfoJob).to receive(:perform_later)
 
         MentorProfileMentorType.create(
           mentor_profile_id: mentor_profile.id,

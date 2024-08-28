@@ -9,7 +9,7 @@ RSpec.describe Membership do
         let(:team) { FactoryBot.build(:team) }
 
         it "calls the job to update the mentor's program info in the CRM" do
-          expect(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+          expect(CRM::UpsertProgramInfoJob).to receive(:perform_later)
 
           Membership.create(
             member_type: member_type,
@@ -25,7 +25,7 @@ RSpec.describe Membership do
         let(:team) { FactoryBot.build(:team) }
 
         it "does not call the job to update the mentor's program info in the CRM" do
-          expect(CRM::UpdateProgramInfoJob).not_to receive(:perform_later)
+          expect(CRM::UpsertProgramInfoJob).not_to receive(:perform_later)
 
           Membership.create(
             member_type: member_type,

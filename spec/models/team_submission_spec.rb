@@ -84,7 +84,7 @@ RSpec.describe TeamSubmission do
         context "when CRM fields are being updated" do
           context "when the app name is being updated" do
             it "calls the job to update the student's program info" do
-              expect(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+              expect(CRM::UpsertProgramInfoJob).to receive(:perform_later)
 
               submission.update(
                 app_name: "My updated app name"
@@ -94,7 +94,7 @@ RSpec.describe TeamSubmission do
 
           context "when the pitch link is being updated" do
             it "calls the job to update the student's program info" do
-              expect(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+              expect(CRM::UpsertProgramInfoJob).to receive(:perform_later)
 
               submission.update(
                 pitch_video_link: "http://example.com/xzy-pitch-video"
@@ -104,7 +104,7 @@ RSpec.describe TeamSubmission do
 
           context "when the submision is being published" do
             it "calls the job to update the student's program info" do
-              expect(CRM::UpdateProgramInfoJob).to receive(:perform_later)
+              expect(CRM::UpsertProgramInfoJob).to receive(:perform_later)
 
               submission.update(
                 published_at: Time.now
@@ -115,7 +115,7 @@ RSpec.describe TeamSubmission do
 
         context "when a non-CRM field is being updated" do
           it "does not call the job to update the student's program info" do
-            expect(CRM::UpdateProgramInfoJob).not_to receive(:perform_later)
+            expect(CRM::UpsertProgramInfoJob).not_to receive(:perform_later)
 
             submission.update(
               app_description: "My updated app details"
@@ -133,7 +133,7 @@ RSpec.describe TeamSubmission do
 
         context "when a CRM field is being updated" do
           it "does not call the job to update the student's program info" do
-            expect(CRM::UpdateProgramInfoJob).not_to receive(:perform_later)
+            expect(CRM::UpsertProgramInfoJob).not_to receive(:perform_later)
 
             submission.update(
               pitch_video_link: "http://example.com/xzy-pitch-video"
