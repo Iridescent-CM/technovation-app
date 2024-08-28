@@ -85,7 +85,7 @@ class ChaptersGrid
     onboarded? ? "yes" : "no"
   end
 
-  column :affiliation_agreement_status do
+  column :affiliation_agreement_status, preload: [:legal_contact, legal_contact: :chapter_affiliation_agreement] do
     if affiliation_agreement.present?
       affiliation_agreement_signed? ? "Signed" : "Not signed"
     else
@@ -93,7 +93,19 @@ class ChaptersGrid
     end
   end
 
-  column :affiliation_agreement_valid_for do
+  column :season_affiliation_agreement_signed, preload: [:legal_contact, legal_contact: :chapter_affiliation_agreement] do
+    if affiliation_agreement.present?
+      affiliation_agreement.season_signed.presence || "-"
+    end
+  end
+
+  column :season_affiliation_agreement_expires, preload: [:legal_contact, legal_contact: :chapter_affiliation_agreement] do
+    if affiliation_agreement.present?
+      affiliation_agreement.season_expires.presence || "-"
+    end
+  end
+
+  column :affiliation_agreement_valid_for, preload: [:legal_contact, legal_contact: :chapter_affiliation_agreement] do
     legal_contact&.seasons_chapter_affiliation_agreement_is_valid_for&.join(", ")
   end
 

@@ -17,7 +17,8 @@ class ProcessDocusignWebhookPayloadJob < ActiveJob::Base
     if document.present? && docusign_envelope_status == "completed"
       document.update(
         signed_at: docusign_envelope_completed_at,
-        season_signed: Season.current.year
+        season_signed: Season.current.year,
+        season_expires: season_document_expires(document)
       )
 
       webhook_payload.delete
@@ -26,6 +27,15 @@ class ProcessDocusignWebhookPayloadJob < ActiveJob::Base
 
       logger.error(error)
       error_notifier.notify(error)
+    end
+  end
+
+  private
+
+  def season_document_expires(document)
+    case document.signer_type
+    when "LegalContact"
+      Season.current.year + LegalContact::NUMBER_OF_SEASONS_CHAPTER_AFFILIATION_AGREEMENT_IS_VALID_FOR - 1
     end
   end
 end

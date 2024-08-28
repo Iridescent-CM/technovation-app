@@ -10,8 +10,8 @@ class LegalContact < ActiveRecord::Base
   validates :full_name, presence: true
 
   def seasons_chapter_affiliation_agreement_is_valid_for
-    if chapter_affiliation_agreement&.season_signed.present?
-      Array(chapter_affiliation_agreement.season_signed...(chapter_affiliation_agreement.season_signed + NUMBER_OF_SEASONS_CHAPTER_AFFILIATION_AGREEMENT_IS_VALID_FOR))
+    if chapter_affiliation_agreement&.season_signed.present? && chapter_affiliation_agreement&.season_expires.present?
+      Array(chapter_affiliation_agreement.season_signed..chapter_affiliation_agreement.season_expires)
     else
       []
     end

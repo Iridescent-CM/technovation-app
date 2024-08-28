@@ -804,7 +804,8 @@ CREATE TABLE public.documents (
     updated_at timestamp(6) without time zone NOT NULL,
     voided_at timestamp without time zone,
     sent_at timestamp without time zone,
-    status public.document_status
+    status public.document_status,
+    season_expires smallint
 );
 
 
@@ -4547,6 +4548,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240723134333'),
 ('20240723134706'),
 ('20240806155230'),
-('20240806155409');
+('20240806155409'),
+('20240827125548');
 
 
