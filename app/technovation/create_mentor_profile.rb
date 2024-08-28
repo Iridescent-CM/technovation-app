@@ -17,7 +17,7 @@ module CreateMentorProfile
     if account.chapter_ambassador_profile.present?
       {
         school_company_name: account.chapter_ambassador_profile
-          .organization_company_name,
+          .organization_company_name.presence || account.chapter_ambassador_profile.chapter.organization_name,
         job_title: account.chapter_ambassador_profile.job_title,
         mentor_type_ids: [MentorType.find_by(name: "Industry professional")&.id]
       }

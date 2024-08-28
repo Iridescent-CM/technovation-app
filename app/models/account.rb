@@ -577,7 +577,7 @@ class Account < ActiveRecord::Base
     if student_profile
       student_profile.school_name
     elsif chapter_ambassador_profile
-      chapter_ambassador_profile.organization_company_name
+      chapter_ambassador_profile.organization_company_name.presence || chapter_ambassador_profile.chapter&.organization_name
     elsif mentor_profile
       mentor_profile.school_company_name
     elsif judge_profile
