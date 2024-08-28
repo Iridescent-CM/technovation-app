@@ -218,6 +218,44 @@
       </div>
     </div>
 
+    <div class="field mt-4">
+      <%= f.label :uses_gadgets,
+        t("submissions.uses_gadgets_question"),
+        for: :team_submission_uses_gadgets %>
+
+      <%= f.select :uses_gadgets,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        data: {
+          toggles: {
+            "true": "#uses_gadgets_checkboxes"
+          },
+        },
+        class: "w-full lg:w-1/5",
+        id: :team_submission_uses_gadgets %>
+
+      <div id="uses_gadgets_checkboxes" class="mt-4">
+        <%= f.label :gadget_type_ids,
+                    "Which of the following additional gadgets are used in your project?" %>
+
+        <div class="checkbox-group">
+          <%= f.collection_check_boxes :gadget_type_ids, GadgetType.all, :id, :name do |cb| %>
+            <div class="checkbox-item">
+              <%= cb.check_box %>
+              <%= cb.label %>
+            </div>
+          <% end %>
+        </div>
+
+        <div id="uses_gadgets_description" class="mt-4" style="display: <%= @team_submission.uses_gadgets_description.present? ? 'block' : 'none' %>;">
+          <p class="tw-hint">Please specify other gadgets:</p>
+
+          <%= f.text_field :uses_gadgets_description,
+                          id: :team_submission_uses_gadgets_description %>
+        </div>
+      </div>
+    </div>
+
     <div class="actions mt-8 submission-actions">
       <p class="btn-wrapper">
         <%= f.submit "Save my responses", class: "tw-green-btn cursor-pointer" %>

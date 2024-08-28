@@ -140,6 +140,14 @@ class SubmissionsGrid
       .concat(description)
   end
 
+  column :uses_gadgets, header: "Uses Gadgets", if: ->(grid) { grid.admin } do
+    description = uses_gadgets? ? " - #{team_submission_gadget_types.joins(:gadget_type).pluck(:name).join(", ")}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(uses_gadgets)
+      .concat(description)
+  end
+
   column :city, order: "teams.city" do
     team.city
   end
