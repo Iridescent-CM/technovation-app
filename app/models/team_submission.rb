@@ -67,6 +67,7 @@ class TeamSubmission < ActiveRecord::Base
     self.ai_description = "" if ai.blank?
     self.climate_change_description = "" if climate_change.blank?
     self.game_description = "" if game.blank?
+    self.gadget_types = [] unless uses_gadgets?
   }
 
   after_commit :update_student_info_in_crm
@@ -201,6 +202,12 @@ class TeamSubmission < ActiveRecord::Base
   has_many :live_complete_submission_scores,
     -> { current.live.complete },
     class_name: "SubmissionScore"
+
+  has_many :team_submission_gadget_types,
+           dependent: :destroy
+
+  has_many :gadget_types,
+           through: :team_submission_gadget_types
 
   validate -> {
     unless integrity_affirmed?
@@ -350,7 +357,12 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def app_details
-    !ai.nil? || !climate_change.nil? || !game.nil?
+    !ai.nil? ||
+      !climate_change.nil? ||
+      !game.nil? ||
+      !uses_open_ai.nil? ||
+      !solves_education.nil? ||
+      !uses_gadgets.nil?
   end
 
   def team_photo_uploaded?

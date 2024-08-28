@@ -251,6 +251,9 @@ module TeamSubmissionController
         :thunkable_project_url,
         :thunkable_account_email,
         :scratch_project_url,
+        :uses_gadgets,
+        :uses_gadgets_description,
+        gadget_type_ids: [],
         screenshots: [],
         screenshots_attributes: [
           :id,
