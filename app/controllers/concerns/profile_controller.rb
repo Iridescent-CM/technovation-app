@@ -72,7 +72,8 @@ module ProfileController
         :latitude,
         :longitude,
         :icon_path,
-        :profile_image
+        :profile_image,
+        :phone_number
       ]
     ).tap do |tapped|
       if tapped[:account_attributes]

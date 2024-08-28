@@ -3,6 +3,8 @@
     label: t('models.account.gender'),
     collection: Account.genders.keys,
     input_html: { class: "margin--b-large" } %>
+
+  <%= a.input :phone_number %>
 <% end %>
 
 <%= f.input :company_name,

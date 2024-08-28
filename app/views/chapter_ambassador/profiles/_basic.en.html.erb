@@ -9,6 +9,9 @@
         <dt>Name</dt>
         <dd><%= current_ambassador.full_name %></dd>
 
+        <dt>Phone Number</dt>
+        <dd><%= current_ambassador.phone_number.presence || "-" %></dd>
+
         <dt>Gender Identity</dt>
         <dd><%= current_ambassador.gender || "Not specified" %></dd>
 
