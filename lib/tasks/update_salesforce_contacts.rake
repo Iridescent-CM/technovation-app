@@ -12,6 +12,8 @@ task update_salesforce_contacts: :environment do |_, args|
           account_id: account.id
         )
 
+        wait_time += 15
+
         if account.student_profile.present?
           puts "Upserting student program info for account id: #{account_id}"
 
@@ -20,8 +22,10 @@ task update_salesforce_contacts: :environment do |_, args|
             profile_type: "student"
           )
 
-          wait_time += 30
-        elsif account.mentor_profile.present?
+          wait_time += 15
+        end
+
+        if account.mentor_profile.present?
           puts "Upserting mentor program info for account id: #{account_id}"
 
           CRM::UpsertProgramInfoJob.set(wait: wait_time.seconds).perform_later(
@@ -29,8 +33,10 @@ task update_salesforce_contacts: :environment do |_, args|
             profile_type: "mentor"
           )
 
-          wait_time += 30
-        elsif account.judge_profile.present?
+          wait_time += 15
+        end
+
+        if account.judge_profile.present?
           puts "Upserting judge program info for account id: #{account_id}"
 
           CRM::UpsertProgramInfoJob.set(wait: wait_time.seconds).perform_later(
@@ -38,8 +44,10 @@ task update_salesforce_contacts: :environment do |_, args|
             profile_type: "judge"
           )
 
-          wait_time += 30
-        elsif account.chapter_ambassador_profile.present?
+          wait_time += 15
+        end
+
+        if account.chapter_ambassador_profile.present?
           puts "Upserting chapter ambassador program info for account id: #{account_id}"
 
           CRM::UpsertProgramInfoJob.set(wait: wait_time.seconds).perform_later(
