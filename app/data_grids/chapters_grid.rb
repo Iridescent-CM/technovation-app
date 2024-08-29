@@ -8,13 +8,17 @@ class ChaptersGrid
   end
 
   filter :program_name do |value|
-    where("name ilike ?",
-      "#{value}%")
+    sanitized = sanitize_sql_like(value)
+    processed_value = I18n.transliterate(sanitized.strip.downcase).gsub(/['\s]+/, "%")
+
+    where("lower(unaccent(name)) ILIKE ?", "%#{processed_value}%")
   end
 
-  filter :organization_name do |value|
-    where("organization_name ilike ?",
-      "#{value}%")
+  filter :organization_name, header: "Organization" do |value|
+    value = sanitize_sql_like(value)
+    processed_value = I18n.transliterate(value.strip.downcase).gsub(/['\s]+/, "%")
+
+    where("lower(unaccent(organization_name)) ILIKE ?", "%#{processed_value}%")
   end
 
   filter(:onboarded,
