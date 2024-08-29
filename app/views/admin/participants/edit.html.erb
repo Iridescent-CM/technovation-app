@@ -37,6 +37,13 @@
       </p>
     <% end %>
 
+    <% if !f.object.student_profile.present? %>
+      <p>
+        <%=  f.label :phone_number  %>
+        <%= f.text_field :phone_number %>
+      </p>
+    <%  end %>
+
     <p>
       <%= f.label :gender,
         "#{t('models.account.gender')} #{t('views.application.optional')}" %>

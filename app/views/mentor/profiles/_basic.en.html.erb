@@ -2,6 +2,9 @@
   <dt>Name</dt>
   <dd><%= current_mentor.full_name %></dd>
 
+  <dt>Phone Number</dt>
+  <dd><%= current_mentor.phone_number.presence || "-" %></dd>
+
   <dt>Gender identity</dt>
   <dd><%= current_mentor.gender || "Not specified" %></dd>
 

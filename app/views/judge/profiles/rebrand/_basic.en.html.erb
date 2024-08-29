@@ -10,6 +10,9 @@
       <dt>Birthdate</dt>
       <dd><%= current_judge.date_of_birth&.strftime("%B %e, %Y").presence || "-" %></dd>
 
+      <dt>Phone Number</dt>
+      <dd><%= current_judge.phone_number.presence || "-" %></dd>
+
       <dt>Company name</dt>
       <dd><%= current_judge.company_name %></dd>
 

@@ -101,6 +101,7 @@ module Admin
         :profile_image,
         :profile_image_cache,
         :password,
+        :phone_number,
         mentor_profile_attributes: [:id, mentor_type_ids: []],
         student_profile: {},
         judge_profile_attributes: [:id, judge_type_ids: []],
