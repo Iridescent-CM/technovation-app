@@ -54,6 +54,22 @@ class ParentalConsentsGrid
     render "admin/paper_parental_consents/actions", parental_consent: parental_consent
   end
 
+  filter :name_email,
+    header: "Name or Email",
+    filter_group: "common" do |value, scope, grid|
+    names = value.strip.downcase.split(" ").map { |n|
+      I18n.transliterate(n).gsub("'", "''")
+    }
+
+    scope.fuzzy_search({
+      accounts: {
+        first_name: names.first,
+        last_name: names.last || names.first,
+        email: names.first
+      }
+    }, false).left_outer_joins(student_profile: :account)
+  end
+
   filter :upload_approval_status,
     :enum,
     header: "Status",
