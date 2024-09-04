@@ -1,0 +1,12 @@
+<ul class="list-disc ml-8 text-base text-gray-60">
+  <% team_submission.gadget_types.each do |gadget_type| %>
+    <li>
+      <%= gadget_type.name %>
+      <% if gadget_type.name.downcase == "other" && team_submission.uses_gadgets_description.present? %>
+        <span class="italic">
+          - <%= team_submission.uses_gadgets_description %>
+        </span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

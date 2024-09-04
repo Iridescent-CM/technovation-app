@@ -7,6 +7,10 @@
       <%= humanize_boolean(eval("team_submission.#{question_label}")) %>
     </p>
 
-    <i><%= eval("team_submission.#{question_label}_description") %></i>
+    <% if question_label == :uses_gadgets && team_submission.gadget_types.any? %>
+      <%= render "team_submissions/gadget_types", team_submission: team_submission %>
+    <% else %>
+        <i><%= eval("team_submission.#{question_label}_description") %></i>
+    <% end %>
   <% end %>
 <% end %>
