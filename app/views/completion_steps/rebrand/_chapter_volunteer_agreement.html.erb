@@ -12,13 +12,6 @@
 <div class="ml-8 mb-8">
   <ol role="list" class="space-y-4">
     <%= render "application/templates/sub_checklist_item",
-               name: "Non-Disclosure Agreement",
-               url: ENV.fetch("CHAPTER_AMBASSADOR_NON_DISCLOSURE_AGREEMENT_URL"),
-               new_tab: true,
-               is_complete: false
-    %>
-
-    <%= render "application/templates/sub_checklist_item",
                name: "Brand Guidelines",
                url: ENV.fetch("CHAPTER_AMBASSADOR_BRAND_GUIDELINES_URL"),
                new_tab: true,
