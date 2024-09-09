@@ -82,6 +82,7 @@ CREATE TYPE public.chapter_ambassador_organization_status AS ENUM (
 CREATE TYPE public.document_status AS ENUM (
     'sent',
     'signed',
+    'off-platform',
     'voided'
 );
 
@@ -813,7 +814,7 @@ CREATE TABLE public.documents (
     active boolean,
     signed_at timestamp without time zone,
     season_signed smallint,
-    docusign_envelope_id character varying NOT NULL,
+    docusign_envelope_id character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     voided_at timestamp without time zone,
@@ -4689,10 +4690,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240723134706'),
 ('20240806155230'),
 ('20240806155409'),
-('20240806155409'),
 ('20240819184734'),
 ('20240819184824'),
 ('20240819191052'),
 ('20240822181726'),
-('20240827125548');
+('20240827125548'),
+('20240829193423'),
+('20240830132508');
+
 

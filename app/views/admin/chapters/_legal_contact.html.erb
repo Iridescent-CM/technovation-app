@@ -36,7 +36,8 @@
                 class: "button",
                 onclick: "this.disabled=true; this.form.submit();"
               %>
-            <% elsif !@chapter.affiliation_agreement_signed? %>
+
+            <% elsif !@chapter.affiliation_agreement.signed? && !@chapter.affiliation_agreement.off_platform? %>
               <%= button_to "Void Chapter Affiliation Agreement",
                 void_admin_chapter_affiliation_agreement_path(@chapter),
                 method: "patch",
@@ -46,6 +47,26 @@
             <% end %>
           <% end %>
         </div>
+
+        <% if @chapter.affiliation_agreement.blank? && params[:affiliation_agreement_job_scheduled].blank? %>
+          <h4 class="margin--t-xxlarge">Create Off-platform Affiliation Agreement</h4>
+          <%= form_with url: admin_chapter_off_platform_affiliation_agreement_path(@chapter), method: :post do %>
+
+            <%= select_tag :seasons_valid,
+              options_for_select({
+                "Valid for 1 season": "1",
+                "Valid for 2 seasons": "2",
+                "Valid for 3 seasons": "3"
+              })
+            %>
+
+          <%= submit_tag "Submit",
+            method: "post",
+            class: "button",
+            onclick: "this.disabled=true; this.form.submit();"
+          %>
+      <% end %>
+    <% end %>
       <% else %>
         <%= render "admin/chapters/legal_contacts/form", chapter: @chapter, legal_contact: @chapter.build_legal_contact %>
       <% end %>

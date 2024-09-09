@@ -59,13 +59,20 @@
         </div>
 
         <div class="grid__col-6">
+          <h3>Chapter Affiliation Agreement</h3>
+
           <dl>
-            <dt>Chapter Affiliation Agreement</dt>
+            <dt>Status</dt>
             <dd>
               <% if @chapter.legal_contact.present? %>
                 <% if @chapter.affiliation_agreement.present? %>
-                  <% if @chapter.affiliation_agreement_signed? %>
-                    Signed <%= @chapter.affiliation_agreement.signed_at.strftime("%b %d, %Y") %>
+                  <% if @chapter.affiliation_agreement_complete? %>
+                    <% if @chapter.affiliation_agreement.signed? %>
+                      Signed <%= @chapter.affiliation_agreement.signed_at.strftime("%b %d, %Y") %>
+                  <% elsif @chapter.affiliation_agreement.off_platform? %>
+                      Completed off-platform
+
+                  <% end %>
                   <% else %>
                     Not signed
                   <% end %>
@@ -77,17 +84,17 @@
               <% end %>
             </dd>
 
-            <dt>Season Affiliation Agreement Signed</dt>
+            <dt>Season Signed</dt>
             <dd>
               <%= @chapter.affiliation_agreement&.season_signed.presence || "-" %>
             </dd>
 
-            <dt>Season Affiliation Agreement Expires</dt>
+            <dt>Season Expires</dt>
             <dd>
               <%= @chapter.affiliation_agreement&.season_expires.presence || "-" %>
             </dd>
 
-            <dt>Seasons Affiliation Agreement Valid For</dt>
+            <dt>Seasons Valid For</dt>
             <dd>
               <% if @chapter.affiliation_agreement.present? && @chapter.seasons_chapter_affiliation_agreement_is_valid_for.present? %>
                 <%= @chapter.seasons_chapter_affiliation_agreement_is_valid_for.to_sentence %>

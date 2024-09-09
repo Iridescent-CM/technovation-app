@@ -133,9 +133,17 @@ class ChaptersGrid
 
   column :affiliation_agreement_status, preload: [:legal_contact, legal_contact: :chapter_affiliation_agreement] do
     if affiliation_agreement.present?
-      affiliation_agreement_signed? ? "Signed" : "Not signed"
-    else
-      "Not sent"
+      if affiliation_agreement_complete?
+        if affiliation_agreement.signed?
+          "Signed"
+        elsif affiliation_agreement.off_platform?
+          "Off-platform"
+        else
+          "Not signed"
+        end
+      else
+        "Not sent"
+      end
     end
   end
 

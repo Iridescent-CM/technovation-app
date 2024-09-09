@@ -276,6 +276,9 @@ Rails.application.routes.draw do
       resource :affiliation_agreement, only: :create, controller: "chapter_affiliation_agreement" do
         patch :void
       end
+      resource :off_platform_affiliation_agreement,
+        only: :create,
+        controller: "chapters/off_platform_chapter_affiliation_agreement"
       resources :invites, only: :create, controller: "chapter_invites"
       resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
     end

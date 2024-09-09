@@ -9,14 +9,20 @@
         <dt>Sign Chapter Affiliation Agreement</dt>
         <dd>
           <div style="display: flex;">
-            <% if chapter.affiliation_agreement_signed? %>
+            <% if chapter.affiliation_agreement_complete? %>
               <%= web_icon("check-circle icon-green") %>
               <div>
                 Complete
 
-                <p class="hint margin--b-none">
-                  Signed <%= chapter.affiliation_agreement.signed_at.strftime("%b %d, %Y") %>
-                </p>
+                <% if chapter.affiliation_agreement.signed? %>
+                  <p class="hint margin--b-none">
+                    Signed <%= chapter.affiliation_agreement.signed_at.strftime("%b %d, %Y") %>
+                  </p>
+                <% elsif chapter.affiliation_agreement.off_platform? %>
+                  <p class="hint margin--b-none">
+                    Completed Off-platform
+                  </p>
+                <% end %>
               </div>
             <% else %>
               <%= web_icon("exclamation-circle icon-red") %>

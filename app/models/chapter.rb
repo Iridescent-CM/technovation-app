@@ -22,7 +22,7 @@ class Chapter < ActiveRecord::Base
 
   scope :signed_affiliation_agreements, -> {
     joins(legal_contact: :documents)
-      .where("documents.active = TRUE AND documents.signed_at IS NOT NULL")
+      .where("documents.active = TRUE AND documents.status = 'signed' OR documents.status = 'off-platform'")
   }
 
   scope :not_signed_affiliation_agreements, -> {
@@ -43,7 +43,7 @@ class Chapter < ActiveRecord::Base
   end
 
   def can_be_marked_onboarded?
-    !!(affiliation_agreement_signed? &&
+    !!(affiliation_agreement_complete? &&
       chapter_info_complete? &&
       location_complete? &&
       program_info_complete?)
@@ -53,8 +53,8 @@ class Chapter < ActiveRecord::Base
     update_column(:onboarded, can_be_marked_onboarded?)
   end
 
-  def affiliation_agreement_signed?
-    !!affiliation_agreement&.signed?
+  def affiliation_agreement_complete?
+    !!affiliation_agreement&.complete?
   end
 
   def chapter_info_complete?
@@ -76,7 +76,7 @@ class Chapter < ActiveRecord::Base
 
   def required_onboarding_tasks
     {
-      "Chapter Affiliation Agreement" => affiliation_agreement_signed?,
+      "Chapter Affiliation Agreement" => affiliation_agreement_complete?,
       "Public Info" => chapter_info_complete?,
       "Chapter Location" => location_complete?,
       "Program Info" => program_info_complete?
