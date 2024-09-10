@@ -119,6 +119,54 @@ RSpec.describe Account do
       end
     end
 
+    describe "#first_name" do
+      let(:judge) { FactoryBot.create(:judge) }
+
+      context "when the first name contains an alphabetical character" do
+        before do
+          judge.first_name = "My name"
+        end
+
+        it "is valid" do
+          expect(judge).to be_valid
+        end
+      end
+
+      context "when the first name does not contain an alphabetical character" do
+        before do
+          judge.first_name = "-"
+        end
+
+        it "is not valid" do
+          expect(judge).not_to be_valid
+        end
+      end
+
+      describe "#last_name" do
+        let(:judge) { FactoryBot.create(:judge) }
+
+        context "when the last name contains an alphabetical character" do
+          before do
+            judge.last_name = "Last name"
+          end
+
+          it "is valid" do
+            expect(judge).to be_valid
+          end
+        end
+
+        context "when the last name does not contain an alphabetical character" do
+          before do
+            judge.last_name = "-"
+          end
+
+          it "is not valid" do
+            expect(judge).not_to be_valid
+          end
+        end
+      end
+    end
+
     describe "meets minimum age requirement" do
       context "for new a judge" do
         let(:judge_account) {
