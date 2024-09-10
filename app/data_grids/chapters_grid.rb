@@ -113,6 +113,14 @@ class ChaptersGrid
     legal_contact&.seasons_chapter_affiliation_agreement_is_valid_for&.join(", ")
   end
 
+  column :legal_contact_name, preload: [:legal_contact] do
+    legal_contact&.full_name.presence || "-"
+  end
+
+  column :legal_contact_email_address, preload: [:legal_contact] do
+    legal_contact&.email_address.presence || "-"
+  end
+
   column :visible_on_map, header: "Visible on map"
 
   column :child_safeguarding_policy_and_process, preload: :chapter_program_information do
