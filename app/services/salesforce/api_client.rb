@@ -16,6 +16,9 @@ module Salesforce
       authentication_callback: proc do |response|
         Rails.cache.write(:salesforce_access_token, response["access_token"])
       end,
+      request_headers: {
+        "Sforce-Duplicate-Rule-Header" => "allowSave=true"
+      },
       client_constructor: Restforce,
       logger: Rails.logger,
       error_notifier: Airbrake
@@ -31,7 +34,8 @@ module Salesforce
         client_secret: client_secret,
         refresh_token: refresh_token,
         oauth_token: oauth_token,
-        authentication_callback: authentication_callback
+        authentication_callback: authentication_callback,
+        request_headers: request_headers
       )
       @salesforce_enabled = ActiveModel::Type::Boolean.new.cast(enabled)
       @logger = logger
