@@ -638,7 +638,9 @@ CREATE TABLE public.chapters (
     primary_contact_id bigint,
     visible_on_map boolean DEFAULT true,
     organization_headquarters_location character varying,
-    onboarded boolean DEFAULT false
+    onboarded boolean DEFAULT false,
+    latitude double precision,
+    longitude double precision
 );
 
 
@@ -4696,6 +4698,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240822181726'),
 ('20240827125548'),
 ('20240829193423'),
-('20240830132508');
-
-
+('20240830132508'),
+('20240911191634');
