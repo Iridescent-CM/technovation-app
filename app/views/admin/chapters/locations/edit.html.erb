@@ -1,0 +1,10 @@
+<div class="panel panel--left">
+  <h1>Edit location</h1>
+  <h3>For chapter <span><%= @chapter.name.presence || "TBD" %></span></h3>
+
+  <p>
+    <%= link_to 'Go back to chapter page', admin_chapter_path(@chapter) %>
+  </p>
+
+  <%= render 'signups/location_fields', chapter_id: @chapter.id %>
+</div>

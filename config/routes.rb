@@ -281,6 +281,7 @@ Rails.application.routes.draw do
         controller: "chapters/off_platform_chapter_affiliation_agreement"
       resources :invites, only: :create, controller: "chapter_invites"
       resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
+      resource :location, only: :edit, controller: "chapters/locations"
     end
 
     resources :chapter_ambassadors, only: :index
