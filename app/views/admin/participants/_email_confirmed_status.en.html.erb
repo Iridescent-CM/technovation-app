@@ -1,0 +1,10 @@
+<dt>Email Confirmed</dt>
+<dd>
+  <% if account.email_confirmed? %>
+    <%= web_icon("check-circle icon-green") %>
+    Confirmed
+  <% else %>
+    <%= web_icon("exclamation-circle icon-red") %>
+    Not confirmed. Please contact the dev team.
+  <% end %>
+</dd>
