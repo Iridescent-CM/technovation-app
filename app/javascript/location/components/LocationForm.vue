@@ -105,7 +105,7 @@
           </template>
 
           <template v-else>
-            <label>Please choose the correct terrritory:</label>
+            <label>Please choose the correct territory:</label>
 
             <p class="inline-checkbox">
               <label>
@@ -228,6 +228,12 @@ export default {
     },
 
     teamId: {
+      type: [Number, Boolean],
+      required: false,
+      default: false,
+    },
+
+    chapterId: {
       type: [Number, Boolean],
       required: false,
       default: false,
@@ -572,6 +578,8 @@ export default {
         return `${endpointRoot}?account_id=${this.accountId}`;
       } else if (this.teamId) {
         return `${endpointRoot}?team_id=${this.teamId}`;
+      } else if (this.chapterId) {
+        return `${endpointRoot}?chapter_id=${this.chapterId}`;
       } else {
         return endpointRoot;
       }

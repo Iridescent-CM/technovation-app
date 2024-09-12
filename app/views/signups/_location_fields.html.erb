@@ -1,6 +1,7 @@
 <%
  account_id ||= false
  team_id ||= false
+ chapter_id ||= false
 %>
 
 <div class="vue-enable-location-form">
@@ -8,6 +9,7 @@
     scope-name="<%= current_scope %>"
     :account-id="<%= account_id %>"
     :team-id="<%= team_id %>"
+    :chapter-id="<%= chapter_id %>"
     :handle-confirm="goBack"
   >
   </location-form>
