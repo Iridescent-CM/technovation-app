@@ -89,6 +89,48 @@ class ChaptersGrid
     onboarded? ? "yes" : "no"
   end
 
+  column :remaining_onboarding_tasks,
+    preload: [
+      :chapter_links,
+      :chapter_program_information,
+      :legal_contact,
+      :primary_contact,
+      chapter_program_information: [
+        :low_income_estimate,
+        :meeting_facilitators,
+        :meeting_times,
+        :organization_types,
+        :participant_count_estimate,
+        :program_length
+      ],
+      legal_contact: [
+        :chapter_affiliation_agreement
+      ]
+    ] do
+    incomplete_onboarding_tasks.to_sentence
+  end
+
+  column :completed_onboarding_tasks,
+    preload: [
+      :chapter_links,
+      :chapter_program_information,
+      :legal_contact,
+      :primary_contact,
+      chapter_program_information: [
+        :low_income_estimate,
+        :meeting_facilitators,
+        :meeting_times,
+        :organization_types,
+        :participant_count_estimate,
+        :program_length
+      ],
+      legal_contact: [
+        :chapter_affiliation_agreement
+      ]
+    ] do
+    complete_onboarding_tasks.to_sentence
+  end
+
   column :affiliation_agreement_status, preload: [:legal_contact, legal_contact: :chapter_affiliation_agreement] do
     if affiliation_agreement.present?
       affiliation_agreement_signed? ? "Signed" : "Not signed"
