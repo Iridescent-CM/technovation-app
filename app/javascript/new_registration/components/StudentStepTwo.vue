@@ -7,99 +7,50 @@
         <h2 class="registration-title">Student Information</h2>
 
         <div class="formulate-input-wrapper name-group">
-          <FormulateInput
-            name="firstName"
-            id="firstName"
-            type="text"
-            label="First Name"
-            placeholder="First Name"
-            validation="required"
-            validation-name="First name"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-            class="flex-grow pr-2"
-          />
+          <FormulateInput name="firstName" id="firstName" type="text" label="First Name" placeholder="First Name"
+            :validation="[['required'], ['matches', /[a-za-z]/]]" :validation-messages="{
+              matches: 'Must contain at least one alphabetical character.'
+            }" validation-name="First name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pr-2" />
 
-          <FormulateInput
-            name="lastName"
-            id="lastName"
-            type="text"
-            label="Last Name"
-            placeholder="Last Name"
-            validation="required"
-            validation-name="Last name"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-            class="flex-grow pl-2"
-          />
+          <FormulateInput name="lastName" id="lastName" type="text" label="Last Name" placeholder="Last Name"
+            :validation="[['required'], ['matches', /[a-za-z]/]]" :validation-messages="{
+              matches: 'Must contain at least one alphabetical character.'
+            }" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pl-2" />
         </div>
 
-        <FormulateInput
-          name="dateOfBirth"
-          id="dateOfBirth"
-          type="date"
-          v-model="birthday"
-          label="Birthday"
-          placeholder="Birthday"
-          :validation="birthdayValidation"
-          :validation-messages="{
+        <FormulateInput name="dateOfBirth" id="dateOfBirth" type="date" v-model="birthday" label="Birthday"
+          placeholder="Birthday" :validation="birthdayValidation" :validation-messages="{
             after: 'Please enter a valid birthday.',
             before: 'Please enter a valid birthday.'
-          }"
-          validation-name="Birthday"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-          @change="checkValidation"
-        />
+          }
+            " validation-name="Birthday" @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
 
         <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
           <p class="text-left">
             The cutoff date used for division assignment is <strong>{{ divisionCutoffDate }}</strong>.
-            Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years old by this date.
+            Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years old
+            by this date.
           </p>
         </div>
 
-        <FormulateInput
-          name="studentSchoolName"
-          id="studentSchoolName"
-          type="text"
-          label="School Name"
-          placeholder="School Name"
-          validation="required"
-          validation-name="School name"
-          @keyup="checkValidation"
-          @blur="checkValidation"
-        />
+        <FormulateInput name="studentSchoolName" id="studentSchoolName" type="text" label="School Name"
+          placeholder="School Name" validation="required" validation-name="School name" @keyup="checkValidation"
+          @blur="checkValidation" />
 
         <div id="parent-information">
           <h2 class="registration-title">Parent/Guardian Information</h2>
 
           <div class="formulate-input-wrapper name-group">
-            <FormulateInput
-              name="studentParentGuardianName"
-              id="studentParentGuardianName"
-              type="text"
-              label="Name"
-              placeholder="Parent Name"
-              validation="required"
-              validation-name="Parent name"
-              @keyup="checkValidation"
-              @blur="checkValidation"
-              class="flex-grow pr-2"
-            />
+            <FormulateInput name="studentParentGuardianName" id="studentParentGuardianName" type="text" label="Name"
+              placeholder="Parent Name" validation="required" validation-name="Parent name" @keyup="checkValidation"
+              @blur="checkValidation" class="flex-grow pr-2" />
           </div>
 
-          <FormulateInput
-            name="studentParentGuardianEmail"
-            id="studentParentGuardianEmail"
-            type="email"
+          <FormulateInput name="studentParentGuardianEmail" id="studentParentGuardianEmail" type="email"
             :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Parent Email Address (Optional)'"
             placeholder="Parent Email address"
             :validation="formValues.profileType === 'parent' ? 'required|email' : 'optional|email'"
-            validation-name="Email address"
-            @keyup="checkValidation"
-            @blur="checkValidation"
-          />
+            validation-name="Email address" @keyup="checkValidation" @blur="checkValidation" />
 
           <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2">
             <p class="text-left">
@@ -113,8 +64,8 @@
     <ReferredBy />
 
     <div class="registration-btn-wrapper">
-      <PreviousButton @prev="$emit('prev')"/>
-      <NextButton @next="$emit('next')" :disabled="hasValidationErrors"/>
+      <PreviousButton @prev="$emit('prev')" />
+      <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
     </div>
   </div>
 </template>
@@ -137,7 +88,7 @@ export default {
     PreviousButton,
     NextButton
   },
-  data () {
+  data() {
     return {
       birthday: '',
       hasValidationErrors: true

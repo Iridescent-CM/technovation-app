@@ -8,12 +8,14 @@
 
         <div class="formulate-input-wrapper name-group">
           <FormulateInput name="firstName" id="firstName" type="text" label="First Name" placeholder="First Name"
-            validation="required" validation-name="First name" @keyup="checkValidation" @blur="checkValidation"
-            class="flex-grow pr-2" />
+            :validation="[['required'], ['matches', /[a-za-z]/]]" :validation-messages="{
+              matches: 'Must contain at least one alphabetical character.'
+            }" validation-name="First name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pr-2" />
 
           <FormulateInput name="lastName" id="lastName" type="text" label="Last Name" placeholder="Last Name"
-            validation="required" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation"
-            class="flex-grow pl-2" />
+            :validation="[['required'], ['matches', /[a-za-z]/]]" :validation-messages="{
+              matches: 'Must contain at least one alphabetical character.'
+            }" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pl-2" />
         </div>
 
         <FormulateInput name="gender" :options="genderOptions" type="select" placeholder="Select an option"
@@ -24,7 +26,8 @@
           validation="required|mentor_age|after:01/01/1900|before:01/01/2020" :validation-messages="{
             after: 'Please enter a valid birthday.',
             before: 'Please enter a valid birthday.'
-          }" validation-name="Birthday" @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
+          }
+            " validation-name="Birthday" @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
 
         <FormulateInput name="phoneNumber" id="phoneNumber" type="tel"
           :validation="[['matches', /^([\+\(\s.\-\/\d]{5,30}|)$/]]"
