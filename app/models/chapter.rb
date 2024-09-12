@@ -2,6 +2,9 @@ class Chapter < ActiveRecord::Base
   include ActiveGeocoded
   include OnboardingTasksConcern
 
+  include Casting::Client
+  delegate_missing_methods
+
   belongs_to :primary_contact, class_name: "ChapterAmbassadorProfile", foreign_key: "primary_contact_id", optional: true
 
   has_one :legal_contact, dependent: :destroy
@@ -47,6 +50,12 @@ class Chapter < ActiveRecord::Base
       chapter_info_complete? &&
       location_complete? &&
       program_info_complete?)
+  end
+
+  def assign_address_details(geocoded)
+    self.city = geocoded.city
+    self.state_province = geocoded.state_code
+    self.country = geocoded.country_code
   end
 
   def update_onboarding_status
