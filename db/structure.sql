@@ -157,7 +157,6 @@ CREATE TABLE public.accounts (
     geocoding_fixed_at timestamp without time zone,
     terms_agreed_at timestamp without time zone,
     parent_registered boolean DEFAULT false NOT NULL,
-    learn_worlds_user_id character varying,
     meets_minimum_age_requirement boolean,
     background_check_exemption boolean DEFAULT false NOT NULL,
     phone_number character varying
@@ -4699,4 +4698,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240827125548'),
 ('20240829193423'),
 ('20240830132508'),
-('20240911191634');
+('20240911191634'),
+('20240912161211');
+
+

@@ -11,7 +11,7 @@
 
           <h3 class="margin--t-xlarge margin--b-none">Beginner Division</h3>
           <p>
-            <a href="/learnworlds" class="button" target="_blank">
+            <a href="https://beginner.technovationchallenge.org/" class="button" target="_blank">
               Go to Beginner Lessons
             </a>
           </p>
