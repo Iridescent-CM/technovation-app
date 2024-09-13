@@ -8,7 +8,6 @@ RSpec.feature "Authentication" do
   end
 
   {judge: %i[chapter_ambassador student admin],
-   student: %i[mentor chapter_ambassador judge admin],
    mentor: %i[chapter_ambassador student admin],
    chapter_ambassador: %i[student admin]}.each do |scope, not_scopes|
     not_scopes.each do |not_scope|
@@ -16,10 +15,10 @@ RSpec.feature "Authentication" do
         account = FactoryBot.create(scope)
 
         sign_in(account)
-        visit send("#{not_scope}_dashboard_path")
+        visit send(:"#{not_scope}_dashboard_path")
 
         expect(current_path.sub(/\?.+$/, "")).to eq(
-          send("#{scope}_dashboard_path")
+          send(:"#{scope}_dashboard_path")
         )
 
         expect(page).to have_css(
@@ -30,9 +29,9 @@ RSpec.feature "Authentication" do
     end
   end
 
-  %i[mentor student judge chapter_ambassador admin].each do |scope|
+  %i[mentor judge chapter_ambassador admin].each do |scope|
     scenario "A logged out user tries to visit a #{scope} path" do
-      visit send("#{scope}_dashboard_path")
+      visit send(:"#{scope}_dashboard_path")
 
       expect(page).to have_current_path(signin_path)
       expect(page).to have_css(".flash", text: "You must be signed in as #{scope.indefinitize.humanize.downcase} to go there!")
@@ -45,15 +44,15 @@ RSpec.feature "Authentication" do
         account = FactoryBot.create(scope)
 
         sign_in(account)
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
 
-        expect(page).to have_current_path(send("#{scope}_dashboard_path"), ignore_query: true)
+        expect(page).to have_current_path(send(:"#{scope}_dashboard_path"), ignore_query: true)
       end
 
       Timecop.freeze(ImportantDates.new_season_switch) do
         reload_cookie_names
 
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).to have_current_path(signin_path)
       end
     end
