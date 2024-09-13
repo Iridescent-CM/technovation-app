@@ -1,0 +1,22 @@
+<div class="prose">
+  <p>
+    Unfortunately, there are no chapters currently active in your country, but there are
+    many resources on the Technovation website to help you complete the program.
+  </p>
+
+  <p class="mb-2">
+   Check out these options:
+  </p>
+
+  <ul>
+    <li class="my-0">Connect with a mentor</li>
+    <li class="my-0">Review our online curriculum</li>
+    <li class="my-0">Find teammates to work with on your project</li>
+  </ul>
+
+  <p>
+    Are you already working with a chapter outside your region?
+    Contact us at <%= mail_to ENV.fetch("HELP_EMAIL"), ENV.fetch("HELP_EMAIL"), class: "tw-link" %>
+    and we'll connect your account with that chapter.
+  </p>
+</div>

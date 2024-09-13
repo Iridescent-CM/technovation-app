@@ -394,6 +394,7 @@ Rails.application.routes.draw do
   end
 
   resource :terms_agreement, only: [:edit, :update]
+  resource :chapter_selection
 
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
