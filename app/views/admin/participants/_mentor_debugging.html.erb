@@ -11,6 +11,8 @@
   </p>
 
   <dl>
+    <%= render "admin/participants/email_confirmed_status", account: profile.account %>
+
     <dt>Mentor training</dt>
     <dd class="mentor-training">
       <% if profile.training_complete? %>
