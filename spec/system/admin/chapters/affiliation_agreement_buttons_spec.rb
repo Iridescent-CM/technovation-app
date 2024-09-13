@@ -19,6 +19,21 @@ RSpec.describe "Admin 'Chapter Affiliation Agreement' buttons" do
 
         expect(page).to have_button("Send Chapter Affiliation Agreement")
       end
+
+      it "displays the section to create an off-platform affiliation agreeemnt" do
+        visit admin_chapter_path(chapter)
+
+        expect(page).to have_content("Create Off-platform Affiliation Agreement")
+        expect(page).to have_select(
+          nil,
+          with_options: [
+            "Valid for 1 season",
+            "Valid for 2 seasons",
+            "Valid for 3 seasons"
+          ]
+        )
+        expect(page).to have_button("Submit")
+      end
     end
 
     context "when the legal contact's chapter affiliation agreement has not been signed" do

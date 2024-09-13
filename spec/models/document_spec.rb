@@ -1,23 +1,31 @@
 require "rails_helper"
 
 RSpec.describe Document do
-  let(:document) { Document.new(sent_at: sent_at) }
-  let(:sent_at) { Time.now }
+  let(:document) { Document.new(status: document_status) }
+  let(:document_status) { "void" }
 
-  describe "#sent?" do
-    context "when the document has a sent_at timestamp" do
-      let(:sent_at) { 1.day.ago }
+  describe "#complete?" do
+    context "when the document has been signed" do
+      let(:document_status) { "signed" }
 
       it "returns true" do
-        expect(document.sent?).to eq(true)
+        expect(document.complete?).to eq(true)
       end
     end
 
-    context "when the document does not have a sent_at timestamp" do
-      let(:sent_at) { nil }
+    context "when it's an off-platform document" do
+      let(:document_status) { "off-platform" }
+
+      it "returns true" do
+        expect(document.complete?).to eq(true)
+      end
+    end
+
+    context "when the document hasn't been signed and it's not an off-platform document" do
+      let(:document_status) { "sent" }
 
       it "returns false" do
-        expect(document.sent?).to eq(false)
+        expect(document.complete?).to eq(false)
       end
     end
   end

@@ -12,7 +12,7 @@ RSpec.describe Chapter do
 
   describe "#incomplete_onboarding_tasks" do
     before do
-      allow(chapter).to receive(:affiliation_agreement_signed?).and_return(true)
+      allow(chapter).to receive(:affiliation_agreement_complete?).and_return(true)
       allow(chapter).to receive(:chapter_info_complete?).and_return(true)
       allow(chapter).to receive(:location_complete?).and_return(true)
       allow(chapter).to receive(:program_info_complete?).and_return(true)
@@ -26,7 +26,7 @@ RSpec.describe Chapter do
 
     context "when the chapter affiliation has not been signed" do
       before do
-        allow(chapter).to receive(:affiliation_agreement_signed?).and_return(false)
+        allow(chapter).to receive(:affiliation_agreement_complete?).and_return(false)
       end
 
       it "returns returns an array that contains 'Chapter Affiliation Agreement'" do
@@ -78,13 +78,13 @@ RSpec.describe Chapter do
             .and_return(chapter_program_information)
         end
 
-        let(:affiliation_agreement) { instance_double(Document, signed?: affiliation_agreement_signed) }
-        let(:affiliation_agreement_signed) { true }
+        let(:affiliation_agreement) { instance_double(Document, complete?: affiliation_agreement_complete) }
+        let(:affiliation_agreement_complete) { true }
         let(:chapter_program_information) { instance_double(ChapterProgramInformation, complete?: program_info_complete) }
         let(:program_info_complete) { true }
 
         context "when all onboarding steps have been completed" do
-          let(:affiliation_agreement_signed) { true }
+          let(:affiliation_agreement_complete) { true }
           let(:program_info_complete) { true }
 
           before do
@@ -97,7 +97,7 @@ RSpec.describe Chapter do
         end
 
         context "when the affiliation agreement has not been signed" do
-          let(:affiliation_agreement_signed) { false }
+          let(:affiliation_agreement_complete) { false }
 
           before do
             chapter.save
@@ -163,25 +163,25 @@ RSpec.describe Chapter do
     end
   end
 
-  describe "#affiliation_agreement_signed?" do
+  describe "#affiliation_agreement_complete?" do
     context "when an affiliation agreement exists" do
       before do
-        allow(chapter).to receive_message_chain(:affiliation_agreement, :signed?).and_return(affiliation_agreement_signed)
+        allow(chapter).to receive_message_chain(:affiliation_agreement, :complete?).and_return(affiliation_agreement_complete)
       end
 
       context "when the affiliation agreement has been signed" do
-        let(:affiliation_agreement_signed) { true }
+        let(:affiliation_agreement_complete) { true }
 
         it "returns true" do
-          expect(chapter.affiliation_agreement_signed?).to eq(true)
+          expect(chapter.affiliation_agreement_complete?).to eq(true)
         end
       end
 
       context "when the affiliation agreement has not been signed" do
-        let(:affiliation_agreement_signed) { false }
+        let(:affiliation_agreement_complete) { false }
 
         it "returns false" do
-          expect(chapter.affiliation_agreement_signed?).to eq(false)
+          expect(chapter.affiliation_agreement_complete?).to eq(false)
         end
       end
     end
@@ -192,7 +192,7 @@ RSpec.describe Chapter do
       end
 
       it "returns false" do
-        expect(chapter.affiliation_agreement_signed?).to eq(false)
+        expect(chapter.affiliation_agreement_complete?).to eq(false)
       end
     end
   end

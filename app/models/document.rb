@@ -4,10 +4,19 @@ class Document < ActiveRecord::Base
   before_save :set_status
   after_update -> { signer.update_onboarding_status }
 
-  enum status: {sent: "sent", signed: "signed", voided: "voided"}
+  enum status: {
+    sent: "sent",
+    signed: "signed",
+    "off-platform": "off-platform",
+    voided: "voided"
+  }
 
   def sent?
     sent_at.present?
+  end
+
+  def complete?
+    signed? || off_platform?
   end
 
   private
