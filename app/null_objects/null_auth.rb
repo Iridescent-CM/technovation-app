@@ -23,6 +23,18 @@ class NullAuth < NullObject
     false
   end
 
+  def assigned_to_chapter?
+    false
+  end
+
+  def valid_address?
+    false
+  end
+
+  def valid_coordinates?
+    false
+  end
+
   def scope_name
     "application"
   end
