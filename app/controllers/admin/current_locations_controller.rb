@@ -1,10 +1,12 @@
 module Admin
   class CurrentLocationsController < AdminController
     def show
-      record = if account_id = params.fetch(:account_id) { false }
-        Account.find(account_id)
-      else
+      record = if params.has_key?(:account_id)
+        Account.find(params.fetch(:account_id))
+      elsif params.has_key?(:team_id)
         Team.find(params.fetch(:team_id))
+      elsif params.has_key?(:chapter_id)
+        Chapter.find(params.fetch(:chapter_id))
       end
 
       state = FriendlySubregion.call(record, prefix: false)

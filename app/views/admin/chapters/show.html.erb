@@ -20,7 +20,18 @@
             </dd>
 
             <dt>Location</dt>
-            <dd><%= @chapter.address_details.presence || "-" %></dd>
+            <dd>
+              <%= @chapter.address_details.presence || "-" %>
+
+              <p>
+                <%= link_to "Edit location",
+                  edit_admin_chapter_location_path(
+                    @chapter,
+                    return_to: admin_chapter_path(@chapter)
+                  ),
+                  class: "button secondary small" %>
+              </p>
+            </dd>
 
             <dt>Public Map Visibility</dt>
             <dd>
