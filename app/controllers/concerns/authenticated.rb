@@ -5,7 +5,7 @@ module Authenticated
     before_action :unauthorized!, if: -> {
       !current_session.authenticated? and
         current_account.authenticated? and
-        current_account.send("#{current_scope}_profile").nil?
+        current_account.send(:"#{current_scope}_profile").nil?
     }
 
     before_action :unauthenticated!, if: -> {

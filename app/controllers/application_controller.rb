@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include CookiesHelper
   include ForceTermsAgreement
   include ForceLocation
+  include ForceChapterSelection
 
   protect_from_forgery with: :exception
 
@@ -82,7 +83,7 @@ class ApplicationController < ActionController::Base
 
   def require_unauthenticated
     if current_account.authenticated?
-      redirect_to send("#{current_account.scope_name}_dashboard_path"),
+      redirect_to send(:"#{current_account.scope_name}_dashboard_path"),
         notice: t("controllers.application.already_authenticated")
     else
       true
@@ -112,7 +113,7 @@ class ApplicationController < ActionController::Base
     invite.opened!
 
     @profile = instance_variable_set(
-      "@#{scope}_profile",
+      :"@#{scope}_profile",
       "#{scope}_profile".camelize.constantize.new(
         account_attributes: {email: invite.email}
       )

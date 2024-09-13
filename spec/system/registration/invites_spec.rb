@@ -65,6 +65,7 @@ RSpec.describe "Using registration invite codes", :js do
 
       after :each do
         ChapterAmbassadorProfile.update_all(chapter_id: nil)
+        StudentProfile.update_all(chapter_id: nil)
         UserInvitation.destroy_all
         LegalContact.destroy_all
         ChapterProgramInformation.destroy_all

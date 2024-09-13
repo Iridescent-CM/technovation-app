@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Unpublishing a submission", :js do
-  context "when a submisison is complete" do
+  context "when a submission is complete" do
     let!(:submission) { FactoryBot.create(:submission, :complete) }
 
     context "as a super admin" do
