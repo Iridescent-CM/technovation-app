@@ -13,6 +13,7 @@ RSpec.describe Salesforce::ApiClient do
       refresh_token: salesforce_refresh_token,
       oauth_token: salesforce_oauth_token,
       authentication_callback: salesforce_authentication_callback,
+      request_headers: salesforce_request_headers,
       enabled: salesforce_enabled,
       client_constructor: client_constructor,
       logger: logger,
@@ -28,6 +29,7 @@ RSpec.describe Salesforce::ApiClient do
   let(:salesforce_oauth_token) { "aaaaa-bbbb-ccc" }
   let(:salesforce_refresh_token) { "11111-22222-3333333" }
   let(:salesforce_authentication_callback) { double("authentication_callback") }
+  let(:salesforce_request_headers) { {} }
   let(:salesforce_enabled) { true }
   let(:client_constructor) { class_double(Restforce).as_stubbed_const }
   let(:logger) { double("Logger") }
@@ -42,7 +44,8 @@ RSpec.describe Salesforce::ApiClient do
       client_secret: salesforce_client_secret,
       refresh_token: salesforce_refresh_token,
       oauth_token: salesforce_oauth_token,
-      authentication_callback: salesforce_authentication_callback
+      authentication_callback: salesforce_authentication_callback,
+      request_headers: salesforce_request_headers
     ).and_return(salesforce_client)
 
     allow(logger).to receive(:info)
