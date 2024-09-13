@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :student_profile, aliases: [:student, :student_account] do
     account
+    chapter
 
     parent_guardian_name { "Parenty Guardiana" }
     parent_guardian_email { "parentguardian@example.com" }
@@ -152,7 +153,7 @@ FactoryBot.define do
         country: e.country,
         date_of_birth: e.date_of_birth
       }.each do |k, v|
-        s.account.send("#{k}=", v)
+        s.account.send(:"#{k}=", v)
       end
     end
 
