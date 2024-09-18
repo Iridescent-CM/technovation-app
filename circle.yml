@@ -202,21 +202,21 @@ jobs:
           fingerprints:
             - "32:c4:d8:7f:60:e0:56:7d:e9:ee:f5:04:e1:9c:2d:4e"
 
-      - deploy:
+      - run:
           name: Deploy Preview to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "preview" ]; then
               git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-preview.git preview:master
             fi
 
-      - deploy:
+      - run:
           name: Deploy QA to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "qa" ]; then
               git push https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-qa.git qa:master
             fi
 
-      - deploy:
+      - run:
           name: Deploy Production to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "production" ]; then
