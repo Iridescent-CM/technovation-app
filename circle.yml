@@ -1,13 +1,13 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@1.4.4
 
 jobs:
   build:
     working_directory: ~/technovation-girls
     docker:
-      - image: cimg/ruby:3.1.2-browsers:current
+      - image: cimg/ruby:3.1.2-browsers
         auth:
           username: technovationdocker
           password: $DOCKERHUB_PASSWORD
