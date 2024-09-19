@@ -7,7 +7,7 @@ jobs:
   build:
     working_directory: ~/technovation-girls
     docker:
-      - image: cimg/ruby:3.1.2-browsers
+      - image: cimg/ruby:3.1.2-browsers:current
         auth:
           username: technovationdocker
           password: $DOCKERHUB_PASSWORD
