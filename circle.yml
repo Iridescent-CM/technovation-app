@@ -83,7 +83,7 @@ jobs:
           DOCUSIGN_CHAPTER_VOLUNTEER_AGREEMENT_TEMPLATE_ID: n-a
           DOCUSIGN_HMAC_SECRET_KEY: n-a
           ENABLE_HOMEPAGE_BANNER: true
-          FINALISTS_URL: "https://some/url"
+          FINALISTS_URL: "https://some/urls"
           FILESTACK_API_KEY: n-a
           GOOGLE_ANALYTICS_ID: n-a
           GOOGLE_MAPS_API_KEY: n-a
