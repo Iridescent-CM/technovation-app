@@ -91,6 +91,7 @@ jobs:
           GOOGLE_TIMEZONE_API_KEY: n-a
           HELP_EMAIL: support@technovation.org
           HOST_DOMAIN: localhost:31337
+          JAVASCRIPT_DRIVER: selenium_headless
           JUDGE_MAXIMUM_NUMBER_OF_RECUSALS: 15
           JUDGE_SLACK_SIGNUP_URL: n-a
           JUDGE_TRAINING_URL: n-a
