@@ -123,8 +123,8 @@ jobs:
     steps:
       - checkout
 
-      - run: which google-chrome || echo "google-chrome not found"
-      - run: which chromium-browser || echo "chromium-browser not found"
+      - run: dpkg -l | grep -i chrome
+
 
       - restore_cache:
           name: Restore cached gems
