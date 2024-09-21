@@ -122,8 +122,9 @@ jobs:
 
     steps:
       - checkout
-      - browser-tools/install-browser-tools:
-        chrome-version: 116.0.5845.96 # TODO: remove when chromedriver downloads are fixed
+
+      - run: google-chrome --version
+      - run: chromedriver --version
 
       - restore_cache:
           name: Restore cached gems
