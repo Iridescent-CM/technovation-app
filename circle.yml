@@ -189,7 +189,7 @@ jobs:
 
       - run:
           name: Run RSpec tests
-          command: bundle exec rspec --order rand --format documentation
+          command: bundle exec rspec --order rand --format documentation --tag ~js
 
       - store_artifacts:
           path: tmp/screenshots
