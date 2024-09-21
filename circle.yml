@@ -123,9 +123,6 @@ jobs:
     steps:
       - checkout
 
-      - run: dpkg -l | grep -i chrome
-
-
       - restore_cache:
           name: Restore cached gems
           keys:
