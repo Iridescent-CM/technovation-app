@@ -548,7 +548,7 @@ class Account < ActiveRecord::Base
 
   validates :first_name, :last_name,
     presence: true,
-    format: {with: /[A-Za-z]/, message: "must contain at least one alphabetical character"}
+    format: {with: /\A[^.-].*/, message: "must start with an alphabetical character"}
 
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador?) && new_record? }
