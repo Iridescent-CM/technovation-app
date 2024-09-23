@@ -59,20 +59,8 @@ export default {
     return {
       resourceLinks: [
         {
-          heading: "Beginner Students",
-          url: "https://beginner.technovationchallenge.org/",
-          text: "Open the Curriculum",
-        },
-
-        {
-          heading: "Junior Students",
-          url: "https://technovationchallenge.org/curriculum-landing-page/",
-          text: "Open the Curriculum",
-        },
-
-        {
-          heading: "Senior Students",
-          url: "https://technovationchallenge.org/curriculum-landing-page/",
+          heading: "Student Curriculum",
+          url: "https://technovationchallenge.org/technovation-curriculum/",
           text: "Open the Curriculum",
         },
 
