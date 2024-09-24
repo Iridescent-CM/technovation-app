@@ -56,6 +56,9 @@ class Account < ActiveRecord::Base
 
   belongs_to :division, required: false
 
+  has_many :chapter_assignments, class_name: "ChapterAccountAssignment"
+  has_many :chapters, through: :chapter_assignments
+
   has_many :certificates, dependent: :destroy
 
   has_many :current_certificates, -> { current }, class_name: "Certificate"
