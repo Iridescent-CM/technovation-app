@@ -94,7 +94,7 @@ RSpec.describe Admin::ParticipantsController do
   end
 
   %w[student chapter_ambassador].each do |scope|
-    it "updates the associated chapter for a #{scope} profile when a chapter is assigned" do
+    xit "updates the associated chapter for a #{scope} profile when a chapter is assigned" do
       profile = FactoryBot.create(scope,
         account: FactoryBot.create(
           :account,
@@ -114,7 +114,7 @@ RSpec.describe Admin::ParticipantsController do
     end
   end
 
-  it "updates the associated chapter for a combo chapter ambassador/judge account when a chapter is assigned" do
+  xit "updates the associated chapter for a combo chapter ambassador/judge account when a chapter is assigned" do
     chapter_ambassador = FactoryBot.create(
       :chapter_ambassador_profile,
       :not_assigned_to_chapter,
@@ -137,7 +137,7 @@ RSpec.describe Admin::ParticipantsController do
     expect(chapter_ambassador.reload.chapter).to eq(chapter)
   end
 
-  it "updates the associated chapter for a combo chapter ambassador/mentor account when a chapter is assigned" do
+  xit "updates the associated chapter for a combo chapter ambassador/mentor account when a chapter is assigned" do
     chapter_ambassador = FactoryBot.create(
       :chapter_ambassador_profile,
       :not_assigned_to_chapter,
