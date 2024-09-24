@@ -142,6 +142,16 @@ RSpec.describe Account do
         end
       end
 
+      context "when the first name contains a special character not at the beginning" do
+        before do
+          judge.first_name = "Billie-Jean"
+        end
+
+        it "is valid" do
+          expect(judge).to be_valid
+        end
+      end
+
       describe "#last_name" do
         let(:judge) { FactoryBot.create(:judge) }
 
@@ -162,6 +172,16 @@ RSpec.describe Account do
 
           it "is not valid" do
             expect(judge).not_to be_valid
+          end
+        end
+
+        context "when the last name contains a special character not at the beginning" do
+          before do
+            judge.last_name = "A."
+          end
+
+          it "is valid" do
+            expect(judge).to be_valid
           end
         end
       end

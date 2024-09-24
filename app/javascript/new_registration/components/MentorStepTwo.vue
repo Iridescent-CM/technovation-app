@@ -8,13 +8,13 @@
 
         <div class="formulate-input-wrapper name-group">
           <FormulateInput name="firstName" id="firstName" type="text" label="First Name" placeholder="First Name"
-            :validation="[['required'], ['matches', /[a-zA-Z]/]]" :validation-messages="{
-              matches: 'Must contain at least one alphabetical character.'
+            :validation="[['required'], ['matches', /^[^.-].*/]]" :validation-messages="{
+              matches: 'Must start with an alphabetical character.'
             }" validation-name="First name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pr-2" />
 
           <FormulateInput name="lastName" id="lastName" type="text" label="Last Name" placeholder="Last Name"
-            :validation="[['required'], ['matches', /[a-zA-Z]/]]" :validation-messages="{
-              matches: 'Must contain at least one alphabetical character.'
+            :validation="[['required'], ['matches', /^[^.-].*/]]" :validation-messages="{
+              matches: 'Must start with an alphabetical character.'
             }" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pl-2" />
         </div>
 
@@ -35,8 +35,8 @@
           @keyup="checkValidation" @blur="checkValidation" />
 
         <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
-          Your phone number will be shared with the Technovation Ambassador for your region and may be used to contact you
-          regarding volunteer opportunities. Providing your phone number is optional.
+          Your phone number will be shared with the Technovation Ambassador for your region and may be used to contact
+          you regarding volunteer opportunities. Providing your phone number is optional.
         </p>
 
         <FormulateInput name="mentorSchoolCompanyName" id="mentorSchoolCompanyName" type="text" label="Company Name"
@@ -52,8 +52,8 @@
           </h4>
 
           <FormulateInput name="mentorTypes" id="mentorTypes" type="checkbox" :options="mentorTypeOptions"
-            validation="required" :validation-messages="{ required: 'This field is required.' }" @keyup="checkValidation"
-            @blur="checkValidation" @input="checkValidation" />
+            validation="required" :validation-messages="{ required: 'This field is required.' }"
+            @keyup="checkValidation" @blur="checkValidation" @input="checkValidation" />
         </div>
 
         <div class="mentor-information" v-show="mentorProfileExpertiseOptions.length > 0">

@@ -8,13 +8,13 @@
 
         <div class="formulate-input-wrapper name-group">
           <FormulateInput name="firstName" id="firstName" type="text" label="First Name" placeholder="First Name"
-            :validation="[['required'], ['matches', /[a-zA-Z]/]]" :validation-messages="{
-              matches: 'Must contain at least one alphabetical character.'
+            :validation="[['required'], ['matches', /^[^.-].*/]]" :validation-messages="{
+              matches: 'Must start with an alphabetical character.'
             }" validation-name="First name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pr-2" />
 
           <FormulateInput name="lastName" id="lastName" type="text" label="Last Name" placeholder="Last Name"
-            :validation="[['required'], ['matches', /[a-zA-Z]/]]" :validation-messages="{
-              matches: 'Must contain at least one alphabetical character.'
+            :validation="[['required'], ['matches', /^[^.-].*/]]" :validation-messages="{
+              matches: 'Must start with an alphabetical character.'
             }" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pl-2" />
         </div>
 
@@ -28,8 +28,8 @@
         <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
           <p class="text-left">
             The cutoff date used for division assignment is <strong>{{ divisionCutoffDate }}</strong>.
-            Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years old
-            by this date.
+            Based on the birthday you entered, {{ pronoun }} will be <strong>{{ ageByDivisionCutoff }}</strong> years
+            old by this date.
           </p>
         </div>
 
