@@ -146,6 +146,8 @@ class MentorProfile < ActiveRecord::Base
 
   has_many :jobs, as: :owner
 
+  has_many :chapter_assignments, as: :profile, class_name: "ChapterAccountAssignment"
+
   reverse_geocoded_by "accounts.latitude", "accounts.longitude"
 
   before_validation -> { enable_searchability }, on: :update
@@ -384,4 +386,3 @@ end
 def background_check_invitation_expired_or_error?
   background_check.invitation_expired? || background_check.error?
 end
-

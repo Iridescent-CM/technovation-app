@@ -16,7 +16,7 @@
 
             <dt>Primary Contact</dt>
             <dd>
-              <%= @chapter.primary_contact.present? ? (link_to @chapter.primary_contact.full_name, admin_participant_path(@chapter.primary_contact.account)) : "Not Set" %>
+              <%= @chapter.primary_contact.present? ? (link_to @chapter.primary_contact.full_name, admin_participant_path(@chapter.primary_contact)) : "Not Set" %>
             </dd>
 
             <dt>Location</dt>

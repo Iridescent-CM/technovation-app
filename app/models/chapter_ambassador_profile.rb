@@ -12,7 +12,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   }
 
   belongs_to :account
-  belongs_to :chapter, optional: true
   accepts_nested_attributes_for :account
   validates_associated :account
 
@@ -29,6 +28,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   validates :job_title, presence: true
 
+  has_one :chapter, through: :account, source: :chapters
+
   has_one :chapter_volunteer_agreement, -> { where(active: true) }, class_name: "Document", as: :signer
   has_many :documents, as: :signer
 
@@ -40,6 +41,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   has_many :messages, as: :sender
   has_many :multi_messages, as: :sender
 
+  has_many :chapter_assignments, as: :profile, class_name: "ChapterAccountAssignment"
   has_many :chapter_links, dependent: :destroy
 
   has_one :community_connection

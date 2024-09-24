@@ -101,6 +101,8 @@ class StudentProfile < ActiveRecord::Base
 
   has_many :jobs, as: :owner
 
+  has_many :chapter_assignments, as: :profile, class_name: "ChapterAccountAssignment"
+
   after_commit :reset_parent, on: :update
 
   after_touch { team.touch }

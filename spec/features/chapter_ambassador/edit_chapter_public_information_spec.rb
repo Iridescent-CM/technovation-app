@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.feature "Chapter ambassadors edit public chapter information" do
-  let(:chapter) { FactoryBot.create(:chapter) }
+  let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
+  let(:chapter) { FactoryBot.create(:chapter, primary_contact: chapter_ambassador.account) }
 
   before do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador, chapter: chapter)
     sign_in(chapter_ambassador)
     click_link "Chapter Profile"
     click_link "Public Info"
@@ -35,7 +35,6 @@ RSpec.feature "Chapter ambassadors edit public chapter information" do
 
     expect(page).to have_css(".flash.flash--alert", text: "Error updating chapter details.")
   end
-
 
   scenario "Chapter ambassador changes their public chapter visibility status to 'do not display'" do
     expect(page).to have_content "This chapter is displayed on the map of chapters on the Technovation website"

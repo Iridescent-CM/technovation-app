@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.feature "Admins managing chapters", :js do
   before do
     sign_in(:admin)
+
+    Chapter.destroy_all
   end
 
   scenario "Admin add a chapter" do

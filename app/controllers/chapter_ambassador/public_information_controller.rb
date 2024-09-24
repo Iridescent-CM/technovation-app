@@ -25,7 +25,7 @@ module ChapterAmbassador
       params.require(:chapter).permit(
         :name,
         :summary,
-        :primary_contact_id,
+        :primary_account_id,
         :visible_on_map,
         chapter_links_attributes: [
           :id,

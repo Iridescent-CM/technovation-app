@@ -5,12 +5,17 @@ class Chapter < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
-  belongs_to :primary_contact, class_name: "ChapterAmbassadorProfile", foreign_key: "primary_contact_id", optional: true
+  belongs_to :primary_contact, class_name: "Account", foreign_key: "primary_account_id", optional: true
 
   has_one :legal_contact, dependent: :destroy
   has_one :chapter_program_information, dependent: :destroy
 
-  has_many :chapter_ambassador_profiles
+  has_many :chapter_account_assignments
+  has_many :accounts, through: :chapter_account_assignments
+  has_many :chapter_ambassadors, -> { where "profile_type = 'ChapterAmbassadorProfile'" },
+    through: :chapter_account_assignments,
+    source: :account
+
   has_many :chapter_links, dependent: :destroy
   has_many :student_profiles
   has_many :registration_invites, class_name: "UserInvitation", dependent: :destroy
