@@ -68,7 +68,7 @@ RSpec.describe Chapter do
   context "callbacks" do
     context "#after_update" do
       describe "updating the onboarded status" do
-        let(:chapter) { FactoryBot.create(:chapter, primary_contact: chapter_ambassador) }
+        let(:chapter) { FactoryBot.create(:chapter, primary_contact: chapter_ambassador.account) }
         let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
 
         before do
@@ -209,13 +209,13 @@ RSpec.describe Chapter do
 
     let(:chapter_name) { "Sample Chapter" }
     let(:chapter_summary) { "Sample chapter summary." }
-    let(:chapter_primary_contact) { ChapterAmbassadorProfile.new }
+    let(:chapter_primary_contact) { Account.new }
     let(:chapter_links) { [ChapterLink.new] }
 
     context "when all of the chapter info has been completed" do
       let(:chapter_name) { "Technovation Tokyo" }
       let(:chapter_summary) { "We are Technovation Tokyo." }
-      let(:chapter_primary_contact) { ChapterAmbassadorProfile.new }
+      let(:chapter_primary_contact) { Account.new }
       let(:chapter_links) { [ChapterLink.new] }
 
       it "returns true" do
