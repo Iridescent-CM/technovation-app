@@ -23,7 +23,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within("#find-team") { click_link "Find a team" }
+    within("#find-team") { click_link "Find a team", class: "button" }
 
     expect(page).to have_css(
       ".search-result-head",
@@ -52,7 +52,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within("#find-team") { click_link "Find a team" }
+    within("#find-team") { click_link "Find a team", class: "button" }
 
     fill_in "text", with: "araw" # partial match
     fill_in "nearby", with: "anywhere"
@@ -75,7 +75,7 @@ RSpec.feature "Mentors find a team" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    within("#find-team") { click_link "Find a team" }
+    within("#find-team") { click_link "Find a team", class: "button" }
 
     check "Junior"
     uncheck "Senior"
@@ -97,7 +97,7 @@ RSpec.feature "Mentors find a team" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    within("#find-team") { click_link "Find a team" }
+    within("#find-team") { click_link "Find a team", class: "button" }
 
     check "Senior"
     uncheck "Junior"

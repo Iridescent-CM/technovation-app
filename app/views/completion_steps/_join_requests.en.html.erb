@@ -2,6 +2,14 @@
 
 <p>Use our team search to find a team and ask to join them!</p>
 
+<% if current_scope == "mentor" %>
+  <p>To learn more about finding a team, review the
+    <%= link_to "Find a team",
+      "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-find-a-team/" %>
+    lesson from the Mentor Training.
+  </p>
+<% end %>
+
 <%= link_to(
   t("views.profile_requirements.create_join_team.links.join.text"),
   send("new_#{current_scope}_team_search_path"),

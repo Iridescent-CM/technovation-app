@@ -16,7 +16,7 @@ RSpec.feature "Mentors join a team" do
 
   scenario "request to join a team" do
     Timecop.freeze(day_before_qfs) do
-      within("#find-team") { click_link "Find a team" }
+      within("#find-team") { click_link "Find a team", class: "button" }
 
       click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"
@@ -41,7 +41,7 @@ RSpec.feature "Mentors join a team" do
 
       join_request.deleted!
 
-      within("#find-team") { click_link "Find a team" }
+      within("#find-team") { click_link "Find a team", class: "button" }
 
       click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"

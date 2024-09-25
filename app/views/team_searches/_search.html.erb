@@ -6,6 +6,13 @@
       <h1 class="page-heading"><%= t("views.team_searches.new.title") %></h1>
 
       <p><%= t("views.team_searches.new.intro") %></p>
+      <% if current_scope == "mentor" %>
+        <p>To learn more about finding a team, review the
+          <%= link_to "Find a team",
+            "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-find-a-team/" %>
+          lesson from the Mentor Training.
+        </p>
+      <% end %>
     </div>
   </div>
 </div>
