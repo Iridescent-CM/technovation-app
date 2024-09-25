@@ -9,7 +9,7 @@ class TeamsGrid
     Team
   end
 
-  column :id, header: "Team ID", if: ->(g) { g.admin }
+  column :id, header: "Team ID"
 
   column :name, mandatory: true
 
