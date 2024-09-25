@@ -203,12 +203,21 @@ class ChapterAmbassadorsGrid
 
   filter :onboarded,
     :enum,
+    header: "Onboarded (includes Chapter onboarding)",
     select: [
       ["Yes, fully onboarded", true],
       ["No, still onboarding", false]
     ],
     filter_group: "common" do |value, scope, grid|
-      scope.where(chapter_ambassador_profiles: {onboarded: value})
+      if value == "true"
+        scope
+          .where(chapter_ambassador_profiles: {onboarded: value})
+          .where(chapter: {onboarded: value})
+      else
+        scope
+          .where(chapter_ambassador_profiles: {onboarded: value})
+          .or(scope.where(chapter: {onboarded: value}))
+      end
     end
 
   filter :season,
