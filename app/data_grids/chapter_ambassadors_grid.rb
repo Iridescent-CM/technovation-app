@@ -80,12 +80,74 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile.training_completed? ? "Yes" : "No"
   end
 
-  column :remaining_onboarding_tasks do
+  column :remaining_chapter_ambassador_onboarding_tasks,
+    preload: [
+      :background_check,
+      chapter_ambassador_profile: [
+        :chapter_volunteer_agreement
+      ]
+    ] do
     chapter_ambassador_profile.incomplete_onboarding_tasks.to_sentence
   end
 
-  column :completed_onboarding_tasks do
+  column :remaining_chapter_onboarding_tasks,
+    preload: [
+      chapter_ambassador_profile: [
+        chapter: [
+          :chapter_links,
+          :chapter_program_information,
+          :legal_contact,
+          :primary_contact,
+          chapter_program_information: [
+            :low_income_estimate,
+            :meeting_facilitators,
+            :meeting_times,
+            :organization_types,
+            :participant_count_estimate,
+            :program_length
+          ],
+          legal_contact: [
+            :chapter_affiliation_agreement
+          ]
+        ]
+      ]
+    ] do
+    chapter_ambassador_profile.chapter&.incomplete_onboarding_tasks&.to_sentence
+  end
+
+  column :completed_chapter_ambassador_onboarding_tasks,
+    preload: [
+      :background_check,
+      chapter_ambassador_profile: [
+        :chapter_volunteer_agreement
+      ]
+    ] do
     chapter_ambassador_profile.complete_onboarding_tasks.to_sentence
+  end
+
+  column :completed_chapter_onboarding_tasks,
+    preload: [
+      chapter_ambassador_profile: [
+        chapter: [
+          :chapter_links,
+          :chapter_program_information,
+          :legal_contact,
+          :primary_contact,
+          chapter_program_information: [
+            :low_income_estimate,
+            :meeting_facilitators,
+            :meeting_times,
+            :organization_types,
+            :participant_count_estimate,
+            :program_length
+          ],
+          legal_contact: [
+            :chapter_affiliation_agreement
+          ]
+        ]
+      ]
+    ] do
+    chapter_ambassador_profile.chapter&.complete_onboarding_tasks&.to_sentence
   end
 
   column :actions, mandatory: true, html: true do |account|
