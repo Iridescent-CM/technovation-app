@@ -1,21 +1,21 @@
 <h3 class="margin--none padding--none">Mentor training</h3>
 
-<% if current_mentor.training_complete? %>
-  <p>Thank you for completing the training!</p>
-  <p>You are welcome to re-visit the training at any time.</p>
-<% elsif !current_mentor.training_required? %>
+<% if !current_mentor.training_required? %>
   <p>
     Training is not required because it was not available when you signed up.
     However, we encourage you to complete the training to help you do your best!
   </p>
+<% elsif current_mentor.training_complete? %>
+  <p>Thank you for completing the training!</p>
+  <p>You are welcome to re-visit the training at any time.</p>
+<% elsif !current_mentor.training_complete? %>
+  <p>To be able to mentor this season, please complete the mentor training.</p>
 <% end %>
 
-<iframe
-  src="<%= ENV.fetch("MENTOR_TRAINING_DOC_URL", "") %>"
-  frameborder="0"
-  width="100%"
-  height="569"
-  allowfullscreen="true"
-  mozallowfullscreen="true"
-  webkitallowfullscreen="true"
-></iframe>
+<p>
+  <%= link_to "Mentor Training",
+    "https://technovationchallenge.org/courses/mentor-training/",
+    class: "button",
+    target: "_blank" %>
+</p>
+
