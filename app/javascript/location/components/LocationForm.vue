@@ -1,12 +1,12 @@
 <template>
   <form class="simple_form" @submit.prevent="handleSubmit">
-    <div v-if="!isStudent && !isJudge && !isChA" class="panel__top-bar">
+    <div v-if="isAdmin" class="panel__top-bar">
       Confirm {{ subjectPossessive }} region
     </div>
 
     <div id="location-change" class="tw-blue-lg-container">
       <div
-        v-if="isStudent || isJudge || isChA"
+        v-if="!isAdmin"
         class="sm-header-wrapper bg-energetic-blue text-white p-2"
       >
         <p class="font-bold">Confirm {{ subjectPossessive }} region</p>
@@ -362,6 +362,10 @@ export default {
 
     isChA() {
       return this.scopeName === "chapter_ambassador";
+    },
+
+    isAdmin() {
+      return this.scopeName === "admin";
     },
 
     getCurrentLocationEndpoint() {
