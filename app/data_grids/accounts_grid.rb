@@ -9,7 +9,7 @@ class AccountsGrid
     Account.not_admin
   end
 
-  column :id, header: "Participant ID", if: ->(g) { g.admin }
+  column :id, header: "Participant ID"
 
   column :profile_type do
     scope_name
