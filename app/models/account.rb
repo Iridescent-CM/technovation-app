@@ -550,6 +550,10 @@ class Account < ActiveRecord::Base
     presence: true,
     format: {with: /\A[^.-].*/, message: "must start with an alphabetical character"}
 
+  validates :phone_number,
+    allow_blank: true,
+    format: {with: /\A[0-9+\-\s]+\z/, message: "can only contain numbers, dashes, and +"}
+
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador?) && new_record? }
   validates :gender, presence: true, if: -> { not_student? }
