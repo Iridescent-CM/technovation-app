@@ -281,6 +281,22 @@ RSpec.describe Account do
         end
       end
     end
+
+    describe "phone number" do
+      it "allows phone numbers with valid characters" do
+        account = FactoryBot.create(:account)
+        account.phone_number = "+1123-456-7890"
+
+        expect(account).to be_valid
+      end
+
+      it "does not allow phone numbers with invalid characters" do
+        account = FactoryBot.create(:account)
+        account.phone_number = "+123-AAA-CCC"
+
+        expect(account).not_to be_valid
+      end
+    end
   end
 
   it "formats the country as a short code before validating" do

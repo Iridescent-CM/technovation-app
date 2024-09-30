@@ -39,10 +39,10 @@
 
     <% if !f.object.student_profile.present? %>
       <p>
-        <%=  f.label :phone_number  %>
+        <%= f.label :phone_number %>
         <%= f.text_field :phone_number %>
       </p>
-    <%  end %>
+    <% end %>
 
     <p>
       <%= f.label :gender,
@@ -64,16 +64,6 @@
             <br>
           <% end %>
         </p>
-
-        <% if f.object.mentor_profile.errors.present? %>
-          <ul class="list--reset field_with_errors">
-            <% f.object.mentor_profile.errors.each do |error| %>
-              <li class="error">
-                <%= error.message %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
       <% end %>
     <% end %>
     <br>
@@ -89,16 +79,6 @@
             <br>
           <% end %>
         </p>
-
-        <% if f.object.judge_profile.errors.present? %>
-          <ul class="list--reset field_with_errors">
-            <% f.object.judge_profile.errors.each do |error| %>
-              <li class="error">
-                <%= error.message %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
       <% end %>
     <% end %>
     <br>
@@ -116,16 +96,6 @@
                 include_blank: 'None'
               ) %>
         </p>
-      <% end %>
-
-      <% if f.object.current_profile.errors.present? %>
-        <ul class="list--reset field_with_errors">
-          <% f.object.current_profile.errors.each do |error| %>
-            <li class="error">
-              <%= error.message %>
-            </li>
-          <% end %>
-        </ul>
       <% end %>
     <% end %>
     <br>
