@@ -19,6 +19,10 @@ class AccountsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :phone_number do |account|
+    account.phone_number.presence || "-"
+  end
+
   column :gender, header: "Gender Identity" do |account|
     account.gender.present? ? account.gender : "-"
   end
