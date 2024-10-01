@@ -27,6 +27,10 @@ class JudgesGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :phone_number do |account|
+    account.phone_number.presence || "-"
+  end
+
   column :judge_types do
     if judge_profile.present?
       judge_profile.judge_profile_judge_types.joins(:judge_type).pluck(:name).join(", ")
