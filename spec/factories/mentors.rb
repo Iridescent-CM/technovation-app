@@ -28,6 +28,14 @@ FactoryBot.define do
       before(:create) do |mentor, _eval|
         mentor.account.seasons = [Season.current.year - 1]
       end
+
+      after(:create) do |mentor, _eval|
+        mentor.chapter_assignments.create(
+          account: mentor.account,
+          chapter: FactoryBot.create(:chapter),
+          season: Season.current.year - 1
+        )
+      end
     end
 
     trait :onboarded do
@@ -73,6 +81,12 @@ FactoryBot.define do
       end
     end
 
+    trait :not_assigned_to_chapter do
+      after(:create) do |mentor|
+        mentor.account.chapters.destroy_all
+      end
+    end
+
     before(:create) do |m, e|
       {
         skip_existing_password: true,
@@ -83,17 +97,17 @@ FactoryBot.define do
         first_name: e.first_name,
         last_name: e.last_name || "FactoryBot"
       }.each do |k, v|
-        m.account.send("#{k}=", v)
+        m.account.send(:"#{k}=", v)
       end
 
-      if m.requires_background_check? and !e.not_onboarded
+      if m.requires_background_check? && !e.not_onboarded
         # TODO: not not_onboarded :/
         m.account.build_background_check(
           FactoryBot.attributes_for(:background_check)
         )
       end
 
-      unless m.consent_signed? or e.not_onboarded
+      unless m.consent_signed? || e.not_onboarded
         m.account.build_consent_waiver(
           FactoryBot.attributes_for(:consent_waiver)
         )
@@ -101,6 +115,12 @@ FactoryBot.define do
     end
 
     after(:create) do |m, e|
+      m.chapter_assignments.create(
+        account: m.account,
+        chapter: FactoryBot.create(:chapter),
+        season: Season.current.year
+      )
+
       ProfileCreating.execute(m, FakeController.new)
 
       e.number_of_teams.times do
