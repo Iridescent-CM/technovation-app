@@ -18,6 +18,10 @@ class MentorsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
 
+  column :phone_number do |account|
+    account.phone_number.presence || "-"
+  end
+
   column :judge, header: "Judge?" do
     judge_profile.present? ? "yes" : "no"
   end
