@@ -13,6 +13,12 @@ RSpec.describe Student::TeamMemberInvitesController do
     let(:invite) { TeamMemberInvite.last }
 
     before do
+      student.chapter_assignments.create(
+        account: student.account,
+        chapter: FactoryBot.create(:chapter),
+        season: ImportantDates.quarterfinals_judging_begins.year
+      )
+
       sign_in(student)
 
       post :create, params: {team_member_invite: {
@@ -57,6 +63,12 @@ RSpec.describe Student::TeamMemberInvitesController do
     let!(:invite) { FactoryBot.create(:team_member_invite, invitee: student) }
 
     before do
+      student.chapter_assignments.create(
+        account: student.account,
+        chapter: FactoryBot.create(:chapter),
+        season: ImportantDates.quarterfinals_judging_begins.year
+      )
+
       Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)
       sign_in(student)
     end

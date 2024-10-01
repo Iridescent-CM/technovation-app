@@ -1,4 +1,4 @@
-<div class="mx-auto w-full lg:w-1/2">
+<div class="mx-auto" style="width: 556px;">
   <div class="tab-content tw-active">
     <div class="tw-blue-lg-container">
       <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
@@ -16,40 +16,44 @@
             </p>
 
             <div class="flex flex-col space-y-6 mt-8">
-              <% @chapters.each do |chapter| %>
+              <%= simple_form_for @chapter_assignment do |f| %>
+
+                <% @chapters.each do |chapter| %>
+                  <div class="flex">
+                    <div class="mr-6">
+                      <%= radio_button_tag "chapter_id", chapter.id %>
+                    </div>
+
+                    <div>
+                      <%= label_tag "chapter_id_#{chapter.id}",
+                        style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" do %>
+
+                        <span class="font-bold text-xl"><%= chapter.name.presence || chapter.organization_name %></span><br>
+                        <%= chapter.location %>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+
                 <div class="flex">
                   <div class="mr-6">
-                    <%= radio_button_tag "chapter_id", chapter.id %>
+                    <%= radio_button_tag "chapter_id", "none_selected", false %>
                   </div>
 
                   <div>
-                    <%= label_tag "chapter_id_#{chapter.id}",
+                    <%= label_tag "chapter_id_none_selected",
                       style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" do %>
 
-                      <span class="font-bold text-xl"><%= chapter.name.presence || chapter.organization_name %></span><br>
-                      <%= chapter.location %>
+                      <span class="font-bold text-xl">I'm not sure</span><br>
+
+                      Select this option if none of the chapters are
+                      near you or you are not sure which to pick.
                     <% end %>
                   </div>
                 </div>
+
+                <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-8" %>
               <% end %>
-
-              <div class="flex">
-                <div class="mr-6">
-                  <%= radio_button_tag "chapter_id", nil, false %>
-                </div>
-
-                <div>
-                  <%= label_tag "chapter_id_",
-                    style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" do %>
-
-                    <span class="font-bold text-xl">I'm not sure</span><br>
-
-                    Select this option if none of the chapters are
-                    near you or you are not sure which to pick.
-                  <% end %>
-
-                </div>
-              </div>
             </div>
 
             <hr class="border-t border-gray-300 my-4">

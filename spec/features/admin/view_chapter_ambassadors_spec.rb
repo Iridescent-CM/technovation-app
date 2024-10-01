@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Admins view Chapter Ambassador participant details" do
   scenario "when Chapter Ambassador is assigned to a chapter, chapter name and organization are displayed" do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador)
-    chapter = chapter_ambassador.chapter
+    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :assigned_to_chapter)
+    chapter = chapter_ambassador.account.current_chapter
 
     sign_in(:admin)
 
@@ -32,3 +32,4 @@ RSpec.feature "Admins view Chapter Ambassador participant details" do
     expect(page).to have_content "Not assigned to a chapter"
   end
 end
+

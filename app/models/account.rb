@@ -1000,12 +1000,11 @@ class Account < ActiveRecord::Base
   end
 
   def assigned_to_chapter?
-    current_profile.respond_to?(:chapter) &&
-      current_profile&.chapter.present?
+    current_chapter.present?
   end
 
   def current_chapter
-    current_profile.chapter
+    chapter_assignments.where(season: Season.current.year)&.first&.chapter
   end
 
   def chapter_program_name
