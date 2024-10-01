@@ -159,7 +159,8 @@ CREATE TABLE public.accounts (
     parent_registered boolean DEFAULT false NOT NULL,
     meets_minimum_age_requirement boolean,
     background_check_exemption boolean DEFAULT false NOT NULL,
-    phone_number character varying
+    phone_number character varying,
+    no_chapter_selected boolean
 );
 
 
@@ -4803,6 +4804,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240911191634'),
 ('20240912161211'),
 ('20240924161806'),
-('20240926154900');
+('20240926154900'),
+('20240930201646');
 
 
