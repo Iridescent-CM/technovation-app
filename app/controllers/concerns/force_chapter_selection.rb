@@ -12,10 +12,11 @@ module ForceChapterSelection
       !logged_in_and_has_profile? ||
       !valid_location? ||
       current_account.assigned_to_chapter? ||
-      current_account.scope_name != "student" ||
+      current_account.no_chapter_selected? ||
+      (current_account.scope_name != "student" && current_account.scope_name != "mentor") ||
       on_chapter_selection_page?
 
-    redirect_to chapter_selection_path
+    redirect_to new_chapter_account_assignments_path
   end
 
   def logged_in_and_has_profile?
@@ -34,10 +35,10 @@ module ForceChapterSelection
       method: request.method
     )
 
-    path_for_chapter_selction = Rails.application.routes.recognize_path(
-      chapter_selection_path
+    chapter_selection_path = Rails.application.routes.recognize_path(
+      new_chapter_account_assignments_path
     )
 
-    original_request_path == path_for_chapter_selction
+    original_request_path == chapter_selection_path
   end
 end
