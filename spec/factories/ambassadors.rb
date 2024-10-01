@@ -49,11 +49,10 @@ FactoryBot.define do
 
     trait :assigned_to_chapter do
       after(:create) do |chapter_ambassador|
-        chapter = FactoryBot.create(:chapter)
-
         chapter_ambassador.chapter_assignments.create(
-          chapter: chapter,
-          account: chapter_ambassador.account
+          account: chapter_ambassador.account,
+          chapter: FactoryBot.create(:chapter),
+          season: Season.current.year
         )
       end
     end

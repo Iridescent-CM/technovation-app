@@ -15,13 +15,16 @@ RSpec.describe "A mentor completing their training", :js do
   end
 
   it "is not required for returning mentors before the ImportantDates.mentor_training_required_since date" do
-    mentor = FactoryBot.create(:mentor, :past)
-    mentor.update_column(:bio, "Something of sufficient length " * 10)
-    mentor.create_consent_waiver!(electronic_signature: "me")
-    mentor.create_background_check!(candidate_id: "TEST", report_id: "TEST", status: :clear)
-
     Timecop.freeze(ImportantDates.mentor_training_required_since - 1.day) do
-      sign_in(:mentor)
+      mentor = FactoryBot.create(:mentor)
+
+      mentor.chapter_assignments.create(
+        account: mentor.account,
+        chapter: FactoryBot.create(:chapter),
+        season: (ImportantDates.mentor_training_required_since - 1.day).year
+      )
+
+      sign_in(mentor)
 
       click_button "Mentor training"
       expect(page).to have_content(
@@ -38,13 +41,15 @@ RSpec.describe "A mentor completing their training", :js do
   end
 
   it "is required for returning mentors on and after the ImportantDates.mentor_training_required_since date" do
-    mentor = nil
-
-    Timecop.freeze(ImportantDates.registration_opens - 8.months) do
-      mentor = FactoryBot.create(:mentor, :past)
-    end
-
     Timecop.freeze(ImportantDates.mentor_training_required_since) do
+      mentor = FactoryBot.create(:mentor)
+
+      mentor.chapter_assignments.create(
+        account: mentor.account,
+        chapter: FactoryBot.create(:chapter),
+        season: ImportantDates.mentor_training_required_since.year
+      )
+
       mentor.update_column(:training_completed_at, nil)
       sign_in(mentor)
 
