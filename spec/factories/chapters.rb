@@ -9,6 +9,11 @@ FactoryBot.define do
 
     association :legal_contact
 
+    after(:build) do |chapter|
+      build(:chapter_program_information,
+        chapter: chapter)
+    end
+
     after(:create) do |chapter|
       create(:chapter_program_information,
         chapter: chapter)

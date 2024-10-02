@@ -38,7 +38,7 @@ RSpec.describe Document do
         signed_at: signed_at,
         voided_at: voided_at)
     end
-    let(:signer) { FactoryBot.create(:chapter_ambassador) }
+    let(:signer) { FactoryBot.create(:chapter_ambassador, :not_assigned_to_chapter) }
     let(:sent_at) { nil }
     let(:signed_at) { nil }
     let(:voided_at) { nil }
@@ -71,9 +71,22 @@ RSpec.describe Document do
       end
     end
 
-    context "#after_update" do
+    context "#after_save" do
+      let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :not_assigned_to_chapter) }
+
+      it "makes a call to update the signer's onboarding status when an off-platform document is created" do
+        expect(chapter_ambassador).to receive(:update_onboarding_status)
+
+        Document.create(
+          signer: chapter_ambassador,
+          full_name: chapter_ambassador.full_name,
+          email_address: chapter_ambassador.email,
+          status: "off-platform"
+        )
+      end
+
       it "makes a call to update the signer's onboarding status when the document is updated" do
-        expect(signer).to receive(:update_onboarding_status)
+        expect(signer).to receive(:update_onboarding_status).at_least(:once)
 
         document.update(signed_at: Time.now)
       end

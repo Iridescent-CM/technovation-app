@@ -2,7 +2,7 @@ class Document < ActiveRecord::Base
   belongs_to :signer, polymorphic: true
 
   before_save :set_status
-  after_update -> { signer.update_onboarding_status }
+  after_save -> { signer.update_onboarding_status }
 
   enum status: {
     sent: "sent",
