@@ -125,11 +125,15 @@ jobs:
       - browser-tools/install-browser-tools:
           chrome-version: 128.0.6613.84 # TODO: remove when chromedriver downloads are fixed
 
+      - run:
+          name: Install libc6
+          command: sudo apt install libc6
+
       - restore_cache:
           name: Restore cached gems
           keys:
-            - v2-gem-cache-{{ checksum "Gemfile.lock" }}
-            - v2-gem-cache-
+            - v3-gem-cache-{{ checksum "Gemfile.lock" }}
+            - v3-gem-cache-
 
       - restore_cache:
           name: Restore cached node packages
@@ -165,7 +169,7 @@ jobs:
 
       - save_cache:
           name: Cache gems
-          key: v2-gem-cache-{{ checksum "Gemfile.lock" }}
+          key: v3-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
