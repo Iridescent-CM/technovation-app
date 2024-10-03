@@ -61,7 +61,8 @@ RSpec.describe LegalContact do
   end
 
   describe "#update_onboarding_status" do
-    let(:legal_contact) { FactoryBot.create(:legal_contact) }
+    let(:chapter) { FactoryBot.create(:chapter) }
+    let(:legal_contact) { FactoryBot.create(:legal_contact, chapter: chapter) }
 
     it "calls #update_onboarding_status on the legal contact's chapter" do
       expect(legal_contact.chapter).to receive(:update_onboarding_status)
