@@ -284,7 +284,11 @@ Rails.application.routes.draw do
       resource :location, only: :edit, controller: "chapters/locations"
     end
 
-    resources :chapter_ambassadors, only: :index
+    resources :chapter_ambassadors, only: :index do
+      resource :off_platform_chapter_volunteer_agreement,
+        only: :create,
+        controller: "chapter_ambassadors/off_platform_chapter_volunteer_agreement"
+    end
 
     resources :chapter_ambassador_status, only: :update
 

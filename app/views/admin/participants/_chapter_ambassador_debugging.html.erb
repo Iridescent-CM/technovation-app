@@ -8,6 +8,11 @@
         <hr style="height: 1px; width: 100%;">
       <% end %>
 
+      <% if current_account.is_admin? && !profile.chapter_volunteer_agreement_complete? %>
+        <%= render "admin/participants/off_platform_chapter_volunteer_agreement", profile: profile %>
+        <hr style="height: 1px; width: 100%;">
+      <% end %>
+
       <dl>
         <dt>Chapter Onboarding Status</dt>
         <dd>

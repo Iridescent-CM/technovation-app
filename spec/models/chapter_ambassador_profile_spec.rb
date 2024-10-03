@@ -17,24 +17,24 @@ RSpec.describe ChapterAmbassadorProfile do
     end
   end
 
-  describe "#chapter_volunteer_agreement_signed?" do
+  describe "#chapter_volunteer_agreement_complete?" do
     before do
-      allow(chapter_ambassador_profile).to receive_message_chain(:chapter_volunteer_agreement, :signed?).and_return(document_signed)
+      allow(chapter_ambassador_profile).to receive_message_chain(:chapter_volunteer_agreement, :complete?).and_return(document_completed)
     end
 
     context "when the legal document has been signed" do
-      let(:document_signed) { true }
+      let(:document_completed) { true }
 
       it "returns true" do
-        expect(chapter_ambassador_profile.chapter_volunteer_agreement_signed?).to eq(true)
+        expect(chapter_ambassador_profile.chapter_volunteer_agreement_complete?).to eq(true)
       end
     end
 
     context "when the legal document has not been signed" do
-      let(:document_signed) { false }
+      let(:document_completed) { false }
 
       it "returns false" do
-        expect(chapter_ambassador_profile.chapter_volunteer_agreement_signed?).to eq(false)
+        expect(chapter_ambassador_profile.chapter_volunteer_agreement_complete?).to eq(false)
       end
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe ChapterAmbassadorProfile do
     before do
       allow(chapter_ambassador_profile).to receive(:background_check_exempt_or_complete?).and_return(true)
       allow(chapter_ambassador_profile).to receive(:training_completed?).and_return(true)
-      allow(chapter_ambassador_profile).to receive(:chapter_volunteer_agreement_signed?).and_return(true)
+      allow(chapter_ambassador_profile).to receive(:chapter_volunteer_agreement_complete?).and_return(true)
       allow(chapter_ambassador_profile).to receive(:viewed_community_connections?).and_return(true)
     end
 
@@ -75,7 +75,7 @@ RSpec.describe ChapterAmbassadorProfile do
 
     context "when the Chapter Volunteer Agreement has not been signed" do
       before do
-        allow(chapter_ambassador_profile).to receive(:chapter_volunteer_agreement_signed?).and_return(false)
+        allow(chapter_ambassador_profile).to receive(:chapter_volunteer_agreement_complete?).and_return(false)
       end
 
       it "returns returns an array that contains 'Chapter Volunteer Agreement'" do
@@ -112,13 +112,13 @@ RSpec.describe ChapterAmbassadorProfile do
         let(:email_address_confirmed) { true }
         let(:background_check) { instance_double(BackgroundCheck, clear?: background_check_cleared) }
         let(:background_check_cleared) { true }
-        let(:chapter_volunteer_agreement) { instance_double(Document, signed?: chapter_volunteer_agreement_signed) }
-        let(:chapter_volunteer_agreement_signed) { true }
+        let(:chapter_volunteer_agreement) { instance_double(Document, complete?: chapter_volunteer_agreement_complete) }
+        let(:chapter_volunteer_agreement_complete) { true }
 
         context "when all onboarding steps have been completed" do
           let(:email_address_confirmed) { true }
           let(:background_check_cleared) { true }
-          let(:chapter_volunteer_agreement_signed) { true }
+          let(:chapter_volunteer_agreement_complete) { true }
 
           before do
             chapter_ambassador_profile.update(viewed_community_connections: true)
@@ -142,7 +142,7 @@ RSpec.describe ChapterAmbassadorProfile do
         end
 
         context "when the legal document has not been signed" do
-          let(:chapter_volunteer_agreement_signed) { false }
+          let(:chapter_volunteer_agreement_complete) { false }
 
           before do
             chapter_ambassador_profile.save

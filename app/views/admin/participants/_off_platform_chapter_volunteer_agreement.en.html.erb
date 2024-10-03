@@ -1,0 +1,25 @@
+<h5>Create Off-platform Chapter Volunteer Agreement</h5>
+
+<% if profile.chapter_volunteer_agreement.present? %>
+  <p>
+    A Chapter Volunteer Agreement already exists for this chapter ambassador.
+    The existing agreement will need to be voided before an off-platform one can be created.
+  </p>
+
+  <p>
+    Chapter Volunteer Agreement Status: <strong><%= profile.chapter_volunteer_agreement.status.humanize %></strong>
+  </p>
+<% else %>
+  <p>
+    Click the button below to create an off-platform Chapter Volunteer Agreement for <%= profile.full_name %> that will be valid for one year.
+  </p>
+
+  <%= form_with url: admin_chapter_ambassador_off_platform_chapter_volunteer_agreement_path(profile), method: :post do %>
+    <%= submit_tag "Create an off-platform Chapter Volunteer Agreement",
+      method: "post",
+      class: "button",
+      style: "margin: 8px 0;",
+      onclick: "this.disabled=true; this.form.submit();"
+    %>
+  <% end %>
+<% end %>

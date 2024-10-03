@@ -127,15 +127,15 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     viewed_community_connections
   end
 
-  def chapter_volunteer_agreement_signed?
-    chapter_volunteer_agreement&.signed?
+  def chapter_volunteer_agreement_complete?
+    !!chapter_volunteer_agreement&.complete?
   end
 
   def required_onboarding_tasks
     {
       "Background Check" => background_check_exempt_or_complete?,
       "Chapter Ambassador Training" => training_completed?,
-      "Chapter Volunteer Agreement" => chapter_volunteer_agreement_signed?,
+      "Chapter Volunteer Agreement" => chapter_volunteer_agreement_complete?,
       "Community Connections" => viewed_community_connections?
     }
   end
@@ -162,7 +162,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   def can_be_marked_onboarded?
     !!(account.email_confirmed? &&
       background_check_exempt_or_complete? &&
-      chapter_volunteer_agreement_signed? &&
+      chapter_volunteer_agreement_complete? &&
       training_completed? &&
       viewed_community_connections?)
   end
