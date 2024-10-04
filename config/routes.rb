@@ -373,6 +373,7 @@ Rails.application.routes.draw do
       resources :judge_types, only: :index
 
       resource :chapter_organization_name, only: :show
+      resource :user_invitation_email, only: :show
     end
 
     namespace :regional_pitch_events do
