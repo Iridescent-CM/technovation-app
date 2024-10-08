@@ -1,0 +1,21 @@
+<div class="panel">
+
+  <%= form_with model: @chapter_account_assignment,
+    url: admin_account_chapter_account_assignments_path(@account),
+    local: true do |f| %>
+
+    <div>
+      <%= f.label :chapter_id, "Select Chapter" %>
+      <%= f.collection_select :chapter_id,
+        @chapters,
+        :id,
+        :organization_name,
+        include_blank: "None",
+        selected: @account.current_chapter&.id %>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <%= f.submit "Save", class: "button" %>
+    </div>
+  <% end %>
+</div>
