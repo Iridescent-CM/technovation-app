@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Chapter ambassadors registering", :js do
-  let(:chapter_ambassado_registration_invite) {
+  let(:chapter_ambassador_registration_invite) {
     UserInvitation.create!(
       profile_type: :chapter_ambassador,
       email: "chapter_ambassador_invite@example.com",
@@ -15,7 +15,7 @@ RSpec.feature "Chapter ambassadors registering", :js do
   before do
     SeasonToggles.registration_open!
 
-    visit signup_path(invite_code: chapter_ambassado_registration_invite.admin_permission_token)
+    visit signup_path(invite_code: chapter_ambassador_registration_invite.admin_permission_token)
   end
 
   scenario "Chapter ambassador registration steps and fields" do
@@ -40,7 +40,6 @@ RSpec.feature "Chapter ambassadors registering", :js do
 
     expect(page).to have_content("Set your email and password")
 
-    fill_in "Email Address", with: "hopeful.heart@test.com"
     fill_in "Password", with: "secret12345"
     click_button "Submit this form"
   end

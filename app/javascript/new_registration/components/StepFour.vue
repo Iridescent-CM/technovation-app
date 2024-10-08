@@ -3,26 +3,52 @@
     <ContainerHeader header-text="Set your email and password" />
 
     <div id="email-password" class="form-wrapper">
-      <h1 class="text-tg-green text-2xl text-left mb-6" v-if="formValues.profileType === 'mentor'">This is an account for a mentor</h1>
-      <h1 class="text-tg-green text-2xl text-left mb-6" v-else-if="formValues.profileType === 'judge'">This is an account for a judge</h1>
+      <h1
+        class="text-tg-green text-2xl text-left mb-6"
+        v-if="formValues.profileType === 'mentor'"
+      >
+        This is an account for a mentor
+      </h1>
+      <h1
+        class="text-tg-green text-2xl text-left mb-6"
+        v-else-if="formValues.profileType === 'judge'"
+      >
+        This is an account for a judge
+      </h1>
 
       <FormulateInput
         name="email"
         id="email"
         type="email"
-        :label="formValues.profileType === 'parent' ? 'Parent Email Address' : 'Email Address'"
+        :label="
+          formValues.profileType === 'parent'
+            ? 'Parent Email Address'
+            : 'Email Address'
+        "
         placeholder="Email address"
         :validation="emailValidation"
         validation-name="Email address"
         @keyup="checkValidation"
         @blur="checkValidation"
         class="flex-grow"
-        v-model="setAccountEmailForParentProfile"
-        :disabled="formValues.profileType === 'parent'"
+        v-model="setAccountEmailForParentOrChapterAmbassadorProfile"
+        :disabled="
+          formValues.profileType === 'parent' ||
+          formValues.profileType === 'chapter_ambassador'
+        "
       />
 
-      <p class="text-left text-sm mb-12" v-if="formValues.profileType === 'judge'">Please use your company email if you want your employer to know you volunteered with Technovation.</p>
-      <p class="text-left text-sm mb-12" v-else >Please choose a personal, permanent email. A school or company email might block us from sending important messages to you.</p>
+      <p
+        class="text-left text-sm mb-12"
+        v-if="formValues.profileType === 'judge'"
+      >
+        Please use your company email if you want your employer to know you
+        volunteered with Technovation.
+      </p>
+      <p class="text-left text-sm mb-12" v-else>
+        Please choose a personal, permanent email. A school or company email
+        might block us from sending important messages to you.
+      </p>
 
       <div class="double-wide">
         <FormulateInput
@@ -62,58 +88,63 @@ export default {
   name: "StepFour",
   components: {
     ContainerHeader,
-    PreviousButton
+    PreviousButton,
   },
-  data () {
+  data() {
     return {
-      hasValidationErrors: true
-    }
+      hasValidationErrors: true,
+    };
   },
   methods: {
     checkValidation() {
       const validationErrorMessages = Array.from(
-        document.getElementsByClassName('validation-error-message')
-      ).map(element => element.innerText)
+        document.getElementsByClassName("validation-error-message")
+      ).map((element) => element.innerText);
 
-      if (document.getElementById('email').value.length === 0 ||
-        document.getElementById('password').value.length < 8 ||
+      if (
+        document.getElementById("email").value.length === 0 ||
+        document.getElementById("password").value.length < 8 ||
         validationErrorMessages.some((message) => {
-          return (message.indexOf('is not a valid email address') >= 0 ||
-            message.indexOf('Password must be at least') >= 0)
-        })) {
-
-        this.hasValidationErrors = true
+          return (
+            message.indexOf("is not a valid email address") >= 0 ||
+            message.indexOf("Password must be at least") >= 0
+          );
+        })
+      ) {
+        this.hasValidationErrors = true;
       } else {
-        this.hasValidationErrors = false
+        this.hasValidationErrors = false;
       }
-    }
+    },
   },
   props: {
     formValues: {
       type: Object,
-      required: true
+      required: true,
     },
     isLoading: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
-  computed:{
-    setAccountEmailForParentProfile: {
-      get(){
+  computed: {
+    setAccountEmailForParentOrChapterAmbassadorProfile: {
+      get() {
         if (this.formValues.profileType === "parent") {
-          return this.formValues.studentParentGuardianEmail
+          return this.formValues.studentParentGuardianEmail;
+        } else if (this.formValues.profileType === "chapter_ambassador") {
+          return this.formValues.email;
         } else {
-          return  this.formValues.email
+          return this.formValues.email;
         }
       },
-      set(accountEmailVal){
-        this.formValues.email = accountEmailVal
-      }
+      set(accountEmailVal) {
+        this.formValues.email = accountEmailVal;
+      },
     },
     emailValidation() {
-        return 'required|email'
-    }
-  }
-}
+      return "required|email";
+    },
+  },
+};
 </script>
