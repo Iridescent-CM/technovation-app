@@ -81,24 +81,6 @@
         </p>
       <% end %>
     <% end %>
-    <br>
-
-    <% if f.object.student_profile.present? || f.object.chapter_ambassador_profile.present? %>
-      <%= f.fields_for f.object.current_profile do |s| %>
-        <p>
-          <%= s.label :chapter_id, "Assign to Chapter", for: :chapter_id %>
-
-          <%= s.collection_select(
-                :chapter_id,
-                Chapter.all.order(organization_name: :asc),
-                :id,
-                :organization_name,
-                include_blank: 'None'
-              ) %>
-        </p>
-      <% end %>
-    <% end %>
-    <br>
 
     <p>
       <%= f.label :profile_image %>
