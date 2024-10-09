@@ -295,6 +295,12 @@ class MentorProfile < ActiveRecord::Base
       background_check.clear?
   end
 
+  def background_check_flagged?
+    background_check.consider? ||
+      background_check.suspended? ||
+      background_check.suspended?
+  end
+
   def requires_background_check?
     (account.valid? && (account.date_of_birth.present? && account.age >= 18 || account.meets_minimum_age_requirement?)) &&
       in_background_check_country? &&
