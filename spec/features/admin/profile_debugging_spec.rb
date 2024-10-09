@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "When an admin is debugging a profile" do
-  scenario "they view the background check status in the mentor debugging section a mentor based in the US" do
+  scenario "they view the background check status in the mentor debugging section of an onboarded mentor based in the US" do
     mentor = FactoryBot.create(
       :mentor,
       :los_angeles,
@@ -16,11 +16,10 @@ RSpec.feature "When an admin is debugging a profile" do
       click_link "view"
     end
 
-    expect(page).to have_content("Background check invitation not required in this country")
     expect(page).to have_css(".web-icon-text", text: "Clear")
   end
 
-  scenario "they view the background check status in the mentor debugging section of mentor based in India" do
+  scenario "they view the background check status of a mentor based in India who has not completed their background check invitation" do
     mentor = FactoryBot.create(
       :mentor,
       :india,
@@ -47,11 +46,10 @@ RSpec.feature "When an admin is debugging a profile" do
       click_link "view"
     end
 
-    expect(page).to have_content("Pending")
-    expect(page).to have_css(".web-icon-text", text: "Invitation required")
+    expect(page).to have_content("Invitation status: Pending")
   end
 
-  scenario "they view the background check status in the mentor debugging section of a mentor not in a background check country" do
+  scenario "they view the background check status of a mentor not in a background check country" do
     mentor = FactoryBot.create(
       :mentor,
       :brazil,
@@ -66,17 +64,17 @@ RSpec.feature "When an admin is debugging a profile" do
       click_link "view"
     end
 
-    expect(page).to have_content("Background check invitation not required in this country")
     expect(page).to have_content("Background check not required in this country")
   end
 
-  scenario "they view the background check invitation status in the mentor debugging section of a mentor based in India who has not requested a background check invitation" do
+  scenario "they view the background check invitation status of a mentor based in India who has not requested a background check invitation" do
     mentor = FactoryBot.create(
       :mentor,
       :india
     )
 
     mentor.background_check.destroy
+    mentor.reload
 
     sign_in(:admin)
 
@@ -86,7 +84,7 @@ RSpec.feature "When an admin is debugging a profile" do
       click_link "view"
     end
 
-    expect(page).to have_content("Background check invitation not yet requested")
-    expect(page).to have_css(".web-icon-text", text: "Not submitted")
+    expect(page).to have_content("Incomplete")
+    expect(page).to have_content("Invitation not sent")
   end
 end

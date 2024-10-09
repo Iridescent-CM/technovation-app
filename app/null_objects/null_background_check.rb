@@ -39,6 +39,10 @@ class NullBackgroundCheck < NullObject
     false
   end
 
+  def canceled?
+    false
+  end
+
   def paranoid?
     false
   end

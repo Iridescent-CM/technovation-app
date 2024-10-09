@@ -17,30 +17,8 @@
             <%= web_icon("exclamation-circle icon-red") %>
             <div>
               Incomplete
-
-              <% if chapter_ambassador.background_check.invitation_status.present? && !chapter_ambassador.background_check.invitation_completed? %>
-                <p class="hint margin--b-none">
-                  Invitation status: <%= chapter_ambassador.background_check.invitation_status&.humanize %>
-                </p>
-
-                <% if chapter_ambassador.background_check.invitation_expired? %>
-                  <p class="hint margin--b-none">
-                    The background check invitation has expired. Participant must request a new invitation.
-                  </p>
-                <% end %>
-              <% else %>
-                <p class="hint margin--b-none">
-                  <% if chapter_ambassador.background_check.present? %>
-                    <% if chapter_ambassador.background_check.error? %>
-                      Error: <%= chapter_ambassador.background_check.error_message.presence || "No error message recorded" %>
-                    <% else %>
-                      <%= chapter_ambassador.background_check.status.humanize %>
-                    <% end %>
-                  <% else %>
-                    Not sent
-                  <% end %>
-                </p>
-              <% end %>
+              <%= render 'admin/participants/background_check_invitation_status',
+                profile: chapter_ambassador %>
             </div>
           <% end %>
         </div>
