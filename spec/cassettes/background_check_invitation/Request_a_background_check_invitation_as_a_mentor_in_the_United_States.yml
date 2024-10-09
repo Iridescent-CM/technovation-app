@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/candidates
+    body:
+      encoding: UTF-8
+      string: '{"email":"engineering+factorymentorusa@technovation.org","first_name":"Mentor","last_name":"FactoryBot","work_locations":[{"country":"US"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v2.5.2
+      Authorization:
+      - Basic MzdlY2E4ZmRmNDAxNGM0N2Y5MzUzNGNhMWZkODYzNTY3ZGFjNTMzMTo=
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 08 Oct 2024 17:31:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '630'
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 8cf7dd0c0fe0c309-IAH
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Origin, Accept-Encoding
+      Ratelimit-Limit:
+      - '1200'
+      Ratelimit-Remaining:
+      - '1199'
+      Ratelimit-Reset:
+      - '45'
+      X-Checkr-Region:
+      - us-east-1
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Limit:
+      - '1200'
+      X-Ratelimit-Remaining:
+      - '1199'
+      X-Ratelimit-Reset:
+      - '2024-10-08T17:32:00Z'
+      X-Request-Id:
+      - 34610354-72b7-9a2c-a072-8a37110adffb
+      Server:
+      - cloudflare
+    body:
+      encoding: UTF-8
+      string: '{"id":"19152f75446aea8b543fd14e","uri":"/v1/candidates/19152f75446aea8b543fd14e","created_at":"2024-10-08T17:31:15Z","first_name":"Mentor","last_name":"Factorybot","middle_name":null,"mother_maiden_name":null,"dob":null,"ssn":null,"email":"engineering+factorymentorusa@technovation.org","zipcode":null,"phone":null,"driver_license_state":null,"driver_license_number":null,"copy_requested":false,"previous_driver_license_state":null,"previous_driver_license_number":null,"adjudication":null,"custom_id":null,"no_middle_name":false,"updated_at":"2024-10-08T17:31:15Z","locale":null,"object":"candidate","report_ids":[],"geo_ids":[]}'
+  recorded_at: Tue, 08 Oct 2024 17:31:15 GMT
+- request:
+    method: post
+    uri: https://api.checkr.com/v1/invitations
+    body:
+      encoding: UTF-8
+      string: '{"package":"tasker_standard","candidate_id":"19152f75446aea8b543fd14e","work_locations":[{"country":"US"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Faraday v2.5.2
+      Authorization:
+      - Basic MzdlY2E4ZmRmNDAxNGM0N2Y5MzUzNGNhMWZkODYzNTY3ZGFjNTMzMTo=
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 08 Oct 2024 17:31:16 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '487'
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 8cf7dd106b3a486d-DFW
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Origin, Accept-Encoding
+      Ratelimit-Limit:
+      - '1200'
+      Ratelimit-Remaining:
+      - '1198'
+      Ratelimit-Reset:
+      - '44'
+      X-Checkr-Region:
+      - us-east-1
+      X-Content-Type-Options:
+      - nosniff
+      X-Ratelimit-Limit:
+      - '1200'
+      X-Ratelimit-Remaining:
+      - '1198'
+      X-Ratelimit-Reset:
+      - '2024-10-08T17:32:00Z'
+      X-Request-Id:
+      - eaf5e11b-3b66-9a83-8019-d38ba92d66fa
+      Server:
+      - cloudflare
+    body:
+      encoding: UTF-8
+      string: '{"id":"4e987a175af77e16ec3cfe68","status":"pending","uri":"/v1/invitations/4e987a175af77e16ec3cfe68","invitation_url":"https://apply.checkrhq-staging.net/invite/technovation/e3b72976d8385be0f23798c92ba96146","completed_at":null,"deleted_at":null,"package":"tasker_standard","created_at":"2024-10-08T17:31:16Z","expires_at":"2024-10-16T06:59:59Z","tags":[],"locale":null,"archived":false,"archived_info":{},"object":"invitation","candidate_id":"19152f75446aea8b543fd14e","report_id":null}'
+  recorded_at: Tue, 08 Oct 2024 17:31:16 GMT
+recorded_with: VCR 6.1.0
