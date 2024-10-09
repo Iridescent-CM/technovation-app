@@ -298,7 +298,7 @@ class MentorProfile < ActiveRecord::Base
   def background_check_flagged?
     background_check.consider? ||
       background_check.suspended? ||
-      background_check.suspended?
+      background_check.canceled?
   end
 
   def requires_background_check?
