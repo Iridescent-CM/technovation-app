@@ -93,7 +93,11 @@ FactoryBot.define do
     after(:create) do |r, e|
       chapter = FactoryBot.create(:chapter, primary_contact: r.account)
 
-      r.chapter_assignments.create(chapter: chapter, account: r.account)
+      r.chapter_assignments.create(
+        chapter: chapter,
+        account: r.account,
+        season: Season.current.year
+      )
 
       ProfileCreating.execute(r, FakeController.new)
     end
