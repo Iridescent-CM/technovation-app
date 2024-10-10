@@ -1,10 +1,16 @@
 require "rails_helper"
 
 RSpec.feature "chapter ambassadors view student profile pages" do
-  scenario "viewing a new student" do
+  scenario "viewing a new student that belongs to the chapter ambassador's chapter" do
+    chapter_ambassador = FactoryBot.create(:chapter_ambassador)
     student = FactoryBot.create(:student)
+    student.chapter_assignments.create(
+      chapter: chapter_ambassador.current_chapter,
+      account: student.account,
+      season: Season.current.year
+    )
 
-    sign_in(:ambassador, :approved)
+    sign_in(chapter_ambassador)
     visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Participants"
@@ -17,10 +23,16 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     )
   end
 
-  scenario "viewing a past student" do
+  scenario "viewing a past student that belongs to the chapter ambassador's chapter" do
+    chapter_ambassador = FactoryBot.create(:chapter_ambassador)
     student = FactoryBot.create(:student, :past)
+    student.chapter_assignments.create(
+      chapter: chapter_ambassador.current_chapter,
+      account: student.account,
+      season: Season.current.year - 1
+    )
 
-    sign_in(:ambassador, :approved)
+    sign_in(chapter_ambassador)
     visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Participants"
@@ -32,10 +44,16 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     )
   end
 
-  scenario "viewing a returning student" do
+  scenario "viewing a returning student that belongs to the chapter ambassador's chapter" do
+    chapter_ambassador = FactoryBot.create(:chapter_ambassador)
     student = FactoryBot.create(:student, :returning)
+    student.chapter_assignments.create(
+      chapter: chapter_ambassador.current_chapter,
+      account: student.account,
+      season: Season.current.year
+    )
 
-    sign_in(:ambassador, :approved)
+    sign_in(chapter_ambassador)
     visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Participants"

@@ -3,8 +3,14 @@ require "rails_helper"
 RSpec.describe "chapter ambassador convert students to mentors" do
   context "when the student is under 18" do
     it "does not show the convert button" do
+      chapter_ambassador = FactoryBot.create(:chapter_ambassador)
       student = FactoryBot.create(:student, date_of_birth: 17.years.ago)
-      chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
+      student.chapter_assignments.create(
+        chapter: chapter_ambassador.current_chapter,
+        account: student.account,
+        season: Season.current.year
+      )
+
       sign_in(chapter_ambassador)
       visit(chapter_ambassador_chapter_admin_path)
 
@@ -19,8 +25,14 @@ RSpec.describe "chapter ambassador convert students to mentors" do
 
   context "when the student is 18 and older" do
     it "shows the convert button" do
+      chapter_ambassador = FactoryBot.create(:chapter_ambassador)
       student = FactoryBot.create(:student, date_of_birth: 18.years.ago)
-      chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
+      student.chapter_assignments.create(
+        chapter: chapter_ambassador.current_chapter,
+        account: student.account,
+        season: Season.current.year
+      )
+
       sign_in(chapter_ambassador)
       visit(chapter_ambassador_chapter_admin_path)
 
