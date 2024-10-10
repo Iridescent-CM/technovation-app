@@ -1,19 +1,30 @@
 require "rails_helper"
 
 RSpec.describe "chapter ambassadors reviewing mentors" do
-  let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved) }
+  let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
 
   describe "training completion status" do
     it "displays on their debugging page" do
-      untrained = FactoryBot.create(:mentor, :onboarding)
-      trained = FactoryBot.create(:mentor, :onboarded)
+      untrained_mentor = FactoryBot.create(:mentor, :onboarding)
+      trained_mentor = FactoryBot.create(:mentor, :onboarded)
+
+      untrained_mentor.chapter_assignments.create(
+        chapter: chapter_ambassador.current_chapter,
+        account: untrained_mentor.account,
+        season: Season.current.year
+      )
+      trained_mentor.chapter_assignments.create(
+        chapter: chapter_ambassador.current_chapter,
+        account: trained_mentor.account,
+        season: Season.current.year
+      )
 
       sign_in(chapter_ambassador)
       visit(chapter_ambassador_chapter_admin_path)
 
       click_link "Participants"
 
-      within("#account_#{untrained.account_id}") do
+      within("#account_#{untrained_mentor.account_id}") do
         click_link "view"
       end
 
@@ -21,7 +32,7 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
 
       click_link "Participants"
 
-      within("#account_#{trained.account_id}") do
+      within("#account_#{trained_mentor.account_id}") do
         click_link "view"
       end
 
@@ -32,6 +43,11 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
       mentor = FactoryBot.create(:mentor, :onboarding)
       mentor.account.update(
         season_registered_at: ImportantDates.mentor_training_required_since - 1.day
+      )
+      mentor.chapter_assignments.create(
+        chapter: chapter_ambassador.current_chapter,
+        account: mentor.account,
+        season: Season.current.year
       )
 
       sign_in(chapter_ambassador)
