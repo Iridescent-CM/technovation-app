@@ -8,7 +8,9 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
     update_season_data_with_resets(record)
 
-    if is_student?(record) && !is_mentor?(record)
+    if is_student?(record) &&
+        !is_mentor?(record) &&
+        record.age_by_cutoff <= 18
       prepare_student_for_current_season(record)
     end
 

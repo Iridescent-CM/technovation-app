@@ -15,7 +15,7 @@ describe StudentToMentorConverter do
     allow(student_profile).to receive_message_chain(:join_requests, :pending, :delete_all)
     allow(student_profile).to receive_message_chain(:memberships, :delete_all)
 
-    allow(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
+    allow(RegisterToCurrentSeasonJob).to receive(:perform_later)
   end
 
   it "creates a mentor profile (that's marked as being a former student)" do
@@ -57,12 +57,9 @@ describe StudentToMentorConverter do
     student_to_mentor_converter.call
   end
 
-  it "calls the job that will setup the new mentor profile in the CRM" do
-    expect(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
-      .with(
-        account_id: account.id,
-        profile_type: "mentor"
-      )
+  it "registers the mentor to the current season" do
+    expect(RegisterToCurrentSeasonJob).to receive(:perform_later)
+      .with(account)
 
     student_to_mentor_converter.call
   end

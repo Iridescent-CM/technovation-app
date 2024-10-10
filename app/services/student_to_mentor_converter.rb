@@ -10,7 +10,7 @@ class StudentToMentorConverter
       delete_team_memberships
       delete_student_profile
 
-      setup_mentor_profile_in_crm
+      register_mentor_to_current_season
 
       Result.new(success?: true, message: {success: "#{account.name} has been successfully converted to a mentor"})
     else
@@ -49,10 +49,7 @@ class StudentToMentorConverter
     account.student_profile&.delete
   end
 
-  def setup_mentor_profile_in_crm
-    CRM::SetupAccountForCurrentSeasonJob.perform_later(
-      account_id: account.id,
-      profile_type: "mentor"
-    )
+  def register_mentor_to_current_season
+    RegisterToCurrentSeasonJob.perform_later(account)
   end
 end
