@@ -5,16 +5,26 @@ module ChapterAmbassador
     use_datagrid with: AccountsGrid,
 
       html_scope: ->(scope, user, params) {
-        scope.in_region(user).page(params[:page])
+        scope
+          .joins(:chapter_assignments)
+          .where(chapter_assignments: {chapter_id: user.current_chapter.id})
+          .page(params[:page])
       },
 
-      csv_scope: "->(scope, user, params) { scope.in_region(user) }"
+      csv_scope: "->(scope, user, _params) {
+        scope
+          .joins(:chapter_assignments)
+          .where(chapter_assignments: {chapter_id: user.current_chapter.id})
+      }"
 
     def show
       @account = if params[:allow_out_of_region]
         Account.find(params[:id])
       else
-        Account.in_region(current_ambassador).find(params[:id])
+        Account
+          .joins(:chapter_assignments)
+          .where(chapter_assignments: {chapter_id: current_ambassador.current_chapter.id})
+          .find(params[:id])
       end
 
       @teams = Team.current.in_region(current_ambassador)
