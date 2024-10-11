@@ -1,28 +1,34 @@
-<% if profile.in_background_check_country? %>
-  <% if profile.account.background_check_exemption? %>
-    <%= web_icon(
-          "check-circle icon-green",
-          text: "Background check exempt"
-        ) %>
-  <% elsif profile.background_check.clear? %>
-    <%= web_icon(
-          "check-circle icon-green",
-          text: profile.background_check.status.humanize
-        ) %>
-  <% elsif profile.background_check.present? %>
-    <%= web_icon(
-          "exclamation-circle icon-red",
-          text: profile.background_check.status.humanize
-        ) %>
+<div style="display: flex;">
+  <% if profile.in_background_check_country? %>
+    <% if profile.account.background_check_exemption? %>
+      <%= web_icon(
+            "check-circle icon-green",
+            text: "Background check exempt"
+          ) %>
+    <% elsif profile.background_check.clear? %>
+        <%= web_icon(
+              "check-circle icon-green",
+              text: profile.background_check.status.humanize
+            ) %>
+    <% elsif profile.background_check.pending? || profile.background_check.complete_with_concerns? %>
+        <%= web_icon(
+              "exclamation-circle icon--orange",
+              text: profile.background_check.status.humanize
+            ) %>
+    <% else %>
+      <%= web_icon(
+            "exclamation-circle icon-red"
+          ) %>
+      <div>
+        Incomplete
+        <%= render 'admin/participants/background_check_invitation_status',
+          profile: profile %>
+      </div>
+    <% end %>
   <% else %>
     <%= web_icon(
-          "exclamation-circle icon-red",
-          text: "Not submitted"
+          "check-circle",
+          text: "Background check not required in this country"
         ) %>
   <% end %>
-<% else %>
-  <%= web_icon(
-        "check-circle",
-        text: "Background check not required in this country"
-      ) %>
-<% end %>
+</div>

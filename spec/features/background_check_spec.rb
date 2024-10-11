@@ -1,20 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "background checks" do
-  scenario "Complete a mentor background check", :vcr do
-    mentor = FactoryBot.create(:mentor, :geocoded)
-    mentor.background_check.destroy
-    sign_in(mentor)
-    click_link "Submit Background Check"
-
-    fill_in "Zipcode", with: 60622
-    fill_in "Ssn", with: "111-11-2001"
-    fill_in "Driver license state", with: "CA"
-    click_button "Submit"
-
-    expect(mentor.reload.background_check).to be_present
-  end
-
   scenario "mentors not located in the US, India, or Canada do not see a link to submit a background check" do
     mentor = FactoryBot.create(
       :mentor,

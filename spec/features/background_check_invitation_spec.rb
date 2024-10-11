@@ -18,6 +18,24 @@ RSpec.feature "background check invitation" do
     expect(mentor.reload.background_check).to be_present
   end
 
+  scenario "Request a background check invitation as a mentor in the United States", :vcr do
+    mentor = FactoryBot.create(
+      :mentor,
+      :los_angeles,
+      account: FactoryBot.create(:account, email: "engineering+factorymentorusa@technovation.org")
+    )
+    mentor.background_check.destroy
+
+    sign_in(mentor)
+    click_link "Submit Background Check"
+
+    expect(page).to have_link("Request background check invitation")
+    click_link "Request background check invitation"
+
+    expect(mentor.reload.background_check).to be_present
+  end
+
+
   scenario "Request a background check invitation as a chapter ambassador", :vcr do
     chapter_ambassador = FactoryBot.create(
       :chapter_ambassador,
