@@ -43,6 +43,10 @@ class NullBackgroundCheck < NullObject
     false
   end
 
+  def complete_with_concerns?
+    false
+  end
+
   def paranoid?
     false
   end

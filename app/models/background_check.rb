@@ -18,6 +18,12 @@ class BackgroundCheck < ActiveRecord::Base
     pending?
   end
 
+  def complete_with_concerns?
+    consider? ||
+      suspended? ||
+      canceled?
+  end
+
   class << self
     def get(resource, id)
       Checkr.request(:get, "/v1/#{resource}/#{id}")

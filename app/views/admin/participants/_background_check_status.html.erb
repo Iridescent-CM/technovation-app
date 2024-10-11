@@ -10,7 +10,7 @@
               "check-circle icon-green",
               text: profile.background_check.status.humanize
             ) %>
-    <% elsif profile.background_check.pending? || profile.background_check_flagged? %>
+    <% elsif profile.background_check.pending? || profile.background_check.complete_with_concerns? %>
         <%= web_icon(
               "exclamation-circle icon--orange",
               text: profile.background_check.status.humanize
