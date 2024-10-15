@@ -508,8 +508,33 @@ class AccountsGrid
     html: {
       class: "and-or-field"
     },
-    multiple: true do |value, scope, grid|
+    multiple: true,
+    if: ->(g) { g.admin } do |value, scope, grid|
     scope.by_season(value, match: grid.season_and_or)
+  end
+
+  filter :season,
+    :enum,
+    select: (2025..Season.current.year).to_a.reverse,
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: true,
+    if: ->(g) { !g.admin } do |season_value, scope, grid|
+    case grid.season_and_or
+    when "match_any"
+      scope
+        .joins(:chapter_assignments)
+        .where(chapter_assignments: {season: season_value})
+        .distinct
+    else
+      scope
+        .joins(:chapter_assignments)
+        .where(chapter_assignments: {season: season_value})
+        .group("accounts.id")
+        .having("COUNT(DISTINCT chapter_assignments.season) = ?", season_value.length)
+    end
   end
 
   filter :season_and_or,
