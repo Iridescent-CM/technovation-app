@@ -13,7 +13,9 @@ module Admin
 
       if chapter_account_assignment_params.fetch(:chapter_id).present?
         account.chapter_assignments.create(
-          profile: account.current_profile,
+          profile: account.chapter_ambassador_profile.presence ||
+            account.mentor_profile.presence ||
+            account.student_profile,
           chapter_id: chapter_account_assignment_params.fetch(:chapter_id),
           season: Season.current.year,
           primary: true
