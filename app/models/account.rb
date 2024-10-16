@@ -1003,8 +1003,12 @@ class Account < ActiveRecord::Base
     current_chapter.present?
   end
 
+  def current_chapter_assignment
+    chapter_assignments.where(season: Season.current.year)&.first
+  end
+
   def current_chapter
-    chapter_assignments.where(season: Season.current.year)&.first&.chapter
+    current_chapter_assignment&.chapter
   end
 
   def chapter_program_name
