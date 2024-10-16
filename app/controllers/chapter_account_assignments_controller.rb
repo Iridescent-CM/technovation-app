@@ -11,7 +11,7 @@ class ChapterAccountAssignmentsController < ApplicationController
       current_account.update(no_chapter_selected: true)
     else
       current_account.chapter_assignments.create(
-        profile: current_account.current_profile,
+        profile: current_account.mentor_profile.presence || current_account.student_profile,
         chapter_id: params[:chapter_id],
         season: Season.current.year,
         primary: true
