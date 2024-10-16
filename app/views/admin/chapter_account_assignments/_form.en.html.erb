@@ -1,0 +1,22 @@
+<%= form_with model: @chapter_account_assignment,
+  url: (
+    @chapter_account_assignment.new_record? ?
+    admin_account_chapter_account_assignments_path(@account) :
+    admin_account_chapter_account_assignment_path(@account, @chapter_account_assignment)
+  ),
+  local: true do |form| %>
+
+  <div>
+    <%= form.label :chapter_id, "Select Chapter" %>
+    <%= form.collection_select :chapter_id,
+      @chapters,
+      :id,
+      :organization_name,
+      include_blank: "None",
+      selected: @account.current_chapter&.id %>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <%= form.submit "Save", class: "button" %>
+  </div>
+<% end %>
