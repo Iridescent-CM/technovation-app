@@ -24,6 +24,28 @@ module Admin
         success: "Successfully assigned #{account.full_name} to a new chapter"
     end
 
+    def edit
+      @account = Account.find(params.fetch(:account_id))
+      @chapters = Chapter.all.order(organization_name: :asc)
+      @chapter_account_assignment = @account.current_chapter_assignment
+    end
+
+    def update
+      account = Account.find(params.fetch(:account_id))
+      chapter_account_assignment = ChapterAccountAssignment.find(params.fetch(:id))
+
+      if chapter_account_assignment_params.fetch(:chapter_id).present?
+        chapter_account_assignment.update(
+          chapter_id: chapter_account_assignment_params.fetch(:chapter_id)
+        )
+      else
+        chapter_account_assignment.delete
+      end
+
+      redirect_to admin_participant_path(account),
+        success: "Successfully updated #{account.full_name}'s chapter assignment"
+    end
+
     private
 
     def chapter_account_assignment_params

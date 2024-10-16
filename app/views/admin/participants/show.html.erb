@@ -99,19 +99,27 @@
                 <dd>
                   <%= @account.friendly_chapter_organization_name %>
                 </dd>
+
+                <p>
+                  <%= link_to "Edit chapter#{@account.current_chapter_assignment.profile_type == 'MentorProfile' ? ' for mentor' : ' for ChA'}",
+                    edit_admin_account_chapter_account_assignment_path(
+                    @account,
+                    @account.current_chapter_assignment
+                  ),
+                  class: "button secondary small" %>
+                </p>
               <% else %>
                 <dt>Chapter</dt>
                 <dd>Not assigned to a chapter</dd>
-              <% end %>
 
                 <p>
-                  <%= link_to "Edit chapter",
+                  <%= link_to "Assign #{(@account.is_an_ambassador? && @account.is_a_mentor?) ? 'ChA' : ''} to a chapter",
                     new_admin_account_chapter_account_assignment_path(
-                      @account,
-                      return_to: admin_participant_path(@account)
+                      @account
                     ),
                     class: "button secondary small" %>
                 </p>
+              <% end %>
             </dl>
           <% end %>
         </div>
