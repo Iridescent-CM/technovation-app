@@ -272,7 +272,7 @@ Rails.application.routes.draw do
     resources :mentor_to_judge_conversions, only: :create
     resources :chapter_ambassador_profile_additions, only: :create
     resources :accounts, only: [] do
-      resources :chapter_account_assignments, only: [:new, :create]
+      resources :chapter_account_assignments, only: [:new, :create, :edit, :update]
     end
     resources :chapters do
       resource :legal_contact, only: [:new, :create, :edit, :update], controller: "chapters/legal_contacts"
