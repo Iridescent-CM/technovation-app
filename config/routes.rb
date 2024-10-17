@@ -159,6 +159,7 @@ Rails.application.routes.draw do
 
     resources :accounts, only: :show, controller: :participants
     resources :participants, only: [:index, :show, :edit, :update]
+    resources :unaffiliated_students, only: [:index]
     resources :participant_sessions, only: [:show, :destroy]
 
     resources :student_conversions, only: :create
