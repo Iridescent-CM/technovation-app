@@ -11,12 +11,21 @@ class Document < ActiveRecord::Base
     voided: "voided"
   }
 
-  def sent?
-    sent_at.present?
+  def unsigned?
+    sent? && signed_at.blank?
   end
 
   def complete?
     signed? || off_platform?
+  end
+
+  def document_type
+    case signer_type
+    when "LegalContact"
+      "Chapter Affiliation Agreement"
+    when "ChapterAmbassadorProfile"
+      "Chapter Volunteer Agreement"
+    end
   end
 
   private

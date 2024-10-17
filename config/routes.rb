@@ -315,6 +315,10 @@ Rails.application.routes.draw do
     resources :background_check_sweeps, only: :create
     resources :background_check_syncs, only: :create
 
+    resources :legal_documents, only: :index do
+      patch :void
+    end
+
     resources :events,
       controller: :regional_pitch_events,
       only: [:index, :show, :edit, :update]

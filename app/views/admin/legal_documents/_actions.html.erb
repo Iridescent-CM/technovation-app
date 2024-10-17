@@ -1,0 +1,11 @@
+<% if document.unsigned? %>
+  <%= link_to(
+    "Void",
+    admin_legal_document_void_path(document),
+    class: "button small",
+    data: {
+      method: :patch,
+      confirm: "You are about to void this legal document"
+    }
+  ) %>
+<% end %>
