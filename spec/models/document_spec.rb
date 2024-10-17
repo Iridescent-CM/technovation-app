@@ -1,8 +1,36 @@
 require "rails_helper"
 
 RSpec.describe Document do
-  let(:document) { Document.new(status: document_status) }
-  let(:document_status) { "void" }
+  let(:document) do
+    Document.new(
+      status: document_status,
+      signed_at: document_signed_at,
+      signer_type: document_signer_type
+    )
+  end
+
+  let(:document_status) { "voided" }
+  let(:document_signer_type) { "LegalContact" }
+  let(:document_signed_at) { nil }
+
+  describe "#unsigned?" do
+    context "when the document has been sent but not signed" do
+      let(:document_status) { "sent" }
+      let(:document_signed_at) { nil }
+
+      it "returns true" do
+        expect(document.unsigned?).to eq(true)
+      end
+    end
+
+    context "when the document has been signed" do
+      let(:document_status) { "signed" }
+
+      it "returns false" do
+        expect(document.unsigned?).to eq(false)
+      end
+    end
+  end
 
   describe "#complete?" do
     context "when the document has been signed" do
@@ -26,6 +54,24 @@ RSpec.describe Document do
 
       it "returns false" do
         expect(document.complete?).to eq(false)
+      end
+    end
+
+    describe "#document_type" do
+      context "when the signer type is a legal contact" do
+        let(:document_signer_type) { "LegalContact" }
+
+        it "returns 'Chapter Affiliation Agreement'" do
+          expect(document.document_type).to eq("Chapter Affiliation Agreement")
+        end
+      end
+
+      context "when the signer type is a chapter ambassador" do
+        let(:document_signer_type) { "ChapterAmbassadorProfile" }
+
+        it "returns 'Chapter Volunteer Agreement'" do
+          expect(document.document_type).to eq("Chapter Volunteer Agreement")
+        end
       end
     end
   end

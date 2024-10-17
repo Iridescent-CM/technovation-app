@@ -31,6 +31,8 @@ module SavedSearchController
       "#{current_scope}_chapter_ambassadors_path"
     when "parental_consents_grid"
       "#{current_scope}_paper_parental_consents_path"
+    when "legal_documents_grid"
+      "admin_legal_documents_path"
     else
       raise "Param root #{@saved_search.param_root} not supported"
     end
