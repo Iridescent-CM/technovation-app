@@ -10,6 +10,7 @@ module Admin
       account = Account.find(params.fetch(:account_id))
 
       account.chapter_assignments.where(season: Season.current.year).delete_all
+      account.update(no_chapter_selected: nil)
 
       if chapter_account_assignment_params.fetch(:chapter_id).present?
         account.chapter_assignments.create(
