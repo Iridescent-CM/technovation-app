@@ -22,7 +22,7 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
     expect(page).to have_content(unaffiliated_mentor.account.email)
   end
 
-  scenario "does not display unaffiliated students or mentors located in a different country that the ambassador" do
+  scenario "does not display unaffiliated students or mentors located in a different country than the ambassador" do
     unaffiliated_student = FactoryBot.create(:student, :brazil, :unaffiliated)
     unaffiliated_mentor = FactoryBot.create(:mentor, :brazil, :unaffiliated)
 
@@ -32,7 +32,7 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
     expect(page).not_to have_content(unaffiliated_mentor.account.email)
   end
 
-  scenario "does not display affiliated students or mentors in the ambassador's chapter" do
+  scenario "does not display affiliated students or mentors assigned to the ambassador's chapter" do
     affiliated_student = FactoryBot.create(:student, :chicago)
     affiliated_student.chapter_assignments.create(
       account: affiliated_student.account,
@@ -52,6 +52,5 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
 
     expect(page).not_to have_content(affiliated_student.account.email)
     expect(page).not_to have_content(affiliated_mentor.account.email)
-    visit(chapter_ambassador_participants_path)
   end
 end
