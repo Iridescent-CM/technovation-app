@@ -32,7 +32,7 @@ RSpec.describe NewRegistrationController do
       end
 
       it "assigns the chapter from the invite to the newly created chapter ambassador" do
-        expect(ChapterAmbassadorProfile.last.chapter_id).to eq(registration_invite.chapter_id)
+        expect(ChapterAmbassadorProfile.last.account.current_chapter.id).to eq(registration_invite.chapter_id)
       end
 
       it "updates the invitation to a registered status" do
