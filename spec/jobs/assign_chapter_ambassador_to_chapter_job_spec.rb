@@ -12,6 +12,8 @@ RSpec.describe AssignChapterAmbassadorToChapterJob do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
 
   before do
+    chapter_ambassador.account.chapters.delete_all
+
     allow(UserInvitation).to receive(:find_by)
       .with(admin_permission_token: registration_invite.admin_permission_token)
       .and_return(registration_invite)
@@ -27,6 +29,6 @@ RSpec.describe AssignChapterAmbassadorToChapterJob do
       chapter_ambassador_profile_id: chapter_ambassador.id
     )
 
-    expect(chapter_ambassador.chapter_id).to eq(registration_invite.chapter_id)
+    expect(chapter_ambassador.account.current_chapter.id).to eq(registration_invite.chapter_id)
   end
 end
