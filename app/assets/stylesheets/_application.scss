@@ -5,8 +5,8 @@
 
 // FIXES VENDOR BUG:
 // https://github.com/tsechingho/chosen-rails/issues/97#issuecomment-365472872
-$chosen-sprite: image-url('chosen-sprite.png');
-$chosen-sprite-retina: image-url('chosen-sprite@2x.png');
+$chosen-sprite: image-url("chosen-sprite.png");
+$chosen-sprite-retina: image-url("chosen-sprite@2x.png");
 
 @import "chosen";
 @import "sweetalert2";
@@ -40,6 +40,9 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png');
 
 // animation/transitions
 @import "transitions";
+
+@import "immosquare-cookies";
+@import "cookies_banner";
 
 #site-footer {
   font-size: 0.9rem;
