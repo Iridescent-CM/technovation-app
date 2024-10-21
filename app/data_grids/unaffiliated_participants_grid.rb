@@ -69,7 +69,7 @@ class UnaffiliatedParticipantsGrid
 
   filter :season,
     :enum,
-    select: (2015..Season.current.year).to_a.reverse,
+    select: (2025..Season.current.year).to_a.reverse,
     filter_group: "more-specific",
     html: {
       class: "and-or-field"
