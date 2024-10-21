@@ -195,6 +195,13 @@ FactoryBot.define do
       end
     end
 
+    trait :unaffiliated do
+      after(:create) do |m|
+        m.account.chapters.destroy_all
+        m.account.update_column(:no_chapter_selected, true)
+      end
+    end
+
     factory :onboarded_mentor
   end
 end
