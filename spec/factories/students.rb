@@ -222,6 +222,13 @@ FactoryBot.define do
       not_onboarded { true }
     end
 
+    trait :unaffiliated do
+      after(:create) do |s|
+        s.account.chapters.destroy_all
+        s.account.update_column(:no_chapter_selected, true)
+      end
+    end
+
     factory :onboarded_student, traits: [:full_profile]
     factory :onboarding_student, traits: [:onboarding]
   end

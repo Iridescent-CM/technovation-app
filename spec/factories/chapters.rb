@@ -36,5 +36,11 @@ FactoryBot.define do
       state_province { "Bahia" }
       country { "BR" }
     end
+
+    trait :onboarded do
+      after(:create) do |c|
+        c.update_column(:onboarded, true)
+      end
+    end
   end
 end
