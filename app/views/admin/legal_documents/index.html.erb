@@ -1,0 +1,7 @@
+<% provide :title, "Admin • Legal Documents" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @legal_documents_grid,
+  form_url: admin_legal_documents_path,
+  model_name: "documents",
+  scope: :admin %>
