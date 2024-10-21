@@ -1,4 +1,4 @@
-class UnaffiliatedStudentsGrid
+class UnaffiliatedParticipantsGrid
   include Datagrid
 
   attr_accessor :admin, :allow_state_search
