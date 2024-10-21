@@ -6,7 +6,7 @@ class UnaffiliatedParticipantsGrid
   self.batch_size = 1_000
 
   scope do
-    Account.joins(:student_profile).where(no_chapter_selected: true)
+    Account.not_admin
   end
 
   column :id, header: "Participant ID"
