@@ -25,7 +25,7 @@ module ChapterAmbassador
           scope.where(country: user.account.current_chapter.country_code)
         else
           scope.in_region(user)
-                end
+        end
 
         scope.where(no_chapter_selected: true)
       }
@@ -48,7 +48,7 @@ module ChapterAmbassador
     end
 
     def country_code
-      current_ambassador.account.current_chapter.country_code.presence || current_ambassador.country_code
+      current_ambassador.account.current_chapter&.country_code.presence || current_ambassador.country_code
     end
   end
 end
