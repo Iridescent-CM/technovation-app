@@ -6,7 +6,7 @@ class UnaffiliatedParticipantsGrid
   self.batch_size = 1_000
 
   scope do
-    Account.not_admin
+    Account
   end
 
   column :id, header: "Participant ID"
