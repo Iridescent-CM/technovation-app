@@ -17,18 +17,13 @@ module ChapterAmbassador
         scope.where(no_chapter_selected: true).page(params[:page])
       },
 
-      csv_scope: ->(scope, user, params) {
-        scope = scope
-          .left_outer_joins(:student_profile, :mentor_profile)
-
-        scope = if user.account.current_chapter&.country.present?
-          scope.where(country: user.account.current_chapter.country_code)
-        else
-          scope.in_region(user)
-        end
-
-        scope.where(no_chapter_selected: true)
-      }
+      csv_scope: "->(scope, user, params) { " +
+        "scope = scope.left_outer_joins(:student_profile, :mentor_profile); " +
+        "scope = if user.account.current_chapter&.country.present?; " +
+        "scope.where(country: user.account.current_chapter.country_code); " +
+        "else; scope.in_region(user); end; " +
+        "scope.where(no_chapter_selected: true) " +
+        "}"
 
     private
 
