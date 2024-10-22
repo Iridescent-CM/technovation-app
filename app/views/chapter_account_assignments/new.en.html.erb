@@ -8,12 +8,7 @@
       <div class="p-6">
         <% if @chapters.present? %>
           <div class="prose">
-            <p>
-              Our chapters help provide mentors, classes, and other support
-              for Technovation Girls participants. Please select the chapter
-              you have been in contact with or the chapter nearest your location,
-              and we'll share your contact info with the Chapter Ambassador.
-            </p>
+            <%= render "#{current_account.scope_name}_text" %>
 
             <div class="flex flex-col space-y-6 mt-8">
               <%= simple_form_for @chapter_assignment do |f| %>
@@ -51,6 +46,10 @@
                     <% end %>
                   </div>
                 </div>
+
+                <% if current_account.scope_name == "mentor" %>
+                  <%= render "extra_mentor_form_fields" %>
+                <% end %>
 
                 <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-8" %>
               <% end %>
