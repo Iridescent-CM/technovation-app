@@ -6,7 +6,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
   context "when there is a chapter in the same area" do
     let!(:chapter) { FactoryBot.create(:chapter, :chicago) }
 
-    it "it assigns the chapter to the mentor after they choose it" do
+    it "assigns the chapter to the mentor after they choose it" do
       sign_in(mentor)
 
       choose chapter.name
@@ -15,7 +15,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
       expect(mentor.account.current_chapter).to eq(chapter)
     end
 
-    it "it updates the account to 'no_chapter_selected' when they choose the 'I'm not sure' option" do
+    it "updates the account to 'no_chapter_selected' when they choose the 'I'm not sure' option" do
       sign_in(mentor)
 
       choose "I'm not sure"
@@ -24,12 +24,25 @@ RSpec.describe "Mentor selecting a chapter", :js do
       mentor.reload
       expect(mentor.account.no_chapter_selected?).to eq(true)
     end
+
+    it "updates mentor profile fields when they select team matching options" do
+      sign_in(mentor)
+
+      choose "I'm not sure"
+      check "Allow teams to find you in search results and invite you to join"
+      check "Indicate to teams that you can be an online, remote mentor"
+      click_button "Save"
+
+      mentor.reload
+      expect(mentor.virtual?).to eq(true)
+      expect(mentor.accepting_team_invites?).to eq(true)
+    end
   end
 
   context "when there are no chapters in the same area" do
     Chapter.destroy_all
 
-    it "it updates the account to 'no_chapter_selected' after they click 'Acknowledge and Go to Dashboard'" do
+    it "updates the account to 'no_chapter_selected' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(mentor)
 
       expect(page).to have_content("Unfortunately, there are no chapters currently active in your country")

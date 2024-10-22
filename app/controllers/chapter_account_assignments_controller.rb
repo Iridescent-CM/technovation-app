@@ -18,6 +18,13 @@ class ChapterAccountAssignmentsController < ApplicationController
       )
     end
 
+    if current_account.is_a_mentor?
+      current_account.mentor_profile.update(
+        virtual: params.fetch(:mentor_profile_virtual, false),
+        accepting_team_invites: params.fetch(:mentor_profile_accepting_team_invites, false)
+      )
+    end
+
     redirect_to send(:"#{current_account.scope_name}_dashboard_path")
   end
 end
