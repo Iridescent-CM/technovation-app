@@ -42,7 +42,7 @@ class Chapter < ActiveRecord::Base
   delegate :seasons_chapter_affiliation_agreement_is_valid_for, to: :legal_contact
 
   def affiliation_agreement
-    legal_contact&.chapter_affiliation_agreement
+    legal_contact&.reload&.chapter_affiliation_agreement
   end
 
   def can_be_marked_onboarded?

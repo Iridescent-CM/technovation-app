@@ -128,6 +128,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def chapter_volunteer_agreement_complete?
+    reload
+
     !!chapter_volunteer_agreement&.complete?
   end
 
