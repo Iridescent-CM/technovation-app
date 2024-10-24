@@ -256,6 +256,7 @@ GEM
       glob
       i18n
     i18n_data (0.7.0)
+    immosquare-cookies (0.1.6)
     indefinite_article (0.2.4)
       activesupport
     ipaddress (0.8.3)
@@ -600,6 +601,7 @@ DEPENDENCIES
   geocoder (~> 1.6.0)
   hiredis (~> 0.6)
   i18n-js (~> 4.0)
+  immosquare-cookies
   indefinite_article (~> 0.2)
   jquery-rails (~> 4.3)
   jquery-ui-rails (~> 7.0)!
