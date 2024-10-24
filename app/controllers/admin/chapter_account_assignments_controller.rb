@@ -43,6 +43,7 @@ module Admin
         )
       else
         chapter_account_assignment.delete
+        account.update(no_chapter_selected: true)
       end
 
       redirect_to admin_participant_path(account),
