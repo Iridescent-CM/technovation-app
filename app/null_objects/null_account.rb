@@ -37,6 +37,10 @@ class NullAccount < NullObject
     false
   end
 
+  def current_chapter
+    NullChapter.new
+  end
+
   class NullCertificates
     def destroy_all
       false
