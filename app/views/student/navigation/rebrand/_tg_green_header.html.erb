@@ -8,7 +8,7 @@
           Meet your Chapter Ambassador &#8227;
       </span>
     </div>
-    <% if chapter_ambassador.present? && chapter_ambassador.account.current_chapter.present? %>
+    <% if chapter_ambassador.present? && chapter_ambassador.account&.current_chapter.present? %>
       <%= render partial: 'dashboards/rebrand/chapter_ambassador_chapter_intro',
         locals: { chapter_ambassador: chapter_ambassador, chapter: chapter_ambassador.account.current_chapter } %>
     <% else %>
