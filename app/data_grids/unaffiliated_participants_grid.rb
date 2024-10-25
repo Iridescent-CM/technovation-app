@@ -1,7 +1,7 @@
 class UnaffiliatedParticipantsGrid
   include Datagrid
 
-  attr_accessor :admin, :allow_state_search
+  attr_accessor :admin, :allow_state_search, :chapter_id
 
   self.batch_size = 1_000
 
@@ -26,7 +26,16 @@ class UnaffiliatedParticipantsGrid
   end
 
   column :actions, mandatory: true, html: true do |account, grid|
-    "PLACEHOLDER: assign to chapter"
+    link_to "Add to your chapter",
+      chapter_ambassador_account_chapter_account_assignments_path(
+        account_id: account.id,
+        chapter_account_assignment: {chapter_id: grid.chapter_id}
+      ),
+      class: "button button--remove-bg",
+      data: {
+        method: :post,
+        confirm: "You are adding #{account.full_name} to your chapter!",
+      }
   end
 
   filter :name_email,
