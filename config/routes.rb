@@ -157,7 +157,9 @@ Rails.application.routes.draw do
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
-    resources :accounts, only: :show, controller: :participants
+    resources :accounts, only: :show, controller: :participants do
+      resource :chapter_account_assignments, only: [:create]
+    end
     resources :participants, only: [:index, :show, :edit, :update]
     resources :unaffiliated_participants, only: [:index]
     resources :participant_sessions, only: [:show, :destroy]
