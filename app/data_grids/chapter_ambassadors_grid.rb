@@ -85,7 +85,6 @@ class ChapterAmbassadorsGrid
 
   column :remaining_chapter_ambassador_onboarding_tasks,
     preload: [
-      :background_check,
       chapter_ambassador_profile: [
         :chapter_volunteer_agreement
       ]
@@ -93,29 +92,8 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile.incomplete_onboarding_tasks.to_sentence
   end
 
-  column :remaining_chapter_onboarding_tasks,
-    preload: [
-      chapter_ambassador_profile: [
-        chapter: [
-          :chapter_links,
-          :chapter_program_information,
-          :legal_contact,
-          :primary_contact,
-          chapter_program_information: [
-            :low_income_estimate,
-            :meeting_facilitators,
-            :meeting_times,
-            :organization_types,
-            :participant_count_estimate,
-            :program_length
-          ],
-          legal_contact: [
-            :chapter_affiliation_agreement
-          ]
-        ]
-      ]
-    ] do
-    chapter_ambassador_profile.chapter&.incomplete_onboarding_tasks&.to_sentence
+  column :remaining_chapter_onboarding_tasks do
+    current_chapter&.incomplete_onboarding_tasks&.to_sentence
   end
 
   column :completed_chapter_ambassador_onboarding_tasks,
@@ -128,29 +106,8 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile.complete_onboarding_tasks.to_sentence
   end
 
-  column :completed_chapter_onboarding_tasks,
-    preload: [
-      chapter_ambassador_profile: [
-        chapter: [
-          :chapter_links,
-          :chapter_program_information,
-          :legal_contact,
-          :primary_contact,
-          chapter_program_information: [
-            :low_income_estimate,
-            :meeting_facilitators,
-            :meeting_times,
-            :organization_types,
-            :participant_count_estimate,
-            :program_length
-          ],
-          legal_contact: [
-            :chapter_affiliation_agreement
-          ]
-        ]
-      ]
-    ] do
-    chapter_ambassador_profile.chapter&.complete_onboarding_tasks&.to_sentence
+  column :completed_chapter_onboarding_tasks do
+    current_chapter&.complete_onboarding_tasks&.to_sentence
   end
 
   column :actions, mandatory: true, html: true do |account|
@@ -215,12 +172,12 @@ class ChapterAmbassadorsGrid
     filter_group: "common" do |value, scope, grid|
       if value == "true"
         scope
-          .where(chapter_ambassador_profiles: {onboarded: value})
-          .where(chapter: {onboarded: value})
+          .where(chapter_ambassador_profiles: {onboarded: true})
+          .where(chapters: {onboarded: true})
       else
         scope
-          .where(chapter_ambassador_profiles: {onboarded: value})
-          .or(scope.where(chapter: {onboarded: value}))
+          .where(chapter_ambassador_profiles: {onboarded: false})
+          .or(scope.where(chapters: {onboarded: false}))
       end
     end
 
