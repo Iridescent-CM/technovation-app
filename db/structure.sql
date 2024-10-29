@@ -677,7 +677,9 @@ CREATE TABLE public.chapters (
     onboarded boolean DEFAULT false,
     latitude double precision,
     longitude double precision,
-    primary_account_id bigint
+    primary_account_id bigint,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 
 
@@ -4805,6 +4807,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240912161211'),
 ('20240924161806'),
 ('20240926154900'),
-('20240930201646');
+('20240930201646'),
+('20241029161303');
 
 
