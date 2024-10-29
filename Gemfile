@@ -101,6 +101,7 @@ gem "net-imap", require: false
 gem "net-pop", require: false
 
 gem "rexml", "~> 3.3.6"
+gem "immosquare-cookies"
 
 group :development do
   gem "pp_sql", "~> 0.2", require: false
