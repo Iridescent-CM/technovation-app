@@ -199,6 +199,7 @@
 <script>
 import LocationResult from "../models/LocationResult";
 import HttpStatusCodes from "../../constants/HttpStatusCodes";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -286,6 +287,14 @@ export default {
         this.state = data.state;
         this.country = data.country;
       });
+    }
+  },
+
+  mounted() {
+    if (
+      window.location.pathname === "/chapter_ambassador/chapter_location/edit"
+    ) {
+      this.openAlertMessage();
     }
   },
 
@@ -595,6 +604,24 @@ export default {
       } else {
         return endpointRoot;
       }
+    },
+
+    openAlertMessage() {
+      Swal.fire({
+        html: `
+        <p>
+          The chapter location determines which users see your chapter as a suggested chapter when they register.
+          Students and mentors see a list of chapters in their local area or their country.
+        </p>
+
+        <p class="mt-8">By editing your location, you understand that it may change which users can join your chapter when they register.</p>
+
+        <p class="mt-8">Please contact <a href=mailto:"${process.env.HELP_EMAIL}" class="tw-link">${process.env.HELP_EMAIL}</a> with any questions.</p>
+        `,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#3FA428",
+        width: "50%",
+      });
     },
   },
 };
