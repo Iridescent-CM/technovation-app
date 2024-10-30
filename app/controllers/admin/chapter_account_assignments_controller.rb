@@ -43,6 +43,10 @@ module Admin
         )
       else
         chapter_account_assignment.delete
+
+        if account.is_a_mentor? || account.is_a_student?
+          account.update(no_chapter_selected: true)
+        end
       end
 
       redirect_to admin_participant_path(account),

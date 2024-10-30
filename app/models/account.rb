@@ -752,6 +752,10 @@ class Account < ActiveRecord::Base
     mentor_profile.present?
   end
 
+  def is_a_student?
+    student_profile.present?
+  end
+
   def is_an_ambassador?
     chapter_ambassador_profile.present?
   end
