@@ -335,6 +335,8 @@ export default {
         return "this person's";
       } else if (this.teamId) {
         return "this team's";
+      } else if (this.chapterId) {
+        return "this chapter's";
       } else {
         return "your";
       }
@@ -576,7 +578,13 @@ export default {
     },
 
     _getEndpoint(pathPart) {
-      const endpointRoot = `/${this.scopeName}/${pathPart}`;
+      let endpointRoot;
+
+      if (this.scopeName === "chapter_ambassador" && this.chapterId) {
+        endpointRoot = `/chapter_ambassador/chapter_${pathPart}`;
+      } else {
+        endpointRoot = `/${this.scopeName}/${pathPart}`;
+      }
 
       if (this.accountId) {
         return `${endpointRoot}?account_id=${this.accountId}`;
