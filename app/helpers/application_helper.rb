@@ -22,6 +22,7 @@ module ApplicationHelper
       chapter_affiliation_agreements
       chapter_ambassador
       chapter_locations
+      chapter_organization_headquarters_locations
       chapter_profile
       chapter_program_information
       chapter_volunteer_agreements
