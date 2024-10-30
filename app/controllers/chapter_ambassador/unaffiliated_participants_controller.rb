@@ -36,8 +36,6 @@ module ChapterAmbassador
         allow_state_search: false,
         country: [country_code],
         state_province: Array(params[:unaffiliated_participants_grid][:state_province]),
-        season: params[:unaffiliated_participants_grid][:season] || Season.current.year,
-        season_and_or: params[:unaffiliated_participants_grid][:season_and_or] || "match_any"
       )
 
       grid.merge(

@@ -66,29 +66,6 @@ class UnaffiliatedParticipantsGrid
       })
     end
 
-
-  filter :season,
-    :enum,
-    select: (2025..Season.current.year).to_a.reverse,
-    filter_group: "more-specific",
-    html: {
-      class: "and-or-field"
-    },
-    multiple: true do |value, scope, grid|
-    scope.by_season(value, match: grid.season_and_or)
-  end
-
-  filter :season_and_or,
-    :enum,
-    header: "Season options:",
-    select: [
-      ["Match any season", "match_any"],
-      ["Match all seasons", "match_all"]
-    ],
-    filter_group: "more-specific" do |_, scope|
-    scope
-  end
-
   filter :country,
     :enum,
     header: "Country",
