@@ -22,4 +22,8 @@ class NullChapterAmbassador < NullObject
   def program_name
     nil
   end
+
+  def account
+    ::NullAccount.new
+  end
 end
