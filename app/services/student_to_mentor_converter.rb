@@ -50,6 +50,12 @@ class StudentToMentorConverter
   end
 
   def register_mentor_to_current_season
-    RegisterToCurrentSeasonJob.perform_later(account)
+    if ENV.fetch("ACTIVE_JOB_BACKEND", "inline") == "inline"
+      RegisterToCurrentSeasonJob.perform_later(account)
+    else
+      RegisterToCurrentSeasonJob
+        .set(wait: 1.minute)
+        .perform_later(account)
+    end
   end
 end
