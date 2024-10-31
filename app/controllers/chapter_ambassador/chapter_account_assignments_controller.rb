@@ -3,17 +3,14 @@ module ChapterAmbassador
     def create
       account = Account.find(params.fetch(:account_id))
 
-      account.chapter_assignments.where(season: Season.current.year).delete_all
       account.update(no_chapter_selected: nil)
 
-      if chapter_account_assignment_params.fetch(:chapter_id).present?
-        account.chapter_assignments.create(
-          profile: account.mentor_profile.presence || account.student_profile,
-          chapter_id: chapter_account_assignment_params.fetch(:chapter_id),
-          season: Season.current.year,
-          primary: true
-        )
-      end
+      account.chapter_assignments.create(
+        profile: account.mentor_profile.presence || account.student_profile,
+        chapter_id: chapter_account_assignment_params.fetch(:chapter_id),
+        season: Season.current.year,
+        primary: true
+      )
 
       redirect_to chapter_ambassador_participants_path,
         success: "Successfully assigned #{account.full_name} to a your chapter"
