@@ -100,7 +100,7 @@ gem "net-smtp", require: false
 gem "net-imap", require: false
 gem "net-pop", require: false
 
-gem "rexml", "~> 3.3.6"
+gem "rexml", "~> 3.3.0"
 gem "immosquare-cookies"
 
 group :development do
