@@ -13,7 +13,9 @@ module SignIn
       permanent: options[:permanent]
     )
 
-    RegisterToCurrentSeasonJob.perform_later(signin)
+    unless signin.student? && signin.age_by_cutoff > 18
+      RegisterToCurrentSeasonJob.perform_later(signin)
+    end
 
     RecordBrowserDetailsJob.perform_later(
       signin.id,
