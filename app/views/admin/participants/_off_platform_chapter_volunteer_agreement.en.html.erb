@@ -6,9 +6,12 @@
     The existing agreement will need to be voided before an off-platform one can be created.
   </p>
 
-  <p>
-    Chapter Volunteer Agreement Status: <strong><%= profile.chapter_volunteer_agreement.status.humanize %></strong>
-  </p>
+  <% if profile.chapter_volunteer_agreement.status.present? %>
+    <p>
+      Chapter Volunteer Agreement Status:
+      <strong><%= profile.chapter_volunteer_agreement.status.humanize %></strong>
+    </p>
+  <% end %>
 <% else %>
   <p>
     Click the button below to create an off-platform Chapter Volunteer Agreement for <%= profile.full_name %> that will be valid for one year.
