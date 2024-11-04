@@ -139,6 +139,13 @@ FactoryBot.define do
       end
     end
 
+    trait :unaffiliated_chapter do
+      after(:create) do |student|
+        student.account.chapters.destroy_all
+        student.account.update_column(:no_chapter_selected, true)
+      end
+    end
+
     before(:create) do |s, e|
       if e.not_onboarded
         s.build_parental_consent
@@ -220,13 +227,6 @@ FactoryBot.define do
 
     trait :onboarding do
       not_onboarded { true }
-    end
-
-    trait :unaffiliated do
-      after(:create) do |s|
-        s.account.chapters.destroy_all
-        s.account.update_column(:no_chapter_selected, true)
-      end
     end
 
     factory :onboarded_student, traits: [:full_profile]
