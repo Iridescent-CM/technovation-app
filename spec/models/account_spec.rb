@@ -1205,4 +1205,30 @@ RSpec.describe Account do
       end
     end
   end
+
+  context "background check exemptions" do
+    describe "#grant_background_check_exemption" do
+      context "when the background check exemption is for a mentor" do
+        let!(:mentor_account) { FactoryBot.create(:account, :mentor) }
+
+        it "makes a call to enable searchability for the mentor" do
+          expect(mentor_account).to receive_message_chain(:mentor_profile, :enable_searchability_with_save)
+
+          mentor_account.grant_background_check_exemption
+        end
+      end
+    end
+
+    describe "#revoke_background_check_exemption" do
+      context "when the background check exemption is for a mentor" do
+        let!(:mentor_account) { FactoryBot.create(:account, :mentor) }
+
+        it "makes a call to enable searchability for the mentor" do
+          expect(mentor_account).to receive_message_chain(:mentor_profile, :enable_searchability_with_save)
+
+          mentor_account.revoke_background_check_exemption
+        end
+      end
+    end
+  end
 end

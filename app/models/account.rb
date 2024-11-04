@@ -1023,10 +1023,14 @@ class Account < ActiveRecord::Base
 
   def grant_background_check_exemption
     update(background_check_exemption: true)
+
+    mentor_profile&.enable_searchability_with_save
   end
 
   def revoke_background_check_exemption
     update(background_check_exemption: false)
+
+    mentor_profile&.enable_searchability_with_save
   end
 
   def update_chapter_ambassador_onboarding_status
