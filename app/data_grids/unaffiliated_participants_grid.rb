@@ -9,11 +9,14 @@ class UnaffiliatedParticipantsGrid
     Account
   end
 
-  column :id, header: "Participant ID"
+  column :id, header: "Participant ID", if: ->(g) { g.admin }
 
   column :first_name, mandatory: true
   column :last_name, mandatory: true
   column :email, mandatory: true
+  column :profile_type do
+    scope_name
+  end
 
   column :city, mandatory: true
 
@@ -26,16 +29,31 @@ class UnaffiliatedParticipantsGrid
   end
 
   column :actions, mandatory: true, html: true do |account, grid|
-    link_to "Add to your chapter",
-      chapter_ambassador_account_chapter_account_assignments_path(
-        account_id: account.id,
-        chapter_account_assignment: {chapter_id: grid.chapter_id}
-      ),
-      class: "button button--remove-bg",
-      data: {
-        method: :post,
-        confirm: "You are adding #{account.full_name} to your chapter!",
-      }
+    if grid.admin
+      html = link_to(
+        "View",
+        admin_participant_path(account),
+        data: {turbolinks: false}
+      )
+      html += " | "
+
+      html += link_to(
+        "Assign to a chapter",
+        new_admin_account_chapter_account_assignment_path(account),
+        data: {turbolinks: false}
+      )
+    else
+      link_to "Add to your chapter",
+        chapter_ambassador_account_chapter_account_assignments_path(
+          account_id: account.id,
+          chapter_account_assignment: {chapter_id: grid.chapter_id}
+        ),
+        class: "button button--remove-bg",
+        data: {
+          method: :post,
+          confirm: "You are adding #{account.full_name} to your chapter!"
+        }
+    end
   end
 
   filter :name_email,
