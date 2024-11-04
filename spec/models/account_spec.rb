@@ -299,6 +299,20 @@ RSpec.describe Account do
     end
   end
 
+  context "callbacks" do
+    context "#after_update" do
+      describe "sending the student assigned to chapter email" do
+        let(:student) { FactoryBot.create(:student, :unaffiliated_chapter) }
+
+        it "makes a call to send the chapter assigned email to the student when they're assigned to a chapter" do
+          expect(StudentMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
+
+          student.account.update(no_chapter_selected: false)
+        end
+      end
+    end
+  end
+
   it "formats the country as a short code before validating" do
     account = Account.new(country: "United States")
     account.valid?

@@ -3,9 +3,11 @@ require "rails_helper"
 RSpec.describe ChapterAmbassador::ChapterAccountAssignmentsController do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
   let(:chapter) { chapter_ambassador.chapter }
-  let(:student_profile) { FactoryBot.create(:student_profile, :not_assigned_to_chapter) }
+  let(:student_profile) { FactoryBot.create(:student_profile, :unaffiliated_chapter) }
 
   before do
+    allow(StudentMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
+
     sign_in(chapter_ambassador)
   end
 
@@ -31,6 +33,17 @@ RSpec.describe ChapterAmbassador::ChapterAccountAssignmentsController do
         }
 
         expect(student_profile.account.reload.current_chapter).to eq(chapter)
+      end
+
+      it "makes a call to send the chapter assigned email to the student" do
+        expect(StudentMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
+
+        post :create, params: {
+          account_id: student_profile.account.id,
+          chapter_account_assignment: {
+            chapter_id: chapter.id
+          }
+        }
       end
     end
   end
