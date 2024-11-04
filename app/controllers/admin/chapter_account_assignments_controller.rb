@@ -9,8 +9,10 @@ module Admin
     def create
       account = Account.find(params.fetch(:account_id))
 
-      account.chapter_assignments.where(season: Season.current.year).delete_all
-      account.update(no_chapter_selected: nil)
+      account
+        .chapter_assignments
+        .where(season: Season.current.year, primary: true)
+        .delete_all
 
       if chapter_account_assignment_params.fetch(:chapter_id).present?
         account.chapter_assignments.create(
@@ -21,6 +23,8 @@ module Admin
           season: Season.current.year,
           primary: true
         )
+
+        account.update(no_chapter_selected: nil)
       end
 
       redirect_to admin_participant_path(account),
