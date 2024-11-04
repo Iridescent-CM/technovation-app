@@ -23,10 +23,12 @@
         <% activity.parameters[:changes].each do |key, changes| %>
           <li><%= t(key) %></li>
 
-          <ul style="list-style: circle;">
-            <li>Old: <%= changes.first %></li>
-            <li>New: <%= changes.last %></li>
-          </ul>
+          <% if changes.present? %>
+            <ul style="list-style: circle;">
+              <li>Old: <%= changes.first %></li>
+              <li>New: <%= changes.last %></li>
+            </ul>
+          <% end %>
         <% end %>
       <% else %>
         <li>Profile updated</li>
