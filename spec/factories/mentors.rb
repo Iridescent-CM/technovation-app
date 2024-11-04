@@ -87,6 +87,13 @@ FactoryBot.define do
       end
     end
 
+    trait :unaffiliated_chapter do
+      after(:create) do |mentor|
+        mentor.account.chapters.destroy_all
+        mentor.account.update_column(:no_chapter_selected, true)
+      end
+    end
+
     before(:create) do |m, e|
       {
         skip_existing_password: true,
@@ -192,13 +199,6 @@ FactoryBot.define do
     trait :has_judge_profile do
       after(:create) do |mentor|
         CreateJudgeProfile.call(mentor.account)
-      end
-    end
-
-    trait :unaffiliated do
-      after(:create) do |m|
-        m.account.chapters.destroy_all
-        m.account.update_column(:no_chapter_selected, true)
       end
     end
 

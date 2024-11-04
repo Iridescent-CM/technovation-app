@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ChapterAmbassador::ChapterAccountAssignmentsController do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
   let(:chapter) { chapter_ambassador.chapter }
-  let(:student_profile) { FactoryBot.create(:student_profile, :unaffiliated) }
+  let(:student_profile) { FactoryBot.create(:student_profile, :not_assigned_to_chapter) }
 
   before do
     sign_in(chapter_ambassador)
