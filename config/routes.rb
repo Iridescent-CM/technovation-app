@@ -270,6 +270,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :unaffiliated_participants, only: [:index]
     resources :participant_sessions, only: [:show, :destroy]
     resources :user_invitations, only: [:new, :create, :index, :destroy]
     resources :user_invitation_emails, only: :create
