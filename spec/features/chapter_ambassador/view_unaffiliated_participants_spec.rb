@@ -13,8 +13,8 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
   end
 
   scenario "displays unaffiliated students and mentors in the ambassador's country" do
-    unaffiliated_student = FactoryBot.create(:student, :chicago, :unaffiliated)
-    unaffiliated_mentor = FactoryBot.create(:mentor, :chicago, :unaffiliated)
+    unaffiliated_student = FactoryBot.create(:student, :chicago, :unaffiliated_chapter)
+    unaffiliated_mentor = FactoryBot.create(:mentor, :chicago, :unaffiliated_chapter)
 
     sign_in(chapter_ambassador)
     visit(chapter_ambassador_unaffiliated_participants_path)
@@ -23,8 +23,8 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
   end
 
   scenario "does not display unaffiliated students or mentors located in a different country than the ambassador" do
-    unaffiliated_student = FactoryBot.create(:student, :brazil, :unaffiliated)
-    unaffiliated_mentor = FactoryBot.create(:mentor, :brazil, :unaffiliated)
+    unaffiliated_student = FactoryBot.create(:student, :brazil, :unaffiliated_chapter)
+    unaffiliated_mentor = FactoryBot.create(:mentor, :brazil, :unaffiliated_chapter)
 
     sign_in(chapter_ambassador)
     visit(chapter_ambassador_unaffiliated_participants_path)
