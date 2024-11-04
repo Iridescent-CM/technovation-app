@@ -28,6 +28,7 @@ class ChapterSelector
     Chapter
       .joins(legal_contact: :chapter_affiliation_agreement)
       .includes(legal_contact: :chapter_affiliation_agreement)
+      .includes(:primary_contact)
       .where(chapter_affiliation_agreement: {status: ["signed", "off-platform"]})
       .where(where_clause)
   end
