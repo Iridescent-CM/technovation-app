@@ -33,7 +33,7 @@ module ChapterAmbassador
     def grid_params
       grid = (params[:unaffiliated_participants_grid] ||= {}).merge(
         admin: false,
-        allow_state_search: false,
+        allow_state_search: true,
         chapter_id: current_ambassador.account.current_chapter.id,
         country: [country_code],
         state_province: Array(params[:unaffiliated_participants_grid][:state_province]),
