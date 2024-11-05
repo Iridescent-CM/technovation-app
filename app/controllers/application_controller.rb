@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
     :current_profile_type,
     :current_session,
     :get_cookie,
-    :chapter_ambassador
+    :chapter_ambassador,
+    :chapter
 
   rescue_from "ActionController::ParameterMissing" do |e|
     if e.message.include?("token")
@@ -75,6 +76,12 @@ class ApplicationController < ActionController::Base
     return @chapter_ambassador if defined?(@chapter_ambassador)
 
     @chapter_ambassador = region_account.chapter_ambassador
+  end
+
+  def chapter
+    return @chapter if defined?(@chapter)
+
+    @chapter = region_account.current_chapter || ::NullChapter.new
   end
 
   def save_redirected_path

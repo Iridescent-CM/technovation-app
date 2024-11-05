@@ -1,16 +1,16 @@
 <div class="tg-green-stripes rubik h-auto mx-auto pt-16 flex flex-col mb-8">
   <div class="banner-text-wrapper w-full lg:w-3/4 mx-auto pb-16">
     <div class="text-white text-4xl md:text-6xl font-black mb-8 uppercase">
-      Technovation Girls <%= chapter_ambassador.account.current_chapter.name.presence %>
+      Technovation Girls <%= chapter.name.presence %>
     </div>
     <div class="text-white text-3xl font-bold mb-8">
       <span id="cha-student-meet" class="cursor-pointer hover:text-energetic-blue">
           Meet your Chapter Ambassador &#8227;
       </span>
     </div>
-    <% if chapter_ambassador.present? && chapter_ambassador.account.current_chapter.present? %>
+    <% if chapter.present? %>
       <%= render partial: 'dashboards/rebrand/chapter_ambassador_chapter_intro',
-        locals: { chapter_ambassador: chapter_ambassador, chapter: chapter_ambassador.account.current_chapter } %>
+        locals: { chapter: chapter } %>
     <% else %>
       <%= render 'dashboards/rebrand/chapter_ambassador_missing' %>
     <% end %>
