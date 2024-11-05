@@ -1012,7 +1012,7 @@ class Account < ActiveRecord::Base
   end
 
   def current_chapter
-    current_chapter_assignment&.chapter
+    current_chapter_assignment&.chapter || ::NullChapter.new
   end
 
   def chapter_program_name
