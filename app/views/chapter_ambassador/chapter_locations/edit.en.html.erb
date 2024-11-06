@@ -1,13 +1,17 @@
-<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render "chapter_ambassador/chapter_profile/side_nav" %>
-
-  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Update Chapter Location" } do %>
+<% if current_chapter.present? %>
+  <div class="mx-auto w-full lg:w-1/2">
     <div>
-      <% if current_chapter.present? %>
-        <%= render "chapter_ambassador/chapter_locations/form"%>
-      <% else %>
-        <p>You are not associated with a chapter. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
-      <% end %>
+      <%= render "signups/location_fields", chapter_id: current_chapter.id %>
     </div>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+    <%= render "chapter_ambassador/chapter_profile/side_nav" %>
+
+    <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Update Chapter Location" } do %>
+      <div>
+          <p>You are not associated with a chapter. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
+      </div>
+    <% end %>
+  </div>
+<% end %>

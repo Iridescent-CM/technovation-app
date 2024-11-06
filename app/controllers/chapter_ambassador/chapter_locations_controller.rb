@@ -1,26 +1,17 @@
 module ChapterAmbassador
   class ChapterLocationsController < ChapterAmbassadorController
+    include LocationController
+
     skip_before_action :require_chapter_and_chapter_ambassador_onboarded
 
     layout "chapter_ambassador_rebrand"
 
-    def update
-      @chapter = current_ambassador.chapter
-      if @chapter.update(chapter_location_params)
-        redirect_to chapter_ambassador_chapter_location_path,
-          success: "You updated your chapter location details!"
-      else
-        flash.now[:alert] = "Error updating chapter location details."
-        render :edit
-      end
-    end
-
     private
 
-    def chapter_location_params
-      params.require(:chapter).permit(
-        :organization_headquarters_location
-      )
+    def db_record
+      @db_record ||= if params.has_key?(:chapter_id)
+        Chapter.find(params.fetch(:chapter_id))
+      end
     end
   end
 end

@@ -148,7 +148,10 @@ Rails.application.routes.draw do
     resource :chapter_profile, only: :show, controller: "chapter_profile"
     resource :chapter_affiliation_agreement, only: :show
     resource :public_information, only: [:show, :edit, :update], controller: "public_information"
-    resource :chapter_location, only: [:show, :edit, :update]
+    resource :chapter_organization_headquarters_location, only: [:edit, :update]
+    resource :chapter_location, only: [:show, :edit, :update, :create], controller: "chapter_locations"
+    resource :chapter_current_location, only: :show
+
     resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
     resource :chapter_volunteer_agreement, only: [:show, :create]
     resource :community_connections, only: [:show, :new, :create, :edit, :update]

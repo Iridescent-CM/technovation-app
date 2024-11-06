@@ -16,7 +16,7 @@ RSpec.feature "Chapter ambassadors edit chapter location" do
     fill_in "chapter_organization_headquarters_location", with: "123 Main St, USA"
     click_button "Save"
 
-    expect(page).to have_css(".flash.flash--success", text: "You updated your chapter location details!")
+    expect(page).to have_css(".flash.flash--success", text: "You updated your chapter organization headquarters location details!")
     expect(page).to have_content "123 Main St, USA"
   end
 end

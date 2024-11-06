@@ -1,0 +1,20 @@
+<%= simple_form_for current_chapter,
+  url: chapter_ambassador_chapter_organization_headquarters_location_path do |f| %>
+
+  <div class="mb-4">
+    <%= f.label :organization_headquarters_location, "Organization Headquarters Location" %>
+    <%= f.text_field :organization_headquarters_location,
+                     placeholder: "Full address OR city, state, country",
+                     class: "mb-0"
+    %>
+    <p class="text-sm italic">
+      The city entered for the organization headquarters will be used to map the location of your chapter.
+    </p>
+  </div>
+
+  <p class="mt-8">
+    <%= f.submit "Save", class: "tw-green-btn" %>
+      or
+    <%= link_to "cancel", chapter_ambassador_chapter_location_path %>
+  </p>
+<% end %>

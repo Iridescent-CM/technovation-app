@@ -199,6 +199,7 @@
 <script>
 import LocationResult from "../models/LocationResult";
 import HttpStatusCodes from "../../constants/HttpStatusCodes";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -289,6 +290,14 @@ export default {
     }
   },
 
+  mounted() {
+    if (
+      window.location.pathname === "/chapter_ambassador/chapter_location/edit"
+    ) {
+      this.openAlertMessage();
+    }
+  },
+
   computed: {
     countryDetectedInStateOptionalList() {
       if (!this.country || !this.country.length) return false;
@@ -335,6 +344,8 @@ export default {
         return "this person's";
       } else if (this.teamId) {
         return "this team's";
+      } else if (this.chapterId) {
+        return "this chapter's";
       } else {
         return "your";
       }
@@ -576,7 +587,13 @@ export default {
     },
 
     _getEndpoint(pathPart) {
-      const endpointRoot = `/${this.scopeName}/${pathPart}`;
+      let endpointRoot;
+
+      if (this.scopeName === "chapter_ambassador" && this.chapterId) {
+        endpointRoot = `/chapter_ambassador/chapter_${pathPart}`;
+      } else {
+        endpointRoot = `/${this.scopeName}/${pathPart}`;
+      }
 
       if (this.accountId) {
         return `${endpointRoot}?account_id=${this.accountId}`;
@@ -587,6 +604,24 @@ export default {
       } else {
         return endpointRoot;
       }
+    },
+
+    openAlertMessage() {
+      Swal.fire({
+        html: `
+        <p>
+          The chapter location determines which users see your chapter as a suggested chapter when they register.
+          Students and mentors see a list of chapters in their local area or their country.
+        </p>
+
+        <p class="mt-8">By editing your location, you understand that it may change which users can join your chapter when they register.</p>
+
+        <p class="mt-8">Please contact <a href=mailto:"${process.env.HELP_EMAIL}" class="tw-link">${process.env.HELP_EMAIL}</a> with any questions.</p>
+        `,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#3FA428",
+        width: "50%",
+      });
     },
   },
 };
