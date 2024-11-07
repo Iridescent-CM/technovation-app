@@ -6,13 +6,15 @@ module Admin
       html_scope: ->(scope, user, params) {
         scope
           .current
+          .includes(:student_profile, :mentor_profile, :chapter_ambassador_profile)
           .left_outer_joins(:student_profile, :mentor_profile)
           .where("student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL")
           .where(no_chapter_selected: true).page(params[:page])
       },
 
       csv_scope: "->(scope, user, params) { " +
-        "scope.current.left_outer_joins(:student_profile, :mentor_profile)" +
+        "scope.current.includes(:student_profile, :mentor_profile, :chapter_ambassador_profile)" +
+        ".left_outer_joins(:student_profile, :mentor_profile)" +
         ".where('student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL'); " +
         "scope.where(no_chapter_selected: true) " +
         "}"
