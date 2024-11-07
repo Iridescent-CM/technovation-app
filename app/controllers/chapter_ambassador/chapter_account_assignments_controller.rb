@@ -17,7 +17,7 @@ module ChapterAmbassador
 
       account.update(no_chapter_selected: nil)
 
-      redirect_to chapter_ambassador_participants_path,
+      redirect_to chapter_ambassador_unaffiliated_participants_path,
         success: "Successfully assigned #{account.full_name} to a your chapter"
     end
 
