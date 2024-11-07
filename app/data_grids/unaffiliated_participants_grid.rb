@@ -160,7 +160,34 @@ class UnaffiliatedParticipantsGrid
             operator: "OR"
           )
         )
+  end
+
+  filter :scope_names,
+    :enum,
+    header: "Profile type",
+    select: ->(g) {
+      profile_types = [
+       ["Students", "student"],
+       ["Mentors", "mentor"],
+      ]
+      profile_types
+    },
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: true do |values|
+    clauses = values.flatten.map do |v|
+      "#{v}_profiles.id IS NOT NULL"
     end
+
+    includes = values.flatten.map { |v| "#{v}_profile" }
+    references = values.flatten.map { |v| "#{v}_profiles" }
+
+    includes(*includes)
+      .references(*references)
+      .where(clauses.join(" OR "))
+  end
 
   column_names_filter(
     header: "More columns",
