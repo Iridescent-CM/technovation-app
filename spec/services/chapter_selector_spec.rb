@@ -9,20 +9,20 @@ describe ChapterSelector do
       let(:las_angeles_chapter) { FactoryBot.create(:chapter, :los_angeles) }
 
       it "returns the chapter in the same state/province" do
-        expect(chapter_selector.call).to eq([las_angeles_chapter])
-      end
-    end
-
-    context "when there are no chapters in the same state/province" do
-      before do
-        Chapter.delete_all
+        expect(chapter_selector.call).to eq({
+          chapters_in_state_province: [las_angeles_chapter],
+          chapters_in_country: []
+        })
       end
 
       context "when there is a chapter in the same country" do
         let(:chicago_chapter) { FactoryBot.create(:chapter, :chicago) }
 
-        it "returns the chapter in the same country" do
-          expect(chapter_selector.call).to eq([chicago_chapter])
+        it "returns the chapter in the same state/province and the one in the country" do
+          expect(chapter_selector.call).to eq({
+            chapters_in_state_province: [las_angeles_chapter],
+            chapters_in_country: [chicago_chapter]
+          })
         end
       end
     end
@@ -32,8 +32,11 @@ describe ChapterSelector do
         Chapter.delete_all
       end
 
-      it "returns an empty array" do
-        expect(chapter_selector.call).to eq([])
+      it "returns an empty result" do
+        expect(chapter_selector.call).to eq({
+          chapters_in_state_province: [],
+          chapters_in_country: []
+        })
       end
     end
   end

@@ -3,7 +3,10 @@ class ChapterAccountAssignmentsController < ApplicationController
 
   def new
     @chapter_assignment = ChapterAccountAssignment.new
-    @chapters = ChapterSelector.new(account: current_account).call
+
+    all_chapters = ChapterSelector.new(account: current_account).call
+    @primary_chapters = all_chapters[:chapters_in_state_province]
+    @additional_chapters = all_chapters[:chapters_in_country]
   end
 
   def create

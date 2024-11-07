@@ -1,0 +1,43 @@
+<style>
+  #additional-chapters {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+  }
+</style>
+
+<% if @additional_chapters.present? %>
+  <div id="additional-chapters-button" class="flex justify-center">
+    <button
+      class="mt-2 mb-8 p-2 rounded text-white font-bold bg-energetic-blue hover:bg-blue-700 transition"
+      onclick="showAdditionalChapters(event)"
+    >
+      Show all Chapters in my country
+    </button>
+  </div>
+
+  <div id="additional-chapters" class="hidden">
+    <% @additional_chapters.each do |chapter| %>
+      <%= render "chapter", chapter: chapter %>
+    <% end %>
+
+    <% if @primary_chapters.empty? %>
+        <%= render "none_of_the_above_option" %>
+    <% end %>
+  </div>
+
+  <script>
+    function showAdditionalChapters(event) {
+      event.preventDefault();
+
+      const button = document.getElementById('additional-chapters-button');
+      const additionalChapters = document.getElementById('additional-chapters');
+
+      button.classList.add('hidden');
+      additionalChapters.classList.remove('hidden');
+      additionalChapters.style.display = 'block'
+      setTimeout(() => {
+        additionalChapters.style.opacity = 1;
+      }, 10);
+    };
+  </script>
+<% end %>

@@ -1,0 +1,25 @@
+<div class="flex mb-4">
+  <div class="mr-6">
+    <%= radio_button_tag "chapter_id", chapter.id %>
+  </div>
+
+  <div>
+    <%= label_tag "chapter_id_#{chapter.id}",
+      style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" do %>
+
+      <div class="font-bold text-xl">
+        <%= chapter.name.presence || chapter.organization_name %>
+      </div>
+
+      <% if chapter.primary_contact.present? %>
+        <div class="text-sm leading-snug">
+          <%= chapter.primary_contact.full_name %>
+        </div>
+      <% end %>
+
+      <div class="text-sm leading-snug">
+        <%= chapter.location %>
+      </div>
+    <% end %>
+  </div>
+</div>

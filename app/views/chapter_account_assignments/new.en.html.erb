@@ -6,61 +6,31 @@
       </div>
 
       <div class="p-6">
-        <% if @chapters.present? %>
+        <% if @primary_chapters.present? || @additional_chapters.present? %>
           <div class="prose">
-            <%= render "#{current_account.scope_name}_text" %>
+            <%= render "chapter_account_assignments/#{current_account.scope_name}/chapters_found_intro_text" %>
+
+            <% if @primary_chapters.empty? %>
+              <p class="m-0 font-bold">
+                There aren’t any Chapters based in your area. Click below to show all Chapters in your country.
+              </p>
+            <% end %>
 
             <div class="flex flex-col space-y-6 mt-8">
               <%= simple_form_for @chapter_assignment do |f| %>
 
-                <% @chapters.each do |chapter| %>
-                  <div class="flex mb-4">
-                    <div class="mr-6">
-                      <%= radio_button_tag "chapter_id", chapter.id %>
-                    </div>
+                <% if @primary_chapters.present? %>
+                  <% @primary_chapters.each do |chapter| %>
+                    <%= render "chapter", chapter: chapter %>
+                  <% end %>
 
-                    <div>
-                      <%= label_tag "chapter_id_#{chapter.id}",
-                        style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" do %>
-
-                        <div class="font-bold text-xl">
-                          <%= chapter.name.presence || chapter.organization_name %>
-                        </div>
-
-                        <% if chapter.primary_contact.present? %>
-                          <div class="text-sm leading-snug">
-                            <%= chapter.primary_contact.full_name %>
-                          </div>
-                        <% end %>
-
-                        <div class="text-sm leading-snug">
-                          <%= chapter.location %>
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
+                  <%= render "additional_chapters" %>
+                  <%= render "none_of_the_above_option" %>
+                <% else %>
+                  <%= render "additional_chapters" %>
                 <% end %>
 
-                <div class="flex">
-                  <div class="mr-6">
-                    <%= radio_button_tag "chapter_id", "none_selected", false %>
-                  </div>
-
-                  <div>
-                    <%= label_tag "chapter_id_none_selected",
-                      style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" do %>
-
-                      <span class="font-bold text-xl">I'm not sure</span><br>
-
-                      Select this option if none of the chapters are
-                      near you or you are not sure which to pick.
-                    <% end %>
-                  </div>
-                </div>
-
-                <% if current_account.scope_name == "mentor" %>
-                  <%= render "extra_mentor_form_fields" %>
-                <% end %>
+                <%= render "chapter_account_assignments/mentor/extra_form_fields" %>
 
                 <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-8" %>
               <% end %>
@@ -69,16 +39,16 @@
             <hr class="border-t border-gray-300 my-4">
 
             <p class="font-bold mb-2">
-              Working with a chapter that isn't listed?</span>
+              Working with a Chapter that isn't listed?
             </p>
 
             <p class="mt-2">
               Contact us at <%= mail_to ENV.fetch("HELP_EMAIL"), ENV.fetch("HELP_EMAIL"), class: "tw-link" %>
-              and we'll connect your account with that chapter.
+              and we'll connect your account with that Chapter.
             </p>
           </div>
         <% else %>
-          <%= render "no_chapters_found" %>
+          <%= render "chapter_account_assignments/#{current_account.scope_name}/no_chapters_found" %>
         <% end %>
       </div>
     </div>
