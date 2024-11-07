@@ -1,0 +1,25 @@
+<% if current_account.scope_name == "mentor" %>
+  <hr class="border-t border-gray-300 my-4">
+
+  <p>
+    If you are open to mentoring students from anywhere in the world, please keep the "remote mentor" option selected and students around the world will be able to match with you. You can be a remote mentor while also being associated with a chapter.
+  </p>
+
+  <div class="mt-4 p-2 border" style="background-color: #f0f9ff;">
+    <div>
+      <%= check_box_tag :mentor_profile_accepting_team_invites %>
+
+      <%= label_tag :mentor_profile_accepting_team_invites,
+        "Allow teams to find you in search results and invite you to join",
+        style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" %>
+    </div>
+
+    <div class="mt-2">
+      <%= check_box_tag :mentor_profile_virtual %>
+
+      <%= label_tag :mentor_profile_virtual,
+        "Indicate to teams that you can be an online, remote mentor",
+        style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" %>
+    </div>
+  </div>
+<% end %>

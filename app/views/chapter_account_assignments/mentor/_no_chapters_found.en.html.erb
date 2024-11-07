@@ -1,0 +1,27 @@
+<div class="prose">
+  <p>
+  Unfortunately, there are no Chapters currently active in your country. Proceed to your dashboard, and once you have completed training, you will get access to:
+  </p>
+
+  <ul>
+    <li class="my-0">Information to find a team</li>
+    <li class="my-0">Our global Slack workspace</li>
+    <li class="my-0">Ability to search for and connect with teams across the world</li>
+  </ul>
+
+  <%= simple_form_for @chapter_assignment do |f| %>
+    <%= hidden_field_tag "chapter_id", "none_selected" %>
+
+    <%= render "chapter_account_assignments/mentor/extra_form_fields" %>
+
+    <%= f.submit "Acknowledge and Go To Dashboard", class: "tw-green-btn cursor-pointer mt-8" %>
+  <% end %>
+
+  <hr class="border-t border-gray-300 mt-8 mb-4">
+
+  <p>
+    Are you already working with a Chapter outside your region?
+    Contact us at <%= mail_to ENV.fetch("HELP_EMAIL"), ENV.fetch("HELP_EMAIL"), class: "tw-link" %>
+    and we'll connect your account with that Chapter.
+  </p>
+</div>
