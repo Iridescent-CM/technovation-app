@@ -4,8 +4,8 @@ RSpec.feature "Admin viewing unaffiliated participants" do
   let(:admin) { FactoryBot.create(:admin) }
 
   scenario "displays unaffiliated students and mentors in any country" do
-    unaffiliated_student = FactoryBot.create(:student, :chicago, :unaffiliated)
-    unaffiliated_mentor = FactoryBot.create(:mentor, :brazil, :unaffiliated)
+    unaffiliated_student = FactoryBot.create(:student, :chicago, :unaffiliated_chapter)
+    unaffiliated_mentor = FactoryBot.create(:mentor, :brazil, :unaffiliated_chapter)
 
     sign_in(admin)
     visit(admin_unaffiliated_participants_path)
