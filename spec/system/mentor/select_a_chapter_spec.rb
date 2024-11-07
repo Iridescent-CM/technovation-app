@@ -15,10 +15,10 @@ RSpec.describe "Mentor selecting a chapter", :js do
       expect(mentor.account.current_chapter).to eq(chapter)
     end
 
-    it "updates the account to 'no_chapter_selected' when they choose the 'I'm not sure' option" do
+    it "updates the account to 'no_chapter_selected' when they choose the 'None of the Above' option" do
       sign_in(mentor)
 
-      choose "I'm not sure"
+      choose "None of the Above"
       click_button "Save"
 
       mentor.reload
@@ -28,7 +28,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
     it "updates mentor profile fields when they select team matching options" do
       sign_in(mentor)
 
-      choose "I'm not sure"
+      choose "None of the Above"
       check "Allow teams to find you in search results and invite you to join"
       check "Indicate to teams that you can be an online, remote mentor"
       click_button "Save"
@@ -45,7 +45,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
     it "updates the account to 'no_chapter_selected' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(mentor)
 
-      expect(page).to have_content("Unfortunately, there are no chapters currently active in your country")
+      expect(page).to have_content("Unfortunately, there are no Chapters currently active in your country")
       click_button "Acknowledge and Go To Dashboard"
 
       mentor.reload
