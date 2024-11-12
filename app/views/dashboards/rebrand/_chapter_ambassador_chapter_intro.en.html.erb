@@ -15,10 +15,10 @@
       <% end %>
 
       <p>Please check out the following info about the Chapter.</p>
-      <p class="mt-4 font-medium"><%= chapter.name.titleize.presence || "Chapter name not set"%></p>
+      <p class="mt-4 font-medium"><%= chapter.name&.titleize.presence || "Chapter name coming soon"%></p>
       <p class="mt-4"><%= chapter.primary_contact&.full_name.presence %></p>
       <p><%= chapter.primary_contact&.email.presence %></p>
-      <p class="mt-4"><%= chapter.summary.presence || "More info coming soon" %></p>
+      <p class="mt-4"><%= chapter.summary.presence || "Your Chapter Ambassador will be adding more information about the Chapter soon." %></p>
 
       <% if chapter.chapter_links.any? %>
         <div id="cha-social-links">
