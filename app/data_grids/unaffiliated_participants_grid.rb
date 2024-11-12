@@ -14,7 +14,7 @@ class UnaffiliatedParticipantsGrid
   column :first_name, mandatory: true
   column :last_name, mandatory: true
   column :email, mandatory: true
-  column :profile_type do
+  column :profile_type, preload: [:student_profile, :mentor_profile, :chapter_ambassador_profile] do
     scope_name
   end
 

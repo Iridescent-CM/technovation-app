@@ -7,7 +7,6 @@ module ChapterAmbassador
       html_scope: ->(scope, user, params) {
         scope = scope
           .current
-          .includes(:student_profile, :mentor_profile, :chapter_ambassador_profile)
           .left_outer_joins(:student_profile, :mentor_profile)
           .where("student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL")
 
@@ -21,7 +20,7 @@ module ChapterAmbassador
       },
 
       csv_scope: "->(scope, user, params) { " +
-        "scope = scope.current.includes(:student_profile, :mentor_profile, :chapter_ambassador_profile))" +
+        "scope = scope.current" +
         ".left_outer_joins(:student_profile, :mentor_profile)" +
         ".where('student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL'); " +
         "scope = if user.account.current_chapter&.country.present?; " +
