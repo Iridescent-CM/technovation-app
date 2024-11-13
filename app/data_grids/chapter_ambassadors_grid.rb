@@ -4,15 +4,18 @@ class ChapterAmbassadorsGrid
   self.batch_size = 10
 
   scope do
-    Account.includes(:chapter_ambassador_profile, chapter_ambassador_profile: :chapter).where.not(chapter_ambassador_profiles: {id: nil}).order(id: :desc)
+    Account
+      .includes(:chapter_ambassador_profile, :chapter_assignments, :chapters)
+      .where.not(chapter_ambassador_profiles: {id: nil})
+      .order(id: :desc)
   end
 
   column :name, header: "Chapters (Program Name)", mandatory: true do |account|
-    if account.chapter_ambassador_profile.chapter.present?
+    if account.current_chapter.present?
       format(account.name) do
         link_to(
-          account.chapter_ambassador_profile.chapter.name.presence || "-",
-          admin_chapter_path(account.chapter_ambassador_profile.chapter)
+          account.chapter_program_name || "-",
+          admin_chapter_path(account.current_chapter)
         )
       end
     else
@@ -21,8 +24,8 @@ class ChapterAmbassadorsGrid
   end
 
   column :organization_name, header: "Organization Name", mandatory: true do |account|
-    if account.chapter_ambassador_profile.chapter.present?
-      account.chapter_ambassador_profile.chapter.organization_name.presence || "-"
+    if account.current_chapter.present?
+      account.chapter_organization_name.presence || "-"
     else
       "No organization"
     end
@@ -82,7 +85,6 @@ class ChapterAmbassadorsGrid
 
   column :remaining_chapter_ambassador_onboarding_tasks,
     preload: [
-      :background_check,
       chapter_ambassador_profile: [
         :chapter_volunteer_agreement
       ]
@@ -90,29 +92,8 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile.incomplete_onboarding_tasks.to_sentence
   end
 
-  column :remaining_chapter_onboarding_tasks,
-    preload: [
-      chapter_ambassador_profile: [
-        chapter: [
-          :chapter_links,
-          :chapter_program_information,
-          :legal_contact,
-          :primary_contact,
-          chapter_program_information: [
-            :low_income_estimate,
-            :meeting_facilitators,
-            :meeting_times,
-            :organization_types,
-            :participant_count_estimate,
-            :program_length
-          ],
-          legal_contact: [
-            :chapter_affiliation_agreement
-          ]
-        ]
-      ]
-    ] do
-    chapter_ambassador_profile.chapter&.incomplete_onboarding_tasks&.to_sentence
+  column :remaining_chapter_onboarding_tasks do
+    current_chapter&.incomplete_onboarding_tasks&.to_sentence
   end
 
   column :completed_chapter_ambassador_onboarding_tasks,
@@ -125,29 +106,8 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile.complete_onboarding_tasks.to_sentence
   end
 
-  column :completed_chapter_onboarding_tasks,
-    preload: [
-      chapter_ambassador_profile: [
-        chapter: [
-          :chapter_links,
-          :chapter_program_information,
-          :legal_contact,
-          :primary_contact,
-          chapter_program_information: [
-            :low_income_estimate,
-            :meeting_facilitators,
-            :meeting_times,
-            :organization_types,
-            :participant_count_estimate,
-            :program_length
-          ],
-          legal_contact: [
-            :chapter_affiliation_agreement
-          ]
-        ]
-      ]
-    ] do
-    chapter_ambassador_profile.chapter&.complete_onboarding_tasks&.to_sentence
+  column :completed_chapter_onboarding_tasks do
+    current_chapter&.complete_onboarding_tasks&.to_sentence
   end
 
   column :actions, mandatory: true, html: true do |account|
@@ -194,11 +154,12 @@ class ChapterAmbassadorsGrid
       ["No", "no"]
     ],
     filter_group: "common" do |value, scope, grid|
-      is_is_not = (value === "yes") ? "IS NOT" : "IS"
-
-      scope.left_outer_joins(:chapter_ambassador_profile).where(
-        "chapter_ambassador_profiles.chapter_id #{is_is_not} NULL"
-      )
+      if value == "yes"
+        scope.joins(:chapter_assignments)
+      else
+        scope.left_outer_joins(:chapter_assignments)
+          .where(chapter_account_assignments: {id: nil})
+      end
     end
 
   filter :onboarded,
@@ -211,12 +172,12 @@ class ChapterAmbassadorsGrid
     filter_group: "common" do |value, scope, grid|
       if value == "true"
         scope
-          .where(chapter_ambassador_profiles: {onboarded: value})
-          .where(chapter: {onboarded: value})
+          .where(chapter_ambassador_profiles: {onboarded: true})
+          .where(chapters: {onboarded: true})
       else
         scope
-          .where(chapter_ambassador_profiles: {onboarded: value})
-          .or(scope.where(chapter: {onboarded: value}))
+          .where(chapter_ambassador_profiles: {onboarded: false})
+          .or(scope.where(chapters: {onboarded: false}))
       end
     end
 

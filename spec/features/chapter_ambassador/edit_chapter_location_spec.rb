@@ -1,10 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Chapter ambassadors edit chapter location" do
-  let(:chapter) { FactoryBot.create(:chapter) }
+  let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
 
   before do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador, chapter: chapter)
     sign_in(chapter_ambassador)
     click_link "Chapter Profile"
     click_link "Chapter Location"

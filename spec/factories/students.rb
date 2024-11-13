@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :student_profile, aliases: [:student, :student_account] do
     account
+    chapter
 
     parent_guardian_name { "Parenty Guardiana" }
     parent_guardian_email { "parentguardian@example.com" }
@@ -132,6 +133,19 @@ FactoryBot.define do
       end
     end
 
+    trait :not_assigned_to_chapter do
+      after(:create) do |student|
+        student.account.chapters.destroy_all
+      end
+    end
+
+    trait :unaffiliated_chapter do
+      after(:create) do |student|
+        student.account.chapters.destroy_all
+        student.account.update_column(:no_chapter_selected, true)
+      end
+    end
+
     before(:create) do |s, e|
       if e.not_onboarded
         s.build_parental_consent
@@ -152,11 +166,17 @@ FactoryBot.define do
         country: e.country,
         date_of_birth: e.date_of_birth
       }.each do |k, v|
-        s.account.send("#{k}=", v)
+        s.account.send(:"#{k}=", v)
       end
     end
 
     after(:create) do |s, e|
+      s.chapter_assignments.create(
+        account: s.account,
+        chapter: FactoryBot.create(:chapter),
+        season: Season.current.year
+      )
+
       ProfileCreating.execute(s, FakeController.new)
     end
 

@@ -160,8 +160,11 @@ Rails.application.routes.draw do
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
-    resources :accounts, only: :show, controller: :participants
+    resources :accounts, only: :show, controller: :participants do
+      resource :chapter_account_assignments, only: [:create]
+    end
     resources :participants, only: [:index, :show, :edit, :update]
+    resources :unaffiliated_participants, only: [:index]
     resources :participant_sessions, only: [:show, :destroy]
 
     resources :student_conversions, only: :create
@@ -267,6 +270,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :unaffiliated_participants, only: [:index]
     resources :participant_sessions, only: [:show, :destroy]
     resources :user_invitations, only: [:new, :create, :index, :destroy]
     resources :user_invitation_emails, only: :create
@@ -274,6 +278,9 @@ Rails.application.routes.draw do
     resources :student_conversions, only: :create
     resources :mentor_to_judge_conversions, only: :create
     resources :chapter_ambassador_profile_additions, only: :create
+    resources :accounts, only: [] do
+      resources :chapter_account_assignments, only: [:new, :create, :edit, :update]
+    end
     resources :chapters do
       resource :legal_contact, only: [:new, :create, :edit, :update], controller: "chapters/legal_contacts"
       resource :affiliation_agreement, only: :create, controller: "chapter_affiliation_agreement" do
@@ -397,6 +404,7 @@ Rails.application.routes.draw do
   end
 
   resource :terms_agreement, only: [:edit, :update]
+  resource :chapter_account_assignments, only: [:new, :create]
 
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]

@@ -6,9 +6,19 @@
     </div>
 
     <div id="cha-profile-summary" class="mb-4 lg:mb-0 p-0 lg:px-8 w-full lg:w-2/3">
-      <p class="font-bold text-2xl"><%= chapter.primary_contact&.full_name.presence %></p>
-      <p class="font-bold"><%= chapter.name.titleize.presence %></p>
-      <p class="mt-8"><%= chapter.summary.presence || "More info coming soon" %></p>
+      <p>Welcome to Technovation Girls!</p>
+
+      <% if chapter.name.present? %>
+        <p>
+          You are connected with <span class="font-medium"><%= chapter.name.titleize %></span>.
+        </p>
+      <% end %>
+
+      <p>Please check out the following info about the Chapter.</p>
+      <p class="mt-4 font-medium"><%= chapter.name&.titleize.presence || "Chapter name coming soon"%></p>
+      <p class="mt-4"><%= chapter.primary_contact&.full_name.presence %></p>
+      <p><%= chapter.primary_contact&.email.presence %></p>
+      <p class="mt-4"><%= chapter.summary.presence || "Your Chapter Ambassador will be adding more information about the Chapter soon." %></p>
 
       <% if chapter.chapter_links.any? %>
         <div id="cha-social-links">

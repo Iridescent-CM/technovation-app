@@ -56,6 +56,9 @@ class Account < ActiveRecord::Base
 
   belongs_to :division, required: false
 
+  has_many :chapter_assignments, class_name: "ChapterAccountAssignment"
+  has_many :chapters, through: :chapter_assignments
+
   has_many :certificates, dependent: :destroy
 
   has_many :current_certificates, -> { current }, class_name: "Certificate"
@@ -262,6 +265,7 @@ class Account < ActiveRecord::Base
   before_update :update_division, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   after_commit :update_crm_contact_info, on: :update
   after_update :update_chapter_ambassador_onboarding_status
+  after_update :send_student_assigned_to_chapter_email
 
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
@@ -749,6 +753,10 @@ class Account < ActiveRecord::Base
     mentor_profile.present?
   end
 
+  def is_a_student?
+    student_profile.present?
+  end
+
   def is_an_ambassador?
     chapter_ambassador_profile.present?
   end
@@ -997,12 +1005,15 @@ class Account < ActiveRecord::Base
   end
 
   def assigned_to_chapter?
-    current_profile.respond_to?(:chapter) &&
-      current_profile&.chapter.present?
+    current_chapter.present?
+  end
+
+  def current_chapter_assignment
+    chapter_assignments.where(season: Season.current.year)&.first
   end
 
   def current_chapter
-    current_profile.chapter
+    current_chapter_assignment&.chapter || ::NullChapter.new
   end
 
   def chapter_program_name
@@ -1143,6 +1154,12 @@ class Account < ActiveRecord::Base
       find_chapter_ambassador_by({
         "accounts.country" => country_code
       })
+    end
+  end
+
+  def send_student_assigned_to_chapter_email
+    if student_profile.present? && saved_change_to_no_chapter_selected? && !no_chapter_selected?
+      StudentMailer.chapter_assigned(self).deliver_later
     end
   end
 end

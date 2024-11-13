@@ -159,7 +159,8 @@ CREATE TABLE public.accounts (
     parent_registered boolean DEFAULT false NOT NULL,
     meets_minimum_age_requirement boolean,
     background_check_exemption boolean DEFAULT false NOT NULL,
-    phone_number character varying
+    phone_number character varying,
+    no_chapter_selected boolean
 );
 
 
@@ -407,6 +408,42 @@ ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 
 --
+-- Name: chapter_account_assignments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapter_account_assignments (
+    id bigint NOT NULL,
+    chapter_id bigint,
+    account_id bigint,
+    profile_type character varying,
+    profile_id bigint,
+    season smallint,
+    "primary" boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: chapter_account_assignments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapter_account_assignments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapter_account_assignments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapter_account_assignments_id_seq OWNED BY public.chapter_account_assignments.id;
+
+
+--
 -- Name: chapter_ambassador_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -639,7 +676,10 @@ CREATE TABLE public.chapters (
     organization_headquarters_location character varying,
     onboarded boolean DEFAULT false,
     latitude double precision,
-    longitude double precision
+    longitude double precision,
+    primary_account_id bigint,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 
 
@@ -2486,6 +2526,13 @@ ALTER TABLE ONLY public.certificates ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: chapter_account_assignments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_account_assignments ALTER COLUMN id SET DEFAULT nextval('public.chapter_account_assignments_id_seq'::regclass);
+
+
+--
 -- Name: chapter_ambassador_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2918,6 +2965,14 @@ ALTER TABLE ONLY public.business_plans
 
 ALTER TABLE ONLY public.certificates
     ADD CONSTRAINT certificates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapter_account_assignments chapter_account_assignments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapter_account_assignments
+    ADD CONSTRAINT chapter_account_assignments_pkey PRIMARY KEY (id);
 
 
 --
@@ -3486,6 +3541,27 @@ CREATE INDEX index_certificates_on_team_id ON public.certificates USING btree (t
 
 
 --
+-- Name: index_chapter_account_assignments_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_account_assignments_on_account_id ON public.chapter_account_assignments USING btree (account_id);
+
+
+--
+-- Name: index_chapter_account_assignments_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_account_assignments_on_chapter_id ON public.chapter_account_assignments USING btree (chapter_id);
+
+
+--
+-- Name: index_chapter_account_assignments_on_profile; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_account_assignments_on_profile ON public.chapter_account_assignments USING btree (profile_type, profile_id);
+
+
+--
 -- Name: index_chapter_ambassador_profiles_on_chapter_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3532,6 +3608,13 @@ CREATE INDEX index_chapter_program_information_on_low_income_estimate_id ON publ
 --
 
 CREATE INDEX index_chapter_program_information_on_program_length_id ON public.chapter_program_information USING btree (program_length_id);
+
+
+--
+-- Name: index_chapters_on_primary_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapters_on_primary_account_id ON public.chapters USING btree (primary_account_id);
 
 
 --
@@ -3798,6 +3881,20 @@ CREATE INDEX index_submission_scores_on_judge_recusal ON public.submission_score
 --
 
 CREATE INDEX index_submission_scores_on_team_submission_id ON public.submission_scores USING btree (team_submission_id);
+
+
+--
+-- Name: index_table_chapter_account_assignments_on_account_chapter_ids; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_table_chapter_account_assignments_on_account_chapter_ids ON public.chapter_account_assignments USING btree (account_id, chapter_id);
+
+
+--
+-- Name: index_table_chapter_account_assignments_on_chapter_account_ids; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_table_chapter_account_assignments_on_chapter_account_ids ON public.chapter_account_assignments USING btree (chapter_id, account_id);
 
 
 --
@@ -4258,6 +4355,14 @@ ALTER TABLE ONLY public.chapters
 
 
 --
+-- Name: chapters fk_rails_b0d5340759; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT fk_rails_b0d5340759 FOREIGN KEY (primary_account_id) REFERENCES public.accounts(id);
+
+
+--
 -- Name: chapter_program_information_meeting_times fk_rails_b3eaf5a58a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4699,6 +4804,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240829193423'),
 ('20240830132508'),
 ('20240911191634'),
-('20240912161211');
+('20240912161211'),
+('20240924161806'),
+('20240926154900'),
+('20240930201646'),
+('20241029161303');
 
 

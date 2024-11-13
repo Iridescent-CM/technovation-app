@@ -43,7 +43,7 @@ class AccountsGrid
     end
   end
 
-  column :judge_types do
+  column :judge_types, if: ->(g) { g.admin } do
     if judge_profile.present?
       judge_profile.judge_profile_judge_types.joins(:judge_type).pluck(:name).join(", ")
     else
@@ -51,7 +51,7 @@ class AccountsGrid
     end
   end
 
-  column :judge_industry do
+  column :judge_industry, if: ->(g) { g.admin } do
     if judge_profile.present?
       judge_profile.industry_text
     else
@@ -59,7 +59,7 @@ class AccountsGrid
     end
   end
 
-  column :judge_skills do
+  column :judge_skills, if: ->(g) { g.admin } do
     if judge_profile.present?
       judge_profile.skills
     else
@@ -67,7 +67,7 @@ class AccountsGrid
     end
   end
 
-  column :judge_degree do
+  column :judge_degree, if: ->(g) { g.admin } do
     if judge_profile.present?
       judge_profile.degree
     else
@@ -227,7 +227,7 @@ class AccountsGrid
     account.returning? ? "Yes" : "No"
   end
 
-  column :onboarded_judges do
+  column :onboarded_judges, if: ->(g) { g.admin } do
     if judge_profile.present?
       judge_profile.onboarded? ? "Yes" : "No"
     else
@@ -235,7 +235,7 @@ class AccountsGrid
     end
   end
 
-  column :virtual_or_live do
+  column :virtual_or_live, if: ->(g) { g.admin } do
     if judge_profile.present?
       judge_profile.live_event? ? "Live" : "Virtual"
     else
@@ -362,7 +362,8 @@ class AccountsGrid
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w[student mentor chapter_ambassador] & (g.scope_names || [])).empty?
+      g.admin &&
+        (%w[student mentor chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       scope.includes(:judge_profile)
         .references(:judge_profiles)
@@ -398,7 +399,8 @@ class AccountsGrid
     ],
     filter_group: "common",
     if: ->(g) {
-      (%w[student mentor chapter_ambassador] & (g.scope_names || [])).empty?
+      g.admin &&
+        (%w[student mentor chapter_ambassador] & (g.scope_names || [])).empty?
     } do |value, scope, grid|
       is_is_not = (value === "virtual") ? "IS" : "IS NOT"
 
@@ -410,7 +412,8 @@ class AccountsGrid
 
   filter :school_company_name,
     header: "School or company name (judges and mentors)",
-    filter_group: "common" do |value, scope|
+    filter_group: "common",
+    if: ->(g) { g.admin } do |value, scope|
       scope
         .includes(:mentor_profile)
         .references(:mentor_profiles)
@@ -420,6 +423,19 @@ class AccountsGrid
           "mentor_profiles.school_company_name ILIKE ? OR " +
           "judge_profiles.company_name ILIKE ?",
           "%#{value}%",
+          "%#{value}%"
+        )
+    end
+
+  filter :school_company_name,
+    header: "School or company name (mentors only)",
+    filter_group: "common",
+    if: ->(g) { !g.admin } do |value, scope|
+      scope
+        .includes(:mentor_profile)
+        .references(:mentor_profiles)
+        .where(
+          "mentor_profiles.school_company_name ILIKE ?",
           "%#{value}%"
         )
     end
@@ -492,8 +508,33 @@ class AccountsGrid
     html: {
       class: "and-or-field"
     },
-    multiple: true do |value, scope, grid|
+    multiple: true,
+    if: ->(g) { g.admin } do |value, scope, grid|
     scope.by_season(value, match: grid.season_and_or)
+  end
+
+  filter :season,
+    :enum,
+    select: (2025..Season.current.year).to_a.reverse,
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: true,
+    if: ->(g) { !g.admin } do |season_value, scope, grid|
+    case grid.season_and_or
+    when "match_any"
+      scope
+        .joins(:chapter_assignments)
+        .where(chapter_assignments: {season: season_value})
+        .distinct
+    else
+      scope
+        .joins(:chapter_assignments)
+        .where(chapter_assignments: {season: season_value})
+        .group("accounts.id")
+        .having("COUNT(DISTINCT chapter_assignments.season) = ?", season_value.length)
+    end
   end
 
   filter :season_and_or,
@@ -510,12 +551,17 @@ class AccountsGrid
   filter :scope_names,
     :enum,
     header: "Profile type",
-    select: [
-      ["Students", "student"],
-      ["Mentors", "mentor"],
-      ["Judges", "judge"],
-      ["Chapter Ambassadors", "chapter_ambassador"]
-    ],
+    select: ->(g) {
+              profile_types = [
+                ["Students", "student"],
+                ["Mentors", "mentor"],
+                ["Chapter Ambassadors", "chapter_ambassador"]
+              ]
+
+              profile_types.insert(2, ["Judges", "judge"]) if g.admin
+
+              profile_types
+            },
     filter_group: "more-specific",
     html: {
       class: "and-or-field"
@@ -566,7 +612,8 @@ class AccountsGrid
     html: {
       class: "and-or-field"
     },
-    multiple: true do |values, scope|
+    multiple: true,
+    if: ->(g) { g.admin } do |values, scope|
     scope.includes(judge_profile: :judge_types)
       .references(:judge_profile, :judge_profile_judge_types)
       .where(judge_profile_judge_types: {judge_type_id: values})

@@ -81,6 +81,47 @@
               </p>
             </dd>
           </dl>
+
+          <% if @account.student_profile.present? ||
+            @account.is_a_mentor? ||
+            @account.is_an_ambassador?
+          %>
+
+            <dl class="chapter-info">
+              <% if @account.assigned_to_chapter? %>
+                <dt>Chapter (Program name)</dt>
+                <dd>
+                  <%= link_to(@account.friendly_chapter_program_name,
+                        admin_chapter_path(@account.current_chapter)) %>
+                </dd>
+
+                <dt>Chapter Organization</dt>
+                <dd>
+                  <%= @account.friendly_chapter_organization_name %>
+                </dd>
+
+                <p>
+                  <%= link_to "Edit chapter#{@account.current_chapter_assignment.profile_type == 'MentorProfile' ? ' for mentor' : ' for ChA'}",
+                    edit_admin_account_chapter_account_assignment_path(
+                    @account,
+                    @account.current_chapter_assignment
+                  ),
+                  class: "button secondary small" %>
+                </p>
+              <% else %>
+                <dt>Chapter</dt>
+                <dd>Not assigned to a chapter</dd>
+
+                <p>
+                  <%= link_to "Assign #{(@account.is_an_ambassador? && @account.is_a_mentor?) ? 'ChA' : ''} to a chapter",
+                    new_admin_account_chapter_account_assignment_path(
+                      @account
+                    ),
+                    class: "button secondary small" %>
+                </p>
+              <% end %>
+            </dl>
+          <% end %>
         </div>
 
         <div class="grid__col-4">
@@ -88,24 +129,6 @@
             "admin/participants/#{@account.scope_name.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")}_profile",
             profile: @account.public_send("#{@account.scope_name}_profile")
           ) %>
-
-          <dl class="chapter-info">
-            <% if @account.assigned_to_chapter? %>
-              <dt>Chapter (Program name)</dt>
-              <dd>
-                <%= link_to(@account.friendly_chapter_program_name,
-                      admin_chapter_path(@account.current_chapter)) %>
-              </dd>
-
-              <dt>Chapter Organization</dt>
-              <dd>
-                <%= @account.friendly_chapter_organization_name %>
-              </dd>
-            <% else %>
-              <dt>Chapter</dt>
-              <dd>Not assigned to a chapter</dd>
-            <% end %>
-          </dl>
 
           <%= link_to 'Edit participant',
             edit_admin_participant_path(@account),

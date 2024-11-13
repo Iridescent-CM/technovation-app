@@ -1,0 +1,43 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Assigned to a chapter notification">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hello <%= @first_name %>,
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Thank you for being part of the Technovation Girls program. Based on
+          your location, you have been assigned to <%= @chapter_name %>.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Technovation Chapters are partner organizations that run the
+          Technovation program in a local community or region. The
+          Chapter Ambassador is the leader of a Chapter and can help
+          guide you through the Technovation program.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          We are excited to have you as part of Technovation Girls!
+          If you have any questions, please contact us at
+          <%= mail_to ENV.fetch("HELP_EMAIL"), ENV.fetch("HELP_EMAIL") %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Thanks,<br>
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

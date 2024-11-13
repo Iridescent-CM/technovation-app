@@ -15,6 +15,11 @@
       data: { turbolinks: false },
       class: al(admin_participants_path) %>
 
+    <%= link_to "Unaffiliated Participants",
+      admin_unaffiliated_participants_path,
+      data: { turbolinks: false },
+      class: al(admin_unaffiliated_participants_path) %>
+
     <%= link_to "Teams",
       admin_teams_path,
       data: { turbolinks: false },

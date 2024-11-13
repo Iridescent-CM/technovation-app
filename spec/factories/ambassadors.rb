@@ -13,7 +13,6 @@ FactoryBot.define do
     viewed_community_connections { true }
 
     account { association :account, meets_minimum_age_requirement: true }
-    association :chapter
 
     transient do
       city { "Chicago" }
@@ -49,15 +48,18 @@ FactoryBot.define do
     end
 
     trait :assigned_to_chapter do
-      before(:create) do |chapter_ambassador|
-        chapter = FactoryBot.create(:chapter)
-        chapter_ambassador.chapter_id = chapter.id
+      after(:create) do |chapter_ambassador|
+        chapter_ambassador.chapter_assignments.create(
+          account: chapter_ambassador.account,
+          chapter: FactoryBot.create(:chapter),
+          season: Season.current.year
+        )
       end
     end
 
     trait :not_assigned_to_chapter do
-      before(:create) do |chapter_ambassador|
-        chapter_ambassador.chapter_id = nil
+      after(:create) do |chapter_ambassador|
+        chapter_ambassador.account.chapters.destroy_all
       end
     end
 
@@ -89,11 +91,15 @@ FactoryBot.define do
     end
 
     after(:create) do |r, e|
-      ProfileCreating.execute(r, FakeController.new)
+      chapter = FactoryBot.create(:chapter, primary_contact: r.account)
 
-      if r.chapter.present?
-        r.chapter.update(primary_contact: r)
-      end
+      r.chapter_assignments.create(
+        chapter: chapter,
+        account: r.account,
+        season: Season.current.year
+      )
+
+      ProfileCreating.execute(r, FakeController.new)
     end
 
     trait :approved do

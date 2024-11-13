@@ -6,7 +6,12 @@ class AssignChapterAmbassadorToChapterJob < ActiveJob::Base
     chapter_ambassador = ChapterAmbassadorProfile.find(chapter_ambassador_profile_id)
 
     if invite.present? && invite.chapter_id.present?
-      chapter_ambassador.update_columns(chapter_id: invite.chapter_id)
+      chapter_ambassador.account.chapter_assignments.create(
+        profile: chapter_ambassador,
+        chapter_id: invite.chapter_id,
+        season: Season.current.year,
+        primary: true
+      )
     end
   end
 end

@@ -2,9 +2,22 @@
     <div class="bg-white p-6 rounded-md flex flex-col lg:flex-row justify-between">
       <section id="cha-avatar" class="mx-4 mb-4 lg:mb-0">
         <p>
-          It looks like there is no Chapter Ambassador in your area. You can still
-          look for a mentor in your community or on this website after you form a team,
-          or check out the other resources on your dashboard!
+          Welcome to Technovation Girls! Currently, you are not affiliated with a Chapter.
+        </p>
+        <p>
+          Please check out our
+          <%= link_to "curriculum",
+            "https://technovationchallenge.org/curriculum-intro/registered/new/",
+            target: "_blank",
+            class: "tw-link"
+          %>
+          and connect with a
+          <%= link_to_if current_profile.onboarded?,
+            "mentor",
+            new_student_mentor_search_path,
+            class: "tw-link"
+          %>
+          for support as you work on your Technovation Girls project.
         </p>
       </section>
     </div>
