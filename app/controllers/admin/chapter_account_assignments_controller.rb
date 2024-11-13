@@ -45,6 +45,8 @@ module Admin
         chapter_account_assignment.update(
           chapter_id: chapter_account_assignment_params.fetch(:chapter_id)
         )
+
+        account.update(no_chapter_selected: nil)
       else
         chapter_account_assignment.delete
 
