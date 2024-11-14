@@ -487,6 +487,11 @@ class Account < ActiveRecord::Base
       .where("background_checks.status = ?", BackgroundCheck.statuses[:suspended])
   }
 
+  scope :by_chapter, ->(chapter_id) {
+    left_outer_joins(:chapter_assignments)
+      .where("chapter_account_assignments.chapter_id = ?", chapter_id)
+  }
+
   scope :by_division, ->(division) {
     left_outer_joins(:division, :student_profile)
       .where("student_profiles.id IS NOT NULL")

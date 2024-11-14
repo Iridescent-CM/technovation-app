@@ -27,6 +27,10 @@ class AccountsGrid
     account.gender.present? ? account.gender : "-"
   end
 
+  column :chapter, if: ->(g) { g.admin } do |account|
+    account.current_chapter.name.presence || "-"
+  end
+
   column :mentor_types do
     if mentor_profile.present?
       mentor_profile.mentor_profile_mentor_types.joins(:mentor_type).pluck(:name).join(", ")
@@ -291,6 +295,20 @@ class AccountsGrid
     end
 
     html
+  end
+
+  filter :chapter,
+    :enum,
+    header: "Chapter (students, mentors and ChAs only)",
+    select: Chapter.all.order(organization_name: :asc).map { |c| [c.name, c.id] },
+    filter_group: "common",
+    if: ->(g) {
+      g.admin
+    },
+    html: {
+      class: "and-or-field"
+    } do |value|
+    by_chapter(value)
   end
 
   filter :division,
