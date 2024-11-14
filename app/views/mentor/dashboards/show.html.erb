@@ -3,7 +3,7 @@
     nil,
     id: "vue-data-registration",
     data: {
-      chapter_ambassador: ChapterAmbassadorSerializer.new(chapter_ambassador).serialized_json,
+      chapter_ambassador: ChapterAmbassadorSerializer.new(current_account.current_chapter.primary_contact&.chapter_ambassador_profile).serialized_json,
       current_account: AccountSerializer.new(current_account).serialized_json,
       current_mentor: MentorProfileSerializer.new(current_mentor).serialized_json,
       current_teams: TeamSerializer.new(current_mentor.current_teams).serialized_json,

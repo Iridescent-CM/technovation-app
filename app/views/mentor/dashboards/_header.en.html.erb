@@ -1,5 +1,7 @@
 <div slot="chapter-ambassador-intro">
-  <%= render 'dashboards/chapter_ambassador_intro' %>
+  <%= render partial: 'dashboards/chapter_ambassador_chapter_intro',
+    locals: { chapter: current_account.current_chapter }
+  %>
 </div>
 
 <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>

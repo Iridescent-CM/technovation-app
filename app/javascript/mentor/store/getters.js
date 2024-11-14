@@ -13,18 +13,12 @@ export default {
     return digStateAttributes(state, "chapterAmbassador", "name");
   },
 
-  regionalProgramName(state) {
-    const programName = digStateAttributes(
-      state,
-      "chapterAmbassador",
-      "programName"
-    );
+  assignedToChapter(state) {
+    return digStateAttributes(state, "currentAccount", "assignedToChapter");
+  },
 
-    if (!programName) {
-      return digStateAttributes(state, "chapterAmbassador", "name");
-    } else {
-      return programName;
-    }
+  chapterName(state) {
+    return digStateAttributes(state, "currentAccount", "chapterName");
   },
 
   chapterAmbassadorAvatarUrl(state) {

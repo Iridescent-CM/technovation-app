@@ -7,6 +7,10 @@ class NullChapter < NullObject
     nil
   end
 
+  def primary_contact
+    nil
+  end
+
   def chapter_program_information
     ChapterProgramInformation.none
   end
