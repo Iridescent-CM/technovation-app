@@ -11,6 +11,10 @@
           />
           {{ getChapterName() }}
 
+          <small v-if="surveyLink">
+            <a :href="surveyLink" target="_blank">{{ surveyLinkText }}</a>
+          </small>
+
           <small>
             <drop-down label="Meet your Chapter Ambassador">
               <slot name="chapter-ambassador-intro" />
@@ -101,7 +105,7 @@ export default {
       "regionalProgramName",
       "chapterAmbassadorAvatarUrl",
       "chapterAmbassadorHasProvidedIntro",
-      "isAssignedToChapter",
+      "assignedToChapter",
       "chapterName",
     ]),
 
