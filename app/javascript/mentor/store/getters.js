@@ -13,7 +13,7 @@ export default {
     return digStateAttributes(state, "chapterAmbassador", "name");
   },
 
-  isAssignedToChapter(state) {
+  assignedToChapter(state) {
     return digStateAttributes(state, "currentAccount", "assignedToChapter");
   },
 

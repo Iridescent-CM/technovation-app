@@ -1,7 +1,7 @@
 <template>
   <div class="grid dashboard-notices">
     <div class="grid__col-sm-6 grid__col--bleed-y">
-      <div v-if="isAssignedToChapter" class="grid__cell">
+      <div v-if="assignedToChapter" class="grid__cell">
         <h1 class="page-heading">
           <img
             :src="getChapterAmbassadorAvatarUrl()"
