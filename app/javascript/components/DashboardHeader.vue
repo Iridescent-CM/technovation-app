@@ -1,7 +1,7 @@
 <template>
   <div class="grid dashboard-notices">
     <div class="grid__col-sm-6 grid__col--bleed-y">
-      <div v-if="chapterAmbassadorHasProvidedIntro" class="grid__cell">
+      <div v-if="isAssignedToChapter" class="grid__cell">
         <h1 class="page-heading">
           <img
             :src="getChapterAmbassadorAvatarUrl()"
@@ -9,7 +9,7 @@
             width="40"
             height="40"
           />
-          {{ regionalProgramName }}
+          {{ getChapterName() }}
 
           <small>
             <drop-down label="Meet your Chapter Ambassador">
@@ -26,6 +26,12 @@
           <small v-if="surveyLink">
             <a :href="surveyLink" target="_blank">{{ surveyLinkText }}</a>
           </small>
+
+          <small>
+            <drop-down label="More Details">
+              <slot name="chapter-ambassador-intro" />
+            </drop-down>
+          </small>
         </h1>
       </div>
     </div>
@@ -33,13 +39,6 @@
     <div class="grid__col-sm-6 grid__col--bleed-y grid--align-end">
       <div class="grid__cell">
         <h1 class="page-heading">
-<!--          <img-->
-<!--            :src="currentAccountAvatarUrl"-->
-<!--            class="profile-image"-->
-<!--            width="40"-->
-<!--            height="40"-->
-<!--          />-->
-
           {{ currentAccountName }}
 
           <slot name="right-sidebar" />
@@ -64,15 +63,15 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers } from "vuex";
 
-import DropDown from 'components/DropDown'
-import Icon from 'components/Icon'
+import DropDown from "components/DropDown";
+import Icon from "components/Icon";
 
-const { mapGetters } = createNamespacedHelpers('authenticated')
+const { mapGetters } = createNamespacedHelpers("authenticated");
 
 export default {
-  name: 'dashboard-header',
+  name: "dashboard-header",
 
   components: {
     DropDown,
@@ -83,48 +82,66 @@ export default {
     defaultTitle: {
       type: String,
       required: false,
-      default: 'Your Dashboard',
+      default: "Your Dashboard",
     },
 
     resourceLinks: {
       type: Array,
       required: false,
-      default () { return [] },
-    }
+      default() {
+        return [];
+      },
+    },
   },
 
   computed: {
     ...mapGetters([
-      'currentAccountName',
-      'currentAccountAvatarUrl',
-      'regionalProgramName',
-      'chapterAmbassadorAvatarUrl',
-      'chapterAmbassadorHasProvidedIntro',
+      "currentAccountName",
+      "currentAccountAvatarUrl",
+      "regionalProgramName",
+      "chapterAmbassadorAvatarUrl",
+      "chapterAmbassadorHasProvidedIntro",
+      "isAssignedToChapter",
+      "chapterName",
     ]),
 
-    surveyLink () {
-      return this.surveyLinkFromResources.url
+    surveyLink() {
+      return this.surveyLinkFromResources.url;
     },
 
-    surveyLinkText () {
-      return this.surveyLinkFromResources.text
+    surveyLinkText() {
+      return this.surveyLinkFromResources.text;
     },
 
-    surveyLinkFromResources () {
-      return Object.assign({}, this.resourceLinks.filter(l => l.isSurveyLink)[0])
+    surveyLinkFromResources() {
+      return Object.assign(
+        {},
+        this.resourceLinks.filter((l) => l.isSurveyLink)[0]
+      );
     },
   },
 
   methods: {
-    getChapterAmbassadorAvatarUrl () {
-      if (this.chapterAmbassadorAvatarUrl === "placeholders/avatars/1.svg") {
-        return `${require('placeholders/avatars/1.svg')}`
+    getChapterAmbassadorAvatarUrl() {
+      if (
+        this.chapterAmbassadorAvatarUrl === "placeholders/avatars/1.svg" ||
+        !this.chapterAmbassadorAvatarUrl
+      ) {
+        return `${require("placeholders/avatars/1.svg")}`;
       } else {
-        return this.chapterAmbassadorAvatarUrl
+        return this.chapterAmbassadorAvatarUrl;
       }
     },
-  }
-}
+
+    getChapterName() {
+      if (this.chapterName) {
+        return this.chapterName;
+      } else {
+        return "Technovation Girls";
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
