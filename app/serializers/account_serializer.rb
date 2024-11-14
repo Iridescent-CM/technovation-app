@@ -70,4 +70,14 @@ class AccountSerializer
       account.student_profile.team_id
     end
   end
+
+  attribute(:assigned_to_chapter) do |account|
+    account.assigned_to_chapter?
+  end
+
+  attribute(:chapter_name) do |account|
+    if account.assigned_to_chapter?
+      account.current_chapter.name.presence
+    end
+  end
 end
