@@ -165,7 +165,7 @@ class UnaffiliatedParticipantsGrid
   filter :scope_names,
     :enum,
     header: "Profile type",
-    select: ->(g) {
+    select: -> {
       profile_types = [
        ["Students", "student"],
        ["Mentors", "mentor"],
@@ -181,11 +181,8 @@ class UnaffiliatedParticipantsGrid
       "#{v}_profiles.id IS NOT NULL"
     end
 
-    includes = values.flatten.map { |v| "#{v}_profile" }
     references = values.flatten.map { |v| "#{v}_profiles" }
-
-    includes(*includes)
-      .references(*references)
+    references(*references)
       .where(clauses.join(" OR "))
   end
 
