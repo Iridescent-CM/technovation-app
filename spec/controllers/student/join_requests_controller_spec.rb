@@ -131,9 +131,10 @@ RSpec.describe Student::JoinRequestsController do
       Timecop.return
     end
 
-    context "accepting the request" do
+    context "when the join request is accepted" do
       before do
         ActionMailer::Base.deliveries.clear
+
         put :update, params: {
           id: join_request.review_token,
           join_request: {status: :approved}
@@ -142,6 +143,16 @@ RSpec.describe Student::JoinRequestsController do
 
       it "adds the mentor to the team" do
         expect(mentor.teams).to include(team)
+      end
+
+      it "assigns the mentor to each of the student's chapter on the team" do
+        mentor_chapter_assignments = mentor.account.chapter_assignments.map do |assignment|
+          assignment.chapter
+        end
+
+        team.students.each do |student|
+          expect(mentor_chapter_assignments).to include(student.account.current_chapter)
+        end
       end
 
       it "emails the mentor acceptance email" do
@@ -171,7 +182,7 @@ RSpec.describe Student::JoinRequestsController do
       end
     end
 
-    context "declining the request" do
+    context "when the join request is declined" do
       before do
         ActionMailer::Base.deliveries.clear
         put :update, params: {
