@@ -1,0 +1,11 @@
+<%= form_with model: @club, url: admin_clubs_path, local: true do |f| %>
+  <%= render 'errors', record: @club %>
+
+  <p>
+    <%= f.label :name, for: :name %>
+    <%= f.text_field :name, id: :name, required: true  %>
+  </p>
+
+  <%= f.submit "Add", class: "button" %> or <%= link_to 'cancel', admin_clubs_path %>
+
+<% end %>

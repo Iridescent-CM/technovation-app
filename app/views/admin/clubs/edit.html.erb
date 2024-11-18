@@ -1,0 +1,17 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h1>
+      Edit Club
+    </h1>
+
+    <div class="panel">
+      <%= simple_form_for @club, url: admin_club_path(@club) do |f| %>
+        <%= f.input :name, label: "Club Name" %>
+        <%= f.input :summary, label: "Club Summary" %>
+
+        <br>
+        <%= f.submit "Update", class: "button" %>
+      <% end %>
+    </div>
+  </div>
+</div>
