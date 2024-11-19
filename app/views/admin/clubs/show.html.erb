@@ -20,6 +20,20 @@
             <dd>
               <%= simple_format h(@club.summary.presence || "-") %>
             </dd>
+
+            <dt>Location</dt>
+            <dd>
+              <%= @club.address_details.presence || "-" %>
+
+              <p>
+                <%= link_to "Edit location",
+                            edit_admin_club_location_path(
+                              @club,
+                              return_to: admin_club_path(@club)
+                            ),
+                            class: "button secondary small" %>
+              </p>
+            </dd>
           </dl>
         </div>
       </div>
