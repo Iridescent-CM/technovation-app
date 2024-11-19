@@ -240,6 +240,12 @@ export default {
       default: false,
     },
 
+    clubId: {
+      type: [Number, Boolean],
+      required: false,
+      default: false,
+    },
+
     scopeName: {
       type: String,
       required: true,
@@ -346,6 +352,8 @@ export default {
         return "this team's";
       } else if (this.chapterId) {
         return "this chapter's";
+      } else if (this.clubId) {
+        return "this club's";
       } else {
         return "your";
       }
@@ -601,6 +609,8 @@ export default {
         return `${endpointRoot}?team_id=${this.teamId}`;
       } else if (this.chapterId) {
         return `${endpointRoot}?chapter_id=${this.chapterId}`;
+      } else if (this.clubId) {
+        return `${endpointRoot}?club_id=${this.clubId}`;
       } else {
         return endpointRoot;
       }
