@@ -25,7 +25,20 @@ module Mentor
       elsif invite = current_mentor.mentor_invites.pending.find_by(
         invite_token: params.fetch(:id)
       )
+
         invite.update(invite_params)
+
+        student_chapters = invite.team.students.flat_map { |s| s.account.current_chapter }
+
+        student_chapters.each do |chapter|
+          chapter.chapter_account_assignments.create(
+            profile: current_mentor,
+            account: current_mentor.account,
+            season: Season.current.year,
+            primary: false
+          )
+        end
+
         redirect_based_on_status(invite)
       else
         redirect_to mentor_dashboard_path,

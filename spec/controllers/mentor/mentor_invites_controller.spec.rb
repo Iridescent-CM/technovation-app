@@ -63,6 +63,21 @@ RSpec.describe Mentor::MentorInvitesController do
       expect(invite.reload).to be_accepted
     end
 
+    it "assigns the mentor to each of the student's chapter on the team" do
+      put :update, params: {
+        id: invite.invite_token,
+        team_member_invite: {status: :accepted}
+      }
+
+      mentor_chapter_assignments = mentor.account.chapter_assignments.map do |assignment|
+        assignment.chapter
+      end
+
+      invite.team.students.each do |student|
+        expect(mentor_chapter_assignments).to include(student.account.current_chapter)
+      end
+    end
+
     it "redirects to the mentor team page" do
       put :update, params: {
         id: invite.invite_token,
