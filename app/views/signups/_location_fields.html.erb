@@ -2,6 +2,7 @@
  account_id ||= false
  team_id ||= false
  chapter_id ||= false
+ club_id ||= false
 %>
 
 <div class="vue-enable-location-form">
@@ -10,6 +11,7 @@
     :account-id="<%= account_id %>"
     :team-id="<%= team_id %>"
     :chapter-id="<%= chapter_id %>"
+    :club-id="<%= club_id %>"
     :handle-confirm="goBack"
   >
   </location-form>
