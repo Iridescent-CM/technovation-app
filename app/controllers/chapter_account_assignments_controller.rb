@@ -10,7 +10,10 @@ class ChapterAccountAssignmentsController < ApplicationController
   end
 
   def create
-    if params[:chapter_id] == "none_selected"
+    if params[:chapter_id].blank?
+      redirect_to new_chapter_account_assignments_path,
+        alert: "Please select a Chapter or the None of the Above option." and return
+    elsif params[:chapter_id] == "none_selected"
       current_account.update(no_chapter_selected: true)
     else
       current_account.chapter_assignments.create(

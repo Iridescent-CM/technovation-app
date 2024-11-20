@@ -301,14 +301,62 @@ RSpec.describe Account do
 
   context "callbacks" do
     context "#after_update" do
-      describe "sending the student assigned to chapter email" do
-        let(:student) { FactoryBot.create(:student, :unaffiliated_chapter) }
+      describe "sending the account assigned to chapter email" do
+        context "when it's a student account" do
+          let(:student) { FactoryBot.create(:student, :unaffiliated_chapter) }
 
-        it "makes a call to send the chapter assigned email to the student when they're assigned to a chapter" do
-          expect(StudentMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
+          it "makes a call to send the chapter assigned email to the student when they're assigned to a chapter" do
+            expect(AccountMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
 
-          student.account.update(no_chapter_selected: false)
+            student.account.update(no_chapter_selected: false)
+          end
         end
+
+        context "when it's a mentor account" do
+          let(:mentor) { FactoryBot.create(:mentor, :unaffiliated_chapter) }
+
+          it "makes a call to send the chapter assigned email to the mentor when they're assigned to a chapter" do
+            expect(AccountMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
+
+            mentor.account.update(no_chapter_selected: false)
+          end
+        end
+      end
+    end
+  end
+
+  context "scopes" do
+    describe ".by_chapter" do
+      let!(:chapter) { FactoryBot.create(:chapter) }
+      let!(:student1) { FactoryBot.create(:student) }
+      let!(:student2) { FactoryBot.create(:student) }
+
+      let!(:another_chapter) { FactoryBot.create(:chapter) }
+      let!(:student_in_another_chapter) { FactoryBot.create(:student) }
+
+      before do
+        student1.chapter_assignments.create(
+          account: student1.account,
+          chapter: chapter
+        )
+
+        student2.chapter_assignments.create(
+          account: student2.account,
+          chapter: chapter
+        )
+
+        student_in_another_chapter.chapter_assignments.create(
+          account: student_in_another_chapter.account,
+          chapter: another_chapter
+        )
+      end
+
+      it "returns accounts belonging to the specified chapter" do
+        expect(Account.by_chapter(chapter.id)).to include(student1.account, student2.account)
+      end
+
+      it "does not return accounts belonging to a different chapter" do
+        expect(Account.by_chapter(chapter.id)).not_to include(student_in_another_chapter.account)
       end
     end
   end
@@ -1226,7 +1274,7 @@ RSpec.describe Account do
         let!(:mentor_account) { FactoryBot.create(:account, :mentor) }
 
         it "makes a call to enable searchability for the mentor" do
-          expect(mentor_account).to receive_message_chain(:mentor_profile, :enable_searchability_with_save)
+          expect(mentor_account.mentor_profile).to receive(:enable_searchability_with_save).at_least(:once)
 
           mentor_account.grant_background_check_exemption
         end
@@ -1238,7 +1286,7 @@ RSpec.describe Account do
         let!(:mentor_account) { FactoryBot.create(:account, :mentor) }
 
         it "makes a call to enable searchability for the mentor" do
-          expect(mentor_account).to receive_message_chain(:mentor_profile, :enable_searchability_with_save)
+          expect(mentor_account.mentor_profile).to receive(:enable_searchability_with_save).at_least(:once)
 
           mentor_account.revoke_background_check_exemption
         end
