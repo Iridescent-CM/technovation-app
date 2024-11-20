@@ -10,7 +10,7 @@ module JoinRequestApproved
     TeamRosterManaging.add(join_request.team, join_request.requestor)
 
     if join_request.requestor_scope_name == "mentor"
-      student_chapters = join_request.team.students.flat_map { |s| s.account.current_chapter }
+      student_chapters = join_request.team.students.flat_map { |s| s.account.current_chapter }.uniq
 
       student_chapters.each do |chapter|
         chapter.chapter_account_assignments.create(

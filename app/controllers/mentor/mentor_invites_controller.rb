@@ -28,7 +28,7 @@ module Mentor
 
         invite.update(invite_params)
 
-        student_chapters = invite.team.students.flat_map { |s| s.account.current_chapter }
+        student_chapters = invite.team.students.flat_map { |s| s.account.current_chapter }.uniq
 
         student_chapters.each do |chapter|
           chapter.chapter_account_assignments.create(
