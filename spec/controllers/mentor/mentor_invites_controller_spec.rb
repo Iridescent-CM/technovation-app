@@ -25,7 +25,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       expect(response).to redirect_to mentor_dashboard_path
       expect(flash[:alert]).to eq(
-        "Sorry, but accepting invites is currently disabled because judging has already begun."
+        "Sorry, but team invitations are currently disabled because judging has already begun."
       )
       expect(invite.reload).to be_pending
     end
@@ -40,7 +40,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       expect(response).to redirect_to mentor_dashboard_path
       expect(flash[:alert]).to eq(
-        "Sorry, but accepting invites is currently disabled because judging has already begun."
+        "Sorry, but team invitations are currently disabled because judging has already begun."
       )
       expect(invite.reload).to be_pending
     end
@@ -97,7 +97,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       expect(response).to redirect_to mentor_dashboard_path
       expect(flash[:alert]).to eq(
-        "Sorry, but accepting invites is currently disabled because judging has already begun."
+        "Sorry, but team invitations are currently disabled because judging has already begun."
       )
       expect(invite.reload).to be_pending
     end
@@ -112,7 +112,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       expect(response).to redirect_to mentor_dashboard_path
       expect(flash[:alert]).to eq(
-        "Sorry, but accepting invites is currently disabled because judging has already begun."
+        "Sorry, but team invitations are currently disabled because judging has already begun."
       )
       expect(invite.reload).to be_pending
     end
@@ -135,7 +135,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       expect(response).to redirect_to mentor_dashboard_path
       expect(flash[:alert]).to eq(
-        "Sorry, but accepting invites is currently disabled because judging has already begun."
+        "Sorry, but team invitations are currently disabled because judging has already begun."
       )
       expect(invite.reload).to be_pending
     end
@@ -149,7 +149,7 @@ RSpec.describe Mentor::MentorInvitesController do
 
       expect(response).to redirect_to mentor_dashboard_path
       expect(flash[:alert]).to eq(
-        "Sorry, but accepting invites is currently disabled because judging has already begun."
+        "Sorry, but team invitations are currently disabled because judging has already begun."
       )
       expect(invite.reload).to be_pending
     end
