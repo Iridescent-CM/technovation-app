@@ -24,20 +24,6 @@ COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs
 
 
 --
--- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pg_stat_statements IS 'track planning and execution statistics of all SQL statements executed';
-
-
---
 -- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -700,6 +686,46 @@ CREATE SEQUENCE public.chapters_id_seq
 --
 
 ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
+
+
+--
+-- Name: clubs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.clubs (
+    id bigint NOT NULL,
+    name character varying,
+    summary text,
+    headquarters_location character varying,
+    visible_on_map boolean DEFAULT true,
+    city character varying,
+    state_province character varying,
+    country character varying,
+    latitude double precision,
+    longitude double precision,
+    primary_account_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: clubs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.clubs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: clubs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.clubs_id_seq OWNED BY public.clubs.id;
 
 
 --
@@ -2582,6 +2608,13 @@ ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.cha
 
 
 --
+-- Name: clubs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.clubs ALTER COLUMN id SET DEFAULT nextval('public.clubs_id_seq'::regclass);
+
+
+--
 -- Name: community_connection_availability_slots id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3029,6 +3062,14 @@ ALTER TABLE ONLY public.chapter_program_information
 
 ALTER TABLE ONLY public.chapters
     ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: clubs clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.clubs
+    ADD CONSTRAINT clubs_pkey PRIMARY KEY (id);
 
 
 --
@@ -3622,6 +3663,13 @@ CREATE INDEX index_chapters_on_primary_account_id ON public.chapters USING btree
 --
 
 CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree (primary_contact_id);
+
+
+--
+-- Name: index_clubs_on_primary_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_clubs_on_primary_account_id ON public.clubs USING btree (primary_account_id);
 
 
 --
@@ -4459,6 +4507,14 @@ ALTER TABLE ONLY public.business_plans
 
 
 --
+-- Name: clubs fk_rails_e24e16d93e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.clubs
+    ADD CONSTRAINT fk_rails_e24e16d93e FOREIGN KEY (primary_account_id) REFERENCES public.accounts(id);
+
+
+--
 -- Name: legal_contacts fk_rails_e57ad14bd5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4808,6 +4864,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240924161806'),
 ('20240926154900'),
 ('20240930201646'),
-('20241029161303');
+('20241029161303'),
+('20241118204108');
 
 
