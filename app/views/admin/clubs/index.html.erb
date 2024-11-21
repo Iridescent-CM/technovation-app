@@ -1,0 +1,15 @@
+<div class="grid margin--t-xlarge">
+  <div class="grid__col-auto grid__col--bleed-y">
+    <h3>View Clubs</h3>
+
+    <div class="panel">
+      <p><%= link_to "Setup a new club", new_admin_club_path, class: "button" %></p>
+    </div>
+
+    <%= render 'datagrid/datagrid',
+               grid: @clubs_grid,
+               form_url: admin_clubs_path,
+               model_name: "club",
+               scope: :admin %>
+  </div>
+</div>
