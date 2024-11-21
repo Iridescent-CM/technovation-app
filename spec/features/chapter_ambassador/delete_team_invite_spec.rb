@@ -1,10 +1,26 @@
 require "rails_helper"
 
-RSpec.feature "Chapter Ambsssadors deleting a team invite", :js do
+RSpec.feature "Chapter Ambassadors deleting a team invite", :js do
+  let(:chapter) { FactoryBot.create(:chapter, :chicago, :onboarded) }
+  let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :not_assigned_to_chapter) }
   let(:team) { FactoryBot.create(:team) }
 
   before do
-    sign_in(:chapter_ambassador, :approved)
+    chapter_ambassador.chapter_assignments.create(
+      account: chapter_ambassador.account,
+      chapter: chapter,
+      season: Season.current.year
+    )
+
+    affiliated_student = FactoryBot.create(:student, :chicago)
+    affiliated_student.chapter_assignments.create(
+      account: affiliated_student.account,
+      chapter: chapter,
+      season: Season.current.year
+    )
+
+    TeamRosterManaging.add(team, affiliated_student)
+    sign_in(chapter_ambassador)
     visit(chapter_ambassador_chapter_admin_path)
   end
 
