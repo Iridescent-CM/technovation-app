@@ -9,8 +9,21 @@ module JoinRequestApproved
 
     TeamRosterManaging.add(join_request.team, join_request.requestor)
 
+    if join_request.requestor_scope_name == "mentor"
+      student_chapters = join_request.team.students.flat_map { |s| s.account.current_chapter }.uniq
+
+      student_chapters.each do |chapter|
+        chapter.chapter_account_assignments.create(
+          profile: join_request.requestor,
+          account: join_request.requestor.account,
+          season: Season.current.year,
+          primary: false
+        )
+      end
+    end
+
     TeamMailer.public_send(
-      "#{join_request.requestor_scope_name}_join_request_accepted",
+      :"#{join_request.requestor_scope_name}_join_request_accepted",
       join_request
     ).deliver_later
   end

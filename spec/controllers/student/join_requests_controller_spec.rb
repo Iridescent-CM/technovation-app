@@ -131,9 +131,10 @@ RSpec.describe Student::JoinRequestsController do
       Timecop.return
     end
 
-    context "accepting the request" do
+    context "when the join request is accepted" do
       before do
         ActionMailer::Base.deliveries.clear
+
         put :update, params: {
           id: join_request.review_token,
           join_request: {status: :approved}
@@ -142,6 +143,16 @@ RSpec.describe Student::JoinRequestsController do
 
       it "adds the mentor to the team" do
         expect(mentor.teams).to include(team)
+      end
+
+      it "assigns the mentor to each of the student's chapter on the team" do
+        mentor_chapter_assignments = mentor.account.chapter_assignments.map do |assignment|
+          assignment.chapter
+        end
+
+        team.students.each do |student|
+          expect(mentor_chapter_assignments).to include(student.account.current_chapter)
+        end
       end
 
       it "emails the mentor acceptance email" do
@@ -171,7 +182,7 @@ RSpec.describe Student::JoinRequestsController do
       end
     end
 
-    context "declining the request" do
+    context "when the join request is declined" do
       before do
         ActionMailer::Base.deliveries.clear
         put :update, params: {
@@ -237,6 +248,66 @@ RSpec.describe Student::JoinRequestsController do
         expect(flash[:alert]).to eq(
           "Sorry, but team invitations are currently disabled because judging has already begun."
         )
+      end
+    end
+  end
+
+  describe "mentor chapter assignments" do
+    context "when two students from the same chapter are on a team" do
+      let(:team) { FactoryBot.create(:team) }
+      let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
+      let(:chapter) { FactoryBot.create(:chapter) }
+      let(:student1) { FactoryBot.create(:student, :not_assigned_to_chapter) }
+      let(:student2) { FactoryBot.create(:student, :not_assigned_to_chapter) }
+      let(:join_request) {
+        FactoryBot.create(
+          :join_request,
+          team: team,
+          requestor: mentor
+        )
+      }
+
+      before do
+        student1.chapter_assignments.create(
+          chapter: chapter,
+          account: student1.account,
+          season: Season.current.year
+        )
+
+        student2.chapter_assignments.create(
+          chapter: chapter,
+          account: student2.account,
+          season: Season.current.year
+        )
+
+        team.students << student1
+        team.students << student2
+        team.save
+      end
+
+      before do
+        sign_in(student1)
+      end
+
+      context "when the mentor join request for the team is accepted" do
+        before do
+          put :update, params: {
+            id: join_request.review_token,
+            join_request: {status: :approved}
+          }
+        end
+
+        it "creates one non-primary chapter assignment (since both students belong to the same chapter)" do
+          expect(mentor.account.chapter_assignments.where(chapter: chapter, primary: false).count).to eq(1)
+        end
+
+        it "assigns the mentor to the student's chapter" do
+          mentor_chapter_assignments = mentor.account.chapter_assignments.map do |assignment|
+            assignment.chapter
+          end
+
+          expect(mentor_chapter_assignments).to include(student1.account.current_chapter)
+        end
       end
     end
   end
