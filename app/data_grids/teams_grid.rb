@@ -13,7 +13,7 @@ class TeamsGrid
 
   column :name, mandatory: true
 
-  column :division, mandatory: true do
+  column :division, mandatory: true, preload: [:division] do
     division.name.humanize
   end
 

@@ -4,9 +4,18 @@ module ChapterAmbassador
 
     use_datagrid with: TeamsGrid,
       html_scope: ->(scope, user, params) {
-        scope.in_region(user).page(params[:page])
+        scope
+          .joins(:memberships, students: {account: :chapter_assignments})
+          .where(chapter_assignments: {chapter_id: user.current_chapter.id})
+          .distinct
+          .page(params[:page])
       },
-      csv_scope: "->(scope, user, params) { scope.in_region(user) }"
+      csv_scope: "->(scope, user, params) {
+        scope
+          .joins(:memberships, students: {account: :chapter_assignments})
+          .where(chapter_assignments: {chapter_id: user.current_chapter.id})
+          .distinct
+      }"
 
     def show
       @team = if params[:allow_out_of_region]
