@@ -690,6 +690,39 @@ ALTER SEQUENCE public.chapters_id_seq OWNED BY public.chapters.id;
 
 
 --
+-- Name: club_ambassador_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.club_ambassador_profiles (
+    id bigint NOT NULL,
+    account_id bigint,
+    job_title character varying,
+    training_completed_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: club_ambassador_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.club_ambassador_profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: club_ambassador_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.club_ambassador_profiles_id_seq OWNED BY public.club_ambassador_profiles.id;
+
+
+--
 -- Name: clubs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2609,6 +2642,13 @@ ALTER TABLE ONLY public.chapters ALTER COLUMN id SET DEFAULT nextval('public.cha
 
 
 --
+-- Name: club_ambassador_profiles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.club_ambassador_profiles ALTER COLUMN id SET DEFAULT nextval('public.club_ambassador_profiles_id_seq'::regclass);
+
+
+--
 -- Name: clubs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3063,6 +3103,14 @@ ALTER TABLE ONLY public.chapter_program_information
 
 ALTER TABLE ONLY public.chapters
     ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: club_ambassador_profiles club_ambassador_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.club_ambassador_profiles
+    ADD CONSTRAINT club_ambassador_profiles_pkey PRIMARY KEY (id);
 
 
 --
@@ -3664,6 +3712,13 @@ CREATE INDEX index_chapters_on_primary_account_id ON public.chapters USING btree
 --
 
 CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree (primary_contact_id);
+
+
+--
+-- Name: index_club_ambassador_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_club_ambassador_profiles_on_account_id ON public.club_ambassador_profiles USING btree (account_id);
 
 
 --
@@ -4500,6 +4555,14 @@ ALTER TABLE ONLY public.certificates
 
 
 --
+-- Name: club_ambassador_profiles fk_rails_de21d3b8fb; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.club_ambassador_profiles
+    ADD CONSTRAINT fk_rails_de21d3b8fb FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
 -- Name: business_plans fk_rails_de87026bfd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4867,6 +4930,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240930201646'),
 ('20241029161303'),
 ('20241118204108'),
+('20241122025956'),
 ('20241202210231');
 
 
