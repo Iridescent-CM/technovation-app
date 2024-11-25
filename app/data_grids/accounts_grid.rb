@@ -27,7 +27,9 @@ class AccountsGrid
     account.gender.present? ? account.gender : "-"
   end
 
-  column :chapter, if: ->(g) { g.admin } do |account|
+  column :chapter,
+    order: ->(scope) { scope.joins(:chapters).order("chapters.name") },
+    if: ->(g) { g.admin } do |account|
     account.current_chapter.name.presence || "-"
   end
 
@@ -300,7 +302,7 @@ class AccountsGrid
   filter :chapter,
     :enum,
     header: "Chapter (students, mentors and ChAs only)",
-    select: Chapter.all.order(organization_name: :asc).map { |c| [c.name, c.id] },
+    select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
     filter_group: "common",
     if: ->(g) {
       g.admin
