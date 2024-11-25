@@ -1,0 +1,10 @@
+<div class="panel panel--left">
+  <h1>Edit location</h1>
+  <h3>For club <span><%= @club.name.presence || "TBD" %></span></h3>
+
+  <p>
+    <%= link_to 'Go back to club page', admin_club_path(@club) %>
+  </p>
+
+  <%= render 'signups/location_fields', club_id: @club.id %>
+</div>
