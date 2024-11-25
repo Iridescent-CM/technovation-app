@@ -300,7 +300,7 @@ class AccountsGrid
   filter :chapter,
     :enum,
     header: "Chapter (students, mentors and ChAs only)",
-    select: Chapter.all.order(organization_name: :asc).map { |c| [c.name, c.id] },
+    select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
     filter_group: "common",
     if: ->(g) {
       g.admin
