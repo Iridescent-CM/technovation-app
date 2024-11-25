@@ -27,7 +27,9 @@ class AccountsGrid
     account.gender.present? ? account.gender : "-"
   end
 
-  column :chapter, if: ->(g) { g.admin } do |account|
+  column :chapter,
+    order: ->(scope) { scope.joins(:chapters).order("chapters.name") },
+    if: ->(g) { g.admin } do |account|
     account.current_chapter.name.presence || "-"
   end
 
