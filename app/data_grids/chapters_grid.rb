@@ -257,7 +257,6 @@ class ChaptersGrid
     render "admin/chapters/actions", chapter: chapter
   end
 
-
   column_names_filter(
     header: "More columns",
     filter_group: "more-columns",
