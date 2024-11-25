@@ -66,15 +66,11 @@ class ChaptersGrid
     )
   end
 
-  column :name, header: "Chapters (Program Name)", html: false do |chapter|
+  column :name, header: "Chapter (Program Name)", html: false do |chapter|
     chapter.name.presence || "-"
   end
 
   column :organization_name, header: "Organization", mandatory: true
-
-  column :actions, mandatory: true, html: true do |chapter|
-    render "admin/chapters/actions", chapter: chapter
-  end
 
   column :organization_type, header: "Organization type" do
     organization_types = chapter_program_information&.organization_types
@@ -84,6 +80,10 @@ class ChaptersGrid
       "-"
     end
   end
+
+  column :summary
+
+  column :organization_headquarters_location
 
   column :onboarded do
     onboarded? ? "yes" : "no"
@@ -171,6 +171,28 @@ class ChaptersGrid
     legal_contact&.email_address.presence || "-"
   end
 
+  column :primary_contact_name, preload: [:primary_contact] do
+    primary_contact&.full_name.presence || "-"
+  end
+
+  column :primary_contact_email_address, preload: [:primary_contact] do
+    primary_contact&.email.presence || "-"
+  end
+
+  column :updated_at, header: "Last updated at" do
+    updated_at&.strftime("%Y-%m-%d %H:%M %Z").presence || "-"
+  end
+
+  column :city
+
+  column :state_province, header: "State" do
+    FriendlySubregion.call(self, prefix: false)
+  end
+
+  column :country do
+    FriendlyCountry.new(self).country_name
+  end
+
   column :visible_on_map, header: "Visible on map"
 
   column :child_safeguarding_policy_and_process, preload: :chapter_program_information do
@@ -230,6 +252,11 @@ class ChaptersGrid
   column :number_of_low_income_or_underserved_calculation, preload: :chapter_program_information do
     chapter_program_information&.number_of_low_income_or_underserved_calculation.presence || "-"
   end
+
+  column :actions, mandatory: true, html: true do |chapter|
+    render "admin/chapters/actions", chapter: chapter
+  end
+
 
   column_names_filter(
     header: "More columns",
