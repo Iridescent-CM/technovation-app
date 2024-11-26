@@ -19,10 +19,6 @@
     <% @additional_chapters.each do |chapter| %>
       <%= render "chapter", chapter: chapter %>
     <% end %>
-
-    <% if @primary_chapters.empty? %>
-        <%= render "none_of_the_above_option" %>
-    <% end %>
   </div>
 
   <script>

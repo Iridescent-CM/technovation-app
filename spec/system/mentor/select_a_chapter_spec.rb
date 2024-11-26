@@ -39,8 +39,9 @@ RSpec.describe "Mentor selecting a chapter", :js do
     end
   end
 
-  context "when there are no chapters in the same area" do
+  context "when there are no chapters or clubs in the same area" do
     Chapter.destroy_all
+    Club.destroy_all
 
     it "updates the account to 'no_chapter_selected' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(mentor)
