@@ -14,8 +14,6 @@
         </p>
       <% end %>
 
-      <p>Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Chapter. Please check out the following info about the Chapter.</p>
-
       <p class="mt-4 font-medium"><%= chapter.name&.titleize.presence || "Chapter name coming soon"%></p>
       <p class="mt-4"><%= chapter.primary_contact&.full_name.presence %></p>
       <p><%= chapter.primary_contact&.email.presence %></p>
@@ -34,6 +32,8 @@
           <% end %>
         </div>
       <% end %>
+
+      <p>Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Chapter. Please check out the following info about the Chapter.</p>
     </div>
   </div>
 </div>
