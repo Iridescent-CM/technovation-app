@@ -26,8 +26,11 @@ RSpec.describe "Students selecting a chapter", :js do
     end
   end
 
-  context "when there are no chapters in the same area" do
-    Chapter.destroy_all
+  context "when there are no chapters or clubs in the same area" do
+    before do
+      Chapter.destroy_all
+      Club.destroy_all
+    end
 
     it "it updates the account to 'no_chapters_available' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(student)
