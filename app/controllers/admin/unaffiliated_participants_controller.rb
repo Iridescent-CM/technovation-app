@@ -8,14 +8,17 @@ module Admin
           .current
           .left_outer_joins(:student_profile, :mentor_profile)
           .where("student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL")
-          .where(no_chapter_selected: true).page(params[:page])
+          .where(no_chapter_selected: true)
+          .or(scope.where(no_chapters_available: true))
+          .page(params[:page])
       },
 
-      csv_scope: "->(scope, user, params) { " +
-        "scope.current" +
-        ".left_outer_joins(:student_profile, :mentor_profile)" +
-        ".where('student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL'); " +
-        "scope.where(no_chapter_selected: true) " +
+      csv_scope: "->(scope, user, params) { " \
+        "scope.current" \
+        ".left_outer_joins(:student_profile, :mentor_profile)" \
+        ".where('student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL') " \
+        ".where(no_chapter_selected: true) " \
+        ".or(scope.where(no_chapters_available: true)) " \
         "}"
 
     private

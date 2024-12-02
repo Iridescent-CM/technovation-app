@@ -94,6 +94,13 @@ FactoryBot.define do
       end
     end
 
+    trait :no_chapters_available do
+      after(:create) do |mentor|
+        mentor.account.chapters.destroy_all
+        mentor.account.update_column(:no_chapters_available, true)
+      end
+    end
+
     before(:create) do |m, e|
       {
         skip_existing_password: true,

@@ -15,6 +15,8 @@ class ChapterAccountAssignmentsController < ApplicationController
         alert: "Please select a Chapter or the None of the Above option." and return
     elsif params[:chapter_id] == "none_selected"
       current_account.update(no_chapter_selected: true)
+    elsif params[:chapter_id] == "none_available"
+      current_account.update(no_chapters_available: true)
     else
       current_account.chapter_assignments.create(
         profile: current_account.mentor_profile.presence || current_account.student_profile,
