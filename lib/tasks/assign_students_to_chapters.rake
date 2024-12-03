@@ -6,21 +6,23 @@ task assign_students_to_chapters: :environment do |task, args|
   args.extras[0..-2].each do |email_address|
     account = Account.find_by(email: email_address)
 
-    if account.present? && account.student_profile.present?
-      if account.chapter_assignments.empty?
-        account.student_profile.chapter_assignments.create(
-          account: account,
-          chapter: chapter,
-          season: Season.current.year,
-          primary: true
-        )
-
-        puts "Assigned #{email_address} to #{chapter.name}"
-      else
-        puts "#{email_address} is already assigned to a chapter"
-      end
+    if account.blank?
+      puts "#{email_address} could not be found"
+    elsif account.student_profile.blank?
+      puts "#{email_address} is not a student"
+    elsif !account.current_season?
+      puts "#{email_address} is not registered to the current season"
+    elsif account.chapter_assignments.present?
+      puts "#{email_address} is already assigned to a chapter"
     else
-      puts "#{email_address} could not be found or is not a student"
+      account.student_profile.chapter_assignments.create(
+        account: account,
+        chapter: chapter,
+        season: Season.current.year,
+        primary: true
+      )
+
+      puts "Assigned #{email_address} to #{chapter.name}"
     end
   end
 end
