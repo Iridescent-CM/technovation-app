@@ -1,6 +1,7 @@
 class UserInvitation < ApplicationRecord
   enum profile_type: %i[
     chapter_ambassador
+    club_ambassador
     judge
     mentor
     student
@@ -26,13 +27,16 @@ class UserInvitation < ApplicationRecord
   validates :profile_type, :email, presence: true
   validates :email, uniqueness: true, email: true
   validates :chapter, presence: true, if: -> { profile_type == "chapter_ambassador" }
+  validates :club, presence: true, if: -> { profile_type == "club_ambassador" }
 
   validate ->(invitation) {
     if inviting_existing_chapter_ambassador_to_be_a_chapter_ambassador?
       errors.add(:email, :taken_by_account)
-    elsif inviting_existing_mentor_to_be_a_chapter_ambassador?
+    elsif inviting_existing_club_ambassador_to_be_a_club_ambassador?
+      errors.add(:email, :taken_by_account)
+    elsif inviting_existing_mentor_to_be_a_chapter_or_club_ambassador?
       true
-    elsif inviting_existing_judge_to_be_a_chapter_ambassador?
+    elsif inviting_existing_judge_to_be_a_chapter_or_club_ambassador?
       true
     elsif inviting_existing_account?
       errors.add(:email, :taken_by_account)
@@ -46,6 +50,7 @@ class UserInvitation < ApplicationRecord
   belongs_to :current_account, -> { current }, required: false
   belongs_to :invited_by, class_name: "Account", required: false
   belongs_to :chapter, required: false
+  belongs_to :club, required: false
 
   has_many :judge_assignments, as: :assigned_judge, dependent: :destroy
   has_many :assigned_teams,
@@ -62,18 +67,19 @@ class UserInvitation < ApplicationRecord
   }
 
   after_commit -> {
-    if account = Account.left_outer_joins(
-      :chapter_ambassador_profile
+    if (account = Account.left_outer_joins(
+      :chapter_ambassador_profile,
+      :club_ambassador_profile
     )
-        .includes(:judge_profile, :mentor_profile)
-        .where(
-          "chapter_ambassador_profiles.id " +
-          "IS NULL"
-        )
-        .find_by(
-          "lower(trim(both ' ' from email)) = ?",
-          email
-        )
+      .includes(:judge_profile, :mentor_profile)
+      .where(
+        "chapter_ambassador_profiles.id IS NULL AND " +
+        "club_ambassador_profiles.id IS NULL"
+      )
+      .find_by(
+        "lower(trim(both ' ' from email)) = ?",
+        email
+      ))
 
       if mentor_profile = account.mentor_profile
         mentor_profile.update(account: nil, user_invitation: self)
@@ -201,15 +207,25 @@ class UserInvitation < ApplicationRecord
         .exists?
   end
 
-  def inviting_existing_mentor_to_be_a_chapter_ambassador?
-    profile_type.to_s == "chapter_ambassador" and
+  def inviting_existing_club_ambassador_to_be_a_club_ambassador?
+    profile_type.to_s == "club_ambassador" and
+      Account.left_outer_joins(:club_ambassador_profile)
+        .where("club_ambassador_profiles.id IS NOT NULL")
+        .where("lower(trim(both ' ' from email)) = ?", email)
+        .exists?
+  end
+
+  def inviting_existing_mentor_to_be_a_chapter_or_club_ambassador?
+    profile_type.to_s == "chapter_ambassador" or
+      profile_type.to_s == "club_ambassador" and
       Account.joins(:mentor_profile)
         .where("lower(trim(both ' ' from email)) = ?", email)
         .exists?
   end
 
-  def inviting_existing_judge_to_be_a_chapter_ambassador?
-    profile_type.to_s == "chapter_ambassador" and
+  def inviting_existing_judge_to_be_a_chapter_or_club_ambassador?
+    profile_type.to_s == "chapter_ambassador" or
+      profile_type.to_s == "club_ambassador"  and
       Account.joins(:judge_profile)
         .where("lower(trim(both ' ' from email)) = ?", email)
         .exists?
