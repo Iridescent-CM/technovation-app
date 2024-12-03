@@ -2481,7 +2481,8 @@ CREATE TABLE public.user_invitations (
     name character varying,
     register_at_any_time boolean,
     invited_by_id integer,
-    chapter_id bigint
+    chapter_id bigint,
+    club_id bigint
 );
 
 
@@ -4057,6 +4058,13 @@ CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USI
 
 
 --
+-- Name: index_user_invitations_on_club_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_invitations_on_club_id ON public.user_invitations USING btree (club_id);
+
+
+--
 -- Name: meeting_facilitator_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4498,6 +4506,14 @@ ALTER TABLE ONLY public.chapter_links
 
 
 --
+-- Name: user_invitations fk_rails_bb8dd2eee8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_invitations
+    ADD CONSTRAINT fk_rails_bb8dd2eee8 FOREIGN KEY (club_id) REFERENCES public.clubs(id);
+
+
+--
 -- Name: mentor_profiles fk_rails_beb02031d5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4929,6 +4945,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20240930201646'),
 ('20241029161303'),
 ('20241118204108'),
-('20241122025956');
+('20241122025956'),
+('20241203191721');
 
 
