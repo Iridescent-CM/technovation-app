@@ -81,13 +81,20 @@ document.addEventListener("turbolinks:load", function () {
         "user_invitation_register_at_any_time"
       );
       const chapterSelect = document.getElementById("chapter");
+      const clubSelect = document.getElementById("club");
 
       if (invitationProfileType.value == "chapter_ambassador") {
         chapterSelect.style.display = "block";
         registerAtAnyTime.checked = true;
         registerAtAnyTime.disabled = true;
-      } else {
+      } else if (invitationProfileType.value == "club_ambassador") {
+        clubSelect.style.display = "block";
+        registerAtAnyTime.checked = true;
+        registerAtAnyTime.disabled = true;
+      }
+      else {
         chapterSelect.style.display = "none";
+        clubSelect.style.display = "none";
         registerAtAnyTime.checked = false;
         registerAtAnyTime.disabled = false;
       }
