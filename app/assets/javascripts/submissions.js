@@ -35,16 +35,18 @@ document.addEventListener("turbolinks:load", function () {
     "team_submission_uses_gadgets_description"
   );
 
-  if (usesOtherGadgetTypeCheckbox.checked) {
-    usesGadgetsDescriptionDiv.style.display = "block";
-  }
-
-  usesOtherGadgetTypeCheckbox.addEventListener("change", function () {
-    if (this.checked) {
+  if (usesOtherGadgetTypeCheckbox) {
+    if (usesOtherGadgetTypeCheckbox.checked) {
       usesGadgetsDescriptionDiv.style.display = "block";
-    } else {
-      usesGadgetsDescriptionDiv.style.display = "none";
-      usesGadgetsDescription.value = "";
     }
-  });
+
+    usesOtherGadgetTypeCheckbox.addEventListener("change", function () {
+      if (this.checked) {
+        usesGadgetsDescriptionDiv.style.display = "block";
+      } else {
+        usesGadgetsDescriptionDiv.style.display = "none";
+        usesGadgetsDescription.value = "";
+      }
+    });
+  }
 });
