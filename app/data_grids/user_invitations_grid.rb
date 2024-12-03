@@ -2,7 +2,7 @@ class UserInvitationsGrid
   include Datagrid
 
   scope do
-    UserInvitation.order(created_at: :desc)
+    UserInvitation.includes(:account, :invited_by).order(created_at: :desc)
   end
 
   column :profile_type, header: "Registration Type", mandatory: true do |registration_invite|
@@ -72,11 +72,22 @@ class UserInvitationsGrid
     end
   end
 
-  column :chapter, html: true do |registration_invite|
+  column :chapter, preload: [:chapter], html: true do |registration_invite|
     if registration_invite.chapter.present?
       link_to(
         registration_invite.chapter.organization_name,
         admin_chapter_path(registration_invite.chapter)
+      )
+    else
+      "-"
+    end
+  end
+
+  column :club, preload: [:club], html: true do |registration_invite|
+    if registration_invite.club.present?
+      link_to(
+        registration_invite.club.name,
+        admin_club_path(registration_invite.club)
       )
     else
       "-"
