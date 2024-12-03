@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "Registration invites", :js do
   let(:admin) { FactoryBot.create(:admin) }
   let!(:chapter) { FactoryBot.create(:chapter) }
+  let!(:club) { FactoryBot.create(:club) }
 
   before do
     sign_in(admin)
@@ -33,6 +34,11 @@ RSpec.describe "Registration invites", :js do
       invite_profile_type: "chapter_ambassador",
       friendly_profile_type: "chapter ambassador",
       select_option: "Chapter Ambassador"
+    },
+    {
+      invite_profile_type: "club_ambassador",
+      friendly_profile_type: "club ambassador",
+      select_option: "Club Ambassador"
     }
   ].each do |item|
     let(:name) { "Devin #{item[:friendly_profile_type]}" }
@@ -46,6 +52,12 @@ RSpec.describe "Registration invites", :js do
           select item[:select_option], from: "Registration Type"
           fill_in "Name", with: name
           fill_in "Email", with: email_address
+
+          if item[:friendly_profile_type] === "chapter ambassador"
+            find("#user_invitation_chapter_id").select(chapter.organization_name)
+          elsif item[:friendly_profile_type] === "club ambassador"
+            find("#user_invitation_club_id").select(club.name)
+          end
 
           click_button "Send invitation"
         }.to change {
