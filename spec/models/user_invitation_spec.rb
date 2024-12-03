@@ -36,6 +36,24 @@ RSpec.describe UserInvitation do
     )
   end
 
+  it "validates the email against an existing club ambassador" do
+    club_ambassador = FactoryBot.create(:club_ambassador)
+    club_ambassador.account.create_mentor_profile!(
+      FactoryBot.attributes_for(:mentor)
+        .merge({mentor_type_ids: [MentorType.first.id]})
+    )
+
+    invite = UserInvitation.new(
+      profile_type: :club_ambassador,
+      email: club_ambassador.email
+    )
+
+    expect(invite).not_to be_valid
+    expect(invite.errors[:email]).to include(
+      "An account already exists with that email"
+    )
+  end
+
   %i[student mentor judge].each do |type|
     it "validates email against existing mentor if the type is #{type}" do
       mentor = FactoryBot.create(:mentor, :onboarded)
