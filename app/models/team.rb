@@ -194,7 +194,7 @@ class Team < ActiveRecord::Base
     where(accepting_student_requests: true)
   }
 
-  scope :by_student_chapter, ->(chapter_id) do
+  scope :by_chapter, ->(chapter_id) do
     joins(:memberships, students: {account: :chapter_assignments})
       .where(chapter_assignments: {chapter_id: chapter_id})
   end

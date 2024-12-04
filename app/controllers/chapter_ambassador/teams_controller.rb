@@ -5,26 +5,26 @@ module ChapterAmbassador
     use_datagrid with: TeamsGrid,
       html_scope: ->(scope, user, params) {
         scope
-          .by_student_chapter(user.current_chapter.id)
+          .by_chapter(user.current_chapter.id)
           .distinct
           .page(params[:page])
       },
       csv_scope: "->(scope, user, params) {
         scope
-          .by_student_chapter(user.current_chapter.id)
+          .by_chapter(user.current_chapter.id)
           .distinct
       }"
 
     def show
-      @team = Team.by_student_chapter(current_ambassador.current_chapter.id).find(params[:id])
+      @team = Team.by_chapter(current_ambassador.current_chapter.id).find(params[:id])
     end
 
     def edit
-      @team = Team.by_student_chapter(current_ambassador.current_chapter.id).find(params[:id])
+      @team = Team.by_chapter(current_ambassador.current_chapter.id).find(params[:id])
     end
 
     def update
-      @team = Team.by_student_chapter(current_ambassador.current_chapter.id).find(params[:id])
+      @team = Team.by_chapter(current_ambassador.current_chapter.id).find(params[:id])
 
       if TeamUpdating.execute(@team, team_params)
         redirect_to chapter_ambassador_team_path, success: "Team changes saved!"
