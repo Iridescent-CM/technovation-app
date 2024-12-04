@@ -163,10 +163,10 @@ class TeamsGrid
     created_at.strftime("%Y-%m-%d")
   end
 
-  column :actions, mandatory: true, html: true do |account|
+  column :actions, mandatory: true, html: true do |team|
     link_to(
       "view",
-      send("#{current_scope}_team_path", account),
+      send("#{current_scope}_team_path", team),
       data: {turbolinks: false}
     )
   end
