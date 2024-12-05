@@ -14,6 +14,7 @@ class RegistrationSettingsAggregator
       mentor_registration_open?: season_toggles.mentor_registration_open?,
       judge_registration_open?: season_toggles.judge_registration_open?,
       chapter_ambassador_registration_open?: false,
+      club_ambassador_registration_open?: false,
       invited_registration_profile_type: "",
       success_message: "",
       error_message: default_error_message
@@ -35,6 +36,7 @@ class RegistrationSettingsAggregator
     :mentor_registration_open?,
     :judge_registration_open?,
     :chapter_ambassador_registration_open?,
+    :club_ambassador_registration_open?,
     :invited_registration_profile_type,
     :success_message,
     :error_message,
@@ -94,6 +96,8 @@ class RegistrationSettingsAggregator
       registration_settings[:judge_registration_open?] = true
     when "chapter_ambassador"
       registration_settings[:chapter_ambassador_registration_open?] = true
+    when "club_ambassador"
+      registration_settings[:club_ambassador_registration_open?] = true
     end
   end
 
