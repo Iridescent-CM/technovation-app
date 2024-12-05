@@ -21,6 +21,9 @@ export default {
       chapter_ambassador_signup: Boolean(
         !judgingRoundEnabled && state.chapter_ambassador_signup
       ),
+      club_ambassador_signup: Boolean(
+        !judgingRoundEnabled && state.club_ambassador_signup
+      ),
 
       // Notices
       student_dashboard_text: state.student_dashboard_text,
