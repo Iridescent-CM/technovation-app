@@ -39,5 +39,37 @@ RSpec.describe NewRegistrationController do
         expect(registration_invite.reload.registered?).to eq(true)
       end
     end
+
+    context "when registering as a club ambassador" do
+      let(:registration_invite) {
+        UserInvitation.create!(
+          profile_type: :club_ambassador,
+          email: "club_ambassador_invite@example.com",
+          club_id: club.id
+        )
+      }
+      let(:club) { FactoryBot.create(:club) }
+
+      before do
+        post :create, params: {
+          profileType: "club_ambassador",
+          inviteCode: registration_invite.admin_permission_token,
+          new_registration: {
+            email: "jjones@example.com",
+            firstName: "Jones",
+            lastName: "Jones",
+            gender: "Female",
+            meetsMinimumAgeRequirement: true,
+            clubAmbassadorJobTitle: "Chef",
+            dataTermsAgreedTo: true,
+            password: "123abc*&^"
+          }
+        }
+      end
+
+      it "updates the invitation to a registered status" do
+        expect(registration_invite.reload.registered?).to eq(true)
+      end
+    end
   end
 end
