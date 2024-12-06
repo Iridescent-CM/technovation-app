@@ -10,16 +10,17 @@ module Admin
       account = Account.find(params.fetch(:account_id))
 
       account
-        .chapter_assignments
-        .where(season: Season.current.year, primary: true)
+        .current_chapterable_assignments
+        .where(primary: true)
         .delete_all
 
       if chapter_account_assignment_params.fetch(:chapter_id).present?
-        account.chapter_assignments.create(
+        account.chapterable_assignments.create(
           profile: account.chapter_ambassador_profile.presence ||
             account.mentor_profile.presence ||
             account.student_profile,
-          chapter_id: chapter_account_assignment_params.fetch(:chapter_id),
+          chapterable_id: chapter_account_assignment_params.fetch(:chapter_id),
+          chapterable_type: "Chapter",
           season: Season.current.year,
           primary: true
         )
@@ -34,7 +35,7 @@ module Admin
     def edit
       @account = Account.find(params.fetch(:account_id))
       @chapters = Chapter.all.order(organization_name: :asc)
-      @chapter_account_assignment = @account.current_chapter_assignment
+      @chapter_account_assignment = @account.current_chapterable_assignment
     end
 
     def update
@@ -43,7 +44,8 @@ module Admin
 
       if chapter_account_assignment_params.fetch(:chapter_id).present?
         chapter_account_assignment.update(
-          chapter_id: chapter_account_assignment_params.fetch(:chapter_id)
+          chapterable_id: chapter_account_assignment_params.fetch(:chapter_id),
+          chapterable_type: "Chapter"
         )
 
         account.update(no_chapter_selected: nil)
