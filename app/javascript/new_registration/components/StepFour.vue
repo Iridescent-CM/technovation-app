@@ -31,10 +31,11 @@
         @keyup="checkValidation"
         @blur="checkValidation"
         class="flex-grow"
-        v-model="setAccountEmailForParentOrChapterAmbassadorProfile"
+        v-model="setAccountEmailForParentOrAmbassadorProfile"
         :disabled="
           formValues.profileType === 'parent' ||
-          formValues.profileType === 'chapter_ambassador'
+          formValues.profileType === 'chapter_ambassador' ||
+          formValues.profileType === 'club_ambassador'
         "
       />
 
@@ -128,11 +129,12 @@ export default {
     },
   },
   computed: {
-    setAccountEmailForParentOrChapterAmbassadorProfile: {
+    setAccountEmailForParentOrAmbassadorProfile: {
       get() {
         if (this.formValues.profileType === "parent") {
           return this.formValues.studentParentGuardianEmail;
-        } else if (this.formValues.profileType === "chapter_ambassador") {
+        } else if (this.formValues.profileType === "chapter_ambassador" ||
+          this.formValues.profileType === "club_ambassador") {
           return this.formValues.email;
         } else {
           return this.formValues.email;

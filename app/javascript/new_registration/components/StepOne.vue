@@ -80,6 +80,7 @@ export default {
       isMentorRegistrationOpen: false,
       isJudgeRegistrationOpen: false,
       isChapterAmbassadorRegistrationOpen: false,
+      isClubAmbassadorRegistrationOpen: false,
       invitedRegistrationProfileType: "",
       successMessage: "",
       errorMessage: "",
@@ -109,6 +110,8 @@ export default {
         this.isJudgeRegistrationOpen = response.data.isJudgeRegistrationOpen;
         this.isChapterAmbassadorRegistrationOpen =
           response.data.isChapterAmbassadorRegistrationOpen;
+        this.isClubAmbassadorRegistrationOpen =
+          response.data.isClubAmbassadorRegistrationOpen;
         this.invitedRegistrationProfileType =
           response.data.invitedRegistrationProfileType;
         this.successMessage = response.data.successMessage;
@@ -139,9 +142,12 @@ export default {
       if (this.isChapterAmbassadorRegistrationOpen) {
         this.profileTypes.push(this.chapterAmbassadorProfileType());
       }
+
+      if (this.isClubAmbassadorRegistrationOpen) {
+        this.profileTypes.push(this.clubAmbassadorProfileType());
+      }
     },
     preSelectInvitedProfileType() {
-      console.log(this.invitedRegistrationProfileType);
       document.getElementById(`${this.invitedRegistrationProfileType}`).click();
       document.getElementById(
         `${this.invitedRegistrationProfileType}`
@@ -221,6 +227,13 @@ export default {
         label: `<img src="${require("signup/chapter-ambassador.png")}" alt="" class="chapter_ambassador mb-2"> <span class="chapter_ambassador s1-label-text">Chapter Ambassador</span>`,
         value: "chapter_ambassador",
         id: "chapter_ambassador",
+      };
+    },
+    clubAmbassadorProfileType() {
+      return {
+        label: `<img src="${require("signup/club-ambassador.png")}" alt="" class="club_ambassador mb-2"> <span class="club_ambassador s1-label-text">Club Ambassador</span>`,
+        value: "club_ambassador",
+        id: "club_ambassador",
       };
     },
     displayDivisionCutoffDescription() {

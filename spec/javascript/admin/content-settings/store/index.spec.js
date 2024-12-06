@@ -27,6 +27,7 @@ describe("Admin Content & Settings - Vuex store", () => {
       mentor_signup: 0,
       judge_signup: 0,
       chapter_ambassador_signup: 0,
+      club_ambassador_signup: 0,
       student_dashboard_text: "",
       mentor_dashboard_text: "",
       judge_dashboard_text: "",

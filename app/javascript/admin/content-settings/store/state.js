@@ -5,6 +5,7 @@ export default {
   mentor_signup: 0,
   judge_signup: 0,
   chapter_ambassador_signup: 0,
+  club_ambassador_signup: 0,
 
   // Notices
   student_dashboard_text: "",
