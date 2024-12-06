@@ -6,15 +6,15 @@ module ChapterAmbassador
 
       html_scope: ->(scope, user, params) {
         scope
-          .joins(:chapter_assignments)
-          .where(chapter_assignments: {chapter_id: user.current_chapter.id})
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: user.current_chapter.id})
           .page(params[:page])
       },
 
       csv_scope: "->(scope, user, _params) {
         scope
-          .joins(:chapter_assignments)
-          .where(chapter_assignments: {chapter_id: user.current_chapter.id})
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {chapterable_type: 'Chapter', chapterable_id: user.current_chapter.id})
       }"
 
     def show
@@ -22,8 +22,8 @@ module ChapterAmbassador
         Account.find(params[:id])
       else
         Account
-          .joins(:chapter_assignments)
-          .where(chapter_assignments: {chapter_id: current_ambassador.current_chapter.id})
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: current_ambassador.current_chapter.id})
           .find(params[:id])
       end
 

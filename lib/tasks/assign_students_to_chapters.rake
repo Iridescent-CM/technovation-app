@@ -15,9 +15,9 @@ task assign_students_to_chapters: :environment do |task, args|
     elsif account.chapter_assignments.present?
       puts "#{email_address} is already assigned to a chapter"
     else
-      account.student_profile.chapter_assignments.create(
+      account.student_profile.chapterable_assignments.create(
         account: account,
-        chapter: chapter,
+        chapterable: chapter,
         season: Season.current.year,
         primary: true
       )

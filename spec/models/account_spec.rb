@@ -337,17 +337,17 @@ RSpec.describe Account do
       before do
         student1.chapter_assignments.create(
           account: student1.account,
-          chapter: chapter
+          chapterable: chapter
         )
 
         student2.chapter_assignments.create(
           account: student2.account,
-          chapter: chapter
+          chapterable: chapter
         )
 
         student_in_another_chapter.chapter_assignments.create(
           account: student_in_another_chapter.account,
-          chapter: another_chapter
+          chapterable: another_chapter
         )
       end
 
