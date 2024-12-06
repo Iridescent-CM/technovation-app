@@ -28,6 +28,7 @@ describe RegistrationInviteCodeValidator do
       mentor?: mentor_invite,
       judge?: judge_invite,
       chapter_ambassador?: chapter_ambassador_invite,
+      club_ambassador?: club_ambassador_invite,
       register_at_any_time?: register_at_any_time)
   end
 
@@ -37,6 +38,7 @@ describe RegistrationInviteCodeValidator do
   let(:mentor_invite) { false }
   let(:judge_invite) { false }
   let(:chapter_ambassador_invite) { false }
+  let(:club_ambassador_invite) { false }
   let(:register_at_any_time) { false }
 
   context "when an invite is pending" do
