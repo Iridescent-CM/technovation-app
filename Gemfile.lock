@@ -83,10 +83,10 @@ GEM
     after_commit_action (1.1.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-    airbrake (11.0.3)
-      airbrake-ruby (~> 5.1)
-    airbrake-ruby (5.2.1)
-      rbtree3 (~> 0.5)
+    airbrake (13.0.4)
+      airbrake-ruby (~> 6.0)
+    airbrake-ruby (6.2.2)
+      rbtree3 (~> 0.6)
     anbt-sql-formatter (0.0.7)
     arrayfields (4.9.2)
     ast (2.4.2)
@@ -409,7 +409,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbtree3 (0.7.0)
+    rbtree3 (0.7.1)
     redis (4.8.1)
     redis-client (0.17.0)
       connection_pool
@@ -562,7 +562,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_query_trace (~> 1.5)
-  airbrake (~> 11.0.3)
+  airbrake
   autoprefixer-rails (~> 6.7)
   aws-sdk (~> 2.11)
   barnes (~> 0.0.7)
