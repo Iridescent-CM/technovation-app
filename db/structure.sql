@@ -400,14 +400,15 @@ ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 CREATE TABLE public.chapter_account_assignments (
     id bigint NOT NULL,
-    chapter_id bigint,
+    chapterable_id bigint,
     account_id bigint,
     profile_type character varying,
     profile_id bigint,
     season smallint,
     "primary" boolean,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    chapterable_type character varying
 );
 
 
@@ -3638,10 +3639,17 @@ CREATE INDEX index_chapter_account_assignments_on_account_id ON public.chapter_a
 
 
 --
--- Name: index_chapter_account_assignments_on_chapter_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_chapter_account_assignments_on_chapter; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_chapter_account_assignments_on_chapter_id ON public.chapter_account_assignments USING btree (chapter_id);
+CREATE INDEX index_chapter_account_assignments_on_chapter ON public.chapter_account_assignments USING btree (chapterable_type, chapterable_id);
+
+
+--
+-- Name: index_chapter_account_assignments_on_chapterable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapter_account_assignments_on_chapterable_id ON public.chapter_account_assignments USING btree (chapterable_id);
 
 
 --
@@ -3991,14 +3999,14 @@ CREATE INDEX index_submission_scores_on_team_submission_id ON public.submission_
 -- Name: index_table_chapter_account_assignments_on_account_chapter_ids; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_table_chapter_account_assignments_on_account_chapter_ids ON public.chapter_account_assignments USING btree (account_id, chapter_id);
+CREATE INDEX index_table_chapter_account_assignments_on_account_chapter_ids ON public.chapter_account_assignments USING btree (account_id, chapterable_id);
 
 
 --
 -- Name: index_table_chapter_account_assignments_on_chapter_account_ids; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_table_chapter_account_assignments_on_chapter_account_ids ON public.chapter_account_assignments USING btree (chapter_id, account_id);
+CREATE INDEX index_table_chapter_account_assignments_on_chapter_account_ids ON public.chapter_account_assignments USING btree (chapterable_id, account_id);
 
 
 --
@@ -4931,6 +4939,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241029161303'),
 ('20241118204108'),
 ('20241122025956'),
-('20241202210231');
+('20241202210231'),
+('20241204142027');
+
 
 

@@ -7,8 +7,9 @@ RSpec.feature "Chapter Ambassador viewing their teams" do
   before do
     chapter_ambassador.chapter_assignments.create(
       account: chapter_ambassador.account,
-      chapter: chapter,
-      season: Season.current.year
+      chapterable: chapter,
+      season: Season.current.year,
+      primary: true
     )
   end
 
@@ -16,8 +17,9 @@ RSpec.feature "Chapter Ambassador viewing their teams" do
     affiliated_student = FactoryBot.create(:student, :chicago)
     affiliated_student.chapter_assignments.create(
       account: affiliated_student.account,
-      chapter: chapter,
-      season: Season.current.year
+      chapterable: chapter,
+      season: Season.current.year,
+      primary: true
     )
 
     team = FactoryBot.create(:team)
@@ -26,8 +28,9 @@ RSpec.feature "Chapter Ambassador viewing their teams" do
     affiliated_student_2 = FactoryBot.create(:student, :chicago)
     affiliated_student_2.chapter_assignments.create(
       account: affiliated_student_2.account,
-      chapter: chapter,
-      season: Season.current.year
+      chapterable: chapter,
+      season: Season.current.year,
+      primary: true
     )
 
     team_2 = FactoryBot.create(:team)

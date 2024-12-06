@@ -8,15 +8,17 @@ RSpec.feature "Chapter Ambassadors deleting a team invite", :js do
   before do
     chapter_ambassador.chapter_assignments.create(
       account: chapter_ambassador.account,
-      chapter: chapter,
-      season: Season.current.year
+      chapterable: chapter,
+      season: Season.current.year,
+      primary: true
     )
 
     affiliated_student = FactoryBot.create(:student, :chicago)
     affiliated_student.chapter_assignments.create(
       account: affiliated_student.account,
-      chapter: chapter,
-      season: Season.current.year
+      chapterable: chapter,
+      season: Season.current.year,
+      primary: true
     )
 
     TeamRosterManaging.add(team, affiliated_student)

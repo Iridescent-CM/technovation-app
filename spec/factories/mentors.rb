@@ -32,8 +32,9 @@ FactoryBot.define do
       after(:create) do |mentor, _eval|
         mentor.chapter_assignments.create(
           account: mentor.account,
-          chapter: FactoryBot.create(:chapter),
-          season: Season.current.year - 1
+          chapterable: FactoryBot.create(:chapter),
+          season: Season.current.year - 1,
+          primary: true
         )
       end
     end
@@ -131,8 +132,9 @@ FactoryBot.define do
     after(:create) do |m, e|
       m.chapter_assignments.create(
         account: m.account,
-        chapter: FactoryBot.create(:chapter),
-        season: Season.current.year
+        chapterable: FactoryBot.create(:chapter),
+        season: Season.current.year,
+        primary: true
       )
 
       ProfileCreating.execute(m, FakeController.new)

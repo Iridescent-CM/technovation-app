@@ -20,7 +20,7 @@ RSpec.describe "A mentor completing their training", :js do
 
       mentor.chapter_assignments.create(
         account: mentor.account,
-        chapter: FactoryBot.create(:chapter),
+        chapterable: FactoryBot.create(:chapter),
         season: (ImportantDates.mentor_training_required_since - 1.day).year
       )
 
@@ -46,7 +46,7 @@ RSpec.describe "A mentor completing their training", :js do
 
       mentor.chapter_assignments.create(
         account: mentor.account,
-        chapter: FactoryBot.create(:chapter),
+        chapterable: FactoryBot.create(:chapter),
         season: ImportantDates.mentor_training_required_since.year
       )
 

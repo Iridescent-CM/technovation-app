@@ -22,9 +22,10 @@ class ChapterAccountAssignmentsController < ApplicationController
     elsif params[:chapter_id] == "none_available"
       current_account.update(no_chapters_available: true)
     else
-      current_account.chapter_assignments.create(
+      current_account.chapterable_assignments.create(
         profile: current_account.mentor_profile.presence || current_account.student_profile,
-        chapter_id: params[:chapter_id],
+        chapterable_id: params[:chapter_id],
+        chapterable_type: "Chapter",
         season: Season.current.year,
         primary: true
       )

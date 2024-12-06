@@ -146,12 +146,8 @@ RSpec.describe Student::JoinRequestsController do
       end
 
       it "assigns the mentor to each of the student's chapter on the team" do
-        mentor_chapter_assignments = mentor.account.chapter_assignments.map do |assignment|
-          assignment.chapter
-        end
-
         team.students.each do |student|
-          expect(mentor_chapter_assignments).to include(student.account.current_chapter)
+          expect(mentor.account.current_chapters).to include(student.account.current_chapter)
         end
       end
 
@@ -269,15 +265,17 @@ RSpec.describe Student::JoinRequestsController do
 
       before do
         student1.chapter_assignments.create(
-          chapter: chapter,
+          chapterable: chapter,
           account: student1.account,
-          season: Season.current.year
+          season: Season.current.year,
+          primary: true
         )
 
         student2.chapter_assignments.create(
-          chapter: chapter,
+          chapterable: chapter,
           account: student2.account,
-          season: Season.current.year
+          season: Season.current.year,
+          primary: true
         )
 
         team.students << student1
@@ -298,15 +296,11 @@ RSpec.describe Student::JoinRequestsController do
         end
 
         it "creates one non-primary chapter assignment (since both students belong to the same chapter)" do
-          expect(mentor.account.chapter_assignments.where(chapter: chapter, primary: false).count).to eq(1)
+          expect(mentor.account.chapterable_assignments.where(chapterable: chapter, primary: false).count).to eq(1)
         end
 
         it "assigns the mentor to the student's chapter" do
-          mentor_chapter_assignments = mentor.account.chapter_assignments.map do |assignment|
-            assignment.chapter
-          end
-
-          expect(mentor_chapter_assignments).to include(student1.account.current_chapter)
+          expect(mentor.account.current_chapters).to include(student1.account.current_chapter)
         end
       end
     end

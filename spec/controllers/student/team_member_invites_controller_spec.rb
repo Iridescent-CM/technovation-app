@@ -15,8 +15,9 @@ RSpec.describe Student::TeamMemberInvitesController do
     before do
       student.chapter_assignments.create(
         account: student.account,
-        chapter: FactoryBot.create(:chapter),
-        season: ImportantDates.quarterfinals_judging_begins.year
+        chapterable: FactoryBot.create(:chapter),
+        season: ImportantDates.quarterfinals_judging_begins.year,
+        primary: true
       )
 
       sign_in(student)
@@ -65,8 +66,9 @@ RSpec.describe Student::TeamMemberInvitesController do
     before do
       student.chapter_assignments.create(
         account: student.account,
-        chapter: FactoryBot.create(:chapter),
-        season: ImportantDates.quarterfinals_judging_begins.year
+        chapterable: FactoryBot.create(:chapter),
+        season: ImportantDates.quarterfinals_judging_begins.year,
+        primary: true
       )
 
       Timecop.freeze(ImportantDates.quarterfinals_judging_begins - 1.day)

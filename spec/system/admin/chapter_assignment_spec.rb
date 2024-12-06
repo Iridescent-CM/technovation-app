@@ -11,7 +11,7 @@ RSpec.describe "Admins assigning participants to chapters" do
 
     context "when a student doesn't have a chapter assignment" do
       before do
-        student.account.chapter_assignments.delete_all
+        student.account.chapterable_assignments.delete_all
       end
 
       it "assigns the selected chapter to the student" do
@@ -28,10 +28,13 @@ RSpec.describe "Admins assigning participants to chapters" do
 
     context "when a student is already assigned to a chapter" do
       before do
+        student.account.chapterable_assignments.delete_all
+
         student.chapter_assignments.create(
           account: student.account,
-          chapter: FactoryBot.create(:chapter),
-          season: Season.current.year
+          chapterable: FactoryBot.create(:chapter),
+          season: Season.current.year,
+          primary: true
         )
       end
 
@@ -60,7 +63,7 @@ RSpec.describe "Admins assigning participants to chapters" do
 
     context "when a mentor doesn't have a chapter assignment" do
       before do
-        mentor.account.chapter_assignments.delete_all
+        mentor.account.chapterable_assignments.delete_all
       end
 
       it "assigns the selected chapter to the mentor" do
@@ -77,10 +80,13 @@ RSpec.describe "Admins assigning participants to chapters" do
 
     context "when a mentor is already assigned to a chapter" do
       before do
+        mentor.account.chapterable_assignments.delete_all
+
         mentor.chapter_assignments.create(
           account: mentor.account,
-          chapter: FactoryBot.create(:chapter),
-          season: Season.current.year
+          chapterable: FactoryBot.create(:chapter),
+          season: Season.current.year,
+          primary: true
         )
       end
 
@@ -109,7 +115,7 @@ RSpec.describe "Admins assigning participants to chapters" do
 
     context "when a chapter ambassador doesn't have a chapter assignment" do
       before do
-        chapter_ambassador.account.chapter_assignments.delete_all
+        chapter_ambassador.account.chapterable_assignments.delete_all
       end
 
       it "assigns the selected chapter to the chapter ambassador" do
@@ -126,10 +132,13 @@ RSpec.describe "Admins assigning participants to chapters" do
 
     context "when a chapter ambassador is already assigned to a chapter" do
       before do
+        chapter_ambassador.account.chapterable_assignments.delete_all
+
         chapter_ambassador.chapter_assignments.create(
           account: chapter_ambassador.account,
-          chapter: FactoryBot.create(:chapter),
-          season: Season.current.year
+          chapterable: FactoryBot.create(:chapter),
+          season: Season.current.year,
+          primary: true
         )
       end
 

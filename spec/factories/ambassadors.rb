@@ -51,8 +51,9 @@ FactoryBot.define do
       after(:create) do |chapter_ambassador|
         chapter_ambassador.chapter_assignments.create(
           account: chapter_ambassador.account,
-          chapter: FactoryBot.create(:chapter),
-          season: Season.current.year
+          chapterable: FactoryBot.create(:chapter),
+          season: Season.current.year,
+          primary: true
         )
       end
     end
@@ -94,9 +95,10 @@ FactoryBot.define do
       chapter = FactoryBot.create(:chapter, primary_contact: r.account)
 
       r.chapter_assignments.create(
-        chapter: chapter,
+        chapterable: chapter,
         account: r.account,
-        season: Season.current.year
+        season: Season.current.year,
+        primary: true
       )
 
       ProfileCreating.execute(r, FakeController.new)
