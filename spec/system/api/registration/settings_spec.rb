@@ -13,6 +13,7 @@ RSpec.describe "Registration Settings" do
       mentor_registration_open?: true,
       judge_registration_open?: true,
       chapter_ambassador_registration_open?: false,
+      club_ambassador_registration_open?: false,
       invited_registration_profile_type: "student",
       success_message: "",
       error_message: "")
@@ -28,6 +29,7 @@ RSpec.describe "Registration Settings" do
         "isMentorRegistrationOpen" => registration_settings.mentor_registration_open?,
         "isJudgeRegistrationOpen" => registration_settings.judge_registration_open?,
         "isChapterAmbassadorRegistrationOpen" => registration_settings.chapter_ambassador_registration_open?,
+        "isClubAmbassadorRegistrationOpen" => registration_settings.club_ambassador_registration_open?,
         "invitedRegistrationProfileType" => registration_settings.invited_registration_profile_type,
         "successMessage" => registration_settings.success_message,
         "errorMessage" => registration_settings.error_message
