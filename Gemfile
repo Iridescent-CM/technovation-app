@@ -57,7 +57,7 @@ gem "bcrypt", "~> 3.1"
 gem "redis"
 gem "sidekiq", "~> 7.0"
 
-gem "airbrake", "~> 11.0.3"
+gem "airbrake"
 gem "scout_apm"
 
 gem "dalli", "~> 3.0"
