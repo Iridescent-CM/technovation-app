@@ -56,8 +56,18 @@ class Account < ActiveRecord::Base
 
   belongs_to :division, required: false
 
-  has_many :chapter_assignments, class_name: "ChapterAccountAssignment"
-  has_many :chapters, through: :chapter_assignments
+  has_many :chapterable_assignments,
+    class_name: "ChapterAccountAssignment"
+  has_many :current_chapterable_assignments, -> { current },
+    class_name: "ChapterAccountAssignment"
+  has_many :current_chapter_assignments, -> { current.chapters },
+    class_name: "ChapterAccountAssignment"
+
+  has_many :chapters, through: :chapterable_assignments, source: :chapterable, source_type: "Chapter"
+  has_many :current_chapters, -> { current },
+    through: :chapterable_assignments,
+    source: :chapterable,
+    source_type: "Chapter"
 
   has_many :certificates, dependent: :destroy
 
@@ -488,8 +498,9 @@ class Account < ActiveRecord::Base
   }
 
   scope :by_chapter, ->(chapter_id) {
-    left_outer_joins(:chapter_assignments)
-      .where("chapter_account_assignments.chapter_id = ?", chapter_id)
+    left_outer_joins(:chapterable_assignments)
+      .where("chapter_account_assignments.chapterable_type = 'Chapter'")
+      .where("chapter_account_assignments.chapterable_id = ?", chapter_id)
   }
 
   scope :by_division, ->(division) {
@@ -1013,12 +1024,20 @@ class Account < ActiveRecord::Base
     current_chapter.present?
   end
 
-  def current_chapter_assignment
-    chapter_assignments.where(season: Season.current.year)&.first
+  def current_primary_chapter
+    current_chapter_assignments.find_by(primary: true)&.chapterable
   end
 
   def current_chapter
-    current_chapter_assignment&.chapter || ::NullChapter.new
+    current_primary_chapter || ::NullChapter.new
+  end
+
+  def current_chapterable_assignment
+    current_primary_chapterable_assignment
+  end
+
+  def current_primary_chapterable_assignment
+    current_chapterable_assignments.find_by(primary: true)
   end
 
   def chapter_program_name
