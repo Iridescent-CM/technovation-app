@@ -29,14 +29,14 @@ RSpec.describe "Students selecting a chapter", :js do
   context "when there are no chapters in the same area" do
     Chapter.destroy_all
 
-    it "it updates the account to 'no_chapter_selected' after they click 'Acknowledge and Go to Dashboard'" do
+    it "it updates the account to 'no_chapters_available' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(student)
 
       expect(page).to have_content("Unfortunately, there are no Chapters currently active in your country")
       click_button "Acknowledge and Go To Dashboard"
 
       student.reload
-      expect(student.account.no_chapter_selected?).to eq(true)
+      expect(student.account.no_chapters_available?).to eq(true)
     end
   end
 end

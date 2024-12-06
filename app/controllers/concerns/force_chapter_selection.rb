@@ -13,6 +13,7 @@ module ForceChapterSelection
       !valid_location? ||
       current_account.assigned_to_chapter? ||
       current_account.no_chapter_selected? ||
+      current_account.no_chapters_available? ||
       (current_account.scope_name != "student" && current_account.scope_name != "mentor") ||
       on_chapter_selection_page?
 

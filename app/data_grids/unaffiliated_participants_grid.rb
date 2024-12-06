@@ -145,21 +145,21 @@ class UnaffiliatedParticipantsGrid
       placeholder: "Select or start typing..."
     },
     if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
-      scope.where(
-        StateClauses.for(
-          values: grid.state_province[0],
-          countries: grid.country,
+    scope.where(
+      StateClauses.for(
+        values: grid.state_province[0],
+        countries: grid.country,
+        table_name: "accounts",
+        operator: "OR"
+      )
+    )
+      .where(
+        CityClauses.for(
+          values: values,
           table_name: "accounts",
           operator: "OR"
         )
       )
-        .where(
-          CityClauses.for(
-            values: values,
-            table_name: "accounts",
-            operator: "OR"
-          )
-        )
   end
 
   filter :scope_names,
@@ -167,8 +167,8 @@ class UnaffiliatedParticipantsGrid
     header: "Profile type",
     select: -> {
       profile_types = [
-       ["Students", "student"],
-       ["Mentors", "mentor"],
+        ["Students", "student"],
+        ["Mentors", "mentor"]
       ]
       profile_types
     },
@@ -184,6 +184,31 @@ class UnaffiliatedParticipantsGrid
     references = values.flatten.map { |v| "#{v}_profiles" }
     references(*references)
       .where(clauses.join(" OR "))
+  end
+
+  filter :unaffilated_type,
+    :enum,
+    header: "Unaffiliated Type",
+    if: ->(g) {
+      g.admin
+    },
+    select: -> {
+      unaffiliated_types = [
+        ["No chapter selected", "no_chapter_selected"],
+        ["No chapters available", "no_chapters_available"]
+      ]
+      unaffiliated_types
+    },
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: true do |values|
+    clauses = values.flatten.map do |v|
+      "#{v} IS NOT NULL"
+    end
+
+    where(clauses.join(" OR "))
   end
 
   column_names_filter(

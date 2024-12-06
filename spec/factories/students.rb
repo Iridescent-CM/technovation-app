@@ -146,6 +146,13 @@ FactoryBot.define do
       end
     end
 
+    trait :no_chapters_available do
+      after(:create) do |student|
+        student.account.chapters.destroy_all
+        student.account.update_column(:no_chapters_available, true)
+      end
+    end
+
     before(:create) do |s, e|
       if e.not_onboarded
         s.build_parental_consent
