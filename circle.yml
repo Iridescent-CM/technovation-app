@@ -120,6 +120,8 @@ jobs:
         environment:
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 
+    parallelism: 2
+
     steps:
       - checkout
       - browser-tools/install-browser-tools:
