@@ -6,9 +6,10 @@ class AssignChapterAmbassadorToChapterJob < ActiveJob::Base
     chapter_ambassador = ChapterAmbassadorProfile.find(chapter_ambassador_profile_id)
 
     if invite.present? && invite.chapter_id.present?
-      chapter_ambassador.account.chapter_assignments.create(
+      chapter_ambassador.account.chapterable_assignments.create(
         profile: chapter_ambassador,
-        chapter_id: invite.chapter_id,
+        chapterable_id: invite.chapter_id,
+        chapterable_type: "Chapter",
         season: Season.current.year,
         primary: true
       )

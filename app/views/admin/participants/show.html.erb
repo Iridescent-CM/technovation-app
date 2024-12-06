@@ -101,10 +101,19 @@
                 </dd>
 
                 <p>
-                  <%= link_to "Edit chapter#{@account.current_chapter_assignment.profile_type == 'MentorProfile' ? ' for mentor' : ' for ChA'}",
+                  <% case @account.current_primary_chapterable_assignment.profile_type %>
+                  <% when "StudentProfile" %>
+                    <% link_text = "Edit chapter" %>
+                  <% when "MentorProfile" %>
+                    <% link_text = "Edit chapter for mentor" %>
+                  <% else %>
+                    <% link_text = "Edit chapter for ChA" %>
+                  <% end %>
+
+                  <%= link_to link_text,
                     edit_admin_account_chapter_account_assignment_path(
                     @account,
-                    @account.current_chapter_assignment
+                    @account.current_primary_chapterable_assignment
                   ),
                   class: "button secondary small" %>
                 </p>
