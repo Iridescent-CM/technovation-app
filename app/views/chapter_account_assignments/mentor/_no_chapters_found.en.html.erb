@@ -9,13 +9,7 @@
     <li class="my-0">Ability to search for and connect with teams across the world</li>
   </ul>
 
-  <%= simple_form_for @chapter_assignment do |f| %>
-    <%= hidden_field_tag "chapter_id", "none_available" %>
-
-    <%= render "chapter_account_assignments/mentor/extra_form_fields" %>
-
-    <%= f.submit "Acknowledge and Go To Dashboard", class: "tw-green-btn cursor-pointer mt-8" %>
-  <% end %>
+  <%= render "chapter_account_assignments/no_chapters_found_form" %>
 
   <hr class="border-t border-gray-300 mt-8 mb-4">
 
