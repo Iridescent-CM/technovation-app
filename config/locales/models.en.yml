@@ -61,6 +61,9 @@ en:
       organization_company_name: "Organization/company name"
       organization_status: "Status with %{organization_name}"
 
+    club_ambassador_profile:
+      job_title: "Job title"
+
     student_profile:
       date_of_birth: "Date of Birth"
       parent_guardian_email: "Parent or guardian's email"
