@@ -130,6 +130,12 @@ en:
         my_profile: "My Profile"
         chapter_profile: "Chapter Profile"
 
+    club_ambassadors:
+      navigation:
+        club_admin_activity: "Club Admin Activity"
+        my_profile: "My Profile"
+        club_profile: "Club Profile"
+
     mentor:
       form:
         mentor_types: "As a mentor you may call me a..."

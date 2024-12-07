@@ -575,7 +575,8 @@ class AccountsGrid
               profile_types = [
                 ["Students", "student"],
                 ["Mentors", "mentor"],
-                ["Chapter Ambassadors", "chapter_ambassador"]
+                ["Chapter Ambassadors", "chapter_ambassador"],
+                ["Club Ambassadors", "club_ambassador"]
               ]
 
               profile_types.insert(2, ["Judges", "judge"]) if g.admin
