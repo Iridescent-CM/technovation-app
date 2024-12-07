@@ -927,6 +927,8 @@ class Account < ActiveRecord::Base
       "judge"
     elsif chapter_ambassador_profile.present?
       "chapter_ambassador"
+    elsif club_ambassador_profile.present?
+      "club_ambassador"
     elsif mentor_profile.present?
       "mentor"
     elsif student_profile.present?
