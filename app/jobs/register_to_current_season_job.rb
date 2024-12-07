@@ -43,6 +43,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     record.respond_to?(:chapter_ambassador_profile) && record.chapter_ambassador_profile.present?
   end
 
+  def is_club_ambassador?(record)
+    record.respond_to?(:club_ambassador_profile) && record.club_ambassador_profile.present?
+  end
+
   def update_season_data_with_resets(record)
     update_data = {
       seasons: (record.seasons << Season.current.year)
