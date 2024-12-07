@@ -1,5 +1,6 @@
 class ClubAmbassadorController < ApplicationController
   include Authenticated
+  layout "club_ambassador"
 
   helper_method :current_club_ambassador,
     :current_profile, :current_club
