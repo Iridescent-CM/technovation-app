@@ -1,0 +1,38 @@
+<div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Basic Information</p>
+  </div>
+
+  <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
+    <div id="information-details">
+      <dl>
+        <dt>Name</dt>
+        <dd><%= current_club_ambassador.full_name %></dd>
+
+        <dt>Phone Number</dt>
+        <dd><%= current_club_ambassador.phone_number.presence || "-" %></dd>
+
+        <dt>Gender Identity</dt>
+        <dd><%= current_club_ambassador.gender || "Not specified" %></dd>
+
+        <dt>Job Title</dt>
+        <dd><%= current_club_ambassador.job_title %></dd>
+      </dl>
+
+      <p>
+        <%= link_to "Change your basic profile details",
+                    edit_profile_path,
+                    class: "tw-green-btn" %>
+      </p>
+    </div>
+
+    <div id="profile-picture" class="flex flex-col items-center self-start mb-4">
+      <div>
+        <%= render 'profiles/filestack_profile_image_tag' %>
+      </div>
+      <div>
+        <%= render 'profiles/filestack_profile_image_upload' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<% provide :title, "My profile" %>
+
+<div class="container mx-auto flex flex-col lg:flex-row justify-center gap-6 profile-tab-container">
+  <%= render 'club_ambassador/profiles/menu' %>
+
+  <div class="tab">
+    <div id="basic-tab-content" class="tab-content tw-active">
+      <%= render 'club_ambassador/profiles/basic' %>
+    </div>
+
+    <div id="location-tab-content" class="tab-content">
+      <%= render 'club_ambassador/profiles/location' %>
+    </div>
+
+    <div id="email-tab-content" class="tab-content">
+      <%= render 'club_ambassador/profiles/email' %>
+    </div>
+
+    <div id="pw-tab-content" class="tab-content">
+      <%= render 'profiles/rebrand/password' %>
+    </div>
+  </div>
+</div>
