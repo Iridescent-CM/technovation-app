@@ -215,6 +215,11 @@ Rails.application.routes.draw do
     resources :message_deliveries, only: :create
   end
 
+  namespace :club_ambassador do
+    resource :dashboard, only: :show
+    resource :profile, only: [:show, :edit, :update]
+  end
+
   namespace :judge do
     resource :training_completion, only: :show
 
