@@ -4,6 +4,7 @@ module ApplicationHelper
     mentor
     judge
     chapter_ambassador
+    club_ambassador
   ]
 
   def safe_time_ago_in_words(time, postfix = nil)
