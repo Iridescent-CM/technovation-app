@@ -294,6 +294,10 @@ Rails.application.routes.draw do
       resource :location, only: :edit, controller: "chapters/locations"
     end
 
+    resources :clubs do
+      resource :location, only: :edit, controller: "clubs/locations"
+    end
+
     resources :chapter_ambassadors, only: :index do
       resource :off_platform_chapter_volunteer_agreement,
         only: :create,
