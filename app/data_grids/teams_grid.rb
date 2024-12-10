@@ -138,15 +138,15 @@ class TeamsGrid
   end
 
   column :mentor_ids, header: "Mentor Participant IDs", if: ->(grid) { grid.admin } do
-    mentors.collect { |m| m.account.id }.join(",")
+    mentors.select(&:account).collect { |m| m.account.id }.join(",")
   end
 
   column :mentor_names do
-    mentors.collect(&:name).join(",")
+    mentors.select(&:account).collect(&:name).join(",")
   end
 
   column :mentor_emails do
-    mentors.collect(&:email).join(",")
+    mentors.select(&:account).collect(&:email).join(",")
   end
 
   column :city
