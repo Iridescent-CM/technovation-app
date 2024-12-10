@@ -9,7 +9,7 @@
 <% if team.mentors.any? %>
   <ul class="reset">
     <%= render partial: "teams/member",
-      collection: team.mentors,
+      collection: team.mentors.where.not(account_id: nil),
       locals: {
         admin_chapter_ambassador: admin_chapter_ambassador,
       } %>
