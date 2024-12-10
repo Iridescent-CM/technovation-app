@@ -28,6 +28,14 @@ class UnaffiliatedParticipantsGrid
     FriendlyCountry.new(account).country_name
   end
 
+  column :unaffilated_type, if: ->(g) { g.admin } do |account, _grid|
+    if account.no_chapter_selected?
+      "No chapter selected"
+    elsif account.no_chapters_available?
+      "No chapters available"
+    end
+  end
+
   column :actions, mandatory: true, html: true do |account, grid|
     if grid.admin
       html = link_to(
