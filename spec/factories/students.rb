@@ -146,10 +146,11 @@ FactoryBot.define do
       end
     end
 
-    trait :no_chapters_available do
+    trait :no_chapterables_available do
       after(:create) do |student|
         student.account.chapters.destroy_all
-        student.account.update_column(:no_chapters_available, true)
+        student.account.clubs.destroy_all
+        student.account.update_column(:no_chapterables_available, true)
       end
     end
 

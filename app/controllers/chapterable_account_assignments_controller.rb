@@ -20,7 +20,7 @@ class ChapterableAccountAssignmentsController < ApplicationController
     elsif params[:chapterable] == "none_selected"
       current_account.update(no_chapterable_selected: true)
     elsif params[:chapterable] == "none_available"
-      current_account.update(no_chapters_available: true)
+      current_account.update(no_chapterables_available: true)
     else
       current_account.chapterable_assignments.create(
         profile: current_account.mentor_profile.presence || current_account.student_profile,

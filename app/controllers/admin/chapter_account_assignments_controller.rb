@@ -26,7 +26,7 @@ module Admin
         )
 
         account.update(no_chapterable_selected: nil)
-        account.update(no_chapters_available: nil)
+        account.update(no_chapterables_available: nil)
       end
 
       redirect_to admin_participant_path(account),
