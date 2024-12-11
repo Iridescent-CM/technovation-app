@@ -308,7 +308,7 @@ RSpec.describe Account do
           it "makes a call to send the chapter assigned email to the student when they're assigned to a chapter" do
             expect(AccountMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
 
-            student.account.update(no_chapter_selected: false)
+            student.account.update(no_chapterable_selected: false)
           end
         end
 
@@ -318,7 +318,7 @@ RSpec.describe Account do
           it "makes a call to send the chapter assigned email to the mentor when they're assigned to a chapter" do
             expect(AccountMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
 
-            mentor.account.update(no_chapter_selected: false)
+            mentor.account.update(no_chapterable_selected: false)
           end
         end
       end

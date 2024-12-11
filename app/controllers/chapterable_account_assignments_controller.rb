@@ -18,8 +18,8 @@ class ChapterableAccountAssignmentsController < ApplicationController
       redirect_to new_chapterable_account_assignments_path,
         alert: "Please select a Chapter or the None of the Above option." and return
     elsif params[:chapterable] == "none_selected"
-      current_account.update(no_chapter_selected: true)
-    elsif params[:chapter_id] == "none_available"
+      current_account.update(no_chapterable_selected: true)
+    elsif params[:chapterable] == "none_available"
       current_account.update(no_chapters_available: true)
     else
       current_account.chapterable_assignments.create(

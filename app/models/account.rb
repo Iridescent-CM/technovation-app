@@ -1209,7 +1209,7 @@ class Account < ActiveRecord::Base
 
   def send_assigned_to_chapter_email
     if (student_profile.present? || mentor_profile.present?) &&
-        saved_change_to_no_chapter_selected? && !no_chapter_selected?
+        saved_change_to_no_chapterable_selected? && !no_chapterable_selected?
 
       AccountMailer.chapter_assigned(self).deliver_later
     end

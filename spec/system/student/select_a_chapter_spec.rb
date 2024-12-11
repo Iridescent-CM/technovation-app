@@ -15,14 +15,14 @@ RSpec.describe "Students selecting a chapter", :js do
       expect(student.account.current_chapter).to eq(chapter)
     end
 
-    it "it updates the account to 'no_chapter_selected' when they choose the 'None of the Above' option" do
+    it "it updates the account to 'no_chapterable_selected' when they choose the 'None of the Above' option" do
       sign_in(student)
 
       choose "None of the Above"
       click_button "Save"
 
       student.reload
-      expect(student.account.no_chapter_selected?).to eq(true)
+      expect(student.account.no_chapterable_selected?).to eq(true)
     end
   end
 
@@ -32,14 +32,14 @@ RSpec.describe "Students selecting a chapter", :js do
       Club.destroy_all
     end
 
-    it "it updates the account to 'no_chapters_available' after they click 'Acknowledge and Go to Dashboard'" do
+    it "it updates the account to 'no_chapterable_selected' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(student)
 
       expect(page).to have_content("Unfortunately, there are no Chapters currently active in your country")
       click_button "Acknowledge and Go To Dashboard"
 
       student.reload
-      expect(student.account.no_chapters_available?).to eq(true)
+      expect(student.account.no_chapterable_selected?).to eq(true)
     end
   end
 end
