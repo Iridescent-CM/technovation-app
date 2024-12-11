@@ -142,7 +142,7 @@ FactoryBot.define do
     trait :unaffiliated_chapter do
       after(:create) do |student|
         student.account.chapters.destroy_all
-        student.account.update_column(:no_chapter_selected, true)
+        student.account.update_column(:no_chapterable_selected, true)
       end
     end
 

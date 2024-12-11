@@ -25,7 +25,7 @@ module Admin
           primary: true
         )
 
-        account.update(no_chapter_selected: nil)
+        account.update(no_chapterable_selected: nil)
         account.update(no_chapters_available: nil)
       end
 
@@ -49,12 +49,12 @@ module Admin
           chapterable_type: "Chapter"
         )
 
-        account.update(no_chapter_selected: nil)
+        account.update(no_chapterable_selected: nil)
       else
         chapter_account_assignment.delete
 
         if account.is_a_mentor? || account.is_a_student?
-          account.update(no_chapter_selected: true)
+          account.update(no_chapterable_selected: true)
         end
       end
 

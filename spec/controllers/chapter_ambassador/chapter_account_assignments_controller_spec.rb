@@ -21,7 +21,7 @@ RSpec.describe ChapterAmbassador::ChapterAccountAssignmentsController do
           }
         }
 
-        expect(student_profile.account.reload.no_chapter_selected).to be_nil
+        expect(student_profile.account.reload.no_chapterable_selected).to be_nil
       end
 
       it "assigns the student to the Chapter Ambassador's chapter" do
