@@ -147,7 +147,7 @@ CREATE TABLE public.accounts (
     background_check_exemption boolean DEFAULT false NOT NULL,
     phone_number character varying,
     no_chapterable_selected boolean,
-    no_chapters_available boolean
+    no_chapterables_available boolean
 );
 
 
@@ -4942,7 +4942,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241202210231'),
 ('20241204142027'),
 ('20241211141114'),
-('20241211222824');
-
+('20241211222824'),
+('20241211230435');
 
 

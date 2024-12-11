@@ -31,7 +31,7 @@ class UnaffiliatedParticipantsGrid
   column :unaffilated_type, if: ->(g) { g.admin } do |account, _grid|
     if account.no_chapterable_selected?
       "No chapter selected"
-    elsif account.no_chapters_available?
+    elsif account.no_chapterables_available?
       "No chapters available"
     end
   end
@@ -203,7 +203,7 @@ class UnaffiliatedParticipantsGrid
     select: -> {
       unaffiliated_types = [
         ["No chapter selected", "no_chapterable_selected"],
-        ["No chapters available", "no_chapters_available"]
+        ["No chapters available", "no_chapterables_available"]
       ]
       unaffiliated_types
     },

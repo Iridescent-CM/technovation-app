@@ -43,14 +43,14 @@ RSpec.describe "Mentor selecting a chapter", :js do
     Chapter.destroy_all
     Club.destroy_all
 
-    it "updates the account to 'no_chapterable_selected' after they click 'Acknowledge and Go to Dashboard'" do
+    it "updates the account to 'no_chapterables_available' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(mentor)
 
       expect(page).to have_content("Unfortunately, there are no Chapters currently active in your country")
       click_button "Acknowledge and Go To Dashboard"
 
       mentor.reload
-      expect(mentor.account.no_chapterable_selected?).to eq(true)
+      expect(mentor.account.no_chapterables_available?).to eq(true)
     end
   end
 end

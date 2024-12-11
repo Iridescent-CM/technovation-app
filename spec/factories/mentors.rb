@@ -95,10 +95,11 @@ FactoryBot.define do
       end
     end
 
-    trait :no_chapters_available do
+    trait :no_chapterables_available do
       after(:create) do |mentor|
         mentor.account.chapters.destroy_all
-        mentor.account.update_column(:no_chapters_available, true)
+        mentor.account.clubs.destroy_all
+        mentor.account.updane_column(:no_chapterables_available, true)
       end
     end
 

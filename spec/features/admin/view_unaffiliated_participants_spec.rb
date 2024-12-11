@@ -15,8 +15,8 @@ RSpec.feature "Admin viewing unaffiliated participants" do
   end
 
   scenario "displays students and mentors who are in locations that doesn't have any chapters" do
-    student_with_no_available_chapters = FactoryBot.create(:student, :no_chapters_available)
-    mentor_with_no_available_chapters = FactoryBot.create(:mentor, :no_chapters_available)
+    student_with_no_available_chapters = FactoryBot.create(:student, :no_chapterables_available)
+    mentor_with_no_available_chapters = FactoryBot.create(:mentor, :no_chapterables_available)
 
     sign_in(admin)
     visit(admin_unaffiliated_participants_path)
