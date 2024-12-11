@@ -13,12 +13,14 @@ module JoinRequestApproved
       student_chapters = join_request.team.students.flat_map { |s| s.account.current_chapter }.uniq
 
       student_chapters.each do |chapter|
-        chapter.chapter_account_assignments.create(
-          profile: join_request.requestor,
-          account: join_request.requestor.account,
-          season: Season.current.year,
-          primary: false
-        )
+        if chapter.present?
+          chapter.chapter_account_assignments.create(
+            profile: join_request.requestor,
+            account: join_request.requestor.account,
+            season: Season.current.year,
+            primary: false
+          )
+        end
       end
     end
 
