@@ -17,7 +17,7 @@
 
   <div id="additional-chapters" class="hidden">
     <% @additional_chapters.each do |chapter| %>
-      <%= render "chapter", chapter: chapter %>
+      <%= render "chapterable", chapterable: chapter %>
     <% end %>
   </div>
 

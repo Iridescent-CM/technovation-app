@@ -335,17 +335,17 @@ RSpec.describe Account do
       let!(:student_in_another_chapter) { FactoryBot.create(:student) }
 
       before do
-        student1.chapter_assignments.create(
+        student1.chapterable_assignments.create(
           account: student1.account,
           chapterable: chapter
         )
 
-        student2.chapter_assignments.create(
+        student2.chapterable_assignments.create(
           account: student2.account,
           chapterable: chapter
         )
 
-        student_in_another_chapter.chapter_assignments.create(
+        student_in_another_chapter.chapterable_assignments.create(
           account: student_in_another_chapter.account,
           chapterable: another_chapter
         )

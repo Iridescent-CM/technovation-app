@@ -18,7 +18,7 @@ RSpec.describe "A mentor completing their training", :js do
     Timecop.freeze(ImportantDates.mentor_training_required_since - 1.day) do
       mentor = FactoryBot.create(:mentor)
 
-      mentor.chapter_assignments.create(
+      mentor.chapterable_assignments.create(
         account: mentor.account,
         chapterable: FactoryBot.create(:chapter),
         season: (ImportantDates.mentor_training_required_since - 1.day).year
@@ -44,7 +44,7 @@ RSpec.describe "A mentor completing their training", :js do
     Timecop.freeze(ImportantDates.mentor_training_required_since) do
       mentor = FactoryBot.create(:mentor)
 
-      mentor.chapter_assignments.create(
+      mentor.chapterable_assignments.create(
         account: mentor.account,
         chapterable: FactoryBot.create(:chapter),
         season: ImportantDates.mentor_training_required_since.year

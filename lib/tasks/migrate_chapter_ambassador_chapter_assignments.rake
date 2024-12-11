@@ -5,7 +5,7 @@ task migrate_cha_chapter_assignments: :environment do
 
   if chapter_ambassadors_with_chapters.present?
     chapter_ambassadors_with_chapters.find_each do |chapter_ambassador|
-      chapter_ambassador.account.chapter_assignments.create(
+      chapter_ambassador.account.chapterable_assignments.create(
         chapter_id: chapter_ambassador.chapter_id,
         profile: chapter_ambassador,
         season: 2025,

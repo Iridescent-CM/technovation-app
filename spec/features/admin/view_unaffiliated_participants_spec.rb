@@ -29,14 +29,14 @@ RSpec.feature "Admin viewing unaffiliated participants" do
     chapter = FactoryBot.create(:chapter, :chicago, :onboarded)
 
     affiliated_student = FactoryBot.create(:student, :chicago)
-    affiliated_student.chapter_assignments.create(
+    affiliated_student.chapterable_assignments.create(
       account: affiliated_student.account,
       chapterable: chapter,
       season: Season.current.year
     )
 
     affiliated_mentor = FactoryBot.create(:mentor, :chicago)
-    affiliated_mentor.chapter_assignments.create(
+    affiliated_mentor.chapterable_assignments.create(
       account: affiliated_mentor.account,
       chapterable: chapter,
       season: Season.current.year

@@ -30,7 +30,7 @@ RSpec.describe "Admins assigning participants to chapters" do
       before do
         student.account.chapterable_assignments.delete_all
 
-        student.chapter_assignments.create(
+        student.chapterable_assignments.create(
           account: student.account,
           chapterable: FactoryBot.create(:chapter),
           season: Season.current.year,
@@ -82,7 +82,7 @@ RSpec.describe "Admins assigning participants to chapters" do
       before do
         mentor.account.chapterable_assignments.delete_all
 
-        mentor.chapter_assignments.create(
+        mentor.chapterable_assignments.create(
           account: mentor.account,
           chapterable: FactoryBot.create(:chapter),
           season: Season.current.year,
@@ -134,7 +134,7 @@ RSpec.describe "Admins assigning participants to chapters" do
       before do
         chapter_ambassador.account.chapterable_assignments.delete_all
 
-        chapter_ambassador.chapter_assignments.create(
+        chapter_ambassador.chapterable_assignments.create(
           account: chapter_ambassador.account,
           chapterable: FactoryBot.create(:chapter),
           season: Season.current.year,

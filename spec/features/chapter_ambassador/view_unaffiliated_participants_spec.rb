@@ -5,7 +5,7 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :not_assigned_to_chapter) }
 
   before do
-    chapter_ambassador.chapter_assignments.create(
+    chapter_ambassador.chapterable_assignments.create(
       account: chapter_ambassador.account,
       chapterable: chapter,
       season: Season.current.year,
@@ -35,7 +35,7 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
 
   scenario "does not display affiliated students or mentors assigned to the ambassador's chapter" do
     affiliated_student = FactoryBot.create(:student, :chicago)
-    affiliated_student.chapter_assignments.create(
+    affiliated_student.chapterable_assignments.create(
       account: affiliated_student.account,
       chapterable: chapter,
       season: Season.current.year,
@@ -43,7 +43,7 @@ RSpec.feature "Chapter Ambassador viewing unaffiliated participants" do
     )
 
     affiliated_mentor = FactoryBot.create(:mentor, :chicago)
-    affiliated_mentor.chapter_assignments.create(
+    affiliated_mentor.chapterable_assignments.create(
       account: affiliated_mentor.account,
       chapterable: chapter,
       season: Season.current.year,

@@ -1,8 +1,8 @@
-class ChapterAccountAssignmentsController < ApplicationController
+class ChapterableAccountAssignmentsController < ApplicationController
   layout "application_rebrand"
 
   def new
-    @chapter_assignment = ChapterAccountAssignment.new
+    @chapterable_assignment = ChapterableAccountAssignment.new
 
     @chapters = ChapterSelector.new(account: current_account).call
     @primary_chapters = @chapters[:chapters_in_state_province]
@@ -14,18 +14,18 @@ class ChapterAccountAssignmentsController < ApplicationController
   end
 
   def create
-    if params[:chapter_id].blank?
-      redirect_to new_chapter_account_assignments_path,
+    if params[:chapterable].blank?
+      redirect_to new_chapterable_account_assignments_path,
         alert: "Please select a Chapter or the None of the Above option." and return
-    elsif params[:chapter_id] == "none_selected"
+    elsif params[:chapterable] == "none_selected"
       current_account.update(no_chapter_selected: true)
     elsif params[:chapter_id] == "none_available"
       current_account.update(no_chapters_available: true)
     else
       current_account.chapterable_assignments.create(
         profile: current_account.mentor_profile.presence || current_account.student_profile,
-        chapterable_id: params[:chapter_id],
-        chapterable_type: "Chapter",
+        chapterable_id: params[:chapterable].split.first,
+        chapterable_type: params[:chapterable].split.second,
         season: Season.current.year,
         primary: true
       )

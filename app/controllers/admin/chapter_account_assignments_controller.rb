@@ -3,23 +3,23 @@ module Admin
     def new
       @account = Account.find(params.fetch(:account_id))
       @chapters = Chapter.all.order(organization_name: :asc)
-      @chapter_account_assignment = ChapterAccountAssignment.new
+      @chapter_account_assignment = ChapterableAccountAssignment.new
     end
 
     def create
       account = Account.find(params.fetch(:account_id))
 
       account
-        .current_chapter_assignments
+        .current_chapterable_assignments
         .where(primary: true)
         .delete_all
 
-      if chapter_account_assignment_params.fetch(:chapter_id).present?
+      if chapterable_account_assignment_params.fetch(:chapter_id).present?
         account.chapterable_assignments.create(
           profile: account.chapter_ambassador_profile.presence ||
             account.mentor_profile.presence ||
             account.student_profile,
-          chapterable_id: chapter_account_assignment_params.fetch(:chapter_id),
+          chapterable_id: chapterable_account_assignment_params.fetch(:chapter_id),
           chapterable_type: "Chapter",
           season: Season.current.year,
           primary: true
@@ -41,7 +41,7 @@ module Admin
 
     def update
       account = Account.find(params.fetch(:account_id))
-      chapter_account_assignment = ChapterAccountAssignment.find(params.fetch(:id))
+      chapter_account_assignment = ChapterableAccountAssignment.find(params.fetch(:id))
 
       if chapter_account_assignment_params.fetch(:chapter_id).present?
         chapter_account_assignment.update(
@@ -64,8 +64,8 @@ module Admin
 
     private
 
-    def chapter_account_assignment_params
-      params.require(:chapter_account_assignment).permit(:chapter_id)
+    def chapterable_account_assignment_params
+      params.require(:chapterable_account_assignment).permit(:chapter_id)
     end
   end
 end

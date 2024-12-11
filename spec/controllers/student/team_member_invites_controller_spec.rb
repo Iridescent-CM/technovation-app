@@ -13,7 +13,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     let(:invite) { TeamMemberInvite.last }
 
     before do
-      student.chapter_assignments.create(
+      student.chapterable_assignments.create(
         account: student.account,
         chapterable: FactoryBot.create(:chapter),
         season: ImportantDates.quarterfinals_judging_begins.year,
@@ -64,7 +64,7 @@ RSpec.describe Student::TeamMemberInvitesController do
     let!(:invite) { FactoryBot.create(:team_member_invite, invitee: student) }
 
     before do
-      student.chapter_assignments.create(
+      student.chapterable_assignments.create(
         account: student.account,
         chapterable: FactoryBot.create(:chapter),
         season: ImportantDates.quarterfinals_judging_begins.year,
