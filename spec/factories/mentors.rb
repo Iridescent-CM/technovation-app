@@ -99,7 +99,7 @@ FactoryBot.define do
       after(:create) do |mentor|
         mentor.account.chapters.destroy_all
         mentor.account.clubs.destroy_all
-        mentor.account.updane_column(:no_chapterables_available, true)
+        mentor.account.update_column(:no_chapterables_available, true)
       end
     end
 

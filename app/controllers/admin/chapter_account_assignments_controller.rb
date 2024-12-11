@@ -3,7 +3,7 @@ module Admin
     def new
       @account = Account.find(params.fetch(:account_id))
       @chapters = Chapter.all.order(organization_name: :asc)
-      @chapter_account_assignment = ChapterableAccountAssignment.new
+      @chapterable_account_assignment = ChapterableAccountAssignment.new
     end
 
     def create
@@ -36,22 +36,22 @@ module Admin
     def edit
       @account = Account.find(params.fetch(:account_id))
       @chapters = Chapter.all.order(organization_name: :asc)
-      @chapter_account_assignment = @account.current_chapterable_assignment
+      @chapterable_account_assignment = @account.current_chapterable_assignment
     end
 
     def update
       account = Account.find(params.fetch(:account_id))
-      chapter_account_assignment = ChapterableAccountAssignment.find(params.fetch(:id))
+      chapterable_account_assignment = ChapterableAccountAssignment.find(params.fetch(:id))
 
-      if chapter_account_assignment_params.fetch(:chapter_id).present?
-        chapter_account_assignment.update(
-          chapterable_id: chapter_account_assignment_params.fetch(:chapter_id),
+      if chapterable_account_assignment_params.fetch(:chapter_id).present?
+        chapterable_account_assignment.update(
+          chapterable_id: chapterable_account_assignment_params.fetch(:chapter_id),
           chapterable_type: "Chapter"
         )
 
         account.update(no_chapterable_selected: nil)
       else
-        chapter_account_assignment.delete
+        chapterable_account_assignment.delete
 
         if account.is_a_mentor? || account.is_a_student?
           account.update(no_chapterable_selected: true)

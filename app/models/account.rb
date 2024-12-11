@@ -509,8 +509,8 @@ class Account < ActiveRecord::Base
 
   scope :by_chapter, ->(chapter_id) {
     left_outer_joins(:chapterable_assignments)
-      .where("chapter_account_assignments.chapterable_type = 'Chapter'")
-      .where("chapter_account_assignments.chapterable_id = ?", chapter_id)
+      .where("chapterable_account_assignments.chapterable_type = 'Chapter'")
+      .where("chapterable_account_assignments.chapterable_id = ?", chapter_id)
   }
 
   scope :by_division, ->(division) {
