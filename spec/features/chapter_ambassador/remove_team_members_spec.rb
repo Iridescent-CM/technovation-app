@@ -5,7 +5,7 @@ RSpec.feature "Remove an onboarding student" do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :not_assigned_to_chapter) }
 
   before do
-    chapter_ambassador.chapter_assignments.create(
+    chapter_ambassador.chapterable_assignments.create(
       account: chapter_ambassador.account,
       chapterable: chapter,
       season: Season.current.year,
@@ -15,7 +15,7 @@ RSpec.feature "Remove an onboarding student" do
 
   scenario "remove the student" do
     affiliated_onboarding_student = FactoryBot.create(:student, :chicago, :onboarding)
-    affiliated_onboarding_student.chapter_assignments.create(
+    affiliated_onboarding_student.chapterable_assignments.create(
       account: affiliated_onboarding_student.account,
       chapterable: chapter,
       season: Season.current.year,

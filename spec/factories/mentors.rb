@@ -30,7 +30,7 @@ FactoryBot.define do
       end
 
       after(:create) do |mentor, _eval|
-        mentor.chapter_assignments.create(
+        mentor.chapterable_assignments.create(
           account: mentor.account,
           chapterable: FactoryBot.create(:chapter),
           season: Season.current.year - 1,
@@ -130,7 +130,7 @@ FactoryBot.define do
     end
 
     after(:create) do |m, e|
-      m.chapter_assignments.create(
+      m.chapterable_assignments.create(
         account: m.account,
         chapterable: FactoryBot.create(:chapter),
         season: Season.current.year,

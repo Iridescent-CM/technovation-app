@@ -1,4 +1,4 @@
-class ChapterAccountAssignment < ApplicationRecord
+class ChapterableAccountAssignment < ApplicationRecord
   belongs_to :account
   belongs_to :chapterable, polymorphic: true
   belongs_to :profile, polymorphic: true
@@ -9,5 +9,9 @@ class ChapterAccountAssignment < ApplicationRecord
 
   scope :chapters, -> {
     where(chapterable_type: "Chapter")
+  }
+
+  scope :clubs, -> {
+    where(chapterable_type: "Club")
   }
 end

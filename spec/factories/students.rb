@@ -178,7 +178,7 @@ FactoryBot.define do
     end
 
     after(:create) do |s, e|
-      s.chapter_assignments.create(
+      s.chapterable_assignments.create(
         account: s.account,
         chapterable: FactoryBot.create(:chapter),
         season: Season.current.year,

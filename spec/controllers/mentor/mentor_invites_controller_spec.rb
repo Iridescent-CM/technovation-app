@@ -161,14 +161,14 @@ RSpec.describe Mentor::MentorInvitesController do
       let!(:invite) { FactoryBot.create(:team_member_invite, invitee: mentor) }
 
       before do
-        student1.chapter_assignments.create(
+        student1.chapterable_assignments.create(
           chapterable: chapter,
           account: student1.account,
           season: Season.current.year,
           primary: true
         )
 
-        student2.chapter_assignments.create(
+        student2.chapterable_assignments.create(
           chapterable: chapter,
           account: student2.account,
           season: Season.current.year,

@@ -5,7 +5,7 @@ RSpec.feature "Chapter Ambassador viewing their teams" do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :not_assigned_to_chapter) }
 
   before do
-    chapter_ambassador.chapter_assignments.create(
+    chapter_ambassador.chapterable_assignments.create(
       account: chapter_ambassador.account,
       chapterable: chapter,
       season: Season.current.year,
@@ -15,7 +15,7 @@ RSpec.feature "Chapter Ambassador viewing their teams" do
 
   scenario "displays teams of students assigned to their chapter" do
     affiliated_student = FactoryBot.create(:student, :chicago)
-    affiliated_student.chapter_assignments.create(
+    affiliated_student.chapterable_assignments.create(
       account: affiliated_student.account,
       chapterable: chapter,
       season: Season.current.year,
@@ -26,7 +26,7 @@ RSpec.feature "Chapter Ambassador viewing their teams" do
     TeamRosterManaging.add(team, affiliated_student)
 
     affiliated_student_2 = FactoryBot.create(:student, :chicago)
-    affiliated_student_2.chapter_assignments.create(
+    affiliated_student_2.chapterable_assignments.create(
       account: affiliated_student_2.account,
       chapterable: chapter,
       season: Season.current.year,

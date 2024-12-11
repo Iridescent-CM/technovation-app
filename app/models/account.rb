@@ -57,17 +57,27 @@ class Account < ActiveRecord::Base
   belongs_to :division, required: false
 
   has_many :chapterable_assignments,
-    class_name: "ChapterAccountAssignment"
+    class_name: "ChapterableAccountAssignment"
   has_many :current_chapterable_assignments, -> { current },
-    class_name: "ChapterAccountAssignment"
+    class_name: "ChapterableAccountAssignment"
+
   has_many :current_chapter_assignments, -> { current.chapters },
-    class_name: "ChapterAccountAssignment"
+    class_name: "ChapterableAccountAssignment"
+
+  has_many :current_club_assignments, -> { current.clubs },
+    class_name: "ChapterableAccountAssignment"
 
   has_many :chapters, through: :chapterable_assignments, source: :chapterable, source_type: "Chapter"
   has_many :current_chapters,
     through: :current_chapter_assignments,
     source: :chapterable,
     source_type: "Chapter"
+
+  has_many :clubs, through: :chapterable_assignments, source: :chapterable, source_type: "Club"
+  has_many :current_clubs,
+    through: :current_chapter_assignments,
+    source: :chapterable,
+    source_type: "Clubs"
 
   has_many :certificates, dependent: :destroy
 
@@ -1020,16 +1030,32 @@ class Account < ActiveRecord::Base
       !(mentor_profile.present? or judge_profile.present?)
   end
 
+  def assigned_to_chapterable?
+    assigned_to_chapter? || assigned_to_club?
+  end
+
   def assigned_to_chapter?
     current_chapter.present?
+  end
+
+  def current_chapter
+    current_primary_chapter || ::NullChapter.new
   end
 
   def current_primary_chapter
     current_chapter_assignments.find_by(primary: true)&.chapterable
   end
 
-  def current_chapter
-    current_primary_chapter || ::NullChapter.new
+  def assigned_to_club?
+    current_club.present?
+  end
+
+  def current_club
+    current_primary_club || ::NullClub.new
+  end
+
+  def current_primary_club
+    current_club_assignments.find_by(primary: true)&.chapterable
   end
 
   def current_chapterable_assignment

@@ -395,43 +395,6 @@ ALTER SEQUENCE public.certificates_id_seq OWNED BY public.certificates.id;
 
 
 --
--- Name: chapter_account_assignments; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.chapter_account_assignments (
-    id bigint NOT NULL,
-    chapterable_id bigint,
-    account_id bigint,
-    profile_type character varying,
-    profile_id bigint,
-    season smallint,
-    "primary" boolean,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    chapterable_type character varying
-);
-
-
---
--- Name: chapter_account_assignments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.chapter_account_assignments_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: chapter_account_assignments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.chapter_account_assignments_id_seq OWNED BY public.chapter_account_assignments.id;
-
-
---
 -- Name: chapter_ambassador_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -645,6 +608,43 @@ CREATE SEQUENCE public.chapter_program_information_organization_types_id_seq
 --
 
 ALTER SEQUENCE public.chapter_program_information_organization_types_id_seq OWNED BY public.chapter_program_information_organization_types.id;
+
+
+--
+-- Name: chapterable_account_assignments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.chapterable_account_assignments (
+    id bigint NOT NULL,
+    chapterable_id bigint,
+    account_id bigint,
+    profile_type character varying,
+    profile_id bigint,
+    season smallint,
+    "primary" boolean,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    chapterable_type character varying
+);
+
+
+--
+-- Name: chapterable_account_assignments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.chapterable_account_assignments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: chapterable_account_assignments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.chapterable_account_assignments_id_seq OWNED BY public.chapterable_account_assignments.id;
 
 
 --
@@ -2587,13 +2587,6 @@ ALTER TABLE ONLY public.certificates ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- Name: chapter_account_assignments id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapter_account_assignments ALTER COLUMN id SET DEFAULT nextval('public.chapter_account_assignments_id_seq'::regclass);
-
-
---
 -- Name: chapter_ambassador_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2633,6 +2626,13 @@ ALTER TABLE ONLY public.chapter_program_information_meeting_times ALTER COLUMN i
 --
 
 ALTER TABLE ONLY public.chapter_program_information_organization_types ALTER COLUMN id SET DEFAULT nextval('public.chapter_program_information_organization_types_id_seq'::regclass);
+
+
+--
+-- Name: chapterable_account_assignments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapterable_account_assignments ALTER COLUMN id SET DEFAULT nextval('public.chapterable_account_assignments_id_seq'::regclass);
 
 
 --
@@ -3043,14 +3043,6 @@ ALTER TABLE ONLY public.certificates
 
 
 --
--- Name: chapter_account_assignments chapter_account_assignments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapter_account_assignments
-    ADD CONSTRAINT chapter_account_assignments_pkey PRIMARY KEY (id);
-
-
---
 -- Name: chapter_ambassador_profiles chapter_ambassador_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3096,6 +3088,14 @@ ALTER TABLE ONLY public.chapter_program_information_organization_types
 
 ALTER TABLE ONLY public.chapter_program_information
     ADD CONSTRAINT chapter_program_information_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapterable_account_assignments chapterable_account_assignments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.chapterable_account_assignments
+    ADD CONSTRAINT chapterable_account_assignments_pkey PRIMARY KEY (id);
 
 
 --
@@ -3632,31 +3632,17 @@ CREATE INDEX index_certificates_on_team_id ON public.certificates USING btree (t
 
 
 --
--- Name: index_chapter_account_assignments_on_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapter_account_assignments_on_account_id ON public.chapter_account_assignments USING btree (account_id);
-
-
---
 -- Name: index_chapter_account_assignments_on_chapter; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_chapter_account_assignments_on_chapter ON public.chapter_account_assignments USING btree (chapterable_type, chapterable_id);
-
-
---
--- Name: index_chapter_account_assignments_on_chapterable_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapter_account_assignments_on_chapterable_id ON public.chapter_account_assignments USING btree (chapterable_id);
+CREATE INDEX index_chapter_account_assignments_on_chapter ON public.chapterable_account_assignments USING btree (chapterable_type, chapterable_id);
 
 
 --
 -- Name: index_chapter_account_assignments_on_profile; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_chapter_account_assignments_on_profile ON public.chapter_account_assignments USING btree (profile_type, profile_id);
+CREATE INDEX index_chapter_account_assignments_on_profile ON public.chapterable_account_assignments USING btree (profile_type, profile_id);
 
 
 --
@@ -3706,6 +3692,20 @@ CREATE INDEX index_chapter_program_information_on_low_income_estimate_id ON publ
 --
 
 CREATE INDEX index_chapter_program_information_on_program_length_id ON public.chapter_program_information USING btree (program_length_id);
+
+
+--
+-- Name: index_chapterable_account_assignments_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapterable_account_assignments_on_account_id ON public.chapterable_account_assignments USING btree (account_id);
+
+
+--
+-- Name: index_chapterable_account_assignments_on_chapterable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapterable_account_assignments_on_chapterable_id ON public.chapterable_account_assignments USING btree (chapterable_id);
 
 
 --
@@ -3999,14 +3999,14 @@ CREATE INDEX index_submission_scores_on_team_submission_id ON public.submission_
 -- Name: index_table_chapter_account_assignments_on_account_chapter_ids; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_table_chapter_account_assignments_on_account_chapter_ids ON public.chapter_account_assignments USING btree (account_id, chapterable_id);
+CREATE INDEX index_table_chapter_account_assignments_on_account_chapter_ids ON public.chapterable_account_assignments USING btree (account_id, chapterable_id);
 
 
 --
 -- Name: index_table_chapter_account_assignments_on_chapter_account_ids; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_table_chapter_account_assignments_on_chapter_account_ids ON public.chapter_account_assignments USING btree (chapterable_id, account_id);
+CREATE INDEX index_table_chapter_account_assignments_on_chapter_account_ids ON public.chapterable_account_assignments USING btree (chapterable_id, account_id);
 
 
 --
@@ -4940,7 +4940,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241118204108'),
 ('20241122025956'),
 ('20241202210231'),
-('20241204142027');
+('20241204142027'),
+('20241211141114');
 
 
 
