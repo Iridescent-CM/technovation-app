@@ -157,8 +157,8 @@ class ChapterAmbassadorsGrid
       if value == "yes"
         scope.joins(:chapterable_assignments)
       else
-        scope.left_outer_joins(:chapterable_ableassignments)
-          .where(chapter_account_assignments: {id: nil})
+        scope.left_outer_joins(:chapterable_assignments)
+          .where(chapterable_assignments: {id: nil})
       end
     end
 

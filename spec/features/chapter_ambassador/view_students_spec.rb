@@ -35,7 +35,7 @@ RSpec.feature "chapter ambassadors view student profile pages" do
     )
 
     sign_in(chapter_ambassador)
-    visit(chapter_ambassador_chapter_admin_pat)
+    visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Participants"
     visit chapter_ambassador_participant_path(student.account)

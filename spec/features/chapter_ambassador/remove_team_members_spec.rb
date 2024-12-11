@@ -14,13 +14,13 @@ RSpec.feature "Remove an onboarding student" do
   end
 
   scenario "remove the student" do
-    affiliated_onboarding_student = FactoryBot.create(:student, :chicago, :onboarding)
-    affiliated_onboarding_student.chapterable_assignments.create(
-      account: affiliated_onboarding_student.account,
+    affiliated_student = FactoryBot.create(:student, :chicago, :not_assigned_to_chapter)
+    affiliated_student.chapterable_assignments.create(
+      account: affiliated_student.account,
       chapterable: chapter,
-      season: Season.current.year,
-      primary: true
+      season: Season.current.year
     )
+
     team = FactoryBot.create(:team)
     TeamRosterManaging.add(team, affiliated_student)
 
