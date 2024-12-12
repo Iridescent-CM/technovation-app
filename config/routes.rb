@@ -408,7 +408,7 @@ Rails.application.routes.draw do
   end
 
   resource :terms_agreement, only: [:edit, :update]
-  resource :chapter_account_assignments, only: [:new, :create]
+  resource :chapterable_account_assignments, only: [:new, :create]
 
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]

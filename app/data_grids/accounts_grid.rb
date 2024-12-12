@@ -545,15 +545,15 @@ class AccountsGrid
     case grid.season_and_or
     when "match_any"
       scope
-        .joins(:chapter_assignments)
-        .where(chapter_assignments: {season: season_value})
+        .joins(:chapterable_assignments)
+        .where(chapterable_assignments: {season: season_value})
         .distinct
     else
       scope
-        .joins(:chapter_assignments)
-        .where(chapter_assignments: {season: season_value})
+        .joins(:chapterable_assignments)
+        .where(chapterable_assignments: {season: season_value})
         .group("accounts.id")
-        .having("COUNT(DISTINCT chapter_assignments.season) = ?", season_value.length)
+        .having("COUNT(DISTINCT chapterable_assignments.season) = ?", season_value.length)
     end
   end
 

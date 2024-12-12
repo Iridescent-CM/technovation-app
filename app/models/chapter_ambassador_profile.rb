@@ -28,8 +28,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   validates :job_title, presence: true
 
-  has_one :chapter, through: :account, source: :chapters
-
   has_one :chapter_volunteer_agreement, -> { where(active: true) }, class_name: "Document", as: :signer
   has_many :documents, as: :signer
 
@@ -41,7 +39,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   has_many :messages, as: :sender
   has_many :multi_messages, as: :sender
 
-  has_many :chapter_assignments, as: :profile, class_name: "ChapterAccountAssignment"
+  has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
   has_many :chapter_links, dependent: :destroy
 
   has_one :community_connection
@@ -127,6 +125,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def community_connections_viewed?
     viewed_community_connections
+  end
+
+  def chapter
+    account.current_primary_chapter
   end
 
   def chapter_volunteer_agreement_complete?

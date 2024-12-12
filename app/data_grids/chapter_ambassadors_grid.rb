@@ -5,7 +5,7 @@ class ChapterAmbassadorsGrid
 
   scope do
     Account
-      .includes(:chapter_ambassador_profile, :chapter_assignments, :chapters)
+      .includes(:chapter_ambassador_profile, :chapterable_assignments, :chapters)
       .where.not(chapter_ambassador_profiles: {id: nil})
       .order(id: :desc)
   end
@@ -155,10 +155,10 @@ class ChapterAmbassadorsGrid
     ],
     filter_group: "common" do |value, scope, grid|
       if value == "yes"
-        scope.joins(:chapter_assignments)
+        scope.joins(:chapterable_assignments)
       else
-        scope.left_outer_joins(:chapter_assignments)
-          .where(chapter_account_assignments: {id: nil})
+        scope.left_outer_joins(:chapterable_assignments)
+          .where(chapterable_assignments: {id: nil})
       end
     end
 

@@ -195,8 +195,8 @@ class Team < ActiveRecord::Base
   }
 
   scope :by_chapter, ->(chapter_id) do
-    joins(:memberships, students: {account: :chapter_assignments})
-      .where(chapter_assignments: {chapter_id: chapter_id})
+    joins(:memberships, students: {account: :chapterable_assignments})
+      .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: chapter_id})
   end
 
   belongs_to :division

@@ -8,8 +8,8 @@ module Admin
           .current
           .left_outer_joins(:student_profile, :mentor_profile)
           .where("student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL")
-          .where(no_chapter_selected: true)
-          .or(scope.where(no_chapters_available: true))
+          .where(no_chapterable_selected: true)
+          .or(scope.where(no_chapterables_available: true))
           .page(params[:page])
       },
 
@@ -17,8 +17,8 @@ module Admin
         "scope.current" \
         ".left_outer_joins(:student_profile, :mentor_profile)" \
         ".where('student_profiles.id IS NOT NULL OR mentor_profiles.id IS NOT NULL') " \
-        ".where(no_chapter_selected: true) " \
-        ".or(scope.where(no_chapters_available: true)) " \
+        ".where(no_chapterable_selected: true) " \
+        ".or(scope.where(no_chapterables_available: true)) " \
         "}"
 
     private

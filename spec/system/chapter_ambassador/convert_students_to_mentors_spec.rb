@@ -5,10 +5,11 @@ RSpec.describe "chapter ambassador convert students to mentors" do
     it "does not show the convert button" do
       chapter_ambassador = FactoryBot.create(:chapter_ambassador)
       student = FactoryBot.create(:student, date_of_birth: 17.years.ago)
-      student.chapter_assignments.create(
-        chapter: chapter_ambassador.current_chapter,
+      student.chapterable_assignments.create(
+        chapterable: chapter_ambassador.current_chapter,
         account: student.account,
-        season: Season.current.year
+        season: Season.current.year,
+        primary: true
       )
 
       sign_in(chapter_ambassador)
@@ -27,10 +28,11 @@ RSpec.describe "chapter ambassador convert students to mentors" do
     it "shows the convert button" do
       chapter_ambassador = FactoryBot.create(:chapter_ambassador)
       student = FactoryBot.create(:student, date_of_birth: 18.years.ago)
-      student.chapter_assignments.create(
-        chapter: chapter_ambassador.current_chapter,
+      student.chapterable_assignments.create(
+        chapterable: chapter_ambassador.current_chapter,
         account: student.account,
-        season: Season.current.year
+        season: Season.current.year,
+        primary: true
       )
 
       sign_in(chapter_ambassador)

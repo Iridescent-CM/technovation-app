@@ -4,18 +4,19 @@ module ChapterAmbassador
       account = Account.find(params.fetch(:account_id))
 
       account
-        .chapter_assignments
+        .chapterable_assignments
         .where(season: Season.current.year, primary: true)
         .delete_all
 
-      account.chapter_assignments.create(
+      account.chapterable_assignments.create(
         profile: account.mentor_profile.presence || account.student_profile,
-        chapter_id: chapter_account_assignment_params.fetch(:chapter_id),
+        chapterable_id: chapter_account_assignment_params.fetch(:chapter_id),
+        chapterable_type: "Chapter",
         season: Season.current.year,
         primary: true
       )
 
-      account.update(no_chapter_selected: nil)
+      account.update(no_chapterable_selected: nil)
 
       redirect_to chapter_ambassador_unaffiliated_participants_path,
         success: "Successfully assigned #{account.full_name} to a your chapter"

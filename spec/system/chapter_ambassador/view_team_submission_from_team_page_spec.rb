@@ -8,9 +8,9 @@ RSpec.describe "chapter ambassadors visiting a team page" do
       team = FactoryBot.create(:team, :submitted)
 
       affiliated_student = FactoryBot.create(:student, :chicago, :not_assigned_to_chapter)
-      affiliated_student.chapter_assignments.create(
+      affiliated_student.chapterable_assignments.create(
         account: affiliated_student.account,
-        chapter: chapter_ambassador.current_chapter,
+        chapterable: chapter_ambassador.current_chapter,
         season: Season.current.year
       )
       TeamRosterManaging.add(team, affiliated_student)

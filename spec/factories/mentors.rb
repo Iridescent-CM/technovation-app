@@ -30,10 +30,11 @@ FactoryBot.define do
       end
 
       after(:create) do |mentor, _eval|
-        mentor.chapter_assignments.create(
+        mentor.chapterable_assignments.create(
           account: mentor.account,
-          chapter: FactoryBot.create(:chapter),
-          season: Season.current.year - 1
+          chapterable: FactoryBot.create(:chapter),
+          season: Season.current.year - 1,
+          primary: true
         )
       end
     end
@@ -90,14 +91,15 @@ FactoryBot.define do
     trait :unaffiliated_chapter do
       after(:create) do |mentor|
         mentor.account.chapters.destroy_all
-        mentor.account.update_column(:no_chapter_selected, true)
+        mentor.account.update_column(:no_chapterable_selected, true)
       end
     end
 
-    trait :no_chapters_available do
+    trait :no_chapterables_available do
       after(:create) do |mentor|
         mentor.account.chapters.destroy_all
-        mentor.account.update_column(:no_chapters_available, true)
+        mentor.account.clubs.destroy_all
+        mentor.account.update_column(:no_chapterables_available, true)
       end
     end
 
@@ -129,10 +131,11 @@ FactoryBot.define do
     end
 
     after(:create) do |m, e|
-      m.chapter_assignments.create(
+      m.chapterable_assignments.create(
         account: m.account,
-        chapter: FactoryBot.create(:chapter),
-        season: Season.current.year
+        chapterable: FactoryBot.create(:chapter),
+        season: Season.current.year,
+        primary: true
       )
 
       ProfileCreating.execute(m, FakeController.new)

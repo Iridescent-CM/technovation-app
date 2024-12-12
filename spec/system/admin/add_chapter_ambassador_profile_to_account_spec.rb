@@ -32,10 +32,11 @@ RSpec.describe "Admin add chapter ambassador profile to an account" do
     it "does not show an add chapter ambassador profile button" do
       chapter_ambassador = FactoryBot.create(:chapter_ambassador, intro_summary: "Here is my intro summary!")
       mentor = FactoryBot.create(:mentor)
-      mentor.chapter_assignments.create(
-        chapter: chapter_ambassador.current_chapter,
+      mentor.chapterable_assignments.create(
+        chapterable: chapter_ambassador.current_chapter,
         account: mentor.account,
-        season: Season.current.year
+        season: Season.current.year,
+        primary: true
       )
 
       sign_in(chapter_ambassador)
