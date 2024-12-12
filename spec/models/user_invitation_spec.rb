@@ -38,10 +38,6 @@ RSpec.describe UserInvitation do
 
   it "validates the email against an existing club ambassador" do
     club_ambassador = FactoryBot.create(:club_ambassador)
-    club_ambassador.account.create_mentor_profile!(
-      FactoryBot.attributes_for(:mentor)
-        .merge({mentor_type_ids: [MentorType.first.id]})
-    )
 
     invite = UserInvitation.new(
       profile_type: :club_ambassador,
