@@ -16,9 +16,11 @@
   </div>
 
   <div id="additional-clubs" class="hidden">
-    <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
-      Clubs
-    </h2>
+    <% if @primary_clubs.empty? %>
+      <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
+        Clubs
+      </h2>
+    <% end %>
 
     <% @additional_clubs.each do |club| %>
       <%= render "chapterable", chapterable: club %>
