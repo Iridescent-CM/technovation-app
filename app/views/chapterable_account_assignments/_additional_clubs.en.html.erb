@@ -1,0 +1,45 @@
+<style>
+  #additional-clubs {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+  }
+</style>
+
+<% if @additional_clubs.present? %>
+  <div id="additional-clubs-button" class="flex justify-center">
+    <button
+      class="mt-2 mb-8 p-2 rounded text-white font-bold bg-energetic-blue hover:bg-blue-700 transition"
+      onclick="showAdditionalClubs(event)"
+    >
+      Show all Clubs in my country
+    </button>
+  </div>
+
+  <div id="additional-clubs" class="hidden">
+    <% if @primary_clubs.empty? %>
+      <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
+        Clubs
+      </h2>
+    <% end %>
+
+    <% @additional_clubs.each do |club| %>
+      <%= render "chapterable", chapterable: club %>
+    <% end %>
+  </div>
+
+  <script>
+    function showAdditionalClubs(event) {
+      event.preventDefault();
+
+      const button = document.getElementById('additional-clubs-button');
+      const additionalClubs = document.getElementById('additional-clubs');
+
+      button.classList.add('hidden');
+      additionalClubs.classList.remove('hidden');
+      additionalClubs.style.display = 'block'
+      setTimeout(() => {
+        additionalClubs.style.opacity = 1;
+      }, 10);
+    };
+  </script>
+<% end %>

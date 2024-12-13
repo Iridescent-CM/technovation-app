@@ -17,11 +17,7 @@
 
   <div id="additional-chapters" class="hidden">
     <% @additional_chapters.each do |chapter| %>
-      <%= render "chapter", chapter: chapter %>
-    <% end %>
-
-    <% if @primary_chapters.empty? %>
-        <%= render "none_of_the_above_option" %>
+      <%= render "chapterable", chapterable: chapter %>
     <% end %>
   </div>
 

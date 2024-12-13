@@ -16,7 +16,7 @@ module ChapterAmbassador
           scope.in_region(user)
         end
 
-        scope.where(no_chapter_selected: true).page(params[:page])
+        scope.where(no_chapterable_selected: true).page(params[:page])
       },
 
       csv_scope: "->(scope, user, params) { " +
@@ -26,7 +26,7 @@ module ChapterAmbassador
         "scope = if user.account.current_chapter&.country.present?; " +
         "scope.where(country: user.account.current_chapter.country_code); " +
         "else; scope.in_region(user); end; " +
-        "scope.where(no_chapter_selected: true) " +
+        "scope.where(no_chapterable_selected: true) " +
         "}"
 
     private
@@ -37,7 +37,7 @@ module ChapterAmbassador
         allow_state_search: true,
         chapter_id: current_ambassador.account.current_chapter.id,
         country: [country_code],
-        state_province: Array(params[:unaffiliated_participants_grid][:state_province]),
+        state_province: Array(params[:unaffiliated_participants_grid][:state_province])
       )
 
       grid.merge(

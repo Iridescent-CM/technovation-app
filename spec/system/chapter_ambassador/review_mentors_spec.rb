@@ -8,15 +8,17 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
       untrained_mentor = FactoryBot.create(:mentor, :onboarding)
       trained_mentor = FactoryBot.create(:mentor, :onboarded)
 
-      untrained_mentor.chapter_assignments.create(
-        chapter: chapter_ambassador.current_chapter,
+      untrained_mentor.chapterable_assignments.create(
+        chapterable: chapter_ambassador.current_chapter,
         account: untrained_mentor.account,
-        season: Season.current.year
+        season: Season.current.year,
+        primary: true
       )
-      trained_mentor.chapter_assignments.create(
-        chapter: chapter_ambassador.current_chapter,
+      trained_mentor.chapterable_assignments.create(
+        chapterable: chapter_ambassador.current_chapter,
         account: trained_mentor.account,
-        season: Season.current.year
+        season: Season.current.year,
+        primary: true
       )
 
       sign_in(chapter_ambassador)
@@ -44,10 +46,11 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
       mentor.account.update(
         season_registered_at: ImportantDates.mentor_training_required_since - 1.day
       )
-      mentor.chapter_assignments.create(
-        chapter: chapter_ambassador.current_chapter,
+      mentor.chapterable_assignments.create(
+        chapterable: chapter_ambassador.current_chapter,
         account: mentor.account,
-        season: Season.current.year
+        season: Season.current.year,
+        primary: true
       )
 
       sign_in(chapter_ambassador)

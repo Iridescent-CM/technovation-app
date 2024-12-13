@@ -56,8 +56,28 @@ class Account < ActiveRecord::Base
 
   belongs_to :division, required: false
 
-  has_many :chapter_assignments, class_name: "ChapterAccountAssignment"
-  has_many :chapters, through: :chapter_assignments
+  has_many :chapterable_assignments,
+    class_name: "ChapterableAccountAssignment"
+  has_many :current_chapterable_assignments, -> { current },
+    class_name: "ChapterableAccountAssignment"
+
+  has_many :current_chapter_assignments, -> { current.chapters },
+    class_name: "ChapterableAccountAssignment"
+
+  has_many :current_club_assignments, -> { current.clubs },
+    class_name: "ChapterableAccountAssignment"
+
+  has_many :chapters, through: :chapterable_assignments, source: :chapterable, source_type: "Chapter"
+  has_many :current_chapters,
+    through: :current_chapter_assignments,
+    source: :chapterable,
+    source_type: "Chapter"
+
+  has_many :clubs, through: :chapterable_assignments, source: :chapterable, source_type: "Club"
+  has_many :current_clubs,
+    through: :current_chapter_assignments,
+    source: :chapterable,
+    source_type: "Clubs"
 
   has_many :certificates, dependent: :destroy
 
@@ -488,8 +508,9 @@ class Account < ActiveRecord::Base
   }
 
   scope :by_chapter, ->(chapter_id) {
-    left_outer_joins(:chapter_assignments)
-      .where("chapter_account_assignments.chapter_id = ?", chapter_id)
+    left_outer_joins(:chapterable_assignments)
+      .where("chapterable_account_assignments.chapterable_type = 'Chapter'")
+      .where("chapterable_account_assignments.chapterable_id = ?", chapter_id)
   }
 
   scope :by_division, ->(division) {
@@ -1009,16 +1030,40 @@ class Account < ActiveRecord::Base
       !(mentor_profile.present? or judge_profile.present?)
   end
 
+  def assigned_to_chapterable?
+    assigned_to_chapter? || assigned_to_club?
+  end
+
   def assigned_to_chapter?
     current_chapter.present?
   end
 
-  def current_chapter_assignment
-    chapter_assignments.where(season: Season.current.year)&.first
+  def current_chapter
+    current_primary_chapter || ::NullChapter.new
   end
 
-  def current_chapter
-    current_chapter_assignment&.chapter || ::NullChapter.new
+  def current_primary_chapter
+    current_chapter_assignments.find_by(primary: true)&.chapterable
+  end
+
+  def assigned_to_club?
+    current_club.present?
+  end
+
+  def current_club
+    current_primary_club || ::NullClub.new
+  end
+
+  def current_primary_club
+    current_club_assignments.find_by(primary: true)&.chapterable
+  end
+
+  def current_chapterable_assignment
+    current_primary_chapterable_assignment
+  end
+
+  def current_primary_chapterable_assignment
+    current_chapterable_assignments.find_by(primary: true)
   end
 
   def chapter_program_name
@@ -1164,7 +1209,7 @@ class Account < ActiveRecord::Base
 
   def send_assigned_to_chapter_email
     if (student_profile.present? || mentor_profile.present?) &&
-        saved_change_to_no_chapter_selected? && !no_chapter_selected?
+        saved_change_to_no_chapterable_selected? && !no_chapterable_selected?
 
       AccountMailer.chapter_assigned(self).deliver_later
     end

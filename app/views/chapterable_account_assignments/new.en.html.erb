@@ -1,0 +1,86 @@
+<div class="mx-auto" style="width: 556px;">
+  <div class="tab-content tw-active">
+    <div class="tw-blue-lg-container">
+      <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
+        <p class="font-bold">Find a Chapter</p>
+      </div>
+
+      <div class="p-6">
+        <% if @chapters.values.flatten.present? || @clubs.values.flatten.present? %>
+          <div class="prose">
+            <%= render "chapterable_account_assignments/#{current_account.scope_name}/chapters_found_intro_text" %>
+
+            <% if @primary_chapters.empty? %>
+              <p class="m-0 font-bold">
+                There aren’t any Chapters based in your area. Click below to show all Chapters in your country.
+              </p>
+            <% end %>
+
+            <div class="flex flex-col space-y-6 mt-8">
+              <%= simple_form_for @chapterable_assignment do |f| %>
+
+                <% if @primary_chapters.present? || @primary_clubs.present? %>
+                  <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
+                    Chapters
+                  </h2>
+
+                  <% @primary_chapters.each do |chapter| %>
+                    <%= render "chapterable", chapterable: chapter %>
+                  <% end %>
+
+                  <%= render "additional_chapters" %>
+
+                  <% if @primary_clubs.present? %>
+                    <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
+                      Clubs
+                    </h2>
+
+                    <% @primary_clubs.each do |club| %>
+                      <%= render "chapterable", chapterable: club %>
+                    <% end %>
+                  <% end %>
+
+                  <%= render "additional_clubs" %>
+                <% else %>
+                  <% if @additional_chapters.present? %>
+                    <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
+                      Chapters
+                    </h2>
+
+                    <%= render "additional_chapters" %>
+                  <% end %>
+
+                  <% if @additional_clubs.present? %>
+                    <h2 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-top: 0;">
+                      Clubs
+                    </h2>
+
+                    <%= render "additional_clubs" %>
+                  <% end %>
+                <% end %>
+
+                <%= render "none_of_the_above_option" %>
+                <%= render "chapterable_account_assignments/mentor/extra_form_fields" %>
+
+                <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-8" %>
+              <% end %>
+            </div>
+
+            <hr class="border-t border-gray-300 my-4">
+
+            <p class="font-bold mb-2">
+              Working with a Chapter or Club that isn't listed?
+            </p>
+
+            <p class="mt-2">
+              Contact us at <%= mail_to ENV.fetch("HELP_EMAIL"), ENV.fetch("HELP_EMAIL"), class: "tw-link" %>
+              and we'll connect your account with them.
+            </p>
+          </div>
+        <% else %>
+          <%= render "chapterable_account_assignments/#{current_account.scope_name}/no_chapterables_found" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
