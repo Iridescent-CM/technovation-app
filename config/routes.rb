@@ -298,6 +298,8 @@ Rails.application.routes.draw do
       resource :location, only: :edit, controller: "clubs/locations"
     end
 
+    resources :club_ambassadors, only: :index
+
     resources :chapter_ambassadors, only: :index do
       resource :off_platform_chapter_volunteer_agreement,
         only: :create,
