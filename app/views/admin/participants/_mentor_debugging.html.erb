@@ -103,6 +103,25 @@
                   } %>
     </p>
   <% end %>
+
+  <% if current_account.is_admin? && !profile.club_ambassador_profile.present? %>
+    <hr>
+    <p>
+      <%= profile.name %> does not have a Club Ambassador profile. By clicking the button below, <%= profile.name %> will have a Club Ambassador profile in addition to a Mentor profile.
+    </p>
+
+    <p>
+    <%= link_to "Add Club Ambassador profile",
+      admin_club_ambassador_profile_additions_path(account_id: profile.account_id),
+      class: 'button',
+      data: {
+        method: :post,
+        confirm: "Add a Club Ambassador profile for #{profile.name}?" +
+        "<p>They will now have a Mentor profile and a Club Ambassador profile</p>",
+      }
+    %>
+    </p>
+  <% end %>
 </div>
 
 <h4 class="reset">Environment information</h4>
