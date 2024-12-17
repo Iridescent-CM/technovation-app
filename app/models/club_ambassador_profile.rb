@@ -5,7 +5,8 @@ class ClubAmbassadorProfile < ActiveRecord::Base
 
   belongs_to :current_account, -> { current },
     class_name: "Account",
-    foreign_key: "account_id"
+    foreign_key: "account_id",
+    required: false
 
   validates :job_title, presence: true
 
