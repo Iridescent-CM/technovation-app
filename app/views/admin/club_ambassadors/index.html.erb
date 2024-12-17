@@ -1,0 +1,7 @@
+<% provide :title, "Admin Data • Club Ambassadors" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @club_ambassadors_grid,
+  form_url: admin_club_ambassadors_path,
+  model_name: "account",
+  scope: :admin %>
