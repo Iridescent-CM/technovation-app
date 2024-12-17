@@ -1,6 +1,6 @@
 $(document).on("turbolinks:load", function () {
-  $("#cha-student-meet").click(function () {
-    $("#cha-student-intro-wrapper").toggle("slow", function () {});
+  $(".student-meet-your-ambassador").click(function () {
+    $(".meet-your-ambassador-intro").toggle("slow", function () {});
   });
 });
 
