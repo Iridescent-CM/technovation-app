@@ -1,0 +1,18 @@
+<div class="text-white text-4xl md:text-6xl font-black mb-8 uppercase">
+  Technovation Girls <%= current_account.current_chapterable_assignment.chapterable&.name.presence %>
+</div>
+<div class="text-white text-3xl font-bold mb-8">
+  <p class="cursor-pointer hover:text-energetic-blue student-meet-your-ambassador">
+    Meet your
+    <span>
+      <%= current_account.assigned_to_chapter? ? "Chapter Ambassador" : "Club Ambassador" %>
+    </span> &#8227;
+  </p>
+</div>
+<% if current_account.assigned_to_chapter? %>
+  <%= render partial: 'dashboards/rebrand/chapter_ambassador_chapter_intro',
+    locals: { chapter: current_account.current_primary_chapter } %>
+<% elsif current_account.assigned_to_club? %>
+  <%= render partial: 'dashboards/rebrand/club_ambassador_club_intro',
+    locals: { club: current_account.current_primary_club } %>
+<% end %>
