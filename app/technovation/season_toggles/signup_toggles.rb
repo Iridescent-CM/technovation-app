@@ -8,6 +8,7 @@ class SeasonToggles
       mentor
       judge
       chapter_ambassador
+      club_ambassador
     ]
 
     def self.included(base)
