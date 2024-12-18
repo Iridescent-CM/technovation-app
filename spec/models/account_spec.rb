@@ -359,6 +359,40 @@ RSpec.describe Account do
         expect(Account.by_chapter(chapter.id)).not_to include(student_in_another_chapter.account)
       end
     end
+
+    describe ".by_club" do
+      let!(:club) { FactoryBot.create(:club) }
+      let!(:student1) { FactoryBot.create(:student) }
+      let!(:student2) { FactoryBot.create(:student) }
+
+      let!(:another_club) { FactoryBot.create(:club) }
+      let!(:student_in_another_club) { FactoryBot.create(:student) }
+
+      before do
+        student1.chapterable_assignments.create(
+          account: student1.account,
+          chapterable: club
+        )
+
+        student2.chapterable_assignments.create(
+          account: student2.account,
+          chapterable: club
+        )
+
+        student_in_another_club.chapterable_assignments.create(
+          account: student_in_another_club.account,
+          chapterable: another_club
+        )
+      end
+
+      it "returns accounts belonging to the specified club" do
+        expect(Account.by_club(club.id)).to include(student1.account, student2.account)
+      end
+
+      it "does not return accounts belonging to a different club" do
+        expect(Account.by_club(club.id)).not_to include(student_in_another_club.account)
+      end
+    end
   end
 
   it "formats the country as a short code before validating" do
