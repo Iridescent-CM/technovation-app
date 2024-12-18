@@ -33,6 +33,12 @@ class AccountsGrid
     account.current_chapter.name.presence || "-"
   end
 
+  column :club,
+    order: ->(scope) { scope.left_joins(:clubs).order("clubs.name") },
+    if: ->(g) { g.admin } do |account|
+    account.current_club.name.presence || "-"
+  end
+
   column :mentor_types do
     if mentor_profile.present?
       mentor_profile.mentor_profile_mentor_types.joins(:mentor_type).pluck(:name).join(", ")
