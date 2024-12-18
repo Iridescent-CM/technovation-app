@@ -319,6 +319,20 @@ class AccountsGrid
     by_chapter(value)
   end
 
+  filter :club,
+    :enum,
+    header: "Club (students, mentors and ChAs only)",
+    select: Club.all.order(name: :asc).map { |c| [c.name, c.id] },
+    filter_group: "common",
+    if: ->(g) {
+      g.admin
+    },
+    html: {
+      class: "and-or-field"
+    } do |value|
+    by_club(value)
+  end
+
   filter :division,
     :enum,
     header: "Division (students only)",
