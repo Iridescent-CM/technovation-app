@@ -1,52 +1,34 @@
 <div class="chapter-ambassador-intro">
-  <% if chapter.present? %>
-    <p>
-      Welcome to Technovation Girls!
-      <% if chapter.name.present? %>
-        You are connected with <span><%= chapter.name.titleize %></span>.
-      <% end %>
-      Please check out the following info about the Chapter.
-    </p>
-
-    <p><%= chapter.name&.titleize.presence || "Chapter name coming soon" %></p>
-
-    <% if chapter.primary_contact.present? %>
-      <p><%= chapter.primary_contact.full_name.presence %></p>
-      <p><%= chapter.primary_contact.email.presence %></p>
+  <p>
+    Welcome to Technovation Girls!
+    <% if chapter.name.present? %>
+      You are connected with <span><%= chapter.name.titleize %></span>.
     <% end %>
+    Please check out the following info about the Chapter.
+  </p>
 
-    <p><%= chapter.summary.presence || "Your Chapter Ambassador will be adding more information about the Chapter soon." %></p>
+  <p><%= chapter.name&.titleize.presence || "Chapter name coming soon" %></p>
 
-    <% if chapter.chapter_links.any? %>
-      <div>
-        <% chapter.chapter_links.each do |link| %>
-        <span>
-          <% if link.name == "email" %>
-            <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>
-          <% else %>
-            <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
-          <% end %>
-        </span>
-        <% end %>
-      </div>
-    <% end %>
-  <% else %>
-    <p>
-      Welcome to Technovation Girls! Currently, you are not affiliated with a Chapter.
-    </p>
-    <p>
-      Please check out our
-      <%= link_to "curriculum",
-        "https://technovationchallenge.org/curriculum-intro/registered/new/",
-        target: "_blank"
-      %>
-      and review the
-      <%= link_to "Pre-Season Checklist",
-        "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-pre-season-checklist/",
-        target: "_blank"
-      %>
-      for support as you work on your Technovation Girls project.
-    </p>
+  <% if chapter.primary_contact.present? %>
+    <p><%= chapter.primary_contact.full_name.presence %></p>
+    <p><%= chapter.primary_contact.email.presence %></p>
   <% end %>
+
+  <p><%= chapter.summary.presence || "Your Chapter Ambassador will be adding more information about the Chapter soon." %></p>
+
+  <% if chapter.chapter_links.any? %>
+    <div>
+      <% chapter.chapter_links.each do |link| %>
+      <span>
+        <% if link.name == "email" %>
+          <%= mail_to link.value, web_icon("envelope-o", text: link.value) %>
+        <% else %>
+          <%= link_to web_icon(link.icon, text: link.display_text), link.url %>
+        <% end %>
+      </span>
+      <% end %>
+    </div>
+  <% end %>
+
   <p>Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Chapter.</p>
 </div>
