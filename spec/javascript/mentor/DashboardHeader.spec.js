@@ -96,17 +96,17 @@ describe("mentor/DashboardHeader.vue", () => {
     });
   });
 
-  describe("when the mentor is assigned to a chapter ", () => {
+  describe("when the mentor is assigned to a chapterable ", () => {
     beforeEach(() => {
       defaultWrapper.vm.$store.commit("authenticated/htmlDataset", {
         currentAccount:
-          '{"data":{"attributes":{"chapterName":"Technovation[MN]","assignedToChapter":"true"}}}',
-        chapterAmbassador:
+          '{"data":{"attributes":{"chapterableName":"Technovation[MN]","assignedToChapterable":"true"}}}',
+        chapterableAmbassador:
           '{"data":{"attributes":{"avatarUrl":"https://cdn.filestackcontent.com/MeWCyN4LQzWrojqPwYDX}"}}}',
       });
     });
 
-    it("displays the chapter ambassador intro header", () => {
+    it("displays the ambassador's intro header", () => {
       const text = defaultWrapper
         .find(".dashboard-notices .grid__col-sm-6:first-child")
         .text();
