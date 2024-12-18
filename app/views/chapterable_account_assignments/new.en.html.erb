@@ -2,7 +2,7 @@
   <div class="tab-content tw-active">
     <div class="tw-blue-lg-container">
       <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
-        <p class="font-bold">Find a Chapter</p>
+        <p class="font-bold">Find a Chapter or Club</p>
       </div>
 
       <div class="p-6">
@@ -10,9 +10,17 @@
           <div class="prose">
             <%= render "chapterable_account_assignments/#{current_account.scope_name}/chapters_found_intro_text" %>
 
-            <% if @primary_chapters.empty? %>
+            <% if @primary_chapters.empty? && @primary_clubs.empty? %>
               <p class="m-0 font-bold">
-                There aren’t any Chapters based in your area. Click below to show all Chapters in your country.
+                There aren’t any Chapters or Clubs based in your area.
+
+                <% if @additional_chapters.present? && @additional_clubs.present? %>
+                  Click below to show all Chapters or Clubs in your country.
+                <% elsif @additional_chapters.present? && @additional_clubs.empty? %>
+                  Click below to show all Chapters in your country.
+                <% elsif @additional_chapters.empty? && @additional_clubs.present? %>
+                  Click below to show all Clubs in your country.
+                <% end %>
               </p>
             <% end %>
 
@@ -47,7 +55,6 @@
 
                     <%= render "additional_clubs" %>
                   <% end %>
-
                 <% else %>
                   <% if @additional_chapters.present? %>
                     <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
@@ -58,7 +65,7 @@
                   <% end %>
 
                   <% if @additional_clubs.present? %>
-                    <h2 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-top: 0;">
+                    <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
                       Clubs
                     </h2>
 

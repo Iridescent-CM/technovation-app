@@ -1,6 +1,8 @@
 <div class="prose">
   <p>
-  Unfortunately, there are no Chapters currently active in your country. Proceed to your dashboard, and once you have completed training, you will get access to:
+    Unfortunately, there are no Chapters or Clubs currently active in
+    your country. Proceed to your dashboard, and once you have completed
+    training, you will get access to:
   </p>
 
   <ul>
@@ -11,11 +13,5 @@
 
   <%= render "chapterable_account_assignments/no_chapterables_found_form" %>
 
-  <hr class="border-t border-gray-300 mt-8 mb-4">
-
-  <p>
-    Are you already working with a Chapter outside your region?
-    Contact us at <%= mail_to ENV.fetch("HELP_EMAIL"), ENV.fetch("HELP_EMAIL"), class: "tw-link" %>
-    and we'll connect your account with that Chapter.
-  </p>
+  <%= render "chapterable_account_assignments/no_chapterables_found_footer" %>
 </div>
