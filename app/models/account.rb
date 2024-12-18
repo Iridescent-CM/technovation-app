@@ -513,6 +513,12 @@ class Account < ActiveRecord::Base
       .where("chapterable_account_assignments.chapterable_id = ?", chapter_id)
   }
 
+  scope :by_club, ->(club_id) {
+    left_outer_joins(:chapterable_assignments)
+      .where("chapterable_account_assignments.chapterable_type = 'Club'")
+      .where("chapterable_account_assignments.chapterable_id = ?", club_id)
+  }
+
   scope :by_division, ->(division) {
     left_outer_joins(:division, :student_profile)
       .where("student_profiles.id IS NOT NULL")
