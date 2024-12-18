@@ -1,0 +1,20 @@
+<div class="club-ambassador-intro">
+  <p>
+    Welcome to Technovation Girls!
+    <% if club.name.present? %>
+      You are connected with <span><%= club.name.titleize %></span>.
+    <% end %>
+    Please check out the following info about the Club.
+  </p>
+
+  <p><%= club.name&.titleize.presence || "Club name coming soon" %></p>
+
+  <% if club.primary_contact.present? %>
+    <p><%= club.primary_contact.full_name.presence %></p>
+    <p><%= club.primary_contact.email.presence %></p>
+  <% end %>
+
+  <p><%= club.summary.presence || "Your Club Ambassador will be adding more information about the Club soon." %></p>
+
+  <p>Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Club.</p>
+</div>
