@@ -13,20 +13,16 @@ export default {
     return digStateAttributes(state, "chapterAmbassador", "name");
   },
 
-  assignedToChapter(state) {
-    return digStateAttributes(state, "currentAccount", "assignedToChapter");
+  assignedToChapterable(state) {
+    return digStateAttributes(state, "currentAccount", "assignedToChapterable");
   },
 
-  chapterName(state) {
-    return digStateAttributes(state, "currentAccount", "chapterName");
+  chapterableName(state) {
+    return digStateAttributes(state, "currentAccount", "chapterableName");
   },
 
-  chapterAmbassadorAvatarUrl(state) {
-    return digStateAttributes(state, "chapterAmbassador", "avatarUrl");
-  },
-
-  chapterAmbassadorHasProvidedIntro(state) {
-    return digStateAttributes(state, "chapterAmbassador", "hasProvidedIntro");
+  chapterableAmbassadorAvatarUrl(state) {
+    return digStateAttributes(state, "chapterableAmbassador", "avatarUrl");
   },
 
   canJoinTeams(state) {

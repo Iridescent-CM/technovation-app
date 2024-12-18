@@ -71,13 +71,13 @@ class AccountSerializer
     end
   end
 
-  attribute(:assigned_to_chapter) do |account|
-    account.assigned_to_chapter?
+  attribute(:assigned_to_chapterable) do |account|
+    account.assigned_to_chapterable?
   end
 
-  attribute(:chapter_name) do |account|
-    if account.assigned_to_chapter?
-      account.current_chapter.name.presence
+  attribute(:chapterable_name) do |account|
+    if account.assigned_to_chapterable?
+      account.current_chapterable_assignment.chapterable.name.presence
     end
   end
 end

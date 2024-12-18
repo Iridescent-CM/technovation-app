@@ -1,23 +1,23 @@
 <template>
   <div class="grid dashboard-notices">
     <div class="grid__col-sm-6 grid__col--bleed-y">
-      <div v-if="assignedToChapter" class="grid__cell">
+      <div v-if="assignedToChapterable" class="grid__cell">
         <h1 class="page-heading">
           <img
-            :src="getChapterAmbassadorAvatarUrl()"
+            :src="getChapterableAmbassadorAvatarUrl()"
             class="profile-image"
             width="40"
             height="40"
           />
-          {{ getChapterName() }}
+          {{ getChapterableName() }}
 
           <small v-if="surveyLink">
             <a :href="surveyLink" target="_blank">{{ surveyLinkText }}</a>
           </small>
 
           <small>
-            <drop-down label="Meet your Chapter Ambassador">
-              <slot name="chapter-ambassador-intro" />
+            <drop-down label="Meet your Ambassador">
+              <slot name="ambassador-intro" />
             </drop-down>
           </small>
         </h1>
@@ -33,7 +33,7 @@
 
           <small>
             <drop-down label="More Details">
-              <slot name="chapter-ambassador-intro" />
+              <slot name="ambassador-intro" />
             </drop-down>
           </small>
         </h1>
@@ -102,11 +102,9 @@ export default {
     ...mapGetters([
       "currentAccountName",
       "currentAccountAvatarUrl",
-      "regionalProgramName",
-      "chapterAmbassadorAvatarUrl",
-      "chapterAmbassadorHasProvidedIntro",
-      "assignedToChapter",
-      "chapterName",
+      "assignedToChapterable",
+      "chapterableName",
+      "chapterableAmbassadorAvatarUrl"
     ]),
 
     surveyLink() {
@@ -126,20 +124,20 @@ export default {
   },
 
   methods: {
-    getChapterAmbassadorAvatarUrl() {
+    getChapterableAmbassadorAvatarUrl() {
       if (
-        this.chapterAmbassadorAvatarUrl === "placeholders/avatars/1.svg" ||
-        !this.chapterAmbassadorAvatarUrl
+        this.chapterableAmbassadorAvatarUrl === "placeholders/avatars/1.svg" ||
+        !this.chapterableAmbassadorAvatarUrl
       ) {
         return `${require("placeholders/avatars/1.svg")}`;
       } else {
-        return this.chapterAmbassadorAvatarUrl;
+        return this.chapterableAmbassadorAvatarUrl;
       }
     },
 
-    getChapterName() {
-      if (this.chapterName) {
-        return this.chapterName;
+    getChapterableName() {
+      if (this.chapterableName) {
+        return this.chapterableName;
       } else {
         return "Technovation Girls";
       }
