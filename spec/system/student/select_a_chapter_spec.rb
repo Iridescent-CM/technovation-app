@@ -35,7 +35,7 @@ RSpec.describe "Students selecting a chapter", :js do
     it "it updates the account to 'no_chapterables_available' after they click 'Acknowledge and Go to Dashboard'" do
       sign_in(student)
 
-      expect(page).to have_content("Unfortunately, there are no Chapters currently active in your country")
+      expect(page).to have_content("Unfortunately, there are no Chapters or Clubs currently active in your country")
       click_button "Acknowledge and Go To Dashboard"
 
       student.reload
