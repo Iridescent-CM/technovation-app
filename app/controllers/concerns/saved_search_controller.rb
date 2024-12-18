@@ -29,6 +29,8 @@ module SavedSearchController
       "#{current_scope}_chapters_path"
     when "chapter_ambassadors_grid"
       "#{current_scope}_chapter_ambassadors_path"
+    when "clubs_grid"
+      "admin_clubs_path"
     when "parental_consents_grid"
       "#{current_scope}_paper_parental_consents_path"
     when "legal_documents_grid"
