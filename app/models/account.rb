@@ -1063,7 +1063,7 @@ class Account < ActiveRecord::Base
   end
 
   def current_primary_chapterable_assignment
-    current_chapterable_assignments.find_by(primary: true)
+    current_chapterable_assignments.find_by(primary: true) || ::NullChapterableAccountAssignment.new
   end
 
   def chapter_program_name

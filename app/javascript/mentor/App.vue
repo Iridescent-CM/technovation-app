@@ -9,8 +9,8 @@
         <small><slot name="judge-switch-link" /></small>
       </div>
 
-      <div slot="chapter-ambassador-intro">
-        <slot name="chapter-ambassador-intro" />
+      <div slot="ambassador-intro">
+        <slot name="ambassador-intro" />
       </div>
     </dashboard-header>
 

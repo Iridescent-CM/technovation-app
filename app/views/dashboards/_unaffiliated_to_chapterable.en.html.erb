@@ -1,0 +1,17 @@
+<p>
+  Welcome to Technovation Girls! Currently, you are not affiliated with a Chapter or Club.
+</p>
+<p>
+  Please check out our
+  <%= link_to "curriculum",
+              "https://technovationchallenge.org/curriculum-intro/registered/new/",
+              target: "_blank"
+  %>
+  and review the
+  <%= link_to "Pre-Season Checklist",
+              "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-pre-season-checklist/",
+              target: "_blank"
+  %>
+  for support as you work on your Technovation Girls project.
+</p>
+<p>Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Chapter or Club.</p>

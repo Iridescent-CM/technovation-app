@@ -1,0 +1,13 @@
+<div class="ambassador-intro">
+  <% if current_account.assigned_to_chapterable? %>
+    <% if current_account.assigned_to_chapter? %>
+      <%= render partial: 'dashboards/chapter_ambassador_chapter_intro',
+        locals: { chapter: current_account.current_primary_chapter } %>
+    <% elsif current_account.assigned_to_club? %>
+      <%= render partial: 'dashboards/club_ambassador_club_intro',
+        locals: { club: current_account.current_primary_club } %>
+    <% end %>
+  <% else %>
+    <%= render partial: 'dashboards/unaffiliated_to_chapterable' %>
+  <% end %>
+</div>
