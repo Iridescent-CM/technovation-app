@@ -28,7 +28,7 @@ class AccountsGrid
   end
 
   column :chapter,
-    order: ->(scope) { scope.joins(:chapters).order("chapters.name") },
+    order: ->(scope) { scope.left_joins(:chapters).order("chapters.name") },
     if: ->(g) { g.admin } do |account|
     account.current_chapter.name.presence || "-"
   end
