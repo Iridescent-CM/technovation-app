@@ -12,7 +12,7 @@ task assign_students_to_chapters: :environment do |task, args|
       puts "#{email_address} is not a student"
     elsif !account.current_season?
       puts "#{email_address} is not registered to the current season"
-    elsif account.chapter_assignments.present?
+    elsif account.chapterable_assignments.present?
       puts "#{email_address} is already assigned to a chapter"
     else
       account.student_profile.chapterable_assignments.create(
