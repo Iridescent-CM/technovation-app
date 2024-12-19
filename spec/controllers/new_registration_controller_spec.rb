@@ -67,6 +67,10 @@ RSpec.describe NewRegistrationController do
         }
       end
 
+      it "assigns the club from the invite to the newly created club ambassador" do
+        expect(ClubAmbassadorProfile.last.account.current_club.id).to eq(registration_invite.club_id)
+      end
+
       it "updates the invitation to a registered status" do
         expect(registration_invite.reload.registered?).to eq(true)
       end
