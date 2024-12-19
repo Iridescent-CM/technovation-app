@@ -1,0 +1,9 @@
+<%= f.fields_for :account do |a| %>
+  <%= a.input :gender,
+    label: t('models.account.gender'),
+    collection: Account.genders.keys %>
+<% end %>
+
+<%= f.input :job_title,
+  label: t("models.club_ambassador_profile.job_title"),
+  :label_html => { :class => "mt-4" } %>
