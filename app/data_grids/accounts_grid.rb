@@ -28,9 +28,15 @@ class AccountsGrid
   end
 
   column :chapter,
-    order: ->(scope) { scope.joins(:chapters).order("chapters.name") },
+    order: ->(scope) { scope.left_joins(:chapters).order("chapters.name") },
     if: ->(g) { g.admin } do |account|
     account.current_chapter.name.presence || "-"
+  end
+
+  column :club,
+    order: ->(scope) { scope.left_joins(:clubs).order("clubs.name") },
+    if: ->(g) { g.admin } do |account|
+    account.current_club.name.presence || "-"
   end
 
   column :mentor_types do
@@ -311,6 +317,20 @@ class AccountsGrid
       class: "and-or-field"
     } do |value|
     by_chapter(value)
+  end
+
+  filter :club,
+    :enum,
+    header: "Club (students, mentors and ChAs only)",
+    select: Club.all.order(name: :asc).map { |c| [c.name, c.id] },
+    filter_group: "common",
+    if: ->(g) {
+      g.admin
+    },
+    html: {
+      class: "and-or-field"
+    } do |value|
+    by_club(value)
   end
 
   filter :division,
