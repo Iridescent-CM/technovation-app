@@ -18,14 +18,10 @@ module ChapterAmbassador
       }"
 
     def show
-      @account = if params[:allow_out_of_region]
-        Account.find(params[:id])
-      else
-        Account
-          .joins(:chapterable_assignments)
-          .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: current_ambassador.current_chapter.id})
-          .find(params[:id])
-      end
+      @account = Account
+        .joins(:chapterable_assignments)
+        .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: current_ambassador.current_chapter.id})
+        .find(params[:id])
 
       @teams = Team.current.in_region(current_ambassador)
       @season_flag = SeasonFlag.new(@account)
