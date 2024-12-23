@@ -141,6 +141,14 @@ class StudentProfile < ActiveRecord::Base
     end
   end
 
+  def parent_guardian_first_name
+    parent_guardian_name.split(/\s+/, 2).first
+  end
+
+  def parent_guardian_last_name
+    parent_guardian_name.split(/\s+/, 2).last
+  end
+
   def self.exists_on_team?(email)
     if record = joins(:account).find_by("accounts.email = ?", email)
       record.is_on_team?

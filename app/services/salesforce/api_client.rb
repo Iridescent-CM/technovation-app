@@ -134,6 +134,8 @@ module Salesforce
         {
           Birthdate: account.date_of_birth,
           Parent__c: student_profile.parent_guardian_name,
+          Parent_First_Name__c: student_profile.parent_guardian_first_name,
+          Parent_Last_Name__c: student_profile.parent_guardian_last_name,
           Parent_Guardian_Email__c: student_profile.parent_guardian_email
         }
       else
