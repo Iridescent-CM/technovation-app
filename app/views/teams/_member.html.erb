@@ -4,7 +4,6 @@
     {
       member_id: member.id,
       member_type: member.class.name,
-      allow_out_of_region: params.fetch(:allow_out_of_region) { false },
     } :
     { member_id: member.id }
 %>
@@ -21,8 +20,7 @@
         <%= link_to member.full_name,
         send("#{current_scope}_participant_path",
           {
-            id: member.account_id,
-            allow_out_of_region: true
+            id: member.account_id
           }
         )
         %>
@@ -37,7 +35,6 @@
       <%= link_to "remove this member",
         send("#{current_scope}_team_membership_path",
           @team,
-          allow_out_of_region: false,
           member_id: member.id,
           member_type: member.class.name
         ),

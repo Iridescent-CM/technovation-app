@@ -31,10 +31,7 @@ module ChapterAmbassador
 
       TeamRosterManaging.remove(team, member)
 
-      redirect_to chapter_ambassador_team_path(
-        team,
-        allow_out_of_region: params.fetch(:allow_out_of_region) { false }
-      ),
+      redirect_to chapter_ambassador_team_path(team),
         success: "You have removed #{member.name} from this team"
     end
   end
