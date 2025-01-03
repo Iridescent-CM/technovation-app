@@ -700,7 +700,8 @@ CREATE TABLE public.club_ambassador_profiles (
     job_title character varying,
     training_completed_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    onboarded boolean DEFAULT false
 );
 
 
@@ -4962,6 +4963,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241211141114'),
 ('20241211222824'),
 ('20241211230435'),
-('20250103180055');
+('20250103180055'),
+('20250103182555');
 
 
