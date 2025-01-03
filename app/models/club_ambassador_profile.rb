@@ -10,6 +10,8 @@ class ClubAmbassadorProfile < ActiveRecord::Base
 
   validates :job_title, presence: true
 
+  after_update :update_onboarding_status
+
   def method_missing(method_name, *args) # standard:disable all
     account.public_send(method_name, *args) # standard:disable all
   rescue
@@ -33,7 +35,21 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     true
   end
 
-  def onboarded?
+  def update_onboarding_status
+    update_column(:onboarded, can_be_marked_onboarded?)
+  end
+
+  def can_be_marked_onboarded?
+    !!(account.email_confirmed? &&
+      training_completed?)
+  end
+
+  def training_completed?
+    training_completed_at.present?
+  end
+
+  def onboarding?
+    !onboarded?
   end
 
   def club
