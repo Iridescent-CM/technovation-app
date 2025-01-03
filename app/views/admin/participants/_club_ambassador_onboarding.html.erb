@@ -1,27 +1,27 @@
-  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
-    <h4 class="reset">Required onboarding steps:</h4>
-    <p class="hint">
-      Club Ambassadors must complete these items to be considered onboarded:
-    </p>
+<div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+  <h4 class="reset">Required onboarding steps:</h4>
+  <p class="hint">
+    Club Ambassadors must complete these items to be considered onboarded:
+  </p>
 
-    <dl>
-      <%= render "admin/participants/email_confirmed_status", account: club_ambassador.account %>
+  <dl>
+    <%= render "admin/participants/email_confirmed_status", account: club_ambassador.account %>
 
-      <dt>Complete Training & Checkpoint</dt>
-      <dd>
-        <% if club_ambassador.training_completed_at? %>
-          <div>
-            <%= web_icon("check-circle icon-green") %>
-            Complete
-          </div>
-        <% else %>
-          <div>
-            <%= web_icon("exclamation-circle icon-red") %>
-            Incomplete
-          </div>
-        <% end %>
-      </dd>
-    </dl>
+    <dt>Complete Training & Checkpoint</dt>
+    <dd>
+      <% if club_ambassador.training_completed? %>
+        <div>
+          <%= web_icon("check-circle icon-green") %>
+          Complete
+        </div>
+      <% else %>
+        <div>
+          <%= web_icon("exclamation-circle icon-red") %>
+          Incomplete
+        </div>
+      <% end %>
+    </dd>
+  </dl>
 
-    <hr style="height: 1px; width: 100%;">
-  </div>
+  <hr style="height: 1px; width: 100%;">
+</div>
