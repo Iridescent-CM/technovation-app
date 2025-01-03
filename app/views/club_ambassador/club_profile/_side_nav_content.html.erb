@@ -8,10 +8,10 @@
       %>
 
       <%= render "application/templates/completion_step",
-        name: "Club location",
-        url: club_ambassador_profile_path,
-        is_complete: false,
-        is_active_item: al(club_ambassador_profile_path).present?
+        name: "Club Location",
+        url: club_ambassador_club_location_path,
+        is_complete: current_ambassador.club&.location_complete?,
+        is_active_item: al(club_ambassador_club_location_path).present?
       %>
     </ol>
   </nav>

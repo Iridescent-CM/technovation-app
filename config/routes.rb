@@ -218,7 +218,11 @@ Rails.application.routes.draw do
   namespace :club_ambassador do
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+
     resource :club_profile, only: :show, controller: "club_profile"
+    resource :club_headquarters_location, only: [:edit, :update]
+    resource :club_location, only: [:show, :edit, :update, :create], controller: "club_locations"
+    resource :club_current_location, only: :show
   end
 
   namespace :judge do
