@@ -2,7 +2,7 @@ class ClubAmbassadorController < ApplicationController
   include Authenticated
   layout "club_ambassador"
 
-  helper_method :current_club_ambassador,
+  helper_method :current_ambassador, :current_club_ambassador,
     :current_profile, :current_club
 
   before_action -> {
@@ -32,10 +32,12 @@ class ClubAmbassadorController < ApplicationController
     current_club_ambassador
   end
 
-  def current_club_ambassador
-    @current_club_ambassador ||= current_account.club_ambassador_profile ||
+  def current_ambassador
+    @current_ambassador ||= current_account.club_ambassador_profile ||
       current_session.club_ambassador_profile
   end
+
+  alias_method :current_club_ambassador, :current_ambassador
 
   def current_club
     @current_club ||= current_club_ambassador.club || ::NullClub.new
