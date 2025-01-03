@@ -223,6 +223,8 @@ Rails.application.routes.draw do
     resource :club_headquarters_location, only: [:edit, :update]
     resource :club_location, only: [:show, :edit, :update, :create], controller: "club_locations"
     resource :club_current_location, only: :show
+
+    resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
   end
 
   namespace :judge do
