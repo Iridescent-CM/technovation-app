@@ -1,0 +1,48 @@
+<div class="panel">
+  <% if current_account.admin? %>
+    <%= render "admin/participants/club_ambassador_onboarding", club_ambassador: profile %>
+
+    <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+      <dl>
+        <dt>Club Onboarding Status</dt>
+        <dd>
+          <span class="hint">
+            Club Ambassadors must also complete the Club onboarding process to access Club Admin Activity.
+          </span>
+          <% if profile&.club.present? %>
+            <% if profile.club.onboarded? %>
+              <div>
+                <%= web_icon("check-circle icon-green") %>
+                Complete
+              </div>
+            <% else %>
+              <div>
+                <%= web_icon("exclamation-circle icon-red") %>
+                Club not onboarded.
+                <%= link_to "View details",
+                admin_club_path(profile.club) %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>Club Ambassador not assigned to a club</p>
+        <% end %>
+        </dd>
+      </dl>
+      <hr style="height: 1px; width: 100%;">
+    </div>
+  <% end %>
+
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <dl>
+      <% unless profile.account.mentor_profile.present? %>
+        <dt>Browser / OS Info</dt>
+        <dd>
+          <%= [profile.browser_name,
+              profile.browser_version,
+              profile.os_name,
+              profile.os_version].compact.join(' - ') %>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+</div>

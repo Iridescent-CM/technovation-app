@@ -33,6 +33,13 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     true
   end
 
+  def onboarded?
+  end
+
+  def club
+    account.current_primary_club
+  end
+
   def scope_name
     "club_ambassador"
   end
