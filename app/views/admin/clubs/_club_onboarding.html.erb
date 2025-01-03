@@ -1,0 +1,41 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h3>
+      Club Onboarding
+    </h3>
+
+    <div class="panel">
+      <dl>
+        <dt>Complete Public Info</dt>
+        <dd>
+          <% if club.club_info_complete? %>
+            <div>
+              <%= web_icon("check-circle icon-green") %>
+              Complete
+            </div>
+          <% else %>
+            <div>
+              <%= web_icon("exclamation-circle icon-red") %>
+              Incomplete
+            </div>
+          <% end %>
+        </dd>
+
+        <dt>Complete Club Location</dt>
+        <dd>
+          <% if club.location_complete? %>
+            <div>
+              <%= web_icon("check-circle icon-green") %>
+              Complete
+            </div>
+          <% else %>
+            <div>
+              <%= web_icon("exclamation-circle icon-red") %>
+              Incomplete
+            </div>
+          <% end %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
