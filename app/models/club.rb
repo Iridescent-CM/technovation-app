@@ -5,6 +5,12 @@ class Club < ActiveRecord::Base
 
   belongs_to :primary_contact, class_name: "Account", foreign_key: "primary_account_id", optional: true
 
+  has_many :chapterable_account_assignments, as: :chapterable, class_name: "ChapterableAccountAssignment"
+  has_many :accounts, through: :chapterable_account_assignments
+  has_many :club_ambassadors, -> { where "profile_type = 'ClubAmbassadorProfile'" },
+    through: :chapterable_account_assignments,
+    source: :account
+
   validates :name, presence: true
   validates :summary, length: {maximum: 1000}
 
