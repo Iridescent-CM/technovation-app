@@ -14,7 +14,7 @@ class ClubAmbassadorsGrid
     if account.assigned_to_club?
       format(account.name) do
         link_to(
-          account.current_primary_club || "-",
+          account.current_primary_club.name || "-",
           admin_club_path(account.current_primary_club)
         )
       end
