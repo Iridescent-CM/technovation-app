@@ -8,10 +8,32 @@ class Club < ActiveRecord::Base
   validates :name, presence: true
   validates :summary, length: {maximum: 1000}
 
+  after_update :update_onboarding_status
+
   def assign_address_details(geocoded)
     self.city = geocoded.city
     self.state_province = geocoded.state_code
     self.country = geocoded.country_code
   end
 
+  def update_onboarding_status
+    update_column(:onboarded, can_be_marked_onboarded?)
+  end
+
+  def can_be_marked_onboarded?
+    !!(location_complete? &&
+      club_info_complete?)
+  end
+
+  def location_complete?
+    headquarters_location.present?
+  end
+
+  def club_info_complete?
+    [
+      name,
+      summary,
+      primary_contact
+    ].all?(&:present?)
+  end
 end
