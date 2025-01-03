@@ -297,10 +297,11 @@ export default {
   },
 
   mounted() {
-    if (
-      window.location.pathname === "/chapter_ambassador/chapter_location/edit"
-    ) {
-      this.openAlertMessage();
+    if (window.location.pathname === "/chapter_ambassador/chapter_location/edit") {
+      this.openAlertMessage({ chapterableType: "chapter" });
+    }
+    else if (window.location.pathname === "/club_ambassador/club_location/edit") {
+      this.openAlertMessage({ chapterableType: "club" });
     }
   },
 
@@ -599,6 +600,9 @@ export default {
 
       if (this.scopeName === "chapter_ambassador" && this.chapterId) {
         endpointRoot = `/chapter_ambassador/chapter_${pathPart}`;
+      }
+      else if (this.scopeName === "club_ambassador" && this.clubId) {
+        endpointRoot = `/club_ambassador/club_${pathPart}`;
       } else {
         endpointRoot = `/${this.scopeName}/${pathPart}`;
       }
@@ -616,18 +620,18 @@ export default {
       }
     },
 
-    openAlertMessage() {
+    openAlertMessage({ chapterableType }) {
       Swal.fire({
         html: `
-        <p>
-          The chapter location determines which users see your chapter as a suggested chapter when they register.
-          Students and mentors see a list of chapters in their local area or their country.
-        </p>
+          <p>
+          The ${chapterableType} location determines which users see your ${chapterableType} as a suggested ${chapterableType} when they register.
+          Students and mentors see a list of ${chapterableType}s in their local area or their country.
+          </p>
 
-        <p class="mt-8">By editing your location, you understand that it may change which users can join your chapter when they register.</p>
+          <p class="mt-8">By editing your location, you understand that it may change which users can join your ${chapterableType} when they register.</p>
 
-        <p class="mt-8">Please contact <a href=mailto:"${process.env.HELP_EMAIL}" class="tw-link">${process.env.HELP_EMAIL}</a> with any questions.</p>
-        `,
+          <p class="mt-8">Please contact <a href=mailto:"${process.env.HELP_EMAIL}" class="tw-link">${process.env.HELP_EMAIL}</a> with any questions.</p>
+          `,
         confirmButtonText: "OK",
         confirmButtonColor: "#3FA428",
         width: "50%",
