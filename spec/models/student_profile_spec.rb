@@ -145,6 +145,25 @@ RSpec.describe StudentProfile do
     end
   end
 
+  describe "parent/guardian first and last name" do
+    let(:student_profile) do
+      FactoryBot.build(:student_profile,
+        parent_guardian_name: "Pandy Paws the Cat")
+    end
+
+    describe "#parent_guardian_first_name" do
+      it "returns the first part (separated by whitespace) as the first name" do
+        expect(student_profile.parent_guardian_first_name).to eq("Pandy")
+      end
+    end
+
+    describe "#parent_guardian_last_name" do
+      it "return the remaining parts (separated by whitespace) as the last name" do
+        expect(student_profile.parent_guardian_last_name).to eq("Paws the Cat")
+      end
+    end
+  end
+
   it "allows ON FILE as the email ONLY by admin action" do
     profile = FactoryBot.build(:student_profile, parent_guardian_email: "ON FILE")
     expect(profile).not_to be_valid
