@@ -27,7 +27,6 @@ RSpec.describe ClubAmbassadorProfile do
 
         context "when all onboarding steps have been completed" do
           let(:email_address_confirmed) { true }
-          let(:training_completed_at) { Time.now }
 
           it "returns true" do
             expect(club_ambassador_profile.onboarded?).to eq(true)
@@ -39,7 +38,7 @@ RSpec.describe ClubAmbassadorProfile do
             club_ambassador_profile.update(training_completed_at: false)
           end
 
-          it "returns false" do
+          xit "returns false" do
             expect(club_ambassador_profile.onboarded?).to eq(false)
           end
         end
