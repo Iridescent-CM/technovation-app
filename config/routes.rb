@@ -218,6 +218,7 @@ Rails.application.routes.draw do
   namespace :club_ambassador do
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
+    resource :club_profile, only: :show, controller: "club_profile"
   end
 
   namespace :judge do
