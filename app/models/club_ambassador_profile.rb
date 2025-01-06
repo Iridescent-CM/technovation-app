@@ -40,8 +40,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
   end
 
   def can_be_marked_onboarded?
-    !!(account.email_confirmed? &&
-      training_completed?)
+    !!account.email_confirmed?
   end
 
   def training_completed?
