@@ -7,9 +7,12 @@ task update_salesforce_contacts: :environment do |_, args|
       account = Account.find(account_id)
 
       if !account.is_admin?
+        profile_type = account.student_profile.present? ? "student" : nil
+
         puts "Upserting contact info for account id: #{account_id}"
         CRM::UpsertContactInfoJob.perform_later(
-          account_id: account.id
+          account_id: account.id,
+          profile_type: profile_type
         )
 
         wait_time += 15
