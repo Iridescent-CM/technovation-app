@@ -6,6 +6,8 @@ module HandleGeocoderSearch
 
     if geocoder_query.country_code == "PS"
       handle_palestine_search(db_record, geocoder_query, controller)
+    elsif geocoder_query.country_code == "MA"
+      handle_morocco_search(db_record, geocoder_query, controller)
     else
       handle_search(db_record, geocoder_query, controller)
     end
@@ -53,6 +55,23 @@ module HandleGeocoderSearch
       country_code: "PS",
       latitude: 30,
       longitude: 35
+    )
+
+    geocoded = Geocoded.new(object)
+
+    geocode_db_record(db_record, geocoded, controller)
+
+    [{results: [geocoded]}, :ok]
+  end
+
+  def self.handle_morocco_search(db_record, geocoder_query, controller)
+    object = OpenStruct.new(
+      city: geocoder_query.city,
+      state: geocoder_query.state,
+      country: "Morocco",
+      country_code: "MA",
+      latitude: 31,
+      longitude: -7
     )
 
     geocoded = Geocoded.new(object)
