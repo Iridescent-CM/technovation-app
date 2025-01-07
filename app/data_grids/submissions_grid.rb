@@ -6,7 +6,7 @@ class SubmissionsGrid
   self.batch_size = 10
 
   scope do
-    TeamSubmission.includes(:team).references(:teams)
+    TeamSubmission.includes(:screenshots, team: :division).references(:teams)
   end
 
   column :submission_id, header: "Submission ID", if: ->(grid) { grid.admin } do
