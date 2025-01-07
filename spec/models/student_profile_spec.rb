@@ -218,7 +218,10 @@ RSpec.describe StudentProfile do
       )
 
       expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-        .with(account_id: student_profile.account.id)
+        .with(
+          account_id: student_profile.account.id,
+          profile_type: "student"
+        )
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
     end
@@ -236,7 +239,10 @@ RSpec.describe StudentProfile do
       )
 
       expect(CRM::UpsertContactInfoJob).not_to receive(:perform_later)
-        .with(account_id: student_profile.account.id)
+        .with(
+          account_id: student_profile.account.id,
+          profile_type: "student"
+        )
 
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
     end

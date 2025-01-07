@@ -89,7 +89,10 @@ class ParentalConsent < ActiveRecord::Base
 
   def after_signed_parent_actions
     if newsletter_opt_in?
-      CRM::UpsertContactInfoJob.perform_later(account_id: student_profile.account.id)
+      CRM::UpsertContactInfoJob.perform_later(
+        account_id: student_profile.account.id,
+        profile_type: "student"
+      )
     end
 
     ParentMailer.confirm_parental_consent_finished(student_profile.id).deliver_later
