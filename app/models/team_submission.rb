@@ -136,6 +136,11 @@ class TeamSubmission < ActiveRecord::Base
       .where("regional_pitch_events.id IS NULL")
   }
 
+  scope :by_chapterable, ->(chapterable_type, chapterable_id) do
+    joins(team: {students: {account: :chapterable_assignments}})
+      .where(chapterable_assignments: {chapterable_type: chapterable_type, chapterable_id: chapterable_id})
+  end
+
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
     dependent: :destroy,

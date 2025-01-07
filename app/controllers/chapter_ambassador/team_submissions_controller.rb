@@ -5,10 +5,17 @@ module ChapterAmbassador
     use_datagrid with: SubmissionsGrid,
 
       html_scope: ->(scope, user, params) {
-        scope.in_region(user).page(params[:page])
+        scope
+          .by_chapterable("Chapter", user.current_chapter.id)
+          .distinct
+          .page(params[:page])
       },
 
-      csv_scope: "->(scope, user, params) { scope.in_region(user) }"
+      csv_scope: "->(scope, user, params) {
+        scope
+          .by_chapterable('Chapter', user.current_chapter.id)
+          .distinct
+      }"
 
     def show
       @team_submission = TeamSubmission.friendly.find(params[:id])
