@@ -49,8 +49,9 @@ class ScoresGrid
   end
 
   scope do
-    SubmissionScore.current.judge_not_deleted
-      .includes({team_submission: :team})
+    SubmissionScore.complete.judge_not_deleted
+      .includes({judge_profile: [:account, :events]})
+      .includes({team_submission: {team: :division}})
       .references(:teams, :team_submissions)
   end
 
