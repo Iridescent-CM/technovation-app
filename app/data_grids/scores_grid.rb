@@ -182,7 +182,7 @@ class ScoresGrid
   column :view, html: true do |submission_score|
     html = link_to(
       web_icon("list-ul", size: 16, remote: true),
-      send("#{current_scope}_score_path", id: submission_score.id),
+      send(:"#{current_scope}_score_path", id: submission_score.id),
       data: {
         turbolinks: false
       },
@@ -192,7 +192,7 @@ class ScoresGrid
     html += " "
     html += link_to(
       web_icon("list-alt", size: 16, remote: true),
-      send("#{current_scope}_score_detail_path", id: submission_score.team_submission.id),
+      send(:"#{current_scope}_score_detail_path", id: submission_score.team_submission.id),
       {
         "v-tooltip" => "'Read score details'",
         :data => {turbolinks: false}
