@@ -160,6 +160,24 @@ class ScoresGrid
     approved? ? approved_at.strftime("%Y-%m-%d %H:%M") : "-"
   end
 
+  column :project_page, html: true do |submission_score|
+    project_page_link = Rails.application.routes.url_helpers.url_for(
+      controller: "projects",
+      action: "show",
+      id: submission_score.team_submission
+    )
+
+    link_to(project_page_link, project_page_link, target: :_blank, data: {turbolinks: false})
+  end
+
+  column :project_page, html: false do |submission_score|
+    Rails.application.routes.url_helpers.url_for(
+      controller: "projects",
+      action: "show",
+      id: submission_score.team_submission
+    )
+  end
+
   column :view, html: true do |submission_score|
     html = link_to(
       web_icon("list-ul", size: 16, remote: true),
