@@ -23,7 +23,7 @@ RSpec.describe CRM::SetupAccountForCurrentSeasonJob do
 
     CRM::SetupAccountForCurrentSeasonJob.perform_now(
       account_id: account.id,
-      profile_type: "student"
+      profile_type: profile_type
     )
   end
 
@@ -32,7 +32,7 @@ RSpec.describe CRM::SetupAccountForCurrentSeasonJob do
 
     CRM::SetupAccountForCurrentSeasonJob.perform_now(
       account_id: account.id,
-      profile_type: "student"
+      profile_type: profile_type
     )
   end
 end
