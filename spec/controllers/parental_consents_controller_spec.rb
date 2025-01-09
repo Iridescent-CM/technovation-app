@@ -90,7 +90,10 @@ RSpec.describe ParentalConsentsController do
 
       expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
         .at_least(:once)
-        .with(account_id: student.account.id)
+        .with(
+          account_id: student.account.id,
+          profile_type: "student"
+        )
     end
 
     it "redirects to the media consent form" do

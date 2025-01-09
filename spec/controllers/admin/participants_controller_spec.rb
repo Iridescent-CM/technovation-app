@@ -38,7 +38,7 @@ RSpec.describe Admin::ParticipantsController do
   end
 
   %w[student mentor judge chapter_ambassador].each do |scope|
-    it "updates their contact info in the CRM when the email address on the account is changed" do
+    it "updates their contact info in the CRM when the email address on the account is changed (and only includes profile_type for students)" do
       profile = FactoryBot.create(
         scope,
         account: FactoryBot.create(
@@ -57,10 +57,13 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
-        .with(account_id: profile.account_id).at_least(:once)
+        .with(
+          account_id: profile.account_id,
+          profile_type: profile.account.student_profile.present? ? "student" : nil
+        ).at_least(:once)
     end
 
-    it "updates their contact info in the CRM when the first name on the account is changed" do
+    it "updates their contact info in the CRM when the first name on the account is changed (and only includes profile_type for students)" do
       profile = FactoryBot.create(scope)
 
       allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
@@ -73,10 +76,13 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
-        .with(account_id: profile.account_id).at_least(:once)
+        .with(
+          account_id: profile.account_id,
+          profile_type: profile.account.student_profile.present? ? "student" : nil
+        ).at_least(:once)
     end
 
-    it "updates their contact info in the CRM when the last name on the account is changed" do
+    it "updates their contact info in the CRM when the last name on the account is changed (and only includes profile_type for students)" do
       profile = FactoryBot.create(scope)
 
       allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
@@ -89,7 +95,10 @@ RSpec.describe Admin::ParticipantsController do
       }
 
       expect(CRM::UpsertContactInfoJob).to have_received(:perform_later)
-        .with(account_id: profile.account_id).at_least(:once)
+        .with(
+          account_id: profile.account_id,
+          profile_type: profile.account.student_profile.present? ? "student" : nil
+        ).at_least(:once)
     end
   end
 end
