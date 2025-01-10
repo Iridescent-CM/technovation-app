@@ -46,10 +46,6 @@ class Chapter < ActiveRecord::Base
 
   delegate :seasons_chapter_affiliation_agreement_is_valid_for, to: :legal_contact
 
-  def organization_name_with_country
-    country.present? ? "#{organization_name} - #{country}" : "#{organization_name} - No Country"
-  end
-
   def affiliation_agreement
     legal_contact&.reload&.chapter_affiliation_agreement
   end
