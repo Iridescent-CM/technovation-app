@@ -63,6 +63,17 @@
           edit_admin_team_submission_path(@team_submission),
           class: "button button--small" %>
 
+        <% if current_admin.super_admin? && @team_submission.only_needs_to_submit? %>
+          <%= link_to("Publish",
+            admin_team_submission_publish_path(@team_submission),
+            class: "button button--small",
+            data: {
+              method: :patch,
+              confirm: "This will publish this submission"
+            }
+          ) %>
+        <% end %>
+
         <% if current_admin.super_admin? && @team_submission.published? %>
           <%= link_to("Unpublish",
             admin_team_submission_unpublish_path(@team_submission),

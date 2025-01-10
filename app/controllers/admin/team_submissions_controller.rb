@@ -3,7 +3,7 @@ module Admin
     include AdminHelper
     include DatagridController
 
-    before_action :require_super_admin, only: [:unpublish, :bulk_publish]
+    before_action :require_super_admin, only: [:publish, :unpublish, :bulk_publish]
     before_action :get_submissions_only_needing_to_submit, only: [:bulk_publish]
 
     use_datagrid with: SubmissionsGrid
@@ -30,6 +30,14 @@ module Admin
         end
         render :edit
       end
+    end
+
+    def publish
+      team_submission = TeamSubmission.friendly.find(params[:team_submission_id])
+      team_submission.publish!
+
+      redirect_back fallback_location: admin_team_submission_path(team_submission),
+        success: t("controllers.team_submissions.publish.success")
     end
 
     def unpublish
