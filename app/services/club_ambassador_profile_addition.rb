@@ -6,6 +6,7 @@ class ClubAmbassadorProfileAddition
   def call
     if account.mentor_profile.present?
       create_club_ambassador_profile
+      setup_club_ambassador_profile_in_crm
 
       Result.new(success?: true, message: {success: "#{account.name} now has a Club Ambassador profile"})
     else
@@ -26,5 +27,12 @@ class ClubAmbassadorProfileAddition
     account.create_club_ambassador_profile!({
       job_title: account.mentor_profile.job_title
     })
+  end
+
+  def setup_club_ambassador_profile_in_crm
+    CRM::SetupAccountForCurrentSeasonJob.perform_later(
+      account_id: account.id,
+      profile_type: "club ambassador"
+    )
   end
 end

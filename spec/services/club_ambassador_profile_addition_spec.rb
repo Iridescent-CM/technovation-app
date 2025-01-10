@@ -12,4 +12,14 @@ describe ClubAmbassadorProfileAddition do
 
     expect(account.club_ambassador_profile).to be_present
   end
+
+  it "calls the job that will setup the new club ambassador profile in the CRM" do
+    expect(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
+      .with(
+        account_id: account.id,
+        profile_type: "club ambassador"
+      )
+
+    club_ambassador_profile_addition.call
+  end
 end
