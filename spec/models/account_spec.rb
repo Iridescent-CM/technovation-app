@@ -1215,6 +1215,7 @@ RSpec.describe Account do
 
   context "updating the email list when making changes to the account" do
     let!(:account) { FactoryBot.create(:account) }
+    let(:profile_type) { nil }
 
     context "when the first name on the account is changed" do
       before do
@@ -1223,7 +1224,10 @@ RSpec.describe Account do
 
       it "makes a call to update their contact info in the CRM" do
         expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-          .with(account_id: account.id)
+          .with(
+            account_id: account.id,
+            profile_type: profile_type
+          )
 
         account.save
       end
@@ -1236,7 +1240,10 @@ RSpec.describe Account do
 
       it "makes a call to update their contact info in the CRM" do
         expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-          .with(account_id: account.id)
+          .with(
+            account_id: account.id,
+            profile_type: profile_type
+          )
 
         account.save
       end
@@ -1252,7 +1259,10 @@ RSpec.describe Account do
 
       it "makes a call to update their contact info in the CRM" do
         expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-          .with(account_id: account.id)
+          .with(
+            account_id: account.id,
+            profile_type: profile_type
+          )
 
         account.save
       end
@@ -1265,7 +1275,10 @@ RSpec.describe Account do
 
       it "makes a call to update their contact info in the CRM" do
         expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-          .with(account_id: account.id)
+          .with(
+            account_id: account.id,
+            profile_type: profile_type
+          )
 
         account.save
       end
@@ -1280,9 +1293,83 @@ RSpec.describe Account do
 
       it "makes a call to update their contact info in the CRM" do
         expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-          .with(account_id: account.id)
+          .with(
+            account_id: account.id,
+            profile_type: profile_type
+          )
 
         account.save
+      end
+    end
+
+    context "when updating student information" do
+      let!(:account) { FactoryBot.create(:student).account }
+
+      context "when the student's first name on the account is changed" do
+        before do
+          account.first_name = "Carol"
+        end
+
+        it "makes a call to update their contact info in the CRM and includes 'student' as the profile_type" do
+          expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+            .with(
+              account_id: account.id,
+              profile_type: "student"
+            )
+
+          account.save
+        end
+      end
+
+      context "when the student's last name on the account is changed" do
+        before do
+          account.last_name = "Baskins"
+        end
+
+        it "makes a call to update their contact info in the CRM and includes 'student' as the profile_type" do
+          expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+            .with(
+              account_id: account.id,
+              profile_type: "student"
+            )
+
+          account.save
+        end
+      end
+
+      context "when the student's email address on the account is changed" do
+        let!(:current_email_address) { account.email }
+
+        before do
+          account.skip_existing_password = true
+          account.email = "jean@example.com"
+        end
+
+        it "makes a call to update their contact info in the CRM and includes 'student' as the profile_type" do
+          expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+            .with(
+              account_id: account.id,
+              profile_type: "student"
+            )
+
+          account.save
+        end
+      end
+
+      context "when the student's date of birth on the account is changed" do
+        before do
+          account.date_of_birth = 25.years.ago
+        end
+
+        it "makes a call to update their contact info in the CRM, and includes 'student' as the profile_type" do
+          expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
+            .with(
+              account_id: account.id,
+              profile_type: "student"
+            )
+
+          account.save
+        end
       end
     end
   end

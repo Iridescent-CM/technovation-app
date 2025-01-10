@@ -13,9 +13,12 @@ require "rails_helper"
       allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
     end
 
-    it "updates #{scope} contact info in the CRM when their location is changed" do
+    it "updates #{scope} contact info in the CRM when their location is changed (and only includes profile_type for students)" do
       expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-        .with(account_id: profile.account_id)
+        .with(
+          account_id: profile.account_id,
+          profile_type: profile.account.student_profile.present? ? "student" : nil
+        )
 
       patch :update, params: {
         "#{scope}_profile" => {
@@ -29,9 +32,12 @@ require "rails_helper"
       }
     end
 
-    it "updates #{scope} contact info in the CRM when their first name is changed" do
+    it "updates #{scope} contact info in the CRM when their first name is changed (and only includes profile_type for students)" do
       expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-        .with(account_id: profile.account_id)
+        .with(
+          account_id: profile.account_id,
+          profile_type: profile.account.student_profile.present? ? "student" : nil
+        )
 
       patch :update, params: {
         "#{scope}_profile" => {
@@ -43,9 +49,12 @@ require "rails_helper"
       }
     end
 
-    it "updates #{scope} contact info in the CRM when their last name is changed" do
+    it "updates #{scope} contact info in the CRM when their last name is changed (and only includes profile_type for students)" do
       expect(CRM::UpsertContactInfoJob).to receive(:perform_later)
-        .with(account_id: profile.account_id)
+        .with(
+          account_id: profile.account_id,
+          profile_type: profile.account.student_profile.present? ? "student" : nil
+        )
 
       patch :update, params: {
         "#{scope}_profile" => {

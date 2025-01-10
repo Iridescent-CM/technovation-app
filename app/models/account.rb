@@ -1152,7 +1152,12 @@ class Account < ActiveRecord::Base
 
   def update_crm_contact_info
     if any_crm_fileds_changed?
-      CRM::UpsertContactInfoJob.perform_later(account_id: id)
+      profile_type = student_profile.present? ? "student" : nil
+
+      CRM::UpsertContactInfoJob.perform_later(
+        account_id: id,
+        profile_type: profile_type
+      )
     end
   end
 
