@@ -2,7 +2,7 @@ module Admin
   class ChapterAccountAssignmentsController < AdminController
     def new
       @account = Account.find(params.fetch(:account_id))
-      @chapters = Chapter.all.order(organization_name: :asc)
+      @chapters = Chapter.all.order(:country, :organization_name)
       @chapterable_account_assignment = ChapterableAccountAssignment.new
     end
 
@@ -35,7 +35,7 @@ module Admin
 
     def edit
       @account = Account.find(params.fetch(:account_id))
-      @chapters = Chapter.all.order(organization_name: :asc)
+      @chapters = Chapter.all.order(:country, :organization_name)
       @chapterable_account_assignment = @account.current_chapterable_assignment
     end
 
