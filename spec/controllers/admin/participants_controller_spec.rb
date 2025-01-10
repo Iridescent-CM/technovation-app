@@ -37,7 +37,7 @@ RSpec.describe Admin::ParticipantsController do
     end
   end
 
-  %w[student mentor judge chapter_ambassador].each do |scope|
+  %w[student mentor judge chapter_ambassador club_ambassador].each do |scope|
     it "updates their contact info in the CRM when the email address on the account is changed" do
       profile = FactoryBot.create(
         scope,
