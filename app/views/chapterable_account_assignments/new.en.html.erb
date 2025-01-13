@@ -24,6 +24,10 @@
               </p>
             <% end %>
 
+            <% if current_account.country == "Spain" %>
+              <%= render "chapterable_account_assignments/additional_info/spain" %>
+            <% end %>
+
             <div class="flex flex-col space-y-6 mt-8">
               <%= simple_form_for @chapterable_assignment do |f| %>
 
