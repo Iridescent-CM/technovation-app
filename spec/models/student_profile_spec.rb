@@ -148,18 +148,41 @@ RSpec.describe StudentProfile do
   describe "parent/guardian first and last name" do
     let(:student_profile) do
       FactoryBot.build(:student_profile,
-        parent_guardian_name: "Pandy Paws the Cat")
+        parent_guardian_name: parent_guardian_name)
     end
 
-    describe "#parent_guardian_first_name" do
+    context "when the parent/guardian name has more than two parts" do
+      let(:parent_guardian_name) { "Pandy Paws the Cat" }
+
       it "returns the first part (separated by whitespace) as the first name" do
         expect(student_profile.parent_guardian_first_name).to eq("Pandy")
       end
+
+      it "returns the remaining parts (separated by whitespace) as the last name" do
+        expect(student_profile.parent_guardian_last_name).to eq("Paws the Cat")
+      end
     end
 
-    describe "#parent_guardian_last_name" do
-      it "return the remaining parts (separated by whitespace) as the last name" do
-        expect(student_profile.parent_guardian_last_name).to eq("Paws the Cat")
+    context "when the parent/guardian name has exactly two parts" do
+      let(:parent_guardian_name) { "Mama Box" }
+
+      it "returns the first part as the first name" do
+        expect(student_profile.parent_guardian_first_name).to eq("Mama")
+      end
+      it "returns the second part as the last name" do
+        expect(student_profile.parent_guardian_last_name).to eq("Box")
+      end
+    end
+
+    context "when the parent/guardian name only has one name" do
+      let(:parent_guardian_name) { "Carlita" }
+
+      it "returns the only name as the first name" do
+        expect(student_profile.parent_guardian_first_name).to eq("Carlita")
+      end
+
+      it "doesn't return anything for the last name (since there is only one name)" do
+        expect(student_profile.parent_guardian_last_name).to eq(nil)
       end
     end
   end

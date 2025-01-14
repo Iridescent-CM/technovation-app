@@ -142,11 +142,11 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def parent_guardian_first_name
-    parent_guardian_name.split(/\s+/, 2).first
+    parent_guardian_name_parts.first
   end
 
   def parent_guardian_last_name
-    parent_guardian_name.split(/\s+/, 2).last
+    (parent_guardian_name_parts.length >= 2) ? parent_guardian_name_parts.last : nil
   end
 
   def self.exists_on_team?(email)
@@ -396,6 +396,10 @@ class StudentProfile < ActiveRecord::Base
     )
       errors.add(:parent_guardian_email, :invalid)
     end
+  end
+
+  def parent_guardian_name_parts
+    @parent_guardian_name_parts ||= parent_guardian_name.split(/\s+/, 2)
   end
 
   def reset_parent
