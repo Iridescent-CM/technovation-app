@@ -17,9 +17,9 @@ class SubmissionsGrid
     team.division_name.humanize
   end
 
-  column :contest_rank, mandatory: true
+  column :contest_rank, mandatory: true, order: false
 
-  column :project_name, mandatory: true, html: true do |sub|
+  column :project_name, mandatory: true, html: true, order: "team_submissions.app_name" do |sub|
     link_to sub.app_name, send("#{current_scope}_team_submission_path", sub)
   end
 
@@ -27,9 +27,9 @@ class SubmissionsGrid
     app_description
   end
 
-  column :demo_video_link, header: "#{I18n.t("submissions.demo_video").upcase_first} link"
-  column :learning_journey
-  column :pitch_video_link
+  column :demo_video_link, header: "#{I18n.t("submissions.demo_video").upcase_first} link", order: false
+  column :learning_journey, order: false
+  column :pitch_video_link, order: false
   column :submission_type
   column :thunkable_project_url
 
@@ -70,7 +70,6 @@ class SubmissionsGrid
 
   column :project_page,
     mandatory: true,
-    order: "teams.name",
     html: true do |sub|
     link_to(
       "#{request.base_url}#{project_path(sub)}",
@@ -156,11 +155,11 @@ class SubmissionsGrid
     development_platform_text.presence || "-"
   end
 
-  column :state_province, header: "State" do
+  column :state_province, header: "State", order: "teams.state_province" do
     FriendlySubregion.call(team, prefix: false)
   end
 
-  column :country do
+  column :country, order: "teams.country" do
     FriendlyCountry.new(team).country_name
   end
 
@@ -176,7 +175,7 @@ class SubmissionsGrid
     team.qualified? ? "yes" : "no"
   end
 
-  column :submitted? do
+  column :submitted?, order: :published_at do
     published? ? "yes" : "no"
   end
 
@@ -354,6 +353,18 @@ class SubmissionsGrid
     ] do |value|
       send(value)
     end
+
+  filter :qualified,
+    :enum,
+    filter_group: "more-specific",
+    header: "Team Qualified?",
+    select: [
+      ["Yes, qualified", true],
+      ["No, not qualified", false]
+    ] do |value|
+    operator = value == "true" ? "AND" : "OR"
+    where("teams.has_students = ? #{operator} teams.all_students_onboarded = ?", value, value)
+  end
 
   filter :season,
     :enum,
