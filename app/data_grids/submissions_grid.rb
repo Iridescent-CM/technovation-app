@@ -354,6 +354,18 @@ class SubmissionsGrid
       send(value)
     end
 
+  filter :qualified,
+    :enum,
+    filter_group: "more-specific",
+    header: "Team Qualified?",
+    select: [
+      ["Yes, qualified", true],
+      ["No, not qualified", false]
+    ] do |value|
+    operator = value == "true" ? "AND" : "OR"
+    where("teams.has_students = ? #{operator} teams.all_students_onboarded = ?", value, value)
+  end
+
   filter :season,
     :enum,
     select: (2015..Season.current.year).to_a.reverse,
