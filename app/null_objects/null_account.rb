@@ -9,6 +9,10 @@ class NullAccount < NullObject
     "null account"
   end
 
+  def scope_name
+    nil
+  end
+
   def mentor_profile
     ::NullProfile.new
   end
@@ -35,6 +39,10 @@ class NullAccount < NullObject
 
   def authenticated?
     false
+  end
+
+  def profile_image_url
+    nil
   end
 
   def current_chapter

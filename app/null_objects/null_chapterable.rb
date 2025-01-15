@@ -1,5 +1,5 @@
 class NullChapterable < NullObject
   def primary_contact
-    nil
+    NullAccount.new
   end
 end
