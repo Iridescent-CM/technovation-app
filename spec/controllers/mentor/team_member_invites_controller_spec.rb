@@ -75,54 +75,56 @@ RSpec.describe Mentor::TeamMemberInvitesController do
     end
   end
 
-  describe "mentor chapter assignments" do
-    context "when two students from the same chapter are on a team" do
-      let(:team) { FactoryBot.create(:team) }
-      let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
-      let(:chapter) { FactoryBot.create(:chapter) }
-      let(:student1) { FactoryBot.create(:student, :not_assigned_to_chapter) }
-      let(:student2) { FactoryBot.create(:student, :not_assigned_to_chapter) }
-      let!(:invite) { FactoryBot.create(:team_member_invite, invitee: mentor) }
+  describe "mentor chapterable assignments" do
+    %w[club chapter].each do |chapterable_type|
+      context "when two students from the same #{chapterable_type} are on a team" do
+        let(:team) { FactoryBot.create(:team) }
+        let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
+        let(:chapterable) { FactoryBot.create(chapterable_type.to_sym) }
+        let(:student1) { FactoryBot.create(:student, :not_assigned_to_chapter) }
+        let(:student2) { FactoryBot.create(:student, :not_assigned_to_chapter) }
+        let!(:invite) { FactoryBot.create(:team_member_invite, invitee: mentor) }
 
-      before do
-        student1.chapterable_assignments.create(
-          chapterable: chapter,
-          account: student1.account,
-          season: Season.current.year,
-          primary: true
-        )
-
-        student2.chapterable_assignments.create(
-          chapterable: chapter,
-          account: student2.account,
-          season: Season.current.year,
-          primary: true
-        )
-
-        team.students << student1
-        team.students << student2
-        team.save
-
-        invite.team = team
-        invite.save
-      end
-
-      context "when the mentor invite request for this team is accepted" do
         before do
-          sign_in(mentor)
+          student1.chapterable_assignments.create(
+            chapterable: chapterable,
+            account: student1.account,
+            season: Season.current.year,
+            primary: true
+          )
 
-          put :update, params: {
-            id: invite.invite_token,
-            team_member_invite: {status: :accepted}
-          }
+          student2.chapterable_assignments.create(
+            chapterable: chapterable,
+            account: student2.account,
+            season: Season.current.year,
+            primary: true
+          )
+
+          team.students << student1
+          team.students << student2
+          team.save
+
+          invite.team = team
+          invite.save
         end
 
-        it "creates one non-primary chapter assignment (since both students belong to the same chapter)" do
-          expect(mentor.account.chapterable_assignments.where(chapterable: chapter, primary: false).count).to eq(1)
-        end
+        context "when the mentor invite request for this team is accepted" do
+          before do
+            sign_in(mentor)
 
-        it "assigns the mentor to the student's chapter" do
-          expect(mentor.account.current_chapters).to include(student1.account.current_chapter)
+            put :update, params: {
+              id: invite.invite_token,
+              team_member_invite: {status: :accepted}
+            }
+          end
+
+          it "creates one non-primary chapterable assignment (since both students belong to the same #{chapterable_type})" do
+            expect(mentor.account.chapterable_assignments.where(chapterable: chapterable, primary: false).count).to eq(1)
+          end
+
+          it "assigns the mentor to the student's #{chapterable_type}" do
+            expect(mentor.account.chapterable_assignments.map(&:chapterable)).to include(student1.account.current_primary_chapterable_assignment.chapterable)
+          end
         end
       end
     end
