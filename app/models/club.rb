@@ -16,9 +16,6 @@ class Club < ActiveRecord::Base
 
   after_update :update_onboarding_status
 
-  has_many :club_account_assignments, as: :chapterable, class_name: "ChapterableAccountAssignment"
-  has_many :accounts, through: :club_account_assignments
-
   def assign_address_details(geocoded)
     self.city = geocoded.city
     self.state_province = geocoded.state_code
