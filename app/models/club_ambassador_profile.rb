@@ -8,6 +8,8 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     foreign_key: "account_id",
     required: false
 
+  has_many :saved_searches, as: :searcher
+
   validates :job_title, presence: true
 
   after_update :update_onboarding_status

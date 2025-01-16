@@ -229,6 +229,8 @@ Rails.application.routes.draw do
     resource :club_current_location, only: :show
 
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
+
+    resources :saved_searches, only: [:show, :create, :update, :destroy]
   end
 
   namespace :judge do
