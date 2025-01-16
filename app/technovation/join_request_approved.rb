@@ -14,8 +14,7 @@ module JoinRequestApproved
 
       student_chapterables.each do |chapterable|
         if chapterable.present?
-          chapterable_type = chapterable.is_a?(Club) ? "club" : "chapter"
-          chapterable.send("#{chapterable_type}_account_assignments").create(
+          chapterable.chapterable_account_assignments.create(
             profile: join_request.requestor,
             account: join_request.requestor.account,
             season: Season.current.year,
