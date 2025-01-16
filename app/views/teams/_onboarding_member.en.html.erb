@@ -10,10 +10,9 @@
     <h5 class="reset">
       <% if admin_chapter_ambassador %>
         <%= link_to onboarding_member.full_name,
-          send("#{current_scope}_participant_path", 
+          send("#{current_scope}_participant_path",
           {
-            id: onboarding_member.account_id,
-            allow_out_of_region: true,
+            id: onboarding_member.account_id
           })
         %>
       <% else %>

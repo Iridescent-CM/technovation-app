@@ -35,13 +35,13 @@ class ScoredSubmissionsGrid
     when "chapter_ambassador"
       link_to(
         submission.team_name,
-        chapter_ambassador_team_path(submission.team, allow_out_of_region: true),
+        chapter_ambassador_team_path(submission.team),
         turbolinks: true
       )
     when "admin"
       link_to(
         submission.team_name,
-        admin_team_path(submission.team, allow_out_of_region: true),
+        admin_team_path(submission.team),
         turbolinks: true
       )
     end
@@ -54,13 +54,13 @@ class ScoredSubmissionsGrid
     when "chapter_ambassador"
       link_to(
         submission.app_name,
-        chapter_ambassador_team_submission_path(submission, allow_out_of_region: true),
+        chapter_ambassador_team_submission_path(submission),
         turbolinks: true
       )
     when "admin"
       link_to(
         submission.app_name,
-        admin_team_submission_path(submission, allow_out_of_region: true),
+        admin_team_submission_path(submission),
         turbolinks: true
       )
     end

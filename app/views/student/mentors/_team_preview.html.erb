@@ -15,7 +15,7 @@
 <li>
   <div class="grid__cell">
     <%= link_to team_preview.name,
-      send("#{current_scope}_team_path", team_preview, allow_out_of_region: true)
+      send("#{current_scope}_team_path", team_preview)
     %>
   </div>
 
@@ -24,13 +24,9 @@
 
     <% if (mentors = team_preview.mentors - [profile]).any? %>
       <ul class="unstyled">
-        <% mentors.each do |m| %>
+        <% mentors.each do |mentor| %>
           <li>
-            <%= link_to m.full_name, send(
-              "#{current_scope}_#{profile_path_name}_path",
-              m.send(profile_id),
-              allow_out_of_region: true,
-            ) %>
+            <%= mentor.full_name %><br>
           </li>
         <% end %>
       </ul>
