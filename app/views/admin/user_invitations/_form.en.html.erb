@@ -22,7 +22,12 @@
 
   <div id="chapter" class="field margin--b-large" style="display: none;">
     <%= f.label :chapter_id, "Chapter", for: :chapter_id %>
-    <%= f.collection_select(:chapter_id, Chapter.all.order(organization_name: :asc), :id, :organization_name) %>
+    <%= f.collection_select(:chapter_id, Chapter.all.order(organization_name: :asc), :id, :organization_name, include_blank: true) %>
+  </div>
+
+  <div id="club" class="field margin--b-large" style="display: none;">
+    <%= f.label :club_id, "Club", for: :club_id %>
+    <%= f.collection_select(:club_id, Club.all.order(name: :asc), :id, :name, include_blank: true) %>
   </div>
 
   <div class="field">

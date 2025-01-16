@@ -215,6 +215,18 @@ Rails.application.routes.draw do
     resources :message_deliveries, only: :create
   end
 
+  namespace :club_ambassador do
+    resource :dashboard, only: :show
+    resource :profile, only: [:show, :edit, :update]
+
+    resource :club_profile, only: :show, controller: "club_profile"
+    resource :club_headquarters_location, only: [:edit, :update]
+    resource :club_location, only: [:show, :edit, :update, :create], controller: "club_locations"
+    resource :club_current_location, only: :show
+
+    resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
+  end
+
   namespace :judge do
     resource :training_completion, only: :show
 
@@ -278,6 +290,8 @@ Rails.application.routes.draw do
     resources :student_conversions, only: :create
     resources :mentor_to_judge_conversions, only: :create
     resources :chapter_ambassador_profile_additions, only: :create
+    resources :club_ambassador_profile_additions, only: :create
+
     resources :accounts, only: [] do
       resources :chapter_account_assignments, only: [:new, :create, :edit, :update]
     end
@@ -297,6 +311,8 @@ Rails.application.routes.draw do
     resources :clubs do
       resource :location, only: :edit, controller: "clubs/locations"
     end
+
+    resources :club_ambassadors, only: :index
 
     resources :chapter_ambassadors, only: :index do
       resource :off_platform_chapter_volunteer_agreement,
@@ -396,6 +412,7 @@ Rails.application.routes.draw do
       resources :judge_types, only: :index
 
       resource :chapter_organization_name, only: :show
+      resource :club_name, only: :show
       resource :user_invitation_email, only: :show
     end
 

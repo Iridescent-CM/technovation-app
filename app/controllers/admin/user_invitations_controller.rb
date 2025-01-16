@@ -67,7 +67,8 @@ module Admin
         :name,
         :email,
         :register_at_any_time,
-        :chapter_id
+        :chapter_id,
+        :club_id
       )
     end
   end

@@ -1,6 +1,6 @@
 class NewRegistrationController < ApplicationController
   after_action :update_registration_invite, only: :create
-  after_action :assign_chapter_ambassador_to_chapter, only: :create
+  after_action :assign_ambassador_to_chapterable, only: :create
 
   layout "new_registration"
 
@@ -36,6 +36,8 @@ class NewRegistrationController < ApplicationController
       @profile = JudgeProfile.new(judge_params)
     when "chapter_ambassador"
       @profile = ChapterAmbassadorProfile.new(chapter_ambassador_params)
+    when "club_ambassador"
+      @profile = ClubAmbassadorProfile.new(club_ambassador_params)
     end
 
     if @profile.save
@@ -115,6 +117,17 @@ class NewRegistrationController < ApplicationController
     }
   end
 
+  def club_ambassador_params
+    {
+      job_title: registration_params[:clubAmbassadorJobTitle],
+      account_attributes: account_attributes.merge({
+        phone_number: registration_params[:phoneNumber],
+        gender: registration_params[:gender],
+        meets_minimum_age_requirement: registration_params[:meetsMinimumAgeRequirement]
+      })
+    }
+  end
+
   def account_attributes
     {
       first_name: registration_params[:firstName],
@@ -155,6 +168,7 @@ class NewRegistrationController < ApplicationController
       :chapterAmbassadorJobTitle,
       :chapterAmbassadorBio,
       :chapterAmbassadorOrganizationStatus,
+      :clubAmbassadorJobTitle,
       mentorExpertises: [],
       mentorTypes: [],
       judgeTypes: []
@@ -170,11 +184,13 @@ class NewRegistrationController < ApplicationController
     end
   end
 
-  def assign_chapter_ambassador_to_chapter
-    if params[:inviteCode].present? && params[:profileType] == "chapter_ambassador"
-      AssignChapterAmbassadorToChapterJob.perform_later(
+  def assign_ambassador_to_chapterable
+    if params[:inviteCode].present? &&
+        (params[:profileType] == "chapter_ambassador" || params[:profileType] == "club_ambassador")
+
+      AssignAmbassadorToChapterableJob.perform_later(
         invite_code: params[:inviteCode],
-        chapter_ambassador_profile_id: @profile.id
+        ambassador_profile_id: @profile.id
       )
     end
   end

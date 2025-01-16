@@ -17,6 +17,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
     prepare_mentor_for_current_season(record) if is_mentor?(record)
     prepare_judge_for_current_season(record) if is_judge?(record)
     prepare_chapter_ambassador_for_current_season(record) if is_chapter_ambassador?(record)
+    prepare_club_ambassador_for_current_season(record) if is_club_ambassador?(record)
 
     record_registration_activity(record) if record.respond_to?(:create_activity)
   end
@@ -41,6 +42,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
   def is_chapter_ambassador?(record)
     record.respond_to?(:chapter_ambassador_profile) && record.chapter_ambassador_profile.present?
+  end
+
+  def is_club_ambassador?(record)
+    record.respond_to?(:club_ambassador_profile) && record.club_ambassador_profile.present?
   end
 
   def update_season_data_with_resets(record)
@@ -109,6 +114,10 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
 
   def prepare_chapter_ambassador_for_current_season(record)
     setup_account_in_crm_for_current_season(record, "chapter ambassador")
+  end
+
+  def prepare_club_ambassador_for_current_season(record)
+    setup_account_in_crm_for_current_season(record, "club ambassador")
   end
 
   def record_registration_activity(record)

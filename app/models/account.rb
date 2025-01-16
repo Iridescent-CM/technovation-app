@@ -39,6 +39,7 @@ class Account < ActiveRecord::Base
   has_one :mentor_profile, dependent: :destroy
   has_one :judge_profile, dependent: :destroy
   has_one :chapter_ambassador_profile, dependent: :destroy
+  has_one :club_ambassador_profile, dependent: :destroy
   accepts_nested_attributes_for :mentor_profile, :judge_profile
 
   ChapterAmbassadorProfile.statuses.keys.each do |status|
@@ -590,8 +591,8 @@ class Account < ActiveRecord::Base
     allow_blank: true,
     format: {with: /\A[0-9+\-\s]+\z/, message: "can only contain numbers, dashes, and +"}
 
-  validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? }
-  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador?) && new_record? }
+  validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? && !is_club_ambassador? }
+  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador? || is_club_ambassador?) && new_record? }
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
@@ -794,6 +795,11 @@ class Account < ActiveRecord::Base
   end
   alias_method :is_chapter_ambassador?, :is_an_ambassador?
 
+  def is_a_club_ambassador?
+    club_ambassador_profile.present?
+  end
+  alias_method :is_club_ambassador?, :is_a_club_ambassador?
+
   def is_admin?
     admin_profile.present?
   end
@@ -927,6 +933,8 @@ class Account < ActiveRecord::Base
       "judge"
     elsif chapter_ambassador_profile.present?
       "chapter_ambassador"
+    elsif club_ambassador_profile.present?
+      "club_ambassador"
     elsif mentor_profile.present?
       "mentor"
     elsif student_profile.present?

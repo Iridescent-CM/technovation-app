@@ -700,7 +700,8 @@ CREATE TABLE public.club_ambassador_profiles (
     job_title character varying,
     training_completed_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    onboarded boolean DEFAULT false
 );
 
 
@@ -740,7 +741,8 @@ CREATE TABLE public.clubs (
     longitude double precision,
     primary_account_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    onboarded boolean DEFAULT false
 );
 
 
@@ -2483,7 +2485,8 @@ CREATE TABLE public.user_invitations (
     name character varying,
     register_at_any_time boolean,
     invited_by_id integer,
-    chapter_id bigint
+    chapter_id bigint,
+    club_id bigint
 );
 
 
@@ -4066,6 +4069,13 @@ CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USI
 
 
 --
+-- Name: index_user_invitations_on_club_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_invitations_on_club_id ON public.user_invitations USING btree (club_id);
+
+
+--
 -- Name: meeting_facilitator_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4507,6 +4517,14 @@ ALTER TABLE ONLY public.chapter_links
 
 
 --
+-- Name: user_invitations fk_rails_bb8dd2eee8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_invitations
+    ADD CONSTRAINT fk_rails_bb8dd2eee8 FOREIGN KEY (club_id) REFERENCES public.clubs(id);
+
+
+--
 -- Name: mentor_profiles fk_rails_beb02031d5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4940,9 +4958,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241118204108'),
 ('20241122025956'),
 ('20241202210231'),
+('20241203191721'),
 ('20241204142027'),
 ('20241211141114'),
 ('20241211222824'),
-('20241211230435');
+('20241211230435'),
+('20250103180055'),
+('20250103182555');
 
 

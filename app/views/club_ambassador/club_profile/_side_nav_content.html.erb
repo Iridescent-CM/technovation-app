@@ -1,0 +1,17 @@
+  <nav class="p-4" aria-label="Progress">
+    <ol role="list" class="space-y-6 mb-6 overflow-hidden">
+      <%= render "application/templates/completion_step",
+        name: "Public Info",
+        url: club_ambassador_public_information_path,
+        is_complete: current_ambassador.club&.club_info_complete?,
+        is_active_item: al(club_ambassador_public_information_path).present?
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Club Location",
+        url: club_ambassador_club_location_path,
+        is_complete: current_ambassador.club&.location_complete?,
+        is_active_item: al(club_ambassador_club_location_path).present?
+      %>
+    </ol>
+  </nav>

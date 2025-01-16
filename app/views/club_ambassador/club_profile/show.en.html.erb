@@ -1,0 +1,11 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "club_ambassador/club_profile/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Club Profile" } do %>
+    <p class="mb-4">Welcome to the Club Profile section!</p>
+
+    <p class="mb-4">
+      Here, you'll provide important details about your Club to help us understand your local program better.
+    </p>
+  <% end %>
+</div>
