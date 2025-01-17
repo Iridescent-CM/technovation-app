@@ -1,0 +1,40 @@
+<h6>Technovation Ambassador</h6>
+
+<nav>
+  <%= link_to "Dashboard", club_ambassador_dashboard_path %>
+
+  <%# link_to "Participants",
+    club_ambassador_participants_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_participants_path) %>
+
+  <%= link_to "Unaffiliated Participants",
+    club_ambassador_unaffiliated_participants_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_unaffiliated_participants_path) %>
+
+  <%# link_to "Teams",
+    club_ambassador_teams_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_teams_path) %>
+
+  <%# link_to "Submissions",
+    club_ambassador_team_submissions_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_team_submissions_path) %>
+
+  <%# link_to "Scores",
+    club_ambassador_scores_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_scores_path) %>
+
+  <%# link_to "Activity",
+    club_ambassador_activities_path,
+    class: al(club_ambassador_activities_path) %>
+
+  <%= link_to "My Account",
+    club_ambassador_profile_path,
+    class: al(club_ambassador_profile_path) %>
+
+  <%= link_to "Logout", logout_path, data: { method: :delete } %>
+</nav>
