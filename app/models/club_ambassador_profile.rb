@@ -57,6 +57,10 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     account.current_primary_club
   end
 
+  def chapterable_type
+    "club"
+  end
+
   def scope_name
     "club_ambassador"
   end
