@@ -45,4 +45,10 @@ RSpec.describe ClubAmbassadorProfile do
       end
     end
   end
+
+  describe "#chapterable_type" do
+    it "returns club" do
+      expect(ClubAmbassadorProfile.new.chapterable_type).to eq("club")
+    end
+  end
 end
