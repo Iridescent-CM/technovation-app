@@ -12,7 +12,7 @@ class ClubAmbassadorsGrid
 
   column :name, header: "Club Name", mandatory: true do |account|
     if account.assigned_to_club?
-      format(account.name) do
+      format(account.current_primary_club.name) do
         link_to(
           account.current_primary_club.name || "-",
           admin_club_path(account.current_primary_club)
