@@ -5,7 +5,7 @@
     <%= a.input :phone_number %>
   </div>
 
-  <% if !a.object.is_chapter_ambassador? && !a.object.is_club_ambassador? %>
+  <% if !a.object.chapter_ambassador? && !a.object.club_ambassador? %>
     <%= a.input :date_of_birth,
       as: :date,
       prompt: true,

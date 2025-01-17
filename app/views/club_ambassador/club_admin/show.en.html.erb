@@ -1,6 +1,3 @@
-<% if current_ambassador.onboarding? %>
-  <%= render "chapter_ambassador/chapter_admin/onboarding" %>
-<% else %>
   <div class="grid tabs tabs--vertical">
     <div class="grid__col-sm-3 col--sticky-parent">
       <div class="col--sticky-spacer">
@@ -15,7 +12,7 @@
               </h6>
 
               <%= link_to "edit profile",
-                chapter_ambassador_profile_path,
+                club_ambassador_profile_path,
                 class: "small" %>
             </div>
           </div>
@@ -29,23 +26,23 @@
       <div class="col--sticky-spacer">
         <div class="col--sticky">
           <div class="tabs__tab-content" id="students">
-            <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
+            <%# SeasonToggles.dashboard_text(:chapter_ambassador) %>
 
-            <%= render "chapter_ambassador/chapter_admin/students" %>
+            <%# render "chapter_ambassador/chapter_admin/students" %>
           </div>
 
           <div class="tabs__tab-content" id="mentors">
-            <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
+            <%# SeasonToggles.dashboard_text(:chapter_ambassador) %>
 
-            <%= render "chapter_ambassador/chapter_admin/mentors" %>
+            <%# render "chapter_ambassador/chapter_admin/mentors" %>
           </div>
 
           <div class="tabs__tab-content" id="inactivity">
-            <%= render "chapter_ambassador/chapter_admin/inactivity" %>
+            <%# render "chapter_ambassador/chapter_admin/inactivity" %>
           </div>
 
           <div class="tabs__tab-content" id="recent-activity">
-            <%= render 'chapter_ambassador/chapter_admin/activity_feed' %>
+            <%# render 'chapter_ambassador/chapter_admin/activity_feed' %>
           </div>
 
           <div class="tabs__tab-content" id="resources">
@@ -55,4 +52,3 @@
       </div>
     </div>
   </div>
-<% end %>

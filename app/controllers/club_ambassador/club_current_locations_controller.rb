@@ -1,5 +1,7 @@
 module ClubAmbassador
-  class ClubCurrentLocationsController < ClubAmbassadorController
+  class ClubCurrentLocationsController < AmbassadorController
+    layout "club_ambassador_rebrand"
+
     def show
       state = FriendlySubregion.call(current_account.current_club, prefix: false)
       state_code = FriendlySubregion.call(current_account.current_club, {
