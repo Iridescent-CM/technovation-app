@@ -1052,6 +1052,10 @@ class Account < ActiveRecord::Base
     current_chapter.present?
   end
 
+  def current_chapterable
+    current_primary_chapter || current_primary_club || ::NullChapter.new
+  end
+
   def current_chapter
     current_primary_chapter || ::NullChapter.new
   end
