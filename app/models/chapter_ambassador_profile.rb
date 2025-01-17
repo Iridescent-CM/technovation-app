@@ -131,6 +131,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     account.current_primary_chapter
   end
 
+  def chapterable_type
+    "chapter"
+  end
+
   def chapter_volunteer_agreement_complete?
     reload
 
