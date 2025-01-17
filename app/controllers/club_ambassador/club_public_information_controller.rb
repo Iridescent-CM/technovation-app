@@ -1,6 +1,6 @@
 module ClubAmbassador
-  class ClubPublicInformationController < ClubAmbassadorController
-    layout "club_ambassador"
+  class ClubPublicInformationController < AmbassadorController
+    layout "club_ambassador_rebrand"
 
     def edit
     end

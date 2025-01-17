@@ -1,6 +1,6 @@
 module ClubAmbassador
-  class ClubHeadquartersLocationsController < ClubAmbassadorController
-    layout "club_ambassador"
+  class ClubHeadquartersLocationsController < AmbassadorController
+    layout "club_ambassador_rebrand"
 
     def update
       @club = current_ambassador.club
