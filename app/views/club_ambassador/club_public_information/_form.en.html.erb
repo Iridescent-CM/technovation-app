@@ -1,4 +1,4 @@
-<%= simple_form_for current_club,
+<%= simple_form_for current_chapterable,
   url: club_ambassador_public_information_path do |f| %>
 
   <%= f.label :name, "Club Name" %>
@@ -30,12 +30,12 @@
 
   <div>
     <%= f.input :primary_account_id,
-      collection: current_club.club_ambassadors,
+      collection: current_chapterable.club_ambassadors,
       prompt: "Select a primary contact",
       label: "Primary Contact",
       value_method: :id,
       label_method: :full_name,
-      selected: current_club.primary_contact&.id %>
+      selected: current_chapterable.primary_contact&.id %>
 
     <p class="text-sm italic mb-4">This Club Ambassador is the primary contact displayed to students and mentors</p>
   </div>

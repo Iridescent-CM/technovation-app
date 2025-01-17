@@ -1,5 +1,5 @@
 module ClubAmbassador
-  class SavedSearchesController < ClubAmbassadorController
+  class SavedSearchesController < AmbassadorController
     include SavedSearchController
   end
 end

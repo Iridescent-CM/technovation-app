@@ -591,8 +591,8 @@ class Account < ActiveRecord::Base
     allow_blank: true,
     format: {with: /\A[0-9+\-\s]+\z/, message: "can only contain numbers, dashes, and +"}
 
-  validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? && !is_club_ambassador? }
-  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador? || is_club_ambassador?) && new_record? }
+  validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? && !club_ambassador? }
+  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && new_record? }
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
@@ -794,11 +794,11 @@ class Account < ActiveRecord::Base
     chapter_ambassador_profile.present?
   end
   alias_method :is_chapter_ambassador?, :is_an_ambassador?
+  alias_method :chapter_ambassador?, :is_an_ambassador?
 
-  def is_a_club_ambassador?
+  def club_ambassador?
     club_ambassador_profile.present?
   end
-  alias_method :is_club_ambassador?, :is_a_club_ambassador?
 
   def is_admin?
     admin_profile.present?

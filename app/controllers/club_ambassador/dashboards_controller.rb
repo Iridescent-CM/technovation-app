@@ -1,7 +1,6 @@
 module ClubAmbassador
-  class DashboardsController < ClubAmbassadorController
-
-    layout "club_ambassador"
+  class DashboardsController < AmbassadorController
+    layout "club_ambassador_rebrand"
 
     def show
     end

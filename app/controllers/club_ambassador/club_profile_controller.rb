@@ -1,4 +1,5 @@
 module ClubAmbassador
-  class ClubProfileController < ClubAmbassadorController
+  class ClubProfileController < AmbassadorController
+    layout "club_ambassador_rebrand"
   end
 end
