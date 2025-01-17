@@ -1,8 +1,8 @@
 module ClubAmbassador
-  class ClubLocationsController < ClubAmbassadorController
+  class ClubLocationsController < AmbassadorController
     include LocationController
 
-    layout "club_ambassador"
+    layout "club_ambassador_rebrand"
 
     private
 
