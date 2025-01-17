@@ -10,10 +10,10 @@ class Chapter < ActiveRecord::Base
   has_one :legal_contact, dependent: :destroy
   has_one :chapter_program_information, dependent: :destroy
 
-  has_many :chapter_account_assignments, as: :chapterable, class_name: "ChapterableAccountAssignment"
-  has_many :accounts, through: :chapter_account_assignments
+  has_many :chapterable_account_assignments, as: :chapterable, class_name: "ChapterableAccountAssignment"
+  has_many :accounts, through: :chapterable_account_assignments
   has_many :chapter_ambassadors, -> { where "profile_type = 'ChapterAmbassadorProfile'" },
-    through: :chapter_account_assignments,
+    through: :chapterable_account_assignments,
     source: :account
 
   has_many :chapter_links, dependent: :destroy

@@ -28,11 +28,11 @@ module Mentor
 
         invite.update(invite_params)
 
-        student_chapters = invite.team.students.flat_map { |s| s.account.current_chapter }.uniq
+        student_chapterables = invite.team.students.flat_map { |s| s.account.current_chapterable_assignment&.chapterable }.uniq
 
-        student_chapters.each do |chapter|
-          if chapter.present?
-            chapter.chapter_account_assignments.create(
+        student_chapterables.each do |chapterable|
+          if chapterable.present?
+            chapterable.chapterable_account_assignments.create(
               profile: current_mentor,
               account: current_mentor.account,
               season: Season.current.year,
