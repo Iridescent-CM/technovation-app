@@ -164,7 +164,7 @@ Rails.application.routes.draw do
       resource :chapter_account_assignments, only: [:create]
     end
     resources :participants, only: [:index, :show, :edit, :update]
-    resources :unaffiliated_participants, only: [:index]
+    resources :unaffiliated_participants, only: [:index], controller: "/data_grids/ambassador/unaffiliated_participants"
     resources :participant_sessions, only: [:show, :destroy]
 
     resources :student_conversions, only: :create
@@ -230,6 +230,7 @@ Rails.application.routes.draw do
 
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
 
+    resources :unaffiliated_participants, only: [:index], controller: "/data_grids/ambassador/unaffiliated_participants"
     resources :saved_searches, only: [:show, :create, :update, :destroy]
   end
 
