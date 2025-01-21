@@ -37,7 +37,8 @@ module DataGrids::Ambassador
       grid = (params[:unaffiliated_participants_grid] ||= {}).merge(
         admin: false,
         allow_state_search: true,
-        chapter_id: current_ambassador.current_chapterable.id,
+        chapterable_id: current_ambassador.current_chapterable.id,
+        chapterable_type: current_ambassador.chapterable_type.capitalize,
         country: [country_code],
         state_province: Array(params[:unaffiliated_participants_grid][:state_province])
       )

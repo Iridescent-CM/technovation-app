@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe ChapterAmbassador::ChapterAccountAssignmentsController do
+RSpec.describe Ambassador::ChapterableAccountAssignmentsController do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
   let(:chapter) { chapter_ambassador.chapter }
   let(:student_profile) { FactoryBot.create(:student_profile, :unaffiliated_chapter) }
@@ -12,24 +12,20 @@ RSpec.describe ChapterAmbassador::ChapterAccountAssignmentsController do
   end
 
   describe "POST #create" do
-    context "when a Chapter Ambassador assigns an unaffiliated student to their chapter" do
+    context "when a chapter ambassador assigns an unaffiliated student to their chapter" do
       it "sets 'no chapter selected' to nil for the student's account" do
         post :create, params: {
           account_id: student_profile.account.id,
-          chapter_account_assignment: {
-            chapter_id: chapter.id
-          }
+          chapterable: "#{chapter.id},Chapter"
         }
 
         expect(student_profile.account.reload.no_chapterable_selected).to be_nil
       end
 
-      it "assigns the student to the Chapter Ambassador's chapter" do
+      it "assigns the student to the chapter ambassador's chapter" do
         post :create, params: {
           account_id: student_profile.account.id,
-          chapter_account_assignment: {
-            chapter_id: chapter.id
-          }
+          chapterable: "#{chapter.id},Chapter"
         }
 
         expect(student_profile.account.reload.current_chapter).to eq(chapter)
@@ -40,9 +36,7 @@ RSpec.describe ChapterAmbassador::ChapterAccountAssignmentsController do
 
         post :create, params: {
           account_id: student_profile.account.id,
-          chapter_account_assignment: {
-            chapter_id: chapter.id
-          }
+          chapterable: "#{chapter.id},Chapter"
         }
       end
     end

@@ -133,6 +133,12 @@ Rails.application.routes.draw do
     resources :scores, only: :show
   end
 
+  namespace :ambassador do
+    resources :accounts, only: [] do
+      resource :chapterable_account_assignments, only: [:create]
+    end
+  end
+
   namespace :chapter_ambassador do
     resource :profile_details_confirmation, only: [:create, :update]
 
@@ -160,9 +166,7 @@ Rails.application.routes.draw do
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
-    resources :accounts, only: :show, controller: :participants do
-      resource :chapter_account_assignments, only: [:create]
-    end
+    resources :accounts, only: :show, controller: :participants
     resources :participants, only: [:index, :show, :edit, :update]
     resources :unaffiliated_participants, only: [:index], controller: "/data_grids/ambassador/unaffiliated_participants"
     resources :participant_sessions, only: [:show, :destroy]
