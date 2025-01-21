@@ -12,7 +12,7 @@ class ClubAmbassadorsGrid
 
   column :name, header: "Club Name", mandatory: true do |account|
     if account.assigned_to_club?
-      format(account.name) do
+      format(account.current_primary_club.name) do
         link_to(
           account.current_primary_club.name || "-",
           admin_club_path(account.current_primary_club)
@@ -94,10 +94,12 @@ class ClubAmbassadorsGrid
     end
 
   filter :club_name do |value, scope|
+    processed_value = I18n.transliterate(value.strip.downcase).gsub(/['\s]+/, "%")
     scope
       .left_outer_joins(:club_ambassador_profile)
-      .left_outer_joins(club_ambassador_profile: :club)
-      .where("club.name ilike ?", "#{value}%")
+      .left_outer_joins(:chapterable_assignments)
+      .left_outer_joins(:clubs)
+      .where("lower(unaccent(clubs.name)) ILIKE ?", "%#{processed_value}%")
   end
 
   column_names_filter(
