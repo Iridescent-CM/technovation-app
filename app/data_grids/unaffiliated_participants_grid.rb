@@ -1,7 +1,7 @@
 class UnaffiliatedParticipantsGrid
   include Datagrid
 
-  attr_accessor :admin, :allow_state_search, :chapter_id
+  attr_accessor :admin, :allow_state_search, :chapterable_id, :chapterable_type
 
   self.batch_size = 1_000
 
@@ -52,9 +52,9 @@ class UnaffiliatedParticipantsGrid
       )
     else
       link_to "Add to your chapter",
-        chapter_ambassador_account_chapter_account_assignments_path(
+        ambassador_account_chapterable_account_assignments_path(
           account_id: account.id,
-          chapter_account_assignment: {chapter_id: grid.chapter_id}
+          chapterable: "#{grid.chapterable_id},#{grid.chapterable_type}"
         ),
         class: "button button--remove-bg",
         data: {
