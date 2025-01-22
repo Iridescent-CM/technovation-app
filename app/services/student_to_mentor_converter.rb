@@ -54,7 +54,7 @@ class StudentToMentorConverter
       RegisterToCurrentSeasonJob.perform_later(account)
     else
       RegisterToCurrentSeasonJob
-        .set(wait: 1.minute)
+        .set(wait: 8.minutes)
         .perform_later(account)
     end
   end
