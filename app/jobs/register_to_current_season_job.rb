@@ -136,7 +136,7 @@ class RegisterToCurrentSeasonJob < ActiveJob::Base
       profile_type: profile_type.to_s
     )
 
-    @@crm_job_wait_time += 30
+    @@crm_job_wait_time += 45
   end
 
   private

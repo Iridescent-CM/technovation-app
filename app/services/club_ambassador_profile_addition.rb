@@ -30,9 +30,18 @@ class ClubAmbassadorProfileAddition
   end
 
   def setup_club_ambassador_profile_in_crm
-    CRM::SetupAccountForCurrentSeasonJob.perform_later(
-      account_id: account.id,
-      profile_type: "club ambassador"
-    )
+    if ENV.fetch("ACTIVE_JOB_BACKEND", "inline") == "inline"
+      CRM::SetupAccountForCurrentSeasonJob.perform_later(
+        account_id: account.id,
+        profile_type: "club ambassador"
+      )
+    else
+      CRM::SetupAccountForCurrentSeasonJob
+        .set(wait: 6.minutes)
+        .perform_later(
+          account_id: account.id,
+          profile_type: "club ambassador"
+        )
+    end
   end
 end

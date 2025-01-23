@@ -32,9 +32,18 @@ class ChapterAmbassadorProfileAddition
   end
 
   def setup_chapter_ambassador_profile_in_crm
-    CRM::SetupAccountForCurrentSeasonJob.perform_later(
-      account_id: account.id,
-      profile_type: "chapter ambassador"
-    )
+    if ENV.fetch("ACTIVE_JOB_BACKEND", "inline") == "inline"
+      CRM::SetupAccountForCurrentSeasonJob.perform_later(
+        account_id: account.id,
+        profile_type: "chapter ambassador"
+      )
+    else
+      CRM::SetupAccountForCurrentSeasonJob
+        .set(wait: 4.minutes)
+        .perform_later(
+          account_id: account.id,
+          profile_type: "chapter ambassador"
+        )
+    end
   end
 end
