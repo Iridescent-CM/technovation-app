@@ -10,8 +10,7 @@ module ForceLocation
   def require_location
     return if request.xhr?
 
-    # todo: force location screen for club ambassadors
-    return if current_scope == "admin" || current_scope == "club_ambassador"
+    return if current_scope == "admin"
 
     if logged_in_and_has_profile && !valid_location && !on_location_form
       redirect_to send(
