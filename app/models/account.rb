@@ -286,7 +286,7 @@ class Account < ActiveRecord::Base
   before_update :update_division, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   after_commit :update_crm_contact_info, on: :update
   after_update :update_chapter_ambassador_onboarding_status
-  after_update :send_assigned_to_chapter_email
+  after_update :send_assigned_to_chapterable_email
 
   after_commit -> {
     if saved_change_to_email_confirmed_at ||
@@ -1226,11 +1226,11 @@ class Account < ActiveRecord::Base
     end
   end
 
-  def send_assigned_to_chapter_email
+  def send_assigned_to_chapterable_email
     if (student_profile.present? || mentor_profile.present?) &&
         saved_change_to_no_chapterable_selected? && !no_chapterable_selected?
 
-      AccountMailer.chapter_assigned(self).deliver_later
+      AccountMailer.chapterable_assigned(self).deliver_later
     end
   end
 end

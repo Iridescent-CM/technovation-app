@@ -1,0 +1,23 @@
+<%= form_with model: @chapterable_account_assignment,
+  url: (
+    @chapterable_account_assignment.new_record? ?
+    admin_account_chapterable_account_assignments_path(@account) :
+    admin_account_chapterable_account_assignment_path(@account, @chapterable_account_assignment)
+  ),
+  local: true do |form| %>
+
+  <div>
+    <%= form.label :chapterable_id, "Select Club" %>
+    <%= form.collection_select :chapterable_id,
+      @chapterables,
+      :id,
+      ->(club) { "#{club.name} - #{club.country.presence || 'No Country'}" },
+      include_blank: "None",
+      selected: @account.current_club&.id %>
+    <%= form.hidden_field :chapterable_type, value: "Club" %>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <%= form.submit "Save", class: "button" %>
+  </div>
+<% end %>

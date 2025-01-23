@@ -63,12 +63,16 @@ class AccountMailer < ApplicationMailer
     end
   end
 
-  def chapter_assigned(account)
+  def chapterable_assigned(account)
     @first_name = account.first_name
-    @chapter_name = account.current_chapter.name
+    @chapterable_assignment = account.current_chapterable_assignment
+    @chapterable_name = @chapterable_assignment.chapterable.name.presence ||
+      "a #{@chapterable_assignment.chapterable_type}"
+    @assigned_to_chapter = account.assigned_to_chapter?
 
     I18n.with_locale(account.locale) do
-      mail to: account.email
+      mail to: account.email,
+        subject: "#{@chapterable_assignment.chapterable_type} assignment"
     end
   end
 end

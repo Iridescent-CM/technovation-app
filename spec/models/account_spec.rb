@@ -306,7 +306,7 @@ RSpec.describe Account do
           let(:student) { FactoryBot.create(:student, :unaffiliated_chapter) }
 
           it "makes a call to send the chapter assigned email to the student when they're assigned to a chapter" do
-            expect(AccountMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
+            expect(AccountMailer).to receive_message_chain(:chapterable_assigned, :deliver_later)
 
             student.account.update(no_chapterable_selected: false)
           end
@@ -316,7 +316,7 @@ RSpec.describe Account do
           let(:mentor) { FactoryBot.create(:mentor, :unaffiliated_chapter) }
 
           it "makes a call to send the chapter assigned email to the mentor when they're assigned to a chapter" do
-            expect(AccountMailer).to receive_message_chain(:chapter_assigned, :deliver_later)
+            expect(AccountMailer).to receive_message_chain(:chapterable_assigned, :deliver_later)
 
             mentor.account.update(no_chapterable_selected: false)
           end
