@@ -83,58 +83,17 @@
 
           <% if @account.student_profile.present? ||
             @account.is_a_mentor? ||
-            @account.is_an_ambassador?
+            @account.is_an_ambassador? ||
+            @account.is_a_club_ambassador?
           %>
 
-            <dl class="chapter-info">
+            <dl class="chapterable-info">
               <% if @account.assigned_to_chapterable? %>
-                <% if @account.assigned_to_chapter? %>
-                  <dt>Chapter (Program name)</dt>
-                  <dd>
-                    <%= link_to(@account.friendly_chapter_program_name,
-                      admin_chapter_path(@account.current_chapter)) %>
-                  </dd>
-
-                  <dt>Chapter Organization</dt>
-                  <dd>
-                    <%= @account.friendly_chapter_organization_name %>
-                  </dd>
-
-                  <p>
-                    <% case @account.current_primary_chapterable_assignment.profile_type %>
-                    <% when "StudentProfile" %>
-                      <% link_text = "Edit chapter" %>
-                    <% when "MentorProfile" %>
-                      <% link_text = "Edit chapter for mentor" %>
-                    <% else %>
-                      <% link_text = "Edit chapter for ChA" %>
-                    <% end %>
-
-                    <%= link_to link_text,
-                      edit_admin_account_chapter_account_assignment_path(
-                      @account,
-                      @account.current_primary_chapterable_assignment
-                    ),
-                    class: "button secondary small" %>
-                  </p>
-                <% elsif @account.assigned_to_club? %>
-                  <dt>Club</dt>
-                  <dd>
-                    <%= link_to(@account.current_club.name.presence,
-                      admin_club_path(@account.current_club)) %>
-                  </dd>
-                <% end %>
+                <%= render "admin/participants/assigned_to_chapterable",
+                  account: @account %>
               <% else %>
-                <dt>Chapter</dt>
-                <dd>Not assigned to a chapter</dd>
-
-                <p>
-                  <%= link_to "Assign #{(@account.is_an_ambassador? && @account.is_a_mentor?) ? 'ChA' : ''} to a chapter",
-                    new_admin_account_chapter_account_assignment_path(
-                      @account
-                    ),
-                    class: "button secondary small" %>
-                </p>
+                <%= render "admin/participants/not_assigned_to_chapterable",
+                  account: @account %>
               <% end %>
             </dl>
           <% end %>
