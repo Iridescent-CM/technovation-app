@@ -294,6 +294,7 @@ Rails.application.routes.draw do
 
     resources :accounts, only: [] do
       resources :chapter_account_assignments, only: [:new, :create, :edit, :update]
+      resources :chapterable_account_assignments, only: [:new, :create, :edit, :update]
     end
     resources :chapters do
       resource :legal_contact, only: [:new, :create, :edit, :update], controller: "chapters/legal_contacts"
