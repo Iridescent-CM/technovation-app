@@ -96,9 +96,14 @@
   %>
 <% end %>
 
-<% if @account.chapter_ambassador_profile %>
+<% if @account.chapter_ambassador? %>
   <%= render 'admin/participants/chapter_ambassador_debugging',
     profile: @account.chapter_ambassador_profile %>
+<% end %>
+
+<% if @account.club_ambassador? %>
+  <%= render 'admin/participants/club_ambassador_debugging',
+    profile: @account.club_ambassador_profile %>
 <% end %>
 
 <% if @account.mentor_profile %>
