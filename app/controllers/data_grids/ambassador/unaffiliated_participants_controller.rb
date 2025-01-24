@@ -1,8 +1,8 @@
 module DataGrids::Ambassador
   class UnaffiliatedParticipantsController < ::AmbassadorController
-    layout "ambassador"
-
     include DatagridController
+
+    layout "ambassador"
 
     use_datagrid with: UnaffiliatedParticipantsGrid,
 
@@ -37,8 +37,6 @@ module DataGrids::Ambassador
       grid = (params[:unaffiliated_participants_grid] ||= {}).merge(
         admin: false,
         allow_state_search: true,
-        chapterable_id: current_ambassador.current_chapterable.id,
-        chapterable_type: current_ambassador.chapterable_type.capitalize,
         country: [country_code],
         state_province: Array(params[:unaffiliated_participants_grid][:state_province])
       )

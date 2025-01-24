@@ -10,8 +10,8 @@ module Ambassador
 
       account.chapterable_assignments.create(
         profile: account.mentor_profile.presence || account.student_profile,
-        chapterable_id: params.fetch(:chapterable).split(",").first,
-        chapterable_type: params.fetch(:chapterable).split(",").second,
+        chapterable_id: current_ambassador.current_chapterable.id,
+        chapterable_type: current_ambassador.chapterable_type.capitalize,
         season: Season.current.year,
         primary: true
       )

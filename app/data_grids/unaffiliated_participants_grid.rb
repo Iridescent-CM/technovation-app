@@ -53,8 +53,7 @@ class UnaffiliatedParticipantsGrid
     else
       link_to "Add to your #{current_ambassador.chapterable_type}",
         ambassador_account_chapterable_account_assignments_path(
-          account_id: account.id,
-          chapterable: "#{grid.chapterable_id},#{grid.chapterable_type}"
+          account_id: account.id
         ),
         class: "button button--remove-bg",
         data: {
