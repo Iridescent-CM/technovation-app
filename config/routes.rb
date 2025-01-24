@@ -167,7 +167,7 @@ Rails.application.routes.draw do
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
     resources :accounts, only: :show, controller: :participants
-    resources :participants, only: [:show, :edit, :update], controller: "/ambassador/participants"
+    resources :participants, only: [:show], controller: "/ambassador/participants"
     resources :participants, only: [:index], controller: "/data_grids/ambassador/participants"
     resources :unaffiliated_participants, only: [:index], controller: "/data_grids/ambassador/unaffiliated_participants"
     resources :participant_sessions, only: [:show, :destroy]
@@ -236,7 +236,7 @@ Rails.application.routes.draw do
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
 
     resource :club_admin, only: :show, controller: "club_admin"
-    resources :participants, only: [:show, :edit, :update], controller: "/ambassador/participants"
+    resources :participants, only: [:show], controller: "/ambassador/participants"
     resources :participants, only: [:index], controller: "/data_grids/ambassador/participants"
     resources :unaffiliated_participants, only: [:index], controller: "/data_grids/ambassador/unaffiliated_participants"
 
