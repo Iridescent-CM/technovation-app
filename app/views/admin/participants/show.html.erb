@@ -83,8 +83,8 @@
 
           <% if @account.student_profile.present? ||
             @account.is_a_mentor? ||
-            @account.is_an_ambassador? ||
-            @account.is_a_club_ambassador?
+            @account.chapter_ambassador? ||
+            @account.club_ambassador?
           %>
 
             <dl class="chapterable-info">
