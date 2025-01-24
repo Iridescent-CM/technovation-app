@@ -1,8 +1,8 @@
 module ClubAmbassador
-  class LocationDetailsController < ClubAmbassadorController
+  class LocationDetailsController < AmbassadorController
     helper_method :current_profile
 
-    layout "club_ambassador"
+    layout "club_ambassador_rebrand"
 
     def show
       render template: "location_details/show"
