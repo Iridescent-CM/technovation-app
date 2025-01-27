@@ -46,10 +46,7 @@ module Salesforce
       salesforce_contact_id = upsert_contact
 
       if salesforce_contact_id.present?
-        create_program_participant_for(
-          contact_id: salesforce_contact_id,
-          program_participant_info: initial_program_participant_info
-        )
+        upsert_program_info(contact_id: salesforce_contact_id)
       end
     end
 
@@ -57,7 +54,7 @@ module Salesforce
       upsert_contact
     end
 
-    def upsert_program_info(season: Season.current.year)
+    def upsert_program_info(season: Season.current.year, contact_id: nil)
       return if season != Season.current.year
 
       program_participant_record = client.query("select Id from Program_Participant__c where Platform_Participant_Id__c = #{account.id} and Type__c = '#{profile_type}' and Year__c = '#{season}'")
@@ -67,11 +64,17 @@ module Salesforce
           program_participant_id: program_participant_record.first.Id
         )
       else
-        contact_record = client.query("select Id from Contact where Platform_Participant_Id__c = #{account.id}")
+        if contact_id.blank?
+          contact_record = client.query("select Id from Contact where Platform_Participant_Id__c = #{account.id}")
 
-        if contact_record.present?
+          if contact_record.present?
+            contact_id = contact_record.first.Id
+          end
+        end
+
+        if contact_id.present?
           create_program_participant_for(
-            contact_id: contact_record.first.Id,
+            contact_id: contact_id,
             program_participant_info: program_participant_info
           )
         end
