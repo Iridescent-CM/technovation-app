@@ -61,6 +61,7 @@ RSpec.describe Salesforce::ApiClient do
   describe "#setup_account_for_current_season" do
     before do
       allow(salesforce_client).to receive(:upsert!).and_return(salesforce_contact_id)
+      allow(salesforce_client).to receive(:query).and_return(nil)
       allow(salesforce_client).to receive(:insert!)
     end
 
@@ -95,7 +96,11 @@ RSpec.describe Salesforce::ApiClient do
               Platform_Participant_Id__c: account.id,
               Year__c: Season.current.year,
               Type__c: profile_type,
-              TG_Division__c: "#{student_profile.division.name} Division"
+              TG_Division__c: "#{student_profile.division.name} Division",
+              Pitch_Video__c: "",
+              Project_Link__c: "",
+              Submitted_Project__c: "Did Not Submit",
+              Team_Name__c: ""
             }
           )
 
@@ -117,7 +122,8 @@ RSpec.describe Salesforce::ApiClient do
               Year__c: Season.current.year,
               Type__c: profile_type,
               Mentor_Role__c: "",
-              Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";")
+              Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
+              Mentor_Team_Status__c: "Not On Team"
             }
           )
 
