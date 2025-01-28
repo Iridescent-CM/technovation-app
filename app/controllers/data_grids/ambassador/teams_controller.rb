@@ -1,45 +1,23 @@
-module ChapterAmbassador
-  class TeamsController < ChapterAmbassadorController
+module DataGrids::Ambassador
+  class TeamsController < ::AmbassadorController
     include DatagridController
+
+    layout "ambassador"
 
     use_datagrid with: TeamsGrid,
       html_scope: ->(scope, user, params) {
         scope
-          .by_chapter(user.current_chapter.id)
+          .by_chapterable(user.chapterable_type.capitalize, user.current_chapterable.id)
           .distinct
           .page(params[:page])
       },
       csv_scope: "->(scope, user, params) {
         scope
-          .by_chapter(user.current_chapter.id)
+          .by_chapterable(user.chapterable_type.capitalize, user.current_chapterable.id)
           .distinct
       }"
 
-    def show
-      @team = Team.by_chapter(current_ambassador.current_chapter.id).find(params[:id])
-    end
-
-    def edit
-      @team = Team.by_chapter(current_ambassador.current_chapter.id).find(params[:id])
-    end
-
-    def update
-      @team = Team.by_chapter(current_ambassador.current_chapter.id).find(params[:id])
-
-      if TeamUpdating.execute(@team, team_params)
-        redirect_to chapter_ambassador_team_path, success: "Team changes saved!"
-      else
-        redirect_to chapter_ambassador_team_path, error: "Error saving team photo. Please try again later."
-      end
-    end
-
     private
-
-    def team_params
-      params.require(:team).permit(
-        :team_photo
-      )
-    end
 
     def grid_params
       grid = (params[:teams_grid] ||= {}).merge(
