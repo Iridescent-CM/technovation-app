@@ -8,6 +8,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     foreign_key: "account_id",
     required: false
 
+  has_many :exports, as: :owner, dependent: :destroy
   has_many :saved_searches, as: :searcher
 
   validates :job_title, presence: true
