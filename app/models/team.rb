@@ -194,9 +194,17 @@ class Team < ActiveRecord::Base
     where(accepting_student_requests: true)
   }
 
-  scope :by_chapter, ->(chapter_id) do
-    joins(:memberships, students: {account: :chapterable_assignments})
-      .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: chapter_id})
+  scope :by_chapterable, ->(chapterable_type, chapterable_id) do
+    joins(:memberships,
+      students: {
+        account: :chapterable_assignments
+      })
+      .where(
+        chapterable_assignments: {
+          chapterable_type: chapterable_type.capitalize,
+          chapterable_id: chapterable_id
+        }
+      )
   end
 
   belongs_to :division

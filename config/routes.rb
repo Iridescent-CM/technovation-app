@@ -178,7 +178,8 @@ Rails.application.routes.draw do
     resource :missing_participant_search, only: [:new, :show, :create]
     resources :missing_participant_locations, only: [:edit, :update]
 
-    resources :teams, only: [:show, :index, :edit, :update]
+    resources :teams, only: [:show, :edit, :update]
+    resources :teams, only: :index, controller: "/data_grids/ambassador/teams"
     resources :team_submissions, only: [:index, :show]
     resources :team_memberships, only: [:create, :destroy]
     resources :team_member_invites, only: [:destroy]
@@ -241,6 +242,9 @@ Rails.application.routes.draw do
     resources :participants, only: :show, controller: "/ambassador/participants"
     resources :participants, only: :index, controller: "/data_grids/ambassador/participants"
     resources :unaffiliated_participants, only: :index, controller: "/data_grids/ambassador/unaffiliated_participants"
+
+    resources :teams, only: [:show, :edit, :update]
+    resources :teams, only: :index, controller: "/data_grids/ambassador/teams"
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
     resources :export_downloads, only: :update
