@@ -201,7 +201,7 @@ class Team < ActiveRecord::Base
       })
       .where(
         chapterable_assignments: {
-          chapterable_type: chapterable_type,
+          chapterable_type: chapterable_type.titleize,
           chapterable_id: chapterable_id
         }
       )
