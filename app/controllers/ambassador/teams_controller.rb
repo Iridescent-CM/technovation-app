@@ -1,5 +1,7 @@
 module Ambassador
   class TeamsController < AmbassadorController
+    layout "ambassador"
+
     def show
       @team = Team.by_chapterable(
         current_ambassador.chapterable_type,
