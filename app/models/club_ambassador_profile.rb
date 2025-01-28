@@ -65,4 +65,12 @@ class ClubAmbassadorProfile < ActiveRecord::Base
   def scope_name
     "club_ambassador"
   end
+
+  def secondary_regions
+    []
+  end
+
+  def other_regions
+    secondary_regions
+  end
 end

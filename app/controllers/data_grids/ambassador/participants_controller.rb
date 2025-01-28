@@ -1,26 +1,38 @@
-module ChapterAmbassador
-  class ParticipantsController < ChapterAmbassadorController
+module DataGrids::Ambassador
+  class ParticipantsController < AmbassadorController
     include DatagridController
+
+    layout "ambassador"
 
     use_datagrid with: AccountsGrid,
 
       html_scope: ->(scope, user, params) {
         scope
           .joins(:chapterable_assignments)
-          .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: user.current_chapter.id})
+          .where(
+            chapterable_assignments: {
+              chapterable_type: user.chapterable_type.capitalize,
+              chapterable_id: user.current_chapterable.id
+            }
+          )
           .page(params[:page])
       },
 
       csv_scope: "->(scope, user, _params) {
         scope
           .joins(:chapterable_assignments)
-          .where(chapterable_assignments: {chapterable_type: 'Chapter', chapterable_id: user.current_chapter.id})
+      .where(chapterable_assignments: {chapterable_type: user.chapterable_type.capitalize, chapterable_id: user.current_chapterable.id})
       }"
 
     def show
       @account = Account
         .joins(:chapterable_assignments)
-        .where(chapterable_assignments: {chapterable_type: "Chapter", chapterable_id: current_ambassador.current_chapter.id})
+        .where(
+          chapterable_assignments: {
+            chapterable_type: current_ambassador.chapterable_type.capitalize,
+            chapterable_id: current_ambassador.current_chapterable.id
+          }
+        )
         .find(params[:id])
 
       @teams = Team.current.in_region(current_ambassador)

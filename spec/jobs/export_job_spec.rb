@@ -29,7 +29,7 @@ RSpec.describe ExportJob do
           scope_names: ["", "chapter_ambassador"],
           season: ["", "2018"]
         },
-        "ChapterAmbassador::ParticipantsController",
+        "Ambassador::ParticipantsController",
         "->(scope, user, params) { scope.in_region(user) }",
         "filename",
         "csv"

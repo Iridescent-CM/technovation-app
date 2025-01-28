@@ -61,28 +61,30 @@
   </dl>
 </div>
 
-<% if not profile.team.present? %>
-  <h4 class="reset">Help them with their team matching</h4>
+<% if current_scope != "club_ambassador" %>
+  <% if !profile.team.present? %>
+    <h4 class="reset">Help them with their team matching</h4>
 
-  <div class="panel">
-    <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
-      <%= hidden_field_tag :account_id, profile.account_id %>
+    <div class="panel">
+      <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
+        <%= hidden_field_tag :account_id, profile.account_id %>
 
-      <h6>Add <%= profile.full_name %> to a team</h6>
+        <h6>Add <%= profile.full_name %> to a team</h6>
 
-      <p>
+        <p>
         <%= select_tag "team_id",
-            options_from_collection_for_select(@teams, "id", "name"),
-            prompt: "Select a team",
-            required: true,
-            class: "chosen" %>
+          options_from_collection_for_select(@teams, "id", "name"),
+          prompt: "Select a team",
+          required: true,
+          class: "chosen" %>
       </p>
 
       <p>
-        <%= submit_tag 'Add', class: "button" %>
+      <%= submit_tag 'Add', class: "button" %>
       </p>
     <% end %>
-  </div>
+    </div>
+  <% end %>
 <% end %>
 
 <% if (current_account.is_admin? && profile.age >= 14) ||
