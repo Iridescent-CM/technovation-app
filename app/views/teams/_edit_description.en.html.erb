@@ -4,7 +4,7 @@
   <%= simple_format team.description %>
 <% end %>
 
-<% unless current_scope == "chapter_ambassador" %>
+<% if current_scope == "admin" %>
   <%= link_to t("controllers.teams.edit.link"),
     send("edit_#{current_scope}_team_path", team),
     class: "button small" %>
