@@ -49,7 +49,8 @@ module DatagridController
           }
         )
 
-        if controller_name == "unaffiliated_participants"
+        if controller_name == "unaffiliated_participants" ||
+            controller_name == "teams"
           render "data_grids/#{controller_name}/index"
         end
       end
