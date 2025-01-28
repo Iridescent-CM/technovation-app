@@ -2,7 +2,7 @@
   <dt>Primary location:</dt>
   <dd><%= team.primary_location %></dd>
 
-  <% unless current_scope == "chapter_ambassador" %>
+  <% if current_scope == "admin" %>
     <% if team.current? %>
       <p>
         <%= link_to "Change this team's location",
