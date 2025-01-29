@@ -90,7 +90,7 @@
             <dl class="chapterable-info">
               <% if @account.assigned_to_chapterable? %>
                 <%= render partial: "admin/participants/assigned_to_chapterable",
-                  locals: { account: @account, chapterable_assignment: @account.current_chapterable_assignment} %>
+                  locals: { account: @account, chapterable_assignment: @account.current_chapterable_assignment } %>
               <% else %>
                 <%= render "admin/participants/not_assigned_to_chapterable",
                   account: @account %>
