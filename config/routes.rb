@@ -236,6 +236,7 @@ Rails.application.routes.draw do
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
 
     resource :club_admin, only: :show, controller: "club_admin"
+    resource :resources, only: :show
 
     resources :participants, only: :show, controller: "/ambassador/participants"
     resources :participants, only: :index, controller: "/data_grids/ambassador/participants"
