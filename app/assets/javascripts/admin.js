@@ -91,14 +91,48 @@ document.addEventListener("turbolinks:load", function () {
         clubSelect.style.display = "block";
         registerAtAnyTime.checked = true;
         registerAtAnyTime.disabled = true;
-      }
-      else {
+      } else {
         chapterSelect.style.display = "none";
         clubSelect.style.display = "none";
         registerAtAnyTime.checked = false;
         registerAtAnyTime.disabled = false;
       }
     });
+  }
+
+  const chapterableTypeSelect = document.getElementById(
+    "chapterable_account_assignment_chapterable_type"
+  );
+
+  if (chapterableTypeSelect) {
+    const chapterContainer = document.getElementById("chapter-container");
+    const chapterSelect = document.getElementById(
+      "chapterable_account_assignment_chapter_id"
+    );
+    const clubContainer = document.getElementById("club-container");
+    const clubSelect = document.getElementById(
+      "chapterable_account_assignment_club_id"
+    );
+
+    const updateDropdownVisibility = () => {
+      const selectedChapterableType = chapterableTypeSelect.value;
+
+      if (selectedChapterableType === "chapter") {
+        chapterContainer.classList.remove("hidden");
+        clubContainer.classList.add("hidden");
+        clubSelect.value = "";
+      } else if (selectedChapterableType === "club") {
+        clubContainer.classList.remove("hidden");
+        chapterContainer.classList.add("hidden");
+        chapterSelect.value = "";
+      } else {
+        chapterContainer.classList.add("hidden");
+        clubContainer.classList.add("hidden");
+      }
+    };
+
+    chapterableTypeSelect.addEventListener("change", updateDropdownVisibility);
+    updateDropdownVisibility();
   }
 });
 
