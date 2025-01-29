@@ -1,20 +1,52 @@
+<%
+  pre_selected_chapterable_type = if @account.is_a_club_ambassador?
+    "club"
+  elsif @account.is_an_ambassador?
+    "chapter"
+  end
+%>
+
+<p>
+  You are updating the primary assignment for <%= @account.full_name %>.
+</p>
+
 <%= form_with model: @chapterable_account_assignment,
   url: (
     @chapterable_account_assignment.new_record? ?
-    admin_account_chapterable_account_assignments_path(@account) :
-    admin_account_chapterable_account_assignment_path(@account, @chapterable_account_assignment)
+      admin_account_chapterable_account_assignments_path(@account) :
+      admin_account_chapterable_account_assignment_path(@account, @chapterable_account_assignment)
   ),
   local: true do |form| %>
 
   <div>
-    <%= form.label :chapterable_id, "Select Club" %>
-    <%= form.collection_select :chapterable_id,
-      @chapterables,
+    <%= form.label :chapterable_type, "Select Chapter or Club" %>
+    <%= form.select :chapterable_type,
+      [
+        ["Chapter", "chapter"],
+        ["Club", "club"]
+      ],
+      prompt: "Select Chapter or Club",
+      selected: @chapterable_account_assignment.chapterable_type&.downcase.presence || pre_selected_chapterable_type %>
+  </div>
+
+  <div id="chapter-container" class="hidden">
+    <%= form.label :chapter_id, "Select Chapter" %>
+    <%= form.collection_select :chapter_id,
+      @chapters,
       :id,
-      ->(club) { "#{club.name} - #{club.country.presence || 'No Country'}" },
+      ->(chapter) { "#{chapter.name.presence || chapter.organization_name.presence} - #{chapter.country.presence || "No Country"}" },
       include_blank: "None",
-      selected: @account.current_club&.id %>
-    <%= form.hidden_field :chapterable_type, value: "Club" %>
+      selected: @account.current_chapter&.id  %>
+  </div>
+
+  <div id="club-container" class="hidden">
+    <%= form.label :club_id, "Select Club" %>
+    <%= form.collection_select :club_id,
+    @clubs,
+    :id,
+    ->(club) { "#{club.name.presence} - #{club.country.presence || "No Country"}" },
+    include_blank: "None",
+    selected: @account.current_club&.id %>
   </div>
 
   <div style="margin-top: 16px;">
