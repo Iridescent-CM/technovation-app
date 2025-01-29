@@ -1,21 +1,19 @@
-<% if @account.is_a_club_ambassador? %>
-  <dt>Club</dt>
-  <dd>Not assigned to a club</dd>
-  <p>
-    <%= link_to "Assign to club",
-      new_admin_account_chapterable_account_assignment_path(
-        @account
-      ),
-      class: "button secondary small" %>
-  </p>
-<% else %>
-  <dt>Chapter</dt>
-  <dd>Not assigned to a chapter</dd>
-  <p>
-    <%= link_to "Assign #{(@account.is_an_ambassador? && @account.is_a_mentor?) ? 'ChA' : ''} to a chapter",
-      new_admin_account_chapter_account_assignment_path(
-        @account
-      ),
-      class: "button secondary small" %>
-  </p>
-<% end %>
+<%
+  chapterable_options_text = if account.is_chapter_ambassador?
+    "chapter"
+  elsif account.is_club_ambassador?
+    "club"
+  else
+    "chapter or club"
+  end
+%>
+
+<dt><%= chapterable_options_text.capitalize %></dt>
+<dd><%= "Not assigned to #{chapterable_options_text}" %></dd>
+<p>
+  <%= link_to "Assign to #{chapterable_options_text}",
+    new_admin_account_chapterable_account_assignment_path(
+      account
+    ),
+    class: "button secondary small" %>
+</p>
