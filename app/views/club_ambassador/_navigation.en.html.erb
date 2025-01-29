@@ -37,4 +37,16 @@
     class: al(club_ambassador_profile_path) %>
 
   <%= link_to "Logout", logout_path, data: { method: :delete } %>
+
+  <hr>
+
+  <%= link_to "Mentor Mode",
+    mentor_dashboard_path,
+    data: { turbolinks: false } %>
+
+  <% if current_ambassador.can_switch_to_judge? %>
+    <%= link_to "Judge Mode",
+      judge_dashboard_path,
+      data: { turbolinks: false } %>
+  <% end %>
 </nav>
