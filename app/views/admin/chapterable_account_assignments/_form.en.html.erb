@@ -34,7 +34,7 @@
     <%= form.collection_select :chapter_id,
       @chapters,
       :id,
-      ->(chapter) { "#{chapter.name.presence || chapter.organization_name.presence} - #{chapter.country.presence || "No Country"}" },
+      ->(chapter) { "#{chapter.organization_name.presence} - #{chapter.country.presence || "No Country"}" },
       include_blank: "None",
       selected: @account.current_chapter&.id  %>
   </div>
