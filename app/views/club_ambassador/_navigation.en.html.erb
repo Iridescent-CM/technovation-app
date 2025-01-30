@@ -36,8 +36,6 @@
     club_ambassador_resources_path,
     class: al(club_ambassador_resources_path) %>
 
-  <%= link_to "Logout", logout_path, data: { method: :delete } %>
-
   <hr>
 
   <%= link_to "Mentor Mode",
@@ -49,4 +47,6 @@
       judge_dashboard_path,
       data: { turbolinks: false } %>
   <% end %>
+
+  <%= link_to "Logout", logout_path, data: { method: :delete } %>
 </nav>
