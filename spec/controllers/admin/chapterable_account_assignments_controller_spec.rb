@@ -14,7 +14,8 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
         post :create, params: {
           account_id: club_ambassador.account.id,
           chapterable_account_assignment: {
-            chapterable_id: club.id,
+            club_id: club.id,
+            chapter_id: nil,
             chapterable_type: "Club"
           }
         }
@@ -26,7 +27,8 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
         post :create, params: {
           account_id: club_ambassador.account.id,
           chapterable_account_assignment: {
-            chapterable_id: club.id,
+            club_id: club.id,
+            chapter_id: nil,
             chapterable_type: "Club"
           }
         }
@@ -40,7 +42,8 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
         post :create, params: {
           account_id: club_ambassador.account.id,
           chapterable_account_assignment: {
-            chapterable_id: nil,
+            club_id: nil,
+            chapter_id: nil,
             chapterable_type: "Club"
           }
         }
