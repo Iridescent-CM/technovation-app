@@ -248,59 +248,61 @@ RSpec.describe Student::JoinRequestsController do
     end
   end
 
-  describe "mentor chapter assignments" do
-    context "when two students from the same chapter are on a team" do
-      let(:team) { FactoryBot.create(:team) }
-      let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
-      let(:chapter) { FactoryBot.create(:chapter) }
-      let(:student1) { FactoryBot.create(:student, :not_assigned_to_chapter) }
-      let(:student2) { FactoryBot.create(:student, :not_assigned_to_chapter) }
-      let(:join_request) {
-        FactoryBot.create(
-          :join_request,
-          team: team,
-          requestor: mentor
-        )
-      }
+  describe "mentor chapterable assignments" do
+    %w[club chapter].each do |chapterable_type|
+      context "when two students from the same #{chapterable_type} are on a team" do
+        let(:team) { FactoryBot.create(:team) }
+        let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
+        let(:chapterable) { FactoryBot.create(chapterable_type.to_sym) }
+        let(:student1) { FactoryBot.create(:student, :not_assigned_to_chapter) }
+        let(:student2) { FactoryBot.create(:student, :not_assigned_to_chapter) }
+        let(:join_request) {
+          FactoryBot.create(
+            :join_request,
+            team: team,
+            requestor: mentor
+          )
+        }
 
-      before do
-        student1.chapterable_assignments.create(
-          chapterable: chapter,
-          account: student1.account,
-          season: Season.current.year,
-          primary: true
-        )
-
-        student2.chapterable_assignments.create(
-          chapterable: chapter,
-          account: student2.account,
-          season: Season.current.year,
-          primary: true
-        )
-
-        team.students << student1
-        team.students << student2
-        team.save
-      end
-
-      before do
-        sign_in(student1)
-      end
-
-      context "when the mentor join request for the team is accepted" do
         before do
-          put :update, params: {
-            id: join_request.review_token,
-            join_request: {status: :approved}
-          }
+          student1.chapterable_assignments.create(
+            chapterable: chapterable,
+            account: student1.account,
+            season: Season.current.year,
+            primary: true
+          )
+
+          student2.chapterable_assignments.create(
+            chapterable: chapterable,
+            account: student2.account,
+            season: Season.current.year,
+            primary: true
+          )
+
+          team.students << student1
+          team.students << student2
+          team.save
         end
 
-        it "creates one non-primary chapter assignment (since both students belong to the same chapter)" do
-          expect(mentor.account.chapterable_assignments.where(chapterable: chapter, primary: false).count).to eq(1)
+        before do
+          sign_in(student1)
         end
 
-        it "assigns the mentor to the student's chapter" do
-          expect(mentor.account.current_chapters).to include(student1.account.current_chapter)
+        context "when the mentor join request for the team is accepted" do
+          before do
+            put :update, params: {
+              id: join_request.review_token,
+              join_request: {status: :approved}
+            }
+          end
+
+          it "creates one non-primary chapterable assignment (since both students belong to the same #{chapterable_type})" do
+            expect(mentor.account.chapterable_assignments.where(chapterable: chapterable, primary: false).count).to eq(1)
+          end
+
+          it "assigns the mentor to the student's #{chapterable_type}" do
+            expect(mentor.account.chapterable_assignments.map(&:chapterable)).to include(student1.account.current_primary_chapterable_assignment.chapterable)
+          end
         end
       end
     end
