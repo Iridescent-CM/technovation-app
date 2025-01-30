@@ -1,0 +1,8 @@
+<% provide :title, "Team Submissions" %>
+
+<%= render "datagrid/datagrid",
+  grid: @submissions_grid,
+  form_url: send("#{current_scope}_team_submissions_path"),
+  model_name: "team_submission",
+  scope: current_scope.to_sym
+%>
