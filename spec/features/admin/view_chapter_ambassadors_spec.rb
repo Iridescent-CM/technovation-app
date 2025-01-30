@@ -12,7 +12,7 @@ RSpec.feature "Admins view Chapter Ambassador participant details" do
 
     expect(current_path).to eq(admin_participant_path(chapter_ambassador.account))
 
-    expect(page).to have_content "Chapter (Program name)"
+    expect(page).to have_content "Chapter (Name)"
     expect(page).to have_link chapter.name, href: admin_chapter_path(chapter)
     expect(page).to have_content "Chapter Organization"
     expect(page).to have_content "#{chapter.organization_name}"
@@ -29,7 +29,7 @@ RSpec.feature "Admins view Chapter Ambassador participant details" do
     expect(current_path).to eq(admin_participant_path(chapter_ambassador.account))
 
     expect(page).to have_content "Chapter"
-    expect(page).to have_content "Not assigned to a chapter"
+    expect(page).to have_content "Not assigned to chapter"
   end
 end
 
