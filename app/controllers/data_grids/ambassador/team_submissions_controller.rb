@@ -1,25 +1,30 @@
-module ChapterAmbassador
-  class TeamSubmissionsController < ChapterAmbassadorController
+module DataGrids::Ambassador
+  class TeamSubmissionsController < AmbassadorController
     include DatagridController
+
+    layout "ambassador"
 
     use_datagrid with: SubmissionsGrid,
 
       html_scope: ->(scope, user, params) {
         scope
-          .by_chapterable("Chapter", user.current_chapter.id)
+          .by_chapterable(
+            user.chapterable_type,
+            user.current_chapterable.id
+          )
           .distinct
           .page(params[:page])
       },
 
       csv_scope: "->(scope, user, params) {
         scope
-          .by_chapterable('Chapter', user.current_chapter.id)
+          .by_chapterable(
+            user.chapterable_type,
+            user.current_chapter.id
+          )
           .distinct
       }"
 
-    def show
-      @team_submission = TeamSubmission.friendly.find(params[:id])
-    end
 
     private
 
