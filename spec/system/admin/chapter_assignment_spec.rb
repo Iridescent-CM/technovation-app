@@ -17,9 +17,10 @@ RSpec.describe "Admins assigning participants to chapters" do
       it "assigns the selected chapter to the student" do
         visit admin_participant_path(student.account)
 
-        click_link "Assign to a chapter"
+        click_link "Assign to chapter or club"
 
-        select chapter.organization_name
+        select "Chapter", from: "chapterable_account_assignment_chapterable_type"
+        select "#{chapter.organization_name} - No Country", from: "chapterable_account_assignment_chapter_id"
         click_button "Save"
 
         expect(student.account.current_chapter).to eq(chapter)
@@ -45,7 +46,8 @@ RSpec.describe "Admins assigning participants to chapters" do
 
         click_link "Edit chapter"
 
-        select new_chapter.organization_name
+        select "Chapter", from: "chapterable_account_assignment_chapterable_type"
+        select "#{new_chapter.organization_name} - No Country", from: "chapterable_account_assignment_chapter_id"
         click_button "Save"
 
         expect(student.account.current_chapter).to eq(new_chapter)
@@ -69,9 +71,10 @@ RSpec.describe "Admins assigning participants to chapters" do
       it "assigns the selected chapter to the mentor" do
         visit admin_participant_path(mentor.account)
 
-        click_link "Assign to a chapter"
+        click_link "Assign to chapter or club"
 
-        select chapter.organization_name
+        select "Chapter", from: "chapterable_account_assignment_chapterable_type"
+        select "#{chapter.organization_name} - No Country", from: "chapterable_account_assignment_chapter_id"
         click_button "Save"
 
         expect(mentor.account.current_chapter).to eq(chapter)
@@ -97,7 +100,8 @@ RSpec.describe "Admins assigning participants to chapters" do
 
         click_link "Edit chapter"
 
-        select new_chapter.organization_name
+        select "Chapter", from: "chapterable_account_assignment_chapterable_type"
+        select "#{new_chapter.organization_name} - No Country", from: "chapterable_account_assignment_chapter_id"
         click_button "Save"
 
         expect(mentor.account.current_chapter).to eq(new_chapter)
@@ -121,7 +125,9 @@ RSpec.describe "Admins assigning participants to chapters" do
       it "assigns the selected chapter to the chapter ambassador" do
         visit admin_participant_path(chapter_ambassador.account)
 
-        click_link "Assign to a chapter"
+        click_link "Assign to chapter"
+
+        select "Chapter", from: "chapterable_account_assignment_chapterable_type"
 
         select chapter.organization_name
         click_button "Save"
@@ -149,6 +155,7 @@ RSpec.describe "Admins assigning participants to chapters" do
 
         click_link "Edit chapter"
 
+        select "Chapter", from: "chapterable_account_assignment_chapterable_type"
         select new_chapter.organization_name
         click_button "Save"
 

@@ -1,43 +1,33 @@
-<% if @account.assigned_to_chapter? %>
-  <dt>Chapter (Program name)</dt>
-  <dd>
-    <%= link_to(@account.friendly_chapter_program_name,
-      admin_chapter_path(@account.current_chapter)) %>
-  </dd>
+<% chapterable_type = chapterable_assignment.chapterable_type %>
 
+<dt><%= chapterable_type %> (Name)</dt>
+<dd>
+  <%= link_to(chapterable_assignment.chapterable.name.presence || "Name not set",
+    send("admin_#{chapterable_type.downcase}_path",
+      chapterable_assignment.chapterable)) %>
+</dd>
+
+<% if account.assigned_to_chapter? %>
   <dt>Chapter Organization</dt>
   <dd>
-    <%= @account.friendly_chapter_organization_name %>
+    <%= account.friendly_chapter_organization_name %>
   </dd>
-
-  <p>
-    <% case @account.current_primary_chapterable_assignment.profile_type %>
-    <% when "StudentProfile" %>
-      <% link_text = "Edit chapter" %>
-    <% when "MentorProfile" %>
-      <% link_text = "Edit chapter for mentor" %>
-    <% else %>
-      <% link_text = "Edit chapter for ChA" %>
-    <% end %>
-
-    <%= link_to link_text,
-      edit_admin_account_chapter_account_assignment_path(
-        @account,
-        @account.current_primary_chapterable_assignment
-      ),
-      class: "button secondary small" %>
-  </p>
-<% elsif @account.assigned_to_club? %>
-  <dt>Club</dt>
-  <dd>
-    <%= link_to(@account.current_club.name.presence,
-      admin_club_path(@account.current_club)) %>
-  </dd>
-
-  <%= link_to "Edit club",
-    edit_admin_account_chapterable_account_assignment_path(
-      @account,
-      @account.current_primary_chapterable_assignment
-    ),
-    class: "button secondary small" %>
 <% end %>
+
+<% case chapterable_assignment.profile_type %>
+<% when "StudentProfile" %>
+  <% link_text = "Edit #{chapterable_type.downcase} for student" %>
+<% when "MentorProfile" %>
+  <% link_text = "Edit #{chapterable_type.downcase} for mentor" %>
+<% when "ClubAmbassadorProfile" %>
+  <% link_text = "Edit club for ClA" %>
+<% else %>
+  <% link_text = "Edit chapter for ChA" %>
+<% end %>
+
+<%= link_to link_text,
+  edit_admin_account_chapterable_account_assignment_path(
+    account,
+    chapterable_assignment
+  ),
+  class: "button secondary small" %>
