@@ -38,7 +38,7 @@ class NullAccount < NullObject
   end
 
   def current_chapter
-    NullChapter.new
+    NullChapterable.new
   end
 
   class NullCertificates

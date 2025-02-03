@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe NullChapter do
-  let(:null_chapter) { NullChapter.new }
+RSpec.describe NullChapterable do
+  let(:null_chapter) { NullChapterable.new }
 
   describe "#name" do
     it "returns nil" do
