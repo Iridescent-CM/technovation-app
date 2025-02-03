@@ -40,7 +40,7 @@ class ChapterAmbassadorController < ApplicationController
   end
 
   def current_chapter
-    @current_chapter ||= current_ambassador.chapter || ::NullChapter.new
+    @current_chapter ||= current_ambassador.chapter || ::NullChapterable.new
   end
 
   def chapter_ambassador
