@@ -43,9 +43,7 @@ class AmbassadorController < ApplicationController
   end
 
   def current_chapterable
-    @current_chapterable ||= current_ambassador.chapter ||
-      current_ambassador.club ||
-      ::NullChapter.new
+    @current_chapterable ||= current_ambassador.chapterable || ::NullChapter.new
   end
 
   def current_profile
