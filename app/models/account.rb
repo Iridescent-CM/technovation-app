@@ -1053,11 +1053,11 @@ class Account < ActiveRecord::Base
   end
 
   def current_chapterable
-    current_primary_chapter || current_primary_club || ::NullChapter.new
+    current_primary_chapter || current_primary_club || ::NullChapterable.new
   end
 
   def current_chapter
-    current_primary_chapter || ::NullChapter.new
+    current_primary_chapter || ::NullChapterable.new
   end
 
   def current_primary_chapter
