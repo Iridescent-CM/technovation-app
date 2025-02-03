@@ -764,7 +764,8 @@ class Account < ActiveRecord::Base
     !mentor_profile.present? &&
       (judge_profile.present? ||
         chapter_ambassador_profile.present? ||
-          (options[:admin] && student_profile.present? && age >= MINIMUM_MENTOR_AGE))
+        club_ambassador_profile.present? ||
+        (options[:admin] && student_profile.present? && age >= MINIMUM_MENTOR_AGE))
   end
 
   def can_be_a_judge?
