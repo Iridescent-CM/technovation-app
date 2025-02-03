@@ -54,9 +54,10 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     !onboarded?
   end
 
-  def club
+  def chapterable
     account.current_primary_club
   end
+  alias_method :club, :chapterable
 
   def chapterable_type
     "club"

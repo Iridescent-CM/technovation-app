@@ -127,9 +127,10 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     viewed_community_connections
   end
 
-  def chapter
+  def chapterable
     account.current_primary_chapter
   end
+  alias_method :chapter, :chapterable
 
   def chapterable_type
     "chapter"
