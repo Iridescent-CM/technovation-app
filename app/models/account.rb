@@ -816,7 +816,7 @@ class Account < ActiveRecord::Base
   end
 
   def can_switch_to_mentor?
-    if is_an_ambassador?
+    if chapter_ambassador? || club_ambassador?
       true
     elsif is_a_judge?
       !!ENV.fetch("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", false) ||
