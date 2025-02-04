@@ -74,16 +74,18 @@
       their mentor profile by converting their account.
     </p>
 
-    <p>
+    <% if current_scope == "chapter_ambassador" %>
+      <p>
       <%= link_to "Convert to a judge-only account",
         send("#{current_scope}_mentor_to_judge_conversions_path", account_id: profile.account_id),
         class: 'button',
         data: {
           method: :post,
           confirm: "Convert #{profile.name} to a judge?" +
-                   "<p>This will delete their mentor profile</p>",
+            "<p>This will delete their mentor profile</p>",
         } %>
-    </p>
+      </p>
+    <% end %>
   <% end %>
 
   <% if current_account.is_admin? && !profile.chapter_ambassador_profile.present? %>
