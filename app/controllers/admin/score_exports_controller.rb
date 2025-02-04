@@ -24,6 +24,7 @@ module Admin
 
       grid.merge({
         round: round,
+        season: params[:scores_grid][:season] || Season.current.year,
         column_names: detect_extra_columns(grid)
       })
     end
