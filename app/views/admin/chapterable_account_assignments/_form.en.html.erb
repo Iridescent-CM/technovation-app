@@ -1,7 +1,7 @@
 <%
-  pre_selected_chapterable_type = if @account.is_a_club_ambassador?
+  pre_selected_chapterable_type = if @account.club_ambassador?
     "club"
-  elsif @account.is_an_ambassador?
+  elsif @account.chapter_ambassador?
     "chapter"
   end
 %>

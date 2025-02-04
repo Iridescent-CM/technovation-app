@@ -8,7 +8,7 @@ class NullChapterable < NullObject
   end
 
   def primary_contact
-    NullAccount.new
+    nil
   end
 
   def chapter_program_information
