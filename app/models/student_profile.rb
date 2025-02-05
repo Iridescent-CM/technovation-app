@@ -399,7 +399,7 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def parent_guardian_name_parts
-    @parent_guardian_name_parts ||= parent_guardian_name.split(/\s+/, 2)
+    @parent_guardian_name_parts ||= parent_guardian_name.present? ? parent_guardian_name.split(/\s+/, 2) : []
   end
 
   def reset_parent

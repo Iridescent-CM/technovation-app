@@ -185,6 +185,18 @@ RSpec.describe StudentProfile do
         expect(student_profile.parent_guardian_last_name).to eq(nil)
       end
     end
+
+    context "when the parent/guardian name is blank" do
+      let(:parent_guardian_name) { nil }
+
+      it "doesn't return anything for the first name" do
+        expect(student_profile.parent_guardian_first_name).to eq(nil)
+      end
+
+      it "doesn't return anything for the last name" do
+        expect(student_profile.parent_guardian_last_name).to eq(nil)
+      end
+    end
   end
 
   it "allows ON FILE as the email ONLY by admin action" do
