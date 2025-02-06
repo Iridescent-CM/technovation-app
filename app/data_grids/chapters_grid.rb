@@ -45,6 +45,21 @@ class ChaptersGrid
 
   filter(:visible_on_map, :xboolean)
 
+  filter :country,
+    :enum,
+    header: "Country",
+    select: ->(g) {
+      CountryStateSelect.countries_collection
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    } do |values|
+    clauses = values.flatten.map { |v| "chapters.country = '#{v}'" }
+    where(clauses.join(" OR "))
+  end
+
   filter :organization_type,
     :enum,
     header: "Organization type",
