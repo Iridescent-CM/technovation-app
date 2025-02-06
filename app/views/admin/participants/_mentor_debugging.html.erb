@@ -209,26 +209,24 @@
   </dl>
 </div>
 
-<% if current_scope == "chapter_ambassador" %>
-  <h4 class="reset">Help them with their team matching</h4>
+<h4 class="reset">Help them with their team matching</h4>
 
-  <div class="panel">
-    <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
-      <%= hidden_field_tag :account_id, profile.account_id %>
+<div class="panel">
+  <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
+    <%= hidden_field_tag :account_id, profile.account_id %>
 
-      <h6>Add <%= profile.full_name %> to a team</h6>
+    <h6>Add <%= profile.full_name %> to a team</h6>
 
-      <p>
-        <%= select_tag "team_id",
-          options_from_collection_for_select(@teams, "id", "name"),
-          prompt: "Select a team",
-          required: true,
-          class: "chosen" %>
-      </p>
+    <p>
+      <%= select_tag "team_id",
+        options_from_collection_for_select(@teams, "id", "name"),
+        prompt: "Select a team",
+        required: true,
+        class: "chosen" %>
+    </p>
 
-      <p>
-        <%= submit_tag 'Add', class: "button" %>
-      </p>
-    <% end %>
-  </div>
-<% end %>
+    <p>
+      <%= submit_tag 'Add', class: "button" %>
+    </p>
+  <% end %>
+</div>
