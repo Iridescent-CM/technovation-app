@@ -54,6 +54,20 @@ class ClubAmbassadorsGrid
     )
   end
 
+  filter :has_mentor_profile,
+    :enum,
+    select: [
+      ["Yes, is also a mentor", "yes"],
+      ["No", "no"]
+    ],
+    filter_group: "common" do |value, scope, grid|
+      is_is_not = (value === "yes") ? "IS NOT" : "IS"
+
+      scope.left_outer_joins(:mentor_profile).where(
+        "mentor_profiles.id #{is_is_not} NULL"
+      )
+    end
+
   filter :assigned_to_club,
     :enum,
     select: [
