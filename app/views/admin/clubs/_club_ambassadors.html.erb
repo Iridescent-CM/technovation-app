@@ -1,0 +1,17 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h3>
+      Club Ambassadors
+    </h3>
+
+    <div class="panel">
+      <ul>
+        <% club.club_ambassadors.each do |club_ambassador| %>
+          <li>
+            <%= link_to club_ambassador.full_name, admin_participant_path(club_ambassador) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
