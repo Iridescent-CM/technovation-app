@@ -8,6 +8,9 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     foreign_key: "account_id",
     required: false
 
+  has_many :exports, as: :owner, dependent: :destroy
+  has_many :saved_searches, as: :searcher
+
   validates :job_title, presence: true
 
   after_update :update_onboarding_status
@@ -51,11 +54,24 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     !onboarded?
   end
 
-  def club
+  def chapterable
     account.current_primary_club
+  end
+  alias_method :club, :chapterable
+
+  def chapterable_type
+    "club"
   end
 
   def scope_name
     "club_ambassador"
+  end
+
+  def secondary_regions
+    []
+  end
+
+  def other_regions
+    secondary_regions
   end
 end

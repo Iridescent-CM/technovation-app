@@ -43,11 +43,18 @@ module DatagridController
     respond_to do |f|
       f.html do
         instance_variable_set(
-          "@#{param_root}",
+          :"@#{param_root}",
           grid_klass.new(grid_params) { |scope|
             modify_html_scope(scope)
           }
         )
+
+        if controller_name == "participants" ||
+            controller_name == "team_submissions" ||
+            controller_name == "teams" ||
+            controller_name == "unaffiliated_participants"
+          render "data_grids/#{controller_name}/index"
+        end
       end
 
       f.json do
@@ -86,13 +93,13 @@ module DatagridController
 
       f.csv do
         instance_variable_set(
-          "@#{param_root}",
+          :"@#{param_root}",
           grid_klass.new(grid_params) { |scope|
             modify_csv_scope(scope)
           }
         )
 
-        send_export(instance_variable_get("@#{param_root}"), :csv)
+        send_export(instance_variable_get(:"@#{param_root}"), :csv)
       end
     end
   end
@@ -158,7 +165,7 @@ module DatagridController
       "#{passed_filename}.#{format}"
     end
 
-    send_data collection.public_send("to_#{format}"),
+    send_data collection.public_send(:"to_#{format}"),
       type: "text/csv",
       disposition: "inline",
       filename: filename

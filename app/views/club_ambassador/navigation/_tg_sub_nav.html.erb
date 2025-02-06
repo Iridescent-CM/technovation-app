@@ -11,5 +11,9 @@
     <%= link_to t("views.club_ambassador.navigation.my_profile"),
                 club_ambassador_profile_path,
                 class: al(club_ambassador_profile_path) + " sub-nav-item"%>
+
+    <%= link_to t("views.club_ambassadors.navigation.club_admin_activity"),
+                club_ambassador_participants_path,
+                class: al(club_ambassador_participants_path) + " sub-nav-item"%>
   </nav>
 </div>

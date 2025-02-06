@@ -591,8 +591,8 @@ class Account < ActiveRecord::Base
     allow_blank: true,
     format: {with: /\A[0-9+\-\s]+\z/, message: "can only contain numbers, dashes, and +"}
 
-  validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? && !is_club_ambassador? }
-  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador? || is_club_ambassador?) && new_record? }
+  validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_chapter_ambassador? && !club_ambassador? }
+  validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && new_record? }
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
@@ -764,7 +764,8 @@ class Account < ActiveRecord::Base
     !mentor_profile.present? &&
       (judge_profile.present? ||
         chapter_ambassador_profile.present? ||
-          (options[:admin] && student_profile.present? && age >= MINIMUM_MENTOR_AGE))
+        club_ambassador_profile.present? ||
+        (options[:admin] && student_profile.present? && age >= MINIMUM_MENTOR_AGE))
   end
 
   def can_be_a_judge?
@@ -794,11 +795,11 @@ class Account < ActiveRecord::Base
     chapter_ambassador_profile.present?
   end
   alias_method :is_chapter_ambassador?, :is_an_ambassador?
+  alias_method :chapter_ambassador?, :is_an_ambassador?
 
-  def is_a_club_ambassador?
+  def club_ambassador?
     club_ambassador_profile.present?
   end
-  alias_method :is_club_ambassador?, :is_a_club_ambassador?
 
   def is_admin?
     admin_profile.present?
@@ -815,7 +816,7 @@ class Account < ActiveRecord::Base
   end
 
   def can_switch_to_mentor?
-    if is_an_ambassador?
+    if chapter_ambassador? || club_ambassador?
       true
     elsif is_a_judge?
       !!ENV.fetch("ENABLE_MENTOR_MODE_FOR_ALL_JUDGES", false) ||
@@ -1052,8 +1053,12 @@ class Account < ActiveRecord::Base
     current_chapter.present?
   end
 
+  def current_chapterable
+    current_primary_chapter || current_primary_club || ::NullChapterable.new
+  end
+
   def current_chapter
-    current_primary_chapter || ::NullChapter.new
+    current_primary_chapter || ::NullChapterable.new
   end
 
   def current_primary_chapter

@@ -1,0 +1,52 @@
+<h6>Technovation Ambassador</h6>
+
+<nav>
+  <%= link_to "Dashboard", club_ambassador_dashboard_path %>
+
+  <%= link_to "Participants",
+    club_ambassador_participants_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_participants_path) %>
+
+  <%= link_to "Unaffiliated Participants",
+    club_ambassador_unaffiliated_participants_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_unaffiliated_participants_path) %>
+
+  <%= link_to "Teams",
+    club_ambassador_teams_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_teams_path) %>
+
+  <%= link_to "Submissions",
+    club_ambassador_team_submissions_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_team_submissions_path) %>
+
+  <%# link_to "Scores",
+    club_ambassador_scores_path,
+    data: { turbolinks: false },
+    class: al(club_ambassador_scores_path) %>
+
+  <%# link_to "Activity",
+    club_ambassador_activities_path,
+    class: al(club_ambassador_activities_path) %>
+
+  <%= link_to "Club Resources",
+    club_ambassador_resources_path,
+    class: al(club_ambassador_resources_path) %>
+
+  <hr>
+
+  <%= link_to "Mentor Mode",
+    mentor_dashboard_path,
+    data: { turbolinks: false } %>
+
+  <% if current_ambassador.can_switch_to_judge? %>
+    <%= link_to "Judge Mode",
+      judge_dashboard_path,
+      data: { turbolinks: false } %>
+  <% end %>
+
+  <%= link_to "Logout", logout_path, data: { method: :delete } %>
+</nav>

@@ -21,6 +21,12 @@ module CreateMentorProfile
         job_title: account.chapter_ambassador_profile.job_title,
         mentor_type_ids: [MentorType.find_by(name: "Industry professional")&.id]
       }
+    elsif account.club_ambassador_profile.present?
+      {
+        school_company_name: account.club_ambassador_profile.club.name,
+        job_title: account.club_ambassador_profile.job_title,
+        mentor_type_ids: [MentorType.find_by(name: "Industry professional")&.id]
+      }
     elsif account.judge_profile.present?
       {
         school_company_name: account.judge_profile.company_name,

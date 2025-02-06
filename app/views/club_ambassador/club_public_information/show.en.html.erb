@@ -8,18 +8,18 @@
 
       <div class="ml-8">
         <p class="font-semibold">Club Name</p>
-        <p class="mb-4"><%= current_club.name.presence || "Not set" %></p>
+        <p class="mb-4"><%= current_chapterable.name.presence || "Not set" %></p>
 
         <p class="font-semibold">Program Summary</p>
-        <p class="mb-4"><%= current_club.summary.presence || "Not set" %></p>
+        <p class="mb-4"><%= current_chapterable.summary.presence || "Not set" %></p>
 
         <p class="font-semibold">Primary Contact Visibility</p>
-        <%= current_club.primary_contact&.full_name.presence || "Please select a primary contact" %>
+        <%= current_chapterable.primary_contact&.full_name.presence || "Please select a primary contact" %>
         <p class="text-sm italic mb-4">This Club Ambassador is the primary contact displayed to students and mentors</p>
 
         <p class="font-semibold">Public Map Visibility</p>
         <p>
-          This club <%= current_club.visible_on_map? ? "is" : "is not" %>
+          This club <%= current_chapterable.visible_on_map? ? "is" : "is not" %>
           displayed on the map of clubs on the Technovation website
         </p>
       </div>

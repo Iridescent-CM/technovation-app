@@ -74,16 +74,18 @@
       their mentor profile by converting their account.
     </p>
 
-    <p>
+    <% if current_scope == "chapter_ambassador" %>
+      <p>
       <%= link_to "Convert to a judge-only account",
         send("#{current_scope}_mentor_to_judge_conversions_path", account_id: profile.account_id),
         class: 'button',
         data: {
           method: :post,
           confirm: "Convert #{profile.name} to a judge?" +
-                   "<p>This will delete their mentor profile</p>",
+            "<p>This will delete their mentor profile</p>",
         } %>
-    </p>
+      </p>
+    <% end %>
   <% end %>
 
   <% if current_account.is_admin? && !profile.chapter_ambassador_profile.present? %>
@@ -207,24 +209,26 @@
   </dl>
 </div>
 
-<h4 class="reset">Help them with their team matching</h4>
+<% if current_scope == "chapter_ambassador" %>
+  <h4 class="reset">Help them with their team matching</h4>
 
-<div class="panel">
-  <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
-    <%= hidden_field_tag :account_id, profile.account_id %>
+  <div class="panel">
+    <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
+      <%= hidden_field_tag :account_id, profile.account_id %>
 
-    <h6>Add <%= profile.full_name %> to a team</h6>
+      <h6>Add <%= profile.full_name %> to a team</h6>
 
-    <p>
-      <%= select_tag "team_id",
+      <p>
+        <%= select_tag "team_id",
           options_from_collection_for_select(@teams, "id", "name"),
           prompt: "Select a team",
           required: true,
           class: "chosen" %>
-    </p>
+      </p>
 
-    <p>
-      <%= submit_tag 'Add', class: "button" %>
-    </p>
-  <% end %>
-</div>
+      <p>
+        <%= submit_tag 'Add', class: "button" %>
+      </p>
+    <% end %>
+  </div>
+<% end %>

@@ -133,6 +133,12 @@ Rails.application.routes.draw do
     resources :scores, only: :show
   end
 
+  namespace :ambassador do
+    resources :accounts, only: [] do
+      resource :chapterable_account_assignments, only: [:create]
+    end
+  end
+
   namespace :chapter_ambassador do
     resource :profile_details_confirmation, only: [:create, :update]
 
@@ -160,11 +166,10 @@ Rails.application.routes.draw do
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
 
-    resources :accounts, only: :show, controller: :participants do
-      resource :chapter_account_assignments, only: [:create]
-    end
-    resources :participants, only: [:index, :show, :edit, :update]
-    resources :unaffiliated_participants, only: [:index]
+    resources :accounts, only: :show, controller: :participants
+    resources :participants, only: :show, controller: "/ambassador/participants"
+    resources :participants, only: :index, controller: "/data_grids/ambassador/participants"
+    resources :unaffiliated_participants, only: :index, controller: "/data_grids/ambassador/unaffiliated_participants"
     resources :participant_sessions, only: [:show, :destroy]
 
     resources :student_conversions, only: :create
@@ -173,8 +178,10 @@ Rails.application.routes.draw do
     resource :missing_participant_search, only: [:new, :show, :create]
     resources :missing_participant_locations, only: [:edit, :update]
 
-    resources :teams, only: [:show, :index, :edit, :update]
-    resources :team_submissions, only: [:index, :show]
+    resources :teams, only: :show, controller: "/ambassador/teams"
+    resources :teams, only: :index, controller: "/data_grids/ambassador/teams"
+    resources :team_submissions, only: :show, controller: "/ambassador/team_submissions"
+    resources :team_submissions, only: :index, controller: "/data_grids/ambassador/team_submissions"
     resources :team_memberships, only: [:create, :destroy]
     resources :team_member_invites, only: [:destroy]
 
@@ -229,6 +236,22 @@ Rails.application.routes.draw do
     resource :club_current_location, only: :show
 
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
+
+    resource :club_admin, only: :show, controller: "club_admin"
+    resource :resources, only: :show
+
+    resources :participants, only: :show, controller: "/ambassador/participants"
+    resources :participants, only: :index, controller: "/data_grids/ambassador/participants"
+    resources :unaffiliated_participants, only: :index, controller: "/data_grids/ambassador/unaffiliated_participants"
+
+    resources :teams, only: :show, controller: "/ambassador/teams"
+    resources :teams, only: :index, controller: "/data_grids/ambassador/teams"
+
+    resources :team_submissions, only: :show, controller: "/ambassador/team_submissions"
+    resources :team_submissions, only: :index, controller: "/data_grids/ambassador/team_submissions"
+
+    resources :saved_searches, only: [:show, :create, :update, :destroy]
+    resources :export_downloads, only: :update
   end
 
   namespace :judge do

@@ -94,6 +94,12 @@ RSpec.describe ChapterAmbassadorProfile do
     end
   end
 
+  describe "#chapterable_type" do
+    it "returns chapter" do
+      expect(ChapterAmbassadorProfile.new.chapterable_type).to eq("chapter")
+    end
+  end
+
   context "callbacks" do
     context "#after_update" do
       describe "updating the onboarded status" do

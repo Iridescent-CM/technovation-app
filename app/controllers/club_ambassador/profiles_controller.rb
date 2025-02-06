@@ -1,6 +1,8 @@
 module ClubAmbassador
-  class ProfilesController < ClubAmbassadorController
+  class ProfilesController < AmbassadorController
     include ProfileController
+
+    layout "club_ambassador_rebrand"
 
     def profile_params
       [

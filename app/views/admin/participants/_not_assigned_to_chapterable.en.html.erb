@@ -1,7 +1,7 @@
 <%
-  chapterable_options_text = if account.is_chapter_ambassador?
+  chapterable_options_text = if account.chapter_ambassador?
     "chapter"
-  elsif account.is_club_ambassador?
+  elsif account.club_ambassador?
     "club"
   else
     "chapter or club"
