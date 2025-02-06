@@ -46,7 +46,7 @@ class UnaffiliatedParticipantsGrid
       html += " | "
 
       html += link_to(
-        "Assign to a chapter",
+        "Assign to a chapter or club",
         new_admin_account_chapterable_account_assignment_path(account),
         data: {turbolinks: false}
       )
