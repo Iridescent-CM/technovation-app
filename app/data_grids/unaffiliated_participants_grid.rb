@@ -47,7 +47,7 @@ class UnaffiliatedParticipantsGrid
 
       html += link_to(
         "Assign to a chapter",
-        new_admin_account_chapter_account_assignment_path(account),
+        new_admin_account_chapterable_account_assignment_path(account),
         data: {turbolinks: false}
       )
     else
