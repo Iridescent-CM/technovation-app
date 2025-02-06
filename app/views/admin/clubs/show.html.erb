@@ -26,12 +26,13 @@
               <%= @club.address_details.presence || "-" %>
 
               <p>
-                <%= link_to "Edit location",
-                            edit_admin_club_location_path(
-                              @club,
-                              return_to: admin_club_path(@club)
-                            ),
-                            class: "button secondary small" %>
+              <%= link_to "Edit location",
+                edit_admin_club_location_path(
+                  @club,
+                  return_to: admin_club_path(@club)
+                ),
+                class: "button secondary small"
+              %>
               </p>
             </dd>
           </dl>
@@ -48,5 +49,9 @@
 </div>
 
 <%= render "admin/clubs/club_onboarding",
+  club: @club
+%>
+
+<%= render "admin/clubs/club_ambassadors",
   club: @club
 %>
