@@ -5,6 +5,13 @@ class ScoresGrid
 
   self.batch_size = 10
 
+  scope do
+    SubmissionScore.complete.judge_not_deleted
+      .includes({judge_profile: [:account, :events]})
+      .includes({team_submission: {team: :division}})
+      .references(:teams, :team_submissions)
+  end
+
   filter :round,
     :enum,
     select: -> {
@@ -48,11 +55,37 @@ class ScoresGrid
     scope.public_send(value)
   end
 
-  scope do
-    SubmissionScore.complete.judge_not_deleted
-      .includes({judge_profile: [:account, :events]})
-      .includes({team_submission: {team: :division}})
-      .references(:teams, :team_submissions)
+  filter :season,
+    :enum,
+    select: (2020..Season.current.year).to_a.reverse,
+    filter_group: "selections",
+    html: {
+     class: "and-or-field"
+    },
+    multiple: true do |value, scope, grid|
+    scope.by_season(value)
+  end
+
+  filter :complete,
+    :enum,
+    select: [
+      ["Complete scores", "complete"],
+      ["Incomplete scores", "incomplete"]
+    ] do |value, scope, grid|
+    scope.public_send(value)
+  end
+
+  filter :suspicious,
+    :enum,
+    select: [
+      ["Yes, suspicious", "yes"],
+      ["No, not suspicious", "no"]
+    ] do |value, scope, grid|
+    if value == "yes"
+      scope.suspicious
+    else
+      scope.not_suspicious
+    end
   end
 
   column :round

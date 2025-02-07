@@ -192,6 +192,18 @@ class SubmissionScore < ActiveRecord::Base
     with_deleted.where("submission_scores.dropped_at IS NOT NULL")
   }
 
+  scope :suspicious, -> {
+    where(completed_too_fast: true)
+      .or(where(completed_too_fast_repeat_offense: true))
+      .or(where(seems_too_low: true))
+  }
+
+  scope :not_suspicious, -> {
+    where(completed_too_fast: false)
+      .where(completed_too_fast_repeat_offense: false)
+      .where(seems_too_low: false)
+  }
+
   scope :completed_too_fast, -> { where(completed_too_fast: true) }
   scope :completed_too_fast_repeat_offense, -> {
     where(completed_too_fast_repeat_offense: true)
