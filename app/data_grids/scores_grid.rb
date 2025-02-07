@@ -57,7 +57,7 @@ class ScoresGrid
 
   filter :season,
     :enum,
-    select: (2015..Season.current.year).to_a.reverse,
+    select: (2020..Season.current.year).to_a.reverse,
     filter_group: "selections",
     html: {
      class: "and-or-field"
@@ -82,9 +82,9 @@ class ScoresGrid
       ["No, not suspicious", "no"]
     ] do |value, scope, grid|
     if value == "yes"
-      scope.where("submission_scores.completed_too_fast = ? OR submission_scores.seems_too_low = ? OR submission_scores.completed_too_fast_repeat_offense = ?", true, true, true)
+      scope.suspicious
     else
-      scope.where("submission_scores.completed_too_fast = ? AND submission_scores.seems_too_low = ? AND submission_scores.completed_too_fast_repeat_offense = ?", false, false, false)
+      scope.not_suspicious
     end
   end
 
