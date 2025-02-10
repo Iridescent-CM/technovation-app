@@ -136,7 +136,7 @@ class JudgesGrid
   column :actions, mandatory: true, html: true do |account|
     link_to(
       "view",
-      send("#{current_scope}_participant_path", account),
+      send(:"#{current_scope}_participant_path", account, search_in_region: true),
       data: {turbolinks: false}
     )
   end

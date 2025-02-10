@@ -42,4 +42,8 @@ class Club < ActiveRecord::Base
       primary_contact
     ].all?(&:present?)
   end
+
+  def secondary_regions
+    []
+  end
 end
