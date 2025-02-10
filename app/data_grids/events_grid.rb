@@ -7,7 +7,7 @@ class EventsGrid
 
   scope do
     RegionalPitchEvent.current
-      .includes(ambassador: :account)
+      .includes(:divisions, ambassador: :account)
       .references(:accounts)
   end
 
