@@ -148,24 +148,24 @@ class JudgesGrid
       ["No, still onboarding", "onboarding"]
     ],
     filter_group: "common" do |value, scope, grid|
-      scope.where(
-        "judge_profiles.onboarded = ?",
-        value == "onboarded"
-      )
+    scope.where(
+      "judge_profiles.onboarded = ?",
+      value == "onboarded"
+    )
   end
 
   filter :judge_types,
-         :enum,
-         header: "Judge Type",
-         select: proc { JudgeType.all.map { |j| [j.name, j.id] } },
-         filter_group: "more-specific",
-         html: {
-           class: "and-or-field"
-         },
-         multiple: true do |values, scope|
+    :enum,
+    header: "Judge Type",
+    select: proc { JudgeType.all.map { |j| [j.name, j.id] } },
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: true do |values, scope|
     scope.includes(judge_profile: :judge_types)
-         .references(:judge_profile, :judge_profile_judge_types)
-         .where(judge_profile_judge_types: {judge_type_id: values})
+      .references(:judge_profile, :judge_profile_judge_types)
+      .where(judge_profile_judge_types: {judge_type_id: values})
   end
 
   filter :has_mentor_profile,
