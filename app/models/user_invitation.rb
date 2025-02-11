@@ -1,11 +1,11 @@
 class UserInvitation < ApplicationRecord
   enum profile_type: %i[
     chapter_ambassador
-    club_ambassador
     judge
     mentor
     student
     parent_student
+    club_ambassador
   ]
 
   enum status: %i[
