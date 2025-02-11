@@ -508,6 +508,16 @@ class Account < ActiveRecord::Base
       .where("background_checks.status = ?", BackgroundCheck.statuses[:suspended])
   }
 
+  scope :by_chapterable, ->(chapterable_type, chapterable_id) do
+    left_outer_joins(:chapterable_assignments)
+      .where(
+        chapterable_assignments: {
+          chapterable_type: chapterable_type.capitalize,
+          chapterable_id: chapterable_id
+        }
+      )
+  end
+
   scope :by_chapter, ->(chapter_id) {
     left_outer_joins(:chapterable_assignments)
       .where("chapterable_account_assignments.chapterable_type = 'Chapter'")

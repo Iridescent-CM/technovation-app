@@ -11,12 +11,9 @@ module Ambassador
           .in_region(current_ambassador)
       else
         @account = Account
-          .joins(:chapterable_assignments)
-          .where(
-            chapterable_assignments: {
-              chapterable_type: current_ambassador.chapterable_type.capitalize,
-              chapterable_id: current_ambassador.current_chapterable.id
-            }
+          .by_chapterable(
+            current_ambassador.chapterable_type,
+            current_ambassador.current_chapterable.id
           )
           .find(params[:id])
 
