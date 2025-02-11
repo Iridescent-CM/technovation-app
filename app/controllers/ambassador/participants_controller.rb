@@ -1,12 +1,16 @@
 module Ambassador
   class ParticipantsController < AmbassadorController
     def show
-      @account = if params[:search_in_region].present?
-        Account
+      if params[:search_in_region].present?
+        @account = Account
           .in_region(current_ambassador)
           .find(params[:id])
+
+        @teams = Team
+          .current
+          .in_region(current_ambassador)
       else
-        Account
+        @account = Account
           .joins(:chapterable_assignments)
           .where(
             chapterable_assignments: {
@@ -15,9 +19,16 @@ module Ambassador
             }
           )
           .find(params[:id])
+
+        @teams = Team
+          .current
+          .by_chapterable(
+            current_ambassador.chapterable_type,
+            current_ambassador.current_chapterable.id
+          )
+          .distinct
       end
 
-      @teams = Team.current.in_region(current_ambassador)
       @season_flag = SeasonFlag.new(@account)
     end
   end
