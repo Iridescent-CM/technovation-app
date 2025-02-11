@@ -12,7 +12,9 @@ class JudgesGrid
   end
 
   scope do
-    Account.includes(judge_profile: :events)
+    Account
+      .includes(judge_profile: :events)
+      .includes(:mentor_profile)
       .references(:judge_profiles, :regional_pitch_events)
       .where("judge_profiles.id IS NOT NULL")
   end
@@ -136,7 +138,7 @@ class JudgesGrid
   column :actions, mandatory: true, html: true do |account|
     link_to(
       "view",
-      send(:"#{current_scope}_participant_path", account, search_in_region: true),
+      send(:"#{current_scope}_participant_path", account, search_in_region: 1),
       data: {turbolinks: false}
     )
   end
