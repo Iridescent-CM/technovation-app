@@ -96,4 +96,8 @@ class Chapter < ActiveRecord::Base
       "Program Info" => program_info_complete?
     }
   end
+
+  def secondary_regions
+    []
+  end
 end
