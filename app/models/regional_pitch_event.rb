@@ -27,6 +27,12 @@ class RegionalPitchEvent < ActiveRecord::Base
       .where("divisions.name = ?", Division.names[division])
   }
 
+  scope :by_chapter, ->(chapter_id) {
+    left_outer_joins(ambassador: {account: :chapterable_assignments})
+      .where("chapterable_account_assignments.chapterable_type = 'Chapter'")
+      .where("chapterable_account_assignments.chapterable_id = ?", chapter_id)
+  }
+
   belongs_to :ambassador,
     class_name: "ChapterAmbassadorProfile",
     foreign_key: :chapter_ambassador_profile_id

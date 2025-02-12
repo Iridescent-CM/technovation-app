@@ -7,17 +7,22 @@ class EventsGrid
 
   scope do
     RegionalPitchEvent.current
-      .includes(ambassador: :account)
+      .includes(:divisions, ambassador: :account)
       .references(:accounts)
   end
 
   column :ambassador_name,
     header: "Ambassador",
-    mandatory: true
+    mandatory: true, order: "accounts.first_name"
 
   column :name, mandatory: true
 
-  column :divisions, mandatory: true do
+  column :chapter, mandatory: true,
+  order: ->(scope) { scope.left_joins(ambassador: {account: :chapters}).order("chapters.name") } do |event|
+    event.ambassador.account.current_chapter&.name.presence || "-"
+  end
+
+  column :divisions, mandatory: true, order: "divisions.name DESC" do
     division_names
   end
 
@@ -25,7 +30,7 @@ class EventsGrid
     unofficial? ? "unofficial" : "official"
   end
 
-  column :date
+  column :date, order: "regional_pitch_events.starts_at"
 
   column :time
 
@@ -35,7 +40,7 @@ class EventsGrid
     FriendlySubregion.call(self, prefix: false)
   end
 
-  column :country do
+  column :country, order: :country do
     Carmen::Country.coded(country) || Carmen::Country.named(country)
   end
 
@@ -65,6 +70,21 @@ class EventsGrid
     where("accounts.first_name ilike ? OR " +
           "accounts.last_name ilike ? ",
       "#{first_name}%", "#{last_name}%")
+  end
+
+  filter :chapter,
+    :enum,
+    select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
+    filter_group: "common",
+    html: {
+      class: "and-or-field"
+    } do |value|
+    by_chapter(value)
+  end
+
+  filter :event_name do |value, scope|
+    processed_value = I18n.transliterate(value.strip.downcase).gsub(/['\s]+/, "%")
+    scope.where("lower(unaccent(regional_pitch_events.name)) ILIKE ?", "%#{processed_value}%")
   end
 
   filter :division,
