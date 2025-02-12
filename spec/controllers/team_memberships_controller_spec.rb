@@ -36,7 +36,7 @@ RSpec.describe "Team Memberships Controllers" do
     end
   end
 
-  %w[chapter_ambassador admin].each do |scope|
+  %w[ambassador admin].each do |scope|
     describe "#{scope.camelize}::TeamMembershipsController".constantize do
       describe "DELETE #destroy" do
         it "reconsiders divisions" do

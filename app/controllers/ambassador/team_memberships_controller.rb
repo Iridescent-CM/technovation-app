@@ -1,5 +1,5 @@
-module ChapterAmbassador
-  class TeamMembershipsController < ChapterAmbassadorController
+module Ambassador
+  class TeamMembershipsController < AmbassadorController
     def create
       team = Team.find(params.fetch(:team_id))
       account = Account.find(params.fetch(:account_id))
@@ -10,8 +10,7 @@ module ChapterAmbassador
 
       msg = if team.members.include?(profile)
         {
-          success: "You have added #{account.full_name} " +
-            "to #{team.name}"
+          success: "You have added #{account.full_name} to #{team.name}"
         }
       elsif account.student_profile
         {alert: team.errors[:add_student][0]}
@@ -19,7 +18,7 @@ module ChapterAmbassador
         {alert: "An error occurred."}
       end
 
-      redirect_to chapter_ambassador_participant_path(account), msg
+      redirect_to send(:"#{current_scope}_participant_path", account), msg
     end
 
     def destroy
