@@ -121,7 +121,6 @@ RSpec.describe Salesforce::ApiClient do
               Platform_Participant_Id__c: account.id,
               Year__c: Season.current.year,
               Type__c: profile_type,
-              Mentor_Role__c: "",
               Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
               Mentor_Team_Status__c: "Not On Team"
             }
@@ -263,34 +262,11 @@ RSpec.describe Salesforce::ApiClient do
               {
                 Id: program_participant_id,
                 Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
-                Mentor_Role__c: "",
                 Mentor_Team_Status__c: "Not On Team"
               }
             )
 
             salesforce_api_client.upsert_program_info
-          end
-
-          context "when a mentor is a club ambassador" do
-            before do
-              mentor_profile.mentor_types = []
-              mentor_profile.mentor_types << FactoryBot.create(:mentor_type, name: "Club Ambassador")
-              mentor_profile.save
-            end
-
-            it "calls update! to update the 'program participant' info for the mentor, sets mentor role to club ambassador and does not include club ambassador as a mentor type" do
-              expect(salesforce_client).to receive(:update!).with(
-                "Program_Participant__c",
-                {
-                  Id: program_participant_id,
-                  Mentor_Type__c: "",
-                  Mentor_Role__c: "Club Ambassador",
-                  Mentor_Team_Status__c: "Not On Team"
-                }
-              )
-
-              salesforce_api_client.upsert_program_info
-            end
           end
         end
 
