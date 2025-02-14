@@ -33,13 +33,13 @@
 
     <h5>Complete Semifinals scores</h5>
     <div id="complete-semifinal-scores">
-      <%= render 'chapter_ambassador/score_details/scores_table',
+      <%= render "ambassador/score_details/scores_table",
         scores: scores.semifinals.complete %>
     </div>
 
     <h5>Incomplete Semifinals scores</h5>
     <div id="incomplete-semifinal-scores">
-      <%= render 'chapter_ambassador/score_details/scores_table',
+      <%= render "ambassador/score_details/scores_table",
         scores: scores.semifinals.incomplete %>
     </div>
 
@@ -47,13 +47,13 @@
 
   <h5>Complete Quarterfinal scores</h5>
   <div id="complete-quarterfinal-scores">
-    <%= render 'chapter_ambassador/score_details/scores_table',
+    <%= render "ambassador/score_details/scores_table",
       scores: scores.quarterfinals.complete %>
   </div>
 
   <h5>Incomplete Quarterfinal scores</h5>
   <div id="incomplete-quarterfinal-scores">
-    <%= render 'chapter_ambassador/score_details/scores_table',
+    <%= render "ambassador/score_details/scores_table",
       scores: scores.judge_not_deleted.quarterfinals.incomplete %>
   </div>
 
@@ -67,7 +67,7 @@
   <p class="margin--b-xlarge">
     <%= link_to(
       'Back to scores',
-      send("#{current_scope}_score_path"),
+      send("#{current_scope}_scores_path"),
       data: { turbolinks: false },
       class: "button button--small"
     ) %>
