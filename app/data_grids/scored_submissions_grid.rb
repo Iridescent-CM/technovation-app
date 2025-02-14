@@ -66,7 +66,7 @@ class ScoredSubmissionsGrid
     end
   end
 
-  column :events do |submission|
+  column :events, if: ->(g) { g.current_account.chapter_ambassador? } do |submission|
     submission.team.events.pluck(:name).join("; ")
   end
 
@@ -321,7 +321,7 @@ class ScoredSubmissionsGrid
         .order(:name)
         .map { |e| [e.name, e.id] }
     },
-    if: ->(g) { g.admin or RegionalPitchEvent.visible_to(g.current_account).any? } do |value, scope, grid|
+    if: ->(g) { g.admin || (g.current_account.chapter_ambassador? && RegionalPitchEvent.visible_to(g.current_account).any?) } do |value, scope, grid|
     scope.includes(team: :events)
       .references(:regional_pitch_events)
       .where("regional_pitch_events.id = ?", value)
@@ -342,6 +342,7 @@ class ScoredSubmissionsGrid
       ["Virtual scores", "virtual"],
       ["Live event scores", "live"]
     ],
+    if: ->(g) { g.current_account.chapter_ambassador? },
     filter_group: "common" do |value, scope, grid|
     mod = grid.complete.present? ? grid.complete : "all"
     assoc = :"#{value}_#{mod}_submission_scores"
