@@ -1,0 +1,26 @@
+<% provide :title, "Scores" %>
+
+<% if current_account.admin? %>
+  <div id="admin-scores-app" class="panel">
+    {{ notice }}
+
+    <template v-if="!ready">
+      <%= web_icon(
+        "spinner2",
+        class: "spin",
+        text: "Checking for suspicious scores..."
+      ) %>
+    </template>
+    <router-view v-else></router-view>
+  </div>
+
+  <h1>Season <%= Season.current.year %> Scores</h1>
+<% end %>
+
+<%= render "datagrid/datagrid",
+  grid: @scored_submissions_grid,
+  form_url: send("#{current_scope}_scores_path"),
+  model_name: "submission",
+  scope: current_scope.to_sym,
+  verb: current_scope == "admin" ? "scored" : "",
+  extra_count: current_scope == "admin" ? "Exports #{number_with_delimiter(@scored_submissions_grid.assets.count)} scored #{grid_params[:round]} submissions" : "" %>

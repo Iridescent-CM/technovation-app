@@ -60,7 +60,7 @@ class ScoresGrid
     select: (2020..Season.current.year).to_a.reverse,
     filter_group: "selections",
     html: {
-     class: "and-or-field"
+      class: "and-or-field"
     },
     multiple: true do |value, scope, grid|
     scope.by_season(value)

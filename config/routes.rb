@@ -169,6 +169,9 @@ Rails.application.routes.draw do
     resources :accounts, only: :show, controller: :participants
     resources :participants, only: :show, controller: "/ambassador/participants"
     resources :participants, only: :index, controller: "/data_grids/ambassador/participants"
+    resources :scores, only: :index, controller: "/data_grids/ambassador/scores"
+    resources :scores, only: :show
+    resources :score_details, only: :show, controller: "/ambassador/score_details"
     resources :unaffiliated_participants, only: :index, controller: "/data_grids/ambassador/unaffiliated_participants"
     resources :participant_sessions, only: [:show, :destroy]
 
@@ -213,8 +216,6 @@ Rails.application.routes.draw do
     resource :judge_list, only: :show
     resource :team_list, only: :show
 
-    resources :scores, only: [:index, :show]
-    resources :score_details, only: :show
     resources :judges, only: :index
 
     resources :messages
@@ -242,6 +243,8 @@ Rails.application.routes.draw do
 
     resources :participants, only: :show, controller: "/ambassador/participants"
     resources :participants, only: :index, controller: "/data_grids/ambassador/participants"
+    resources :scores, only: :index, controller: "/data_grids/ambassador/scores"
+    resources :score_details, only: :show, controller: "/ambassador/score_details"
     resources :unaffiliated_participants, only: :index, controller: "/data_grids/ambassador/unaffiliated_participants"
 
     resources :teams, only: :show, controller: "/ambassador/teams"

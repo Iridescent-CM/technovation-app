@@ -47,6 +47,17 @@ RSpec.describe "viewing score details page" do
       team_submission: team_submission)
   }
 
+  before do
+    team_submission.team.students.each do |student|
+      student.chapterable_assignments.create(
+        chapterable: chapter_ambassador.chapterable,
+        account: student.account,
+        season: Season.current.year,
+        primary: true
+      )
+    end
+  end
+
   context "when the 'display_scores' setting is turned off" do
     before do
       SeasonToggles.display_scores_off!

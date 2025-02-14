@@ -32,10 +32,10 @@ class ScoredSubmissionsGrid
   column :team_name, mandatory: true, html: false
   column :team_name, mandatory: true, html: true do |submission|
     case current_scope
-    when "chapter_ambassador"
+    when "chapter_ambassador", "club_ambassador"
       link_to(
         submission.team_name,
-        chapter_ambassador_team_path(submission.team),
+        send(:"#{current_scope}_team_path", submission.team),
         turbolinks: true
       )
     when "admin"
@@ -51,10 +51,10 @@ class ScoredSubmissionsGrid
   column :app_description
   column :submission, mandatory: true, html: true do |submission|
     case current_scope
-    when "chapter_ambassador"
+    when "chapter_ambassador", "club_ambassador"
       link_to(
         submission.app_name,
-        chapter_ambassador_team_submission_path(submission),
+        send(:"#{current_scope}_team_submission_path", submission),
         turbolinks: true
       )
     when "admin"
@@ -118,7 +118,7 @@ class ScoredSubmissionsGrid
   column :view, mandatory: true, html: true do |submission, grid|
     html = link_to(
       web_icon("list-ul", size: 16, remote: true),
-      send("#{current_scope}_score_detail_path", id: submission.id),
+      send(:"#{current_scope}_score_detail_path", id: submission.id),
       {
         :class => "view-details",
         "v-tooltip" => "'Read score details'",
@@ -297,7 +297,7 @@ class ScoredSubmissionsGrid
               ]
             } do |value, scope, grid|
     mod = grid.complete.present? ? grid.complete : "all"
-    assoc = "#{value}_#{mod}_submission_scores".to_sym
+    assoc = :"#{value}_#{mod}_submission_scores"
     scope.joins(assoc)
   end
 
@@ -344,7 +344,7 @@ class ScoredSubmissionsGrid
     ],
     filter_group: "common" do |value, scope, grid|
     mod = grid.complete.present? ? grid.complete : "all"
-    assoc = "#{value}_#{mod}_submission_scores".to_sym
+    assoc = :"#{value}_#{mod}_submission_scores"
     scope.joins(assoc)
   end
 
@@ -361,7 +361,7 @@ class ScoredSubmissionsGrid
       ["Complete scores", "complete"],
       ["Incomplete scores", "incomplete"]
     ] do |value, scope, grid|
-    scope.joins("#{grid.round}_#{value}_submission_scores".to_sym)
+    scope.joins(:"#{grid.round}_#{value}_submission_scores")
   end
 
   filter :country,
