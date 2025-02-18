@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.feature "Chapter Ambassador views scores" do
+  let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved) }
+
   before do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
     sign_in(chapter_ambassador)
 
     visit(chapter_ambassador_chapter_admin_path)
@@ -25,6 +26,15 @@ RSpec.feature "Chapter Ambassador views scores" do
         :complete
       )
 
+      submission.team.students.each do |student|
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
+
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
       click_link "Scores"
@@ -41,6 +51,15 @@ RSpec.feature "Chapter Ambassador views scores" do
         :complete,
         :semifinalist
       )
+
+      submission.team.students.each do |student|
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
 
       FactoryBot.create(
         :score,
@@ -63,6 +82,15 @@ RSpec.feature "Chapter Ambassador views scores" do
         :complete,
         :semifinalist
       )
+
+      submission.team.students.each do |student|
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
 
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
       FactoryBot.create(
@@ -95,6 +123,15 @@ RSpec.feature "Chapter Ambassador views scores" do
         :complete
       )
 
+      submission.team.students.each do |student|
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
+
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
       rpe = FactoryBot.create(:rpe)
@@ -115,6 +152,15 @@ RSpec.feature "Chapter Ambassador views scores" do
         :complete
       )
 
+      submission.team.students.each do |student|
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
+
       FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
       click_link "Scores"
@@ -128,6 +174,15 @@ RSpec.feature "Chapter Ambassador views scores" do
         :complete,
         :semifinalist
       )
+
+      submission.team.students.each do |student|
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
 
       rpe = FactoryBot.create(:rpe)
 
@@ -159,6 +214,15 @@ RSpec.feature "Chapter Ambassador views scores" do
       :junior,
       :complete
     )
+
+    submission.team.students.each do |student|
+      student.chapterable_assignments.create(
+        chapterable: chapter_ambassador.chapterable,
+        account: student.account,
+        season: Season.current.year,
+        primary: true
+      )
+    end
 
     FactoryBot.create(
       :submission_score,

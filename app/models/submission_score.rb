@@ -243,6 +243,16 @@ class SubmissionScore < ActiveRecord::Base
       .where("judge_profiles.id IS NOT NULL AND judge_profiles.deleted_at IS NULL")
   }
 
+  scope :by_chapterable, ->(chapterable_type, chapterable_id) do
+    joins(team_submission: {team: {students: {account: :chapterable_assignments}}})
+      .where(
+        chapterable_assignments: {
+          chapterable_type: chapterable_type.capitalize,
+          chapterable_id: chapterable_id
+        }
+      )
+  end
+
   validates :team_submission_id, presence: true
   validates :judge_profile_id, presence: true
 

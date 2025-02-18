@@ -50,6 +50,7 @@ module DatagridController
         )
 
         if controller_name == "participants" ||
+            controller_name == "scores" ||
             controller_name == "team_submissions" ||
             controller_name == "teams" ||
             controller_name == "unaffiliated_participants"
