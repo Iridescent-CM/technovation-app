@@ -34,6 +34,10 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     true
   end
 
+  def national_view?
+    false
+  end
+
   def authenticated?
     true
   end

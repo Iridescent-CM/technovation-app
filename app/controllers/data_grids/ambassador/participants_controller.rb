@@ -7,15 +7,26 @@ module DataGrids::Ambassador
     use_datagrid with: AccountsGrid,
 
       html_scope: ->(scope, user, params) {
-        scope
-          .joins(:chapterable_assignments)
-          .where(
-            chapterable_assignments: {
-              chapterable_type: user.chapterable_type.capitalize,
-              chapterable_id: user.current_chapterable.id
-            }
-          )
-          .page(params[:page])
+        if user.chapter_ambassador_profile&.national_view?
+          if params[:accounts_grid][:chapter].blank? && params[:accounts_grid][:club].blank?
+            scope
+              .in_region(user.chapterable)
+              .page(params[:page])
+          else
+            scope
+              .page(params[:page])
+          end
+        else
+          scope
+            .joins(:chapterable_assignments)
+            .where(
+              chapterable_assignments: {
+                chapterable_type: user.chapterable_type.capitalize,
+                chapterable_id: user.current_chapterable.id
+              }
+            )
+            .page(params[:page])
+        end
       },
 
       csv_scope: "->(scope, user, _params) {
@@ -24,26 +35,13 @@ module DataGrids::Ambassador
       .where(chapterable_assignments: {chapterable_type: user.chapterable_type.capitalize, chapterable_id: user.current_chapterable.id})
       }"
 
-    def show
-      @account = Account
-        .joins(:chapterable_assignments)
-        .where(
-          chapterable_assignments: {
-            chapterable_type: current_ambassador.chapterable_type.capitalize,
-            chapterable_id: current_ambassador.current_chapterable.id
-          }
-        )
-        .find(params[:id])
-
-      @teams = Team.current.in_region(current_ambassador)
-      @season_flag = SeasonFlag.new(@account)
-    end
-
     private
 
     def grid_params
       grid = (params[:accounts_grid] ||= {}).merge(
         admin: false,
+        national_view: current_ambassador.national_view?,
+        current_account: current_account,
         allow_state_search: current_ambassador.country_code != "US",
         country: [current_ambassador.country_code],
         state_province: (

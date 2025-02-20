@@ -40,7 +40,8 @@ class Account < ActiveRecord::Base
   has_one :judge_profile, dependent: :destroy
   has_one :chapter_ambassador_profile, dependent: :destroy
   has_one :club_ambassador_profile, dependent: :destroy
-  accepts_nested_attributes_for :mentor_profile, :judge_profile
+
+  accepts_nested_attributes_for :chapter_ambassador_profile, :mentor_profile, :judge_profile
 
   ChapterAmbassadorProfile.statuses.keys.each do |status|
     has_one :"#{status}_chapter_ambassador_profile",
@@ -520,14 +521,22 @@ class Account < ActiveRecord::Base
 
   scope :by_chapter, ->(chapter_id) {
     left_outer_joins(:chapterable_assignments)
-      .where("chapterable_account_assignments.chapterable_type = 'Chapter'")
-      .where("chapterable_account_assignments.chapterable_id = ?", chapter_id)
+      .where(
+        chapterable_assignments: {
+          chapterable_type: "Chapter",
+          chapterable_id: chapter_id
+        }
+      )
   }
 
   scope :by_club, ->(club_id) {
     left_outer_joins(:chapterable_assignments)
-      .where("chapterable_account_assignments.chapterable_type = 'Club'")
-      .where("chapterable_account_assignments.chapterable_id = ?", club_id)
+      .where(
+        chapterable_assignments: {
+          chapterable_type: "Club",
+          chapterable_id: club_id
+        }
+      )
   }
 
   scope :by_division, ->(division) {
