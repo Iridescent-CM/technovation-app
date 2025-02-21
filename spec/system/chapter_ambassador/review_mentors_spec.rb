@@ -5,8 +5,8 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
 
   describe "training completion status" do
     it "displays on their debugging page" do
-      untrained_mentor = FactoryBot.create(:mentor, :onboarding)
-      trained_mentor = FactoryBot.create(:mentor, :onboarded)
+      untrained_mentor = FactoryBot.create(:mentor, :onboarding, :not_assigned_to_chapter)
+      trained_mentor = FactoryBot.create(:mentor, :onboarded, :not_assigned_to_chapter)
 
       untrained_mentor.chapterable_assignments.create(
         chapterable: chapter_ambassador.current_chapter,
@@ -42,7 +42,7 @@ RSpec.describe "chapter ambassadors reviewing mentors" do
     end
 
     it "displays not required for mentors who signed up before the training date" do
-      mentor = FactoryBot.create(:mentor, :onboarding)
+      mentor = FactoryBot.create(:mentor, :onboarding, :not_assigned_to_chapter)
       mentor.account.update(
         season_registered_at: ImportantDates.mentor_training_required_since - 1.day
       )

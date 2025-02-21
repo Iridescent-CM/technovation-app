@@ -49,6 +49,8 @@ FactoryBot.define do
 
     trait :assigned_to_chapter do
       after(:create) do |chapter_ambassador|
+        chapter_ambassador.account.chapters.destroy_all
+
         chapter_ambassador.chapterable_assignments.create(
           account: chapter_ambassador.account,
           chapterable: FactoryBot.create(:chapter),
@@ -93,6 +95,8 @@ FactoryBot.define do
 
     after(:create) do |r, e|
       chapter = FactoryBot.create(:chapter, primary_contact: r.account)
+
+      r.chapters.destroy_all
 
       r.chapterable_assignments.create(
         chapterable: chapter,

@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.feature "chapter ambassadors view student profile pages" do
   scenario "viewing a new student that belongs to the chapter ambassador's chapter" do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador)
-    student = FactoryBot.create(:student)
+    student = FactoryBot.create(:student, :not_assigned_to_chapter)
+
     student.chapterable_assignments.create(
       chapterable: chapter_ambassador.current_chapter,
       account: student.account,
@@ -26,7 +27,8 @@ RSpec.feature "chapter ambassadors view student profile pages" do
 
   scenario "viewing a past student that belongs to the chapter ambassador's chapter" do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador)
-    student = FactoryBot.create(:student, :past)
+    student = FactoryBot.create(:student, :past, :not_assigned_to_chapter)
+
     student.chapterable_assignments.create(
       chapterable: chapter_ambassador.current_chapter,
       account: student.account,
@@ -48,7 +50,8 @@ RSpec.feature "chapter ambassadors view student profile pages" do
 
   scenario "viewing a returning student that belongs to the chapter ambassador's chapter" do
     chapter_ambassador = FactoryBot.create(:chapter_ambassador)
-    student = FactoryBot.create(:student, :returning)
+    student = FactoryBot.create(:student, :returning, :not_assigned_to_chapter)
+
     student.chapterable_assignments.create(
       chapterable: chapter_ambassador.current_chapter,
       account: student.account,

@@ -13,7 +13,7 @@ RSpec.feature "Chapter Ambassadors deleting a team invite", :js do
       primary: true
     )
 
-    affiliated_student = FactoryBot.create(:student, :chicago)
+    affiliated_student = FactoryBot.create(:student, :chicago, :not_assigned_to_chapter)
     affiliated_student.chapterable_assignments.create(
       account: affiliated_student.account,
       chapterable: chapter,

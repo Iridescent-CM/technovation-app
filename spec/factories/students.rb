@@ -179,6 +179,8 @@ FactoryBot.define do
     end
 
     after(:create) do |s, e|
+      s.chapterable_assignments.destroy_all
+
       s.chapterable_assignments.create(
         account: s.account,
         chapterable: FactoryBot.create(:chapter),
