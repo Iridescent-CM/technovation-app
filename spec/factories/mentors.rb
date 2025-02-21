@@ -30,6 +30,8 @@ FactoryBot.define do
       end
 
       after(:create) do |mentor, _eval|
+        mentor.chapterable_assignments.destroy_all
+
         mentor.chapterable_assignments.create(
           account: mentor.account,
           chapterable: FactoryBot.create(:chapter),
@@ -131,6 +133,8 @@ FactoryBot.define do
     end
 
     after(:create) do |m, e|
+      m.chapterable_assignments.destroy_all
+
       m.chapterable_assignments.create(
         account: m.account,
         chapterable: FactoryBot.create(:chapter),

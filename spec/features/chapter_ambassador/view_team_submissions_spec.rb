@@ -14,7 +14,8 @@ RSpec.feature "Chapter Ambassador viewing their team submissions" do
   end
 
   scenario "displays team submissions of students assigned to their chapter" do
-    affiliated_student = FactoryBot.create(:student, :chicago)
+    affiliated_student = FactoryBot.create(:student, :chicago, :not_assigned_to_chapter)
+
     affiliated_student.chapterable_assignments.create(
       account: affiliated_student.account,
       chapterable: chapter,
@@ -29,7 +30,8 @@ RSpec.feature "Chapter Ambassador viewing their team submissions" do
       app_name: "hello",
       team: team)
 
-    affiliated_student_2 = FactoryBot.create(:student, :chicago)
+    affiliated_student_2 = FactoryBot.create(:student, :chicago, :not_assigned_to_chapter)
+
     affiliated_student_2.chapterable_assignments.create(
       account: affiliated_student_2.account,
       chapterable: chapter,
