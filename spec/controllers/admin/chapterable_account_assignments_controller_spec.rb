@@ -25,7 +25,7 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
         expect(club_ambassador.account.reload.no_chapterable_selected).to be_nil
       end
 
-      it "creates a chapterable assignment for this account" do
+      it "creates the assignment for this account" do
         post :create, params: {
           account_id: club_ambassador.account.id,
           chapterable_account_assignment: {
@@ -40,7 +40,7 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
     end
 
     context "when no chapterable is selected" do
-      it "does not create a chapterable assignment" do
+      it "does not create the assignment" do
         post :create, params: {
           account_id: club_ambassador.account.id,
           chapterable_account_assignment: {
@@ -49,13 +49,12 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
             chapterable_type: "Club"
           }
         }
-
-        expect(club_ambassador.account.reload.current_club).to be_empty
+        expect(club_ambassador.account.reload.current_club).to be_blank
       end
     end
 
-    context "when a Club Ambassador is assigned to a chapter" do
-      it "does not create a chapterable assignment" do
+    context "assigning a club ambassador to a chapter" do
+      it "does not create the assignment" do
         post :create, params: {
           account_id: club_ambassador.account.id,
           chapterable_account_assignment: {
@@ -64,13 +63,12 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
             chapterable_type: "Chapter"
           }
         }
-
-        expect(club_ambassador.account.reload.current_chapterable_assignment).to be_empty
+        expect(club_ambassador.account.reload.current_chapterable_assignment).to be_blank
       end
     end
 
-    context "when a Chapter Ambassador is assigned to a club" do
-      it "does not create a chapterable assignment" do
+    context "assigning a chapter ambassador to a club" do
+      it "does not create the assignment" do
         post :create, params: {
           account_id: chapter_ambassador.account.id,
           chapterable_account_assignment: {
@@ -79,8 +77,7 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
             chapterable_type: "Club"
           }
         }
-
-        expect(club_ambassador.account.reload.current_chapterable_assignment).to be_empty
+        expect(chapter_ambassador.account.reload.current_chapterable_assignment).to be_blank
       end
     end
   end
