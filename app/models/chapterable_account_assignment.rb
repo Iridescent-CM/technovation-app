@@ -22,9 +22,9 @@ class ChapterableAccountAssignment < ApplicationRecord
   def ambassador_chapterable_assignment_type
     type = chapterable_type.capitalize
 
-    if account.is_a_club_ambassador? && type == "Chapter"
+    if account.club_ambassador? && type == "Chapter"
       errors.add(:base, "Club ambassadors cannot be assigned to a chapter.")
-    elsif account.is_an_ambassador? && type == "Club"
+    elsif account.chapter_ambassador? && type == "Club"
       errors.add(:base, "Chapter ambassadors cannot be assigned to a club.")
     end
   end

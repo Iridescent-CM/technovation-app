@@ -1,6 +1,6 @@
 module Admin
   class ChapterableAccountAssignmentsController < AdminController
-    before_action :chapterables
+    before_action :get_chapterables
 
     def new
       @account = Account.find(params.fetch(:account_id))
@@ -85,7 +85,7 @@ module Admin
       params.require(:chapterable_account_assignment).permit(:chapter_id, :club_id, :chapterable_type)
     end
 
-    def chapterables
+    def get_chapterables
       @chapters = Chapter.all.order(:country, :organization_name)
       @clubs = Club.all.order(:country, :name)
     end
