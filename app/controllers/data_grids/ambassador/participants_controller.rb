@@ -2,6 +2,8 @@ module DataGrids::Ambassador
   class ParticipantsController < AmbassadorController
     include DatagridController
 
+    before_action :ensure_chapterable_country_is_in_ambassadors_country
+
     layout "ambassador"
 
     use_datagrid with: AccountsGrid,
@@ -69,6 +71,31 @@ module DataGrids::Ambassador
       grid.merge(
         column_names: detect_extra_columns(grid)
       )
+    end
+
+    def ensure_chapterable_country_is_in_ambassadors_country
+      chapter_id = params.dig(:accounts_grid, :chapter)
+      club_id = params.dig(:accounts_grid, :club)
+
+      if !current_ambassador.national_view? && (chapter_id.present? || club_id.present?)
+        raise ActiveRecord::RecordNotFound
+      end
+
+      if chapter_id.present?
+        chapter = Chapter.find(chapter_id)
+
+        if chapter.country_code != current_ambassador.chapter.country_code
+          raise ActiveRecord::RecordNotFound
+        end
+      end
+
+      if club_id.present?
+        club = Club.find(club_id)
+
+        if club.country_code != current_ambassador.chapter.country_code
+          raise ActiveRecord::RecordNotFound
+        end
+      end
     end
   end
 end
