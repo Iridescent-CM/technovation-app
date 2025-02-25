@@ -244,7 +244,9 @@ RSpec.describe Account do
             email: "BarbB123@example.com",
             password: "123abc456",
             gender: "Non-binary",
-            chapter_ambassador_profile: ChapterAmbassadorProfile.new,
+            chapter_ambassador_profile: ChapterAmbassadorProfile.new(
+              job_title: "Pro Builder"
+            ),
             meets_minimum_age_requirement: meets_minimum_age_requirement
           )
         }
