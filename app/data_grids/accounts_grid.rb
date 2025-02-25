@@ -1,7 +1,7 @@
 class AccountsGrid
   include Datagrid
 
-  attr_accessor :admin, :allow_state_search
+  attr_accessor :admin, :national_view, :current_account, :allow_state_search
 
   self.batch_size = 1_000
 
@@ -29,13 +29,13 @@ class AccountsGrid
 
   column :chapter,
     order: ->(scope) { scope.left_joins(:chapters).order("chapters.name") },
-    if: ->(g) { g.admin } do |account|
+    if: ->(g) { g.admin || g.national_view } do |account|
     account.current_chapter.name.presence || "-"
   end
 
   column :club,
     order: ->(scope) { scope.left_joins(:clubs).order("clubs.name") },
-    if: ->(g) { g.admin } do |account|
+    if: ->(g) { g.admin || g.national_view } do |account|
     account.current_club.name.presence || "-"
   end
 
@@ -333,6 +333,32 @@ class AccountsGrid
     by_club(value)
   end
 
+  filter :chapter,
+    :enum,
+    header: "Chapter",
+    if: ->(g) { g.national_view },
+    select: ->(g) { g.get_chapters_for_national_view },
+    filter_group: "common",
+    html: {
+      class: "and-or-field"
+    } do |value|
+    by_chapter(value)
+  end
+
+  filter :club,
+    :enum,
+    header: "Club",
+    if: ->(g) {
+      g.national_view && g.get_clubs_for_national_view.present?
+    },
+    select: ->(g) { g.get_clubs_for_national_view },
+    filter_group: "common",
+    html: {
+      class: "and-or-field"
+    } do |value|
+    by_club(value)
+  end
+
   filter :division,
     :enum,
     header: "Division (students only)",
@@ -562,18 +588,22 @@ class AccountsGrid
     },
     multiple: true,
     if: ->(g) { !g.admin } do |season_value, scope, grid|
-    case grid.season_and_or
-    when "match_any"
-      scope
-        .joins(:chapterable_assignments)
-        .where(chapterable_assignments: {season: season_value})
-        .distinct
+    if grid.chapter.present? || grid.club.present?
+      case grid.season_and_or
+      when "match_any"
+        scope
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {season: season_value})
+          .distinct
+      else
+        scope
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {season: season_value})
+          .group("accounts.id")
+          .having("COUNT(DISTINCT chapterable_assignments.season) = ?", season_value.length)
+      end
     else
-      scope
-        .joins(:chapterable_assignments)
-        .where(chapterable_assignments: {season: season_value})
-        .group("accounts.id")
-        .having("COUNT(DISTINCT chapterable_assignments.season) = ?", season_value.length)
+      scope.by_season(season_value, match: grid.season_and_or)
     end
   end
 
@@ -734,4 +764,18 @@ class AccountsGrid
     filter_group: "more-columns",
     multiple: true
   )
+
+  def get_chapters_for_national_view
+    Chapter
+      .where(country: current_account.current_chapterable.read_attribute(:country))
+      .order(name: :asc)
+      .map { |c| [c.name, c.id] }
+  end
+
+  def get_clubs_for_national_view
+    Club
+      .where(country: current_account.current_chapterable.read_attribute(:country))
+      .order(name: :asc)
+      .map { |c| [c.name, c.id] }
+  end
 end
