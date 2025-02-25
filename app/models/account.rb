@@ -521,14 +521,22 @@ class Account < ActiveRecord::Base
 
   scope :by_chapter, ->(chapter_id) {
     left_outer_joins(:chapterable_assignments)
-      .where("chapterable_account_assignments.chapterable_type = 'Chapter'")
-      .where("chapterable_account_assignments.chapterable_id = ?", chapter_id)
+      .where(
+        chapterable_assignments: {
+          chapterable_type: "Chapter",
+          chapterable_id: chapter_id
+        }
+      )
   }
 
   scope :by_club, ->(club_id) {
     left_outer_joins(:chapterable_assignments)
-      .where("chapterable_account_assignments.chapterable_type = 'Club'")
-      .where("chapterable_account_assignments.chapterable_id = ?", club_id)
+      .where(
+        chapterable_assignments: {
+          chapterable_type: "Club",
+          chapterable_id: club_id
+        }
+      )
   }
 
   scope :by_division, ->(division) {
