@@ -10,10 +10,13 @@
 
 <dt><%= chapterable_options_text.capitalize %></dt>
 <dd><%= "Not assigned to #{chapterable_options_text}" %></dd>
-<p>
-  <%= link_to "Assign to #{chapterable_options_text}",
-    new_admin_account_chapterable_account_assignment_path(
-      account
-    ),
-    class: "button secondary small" %>
-</p>
+
+<% if current_account.admin? %>
+  <p>
+    <%= link_to "Assign to #{chapterable_options_text}",
+      new_admin_account_chapterable_account_assignment_path(
+        account
+      ),
+      class: "button secondary small" %>
+  </p>
+<% end %>
