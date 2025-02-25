@@ -2,9 +2,10 @@
 
 <dt><%= chapterable_type %> (Name)</dt>
 <dd>
-  <%= link_to(chapterable_assignment.chapterable.name.presence || "Name not set",
-    send("admin_#{chapterable_type.downcase}_path",
-      chapterable_assignment.chapterable)) %>
+  <%= link_to_if current_account.admin?,
+    chapterable_assignment.chapterable.name.presence || "Name not set",
+    send("admin_#{chapterable_type.downcase}_path", chapterable_assignment.chapterable)
+  %>
 </dd>
 
 <% if account.assigned_to_chapter? %>
@@ -14,20 +15,22 @@
   </dd>
 <% end %>
 
-<% case chapterable_assignment.profile_type %>
-<% when "StudentProfile" %>
-  <% link_text = "Edit #{chapterable_type.downcase} for student" %>
-<% when "MentorProfile" %>
-  <% link_text = "Edit #{chapterable_type.downcase} for mentor" %>
-<% when "ClubAmbassadorProfile" %>
-  <% link_text = "Edit club for ClA" %>
-<% else %>
-  <% link_text = "Edit chapter for ChA" %>
-<% end %>
+<% if current_account.admin? %>
+  <% case chapterable_assignment.profile_type %>
+  <% when "StudentProfile" %>
+    <% link_text = "Edit #{chapterable_type.downcase} for student" %>
+  <% when "MentorProfile" %>
+    <% link_text = "Edit #{chapterable_type.downcase} for mentor" %>
+  <% when "ClubAmbassadorProfile" %>
+    <% link_text = "Edit club for ClA" %>
+  <% else %>
+    <% link_text = "Edit chapter for ChA" %>
+  <% end %>
 
-<%= link_to link_text,
-  edit_admin_account_chapterable_account_assignment_path(
-    account,
-    chapterable_assignment
-  ),
-  class: "button secondary small" %>
+  <%= link_to link_text,
+    edit_admin_account_chapterable_account_assignment_path(
+      account,
+      chapterable_assignment
+    ),
+    class: "button secondary small" %>
+<% end %>
