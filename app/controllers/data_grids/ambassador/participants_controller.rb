@@ -7,28 +7,51 @@ module DataGrids::Ambassador
     use_datagrid with: AccountsGrid,
 
       html_scope: ->(scope, user, params) {
-        scope
-          .joins(:chapterable_assignments)
-          .where(
-            chapterable_assignments: {
-              chapterable_type: user.chapterable_type.capitalize,
-              chapterable_id: user.current_chapterable.id
-            }
-          )
-          .page(params[:page])
+        if user.chapter_ambassador_profile&.national_view?
+          if params[:accounts_grid][:chapter].blank? && params[:accounts_grid][:club].blank?
+            scope
+              .in_region(user.chapterable)
+              .page(params[:page])
+          else
+            scope
+              .page(params[:page])
+          end
+        else
+          scope
+            .joins(:chapterable_assignments)
+            .where(
+              chapterable_assignments: {
+                chapterable_type: user.chapterable_type.capitalize,
+                chapterable_id: user.current_chapterable.id
+              }
+            )
+            .page(params[:page])
+        end
       },
 
-      csv_scope: "->(scope, user, _params) {
-        scope
-          .joins(:chapterable_assignments)
-      .where(chapterable_assignments: {chapterable_type: user.chapterable_type.capitalize, chapterable_id: user.current_chapterable.id})
-      }"
+      csv_scope: "->(scope, user, _params) {" \
+        "if user.chapter_ambassador_profile&.national_view?;" \
+          "if params[:chapter].blank? && params[:club].blank?;" \
+            "scope.in_region(user.chapterable);" \
+          "else;" \
+            "scope;" \
+          "end;" \
+        "else;" \
+          "scope.joins(:chapterable_assignments)" \
+          ".where(chapterable_assignments: {" \
+            "chapterable_type: user.chapterable_type.capitalize," \
+            "chapterable_id: user.current_chapterable.id" \
+          "});" \
+        "end;" \
+      "}"
 
     private
 
     def grid_params
       grid = (params[:accounts_grid] ||= {}).merge(
         admin: false,
+        national_view: current_ambassador.national_view?,
+        current_account: current_account,
         allow_state_search: current_ambassador.country_code != "US",
         country: [current_ambassador.country_code],
         state_province: (
