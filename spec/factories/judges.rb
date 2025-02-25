@@ -76,6 +76,18 @@ FactoryBot.define do
       country { "US" }
     end
 
+    trait :brazil do
+      city { "Salvador" }
+      state_province { "Bahia" }
+      country { "BR" }
+    end
+
+    trait :india do
+      city { "Mumbai" }
+      state_province { "Maharashtra" }
+      country { "IN" }
+    end
+
     before(:create) do |j, e|
       attrs = {
         city: e.city,
