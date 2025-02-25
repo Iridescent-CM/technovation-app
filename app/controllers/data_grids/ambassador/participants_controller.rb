@@ -24,21 +24,6 @@ module DataGrids::Ambassador
       .where(chapterable_assignments: {chapterable_type: user.chapterable_type.capitalize, chapterable_id: user.current_chapterable.id})
       }"
 
-    def show
-      @account = Account
-        .joins(:chapterable_assignments)
-        .where(
-          chapterable_assignments: {
-            chapterable_type: current_ambassador.chapterable_type.capitalize,
-            chapterable_id: current_ambassador.current_chapterable.id
-          }
-        )
-        .find(params[:id])
-
-      @teams = Team.current.in_region(current_ambassador)
-      @season_flag = SeasonFlag.new(@account)
-    end
-
     private
 
     def grid_params
