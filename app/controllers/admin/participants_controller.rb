@@ -105,7 +105,7 @@ module Admin
         mentor_profile_attributes: [:id, mentor_type_ids: []],
         student_profile: {},
         judge_profile_attributes: [:id, judge_type_ids: []],
-        chapter_ambassador_profile: {}
+        chapter_ambassador_profile_attributes: [:id, :national_view]
       ).tap do |tapped|
         tapped[:skip_existing_password] = true
         tapped[:admin_making_changes] = true

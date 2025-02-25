@@ -53,6 +53,21 @@
     </p>
     <br>
 
+    <% if f.object.chapter_ambassador? %>
+      <%= f.fields_for :chapter_ambassador_profile do |c| %>
+        <p>
+          <%= c.label :national_view %>
+
+          <%= c.radio_button :national_view, true %>
+          <%= c.label :national_view_true, "Yes" %>
+          <br>
+          <%= c.radio_button :national_view, false %>
+          <%= c.label :national_view_false, "No" %>
+        </p>
+      <% end %>
+    <% end %>
+    <br>
+
     <% if f.object.mentor_profile.present? %>
       <%= f.fields_for :mentor_profile do |m| %>
         <p>

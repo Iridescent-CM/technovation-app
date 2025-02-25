@@ -7,4 +7,7 @@
       organization_name: profile.chapter&.organization_name.presence || "Organization") %>
   </dt>
   <dd><%= profile.organization_status&.humanize || "-" %></dd>
+
+  <dt><%= t("models.chapter_ambassador_profile.national_view") %></dt>
+  <dd><%= profile.national_view? ? "Yes" : "No" %></dd>
 </dl>

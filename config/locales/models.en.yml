@@ -60,6 +60,7 @@ en:
       job_title: "Job title"
       organization_company_name: "Organization/company name"
       organization_status: "Status with %{organization_name}"
+      national_view: "National View"
 
     club_ambassador_profile:
       job_title: "Job title"

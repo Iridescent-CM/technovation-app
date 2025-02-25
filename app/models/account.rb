@@ -40,7 +40,8 @@ class Account < ActiveRecord::Base
   has_one :judge_profile, dependent: :destroy
   has_one :chapter_ambassador_profile, dependent: :destroy
   has_one :club_ambassador_profile, dependent: :destroy
-  accepts_nested_attributes_for :mentor_profile, :judge_profile
+
+  accepts_nested_attributes_for :chapter_ambassador_profile, :mentor_profile, :judge_profile
 
   ChapterAmbassadorProfile.statuses.keys.each do |status|
     has_one :"#{status}_chapter_ambassador_profile",
