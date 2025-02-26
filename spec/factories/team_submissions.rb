@@ -48,7 +48,6 @@ FactoryBot.define do
           app_name: "Filled in by the factory!",
           app_description: "Filled in by the factory! " +
                            "Hello world!\n I have line breaks too",
-          submission_type: "Mobile App",
           development_platform: "Swift or XCode",
           demo_video_link: "http://example.com/demo",
           pitch_video_link: "http://example.com/pitch"
@@ -100,7 +99,6 @@ FactoryBot.define do
       learning_journey { "Learning journey description" }
       pitch_video_link { "http://example.com/pitch" }
       demo_video_link { "http://example.com/demo" }
-      submission_type { "Mobile App" }
       development_platform { "Swift or XCode" }
 
       after(:create) do |team_submission|
@@ -118,7 +116,6 @@ FactoryBot.define do
       learning_journey { "Learning journey description" }
       pitch_video_link { "http://example.com/pitch" }
       demo_video_link { "http://example.com/demo" }
-      submission_type { "Mobile App" }
       development_platform { "Swift or XCode" }
 
       after(:create) do |team_submission|
