@@ -57,7 +57,7 @@ module Judging
           Question.new(
             idx: 1,
             section: "demo",
-            submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
+            submission_type: "",
             field: :demo_1,
             worth: 5,
             text: %(
@@ -68,7 +68,7 @@ module Judging
           Question.new(
             idx: 2,
             section: "demo",
-            submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
+            submission_type: "",
             field: :demo_2,
             worth: 5,
             text: %(
@@ -79,66 +79,22 @@ module Judging
           Question.new(
             idx: 3,
             section: "demo",
-            submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
+            submission_type: "",
             field: :demo_3,
             worth: 5,
             text: %(
-              Do we explain the coding we did for 1 or 2 important parts of our app, other than the login screen?
+              Do we explain the machine learning training and/or coding we did for 1 or 2 important parts of our app, other than the login screen?
             )
           ),
 
           Question.new(
             idx: 4,
             section: "demo",
-            submission_type: TeamSubmission::MOBILE_APP_SUBMISSION_TYPE,
+            submission_type: "",
             field: :demo_4,
             worth: 5,
             text: %(
               Do we show what doesn’t work yet and/or share future app features?
-            )
-          ),
-
-          Question.new(
-            idx: 1,
-            section: "demo",
-            submission_type: TeamSubmission::AI_PROJECT_SUBMISSION_TYPE,
-            field: :demo_1,
-            worth: 5,
-            text: %(
-             Do we show what AI model we have built and trained, including explaining what data we gathered and trained the model with?
-            )
-          ),
-
-          Question.new(
-            idx: 2,
-            section: "demo",
-            submission_type: TeamSubmission::AI_PROJECT_SUBMISSION_TYPE,
-            field: :demo_2,
-            worth: 5,
-            text: %(
-              Do we explain how the prototype was tested with users, what feedback was given, and how it affected the features of the prototype?
-            )
-          ),
-
-          Question.new(
-            idx: 3,
-            section: "demo",
-            submission_type: TeamSubmission::AI_PROJECT_SUBMISSION_TYPE,
-            field: :demo_3,
-            worth: 5,
-            text: %(
-              Do we show what invention we have built or prototyped, explaining how we built it, and how it works?
-            )
-          ),
-
-          Question.new(
-            idx: 4,
-            section: "demo",
-            submission_type: TeamSubmission::AI_PROJECT_SUBMISSION_TYPE,
-            field: :demo_4,
-            worth: 5,
-            text: %(
-              Do we show what doesn’t work yet  and/or share future prototype features?
             )
           ),
 

@@ -25,7 +25,7 @@ class JudgeQuestionsForSubmissionScore
 
   def filtered_questions
     questions.delete_if do |question|
-      question.section == "demo" && question.submission_type != submission_type
+      question.section == "demo" && question.submission_type.to_s != submission_type.to_s
     end
   end
 end
