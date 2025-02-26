@@ -16,6 +16,7 @@ class ChapterableAccountAssignment < ApplicationRecord
   }
 
   validate :ambassador_chapterable_assignment_type
+  validate :ensure_one_primary_assignment_per_profile_type_per_season, if: :new_record?
 
   private
 
@@ -26,6 +27,21 @@ class ChapterableAccountAssignment < ApplicationRecord
       errors.add(:base, "Club ambassadors cannot be assigned to a chapter.")
     elsif account.chapter_ambassador? && type == "Club"
       errors.add(:base, "Chapter ambassadors cannot be assigned to a club.")
+    end
+  end
+
+  def ensure_one_primary_assignment_per_profile_type_per_season
+    if primary && ChapterableAccountAssignment
+        .where(
+          account_id: account_id,
+          profile_type: profile_type,
+          profile_id: profile_id,
+          season: season,
+          primary: true
+        )
+        .exists?
+
+      errors.add(:base, "This participant is already assigned to a chapter or club")
     end
   end
 end

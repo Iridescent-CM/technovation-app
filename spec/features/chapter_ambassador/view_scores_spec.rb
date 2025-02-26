@@ -27,6 +27,8 @@ RSpec.feature "Chapter Ambassador views scores" do
       )
 
       submission.team.students.each do |student|
+        student.chapterable_assignments.destroy_all
+
         student.chapterable_assignments.create(
           chapterable: chapter_ambassador.chapterable,
           account: student.account,
@@ -53,6 +55,8 @@ RSpec.feature "Chapter Ambassador views scores" do
       )
 
       submission.team.students.each do |student|
+        student.chapterable_assignments.destroy_all
+
         student.chapterable_assignments.create(
           chapterable: chapter_ambassador.chapterable,
           account: student.account,
@@ -84,6 +88,8 @@ RSpec.feature "Chapter Ambassador views scores" do
       )
 
       submission.team.students.each do |student|
+        student.chapterable_assignments.destroy_all
+
         student.chapterable_assignments.create(
           chapterable: chapter_ambassador.chapterable,
           account: student.account,
@@ -153,6 +159,8 @@ RSpec.feature "Chapter Ambassador views scores" do
       )
 
       submission.team.students.each do |student|
+        student.chapterable_assignments.destroy_all
+
         student.chapterable_assignments.create(
           chapterable: chapter_ambassador.chapterable,
           account: student.account,
@@ -176,6 +184,8 @@ RSpec.feature "Chapter Ambassador views scores" do
       )
 
       submission.team.students.each do |student|
+        student.chapterable_assignments.destroy_all
+
         student.chapterable_assignments.create(
           chapterable: chapter_ambassador.chapterable,
           account: student.account,
@@ -216,6 +226,8 @@ RSpec.feature "Chapter Ambassador views scores" do
     )
 
     submission.team.students.each do |student|
+      student.chapterable_assignments.destroy_all
+
       student.chapterable_assignments.create(
         chapterable: chapter_ambassador.chapterable,
         account: student.account,
