@@ -7,7 +7,7 @@ class ScoredSubmissionsGrid
 
   scope do
     TeamSubmission.complete.current
-      .includes(:team, {submission_scores: :judge_profile})
+      .includes(team: :division, submission_scores: :judge_profile)
       .references(:teams, :submission_scores, :judge_profiles)
   end
 
