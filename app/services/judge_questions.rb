@@ -28,7 +28,7 @@ class JudgeQuestions
       "TwentyTwenty"
     else
       if season < 2020
-        raise "Questions for the #{season} season don't exist! Most likely the questions could be added by looking at the commit history for `quesitons.rb`."
+        raise "Questions for the #{season} season don't exist! Most likely the questions could be added by looking at the commit history for `questions.rb`."
       else
         raise "Questions for the #{season} season haven't been setup yet! You'll likely want to copy the previous year's questions in '/app/services/judging/#{season - 1}/' to get them setup."
       end
