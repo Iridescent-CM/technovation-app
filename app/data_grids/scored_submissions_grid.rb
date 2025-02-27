@@ -84,7 +84,7 @@ class ScoredSubmissionsGrid
 
   column :judge_recusal_count, header: "Recusals", mandatory: true, order: true
 
-  column :recused, header: "Removed from judging pool", mandatory: true do |submission|
+  column :removed_from_judging_pool, header: "Removed from judging pool", mandatory: true do |submission|
     ApplicationController.helpers.humanize_boolean(submission.removed_from_judging_pool)
   end
 
