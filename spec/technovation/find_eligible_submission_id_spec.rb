@@ -138,6 +138,29 @@ RSpec.describe FindEligibleSubmissionId do
       expect(FindEligibleSubmissionId.call(judge)).to be_nil
     end
 
+    it "does not pick submissions that have been removed from the judging pool based on recusal count" do
+      judge = FactoryBot.create(:judge)
+      team = FactoryBot.create(:team)
+      submission = FactoryBot.create(
+        :submission,
+        :complete,
+        team: team,
+        removed_from_judging_pool: false,
+        judge_recusal_count: 4
+      )
+
+      SubmissionScore.create!(
+        judge_profile: judge,
+        team_submission: submission,
+        judge_recusal: true,
+        judge_recusal_reason: "submission_not_in_english"
+      )
+
+      submission.reload
+      expect(submission.removed_from_judging_pool).to eq(true)
+      expect(FindEligibleSubmissionId.call(judge)).to be_nil
+    end
+
     it "picks submission for an unofficial regional pitch event" do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
