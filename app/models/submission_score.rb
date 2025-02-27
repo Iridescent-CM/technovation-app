@@ -33,6 +33,8 @@ class SubmissionScore < ActiveRecord::Base
     )
   }, on: [:create, :update], if: :complete?
 
+  after_commit :update_removed_from_judging_pool, if: :saved_change_to_judge_recusal?
+
   after_commit -> {
     update_column(:official, official?)
   }, on: [:create, :update]
@@ -564,5 +566,9 @@ class SubmissionScore < ActiveRecord::Base
 
   def update_team_score_summaries
     team_submission.update_score_summaries
+  end
+
+  def update_removed_from_judging_pool
+    team_submission.reload.update(removed_from_judging_pool: team_submission.judge_recusal_count > 4)
   end
 end
