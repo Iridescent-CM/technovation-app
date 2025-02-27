@@ -84,6 +84,10 @@ class ScoredSubmissionsGrid
 
   column :judge_recusal_count, header: "Recusals", mandatory: true, order: true
 
+  column :recused, header: "Removed from judging pool", mandatory: true do |submission|
+    ApplicationController.helpers.humanize_boolean(submission.removed_from_judging_pool)
+  end
+
   column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
     str = submission.quarterfinals_average_score.to_s
     str += "/#{submission.total_possible_score}"
@@ -364,6 +368,8 @@ class ScoredSubmissionsGrid
     ] do |value, scope, grid|
     scope.joins(:"#{grid.round}_#{value}_submission_scores")
   end
+
+  filter(:removed_from_judging_pool, :xboolean, header: "Removed from judging pool")
 
   filter :country,
     :enum,
