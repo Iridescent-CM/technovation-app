@@ -69,7 +69,7 @@ module FindEligibleSubmissionId
         []
       end
 
-      candidates = TeamSubmission.current.complete.public_send(
+      candidates = TeamSubmission.current.complete.not_removed_from_judging_pool.public_send(
         rank_for_current_round
       )
         .where.not(
