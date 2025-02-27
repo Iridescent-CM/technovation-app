@@ -14,6 +14,8 @@
     <router-view v-else></router-view>
   </div>
 
+  <%= render partial: "admin/scores/removed_submissions", locals: { removed_submissions: @removed_submissions } %>
+
   <h1>Season <%= Season.current.year %> Scores</h1>
 <% end %>
 

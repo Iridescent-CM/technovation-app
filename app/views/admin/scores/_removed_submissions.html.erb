@@ -1,0 +1,29 @@
+<div class="panel">
+  <h4>Removed Submissions</h4>
+  <p>These submissions are automatically removed from the judging pool due to the number of recusals.</p>
+
+  <% if removed_submissions.any? %>
+    <table class="datagrid">
+      <thead>
+        <tr>
+          <th>Team Name</th>
+          <th>Submission</th>
+          <th>Division</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% removed_submissions.each do |submission| %>
+        <tr>
+          <td><%= link_to(submission.team_name, admin_team_path(submission.team)) %></td>
+          <td><%= link_to(submission.app_name, admin_team_submission_path(submission)) %></td>
+          <td><%= submission.team.division_name %></td>
+          <td><%= link_to("View Recusals", admin_score_detail_path(submission.id)) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>There are no submissions removed for recusal count at this time.</p>
+  <% end %>
+</div>
