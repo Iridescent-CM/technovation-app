@@ -1,14 +1,18 @@
 module Ambassador
   class ParticipantsController < AmbassadorController
     def show
-      if params[:search_in_region].present?
+      if current_ambassador.national_view? || params[:search_in_region].present?
         raise ActiveRecord::RecordNotFound if current_ambassador.club_ambassador?
 
         @account = Account
-          .in_region(current_ambassador)
+          .in_region(current_ambassador.chapter)
           .find(params[:id])
 
-        raise ActiveRecord::RecordNotFound if @account.is_not_a_judge?
+        if (params[:search_in_region].present? && @account.is_not_a_judge?) ||
+            (current_ambassador.national_view? && @account.country_code != current_ambassador.chapter.country_code)
+
+          raise ActiveRecord::RecordNotFound
+        end
 
         @teams = Team
           .current

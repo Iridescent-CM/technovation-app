@@ -414,7 +414,8 @@ CREATE TABLE public.chapter_ambassador_profiles (
     organization_status public.chapter_ambassador_organization_status,
     viewed_community_connections boolean DEFAULT false NOT NULL,
     training_completed_at timestamp without time zone,
-    onboarded boolean DEFAULT false
+    onboarded boolean DEFAULT false,
+    national_view boolean DEFAULT false
 );
 
 
@@ -4965,6 +4966,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241211230435'),
 ('20250103180055'),
 ('20250103182555'),
-('20250211205130');
+('20250211205130'),
+('20250219221626');
 
 

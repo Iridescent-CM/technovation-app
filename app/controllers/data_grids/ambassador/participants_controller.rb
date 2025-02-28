@@ -2,48 +2,58 @@ module DataGrids::Ambassador
   class ParticipantsController < AmbassadorController
     include DatagridController
 
+    before_action :ensure_chapterable_country_is_in_ambassadors_country
+
     layout "ambassador"
 
     use_datagrid with: AccountsGrid,
 
       html_scope: ->(scope, user, params) {
-        scope
-          .joins(:chapterable_assignments)
-          .where(
-            chapterable_assignments: {
-              chapterable_type: user.chapterable_type.capitalize,
-              chapterable_id: user.current_chapterable.id
-            }
-          )
-          .page(params[:page])
+        if user.chapter_ambassador_profile&.national_view?
+          if params[:accounts_grid][:chapter].blank? && params[:accounts_grid][:club].blank?
+            scope
+              .in_region(user.chapterable)
+              .page(params[:page])
+          else
+            scope
+              .page(params[:page])
+          end
+        else
+          scope
+            .joins(:chapterable_assignments)
+            .where(
+              chapterable_assignments: {
+                chapterable_type: user.chapterable_type.capitalize,
+                chapterable_id: user.current_chapterable.id
+              }
+            )
+            .page(params[:page])
+        end
       },
 
-      csv_scope: "->(scope, user, _params) {
-        scope
-          .joins(:chapterable_assignments)
-      .where(chapterable_assignments: {chapterable_type: user.chapterable_type.capitalize, chapterable_id: user.current_chapterable.id})
-      }"
-
-    def show
-      @account = Account
-        .joins(:chapterable_assignments)
-        .where(
-          chapterable_assignments: {
-            chapterable_type: current_ambassador.chapterable_type.capitalize,
-            chapterable_id: current_ambassador.current_chapterable.id
-          }
-        )
-        .find(params[:id])
-
-      @teams = Team.current.in_region(current_ambassador)
-      @season_flag = SeasonFlag.new(@account)
-    end
+      csv_scope: "->(scope, user, _params) {" \
+        "if user.chapter_ambassador_profile&.national_view?;" \
+          "if params[:chapter].blank? && params[:club].blank?;" \
+            "scope.in_region(user.chapterable);" \
+          "else;" \
+            "scope;" \
+          "end;" \
+        "else;" \
+          "scope.joins(:chapterable_assignments)" \
+          ".where(chapterable_assignments: {" \
+            "chapterable_type: user.chapterable_type.capitalize," \
+            "chapterable_id: user.current_chapterable.id" \
+          "});" \
+        "end;" \
+      "}"
 
     private
 
     def grid_params
       grid = (params[:accounts_grid] ||= {}).merge(
         admin: false,
+        national_view: current_ambassador.national_view?,
+        current_account: current_account,
         allow_state_search: current_ambassador.country_code != "US",
         country: [current_ambassador.country_code],
         state_province: (
@@ -61,6 +71,31 @@ module DataGrids::Ambassador
       grid.merge(
         column_names: detect_extra_columns(grid)
       )
+    end
+
+    def ensure_chapterable_country_is_in_ambassadors_country
+      chapter_id = params.dig(:accounts_grid, :chapter)
+      club_id = params.dig(:accounts_grid, :club)
+
+      if !current_ambassador.national_view? && (chapter_id.present? || club_id.present?)
+        raise ActiveRecord::RecordNotFound
+      end
+
+      if chapter_id.present?
+        chapter = Chapter.find(chapter_id)
+
+        if chapter.country_code != current_ambassador.chapter.country_code
+          raise ActiveRecord::RecordNotFound
+        end
+      end
+
+      if club_id.present?
+        club = Club.find(club_id)
+
+        if club.country_code != current_ambassador.chapter.country_code
+          raise ActiveRecord::RecordNotFound
+        end
+      end
     end
   end
 end
