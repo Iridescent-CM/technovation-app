@@ -310,12 +310,16 @@ class SubmissionsGrid
     team.mentors.collect(&:email).join(",")
   end
 
-  filter :team_name do |value, scope, grid|
-    scope.where("teams.name ilike ?", "#{value}%")
+  filter :team_name do |value, scope|
+    processed_value = I18n.transliterate(value.strip.downcase).gsub(/['\s]+/, "%")
+    scope
+      .where("lower(unaccent(teams.name)) ILIKE ?", "%#{processed_value}%")
   end
 
   filter :app_name do |value, scope, grid|
-    scope.where("team_submissions.app_name ilike ?", "#{value}%")
+    processed_value = I18n.transliterate(value.strip.downcase).gsub(/['\s]+/, "%")
+    scope
+      .where("lower(unaccent(team_submissions.app_name)) ILIKE ?", "%#{processed_value}%")
   end
 
   filter :division,
