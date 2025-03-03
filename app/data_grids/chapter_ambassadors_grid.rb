@@ -52,6 +52,12 @@ class ChapterAmbassadorsGrid
     chapter_ambassador_profile.organization_status.presence || "-"
   end
 
+  column :national_view do
+    ApplicationController
+      .helpers
+      .humanize_boolean(chapter_ambassador_profile.national_view?)
+  end
+
   column :mentor, header: "Mentor?" do
     mentor_profile.present? ? "yes" : "no"
   end
@@ -160,6 +166,17 @@ class ChapterAmbassadorsGrid
         scope.left_outer_joins(:chapterable_assignments)
           .where(chapterable_assignments: {id: nil})
       end
+    end
+
+  filter :national_view,
+    :enum,
+    select: [
+      ["Yes", true],
+      ["No", false]
+    ],
+    filter_group: "common" do |value, scope, grid|
+      scope
+        .where(chapter_ambassador_profiles: {national_view: value})
     end
 
   filter :onboarded,
