@@ -221,8 +221,10 @@ class TeamsGrid
     send(value)
   end
 
-  filter :name, filter_group: "more-specific" do |value|
-    fuzzy_search(name: value)
+  filter :name, filter_group: "more-specific" do |value, scope|
+    processed_value = I18n.transliterate(value.strip.downcase).gsub(/['\s]+/, "%")
+    scope
+      .where("lower(unaccent(teams.name)) ILIKE ?", "%#{processed_value}%")
   end
 
   filter :season,
