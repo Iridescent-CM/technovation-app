@@ -18,7 +18,7 @@ class EventsGrid
   column :name, mandatory: true
 
   column :chapter, mandatory: true,
-  order: ->(scope) { scope.left_joins(ambassador: {account: :chapters}).order("chapters.name") } do |event|
+    order: ->(scope) { scope.left_joins(ambassador: {account: :chapters}).order("chapters.name") } do |event|
     event.ambassador.account.current_chapter&.name.presence || "-"
   end
 
@@ -62,7 +62,7 @@ class EventsGrid
 
   column :teams_count, header: "Team count", mandatory: true
 
-  column :actions, mandatory: true, html: true do |event|
+  column :actions, mandatory: true, html: true, if: ->(g) { g.admin } do |event|
     link_to "view", admin_event_path(event)
   end
 
@@ -79,7 +79,7 @@ class EventsGrid
     first_name = names.first
     last_name = names.last
 
-    where("accounts.first_name ilike ? OR " +
+    where("accounts.first_name ilike ? OR " \
           "accounts.last_name ilike ? ",
       "#{first_name}%", "#{last_name}%")
   end
@@ -109,6 +109,7 @@ class EventsGrid
     :enum,
     select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
     filter_group: "common",
+    if: ->(g) { g.admin },
     html: {
       class: "and-or-field"
     } do |value|
