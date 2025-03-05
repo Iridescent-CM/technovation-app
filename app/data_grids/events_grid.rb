@@ -54,6 +54,12 @@ class EventsGrid
     judge_list.size
   end
 
+  column :teams, preload: [:teams] do
+    teams
+      .map(&:name)
+      .join(",")
+  end
+
   column :teams_count, header: "Team count", mandatory: true
 
   column :actions, mandatory: true, html: true do |event|
@@ -76,6 +82,12 @@ class EventsGrid
     where("accounts.first_name ilike ? OR " +
           "accounts.last_name ilike ? ",
       "#{first_name}%", "#{last_name}%")
+  end
+
+  filter :team_name do |value, scope|
+    scope
+      .joins(:teams)
+      .where("teams.name ilike ? ", "#{value}%")
   end
 
   filter :judge_name do |value, scope|
