@@ -50,7 +50,9 @@ module ApplicationHelper
   def al(identifiers)
     decoded_path = CGI.escape(request.fullpath)
 
-    if Array(identifiers).any? { |i| decoded_path.include?(CGI.escape(i)) }
+    if decoded_path.include?("events_list") && identifiers == "/chapter_ambassador/events_list"
+      "active"
+    elsif Array(identifiers).any? { |i| decoded_path.include?(CGI.escape(i)) } && decoded_path.exclude?("events_list")
       "active"
     else
       ""
