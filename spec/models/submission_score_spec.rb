@@ -484,6 +484,48 @@ RSpec.describe SubmissionScore do
     ).to eq(1)
   end
 
+  describe "updating removed_from_judging_pool based on judge recusal count" do
+    context "when the judge recusal count is less than or equal to 4" do
+      it "leaves the submission from the judging pool" do
+        team = FactoryBot.create(:team)
+        team_submission = FactoryBot.create(
+          :submission,
+          :complete,
+          team: team,
+          judge_recusal_count: 3,
+          removed_from_judging_pool: false
+        )
+
+        team_submission.reload
+        expect(team_submission.removed_from_judging_pool).to eq(false)
+      end
+    end
+
+    context "when the judge recusal count is greater than 4" do
+      it "removes the submission from the judging pool" do
+        judge = FactoryBot.create(:judge)
+        team = FactoryBot.create(:team)
+        team_submission = FactoryBot.create(
+          :submission,
+          :complete,
+          team: team,
+          judge_recusal_count: 4,
+          removed_from_judging_pool: false
+        )
+
+        SubmissionScore.create!(
+          judge_profile: judge,
+          team_submission: team_submission,
+          judge_recusal: true,
+          judge_recusal_reason: "submission_not_in_english"
+        )
+
+        team_submission.reload
+        expect(team_submission.removed_from_judging_pool).to eq(true)
+      end
+    end
+  end
+
   describe "scopes" do
     let(:not_started_score) { FactoryBot.create(:score, :not_started) }
     let(:in_progress_score) { FactoryBot.create(:score, :in_progress) }

@@ -7,7 +7,7 @@ class ScoredSubmissionsGrid
 
   scope do
     TeamSubmission.complete.current
-      .includes(:team, {submission_scores: :judge_profile})
+      .includes(team: :division, submission_scores: :judge_profile)
       .references(:teams, :submission_scores, :judge_profiles)
   end
 
@@ -83,6 +83,8 @@ class ScoredSubmissionsGrid
   end
 
   column :judge_recusal_count, header: "Recusals", mandatory: true, order: true
+
+  column :removed_from_judging_pool?, header: "Removed from judging pool", mandatory: true
 
   column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
     str = submission.quarterfinals_average_score.to_s
@@ -364,6 +366,8 @@ class ScoredSubmissionsGrid
     ] do |value, scope, grid|
     scope.joins(:"#{grid.round}_#{value}_submission_scores")
   end
+
+  filter(:removed_from_judging_pool, :xboolean, header: "Removed from judging pool")
 
   filter :country,
     :enum,
