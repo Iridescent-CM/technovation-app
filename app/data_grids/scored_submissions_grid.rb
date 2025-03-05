@@ -84,9 +84,7 @@ class ScoredSubmissionsGrid
 
   column :judge_recusal_count, header: "Recusals", mandatory: true, order: true
 
-  column :removed_from_judging_pool, header: "Removed from judging pool", mandatory: true do |submission|
-    ApplicationController.helpers.humanize_boolean(submission.removed_from_judging_pool)
-  end
+  column :removed_from_judging_pool?, header: "Removed from judging pool", mandatory: true
 
   column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
     str = submission.quarterfinals_average_score.to_s
