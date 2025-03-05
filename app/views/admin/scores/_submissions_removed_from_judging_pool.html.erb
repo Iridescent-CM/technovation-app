@@ -1,8 +1,8 @@
 <div class="panel">
-  <h4>Removed Submissions</h4>
+  <h4>Submissions Removed from Judging Pool</h4>
   <p>These submissions are automatically removed from the judging pool due to the number of recusals.</p>
 
-  <% if removed_submissions.any? %>
+  <% if submissions_removed_from_judging_pool.any? %>
     <table class="datagrid">
       <thead>
         <tr>
@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-      <% removed_submissions.each do |submission| %>
+      <% submissions_removed_from_judging_pool.each do |submission| %>
         <tr>
           <td><%= link_to(submission.team_name, admin_team_path(submission.team)) %></td>
           <td><%= link_to(submission.app_name, admin_team_submission_path(submission)) %></td>
