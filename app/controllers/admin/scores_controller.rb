@@ -10,7 +10,7 @@ module Admin
       unless request.xhr?
         @round = grid_params[:round]
       end
-      @removed_submissions = TeamSubmission.current.complete.removed_from_judging_pool
+      @submissions_removed_from_judging_pool = TeamSubmission.current.complete.removed_from_judging_pool
     }, only: :index
 
     def show
