@@ -44,6 +44,12 @@ class EventsGrid
     Carmen::Country.coded(country) || Carmen::Country.named(country)
   end
 
+  column :judges, preload: [:judges, :user_invitations] do
+    judge_list
+      .map { |j| j.account.full_name }
+      .join(",")
+  end
+
   column :judge_count do
     judge_list.size
   end
@@ -70,6 +76,21 @@ class EventsGrid
     where("accounts.first_name ilike ? OR " +
           "accounts.last_name ilike ? ",
       "#{first_name}%", "#{last_name}%")
+  end
+
+  filter :judge_name do |value, scope|
+    full_name = value.split(" ")
+    first_name = I18n.transliterate(full_name.first.strip.downcase).gsub(/['\s]+/, "%")
+    last_name = I18n.transliterate(full_name.last.strip.downcase).gsub(/['\s]+/, "%")
+
+    scope
+      .joins(judges: :account)
+      .where(
+        "lower(trim(unaccent(accounts_judge_profiles.first_name))) ILIKE ? OR " \
+        "lower(trim(unaccent(accounts_judge_profiles.last_name)) ILIKE ?",
+        "%#{first_name}%",
+        "%#{last_name}%"
+      )
   end
 
   filter :chapter,
