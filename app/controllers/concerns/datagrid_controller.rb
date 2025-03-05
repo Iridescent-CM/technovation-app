@@ -49,7 +49,10 @@ module DatagridController
           }
         )
 
-        if controller_name == "participants" ||
+        if controller_name == "regional_pitch_events" ||
+            controller_name == "events"
+          render "data_grids/events/index"
+        elsif controller_name == "participants" ||
             controller_name == "scores" ||
             controller_name == "team_submissions" ||
             controller_name == "teams" ||
