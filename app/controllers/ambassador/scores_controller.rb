@@ -1,5 +1,5 @@
-module ChapterAmbassador
-  class ScoresController < ChapterAmbassadorController
+module Ambassador
+  class ScoresController < AmbassadorController
     def show
       @score = SubmissionScore.find(params.fetch(:id))
 
