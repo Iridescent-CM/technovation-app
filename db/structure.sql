@@ -2366,7 +2366,8 @@ CREATE TABLE public.team_submissions (
     scratch_project_url character varying,
     uses_gadgets boolean,
     uses_gadgets_description character varying,
-    removed_from_judging_pool boolean DEFAULT false
+    removed_from_judging_pool boolean DEFAULT false,
+    returned_by_id integer
 );
 
 
@@ -4969,6 +4970,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250103182555'),
 ('20250211205130'),
 ('20250219221626'),
-('20250224213654');
+('20250224213654'),
+('20250226214919');
 
 

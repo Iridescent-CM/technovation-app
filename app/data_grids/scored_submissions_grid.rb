@@ -86,6 +86,10 @@ class ScoredSubmissionsGrid
 
   column :removed_from_judging_pool?, header: "Removed from judging pool", mandatory: true
 
+  column :returned_by_id, header: "Returned to judging pool by", order: true do |submission|
+    submission.returned_by.name
+  end
+
   column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
     str = submission.quarterfinals_average_score.to_s
     str += "/#{submission.total_possible_score}"
