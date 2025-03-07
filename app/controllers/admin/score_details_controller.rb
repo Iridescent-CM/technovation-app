@@ -1,9 +1,9 @@
 module Admin
   class ScoreDetailsController < AdminController
     def show
-      @submission = TeamSubmission.includes(:team, :scores_including_deleted)
+      @submission = TeamSubmission.includes(:team)
         .find(params.fetch(:id))
-      @recused_scores = @submission.submission_scores.recused
+      @recused_scores = @submission.submission_scores.recused.includes(judge_profile: :account)
 
       render "ambassador/score_details/show"
     end
