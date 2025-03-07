@@ -2367,7 +2367,7 @@ CREATE TABLE public.team_submissions (
     uses_gadgets boolean,
     uses_gadgets_description character varying,
     removed_from_judging_pool boolean DEFAULT false,
-    returned_by_id integer
+    returned_to_judging_pool_by_account_id integer
 );
 
 

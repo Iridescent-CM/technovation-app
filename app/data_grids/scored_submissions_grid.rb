@@ -86,8 +86,8 @@ class ScoredSubmissionsGrid
 
   column :removed_from_judging_pool?, header: "Removed from judging pool", mandatory: true
 
-  column :returned_by_id, header: "Returned to judging pool by", order: true do |submission|
-    submission.returned_by.name
+  column :returned_to_judging_pool_by_account_id, header: "Last returned to judging pool by", order: true do |submission|
+    submission.returned_to_judging_pool_by&.name.presence || "-"
   end
 
   column :quarterfinals_average, order: :quarterfinals_average_score, mandatory: true do |submission|
