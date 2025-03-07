@@ -22,7 +22,7 @@ RSpec.describe Admin::TeamSubmissionsController do
 
       team_submission.reload
       expect(team_submission.removed_from_judging_pool).to be false
-      expect(team_submission.returned_by_id).to eq(admin.account.id)
+      expect(team_submission.returned_to_judging_pool_by_account_id).to eq(admin.account.id)
     end
   end
 end

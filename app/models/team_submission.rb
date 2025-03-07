@@ -148,7 +148,7 @@ class TeamSubmission < ActiveRecord::Base
     )
   end
 
-  belongs_to :returned_by, class_name: "Account", required: false
+  belongs_to :returned_to_judging_pool_by, class_name: "Account", foreign_key: "returned_to_judging_pool_by_account_id", required: false
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
     dependent: :destroy,
