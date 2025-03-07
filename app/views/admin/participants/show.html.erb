@@ -156,6 +156,13 @@
 
 <div class="grid">
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <% if @account.mentor_profile && @account.mentor_profile.chapterable_assignments.any? %>
+      <h3 class="reset">Chapter & club assignments</h3>
+
+      <%= render 'admin/participants/chapterable_assignments',
+        assignments: @account.mentor_profile.chapterable_assignments %>
+    <% end %>
+
     <h3 class="reset">Profile debugging</h3>
 
     <% if @account.student_profile %>
