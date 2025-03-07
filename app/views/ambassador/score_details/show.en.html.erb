@@ -73,5 +73,20 @@
     ) %>
   </p>
 
+  <% if current_profile.admin? && SeasonToggles.judging_enabled? && @submission.removed_from_judging_pool? %>
+    <div class="panel">
+      <h5 class="margin--t-none margin--b-medium">Return Submission to Judging Pool</h5>
+      <p>This submission has been automatically removed from the judging pool due to recusal count.</p>
+      <%= link_to("Return to judging pool",
+        admin_team_submission_return_to_judging_pool_path(@submission),
+        class: "button button--small",
+        data: {
+          method: :patch,
+          confirm: "This will return the submission to the judging pool"
+        }
+      ) %>
+    </div>
+  <% end %>
+
   <%= render "admin/team_submissions/judge_assignment", current_account: @current_account, submission: @submission %>
 </div>
