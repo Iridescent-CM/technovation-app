@@ -65,6 +65,14 @@ module Admin
       end
     end
 
+    def return_to_judging_pool
+      team_submission = TeamSubmission.friendly.find(params[:team_submission_id])
+      team_submission.update(removed_from_judging_pool: false, returned_by_id: current_account.id)
+
+      redirect_back fallback_location: admin_score_detail_path(team_submission.id),
+        success: "You have returned the submission back to the judging pool."
+    end
+
     private
 
     def grid_params
