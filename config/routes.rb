@@ -360,6 +360,7 @@ Rails.application.routes.draw do
       resources :screenshots, only: [:new, :create]
       patch :publish
       patch :unpublish
+      patch :return_to_judging_pool
 
       collection do
         get :bulk_publish
