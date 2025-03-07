@@ -149,6 +149,7 @@ class TeamSubmission < ActiveRecord::Base
       })
   end
 
+  belongs_to :returned_by, class_name: "Account", required: false
   belongs_to :team, touch: true
   has_many :screenshots, -> { order(:sort_position) },
     dependent: :destroy,
