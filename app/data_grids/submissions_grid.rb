@@ -17,10 +17,12 @@ class SubmissionsGrid
     team.division_name.humanize
   end
 
-  column :contest_rank, mandatory: true, order: false
+  column :contest_rank, mandatory: true, order: false do |submission|
+    submission.contest_rank.humanize.titleize
+  end
 
   column :project_name, mandatory: true, html: true, order: "team_submissions.app_name" do |sub|
-    link_to sub.app_name, send("#{current_scope}_team_submission_path", sub)
+    link_to sub.app_name, send(:"#{current_scope}_team_submission_path", sub)
   end
 
   column :project_description do
@@ -59,7 +61,7 @@ class SubmissionsGrid
     mandatory: true,
     order: "teams.name",
     html: true do |sub|
-    link_to sub.team_name, send("#{current_scope}_team_path", sub.team)
+    link_to sub.team_name, send(:"#{current_scope}_team_path", sub.team)
   end
 
   column :team_name, html: false
@@ -333,7 +335,7 @@ class SubmissionsGrid
 
   filter :contest_rank,
     :enum,
-    select: TeamSubmission.contest_ranks.keys do |value|
+    select: TeamSubmission.contest_ranks.map { |key, _value| [key.humanize.titleize, key] } do |value|
       public_send(value)
     end
 
@@ -366,7 +368,7 @@ class SubmissionsGrid
       ["Yes, qualified", true],
       ["No, not qualified", false]
     ] do |value|
-    operator = value == "true" ? "AND" : "OR"
+    operator = (value == "true") ? "AND" : "OR"
     where("teams.has_students = ? #{operator} teams.all_students_onboarded = ?", value, value)
   end
 

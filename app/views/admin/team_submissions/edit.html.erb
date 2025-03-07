@@ -6,7 +6,7 @@
       <div class="panel">
         <h4>This is a <%= @team_submission.team.division.name.capitalize %> division submission</h4>
         <%= f.input :contest_rank,
-          collection: TeamSubmission.contest_ranks.keys %>
+          collection: TeamSubmission.contest_ranks.map { |key, _value| [key.humanize.titleize, key] } %>
         <div class="grid__cell--padding-md-y">
           <h6> Ideation </h6>
           <%= f.input :app_name %>
