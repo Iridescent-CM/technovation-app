@@ -1,7 +1,0 @@
-<% provide :title, "Admin • Events" %>
-
-<%= render 'datagrid/datagrid',
-  grid: @events_grid,
-  form_url: admin_events_path,
-  model_name: "event",
-  scope: :admin %>

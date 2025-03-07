@@ -1,0 +1,7 @@
+<% provide :title, "Events" %>
+
+<%= render "datagrid/datagrid",
+  grid: @events_grid,
+  form_url: current_account.admin? ? admin_events_path : chapter_ambassador_events_list_path,
+  model_name: "event",
+  scope: current_scope.to_sym %>

@@ -18,7 +18,7 @@ class EventsGrid
   column :name, mandatory: true
 
   column :chapter, mandatory: true,
-  order: ->(scope) { scope.left_joins(ambassador: {account: :chapters}).order("chapters.name") } do |event|
+    order: ->(scope) { scope.left_joins(ambassador: {account: :chapters}).order("chapters.name") } do |event|
     event.ambassador.account.current_chapter&.name.presence || "-"
   end
 
@@ -44,13 +44,25 @@ class EventsGrid
     Carmen::Country.coded(country) || Carmen::Country.named(country)
   end
 
+  column :judges, preload: [:judges, :user_invitations] do
+    judge_list
+      .map { |j| j.account.full_name }
+      .join(",")
+  end
+
   column :judge_count do
     judge_list.size
   end
 
+  column :teams, preload: [:teams] do
+    teams
+      .map(&:name)
+      .join(",")
+  end
+
   column :teams_count, header: "Team count", mandatory: true
 
-  column :actions, mandatory: true, html: true do |event|
+  column :actions, mandatory: true, html: true, if: ->(g) { g.admin } do |event|
     link_to "view", admin_event_path(event)
   end
 
@@ -67,15 +79,37 @@ class EventsGrid
     first_name = names.first
     last_name = names.last
 
-    where("accounts.first_name ilike ? OR " +
+    where("accounts.first_name ilike ? OR " \
           "accounts.last_name ilike ? ",
       "#{first_name}%", "#{last_name}%")
+  end
+
+  filter :team_name do |value, scope|
+    scope
+      .joins(:teams)
+      .where("teams.name ilike ? ", "#{value}%")
+  end
+
+  filter :judge_name do |value, scope|
+    full_name = value.split(" ")
+    first_name = I18n.transliterate(full_name.first.strip.downcase).gsub(/['\s]+/, "%")
+    last_name = I18n.transliterate(full_name.last.strip.downcase).gsub(/['\s]+/, "%")
+
+    scope
+      .joins(judges: :account)
+      .where(
+        "lower(trim(unaccent(accounts_judge_profiles.first_name))) ILIKE ? OR " \
+        "lower(trim(unaccent(accounts_judge_profiles.last_name)) ILIKE ?",
+        "%#{first_name}%",
+        "%#{last_name}%"
+      )
   end
 
   filter :chapter,
     :enum,
     select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
     filter_group: "common",
+    if: ->(g) { g.admin },
     html: {
       class: "and-or-field"
     } do |value|

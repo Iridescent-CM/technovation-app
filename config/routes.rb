@@ -202,6 +202,7 @@ Rails.application.routes.draw do
     resource :training_completion, only: :show
 
     resources :events, controller: :regional_pitch_events
+    get "events_list", to: "/data_grids/ambassador/events#index", as: "events_list"
 
     resources :regional_pitch_events
     resources :printable_scores, only: :show
