@@ -99,7 +99,7 @@ class EventsGrid
       .joins(judges: :account)
       .where(
         "lower(trim(unaccent(accounts_judge_profiles.first_name))) ILIKE ? OR " \
-        "lower(trim(unaccent(accounts_judge_profiles.last_name)) ILIKE ?",
+        "lower(trim(unaccent(accounts_judge_profiles.last_name))) ILIKE ?",
         "%#{first_name}%",
         "%#{last_name}%"
       )
