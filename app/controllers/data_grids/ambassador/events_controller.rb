@@ -13,11 +13,9 @@ module DataGrids::Ambassador
       },
 
       csv_scope: "->(scope, user, params) {
-        scope.by_chapterable(
-            user.chapterable_type,
-            user.current_chapterable.id
-          )
-          .distinct
+        scope
+          .current
+          .in_region(user.chapterable)
       }"
 
     private
