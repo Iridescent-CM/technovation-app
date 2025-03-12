@@ -1,18 +1,18 @@
 <div class="panel">
   <ul>
-    <% assignments.each do |assignment| %>
+    <% chapterable_assignments.each do |chapterable_assignment| %>
       <li>
-        <%= link_to assignment.chapterable.name.presence || "Name not set",
-          send("admin_#{assignment.chapterable_type.downcase}_path", assignment.chapterable) %>
-        <% if assignment.primary? %>
+        <%= link_to chapterable_assignment.chapterable.name.presence || "Name not set",
+          send("admin_#{chapterable_assignment.chapterable_type.downcase}_path", chapterable_assignment.chapterable) %>
+        <% if chapterable_assignment.primary? %>
           <span class="hint">*Primary</span>
         <% end %>
         <ul>
           <li>
-            Type: <%= assignment.chapterable_type %>
+            Type: <%= chapterable_assignment.chapterable_type %>
           </li>
           <li>
-            Id: <%= assignment.chapterable.id %>
+            Id: <%= chapterable_assignment.chapterable.id %>
           </li>
         </ul>
       </li>
