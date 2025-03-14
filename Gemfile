@@ -114,6 +114,7 @@ group :development do
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
   gem "bullet"
+  gem "brakeman", require: false
 end
 
 group :test do
