@@ -109,6 +109,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    brakeman (7.0.0)
+      racc
     browser (2.7.1)
     builder (3.3.0)
     bullet (7.1.6)
@@ -568,6 +570,7 @@ DEPENDENCIES
   barnes (~> 0.0.7)
   bcrypt (~> 3.1)
   bootsnap
+  brakeman
   browser (~> 2.5)
   bullet
   capybara (~> 3.0)
