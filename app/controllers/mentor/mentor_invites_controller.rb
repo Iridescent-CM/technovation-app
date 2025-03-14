@@ -32,7 +32,7 @@ module Mentor
 
         student_chapterables.each do |chapterable|
           if chapterable.present?
-            chapterable.chapterable_account_assignments.create(
+            chapterable.chapterable_account_assignments.find_or_create_by(
               profile: current_mentor,
               account: current_mentor.account,
               season: Season.current.year,
