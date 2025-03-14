@@ -109,7 +109,8 @@ class TeamSubmission < ActiveRecord::Base
     quarterfinalist
     semifinalist
     finalist
-    winner
+    grand_prize_winner
+    regional_honorees
   ]
 
   attr_accessor :step
@@ -141,8 +142,7 @@ class TeamSubmission < ActiveRecord::Base
       .where(chapterable_assignments: {
         chapterable_type: chapterable_type.capitalize,
         chapterable_id: chapterable_id
-      }
-    )
+      })
   end
 
   belongs_to :team, touch: true
@@ -217,10 +217,10 @@ class TeamSubmission < ActiveRecord::Base
     class_name: "SubmissionScore"
 
   has_many :team_submission_gadget_types,
-           dependent: :destroy
+    dependent: :destroy
 
   has_many :gadget_types,
-           through: :team_submission_gadget_types
+    through: :team_submission_gadget_types
 
   validate -> {
     unless integrity_affirmed?
@@ -281,7 +281,7 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(team_submission) { team_submission.solves_education? }
 
   validates :gadget_type_ids, presence: {message: "At least one gadget type must be selected"},
-            if: ->(team_submission) { team_submission.uses_gadgets? }
+    if: ->(team_submission) { team_submission.uses_gadgets? }
 
   validates :pitch_video_link,
     format: {
@@ -774,7 +774,7 @@ class TeamSubmission < ActiveRecord::Base
 
   def reset_development_platform_fields_for_thunkable
     if development_platform == "Thunkable"
-      self.remove_source_code! if source_code.present?
+      remove_source_code! if source_code.present?
       self.development_platform_other = nil
       self.scratch_project_url = nil
       self.app_inventor_app_name = nil
