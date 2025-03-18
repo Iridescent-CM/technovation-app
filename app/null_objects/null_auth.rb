@@ -11,6 +11,14 @@ class NullAuth < NullObject
     false
   end
 
+  def chapter_ambassador?
+    false
+  end
+
+  def club_ambassador?
+    false
+  end
+
   def can_be_a_mentor?(*)
     false
   end
