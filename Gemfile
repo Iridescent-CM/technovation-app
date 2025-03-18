@@ -2,6 +2,7 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 gem "rails", "~> 6.1.7.0"
+gem "rack", ">= 2.2.13"
 
 gem "puma", "~> 5.6.9"
 gem "pg", "~> 1.2"
