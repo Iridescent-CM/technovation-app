@@ -186,7 +186,7 @@ Rails.application.routes.draw do
     resources :team_submissions, only: :show, controller: "/ambassador/team_submissions"
     resources :team_submissions, only: :index, controller: "/data_grids/ambassador/team_submissions"
     resources :team_memberships, only: [:create, :destroy], controller: "/ambassador/team_memberships"
-    resources :team_member_invites, only: [:destroy]
+    resources :team_member_invites, only: [:destroy], controller: "/ambassador/team_member_invites"
 
     resources :activities, only: :index
 
@@ -254,6 +254,7 @@ Rails.application.routes.draw do
     resources :team_memberships, only: [:create, :destroy], controller: "/ambassador/team_memberships"
     resources :team_submissions, only: :show, controller: "/ambassador/team_submissions"
     resources :team_submissions, only: :index, controller: "/data_grids/ambassador/team_submissions"
+    resources :team_member_invites, only: [:destroy], controller: "/ambassador/team_member_invites"
 
     resources :saved_searches, only: [:show, :create, :update, :destroy]
     resources :export_downloads, only: :update
