@@ -2112,8 +2112,7 @@ CREATE TABLE public.student_profiles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     onboarded boolean DEFAULT false,
-    deleted_at timestamp without time zone,
-    chapter_id bigint
+    deleted_at timestamp without time zone
 );
 
 
@@ -3960,13 +3959,6 @@ CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING
 
 
 --
--- Name: index_student_profiles_on_chapter_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_student_profiles_on_chapter_id ON public.student_profiles USING btree (chapter_id);
-
-
---
 -- Name: index_student_profiles_on_deleted_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4544,14 +4536,6 @@ ALTER TABLE ONLY public.submission_scores
 
 
 --
--- Name: student_profiles fk_rails_c18d1e4562; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.student_profiles
-    ADD CONSTRAINT fk_rails_c18d1e4562 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
-
-
---
 -- Name: regional_pitch_events fk_rails_c377215e38; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4971,6 +4955,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250211205130'),
 ('20250219221626'),
 ('20250224213654'),
-('20250226214919');
+('20250226214919'),
+('20250319195255');
 
 
