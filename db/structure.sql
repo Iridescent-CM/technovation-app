@@ -659,7 +659,6 @@ CREATE TABLE public.chapters (
     city character varying,
     state_province character varying,
     country character varying,
-    primary_contact_id bigint,
     visible_on_map boolean DEFAULT true,
     organization_headquarters_location character varying,
     onboarded boolean DEFAULT false,
@@ -3720,13 +3719,6 @@ CREATE INDEX index_chapters_on_primary_account_id ON public.chapters USING btree
 
 
 --
--- Name: index_chapters_on_primary_contact_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree (primary_contact_id);
-
-
---
 -- Name: index_club_ambassador_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4455,14 +4447,6 @@ ALTER TABLE ONLY public.submission_scores
 
 
 --
--- Name: chapters fk_rails_b047a2142a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapters
-    ADD CONSTRAINT fk_rails_b047a2142a FOREIGN KEY (primary_contact_id) REFERENCES public.chapter_ambassador_profiles(id);
-
-
---
 -- Name: chapters fk_rails_b0d5340759; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4949,6 +4933,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250226214919'),
 ('20250319195255'),
 ('20250319195255'),
-('20250319200014');
+('20250319200014'),
+('20250319200353');
 
 
