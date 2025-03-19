@@ -410,7 +410,6 @@ CREATE TABLE public.chapter_ambassador_profiles (
     intro_summary text,
     secondary_regions character varying[] DEFAULT '{}'::character varying[],
     program_name character varying,
-    chapter_id bigint,
     organization_status public.chapter_ambassador_organization_status,
     viewed_community_connections boolean DEFAULT false NOT NULL,
     training_completed_at timestamp without time zone,
@@ -4360,14 +4359,6 @@ ALTER TABLE ONLY public.certificates
 
 
 --
--- Name: chapter_ambassador_profiles fk_rails_793dbc1d27; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapter_ambassador_profiles
-    ADD CONSTRAINT fk_rails_793dbc1d27 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
-
-
---
 -- Name: join_requests fk_rails_7fd972d7ce; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4956,6 +4947,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250219221626'),
 ('20250224213654'),
 ('20250226214919'),
-('20250319195255');
+('20250319195255'),
+('20250319195255'),
+('20250319200014');
 
 
