@@ -108,9 +108,10 @@ class TeamSubmission < ActiveRecord::Base
   enum contest_rank: %w[
     quarterfinalist
     semifinalist
+    regional_honoree
+    special_prize_winner
     finalist
     grand_prize_winner
-    regional_honorees
   ]
 
   attr_accessor :step

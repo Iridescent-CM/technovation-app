@@ -10,9 +10,10 @@ module Student
         @quarterfinals_scores = @all_scores.quarterfinals
 
         if current_team.submission.semifinalist? ||
+            current_team.submission.regional_honoree? ||
+            current_team.submission.special_prize_winner? ||
             current_team.submission.finalist? ||
-            current_team.submission.grand_prize_winner? ||
-            current_team.submission.regional_honorees?
+            current_team.submission.grand_prize_winner?
 
           @semifinals_scores = @all_scores.semifinals
         end
