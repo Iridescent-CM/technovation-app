@@ -3,10 +3,15 @@ module Ambassador
     layout "ambassador"
 
     def show
-      @team = Team.by_chapterable(
-        current_ambassador.chapterable_type,
-        current_ambassador.current_chapterable.id
-      ).find(params[:id])
+      @team = if current_ambassador.national_view?
+        Team.in_region(current_ambassador.chapter)
+          .find(params.fetch(:id))
+      else
+        Team.by_chapterable(
+          current_ambassador.chapterable_type,
+          current_ambassador.current_chapterable.id
+        ).find(params[:id])
+      end
     end
   end
 end

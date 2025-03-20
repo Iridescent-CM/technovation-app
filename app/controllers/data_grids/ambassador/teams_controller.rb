@@ -6,20 +6,31 @@ module DataGrids::Ambassador
 
     use_datagrid with: TeamsGrid,
       html_scope: ->(scope, user, params) {
-        scope
-          .by_chapterable(
-            user.chapterable_type,
-            user.current_chapterable.id
-          )
-          .distinct
-          .page(params[:page])
+        if user.chapter_ambassador_profile&.national_view?
+          scope
+            .in_region(user.chapterable)
+            .page(params[:page])
+        else
+          scope
+            .by_chapterable(
+              user.chapterable_type,
+              user.current_chapterable.id
+            )
+            .distinct
+            .page(params[:page])
+        end
       },
       csv_scope: "->(scope, user, params) {
-        scope
-          .by_chapterable(
-      user.chapterable_type,
-      user.current_chapterable.id)
-          .distinct
+        if user.chapter_ambassador_profile&.national_view?
+          scope
+            .in_region(user.chapterable)
+        else
+          scope
+            .by_chapterable(
+              user.chapterable_type,
+              user.current_chapterable.id)
+            .distinct
+        end
       }"
 
     private
