@@ -3,7 +3,7 @@ es-MX:
     application:
       already_authenticated: "Ya has iniciado sesión."
       general_error: "Lo siento, pero algo salió mal. Probablemente no fue tu culpa."
-      unauthenticated: "¡Debes iniciar sesion como %{profile} para ir ahí!"
+      generic_unauthenticated: "¡Debes iniciar sesion para ir ahí!"
       unauthorized: "¡No tienes permiso para ir allí!"
 
     accounts:

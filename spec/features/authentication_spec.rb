@@ -34,7 +34,7 @@ RSpec.feature "Authentication" do
       visit send(:"#{scope}_dashboard_path")
 
       expect(page).to have_current_path(signin_path)
-      expect(page).to have_css(".flash", text: "You must be signed in as #{scope.indefinitize.humanize.downcase} to go there!")
+      expect(page).to have_css(".flash", text: "You must be signed in to go there!")
     end
 
     scenario "A logged in #{scope} tries to visit a path after the season changes" do

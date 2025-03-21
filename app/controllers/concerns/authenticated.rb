@@ -44,7 +44,6 @@ module Authenticated
     save_redirected_path
 
     redirect_to signin_path,
-      notice: t("controllers.application.unauthenticated",
-        profile: current_scope.indefinitize.humanize.downcase) and return
+      notice: t("controllers.application.generic_unauthenticated") and return
   end
 end

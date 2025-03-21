@@ -99,7 +99,7 @@ RSpec.describe Ambassador::ScoresController do
           end
         end
 
-        context "when viewing a participant that is not in the chapter ambassador's region" do
+        context "when viewing a score for a team that is not in the chapter ambassador's region" do
           let(:chicago_score) { FactoryBot.create(:score, :chicago) }
 
           it "raises an 'ActiveRecord::RecordNotFound' error" do

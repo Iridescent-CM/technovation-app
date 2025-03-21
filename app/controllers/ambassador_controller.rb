@@ -21,9 +21,9 @@ class AmbassadorController < ApplicationController
   end
 
   def current_scope
-    if current_ambassador.chapter_ambassador?
+    if current_ambassador&.chapter_ambassador?
       "chapter_ambassador"
-    elsif current_ambassador.club_ambassador?
+    elsif current_ambassador&.club_ambassador?
       "club_ambassador"
     end
   end
