@@ -410,7 +410,6 @@ CREATE TABLE public.chapter_ambassador_profiles (
     intro_summary text,
     secondary_regions character varying[] DEFAULT '{}'::character varying[],
     program_name character varying,
-    chapter_id bigint,
     organization_status public.chapter_ambassador_organization_status,
     viewed_community_connections boolean DEFAULT false NOT NULL,
     training_completed_at timestamp without time zone,
@@ -660,7 +659,6 @@ CREATE TABLE public.chapters (
     city character varying,
     state_province character varying,
     country character varying,
-    primary_contact_id bigint,
     visible_on_map boolean DEFAULT true,
     organization_headquarters_location character varying,
     onboarded boolean DEFAULT false,
@@ -2112,8 +2110,7 @@ CREATE TABLE public.student_profiles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     onboarded boolean DEFAULT false,
-    deleted_at timestamp without time zone,
-    chapter_id bigint
+    deleted_at timestamp without time zone
 );
 
 
@@ -3722,13 +3719,6 @@ CREATE INDEX index_chapters_on_primary_account_id ON public.chapters USING btree
 
 
 --
--- Name: index_chapters_on_primary_contact_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapters_on_primary_contact_id ON public.chapters USING btree (primary_contact_id);
-
-
---
 -- Name: index_club_ambassador_profiles_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -3957,13 +3947,6 @@ CREATE INDEX index_saved_searches_on_searcher_type_and_searcher_id ON public.sav
 --
 
 CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING btree (team_submission_id);
-
-
---
--- Name: index_student_profiles_on_chapter_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_student_profiles_on_chapter_id ON public.student_profiles USING btree (chapter_id);
 
 
 --
@@ -4368,14 +4351,6 @@ ALTER TABLE ONLY public.certificates
 
 
 --
--- Name: chapter_ambassador_profiles fk_rails_793dbc1d27; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapter_ambassador_profiles
-    ADD CONSTRAINT fk_rails_793dbc1d27 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
-
-
---
 -- Name: join_requests fk_rails_7fd972d7ce; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4472,14 +4447,6 @@ ALTER TABLE ONLY public.submission_scores
 
 
 --
--- Name: chapters fk_rails_b047a2142a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.chapters
-    ADD CONSTRAINT fk_rails_b047a2142a FOREIGN KEY (primary_contact_id) REFERENCES public.chapter_ambassador_profiles(id);
-
-
---
 -- Name: chapters fk_rails_b0d5340759; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4541,14 +4508,6 @@ ALTER TABLE ONLY public.mentor_profiles
 
 ALTER TABLE ONLY public.submission_scores
     ADD CONSTRAINT fk_rails_c08133669a FOREIGN KEY (team_submission_id) REFERENCES public.team_submissions(id);
-
-
---
--- Name: student_profiles fk_rails_c18d1e4562; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.student_profiles
-    ADD CONSTRAINT fk_rails_c18d1e4562 FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
 
 
 --
@@ -4971,6 +4930,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250211205130'),
 ('20250219221626'),
 ('20250224213654'),
-('20250226214919');
+('20250226214919'),
+('20250319195255'),
+('20250319195255'),
+('20250319200014'),
+('20250319200353');
 
 
