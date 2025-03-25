@@ -1,7 +1,7 @@
 <%
   url ||= send("#{current_scope}_profile_path")
   admin ||= false
-  form = current_profile.rebranded? ? 
+  form = (current_profile.rebranded? || current_profile.is_a?(MentorProfile)) ?
     'signups/rebranded/form' :
     'signups/form'
 %>
