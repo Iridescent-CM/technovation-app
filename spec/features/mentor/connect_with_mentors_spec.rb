@@ -7,6 +7,6 @@ RSpec.feature "Mentors connect with other mentors" do
     sign_in(mentor)
     visit mentor_profile_path
 
-    expect(page).to have_unchecked_field("mentor_profile_connect_with_mentors")
+    expect(page).to have_content("Allow other mentors to find you in search results and connect: No")
   end
 end
