@@ -3649,13 +3649,6 @@ CREATE INDEX index_chapter_account_assignments_on_profile ON public.chapterable_
 
 
 --
--- Name: index_chapter_ambassador_profiles_on_chapter_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_chapter_ambassador_profiles_on_chapter_id ON public.chapter_ambassador_profiles USING btree (chapter_id);
-
-
---
 -- Name: index_chapter_ambassador_profiles_on_status; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4931,7 +4924,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250219221626'),
 ('20250224213654'),
 ('20250226214919'),
-('20250319195255'),
 ('20250319195255'),
 ('20250319200014'),
 ('20250319200353');
