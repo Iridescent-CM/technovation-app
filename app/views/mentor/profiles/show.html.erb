@@ -1,23 +1,23 @@
 <% provide :title, "My profile" %>
 
 <div class="container mx-auto flex flex-col lg:flex-row justify-center gap-6 profile-tab-container">
-  <%= render 'mentor/profiles/menu' %>
+  <%= render "mentor/profiles/menu" %>
 
   <div class="tab">
     <div id="basic-tab-content" class="tab-content tw-active">
-      <%= render 'mentor/profiles/basic' %>
+      <%= render "mentor/profiles/basic" %>
     </div>
 
     <div id="location-tab-content" class="tab-content">
-      <%#= render 'profiles/rebrand/location' %>
+      <%#= render "profiles/rebrand/location" %>
     </div>
 
     <div id="email-tab-content" class="tab-content">
-      <%= render 'profiles/rebrand/email' %>
+      <%= render "profiles/rebrand/email" %>
     </div>
 
     <div id="pw-tab-content" class="tab-content">
-      <%= render 'profiles/rebrand/password' %>
+      <%= render "profiles/rebrand/password" %>
     </div>
   </div>
 </div>
