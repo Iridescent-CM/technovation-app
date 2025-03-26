@@ -10,18 +10,7 @@ module JoinRequestApproved
     TeamRosterManaging.add(join_request.team, join_request.requestor)
 
     if join_request.requestor_scope_name == "mentor"
-      student_chapterables = join_request.team.students.flat_map { |s| s.account.current_chapterable_assignment&.chapterable }.uniq
-
-      student_chapterables.each do |chapterable|
-        if chapterable.present?
-          chapterable.chapterable_account_assignments.find_or_create_by(
-            profile: join_request.requestor,
-            account: join_request.requestor.account,
-            season: Season.current.year,
-            primary: false
-          )
-        end
-      end
+      MentorToTeamChapterableAssigner.new(mentor_profile: join_request.requestor, team: join_request.team).call
     end
 
     TeamMailer.public_send(

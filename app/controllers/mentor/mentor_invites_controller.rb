@@ -27,19 +27,7 @@ module Mentor
       )
 
         invite.update(invite_params)
-
-        student_chapterables = invite.team.students.flat_map { |s| s.account.current_chapterable_assignment&.chapterable }.uniq
-
-        student_chapterables.each do |chapterable|
-          if chapterable.present?
-            chapterable.chapterable_account_assignments.find_or_create_by(
-              profile: current_mentor,
-              account: current_mentor.account,
-              season: Season.current.year,
-              primary: false
-            )
-          end
-        end
+        MentorToTeamChapterableAssigner.new(mentor_profile: current_mentor, team: invite.team).call
 
         redirect_based_on_status(invite)
       else
