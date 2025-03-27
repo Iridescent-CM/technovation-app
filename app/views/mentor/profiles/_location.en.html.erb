@@ -1,35 +1,22 @@
-<% if current_mentor.account.scope_name == "chapter_ambassador" %>
-  <% if current_mentor.address_details.blank? %>
-    <p>
-      <%= link_to "Set your location",
-        mentor_location_details_path(
-          return_to: mentor_profile_path(anchor: '!location')
-        ),
-        class: "button" %>
-    </p>
-  <% else %>
-    <dl>
-      <dt>Your location</dt>
-      <dd><%= current_mentor.address_details %></dd>
-    </dl>
-
-    <p class="hint">
-      Chapter Ambassadors cannot edit their own location.
-      <br />
-      Contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to make a change.
-    </p>
-  <% end %>
-<% else %>
-  <dl>
-    <dt>Your location</dt>
-    <dd><%= current_mentor.address_details %></dd>
-  </dl>
-
-  <p>
-    <%= link_to "Change your location",
-      mentor_location_details_path(
-        return_to: mentor_profile_path(anchor: '!location')
-      ),
-      class: "button" %>
-  </p>
-<% end %>
+<div id="location" class="tw-blue-lg-container">
+  <div class="sm-header-wrapper">
+    <p class="font-bold">Your Location</p>
+  </div>
+  <div id="location-wrapper" class="p-6">
+    <div id="location-details" class="flex-col space-y-6">
+      <div class="mb-8">
+        <% if current_account.valid_address? %>
+          <p class="font-bold">Your current location</p>
+          <p><%= current_mentor.address_details %></p>
+        <% else %>
+          <p class="font-bold">You don't have a location set yet</p>
+        <% end %>
+      </div>
+      <p>
+        <%= link_to current_account.valid_address? ? "Change your location" : "Set your location",
+          mentor_location_details_path(return_to: mentor_profile_path(anchor: '!location')),
+          class: "tw-green-btn" %>
+      </p>
+    </div>
+  </div>
+</div>
