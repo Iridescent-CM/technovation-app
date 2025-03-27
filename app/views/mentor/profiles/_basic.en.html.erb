@@ -1,10 +1,10 @@
 <div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
-  <div class="sm-header-wrapper ">
+  <div class="sm-header-wrapper">
     <p class="font-bold">Basic Information</p>
   </div>
 
   <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
-    <div id="information-details">
+    <div id="information-details" class="lg:w-3/4">
       <dl>
         <dt>Name</dt>
         <dd><%= current_mentor.full_name %></dd>
@@ -33,7 +33,7 @@
         <dt>Skills &amp; Interests</dt>
         <dd><%= current_mentor.expertises.map(&:name).to_sentence %></dd>
 
-        <dt>Personal summary</dt>
+        <dt>Personal Summary</dt>
         <dd><%= simple_format h(current_mentor.bio) %></dd>
 
         <dt>Connection Preferences</dt>
