@@ -22,3 +22,17 @@
     <%= b.check_box %><%= b.label { b.text } %>
   </span>
 <% end %>
+
+<label class="mt-6">Connection Preferences</label>
+<%= f.input :accepting_team_invites,
+            as: :radio_buttons,
+            collection: [["Yes", true], ["No", false]],
+            label: "Allow teams to find you in search results and invite you to join" %>
+<%= f.input :virtual,
+            as: :radio_buttons,
+            collection: [["Yes", true], ["No", false]],
+            label: "Indicate to teams that you can be an online, remote mentor" %>
+<%= f.input :connect_with_mentors,
+            as: :radio_buttons,
+            collection: [["Yes", true], ["No", false]],
+            label: "Allow other mentors to find you in search results and connect" %>
