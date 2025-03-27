@@ -145,6 +145,8 @@ en:
         new:
           already_joined: "You are on this team."
           already_requested: "You have asked to join this team"
+      navigation:
+        my_profile: "My Profile"
 
       mentors:
         show:
