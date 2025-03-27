@@ -2,11 +2,13 @@
   <div class="banner-text-wrapper w-full md:w-3/4 mx-auto pb-16 text-center md:text-left">
     <span class="text-white text-4xl md:text-6xl font-black mb-8 uppercase"><%= heading %></span>
   </div>
-  <% if current_scope == 'judge' %>
-    <%= render 'judge/navigation/rebrand/tg_sub_nav' %>
-  <% elsif current_scope == 'chapter_ambassador' %>
-    <%= render 'chapter_ambassador/navigation/rebrand/tg_sub_nav' %>
-  <% elsif current_scope == 'club_ambassador' %>
-    <%= render 'club_ambassador/navigation/tg_sub_nav' %>
+  <% if current_scope == "judge" %>
+    <%= render "judge/navigation/rebrand/tg_sub_nav" %>
+  <% elsif current_scope == "chapter_ambassador" %>
+    <%= render "chapter_ambassador/navigation/rebrand/tg_sub_nav" %>
+  <% elsif current_scope == "club_ambassador" %>
+    <%= render "club_ambassador/navigation/tg_sub_nav" %>
+  <% elsif current_scope == "mentor" %>
+    <%= render "mentor/navigation/tg_sub_nav" %>
   <% end %>
 </div>
