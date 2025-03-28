@@ -486,4 +486,26 @@ RSpec.describe Team do
       end
     end
   end
+
+  describe "#student_chapterables" do
+    let(:team) { FactoryBot.create(:team) }
+    let(:student1) { FactoryBot.create(:student) }
+    let(:student2) { FactoryBot.create(:student) }
+    let(:student3) { FactoryBot.create(:student) }
+
+    before do
+      TeamRosterManaging.remove(team, team.students.first)
+      TeamRosterManaging.add(team, student1)
+      TeamRosterManaging.add(team, student2)
+      TeamRosterManaging.add(team, student3)
+    end
+
+    it "returns a list of chapterables that the students on the team belong to" do
+      expect(team.student_chapterables).to eq([
+        student1.current_chapterable,
+        student2.current_chapterable,
+        student3.current_chapterable
+      ])
+    end
+  end
 end
