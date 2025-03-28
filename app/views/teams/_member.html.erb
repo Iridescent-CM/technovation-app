@@ -17,12 +17,12 @@
   <div class="grid__col-10">
     <% if admin_chapter_ambassador %>
       <h5 class="reset">
-        <%= link_to member.full_name,
-        send("#{current_scope}_participant_path",
-          {
-            id: member.account_id
-          }
-        )
+        <%= link_to_if current_account.is_admin? ||
+            (current_account.ambassador? &&
+              ambassador_can_view_participant_details?(ambassador: current_ambassador, participant_profile: member)
+            ),
+          member.full_name,
+          send("#{current_scope}_participant_path", {id: member.account_id})
         %>
       </h5>
     <% else %>
