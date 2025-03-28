@@ -14,7 +14,11 @@
 
 <li>
   <div class="grid__cell">
-    <%= link_to team_preview.name,
+    <%= link_to_if current_account.admin? ||
+        (current_account.ambassador? &&
+          ambassador_can_view_team_details?(ambassador: current_ambassador, team: team_preview)
+        ),
+      team_preview.name,
       send("#{current_scope}_team_path", team_preview)
     %>
   </div>

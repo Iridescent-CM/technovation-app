@@ -821,6 +821,10 @@ class Account < ActiveRecord::Base
     club_ambassador_profile.present?
   end
 
+  def ambassador?
+    chapter_ambassador? || club_ambassador?
+  end
+
   def is_admin?
     admin_profile.present?
   end
