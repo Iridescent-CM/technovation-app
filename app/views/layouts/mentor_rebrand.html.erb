@@ -1,4 +1,5 @@
 <% provide :root_path, mentor_dashboard_path %>
-<% provide :main_header, render("application/templates/tg_green_header", heading: "Technovation Girls") %>
+<% provide :drop_down, render("mentor/navigation/rebrand/dropdown_nav") %>
+<% provide :main_header, render("application/templates/tg_green_header", heading: nil) %>
 
 <%= render template: "layouts/application_rebrand" %>
