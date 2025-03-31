@@ -1,0 +1,67 @@
+<ul>
+  <% if current_mentor.is_an_ambassador? %>
+    <li>
+      <%= link_to "Switch to Chapter Ambassador Mode",
+        chapter_ambassador_dashboard_path,
+        data: { turbolinks: false } %>
+    </li>
+  <% end %>
+  <% if current_mentor.can_switch_to_judge? %>
+    <li>
+      <%= link_to "Switch to Judge Mode",
+        judge_dashboard_path,
+        data: { turbolinks: false } %>
+    </li>
+  <% end %>
+  <li>
+    <%= link_to t("views.application.dashboards.menu.connect_mentors"),
+      new_mentor_mentor_search_path,
+      class: "capitalize" %>
+  </li>
+  <li>
+    <%= link_to "Student Curriculum",
+      "https://technovationchallenge.org/technovation-curriculum/",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Mentor Curriculum",
+      "https://technovationchallenge.org/mentor-curriculum/",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Mentor Resources",
+      "https://technovationchallenge.org/mentor-resources/",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Safety Information",
+      "https://www.technovation.org/safety/",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Submission Guide",
+      "https://www.technovationchallenge.org/submission-guidelines/",
+      target: "_blank" %>
+  </li>
+  <li>
+    <%= link_to "Competition Judging Rubric",
+      "https://www.technovationchallenge.org/judging-rubric/",
+      target: "_blank" %>
+  </li>
+  <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
+    <li>
+      <%= link_to SeasonToggles.survey_link(current_scope, "text"),
+        SeasonToggles.survey_link(
+          current_scope, "url",
+          format_url: true,
+          account: current_account
+        ),
+        target: "_blank" %>
+    </li>
+  <% end %>
+  <li>
+    <% if current_account.authenticated? %>
+      <%= link_to t('views.application.signout'), signout_path, class: "text-sm" %>
+    <% end %>
+  </li>
+</ul>
