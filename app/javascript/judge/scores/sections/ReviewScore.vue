@@ -84,7 +84,8 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import EnergeticContainer from "../../../components/rebrand/EnergeticContainer";
 import TeamInfo from "../TeamInfo";
 import ThickRule from "../../../components/rebrand/ThickRule";
-import SectionProgressIcons from '../pieces/SectionProgressIcons'
+import SectionProgressIcons from "../pieces/SectionProgressIcons";
+import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -98,9 +99,10 @@ export default {
     ...mapState(['team', 'score', 'submission', 'deadline']),
 
     ...mapGetters([
-      'hasIncompleteSections',
-      'totalScore',
-      'isSectionComplete'
+      "hasIncompleteSections",
+      "totalScore",
+      "totalPossibleScore",
+      "isSectionComplete",
     ]),
 
     sections () {
@@ -124,5 +126,25 @@ export default {
       }
     },
   },
-}
+
+  methods: {
+    openAlertMessage() {
+      Swal.fire({
+        html: `
+        <p>Thank you for judging. You have selected a perfect score for this project. If that is correct,
+        please confirm to submit the score. If you would like to make any edits, please return to judging the submission.</p>
+        `,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#3FA428",
+        width: "50%",
+      });
+    }
+  },
+
+  mounted() {
+    if (this.totalScore === this.totalPossibleScore) {
+      this.openAlertMessage();
+    }
+  },
+};
 </script>
