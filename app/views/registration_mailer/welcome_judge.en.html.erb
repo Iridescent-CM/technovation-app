@@ -43,7 +43,7 @@
             <li>
               Finish your judge training if you haven’t done so already!
               You can access the training
-              <%= link_to "here", "https://technovationchallenge.org/judge%20training/", itemprop: "url" %>
+              <%= link_to "here", ENV.fetch("JUDGE_TRAINING_URL"), itemprop: "url" %>
               or from your <%= link_to "dashboard", judge_dashboard_url, itemprop: "url" %>.
             </li>
 

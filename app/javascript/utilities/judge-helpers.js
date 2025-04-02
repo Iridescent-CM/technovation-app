@@ -1,11 +1,11 @@
 function getJudgingRubricLink(division) {
   switch (division) {
     case "senior":
-      return "https://technovationchallenge.org/wp-content/uploads/2023/07/FINAL-Senior-16-18-Rubric-2024-Season-.pdf";
+      return "https://drive.google.com/file/d/1wotOPhnbT3IJbF8XhnsxT10jpl1EjRvy/view";
     case "junior":
-      return "https://technovationchallenge.org/wp-content/uploads/2023/07/FINAL-Junior-13-15-Rubric-2024-Season-.pdf";
+      return "https://drive.google.com/file/d/1UleYSyl9DlKEF2rIW6IuvqYPznWCo00b/view";
     case "beginner":
-      return "https://technovationchallenge.org/wp-content/uploads/2023/07/FINAL-Beginner-8-12-Rubric-2024-Season-.pdf";
+      return "https://drive.google.com/file/d/1shhyqenpvt-hZ34RiQdemEFpVTCOgmtj/view";
     default:
       return "https://technovationchallenge.org/curriculum/judging-rubric/";
   }
