@@ -23,7 +23,7 @@ class TeamRosterManaging
       scope = profile.class.name.underscore
 
       Casting.delegating(team => MembershipsManager) do
-        team.send("add_#{scope}", profile)
+        team.send(:"add_#{scope}", profile)
       end
     end
   end
@@ -33,7 +33,7 @@ class TeamRosterManaging
       scope = profile.class.name.underscore
 
       Casting.delegating(team => MembershipsManager) do
-        team.send("remove_#{scope}", profile)
+        team.send(:"remove_#{scope}", profile)
       end
     end
 
@@ -128,6 +128,8 @@ class TeamRosterManaging
       if join_request = mentor.join_requests.find_by(team: self)
         join_request.deleted!
       end
+
+      MentorChapterableAssignmentsScrubberJob.perform_later(mentor_profile_id: mentor.id)
 
       mentor.account.create_activity(
         key: "account.leave_team",
