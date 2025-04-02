@@ -41,7 +41,7 @@
       <p>
         For tips on judging this category, click
         <a
-          href="https://docs.google.com/presentation/d/1ZZ8eLTDhIkR8tDcZjR77J2JlnUb8nkX6MElNyGk5XyM/present"
+          href="https://technovationchallenge.org/courses/judge-training/lessons/judge-training-giving-feedback"
           class="tw-link-magenta"
           target="_blank"
           >here</a
