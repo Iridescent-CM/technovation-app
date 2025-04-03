@@ -425,6 +425,12 @@ class Team < ActiveRecord::Base
     assigned_judges.flat_map(&:full_name)
   end
 
+  def student_chapterables
+    students.map do |student|
+      student.current_chapterable
+    end
+  end
+
   private
 
   def regenerate_team_submission_friendly_id
