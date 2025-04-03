@@ -15,6 +15,5 @@ Vue.use(TurbolinksAdapter);
 Vue.use(VTooltip)
 Vue.use(Vue2Filters)
 
-import '../admin/dashboard'
-import '../admin/content-settings'
-import '../admin/scores'
+import "../admin/dashboard";
+import "../admin/content-settings";
