@@ -87,6 +87,8 @@ class TeamRosterManaging
         join_request.approved!
       end
 
+      MentorToTeamChapterableAssignerJob.perform_later(mentor_profile_id: mentor.id, team_id: id)
+
       mentor.account.create_activity(
         key: "account.join_team",
         recipient: self
