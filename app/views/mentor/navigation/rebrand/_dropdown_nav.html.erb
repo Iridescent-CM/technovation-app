@@ -1,5 +1,5 @@
 <ul>
-  <% if current_mentor.is_an_ambassador? %>
+  <% if current_mentor.chapter_ambassador? %>
     <li>
       <%= link_to "Switch to Chapter Ambassador Mode",
         chapter_ambassador_dashboard_path,
