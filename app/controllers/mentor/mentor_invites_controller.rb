@@ -27,7 +27,6 @@ module Mentor
       )
 
         invite.update(invite_params)
-        MentorToTeamChapterableAssigner.new(mentor_profile: current_mentor, team: invite.team).call
 
         redirect_based_on_status(invite)
       else
