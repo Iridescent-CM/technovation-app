@@ -147,6 +147,7 @@ en:
           already_requested: "You have asked to join this team"
       navigation:
         my_profile: "My Profile"
+        scores_and_certificates: "Scores & Certificates"
 
       mentors:
         show:
