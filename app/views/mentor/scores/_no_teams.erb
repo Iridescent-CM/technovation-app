@@ -1,0 +1,35 @@
+<div class="relative">
+  <div class="absolute -top-2 -right-6">
+    <span class="block mb-2 px-2 py-1 text-right text-sm font-bold tw-flag-magenta">Season close</span>
+  </div>
+
+  <h2 class="text-2xl text-energetic-blue font-semibold tracking-wide mb-2">
+    Thank you!
+  </h2>
+
+  <p class="mb-3">
+    Thank you for participating in this season of Technovation Girls.
+    We appreciate your feedback and the time you spent supporting teams from around the world!
+  </p>
+
+  <p>We’d love to stay connected with you! We have a couple of ways for you to remain involved:</p>
+
+  <ul class="list-disc ml-8 mb-3">
+    <li>
+      <%= link_to "Sign up for our newsletter", ENV.fetch("NEWSLETTER_URL"),
+        target: "_blank",
+        class: "tw-link" %>
+      to learn more about the girls you helped this season
+    </li>
+    <li>
+      <%= link_to "Consider mentoring", "https://technovationchallenge.org/get-started/",
+        target: "_blank",
+        class: "tw-link" %>
+      a team in the <%=Season.current.year %>-<%= Season.next.year %> season
+    </li>
+  </ul>
+
+  <p>
+    We hope to see you soon!
+  </p>
+</div>
