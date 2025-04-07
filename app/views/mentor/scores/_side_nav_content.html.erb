@@ -1,0 +1,9 @@
+  <nav class="p-4">
+    <ol role="list" class="space-y-6 mb-6 overflow-hidden">
+      <%= render "application/templates/side_nav_item",
+         name: "Scores",
+         url: mentor_scores_path,
+         is_active_item: al(mentor_scores_path).present?
+      %>
+    </ol>
+  </nav>
