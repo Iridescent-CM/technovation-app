@@ -30,7 +30,7 @@ module Judging
             field: :pitch_2,
             worth: 5,
             text: %(
-               Do we explain how we researched the complexity of the problem?
+              Do we explain how we researched the complexity of the problem?
             )
           ),
 
@@ -138,7 +138,7 @@ module Judging
             field: :entrepreneurship_3,
             worth: 5,
             text: %(
-               Do we explain the marketing plan for how the team will get new users to use our app in its first year?
+              Do we explain the marketing plan for how the team will get new users to use our app in its first year?
             )
           ),
 
@@ -148,7 +148,7 @@ module Judging
             field: :entrepreneurship_4,
             worth: 5,
             text: %(
-               Do we show financial plans for starting the business and explain why they are realistic?
+              Do we show financial plans for starting the business and explain why they are realistic?
             )
           ),
 

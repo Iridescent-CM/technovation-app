@@ -30,7 +30,7 @@ module Judging
             field: :pitch_2,
             worth: 5,
             text: %(
-               Do we explain how we researched the complexity of the problem?
+              Do we explain how we researched the complexity of the problem?
             )
           ),
 
@@ -50,7 +50,7 @@ module Judging
             field: :pitch_4,
             worth: 5,
             text: %(
-               Do we explain how the selected technology is the best solution compared to what already exists?
+              Do we explain how the selected technology is the best solution compared to what already exists?
             )
           ),
 
@@ -115,7 +115,7 @@ module Judging
             field: :entrepreneurship_1,
             worth: 5,
             text: %(
-               Do we show how many users have already tested our app and the feedback provided?
+              Do we show how many users have already tested our app and the feedback provided?
             )
           ),
 
@@ -125,7 +125,7 @@ module Judging
             field: :entrepreneurship_2,
             worth: 5,
             text: %(
-               Do we explain how we will get new users to use our app in its first year?
+              Do we explain how we will get new users to use our app in its first year?
             )
           ),
 
@@ -146,7 +146,7 @@ module Judging
             field: :ideation_2,
             worth: 5,
             text: %(
-               Do we explain what we learned about AI and how we used it in our project?
+              Do we explain what we learned about AI and how we used it in our project?
             )
           ),
 
