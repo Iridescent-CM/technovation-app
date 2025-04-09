@@ -19,7 +19,7 @@ RSpec.feature "scoring submissions", js: true do
     and_scores_the_technical_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 50
+    then_the_review_page_displays_a_perfect_score_of 55
     and_then_submits_the_score
   end
 
@@ -34,7 +34,7 @@ RSpec.feature "scoring submissions", js: true do
     and_scores_the_entrepreneurship_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 70
+    then_the_review_page_displays_a_perfect_score_of 75
     and_then_submits_the_score
   end
 
@@ -49,7 +49,7 @@ RSpec.feature "scoring submissions", js: true do
     and_scores_the_entrepreneurship_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 80
+    then_the_review_page_displays_a_perfect_score_of 85
     and_then_submits_the_score
   end
 
