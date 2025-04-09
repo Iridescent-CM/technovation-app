@@ -154,11 +154,13 @@ export default {
     openAlertMessage() {
       Swal.fire({
         html: `
-        <p>Thank you for judging. You have selected a perfect score for this project. If that is correct,
-        please confirm to submit the score. If you would like to make any edits, please return to judging the submission.</p>
+        <p>You've entered a perfect score. We recommend taking a brief moment to review and ensure the
+        submission aligns with the highest standards set for this evaluation.<br><br>
+        Please click Next to return to your score and either make changes or submit it.</p>
         `,
-        confirmButtonText: "OK",
-        confirmButtonColor: "#3FA428",
+        background: "#fbecd0",
+        confirmButtonText: "Next",
+        confirmButtonColor: "#ffb81c",
         width: "50%",
       });
     },
