@@ -9,7 +9,7 @@ module Judging
             field: :project_details_1,
             worth: 5,
             text: %(
-               Is our 100 word problem/project description compelling and does it clearly state the problem and solution?
+               Is our project description compelling and does it clearly state the problem and solution (maximum 100 words)?
             )
           ),
 
@@ -19,8 +19,8 @@ module Judging
             field: :pitch_1,
             worth: 5,
             text: %(
-              Does our pitch video clearly state the problem and show why
-              the problem is important to us and our community?
+              Does our pitch video clearly state the problem and show why the problem is
+              important to us and our community and which United Nations Sustainable Development Goals are addressed?
             )
           ),
 
@@ -30,8 +30,7 @@ module Judging
             field: :pitch_2,
             worth: 5,
             text: %(
-              Do we explain what we researched about the problem and
-              how it relates to the United Nations Sustainable Development Goals?
+               Do we explain how we researched the complexity of the problem?
             )
           ),
 
@@ -41,7 +40,8 @@ module Judging
             field: :pitch_3,
             worth: 5,
             text: %(
-              Do we convince the viewer that the app or AI solution solves the problem for the users?
+              Do we show the viewer 1-2 key features of the project and explain how
+              our project solves the problem for the users?
             )
           ),
 
@@ -51,8 +51,7 @@ module Judging
             field: :pitch_4,
             worth: 5,
             text: %(
-              Do we explain why the selected technology (AI prototype or mobile app) is the
-              best tool to solve the problem and how it is a better solution compared to what already exists?
+              Do we explain how the selected technology is the best solution compared to what already exists?
             )
           ),
 
@@ -62,8 +61,8 @@ module Judging
             field: :pitch_5,
             worth: 5,
             text: %(
-              Do we explain how we will make sure the solution will only have a
-              positive impact on direct or indirect users and the planet?
+              Do we explain how we considered the ethics of our solution to make sure the solution will
+              only have a positive impact on direct or indirect users and the planet?
             )
           ),
 
@@ -74,7 +73,7 @@ module Judging
             field: :demo_1,
             worth: 5,
             text: %(
-              Do we show what app we built and what parts work successfully so far?
+              Do we show the working parts of the app we built?
             )
           ),
 
@@ -96,7 +95,7 @@ module Judging
             field: :demo_3,
             worth: 5,
             text: %(
-              Do we explain the machine learning training and/or coding we did for 1 or 2 important parts of our app, other than the login screen?
+              Do we explain the machine learning training and/or actual coding we did for 1 or 2 important parts of our app, other than the login screen?
             )
           ),
 
@@ -139,8 +138,7 @@ module Judging
             field: :entrepreneurship_3,
             worth: 5,
             text: %(
-              Do we explain the marketing plan for how the team will get new users
-              to use our app or invention in its first year?
+               Do we explain the marketing plan for how the team will get new users to use our app in its first year?
             )
           ),
 
@@ -150,7 +148,7 @@ module Judging
             field: :entrepreneurship_4,
             worth: 5,
             text: %(
-              Do we show financial plans for starting the business and why they are realistic?
+               Do we show financial plans for starting the business and explain why they are realistic?
             )
           ),
 
@@ -169,6 +167,16 @@ module Judging
             idx: 2,
             section: "ideation",
             field: :ideation_2,
+            worth: 5,
+            text: %(
+              Do we explain what we learned about AI and how we used it in our project?
+            )
+          ),
+
+          Question.new(
+            idx: 3,
+            section: "ideation",
+            field: :ideation_3,
             worth: 5,
             text: %(
               Do we describe how we overcame technical or non-technical challenges?

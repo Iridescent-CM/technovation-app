@@ -9,7 +9,7 @@ module Judging
             field: :project_details_1,
             worth: 5,
             text: %(
-              Is our 100 word problem/project description compelling and does it clearly state the problem and solution?
+              Is our project description compelling and does it clearly state the problem and solution (maximum 100 words)?
             )
           ),
 
@@ -30,7 +30,7 @@ module Judging
             field: :pitch_2,
             worth: 5,
             text: %(
-              Do we explain how our app or AI solution solves the problem for the users?
+              Do we show the viewer 1-2 key features of the project and explain how our project solves the problem for the users?
             )
           ),
 
@@ -61,7 +61,7 @@ module Judging
             field: :demo_1,
             worth: 5,
             text: %(
-              Do we show what app we built and what parts work successfully so far?
+              Do we show what app or Scratch project we built and what parts work successfully so far?
             )
           ),
 
@@ -72,7 +72,7 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we explain how the app was tested with users, what feedback was given, and how it affected the features of the app?
+              Do we explain how the app or Scratch project was tested with users, what feedback was given, and how it affected the features of the project?
             )
           ),
 
@@ -83,7 +83,7 @@ module Judging
             field: :demo_3,
             worth: 5,
             text: %(
-              Do we explain the machine learning training and/or coding we did for 1 or 2 important parts of our app, other than the login screen?
+              Do we explain the machine learning training and/or coding we did for 1 or 2 important parts of our project, other than the login screen?
             )
           ),
 
@@ -94,7 +94,7 @@ module Judging
             field: :demo_4,
             worth: 5,
             text: %(
-              Do we show what doesn’t work yet and/or share future app features?
+              Do we show what doesn’t work yet and/or share future technical features?
             )
           ),
 
@@ -106,6 +106,16 @@ module Judging
             text: %(
               Do we share what we learned and the challenges we overcame through a combination of words and pictures (e.g. screenshots, prototypes)?
               Do we share any technical sources used/remixed and/or our favorite technical resource?
+            )
+          ),
+
+          Question.new(
+            idx: 2,
+            section: "ideation",
+            field: :ideation_2,
+            worth: 5,
+            text: %(
+               Do we explain what we learned about AI and how we used it in our project?
             )
           )
         ]
