@@ -9,10 +9,6 @@ module JoinRequestApproved
 
     TeamRosterManaging.add(join_request.team, join_request.requestor)
 
-    if join_request.requestor_scope_name == "mentor"
-      MentorToTeamChapterableAssigner.new(mentor_profile: join_request.requestor, team: join_request.team).call
-    end
-
     TeamMailer.public_send(
       :"#{join_request.requestor_scope_name}_join_request_accepted",
       join_request
