@@ -49,11 +49,11 @@ export default {
     explainScore(score) {
       switch (score) {
         case 1:
-          return "Not there yet";
+          return "Not there/Missing";
         case 2:
-          return "Getting there";
+          return "Getting there (below expectations)";
         case 3:
-          return "Average";
+          return "Average (meets expectations)";
         case 4:
           return "Good";
         case 5:
