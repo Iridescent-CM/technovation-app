@@ -270,6 +270,24 @@ RSpec.describe Salesforce::ApiClient do
           end
         end
 
+        context "when updating a judge's program info" do
+          let(:judge_profile) { FactoryBot.build(:judge_profile) }
+          let(:account) { judge_profile.account }
+          let(:profile_type) { "judge" }
+
+          it "calls update! to update the 'program participant' info for the judge" do
+            expect(salesforce_client).to receive(:update!).with(
+              "Program_Participant__c",
+              {
+                Id: program_participant_id,
+                Judging_Location__c: "Platform (Virtual)"
+              }
+            )
+
+            salesforce_api_client.upsert_program_info
+          end
+        end
+
         context "when updating a student's program info" do
           let(:student_profile) { FactoryBot.create(:student_profile, :on_team, :submitted) }
           let(:account) { student_profile.account }
