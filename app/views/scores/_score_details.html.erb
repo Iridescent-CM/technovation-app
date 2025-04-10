@@ -1,0 +1,70 @@
+<% provide :title, "Review Score" %>
+
+<% if current_scope == "mentor" %>
+  <div class="bg-gray-100 rounded shadow-md w-full mx-auto mb-8 p-8">
+    <h3>
+      <span>Team</span>
+      <%= link_to score.team_name, mentor_team_path(score.team) %>
+    </h3>
+
+    <h3>
+      <span>Division</span>
+      <%= score.team.division_name.humanize %>
+    </h3>
+
+    <h3>
+      <span>Submission</span>
+      <%= link_to score.team_submission.app_name,
+        project_path(score.team_submission),
+        data: { turbolinks: false },
+        target: "_blank" %>
+    </h3>
+
+    <h3>
+      <span>Score</span> <%= score.total %> / <%= score.total_possible %>
+      <%= render partial: "copy_to_clipboard", locals: { text_to_copy: "#{score.total}/#{score.total_possible}" } %>
+    </h3>
+
+    <h3>
+      <span>Score comes from</span>
+      <%= score.judge_profile.address_details %>
+    </h3>
+  </div>
+<% end %>
+
+<% questions = Questions.for(score) %>
+
+<% questions.sections_for(division: score.team.division_name).each do |section_lookup_key, section_display_name| %>
+  <div class="mt-12">
+    <h3 class="font-medium">
+      <%= section_display_name %>
+    </h3>
+
+    <table class="w-full table-auto border-4 border-black border-collapse my-4">
+      <% section_total = 0 %>
+
+      <% questions.in_section(section_lookup_key).each do |question| %>
+        <% section_total += score.total_for_question(question) %>
+
+        <tr class="border-4 border-black">
+          <td class="py-2 px-4"><%= question.text.html_safe %></td>
+          <td class="border-4 border-black py-2 px-4 w-44"><%= score.total_for_question(question) %></td>
+        </tr>
+      <% end %>
+
+      <tr class="font-medium">
+        <td class="font-medium py-2 px-4">
+          <%= section_display_name %> Score
+        </td>
+        <td class="border-4 border-black py-2 px-4">
+          <span>
+            <%= section_total %> /
+            <%= score.total_points_for_section(score.team.division_name, section_lookup_key) %>
+          </span>
+        </td>
+      </tr>
+    </table>
+
+    <%= simple_format score.comment_for_section(section_lookup_key) %>
+  </div>
+<% end %>
