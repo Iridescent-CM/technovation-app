@@ -71,7 +71,9 @@ class JudgeProfile < ActiveRecord::Base
 
   has_and_belongs_to_many :regional_pitch_events, -> { current }
   has_and_belongs_to_many :events, -> { current },
-    class_name: "RegionalPitchEvent"
+    class_name: "RegionalPitchEvent",
+    after_add: :update_judge_info_in_crm,
+    after_remove: :update_judge_info_in_crm
 
   has_many :judge_assignments,
     -> { current },
@@ -231,5 +233,14 @@ class JudgeProfile < ActiveRecord::Base
       account.email_confirmed? &&
       consent_signed? &&
       training_completed?
+  end
+
+  private
+
+  def update_judge_info_in_crm(_event)
+    CRM::UpsertProgramInfoJob.perform_later(
+      account_id: account.id,
+      profile_type: "judge"
+    )
   end
 end

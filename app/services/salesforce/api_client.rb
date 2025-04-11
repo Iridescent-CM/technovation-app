@@ -184,6 +184,13 @@ module Salesforce
             Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team"
           }
         )
+      when "judge"
+        initial_program_participant_info.merge(
+          {
+            Judging_Location__c: account.judge_profile.events.present? ? "RPE (In-person)" : "Platform (Virtual)"
+          }
+        )
+
       else
         {}
       end
