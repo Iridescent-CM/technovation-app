@@ -1,0 +1,5 @@
+<div class="container mx-auto w-8/12">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Score Details"} do %>
+    <%= render partial: "scores/score_details", locals: { score: @score } %>
+  <% end %>
+</div>

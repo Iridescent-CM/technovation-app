@@ -12,8 +12,6 @@ module Mentor
       @score = SubmissionScore.where(team_submission_id: submission_ids).find(params[:id])
       @team = @score.team
       @team_submission = @team.submission
-
-      render "admin/scores/show"
     end
   end
 end
