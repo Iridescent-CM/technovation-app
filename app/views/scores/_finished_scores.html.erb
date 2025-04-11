@@ -1,0 +1,51 @@
+<div>
+  <h2 class="text-xl text-energetic-blue font-semibold">
+    Finished Scores
+  </h2>
+
+  <div class="mt-2 mb-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300" id="student-finished-scores-table">
+            <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="py-3 pl-4 pr-3 text-left text-base font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                Judging Session
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Judging Location
+              </th>
+              <th scope="col" colspan="2" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Score
+              </th>
+            </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200 bg-white">
+
+            <% scores.sort_by(&:round).reverse.each do |score| %>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-base font-medium text-gray-900 sm:pl-6">
+                  <%= score.round.titlecase%>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                  <%= score.judge_profile.address_details %>
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                  <%= score.total %>/<%= score.total_possible %>
+                </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-base font-medium sm:pr-6">
+                  <%= link_to 'View details',
+                    send("#{current_scope}_score_path", score),
+                    class: "tw-green-btn cursor-pointer" %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

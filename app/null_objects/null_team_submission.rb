@@ -35,6 +35,10 @@ class NullTeamSubmission < NullObject
   end
   alias_method :is_complete, :complete?
 
+  def incomplete?
+    true
+  end
+
   def published_at
     nil
   end

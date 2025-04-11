@@ -1,0 +1,24 @@
+<% if team.submission.blank? || team.submission.incomplete? %>
+  <p>
+    Unfortunately, no scores are available for <%= team.name %>
+    because the submission was incomplete. Give your team some
+    feedback on how to improve for next year!
+  </p>
+<% else %>
+  <p>
+    Congratulations on completing the <%= Season.current.year %>
+    season of Technovation! Your team can use the feedback they
+    received at their pitch event to help learn more and to
+    participate in Technovation next year. Your team should be proud
+    of their work and share it with friends and mentors!
+  </p>
+<% end %>
+
+<% if team.submission.present? %>
+  <p class="mt-8">
+    <%= link_to "Open your submission page",
+      project_path(team.submission),
+      class: "tw-green-btn mt-8",
+      target: "_blank" %>
+  </p>
+<% end %>
