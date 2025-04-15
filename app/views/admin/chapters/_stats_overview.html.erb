@@ -1,0 +1,30 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h3>
+      <%= Season.current.year %> Stats
+    </h3>
+
+    <div class="panel">
+      <table class="datagrid">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Students</td>
+            <td><%= chapter.chapterable_account_assignments.current.students.count %></td>
+          </tr>
+
+          <tr>
+            <td>Mentors</td>
+            <td><%= chapter.chapterable_account_assignments.current.mentors.count %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

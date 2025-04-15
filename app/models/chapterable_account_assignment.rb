@@ -15,6 +15,14 @@ class ChapterableAccountAssignment < ApplicationRecord
     where(chapterable_type: "Club")
   }
 
+  scope :mentors, -> {
+    where(profile_type: "MentorProfile")
+  }
+
+  scope :students, -> {
+    where(profile_type: "StudentProfile")
+  }
+
   validate :ambassador_chapterable_assignment_type
   validate :ensure_one_primary_assignment_per_profile_type_per_season, if: :new_record?
 
