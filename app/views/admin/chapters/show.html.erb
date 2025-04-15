@@ -148,4 +148,7 @@
 
 <%= render "admin/chapters/legal_contact", chapter: @chapter %>
 
-<%= render "admin/chapters/stats_overview", chapter: @chapter %>
+<%= render "admin/chapterables/stats_overview",
+  chapterable: @chapter,
+  chapterable_type: "chapter"
+%>
