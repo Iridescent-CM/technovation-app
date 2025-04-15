@@ -53,7 +53,7 @@ export default {
         case 2:
           return "Getting there (below expectations)";
         case 3:
-          return "Average (meets expectations)";
+          return "Average (meets basic expectations)";
         case 4:
           return "Good";
         case 5:
