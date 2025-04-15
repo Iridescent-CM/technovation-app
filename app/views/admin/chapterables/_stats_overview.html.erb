@@ -10,6 +10,7 @@
           <tr>
             <th>Type</th>
             <th>Total</th>
+            <th></th>
           </tr>
         </thead>
 
@@ -17,11 +18,35 @@
           <tr>
             <td>Students</td>
             <td><%= chapterable.chapterable_account_assignments.current.students.count %></td>
+            <td>
+              <%= link_to "View Details",
+                admin_participants_path(
+                  accounts_grid: {
+                    chapter: chapterable_type == "chapter" ? chapterable : nil,
+                    club: chapterable_type == "club" ? chapterable : nil,
+                    scope_names: ["student"],
+                    season: [Season.current.year]
+                  }
+                )
+              %>
+            </td>
           </tr>
 
           <tr>
             <td>Mentors</td>
             <td><%= chapterable.chapterable_account_assignments.current.mentors.count %></td>
+            <td>
+              <%= link_to "View Details",
+                admin_participants_path(
+                  accounts_grid: {
+                    chapter: chapterable_type == "chapter" ? chapterable : nil,
+                    club: chapterable_type == "club" ? chapterable : nil,
+                    scope_names: ["mentor"],
+                    season: [Season.current.year]
+                  }
+                )
+              %>
+            </td>
           </tr>
         </tbody>
       </table>
