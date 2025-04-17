@@ -14,6 +14,17 @@ class ClubsGrid
     where("lower(unaccent(name)) ILIKE ?", "%#{processed_value}%")
   end
 
+  filter :season,
+    :enum,
+    select: (2025..Season.current.year).to_a.reverse,
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: false do |value|
+    by_season(value)
+  end
+
   column :name, header: "Name", mandatory: true
 
   column :city
@@ -24,6 +35,10 @@ class ClubsGrid
 
   column :country do
     FriendlyCountry.new(self).country_name
+  end
+
+  column :seasons do
+    seasons.to_sentence
   end
 
   column :actions, mandatory: true, html: true do |club|
