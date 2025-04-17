@@ -17,7 +17,8 @@ RSpec.feature "background checks" do
       mentor = FactoryBot.create(
         :mentor,
         :geocoded,
-        date_of_birth: age.years.ago
+        date_of_birth: age.years.ago,
+        meets_minimum_age_requirement: true
       )
 
       sign_in(mentor)
@@ -25,12 +26,13 @@ RSpec.feature "background checks" do
       expect(page).not_to have_link("Submit Background Check")
     end
 
-    scenario "mentors age #{age} still become searchable" do
+    scenario "mentors age #{age} does not become searchable" do
       mentor = FactoryBot.create(
         :mentor,
         :geocoded,
         not_onboarded: true,
         date_of_birth: age.years.ago,
+        meets_minimum_age_requirement: false,
         bio: ""
       )
 
@@ -49,7 +51,7 @@ RSpec.feature "background checks" do
           "porta risus ut, molestie tortor."
       within("[slot=bio]") { click_button "Save" }
 
-      expect(mentor.reload).to be_searchable
+      expect(mentor.reload).not_to be_searchable
     end
   end
 end
