@@ -22,12 +22,18 @@
           validation="required" validation-name="Gender identity" @keyup="checkValidation" @blur="checkValidation"
           label="Gender Identity" id="genderIdentity" input-class="mentorSelectClass" />
 
+        <FormulateInput name="meetsMinimumAgeRequirement" id="meetsMinimumAgeRequirement" type="checkbox"
+          label="I confirm that I am 18 years or older" validation="required"
+          :validation-messages="{ required: 'You must be 18 years or older in order to be a mentor' }"
+          @keyup="checkValidation" @blur="checkValidation" @input="checkValidation" />
+
         <FormulateInput name="dateOfBirth" id="dateOfBirth" type="date" label="Birthday" placeholder="Birthday"
-          validation="required|mentor_age|after:01/01/1900|before:01/01/2020" :validation-messages="{
-            after: 'Please enter a valid birthday.',
-            before: 'Please enter a valid birthday.'
-          }
-            " validation-name="Birthday" @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
+          @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
+
+        <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
+          We use date of birth as a way to gain insight into who volunteers to mentor.<br>
+          This info is optional.
+        </p>
 
         <FormulateInput name="phoneNumber" id="phoneNumber" type="tel"
           :validation="[['matches', /^([\+\(\s.\-\/\d]{5,30}|)$/]]"
@@ -126,7 +132,7 @@ export default {
 
       if (document.getElementById('firstName').value.length === 0 ||
         document.getElementById('lastName').value.length === 0 ||
-        document.getElementById('dateOfBirth').value.length === 0 ||
+        !document.getElementById('meetsMinimumAgeRequirement').checked ||
         document.getElementById('mentorSchoolCompanyName').value.length === 0 ||
         document.getElementById('mentorJobTitle').value.length === 0 ||
         document.getElementById('mentorBio').value.length < 100 ||
@@ -139,7 +145,6 @@ export default {
         validationErrorMessages.some((message) => {
           return (
             message.indexOf('years old to participate') >= 0 ||
-            message.indexOf('Please enter a valid birthday') >= 0 ||
             message.indexOf('Personal summary must be at least') >= 0
           )
         })) {

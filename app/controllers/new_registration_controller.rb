@@ -87,7 +87,8 @@ class NewRegistrationController < ApplicationController
       mentor_type_ids: registration_params["mentorTypes"],
       account_attributes: account_attributes.merge({
         phone_number: registration_params[:phoneNumber],
-        gender: registration_params[:gender]
+        gender: registration_params[:gender],
+        meets_minimum_age_requirement: registration_params[:meetsMinimumAgeRequirement]
       })
     }
   end
