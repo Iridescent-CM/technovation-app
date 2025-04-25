@@ -21,9 +21,23 @@ module ChapterAmbassador
     private
 
     def grid_params
-      params[:judges_grid] ||= {}
-      grid = GridParams.for(params[:judges_grid], current_ambassador, admin: false)
-      grid.merge(column_names: detect_extra_columns(grid))
+      grid = (params[:judges_grid] ||= {}).merge(
+        current_account: current_ambassador.account,
+        admin: false,
+        allow_state_search: current_ambassador.country_code != "US",
+        country: [current_ambassador.country_code],
+        state_province: (
+          if current_ambassador.country_code == "US"
+            [current_ambassador.state_province]
+          else
+            Array(params[:judges_grid][:state_province])
+          end
+        )
+      )
+
+      grid.merge(
+        column_names: detect_extra_columns(grid)
+      )
     end
   end
 end
