@@ -8,7 +8,15 @@ module Admin
     helper_method :back_from_event_path
 
     def show
-      @event = RegionalPitchEvent.find(params[:id])
+      @event = RegionalPitchEvent
+        .includes(
+          judges: :current_account,
+          teams: [
+            :division,
+            submission: [:team, :screenshots]
+          ]
+        )
+        .find(params[:id])
     end
 
     def edit
