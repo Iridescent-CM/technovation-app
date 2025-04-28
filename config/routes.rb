@@ -201,7 +201,9 @@ Rails.application.routes.draw do
     resources :trainings, only: :index
     resource :training_completion, only: :show
 
-    resources :events, controller: :regional_pitch_events
+    resources :events, controller: :regional_pitch_events do
+      get :bulk_download_submission_pitch_presentations
+    end
     get "events_list", to: "/data_grids/ambassador/events#index", as: "events_list"
 
     resources :regional_pitch_events
@@ -386,7 +388,9 @@ Rails.application.routes.draw do
 
     resources :events,
       controller: :regional_pitch_events,
-      only: [:index, :show, :edit, :update]
+      only: [:index, :show, :edit, :update] do
+        get :bulk_download_submission_pitch_presentations
+      end
 
     resources :event_participations,
       controller: :regional_pitch_event_participations,

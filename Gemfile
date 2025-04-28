@@ -103,6 +103,7 @@ gem "net-pop", require: false
 
 gem "rexml", "~> 3.3.0"
 gem "immosquare-cookies"
+gem "zipline"
 
 group :development do
   gem "pp_sql", "~> 0.2", require: false

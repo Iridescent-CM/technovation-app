@@ -1,5 +1,7 @@
 module ChapterAmbassador
   class RegionalPitchEventsController < ChapterAmbassadorController
+    include BulkDownloadSubmissionPitchPresentations
+
     def index
       respond_to do |f|
         f.html {}
@@ -22,35 +24,17 @@ module ChapterAmbassador
     end
 
     def show
-      @pitch_event = RegionalPitchEvent.current
-        .in_region(current_ambassador)
+      @event = RegionalPitchEvent
         .includes(
-          teams: [:division, {judge_assignments: :judge_profile}],
-          judges: {judge_assignments: :team}
-        ).find(params[:id])
+          judges: :current_account,
+          teams: [
+            :division,
+            submission: [:team, :screenshots]
+          ]
+        )
+        .find(params[:id])
 
-      @senior_team_participants = Team.current
-        .senior
-        .in_region(current_ambassador)
-        .not_attending_live_event
-        .distinct
-        .sort { |t1, t2| t1.name.downcase <=> t2.name.downcase }
-
-      @junior_team_participants = Team.current
-        .junior
-        .in_region(current_ambassador)
-        .not_attending_live_event
-        .distinct
-        .sort { |t1, t2| t1.name.downcase <=> t2.name.downcase }
-
-      @judge_participants = JudgeProfile.current
-        .includes(:judge_assignments)
-        .onboarded
-        .in_region(current_ambassador)
-        .not_attending_live_event
-        .sort { |j1, j2|
-          j1.first_name.downcase <=> j2.first_name.downcase
-        }
+      render "admin/regional_pitch_events/show"
     end
 
     def edit
