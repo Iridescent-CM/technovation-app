@@ -15,7 +15,9 @@
                 </a>
               </template>
               <template v-else>
-                {{ event.name }}
+                <a :href="`/chapter_ambassador/events/${event.id}`">
+                  {{ event.name }}
+                </a>
               </template>
             </h5>
           </div>
