@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
+    resource :training, only: :show
     resource :training_completion, only: :show
     resources :consent_waivers, only: [:new, :create, :show]
 
