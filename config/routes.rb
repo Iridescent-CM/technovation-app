@@ -77,6 +77,7 @@ Rails.application.routes.draw do
     resources :consent_waivers, only: [:new, :create, :show]
 
     resource :dashboard, only: :show
+    resource :new_dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
     resource :bio, only: [:edit, :update]
