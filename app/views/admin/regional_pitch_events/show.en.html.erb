@@ -154,7 +154,7 @@
                     <% if team.submission.pitch_presentation_url.present? %>
                       <%= link_to "Download",
                         team.submission.pitch_presentation_url,
-                        download: "#{submission.team.name.downcase.parameterize(separator: "_")}-#{submission.pitch_presentation.file.filename.downcase.parameterize(separator: "_")}",
+                        download: "#{team.submission.team.name.downcase.parameterize(separator: "_")}-#{team.submission.pitch_presentation.file.filename.downcase.parameterize(separator: "_")}",
                         class: "button small"
                       %>
                     <% else %>
