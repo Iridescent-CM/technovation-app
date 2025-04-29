@@ -11,37 +11,42 @@
             <dd>
               <%= @event.unofficial? ? "no" : "yes" %>
 
-              <p>
-                <%= link_to "Toggle official",
-                  admin_event_path(
-                    @event,
-                    {
-                      regional_pitch_event: {
-                        unofficial: !@event.unofficial
+              <% if current_account.admin? %>
+                <p>
+                  <%= link_to "Toggle official",
+                    admin_event_path(
+                      @event,
+                      {
+                        regional_pitch_event: {
+                          unofficial: !@event.unofficial
+                        }
                       }
-                    }
-                  ),
-                  data: {
-                    method: :patch,
-                    confirm: "You are about to mark #{@event.name} as " +
-                             "<strong>" +
-                             (@event.unofficial? ? 'OFFICIAL' : 'UNOFFICIAL') +
-                             "</strong>"
-                  },
-                  class: "button small" %>
-              </p>
+                    ),
+                    data: {
+                      method: :patch,
+                      confirm: "You are about to mark #{@event.name} as " +
+                              "<strong>" +
+                              (@event.unofficial? ? 'OFFICIAL' : 'UNOFFICIAL') +
+                              "</strong>"
+                    },
+                    class: "button small" %>
+                </p>
+              <% end %>
             </dd>
 
             <dt>Divisions</dt>
 
             <dd><%= @event.division_names %></dd>
 
-            <dt>Ambassador:</dt>
 
-            <dd>
-              <%= link_to @event.ambassador.name,
-                          admin_participant_path(@event.ambassador.account) %>
-            </dd>
+            <% if current_account.admin? %>
+              <dt>Ambassador:</dt>
+
+              <dd>
+                <%= link_to @event.ambassador.name,
+                  admin_participant_path(@event.ambassador.account) %>
+              </dd>
+            <% end %>
 
             <dt>Time:</dt>
 
@@ -106,7 +111,7 @@
         </div>
       </div>
 
-      <hr />
+      <hr>
 
       <div class="grid grid--bleed">
         <div class="grid__col-auto" style="overflow-x:auto;">
@@ -119,6 +124,7 @@
                 <th>Team</th>
                 <th>Division</th>
                 <th>Submission</th>
+                <th style="padding-right: 20px;">Presentation Slides</th>
                 <th>Status</th>
               </tr>
               </thead>
@@ -126,23 +132,54 @@
               <% @event.teams.each do |team| %>
                 <tr>
                   <td>
-                    <%= link_to team.name, admin_team_path(team) %>
+                    <%= link_to team.name,
+                      send(
+                        "#{current_scope}_team_path",
+                        team
+                      )
+                    %>
                   </td>
                   <td>
                     <%= team.division_name %>
                   </td>
                   <td>
-                    <%= link_to team.submission.name, admin_team_submission_path(team.submission) %>
+                    <%= link_to team.submission.name,
+                      send(
+                        "#{current_scope}_team_submission_path",
+                        team.submission
+                      )
+                    %>
                   </td>
                   <td>
-                        <span class="pill pill-<%= team.status == 'ready' ? 'green' : 'orange' %>">
-                          <%= team.human_status %>
-                        </span>
+                    <% if team.submission.pitch_presentation_url.present? %>
+                      <%= link_to "Download",
+                        team.submission.pitch_presentation_url,
+                        download: "#{submission.team.name.downcase.parameterize(separator: "_")}-#{submission.pitch_presentation.file.filename.downcase.parameterize(separator: "_")}",
+                        class: "button small"
+                      %>
+                    <% else %>
+                      -
+                    <% end %>
+                  </td>
+                  <td>
+                    <span class="pill pill-<%= team.status == 'ready' ? 'green' : 'orange' %>">
+                      <%= team.human_status %>
+                    </span>
                   </td>
                 </tr>
               <% end %>
               </tbody>
             </table>
+
+            <div style="display: flex; justify-content: center;">
+              <%= link_to "Download All Presentation Slides",
+                send(
+                  "#{current_scope}_event_bulk_download_submission_pitch_presentations_path",
+                  @event
+                ),
+                class: "button"
+              %>
+            </div>
           <% else %>
             <p>No teams yet.</p>
           <% end %>
@@ -162,7 +199,12 @@
                 <tr>
                   <td>
                     <% if judge.is_a?(JudgeProfile) %>
-                      <%= link_to judge.name, admin_participant_path(judge.account) %>
+                      <%= link_to judge.name,
+                        send(
+                          "#{current_scope}_participant_path",
+                          judge.account
+                        )
+                      %>
                     <% else %>
                       Invited Judge
                     <% end %>
@@ -186,10 +228,12 @@
       </div>
     </div>
 
-    <p>
-      <%= link_to 'Go back',
-        back_from_event_path,
-        class: "button small" %>
-    </p>
+    <% if current_account.admin? %>
+      <p>
+        <%= link_to 'Go back',
+          back_from_event_path,
+          class: "button small" %>
+      </p>
+    <% end %>
   </div>
 </div>

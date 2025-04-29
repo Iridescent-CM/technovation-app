@@ -62,8 +62,10 @@ class EventsGrid
 
   column :teams_count, header: "Team count", mandatory: true
 
-  column :actions, mandatory: true, html: true, if: ->(g) { g.admin } do |event|
-    link_to "view", admin_event_path(event)
+  column :actions, mandatory: true, html: true do |event|
+    link_to "view",
+      send(:"#{current_scope}_event_path",
+        event)
   end
 
   column :created_at do
