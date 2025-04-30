@@ -9,7 +9,7 @@ task assign_judges_to_rpe: :environment do |task, args|
   puts "Assigning judges to RPE #{rpe.name} (ID #{rpe.id})"
   args.extras[0..-2].each do |email_address|
     account = Account.find_by(email: email_address)
-    judge_profile = account.judge_profile
+    judge_profile = account&.judge_profile
 
     if account.blank?
       puts "Could not find account with email address: #{email_address}"
