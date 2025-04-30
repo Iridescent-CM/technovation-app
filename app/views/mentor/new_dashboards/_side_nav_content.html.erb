@@ -21,12 +21,12 @@
            is_active_item:  al(mentor_training_path).present?
         %>
 
-        <%= render "application/templates/completion_step",
-           name: "Consent Waiver",
-           url: "#",
-           is_complete: false,
-           is_active_item: false
-        %>
+      <%= render "application/templates/completion_step",
+         name: "Consent Waiver",
+         url: mentor_consent_waiver_path,
+         is_complete: current_mentor.consent_signed?,
+         is_active_item: al(mentor_consent_waiver_path).present?
+      %>
 
         <%= render "application/templates/completion_step",
            name: "Personal Summary",
