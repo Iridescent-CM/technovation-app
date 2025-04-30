@@ -1,19 +1,16 @@
-<h1 class="margin--none padding--none">
-  <%= t("views.profile_requirements.consent_waiver.heading") %>
-</h1>
-
 <% if profile.consent_signed? %>
   <p><%= t("views.profile_requirements.consent_waiver.signed") %></p>
 <% else %>
   <p><%= t("views.profile_requirements.consent_waiver.label") %></p>
 
-  <div class="step-actions">
+  <div class="mt-8 text-center">
     <%= link_to(
       t("views.profile_requirements.consent_waiver.links.view.text"),
       send(
         "new_#{current_scope}_consent_waiver_path",
         { token: profile.account.consent_token }
       ),
-    ) %>
+      class: "tw-green-btn",
+      ) %>
   </div>
 <% end %>
