@@ -18,8 +18,9 @@ RSpec.feature "Consent waivers" do
   end
 
   scenario "valid token, invalid signature form" do
-    visit mentor_dashboard_path
+    visit mentor_new_dashboard_path
 
+    click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
     click_button "I agree"
 
@@ -31,7 +32,9 @@ RSpec.feature "Consent waivers" do
   end
 
   scenario "valid token, valid form" do
-    visit mentor_dashboard_path
+    visit mentor_new_dashboard_path
+
+    click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
 
     fill_in "Type your name as a form of electronic signature",
