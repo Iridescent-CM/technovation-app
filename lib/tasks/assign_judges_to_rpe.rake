@@ -1,6 +1,10 @@
 desc "Assign judges to RPE"
 task assign_judges_to_rpe: :environment do |task, args|
-  rpe = RegionalPitchEvent.find(args.extras.last)
+  rpe = RegionalPitchEvent.find_by(id: args.extras.last)
+
+  if rpe.blank?
+    raise "Could not find RPE with ID: #{args.extras.last}"
+  end
 
   puts "Assigning judges to RPE #{rpe.name} (ID #{rpe.id})"
   args.extras[0..-2].each do |email_address|
@@ -8,7 +12,7 @@ task assign_judges_to_rpe: :environment do |task, args|
     judge_profile = account.judge_profile
 
     if account.blank?
-      puts "#{email_address} could not be found"
+      puts "Could not find account with email address: #{email_address}"
     elsif judge_profile.blank?
       puts "#{email_address} is not a judge"
     elsif !account.current_season?
