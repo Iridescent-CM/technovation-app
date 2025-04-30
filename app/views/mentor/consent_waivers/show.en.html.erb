@@ -1,1 +1,7 @@
-<%= render 'consent_waivers/show', consent_waiver: @consent_waiver %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/new_dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Consent Waiver" } do %>
+    <%= render "completion_steps/consent_waiver", profile: current_mentor %>
+  <% end %>
+</div>
