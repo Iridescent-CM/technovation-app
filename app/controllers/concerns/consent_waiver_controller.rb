@@ -1,10 +1,6 @@
 module ConsentWaiverController
   extend ActiveSupport::Concern
 
-  def show
-    @consent_waiver = ConsentWaiver.find(params.fetch(:id))
-  end
-
   def new
     if valid_token?
       @consent_waiver = ConsentWaiver.new(
