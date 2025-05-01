@@ -20,6 +20,8 @@ task assign_teams_to_rpe: :environment do |task, args|
       puts "#{team.name} is already assigned to this event"
     elsif team.events.present?
       puts "#{team.name} is already assigned to another event"
+    elsif rpe.divisions.exclude? team.division
+      puts "#{team.name} is not in the correct division for this event (Event divisions: #{rpe.divisions.map(&:name).to_sentence}, Team division: #{team.division.name})"
     else
       team.events << rpe
 
