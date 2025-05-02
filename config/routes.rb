@@ -131,6 +131,7 @@ Rails.application.routes.draw do
     resource :regional_pitch_event_selection, only: :create
     resources :regional_pitch_events, only: [:index, :show]
     resources :scores, only: [:index, :show]
+    resources :certificates, only: :index
   end
 
   namespace :ambassador do

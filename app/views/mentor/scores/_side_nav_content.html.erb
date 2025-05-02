@@ -5,5 +5,11 @@
          url: mentor_scores_path,
          is_active_item: al(mentor_scores_path).present?
       %>
+
+      <%= render "application/templates/side_nav_item",
+         name: "Certificates",
+         url: mentor_certificates_path,
+         is_active_item: al(mentor_certificates_path).present?
+      %>
     </ol>
   </nav>

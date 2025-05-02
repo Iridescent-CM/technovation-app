@@ -1,0 +1,22 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/scores/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Certificates" } do %>
+    <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
+      <% if @current_certificates.any? %>
+        <% if current_account.took_program_survey? %>
+          <%= render "mentor/certificates/certificates_table", certificates: @current_certificates %>
+        <% else %>
+          <%= render "mentor/certificates/survey_required", certificates: @current_certificates %>
+        <% end %>
+      <% else %>
+        <p>
+          You don't have a certificate for this season.
+          Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you believe this is an error.
+        </p>
+      <% end %>
+    <% else %>
+      <%= render "explanations/feature_not_available", feature: :scores %>
+    <% end %>
+  <% end %>
+</div>
