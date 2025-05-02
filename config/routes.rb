@@ -82,7 +82,7 @@ Rails.application.routes.draw do
     resource :new_dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
-    resource :bio, only: [:edit, :update]
+    resource :bio, only: [:show, :edit, :update]
 
     resources :cookies, only: :create
     resource :survey_reminder, only: :create
