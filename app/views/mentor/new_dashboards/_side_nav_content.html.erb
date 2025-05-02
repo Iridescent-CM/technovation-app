@@ -27,5 +27,11 @@
          is_complete: false,
          is_active_item: false
       %>
+
+      <%= render "application/templates/side_nav_item",
+        name: "Learn from the Curriculum",
+        url: mentor_curriculum_path,
+        is_active_item: al(mentor_curriculum_path).present?
+      %>
     </ol>
   </nav>
