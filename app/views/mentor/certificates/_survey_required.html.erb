@@ -1,6 +1,6 @@
 <p>
   Before you can access your
-  <%=  "certificate".pluralize(@current_certificates.count) %>,
+  <%= "certificate".pluralize(@current_certificates.count) %>,
   please complete the
   <%= link_to_if SeasonToggles.survey_link_available?(current_scope, current_account),
     "post survey",
