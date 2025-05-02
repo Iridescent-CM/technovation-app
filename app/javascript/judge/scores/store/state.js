@@ -1,18 +1,19 @@
 const emptyComment = {
-  text: '',
+  text: "",
   word_count: 0,
-}
+};
 
 export default {
   problemSections: [],
 
   judge: {
-    recusal_scores_count: 0
+    recusal_scores_count: 0,
   },
 
   score: {
     id: null,
     incomplete: null,
+    started_at: null,
     comments: {
       project_details: emptyComment,
       ideation: emptyComment,
@@ -26,17 +27,17 @@ export default {
 
   team: {
     id: null,
-    name: '',
-    location: '',
-    division: '',
-    photo: '',
+    name: "",
+    location: "",
+    division: "",
+    photo: "",
   },
 
   submission: {
     id: null,
-    name: '',
-    description: '',
-    development_platform: '',
-    deadline: '',
+    name: "",
+    description: "",
+    development_platform: "",
+    deadline: "",
   },
-}
+};

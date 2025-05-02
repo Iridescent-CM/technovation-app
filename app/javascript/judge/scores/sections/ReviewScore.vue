@@ -122,6 +122,7 @@ export default {
       "totalScore",
       "totalPossibleScore",
       "isSectionComplete",
+      "startedAt",
     ]),
 
     sections() {
@@ -151,12 +152,47 @@ export default {
   },
 
   methods: {
-    openAlertMessage() {
+    isCompletingTooFast() {
+      const currentTime = new Date();
+      const startedAtTime = new Date(this.startedAt);
+      const timeElapsedInMs = currentTime.getTime() - startedAtTime;
+      const tenMinutesInMs = 10 * 60 * 1000;
+
+      return !this.isScoreIncomplete && (timeElapsedInMs < tenMinutesInMs);
+    },
+    displayCompletingTooFastAlert() {
       Swal.fire({
         html: `
-        <p>You've entered a perfect score. We recommend taking a brief moment to review and ensure the
-        submission aligns with the highest standards set for this evaluation.<br><br>
-        Please click Next to return to your score and either make changes or submit it.</p>
+          <p>
+            The score was completed in less than our recommend review time. We
+            recommend taking a brief moment to review before submitting your
+            feedback.
+
+            <br><br>
+
+            Please click Next to return to your score and either make changes or
+            submit it.
+          </p>
+        `,
+        background: "#fbecd0",
+        confirmButtonText: "Next",
+        confirmButtonColor: "#ffb81c",
+        width: "50%",
+      });
+    },
+    displayPerfectScoreAlert() {
+      Swal.fire({
+        html: `
+          <p>
+            You've entered a perfect score. We recommend taking a brief moment to
+            review and ensure the submission aligns with the highest standards set
+            for this evaluation.
+
+            <br><br>
+
+            Please click Next to return to your score and either make changes or
+            submit it.
+          </p>
         `,
         background: "#fbecd0",
         confirmButtonText: "Next",
@@ -167,8 +203,10 @@ export default {
   },
 
   mounted() {
-    if (this.totalScore === this.totalPossibleScore) {
-      this.openAlertMessage();
+    if (this.isCompletingTooFast()) {
+      this.displayCompletingTooFastAlert();
+    } else if (this.totalScore === this.totalPossibleScore) {
+      this.displayPerfectScoreAlert();
     }
   },
 };
