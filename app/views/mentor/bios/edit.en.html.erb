@@ -1,11 +1,8 @@
 <% provide :title, "Update your personal summary" %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-1/2">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Personal Summary" } do %>
+    <%= render "errors", record: current_mentor %>
 
-<div class="grid grid--justify-space-around">
-  <div class="panel grid__col-sm-8">
-    <h3>Add your personal summary</h3>
-
-    <%= render 'errors', record: current_mentor %>
-
-    <%= render 'form' %>
-  </div>
+    <%= render "form" %>
+  <% end %>
 </div>
