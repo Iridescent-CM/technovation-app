@@ -1,0 +1,19 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/new_dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Personal Summary" } do %>
+    <% if current_mentor.bio.present? %>
+      <%= simple_format h(current_mentor.bio) %>
+    <% else %>
+      <p>
+        <%= t("views.profile_requirements.build_profile.label") %>
+      </p>
+    <% end %>
+
+    <p class="text-center mt-8">
+      <%= link_to current_mentor.bio.present? ? "Change your summary": "Add your summary",
+        edit_mentor_bio_path,
+        class: "tw-green-btn" %>
+    </p>
+  <% end %>
+</div>
