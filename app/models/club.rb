@@ -1,4 +1,5 @@
 class Club < ActiveRecord::Base
+  include Seasoned
   include ActiveGeocoded
   include Casting::Client
   delegate_missing_methods
