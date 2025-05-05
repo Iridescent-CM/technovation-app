@@ -73,10 +73,12 @@ Rails.application.routes.draw do
     resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
+    resource :training, only: :show
     resource :training_completion, only: :show
     resources :consent_waivers, only: [:new, :create, :show]
 
     resource :dashboard, only: :show
+    resource :new_dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
     resource :bio, only: [:edit, :update]
