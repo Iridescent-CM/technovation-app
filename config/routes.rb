@@ -76,6 +76,7 @@ Rails.application.routes.draw do
     resource :training, only: :show
     resource :training_completion, only: :show
     resources :consent_waivers, only: [:new, :create, :show]
+    resource :curriculum, only: :show, controller: "curriculum"
 
     resource :dashboard, only: :show
     resource :new_dashboard, only: :show
