@@ -151,11 +151,12 @@
                     %>
                   </td>
                   <td>
-                    <% if team.submission.pitch_presentation_url.present? %>
+                    <% if team.submission.pitch_presentation.present? %>
                       <%= link_to "Download",
                         team.submission.pitch_presentation_url,
-                        download: "#{team.submission.team.name.downcase.parameterize(separator: "_")}-#{team.submission.pitch_presentation.file.filename.downcase.parameterize(separator: "_")}",
-                        class: "button small"
+                        download: "#{team.submission.team.name.downcase.parameterize(separator: "_")}-#{team.submission.pitch_presentation.file.filename.downcase.gsub(/\s+/, "_")}",
+                        class: "button small",
+                        style: "margin: 4px 0 4px;"
                       %>
                     <% else %>
                       -
@@ -171,15 +172,17 @@
               </tbody>
             </table>
 
-            <div style="display: flex; justify-content: center;">
-              <%= link_to "Download All Presentation Slides",
-                send(
-                  "#{current_scope}_event_bulk_download_submission_pitch_presentations_path",
-                  @event
-                ),
-                class: "button"
-              %>
-            </div>
+            <% if @event.teams.any? { |t| t.submission.pitch_presentation.present? } %>
+              <div style="display: flex; justify-content: center;">
+                <%= link_to "Download All Presentation Slides",
+                  send(
+                    "#{current_scope}_event_bulk_download_submission_pitch_presentations_path",
+                    @event
+                  ),
+                  class: "button"
+                %>
+              </div>
+            <% end %>
           <% else %>
             <p>No teams yet.</p>
           <% end %>
