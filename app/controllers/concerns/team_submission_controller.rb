@@ -178,6 +178,9 @@ module TeamSubmissionController
     if action_name == "new" ||
         action_name == "create"
       "application_rebrand"
+    elsif action_name == "index" &&
+        current_scope == "mentor"
+      "mentor_rebrand"
     else
       "submissions"
     end
