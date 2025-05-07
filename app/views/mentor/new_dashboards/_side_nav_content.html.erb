@@ -33,5 +33,11 @@
         url: mentor_curriculum_path,
         is_active_item: al(mentor_curriculum_path).present?
       %>
+
+      <%= render "application/templates/side_nav_item",
+        name: "Submit your Project",
+        url: mentor_team_submissions_path,
+        is_active_item: al(mentor_team_submissions_path).present?
+      %>
     </ol>
   </nav>
