@@ -33,5 +33,11 @@
         url: mentor_curriculum_path,
         is_active_item: al(mentor_curriculum_path).present?
       %>
+
+      <%= render "application/templates/side_nav_item",
+        name: "View Scores & Certificates",
+        url: mentor_scores_path,
+        is_active_item: al(mentor_scores_path).present?
+      %>
     </ol>
   </nav>
