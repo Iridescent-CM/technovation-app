@@ -23,9 +23,9 @@
 
       <%= render "application/templates/completion_step",
          name: "Personal Summary",
-         url: "#",
-         is_complete: false,
-         is_active_item: false
+         url: mentor_bio_path,
+         is_complete: current_mentor.bio.present?,
+         is_active_item: al(mentor_bio_path).present?
       %>
 
       <%= render "application/templates/side_nav_item",
