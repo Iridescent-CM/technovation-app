@@ -43,6 +43,12 @@
       %>
 
       <%= render "application/templates/side_nav_item",
+        name: "Submit your Project",
+        url: mentor_team_submissions_path,
+        is_active_item: al(mentor_team_submissions_path).present?
+      %>
+
+      <%= render "application/templates/side_nav_item",
         name: "View Scores & Certificates",
         url: mentor_scores_path,
         is_active_item: al(mentor_scores_path).present?
