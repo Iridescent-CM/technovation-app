@@ -1,0 +1,85 @@
+<div>
+  <div class="mt-2 mb-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="py-3 pl-4 pr-3 text-left text-base font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                Photo
+              </th>
+              <th scope="col" class="py-3 pl-4 pr-3 text-left text-base font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                Name
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Submission
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Division
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Progress
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+              </th>
+            </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% teams.each do |team| %>
+                <tr>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-base font-medium text-gray-900 sm:pl-6">
+                    <%= link_to image_tag(team.team_photo_url, class: "w-14"), mentor_team_path(team) %>
+                  </td>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-base font-medium text-gray-900 sm:pl-6">
+                    <%= link_to team.name, mentor_team_path(team) %>
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-base font-medium sm:pr-6">
+                    <%= team.submission.name %>
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-base font-medium sm:pr-6">
+                    <%= team.division_name.humanize %>
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-base font-medium sm:pr-6">
+                    <%= rebrand_submission_progress_bar(team.submission) %>
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-base font-medium sm:pr-6">
+                    <% if team.submission.present? %>
+                      <% if SeasonToggles.team_submissions_editable? %>
+                        <% if team.submission.only_needs_to_submit? %>
+                          <p>
+                            Your last step is to:<br />
+                            <%= link_to "Review and submit now!",
+                              send("#{current_scope}_published_team_submission_path", team.submission),
+                              class: "tw-green-btn small" %>
+                          </p>
+                        <% else %>
+                          <p>
+                            <%= link_to "Edit submission",
+                              mentor_team_submission_path(team.submission),
+                              class: "tw-green-btn small" %>
+                          </p>
+                        <% end %>
+                      <% else %>
+                        <p class="tw-hint">Submissions are not editable at this time.</p>
+                      <% end %>
+                    <% elsif SeasonToggles.team_submissions_editable? %>
+                      <p>
+                        <%= link_to "Start submission",
+                          new_mentor_team_submission_path(team_id: team.id),
+                          class: "tw-green-btn small" %>
+                      </p>
+                    <% else %>
+                      <p class="tw-hint">Submissions may not be started at this time.</p>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
