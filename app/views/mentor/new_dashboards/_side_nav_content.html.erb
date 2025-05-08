@@ -9,9 +9,9 @@
       <ol class="ml-6">
         <%= render "application/templates/completion_step",
            name: "Background Check",
-           url: "#",
+           url: mentor_background_check_path,
            is_complete: false,
-           is_active_item: false
+           is_active_item: al(mentor_background_check_path.present?)
         %>
 
         <%= render "application/templates/completion_step",
