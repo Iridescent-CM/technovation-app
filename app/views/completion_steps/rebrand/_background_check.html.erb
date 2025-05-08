@@ -1,7 +1,3 @@
-<h1>
-  <%= t("views.profile_requirements.background_check.label") %>
-</h1>
-
 <% if profile.requires_background_check? %>
   <% if profile.background_check.requesting_invitation? %>
     <%= render "background_checks/rebrand/statuses/requesting_invitation" %>
