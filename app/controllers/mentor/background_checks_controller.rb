@@ -3,6 +3,8 @@ module Mentor
     include BackgroundCheckController
     include BackgroundCheckInvitationController
 
+    layout "mentor_rebrand"
+
     private
 
     def current_profile
