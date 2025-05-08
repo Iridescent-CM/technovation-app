@@ -1,1 +1,5 @@
-<%= render 'background_checks/new', url: mentor_background_checks_path %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/new_dashboards/side_nav" %>
+
+  <%= render "background_checks/rebrand/new", url: mentor_background_checks_path %>
+</div>
