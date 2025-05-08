@@ -46,7 +46,7 @@ class EventsGrid
 
   column :judges, preload: [:judges, :user_invitations] do
     judge_list
-      .map { |j| j.account.full_name }
+      .map { |j| j.account.present? ? j.account&.full_name : "Invited Judge" }
       .join(",")
   end
 
