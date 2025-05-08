@@ -1,32 +1,40 @@
   <nav class="p-4">
-    <ol role="list" class="space-y-6 mb-6 overflow-hidden">
-      <%= render "application/templates/completion_step",
-         name: "Background Check",
-         url: "#",
-         is_complete: false,
-         is_active_item: false
+    <ol role="list" class="space-y-4 mb-6 overflow-hidden">
+      <%= render "application/templates/side_nav_item",
+         name: "Onboarding",
+         url: mentor_new_dashboard_path,
+         is_active_item: al(mentor_new_dashboard_path).present?
       %>
 
-      <%= render "application/templates/completion_step",
-         name: "Mentor Training",
-         url: mentor_training_path,
-         is_complete: current_mentor.training_complete?,
-         is_active_item:  al(mentor_training_path).present?
-      %>
+      <ol class="ml-6">
+        <%= render "application/templates/completion_step",
+           name: "Background Check",
+           url: "#",
+           is_complete: false,
+           is_active_item: false
+        %>
 
-      <%= render "application/templates/completion_step",
-         name: "Consent Waiver",
-         url: "#",
-         is_complete: false,
-         is_active_item: false
-      %>
+        <%= render "application/templates/completion_step",
+           name: "Mentor Training",
+           url: mentor_training_path,
+           is_complete: current_mentor.training_complete?,
+           is_active_item:  al(mentor_training_path).present?
+        %>
 
-      <%= render "application/templates/completion_step",
-         name: "Personal Summary",
-         url: mentor_bio_path,
-         is_complete: current_mentor.bio.present?,
-         is_active_item: al(mentor_bio_path).present?
-      %>
+        <%= render "application/templates/completion_step",
+           name: "Consent Waiver",
+           url: "#",
+           is_complete: false,
+           is_active_item: false
+        %>
+
+        <%= render "application/templates/completion_step",
+           name: "Personal Summary",
+           url: mentor_bio_path,
+           is_complete: current_mentor.bio.present?,
+           is_active_item: al(mentor_bio_path).present?
+        %>
+      </ol>
 
       <%= render "application/templates/side_nav_item",
         name: "Learn from the Curriculum",
