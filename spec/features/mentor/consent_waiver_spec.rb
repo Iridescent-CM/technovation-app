@@ -18,8 +18,9 @@ RSpec.feature "Consent waivers" do
   end
 
   scenario "valid token, invalid signature form" do
-    visit mentor_dashboard_path
+    visit mentor_new_dashboard_path
 
+    click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
     click_button "I agree"
 
@@ -31,7 +32,9 @@ RSpec.feature "Consent waivers" do
   end
 
   scenario "valid token, valid form" do
-    visit mentor_dashboard_path
+    visit mentor_new_dashboard_path
+
+    click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
 
     fill_in "Type your name as a form of electronic signature",
@@ -40,5 +43,21 @@ RSpec.feature "Consent waivers" do
 
     expect(current_path).to eq(mentor_dashboard_path)
     expect(page).to have_content("Thank you for signing the consent waiver!")
+  end
+
+  scenario "shows signed message if already signed" do
+    FactoryBot.create(:consent_waiver, account: mentor.account)
+
+    visit mentor_consent_waiver_path
+
+    expect(page).to have_content("You already signed a consent waiver for this season. Thank you!")
+    expect(page).not_to have_link("Sign Consent Waiver")
+  end
+
+  scenario "shows sign button if not yet signed" do
+    visit mentor_consent_waiver_path
+
+    expect(page).to have_content("Please sign the consent waiver in order to participate in Technovation.")
+    expect(page).to have_link("Sign Consent Waiver")
   end
 end
