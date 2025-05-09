@@ -333,6 +333,17 @@ class ScoredSubmissionsGrid
       .where("regional_pitch_events.id = ?", value)
   end
 
+  filter :live_or_virtual,
+    :enum,
+    select: -> {
+      [
+        ["Virtual scores", "virtual"],
+        ["Live event scores", "live"]
+      ]
+    } do |value, scope|
+    scope.public_send(value)
+  end
+
   filter :team_or_submission_name do |value|
     where(
       "lower(trim(teams.name)) ILIKE ? OR " +
