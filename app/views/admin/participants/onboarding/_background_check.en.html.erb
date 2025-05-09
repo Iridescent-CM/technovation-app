@@ -1,0 +1,16 @@
+<dt>Complete Background Check</dt>
+<dd>
+  <div style="display: flex;">
+    <% if profile.background_check_exempt_or_complete? %>
+      <%= web_icon("check-circle icon-green") %>
+      <div><%= profile.background_check_complete? ? "Complete" : "Background check exempt" %></div>
+    <% else %>
+      <%= web_icon("exclamation-circle icon-red") %>
+      <div>
+        Incomplete
+        <%= render "admin/participants/background_check_invitation_status",
+          profile: profile %>
+      </div>
+    <% end %>
+  </div>
+</dd>
