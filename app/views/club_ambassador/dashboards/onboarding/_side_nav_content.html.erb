@@ -1,10 +1,31 @@
   <nav class="p-4" aria-label="Progress">
     <ol role="list" class="space-y-6 mb-6 overflow-hidden">
       <%= render "application/templates/completion_step",
-        name: "Welcome",
-        url: club_ambassador_dashboard_path,
-        is_complete: false,
-        is_active_item: al(club_ambassador_dashboard_path).present?
+        name: "Background Check",
+        url: club_ambassador_background_check_path,
+        is_complete: current_ambassador.background_check_exempt_or_complete?,
+        is_active_item: al(club_ambassador_background_check_path).present?
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Chapter Ambassador Training",
+        url: "#",
+        is_complete: current_ambassador.training_completed?,
+        is_active_item: false
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Chapter Volunteer Agreement",
+        url: "#",
+        is_complete: current_ambassador.chapter_volunteer_agreement_complete?,
+        is_active_item: false
+      %>
+
+      <%= render "application/templates/completion_step",
+        name: "Community Connections",
+        url: "#",
+        is_complete: current_ambassador.viewed_community_connections?,
+        is_active_item: false
       %>
     </ol>
   </nav>

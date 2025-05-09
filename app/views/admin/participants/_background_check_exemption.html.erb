@@ -1,32 +1,38 @@
 <% if profile.requires_background_check? %>
   <p>
-    <%= profile.name %> is in a country that requires a background check. By clicking the button below, <%= profile.name %> will be exempt from the background check requirement.
+    <%= profile.name %> is in a country that requires a background check.
+    By clicking the button below, <%= profile.name %> will be exempt from
+    the background check requirement.
   </p>
 
   <p>
     <%= link_to "Exempt from background check requirement",
-                grant_admin_participant_background_check_exemption_path(profile.account),
-                class: 'button',
-                data: {
-                  method: :patch,
-                  confirm: "Exempt #{profile.name} from the background check requirement?" +
-                    "<p>Please document reason in your records.</p>"
-                } %>
+      grant_admin_participant_background_check_exemption_path(profile.account),
+      class: "button",
+      data: {
+        method: :patch,
+        confirm: "Exempt #{profile.name} from the background check requirement?" +
+        "<p>Please document reason in your records.</p>"
+      }
+    %>
   </p>
 <% elsif profile.background_check_exemption? %>
-    <p>
-      <%= profile.name %> is in a country that requires a background check. They currently have a background check exemption. <br>
-      By clicking the button below, you will revoke the background check exemption and they will be required to complete a background check.
-    </p>
+  <p>
+    <%= profile.name %> is in a country that requires a background check.
+    They currently have a background check exemption. <br> By clicking the
+    button below, you will revoke the background check exemption and they
+    will be required to complete a background check.
+  </p>
 
-    <p>
-      <%= link_to "Revoke background check exemption",
-                  revoke_admin_participant_background_check_exemption_path(profile.account),
-                  class: 'button',
-                  data: {
-                    method: :patch,
-                    confirm: "Revoke background check exemption for #{profile.name}?" +
-                      "<p>Please document reason in your records.</p>"
-                  } %>
-    </p>
-  <% end %>
+  <p>
+    <%= link_to "Revoke background check exemption",
+      revoke_admin_participant_background_check_exemption_path(profile.account),
+      class: "button",
+      data: {
+        method: :patch,
+        confirm: "Revoke background check exemption for #{profile.name}?" +
+        "<p>Please document reason in your records.</p>"
+      }
+    %>
+  </p>
+<% end %>
