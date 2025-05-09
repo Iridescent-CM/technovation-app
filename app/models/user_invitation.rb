@@ -177,6 +177,10 @@ class UserInvitation < ApplicationRecord
     "UserInvitation"
   end
 
+  def assigned_teams_for_event(event)
+    assigned_teams.where(id: event.teams.pluck(:id))
+  end
+
   def locale
     :en
   end
@@ -195,6 +199,10 @@ class UserInvitation < ApplicationRecord
 
   def mailer_token
     admin_permission_token
+  end
+
+  def company_name
+    nil
   end
 
   private
