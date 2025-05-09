@@ -1,0 +1,14 @@
+<dt>Complete Training & Checkpoint</dt>
+<dd>
+  <% if profile.training_completed? %>
+    <div>
+      <%= web_icon("check-circle icon-green") %>
+      Complete
+    </div>
+  <% else %>
+    <div>
+      <%= web_icon("exclamation-circle icon-red") %>
+      Incomplete
+    </div>
+  <% end %>
+</dd>
