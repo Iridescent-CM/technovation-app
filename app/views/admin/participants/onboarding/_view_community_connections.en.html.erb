@@ -1,0 +1,14 @@
+<dt>View Community Connections Page</dt>
+<dd>
+  <% if profile.viewed_community_connections? %>
+    <div>
+      <%= web_icon("check-circle icon-green") %>
+      Viewed community connections
+    </div>
+  <% else %>
+    <div>
+      <%= web_icon("exclamation-circle icon-red") %>
+      Not viewed
+    </div>
+  <% end %>
+</dd>

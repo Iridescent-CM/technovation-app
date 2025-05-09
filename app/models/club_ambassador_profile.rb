@@ -1,4 +1,6 @@
 class ClubAmbassadorProfile < ActiveRecord::Base
+  include BackgroundCheckHelpers
+
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account
@@ -47,7 +49,20 @@ class ClubAmbassadorProfile < ActiveRecord::Base
   end
 
   def can_be_marked_onboarded?
-    !!account.email_confirmed?
+    !!(account.email_confirmed? &&
+      background_check_exempt_or_complete? &&
+      training_completed? &&
+      viewed_community_connections?)
+  end
+
+  def in_background_check_country?
+    ENV.fetch("BACKGROUND_CHECK_COUNTRY_CODES", "")
+      .split(",")
+      .include?(account.country_code)
+  end
+
+  def chapter_volunteer_agreement_complete?
+    false
   end
 
   def training_completed?

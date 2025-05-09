@@ -244,6 +244,10 @@ Rails.application.routes.draw do
     resource :club_location, only: [:show, :edit, :update, :create], controller: "club_locations"
     resource :club_current_location, only: :show
 
+    resource :background_check, only: :show
+    resources :background_checks, only: [:new, :create]
+
+    post "/background_check_invitation", to: "background_checks#create_invitation"
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
 
     resource :club_admin, only: :show, controller: "club_admin"
