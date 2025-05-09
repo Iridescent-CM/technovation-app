@@ -1,6 +1,6 @@
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Technovation volunteer agreement & consent waiver'} do %>
-    <%= render 'errors', record: consent_waiver %>
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Technovation Volunteer Agreement & Consent Waiver" } do %>
+    <%= render "errors", record: consent_waiver %>
 
     <%= render "consent_waivers/text" %>
 
