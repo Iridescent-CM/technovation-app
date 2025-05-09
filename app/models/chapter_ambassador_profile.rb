@@ -1,4 +1,5 @@
 class ChapterAmbassadorProfile < ActiveRecord::Base
+  include BackgroundCheckHelpers
   include OnboardingTasksConcern
 
   scope :onboarded, -> {
@@ -81,30 +82,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   def provided_intro?
     !intro_summary.blank?
-  end
-
-  def background_check_exempt_or_complete?
-    background_check_exempt? || background_check_complete?
-  end
-
-  def background_check_complete?
-    background_check.present? && background_check.clear?
-  end
-
-  def background_check_exempt?
-    account.background_check_exemption?
-  end
-
-  def requires_background_check?
-    !background_check_exempt? && !background_check_complete?
-  end
-
-  def in_background_check_country?
-    country_code == "US"
-  end
-
-  def in_background_check_invitation_country?
-    false
   end
 
   def profile_complete?
