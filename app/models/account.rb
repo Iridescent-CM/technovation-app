@@ -830,7 +830,7 @@ class Account < ActiveRecord::Base
   end
 
   def can_switch_to_judge?
-    if is_an_ambassador?
+    if ambassador?
       !!ENV.fetch("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", false) && is_a_judge?
     elsif is_a_mentor?
       !!ENV.fetch("ENABLE_JUDGE_MODE_FOR_ALL_MENTORS", false)
