@@ -90,6 +90,66 @@ class DetermineCertificates
     end
   end
 
+  def gets_regional_honoree_certificate?
+    return false if !@account.student?
+
+    team = @account.student_profile.team
+    !team.nil? && team.submission.regional_honoree?
+  end
+
+  def needed_regional_honoree_recipients
+    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
+      []
+    else
+      [CertificateRecipient.new(:regional_honoree, @account, team: @account.student_profile.team)]
+    end
+  end
+
+  def gets_special_prize_winner_certificate?
+    return false if !@account.student?
+
+    team = @account.student_profile.team
+    !team.nil? && team.submission.special_prize_winner?
+  end
+
+  def needed_special_prize_winner_recipients
+    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
+      []
+    else
+      [CertificateRecipient.new(:special_prize_winner, @account, team: @account.student_profile.team)]
+    end
+  end
+
+  def gets_finalist_certificate?
+    return false if !@account.student?
+
+    team = @account.student_profile.team
+    !team.nil? && team.submission.finalist?
+  end
+
+  def needed_finalist_recipients
+    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
+      []
+    else
+      [CertificateRecipient.new(:finalist, @account, team: @account.student_profile.team)]
+    end
+  end
+
+  def gets_grand_prize_winner_certificate?
+    return false if !@account.student?
+
+    team = @account.student_profile.team
+    !team.nil? && team.submission.grand_prize_winner?
+  end
+
+  def needed_grand_prize_winner_recipients
+    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
+      []
+    else
+      [CertificateRecipient.new(:grand_prize_winner, @account, team: @account.student_profile.team)]
+    end
+  end
+
   def gets_mentor_appreciation_certificate?
     @account.mentor_profile.present? &&
       @account.mentor_profile.teams.by_season(season).any?
