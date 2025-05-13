@@ -5,7 +5,11 @@ MENTOR_CERTIFICATE_TYPES = {
 STUDENT_CERTIFICATE_TYPES = {
   participation: 3,
   quarterfinalist: 0,
-  semifinalist: 4
+  semifinalist: 4,
+  regional_honoree: 9,
+  special_prize_winner: 10,
+  finalist: 11,
+  grand_prize_winner: 12
 }
 
 JUDGE_CERTIFICATE_TYPES = {
