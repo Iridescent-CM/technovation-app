@@ -236,6 +236,56 @@ RSpec.describe Account do
         end
       end
 
+      context "for new a mentor" do
+        let(:mentor_account) {
+          Account.new(
+            first_name: "Carla",
+            last_name: "Caracara",
+            email: "ccara55@example.com",
+            password: "abc1239876",
+            gender: "Non-binary",
+            mentor_profile: MentorProfile.new(
+              school_company_name: "Ace Academy",
+              job_title: "Ace Teacher",
+              mentor_types: [MentorType.first],
+              bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            ),
+            meets_minimum_age_requirement: meets_minimum_age_requirement
+          )
+        }
+
+        context "when a new mentor meets the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { true }
+
+          it "is valid" do
+            expect(mentor_account).to be_valid
+          end
+        end
+
+        context "when a new mentor does not meet the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { false }
+
+          it "is not valid" do
+            expect(mentor_account).not_to be_valid
+          end
+        end
+      end
+
+      context "for existing mentors" do
+        let(:mentor) {
+          FactoryBot.create(:mentor,
+            account: FactoryBot.create(:account, meets_minimum_age_requirement: meets_minimum_age_requirement))
+        }
+
+        context "when an existing mentor does not meet the minimum age requirement" do
+          let(:meets_minimum_age_requirement) { false }
+
+          it "is valid" do
+            expect(mentor).to be_valid
+          end
+        end
+      end
+
       context "for new chapter ambassadors" do
         let(:chapter_ambassador_account) {
           Account.new(

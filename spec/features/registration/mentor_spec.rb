@@ -16,6 +16,7 @@ RSpec.feature "Mentors registering", :js do
     fill_in "First Name", with: "Cheer"
     fill_in "Last Name", with: "Bear"
     select "Prefer not to say", from: "Gender Identity"
+    check "I confirm that I am 18 years or older"
     fill_in "Birthday", with: 39.years.ago
     fill_in "Company Name", with: "Care-a-Lot Castle"
     fill_in "Job Title", with: "Spellcaster"

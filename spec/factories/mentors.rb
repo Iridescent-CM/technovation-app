@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :mentor_profile, aliases: [:mentor, :mentor_account] do
-    account
+    account { association :account, meets_minimum_age_requirement: true }
 
     school_company_name { "FactoryBot" }
     job_title { "Engineer" }
@@ -19,6 +19,7 @@ FactoryBot.define do
       sequence(:email) { |n| "factory-mentor-#{n}@example.com" }
       password { nil }
       date_of_birth { nil }
+      meets_minimum_age_requirement { true }
       not_onboarded { false }
       number_of_teams { 0 }
     end
@@ -109,6 +110,7 @@ FactoryBot.define do
       {
         skip_existing_password: true,
         date_of_birth: e.date_of_birth || 22.years.ago,
+        meets_minimum_age_requirement: true,
         city: e.city,
         state_province: e.state_province,
         country: e.country,

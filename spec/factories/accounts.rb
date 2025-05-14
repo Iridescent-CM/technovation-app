@@ -5,6 +5,7 @@ FactoryBot.define do
     email_confirmed_at { Time.current }
 
     date_of_birth { Date.today - 31.years }
+    meets_minimum_age_requirement { true }
     first_name { "Factory" }
     last_name { "Account" }
 
