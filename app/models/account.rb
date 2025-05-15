@@ -77,7 +77,7 @@ class Account < ActiveRecord::Base
 
   has_many :clubs, through: :chapterable_assignments, source: :chapterable, source_type: "Club"
   has_many :current_clubs,
-    through: :current_chapter_assignments,
+    through: :current_club_assignments,
     source: :chapterable,
     source_type: "Clubs"
 
