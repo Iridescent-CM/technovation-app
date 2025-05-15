@@ -9,7 +9,7 @@ class ChapterAmbassadorController < ApplicationController
     params.permit!
   }, if: -> { current_ambassador.authenticated? }
 
-  before_action :require_chapter_and_chapter_ambassador_onboarded,
+  before_action :require_chapterable_and_ambassador_onboarded,
     if: -> { current_ambassador.authenticated? }
 
   around_action :set_time_zone,
@@ -51,7 +51,7 @@ class ChapterAmbassadorController < ApplicationController
     "ChapterAmbassadorProfile"
   end
 
-  def require_chapter_and_chapter_ambassador_onboarded
+  def require_chapterable_and_ambassador_onboarded
     unless current_ambassador.chapter&.onboarded? && current_ambassador.onboarded?
       redirect_to chapter_ambassador_dashboard_path,
         error: "You must complete all onboarding tasks before accessing Chapter Admin Activity."

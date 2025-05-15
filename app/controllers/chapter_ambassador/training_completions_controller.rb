@@ -1,6 +1,6 @@
 module ChapterAmbassador
   class TrainingCompletionsController < ChapterAmbassadorController
-    skip_before_action :require_chapter_and_chapter_ambassador_onboarded
+    skip_before_action :require_chapterable_and_ambassador_onboarded
 
     layout "chapter_ambassador_rebrand"
 
@@ -9,6 +9,5 @@ module ChapterAmbassador
       redirect_to chapter_ambassador_trainings_path,
         success: "Thank you for completing the checkpoint!"
     end
-
   end
 end

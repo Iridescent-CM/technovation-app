@@ -2,6 +2,8 @@ module ClubAmbassador
   class ClubLocationsController < AmbassadorController
     include LocationController
 
+    skip_before_action :require_chapterable_and_ambassador_onboarded
+
     layout "club_ambassador_rebrand"
 
     private

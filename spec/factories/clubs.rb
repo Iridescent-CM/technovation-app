@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :club do
     sequence(:name) { |n| "FactoryBot Program #{n}" }
     sequence(:summary) { |n| "FactoryBot Summary #{n}" }
+    sequence(:headquarters_location) { |n| "FactoryBot Location #{n}" }
+    onboarded { true }
 
     trait :chicago do
       city { "Chicago" }
