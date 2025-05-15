@@ -6,7 +6,8 @@ RSpec.describe Club do
       name: club_name,
       summary: club_summary,
       headquarters_location: club_headquarters_location,
-      primary_contact: club_ambassador.account)
+      primary_contact: club_ambassador.account,
+      onboarded: false)
   end
 
   let(:club_name) { "LA Tech Club" }
