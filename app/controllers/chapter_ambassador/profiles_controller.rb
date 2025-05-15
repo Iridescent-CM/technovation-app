@@ -2,7 +2,7 @@ module ChapterAmbassador
   class ProfilesController < ChapterAmbassadorController
     include ProfileController
 
-    skip_before_action :require_chapter_and_chapter_ambassador_onboarded
+    skip_before_action :require_chapterable_and_ambassador_onboarded
 
     layout "chapter_ambassador_rebrand"
 
