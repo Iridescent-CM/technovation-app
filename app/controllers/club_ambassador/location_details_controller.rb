@@ -1,5 +1,7 @@
 module ClubAmbassador
   class LocationDetailsController < AmbassadorController
+    skip_before_action :require_chapterable_and_ambassador_onboarded
+
     helper_method :current_profile
 
     layout "club_ambassador_rebrand"
