@@ -9,6 +9,22 @@ class NullTeamSubmission < NullObject
     false
   end
 
+  def regional_honoree?
+    false
+  end
+
+  def special_prize_winner?
+    false
+  end
+
+  def finalist?
+    false
+  end
+
+  def grand_prize_winner?
+    false
+  end
+
   def screenshots
     ::Screenshot.none
   end
