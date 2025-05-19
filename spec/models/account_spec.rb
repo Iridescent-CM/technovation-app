@@ -324,6 +324,28 @@ RSpec.describe Account do
           end
         end
       end
+
+      describe "updating a mentor's searchability status" do
+        context "for a mentor account" do
+          let(:mentor) { FactoryBot.create(:mentor) }
+
+          it "makes a call to update the mentor searchability status when they're granted a background check exemption" do
+            expect(mentor.mentor_profile).to receive(:enable_searchability_with_save)
+
+            mentor.account.update(background_check_exemption: true)
+          end
+        end
+
+        context "for a chapter ambassador account with a mentor profile" do
+          let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :has_mentor_profile) }
+
+          it "makes a call to update the mentor searchability status when they're granted a background check exemption" do
+            expect(chapter_ambassador.mentor_profile).to receive(:enable_searchability_with_save)
+
+            chapter_ambassador.account.update(background_check_exemption: true)
+          end
+        end
+      end
     end
   end
 
@@ -1407,6 +1429,10 @@ RSpec.describe Account do
     describe "#revoke_background_check_exemption" do
       context "when the background check exemption is for a mentor" do
         let!(:mentor_account) { FactoryBot.create(:account, :mentor) }
+
+        before do
+          mentor_account.grant_background_check_exemption
+        end
 
         it "makes a call to enable searchability for the mentor" do
           expect(mentor_account.mentor_profile).to receive(:enable_searchability_with_save).at_least(:once)
