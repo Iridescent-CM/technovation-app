@@ -13,7 +13,7 @@ module ClubAmbassador
     private
 
     def profile
-      current_club_ambassador
+      current_ambassador
     end
 
     def edit_profile_path
