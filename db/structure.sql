@@ -700,7 +700,8 @@ CREATE TABLE public.club_ambassador_profiles (
     training_completed_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    onboarded boolean DEFAULT false
+    onboarded boolean DEFAULT false,
+    viewed_community_connections boolean DEFAULT false NOT NULL
 );
 
 
@@ -4926,6 +4927,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250226214919'),
 ('20250319195255'),
 ('20250319200014'),
-('20250319200353');
+('20250319200353'),
+('20250509211826');
 
 
