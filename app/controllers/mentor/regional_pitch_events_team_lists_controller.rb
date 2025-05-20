@@ -1,5 +1,8 @@
 module Mentor
   class RegionalPitchEventsTeamListsController < MentorController
+
+    layout "mentor_rebrand"
+
     helper_method :events_available_to,
       :can_select_live_event?
 
