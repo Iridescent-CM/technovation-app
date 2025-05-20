@@ -49,6 +49,12 @@
       %>
 
       <%= render "application/templates/side_nav_item",
+         name: "Find a Pitch Event",
+         url: mentor_regional_pitch_events_finder_path,
+         is_active_item: al(mentor_regional_pitch_events_finder_path).present?
+      %>
+
+      <%= render "application/templates/side_nav_item",
         name: "View Scores & Certificates",
         url: mentor_scores_path,
         is_active_item: al(mentor_scores_path).present?
