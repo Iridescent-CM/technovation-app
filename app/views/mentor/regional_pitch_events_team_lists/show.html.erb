@@ -1,104 +1,89 @@
-<div class="grid grid--justify-space-around">
-  <div class= "grid__col-8">
-    <h3>Select Regional Pitch Events</h3>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/new_dashboards/side_nav" %>
 
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: "Select Regional Pitch Events"} do %>
     <% @current_teams.each do |team| %>
-      <div class="panel">
-        <h3 class="mentor-teams__heading">
-          <%= link_to team.name, mentor_team_path(team) %>
-        </h3>
-
-        <div class="grid">
-          <div class="grid__col-4">
-            <%= link_to image_tag(
-              team.team_photo_url,
-              class: "thumbnail--mdlg grid__cell-img"
-            ), mentor_team_path(team) %>
+      <div class="mb-8 rounded-lg shadow-md border border-gray-300">
+        <div class="p-6">
+          <div class="flex lg:flex-row gap-6">
+            <%= link_to image_tag(team.team_photo_url, class: "w-14"), mentor_team_path(team) %>
+            <div class="flex flex-col">
+              <p class="text-xl">
+                <%= link_to team.name, mentor_team_path(team) %>
+              </p>
+              <p class="text-sm">
+                <%= web_icon(
+                  "flag-o",
+                  text: "#{team.division_name.humanize} Division"
+                ) %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <% if not SeasonToggles.select_regional_pitch_event? %>
+            <p>
+              Regional Pitch Events cannot be selected at this time.
+            </p>
+          <% elsif not team.submission.present? %>
+            <p>
+              This team needs to start a submission in
+              order to select an event.
+            </p>
 
             <p>
-              <%= web_icon(
-                "flag-o",
-                text: "#{team.division_name.humanize} Division"
-              ) %>
+              <%= link_to "Start a submission now",
+                new_mentor_team_submission_path(team_id: team.id),
+                class: "tw-green-btn small" %>
             </p>
-          </div>
+          <% elsif team.division.none_assigned_yet? %>
+            <p>
+              This team needs students registered and listed in
+              order to be eligible to attend an event.
+            </p>
 
-          <div class="grid__col-8 ">
-            <% if not SeasonToggles.select_regional_pitch_event? %>
-              <p>
-                Regional Pitch Events cannot be selected at this time.
-              </p>
-            <% elsif not team.submission.present? %>
-              <p>
-                This team needs to start a submission in
-                order to select an event.
-              </p>
+            <p>
+              <%= link_to "Manage this team",
+                mentor_team_path(team),
+                class: "tw-green-btn" %>
+            </p>
+          <% elsif can_select_live_event?(team) %>
+            <p>
+              There
+              <%= "is".pluralize(events_available_to(team.submission).count) %>
+              <%= pluralize(events_available_to(team.submission).count, "regional pitch event") %>
+              that <%= team.name %> can attend.
+            </p>
 
-              <p>
-                <%= link_to "Start a submission now",
-                  new_mentor_team_submission_path(team_id: team.id),
-                  class: "button small" %>
-              </p>
-            <% elsif team.division.none_assigned_yet? %>
-              <p>
-                This team needs students registered and listed in
-                order to be eligible to attend an event.
-              </p>
+            <p class="text-center mt-4">
+              <%= link_to "Select an Event",
+                mentor_regional_pitch_events_path(team_id: team.id),
+                class: "tw-green-btn"
+              %>
+            </p>
+          <% elsif team.live_event? %>
+            <dl>
+              <dt>Selected Event:</dt>
+              <dd><%= team.event_name %></dd>
+            </dl>
 
-              <p>
-                <%= link_to "Manage this team",
-                  mentor_team_path(team),
-                  class: "button" %>
-              </p>
-            <% elsif can_select_live_event?(team) %>
-              <p>
-                There
-                <%= 'is'.pluralize(
-                  events_available_to(team.submission).count
-                ) %>
-                <%= pluralize(
-                  events_available_to(team.submission).count,
-                  'regional pitch event'
-                ) %>
-                that <%= team.name %> can attend.
-              </p>
+            <p>
+              If this is a mistake or you want to change the event
+              please contact your ambassador.
+            </p>
 
-              <p>
-                <%= link_to 'Select an Event',
-                  mentor_regional_pitch_events_path(team_id: team.id),
-                  class: "button"
-                %>
-              </p>
-            <% elsif team.live_event? %>
-              <dl>
-                <dt>Selected Event:</dt>
-                <dd><%= team.event_name %></dd>
-              </dl>
-
-              <p>
-                If this is a mistake or you want to change the event
-                please contact your chapter ambassador.
-              </p>
-
-              <p>
-                <%= link_to 'View event details',
-                  mentor_regional_pitch_event_path(team.event, team_id: team.id) %>
-              </p>
-            <% else %>
-              <p>
-                There are no nearby events <%= team.name %> can attend.
-                <%= team.name %> will be judged online.
-              </p>
-            <% end %>
-          </div>
+            <div class="mt-8 text-center">
+              <%= link_to "View event details",
+                mentor_regional_pitch_event_path(team.event, team_id: team.id), class: "tw-green-btn" %>
+            </div>
+          <% else %>
+            <p>
+              There are no nearby events <%= team.name %> can attend.
+              <%= team.name %> will be judged online.
+            </p>
+          <% end %>
         </div>
       </div>
     <% end %>
-
-    <p>
-      <%= link_to 'Back',
-          public_send("#{current_account.scope_name}_dashboard_path"),
-          class: "button small" %>
-    <p>
-  </div>
+  <% end %>
 </div>
