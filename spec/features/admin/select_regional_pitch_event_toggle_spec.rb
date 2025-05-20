@@ -41,22 +41,22 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     scenario "Toggled on" do
       SeasonToggles.select_regional_pitch_event = "on"
       visit path
-      expect(page).to have_css(".button", text: "Select an Event")
+      expect(page).to have_link("Select an Event")
     end
 
     scenario "Toggled off" do
       SeasonToggles.select_regional_pitch_event = "off"
       visit path
-      expect(page).not_to have_css(".button", text: "Select an Event")
+      expect(page).not_to have_link("Select an Event")
     end
   end
 
-  context "Mentor dashboard" do
+  context "Mentor dashboard 'Find a Pitch Event' tab" do
     let(:user) { FactoryBot.create(:mentor, :onboarded) }
     let(:team) { FactoryBot.create(:team) }
     let(:sub) { FactoryBot.create(:submission, :junior) }
     let!(:rpe) { FactoryBot.create(:rpe) }
-    let(:path) { mentor_dashboard_path }
+    let(:path) { mentor_regional_pitch_events_finder_path }
 
     before do
       team.team_submissions << sub
@@ -68,13 +68,13 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     scenario "Toggled on" do
       SeasonToggles.select_regional_pitch_event = "on"
       visit path
-      expect(page).to have_css(".button", text: "Select Events")
+      expect(page).to have_link("Select Events")
     end
 
     scenario "Toggled off" do
       SeasonToggles.select_regional_pitch_event = "off"
       visit path
-      expect(page).not_to have_css(".button", text: "Select Events")
+      expect(page).not_to have_link("Select Events")
     end
   end
 end
