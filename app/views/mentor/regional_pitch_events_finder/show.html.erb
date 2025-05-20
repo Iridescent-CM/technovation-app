@@ -1,0 +1,13 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/new_dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Live Pitch Events in your Region" } do %>
+    <% if current_mentor.onboarding? %>
+      <p>Please complete mentor onboarding to view live pitch events in your region.</p>
+    <% elsif SeasonToggles.select_regional_pitch_event? %>
+      <%= render "mentor/dashboards/onboarded/regional_pitch_events", current_teams: @current_teams %>
+    <% else %>
+      <%= render "explanations/feature_not_available", feature: :events %>
+    <% end %>
+  <% end %>
+</div>
