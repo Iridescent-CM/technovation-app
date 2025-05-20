@@ -1,33 +1,23 @@
-<% if current_scope == "mentor" %>
-  <div class="grid grid--justify-center">
-    <div class="grid__col-8">
-        <div class="panel">
-          <%= render "mentor/teams/team_list_item_content",
-                     team: current_team %>
-        </div>
+ <div class="container mx-auto flex w-full lg:w-3/4">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Event Details"} do %>
+    <div class="mb-12">
+      <p class="mb-4">
+        <%= link_to "Go back!",
+          back_from_event_path,
+          class: "tw-gray-btn text-sm" %>
+      </p>
 
-        <%= render 'regional_pitch_events/event',
-                   event: @regional_pitch_event %>
-        <p>
-          <%= link_to 'Go back',
-                      back_from_event_path,
-                      class: "button small" %>
-        </p>
-    </div>
-  </div>
-<% else %>
+      <%= render "regional_pitch_events/rebrand/event", event: @regional_pitch_event %>
 
-  <div class="container mx-auto flex w-full lg:w-3/4">
-    <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Event Details'} do %>
-      <section class="mb-8">
-        <p class="mb-4">
-          <%= link_to 'Go back!',
-                      back_from_event_path,
-                      class: "tw-gray-btn text-sm" %>
-        </p>
-        <%= render 'regional_pitch_events/rebrand/event',
-                   event: @regional_pitch_event %>
-      </section>
+      <% if SeasonToggles.pitch_presentation_needed?(current_team) %>
+        <%= render "team_submissions/pieces/pitch_presentation",
+          team: current_team,
+          submission: current_team.submission %>
       <% end %>
     </div>
-<% end %>
+
+    <div class="tw-hint">
+      <%= render "regional_pitch_events/dashboard_disclaimer" %>
+    </div>
+  <% end %>
+</div>
