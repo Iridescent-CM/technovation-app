@@ -1,9 +1,10 @@
 <% provide :title, "Pitch Presentation Slides" %>
 
-<div>
+<div class="my-12">
+  <p class="font-medium">Pitch Presentation Slides</p>
   <% if team.selected_regional_pitch_event.live? %>
     <% if submission.pitch_presentation_url_complete? %>
-      <div class="field__existing-value">
+      <div class="bg-gray-200 p-4 rounded">
         Your team has uploaded:
         <%= link_to submission.pitch_presentation_filename,
           submission.pitch_presentation_url %>
@@ -26,7 +27,7 @@
 
         <%= f.hidden_field :pitch_presentation_cache %>
 
-        <%= f.submit "Upload", class: "button" %>
+        <%= f.submit "Upload", class: "tw-green-btn" %>
       </div>
     <% end %>
 
@@ -59,7 +60,7 @@
   <% else %>
     <p>
       If you are attending a local celebration or unofficial pitch event, your
-      Chapter Ambassador may ask you to share your pitch presentation slides with
+      Ambassador may ask you to share your pitch presentation slides with
       them before the event. Coordinate with them directly and good luck!
     </p>
   <% end %>
