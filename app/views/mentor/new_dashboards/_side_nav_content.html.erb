@@ -10,8 +10,8 @@
         <%= render "application/templates/completion_step",
            name: "Background Check",
            url: mentor_background_check_path,
-           is_complete: false,
-           is_active_item: al(mentor_background_check_path.present?)
+           is_complete: current_mentor.background_check_exempt_or_complete?,
+           is_active_item: al(mentor_background_check_path).present?
         %>
 
         <%= render "application/templates/completion_step",
