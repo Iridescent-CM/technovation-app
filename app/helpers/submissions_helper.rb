@@ -1,6 +1,6 @@
 module SubmissionsHelper
   def submission_progress_bar(submission)
-    title = "Missing Submisison Pieces: #{format_missing_submission_pieces(submission)}" if submission.missing_pieces.present?
+    title = "Missing Submission Pieces: #{format_missing_submission_pieces(submission)}" if submission.missing_pieces.present?
 
     content_tag :div, class: "bar-graph" do
       html = content_tag :div, class: "bar-wrap", title: title do
@@ -11,6 +11,23 @@ module SubmissionsHelper
 
       html + content_tag(:p, class: "scent scent--soft", title: title) do
         "#{submission.percent_complete}% completed"
+      end
+    end
+  end
+
+  def rebrand_submission_progress_bar(submission)
+    percent = submission.percent_complete
+    title = "Missing Submission Pieces: #{format_missing_submission_pieces(submission)}" if submission.missing_pieces.present?
+
+    content_tag :div, class: "bar-graph" do
+      html = content_tag :div, class: "w-full bg-gray-200 rounded-full h-2", title: title do
+        content_tag(:div, nil,
+          class: "bg-blue-600 h-2 rounded-full",
+          style: "width: #{percent}%;")
+      end
+
+      html + content_tag(:span, title: title) do
+        "#{percent}% completed"
       end
     end
   end
