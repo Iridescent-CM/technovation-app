@@ -127,7 +127,8 @@ Rails.application.routes.draw do
     resources :mentors, only: :show
     resources :students, only: :show
 
-    resources :background_checks, only: [:new, :create, :show]
+    resource :background_check, only: :show
+    resources :background_checks, only: [:new, :create]
 
     post "/background_check_invitation", to: "background_checks#create_invitation"
 

@@ -1,4 +1,5 @@
 class MentorProfile < ActiveRecord::Base
+  include BackgroundCheckHelpers
   include Regioned
   regioned_source Account
 
@@ -290,17 +291,9 @@ class MentorProfile < ActiveRecord::Base
   end
   alias_method :can_create_a_team?, :can_join_a_team?
 
-  def background_check_complete?
-    return true if !requires_background_check?
-
-    background_check.present? and
-      background_check.clear?
-  end
-
   def requires_background_check?
     (account.valid? && (account.date_of_birth.present? && account.age >= 18 || account.meets_minimum_age_requirement?)) &&
-      in_background_check_country? &&
-      !(background_check.present? && background_check.clear? || account.background_check_exemption?)
+      in_background_check_country? && !account.background_check_exemption?
   end
 
   def requires_background_check_invitation?
