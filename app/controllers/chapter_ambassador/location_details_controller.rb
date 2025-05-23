@@ -1,6 +1,6 @@
 module ChapterAmbassador
   class LocationDetailsController < ChapterAmbassadorController
-    skip_before_action :require_chapter_and_chapter_ambassador_onboarded
+    skip_before_action :require_chapterable_and_ambassador_onboarded
     helper_method :current_profile
 
     layout "chapter_ambassador_rebrand"
@@ -16,4 +16,3 @@ module ChapterAmbassador
     end
   end
 end
-
