@@ -12,8 +12,10 @@ module CheckrApiClient
         )
       end
 
-      if account.is_chapter_ambassador?
+      if account.chapter_ambassador?
         requires_background_check_invitation = account.chapter_ambassador_profile.requires_background_check?
+      elsif account.club_ambassador?
+        requires_background_check_invitation = account.club_ambassador_profile.requires_background_check?
       elsif account.is_a_mentor?
         requires_background_check_invitation = account.mentor_profile.requires_background_check_invitation?
       end
@@ -26,6 +28,5 @@ module CheckrApiClient
     Result = Struct.new(:requires_background_check_invitation?, :error?, :error_message, keyword_init: true)
 
     attr_reader :account
-
   end
 end
