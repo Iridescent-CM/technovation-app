@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@1.5.3
 
 jobs:
   build:
@@ -124,7 +124,6 @@ jobs:
       - checkout
       - browser-tools/install-browser-tools:
           chrome-version: 128.0.6613.84 # TODO: remove when chromedriver downloads are fixed
-          firefox-version: 134.0.2
 
       - run:
           name: Install libc6
