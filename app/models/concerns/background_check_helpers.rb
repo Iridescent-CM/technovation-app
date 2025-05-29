@@ -1,6 +1,16 @@
 module BackgroundCheckHelpers
   extend ActiveSupport::Concern
 
+  included do
+    delegate :submitted?,
+      :candidate_id,
+      :report_id,
+      :invitation_id,
+      to: :background_check,
+      prefix: true,
+      allow_nil: true
+  end
+
   def requires_background_check?
     in_background_check_country? && !background_check_exempt?
   end
