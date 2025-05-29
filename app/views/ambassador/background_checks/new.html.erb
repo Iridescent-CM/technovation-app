@@ -1,0 +1,5 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "#{current_scope}/dashboards/onboarding/side_nav" %>
+
+  <%= render "background_checks/rebrand/new", url: send("#{current_scope}_background_checks_path") %>
+</div>
