@@ -12,8 +12,8 @@
         <% if current_scope == "mentor" %>
           We complete these checks for mentors as a safety measure before
           they are able to match with a Technovation team.
-        <% elsif current_scope == "chapter_ambassador" %>
-          We complete these checks for Chapter Ambassadors before they are granted
+        <% elsif current_scope == "chapter_ambassador" || current_scope == "club_ambassador" %>
+          We complete these checks for <%= current_scope.split("_").first.capitalize %> Ambassadors before they are granted
           access to the students’ data such as names and email addresses.
         <% end %>
       </p>
@@ -35,7 +35,7 @@
         background check has cleared,
         <% if current_scope == "mentor" %>
           you will be able to match with an existing Technovation team or create a new team.
-        <% elsif current_scope == "chapter_ambassador" %>
+        <% elsif current_scope == "chapter_ambassador" || current_scope == "club_ambassador" %>
           and you have completed the other onboarding steps, you will be able to access the administrative
           information for your chapter.
         <% end %>

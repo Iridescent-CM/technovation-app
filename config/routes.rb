@@ -200,9 +200,9 @@ Rails.application.routes.draw do
 
     resource :profile_image_upload_confirmation, only: :show
 
-    resource :background_check, only: :show
-    resources :background_checks, only: [:new, :create]
-    post "/background_check_invitation", to: "background_checks#create_invitation"
+    resource :background_check, only: :show, controller: "/ambassador/background_checks"
+    resources :background_checks, only: [:new, :create], controller: "/ambassador/background_checks"
+    post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
 
     resources :trainings, only: :index
     resource :training_completion, only: :show
@@ -245,10 +245,10 @@ Rails.application.routes.draw do
     resource :club_location, only: [:show, :edit, :update, :create], controller: "club_locations"
     resource :club_current_location, only: :show
 
-    resource :background_check, only: :show
-    resources :background_checks, only: [:new, :create]
+    resource :background_check, only: :show, controller: "/ambassador/background_checks"
+    resources :background_checks, only: [:new, :create], controller: "/ambassador/background_checks"
+    post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
 
-    post "/background_check_invitation", to: "background_checks#create_invitation"
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
 
     resource :club_admin, only: :show, controller: "club_admin"
