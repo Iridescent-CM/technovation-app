@@ -157,8 +157,8 @@ jobs:
       - run:
           name: Install wkhtmltopdf
           command: |
-            RUN sed -i 's|http://archive.ubuntu.com|http://mirrors.ubuntu.com/mirrors.txt|g' /etc/apt/sources.list
-            RUN sed -i 's|http://security.ubuntu.com|http://mirrors.ubuntu.com/mirrors.txt|g'
+            sudo sed -i 's|http://archive.ubuntu.com|http://mirrors.ubuntu.com/mirrors.txt|g' /etc/apt/sources.list
+            sudo sed -i 's|http://security.ubuntu.com|http://mirrors.ubuntu.com/mirrors.txt|g'
             
             sudo apt update
             sudo apt install wkhtmltopdf
