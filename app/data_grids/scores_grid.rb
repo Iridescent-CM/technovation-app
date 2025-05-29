@@ -6,7 +6,7 @@ class ScoresGrid
   self.batch_size = 10
 
   scope do
-    SubmissionScore.complete.judge_not_deleted
+    SubmissionScore.judge_not_deleted
       .includes({judge_profile: [:account, :events]})
       .includes({team_submission: {team: :division}})
       .references(:teams, :team_submissions)
