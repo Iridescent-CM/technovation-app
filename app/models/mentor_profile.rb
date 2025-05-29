@@ -165,14 +165,6 @@ class MentorProfile < ActiveRecord::Base
     length: {minimum: 100},
     allow_blank: true
 
-  delegate :submitted?,
-    :candidate_id,
-    :report_id,
-    :invitation_id,
-    to: :background_check,
-    prefix: true,
-    allow_nil: true
-
   def method_missing(method_name, *args) # standard:disable all
     account.public_send(method_name, *args) # standard:disable all
   end
