@@ -59,7 +59,7 @@
     </dd>
   </dl>
 
-  <% if current_account.is_admin? && (profile.requires_background_check? || profile.background_check_exemption?) %>
+  <% if current_account.is_admin? && ((profile.requires_background_check? && !profile.background_check_complete?) || profile.background_check_exemption?) %>
     <hr>
     <%= render 'admin/participants/background_check_exemption',
                profile: @account.mentor_profile %>
