@@ -74,6 +74,17 @@ class ChaptersGrid
       .where(chapter_program_information_organization_types: {organization_type_id: values})
   end
 
+  filter :season,
+    :enum,
+    select: (2025..Season.current.year).to_a.reverse,
+    filter_group: "more-specific",
+    html: {
+      class: "and-or-field"
+    },
+    multiple: false do |value|
+    by_season(value)
+  end
+
   column :name, header: "Chapters (Program Name)", mandatory: true, html: true do |chapter|
     link_to(
       chapter.name.presence || "-",
@@ -266,6 +277,10 @@ class ChaptersGrid
 
   column :number_of_low_income_or_underserved_calculation, preload: :chapter_program_information do
     chapter_program_information&.number_of_low_income_or_underserved_calculation.presence || "-"
+  end
+
+  column :seasons do
+    seasons.to_sentence
   end
 
   column :actions, mandatory: true, html: true do |chapter|

@@ -1,4 +1,5 @@
 class Chapter < ActiveRecord::Base
+  include Seasoned
   include ActiveGeocoded
   include OnboardingTasksConcern
 
