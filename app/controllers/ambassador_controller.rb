@@ -63,4 +63,8 @@ class AmbassadorController < ApplicationController
         error: "You must complete all onboarding tasks before accessing Admin Activity."
     end
   end
+
+  def set_layout_for_current_ambassador
+    "#{current_scope}_rebrand"
+  end
 end
