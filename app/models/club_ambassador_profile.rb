@@ -70,6 +70,10 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     training_completed_at.present?
   end
 
+  def complete_training!
+    update(training_completed_at: Time.current)
+  end
+
   def onboarding?
     !onboarded?
   end
