@@ -9,10 +9,6 @@ module Ambassador
 
     private
 
-    def set_layout_for_current_ambassador
-      "#{current_scope}_rebrand"
-    end
-
     def current_profile
       current_ambassador
     end
