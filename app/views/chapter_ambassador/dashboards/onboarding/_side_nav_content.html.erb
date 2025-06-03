@@ -9,9 +9,9 @@
 
       <%= render "application/templates/completion_step",
         name: "Chapter Ambassador Training",
-        url: chapter_ambassador_trainings_path,
+        url: chapter_ambassador_training_path,
         is_complete: current_ambassador.training_completed?,
-        is_active_item: al(chapter_ambassador_trainings_path).present?
+        is_active_item: al(chapter_ambassador_training_path).present?
       %>
 
       <%= render "application/templates/completion_step",
