@@ -1,0 +1,42 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "#{current_scope}/dashboards/onboarding/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "#{current_scope.titleize} Training and Checkpoint" } do %>
+    <% if current_chapterable.present? %>
+      <% if current_ambassador.training_completed? %>
+        <p class="mb-4">
+          Thank you for completing the checkpoint. You can re-visit the training at any time.
+        </p>
+        <div class="flex flex-row mt-8">
+          <%= link_to "#{current_scope.titleize} Training",
+            ENV.fetch("#{current_scope.upcase}_TRAINING_URL"),
+            class: "tw-green-btn mx-auto",
+            target: "_blank"
+          %>
+        </div>
+      <% else %>
+        <p class="mb-4">
+          Please review the following <%= current_scope.titleize %> training.
+          At the end of the training you will have access to the checkpoint.
+          Please take the checkpoint to complete this step of onboarding.
+        </p>
+        <div class="flex flex-row mt-8">
+          <%= link_to "#{current_scope.titleize} Training",
+            ENV.fetch("#{current_scope.upcase}_TRAINING_URL"),
+            class: "tw-green-btn mx-auto",
+            target: "_blank"
+          %>
+        </div>
+        <div class="flex flex-row mt-8">
+          <%= link_to "Training Checkpoint",
+            external_ambassador_training_checkpoint_link(current_account),
+            class: "tw-green-btn mx-auto",
+            target: "_blank"
+          %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>You are not associated with a chapter or club. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
+    <% end %>
+  <% end %>
+</div>
