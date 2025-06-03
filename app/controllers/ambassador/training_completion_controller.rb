@@ -1,7 +1,6 @@
 module Ambassador
   class TrainingCompletionController < AmbassadorController
     skip_before_action :require_chapterable_and_ambassador_onboarded
-    layout :set_layout_for_current_ambassador
 
     def show
       current_ambassador.complete_training!
