@@ -204,8 +204,8 @@ Rails.application.routes.draw do
     resources :background_checks, only: [:new, :create], controller: "/ambassador/background_checks"
     post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
 
-    resources :trainings, only: :index
-    resource :training_completion, only: :show
+    resource :training, only: :show, controller: "/ambassador/training"
+    resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
     resources :events, controller: :regional_pitch_events do
       get :bulk_download_submission_pitch_presentations
@@ -244,6 +244,9 @@ Rails.application.routes.draw do
     resource :club_headquarters_location, only: [:edit, :update]
     resource :club_location, only: [:show, :edit, :update, :create], controller: "club_locations"
     resource :club_current_location, only: :show
+
+    resource :training, only: :show, controller: "/ambassador/training"
+    resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
     resource :background_check, only: :show, controller: "/ambassador/background_checks"
     resources :background_checks, only: [:new, :create], controller: "/ambassador/background_checks"
