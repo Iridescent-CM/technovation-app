@@ -32,11 +32,13 @@ module ApplicationHelper
       location_details
       profiles
       public_information
+      training
       training_completions
-      trainings
     ]
 
-    if namespace == "chapter_ambassador" && rebranded_chapter_ambassador_sections.include?(path)
+    if (namespace == "chapter_ambassador" || namespace == "ambassador") &&
+        rebranded_chapter_ambassador_sections.include?(path) &&
+        current_scope == "chapter_ambassador"
       :chapter_ambassador_rebrand
     elsif current_account.authenticated? && SCOPES.include?(namespace)
       namespace
