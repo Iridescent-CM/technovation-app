@@ -43,6 +43,10 @@ FactoryBot.define do
       end
     end
 
+    trait :training_not_completed do
+      training_completed_at { nil }
+    end
+
     before(:create) do |r, e|
       {
         city: e.city,
