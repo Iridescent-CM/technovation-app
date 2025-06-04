@@ -19,7 +19,7 @@
     </div>
 
     <div class="flex justify-between mb-1 ml-1 mr-2">
-      <p class="text-base italic">Please write at least {{ minWordCount }} words</p>
+      <p class="text-base italic">Please write between {{ minWordCount }} and {{maxWordCount}} words</p>
 
       <p class="text-base font-bold" :style="`color: ${colorForWordCount}`">
         {{ wordCount }}
@@ -122,6 +122,10 @@ export default {
       return 20
     },
 
+    maxWordCount() {
+      return 150
+    },
+
     wordCount () {
       let text = this.commentText
 
@@ -137,8 +141,10 @@ export default {
     },
 
     colorForWordCount () {
-      if (this.wordCount >= this.minWordCount) {
+      if (this.wordCount >= this.minWordCount && this.wordCount <= this.maxWordCount) {
         return '#43b02a';
+      } else if (this.wordCount >= this.maxWordCount) {
+        return '#ef4444'
       } else if (this.wordCount >= (66 / 100) * this.minWordCount) {
         return '#eab308'
       } else if (this.wordCount >= (33 / 100) * this.minWordCount) {
