@@ -21,6 +21,8 @@ class ChapterSelector
         country: account.country_code
       }
     )
+      .to_a
+      .delete_if { |chapter| chapter == account.current_chapterable }
   end
 
   def find_chapters_in_country
@@ -32,6 +34,8 @@ class ChapterSelector
         state_province: account.state_code
       }
     )
+      .to_a
+      .delete_if { |chapter| chapter == account.current_chapterable }
   end
 
   def select_chapters(where:, where_not: {})
