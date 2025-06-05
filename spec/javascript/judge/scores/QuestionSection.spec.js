@@ -145,6 +145,44 @@ describe('Question comments section', () => {
     })
   })
 
+  describe('maxWordCount()', () => {
+    it('returns 150 for the ideation section', () => {
+      wrapper.setProps({ section: 'ideation' })
+
+      expect(wrapper.vm.maxWordCount).toEqual(150)
+    })
+
+    it('returns 150 for the technical section', () => {
+      wrapper.setProps({ section: 'technical' })
+
+      expect(wrapper.vm.maxWordCount).toEqual(150)
+    })
+
+    it('returns 150 for the pitch section', () => {
+      wrapper.setProps({ section: 'pitch' })
+
+      expect(wrapper.vm.maxWordCount).toEqual(150)
+    })
+
+    it('returns 150 for the entrepreneurship section', () => {
+      storeMocks = mockStore.createMocks({
+        state: { team: { division: 'senior' }}
+      })
+
+      wrapper = shallowMount(
+        QuestionSection, {
+          store: storeMocks.store,
+          localVue,
+          propsData: {
+            section: 'entrepreneurship'
+          }
+        }
+      )
+
+      expect(wrapper.vm.maxWordCount).toEqual(150)
+    })
+  })
+
   describe('colorForWordCount()', () => {
     describe('when the minimum word count (for the comments section) is 20', () => {
       beforeEach(() => {
@@ -157,7 +195,7 @@ describe('Question comments section', () => {
         expect(wrapper.vm.colorForWordCount).toEqual('#ef4444')
       })
 
-      it('returns an orange color when 1/3 of the mimumum word count has been entered', () => {
+      it('returns an orange color when 1/3 of the minimum word count has been entered', () => {
         wrapper.vm.comment.text = 'one two three four five six seven'
 
         expect(wrapper.vm.colorForWordCount).toEqual('#f97316')
@@ -170,11 +208,39 @@ describe('Question comments section', () => {
         expect(wrapper.vm.colorForWordCount).toEqual('#eab308')
       })
 
-      it('returns a green color when the miniumum word count has been met', () => {
+      it('returns a green color when the minimum word count has been met', () => {
         wrapper.vm.comment.text = `one two three four five six seven eight nine ten
           eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty`
 
         expect(wrapper.vm.colorForWordCount).toEqual('#43b02a')
+      })
+    })
+
+    describe('when the maximum word count (for the comments section) is 150', () => {
+      beforeEach(() => {
+        wrapper.setProps({ section: 'pitch' })
+      })
+
+      it('returns a red color when more than 150 words have been entered', () => {
+        wrapper.vm.comment.text = `one two three four five six seven eight nine ten
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty
+          eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty`
+
+
+        expect(wrapper.vm.colorForWordCount).toEqual('#ef4444')
       })
     })
   })

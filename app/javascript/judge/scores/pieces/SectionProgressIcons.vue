@@ -11,7 +11,7 @@
     </span>
 
     <svg
-      :class="commentForSection(section).word_count >= 20 ? 'text-tg-green': 'text-gray-300'"
+      :class="(commentForSection(section).word_count >= 20 && commentForSection(section).word_count <= 150) ? 'text-tg-green': 'text-gray-300'"
       class="h-5 w-5"
       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
     >

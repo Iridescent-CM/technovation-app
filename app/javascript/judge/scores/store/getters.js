@@ -120,7 +120,7 @@ export const hasIncompleteSections = (state, getters) => {
 
 export const isSectionComplete = (state, getters) => (section) => {
   const questions = getters.sectionQuestions(section);
-  const hasValidComment = state.score.comments[section].word_count >= 20;
+  const hasValidComment = state.score.comments[section].word_count >= 20 && state.score.comments[section].word_count <= 150;
   const allQuestionsHaveBeenAnswered =
     questions && questions.every((q) => q.score > 0);
 
