@@ -27,9 +27,19 @@
     </div>
 
     <div class="mt-8">
-      <p class="font-bold">Your current assignment</p>
+      <p class="font-bold">
+        Your current <%= current_account.assigned_to_chapter? ? "chapter" : "club" %>
+      </p>
+
       <% if current_account.assigned_to_chapterable? %>
         <p><%= current_account.current_chapterable_assignment.chapterable.name.presence || "Name not set" %></p>
+
+        <div class="mt-8">
+          <%= link_to "Change your #{current_account.assigned_to_chapter? ? "chapter" : "club"}",
+            new_chapterable_account_assignments_path,
+            class: "tw-green-btn"
+          %>
+        </div>
       <% else %>
         <p>You are not assigned to a Chapter or Club</p>
       <% end %>
