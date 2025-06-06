@@ -2,13 +2,52 @@
   <div class="tab-content tw-active">
     <div class="tw-blue-lg-container">
       <div class="sm-header-wrapper bg-energetic-blue text-white p-2">
-        <p class="font-bold">Find a Chapter or Club</p>
+        <% if current_account.assigned_to_chapterable? %>
+          <p class="font-bold">
+            Review your <%= current_account.assigned_to_chapter? ? "Chapter" : "Club" %>
+          </p>
+        <% else %>
+          <p class="font-bold">Find a Chapter or Club</p>
+        <% end %>
       </div>
 
       <div class="p-6">
+        <% if current_account.assigned_to_chapterable? %>
+          <h3 class="mb-2 text-2xl">
+            Your Current <%= current_account.assigned_to_chapter? ? "Chapter" : "Club" %>
+          </h3>
+
+          <div class="p-2 border bg-blue-50">
+            <%= render "chapterable_details", chapterable: current_account.current_chapterable %>
+          </div>
+
+          <div class="flex justify-between mt-10">
+            <% if @chapters.values.flatten.present? || @clubs.values.flatten.present? %>
+              <div>
+                <%= link_to "Update",
+                  "#",
+                  onclick: "event.preventDefault(); document.getElementById('chapertable-selection').style.display='block';",
+                  class: "tw-gray-btn"
+                %>
+              </div>
+            <% end %>
+
+            <div>
+              <%= link_to "Confirm",
+                send("#{current_account.scope_name}_dashboard_path"),
+                class: "tw-green-btn"
+              %>
+            </div>
+          </div>
+        <% end %>
+
         <% if @chapters.values.flatten.present? || @clubs.values.flatten.present? %>
-          <div class="prose">
-            <%= render "chapterable_account_assignments/#{current_account.scope_name}/chapters_found_intro_text" %>
+          <div id="chapertable-selection" class="prose" style="display: <%= current_account.assigned_to_chapterable? ? "none" : "block" %>">
+            <% if current_account.assigned_to_chapterable? %>
+              <hr class="border-t border-gray-300 my-8">
+            <% else %>
+              <%= render "chapterable_account_assignments/#{current_account.scope_name}/chapters_found_intro_text" %>
+            <% end %>
 
             <% if @primary_chapters.empty? && @primary_clubs.empty? %>
               <p class="m-0 font-bold">
