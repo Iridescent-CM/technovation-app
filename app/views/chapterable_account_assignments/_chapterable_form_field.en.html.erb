@@ -1,0 +1,13 @@
+<div class="flex mb-4">
+  <div class="mr-6">
+    <%= radio_button_tag "chapterable", [chapterable.id, chapterable.class.name] %>
+  </div>
+
+  <div>
+    <%= label_tag "chapterable__#{chapterable.id}___#{chapterable.class.name}_",
+      style: "text-transform: none; letter-spacing: 0; font-size: inherit; font-weight: inherit;" do %>
+
+      <%= render "chapterable_details", chapterable: chapterable %>
+    <% end %>
+  </div>
+</div>
