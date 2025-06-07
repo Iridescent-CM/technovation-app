@@ -1,5 +1,5 @@
 <div class="container mx-auto flex w-full lg:w-3/4">
-  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Available Events"} do %>
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Available Events" } do %>
     <section class="mb-8">
       <p class="mb-4">
         <%= link_to "Go back!",
@@ -11,7 +11,7 @@
         Events will be confirmed as either Regional Pitch Events or
         Celebration Events after <%= ImportantDates.rpe_officiality_finalized.strftime("%B %-d") %>.
         For more information, please check out the
-        <%= link_to "Technovation FAQ", "https://iridescentsupport.zendesk.com/hc/en-us/sections/360007469154-Regional-Pitch-Events" %>
+        <%= link_to "Technovation FAQ", ENV.fetch("REGIONAL_PITCH_EVENTS_FAQ_URL") %>
         or contact your ambassador.
       </p>
     </section>
