@@ -99,7 +99,11 @@ class ChapterAmbassadorsGrid
   end
 
   column :remaining_chapter_onboarding_tasks do
-    current_chapter&.incomplete_onboarding_tasks&.to_sentence
+    if current_chapter.present?
+      current_chapter.incomplete_onboarding_tasks.to_sentence
+    else
+      "(Not assigned to a chapter)"
+    end
   end
 
   column :completed_chapter_ambassador_onboarding_tasks,
@@ -113,7 +117,11 @@ class ChapterAmbassadorsGrid
   end
 
   column :completed_chapter_onboarding_tasks do
-    current_chapter&.complete_onboarding_tasks&.to_sentence
+    if current_chapter.present?
+      current_chapter.complete_onboarding_tasks.to_sentence
+    else
+      "(Not assigned to a chapter)"
+    end
   end
 
   column :actions, mandatory: true, html: true do |account|
