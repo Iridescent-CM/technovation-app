@@ -1,5 +1,6 @@
 class ClubAmbassadorProfile < ActiveRecord::Base
   include BackgroundCheckHelpers
+  include OnboardingTasksConcern
 
   belongs_to :account
   accepts_nested_attributes_for :account
@@ -54,6 +55,14 @@ class ClubAmbassadorProfile < ActiveRecord::Base
       background_check_exempt_or_complete? &&
       training_completed? &&
       viewed_community_connections?)
+  end
+
+  def required_onboarding_tasks
+    {
+      "Background Check" => background_check_exempt_or_complete?,
+      "Club Ambassador Training" => training_completed?,
+      "Community Connections" => viewed_community_connections?
+    }
   end
 
   def in_background_check_country?

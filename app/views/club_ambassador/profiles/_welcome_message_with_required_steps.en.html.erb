@@ -1,0 +1,26 @@
+<div class="container px-4 py-4 mx-auto mb-8 w-full lg:w-3/4 bg-blue-100 border-l-4 border-energetic-blue">
+  <h2 class="mb-4 text-gray-600">Welcome to Technovation Girls!</h2>
+
+  <p class="mb-3 text-base text-gray-500">
+    We're really happy you decided to join us for the <%= Season.current.year %> season!
+    To access participant data in the Club Admin Activity, please complete all Club Ambassador onboarding tasks and Club onboarding tasks.
+  </p>
+
+  <p class="mb-3 text-base text-gray-500">
+    The following tasks are incomplete: <br>
+  </p>
+
+  <ul class="mb-3 text-base text-gray-500 list-disc ml-8">
+    <% current_ambassador.incomplete_onboarding_tasks.each do |ambassador_onboarding_task| %>
+      <li>
+        <%= ambassador_onboarding_task %>
+      </li>
+    <% end %>
+
+    <% current_chapterable.incomplete_onboarding_tasks.each do |chapterable_onboarding_task| %>
+      <li>
+        <%= chapterable_onboarding_task %>
+      </li>
+    <% end %>
+  </ul>
+</div>
