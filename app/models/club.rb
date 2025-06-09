@@ -1,6 +1,8 @@
 class Club < ActiveRecord::Base
   include Seasoned
   include ActiveGeocoded
+  include OnboardingTasksConcern
+
   include Casting::Client
   delegate_missing_methods
 
@@ -30,6 +32,13 @@ class Club < ActiveRecord::Base
   def can_be_marked_onboarded?
     !!(location_complete? &&
       club_info_complete?)
+  end
+
+  def required_onboarding_tasks
+    {
+      "Public Info" => club_info_complete?,
+      "Club Location" => location_complete?
+    }
   end
 
   def location_complete?
