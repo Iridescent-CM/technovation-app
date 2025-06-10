@@ -28,13 +28,15 @@ class ChapterableAccountAssignmentsController < ApplicationController
       elsif params[:chapterable] == "none_available"
         current_account.update(no_chapterables_available: true)
       else
-        current_account.chapterable_assignments.create(
+        assignment = current_account.chapterable_assignments.create(
           profile: current_account.mentor_profile.presence || current_account.student_profile,
           chapterable_id: params[:chapterable].split.first,
           chapterable_type: params[:chapterable].split.second,
           season: Season.current.year,
           primary: true
         )
+
+        flash[:success] = "You were successfully assigned to #{assignment.chapterable.name.presence || assignment.chapterable.organization_name}."
       end
     end
 
