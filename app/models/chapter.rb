@@ -2,6 +2,7 @@ class Chapter < ActiveRecord::Base
   include Seasoned
   include ActiveGeocoded
   include OnboardingTasksConcern
+  include SeasonStatusHelpers
 
   include Casting::Client
   delegate_missing_methods
