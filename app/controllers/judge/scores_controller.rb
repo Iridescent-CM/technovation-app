@@ -11,6 +11,9 @@ module Judge
         .references(:team_submissions)
         .order("team_submissions.app_name")
 
+      not_started = not_started_scores
+      not_started += not_started_rpe_assigned_submissions if SeasonToggles.quarterfinals?
+
       render json: {
         current_round: SeasonToggles.judging_round,
 
@@ -24,7 +27,7 @@ module Judge
           }
         },
 
-        not_started: not_started_rpe_assigned_submissions + not_started_scores
+        not_started: not_started
       }
     end
 
