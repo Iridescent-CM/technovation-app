@@ -20,5 +20,9 @@ FactoryBot.define do
       state_province { "Bahia" }
       country { "BR" }
     end
+
+    trait :current do
+      seasons { [Season.current.year] }
+    end
   end
 end
