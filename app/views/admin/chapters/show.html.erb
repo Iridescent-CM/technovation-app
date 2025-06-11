@@ -66,6 +66,12 @@
                   <p>Not filled out</p>
               <% end %>
             </dd>
+
+            <%= render partial: "admin/chapterables/season_status",
+              locals: { chapterable: @chapter } %>
+
+            <dt>Seasons</dt>
+            <dd><%= @chapter.seasons.to_sentence.presence || "No seasons" %></dd>
           </dl>
         </div>
 
