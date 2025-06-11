@@ -14,7 +14,9 @@ module Admin
     end
 
     def create
-      chapter = Chapter.new(chapter_params)
+      chapter = Chapter.new(
+        chapter_params.merge(seasons: [Season.current.year])
+      )
 
       if chapter.save
         redirect_to admin_chapter_path(chapter), success: "#{chapter.organization_name} was added as a new chapter."
