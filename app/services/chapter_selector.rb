@@ -40,6 +40,7 @@ class ChapterSelector
 
   def select_chapters(where:, where_not: {})
     Chapter
+      .current
       .joins(legal_contact: :chapter_affiliation_agreement)
       .includes(legal_contact: :chapter_affiliation_agreement)
       .includes(:primary_contact)
