@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:name) { |n| "FactoryBot Program #{n}" }
     sequence(:summary) { |n| "FactoryBot Summary #{n}" }
     sequence(:headquarters_location) { |n| "FactoryBot Location #{n}" }
+    seasons { [Season.current.year] }
     onboarded { true }
 
     trait :chicago do
