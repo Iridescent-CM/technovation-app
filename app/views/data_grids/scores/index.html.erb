@@ -1,10 +1,10 @@
 <% provide :title, "Scores" %>
 
-<% if current_account.admin? %>
+<% if current_account.admin? && SeasonToggles.judging_enabled? %>
   <%= render partial: "admin/scores/submissions_removed_from_judging_pool", locals: { submissions_removed_from_judging_pool: @submissions_removed_from_judging_pool } %>
-
-  <h1>Season <%= Season.current.year %> Scores</h1>
 <% end %>
+
+<h1>Season <%= Season.current.year %> Scores</h1>
 
 <%= render "datagrid/datagrid",
   grid: @scored_submissions_grid,
