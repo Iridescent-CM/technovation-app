@@ -18,10 +18,17 @@ module ConsentWaiverController
     scope = get_cookie(CookieNames::LAST_PROFILE_USED) ||
       @consent_waiver.account_scope_name
 
-    if @consent_waiver.save
-      redirect_to send("#{scope}_dashboard_path"),
+    if params[:read_and_understands_code_of_conduct].present? &&
+        params[:acknowledges_consequences_of_code_of_conduct].present? &&
+        @consent_waiver.save
+      redirect_to send(:"#{scope}_dashboard_path"),
         success: t("controllers.consent_waivers.create.success")
     else
+      if params[:read_and_understands_code_of_conduct].blank? ||
+          params[:acknowledges_consequences_of_code_of_conduct].blank?
+
+        flash.now[:error] = t("controllers.consent_waivers.create.missing_code_of_conduct_acknowledgement_error")
+      end
       render :new
     end
   end

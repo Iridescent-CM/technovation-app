@@ -1,9 +1,52 @@
+<hr class="border-t border-gray-300 my-8">
+
 <%= simple_form_for waiver, url: send("#{current_scope}_consent_waivers_path", waiver) do |f| %>
   <%= f.input :account_consent_token, as: :hidden %>
 
+  <div class="mb-4">
+    <%= check_box_tag "read_and_understands_code_of_conduct" %>
+    <%= label_tag "read_and_understands_code_of_conduct",
+      t("views.consent_waivers.read_and_understands_code_of_conduct").html_safe
+    %>
+  </div>
+
+  <div class="mb-4">
+    <%= check_box_tag "acknowledges_consequences_of_code_of_conduct" %>
+    <%= label_tag "acknowledges_consequences_of_code_of_conduct",
+      t("views.consent_waivers.acknowledges_consequences_of_code_of_conduct").html_safe
+    %>
+  </div>
+
+  <section class="mb-4">
+    <p class="font-bold ">
+      BY SIGNING, I ACKNOWLEDGE THAT I HAVE READ AND UNDERSTOOD ALL OF THE
+      TERMS OF THIS AGREEMENT AND THAT I AM VOLUNTARILY GIVING UP SUBSTANTIAL
+      LEGAL RIGHTS.
+    </p>
+  </section>
+
   <%= f.input :electronic_signature,
-    label: "Type your name as a form of electronic signature" %>
+    label: "Type your name as a form of electronic signature"
+  %>
 
   <%= f.button :submit, t("views.consent_waivers.new.submit"),
-    class: "tw-green-btn cursor-pointer" %>
+    id: "submit",
+    class: "tw-green-btn cursor-pointer",
+    disabled: true
+  %>
 <% end %>
+
+<script>
+document.addEventListener("turbolinks:load", function() {
+  const acknowlegeCodeOfConduct1 = document.getElementById("read_and_understands_code_of_conduct");
+  const acknowlegeCodeOfConduct2 = document.getElementById("acknowledges_consequences_of_code_of_conduct");
+  const submitButton = document.getElementById("submit");
+
+  function toggleSubmitButton() {
+    submitButton.disabled = !(acknowlegeCodeOfConduct1.checked && acknowlegeCodeOfConduct2.checked);
+  }
+
+  acknowlegeCodeOfConduct1.addEventListener("change", toggleSubmitButton);
+  acknowlegeCodeOfConduct2.addEventListener("change", toggleSubmitButton);
+});
+</script>
