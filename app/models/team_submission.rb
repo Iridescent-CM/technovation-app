@@ -133,6 +133,19 @@ class TeamSubmission < ActiveRecord::Base
   scope :removed_from_judging_pool, -> { where(removed_from_judging_pool: true, returned_to_judging_pool_by_account_id: nil) }
   scope :not_removed_from_judging_pool, -> { where(removed_from_judging_pool: false) }
 
+  scope :current_round, -> {
+    contest_rank = case SeasonToggles.judging_round
+    when "qf"
+      "quarterfinalist"
+    when "sf"
+      "semifinalist"
+    else
+      none
+    end
+
+    where(contest_rank: contest_rank)
+  }
+
   scope :live, -> { complete.joins(team: :current_official_events) }
 
   scope :virtual, -> {
