@@ -14,6 +14,14 @@ RSpec.describe Admin::ClubsController do
         }.to change { Club.count }.by(1)
       end
 
+      it "adds the current season to the newly created club" do
+        post :create, params: {
+          club: {name: "Coding Club"}
+        }
+
+        expect(Club.last.seasons).to include(Season.current.year)
+      end
+
       it "redirects to the created club" do
         post :create, params: {
           club: {name: "Hello World Again"}
@@ -30,7 +38,6 @@ RSpec.describe Admin::ClubsController do
           }
         }.not_to change { Club.count }
       end
-
     end
   end
 end

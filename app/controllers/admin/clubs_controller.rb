@@ -12,7 +12,9 @@ module Admin
     end
 
     def create
-      club = Club.new(club_params)
+      club = Club.new(
+        club_params.merge(seasons: [Season.current.year])
+      )
 
       if club.save
         redirect_to admin_club_path(club), success: "#{club.name} was added as a new club."
