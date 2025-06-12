@@ -26,6 +26,7 @@ en:
     consent_waivers:
       create:
         success: "Thank you for signing the consent waiver!"
+        missing_code_of_conduct_acknowledgement_error: "You must agree to both Code of Conduct terms"
       new:
         unauthorized: "Sorry, that consent token was invalid."
 

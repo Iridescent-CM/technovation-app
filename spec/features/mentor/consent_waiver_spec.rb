@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Consent waivers" do
+RSpec.feature "Consent waivers", js: true do
   let(:mentor) do
     mentor = FactoryBot.create(:mentor)
     mentor.consent_waiver.destroy
@@ -17,11 +17,14 @@ RSpec.feature "Consent waivers" do
     end
   end
 
-  scenario "valid token, invalid signature form" do
+  scenario "valid token, valid code of conduct, invalid signature form" do
     visit mentor_new_dashboard_path
 
     click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
+
+    check "read_and_understands_code_of_conduct"
+    check "acknowledges_consequences_of_code_of_conduct"
     click_button "I agree"
 
     expect(current_path).to eq(mentor_consent_waivers_path)
@@ -31,11 +34,26 @@ RSpec.feature "Consent waivers" do
     )
   end
 
-  scenario "valid token, valid form" do
+  scenario "valid token, invalid code of conduct, valid signature form" do
     visit mentor_new_dashboard_path
 
     click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
+
+    fill_in "Type your name as a form of electronic signature",
+      with: "Menty Meadows"
+
+    expect(page).to have_selector("#submit[disabled]")
+  end
+
+  scenario "valid token, valid code of conduct, valid signature" do
+    visit mentor_new_dashboard_path
+
+    click_link "Consent Waiver"
+    click_link "Sign Consent Waiver"
+
+    check "read_and_understands_code_of_conduct"
+    check "acknowledges_consequences_of_code_of_conduct"
 
     fill_in "Type your name as a form of electronic signature",
       with: "Mentor McGee"
