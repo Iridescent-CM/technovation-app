@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
     @team_submission = TeamSubmission.friendly.find(params.fetch(:id))
     @team = @team_submission.team
 
-    render "team_submissions/rebrand/published"
+    render "team_submissions/published"
   end
 
   private
