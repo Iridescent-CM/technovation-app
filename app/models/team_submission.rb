@@ -130,7 +130,7 @@ class TeamSubmission < ActiveRecord::Base
   scope :complete, -> { where("published_at IS NOT NULL") }
   scope :incomplete, -> { where("published_at IS NULL") }
 
-  scope :removed_from_judging_pool, -> { where(removed_from_judging_pool: true) }
+  scope :removed_from_judging_pool, -> { where(removed_from_judging_pool: true, returned_to_judging_pool_by_account_id: nil) }
   scope :not_removed_from_judging_pool, -> { where(removed_from_judging_pool: false) }
 
   scope :live, -> { complete.joins(team: :current_official_events) }
