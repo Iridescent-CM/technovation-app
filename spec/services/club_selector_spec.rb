@@ -25,6 +25,19 @@ describe ClubSelector do
           })
         end
 
+        context "when the los angeles club isn't participating in the current season" do
+          before do
+            los_angeles_club.update(seasons: [])
+          end
+
+          it "does not include the los angeles club in the results" do
+            expect(club_selector.call).to eq({
+              clubs_in_state_province: [],
+              clubs_in_country: [chicago_club]
+            })
+          end
+        end
+
         context "when the account already belongs to the los angeles club" do
           before do
             account.chapterable_assignments.delete_all

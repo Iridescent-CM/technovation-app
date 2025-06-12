@@ -40,6 +40,7 @@ class ClubSelector
 
   def select_clubs(where:, where_not: {})
     Club
+      .current
       .includes(:primary_contact)
       .where(where)
       .where.not(where_not)
