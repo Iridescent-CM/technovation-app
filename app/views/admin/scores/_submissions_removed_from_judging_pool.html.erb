@@ -1,5 +1,5 @@
 <div class="panel">
-  <h4>Submissions Removed from Judging Pool</h4>
+  <h4>Submissions Removed from Judging Pool during <%= SeasonToggles.judging_round(full_name: true) %></h4>
   <p>These submissions are automatically removed from the judging pool due to the number of recusals.</p>
 
   <% if submissions_removed_from_judging_pool.any? %>
