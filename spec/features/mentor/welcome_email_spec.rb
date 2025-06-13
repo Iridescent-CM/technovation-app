@@ -17,6 +17,8 @@ RSpec.xfeature "Mentor receives welcome email", js: true do
       current_email.click_link "Sign the consent waiver"
       expect(page).to have_content("Technovation Volunteer Agreement")
 
+      check "read_and_understands_code_of_conduct"
+      check "acknowledges_consequences_of_code_of_conduct"
       fill_in "Type your name", with: "me"
       click_button "I agree"
 
