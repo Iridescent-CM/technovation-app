@@ -1,43 +1,31 @@
 <% provide :title, "Search for a team" %>
 
-<div class="grid">
-  <div class="grid__col-auto grid__col--bleed-y">
-    <div class="grid__cell">
-      <h1 class="page-heading"><%= t("views.team_searches.new.title") %></h1>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "team_searches/rebrand/filter_options", account: account %>
 
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Available Teams" } do %>
+    <% if current_scope == "mentor" %>
       <p><%= t("views.team_searches.new.intro") %></p>
-      <% if current_scope == "mentor" %>
-        <p>To learn more about finding a team, review the
-          <%= link_to "Find a team",
-            "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-find-a-team/",
-            target: "_blank" %>
-          lesson from the Mentor Training.
-        </p>
-      <% end %>
-    </div>
-  </div>
-</div>
 
-<div class="grid">
-  <div class="grid__col-sm-3">
-    <div class="sidebar">
-      <%= render "team_searches/filter_options", account: account %>
-    </div>
-  </div>
-
-  <div class="grid__col-sm-9">
-    <h3>Available Teams</h3>
-
-    <div class="grid">
-      <%= render partial: "team_searches/result", collection: teams, as: :team %>
-
-      <% if teams.empty? %>
-        <div class="grid__col-auto grid__col--bleed">
-          <%= t("views.team_searches.new.no_results") %>
-        </div>
-      <% end %>
-    </div>
-
-    <%= will_paginate teams %>
-  </div>
+      <p class="mb-6">
+        To learn more about finding a team, review the
+        <%= link_to "Find a team",
+              "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-find-a-team/",
+              target: "_blank" %>
+        lesson from the Mentor Training.
+      </p>
+    <% end %>
+    <% if teams.empty? %>
+      <div class="grid__col-auto grid__col--bleed">
+        <%= t("views.team_searches.new.no_results") %>
+      </div>
+    <% else %>
+      <div class="flex flex-wrap mt-4">
+        <%= render partial: "team_searches/result", collection: teams, as: :team %>
+      </div>
+      <div class="text-center">
+        <%= will_paginate teams %>
+      </div>
+    <% end %>
+  <% end %>
 </div>
