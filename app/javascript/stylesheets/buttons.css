@@ -58,3 +58,7 @@ a.link-button-neutral,
   @apply bg-gray-300 text-gray-700;
 }
 
+.tw-red-btn {
+  @apply px-4 py-2 rounded bg-red-800 text-white;
+}
+
