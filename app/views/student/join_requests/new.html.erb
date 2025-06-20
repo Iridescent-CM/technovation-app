@@ -1,5 +1,9 @@
 <div class="container mx-auto flex flex-col lg:flex-row justify-around w-full lg:w-1/2">
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Team Details"} do %>
     <%= render "teams/rebrand/public_show", team: @join_request.team %>
+
+    <%= render "application/templates/tw_thick_rule" %>
+
+    <%= render "teams/rebrand/team_join_request", team: @team %>
   <% end %>
 </div>
