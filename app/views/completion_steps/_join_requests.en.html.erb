@@ -1,57 +1,31 @@
-<h1 class="margin--none padding--none">Join a team</h1>
-
-<p>Use our team search to find a team and ask to join them!</p>
-
-<% if current_scope == "mentor" %>
-  <p>To learn more about finding a team, review the
-    <%= link_to "Find a team",
-      "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-find-a-team/",
-      target: "_blank" %>
-    lesson from the Mentor Training.
-  </p>
-<% end %>
-
-<%= link_to(
-  t("views.profile_requirements.create_join_team.links.join.text"),
-  send("new_#{current_scope}_team_search_path"),
-  class: "button"
-) %>
-
 <% if requests.any? %>
-  <p>You have asked to join a team!</p>
+  <h4 class="text-xl font-medium mb-2">Pending Join Requests</h4>
+
+  <p class="mb-4">You have asked to join a team!</p>
 
   <% requests.each do |join_request| %>
     <%= content_tag :div,
-      class: "join_request",
+      class: "join_request mb-6",
       id: dom_id(join_request) do %>
-      <div class="grid grid--bleed">
-        <div class="grid__col-4">
-          <div class="grid__cell">
-            <%= image_tag join_request.team_team_photo_url,
-              class: 'thumbnail-md grid__cell-img' %>
-          </div>
-        </div>
 
-        <div class="grid__col-8">
-          <div class="grid__cell">
-            <p>
-              <%= join_request.team_name %><br />
-              Division:
-              <%= join_request.team_division_name.humanize %><br />
-              <%= join_request.team_primary_location %><br />
-              <%= link_to "Cancel my request to join this team",
-                send("#{current_scope}_join_request_path", 
-                  {
-                    id: join_request.review_token
-                  }),
-                data: {
-                  method: :delete,
-                  confirm: t("controllers.student.join_requests.destroy.confirm")
-                },
-                class: "danger small"
-              %>
-            </p>
-          </div>
+      <div class="flex flex-row">
+        <div class="h-16 my-auto">
+          <%= image_tag join_request.team_team_photo_url, class: "h-full object-cover my-auto" %>
+        </div>
+        <div class="ml-4">
+          <p><%= join_request.team_name %></p>
+          <p><%= join_request.team_primary_location %></p>
+          <p>Division: <%= join_request.team_division_name.humanize %></p>
+          <p>
+            <%= link_to "Cancel my request to join this team",
+              send("#{current_scope}_join_request_path", { id: join_request.review_token }),
+              data: {
+                method: :delete,
+                confirm: t("controllers.student.join_requests.destroy.confirm")
+              },
+              class: "danger small"
+            %>
+          </p>
         </div>
       </div>
     <% end %>
