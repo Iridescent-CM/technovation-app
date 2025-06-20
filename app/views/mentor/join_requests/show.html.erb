@@ -1,7 +1,7 @@
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-md-8 panel">
+<div class="container mx-auto flex flex-col lg:flex-row justify-around w-full lg:w-1/2">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Join Request"} do %>
     <h1><%= @join_request.team_name %></h1>
     <p>This join request is <%= @join_request.status %></p>
-    <p><%= link_to 'Return to dashboard', mentor_dashboard_path, class: "button" %>
-  </div>
+    <p><%= link_to "Return to dashboard", mentor_dashboard_path, class: "tw-green-btn" %>
+  <% end %>
 </div>

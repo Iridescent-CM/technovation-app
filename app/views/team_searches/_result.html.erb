@@ -1,33 +1,27 @@
-<div class="grid__col-sm-4 grid__col--bleed search-result">
-  <div class="search-result-head">
-    <%= image_tag team.team_photo_url, class: "grid__cell-img" %>
-
-    <h3><%= team.name %></h3>
-
-    <p><%= team.primary_location %></p>
-
-    <div class="badges">
-      <span class="badge badge-success">
-        <%= t("views.application.division") %>: <%= team.division.name.humanize %>
-      </span>
-    </div>
+<div class="shadow-lg border border-gray-300 rounded w-full h-[32rem] lg:w-1/3 mb-4 flex flex-col">
+  <div class="h-64">
+    <%= image_tag team.team_photo_url, class: "h-full w-full object-cover" %>
   </div>
-
-  <div class="search-result-foot grid--justify-center grid__cell-footer">
-    <p>
+  <div class="p-4 flex-grow">
+    <h3 class="font-medium"><%= team.name %></h3>
+    <p><%= team.primary_location %></p>
+    <p><%= t("views.application.division") %>: <%= team.division.name.humanize %></p>
+  </div>
+  <div class="px-4 py-4 sm:px-6">
+    <div class="text-center">
       <% if current_profile.teams_that_declined.include?(team) %>
         You asked to join <%= team.name %>, and they declined.
       <% elsif current_scope == "student" && !team.spot_available? %>
         This team is currently full.
 
         <span class="cursor--not-allowed">
-          <%= link_to "View more details", "#", class: "button disabled" %>
+          <%= link_to "View more details", "#", class: "tw-green-btn disabled" %>
         </span>
       <% else %>
         <%= link_to "View more details",
           send("new_#{current_scope}_join_request_path", {team_id: team.id}),
-          class: 'button' %>
+          class: "tw-green-btn small" %>
       <% end %>
-    </p>
+    </div>
   </div>
 </div>

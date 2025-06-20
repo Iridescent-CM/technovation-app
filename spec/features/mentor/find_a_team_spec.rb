@@ -23,22 +23,12 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within("#find-team") { click_link "Find a team", class: "button" }
+    visit mentor_team_builder_path
+    click_link "Find a team"
 
-    expect(page).to have_css(
-      ".search-result-head",
-      text: available_team.name
-    )
-
-    expect(page).to have_css(
-      ".search-result-head",
-      text: mentored_team.name
-    )
-
-    expect(page).not_to have_css(
-      ".search-result-head",
-      text: faraway_team.name
-    )
+    expect(page).to have_content(available_team.name)
+    expect(page).to have_content(mentored_team.name)
+    expect(page).not_to have_content(faraway_team.name)
   end
 
   scenario "search for a team by name" do
@@ -52,66 +42,47 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    within("#find-team") { click_link "Find a team", class: "button" }
+    visit mentor_team_builder_path
+    click_link "Find a team"
 
     fill_in "text", with: "araw" # partial match
     fill_in "nearby", with: "anywhere"
     page.find("form").submit_form!
 
-    expect(page).to have_css(".search-result-head", text: "faraway")
-
-    expect(page).not_to have_css(
-      ".search-result-head",
-      text: available_team.name
-    )
-
-    expect(page).not_to have_css(
-      ".search-result-head",
-      text: mentored_team.name
-    )
+    expect(page).to have_content("faraway")
+    expect(page).not_to have_content(available_team.name)
+    expect(page).not_to have_content(mentored_team.name)
   end
 
   scenario "search for a team by junior division" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    within("#find-team") { click_link "Find a team", class: "button" }
+    visit mentor_team_builder_path
+    click_link "Find a team"
 
     check "Junior"
     uncheck "Senior"
     uncheck "None assigned yet"
     page.find("form").submit_form!
 
-    expect(page).not_to have_css(
-      ".search-result-head",
-      text: senior_team.name
-    )
-
-    expect(page).to have_css(
-      ".search-result-head",
-      text: junior_team.name
-    )
+    expect(page).not_to have_content(senior_team.name)
+    expect(page).to have_content(junior_team.name)
   end
 
   scenario "search for a team by senior division" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    within("#find-team") { click_link "Find a team", class: "button" }
+    visit mentor_team_builder_path
+    click_link "Find a team"
 
     check "Senior"
     uncheck "Junior"
     uncheck "None assigned yet"
     page.find("form").submit_form!
 
-    expect(page).not_to have_css(
-      ".search-result-head",
-      text: junior_team.name
-    )
-
-    expect(page).to have_css(
-      ".search-result-head",
-      text: senior_team.name
-    )
+    expect(page).not_to have_content(junior_team.name)
+    expect(page).to have_content(senior_team.name)
   end
 end
