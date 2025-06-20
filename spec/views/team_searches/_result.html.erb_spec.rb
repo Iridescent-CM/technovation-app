@@ -41,7 +41,7 @@ RSpec.describe "team_searches/_result.html.erb", type: :view do
   end
 
   it "displays a 'View more details' button" do
-    expect(rendered).to have_link("View more details", class: "button")
+    expect(rendered).to have_link("View more details", class: "tw-green-btn")
   end
 
   context "when the team has already declined the current user/profile" do
@@ -63,7 +63,7 @@ RSpec.describe "team_searches/_result.html.erb", type: :view do
       end
 
       it "disables the 'View more details' button" do
-        expect(rendered).to have_link("View more details", class: "button disabled")
+        expect(rendered).to have_link("View more details", class: "tw-green-btn disabled")
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe "team_searches/_result.html.erb", type: :view do
       let(:current_scope) { "mentor" }
 
       it "displays a 'View more details' button" do
-        expect(rendered).to have_link("View more details", class: "button")
+        expect(rendered).to have_link("View more details", class: "tw-green-btn")
       end
     end
   end
