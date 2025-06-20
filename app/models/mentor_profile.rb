@@ -343,6 +343,11 @@ class MentorProfile < ActiveRecord::Base
     teams.include?(team)
   end
 
+  def is_invited_to_join?(team)
+    team_member_invites.pending.flat_map(&:team).include?(team)
+  end
+
+
   def rebranded?
     false
   end
