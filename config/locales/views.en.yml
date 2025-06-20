@@ -145,6 +145,7 @@ en:
         index:
           title: "My requests"
         new:
+          already_invited: "You have been invited to join this team. %{link}"
           already_joined: "You are on this team."
           already_requested: "You have asked to join this team"
       navigation:
