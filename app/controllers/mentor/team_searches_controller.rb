@@ -1,5 +1,6 @@
 module Mentor
   class TeamSearchesController < MentorController
+    layout "mentor_rebrand"
     before_action :require_onboarded
 
     def new

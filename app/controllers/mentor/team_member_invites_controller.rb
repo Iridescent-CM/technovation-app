@@ -1,6 +1,7 @@
 module Mentor
   class TeamMemberInvitesController < MentorController
     include TeamMemberInviteController
+    layout "mentor_rebrand"
 
     def update
       if SeasonToggles.judging_enabled_or_between?
