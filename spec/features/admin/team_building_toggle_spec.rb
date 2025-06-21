@@ -115,7 +115,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
     end
   end
 
-  context "Viwing mentor invites as a student" do
+  context "Viewing mentor invites as a student" do
     let(:student) { FactoryBot.create(:student, :on_team) }
     let(:mentor) { FactoryBot.create(:mentor, :onboarded) }
     let(:action) { student_mentor_invites_path }
@@ -144,7 +144,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
     scenario "Team building enabled" do
       enable_team_building
-      visit mentor_dashboard_path
+      visit mentor_team_builder_path
 
       expect(page).to have_link("Find a team")
       expect(page).to have_link("Create your team")
@@ -152,7 +152,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
     scenario "Team building disabled" do
       disable_team_building
-      visit mentor_dashboard_path
+      visit mentor_team_builder_path
 
       expect(page).not_to have_link("Find a team")
       expect(page).not_to have_link("Create your team")
