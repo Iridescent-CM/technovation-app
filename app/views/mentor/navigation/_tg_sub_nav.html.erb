@@ -1,12 +1,8 @@
 <div class="sub-nav-wrapper w-full lg:w-3/4 mx-auto">
   <nav class="list-reset flex">
-    <%= link_to "Old Dashboard",
+    <%= link_to t("views.application.dashboards.menu.dashboard"),
       mentor_dashboard_path,
       class: al(mentor_dashboard_path) + " sub-nav-item"%>
-
-    <%= link_to t("views.application.dashboards.menu.dashboard"),
-      mentor_new_dashboard_path,
-      class: al(mentor_new_dashboard_path) + " sub-nav-item"%>
 
     <%= link_to t("views.application.dashboards.menu.my_teams"),
       mentor_teams_path,
