@@ -11,14 +11,14 @@ RSpec.feature "Mentor personal summary" do
     mentor.bio = nil
     mentor.save
 
-    visit mentor_new_dashboard_path
+    visit mentor_dashboard_path
     click_link "Personal Summary"
 
     expect(page).to have_link("Add your summary", href: edit_mentor_bio_path)
   end
 
   scenario "displays existing summary and 'Change your summary' button when personal summary is present" do
-    visit mentor_new_dashboard_path
+    visit mentor_dashboard_path
     click_link "Personal Summary"
 
     expect(page).to have_link("Change your summary", href: edit_mentor_bio_path)
@@ -26,7 +26,7 @@ RSpec.feature "Mentor personal summary" do
   end
 
   scenario "allows mentor to update their personal summary" do
-    visit mentor_new_dashboard_path
+    visit mentor_dashboard_path
     click_link "Personal Summary"
     click_link "Change your summary"
 
