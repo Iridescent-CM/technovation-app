@@ -1,0 +1,16 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "My Teams" } do %>
+    <% if current_mentor.is_on_team? %>
+      <%= render "mentor/teams/team_table", teams: @current_teams %>
+    <% else %>
+      <p>You are not on a team!</p>
+      <p>
+        Please
+        <%= link_to "create or join",
+          mentor_team_builder_path,
+          class: "tw-link" %>
+        a team first.
+      </p>
+    <% end %>
+  <% end %>
+</div>
