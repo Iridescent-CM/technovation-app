@@ -94,7 +94,7 @@ Rails.application.routes.draw do
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]
 
-    resources :teams, except: [:index, :destroy]
+    resources :teams, except: [:destroy]
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
