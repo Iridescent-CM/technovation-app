@@ -3,15 +3,15 @@ require "rails_helper"
 RSpec.describe "A mentor completing their training", :js do
   it "displays their training step as complete" do
     sign_in(:mentor)
-    expect(page).to have_xpath(
-      '//*[@id="mentor_training"]/button/img[contains(@src, "circle-o")]'
-    )
+    within("a[href='/mentor/training']") do
+      expect(page).to have_css("span.bg-white")
+    end
 
     visit mentor_training_completion_path
-    click_button "Build your Team"
-    expect(page).to have_xpath(
-      '//*[@id="mentor_training"]/button/img[contains(@src, "check-circle")]'
-    )
+    click_link "Build your Team"
+    within("a[href='/mentor/training']") do
+      expect(page).to have_css("span.bg-tg-green")
+    end
   end
 
   it "is not required for returning mentors before the ImportantDates.mentor_training_required_since date" do
@@ -26,7 +26,7 @@ RSpec.describe "A mentor completing their training", :js do
 
       sign_in(mentor)
 
-      click_button "Mentor training"
+      click_link "Mentor Training"
       expect(page).to have_content(
         "Training is not required because it was not available when you signed up. " +
         "However, we encourage you to complete the training to help you do your best!"
@@ -35,7 +35,7 @@ RSpec.describe "A mentor completing their training", :js do
       expect(page).not_to have_css("button.disabled", text: "Find your team")
       expect(page).not_to have_css("button.disabled", text: "Create your team")
 
-      click_button "Submit your Project"
+      click_link "Submit your Project"
       expect(page).not_to have_content("You must complete the mentor training")
     end
   end
@@ -53,12 +53,16 @@ RSpec.describe "A mentor completing their training", :js do
       mentor.update_column(:training_completed_at, nil)
       sign_in(mentor)
 
-      expect(page).to have_css("button.disabled", text: "Find your team")
-      expect(page).to have_css("button.disabled", text: "Create your team")
+      click_link "Mentor Training"
+      expect(page).to have_content("To be able to mentor this season, please complete the mentor training.")
 
-      click_button "Submit your Project"
-      expect(page).to have_content("not available")
+      click_link "Build your Team"
       expect(page).to have_content("You must complete the mentor training")
+
+      expect(page).not_to have_button("Find team")
+
+      click_link "Submit your Project"
+      expect(page).to have_content("You need to complete some steps before going there")
     end
   end
 end
