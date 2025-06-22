@@ -51,7 +51,8 @@ RSpec.describe "Reviewing the demo/technical video" do
 
       sign_in(mentor)
 
-      within("#find-team") { click_link "Edit this team's submission" }
+      click_link "Submit your Project"
+      click_link "Edit submission"
       click_link "Technical video"
     end
 
@@ -70,7 +71,8 @@ RSpec.describe "Reviewing the demo/technical video" do
       )
 
       visit mentor_dashboard_path
-      within("#find-team") { click_link "Edit this team's submission" }
+      click_link "Submit your Project"
+      click_link "Edit submission"
       click_link "Pitch"
       expect(page).to have_css(".demo_video_link.incomplete")
     end
