@@ -11,27 +11,28 @@ RSpec.feature "Student team submissions" do
     team_mentor = FactoryBot.create(:mentor, :onboarded, :on_junior_team)
 
     sign_in(mentor)
+    visit mentor_team_submissions_path
 
-    expect(page).not_to have_link("Start a submission now")
+    expect(page).not_to have_link("Start submission")
 
     sign_out
     sign_in(team_mentor)
+    visit mentor_team_submissions_path
 
-    within("#find-team") {
-      expect(page).to have_link(
-        "Start a submission now",
-        href: new_mentor_team_submission_path(
-          team_id: team_mentor.teams.first.id
-        )
+    expect(page).to have_link(
+      "Start submission",
+      href: new_mentor_team_submission_path(
+        team_id: team_mentor.teams.first.id
       )
-    }
+    )
   end
 
   scenario "Confirm submissions are created solely by team students" do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_junior_team)
     sign_in(mentor)
 
-    within("#find-team") { click_link "Start a submission now" }
+    visit mentor_team_submissions_path
+    click_link "Start submission"
 
     check "team_submission[integrity_affirmed]"
     click_button "Start now!"
@@ -52,7 +53,8 @@ RSpec.feature "Student team submissions" do
 
     sign_in(mentor)
 
-    within("#find-team") { click_link "Edit this team's submission" }
+    visit mentor_team_submissions_path
+    click_link "Edit submission"
 
     expect(page).to have_link(
       "Set your project's name",
@@ -123,8 +125,8 @@ RSpec.feature "Student team submissions" do
     )
 
     sign_in(mentor)
-
-    within("#find-team") { click_link "Edit this team's submission" }
+    visit mentor_team_submissions_path
+    click_link "Edit submission"
 
     click_link "Entrepreneurship"
 
@@ -144,8 +146,8 @@ RSpec.feature "Student team submissions" do
       }}
     )
 
-    visit mentor_dashboard_path
-    within("#find-team") { click_link "Edit this team's submission" }
+    visit mentor_team_submissions_path
+    click_link "Edit submission"
 
     click_link "Entrepreneurship"
 
