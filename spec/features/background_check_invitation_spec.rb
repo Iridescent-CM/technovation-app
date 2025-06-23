@@ -10,6 +10,7 @@ RSpec.feature "background check invitation" do
     mentor.background_check.destroy
 
     sign_in(mentor)
+    click_link "Background Check"
     click_link "Submit Background Check"
 
     expect(page).to have_link("Request background check invitation")
@@ -27,6 +28,7 @@ RSpec.feature "background check invitation" do
     mentor.background_check.destroy
 
     sign_in(mentor)
+    click_link "Background Check"
     click_link "Submit Background Check"
 
     expect(page).to have_link("Request background check invitation")
