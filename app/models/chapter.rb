@@ -3,7 +3,6 @@ class Chapter < ActiveRecord::Base
   include ActiveGeocoded
   include OnboardingTasksConcern
   include StatusHelpers
-
   include Casting::Client
   delegate_missing_methods
 
