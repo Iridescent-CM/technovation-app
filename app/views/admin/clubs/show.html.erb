@@ -39,8 +39,8 @@
             <%= render partial: "admin/chapterables/season_status",
               locals: { chapterable: @club } %>
 
-            <dt>Seasons</dt>
-            <dd><%= @club.seasons.to_sentence.presence || "No seasons" %></dd>
+            <%= render partial: "admin/chapterables/seasons_list",
+              locals: { chapterable: @club } %>
           </dl>
         </div>
       </div>
