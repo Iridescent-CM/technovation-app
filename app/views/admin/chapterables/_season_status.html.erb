@@ -1,15 +1,24 @@
 <dt>Status for <%= Season.current.year %> Season</dt>
 <dd>
-  <%= chapterable.active_for_current_season? ? "Active" : "Inactive" %>
+  <%= chapterable.active? ? "Active" : "Inactive" %>
+
   <p>
-    <%= link_to chapterable.active_for_current_season? ? "Mark inactive" : "Mark active",
-      send("admin_#{chapterable.class.name.downcase}_season_status_path", chapterable, active: !chapterable.active_for_current_season?),
+  <% if chapterable.active? %>
+    <%= link_to "Mark inactive",
+      send("inactive_admin_#{chapterable.class.name.downcase}_status_path", chapterable),
       class: "button secondary small",
       data: {
         method: :patch,
-        confirm: "This will mark #{chapterable.name.presence || chapterable.organization_name} #{chapterable.active_for_current_season? ? "inactive": "active"} for the #{Season.current.year} season."
+        confirm: "This will mark #{chapterable.name.presence || chapterable.organization_name} inactive for the #{Season.current.year} season."
       } %>
+    <% else %>
+      <%= link_to "Mark active",
+        send("active_admin_#{chapterable.class.name.downcase}_status_path", chapterable),
+        class: "button secondary small",
+        data: {
+          method: :patch,
+          confirm: "This will mark #{chapterable.name.presence || chapterable.organization_name} active for the #{Season.current.year} season."
+        } %>
+    <% end %>
   </p>
 </dd>
-
-
