@@ -12,7 +12,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
       sign_in(user)
 
       if scope == :mentor
-        click_button "Submit your Project"
+        click_link "Submit your Project"
       end
 
       if scope == :student
@@ -20,7 +20,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
       end
 
       if scope == :mentor
-        click_link "Edit this team's submission"
+        click_link "Edit submission"
       end
     end
 
