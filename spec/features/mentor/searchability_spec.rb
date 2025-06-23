@@ -15,6 +15,7 @@ RSpec.feature "Searchability", js: true do
     sign_in(mentor)
     visit mentor_dashboard_path
     visit mentor_training_completion_path
+    click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
 
     check "read_and_understands_code_of_conduct"
