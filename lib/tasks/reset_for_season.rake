@@ -26,7 +26,10 @@ task :reset_for_season, [:force] => :environment do |t, args|
     JudgeProfile.update_all(completed_training_at: nil)
 
     puts "Activating chapters"
-    SeasonRollover::ChapterActivator.new.call
+    SeasonSetup::ChapterActivator.new.call
+
+    puts "Activating clubs"
+    SeasonSetup::ClubActivator.new.call
 
     puts "Finished resetting"
   else

@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe SeasonRollover::ChapterActivator do
-  let(:chapter_activator) { SeasonRollover::ChapterActivator.new }
+RSpec.describe SeasonSetup::ChapterActivator do
+  let(:chapter_activator) { SeasonSetup::ChapterActivator.new }
   let!(:chapter) { FactoryBot.create(:chapter) }
 
   before do
