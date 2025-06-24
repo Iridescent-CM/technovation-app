@@ -1,7 +1,7 @@
 <% feature = TechnovationFeature.new(current_mentor, :submissions) %>
 
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render "mentor/new_dashboards/side_nav" %>
+  <%= render "mentor/dashboards/side_nav" %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Submit Your Project" } do %>
     <% if SeasonToggles.team_submissions_editable? && @current_teams.any? %>

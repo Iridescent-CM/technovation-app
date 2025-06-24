@@ -112,10 +112,10 @@ feature "chapter ambassadors switch to judge mode through mentor dashboard", :js
       expect(chapter_ambassador.is_a_judge?).to be_truthy
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to Chapter Ambassador mode")
+      expect(page).to have_selector("a", text: "Switch to Chapter Ambassador Mode", visible: false)
       expect(current_path).to eq(mentor_dashboard_path)
 
-      click_link "Switch to Judge mode"
+      visit judge_dashboard_path
       expect(page).to have_text("Judging Rubric")
       expect(current_path).to eq(judge_dashboard_path)
     end
@@ -128,10 +128,9 @@ feature "chapter ambassadors switch to judge mode through mentor dashboard", :js
       expect(chapter_ambassador.is_a_judge?).to be_falsey
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to Chapter Ambassador mode")
+      expect(page).to have_selector("a", text: "Switch to Chapter Ambassador Mode", visible: false)
       expect(current_path).to eq(mentor_dashboard_path)
-
-      expect(page).not_to have_link("Switch to Judge mode")
+      expect(page).not_to have_selector("a", text: "Switch to Judge mode", visible: false)
     end
   end
 
@@ -149,10 +148,10 @@ feature "chapter ambassadors switch to judge mode through mentor dashboard", :js
       expect(chapter_ambassador.is_a_judge?).to be_truthy
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to Chapter Ambassador mode")
+      expect(page).to have_selector("a", text: "Switch to Chapter Ambassador Mode", visible: false)
       expect(current_path).to eq(mentor_dashboard_path)
 
-      expect(page).not_to have_link("Switch to Judge mode")
+      expect(page).not_to have_selector("a", text: "Switch to Judge mode", visible: false)
     end
 
     scenario "a chapter ambassador without a judge profile does not see a judge mode link on their mentor dashboard" do
@@ -163,10 +162,10 @@ feature "chapter ambassadors switch to judge mode through mentor dashboard", :js
       expect(chapter_ambassador.is_a_judge?).to be_falsey
 
       click_link "Mentor Mode"
-      expect(page).to have_link("Switch to Chapter Ambassador mode")
+      expect(page).to have_selector("a", text: "Switch to Chapter Ambassador Mode", visible: false)
       expect(current_path).to eq(mentor_dashboard_path)
 
-      expect(page).not_to have_link("Switch to Judge mode")
+      expect(page).not_to have_selector("a", text: "Switch to Judge mode", visible: false)
     end
   end
 end

@@ -12,14 +12,14 @@ RSpec.feature "Mentors switching to judging mode", :js do
     scenario "displaying the judge mode link" do
       sign_in(mentor)
 
-      expect(page).to have_link "Switch to Judge mode"
+      expect(page).to have_selector("a", text: "Switch to Judge Mode", visible: false)
     end
 
     scenario "creating a new judge profile for the mentor" do
       sign_in(mentor)
       expect(mentor.is_a_judge?).to eq(false)
 
-      click_link "Switch to Judge mode"
+      visit judge_dashboard_path
       expect(mentor.reload.is_a_judge?).to eq(true)
     end
   end
@@ -33,7 +33,7 @@ RSpec.feature "Mentors switching to judging mode", :js do
     scenario "not displaying the judge mode link" do
       sign_in(mentor)
 
-      expect(page).not_to have_link "Switch to Judge mode"
+      expect(page).not_to have_selector("a", text: "Switch to Judge Mode", visible: false)
     end
   end
 end

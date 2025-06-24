@@ -44,13 +44,13 @@ RSpec.feature "Toggling display of scores" do
     scenario "display scores on" do
       SeasonToggles.display_scores_on!
       visit mentor_dashboard_path
-      expect(page).to have_css("div.mentor-scores")
+      expect(page).to have_link("View Scores & Certificates")
     end
 
     scenario "display scores off" do
       SeasonToggles.display_scores_off!
-      visit mentor_dashboard_path
-      expect(page).not_to have_css("div.mentor-scores")
+      visit mentor_scores_path
+      expect(page).to have_content("Reading your scores and certificates is not available right now.")
     end
   end
 end

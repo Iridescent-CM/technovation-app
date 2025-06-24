@@ -13,7 +13,8 @@ RSpec.feature "Students edit submission pieces" do
     SeasonToggles.team_submissions_editable!
     TeamRosterManaging.add(student.team, mentor)
     sign_in(mentor)
-    within("#find-team #team_#{student.team.id}") { click_link "Edit this team's submission" }
+    visit mentor_team_submissions_path
+    within("#team_#{student.team.id}") { click_link "Edit submission" }
   end
 
   scenario "Set the project name" do

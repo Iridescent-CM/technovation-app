@@ -29,12 +29,12 @@ RSpec.describe "Publishing a submission from the dashboard" do
 
       sign_in(mentor)
 
-      within("#find-team") do
-        expect(page).to have_link(
-          "Review and submit now!",
-          href: mentor_published_team_submission_path(submission)
-        )
-      end
+      click_link "Submit your Project"
+
+      expect(page).to have_link(
+        "Review and submit now!",
+        href: mentor_published_team_submission_path(submission)
+      )
     end
   end
 end

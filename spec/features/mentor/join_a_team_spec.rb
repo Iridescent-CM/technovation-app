@@ -65,7 +65,8 @@ RSpec.feature "Mentors join a team" do
       click_button "Yes, do it"
 
       expect(page).to have_content("You have cancelled your request")
-      within("#find-team") { expect(page).not_to have_content(available_team.name) }
+      visit mentor_teams_path
+      expect(page).not_to have_content(available_team.name)
     end
   end
 end

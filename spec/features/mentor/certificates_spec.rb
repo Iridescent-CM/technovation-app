@@ -18,7 +18,6 @@ RSpec.feature "Mentor certificates" do
 
     sign_in(mentor)
 
-    click_link "My profile"
     click_link "Scores & Certificates"
     click_link "Certificates"
     expect(page).not_to have_link("Open your certificate")
@@ -39,7 +38,6 @@ RSpec.feature "Mentor certificates" do
 
     sign_in(mentor)
 
-    click_link "My profile"
     click_link "Scores & Certificates"
     click_link "Certificates"
 
@@ -68,7 +66,6 @@ RSpec.feature "Mentor certificates" do
     }.from(0).to(2)
 
     sign_in(mentor)
-    click_link "My profile"
     click_link "Scores & Certificates"
     click_link "Certificates"
 

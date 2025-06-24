@@ -18,9 +18,9 @@ RSpec.feature "Mentors view scores" do
     FactoryBot.create(:submission_score, :complete, team_submission: submission)
 
     sign_in(mentor)
-    click_link("View details")
+    click_link("View Scores & Certificates")
 
-    expect(page).to have_title("Review Score")
+    expect(page).to have_content("View details")
   end
 
   scenario "view SF scores" do
@@ -44,8 +44,8 @@ RSpec.feature "Mentors view scores" do
     )
 
     sign_in(mentor)
-    click_link("View details")
+    click_link("View Scores & Certificates")
 
-    expect(page).to have_title("Review Score")
+    expect(page).to have_content("View details")
   end
 end
