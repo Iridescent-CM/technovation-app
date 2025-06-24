@@ -39,14 +39,15 @@ RSpec.feature "background checks", js: true do
       sign_in(mentor)
 
       visit mentor_training_completion_path
-      click_link "Sign Consent Waiver"
+      click_link "Consent Waiver"
 
       check "read_and_understands_code_of_conduct"
       check "acknowledges_consequences_of_code_of_conduct"
       fill_in "consent_waiver_electronic_signature", with: "My sig"
       click_button "I agree"
 
-      visit edit_mentor_profile_path
+      visit mentor_bio_path
+      click_link "Add your summary"
       fill_in "mentor_profile_bio",
         with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \
           "Praesent luctus dapibus lacus vitae interdum. " \
