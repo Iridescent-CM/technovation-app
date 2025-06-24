@@ -1,12 +1,9 @@
-module SeasonRollover
-  class ChapterActivator
+module SeasonSetup
+  class ClubActivator
     def call
-      Chapter
+      Club
         .where("'#{previous_season}' = ANY(seasons)")
         .where.not("'#{current_season}' = ANY(seasons)")
-        .joins(legal_contact: :chapter_affiliation_agreement)
-        .includes(legal_contact: :chapter_affiliation_agreement)
-        .where(chapter_affiliation_agreement: {status: ["signed", "off-platform"]})
         .update_all("seasons = array_append(seasons, '#{current_season}')")
     end
 
