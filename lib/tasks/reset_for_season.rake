@@ -25,6 +25,9 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Resetting judge trainings"
     JudgeProfile.update_all(completed_training_at: nil)
 
+    puts "Activating chapters"
+    SeasonRollover::ChapterActivator.new.call
+
     puts "Finished resetting"
   else
     season_start_date = "#{Date.today.year}-#{Season::START_MONTH.to_s.rjust(2, "0")}-#{Season::START_DAY.to_s.rjust(2, "0")}"
