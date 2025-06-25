@@ -5,11 +5,11 @@ module StatusHelpers
     seasons.include?(Season.current.year)
   end
 
-  def mark_active
+  def activate
     update(seasons: seasons << Season.current.year)
   end
 
-  def mark_inactive
+  def deactivate
     update(seasons: seasons - [Season.current.year])
   end
 end
