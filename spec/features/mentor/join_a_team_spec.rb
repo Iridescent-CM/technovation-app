@@ -14,7 +14,7 @@ RSpec.feature "Mentors join a team" do
 
   before {
     sign_in(mentor)
-    visit mentor_team_builder_path
+    visit mentor_team_building_path
   }
 
   scenario "request to join a team" do
