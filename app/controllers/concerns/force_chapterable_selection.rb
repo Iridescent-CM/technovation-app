@@ -11,9 +11,12 @@ module ForceChapterableSelection
     return if request.xhr? ||
       !logged_in_and_has_profile? ||
       !valid_location? ||
-      current_account.assigned_to_chapterable? ||
-      current_account.no_chapterable_selected? ||
-      current_account.no_chapterables_available? ||
+      !current_account.force_chapterable_selection? &&
+        (
+          current_account.assigned_to_chapterable? ||
+          current_account.no_chapterable_selected? ||
+          current_account.no_chapterables_available?
+        ) ||
       (current_account.scope_name != "student" && current_account.scope_name != "mentor") ||
       on_chapter_selection_page?
 

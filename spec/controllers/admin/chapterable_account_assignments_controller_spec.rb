@@ -37,6 +37,19 @@ RSpec.describe Admin::ChapterableAccountAssignmentsController do
 
         expect(club_ambassador.account.reload.current_club).to eq(club)
       end
+
+      it "sets 'force_chapterable_selection' to false for the account" do
+        post :create, params: {
+          account_id: club_ambassador.account.id,
+          chapterable_account_assignment: {
+            club_id: club.id,
+            chapter_id: nil,
+            chapterable_type: "Club"
+          }
+        }
+
+        expect(club_ambassador.account.reload.force_chapterable_selection?).to eq(false)
+      end
     end
 
     context "when no chapterable is selected" do

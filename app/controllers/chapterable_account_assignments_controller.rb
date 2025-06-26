@@ -24,10 +24,18 @@ class ChapterableAccountAssignmentsController < ApplicationController
         .delete_all
 
       if params[:chapterable] == "none_selected"
-        current_account.update(no_chapterable_selected: true)
+        current_account.update(
+          no_chapterable_selected: true,
+          force_chapterable_selection: false
+        )
       elsif params[:chapterable] == "none_available"
-        current_account.update(no_chapterables_available: true)
+        current_account.update(
+          no_chapterables_available: true,
+          force_chapterable_selection: false
+        )
       else
+        current_account.update(force_chapterable_selection: false)
+
         assignment = current_account.chapterable_assignments.create(
           profile: current_account.mentor_profile.presence || current_account.student_profile,
           chapterable_id: params[:chapterable].split.first,
