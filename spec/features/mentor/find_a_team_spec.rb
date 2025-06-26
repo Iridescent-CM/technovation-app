@@ -23,7 +23,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    visit mentor_team_builder_path
+    visit mentor_team_building_path
     click_link "Find a team"
 
     expect(page).to have_content(available_team.name)
@@ -42,7 +42,7 @@ RSpec.feature "Mentors find a team" do
       state_province: "CA"
     )
 
-    visit mentor_team_builder_path
+    visit mentor_team_building_path
     click_link "Find a team"
 
     fill_in "text", with: "araw" # partial match
@@ -58,7 +58,7 @@ RSpec.feature "Mentors find a team" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    visit mentor_team_builder_path
+    visit mentor_team_building_path
     click_link "Find a team"
 
     check "Junior"
@@ -74,7 +74,7 @@ RSpec.feature "Mentors find a team" do
     junior_team = FactoryBot.create(:team, :junior, :geocoded)
     senior_team = FactoryBot.create(:team, :senior, :geocoded)
 
-    visit mentor_team_builder_path
+    visit mentor_team_building_path
     click_link "Find a team"
 
     check "Senior"
