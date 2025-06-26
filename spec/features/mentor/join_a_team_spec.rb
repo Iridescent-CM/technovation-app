@@ -12,11 +12,14 @@ RSpec.feature "Mentors join a team" do
 
   let(:mentor) { FactoryBot.create(:mentor, :onboarded, :geocoded) } # City is Chicago
 
-  before { sign_in(mentor) }
+  before {
+    sign_in(mentor)
+    visit mentor_team_building_path
+  }
 
   scenario "request to join a team" do
     Timecop.freeze(day_before_qfs) do
-      within("#find-team") { click_link "Find a team", class: "button" }
+      click_link "Find a team"
 
       click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"
@@ -28,7 +31,6 @@ RSpec.feature "Mentors join a team" do
       expect(page).to have_content(
         "You have requested to be a mentor for #{available_team.name}"
       )
-      expect(page).to have_content("You have requested to join this team")
     end
   end
 
@@ -41,14 +43,13 @@ RSpec.feature "Mentors join a team" do
 
       join_request.deleted!
 
-      within("#find-team") { click_link "Find a team", class: "button" }
+      click_link "Find a team"
 
       click_link "View more details"
       click_button "Ask to be a mentor for #{available_team.name}"
 
       expect(current_path).to eq(mentor_join_request_path(join_request))
-      expect(page).to have_content("You have requested to join this team")
-      expect(page).to have_content(join_request.team_name)
+      expect(page).to have_content("You have requested to be a mentor for #{available_team.name}")
     end
   end
 
@@ -59,8 +60,7 @@ RSpec.feature "Mentors join a team" do
         team: available_team
       })
 
-      visit mentor_dashboard_path
-
+      click_link "Pending Team Invites & Join Requests"
       within("#join_request_#{join_request.id}") { click_link "Cancel my request" }
       click_button "Yes, do it"
 

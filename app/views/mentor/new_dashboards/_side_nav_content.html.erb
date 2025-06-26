@@ -36,6 +36,28 @@
         %>
       </ol>
 
+      <ol role="list" class="space-y-4 mb-6 overflow-hidden">
+        <%= render "application/templates/side_nav_item",
+                   name: "Build your Team",
+                   url: mentor_team_building_path,
+                   is_active_item: al(mentor_team_building_path).present?
+        %>
+
+        <ol class="ml-6 space-y-4">
+          <%= render "application/templates/side_nav_item",
+                     name: "Join or Create your Team",
+                     url: mentor_team_building_path,
+                     is_active_item: al(mentor_team_building_path).present?
+          %>
+
+          <%= render "application/templates/side_nav_item",
+                     name: "Pending Team Invites & Join Requests",
+                     url: mentor_pending_team_requests_path,
+                     is_active_item: al(mentor_pending_team_requests_path).present?
+          %>
+        </ol>
+      </ol>
+
       <%= render "application/templates/side_nav_item",
         name: "Learn from the Curriculum",
         url: mentor_curriculum_path,
