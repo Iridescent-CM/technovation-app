@@ -19,6 +19,10 @@ FactoryBot.define do
         chapter: chapter)
     end
 
+    trait :current do
+      seasons { [Season.current.year] }
+    end
+
     trait :chicago do
       city { "Chicago" }
       state_province { "IL" }

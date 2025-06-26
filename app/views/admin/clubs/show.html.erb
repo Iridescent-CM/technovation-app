@@ -35,6 +35,12 @@
               %>
               </p>
             </dd>
+
+            <%= render partial: "admin/chapterables/season_status",
+              locals: { chapterable: @club } %>
+
+            <%= render partial: "admin/chapterables/seasons_list",
+              locals: { chapterable: @club } %>
           </dl>
         </div>
       </div>

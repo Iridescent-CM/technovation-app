@@ -341,10 +341,18 @@ Rails.application.routes.draw do
       resources :invites, only: :create, controller: "chapter_invites"
       resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
       resource :location, only: :edit, controller: "chapters/locations"
+      resource :status, only: [], controller: "chapters/status" do
+        patch :activate
+        patch :deactivate
+      end
     end
 
     resources :clubs do
       resource :location, only: :edit, controller: "clubs/locations"
+      resource :status, only: [], controller: "clubs/status" do
+        patch :activate
+        patch :deactivate
+      end
     end
 
     resources :club_ambassadors, only: :index
