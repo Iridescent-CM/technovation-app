@@ -144,7 +144,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
     scenario "Team building enabled" do
       enable_team_building
-      visit mentor_team_builder_path
+      visit mentor_team_building_path
 
       expect(page).to have_link("Find a team")
       expect(page).to have_link("Create your team")
@@ -152,7 +152,7 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
     scenario "Team building disabled" do
       disable_team_building
-      visit mentor_team_builder_path
+      visit mentor_team_building_path
 
       expect(page).not_to have_link("Find a team")
       expect(page).not_to have_link("Create your team")
