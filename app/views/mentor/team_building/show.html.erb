@@ -2,14 +2,14 @@
   <%= render "mentor/new_dashboards/side_nav" %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Build your team" } do %>
-    <% if current_mentor.onboarding? || SeasonToggles.team_building_disabled?%>
+    <% if current_mentor.onboarding? || SeasonToggles.team_building_disabled? %>
       <%= render "explanations/feature_not_available", feature: :team_invites %>
     <% else %>
       <div class="mb-16">
         <h4 class="text-xl font-medium mb-2">Find a Team</h4>
         <p>
           You can request to mentor existing teams of girls, and make yourself available
-          for teams to request your mentorship. AS a mentor, you may support as many
+          for teams to request your mentorship. As a mentor, you may support as many
           teams as you are comfortable with. More than 1 mentor may support a team.
         </p>
 
@@ -34,7 +34,7 @@
         </p>
         <%= link_to(t("views.profile_requirements.create_join_team.links.create.text"),
           new_mentor_team_path,
-        class: "tw-green-btn") %>
+          class: "tw-green-btn") %>
       </div>
     <% end %>
   <% end %>
