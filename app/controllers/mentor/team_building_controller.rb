@@ -1,5 +1,5 @@
 module Mentor
-  class TeamBuilderController < MentorController
+  class TeamBuildingController < MentorController
     layout "mentor_rebrand"
   end
 end

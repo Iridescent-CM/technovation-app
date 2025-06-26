@@ -78,7 +78,7 @@ Rails.application.routes.draw do
     resource :consent_waiver, only: :show
     resources :consent_waivers, only: [:new, :create, :show]
     resource :curriculum, only: :show, controller: "curriculum"
-    resource :team_builder, only: :show, controller: "team_builder"
+    resource :team_building, only: :show, controller: "team_building"
     resource :pending_team_requests, only: :show, controller: "pending_team_requests"
 
 
