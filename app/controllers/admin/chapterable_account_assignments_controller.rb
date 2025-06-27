@@ -31,8 +31,12 @@ module Admin
         )
 
         if assignment.save
-          @account.update(no_chapterable_selected: nil)
-          @account.update(no_chapterables_available: nil)
+          @account.update(
+            no_chapterable_selected: nil,
+            no_chapterables_available: nil,
+            force_chapterable_selection: false
+          )
+
           redirect_to admin_participant_path(@account),
             success: "Successfully assigned #{@account.full_name} to a new #{chapterable_type}"
         else
