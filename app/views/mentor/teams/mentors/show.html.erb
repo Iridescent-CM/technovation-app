@@ -1,0 +1,11 @@
+<% admin_chapter_ambassador ||= false %>
+
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/teams/side_nav", team: @team %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Mentors" } do %>
+    <%= render "teams/mentor_list",
+      admin_chapter_ambassador: admin_chapter_ambassador,
+      team: @team %>
+  <% end %>
+</div>
