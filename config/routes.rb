@@ -93,7 +93,11 @@ Rails.application.routes.draw do
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]
 
-    resources :teams, except: [:destroy]
+    resources :teams, except: [:destroy] do
+      resource :students, only: :show, controller: "teams/students"
+      resource :mentors, only: :show, controller: "teams/mentors"
+      resource :division, only: :show, controller: "teams/division"
+    end
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
