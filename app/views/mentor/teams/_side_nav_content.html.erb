@@ -1,0 +1,27 @@
+  <nav class="p-4">
+    <ol role="list" class="space-y-6 mb-6 overflow-hidden">
+      <%= render "application/templates/side_nav_item",
+        name: "Team Overview",
+        url: mentor_team_path(@team),
+        is_active_item: request.path == mentor_team_path(@team)
+      %>
+
+      <%= render "application/templates/side_nav_item",
+         name: "Students",
+         url: mentor_team_students_path(@team),
+         is_active_item: al(mentor_team_students_path(@team)).present?
+      %>
+
+      <%= render "application/templates/side_nav_item",
+         name: "Mentors",
+         url: mentor_team_mentors_path(@team),
+         is_active_item: al(mentor_team_mentors_path(@team)).present?
+      %>
+
+      <%= render "application/templates/side_nav_item",
+         name: "Division Details",
+         url: mentor_team_division_path(@team),
+         is_active_item: al(mentor_team_division_path(@team)).present?
+      %>
+    </ol>
+  </nav>
