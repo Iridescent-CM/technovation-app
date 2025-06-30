@@ -1,3 +1,7 @@
-<%= render "profiles/public_show",
-  title: @student.first_name,
-  account: @student %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Viewing Student Profile" } do %>
+    <%= render "profiles/rebrand/public_show",
+      title: @student.first_name,
+      account: @student %>
+  <% end %>
+</div>
