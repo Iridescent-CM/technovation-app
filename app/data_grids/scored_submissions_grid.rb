@@ -11,7 +11,9 @@ class ScoredSubmissionsGrid
       .references(:teams, :submission_scores, :judge_profiles)
   end
 
-  column :contest_rank
+  column :contest_rank, if: ->(g) { g.admin } do |submission|
+    submission.contest_rank.humanize.titleize
+  end
 
   column :division do
     team_division_name
@@ -368,6 +370,7 @@ class ScoredSubmissionsGrid
 
   filter :submission_contest_rank,
     :enum,
+    if: ->(g) { g.admin },
     select: TeamSubmission.contest_ranks.keys,
     filter_group: "common" do |value, scope, grid|
     scope.public_send(value)

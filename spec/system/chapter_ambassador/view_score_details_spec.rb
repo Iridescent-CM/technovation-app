@@ -103,10 +103,6 @@ RSpec.describe "viewing score details page" do
           end
         end
 
-        it "displays the team's rank" do
-          expect(page).to have_content("semifinalist")
-        end
-
         it "displays the name of the RPE" do
           expect(page).to have_content("Windy City Event")
         end
@@ -213,10 +209,6 @@ RSpec.describe "viewing score details page" do
         within "h1" do
           expect(page).to have_content("Ravenclaw")
         end
-      end
-
-      it "displays the team's rank" do
-        expect(page).to have_content("semifinalist")
       end
 
       it "displays the name of the RPE" do
