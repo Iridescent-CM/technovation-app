@@ -31,6 +31,9 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Activating clubs"
     SeasonSetup::ClubActivator.new.call
 
+    puts "Setting force chapterable selection flag"
+    SeasonSetup::ForceChapterableSelectionActivator.new.call
+
     puts "Finished resetting"
   else
     season_start_date = "#{Date.today.year}-#{Season::START_MONTH.to_s.rjust(2, "0")}-#{Season::START_DAY.to_s.rjust(2, "0")}"
