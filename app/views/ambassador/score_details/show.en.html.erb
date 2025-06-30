@@ -2,8 +2,10 @@
   <h1><%= @submission.team_name %></h1>
 
   <dl>
-    <dt>Rank:</dt>
-    <dd><%= @submission.contest_rank %></dd>
+    <% if SeasonToggles.display_scores_and_certs? || current_account.is_admin? %>
+      <dt>Rank:</dt>
+      <dd><%= @submission.contest_rank.humanize.titleize %></dd>
+    <% end %>
 
     <dt>Event:</dt>
     <dd><%= @submission.team.event.name %></dd>

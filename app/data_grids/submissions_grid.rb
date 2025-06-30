@@ -17,7 +17,7 @@ class SubmissionsGrid
     team.division_name.humanize
   end
 
-  column :contest_rank, mandatory: true, order: false do |submission|
+  column :contest_rank, if: ->(g) { g.admin } do |submission|
     submission.contest_rank.humanize.titleize
   end
 
@@ -335,6 +335,7 @@ class SubmissionsGrid
 
   filter :contest_rank,
     :enum,
+    if: ->(g) { g.admin },
     select: TeamSubmission.contest_ranks.map { |key, _value| [key.humanize.titleize, key] } do |value|
       public_send(value)
     end

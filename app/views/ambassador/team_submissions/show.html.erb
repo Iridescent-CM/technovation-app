@@ -23,11 +23,13 @@
                 class: "grid__cell--padding-sm-y"
               ) %>
 
-          <%= web_icon(
-                "flag-o",
-                text: "Rank: #{@team_submission.contest_rank.capitalize}",
-                class: "grid__cell--padding-sm-y"
-              ) %>
+          <% if SeasonToggles.display_scores_and_certs? || current_account.is_admin? %>
+            <%= web_icon(
+                  "flag-o",
+                  text: "Rank: #{@team_submission.contest_rank.humanize.titleize}",
+                  class: "grid__cell--padding-sm-y"
+                ) %>
+          <% end %>
 
           <div class="grid__cell--padding-sm-y">
             <%= submission_progress_bar(@team_submission) %>
