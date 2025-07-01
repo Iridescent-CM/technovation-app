@@ -11,7 +11,7 @@ RSpec.feature "Mentor creates a team" do
 
     sign_in(mentor)
 
-    visit mentor_team_builder_path
+    visit mentor_team_building_path
     click_link "Create your team"
     fill_in "Team name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
@@ -29,7 +29,7 @@ RSpec.feature "Mentor creates a team" do
 
     sign_in(mentor)
 
-    visit mentor_team_builder_path
+    visit mentor_team_building_path
     click_link "Create your team"
     fill_in "Team name", with: "Awesomest Saucesests"
     click_button I18n.t("views.application.create",
