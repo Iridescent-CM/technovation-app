@@ -6,7 +6,7 @@
       <p><%= member.full_name %></p>
       <p><%= mail_to member.email %></p>
 
-      <% if member.actions_needed.present? %>
+      <% if member.student_profile.present? && member.actions_needed.present? %>
         <div class="text-sm text-gray-900 truncate">
           <p class="font-medium">Onboarding steps required:</p>
           <ul class="list-disc list-inside ml-4">
