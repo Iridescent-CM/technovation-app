@@ -38,13 +38,17 @@
 
     <h5 class="font-medium mt-16">Do you want more teammates?</h5>
 
-    <%= render "application/templates/alerts/info" do %>
-      <% if !SeasonToggles.team_building_enabled? || SeasonToggles.judging_enabled_or_between? %>
+    <% if !SeasonToggles.team_building_enabled? || SeasonToggles.judging_enabled_or_between? %>
+      <%= render "application/templates/alerts/info" do %>
         Team building is not enabled at this time, so your team cannot add students.
-      <% elsif !@team.spot_available? %>
+      <% end %>
+    <% elsif !@team.spot_available? %>
+      <%= render "application/templates/alerts/info" do %>
         You cannot invite more students while you have a combined total
         of five members, invitations, and/or join requests.
-      <% elsif !@team.current? %>
+      <% end %>
+    <% elsif !@team.current? %>
+      <%= render "application/templates/alerts/info" do %>
         <%= t("views.teams.show.past_team") %>
       <% end %>
     <% end %>
