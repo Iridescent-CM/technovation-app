@@ -59,24 +59,6 @@ class CertificateRecipient
     end
   end
 
-  define_method("LEVEL") do
-    level
-  end
-
-  define_method("Name") do
-    full_name
-  end
-
-  define_method("DESCRIPTION") do
-    title = @certificate_type.to_s.humanize.titleize
-
-    if @team.present?
-      "#{title} Certificate for #{@team.name}"
-    else
-      "#{title} Certificate"
-    end
-  end
-
   def ==(other)
     other.class == self.class && other.state == state
   end
