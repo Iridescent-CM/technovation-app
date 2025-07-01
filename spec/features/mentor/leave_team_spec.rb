@@ -10,7 +10,7 @@ RSpec.feature "Mentors leave their own team" do
     TeamRosterManaging.add(team, mentor)
 
     sign_in(mentor)
-    within("#find-team") { click_link mentor.team_names.last }
+    visit mentor_team_mentors_path(team)
     click_link "remove this member"
 
     expect(current_path).to eq(mentor_dashboard_path)
