@@ -4,8 +4,54 @@
   <%= render "mentor/teams/side_nav", team: @team %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Mentors" } do %>
-    <%= render "teams/mentor_list",
-      admin_chapter_ambassador: admin_chapter_ambassador,
-      team: @team %>
+    <p class="mb-8">You can add as many mentors as your team needs.</p>
+
+    <% if @team.mentors.any? %>
+      <%= render "mentor/teams/mentors/mentors_list",
+        mentors: @team.mentors.where.not(account_id: nil) %>
+    <% else %>
+      <p>Your team does not have any mentors</p>
+    <% end %>
+
+    <h5 class="font-medium mt-16">Invitations and Requests</h5>
+    <p class="tw-hint">
+      Only students can invite mentors to a team.
+      You can connect with other mentors
+      <%= link_to "here", new_mentor_mentor_search_path, class: "tw-link" %>.
+    </p>
+
+    <% if @team.pending_mentor_join_requests.present? %>
+      <%= render "teams/rebrand/pending_requests",
+        team: @team,
+        requests: @team.pending_mentor_join_requests %>
+    <% else %>
+      <p>There are no pending join requests</p>
+    <% end %>
+
+    <h5 class="font-medium mt-16">Do you want more mentors?</h5>
+    <p class="tw-hint">
+      If you're looking to add a student to your team,
+      <%= link_to "go here", public_send("#{current_scope}_team_students_path", @team), class: "text-energetic-blue" %>.
+    </p>
+
+    <% if SeasonToggles.team_building_enabled? %>
+      <%= form_with model: @team,
+        data: { submit_on_change: true },
+        url: send("#{current_scope}_team_path", @team, { format: :json }),
+        method: :patch do |f| %>
+        <p>
+          <%= f.check_box :accepting_mentor_requests,
+            id: :team_accepting_mentor_requests %>
+
+          <%= f.label :accepting_mentor_requests,
+            "Allow mentors to find our team and request to join us",
+            for: :team_accepting_mentor_requests %>
+        </p>
+      <% end %>
+    <% else %>
+      <%= render "application/templates/alerts/info" do %>
+        Team building is not enabled at this time, so your team cannot add mentors.
+      <% end %>
+    <% end %>
   <% end %>
 </div>
