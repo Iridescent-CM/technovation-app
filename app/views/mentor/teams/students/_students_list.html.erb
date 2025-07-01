@@ -1,3 +1,5 @@
 <ul>
-  <%= render partial: "teams/rebrand/member", collection: students %>
+  <%= render partial: "teams/rebrand/member",
+    collection: students,
+    locals: { team: team } %>
 </ul>

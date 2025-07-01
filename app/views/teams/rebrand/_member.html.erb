@@ -20,9 +20,9 @@
       <% if CanRemoveTeamMember.(current_account, member) %>
         <%= link_to "remove this member",
           send("#{current_scope}_team_membership_path",
-               @team,
-               member_id: member.id,
-               member_type: member.class.name
+            team,
+            member_id: member.id,
+            member_type: member.class.name
           ),
           data: {
             method: :delete,

@@ -1,5 +1,5 @@
-<%= render layout: "application/templates/dashboards/side_nav", locals: { heading: @team.name } do %>
+<%= render layout: "application/templates/dashboards/side_nav", locals: { heading: team.name } do %>
   <div class="p-4" id="tab-wrapper">
-    <%= render "mentor/teams/side_nav_content", team: @team %>
+    <%= render "mentor/teams/side_nav_content", team: team %>
   </div>
 <% end %>

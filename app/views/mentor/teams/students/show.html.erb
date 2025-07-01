@@ -1,14 +1,15 @@
 <% admin_chapter_ambassador ||= false %>
 
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render "mentor/teams/side_nav" %>
+  <%= render "mentor/teams/side_nav", team: @team %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Students" } do %>
     <h5 class="font-medium mb-4">Current Students</h5>
 
     <% if @team.students.onboarded.any? %>
       <%= render "mentor/teams/students/students_list",
-        students: @team.students.onboarded %>
+        students: @team.students.onboarded,
+        team: @team %>
     <% else %>
       <p>Your team does not have any students</p>
     <% end %>
@@ -21,12 +22,13 @@
 
     <% if @team.students.onboarding.any? %>
       <%= render "mentor/teams/students/students_list",
-        students: @team.students.onboarding %>
+        students: @team.students.onboarding,
+        team: @team %>
     <% else %>
       <p>Your team does not have any pending students</p>
     <% end %>
 
-    <h5 class="font-medium mt-16">Requests to join your team</h5>
+    <h5 class="font-medium mt-16 mb-4">Requests to join your team</h5>
 
     <% if @team.pending_student_join_requests.present? %>
       <%= render "teams/rebrand/pending_requests",
