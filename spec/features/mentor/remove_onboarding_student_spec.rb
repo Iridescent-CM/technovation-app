@@ -9,12 +9,9 @@ RSpec.feature "Mentors removing students from a team" do
     TeamRosterManaging.add(team, [onboarding_student, mentor])
 
     sign_in(mentor)
-    click_link "My Teams"
-    click_link team.name
+    visit mentor_team_students_path(team)
 
-    within(".onboarding_students") do
-      click_link "remove this member"
-    end
+    click_link "remove this member"
 
     expect(team.reload.mentors).to include(mentor)
     expect(team.students).not_to include(onboarding_student)
