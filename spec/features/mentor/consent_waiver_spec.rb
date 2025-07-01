@@ -47,7 +47,7 @@ RSpec.feature "Consent waivers", js: true do
   end
 
   scenario "valid token, valid code of conduct, valid signature" do
-    visit mentor_new_dashboard_path
+    visit mentor_dashboard_path
 
     click_link "Consent Waiver"
     click_link "Sign Consent Waiver"
