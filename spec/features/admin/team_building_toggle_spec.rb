@@ -205,15 +205,15 @@ RSpec.feature "Team submissions editable toggles team roster controls" do
 
     scenario "Team building enabled" do
       enable_team_building
-      visit mentor_team_path(team)
-
+      visit mentor_team_students_path(team)
       expect(page).to have_text("Do you want more teammates?")
+      visit mentor_team_mentors_path(team)
       expect(page).to have_text("Do you want more mentors?")
     end
 
     scenario "Team building disabled" do
       disable_team_building
-      visit mentor_team_path(team)
+      visit mentor_team_students_path(team)
 
       expect(page).to have_text("Team building is not enabled at this time")
     end

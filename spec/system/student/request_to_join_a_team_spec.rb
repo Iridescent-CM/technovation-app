@@ -192,7 +192,7 @@ RSpec.describe "Students request to join a team",
       sign_out
       sign_in(team.mentors.sample)
 
-      visit mentor_team_path(team)
+      visit mentor_team_students_path(team)
 
       expect {
         click_link "Approve"
@@ -204,7 +204,7 @@ RSpec.describe "Students request to join a team",
       sign_out
       sign_in(team.mentors.sample)
 
-      visit mentor_team_path(team)
+      visit mentor_team_students_path(team)
 
       expect {
         click_link "Decline"
