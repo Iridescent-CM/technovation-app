@@ -40,6 +40,7 @@ RSpec.feature "background checks", js: true do
 
       visit mentor_training_completion_path
       click_link "Consent Waiver"
+      click_link "Sign Consent Waiver"
 
       check "read_and_understands_code_of_conduct"
       check "acknowledges_consequences_of_code_of_conduct"
