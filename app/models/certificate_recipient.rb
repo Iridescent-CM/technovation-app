@@ -5,7 +5,7 @@ require "./app/null_objects/null_team"
 class CertificateRecipient
   attr_reader :certificate_type, :account, :team,
     :id, :mobile_app_name, :full_name,
-    :team_name, :team_id, :season
+    :team_name, :team_id, :season, :division
 
   def initialize(certificate_type, account, **options)
     @certificate_type = certificate_type
@@ -17,6 +17,7 @@ class CertificateRecipient
       @team_id = team.id
       @mobile_app_name = team.submission.app_name
       @team_name = team.name
+      @division = team.division_name.humanize.titleize
     end
 
     @account = account
