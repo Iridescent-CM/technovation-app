@@ -7,6 +7,10 @@ class ChapterableAccountAssignment < ApplicationRecord
     where(season: Season.current.year)
   }
 
+  scope :last_season, -> {
+    where(season: Season.current.year - 1)
+  }
+
   scope :chapters, -> {
     where(chapterable_type: "Chapter")
   }

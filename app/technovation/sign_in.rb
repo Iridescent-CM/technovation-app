@@ -14,6 +14,7 @@ module SignIn
     )
 
     unless signin.student? && signin.age_by_cutoff > 18
+      ChapterableReassigner.new(account: signin).call
       RegisterToCurrentSeasonJob.perform_later(signin)
     end
 
@@ -43,7 +44,7 @@ module SignIn
     last_profile_used = context.remove_cookie(CookieNames::LAST_PROFILE_USED)
 
     if last_profile_used and
-        !signin.public_send("#{last_profile_used}_profile").present?
+        !signin.public_send(:"#{last_profile_used}_profile").present?
       last_profile_used = nil
     end
 

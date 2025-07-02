@@ -43,6 +43,12 @@ FactoryBot.define do
       end
     end
 
+    trait :not_assigned_to_club do
+      after(:create) do |club_ambassador|
+        club_ambassador.account.chapterable_assignments.destroy_all
+      end
+    end
+
     trait :training_not_completed do
       training_completed_at { nil }
     end
