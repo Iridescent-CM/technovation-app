@@ -63,6 +63,9 @@ class Account < ActiveRecord::Base
   has_many :current_chapterable_assignments, -> { current },
     class_name: "ChapterableAccountAssignment"
 
+  has_many :last_seasons_chapterable_assignments, -> { last_season },
+    class_name: "ChapterableAccountAssignment"
+
   has_many :current_chapter_assignments, -> { current.chapters },
     class_name: "ChapterableAccountAssignment"
 
@@ -1132,6 +1135,10 @@ class Account < ActiveRecord::Base
 
   def current_primary_chapterable_assignment
     current_chapterable_assignments.find_by(primary: true) || ::NullChapterableAccountAssignment.new
+  end
+
+  def last_seasons_primary_chapterable_assignment
+    last_seasons_chapterable_assignments.find_by(primary: true) || ::NullChapterableAccountAssignment.new
   end
 
   def chapter_program_name
