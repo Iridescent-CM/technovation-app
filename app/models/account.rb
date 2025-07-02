@@ -103,6 +103,30 @@ class Account < ActiveRecord::Base
   has_many :current_semifinalist_certificates, -> { current.semifinalist },
     class_name: "Certificate"
 
+  has_many :regional_honoree_certificates, -> { regional_honoree },
+    class_name: "Certificate"
+
+  has_many :current_regional_honoree_certificates, -> { current.regional_honoree },
+    class_name: "Certificate"
+
+  has_many :finalist_certificates, -> { finalist },
+    class_name: "Certificate"
+
+  has_many :current_finalist_certificates, -> { current.finalist },
+    class_name: "Certificate"
+
+  has_many :special_prize_winner_certificates, -> { special_prize_winner },
+    class_name: "Certificate"
+
+  has_many :current_special_prize_winner_certificates, -> { current.special_prize_winner },
+    class_name: "Certificate"
+
+  has_many :grand_prize_winner_certificates, -> { grand_prize_winner },
+    class_name: "Certificate"
+
+  has_many :current_grand_prize_winner_certificates, -> { current.grand_prize_winner },
+    class_name: "Certificate"
+
   has_many :appreciation_certificates, -> { mentor_appreciation },
     class_name: "Certificate"
 
