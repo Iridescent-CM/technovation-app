@@ -17,7 +17,7 @@ class CertificateRecipient
       @team_id = team.id
       @mobile_app_name = team.submission.app_name
       @team_name = team.name
-      @division = team.division_name.humanize.titleize
+      @division = "#{team.division_name.titleize} Division"
     end
 
     @account = account
