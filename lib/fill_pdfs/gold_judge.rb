@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 module FillPdfs
-  class JudgeAdvisor
+  class GoldJudge
     include FillPdfs
 
     def full_text
