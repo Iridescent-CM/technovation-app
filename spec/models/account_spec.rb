@@ -511,7 +511,7 @@ RSpec.describe Account do
     expect {
       account.update(first_name: "Change")
     }.to change {
-      account.reload.current_certified_judge_certificates.count
+      account.reload.current_bronze_judge_certificates.count
     }.from(1).to(0)
 
     FillPdfs.call(account)
@@ -519,7 +519,7 @@ RSpec.describe Account do
     expect {
       account.update(last_name: "Change!!!")
     }.to change {
-      account.reload.current_certified_judge_certificates.count
+      account.reload.current_bronze_judge_certificates.count
     }.from(1).to(0)
   end
 
