@@ -173,7 +173,7 @@ class DetermineCertificates
       !@account.judge_profile.suspended? &&
       !@account.judge_profile.events.any? &&
       @account.judge_profile.completed_scores.by_season(season).any? &&
-      @account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+      @account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
   end
 
   def needed_bronze_judge_recipients
@@ -187,9 +187,9 @@ class DetermineCertificates
   def gets_silver_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
+      @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
       (@account.judge_profile.events.any? ||
-       @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+       @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_SILVER_JUDGE)
   end
 
   def needed_silver_judge_recipients
@@ -203,7 +203,7 @@ class DetermineCertificates
   def gets_gold_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
+      @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_GOLD_JUDGE
   end
 
   def needed_gold_judge_recipients
