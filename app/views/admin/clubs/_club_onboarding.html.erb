@@ -35,6 +35,21 @@
             </div>
           <% end %>
         </dd>
+
+        <dt>Complete Program Info</dt>
+        <dd>
+          <% if club.program_info_complete? %>
+            <div>
+              <%= web_icon("check-circle icon-green") %>
+              Complete
+            </div>
+          <% else %>
+            <div>
+              <%= web_icon("exclamation-circle icon-red") %>
+              Incomplete
+            </div>
+          <% end %>
+        </dd>
       </dl>
     </div>
   </div>
