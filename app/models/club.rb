@@ -31,13 +31,15 @@ class Club < ActiveRecord::Base
 
   def can_be_marked_onboarded?
     !!(location_complete? &&
-      club_info_complete?)
+      club_info_complete? &&
+      program_info_complete?)
   end
 
   def required_onboarding_tasks
     {
       "Public Info" => club_info_complete?,
-      "Club Location" => location_complete?
+      "Club Location" => location_complete?,
+      "Program Info" => program_info_complete?
     }
   end
 
@@ -51,6 +53,10 @@ class Club < ActiveRecord::Base
       summary,
       primary_contact
     ].all?(&:present?)
+  end
+
+  def program_info_complete?
+    false
   end
 
   def secondary_regions
