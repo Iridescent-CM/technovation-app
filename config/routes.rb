@@ -256,6 +256,7 @@ Rails.application.routes.draw do
     post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
 
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
+    resource :program_information, only: :show, controller: "club_program_information"
 
     resource :club_admin, only: :show, controller: "club_admin"
     resource :resources, only: :show
