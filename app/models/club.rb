@@ -56,7 +56,7 @@ class Club < ActiveRecord::Base
   end
 
   def program_info_complete?
-    false
+    true
   end
 
   def secondary_regions
