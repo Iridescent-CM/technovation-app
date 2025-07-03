@@ -13,9 +13,9 @@ STUDENT_CERTIFICATE_TYPES = {
 }
 
 JUDGE_CERTIFICATE_TYPES = {
-  certified_judge: 6,
-  head_judge: 7,
-  judge_advisor: 8
+  bronze_judge: 6,
+  silver_judge: 7,
+  gold_judge: 8
 }
 
 OFF_PLATFORM_CERTIFICATE_TYPES = {

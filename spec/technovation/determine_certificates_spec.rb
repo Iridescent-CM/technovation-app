@@ -112,7 +112,7 @@ RSpec.describe DetermineCertificates do
         FactoryBot.create(:score, :complete, judge_profile: user.account.judge_profile)
       end
 
-      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w[mentor_appreciation certified_judge])
+      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w[mentor_appreciation bronze_judge])
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:certified_judge, judge.account)
+        CertificateRecipient.new(:bronze_judge, judge.account)
       )
     end
 
@@ -159,7 +159,7 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:certified_judge, judge.account)
+        CertificateRecipient.new(:bronze_judge, judge.account)
       )
     end
 
@@ -183,7 +183,7 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:head_judge, judge.account)
+        CertificateRecipient.new(:silver_judge, judge.account)
       )
     end
 
@@ -207,7 +207,7 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:head_judge, judge.account)
+        CertificateRecipient.new(:silver_judge, judge.account)
       )
     end
 
@@ -231,7 +231,7 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:judge_advisor, judge.account)
+        CertificateRecipient.new(:gold_judge, judge.account)
       )
     end
 
@@ -261,12 +261,12 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:certified_judge, judge.account)
+        CertificateRecipient.new(:bronze_judge, judge.account)
       )
 
       FactoryBot.create(:certificate,
         account: judge.account,
-        cert_type: :head_judge)
+        cert_type: :silver_judge)
 
       expect(DetermineCertificates.new(judge.account).needed).to be_empty
     end

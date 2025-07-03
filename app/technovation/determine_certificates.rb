@@ -168,49 +168,49 @@ class DetermineCertificates
     false # Only valid for seasons before 2019
   end
 
-  def gets_certified_judge_certificate?
+  def gets_bronze_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.suspended? &&
       !@account.judge_profile.events.any? &&
       @account.judge_profile.completed_scores.by_season(season).any? &&
-      @account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_CERTIFIED_JUDGE
+      @account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
   end
 
-  def needed_certified_judge_recipients
+  def needed_bronze_judge_recipients
     if @account.certificates.judge_types.by_season(season).any?
       []
     else
-      [CertificateRecipient.new(:certified_judge, @account)]
+      [CertificateRecipient.new(:bronze_judge, @account)]
     end
   end
 
-  def gets_head_judge_certificate?
+  def gets_silver_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_HEAD_JUDGE &&
+      @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
       (@account.judge_profile.events.any? ||
-       @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_HEAD_JUDGE)
+       @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_SILVER_JUDGE)
   end
 
-  def needed_head_judge_recipients
+  def needed_silver_judge_recipients
     if @account.certificates.judge_types.by_season(season).any?
       []
     else
-      [CertificateRecipient.new(:head_judge, @account)]
+      [CertificateRecipient.new(:silver_judge, @account)]
     end
   end
 
-  def gets_judge_advisor_certificate?
+  def gets_gold_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_JUDGE_ADVISOR
+      @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_GOLD_JUDGE
   end
 
-  def needed_judge_advisor_recipients
+  def needed_gold_judge_recipients
     if @account.certificates.judge_types.by_season(season).any?
       []
     else
-      [CertificateRecipient.new(:judge_advisor, @account)]
+      [CertificateRecipient.new(:gold_judge, @account)]
     end
   end
 

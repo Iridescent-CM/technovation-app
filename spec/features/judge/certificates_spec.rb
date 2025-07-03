@@ -2,7 +2,7 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.feature "Judge certificates" do
-  let(:season_with_templates) { instance_double(Season, year: 2020) }
+  let(:season_with_templates) { instance_double(Season, year: 2025) }
 
   before do
     allow(Season).to receive(:current).and_return(season_with_templates)
@@ -167,11 +167,11 @@ RSpec.feature "Judge certificates" do
       }.to not_change {
         judge.current_general_judge_certificates.count
       }.and not_change {
-        judge.current_certified_judge_certificates.count
+        judge.current_bronze_judge_certificates.count
       }.and not_change {
-        judge.current_head_judge_certificates.count
+        judge.current_silver_judge_certificates.count
       }.and not_change {
-        judge.current_judge_advisor_certificates.count
+        judge.current_gold_judge_certificates.count
       }
 
       sign_in(judge)
@@ -190,13 +190,13 @@ RSpec.feature "Judge certificates" do
     expect {
       FillPdfs.call(judge.account)
     }.to change {
-      judge.current_certified_judge_certificates.count
+      judge.current_bronze_judge_certificates.count
     }.from(0).to(1).and not_change {
       judge.current_general_judge_certificates.count
     }.and not_change {
-      judge.current_head_judge_certificates.count
+      judge.current_silver_judge_certificates.count
     }.and not_change {
-      judge.current_judge_advisor_certificates.count
+      judge.current_gold_judge_certificates.count
     }
 
     sign_in(judge)
@@ -204,7 +204,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_certified_judge_certificates.last.file_url
+      href: judge.current_bronze_judge_certificates.last.file_url
     )
   end
 
@@ -220,10 +220,10 @@ RSpec.feature "Judge certificates" do
       expect {
         FillPdfs.call(judge.account)
       }.to change {
-        judge.current_head_judge_certificates.count
+        judge.current_silver_judge_certificates.count
       }.from(0).to(1)
         .and not_change {
-               judge.current_certified_judge_certificates.count
+               judge.current_bronze_judge_certificates.count
              }.and not_change {
                      judge.current_general_judge_certificates.count
                    }
@@ -232,7 +232,7 @@ RSpec.feature "Judge certificates" do
       expect(page).to have_css("#judge-certificate")
       expect(page).to have_link(
         "View your certificate",
-        href: judge.current_head_judge_certificates.last.file_url
+        href: judge.current_silver_judge_certificates.last.file_url
       )
     end
   end
@@ -248,12 +248,12 @@ RSpec.feature "Judge certificates" do
     expect {
       FillPdfs.call(judge.account)
     }.to change {
-      judge.current_judge_advisor_certificates.count
+      judge.current_gold_judge_certificates.count
     }.from(0).to(1)
       .and not_change {
-             judge.current_head_judge_certificates.count
+             judge.current_silver_judge_certificates.count
            }.and not_change {
-                   judge.current_certified_judge_certificates.count
+                   judge.current_bronze_judge_certificates.count
                  }.and not_change {
                          judge.current_general_judge_certificates.count
                        }
@@ -263,7 +263,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_judge_advisor_certificates.last.file_url
+      href: judge.current_gold_judge_certificates.last.file_url
     )
   end
 
@@ -278,12 +278,12 @@ RSpec.feature "Judge certificates" do
     expect {
       FillPdfs.call(judge.account)
     }.to change {
-      judge.current_head_judge_certificates.count
+      judge.current_silver_judge_certificates.count
     }.from(0).to(1)
       .and not_change {
-             judge.current_judge_advisor_certificates.count
+             judge.current_gold_judge_certificates.count
            }.and not_change {
-                   judge.current_certified_judge_certificates.count
+                   judge.current_bronze_judge_certificates.count
                  }.and not_change {
                          judge.current_general_judge_certificates.count
                        }
@@ -293,7 +293,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_head_judge_certificates.last.file_url
+      href: judge.current_silver_judge_certificates.last.file_url
     )
   end
 
@@ -308,12 +308,12 @@ RSpec.feature "Judge certificates" do
     expect {
       FillPdfs.call(judge.account)
     }.to change {
-      judge.current_judge_advisor_certificates.count
+      judge.current_gold_judge_certificates.count
     }.from(0).to(1)
       .and not_change {
-             judge.current_head_judge_certificates.count
+             judge.current_silver_judge_certificates.count
            }.and not_change {
-                   judge.current_certified_judge_certificates.count
+                   judge.current_bronze_judge_certificates.count
                  }.and not_change {
                          judge.current_general_judge_certificates.count
                        }
@@ -323,13 +323,13 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_judge_advisor_certificates.last.file_url
+      href: judge.current_gold_judge_certificates.last.file_url
     )
   end
 
   scenario "Judge can view their previous judge certificates" do
     judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
-    previous_certificate = FactoryBot.create(:certificate, :past, account: judge.account, cert_type: :head_judge)
+    previous_certificate = FactoryBot.create(:certificate, :past, account: judge.account, cert_type: :silver_judge)
 
     FillPdfs.call(judge.account)
     sign_in(judge)
