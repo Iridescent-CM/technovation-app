@@ -13,5 +13,12 @@
         is_complete: current_ambassador.club&.location_complete?,
         is_active_item: al(club_ambassador_club_location_path).present?
       %>
+
+      <%= render "application/templates/completion_step",
+        name: "Program Info",
+        url: club_ambassador_program_information_path,
+        is_complete: current_ambassador.club&.program_info_complete?,
+        is_active_item: al(club_ambassador_program_information_path).present?
+      %>
     </ol>
   </nav>
