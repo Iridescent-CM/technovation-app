@@ -1,11 +1,11 @@
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render "chapter_ambassador/dashboards/onboarding/side_nav" %>
+  <%= render "#{current_scope}/dashboards/onboarding/side_nav" %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Community Connections" } do %>
-    <% if current_chapter.present? %>
+    <% if current_chapterable.present? %>
       <%= render "completion_steps/rebrand/community_connections", profile: current_ambassador %>
     <% else %>
-      <p>You are not associated with a chapter. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
+      <p>You are not associated with a chapter or club. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
     <% end %>
   <% end %>
 </div>

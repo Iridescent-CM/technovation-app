@@ -81,7 +81,6 @@ Rails.application.routes.draw do
     resource :team_building, only: :show, controller: "team_building"
     resource :pending_team_requests, only: :show, controller: "pending_team_requests"
 
-
     resource :dashboard, only: :show
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
@@ -173,7 +172,7 @@ Rails.application.routes.draw do
 
     resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
     resource :chapter_volunteer_agreement, only: [:show, :create]
-    resource :community_connections, only: [:show, :new, :create, :edit, :update]
+    resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
     resources :job_statuses, only: :show
 
@@ -263,6 +262,7 @@ Rails.application.routes.draw do
 
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
     resource :program_information, only: :show, controller: "club_program_information"
+    resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
     resource :club_admin, only: :show, controller: "club_admin"
     resource :resources, only: :show

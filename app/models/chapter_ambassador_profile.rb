@@ -43,7 +43,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
   has_many :chapter_links, dependent: :destroy
 
-  has_one :community_connection
+  has_one :community_connection, as: :ambassador
 
   accepts_nested_attributes_for :chapter_links, reject_if: ->(attrs) {
     attrs.reject { |k, _| k.to_s == "custom_label" }.values.any?(&:blank?)
