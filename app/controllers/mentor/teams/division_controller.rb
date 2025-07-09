@@ -1,6 +1,6 @@
 module Mentor::Teams
   class DivisionController < MentorController
-    include MentorTeamDetailsConcern
+    include TeamController
     layout "mentor_rebrand"
   end
 end

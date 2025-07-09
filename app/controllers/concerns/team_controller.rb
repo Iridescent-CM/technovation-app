@@ -9,7 +9,8 @@ module TeamController
   end
 
   def show
-    @team = current_profile.teams.find(params.fetch(:id))
+    team_id = params[:id].presence || params[:team_id].presence
+    @team = current_profile.teams.find(team_id)
 
     if @team.current?
       @team_member_invite = TeamMemberInvite.new(team_id: @team.id)
