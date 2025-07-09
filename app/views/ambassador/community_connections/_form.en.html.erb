@@ -1,5 +1,6 @@
 <%= simple_form_for @community_connection,
-  url: chapter_ambassador_community_connections_path do |f| %>
+  url: send(:"#{current_scope}_community_connections_path") do |f|
+%>
 
   <p class="mb-4">
     <span class="text-red-600 mb-4">
@@ -10,35 +11,41 @@
 
   <div class="mb-8">
     <%= f.association :availability_slots,
-                      as: :check_boxes,
-                      label_method: :time,
-                      label: "Please select any times you might be available to join councils, trainings, etc."%>
+      as: :check_boxes,
+      label_method: :time,
+      label: "Please select any times you might be available to join councils, trainings, etc."
+    %>
   </div>
 
   <div class="mb-8">
     <%= f.label :topic_sharing_response,
-                "Are there any relevant topics you would be willing to share with our global community at a training council? ",
-                for: :child_safeguarding_policy_and_process %>
+      "Are there any relevant topics you would be willing to share with our global community at a training council? ",
+      for: :child_safeguarding_policy_and_process
+    %>
+
     <p class="text-base">
       This could include best practices for impactful learning, submissions, partnership development, funding, etc.
     </p>
 
     <%= f.input :topic_sharing_response,
-                label: false,
-                as: :text,
-                input_html: {
-                  rows: 2,
-                } %>
+      label: false,
+      as: :text,
+      input_html: {
+        rows: 2,
+      }
+    %>
   </div>
 
   <div class="mt-8 w-full flex mx-auto">
     <p class="flex flex-row mx-auto space-x-4">
       <%= f.submit "Save", class: "tw-green-btn cursor-pointer" %>
+
       <span class="flex flex-col justify-center text-center">or</span>
+
       <%= link_to "cancel",
-                  chapter_ambassador_community_connections_path,
-                  class: "flex flex-col justify-center text-center" %>
+        send(:"#{current_scope}_community_connections_path"),
+        class: "flex flex-col justify-center text-center"
+      %>
     </p>
   </div >
 <% end %>
-

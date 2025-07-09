@@ -16,6 +16,8 @@ class ClubAmbassadorProfile < ActiveRecord::Base
   has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
   has_one :volunteer_agreement, -> { nonvoid }, dependent: :destroy, as: :ambassador
 
+  has_one :community_connection, as: :ambassador
+
   validates :job_title, presence: true
 
   after_update :update_onboarding_status

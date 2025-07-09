@@ -25,6 +25,6 @@ RSpec.feature "Chapter Ambassador Dashboard" do
 
   scenario "Viewing Community Connections tab, the Chapter Ambassador cannot complete community connections onboarding task" do
     click_link "Community Connections"
-    expect(page).to have_content("You are not associated with a chapter.")
+    expect(page).to have_content("You are not associated with a chapter or club.")
   end
 end

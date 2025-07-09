@@ -1,12 +1,12 @@
-module ChapterAmbassador
-  class CommunityConnectionsController < ChapterAmbassadorController
+module Ambassador
+  class CommunityConnectionsController < AmbassadorController
     skip_before_action :require_chapterable_and_ambassador_onboarded
-
-    layout "chapter_ambassador_rebrand"
 
     after_action :update_viewed_community_connections,
       only: :show,
-      if: -> { current_chapter.present? }
+      if: -> { current_chapterable.present? }
+
+    layout :set_layout_for_current_ambassador
 
     def new
       @community_connection = current_ambassador.build_community_connection
@@ -16,7 +16,8 @@ module ChapterAmbassador
       @community_connection = current_ambassador.build_community_connection(community_connection_params)
 
       if @community_connection.save
-        redirect_to chapter_ambassador_community_connections_path,
+
+        redirect_to send(:"#{current_scope}_community_connections_path"),
           success: "You updated your community connection responses!"
       else
         flash.now[:alert] = "Error updating community connection responses."
@@ -32,7 +33,7 @@ module ChapterAmbassador
       @community_connection = current_ambassador.community_connection
 
       if @community_connection.update(community_connection_params)
-        redirect_to chapter_ambassador_community_connections_path,
+        redirect_to send(:"#{current_scope}_community_connections_path"),
           success: "You updated your community connection responses!"
       else
         flash.now[:alert] = "Error updating community connection responses."

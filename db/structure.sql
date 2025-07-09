@@ -809,7 +809,9 @@ CREATE TABLE public.community_connections (
     topic_sharing_response text,
     chapter_ambassador_profile_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    ambassador_type character varying,
+    ambassador_id integer
 );
 
 
@@ -3779,6 +3781,13 @@ CREATE INDEX index_clubs_on_primary_account_id ON public.clubs USING btree (prim
 
 
 --
+-- Name: index_community_connections_on_ambassador; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_community_connections_on_ambassador ON public.community_connections USING btree (ambassador_type, ambassador_id);
+
+
+--
 -- Name: index_community_connections_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4991,6 +5000,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250417134213'),
 ('20250509211826'),
 ('20250626170949'),
+('20250707224547'),
 ('20250709204951');
-
 
