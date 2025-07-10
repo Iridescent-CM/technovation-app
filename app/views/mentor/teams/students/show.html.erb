@@ -1,0 +1,73 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/teams/side_nav", team: @team %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Students" } do %>
+    <h5 class="font-medium mb-4">Current Students</h5>
+
+    <% if @team.students.onboarded.any? %>
+      <%= render "mentor/teams/students/students_list",
+        students: @team.students.onboarded,
+        team: @team %>
+    <% else %>
+      <p>Your team does not have any students</p>
+    <% end %>
+
+    <h5 class="font-medium mt-16">Pending Students</h5>
+    <p class="tw-hint">
+      These students are listed on your team,
+      but are not yet eligible to compete.
+    </p>
+
+    <% if @team.students.onboarding.any? %>
+      <%= render "mentor/teams/students/students_list",
+        students: @team.students.onboarding,
+        team: @team %>
+    <% else %>
+      <p>Your team does not have any pending students</p>
+    <% end %>
+
+    <h5 class="font-medium mt-16 mb-4">Requests to join your team</h5>
+
+    <% if @team.pending_student_join_requests.present? %>
+      <%= render "teams/rebrand/pending_requests",
+        team: @team,
+        requests: @team.pending_student_join_requests %>
+    <% else %>
+      <p>There are no pending join requests</p>
+    <% end %>
+
+    <h5 class="font-medium mt-16">Do you want more teammates?</h5>
+
+    <% if !SeasonToggles.team_building_enabled? || SeasonToggles.judging_enabled_or_between? %>
+      <%= render "application/templates/alerts/info" do %>
+        Team building is not enabled at this time, so your team cannot add students.
+      <% end %>
+    <% elsif !@team.spot_available? %>
+      <%= render "application/templates/alerts/info" do %>
+        You cannot invite more students while you have a combined total
+        of five members, invitations, and/or join requests.
+      <% end %>
+    <% elsif !@team.current? %>
+      <%= render "application/templates/alerts/info" do %>
+        <%= t("views.teams.show.past_team") %>
+      <% end %>
+    <% end %>
+
+    <% if SeasonToggles.team_building_enabled? && !SeasonToggles.judging_enabled_or_between? %>
+      <%= form_with model: @team,
+        data: { submit_on_change: true },
+        url: send("#{current_scope}_team_path", @team, { format: :json }),
+        method: :patch do |f| %>
+
+        <p>
+          <%= f.check_box :accepting_student_requests,
+            id: :team_accepting_student_requests %>
+
+          <%= f.label :accepting_student_requests,
+            "Allow other students to find our team and request to join us",
+            for: :team_accepting_student_requests %>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
