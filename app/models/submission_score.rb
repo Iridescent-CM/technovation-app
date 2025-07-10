@@ -499,7 +499,8 @@ class SubmissionScore < ActiveRecord::Base
   def demo_total
     demo_1 +
       demo_2 +
-      demo_3
+      demo_3 +
+      demo_4
   end
 
   def overall_impression_total
