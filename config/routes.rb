@@ -255,6 +255,8 @@ Rails.application.routes.draw do
     resource :training, only: :show, controller: "/ambassador/training"
     resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
+    resource :volunteer_agreement, only: [:show, :new, :create], controller: "/ambassador/volunteer_agreements"
+
     resource :background_check, only: :show, controller: "/ambassador/background_checks"
     resources :background_checks, only: [:new, :create], controller: "/ambassador/background_checks"
     post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
