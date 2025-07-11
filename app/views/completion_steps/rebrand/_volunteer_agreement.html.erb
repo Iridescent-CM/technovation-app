@@ -1,0 +1,18 @@
+<% if profile.volunteer_agreement_complete? %>
+  <p class="mb-4">Thank you for signing the <%= current_scope.titleize %> Volunteer Agreement.</p>
+  <p>Signed on <%= profile.volunteer_agreement.signed_at.strftime("%B %d, %Y") %></p>
+  <p>Signature: <%= profile.volunteer_agreement.electronic_signature %></p>
+
+  <div class="mt-6">
+    <%= render "ambassador/volunteer_agreements/#{current_scope}_text" %>
+  </div>
+<% else %>
+  <p class="mb-4">
+    Please sign the <%= current_scope.titleize %> Volunteer Agreement to participate this season.
+  </p>
+  <div class="mt-8 text-center">
+    <%= link_to "Sign the #{current_scope.titleize} Volunteer Agreement",
+      new_club_ambassador_volunteer_agreement_path,
+      class: "tw-green-btn" %>
+  </div>
+<% end %>
