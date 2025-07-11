@@ -1,0 +1,19 @@
+<dt>Sign Volunteer Agreement</dt>
+<dd>
+  <div style="display: flex;">
+    <% if profile.volunteer_agreement_complete? %>
+      <%= web_icon("check-circle icon-green") %>
+      <div>
+        Complete
+        <p class="hint margin--b-none">
+          Signed <%= profile.volunteer_agreement.signed_at.strftime("%b %d, %Y") %>
+        </p>
+      </div>
+    <% else %>
+      <%= web_icon("exclamation-circle icon-red") %>
+      <div>
+        Incomplete
+      </div>
+    <% end %>
+  </div>
+</dd>
