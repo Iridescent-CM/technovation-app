@@ -72,6 +72,8 @@ FactoryBot.define do
       unless r.consent_signed?
         r.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
+
+      r.build_volunteer_agreement(FactoryBot.attributes_for(:volunteer_agreement))
     end
 
     after(:create) do |r, e|
