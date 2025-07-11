@@ -31,6 +31,9 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Activating clubs"
     SeasonSetup::ClubActivator.new.call
 
+    puts "Resetting unaffiliated list"
+    SeasonSetup::UnaffiliatedListResetter.new.call
+
     puts "Setting force chapterable selection flag"
     SeasonSetup::ForceChapterableSelectionActivator.new.call
 
