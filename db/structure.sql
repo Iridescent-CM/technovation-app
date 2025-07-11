@@ -2514,6 +2514,40 @@ ALTER SEQUENCE public.user_invitations_id_seq OWNED BY public.user_invitations.i
 
 
 --
+-- Name: volunteer_agreements; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.volunteer_agreements (
+    id bigint NOT NULL,
+    profile_type character varying,
+    profile_id bigint,
+    electronic_signature character varying NOT NULL,
+    voided_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: volunteer_agreements_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.volunteer_agreements_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: volunteer_agreements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.volunteer_agreements_id_seq OWNED BY public.volunteer_agreements.id;
+
+
+--
 -- Name: webhook_payloads; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2976,6 +3010,13 @@ ALTER TABLE ONLY public.unconfirmed_email_addresses ALTER COLUMN id SET DEFAULT 
 --
 
 ALTER TABLE ONLY public.user_invitations ALTER COLUMN id SET DEFAULT nextval('public.user_invitations_id_seq'::regclass);
+
+
+--
+-- Name: volunteer_agreements id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.volunteer_agreements ALTER COLUMN id SET DEFAULT nextval('public.volunteer_agreements_id_seq'::regclass);
 
 
 --
@@ -3495,6 +3536,14 @@ ALTER TABLE ONLY public.unconfirmed_email_addresses
 
 ALTER TABLE ONLY public.user_invitations
     ADD CONSTRAINT user_invitations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: volunteer_agreements volunteer_agreements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.volunteer_agreements
+    ADD CONSTRAINT volunteer_agreements_pkey PRIMARY KEY (id);
 
 
 --
@@ -4056,6 +4105,13 @@ CREATE INDEX index_user_invitations_on_chapter_id ON public.user_invitations USI
 --
 
 CREATE INDEX index_user_invitations_on_club_id ON public.user_invitations USING btree (club_id);
+
+
+--
+-- Name: index_volunteer_agreements_on_profile; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_volunteer_agreements_on_profile ON public.volunteer_agreements USING btree (profile_type, profile_id);
 
 
 --
@@ -4934,6 +4990,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250417134159'),
 ('20250417134213'),
 ('20250509211826'),
-('20250626170949');
+('20250626170949'),
+('20250709204951');
 
 
