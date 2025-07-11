@@ -1,0 +1,25 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Sign the #{current_scope.titleize} Volunteer Agreement" } do %>
+    <%= render "ambassador/volunteer_agreements/#{current_scope}_text" %>
+
+    <hr class="border-t border-gray-300 my-8">
+
+    <%= simple_form_for @volunteer_agreement, url: send("#{current_scope}_volunteer_agreement_path", @volunteer_agreement) do |f| %>
+      <div class="mb-4">
+        <p class="font-bold ">
+          I have had the opportunity to get legal advice on this agreement and to negotiate its terms.
+          I understand the terms of the agreement and agree to them voluntarily. I agree to follow the
+          rules and requirements set forth in this agreement, and any other rules and requirements for
+          volunteers that Technovation may adopt.
+        </p>
+      </div>
+
+      <%= f.input :electronic_signature,
+        label: "Type your name as a form of electronic signature" %>
+
+      <%= f.button :submit, "Sign Agreement",
+       id: "submit",
+       class: "tw-green-btn mx-auto cursor-pointer" %>
+    <% end %>
+  <% end %>
+</div>
