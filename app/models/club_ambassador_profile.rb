@@ -14,6 +14,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
   has_many :exports, as: :owner, dependent: :destroy
   has_many :saved_searches, as: :searcher
   has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
+  has_one :volunteer_agreement, -> { nonvoid }, dependent: :destroy, as: :ambassador
 
   validates :job_title, presence: true
 
@@ -54,6 +55,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     !!(account.email_confirmed? &&
       background_check_exempt_or_complete? &&
       training_completed? &&
+      volunteer_agreement_complete? &&
       viewed_community_connections?)
   end
 
@@ -61,6 +63,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     {
       "Background Check" => background_check_exempt_or_complete?,
       "Club Ambassador Training" => training_completed?,
+      "Club Ambassador Volunteer Agreement" => volunteer_agreement_complete?,
       "Community Connections" => viewed_community_connections?
     }
   end
@@ -71,8 +74,8 @@ class ClubAmbassadorProfile < ActiveRecord::Base
       .include?(account.country_code)
   end
 
-  def chapter_volunteer_agreement_complete?
-    false
+  def volunteer_agreement_complete?
+    volunteer_agreement&.signed?
   end
 
   def training_completed?
