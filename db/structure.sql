@@ -2519,8 +2519,8 @@ ALTER SEQUENCE public.user_invitations_id_seq OWNED BY public.user_invitations.i
 
 CREATE TABLE public.volunteer_agreements (
     id bigint NOT NULL,
-    profile_type character varying,
-    profile_id bigint,
+    ambassador_type character varying,
+    ambassador_id bigint,
     electronic_signature character varying NOT NULL,
     voided_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
@@ -4108,10 +4108,10 @@ CREATE INDEX index_user_invitations_on_club_id ON public.user_invitations USING 
 
 
 --
--- Name: index_volunteer_agreements_on_profile; Type: INDEX; Schema: public; Owner: -
+-- Name: index_volunteer_agreements_on_ambassador; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_volunteer_agreements_on_profile ON public.volunteer_agreements USING btree (profile_type, profile_id);
+CREATE INDEX index_volunteer_agreements_on_ambassador ON public.volunteer_agreements USING btree (ambassador_type, ambassador_id);
 
 
 --

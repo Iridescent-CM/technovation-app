@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe VolunteerAgreement do
   let(:volunteer_agreement) do
     VolunteerAgreement.new(
-      profile: FactoryBot.create(:club_ambassador),
+      ambassador: FactoryBot.create(:club_ambassador),
       electronic_signature: volunteer_agreement_electronic_signature,
       created_at: volunteer_agreement_created_at,
       voided_at: volunteer_agreement_voided_at

@@ -1,5 +1,5 @@
 class VolunteerAgreement < ActiveRecord::Base
-  belongs_to :profile, polymorphic: true
+  belongs_to :ambassador, polymorphic: true
   validates :electronic_signature, presence: true
 
   scope :nonvoid, -> { where(voided_at: nil) }
