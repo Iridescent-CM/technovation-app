@@ -14,7 +14,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
   has_many :exports, as: :owner, dependent: :destroy
   has_many :saved_searches, as: :searcher
   has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
-  has_one :volunteer_agreement, -> { nonvoid }, dependent: :destroy, as: :profile
+  has_one :volunteer_agreement, -> { nonvoid }, dependent: :destroy, as: :ambassador
 
   validates :job_title, presence: true
 
