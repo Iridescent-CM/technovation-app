@@ -1,4 +1,5 @@
-<% if (!current_ambassador.onboarded? || !current_chapterable.onboarded?) %>
+<% if current_chapterable.present? &&
+      (!current_ambassador.onboarded? || !current_chapterable.onboarded?) %>
   <%= render "club_ambassador/profiles/welcome_message_with_required_steps" %>
 <% end %>
 
