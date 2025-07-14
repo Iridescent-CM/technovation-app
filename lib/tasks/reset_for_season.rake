@@ -25,6 +25,12 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Resetting judge trainings"
     JudgeProfile.update_all(completed_training_at: nil)
 
+    puts "Resetting chapter ambassador onboarding"
+    SeasonSetup::ChapterAmbassadorOnboardingResetter.new.call
+
+    puts "Resetting club ambassador onboarding"
+    SeasonSetup::ClubAmbassadorOnboardingResetter.new.call
+
     puts "Activating chapters"
     SeasonSetup::ChapterActivator.new.call
 
