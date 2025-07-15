@@ -5,6 +5,8 @@ class VolunteerAgreement < ActiveRecord::Base
   scope :nonvoid, -> { where(voided_at: nil) }
   scope :void, -> { where.not(voided_at: nil) }
 
+  after_save -> { ambassador.update_onboarding_status }
+
   def signed_at
     created_at
   end
