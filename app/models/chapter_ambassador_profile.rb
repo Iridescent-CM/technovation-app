@@ -106,10 +106,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     "chapter"
   end
 
-  def chapter_volunteer_agreement_complete?
-    reload
-
-    !!chapter_volunteer_agreement&.complete?
+  def volunteer_agreement_complete?
+    !!volunteer_agreement&.signed?
   end
 
   def required_onboarding_tasks
