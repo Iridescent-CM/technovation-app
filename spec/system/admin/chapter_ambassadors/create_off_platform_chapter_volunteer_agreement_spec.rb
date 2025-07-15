@@ -5,7 +5,7 @@ RSpec.describe "Admin creating an off-platform Chapter Volunteer Agreement for a
 
   context "when the chapter ambassador does not already have a Chapter Volunteer Agreement" do
     before do
-      chapter_ambassador.chapter_volunteer_agreement.delete
+      chapter_ambassador.volunteer_agreement.delete
     end
 
     it "creates an off-platform Chapter Volunteer Agreement" do
@@ -15,7 +15,7 @@ RSpec.describe "Admin creating an off-platform Chapter Volunteer Agreement for a
       click_button "Create an off-platform Chapter Volunteer Agreement"
 
       chapter_ambassador.reload
-      expect(chapter_ambassador.chapter_volunteer_agreement.status).to eq("off-platform")
+      expect(chapter_ambassador.volunteer_agreement.off_platform).to be true
     end
   end
 end
