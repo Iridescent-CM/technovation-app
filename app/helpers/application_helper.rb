@@ -26,7 +26,6 @@ module ApplicationHelper
       chapter_organization_headquarters_locations
       chapter_profile
       chapter_program_information
-      chapter_volunteer_agreements
       community_connections
       dashboards
       location_details
@@ -34,6 +33,7 @@ module ApplicationHelper
       public_information
       training
       training_completions
+      volunteer_agreements
     ]
 
     if (namespace == "chapter_ambassador" || namespace == "ambassador") &&
