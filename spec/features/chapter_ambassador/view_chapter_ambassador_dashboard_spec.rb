@@ -20,7 +20,7 @@ RSpec.feature "Chapter Ambassador Dashboard" do
 
   scenario "Viewing the Chapter Volunteer Agreement tab, the Chapter Ambassador cannot complete legal agreement onboarding task" do
     click_link "Chapter Volunteer Agreement"
-    expect(page).to have_content("You are not associated with a chapter.")
+    expect(page).to have_content("You are not associated with a chapter or club.")
   end
 
   scenario "Viewing Community Connections tab, the Chapter Ambassador cannot complete community connections onboarding task" do
