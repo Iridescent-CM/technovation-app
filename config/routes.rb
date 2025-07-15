@@ -171,7 +171,7 @@ Rails.application.routes.draw do
     resource :chapter_current_location, only: :show
 
     resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
-    resource :chapter_volunteer_agreement, only: [:show, :create]
+    resource :volunteer_agreement, only: [:show, :new, :create], controller: "/ambassador/volunteer_agreements"
     resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
     resources :job_statuses, only: :show
