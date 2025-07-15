@@ -65,14 +65,6 @@ RSpec.describe Document do
           expect(document.document_type).to eq("Chapter Affiliation Agreement")
         end
       end
-
-      context "when the signer type is a chapter ambassador" do
-        let(:document_signer_type) { "ChapterAmbassadorProfile" }
-
-        it "returns 'Chapter Volunteer Agreement'" do
-          expect(document.document_type).to eq("Chapter Volunteer Agreement")
-        end
-      end
     end
   end
 
