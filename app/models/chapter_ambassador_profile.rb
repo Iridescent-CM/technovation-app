@@ -114,7 +114,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     {
       "Background Check" => background_check_exempt_or_complete?,
       "Chapter Ambassador Training" => training_completed?,
-      "Chapter Volunteer Agreement" => chapter_volunteer_agreement_complete?,
+      "Chapter Volunteer Agreement" => volunteer_agreement_complete?,
       "Community Connections" => viewed_community_connections?
     }
   end
