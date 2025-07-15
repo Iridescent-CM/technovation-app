@@ -16,9 +16,9 @@
 
       <%= render "application/templates/completion_step",
         name: "Chapter Volunteer Agreement",
-        url: chapter_ambassador_chapter_volunteer_agreement_path,
-        is_complete: current_ambassador.chapter_volunteer_agreement_complete?,
-        is_active_item: al(chapter_ambassador_chapter_volunteer_agreement_path).present?
+        url: chapter_ambassador_volunteer_agreement_path,
+        is_complete: current_ambassador.volunteer_agreement_complete?,
+        is_active_item: al(chapter_ambassador_volunteer_agreement_path).present?
       %>
 
       <%= render "application/templates/completion_step",
