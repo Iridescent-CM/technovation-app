@@ -70,6 +70,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     }
   end
 
+
   def in_background_check_country?
     ENV.fetch("BACKGROUND_CHECK_COUNTRY_CODES", "")
       .split(",")
