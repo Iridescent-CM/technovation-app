@@ -17,50 +17,12 @@
     <% end %>
   </dd>
 
-  <dt><%= t("submissions.solves_hunger_or_food_waste_question") %></dt>
-  <dd>
-    <%= humanize_boolean(team_submission.solves_hunger_or_food_waste) %>
-
-    <% if team_submission.solves_hunger_or_food_waste? %>
-      <%= simple_format(team_submission.solves_hunger_or_food_waste_description) %>
-    <% end %>
-  </dd>
-
-  <dt><%= t("submissions.uses_open_ai_question") %></dt>
-  <dd>
-    <%= humanize_boolean(team_submission.uses_open_ai) %>
-
-    <% if team_submission.uses_open_ai? %>
-      <%= simple_format(team_submission.uses_open_ai_description) %>
-    <% end %>
-  </dd>
-
   <dt><%= t("submissions.solves_education_question") %></dt>
   <dd>
     <%= humanize_boolean(team_submission.solves_education) %>
 
     <% if team_submission.solves_education? %>
       <%= simple_format(team_submission.solves_education_description) %>
-    <% end %>
-  </dd>
-
-  <dt><%= t("submissions.uses_gadgets_question") %></dt>
-  <dd>
-    <%= humanize_boolean(team_submission.uses_gadgets) %>
-
-    <% if team_submission.gadget_types.present? %>
-      <ul class="list-disc ml-8">
-        <% team_submission.gadget_types.each do |gadget_type| %>
-          <li>
-            <%= gadget_type.name %>
-            <% if gadget_type.name.downcase == "other" && team_submission.uses_gadgets_description.present? %>
-              <span class="italic">
-                - <%= team_submission.uses_gadgets_description %>
-              </span>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
     <% end %>
   </dd>
 </dl>

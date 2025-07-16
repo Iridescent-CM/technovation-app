@@ -99,86 +99,6 @@
     </div>
 
     <div class="field mt-4">
-      <%= f.label :game,
-        t("submissions.solves_hunger_or_food_waste_question"),
-        for: :team_submission_solves_hunger_or_food_waste %>
-
-      <%= f.select :solves_hunger_or_food_waste,
-        [["Yes", true], ["No", false]],
-        { include_blank: true },
-        data: {
-          toggles: {
-            "true": "#solves_hunger_or_food_waste_description"
-          },
-        },
-        class: "w-full lg:w-1/5",
-        id: :team_submission_solves_hunger_or_food_waste %>
-
-      <div id="solves_hunger_or_food_waste_description" class="mt-4">
-        <p class="tw-hint">Please explain how:</p>
-
-        <%= f.text_area :solves_hunger_or_food_waste_description,
-          id: :team_submission_solves_hunger_or_food_waste_description,
-          data: {
-            word_count: true,
-            word_count_limit: 100,
-            word_count_details_container: "solves-hunger-or-food-waste-word-count"
-          },
-          rows: 5 %>
-
-        <p id="solves-hunger-or-food-waste-word-count" class="tw-hint word-counter">
-          Number of words typed:
-          <br>
-          <span class="word-count__total word-count--plenty-remaining">
-            0
-          </span>
-          /
-          <span class="word-count__limit"></span>
-        </p>
-      </div>
-    </div>
-
-    <div class="field mt-4">
-      <%= f.label :game,
-        t("submissions.uses_open_ai_question"),
-        for: :team_submission_game %>
-
-      <%= f.select :uses_open_ai,
-        [["Yes", true], ["No", false]],
-        { include_blank: true },
-        data: {
-          toggles: {
-            "true": "#uses_open_ai_description"
-          },
-        },
-        class: "w-full lg:w-1/5",
-        id: :team_submission_game %>
-
-      <div id="uses_open_ai_description" class="mt-4">
-        <p class="tw-hint">Please explain how:</p>
-
-        <%= f.text_area :uses_open_ai_description,
-          id: :team_submission_uses_open_ai_description,
-          data: {
-            word_count: true,
-            word_count_limit: 100,
-            word_count_details_container: "uses-open-ai-word-count"
-          },
-          rows: 5 %>
-
-        <p id="uses-open-ai-word-count" class="tw-hint word-counter">
-          Number of words typed:
-          <br>
-          <span class="word-count__total word-count--plenty-remaining">
-            0
-          </span>
-          /
-          <span class="word-count__limit"></span>
-        </p>
-      </div>
-    </div>
-
-    <div class="field mt-4">
       <%= f.label :education,
         t("submissions.solves_education_question"),
         for: :team_submission_solves_education %>
@@ -215,44 +135,6 @@
           /
           <span class="word-count__limit"></span>
         </p>
-      </div>
-    </div>
-
-    <div class="field mt-4">
-      <%= f.label :uses_gadgets,
-        t("submissions.uses_gadgets_question"),
-        for: :team_submission_uses_gadgets %>
-
-      <%= f.select :uses_gadgets,
-        [["Yes", true], ["No", false]],
-        { include_blank: true },
-        data: {
-          toggles: {
-            "true": "#uses_gadgets_checkboxes"
-          },
-        },
-        class: "w-full lg:w-1/5",
-        id: :team_submission_uses_gadgets %>
-
-      <div id="uses_gadgets_checkboxes" class="mt-4">
-        <%= f.label :gadget_type_ids,
-                    "Which of the following additional gadgets are used in your project?" %>
-
-        <div class="checkbox-group">
-          <%= f.collection_check_boxes :gadget_type_ids, GadgetType.all, :id, :name do |cb| %>
-            <div class="checkbox-item">
-              <%= cb.check_box %>
-              <%= cb.label %>
-            </div>
-          <% end %>
-        </div>
-
-        <div id="uses_gadgets_description" class="mt-4" style="display: <%= @team_submission.uses_gadgets_description.present? ? 'block' : 'none' %>;">
-          <p class="tw-hint">Please specify other gadgets:</p>
-
-          <%= f.text_field :uses_gadgets_description,
-                          id: :team_submission_uses_gadgets_description %>
-        </div>
       </div>
     </div>
 
