@@ -34,8 +34,14 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Activating chapters"
     SeasonSetup::ChapterActivator.new.call
 
+    puts "Reassigning chapter ambassadors to chapters"
+    SeasonSetup::ChapterAmbassadorToChapterReassigner.new.call
+
     puts "Activating clubs"
     SeasonSetup::ClubActivator.new.call
+
+    puts "Reassigning club ambassadors to clubs"
+    SeasonSetup::ClubAmbassadorToClubReassigner.new.call
 
     puts "Resetting unaffiliated list"
     SeasonSetup::UnaffiliatedListResetter.new.call
