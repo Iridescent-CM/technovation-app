@@ -62,7 +62,7 @@ FactoryBot.define do
 
     trait :not_assigned_to_chapter do
       after(:create) do |chapter_ambassador|
-        chapter_ambassador.account.chapters.destroy_all
+        chapter_ambassador.account.reload.chapters.destroy_all
       end
     end
 
