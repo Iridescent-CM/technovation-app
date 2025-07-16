@@ -13,6 +13,7 @@ RSpec.describe AssignAmbassadorToChapterableJob do
     let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador) }
 
     before do
+      chapter_ambassador.account.reload
       chapter_ambassador.account.chapters.delete_all
 
       allow(UserInvitation).to receive(:find_by)
