@@ -137,20 +137,6 @@
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
-            :demo_video,
-            t("submissions.demo_video").upcase_first
-          ),
-          send(
-            "#{current_scope}_team_submission_path",
-            submission,
-            piece: :demo_video_link
-          )
-        %>
-        </li>
-
-        <li>
-          <%= link_to submission_progress_web_icon(
-            submission,
             :pitch_video,
             "Pitch video"
           ),
@@ -159,7 +145,21 @@
             submission,
             piece: :pitch_video_link
           )
-         %>
+          %>
+        </li>
+
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
+            :demo_video,
+            t("submissions.demo_video").upcase_first
+          ),
+          send(
+            "#{current_scope}_team_submission_path",
+            submission,
+            piece: :demo_video_link
+          )
+          %>
         </li>
       </ol>
     </div>

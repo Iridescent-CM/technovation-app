@@ -16,6 +16,36 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
+  title: "Pitch video",
+  scope: current_scope,
+  attribute: :pitch_video_link,
+  cta_when_empty: "Add the pitch video link",
+  cta_when_filled: "Change the pitch video link" do %>
+
+  <%= link_to web_icon("play-circle-o", text: "Watch the pitch video"),
+    "#",
+    class: "tw-gold-btn small",
+    data: {
+      opens_modal: "video-modal-#{@team_submission.video_id(:pitch)}",
+      modal_fetch: send(
+        "#{current_scope}_embed_code_path",
+        @team_submission,
+        piece: :pitch,
+        ),
+    } %>
+
+    <div
+      class="modal"
+      id="video-modal-<%= @team_submission.video_id(:pitch) %>"
+    >
+    <div class="modal-content"></div>
+  </div>
+<% end %>
+
+<%= render 'application/templates/tw_thick_rule'%>
+
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
   title: t("submissions.demo_video").titleize,
   scope: current_scope,
   attribute: :demo_video_link,
@@ -37,36 +67,6 @@
   <div
     class="modal"
     id="video-modal-<%= @team_submission.video_id(:demo) %>"
-  >
-    <div class="modal-content"></div>
-  </div>
-<% end %>
-
-<%= render 'application/templates/tw_thick_rule'%>
-
-<%= render 'team_submissions/pieces/piece',
-  submission: @team_submission,
-  title: "Pitch video",
-  scope: current_scope,
-  attribute: :pitch_video_link,
-  cta_when_empty: "Add the pitch video link",
-  cta_when_filled: "Change the pitch video link" do %>
-
-  <%= link_to web_icon("play-circle-o", text: "Watch the pitch video"),
-    "#",
-    class: "tw-gold-btn small",
-    data: {
-      opens_modal: "video-modal-#{@team_submission.video_id(:pitch)}",
-      modal_fetch: send(
-        "#{current_scope}_embed_code_path",
-        @team_submission,
-        piece: :pitch,
-      ),
-    } %>
-
-  <div
-    class="modal"
-    id="video-modal-<%= @team_submission.video_id(:pitch) %>"
   >
     <div class="modal-content"></div>
   </div>
