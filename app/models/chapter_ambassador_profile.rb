@@ -139,8 +139,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   end
 
   def can_be_marked_onboarded?
-    puts("----------------------")
-    puts(volunteer_agreement_complete?)
     !!(account.email_confirmed? &&
       background_check_exempt_or_complete? &&
       volunteer_agreement_complete? &&
