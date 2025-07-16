@@ -52,7 +52,7 @@ export const sections = (state, getters) => {
       name: "entrepreneurship",
       title:
         state.team.division === "senior"
-          ? "Business Plan"
+          ? "Business Canvas"
           : "User Adoption Plan",
       pointsTotal: getters.sectionPointsTotal("entrepreneurship"),
       pointsPossible: getters.sectionPointsPossible("entrepreneurship"),
@@ -120,7 +120,9 @@ export const hasIncompleteSections = (state, getters) => {
 
 export const isSectionComplete = (state, getters) => (section) => {
   const questions = getters.sectionQuestions(section);
-  const hasValidComment = state.score.comments[section].word_count >= 20 && state.score.comments[section].word_count <= 150;
+  const hasValidComment =
+    state.score.comments[section].word_count >= 20 &&
+    state.score.comments[section].word_count <= 150;
   const allQuestionsHaveBeenAnswered =
     questions && questions.every((q) => q.score > 0);
 
