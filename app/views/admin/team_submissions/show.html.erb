@@ -121,7 +121,7 @@
         <h5>Entrepreneurship</h5>
 
         <p>
-          t("submissions.business_plan").titleize:
+          <%= t("submissions.business_plan").titleize %>:
 
           <% if @team_submission.seasons == [2017] %>
             <% if bp = BusinessPlan.find_by(team_submission_id: @team_submission.id) %>
