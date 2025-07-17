@@ -182,9 +182,6 @@
               <li>
                 App Name: <%= @team_submission.app_inventor_app_name %>
               </li>
-              <li>
-                Email: <%= @team_submission.app_inventor_gmail %>
-              </li>
             </ul>
           <% elsif @team_submission.scratch? %>
             <ul>
@@ -194,9 +191,6 @@
             </ul>
           <% elsif @team_submission.thunkable? %>
             <ul>
-              <li>
-                Account email: <%= @team_submission.thunkable_account_email %>
-              </li>
               <li class="overflow-wrap--break-word">
                 Project URL: <%= link_to nil, @team_submission.thunkable_project_url, :target => "_blank" %>
               </li>

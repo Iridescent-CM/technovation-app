@@ -91,7 +91,6 @@ class RequiredDevPlatformField < RequiredField
     submission.development_platform = nil
     submission.development_platform_other = nil
     submission.app_inventor_app_name = nil
-    submission.app_inventor_gmail = nil
   end
 end
 

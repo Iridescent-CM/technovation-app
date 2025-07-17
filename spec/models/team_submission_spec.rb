@@ -349,15 +349,6 @@ RSpec.describe TeamSubmission do
       expect(submission.app_inventor_fields_complete?).to be true
     end
 
-    it "returns true when app inventor name and app inventor gmail is complete" do
-      submission = FactoryBot.create(:submission)
-
-      submission.development_platform = "App Inventor"
-      submission.app_inventor_app_name = "Test App"
-      submission.app_inventor_gmail = "test@gmail.com"
-      expect(submission.app_inventor_fields_complete?).to be true
-    end
-
     it "returns false when app inventor app name is missing" do
       submission = FactoryBot.create(:submission)
 
