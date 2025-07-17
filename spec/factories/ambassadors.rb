@@ -62,7 +62,7 @@ FactoryBot.define do
 
     trait :not_assigned_to_chapter do
       after(:create) do |chapter_ambassador|
-        chapter_ambassador.account.chapters.destroy_all
+        chapter_ambassador.account.reload.chapters.destroy_all
       end
     end
 
@@ -90,7 +90,7 @@ FactoryBot.define do
         r.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
       end
 
-      r.build_chapter_volunteer_agreement(FactoryBot.attributes_for(:document, :signed))
+      r.build_volunteer_agreement(FactoryBot.attributes_for(:volunteer_agreement))
     end
 
     after(:create) do |r, e|

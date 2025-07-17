@@ -7,6 +7,9 @@
         Complete
         <p class="hint margin--b-none">
           Signed <%= profile.volunteer_agreement.signed_at.strftime("%b %d, %Y") %>
+          <% if profile.volunteer_agreement.off_platform? %>
+            <span>Off-platform</span>
+          <% end %>
         </p>
       </div>
     <% else %>

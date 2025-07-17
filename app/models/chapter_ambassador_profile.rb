@@ -29,7 +29,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
 
   validates :job_title, presence: true
 
-  has_one :chapter_volunteer_agreement, -> { where(active: true) }, class_name: "Document", as: :signer
+  has_one :volunteer_agreement, -> { nonvoid }, dependent: :destroy, as: :ambassador
+
   has_many :documents, as: :signer
 
   has_many :saved_searches, as: :searcher
@@ -105,17 +106,15 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     "chapter"
   end
 
-  def chapter_volunteer_agreement_complete?
-    reload
-
-    !!chapter_volunteer_agreement&.complete?
+  def volunteer_agreement_complete?
+    !!volunteer_agreement&.signed?
   end
 
   def required_onboarding_tasks
     {
       "Background Check" => background_check_exempt_or_complete?,
       "Chapter Ambassador Training" => training_completed?,
-      "Chapter Volunteer Agreement" => chapter_volunteer_agreement_complete?,
+      "Chapter Volunteer Agreement" => volunteer_agreement_complete?,
       "Community Connections" => viewed_community_connections?
     }
   end
@@ -142,7 +141,7 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   def can_be_marked_onboarded?
     !!(account.email_confirmed? &&
       background_check_exempt_or_complete? &&
-      chapter_volunteer_agreement_complete? &&
+      volunteer_agreement_complete? &&
       training_completed? &&
       viewed_community_connections?)
   end

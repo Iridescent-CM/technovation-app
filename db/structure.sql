@@ -2526,7 +2526,8 @@ CREATE TABLE public.volunteer_agreements (
     electronic_signature character varying NOT NULL,
     voided_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    off_platform boolean DEFAULT false
 );
 
 
@@ -5001,5 +5002,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250509211826'),
 ('20250626170949'),
 ('20250707224547'),
-('20250709204951');
+('20250709204951'),
+('20250714185115');
+
 

@@ -65,7 +65,7 @@ class ClubAmbassadorProfile < ActiveRecord::Base
     {
       "Background Check" => background_check_exempt_or_complete?,
       "Club Ambassador Training" => training_completed?,
-      "Club Ambassador Volunteer Agreement" => volunteer_agreement_complete?,
+      "Club Volunteer Agreement" => volunteer_agreement_complete?,
       "Community Connections" => viewed_community_connections?
     }
   end

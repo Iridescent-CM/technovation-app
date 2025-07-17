@@ -11,7 +11,7 @@ module Ambassador
       @volunteer_agreement = current_ambassador.build_volunteer_agreement(volunteer_agreement_params)
 
       if @volunteer_agreement.save
-        redirect_to club_ambassador_volunteer_agreement_path,
+        redirect_to send(:"#{current_scope}_volunteer_agreement_path"),
           success: "Thank you for signing #{current_scope.titleize} the Volunteer Agreement"
       else
         flash.now[:error] = "Error signing agreement"
