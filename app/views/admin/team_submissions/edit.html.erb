@@ -28,7 +28,7 @@
 
         <div class="grid__cell--padding-md-y">
           <h6>Entrepreneurship</h6>
-          <%= f.label :business_plan, "#{@team_submission.senior_division? ? "Business Canvas" : "User Adoption Plan"}" %>
+          <%= f.label :business_plan, "#{@team_submission.senior_division? ? t("submissions.business_plan").titleize : "User Adoption Plan"}" %>
           <% if @team_submission.business_plan_url %>
             <%= link_to @team_submission.business_plan_identifier,
               @team_submission.business_plan_url,
@@ -50,8 +50,6 @@
           <%= f.input :development_platform_other %>
           <%= f.input :learning_journey %>
           <%= f.input :app_inventor_app_name %>
-          <%= f.input :app_inventor_gmail %>
-          <%= f.input :thunkable_account_email %>
           <%= f.input :thunkable_project_url %>
           <%= f.input :scratch_project_url %>
 

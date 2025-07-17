@@ -174,7 +174,7 @@ class Questions
     when "demo"
       "Technical"
     when "entrepreneurship"
-      (division == "senior") ? "Business Canvas" : "User Adoption Plan"
+      (division == "senior") ? t("submissions.business_plan").titleize : "User Adoption Plan"
     else
       section.titlecase
     end
