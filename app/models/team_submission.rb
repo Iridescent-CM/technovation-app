@@ -66,12 +66,7 @@ class TeamSubmission < ActiveRecord::Base
   before_save -> {
     self.ai_description = "" if ai.blank?
     self.climate_change_description = "" if climate_change.blank?
-    self.game_description = "" if game.blank?
     self.solves_education_description = "" if solves_education.blank?
-    if uses_gadgets.blank?
-      self.gadget_types = []
-      self.uses_gadgets_description = ""
-    end
   }
 
   after_commit :update_student_info_in_crm
@@ -275,9 +270,6 @@ class TeamSubmission < ActiveRecord::Base
     },
     allow_blank: true
 
-  validates :app_inventor_gmail, email: true, allow_blank: true
-
-  validates :thunkable_account_email, email: true, allow_blank: true
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
   validates :scratch_project_url, scratch_share_url: true, allow_blank: true
@@ -650,15 +642,13 @@ class TeamSubmission < ActiveRecord::Base
   def app_inventor_fields_complete?
     developed_on?("App Inventor") &&
       app_inventor_app_name.present? &&
-      errors.attribute_names.exclude?(:app_inventor_app_name) &&
-      (app_inventor_gmail.blank? || errors.attribute_names.exclude?(:app_inventor_gmail))
+      errors.attribute_names.exclude?(:app_inventor_app_name)
   end
 
   def thunkable_fields_complete?
     developed_on?("Thunkable") &&
       thunkable_project_url.present? &&
-      errors.attribute_names.exclude?(:thunkable_project_url) &&
-      (thunkable_account_email.blank? || errors.attribute_names.exclude?(:thunkable_account_email))
+      errors.attribute_names.exclude?(:thunkable_project_url)
   end
 
   def scratch_fields_complete?
@@ -779,7 +769,6 @@ class TeamSubmission < ActiveRecord::Base
       self.development_platform = nil
       self.development_platform_other = nil
       self.app_inventor_app_name = nil
-      self.app_inventor_gmail = nil
     end
   end
 
@@ -798,26 +787,21 @@ class TeamSubmission < ActiveRecord::Base
       self.development_platform_other = nil
       self.scratch_project_url = nil
       self.app_inventor_app_name = nil
-      self.app_inventor_gmail = nil
     end
   end
 
   def reset_development_platform_fields_for_other_platforms
     if development_platform == "Other"
-      self.thunkable_account_email = nil
       self.thunkable_project_url = nil
       self.app_inventor_app_name = nil
-      self.app_inventor_gmail = nil
       self.scratch_project_url = nil
     end
   end
 
   def reset_development_platform_fields_for_scratch
     if development_platform == "Scratch"
-      self.thunkable_account_email = nil
       self.thunkable_project_url = nil
       self.app_inventor_app_name = nil
-      self.app_inventor_gmail = nil
       self.development_platform_other = nil
     end
   end

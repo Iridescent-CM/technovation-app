@@ -113,14 +113,12 @@ module Admin
         :uses_open_ai_description,
         :solves_education,
         :solves_education_description,
-        :app_inventor_gmail,
         :source_code,
         :contest_rank,
         :business_plan_cache,
         :development_platform_other,
         :source_code_cache,
         :thunkable_project_url,
-        :thunkable_account_email,
         :scratch_project_url,
         screenshots_attributes: [:id, :_destroy]
       )
