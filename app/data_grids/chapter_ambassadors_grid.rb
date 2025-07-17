@@ -12,7 +12,7 @@ class ChapterAmbassadorsGrid
 
   column :name, header: "Chapters (Program Name)", mandatory: true do |account|
     if account.current_chapter.present?
-      format(account.name) do
+      format(account.chapter_program_name) do
         link_to(
           account.chapter_program_name || "-",
           admin_chapter_path(account.current_chapter)
