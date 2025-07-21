@@ -3,6 +3,7 @@ module Student
     include RequireParentalConsentSigned
     include RequireLocationIsSet
     include LocationStorageController
+    include UnsetForceChapterableSelection
 
     def show
       @regional_events = available_regional_events
