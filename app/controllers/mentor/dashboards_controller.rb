@@ -1,6 +1,8 @@
 module Mentor
   class DashboardsController < MentorController
     include LocationStorageController
+    include UnsetForceChapterableSelection
+
     layout "mentor_rebrand"
 
     private

@@ -17,7 +17,10 @@ Rails.application.routes.draw do
     resources :cookies, only: :create
     resource :survey_reminder, only: :create
 
-    resource :dashboard, only: :show
+    resource :dashboard, only: :show do
+      post :unset_force_chapterable_selection
+    end
+
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
 
@@ -81,7 +84,10 @@ Rails.application.routes.draw do
     resource :team_building, only: :show, controller: "team_building"
     resource :pending_team_requests, only: :show, controller: "pending_team_requests"
 
-    resource :dashboard, only: :show
+    resource :dashboard, only: :show do
+      post :unset_force_chapterable_selection
+    end
+
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
     resource :bio, only: [:show, :edit, :update]
