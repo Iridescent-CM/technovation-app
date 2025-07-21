@@ -34,7 +34,8 @@
 
             <div>
               <%= link_to "Confirm",
-                send("#{current_account.scope_name}_dashboard_path"),
+                send("unset_force_chapterable_selection_#{current_account.scope_name}_dashboard_path"),
+                method: :post,
                 class: "tw-green-btn"
               %>
             </div>
