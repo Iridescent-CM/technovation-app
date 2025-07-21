@@ -204,8 +204,8 @@ RSpec.feature "Students edit submission pieces" do
 
     select "Yes", from: "team_submission_ai"
     select "Yes", from: "team_submission_climate_change"
-    select "Yes", from: "team_submission_solves_hunger_or_food_waste"
-    select "Yes", from: "team_submission_game"
+    select "Yes", from: "team_submission_solves_education"
+
 
     click_button "Save my responses"
 
@@ -219,11 +219,7 @@ RSpec.feature "Students edit submission pieces" do
       expect(page).to have_content("can't be blank")
     end
 
-    within("#solves_hunger_or_food_waste_description") do
-      expect(page).to have_content("can't be blank")
-    end
-
-    within("#uses_open_ai_description") do
+    within("#solves_education_description") do
       expect(page).to have_content("can't be blank")
     end
   end
