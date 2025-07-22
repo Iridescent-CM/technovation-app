@@ -17,29 +17,9 @@
     <%= @chapter.chapter_program_information.child_safeguarding_policy_and_process.presence || raw('<span>Missing</span>') %>
   </dd>
 
-  <dt ><%= t("chapter.chapter_program_information.team_structure_question") %></dt>
-  <dd>
-    <%= @chapter.chapter_program_information.team_structure.presence || raw('<span>Missing</span>') %>
-  </dd>
-
-  <dt class="font-semibold"><%= t("chapter.chapter_program_information.external_partnerships_question") %></dt>
-  <dd>
-    <%= @chapter.chapter_program_information.external_partnerships.presence || raw('<span class="text-red-500">Missing</span>') %>
-  </dd>
-
   <dt class="font-semibold"><%= t("chapter.chapter_program_information.start_date_question") %></dt>
   <dd>
     <%= @chapter.chapter_program_information.start_date.presence || raw('<span class="text-red-500">Missing</span>') %>
-  </dd>
-
-  <dt><%= t("chapter.chapter_program_information.launch_date_question") %></dt>
-  <dd>
-    <%= @chapter.chapter_program_information.launch_date.presence || raw('<span>Missing</span>') %>
-  </dd>
-
-  <dt><%= t("chapter.chapter_program_information.program_model_question") %></dt>
-  <dd>
-    <%= @chapter.chapter_program_information.program_model.presence || raw('<span>Missing</span>')%>
   </dd>
 
   <dt><%= t("chapter.chapter_program_information.meeting_time_question") %></dt>
@@ -71,20 +51,5 @@
     <% else %>
       <p>Missing</p>
     <% end %>
-  </dd>
-
-  <dt><%= t("chapter.chapter_program_information.participant_count_estimate_question") %></dt>
-  <dd>
-    <%= @chapter.chapter_program_information.participant_count_estimate&.range.presence || raw('<span>Missing</span>')%>
-  </dd>
-
-  <dt><%= t("chapter.chapter_program_information.number_of_low_income_or_underserved_question") %></dt>
-  <dd>
-    <%= @chapter.chapter_program_information.low_income_estimate&.percentage.presence || raw('<span>Missing</span>')%>
-  </dd>
-
-  <dt><%= t("chapter.chapter_program_information.number_of_low_income_or_underserved_calculation_question") %></dt>
-  <dd>
-    <%= @chapter.chapter_program_information.number_of_low_income_or_underserved_calculation.presence || raw('<span>Missing</span>')%>
   </dd>
 </dl>

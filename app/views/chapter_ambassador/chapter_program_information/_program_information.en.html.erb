@@ -20,37 +20,9 @@
   </div>
 
   <div class="mb-4">
-    <p class="font-semibold"><%= t("chapter.chapter_program_information.team_structure_question") %></p>
-    <p>
-      <%= current_chapter.chapter_program_information.team_structure.presence || raw('<span class="text-red-500">Missing</span>') %>
-    </p>
-  </div>
-
-  <div class="mb-4">
-    <p class="font-semibold"><%= t("chapter.chapter_program_information.external_partnerships_question") %></p>
-    <p>
-      <%= current_chapter.chapter_program_information.external_partnerships.presence || raw('<span class="text-red-500">Missing</span>') %>
-    </p>
-  </div>
-
-  <div class="mb-4">
     <p class="font-semibold"><%= t("chapter.chapter_program_information.start_date_question") %></p>
     <p>
       <%= current_chapter.chapter_program_information.start_date.presence || raw('<span class="text-red-500">Missing</span>') %>
-    </p>
-  </div>
-
-  <div class="mb-4">
-    <p class="font-semibold"><%= t("chapter.chapter_program_information.launch_date_question") %></p>
-    <p>
-      <%= current_chapter.chapter_program_information.launch_date.presence || raw('<span class="text-red-500">Missing</span>') %>
-    </p>
-  </div>
-
-  <div class="mb-4">
-    <p class="font-semibold"><%= t("chapter.chapter_program_information.program_model_question") %></p>
-    <p>
-      <%= current_chapter.chapter_program_information.program_model.presence || raw('<span class="text-red-500">Missing</span>')%>
     </p>
   </div>
 
@@ -85,26 +57,5 @@
     <% else %>
       <p class="text-red-500">Missing</p>
     <% end %>
-  </div>
-
-  <div class="mb-4">
-    <p class="font-semibold"><%= t("chapter.chapter_program_information.participant_count_estimate_question") %></p>
-    <p>
-      <%= current_chapter.chapter_program_information.participant_count_estimate&.range.presence || raw('<span class="text-red-500">Missing</span>')%>
-    </p>
-  </div>
-
-  <div class="mb-4">
-    <p class="font-semibold"><%= t("chapter.chapter_program_information.number_of_low_income_or_underserved_question") %></p>
-    <p>
-      <%= current_chapter.chapter_program_information.low_income_estimate&.percentage.presence || raw('<span class="text-red-500">Missing</span>')%>
-    </p>
-  </div>
-
-  <div class="mb-4">
-    <p class="font-semibold"><%= t("chapter.chapter_program_information.number_of_low_income_or_underserved_calculation_question") %></p>
-    <p>
-      <%= current_chapter.chapter_program_information.number_of_low_income_or_underserved_calculation.presence || raw('<span class="text-red-500">Missing</span>')%>
-    </p>
   </div>
 </div>

@@ -14,140 +14,80 @@
 
   <div class="mb-8">
     <%= f.association :organization_types,
-                      as: :check_boxes,
-                      label: t("chapter.chapter_program_information.organization_type_question") %>
+      as: :check_boxes,
+      label: t("chapter.chapter_program_information.organization_type_question")
+    %>
   </div>
 
   <div class="mb-8">
     <%= f.label :child_safeguarding_policy_and_process,
-                t("chapter.chapter_program_information.child_safeguarding_policy_and_process_question"),
-                for: :child_safeguarding_policy_and_process %>
+      t("chapter.chapter_program_information.child_safeguarding_policy_and_process_question"),
+      for: :child_safeguarding_policy_and_process
+    %>
     <p class="text-base"><%= t("chapter.chapter_program_information.child_safeguarding_policy_and_process_description") %></p>
-
     <%= f.input :child_safeguarding_policy_and_process,
-                label: false,
-                as: :text,
-                input_html: {
-                  rows: 3,
-                } %>
-  </div>
-
-  <div class="mb-8">
-    <%= f.input :team_structure,
-                label: t("chapter.chapter_program_information.team_structure_question"),
-                as: :text,
-                input_html: {
-                  rows: 3,
-                } %>
-  </div>
-
-  <div class="mb-8">
-    <%= f.input :external_partnerships,
-                label: t("chapter.chapter_program_information.external_partnerships_question"),
-                as: :text,
-                input_html: {
-                  rows: 3,
-                } %>
+      label: false,
+      as: :text,
+      input_html: {
+        rows: 3,
+      }
+    %>
   </div>
 
   <div class="mb-8">
     <%= f.input :start_date,
-                start_year: Date.today.year ,
-                end_year: Date.today.year + 1,
-                label: t("chapter.chapter_program_information.start_date_question"),
-                include_blank: true,
-                prompt: true %>
+      start_year: Date.today.year ,
+      end_year: Date.today.year + 1,
+      label: t("chapter.chapter_program_information.start_date_question"),
+      include_blank: true,
+      prompt: true
+    %>
   </div>
 
-  <div class="mb-8">
-    <%= f.input :launch_date,
-                start_year: Date.today.year,
-                end_year: Date.today.year + 1,
-                label: t("chapter.chapter_program_information.launch_date_question"),
-                include_blank: true,
-                prompt: true %>
-  </div>
-
-  <div class="mb-8">
-    <%= f.label :program_model,
-                t("chapter.chapter_program_information.program_model_question"),
-                for: :program_model %>
-    <p class="text-base"><%= t("chapter.chapter_program_information.program_model_description") %></p>
-
-    <%= f.input :program_model,
-                label: false,
-                as: :text,
-                input_html: {
-                  rows: 3,
-                } %>
+  <div class=" border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
+    <p class="text-left">
+      Please provide the following information on your program to the best
+      of your ability. If you’re not sure about any aspects you can select
+      the “Uncertain” option and come back later to provide more accurate
+      information.
+    </p>
   </div>
 
   <div class="mb-8">
     <%= f.association :meeting_times,
-                      as: :check_boxes,
-                      label_method: :time,
-                      label: t("chapter.chapter_program_information.meeting_time_question") %>
+      as: :check_boxes,
+      label_method: :time,
+      label: t("chapter.chapter_program_information.meeting_time_question")
+    %>
   </div>
-
 
   <div class="mb-8">
     <%= f.association :program_length,
-                      collection: ProgramLength.all,
-                      as: :select,
-                      label_method: :length,
-                      required: false,
-                      label: t("chapter.chapter_program_information.program_length_question"),
-                      prompt: "Select a Program Length" %>
+      collection: ProgramLength.all,
+      as: :select,
+      label_method: :length,
+      required: false,
+      label: t("chapter.chapter_program_information.program_length_question"),
+      prompt: "Select a Program Length"
+    %>
   </div>
 
   <div class="mb-8">
     <%= f.association :meeting_facilitators,
-                      as: :check_boxes,
-                      label_method: :name,
-                      label: t("chapter.chapter_program_information.meeting_facilitator_question") %>
-  </div>
-
-  <div class="mb-8">
-    <%= f.association :participant_count_estimate,
-                      collection: ParticipantCountEstimate.all.order(:order),
-                      as: :select,
-                      label_method: :range,
-                      required: false,
-                      label: t("chapter.chapter_program_information.participant_count_estimate_question"),
-                      prompt: "Select an option" %>
-  </div>
-
-  <div class="mb-8">
-    <%= f.association :low_income_estimate,
-                      collection: LowIncomeEstimate.all,
-                      as: :select,
-                      label_method: :percentage,
-                      required: false,
-                      label: t("chapter.chapter_program_information.number_of_low_income_or_underserved_question"),
-                      prompt: "Select a percentage" %>
-  </div>
-
-  <div class="mb-8">
-    <%= f.label :number_of_low_income_or_underserved_calculation,
-                t("chapter.chapter_program_information.number_of_low_income_or_underserved_calculation_question"),
-                for: :number_of_low_income_or_underserved_calculation %>
-    <p class="text-base"><%= t("chapter.chapter_program_information.number_of_low_income_or_underserved_calculation_description") %></p>
-
-    <%= f.input :number_of_low_income_or_underserved_calculation,
-                label: false,
-                as: :text,
-                input_html: {
-                  rows: 3,
-                } %>
-  </div>
+      as: :check_boxes,
+      label_method: :name,
+      label: t("chapter.chapter_program_information.meeting_facilitator_question")
+    %>
+</div>
 
   <div class="mt-8 w-full flex mx-auto">
     <p class="flex flex-row mx-auto space-x-4">
       <%= f.submit "Save", class: "tw-green-btn cursor-pointer" %>
       <span class="flex flex-col justify-center text-center">or</span>
       <%= link_to "cancel",
-                  chapter_ambassador_chapter_program_information_path,
-                  class: "flex flex-col justify-center text-center" %>
+        chapter_ambassador_chapter_program_information_path,
+        class: "flex flex-col justify-center text-center"
+      %>
     </p>
   </div >
 <% end %>
