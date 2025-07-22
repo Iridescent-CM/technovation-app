@@ -134,7 +134,7 @@
               and we'll connect your account with them.
             </p>
           </div>
-        <% else %>
+        <% elsif !current_account.assigned_to_chapterable? %>
           <%= render "chapterable_account_assignments/#{current_account.scope_name}/no_chapterables_found" %>
         <% end %>
       </div>
