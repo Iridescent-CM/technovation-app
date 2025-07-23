@@ -42,18 +42,24 @@
       <%= link_to @team_submission.scratch_project_url,
       @team_submission.scratch_project_url %>
     </p>
+  <% elsif @team_submission.developed_on?("App Inventor") %>
+    <p class="mt-4">
+      <strong class="font-bold">App Inventor Project Name</strong><br>
+      <%= @team_submission.app_inventor_app_name %>
+    </p>
   <% end %>
 
-  <br>
-  <dl>
-    <dt>
-      Did you use AI to help with your coding and/or to help you build your machine learning model?
-    </dt>
-    <dd>
-      <%= humanize_boolean(@team_submission.ai_usage?) %>
-    </dd>
-  </dl>
-
+  <% if @team_submission.junior_division? || @team_submission.senior_division? %>
+    <br>
+    <dl>
+      <dt>
+        Did you use AI to help with your coding and/or to help you build your machine learning model?
+      </dt>
+      <dd>
+        <%= humanize_boolean(@team_submission.ai_usage?) %>
+      </dd>
+    </dl>
+  <% end %>
 <% end %>
 
 <%= render 'application/templates/tw_thick_rule'%>
