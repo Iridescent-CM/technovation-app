@@ -249,6 +249,7 @@ module TeamSubmissionController
         :pitch_video_link,
         :development_platform_other,
         :development_platform,
+        :ai_usage,
         :app_inventor_app_name,
         :app_inventor_gmail,
         :thunkable_project_url,
