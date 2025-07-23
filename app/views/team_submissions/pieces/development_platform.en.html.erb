@@ -40,6 +40,17 @@
         id: :team_submission_development_platform %>
       </div>
 
+      <div class="field">
+        <%= f.label :ai_usage,
+          "Did you use AI to help with your coding and/or to help you build your machine learning model?",
+          for: :team_submission_ai_usage %>
+
+      <%= f.select :ai_usage,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        class: "w-full lg:w-full lg:w-1/5" %>
+      </div>
+
       <div id="app_inventor_fields" class="mt-8">
         <p class="tw-hint">
           We want to ask you two questions about your use of

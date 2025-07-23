@@ -2435,7 +2435,8 @@ CREATE TABLE public.team_submissions (
     uses_gadgets boolean,
     uses_gadgets_description character varying,
     removed_from_judging_pool boolean DEFAULT false,
-    returned_to_judging_pool_by_account_id integer
+    returned_to_judging_pool_by_account_id integer,
+    ai_usage boolean
 );
 
 
@@ -5141,6 +5142,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250722233903'),
 ('20250723000305'),
 ('20250723000814'),
+('20250723142006'),
 ('20250724035903'),
 ('20250724040143'),
 ('20250724040309');
