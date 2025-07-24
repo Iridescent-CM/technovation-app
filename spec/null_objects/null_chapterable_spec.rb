@@ -15,15 +15,15 @@ RSpec.describe NullChapterable do
     end
   end
 
-  describe "#chapter_program_information" do
-    it "returns an empty chapter_program_information result set" do
-      expect(null_chapter.chapter_program_information).to eq(ChapterProgramInformation.none)
+  describe "#program_information" do
+    it "returns an empty program_information result set" do
+      expect(null_chapter.program_information).to eq(ProgramInformation.none)
     end
   end
 
-  describe "#build_chapter_program_information" do
-    it "returns an empty chapter_program_information result set" do
-      expect(null_chapter.build_chapter_program_information).to eq(ChapterProgramInformation.none)
+  describe "#build_program_information" do
+    it "returns an empty program_information result set" do
+      expect(null_chapter.build_program_information).to eq(ProgramInformation.none)
     end
   end
 end
