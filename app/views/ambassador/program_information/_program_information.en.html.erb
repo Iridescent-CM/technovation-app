@@ -1,0 +1,76 @@
+<div class="overflow-y-auto h-full">
+  <% if current_ambassador.chapterable_type == "club" %>
+    <div class="mb-4">
+      <p class="font-semibold"><%= t("program_information.club.meeting_format_question") %></p>
+      <% if chapterable.program_information.meeting_formats.any? %>
+        <ul class="list-disc">
+          <% chapterable.program_information.meeting_formats.each do |meeting_format| %>
+            <li><%= meeting_format.name %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-red-500">Missing</p>
+      <% end %>
+    </div>
+  <% elsif current_ambassador.chapterable_type == "chapter" %>
+    <div class="mb-4">
+      <p class="font-semibold"><%= t("program_information.organization_type_question") %></p>
+      <% if chapterable.program_information.organization_types.any? %>
+        <ul class="list-disc">
+          <% chapterable.program_information.organization_types.each do |organization_type| %>
+            <li><%= organization_type.name %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-red-500">Missing</p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <p class="font-semibold"><%= t("program_information.child_safeguarding_policy_and_process_question") %></p>
+      <p>
+        <%= chapterable.program_information.child_safeguarding_policy_and_process.presence || raw('<span class="text-red-500">Missing</span>') %>
+      </p>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <p class="font-semibold"><%= t("program_information.start_date_question") %></p>
+    <p>
+      <%= chapterable.program_information.start_date.presence || raw('<span class="text-red-500">Missing</span>') %>
+    </p>
+  </div>
+
+  <div class="mb-4">
+    <p class="font-semibold"><%= t("program_information.meeting_time_question") %></p>
+    <% if chapterable.program_information.meeting_times.any? %>
+      <ul class="list-disc">
+        <% chapterable.program_information.meeting_times.each do |meeting_time| %>
+          <li><%= meeting_time.time %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-red-500">Missing</p>
+    <% end %>
+  </div>
+
+  <div class="mb-4">
+    <p class="font-semibold"><%= t("program_information.program_length_question") %></p>
+    <p>
+      <%= chapterable.program_information.program_length&.length.presence || raw('<span class="text-red-500">Missing</span>')%>
+    </p>
+  </div>
+
+  <div class="mb-4">
+    <p class="font-semibold"><%= t("program_information.#{current_ambassador.chapterable_type}.meeting_facilitator_question") %></p>
+    <% if chapterable.program_information.meeting_facilitators.any? %>
+      <ul class="list-disc">
+        <% chapterable.program_information.meeting_facilitators.each do |meeting_facilitator| %>
+          <li><%= meeting_facilitator.name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-red-500">Missing</p>
+    <% end %>
+  </div>
+</div>

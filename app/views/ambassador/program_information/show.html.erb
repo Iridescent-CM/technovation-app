@@ -1,0 +1,31 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "#{current_scope}/#{current_ambassador.chapterable_type}_profile/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Program Info" } do %>
+    <% if current_chapterable.present? %>
+      <p class="mb-4">
+        All this information is private and will not be publicly displayed. You are required to enter a
+        response now, but you can go back later and edit the information. This information helps our
+        team support your local chapter to the best of our ability.
+      </p>
+
+      <% if current_chapterable.program_information.present? %>
+        <%= render "ambassador/program_information/program_information", chapterable: current_chapterable %>
+      <% end %>
+
+      <div class="text-center">
+        <% if current_chapterable.program_information.present? %>
+          <%= link_to "Update program info",
+            send(:"edit_#{current_scope}_program_information_path"),
+            class: "tw-green-btn" %>
+        <% else %>
+          <%= link_to "Get started",
+            send(:"new_#{current_scope}_program_information_path"),
+            class: "tw-green-btn" %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>You are not associated with a chapter or club. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
+    <% end %>
+  <% end %>
+</div>
