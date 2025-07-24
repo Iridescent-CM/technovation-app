@@ -1321,6 +1321,37 @@ ALTER SEQUENCE public.meeting_facilitators_id_seq OWNED BY public.meeting_facili
 
 
 --
+-- Name: meeting_formats; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.meeting_formats (
+    id bigint NOT NULL,
+    name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: meeting_formats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.meeting_formats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: meeting_formats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.meeting_formats_id_seq OWNED BY public.meeting_formats.id;
+
+
+--
 -- Name: meeting_times; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1815,6 +1846,38 @@ CREATE SEQUENCE public.program_information_meeting_facilitators_id_seq
 --
 
 ALTER SEQUENCE public.program_information_meeting_facilitators_id_seq OWNED BY public.program_information_meeting_facilitators.id;
+
+
+--
+-- Name: program_information_meeting_formats; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.program_information_meeting_formats (
+    id bigint NOT NULL,
+    program_information_id bigint,
+    meeting_format_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: program_information_meeting_formats_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.program_information_meeting_formats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: program_information_meeting_formats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.program_information_meeting_formats_id_seq OWNED BY public.program_information_meeting_formats.id;
 
 
 --
@@ -2808,6 +2871,13 @@ ALTER TABLE ONLY public.meeting_facilitators ALTER COLUMN id SET DEFAULT nextval
 
 
 --
+-- Name: meeting_formats id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_formats ALTER COLUMN id SET DEFAULT nextval('public.meeting_formats_id_seq'::regclass);
+
+
+--
 -- Name: meeting_times id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2903,6 +2973,13 @@ ALTER TABLE ONLY public.program_information ALTER COLUMN id SET DEFAULT nextval(
 --
 
 ALTER TABLE ONLY public.program_information_meeting_facilitators ALTER COLUMN id SET DEFAULT nextval('public.program_information_meeting_facilitators_id_seq'::regclass);
+
+
+--
+-- Name: program_information_meeting_formats id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_information_meeting_formats ALTER COLUMN id SET DEFAULT nextval('public.program_information_meeting_formats_id_seq'::regclass);
 
 
 --
@@ -3296,6 +3373,14 @@ ALTER TABLE ONLY public.meeting_facilitators
 
 
 --
+-- Name: meeting_formats meeting_formats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.meeting_formats
+    ADD CONSTRAINT meeting_formats_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: meeting_times meeting_times_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3397,6 +3482,14 @@ ALTER TABLE ONLY public.pitch_presentations
 
 ALTER TABLE ONLY public.program_information_meeting_facilitators
     ADD CONSTRAINT program_information_meeting_facilitators_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: program_information_meeting_formats program_information_meeting_formats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_information_meeting_formats
+    ADD CONSTRAINT program_information_meeting_formats_pkey PRIMARY KEY (id);
 
 
 --
@@ -3966,6 +4059,13 @@ CREATE INDEX index_parental_consents_on_student_profile_id ON public.parental_co
 
 
 --
+-- Name: index_pi_mf_on_program_information_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pi_mf_on_program_information_id ON public.program_information_meeting_formats USING btree (program_information_id);
+
+
+--
 -- Name: index_program_information_on_chapter_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4141,6 +4241,13 @@ CREATE INDEX meeting_facilitator_id ON public.program_information_meeting_facili
 
 
 --
+-- Name: meeting_format_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX meeting_format_id ON public.program_information_meeting_formats USING btree (meeting_format_id);
+
+
+--
 -- Name: meeting_time_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4271,6 +4378,14 @@ ALTER TABLE ONLY public.divisions_regional_pitch_events
 
 
 --
+-- Name: program_information_meeting_formats fk_rails_11fb8da74a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_information_meeting_formats
+    ADD CONSTRAINT fk_rails_11fb8da74a FOREIGN KEY (meeting_format_id) REFERENCES public.meeting_formats(id);
+
+
+--
 -- Name: judge_profiles fk_rails_185397937b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4356,6 +4471,14 @@ ALTER TABLE ONLY public.regional_pitch_events_user_invitations
 
 ALTER TABLE ONLY public.program_information
     ADD CONSTRAINT fk_rails_41d22ed899 FOREIGN KEY (participant_count_estimate_id) REFERENCES public.participant_count_estimates(id);
+
+
+--
+-- Name: program_information_meeting_formats fk_rails_4b139bbac0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_information_meeting_formats
+    ADD CONSTRAINT fk_rails_4b139bbac0 FOREIGN KEY (program_information_id) REFERENCES public.program_information(id);
 
 
 --
@@ -5017,6 +5140,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250722233807'),
 ('20250722233903'),
 ('20250723000305'),
-('20250723000814');
+('20250723000814'),
+('20250724035903'),
+('20250724040143'),
+('20250724040309');
 
 
