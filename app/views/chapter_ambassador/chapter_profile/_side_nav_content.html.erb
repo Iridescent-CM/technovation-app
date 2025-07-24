@@ -23,9 +23,9 @@
 
       <%= render "application/templates/completion_step",
         name: "Program Info",
-        url: chapter_ambassador_chapter_program_information_path,
+        url: chapter_ambassador_program_information_path,
         is_complete: current_ambassador.chapter&.program_info_complete?,
-        is_active_item: al(chapter_ambassador_chapter_program_information_path).present?
+        is_active_item: al(chapter_ambassador_program_information_path).present?
       %>
     </ol>
   </nav>
