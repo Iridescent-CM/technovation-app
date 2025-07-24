@@ -25,11 +25,11 @@ module ApplicationHelper
       chapter_locations
       chapter_organization_headquarters_locations
       chapter_profile
-      chapter_program_information
       community_connections
       dashboards
       location_details
       profiles
+      program_information
       public_information
       training
       training_completions
