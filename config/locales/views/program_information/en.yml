@@ -1,0 +1,13 @@
+en:
+  program_information:
+    meeting_time_question: When do you plan to hold meetings for your participants?
+    program_length_question: How long are you planning to run your Technovation program?
+    start_date_question: When do you estimate will be the start of your Technovation Girls program this season?
+    club:
+      meeting_facilitator_question: Who will be the Mentors for your students?
+      meeting_format_question: How will the teams in your Club meet?
+    chapter:
+      child_safeguarding_policy_and_process_question: What is your child safeguarding policy and process?
+      child_safeguarding_policy_and_process_description: Please describe if/how you conduct background checks, hold child protection trainings, safety reporting process, etc. If your policies are available online, please share the links.
+      organization_type_question: "Is your organization a:"
+      meeting_facilitator_question: Who will facilitate the meetings for your students?
