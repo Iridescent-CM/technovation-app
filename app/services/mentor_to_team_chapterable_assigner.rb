@@ -10,7 +10,8 @@ class MentorToTeamChapterableAssigner
         profile: mentor_profile,
         chapterable: chapterable,
         season: Season.current.year,
-        primary: false
+        primary: false,
+        assignment_by: team
       )
     end
   end

@@ -2,6 +2,7 @@ class ChapterableAccountAssignment < ApplicationRecord
   belongs_to :account
   belongs_to :chapterable, polymorphic: true
   belongs_to :profile, polymorphic: true
+  belongs_to :assignment_by, polymorphic: true, optional: true
 
   scope :current, -> {
     where(season: Season.current.year)

@@ -488,7 +488,9 @@ CREATE TABLE public.chapterable_account_assignments (
     "primary" boolean,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    chapterable_type character varying
+    chapterable_type character varying,
+    assignment_by_id integer,
+    assignment_by_type character varying
 );
 
 
@@ -3829,6 +3831,13 @@ CREATE INDEX index_chapterable_account_assignments_on_account_id ON public.chapt
 
 
 --
+-- Name: index_chapterable_account_assignments_on_assignment_by; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_chapterable_account_assignments_on_assignment_by ON public.chapterable_account_assignments USING btree (assignment_by_id, assignment_by_type);
+
+
+--
 -- Name: index_chapterable_account_assignments_on_chapterable_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5143,6 +5152,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250723000305'),
 ('20250723000814'),
 ('20250723142006'),
+('20250723210518');
 ('20250724035903'),
 ('20250724040143'),
 ('20250724040309');

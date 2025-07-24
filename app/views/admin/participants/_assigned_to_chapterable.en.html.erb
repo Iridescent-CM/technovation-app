@@ -8,6 +8,11 @@
   %>
 </dd>
 
+<% if current_account.admin? && chapterable_assignment.assignment_by.present? %>
+  <dt>Assignment By</dt>
+  <dd><%= chapterable_assignment.assignment_by.name %></dd>
+<% end %>
+
 <% if account.assigned_to_chapter? %>
   <dt>Chapter Organization</dt>
   <dd>
