@@ -9,7 +9,7 @@ class Chapter < ActiveRecord::Base
   belongs_to :primary_contact, class_name: "Account", foreign_key: "primary_account_id", optional: true
 
   has_one :legal_contact, dependent: :destroy
-  has_one :chapter_program_information, dependent: :destroy
+  has_one :program_information, dependent: :destroy, as: :chapterable
 
   has_many :chapterable_account_assignments, as: :chapterable, class_name: "ChapterableAccountAssignment"
   has_many :accounts, through: :chapterable_account_assignments
@@ -86,7 +86,7 @@ class Chapter < ActiveRecord::Base
   end
 
   def program_info_complete?
-    chapter_program_information&.complete?
+    program_information&.complete?
   end
 
   def required_onboarding_tasks
