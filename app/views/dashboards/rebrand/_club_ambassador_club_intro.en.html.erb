@@ -17,7 +17,8 @@
       <p class="mt-4 font-medium"><%= club.name&.titleize.presence || "Club name coming soon"%></p>
       <p class="mt-4"><%= club.primary_contact&.full_name.presence %></p>
       <p class="mt-4"><%= club.summary.presence || "Your Club Ambassador will be adding more information about the Club soon." %></p>
-      <p class="mt-4">Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Club. Please check out the following info about the Club.</p>
+
+      <%= render "dashboards/rebrand/update_chapterable", chapterable_type: "Club" %>
     </div>
   </div>
 </div>

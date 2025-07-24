@@ -1,0 +1,11 @@
+<% if current_scope == "mentor" %>
+  <p class="mt-4">
+    Please review our Mentor training and resources to learn more about the support
+    available to you during the program
+  </p>
+  <p>
+    Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your <%= chapterable_type %>.
+  </p>
+<% elsif current_scope == "student" %>
+  <p class="mt-4">Please visit your My Profile tab to change your <%= chapterable_type %>.</p>
+<% end %>
