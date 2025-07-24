@@ -1,0 +1,84 @@
+<div class="grid">
+  <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
+    <h3>
+      Program Information
+    </h3>
+    <div class="panel">
+      <% if chapterable.program_information.present? %>
+        <dl>
+          <% if chapterable_type == "club" %>
+            <dt class="font-semibold"><%= t("program_information.club.meeting_format_question") %></dt>
+            <dd>
+              <% if chapterable.program_information.meeting_formats.any? %>
+                <ul class="list-disc">
+                  <% chapterable.program_information.meeting_formats.each do |meeting_format| %>
+                    <li><%= meeting_format.name %></li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="text-red-500">Missing</p>
+              <% end %>
+            </dd>
+          <% elsif chapterable_type == "chapter" %>
+            <dt class="font-semibold"><%= t("program_information.organization_type_question") %></dt>
+            <dd>
+              <% if chapterable.program_information.organization_types.any? %>
+                <ul class="list-disc">
+                  <% chapterable.program_information.organization_types.each do |organization_type| %>
+                    <li><%= organization_type.name %></li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="text-red-500">Missing</p>
+              <% end %>
+            </dd>
+
+            <dt class="font-semibold"><%= t("program_information.child_safeguarding_policy_and_process_question") %></dt>
+            <dd>
+              <%= chapterable.program_information.child_safeguarding_policy_and_process.presence || raw('<span class="text-red-500">Missing</span>') %>
+            </dd>
+          <% end %>
+
+          <dt class="font-semibold"><%= t("program_information.start_date_question") %></dt>
+          <dd>
+            <%= chapterable.program_information.start_date.presence || raw('<span class="text-red-500">Missing</span>') %>
+          </dd>
+
+          <dt><%= t("program_information.meeting_time_question") %></dt>
+          <dd>
+            <% if chapterable.program_information.meeting_times.any? %>
+              <ul>
+                <% chapterable.program_information.meeting_times.each do |meeting_time| %>
+                  <li><%= meeting_time.time %></li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>Missing</p>
+            <% end %>
+          </dd>
+
+          <dt><%= t("program_information.program_length_question") %></dt>
+          <dd>
+            <%= chapterable.program_information.program_length&.length.presence || raw('<span>Missing</span>')%>
+          </dd>
+
+          <dt><%= t("program_information.#{chapterable_type}.meeting_facilitator_question") %></dt>
+          <dd>
+            <% if chapterable.program_information.meeting_facilitators.any? %>
+              <ul>
+                <% chapterable.program_information.meeting_facilitators.each do |meeting_facilitator| %>
+                  <li><%= meeting_facilitator.name %></li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>Missing</p>
+            <% end %>
+          </dd>
+        </dl>
+      <% else %>
+        <p>Not filled out</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+

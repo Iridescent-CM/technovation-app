@@ -1,0 +1,13 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "#{current_scope}/#{current_ambassador.chapterable_type}_profile/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Program Info" } do %>
+    <div>
+      <% if current_chapterable.present? %>
+        <%= render "ambassador/program_information/form"%>
+      <% else %>
+        <p>You are not associated with a chapter or club. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

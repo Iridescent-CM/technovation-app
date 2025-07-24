@@ -66,7 +66,7 @@ RSpec.describe "Using registration invite codes", :js do
       after :each do
         UserInvitation.destroy_all
         LegalContact.destroy_all
-        ChapterProgramInformation.destroy_all
+        ProgramInformation.destroy_all
         Chapter.destroy_all
       end
 

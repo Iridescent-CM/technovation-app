@@ -14,6 +14,8 @@ class Club < ActiveRecord::Base
     through: :chapterable_account_assignments,
     source: :account
 
+  has_one :program_information, dependent: :destroy, as: :chapterable
+
   validates :name, presence: true
   validates :summary, length: {maximum: 1000}
 
@@ -56,7 +58,7 @@ class Club < ActiveRecord::Base
   end
 
   def program_info_complete?
-    true
+    !!program_information&.complete?
   end
 
   def secondary_regions

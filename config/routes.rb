@@ -176,7 +176,7 @@ Rails.application.routes.draw do
     resource :chapter_location, only: [:show, :edit, :update, :create], controller: "chapter_locations"
     resource :chapter_current_location, only: :show
 
-    resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
+    resource :program_information, only: [:show, :edit, :update, :new, :create], controller: "/ambassador/program_information"
     resource :volunteer_agreement, only: [:show, :new, :create], controller: "/ambassador/volunteer_agreements"
     resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
@@ -267,7 +267,7 @@ Rails.application.routes.draw do
     post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
 
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
-    resource :program_information, only: :show, controller: "club_program_information"
+    resource :program_information, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/program_information"
     resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
     resource :club_admin, only: :show, controller: "club_admin"
@@ -368,7 +368,6 @@ Rails.application.routes.draw do
         only: :create,
         controller: "chapters/off_platform_chapter_affiliation_agreement"
       resources :invites, only: :create, controller: "chapter_invites"
-      resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
       resource :location, only: :edit, controller: "chapters/locations"
       resource :status, only: [], controller: "chapters/status" do
         patch :activate

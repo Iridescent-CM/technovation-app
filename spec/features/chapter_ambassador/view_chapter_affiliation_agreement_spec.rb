@@ -39,7 +39,7 @@ RSpec.feature "Chapter Ambassadors view the chapter affiliation agreement tab" d
   end
 
   scenario "A Chapter Ambassador not assigned to a chapter" do
-    chapter_ambassador.chapter.chapter_program_information.destroy
+    chapter_ambassador.chapter.program_information.destroy
     chapter_ambassador.reload
     chapter_ambassador.chapter.destroy
 
