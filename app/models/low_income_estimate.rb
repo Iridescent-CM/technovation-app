@@ -1,3 +1,3 @@
 class LowIncomeEstimate < ActiveRecord::Base
-  has_many :chapter_program_information
+  has_many :program_information
 end
