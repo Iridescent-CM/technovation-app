@@ -20,6 +20,10 @@ RSpec.describe Club do
       describe "updating the onboarded status" do
         context "when all onboarding steps have been completed" do
           before do
+            club.program_information.destroy
+            club.reload
+            FactoryBot.create(:program_information, chapterable: club)
+
             club.update(
               name: "My club",
               summary: "My club's summary",
@@ -33,13 +37,14 @@ RSpec.describe Club do
           end
         end
 
-        context "when the club's name is missing" do
+        context "when trying to set a club's name to nil" do
           before do
-            club.update(name: nil)
+            result = club.update(name: nil)
+            expect(result).to eq(false)
           end
 
-          it "returns false" do
-            expect(club.onboarded?).to eq(false)
+          it "does not update due to validation error" do
+            expect(club.onboarded?).to eq(true)
           end
         end
 
@@ -120,6 +125,24 @@ RSpec.describe Club do
 
       it "returns false" do
         expect(club.club_info_complete?).to eq(false)
+      end
+    end
+  end
+
+  describe "#program_info_complete?" do
+    context "When all of the club's program info has been completed" do
+      it "returns true" do
+        expect(club.program_info_complete?).to eq(true)
+      end
+    end
+
+    context "When the club doesn't have program info" do
+      before do
+        club.program_information.destroy
+      end
+
+      it "returns false" do
+        expect(club.reload.program_info_complete?).to eq(false)
       end
     end
   end

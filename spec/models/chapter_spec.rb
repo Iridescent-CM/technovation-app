@@ -74,13 +74,13 @@ RSpec.describe Chapter do
         before do
           allow(chapter).to receive(:affiliation_agreement)
             .and_return(affiliation_agreement)
-          allow(chapter).to receive(:chapter_program_information)
-            .and_return(chapter_program_information)
+          allow(chapter).to receive(:program_information)
+            .and_return(program_information)
         end
 
         let(:affiliation_agreement) { instance_double(Document, complete?: affiliation_agreement_complete) }
         let(:affiliation_agreement_complete) { true }
-        let(:chapter_program_information) { instance_double(ChapterProgramInformation, complete?: program_info_complete) }
+        let(:program_information) { instance_double(ProgramInformation, complete?: program_info_complete) }
         let(:program_info_complete) { true }
 
         context "when all onboarding steps have been completed" do
@@ -284,7 +284,7 @@ RSpec.describe Chapter do
 
   describe "#program_info_complete?" do
     before do
-      allow(chapter).to receive_message_chain(:chapter_program_information, :complete?).and_return(program_info_complete)
+      allow(chapter).to receive_message_chain(:program_information, :complete?).and_return(program_info_complete)
     end
 
     context "when the program info has been completed" do
