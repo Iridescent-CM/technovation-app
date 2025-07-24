@@ -57,16 +57,6 @@
               <% end %>
             </dd>
 
-            <dt>Chapter Program Information</dt>
-            <dd>
-              <%if @chapter.chapter_program_information.present? %>
-                <%= link_to "View Responses",
-                            admin_chapter_chapter_program_information_path(@chapter)%>
-              <% else %>
-                  <p>Not filled out</p>
-              <% end %>
-            </dd>
-
             <%= render partial: "admin/chapterables/season_status",
               locals: { chapterable: @chapter } %>
 
@@ -155,6 +145,11 @@
 <%= render "admin/chapters/legal_contact", chapter: @chapter %>
 
 <%= render "admin/chapterables/stats_overview",
+  chapterable: @chapter,
+  chapterable_type: "chapter"
+%>
+
+<%= render "admin/chapterables/program_information",
   chapterable: @chapter,
   chapterable_type: "chapter"
 %>
