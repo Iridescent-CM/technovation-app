@@ -21,19 +21,34 @@ class ProgramInformation < ActiveRecord::Base
   after_save -> { chapterable.update_onboarding_status }
 
   def complete?
+    case chapterable_type
+    when "Club"
+      club_complete?
+    when "Chapter"
+      chapter_complete?
+    end
+  end
+
+  private
+
+  def club_complete?
+    [
+      meeting_facilitators,
+      meeting_formats,
+      meeting_times,
+      program_length,
+      start_date
+    ].all?(&:present?)
+  end
+
+  def chapter_complete?
     [
       child_safeguarding_policy_and_process,
-      team_structure,
-      external_partnerships,
-      start_date,
-      program_model,
-      number_of_low_income_or_underserved_calculation,
-      program_length,
-      participant_count_estimate,
-      low_income_estimate,
-      organization_types,
+      meeting_facilitators,
       meeting_times,
-      meeting_facilitators
+      organization_types,
+      program_length,
+      start_date
     ].all?(&:present?)
   end
 end
