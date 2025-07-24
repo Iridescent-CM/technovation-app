@@ -69,9 +69,9 @@ class ChaptersGrid
       class: "and-or-field"
     },
     multiple: true do |values, scope|
-    scope.includes(chapter_program_information: {organization_types: :chapter_program_information_organization_types})
-      .references(:chapter_program_information_organization_types)
-      .where(chapter_program_information_organization_types: {organization_type_id: values})
+    scope.includes(program_information: { organization_types: :program_information_organization_types })
+      .references(:program_information_organization_types)
+      .where(program_information_organization_types: { organization_type_id: values })
   end
 
   filter :season,
@@ -99,7 +99,7 @@ class ChaptersGrid
   column :organization_name, header: "Organization", mandatory: true
 
   column :organization_type, header: "Organization type" do
-    organization_types = chapter_program_information&.organization_types
+    organization_types = program_information&.organization_types
     if organization_types&.any?
       organization_types.pluck(:name).join(", ")
     else
@@ -118,10 +118,10 @@ class ChaptersGrid
   column :remaining_onboarding_tasks,
     preload: [
       :chapter_links,
-      :chapter_program_information,
+      :program_information,
       :legal_contact,
       :primary_contact,
-      chapter_program_information: [
+      program_information: [
         :low_income_estimate,
         :meeting_facilitators,
         :meeting_times,
@@ -139,10 +139,10 @@ class ChaptersGrid
   column :completed_onboarding_tasks,
     preload: [
       :chapter_links,
-      :chapter_program_information,
+      :program_information,
       :legal_contact,
       :primary_contact,
-      chapter_program_information: [
+      program_information: [
         :low_income_estimate,
         :meeting_facilitators,
         :meeting_times,
@@ -221,32 +221,32 @@ class ChaptersGrid
 
   column :visible_on_map, header: "Visible on map"
 
-  column :child_safeguarding_policy_and_process, preload: :chapter_program_information do
-    chapter_program_information&.child_safeguarding_policy_and_process.presence || "-"
+  column :child_safeguarding_policy_and_process, preload: :program_information do
+    program_information&.child_safeguarding_policy_and_process.presence || "-"
   end
 
-  column :team_structure, preload: :chapter_program_information do
-    chapter_program_information&.team_structure.presence || "-"
+  column :team_structure, preload: :program_information do
+    program_information&.team_structure.presence || "-"
   end
 
-  column :external_partnerships, preload: :chapter_program_information do
-    chapter_program_information&.external_partnerships.presence || "-"
+  column :external_partnerships, preload: :program_information do
+    program_information&.external_partnerships.presence || "-"
   end
 
-  column :start_date, header: "Program start date", preload: :chapter_program_information do
-    chapter_program_information&.start_date&.strftime("%m-%d-%Y").presence || "-"
+  column :start_date, header: "Program start date", preload: :program_information do
+    program_information&.start_date&.strftime("%m-%d-%Y").presence || "-"
   end
 
-  column :launch_date, preload: :chapter_program_information do
-    chapter_program_information&.launch_date&.strftime("%m-%d-%Y").presence || "-"
+  column :launch_date, preload: :program_information do
+    program_information&.launch_date&.strftime("%m-%d-%Y").presence || "-"
   end
 
-  column :program_model, preload: :chapter_program_information do
-    chapter_program_information&.program_model.presence || "-"
+  column :program_model, preload: :program_information do
+    program_information&.program_model.presence || "-"
   end
 
-  column :meeting_times, preload: :chapter_program_information do
-    meeting_times = chapter_program_information&.meeting_times
+  column :meeting_times, preload: :program_information do
+    meeting_times = program_information&.meeting_times
     if meeting_times&.any?
       meeting_times.pluck(:time).join(", ")
     else
@@ -254,12 +254,12 @@ class ChaptersGrid
     end
   end
 
-  column :program_length, preload: :chapter_program_information do
-    chapter_program_information&.program_length&.length.presence || "-"
+  column :program_length, preload: :program_information do
+    program_information&.program_length&.length.presence || "-"
   end
 
-  column :meeting_facilitators, preload: :chapter_program_information do
-    meeting_facilitators = chapter_program_information&.meeting_facilitators
+  column :meeting_facilitators, preload: :program_information do
+    meeting_facilitators = program_information&.meeting_facilitators
     if meeting_facilitators&.any?
       meeting_facilitators.pluck(:name).join(", ")
     else
@@ -267,16 +267,16 @@ class ChaptersGrid
     end
   end
 
-  column :participant_count_estimate, header: "Estimated participation", preload: :chapter_program_information do
-    chapter_program_information&.participant_count_estimate&.range.presence || "-"
+  column :participant_count_estimate, header: "Estimated participation", preload: :program_information do
+    program_information&.participant_count_estimate&.range.presence || "-"
   end
 
-  column :low_income_estimate, header: "Percent underresourced", preload: :chapter_program_information do
-    chapter_program_information&.low_income_estimate&.percentage.presence || "-"
+  column :low_income_estimate, header: "Percent underresourced", preload: :program_information do
+    program_information&.low_income_estimate&.percentage.presence || "-"
   end
 
-  column :number_of_low_income_or_underserved_calculation, preload: :chapter_program_information do
-    chapter_program_information&.number_of_low_income_or_underserved_calculation.presence || "-"
+  column :number_of_low_income_or_underserved_calculation, preload: :program_information do
+    program_information&.number_of_low_income_or_underserved_calculation.presence || "-"
   end
 
   column :seasons do
