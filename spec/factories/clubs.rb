@@ -27,5 +27,9 @@ FactoryBot.define do
     trait :current do
       seasons { [Season.current.year] }
     end
+
+    after(:create) do |club|
+      create(:program_information, chapterable: club)
+    end
   end
 end

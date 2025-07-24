@@ -10,14 +10,8 @@ FactoryBot.define do
 
     association :legal_contact
 
-    after(:build) do |chapter|
-      build(:chapter_program_information,
-        chapter: chapter)
-    end
-
     after(:create) do |chapter|
-      create(:chapter_program_information,
-        chapter: chapter)
+      create(:program_information, chapterable: chapter)
     end
 
     trait :current do
