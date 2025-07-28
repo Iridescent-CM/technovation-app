@@ -29,7 +29,7 @@
           by our curriculum. Parents are encouraged to take an active role in mentoring
           or supporting their daughters especially in the Beginner Division. At the end of the program,
           teams submit their app or web app, pitch, and other
-          <%= link_to "submission materials", "https://technovationchallenge.org/submission-guidelines/" %>
+          <%= link_to "submission materials", @submission_guidelines_url %>
           online. Judges from around the world provide written feedback to teams to help them make
           their ideas even better in the future! In some locations, teams are also eligible
           to sign up for live pitch events organized by chapters.
@@ -85,7 +85,7 @@
           <ul>
             <li>
               Check out the Parent Resource page
-              <%= link_to "here" , "https://technovationchallenge.org/parent-resources/"%>
+              <%= link_to "here", @parent_resources_url%>
               for ideas on supporting your daughter and her team.
             </li>
           </ul>
@@ -104,12 +104,21 @@
 
       <tr>
         <td class="content-block">
+          <strong>Learning Support</strong>
+          Through their account, students can connect with virtual mentors and find information
+          on locally-hosted programs through Chapters and Clubs. Plus, keep an eye on your
+          email to book a time with a coach later in the season!
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
           <strong>Internet safety and digital literacy:</strong>
           Technovation Girls is a program with online components, and we want to make sure your daughter knows
           how to be safe online. In Technovation Girls, you can look for another adult mentor to support
           your daughter’s team develop their app through our platform. Our mentors complete a
           mandatory training and sign a volunteer agreement, but we still recommend that you discuss
-          <%= link_to "how to keep yourself safe", @safety_url %>
+          <%= link_to "how to keep yourself safe", @internet_safety_url %>
           with your daughter when collaborating online.
         </td>
       </tr>

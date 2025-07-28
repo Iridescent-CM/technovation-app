@@ -6,7 +6,7 @@
         <td class="content-block">
           We're so glad you're joining Technovation Girls for the <%= @season_year %>
           season! We can't wait to hear how you want to change your community with
-          technology, but first, a few reminders and important
+          technology, but first, here are a few reminders and important
           deadlines.
         </td>
       </tr>
@@ -25,13 +25,23 @@
 
       <tr>
         <td class="content-block">
+          <strong>Learning Support:</strong>
+
+          Through their account, students can connect with virtual mentors and find information on
+          locally-hosted programs through Chapters and Clubs. Plus, keep an eye on your email to
+          book a time with a coach later in the season!
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
           <strong>Internet safety and digital literacy:</strong>
 
           Technovation Girls is a program with online components, and we want to make sure you know
           how to be safe online. In Technovation Girls, you might be connected with an adult
           mentor to support you as you develop your project.
           Our mentors receive
-          <%= link_to "educational training", @educational_training_url %>,
+          <%= link_to "educational training", @mentor_resources_url %>,
           but we still recommend you take a few minutes to learn how to keep yourself safe when
           <%= link_to "collaborating online", @internet_safety_url %> or
           <%= link_to "meeting in person.", @in_person_safety_url %>
@@ -45,16 +55,16 @@
           Technovation Girls is a learning experience. By participating in this program, 
           you agree to submit your own team’s work to the competition. You can find more 
           rules and guidelines about what is possible to submit 
-          <%= link_to "here.", "https://iridescentsupport.zendesk.com/hc/en-us/articles/115002717413-Submission-rules-for-girls-and-mentors" %> 
-          If you are found breaking competition rules or plagiarizing, your team will not be eligible to compete.
+          <%= link_to "here.", @submission_guidelines_url %>
+          If you are found
+          <%= link_to "breaking competition rules", @competition_rules_url %>
+          or plagiarizing, your team will not be eligible to compete.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          <%= link_to "Key Dates",
-            "https://technovationchallenge.org/program-timeline"
-          %>
+          <%= link_to "Key Dates", @program_timeline_url %>
           <br />
           <strong>
             Write these dates on your calendar! All deadlines are firm.
