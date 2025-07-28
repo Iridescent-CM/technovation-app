@@ -25,6 +25,7 @@ jobs:
           CHAPTER_AMBASSADOR_SLACK_URL: n-a
           CHAPTER_AMBASSADOR_TRAINING_URL: "https://some/training-url"
           CHAPTER_AMBASSADOR_TRAINING_CHECKPOINT_BASE_URL: "https://some/base-url"
+          COMPETITION_RULES_URL: n-a
           COOKIES_AUTH_TOKEN: auth_token_JUNE_2018
           COOKIES_IP_GEOLOCATION: ip_geolocation_JUNE_2018
           COOKIES_LAST_PROFILE_USED: last_profile_used_JUNE_2018
@@ -86,6 +87,7 @@ jobs:
           DOCUSIGN_CHAPTER_VOLUNTEER_AGREEMENT_TEMPLATE_ID: n-a
           DOCUSIGN_HMAC_SECRET_KEY: n-a
           ENABLE_HOMEPAGE_BANNER: true
+          FAQ_URL: n-a
           FINALISTS_URL: "https://some/url"
           FILESTACK_API_KEY: n-a
           GOOGLE_ANALYTICS_ID: n-a
@@ -94,6 +96,8 @@ jobs:
           GOOGLE_TIMEZONE_API_KEY: n-a
           HELP_EMAIL: support@technovation.org
           HOST_DOMAIN: localhost:31337
+          INTERNET_SAFETY_URL: n-a
+          IN_PERSON_SAFETY_URL: n-a
           JUDGE_MAXIMUM_NUMBER_OF_RECUSALS: 15
           JUDGE_SLACK_SIGNUP_URL: n-a
           JUDGE_TRAINING_URL: n-a
@@ -104,14 +108,20 @@ jobs:
           SALESFORCE_CLIENT_ID: n-a
           SALESFORCE_CLIENT_SECRET: n-a
           SALESFORCE_REFRESH_TOKEN: n-a
+          SUBMISSION_GUIDELINES_URL: n-a
+          MENTOR_COHORT_INTEREST_FORM_URL: n-a
+          MENTOR_RESOURCES_URL: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a
+          MENTOR_TRAINING_URL: n-a
           NEWSLETTER_URL: "https://some/other/url"
           GENERAL_NEWSLETTER_URL: "https://some/general/url"
           NEW_RELIC_LICENSE_KEY: n-a
           PARENT_CONSENT_PDF: n-a
+          PARENT_RESOURCES_URL: n-a
           PDFTK_PATH: /usr/bin/pdftk
           PGHOST: 127.0.0.1
           PGUSER: root
+          PROGRAM_TIMELINE_URL: n-a
           RAILS_ENV: test
           REDIS_URL: redis://127.0.0.1:6379/0
           REGIONAL_PITCH_EVENTS_FAQ_URL: 'https://some-url'
