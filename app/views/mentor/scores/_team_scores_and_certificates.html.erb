@@ -1,0 +1,26 @@
+<% current_teams.each do |team| %>
+  <div class="rounded-lg shadow-lg border mb-8">
+    <div class="p-6">
+      <div class="mb-8">
+        <p class="text-xl font-semibold">
+          Team:
+          <span class="tw-link"><%= link_to team.name, mentor_team_path(team) %></span>
+        </p>
+        <p class="text-xl font-semibold">
+          Submission:
+          <span class="tw-link"><%= link_to team.submission.app_name, mentor_published_team_submission_path(team.submission) %></span>
+        </p>
+      </div>
+
+      <div class="mt-8">
+        <% scores = team.submission.submission_scores.complete %>
+
+        <% if scores.any?  %>
+          <%= render "scores/finished_scores", team: team, scores: scores %>
+        <% else %>
+          <%= render "mentor/scores/no_scores", team: team %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

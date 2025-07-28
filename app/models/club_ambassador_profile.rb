@@ -1,4 +1,7 @@
 class ClubAmbassadorProfile < ActiveRecord::Base
+  include BackgroundCheckHelpers
+  include OnboardingTasksConcern
+
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account
@@ -10,6 +13,10 @@ class ClubAmbassadorProfile < ActiveRecord::Base
 
   has_many :exports, as: :owner, dependent: :destroy
   has_many :saved_searches, as: :searcher
+  has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
+  has_one :volunteer_agreement, -> { nonvoid }, dependent: :destroy, as: :ambassador
+
+  has_one :community_connection, as: :ambassador
 
   validates :job_title, presence: true
 
@@ -47,11 +54,38 @@ class ClubAmbassadorProfile < ActiveRecord::Base
   end
 
   def can_be_marked_onboarded?
-    !!account.email_confirmed?
+    !!(account.email_confirmed? &&
+      background_check_exempt_or_complete? &&
+      training_completed? &&
+      volunteer_agreement_complete? &&
+      viewed_community_connections?)
+  end
+
+  def required_onboarding_tasks
+    {
+      "Background Check" => background_check_exempt_or_complete?,
+      "Club Ambassador Training" => training_completed?,
+      "Club Volunteer Agreement" => volunteer_agreement_complete?,
+      "Community Connections" => viewed_community_connections?
+    }
+  end
+
+  def in_background_check_country?
+    ENV.fetch("BACKGROUND_CHECK_COUNTRY_CODES", "")
+      .split(",")
+      .include?(account.country_code)
+  end
+
+  def volunteer_agreement_complete?
+    volunteer_agreement&.signed?
   end
 
   def training_completed?
     training_completed_at.present?
+  end
+
+  def complete_training!
+    update(training_completed_at: Time.current)
   end
 
   def onboarding?

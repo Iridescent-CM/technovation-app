@@ -1,0 +1,16 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "#{current_scope}/dashboards/onboarding/side_nav" %>
+  <% if current_chapterable.present? %>
+    <% if current_ambassador.background_check.invitation_sent? && !current_ambassador.account.background_check_exemption? %>
+      <%= render "background_checks/rebrand/show" %>
+    <% else %>
+      <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Background Check" } do %>
+        <%= render "completion_steps/rebrand/background_check", profile: current_ambassador %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Background Check" } do %>
+      <p>You are not associated with a chapter or club. Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for support.</p>
+    <% end %>
+  <% end %>
+</div>

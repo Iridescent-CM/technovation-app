@@ -1,5 +1,7 @@
 module ClubAmbassador
   class ClubHeadquartersLocationsController < AmbassadorController
+    skip_before_action :require_chapterable_and_ambassador_onboarded
+
     layout "club_ambassador_rebrand"
 
     def update

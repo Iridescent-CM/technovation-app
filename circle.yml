@@ -20,7 +20,10 @@ jobs:
           BACKGROUND_CHECK_COUNTRY_CODES: "US,IN,CA"
           BING_MAPS_API_KEY: n-a
           CAMPAIGN_MONITOR_API_KEY: n-a
+          CLUB_AMBASSADOR_TRAINING_URL: "https://some/training-url"
+          CLUB_AMBASSADOR_TRAINING_CHECKPOINT_BASE_URL: "https://some/base-url"
           CHAPTER_AMBASSADOR_SLACK_URL: n-a
+          CHAPTER_AMBASSADOR_TRAINING_URL: "https://some/training-url"
           CHAPTER_AMBASSADOR_TRAINING_CHECKPOINT_BASE_URL: "https://some/base-url"
           COOKIES_AUTH_TOKEN: auth_token_JUNE_2018
           COOKIES_IP_GEOLOCATION: ip_geolocation_JUNE_2018
@@ -111,6 +114,7 @@ jobs:
           PGUSER: root
           RAILS_ENV: test
           REDIS_URL: redis://127.0.0.1:6379/0
+          REGIONAL_PITCH_EVENTS_FAQ_URL: 'https://some-url'
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/bin/wkhtmltopdf
       - image: cimg/postgres:13.7

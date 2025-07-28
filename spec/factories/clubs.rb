@@ -2,6 +2,9 @@ FactoryBot.define do
   factory :club do
     sequence(:name) { |n| "FactoryBot Program #{n}" }
     sequence(:summary) { |n| "FactoryBot Summary #{n}" }
+    sequence(:headquarters_location) { |n| "FactoryBot Location #{n}" }
+    seasons { [Season.current.year] }
+    onboarded { true }
 
     trait :chicago do
       city { "Chicago" }
@@ -23,6 +26,10 @@ FactoryBot.define do
 
     trait :current do
       seasons { [Season.current.year] }
+    end
+
+    after(:create) do |club|
+      create(:program_information, chapterable: club)
     end
   end
 end

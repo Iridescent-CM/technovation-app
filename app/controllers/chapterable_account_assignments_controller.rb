@@ -1,4 +1,6 @@
 class ChapterableAccountAssignmentsController < ApplicationController
+  skip_before_action :require_chapterable_selection, only: :unset_force_chapterable_selection
+
   layout "application_rebrand"
 
   def new
@@ -17,18 +19,35 @@ class ChapterableAccountAssignmentsController < ApplicationController
     if params[:chapterable].blank?
       redirect_to new_chapterable_account_assignments_path,
         alert: "Please select a Chapter or the None of the Above option." and return
-    elsif params[:chapterable] == "none_selected"
-      current_account.update(no_chapterable_selected: true)
-    elsif params[:chapterable] == "none_available"
-      current_account.update(no_chapterables_available: true)
     else
-      current_account.chapterable_assignments.create(
-        profile: current_account.mentor_profile.presence || current_account.student_profile,
-        chapterable_id: params[:chapterable].split.first,
-        chapterable_type: params[:chapterable].split.second,
-        season: Season.current.year,
-        primary: true
-      )
+      current_account
+        .current_chapterable_assignments
+        .where(primary: true)
+        .delete_all
+
+      if params[:chapterable] == "none_selected"
+        current_account.update(
+          no_chapterable_selected: true,
+          force_chapterable_selection: false
+        )
+      elsif params[:chapterable] == "none_available"
+        current_account.update(
+          no_chapterables_available: true,
+          force_chapterable_selection: false
+        )
+      else
+        current_account.update(force_chapterable_selection: false)
+
+        assignment = current_account.chapterable_assignments.create(
+          profile: current_account.mentor_profile.presence || current_account.student_profile,
+          chapterable_id: params[:chapterable].split.first,
+          chapterable_type: params[:chapterable].split.second,
+          season: Season.current.year,
+          primary: true
+        )
+
+        flash[:success] = "You were successfully assigned to #{assignment.chapterable.name.presence || assignment.chapterable.organization_name}."
+      end
     end
 
     if current_account.is_a_mentor?
@@ -37,6 +56,12 @@ class ChapterableAccountAssignmentsController < ApplicationController
         accepting_team_invites: params.fetch(:mentor_profile_accepting_team_invites, false)
       )
     end
+
+    redirect_to send(:"#{current_account.scope_name}_dashboard_path")
+  end
+
+  def unset_force_chapterable_selection
+    current_account.update(force_chapterable_selection: false)
 
     redirect_to send(:"#{current_account.scope_name}_dashboard_path")
   end

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resource :survey_reminder, only: :create
 
     resource :dashboard, only: :show
+
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
 
@@ -73,13 +74,19 @@ Rails.application.routes.draw do
     resource :location_details, only: :show
     resource :current_location, only: :show
     resource :location, only: [:update, :create]
+    resource :training, only: :show
     resource :training_completion, only: :show
+    resource :consent_waiver, only: :show
     resources :consent_waivers, only: [:new, :create, :show]
+    resource :curriculum, only: :show, controller: "curriculum"
+    resource :team_building, only: :show, controller: "team_building"
+    resource :pending_team_requests, only: :show, controller: "pending_team_requests"
 
     resource :dashboard, only: :show
+
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
-    resource :bio, only: [:edit, :update]
+    resource :bio, only: [:show, :edit, :update]
 
     resources :cookies, only: :create
     resource :survey_reminder, only: :create
@@ -87,7 +94,11 @@ Rails.application.routes.draw do
     resources :team_searches, except: [:index, :destroy]
     resources :mentor_searches, except: [:index, :destroy]
 
-    resources :teams, except: [:index, :destroy]
+    resources :teams, except: [:destroy] do
+      resource :students, only: :show, controller: "teams/students"
+      resource :mentors, only: :show, controller: "teams/mentors"
+      resource :division, only: :show, controller: "teams/division"
+    end
     resources :team_memberships, only: :destroy
 
     resources :team_submissions
@@ -123,14 +134,17 @@ Rails.application.routes.draw do
     resources :mentors, only: :show
     resources :students, only: :show
 
-    resources :background_checks, only: [:new, :create, :show]
+    resource :background_check, only: :show
+    resources :background_checks, only: [:new, :create]
 
     post "/background_check_invitation", to: "background_checks#create_invitation"
 
     resource :regional_pitch_events_team_list, only: :show
     resource :regional_pitch_event_selection, only: :create
     resources :regional_pitch_events, only: [:index, :show]
-    resources :scores, only: :show
+    resource :regional_pitch_events_finder, only: :show, controller: "regional_pitch_events_finder"
+    resources :scores, only: [:index, :show]
+    resources :certificates, only: :index
   end
 
   namespace :ambassador do
@@ -158,9 +172,9 @@ Rails.application.routes.draw do
     resource :chapter_location, only: [:show, :edit, :update, :create], controller: "chapter_locations"
     resource :chapter_current_location, only: :show
 
-    resource :chapter_program_information, only: [:show, :edit, :update, :new, :create], controller: "chapter_program_information"
-    resource :chapter_volunteer_agreement, only: [:show, :create]
-    resource :community_connections, only: [:show, :new, :create, :edit, :update]
+    resource :program_information, only: [:show, :edit, :update, :new, :create], controller: "/ambassador/program_information"
+    resource :volunteer_agreement, only: [:show, :new, :create], controller: "/ambassador/volunteer_agreements"
+    resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
     resources :job_statuses, only: :show
 
@@ -194,12 +208,12 @@ Rails.application.routes.draw do
 
     resource :profile_image_upload_confirmation, only: :show
 
-    resource :background_check, only: :show
-    resources :background_checks, only: [:new, :create]
-    post "/background_check_invitation", to: "background_checks#create_invitation"
+    resource :background_check, only: :show, controller: "/ambassador/background_checks"
+    resources :background_checks, only: [:new, :create], controller: "/ambassador/background_checks"
+    post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
 
-    resources :trainings, only: :index
-    resource :training_completion, only: :show
+    resource :training, only: :show, controller: "/ambassador/training"
+    resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
     resources :events, controller: :regional_pitch_events do
       get :bulk_download_submission_pitch_presentations
@@ -239,7 +253,18 @@ Rails.application.routes.draw do
     resource :club_location, only: [:show, :edit, :update, :create], controller: "club_locations"
     resource :club_current_location, only: :show
 
+    resource :training, only: :show, controller: "/ambassador/training"
+    resource :training_completion, only: :show, controller: "/ambassador/training_completion"
+
+    resource :volunteer_agreement, only: [:show, :new, :create], controller: "/ambassador/volunteer_agreements"
+
+    resource :background_check, only: :show, controller: "/ambassador/background_checks"
+    resources :background_checks, only: [:new, :create], controller: "/ambassador/background_checks"
+    post "/background_check_invitation", to: "/ambassador/background_checks#create_invitation"
+
     resource :public_information, only: [:show, :edit, :update], controller: "club_public_information"
+    resource :program_information, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/program_information"
+    resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
     resource :club_admin, only: :show, controller: "club_admin"
     resource :resources, only: :show
@@ -339,7 +364,6 @@ Rails.application.routes.draw do
         only: :create,
         controller: "chapters/off_platform_chapter_affiliation_agreement"
       resources :invites, only: :create, controller: "chapter_invites"
-      resource :chapter_program_information, only: :show, controller: "chapters/chapter_program_information"
       resource :location, only: :edit, controller: "chapters/locations"
       resource :status, only: [], controller: "chapters/status" do
         patch :activate
@@ -472,6 +496,7 @@ Rails.application.routes.draw do
 
   resource :terms_agreement, only: [:edit, :update]
   resource :chapterable_account_assignments, only: [:new, :create]
+  post "unset_force_chapterable_selection", to: "chapterable_account_assignments#unset_force_chapterable_selection"
 
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]

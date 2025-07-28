@@ -1,9 +1,9 @@
-<div class="grid grid--justify-space-around">
-  <div class="panel grid__col-md-8">
-    <%= render 'errors', record: consent_waiver %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Technovation Volunteer Agreement & Consent Waiver" } do %>
+    <%= render "errors", record: consent_waiver %>
 
     <%= render "consent_waivers/text" %>
 
     <%= render "consent_waivers/form", waiver: consent_waiver %>
-  </div>
+  <% end %>
 </div>

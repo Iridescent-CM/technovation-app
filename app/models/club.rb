@@ -14,6 +14,8 @@ class Club < ActiveRecord::Base
     through: :chapterable_account_assignments,
     source: :account
 
+  has_one :program_information, dependent: :destroy, as: :chapterable
+
   validates :name, presence: true
   validates :summary, length: {maximum: 1000}
 
@@ -31,7 +33,16 @@ class Club < ActiveRecord::Base
 
   def can_be_marked_onboarded?
     !!(location_complete? &&
-      club_info_complete?)
+      club_info_complete? &&
+      program_info_complete?)
+  end
+
+  def required_onboarding_tasks
+    {
+      "Public Info" => club_info_complete?,
+      "Club Location" => location_complete?,
+      "Program Info" => program_info_complete?
+    }
   end
 
   def location_complete?
@@ -44,6 +55,10 @@ class Club < ActiveRecord::Base
       summary,
       primary_contact
     ].all?(&:present?)
+  end
+
+  def program_info_complete?
+    !!program_information&.complete?
   end
 
   def secondary_regions

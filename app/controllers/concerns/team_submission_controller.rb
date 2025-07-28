@@ -178,6 +178,9 @@ module TeamSubmissionController
     if action_name == "new" ||
         action_name == "create"
       "application_rebrand"
+    elsif action_name == "index" &&
+        current_scope == "mentor"
+      "mentor_rebrand"
     else
       "submissions"
     end
@@ -246,6 +249,7 @@ module TeamSubmissionController
         :pitch_video_link,
         :development_platform_other,
         :development_platform,
+        :ai_usage,
         :app_inventor_app_name,
         :app_inventor_gmail,
         :thunkable_project_url,

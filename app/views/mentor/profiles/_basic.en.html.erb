@@ -1,67 +1,73 @@
-<dl>
-  <dt>Name</dt>
-  <dd><%= current_mentor.full_name %></dd>
+<div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
+  <div class="sm-header-wrapper">
+    <p class="font-bold">Basic Information</p>
+  </div>
 
-  <dt>Phone Number</dt>
-  <dd><%= current_mentor.phone_number.presence || "-" %></dd>
+  <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
+    <div id="information-details" class="lg:w-3/4">
+      <dl>
+        <dt>Name</dt>
+        <dd><%= current_mentor.full_name %></dd>
 
-  <dt>Gender identity</dt>
-  <dd><%= current_mentor.gender || "Not specified" %></dd>
+        <dt>Phone Number</dt>
+        <dd><%= current_mentor.phone_number.presence || "-" %></dd>
 
-  <dt>School / Company name</dt>
-  <dd><%= current_mentor.school_company_name %></dd>
+        <dt>Gender Identity</dt>
+        <dd><%= current_mentor.gender || "Not specified" %></dd>
 
-  <dt>Job title</dt>
-  <dd><%= current_mentor.job_title %></dd>
+        <dt>School/Company Name</dt>
+        <dd><%= current_mentor.school_company_name %></dd>
 
-  <dt><%= t('views.mentor.form.mentor_types') %></dt>
-  <dd>
-    <ul>
-      <% current_mentor.mentor_types.each do |mentor_type| %>
-        <li><%= mentor_type.name %></li>
-      <% end %>
-    </ul>
-  </dd>
+        <dt>Job Title</dt>
+        <dd><%= current_mentor.job_title %></dd>
 
-  <dt>Skills &amp; Interests</dt>
-  <dd><%= current_mentor.expertises.map(&:name).to_sentence %></dd>
+        <dt><%= t("views.mentor.form.mentor_types") %></dt>
+        <dd>
+          <ul>
+            <% current_mentor.mentor_types.each do |mentor_type| %>
+              <li class="list-disc ml-8"><%= mentor_type.name %></li>
+            <% end %>
+          </ul>
+        </dd>
 
-  <dt>Personal summary</dt>
-  <dd><%= simple_format h(current_mentor.bio) %></dd>
-</dl>
+        <dt>Skills &amp; Interests</dt>
+        <dd><%= current_mentor.expertises.map(&:name).to_sentence %></dd>
 
-<% if current_mentor.onboarded? %>
-  <%= form_with(model: current_mentor,
-    data: { submit_on_change: true },
-    url: mentor_profile_path(format: :json),
-    method: :patch) do |f| %>
-    <p>
-      <%= f.check_box :accepting_team_invites,
-        id: :mentor_profile_accepting_team_invites %>
+        <dt>Personal Summary</dt>
+        <dd><%= simple_format h(current_mentor.bio) %></dd>
 
-      <%= f.label :accepting_team_invites,
-        "Allow teams to find you in search results and invite you to join" %>
-    </p>
+        <dt>Connection Preferences</dt>
+        <dd>
+          <ul class="list-disc">
+            <li class="ml-8">
+              Allow teams to find you in search results and invite you to join:
+              <span class="font-medium"><%= humanize_boolean(current_mentor.accepting_team_invites) %></span>
+            </li>
+            <li class="ml-8">
+              Indicate to teams that you can be an online, remote mentor:
+              <span class="font-medium"><%= humanize_boolean(current_mentor.virtual) %></span>
+            </li>
+            <li class="ml-8">
+              Allow other mentors to find you in search results and connect:
+              <span class="font-medium"><%= humanize_boolean(current_mentor.connect_with_mentors) %></span>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+      <p class="mt-8">
+        <%= link_to "Change your basic profile details",
+          edit_profile_path,
+          class: "tw-green-btn" %>
+      </p>
+    </div>
 
-    <p>
-      <%= f.check_box :virtual, id: :mentor_profile_virtual %>
-
-      <%= f.label :virtual,
-        "Indicate to teams that you can be an online, remote mentor" %>
-    </p>
-
-    <p>
-      <%= f.check_box :connect_with_mentors,
-        id: :mentor_profile_connect_with_mentors %>
-
-      <%= f.label :connect_with_mentors,
-        "Allow other mentors to find you in search results and connect via email" %>
-    </p>
-  <% end %>
-<% end %>
-
-<p>
-  <%= link_to "Change your basic profile details",
-    edit_profile_path,
-    class: "button" %>
-</p>
+    <div id="profile-picture" class="flex flex-col items-center self-start mb-4">
+      <div>
+        <%= render "profiles/filestack_profile_image_tag" %>
+      </div>
+      <div>
+        <%= render "profiles/filestack_profile_image_upload" %>
+      </div>
+    </div>
+  </div>
+</div>

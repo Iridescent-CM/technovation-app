@@ -11,12 +11,12 @@ class NullChapterable < NullObject
     nil
   end
 
-  def chapter_program_information
-    ChapterProgramInformation.none
+  def program_information
+    ProgramInformation.none
   end
 
-  def build_chapter_program_information
-    ChapterProgramInformation.none
+  def build_program_information
+    ProgramInformation.none
   end
 
   def country

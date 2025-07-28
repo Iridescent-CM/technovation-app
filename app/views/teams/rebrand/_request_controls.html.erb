@@ -1,0 +1,22 @@
+<% if !SeasonToggles.judging_enabled_or_between? %>
+  <p>
+    <%= link_to t("views.application.approved"),
+      send("#{current_scope}_join_request_path", join_request, join_request: {status: :approved}),
+      class: "tw-green-btn text-xs",
+      data: {
+        method: :put,
+        confirm: t("views.application.confirm_approved",
+          name: join_request.requestor_first_name),
+        positive: true,
+      } %>
+      
+    <%= link_to t("views.application.declined"),
+      send("#{current_scope}_join_request_path", join_request, join_request: {status: :declined}),
+      class: "tw-red-btn text-xs",
+      data: {
+        method: :put,
+        confirm: t("views.application.confirm_declined",
+          name: join_request.requestor_first_name),
+      } %>
+  </p>
+<% end %>

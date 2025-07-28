@@ -54,12 +54,10 @@ RSpec.describe "Students request to join a team",
     end
 
     it "displays a message that it has been declined" do
-      within(".search-result") do
-        expect(page).to have_content(team.name)
-        expect(page).to have_content(
-          "You asked to join #{team.name}, and they declined."
-        )
-      end
+      expect(page).to have_content(team.name)
+      expect(page).to have_content(
+        "You asked to join #{team.name}, and they declined."
+      )
     end
   end
 
@@ -194,7 +192,7 @@ RSpec.describe "Students request to join a team",
       sign_out
       sign_in(team.mentors.sample)
 
-      visit mentor_team_path(team)
+      visit mentor_team_students_path(team)
 
       expect {
         click_link "Approve"
@@ -206,7 +204,7 @@ RSpec.describe "Students request to join a team",
       sign_out
       sign_in(team.mentors.sample)
 
-      visit mentor_team_path(team)
+      visit mentor_team_students_path(team)
 
       expect {
         click_link "Decline"

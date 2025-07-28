@@ -25,6 +25,30 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Resetting judge trainings"
     JudgeProfile.update_all(completed_training_at: nil)
 
+    puts "Resetting chapter ambassador onboarding"
+    SeasonSetup::ChapterAmbassadorOnboardingResetter.new.call
+
+    puts "Resetting club ambassador onboarding"
+    SeasonSetup::ClubAmbassadorOnboardingResetter.new.call
+
+    puts "Activating chapters"
+    SeasonSetup::ChapterActivator.new.call
+
+    puts "Reassigning chapter ambassadors to chapters"
+    SeasonSetup::ChapterAmbassadorToChapterReassigner.new.call
+
+    puts "Activating clubs"
+    SeasonSetup::ClubActivator.new.call
+
+    puts "Reassigning club ambassadors to clubs"
+    SeasonSetup::ClubAmbassadorToClubReassigner.new.call
+
+    puts "Resetting unaffiliated list"
+    SeasonSetup::UnaffiliatedListResetter.new.call
+
+    puts "Setting force chapterable selection flag"
+    SeasonSetup::ForceChapterableSelectionActivator.new.call
+
     puts "Finished resetting"
   else
     season_start_date = "#{Date.today.year}-#{Season::START_MONTH.to_s.rjust(2, "0")}-#{Season::START_DAY.to_s.rjust(2, "0")}"

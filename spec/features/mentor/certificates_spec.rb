@@ -12,29 +12,44 @@ RSpec.feature "Mentor certificates" do
   let(:current_season) { instance_double(Season, year: 2020) }
   let(:next_season) { instance_double(Season, year: 2021) }
 
-  scenario "no certificates for no teams" do
+  scenario "mentor without teams or certificates does not see a certificate link" do
     mentor = FactoryBot.create(:mentor, :onboarded)
+    mentor.account.took_program_survey!
 
     sign_in(mentor)
 
+    click_link "Scores & Certificates"
+    click_link "Certificates"
     expect(page).not_to have_link("Open your certificate")
 
     expect(page).to have_content(
-      "Thank you for participating in this season of Technovation Girls."
-    )
-
-    expect(page).to have_content(
-      "Consider mentoring a team in the #{Season.current.year}-#{Season.next.year}"
-    )
-
-    expect(page).to have_link(
-      "Sign up for our newsletter",
-      href: ENV.fetch("NEWSLETTER_URL")
+      "You don't have a certificate for this season."
     )
   end
 
-  scenario "appreciation certificate per team" do
+  scenario "mentor with a team and certificate cannot access it before completing the post survey" do
     mentor = FactoryBot.create(:mentor, :onboarded)
+    team_a = FactoryBot.create(:team)
+
+    TeamRosterManaging.add(team_a, mentor)
+    FactoryBot.create(:team_submission, :complete, team: team_a)
+
+    FillPdfs.call(mentor.account)
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Certificates"
+
+    expect(page).not_to have_link("Open your certificate")
+
+    expect(page).to have_content("Before you can access your certificate, please complete the post survey")
+  end
+
+  scenario "mentor with two teams sees two certificate links after completing the post survey" do
+    mentor = FactoryBot.create(:mentor, :onboarded)
+    mentor.account.took_program_survey!
+
     team_a = FactoryBot.create(:team)
     team_b = FactoryBot.create(:team)
 
@@ -51,6 +66,8 @@ RSpec.feature "Mentor certificates" do
     }.from(0).to(2)
 
     sign_in(mentor)
+    click_link "Scores & Certificates"
+    click_link "Certificates"
 
     expect(page).to have_link("Open your certificate", count: 2)
   end

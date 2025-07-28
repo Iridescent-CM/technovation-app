@@ -6,6 +6,10 @@
 
   <dl>
     <%= render "admin/participants/email_confirmed_status", account: club_ambassador.account %>
+    <%= render "admin/participants/onboarding/background_check", profile: club_ambassador %>
+    <%= render "admin/participants/onboarding/training", profile: club_ambassador %>
+    <%= render "admin/participants/onboarding/sign_volunteer_agreement", profile: club_ambassador %>
+    <%= render "admin/participants/onboarding/view_community_connections", profile: club_ambassador %>
   </dl>
 
   <hr style="height: 1px; width: 100%;">

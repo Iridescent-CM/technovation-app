@@ -21,6 +21,8 @@ class ClubSelector
         country: account.country_code
       }
     )
+      .to_a
+      .delete_if { |club| club == account.current_chapterable }
   end
 
   def find_clubs_in_country
@@ -32,10 +34,13 @@ class ClubSelector
         state_province: account.state_code
       }
     )
+      .to_a
+      .delete_if { |club| club == account.current_chapterable }
   end
 
   def select_clubs(where:, where_not: {})
     Club
+      .current
       .includes(:primary_contact)
       .where(where)
       .where.not(where_not)

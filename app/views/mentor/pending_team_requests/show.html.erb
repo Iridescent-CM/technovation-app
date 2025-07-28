@@ -1,0 +1,18 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Pending Team Invites and Join Requests" } do %>
+    <div class="mb-16">
+      <%= render "completion_steps/rebrand/invitations",
+        hidden: current_mentor.onboarding?,
+        invites: current_mentor.pending_mentor_invites %>
+    </div>
+
+    <div>
+      <%= render "completion_steps/join_requests",
+         hidden: current_mentor.onboarding?,
+         allow_many: true,
+         requests: current_mentor.join_requests.pending %>
+    </div>
+  <% end %>
+</div>

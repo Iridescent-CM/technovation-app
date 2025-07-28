@@ -9,7 +9,8 @@ RSpec.feature "Mentors edit submission development platform" do
 
     sign_in(mentor)
 
-    within("#find-team") { click_link "Edit this team's submission" }
+    click_link "Submit your Project"
+    click_link "Edit submission"
     click_link "Technical Elements"
     click_link "Select your coding language"
   end

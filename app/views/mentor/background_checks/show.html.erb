@@ -1,1 +1,10 @@
-<%= render 'background_checks/show' %>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/dashboards/side_nav" %>
+  <% if current_mentor.background_check.invitation_sent? && !current_mentor.account.background_check_exemption?%>
+    <%= render "background_checks/rebrand/show" %>
+  <% else %>
+    <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Background Check" } do %>
+      <%= render "completion_steps/rebrand/background_check", profile: current_mentor %>
+    <% end %>
+  <% end %>
+</div>

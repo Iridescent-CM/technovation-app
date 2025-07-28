@@ -1,0 +1,19 @@
+<div class="sub-nav-wrapper w-full lg:w-3/4 mx-auto">
+  <nav class="list-reset flex">
+    <%= link_to t("views.application.dashboards.menu.dashboard"),
+      mentor_dashboard_path,
+      class: al(mentor_dashboard_path) + " sub-nav-item"%>
+
+    <%= link_to t("views.application.dashboards.menu.my_teams"),
+      mentor_teams_path,
+      class: al(mentor_teams_path) + " sub-nav-item"%>
+
+    <%= link_to t("views.mentor.navigation.my_profile"),
+      mentor_profile_path,
+      class: al(mentor_profile_path) + " sub-nav-item"%>
+
+    <%= link_to t("views.mentor.navigation.scores_and_certificates"),
+      mentor_scores_path,
+      class: al(mentor_scores_path) + " sub-nav-item"%>
+  </nav>
+</div>

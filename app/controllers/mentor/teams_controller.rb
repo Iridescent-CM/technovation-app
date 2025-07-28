@@ -1,8 +1,13 @@
 module Mentor
   class TeamsController < MentorController
     include TeamController
+    layout "mentor_rebrand"
 
     before_action :require_onboarded
+
+    def index
+      @current_teams = current_mentor.teams.current.order("teams.name")
+    end
 
     private
 

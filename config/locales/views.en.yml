@@ -85,6 +85,8 @@ en:
         submit: "I agree"
       show:
         signed: "%{account_name} has signed the consent waiver as %{signed_name} on %{date}"
+      read_and_understands_code_of_conduct: "I have read and understand the <a href='https://www.technovation.org/safety/volunteer-code-of-conduct/' class='tw-link'>Code of Conduct</a>."
+      acknowledges_consequences_of_code_of_conduct: "I understand that failure to abide by the <a href='https://www.technovation.org/safety/volunteer-code-of-conduct/' class='tw-link'>Code of Conduct</a> could lead to formal warnings from Technovation. Depending on the severity or frequency of the infractions, volunteers may be prohibited from volunteering with the organization for the remainder of the season and future seasons."
 
     background_checks:
       new:
@@ -143,8 +145,12 @@ en:
         index:
           title: "My requests"
         new:
+          already_invited: "You have been invited to join this team. %{link}"
           already_joined: "You are on this team."
           already_requested: "You have asked to join this team"
+      navigation:
+        my_profile: "My Profile"
+        scores_and_certificates: "Scores & Certificates"
 
       mentors:
         show:

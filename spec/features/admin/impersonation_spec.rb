@@ -29,7 +29,8 @@ RSpec.feature "Admins impersonating other accounts" do
     click_link "Login as #{mentor.full_name}"
     expect(current_path).to eq(mentor_dashboard_path)
 
-    within("#find-team") { click_link mentor.teams.first.name }
+    visit mentor_teams_path
+    click_link mentor.teams.first.name
     expect(current_path).to eq(mentor_team_path(mentor.teams.first))
 
     click_link "return to Admin mode"

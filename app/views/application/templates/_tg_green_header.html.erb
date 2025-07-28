@@ -1,12 +1,27 @@
 <div class="tg-green-stripes rubik h-auto mx-auto pt-16 flex flex-col">
   <div class="banner-text-wrapper w-full md:w-3/4 mx-auto pb-16 text-center md:text-left">
-    <span class="text-white text-4xl md:text-6xl font-black mb-8 uppercase"><%= heading %></span>
+    <% if heading.present? %>
+      <h1 class="text-white text-4xl md:text-6xl font-black mb-8 uppercase"><%= heading %></h1>
+    <% end %>
+
+    <% if current_scope == "student" || current_scope == "mentor" %>
+      <% if current_account.assigned_to_chapterable? %>
+        <%= render partial: "dashboards/rebrand/assigned_to_chapterable" %>
+      <% else %>
+        <%= render partial: "dashboards/rebrand/unaffiliated_to_chapterable" %>
+      <% end %>
+    <% end %>
   </div>
-  <% if current_scope == 'judge' %>
-    <%= render 'judge/navigation/rebrand/tg_sub_nav' %>
-  <% elsif current_scope == 'chapter_ambassador' %>
-    <%= render 'chapter_ambassador/navigation/rebrand/tg_sub_nav' %>
-  <% elsif current_scope == 'club_ambassador' %>
-    <%= render 'club_ambassador/navigation/tg_sub_nav' %>
-  <% end %>
+
+  <% if current_scope == "judge" %>
+    <%= render "judge/navigation/rebrand/tg_sub_nav" %>
+  <% elsif current_scope == "chapter_ambassador" %>
+    <%= render "chapter_ambassador/navigation/rebrand/tg_sub_nav" %>
+  <% elsif current_scope == "club_ambassador" %>
+    <%= render "club_ambassador/navigation/tg_sub_nav" %>
+  <% elsif current_scope == "mentor" %>
+    <%= render "mentor/navigation/tg_sub_nav" %>
+  <% elsif current_scope == "student" %>
+    <%= render "student/navigation/rebrand/tg_sub_nav" %>
+<% end %>
 </div>

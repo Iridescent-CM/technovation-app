@@ -1,0 +1,13 @@
+<div class="font-bold text-l">
+  <%= chapterable.name.presence || chapterable.organization_name %>
+</div>
+
+<% if chapterable.primary_contact.present? %>
+  <div class="text-sm leading-snug">
+    <%= chapterable.primary_contact.full_name %>
+  </div>
+<% end %>
+
+<div class="text-sm leading-snug">
+  <%= chapterable.location %>
+</div>

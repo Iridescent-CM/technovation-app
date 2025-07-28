@@ -63,6 +63,9 @@ class Account < ActiveRecord::Base
   has_many :current_chapterable_assignments, -> { current },
     class_name: "ChapterableAccountAssignment"
 
+  has_many :last_seasons_chapterable_assignments, -> { last_season },
+    class_name: "ChapterableAccountAssignment"
+
   has_many :current_chapter_assignments, -> { current.chapters },
     class_name: "ChapterableAccountAssignment"
 
@@ -77,7 +80,7 @@ class Account < ActiveRecord::Base
 
   has_many :clubs, through: :chapterable_assignments, source: :chapterable, source_type: "Club"
   has_many :current_clubs,
-    through: :current_chapter_assignments,
+    through: :current_club_assignments,
     source: :chapterable,
     source_type: "Clubs"
 
@@ -312,6 +315,7 @@ class Account < ActiveRecord::Base
   before_update :update_division, if: -> { !is_a_judge? && !is_chapter_ambassador? }
   after_commit :update_crm_contact_info, on: :update
   after_update :update_chapter_ambassador_onboarding_status
+  after_update :update_mentor_searchability_status
   after_update :send_assigned_to_chapterable_email
 
   after_commit -> {
@@ -1133,6 +1137,10 @@ class Account < ActiveRecord::Base
     current_chapterable_assignments.find_by(primary: true) || ::NullChapterableAccountAssignment.new
   end
 
+  def last_seasons_primary_chapterable_assignment
+    last_seasons_chapterable_assignments.find_by(primary: true) || ::NullChapterableAccountAssignment.new
+  end
+
   def chapter_program_name
     current_chapter.name
   end
@@ -1151,14 +1159,10 @@ class Account < ActiveRecord::Base
 
   def grant_background_check_exemption
     update(background_check_exemption: true)
-
-    mentor_profile&.enable_searchability_with_save
   end
 
   def revoke_background_check_exemption
     update(background_check_exemption: false)
-
-    mentor_profile&.enable_searchability_with_save
   end
 
   def update_chapter_ambassador_onboarding_status
@@ -1276,6 +1280,12 @@ class Account < ActiveRecord::Base
       find_chapter_ambassador_by({
         "accounts.country" => country_code
       })
+    end
+  end
+
+  def update_mentor_searchability_status
+    if saved_change_to_background_check_exemption? && mentor_profile.present?
+      mentor_profile.enable_searchability_with_save
     end
   end
 

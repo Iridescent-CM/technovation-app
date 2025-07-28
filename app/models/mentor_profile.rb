@@ -1,4 +1,5 @@
 class MentorProfile < ActiveRecord::Base
+  include BackgroundCheckHelpers
   include Regioned
   regioned_source Account
 
@@ -164,14 +165,6 @@ class MentorProfile < ActiveRecord::Base
     length: {minimum: 100},
     allow_blank: true
 
-  delegate :submitted?,
-    :candidate_id,
-    :report_id,
-    :invitation_id,
-    to: :background_check,
-    prefix: true,
-    allow_nil: true
-
   def method_missing(method_name, *args) # standard:disable all
     account.public_send(method_name, *args) # standard:disable all
   end
@@ -290,17 +283,9 @@ class MentorProfile < ActiveRecord::Base
   end
   alias_method :can_create_a_team?, :can_join_a_team?
 
-  def background_check_complete?
-    return true if !requires_background_check?
-
-    background_check.present? and
-      background_check.clear?
-  end
-
   def requires_background_check?
     (account.valid? && (account.date_of_birth.present? && account.age >= 18 || account.meets_minimum_age_requirement?)) &&
-      in_background_check_country? &&
-      !(background_check.present? && background_check.clear? || account.background_check_exemption?)
+      in_background_check_country? && !account.background_check_exemption?
   end
 
   def requires_background_check_invitation?
@@ -357,6 +342,11 @@ class MentorProfile < ActiveRecord::Base
   def is_on?(team)
     teams.include?(team)
   end
+
+  def is_invited_to_join?(team)
+    team_member_invites.pending.flat_map(&:team).include?(team)
+  end
+
 
   def rebranded?
     false

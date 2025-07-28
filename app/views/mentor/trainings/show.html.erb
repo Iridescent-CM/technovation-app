@@ -1,0 +1,24 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "mentor/dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Training" } do %>
+    <% if !current_mentor.training_required? %>
+      <p>
+        Training is not required because it was not available when you signed up.
+        However, we encourage you to complete the training to help you do your best!
+      </p>
+    <% elsif current_mentor.training_complete? %>
+      <p>Thank you for completing the training!</p>
+      <p>You are welcome to re-visit the training at any time.</p>
+    <% elsif !current_mentor.training_complete? %>
+      <p>To be able to mentor this season, please complete the mentor training.</p>
+    <% end %>
+
+    <p class="mt-8">
+      <%= link_to "Mentor Training",
+        "https://technovationchallenge.org/courses/mentor-training/",
+        class: "tw-green-btn",
+        target: "_blank" %>
+    </p>
+  <% end %>
+</div>

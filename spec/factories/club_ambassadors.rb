@@ -4,6 +4,9 @@ FactoryBot.define do
     :club_ambassador_account
   ] do
     job_title { "Engineer" }
+    training_completed_at { Time.now }
+    viewed_community_connections { true }
+    onboarded { true }
 
     account { association :account, meets_minimum_age_requirement: true }
 
@@ -40,6 +43,16 @@ FactoryBot.define do
       end
     end
 
+    trait :not_assigned_to_club do
+      after(:create) do |club_ambassador|
+        club_ambassador.account.chapterable_assignments.destroy_all
+      end
+    end
+
+    trait :training_not_completed do
+      training_completed_at { nil }
+    end
+
     before(:create) do |r, e|
       {
         city: e.city,
@@ -51,9 +64,30 @@ FactoryBot.define do
       }.each do |k, v|
         r.account.send(:"#{k}=", v)
       end
+
+      unless r.background_check.present?
+        r.account.build_background_check(FactoryBot.attributes_for(:background_check))
+      end
+
+      unless r.consent_signed?
+        r.account.build_consent_waiver(FactoryBot.attributes_for(:consent_waiver))
+      end
+
+      r.build_volunteer_agreement(FactoryBot.attributes_for(:volunteer_agreement))
     end
 
     after(:create) do |r, e|
+      club = FactoryBot.create(:club, primary_contact: r.account)
+
+      r.clubs.destroy_all
+
+      r.chapterable_assignments.create(
+        chapterable: club,
+        account: r.account,
+        season: Season.current.year,
+        primary: true
+      )
+
       ProfileCreating.execute(r, FakeController.new)
     end
 

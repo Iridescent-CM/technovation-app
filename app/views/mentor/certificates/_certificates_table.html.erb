@@ -1,0 +1,40 @@
+<div>
+  <div class="mt-2 mb-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="py-3 pl-4 pr-3 text-left text-base font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
+                Team
+              </th>
+              <th scope="col" class="px-3 py-3 text-left text-base font-medium uppercase tracking-wide text-gray-500">
+                Certificate
+              </th>
+            </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% certificates.each do |certificate| %>
+                <tr>
+                  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-base font-medium text-gray-900 sm:pl-6">
+                    <%= certificate.team.name%>
+                  </td>
+                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-base font-medium sm:pr-6">
+                    <%= link_to "Open your certificate",
+                      certificate.file_url,
+                      target: "_blank",
+                      class: "tw-green-btn cursor-pointer",
+                      disabled: !current_account.took_program_survey?
+                    %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

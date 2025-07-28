@@ -25,18 +25,20 @@ module ApplicationHelper
       chapter_locations
       chapter_organization_headquarters_locations
       chapter_profile
-      chapter_program_information
-      chapter_volunteer_agreements
       community_connections
       dashboards
       location_details
       profiles
+      program_information
       public_information
+      training
       training_completions
-      trainings
+      volunteer_agreements
     ]
 
-    if namespace == "chapter_ambassador" && rebranded_chapter_ambassador_sections.include?(path)
+    if (namespace == "chapter_ambassador" || namespace == "ambassador") &&
+        rebranded_chapter_ambassador_sections.include?(path) &&
+        current_scope == "chapter_ambassador"
       :chapter_ambassador_rebrand
     elsif current_account.authenticated? && SCOPES.include?(namespace)
       namespace

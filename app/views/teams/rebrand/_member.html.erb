@@ -1,0 +1,36 @@
+<li id="<%= dom_id(member) %>" class="mb-8">
+  <div class="flex flex-row space-x-4">
+    <%= image_tag member.profile_image_url,
+      class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-12 h-12" %>
+    <div>
+      <p><%= member.full_name %></p>
+      <p><%= mail_to member.email %></p>
+
+      <% if member.student_profile.present? && member.actions_needed.present? %>
+        <div class="text-sm text-gray-900 truncate">
+          <p class="font-medium">Onboarding steps required:</p>
+          <ul class="list-disc list-inside ml-4">
+            <% member.actions_needed.each do |action| %>
+              <li class="text-sm text-gray-800"><%= action %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if CanRemoveTeamMember.(current_account, member) %>
+        <%= link_to "remove this member",
+          send("#{current_scope}_team_membership_path",
+            team,
+            member_id: member.id,
+            member_type: member.class.name
+          ),
+          data: {
+            method: :delete,
+            confirm: t("views.teams.show.confirm_leave", name: member.name),
+          },
+          class: "text-red-700 text-base"
+        %>
+      <% end %>
+    </div>
+  </div>
+</li>
