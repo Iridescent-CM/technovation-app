@@ -78,13 +78,13 @@ class RegistrationMailer < ApplicationMailer
     @season_year = Season.current.year
     @root_url = root_url(mailer_token: student.mailer_token)
     @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
-    @program_timeline_url=ENV.fetch("PROGRAM_TIMELINE_URL")
+    @program_timeline_url = ENV.fetch("PROGRAM_TIMELINE_URL")
     @mentor_resources_url = ENV.fetch("MENTOR_RESOURCES_URL")
     @internet_safety_url = ENV.fetch("INTERNET_SAFETY_URL")
     @in_person_safety_url = ENV.fetch("IN_PERSON_SAFETY_URL")
     @faq_url = ENV.fetch("FAQ_URL")
-    @submission_guidelines_url = ENV.fetch("SUBMISSIONS_GUIDELINES_URL")
-    @competition_rules_url = ENV.fetch("COMPETITION_rules_URL")
+    @submission_guidelines_url = ENV.fetch("SUBMISSION_GUIDELINES_URL")
+    @competition_rules_url = ENV.fetch("COMPETITION_RULES_URL")
 
     I18n.with_locale(student.locale) do
       mail to: student.email,
@@ -106,7 +106,8 @@ class RegistrationMailer < ApplicationMailer
     @internet_safety_url = ENV.fetch("INTERNET_SAFETY_URL")
     @faq_url = ENV.fetch("FAQ_URL")
     @parent_resources_url = ENV.fetch("PARENT_RESOURCES_URL")
-    @submission_guidelines_url = ENV.fetch("SUBMISSIONS_GUIDELINES_URL")
+    @submission_guidelines_url = ENV.fetch("SUBMISSION_GUIDELINES_URL")
+    @program_timeline_url = ENV.fetch("PROGRAM_TIMELINE_URL")
 
     I18n.with_locale(student.locale) do
       mail to: student.email,
