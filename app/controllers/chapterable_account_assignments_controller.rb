@@ -1,4 +1,6 @@
 class ChapterableAccountAssignmentsController < ApplicationController
+  skip_before_action :require_chapterable_selection, only: :unset_force_chapterable_selection
+
   layout "application_rebrand"
 
   def new
@@ -54,6 +56,12 @@ class ChapterableAccountAssignmentsController < ApplicationController
         accepting_team_invites: params.fetch(:mentor_profile_accepting_team_invites, false)
       )
     end
+
+    redirect_to send(:"#{current_account.scope_name}_dashboard_path")
+  end
+
+  def unset_force_chapterable_selection
+    current_account.update(force_chapterable_selection: false)
 
     redirect_to send(:"#{current_account.scope_name}_dashboard_path")
   end
