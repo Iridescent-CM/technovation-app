@@ -17,9 +17,7 @@ Rails.application.routes.draw do
     resources :cookies, only: :create
     resource :survey_reminder, only: :create
 
-    resource :dashboard, only: :show do
-      post :unset_force_chapterable_selection
-    end
+    resource :dashboard, only: :show
 
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
@@ -84,9 +82,7 @@ Rails.application.routes.draw do
     resource :team_building, only: :show, controller: "team_building"
     resource :pending_team_requests, only: :show, controller: "pending_team_requests"
 
-    resource :dashboard, only: :show do
-      post :unset_force_chapterable_selection
-    end
+    resource :dashboard, only: :show
 
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
@@ -500,6 +496,7 @@ Rails.application.routes.draw do
 
   resource :terms_agreement, only: [:edit, :update]
   resource :chapterable_account_assignments, only: [:new, :create]
+  post "unset_force_chapterable_selection", to: "chapterable_account_assignments#unset_force_chapterable_selection"
 
   resources :password_resets, only: [:new, :create]
   resources :passwords, only: [:new, :create]
