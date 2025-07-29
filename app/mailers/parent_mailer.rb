@@ -43,6 +43,8 @@ class ParentMailer < ApplicationMailer
     return if @student_profile.parent_guardian_email&.blank?
 
     @technovation_url = "http://technovationchallenge.org/about/"
+    @parent_resources_url = ENV.fetch("PARENT_RESOURCES_URL")
+    @submission_guidelines_url = ENV.fetch("SUBMISSION_GUIDELINES_URL")
 
     I18n.with_locale(@student_profile.account.locale) do
       mail to: @student_profile.parent_guardian_email
