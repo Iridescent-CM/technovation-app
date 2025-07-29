@@ -13,7 +13,8 @@ module Ambassador
         chapterable_id: current_ambassador.current_chapterable.id,
         chapterable_type: current_ambassador.chapterable_type.capitalize,
         season: Season.current.year,
-        primary: true
+        primary: true,
+        assignment_by: current_account
       )
 
       account.update(no_chapterable_selected: nil)

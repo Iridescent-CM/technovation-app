@@ -27,7 +27,8 @@ module Admin
           chapterable_id: chapterable_id,
           chapterable_type: chapterable_type.capitalize,
           season: Season.current.year,
-          primary: true
+          primary: true,
+          assignment_by: current_account
         )
 
         if assignment.save

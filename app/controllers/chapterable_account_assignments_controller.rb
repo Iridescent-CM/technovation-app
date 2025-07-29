@@ -43,7 +43,8 @@ class ChapterableAccountAssignmentsController < ApplicationController
           chapterable_id: params[:chapterable].split.first,
           chapterable_type: params[:chapterable].split.second,
           season: Season.current.year,
-          primary: true
+          primary: true,
+          assignment_by: current_account
         )
 
         flash[:success] = "You were successfully assigned to #{assignment.chapterable.name.presence || assignment.chapterable.organization_name}."

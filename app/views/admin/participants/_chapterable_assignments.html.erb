@@ -11,8 +11,13 @@
           <li>
             Type: <%= chapterable_assignment.chapterable_type %>
           </li>
+
           <li>
             Id: <%= chapterable_assignment.chapterable.id %>
+          </li>
+
+          <li>
+            Assignment By: <%= chapterable_assignment.assignment_by&.name&.presence || "<em>NA</em>".html_safe %>
           </li>
         </ul>
       </li>

@@ -21,7 +21,8 @@ class ChapterableReassigner
       profile: profile,
       chapterable: account.last_seasons_primary_chapterable_assignment.chapterable,
       season: Season.current.year,
-      primary: true
+      primary: true,
+      assignment_by: account
     )
   end
 
