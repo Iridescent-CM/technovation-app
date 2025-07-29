@@ -12,22 +12,26 @@
       <p>
         Welcome to Technovation Girls! Currently, you are not affiliated with a Chapter or Club.
       </p>
-      <p>
-        Please check out our
-        <%= link_to "curriculum",
-                    "https://technovationchallenge.org/curriculum-intro/registered/new/",
-                    target: "_blank",
-                    class: "tw-link"
-        %>
-        and connect with a
-        <%= link_to_if current_profile.onboarded?,
-                       "mentor",
-                       new_student_mentor_search_path,
-                       class: "tw-link"
-        %>
-        for support as you work on your Technovation Girls project.
-      </p>
-      <p>Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Chapter or Club.</p>
+
+      <% if current_scope == "student" %>
+        <p>
+          Please check out our
+          <%= link_to "curriculum",
+            "https://technovationchallenge.org/curriculum-intro/registered/new/",
+            target: "_blank",
+            class: "tw-link"
+          %>
+          and connect with a
+          <%= link_to_if current_profile.onboarded?,
+            "mentor",
+            new_student_mentor_search_path,
+            class: "tw-link"
+          %>
+          for support as you work on your Technovation Girls project.
+        </p>
+      <% end %>
+
+      <%= render "dashboards/rebrand/update_chapterable", chapterable_type: "Chapter or Club" %>
     </section>
   </div>
 </div>

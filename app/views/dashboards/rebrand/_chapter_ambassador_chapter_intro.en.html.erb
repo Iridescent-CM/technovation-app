@@ -15,6 +15,7 @@
       <% end %>
 
       <p class="mt-4 font-medium"><%= chapter.name&.titleize.presence || "Chapter name coming soon"%></p>
+      <p class="mt-4 font-medium"><%= chapter.organization_name&.titleize.presence || "Chapter organization coming soon"%></p>
       <p class="mt-4"><%= chapter.primary_contact&.full_name.presence %></p>
       <p><%= chapter.primary_contact&.email.presence %></p>
       <p class="mt-4"><%= chapter.summary.presence || "Your Chapter Ambassador will be adding more information about the Chapter soon." %></p>
@@ -33,7 +34,7 @@
         </div>
       <% end %>
 
-      <p>Please email <%= mail_to ENV.fetch("HELP_EMAIL") %> if you need to change your Chapter. Please check out the following info about the Chapter.</p>
+      <%= render "dashboards/rebrand/update_chapterable", chapterable_type: "Chapter" %>
     </div>
   </div>
 </div>
