@@ -15,6 +15,7 @@
   <% if current_ambassador.chapterable_type == "chapter" %>
     <div class="mb-8">
       <%= f.association :organization_types,
+        collection: OrganizationType.order(:order),
         as: :check_boxes,
         label: t("program_information.chapter.organization_type_question")
       %>

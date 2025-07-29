@@ -1644,7 +1644,8 @@ CREATE TABLE public.organization_types (
     id bigint NOT NULL,
     name character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    "order" integer
 );
 
 
@@ -5143,8 +5144,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250723000305'),
 ('20250723000814'),
 ('20250723142006'),
+('20250723210518'),
 ('20250724035903'),
 ('20250724040143'),
-('20250724040309');
+('20250724040309'),
+('20250729170321'),
+('20250729170744');
 
 
