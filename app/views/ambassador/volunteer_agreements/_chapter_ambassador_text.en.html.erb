@@ -1,37 +1,46 @@
 <div class="h-screen">
   <div class="overflow-auto h-full border p-4 text-base">
     <p class="mb-8">
-      THIS VOLUNTEER AGREEMENT (this “Agreement”), made on the date indicated with your signature is an
-      understanding made between Technovation, a US 501c3 nonprofit, and (henceforth referred to as Club Ambassador),
-      an unpaid Technovation Girls Volunteer who organizes a Technovation Girls Club.  This agreement is valid for one year
-      from the date indicated with your signature. The Club Ambassador may choose to end the Agreement with
-      Technovation at any point before the end of the one-year time period. The Parties hereby agree to the following:
+      THIS VOLUNTEER AGREEMENT (this “Agreement”), made on the date indicated with your signature, is an 
+      understanding made between Technovation, a US 501c3 nonprofit, and <%= current_ambassador.full_name %>                                    
+      (henceforth referred to as Chapter Ambassador), a Technovation Girls Volunteer (unpaid by Technovation)  
+      connected with <%= current_ambassador.current_chapter.organization_name %>, who organizes a Technovation 
+      Girls chapter.  This agreement is valid for one year from the date indicated with your signature. T
+      he Chapter Ambassador may choose to end the Agreement with Technovation at any point before the end of 
+      the one-year time period. The Parties hereby agree to the following:
     </p>
 
     <ul class="list-decimal space-y-8 ml-4">
       <li>
-        <span class="font-semibold">Responsibilities of a Club Ambassador </span>
+        <span class="font-semibold">Responsibilities of a Chapter Ambassador</span>
         <br>
-        <span class="tw-hint">The Club Ambassador agrees to the following:</span>
+        <span class="tw-hint">Chapter Ambassador agrees to the following:</span>
 
         <ol class="ml-6 list-decimal space-y-4">
           <li>
-            <span class="font-semibold">Serve as the Club's primary contact</span>
+            <span class="font-semibold">Serve as the Chapter's primary contact</span>
             with external stakeholders, the Technovation headquarters team, and other volunteers & Mentors.
           </li>
           <li>
             <span class="font-semibold">
-              Engage students that identify as female, trans, nonbinary, or gender
-              nonconforming from local schools and/or community-based organizations:
+              Engage students who identify as female or gender nonconforming from local schools and/or
+              community-based organizations:
             </span>
-            Recruit as needed to engage Technovation Girls participants, particularly those from underserved or
-            underrepresented communities. (Club Ambassadors are expected to have 15 or more girls
-            on teams registered on the technovationchallenge.org virtual platform. Volunteers that run Technovation
-            on a smaller scale will be invited to be a Mentor.)
+            Recruit as needed to engage Technovation Girls participants, particularly those from underserved
+            or underrepresented communities. (Chapter Ambassadors are expected to have 15 or more girls on
+            teams registered on the my.technovationchallenge.org virtual platform. Organizations that run
+            Technovation on a smaller scale will be invited to be a mentor.)
           </li>
           <li>
             <span class="font-semibold">Have procedures in place for participant safety:</span>
-            This should include information on how girls can report potential issues when meeting with Mentors or other adults.
+            This should include information on how girls can report potential issues when meeting with
+            mentors or other adults. By signing this Agreement, the Chapter Ambassador agrees to complete
+            applicable training and review resources as they become available. Training and resources can
+            be found on the
+            <%= link_to "Technovation safety page",
+              ENV.fetch("INTERNET_SAFETY_URL"),
+              target: "_blank",
+              class: "text-blue-600 hover:text-blue-800" %>.
           </li>
           <li>
             <span class="font-semibold">Ongoing season support via the Technovation Girls platform:</span>
@@ -39,87 +48,100 @@
             platform to ensure girls have registered and formed teams.
           </li>
           <li>
-            <span class="font-semibold">As needed, cover any local operating costs of running Technovation:</span>
-            While all of Technovation's resources & services are completely free, we recognize there may be other
-            expenses associated with running the program, such as staff time, internet access, space usage, etc.
-            Club Ambassadors are eligible to apply for funding from Technovation, we do not guarantee all
-            program costs will be covered. [see Section 4 for more information].
+            <span class="font-semibold">Coordinate with Technovation Girls funders</span>
+            (if applicable): Chapter Ambassador will connect with and support foundation/corporate
+            staff who fund Technovation Girls in the region to meet specific program deliverables
+            (potential funding might be associated).
           </li>
           <li>
-            <span class="font-semibold">Coordinate with Technovation Girls funders (if applicable):</span>
-            Club Ambassador will connect with and support foundation/corporate staff who fund Technovation Girls in the
-            region to meet specific program deliverables (potential funding might be associated).
-          </li>
-          <li>
-            <span class="font-semibold">Follow Club Ambassador Rules and Code of Conduct</span>
-            Club Ambassador must adhere to the Rules, Code of Conduct, and Safety instructions [see Sections 3, 4, and 6].
-            Failure to adhere could result in the termination of Club Ambassador status.
+            <span class="font-semibold">Follow Chapter Ambassador Rules and Code of Conduct</span>
+            Chapter Ambassador must adhere to the Rules,
+            <%= link_to "Technovation safety page",
+              ENV.fetch("CODE_OF_CONDUCT_URL"),
+              target: "_blank",
+              class: "text-blue-600 hover:text-blue-800" %>
+            , and Safety instructions as mentioned in
+            the chapter Affiliation signed by the Partner Organization. Failure to adhere could result in the
+            termination of Chapter Ambassador status.
           </li>
           <li>
             <span class="font-semibold">Identify and support Mentors</span>
-            Mentors can be teachers, organization staff, community members, professionals, university students or
-            faculty. As needed, reach out to local companies and community Club Ambassadors to help support Technovation
-            Girls participants. Club Ambassadors can organize Mentor orientation sessions and share Mentor training
+            Mentors can be teachers, organization staff, community members, professionals, university students,
+            or faculty. As needed, reach out to local companies and community partners to help support Technovation
+            Girls participants. Chapter Ambassadors can organize mentor orientation sessions and share mentor training
             and support materials.
           </li>
           <li>
             <span class="font-semibold">
-              Any additional staff or volunteers accessing student information on theTechnovation platform should
-              have a Club Ambassador account
+              Ensure any additional staff or volunteers that need to access student information on the Technovation
+              platform have a Chapter Ambassador account
             </span>
-            and sign this Volunteer Agreement as part of their Club Ambassador onboarding. These individuals must
-            complete all Club Ambassador training and onboarding no later than November 30, 2024.
+            and sign this Volunteer Agreement as part of their Chapter Ambassador onboarding. Please send the names
+            and emails of these individuals to your point of contact, who will invite them to create an account
+            associated with your Chapter.
           </li>
           <li>
             <span class="font-semibold">
-              Where available, work with Student Ambassadors (SAs)<sup>1</sup>
+              Where applicable, work with Student Ambassadors (SAs)<sup>1</sup>
             </span>
             Please follow the guidelines below when working with SAs:
-              <ul class="list-disc  ml-8">
-                <li>
-                  After Technovation introduces regional Student Ambassadors to Club Ambassadors, please connect
-                  with your local SAs virtually or in-person to understand their desired role and relationship with
-                  your Club. As desired, involve them in local Technovation recruitment and programming.
-                </li>
-                <li>
-                  Student Ambassadors are NOT responsible for recruiting adult mentors for teams and should
-                  not meet one-on-one with Technovation volunteers.
-                </li>
-                <li>
-                  Student Ambassadors are not expected to fundraise.
-                </li>
-                <li>
-                  If Technovation provides the Student Ambassador's funding for program support and/or to purchase a
-                  technological device, the Club may need to help receive and transfer funding to the SA and/or
-                  their parent/guardian. Funding sent from Technovation to SAs is intended only for use by the named SA.
-                </li>
-              </ul>
+            <ul class="list-disc ml-8">
+              <li>
+                If there is a Chapter and Technovation HQ-approved Student Ambassador in your location,
+                please connect with them virtually or in person to understand their desired role and
+                relationship with your Chapter. As desired by both parties, involve them in local Technovation
+                recruitment and programming.
+              </li>
+              <li>
+                It is important to note that:
+                <ul class="list-disc ml-8">
+                  <li>
+                    Student Ambassadors are NOT responsible for recruiting adult mentors for teams and should
+                    not meet one-on-one with Technovation volunteers.
+                  </li>
+                  <li>
+                    Student Ambassadors are not expected to fundraise.
+                  </li>
+                  <li>
+                    If Technovation provides the Student Ambassador's funding for program support and/or to purchase a
+                    technological device, the Chapter may need to help receive and transfer funding to the SA and/or
+                    their parent/guardian. Funding sent from Technovation to SAs is intended only for use by the named SA.
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </li>
           <li>
             <span class="font-semibold">As needed, organize events</span>
-            such as information sessions, Launch Workshops, Mentor training sessions, field trips,, and/or Celebration
-            Events. Technovation does not require any Club to hold any in-person events. Please adhere to any health
-            restrictions, permit requirements, or other legal conditions required by your state/province and country.
+            such as information sessions, Launch Workshops, mentor training sessions, field trips, Regional Pitch Events,
+            and/or Celebration Events. Technovation does not require any Chapter to hold any in-person events.
+            Please adhere to any health restrictions, permit requirements, or other legal conditions required by your
+            organization and country.
+          </li>
+          <li>
+            <span class="font-semibold">As needed, recruit judges</span>
+            Share promotional materials to recruit judges for Regional Pitch events and/or virtual judging.
+            Note: Hosting judging events is optional.
           </li>
           <li>
             <span class="font-semibold">Reporting:</span>
-            Club Ambassador agrees to complete any required documentation during the season such as their profile on the
-            Technovation platform, and any required Club reports These reports help our team understand local needs and
-            best practices to better support our global community.
+            Chapter Ambassador agrees to complete any required documentation during the season, such as their profile on
+            the Technovation platform, the mid-season survey, and the End of Season Report. These reports help
+            our team understand local needs and best practices to better support our global community.
           </li>
           <li>
             <span class="font-semibold">Share alumnae stories and in-season highlights:</span>
-            Club Ambassador will share success stories and alumnae achievements with Technovation to help raise the
+            Chapter Ambassador will share success stories and alumnae achievements with Technovation to help raise the
             visibility of the program and its impact.
           </li>
           <li>
             <span class="font-semibold">Cross-promote:</span>
-            Club Ambassador agrees to promote Technovation Girls whenever possible and relevant through websites,
-            social media, press, promotional materials, and public occasions. Club Ambassador must mention and recognize
-            Technovation [refer to Section 3] in local press coverage and interviews related to the Technovation Girls
-            teams/program<sup>2</sup>. If managing a Technovation social media page, the Club Ambassador will read and abide by the
+            Chapter Ambassador agrees to promote Technovation Girls whenever possible and relevant through websites,
+            social media, press, promotional materials, and public occasions. Chapter Ambassador must mention and recognize
+            Technovation in local press coverage and interviews related to the Technovation Girls teams/program <sup>2</sup>.
+            If managing a Technovation social media page, the Chapter Ambassador will read and abide by the
             <%= link_to "Technovation's Social Media Guidelines",
-              ENV.fetch("CHAPTER_AMBASSADOR_SOCIAL_MEDIA_GUIDELINES_URL"),
+              ENV.fetch("SOCIAL_MEDIA_GUIDELINES_URL"),
               target: "_blank",
               class: "text-blue-600 hover:text-blue-800" %>
           </li>
@@ -135,161 +157,26 @@
       </li>
 
       <li>
-        <span class="font-semibold">Adherence to the Technovation Brand</span>
-        <ol class="ml-6 list-decimal space-y-4">
-          <li>
-            <span class="font-semibold">Refer to</span>
-            <%= link_to "Technovation's Brand Guidelines",
-              ENV.fetch("CHAPTER_AMBASSADOR_BRAND_GUIDELINES_URL"),
-              target: "_blank",
-              class: "text-blue-600 hover:text-blue-800" %>
-            when developing customized, local materials. Technovation reserves the right to review and approve, or
-            reject, any promotional materials, merchandise, marketing, websites, events, and/or written reference to
-            Technovation and Technovation Girls before distribution or upon discovery.
-          </li>
-          <li>
-            Any regional websites or webpages for Clubs must
-            <span class="font-semibold">
-              reference Technovation as the organization running the global Technovation Girls program and link back to
-              Technovation.org.
-            </span>
-            Sample language and other branding collateral are in the Regional Web Style Guide.
-          </li>
-          <li>
-            Club Ambassadors will portray their relationship to Technovation and Technovation Girls accurately and will
-            not suggest they run the global Technovation Girls program or that they founded Technovation Girls. It must
-            be clear that the Club Ambassadors is running a local Club of a global program
-          </li>
-          <li>
-            <span class="font-semibold">
-              Get approval for press releases.
-            </span>
-            Club Ambassadors must send all press releases for approval to Technovation’s Marketing and Communication
-            team at <%= mail_to "press@technovation.org" %> at least one week in advance. Technovation may request edits to ensure
-            alignment with the Technovation Girls brand. Club Ambassadors must also secure approval for any quotes
-            attributed to Technovation staff members or the organization as a whole.
-          </li>
-          <li>
-            <span class="font-semibold">
-              Technovation's regional and Club social media accounts should follow
-              <%= link_to "Technovation's Social Media Guidelines",
-                ENV.fetch("CHAPTER_AMBASSADOR_SOCIAL_MEDIA_GUIDELINES_URL"),
-                target: "_blank",
-                class: "text-blue-600 hover:text-blue-800" %>
-              and
-            </span>
-            <ol class="list-decimal ml-6">
-              <li>Complete this
-                <%= link_to "this form",
-                  "https://forms.gle/sY9TUJjgAmkc1UES8",
-                  target: "_blank",
-                  class: "text-blue-600 hover:text-blue-800" %>
-                to (1) report the Technovation social media page(s) your Club is managing and/or
-                (2) indicate which channels you would like to start a social media page on. Please complete this form
-                for every season.
-              </li>
-              <li>
-                Admins of Technovation social media pages must be 18 or older.
-              </li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-
-      <li>
-        <span class="font-semibold">Intellectual Property Rights</span>
-        <ol class="ml-6 list-decimal space-y-4">
-          <li>
-            Technovation retains ownership of all curricula, training materials, social media content, and other
-            information (i.e. the Materials) created for the Technovation Girls program and grants the Club Ambassadors
-            a non-exclusive right to access and use these Materials for the purpose of supporting the Technovation Girls program.
-          </li>
-          <li>
-            Technovation makes no representation, warranty, guarantee, or undertaking, that the Materials are entirely
-            accurate or free from bugs, errors, or mistakes, or that the Materials will meet Club Ambassadors’s requirements.
-            Club Ambassadors must ensure that the Materials are suitable for Club Ambassadors’s requirements.
-          </li>
-          <li>
-            Technovation retains ownership of the Technovation name and logo. The Club Ambassadors may not use Technovation
-            or the logo in the name or branding of the local Club unless given written permission by Technovation.
-          </li>
-        </ol>
-      </li>
-
-      <li>
-        <span class="font-semibold">Rules</span>
-        <ol class="ml-6 list-decimal space-y-4">
-          <li>
-            <span class="font-semibold">Fundraising and Financial Support:</span>
-            This Agreement does not secure any financial support from Technovation to the approved Club Ambassadors or
-            vice versa. If Technovation and the Club Ambassador are involved in joint fundraising, the decision to share
-            financial resources will be negotiated in the terms and conditions of the specific grant, and at the discretion
-            of Technovation. Technovation may, at its discretion, offer financial support to specific Club Ambassadors
-            based on criteria established by Technovation. When fundraising, the Club Ambassador must make it clear
-            in the request for funds that the Club Ambassador is fundraising for the local Technovation Club and not as
-            Technovation headquarters.
-          </li>
-          <li>
-            <span class="font-semibold">Fundraising and Financial Support:</span>
-            This Agreement does not secure any financial support from Technovation to the approved Club Ambassadors or
-            vice versa. If Technovation and the Club Ambassador are involved in joint fundraising, the decision to share
-            financial resources will be negotiated in the terms and conditions of the specific grant, and at the discretion
-            of Technovation. Technovation may, at its discretion, offer financial support to specific Club Ambassadors
-            based on criteria established by Technovation. When fundraising, the Club Ambassador must make it clear
-            in the request for funds that the Club Ambassador is fundraising for the local Technovation Club and not as
-            Technovation headquarters.
-          </li>
-          <li>
-            <span class="font-semibold">Discrimination is prohibited.</span>
-            Participants of any socioeconomic background, academic record, ethnicity, race, religion, and sexual
-            orientation are to be included in Technovation Girls' programming. While only
-            <%= link_to "girls",
-              "https://www.technovation.org/diversity-equity-inclusion-statement/",
-              target: "_blank",
-              class: "text-blue-600 hover:text-blue-800" %>
-            can participate in the
-            competition, the curriculum is available to everyone.
-          </li>
-          <li>
-            <span class="font-semibold">Girls cannot be charged to participate.</span>
-            If there is a specific instance where a Club Ambassador feels they need to charge participants a fee, they
-            should first contact their Technovation point of contact to discuss the situation before collecting any funds.
-          </li>
-          <li>
-            <span class="font-semibold">
-              The Club Ambassador is responsible for securing and retaining media and photo consent
-            </span>
-            from every individual appearing in a photo they share with Technovation staff. It is assumed that the Club
-            Ambassadors will only share photos of individuals who have consented to have their photo taken and potentially
-            shared with the global Technovation community.
-          </li>
-          <li>
-            Club Ambassadors are responsible for following local privacy laws.
-          </li>
-        </ol>
-      </li>
-
-      <li>
         <span class="font-semibold">Responsibilities of Technovation</span>
         <ol class="ml-6 list-decimal space-y-4">
           <li>
             Provide access to Technovation Girls’ free, updated <span class="font-semibold">curricula</span> and associated Materials.
           </li>
           <li>
-            Provide <span class="font-semibold">participant information</span> for participants within the Club Ambassador’s geographic region
-            via access to our platform and any survey results requested by the Club Ambassador.
+            Provide <span class="font-semibold">participant information</span> for participants within the Chapter Ambassador’s geographic region
+            via access to our platform and any survey results requested by the Chapter Ambassador.
           </li>
           <li>
-            Provide a <span class="font-semibold">dedicated staff point of contact.</span>
+            Provide a <span class="font-semibold">dedicated staff point of contact for each region.</span>
           </li>
           <li>
-            Provide <span class="font-semibold">training and support</span> throughout the season for Club Ambassadors, including
+            Provide <span class="font-semibold">training and support</span> throughout the season for Chapter Ambassadors, including
             an Ambassador resource page.
           </li>
           <li>
             Provide access to <span class="font-semibold">marketing collateral</span> and
             <%= link_to "brand guidelines.",
-              ENV.fetch("CHAPTER_AMBASSADOR_BRAND_GUIDELINES_URL"),
+              ENV.fetch("BRAND_GUIDELINES_URL"),
               target: "_blank",
               class: "text-blue-600 hover:text-blue-800" %>
           </li>
@@ -301,28 +188,14 @@
       </li>
 
       <li>
-        <span class="font-semibold">Code of Conduct</span>
-        <ol class="ml-6 list-decimal space-y-4">
-         <li>
-           As a Club Ambassador, <span>I agree to follow Technovation's</span> 
-           <%= link_to "Code of Conduct.",
-             "https://www.technovation.org/safety/volunteer-code-of-conduct/",
-             target: "_blank",
-             class: "text-blue-600 hover:text-blue-800" %>
-           Make sure to read the document in its entirety as it contains important information regarding data privacy.
-         </li>
-        </ol>
-      </li>
-
-      <li>
         <span class="font-semibold">Confidentiality Rules</span>
         <ol class="ml-6 list-decimal space-y-4">
           <li>
-            Club Ambassador may have access to Confidential information in connection with the program. Confidential
-            information may not be disclosed to others not included in this agreement or the Club Ambassadors Agreement.
+            Chapter Ambassador may have access to Confidential information <sup>3</sup> in connection with the program.
+            Confidential information may not be disclosed to others not included in this
           </li>
           <li>
-            Club Ambassador shall use Confidential information only in connection with and to benefit the Technovation
+            Chapter Ambassador shall use Confidential information only in connection with and to benefit the Technovation
             Girls program and participants.
           </li>
           <li>
@@ -330,37 +203,40 @@
             who have media consent on file with Technovation.
           </li>
           <li>
-            All parties shall obey all local laws around data privacy such as GDPR regulations for European participants.
+            All parties shall comply with all local laws regarding data privacy,such as GDPR for European participants.
           </li>
           <li>
             Should there be a breach of information and/or confidentiality, Technovation reserves the right to
             remove any involved parties from their roles with Technovation.
           </li>
         </ol>
+        <p class="tw-hint mt-8">
+          <sup>3</sup>Definition of Confidential includes any information about Technovation Girls participants or
+          volunteers including but not limited to names, email addresses, locations (cities), and submission information.
+        </p>
       </li>
 
       <li>
-        <span class="font-semibold">Code of Conduct</span>
+        <span class="font-semibold">Liability Waiver</span>
         <ol class="ml-6 list-decimal space-y-4">
           <li>
-            The Club Ambassador understands that there are risks of harm associated with activities, events,
-            locations, people, or organizations, related to their volunteer service.
+            The Chapter Ambassador understands that there are risks of harm associated with activities, events, locations,
+            people, or organizations, related to their volunteer service.
           </li>
           <li>
-            The Club Ambassador understands that they are responsible for their own safety during their volunteer
+            The Chapter Ambassador understands that they are responsible for their own safety during their volunteer
             service, and states that they have the skills and abilities needed to serve as a Volunteer safely.
-            The Volunteer agrees not to hold Technovation liable for any harms or losses they may suffer while
-            serving as a volunteer or while participating in any activities or events connected with the Technovation
-            Girls program.
+            The Volunteer agrees not to hold Technovation liable for any harms or losses they may suffer while serving
+            as a volunteer or while participating in any activities or events connected with the Technovation Girls program.
           </li>
           <li>
-            Any Volunteer working for an organization partnering with Technovation understands that they need to
-            follow their organization’s rules in regard to liability.
+            Any Volunteer working for an organization partnering with Technovation understands that they need to follow
+            their organization’s rules in regard to liability.
           </li>
           <li>
-            The Club Ambassador agrees not to sue or make any claim, including any claim of negligence,
-            against Technovation for any expenses, damages, losses, or harms that may occur from any activity,
-            event, location, person, or organization relating to their service as a Technovation Girls volunteer.
+            The Chapter Ambassador agrees not to sue or make any claim, including any claim of negligence, against
+            Technovation for any expenses, damages, losses, or harms that may occur from any activity, event, location,
+            person, or organization relating to their service as a Technovation Girls volunteer.
           </li>
         </ol>
       </li>
@@ -369,11 +245,11 @@
         <span class="font-semibold">Safety</span>
         <ol class="ml-6 list-decimal space-y-4">
           <li>
-            Technovation created resources for all its volunteers, including Club Ambassadors,
-            mentors, and judges, to ensure the safety of its participants.
+            Technovation created resources for all its volunteers, including Chapter Ambassadors, mentors,
+            and judges, to ensure the safety of its participants.
             <span class="font-semibold">
-              By signing this Agreement,the Club Ambassador agrees to complete applicable training and review
-              resources as they become available.
+              By signing this Agreement, the Chapter Ambassador agrees to complete applicable training and review resources
+              as they become available.
             </span>
             Training and resources can be found on the
             <%= link_to "Technovation safety page.",
@@ -388,13 +264,13 @@
         <span class="font-semibold">Use of Likeness Release</span>
         <ol class="ml-6 list-decimal space-y-4">
           <li>
-            Club Ambassador agrees that Technovation may produce or participate in the production
-            and/or dissemination of video (including team submissions), motion picture, audio recording,
-            web page, public relations, or still photograph productions, broadcasting, and/or publication
-            of printed and digital assets which may involve the use of Club Ambassador’s name, photo, likenesses,
-            or voices. Club Ambassador agrees that such productions may be used for educational, exhibition,
-            promotional, advertising, or other purposes by Technovation and/or its Club Ambassadors.
-            Technovation will always obtain consent for using footage that includes minors.
+            Chapter Ambassador agrees that Technovation may produce or participate in the production and/or
+            dissemination of video (including team submissions), motion picture, audio recording, web page,
+            public relations, or still photograph productions, broadcasting, and/or publication of printed
+            and digital assets which may involve the use of Chapter Ambassador’s name, photo, likenesses,
+            or voices. Chapter Ambassador agrees that such productions may be used for educational, exhibition,
+            promotional, advertising, or other purposes by Technovation and/or its partners. Technovation will
+            always obtain consent for using footage that includes minors.
           </li>
         </ol>
       </li>
@@ -403,42 +279,29 @@
         <span class="font-semibold">Termination and Resignation</span>
         <ol class="ml-6 list-decimal space-y-4">
           <li>
-            <span class="font-semibold">Termination of a Club Ambassador:</span> A Club Ambassador serves at the
-            discretion of Technovation, and Technovation may terminate the volunteer relationship at any time for
-            any reason. Main reasons for termination:
+            <span class="font-semibold">Termination of a Chapter Ambassador:</span> A Chapter Ambassador serves
+            at the discretion of Technovation, and Technovation may terminate the volunteer relationship at any
+            time for any reason. Main reasons for termination:
             <ul class="ml-6 list-disc">
               <li>
-                Club Ambassador violates any section of this Agreement or the Code of Conduct.
+                Chapter Ambassador violates any section of this Agreement or the Code of Conduct.
               </li>
               <li>
-                Club Ambassador becomes inactive - Inactivity is defined by two or more of the following:
-                having less than 10 girls registered for the program in their region, little to no interactions
-                with Technovation staff, no communication with other Club Ambassadors, and not attending webinars or training.
+                Chapter Ambassador becomes inactive - Inactivity is defined by two or more of the following:
+                having less than 10 girls registered for the program, little to no interactions with Technovation staff,
+                no communication with other Chapter Ambassadors, and not attending webinars or training.
                 <br>
                 <span class="tw-hint">
-                  If terminated, Club Ambassador must immediately refrain from any further action related to
-                  Technovation Girls or communication with program participants as a Club Ambassador.
+                  If terminated, Chapter Ambassador must immediately refrain from any further action related to
+                  Technovation Girls or communication with program participants as a Chapter Ambassador.
                 </span>
               </li>
             </ul>
           </li>
           <li>
             <span class="font-semibold">Resignation:</span>
-            If a Club Ambassador wishes to resign, he/she should try to find a replacement and help transition the program
-            to the new Club Ambassador whenever possible
-          </li>
-        </ol>
-      </li>
-
-      <li>
-        <span class="font-semibold">Agreement Termination</span>
-        <ol class="ml-6 list-decimal space-y-4">
-          <li>
-            <span class="font-semibold">Termination Rights:</span>
-            Suspension or Termination Due to Club Ambassadors Breach or Change of Content.  Technovation may suspend
-            or terminate Club Ambassadors’s right to use the Copyrights, Marks, and/or Materials immediately upon
-            notice to Club Ambassadors at any time upon such notice if (a) Club Ambassadors violates any term of this
-            Agreement or (b) Club Ambassadors undergoes any material change in ownership or organizational control.
+            If a Chapter Ambassador wishes to resign, he/she should try to find a replacement and help transition the program
+            to the new Chapter Ambassador whenever possible
           </li>
         </ol>
       </li>
@@ -447,11 +310,11 @@
         <span class="font-semibold">Technovation Complaint Process</span>
         <ol class="ml-6 list-decimal space-y-4">
           <li>
-            If a Club Ambassador would like to raise concerns over the program delivery in their country,
-            communication or conduct with Technovation staff, judging results, a termination decision, or
-            any other subject, he/she should contact Technovation’s Senior Program Director, Rebecca Anderson
-            rebecca@technovation.org. Club Ambassadors shall not send communication to teams and/or mentors
-            regarding disputes.
+            If a Chapter Ambassador would like to raise concerns over the program delivery in their country,
+            communication or conduct with Technovation staff, judging results, a termination decision, or any
+            other subject, he/she should contact Technovation’s Senior Program Director, Rebecca Anderson
+            rebecca@technovation.org. Chapter Ambassadors shall not send communication to teams and/or mentors regarding disputes.
+
           </li>
         </ol>
       </li>
