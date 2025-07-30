@@ -40,7 +40,6 @@ class SubmissionsGrid
   end
 
   column :app_inventor_app_name
-  column :app_inventor_gmail
   column :source_code_url
 
   column :business_plan_url do

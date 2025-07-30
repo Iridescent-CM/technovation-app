@@ -133,7 +133,7 @@
               </svg>
 
               <div>
-                Read the <%= submission.senior_division? ? "business" : "user adoption" %> plan
+                Read the <%= submission.senior_division? ? t("submissions.business_plan") : "user adoption plan" %>
               </div>
 
               <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -214,11 +214,7 @@
         <%= humanize_boolean(eval("submission.#{question_label}")) %>
       </span>
 
-      <% if question_label == :uses_gadgets && submission.gadget_types.any? %>
-        <%= render "team_submissions/gadget_types", team_submission: submission %>
-      <% else %>
-        <%= simple_format eval("submission.#{question_label}_description"), class: "mt-3 space-y-6 text-base text-gray-600" %>
-      <% end %>
+      <%= simple_format eval("submission.#{question_label}_description"), class: "mt-3 space-y-6 text-base text-gray-600" %>
     </div>
   <% end %>
 <% end %>

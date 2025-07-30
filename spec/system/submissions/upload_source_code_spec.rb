@@ -77,7 +77,6 @@ RSpec.describe "Uploading technical work to submissions", :js do
         before do
           TeamSubmission.last.update!({
             development_platform: "Thunkable",
-            thunkable_account_email: "our-team@thunkable.com",
             thunkable_project_url: url
           })
         end
@@ -138,9 +137,6 @@ RSpec.describe "Uploading technical work to submissions", :js do
         click_link "Technical Additions"
 
         select "Thunkable", from: "Which coding language did your team use?"
-
-        fill_in "What is the email address of your team's Thunkable account (optional)?",
-          with: "our-team@thunkable.com"
 
         fill_in "What is the URL to your Thunkable project detail page?",
           with: "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"

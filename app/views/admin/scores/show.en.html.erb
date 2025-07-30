@@ -89,7 +89,7 @@
         <h5>
           <span>
             Downloaded
-            <%= @score.team.senior? ? "Business Plan" : "User Adoption Plan" %>
+            <%= @score.team.senior? ? t("submissions.business_plan").titleize : "User Adoption Plan" %>
           </span>
           <%= @score.downloaded_business_plan? ? "Yes" : "No" %>
         </h5>

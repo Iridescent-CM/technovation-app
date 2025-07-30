@@ -19,7 +19,7 @@
     <% if @team.junior? %>
       User Adoption Plan
     <% else %>
-      Business plan
+      <%= t("submissions.business_plan").titleize %>
     <% end %>
   </h3>
 
@@ -66,7 +66,7 @@
     </p>
 
     <p class="tw-hint">
-      Uploading a business plan is
+      Uploading a <%= t("submissions.business_plan") %> is
       <strong>not required</strong>
       in the Beginner Division.
     </p>

@@ -1,4 +1,4 @@
-<% provide :title, @team.junior? ? "User Adoption Plan" : "Business Plan" %>
+<% provide :title, @team.junior? ? "User Adoption Plan" : t("submissions.business_plan").titleize %>
 
   <% if @team.senior? || @team.junior? %>
     <% if @team_submission.business_plan_url_complete? %>
@@ -13,7 +13,7 @@
       <% if @team.junior? %>
         Submit your 1 to 2 page user adoption plan
       <% else %>
-        Submit your 5 to 10 page business plan
+        Submit your 5 to 10 page <%= t("submissions.business_plan").titleize %>
       <% end %>
 
       as a <span class="font-medium">PDF file</span>.
@@ -54,9 +54,9 @@
 
     <p class="py-2">
       <% if @team.senior? %>
-        Get some help writing your business plan in the
+        Get some help writing your <%= t("submissions.business_plan") %> in the
         <%= link_to(
-          "business plan curriculum unit.",
+          "#{t("submissions.business_plan")} curriculum unit.",
           "https://technovationchallenge.org/courses/senior-division-curriculum/lessons/business-plan//",
           target: "_blank",
           class: "tw-link"
@@ -82,7 +82,7 @@
     </p>
 
     <p class="tw-hint">
-      Uploading a business plan is
+      Uploading a <%= t("submissions.business_plan") %> is
       <strong>not required</strong>
       for the Beginner Division.
     </p>
