@@ -81,7 +81,6 @@ class RegistrationMailer < ApplicationMailer
     @program_timeline_url = ENV.fetch("PROGRAM_TIMELINE_URL")
     @mentor_resources_url = ENV.fetch("MENTOR_RESOURCES_URL")
     @internet_safety_url = ENV.fetch("INTERNET_SAFETY_URL")
-    @in_person_safety_url = ENV.fetch("IN_PERSON_SAFETY_URL")
     @faq_url = ENV.fetch("FAQ_URL")
     @submission_guidelines_url = ENV.fetch("SUBMISSION_GUIDELINES_URL")
     @competition_rules_url = ENV.fetch("COMPETITION_RULES_URL")
