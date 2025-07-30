@@ -135,7 +135,10 @@
             </li>
             <li>
               Mentor Cohort: Connect with other Mentors for peer learning and support.
-              Learn more here. If you are interested,
+              <%= link_to "Learn more here.",
+                "https://technovationchallenge.org/courses/mentor-training/lessons/mentor-training-mentor-cohorts/",
+                itemprop: "url" %>
+              If you are interested,
               <%= link_to "fill out the Cohort Interest form",
                 ENV.fetch("MENTOR_COHORT_INTEREST_FORM_URL"),
                 itemprop: "url" %>
