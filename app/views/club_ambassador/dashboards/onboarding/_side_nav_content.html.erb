@@ -28,4 +28,10 @@
         is_active_item: false
       %>
     </ol>
+
+    <% unless current_ambassador.chapterable&.onboarded %>
+      <%= link_to "Up Next: Club Profile",
+        club_ambassador_club_profile_path,
+        class: "text-sm tw-green-btn mx-auto" %>
+    <% end %>
   </nav>
