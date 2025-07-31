@@ -63,7 +63,8 @@ module Admin
       if chapterable_id.present?
         if @chapterable_account_assignment.update(
           chapterable_id: chapterable_id,
-          chapterable_type: chapterable_type.capitalize
+          chapterable_type: chapterable_type.capitalize,
+          assignment_by: current_account
         )
           @account.update(no_chapterable_selected: nil)
 
