@@ -2,8 +2,9 @@
   <p class="mb-4">
     Check out all our resources for running the Technovation program on the
     <%= link_to "Ambassador Resource Page",
-                ENV.fetch("CHAPTER_AMBASSADOR_RESOURCE_PAGE_URL"),
-                class: "tw-link" %>!
+      ENV.fetch("CHAPTER_AMBASSADOR_RESOURCE_PAGE_URL"),
+      class: "tw-link",
+      target: "_blank" %>!
   </p>
 
   <p class="mb-4">
@@ -23,20 +24,17 @@
     <li class="ml-8">
       Join out global ambassador's
       <%= link_to "LinkedIn Group",
-                  ENV.fetch("CHAPTER_AMBASSADOR_LINKEDIN_GROUP_URL"),
-                  class: "tw-link",
-                  target: "_blank" %>!
+        ENV.fetch("CHAPTER_AMBASSADOR_LINKEDIN_GROUP_URL"),
+        class: "tw-link",
+        target: "_blank" %>!
     </li>
     <li class="ml-8">
       Connect with other ambassadors and mentors on our
       <%= link_to "Slack group",
-                  ENV.fetch("CHAPTER_AMBASSADOR_SLACK_URL"),
-                  class: "tw-link",
-                  target: "_blank" %>!
+        ENV.fetch("CHAPTER_AMBASSADOR_SLACK_URL"),
+        class: "tw-link",
+        target: "_blank" %>!
       If you're a new ambassador, look out for an email to join the group.
-    </li>
-    <li class="ml-8">
-      Join our Whatsapp group and join a regional community (Coming soon)
     </li>
   </ul>
 
@@ -63,12 +61,12 @@
   <div class="w-full lg:w-1/3 flex mt-8 mx-auto">
     <% if current_ambassador.community_connection.present? %>
       <%= link_to "Update community connections",
-                  edit_club_ambassador_community_connections_path,
-                  class: "tw-green-btn mx-auto" %>
+        edit_club_ambassador_community_connections_path,
+        class: "tw-green-btn mx-auto" %>
     <% else %>
       <%= link_to "Add community connections",
-                  new_club_ambassador_community_connections_path,
-                  class: "tw-green-btn mx-auto" %>
+        new_club_ambassador_community_connections_path,
+        class: "tw-green-btn mx-auto" %>
     <% end %>
   </div>
 </div>
