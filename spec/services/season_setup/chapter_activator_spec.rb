@@ -44,6 +44,18 @@ RSpec.describe SeasonSetup::ChapterActivator do
         end
       end
 
+      context "when a chapter has an inactive chapter affiliation agreement" do
+        before do
+          chapter.legal_contact.chapter_affiliation_agreement.update(active: false)
+        end
+
+        it "does not assign the chapter to the current season" do
+          chapter_activator.call
+
+          expect(chapter.reload.seasons).not_to include(Season.current.year)
+        end
+      end
+
       context "when a chapter already belongs to the current season" do
         before do
           chapter.update(seasons: chapter.seasons + [Season.current.year])

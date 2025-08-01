@@ -6,7 +6,10 @@ module SeasonSetup
         .where.not("'#{current_season}' = ANY(seasons)")
         .joins(legal_contact: :chapter_affiliation_agreement)
         .includes(legal_contact: :chapter_affiliation_agreement)
-        .where(chapter_affiliation_agreement: {status: ["signed", "off-platform"]})
+        .where(chapter_affiliation_agreement: {
+          status: ["signed", "off-platform"],
+          active: true
+        })
         .update_all("seasons = array_append(seasons, '#{current_season}')")
     end
 

@@ -31,6 +31,9 @@ task :reset_for_season, [:force] => :environment do |t, args|
     puts "Resetting club ambassador onboarding"
     SeasonSetup::ClubAmbassadorOnboardingResetter.new.call
 
+    puts "Deactivating chapter affiliation agreements"
+    SeasonSetup::ChapterAffiliationAgreementDeactivator.new.call
+
     puts "Activating chapters"
     SeasonSetup::ChapterActivator.new.call
 
