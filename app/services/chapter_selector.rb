@@ -44,7 +44,10 @@ class ChapterSelector
       .joins(legal_contact: :chapter_affiliation_agreement)
       .includes(legal_contact: :chapter_affiliation_agreement)
       .includes(:primary_contact)
-      .where(chapter_affiliation_agreement: {status: ["signed", "off-platform"]})
+      .where(chapter_affiliation_agreement: {
+        status: ["signed", "off-platform"],
+        active: true
+      })
       .where(where)
       .where.not(where_not)
       .order(:name)
