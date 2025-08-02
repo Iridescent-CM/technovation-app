@@ -1796,7 +1796,8 @@ CREATE TABLE public.program_information (
     participant_count_estimate_id bigint,
     low_income_estimate_id bigint,
     chapterable_type character varying,
-    chapterable_id integer
+    chapterable_id integer,
+    work_related_ambassador boolean
 );
 
 
@@ -5158,6 +5159,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250724040143'),
 ('20250724040309'),
 ('20250729170321'),
-('20250729170744');
+('20250729170744'),
+('20250730184414');
 
 

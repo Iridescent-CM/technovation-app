@@ -122,7 +122,8 @@ RSpec.describe ProgramInformation do
           program_length: program_length,
           meeting_times: meeting_times,
           meeting_facilitators: meeting_facilitators,
-          meeting_formats: meeting_formats
+          meeting_formats: meeting_formats,
+          work_related_ambassador: work_related_ambassador
         )
       end
 
@@ -131,6 +132,7 @@ RSpec.describe ProgramInformation do
       let(:meeting_times) { [MeetingTime.new] }
       let(:meeting_facilitators) { [MeetingFacilitator.new] }
       let(:meeting_formats) { [MeetingFormat.new] }
+      let(:work_related_ambassador) { nil }
 
       context "when all of the program info has been completed" do
         let(:start_date) { Time.now }
@@ -138,6 +140,7 @@ RSpec.describe ProgramInformation do
         let(:meeting_times) { [MeetingTime.new] }
         let(:meeting_facilitators) { [MeetingFacilitator.new] }
         let(:meeting_formats) { [MeetingFormat.new] }
+        let(:work_related_ambassador) { true }
 
         it "returns true" do
           expect(program_information.complete?).to eq(true)
@@ -176,9 +179,16 @@ RSpec.describe ProgramInformation do
         end
       end
 
-
       context "when there are no meeting formats" do
         let(:meeting_formats) { [] }
+
+        it "returns false" do
+          expect(program_information.complete?).to eq(false)
+        end
+      end
+
+      context "when the work based ambassador is missing" do
+        let(:work_related_ambassador) { nil }
 
         it "returns false" do
           expect(program_information.complete?).to eq(false)

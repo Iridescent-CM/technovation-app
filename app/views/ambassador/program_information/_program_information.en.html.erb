@@ -12,6 +12,18 @@
         <p class="text-red-500">Missing</p>
       <% end %>
     </div>
+
+    <div class="mb-4">
+      <p class="font-semibold"><%= t("program_information.club.work_related_ambassador_question") %></p>
+      <p>
+        <% if !chapterable.program_information.work_related_ambassador.nil? %>
+          <%= chapterable.program_information.work_related_ambassador? ?
+            t("program_information.club.work_related_ambassador_job_option") : t("program_information.club.work_related_ambassador_volunteer_option") %>
+        <% else %>
+          <span class="text-red-500">Missing</span>
+        <% end %>
+      </p>
+    </div>
   <% elsif current_ambassador.chapterable_type == "chapter" %>
     <div class="mb-4">
       <p class="font-semibold"><%= t("program_information.organization_type_question") %></p>
