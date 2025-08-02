@@ -44,6 +44,19 @@
         label: t("program_information.club.meeting_format_question")
       %>
     </div>
+
+    <div class="mb-8">
+      <%= f.label :work_related_ambassador,
+        t("program_information.club.work_related_ambassador_question"),
+        for: :work_related_ambassador %>
+      <%= f.select :work_related_ambassador,
+        [
+          [t("program_information.club.work_related_ambassador_job_option"), true],
+          [t("program_information.club.work_related_ambassador_volunteer_option"), false]
+        ],
+       include_blank: true
+      %>
+    </div>
   <% end %>
 
   <div class="mb-8">

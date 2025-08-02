@@ -37,7 +37,8 @@ class ProgramInformation < ActiveRecord::Base
       meeting_formats,
       meeting_times,
       program_length,
-      start_date
+      start_date,
+      work_related_ambassador
     ].all?(&:present?)
   end
 

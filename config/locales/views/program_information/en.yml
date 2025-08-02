@@ -6,6 +6,9 @@ en:
     club:
       meeting_facilitator_question: Who will be the Mentors for your students?
       meeting_format_question: How will the teams in your Club meet?
+      work_related_ambassador_question: Are the Club Ambassadors participating in this role as part of their job (e.g., through a school program or paid position), or are they volunteering independently and unpaid?
+      work_related_ambassador_job_option: I am a club ambassador as part of my job
+      work_related_ambassador_volunteer_option: I am volunteering independently
     chapter:
       child_safeguarding_policy_and_process_question: What is your child safeguarding policy and process?
       child_safeguarding_policy_and_process_description: Please describe if/how you conduct background checks, hold child protection trainings, safety reporting process, etc. If your policies are available online, please share the links.

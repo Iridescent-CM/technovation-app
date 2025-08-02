@@ -41,6 +41,7 @@ module Ambassador
       params.require(:program_information).permit(
         :child_safeguarding_policy_and_process,
         :start_date,
+        :work_related_ambassador,
         :program_length_id,
         organization_type_ids: [],
         meeting_time_ids: [],
