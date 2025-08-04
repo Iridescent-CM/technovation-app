@@ -28,7 +28,7 @@ module Student
         redirect_to student_dashboard_path,
           alert: "You do not have permission to visit that page"
       elsif @join_request.status == :pending
-        render template: "join_requests/rebranded/show_pending"
+        render template: "join_requests/rebrand/show_pending"
       else
         render template: "join_requests/show_#{@join_request.status}"
       end
