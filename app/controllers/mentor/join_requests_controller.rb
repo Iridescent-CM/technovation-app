@@ -47,7 +47,7 @@ module Mentor
         redirect_to mentor_dashboard_path,
           alert: "You do not have permission to visit that page"
       else
-        render template: "join_requests/show_#{@join_request.status}"
+        render template: "join_requests/rebrand/show_#{@join_request.status}"
       end
     end
 
