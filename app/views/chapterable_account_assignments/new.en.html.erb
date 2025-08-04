@@ -92,12 +92,6 @@
                     <% end %>
 
                     <%= render "additional_clubs" %>
-                  <% else %>
-                    <h2 style="font-size: 1.875rem; font-weight: 600; color: #1f2937; margin-top: 0;">
-                      Clubs
-                    </h2>
-
-                    <%= render "additional_clubs" %>
                   <% end %>
                 <% else %>
                   <% if @additional_chapters.present? %>
@@ -135,7 +129,13 @@
               and we'll connect your account with them.
             </p>
           </div>
-        <% elsif !current_account.assigned_to_chapterable? %>
+        <% elsif current_account.assigned_to_chapterable? %>
+          <%= simple_form_for @chapterable_assignment do |f| %>
+            <%= render "none_of_the_above_option" %>
+
+            <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-8" %>
+          <% end %>
+        <% else %>
           <%= render "chapterable_account_assignments/#{current_account.scope_name}/no_chapterables_found" %>
         <% end %>
       </div>
