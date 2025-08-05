@@ -249,6 +249,7 @@ module TeamSubmissionController
         :app_inventor_app_name,
         :thunkable_project_url,
         :scratch_project_url,
+        :ethics_description,
         screenshots: [],
         screenshots_attributes: [
           :id,
