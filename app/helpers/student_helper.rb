@@ -33,6 +33,8 @@ module StudentHelper
       :complete if submission.app_details.present?
     when :learning_journey
       :complete if submission.learning_journey.present?
+    when :ethics_description
+      :complete if submission.ethics_description.present?
     when :pitch_video
       :complete unless submission.pitch_video_link.blank?
     when :demo_video
