@@ -211,6 +211,15 @@
       </p>
 
       <p>
+        Ethics:
+        <% if @team_submission.ethics_description.present? %>
+          <%= @team_submission.ethics_description %>
+        <% else %>
+          blank
+        <% end %>
+      </p>
+
+      <p>
         Submission Type:
         <% if !@team_submission.submission_type.nil? %>
           <%= @team_submission.submission_type %>
