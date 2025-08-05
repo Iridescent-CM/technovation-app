@@ -83,6 +83,25 @@ class ClubAmbassadorsGrid
       end
     end
 
+  filter :onboarded,
+    :enum,
+    header: "Onboarded (includes Club onboarding)",
+    select: [
+     ["Yes, fully onboarded", true],
+     ["No, still onboarding", false]
+    ],
+    filter_group: "common" do |value, scope, grid|
+      if value == "true"
+        scope
+          .where(club_ambassador_profiles: { onboarded: true })
+          .where(clubs: { onboarded: true })
+      else
+        scope
+          .where(club_ambassador_profiles: { onboarded: false })
+          .or(scope.where(clubs: { onboarded: false }))
+      end
+    end
+
   filter :season,
     :enum,
     select: (2025..Season.current.year).to_a.reverse,
