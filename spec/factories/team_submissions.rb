@@ -48,6 +48,7 @@ FactoryBot.define do
           app_name: "Filled in by the factory!",
           app_description: "Filled in by the factory! " +
                            "Hello world!\n I have line breaks too",
+          ethics_description: "Filled in by factory!",
           development_platform: "Swift or XCode",
           demo_video_link: "http://example.com/demo",
           pitch_video_link: "http://example.com/pitch"
@@ -96,6 +97,7 @@ FactoryBot.define do
       app_name { "Submission name" }
       app_description { "Submission description" }
       learning_journey { "Learning journey description" }
+      ethics_description { "Ethics description" }
       pitch_video_link { "http://example.com/pitch" }
       demo_video_link { "http://example.com/demo" }
       development_platform { "Swift or XCode" }
@@ -113,6 +115,7 @@ FactoryBot.define do
       app_name { "Submission name" }
       app_description { "Submission description" }
       learning_journey { "Learning journey description" }
+      ethics_description { "Ethics description" }
       pitch_video_link { "http://example.com/pitch" }
       demo_video_link { "http://example.com/demo" }
       development_platform { "Swift or XCode" }

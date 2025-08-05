@@ -510,20 +510,20 @@ RSpec.describe TeamSubmission do
         expect(junior_submission.percent_complete).to eq(0)
       end
 
-      it "returns 10% when one required item has been completed" do
+      it "returns 9% when one required item has been completed" do
         junior_submission = FactoryBot.create(:submission, :junior)
 
         junior_submission.update(app_name: "An amazing app")
 
-        expect(junior_submission.percent_complete).to eq(10)
+        expect(junior_submission.percent_complete).to eq(9)
       end
 
-      it "returns 90% when all required items have been completed, but it hasn't been published yet" do
+      it "returns 91% when all required items have been completed, but it hasn't been published yet" do
         junior_submission = FactoryBot.create(:submission, :junior, :complete)
 
         junior_submission.update(published_at: nil)
 
-        expect(junior_submission.percent_complete).to eq(90)
+        expect(junior_submission.percent_complete).to eq(91)
       end
 
       it "returns 100% when all required items have been completed, and it has been published" do
@@ -542,20 +542,20 @@ RSpec.describe TeamSubmission do
         expect(senior_submission.percent_complete).to eq(0)
       end
 
-      it "returns 10% when one required item has been completed" do
+      it "returns 9 when one required item has been completed" do
         senior_submission = FactoryBot.create(:submission, :senior)
 
         senior_submission.update(app_name: "Fantastico Magnifico")
 
-        expect(senior_submission.percent_complete).to eq(10)
+        expect(senior_submission.percent_complete).to eq(9)
       end
 
-      it "returns 90% when all required items have been completed, but it hasn't been published yet" do
+      it "returns 91% when all required items have been completed, but it hasn't been published yet" do
         senior_submission = FactoryBot.create(:submission, :senior, :complete)
 
         senior_submission.update(published_at: nil)
 
-        expect(senior_submission.percent_complete).to eq(90)
+        expect(senior_submission.percent_complete).to eq(91)
       end
 
       it "returns 100% when all required items have been completed, and it has been published" do
