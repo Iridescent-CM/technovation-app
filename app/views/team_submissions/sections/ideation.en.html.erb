@@ -52,6 +52,19 @@
 
 <%= render 'team_submissions/pieces/piece',
   submission: @team_submission,
+  title: "Ethics",
+  scope: current_scope,
+  attribute: :ethics_description,
+  cta_when_empty: "Add your ethics description",
+  cta_when_filled: "Update your ethics description" do %>
+
+  <%= simple_format(@team_submission.ethics_description) %>
+<% end %>
+
+<%= render 'application/templates/tw_thick_rule'%>
+
+<%= render 'team_submissions/pieces/piece',
+  submission: @team_submission,
   title: "Images",
   scope: current_scope,
   attribute: :screenshots,

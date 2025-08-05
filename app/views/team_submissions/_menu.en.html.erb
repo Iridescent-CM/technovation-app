@@ -93,6 +93,20 @@
         <li>
           <%= link_to submission_progress_web_icon(
             submission,
+            :ethics_description,
+            "Ethics"
+          ),
+            send(
+              "#{current_scope}_team_submission_path",
+              submission,
+              piece: :ethics_description
+            )
+          %>
+        </li>
+
+        <li>
+          <%= link_to submission_progress_web_icon(
+            submission,
             :screenshots,
             "2 or more images"
           ),

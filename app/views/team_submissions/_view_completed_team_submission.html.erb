@@ -185,6 +185,9 @@
     <h3 class="mb-2">Learning Journey</h3>
     <%= simple_format submission.learning_journey, class: "mb-3 space-y-6 text-base text-gray-600" %>
 
+    <h3 class="mb-2">Ethics</h3>
+    <%= simple_format submission.ethics_description, class: "mb-3 space-y-6 text-base text-gray-600" %>
+
     <div class="mt-8 flex flex-wrap gap-8">
       <% submission.screenshots.each do |screenshot| %>
         <% if screenshot.image_url.present? %>
