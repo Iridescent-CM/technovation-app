@@ -71,6 +71,32 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
+  scenario "Set the ethics description" do
+    click_link "Ideation"
+
+    within(".ethics_description.incomplete") do
+      click_link "Add your ethics description"
+    end
+
+    fill_in "Provide an explanation of how you considered ethics when developing your app (150 word max)",
+      with: "Only a few sentences"
+
+    click_button "Save"
+
+    within(".ethics_description.complete") do
+      expect(page).not_to have_link("Add your ethics description")
+
+      expect(page).to have_content "Only a few sentences"
+      expect(page).to have_link(
+        "Update your ethics description",
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :ethics_description
+        )
+      )
+    end
+  end
+
   scenario "Set the demo/technical video" do
     click_link "Pitch"
 
