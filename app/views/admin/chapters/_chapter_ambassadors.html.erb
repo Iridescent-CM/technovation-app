@@ -6,9 +6,9 @@
 
     <div class="panel">
       <ul>
-        <% chapter.chapter_ambassadors.each do |chapter_ambassador| %>
+        <% chapter.current_ambassadors.each do |ambassador| %>
           <li>
-            <%= link_to chapter_ambassador.full_name, admin_participant_path(chapter_ambassador) %>
+            <%= link_to ambassador.full_name, admin_participant_path(ambassador) %>
           </li>
         <% end %>
       </ul>

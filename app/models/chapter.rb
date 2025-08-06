@@ -13,6 +13,17 @@ class Chapter < ActiveRecord::Base
 
   has_many :chapterable_account_assignments, as: :chapterable, class_name: "ChapterableAccountAssignment"
   has_many :accounts, through: :chapterable_account_assignments
+  has_many :current_ambassadors,
+    -> {
+      where(
+        chapterable_account_assignments: {
+          profile_type: "ChapterAmbassadorProfile",
+          season: Season.current.year
+        }
+      )
+    },
+    through: :chapterable_account_assignments,
+    source: :account
   has_many :chapter_ambassadors, -> { where "profile_type = 'ChapterAmbassadorProfile'" },
     through: :chapterable_account_assignments,
     source: :account
