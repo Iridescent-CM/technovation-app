@@ -6,9 +6,9 @@
 
     <div class="panel">
       <ul>
-        <% club.club_ambassadors.each do |club_ambassador| %>
+        <% club.current_ambassadors.each do |ambassador| %>
           <li>
-            <%= link_to club_ambassador.full_name, admin_participant_path(club_ambassador) %>
+            <%= link_to ambassador.full_name, admin_participant_path(ambassador) %>
           </li>
         <% end %>
       </ul>
