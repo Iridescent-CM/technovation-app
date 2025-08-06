@@ -345,6 +345,7 @@ class TeamSubmission < ActiveRecord::Base
     source_code_url
     business_plan_url
     pitch_presentation_url
+    ethics_description
   ].each do |piece|
     define_method(:"#{piece}_complete?") do
       !public_send(piece).blank?
