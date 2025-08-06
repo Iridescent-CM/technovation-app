@@ -285,7 +285,8 @@ class MentorProfile < ActiveRecord::Base
 
   def requires_background_check?
     (account.valid? && (account.date_of_birth.present? && account.age >= 18 || account.meets_minimum_age_requirement?)) &&
-      in_background_check_country? && !account.background_check_exemption?
+      in_background_check_country? &&
+      !(background_check.present? && background_check.clear? || account.background_check_exemption?)
   end
 
   def requires_background_check_invitation?
