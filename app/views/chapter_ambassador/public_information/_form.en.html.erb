@@ -38,7 +38,7 @@
 
   <div>
     <%= f.input :primary_account_id,
-                collection: current_chapter.chapter_ambassadors,
+                collection: current_chapter.current_ambassadors,
                 prompt: "Select a primary contact",
                 label: "Primary Contact",
                 value_method: :id,
