@@ -13,9 +13,7 @@
 
   <dt class="leading-tight"><%= t("models.mentor_profile.expertise_names") %></dt>
   <dd class="leading-tight"><%= account.expertise_names.present? ? account.expertise_names.to_sentence : "No expertises selected"%></dd>
-</dl>
 
-<div>
-  <h3 class="text-neutral-700 font-bold leading-tight"><%= t("models.mentor_profile.bio") %></h3>
-  <%= account.bio.present? ? simple_format(h(account.bio)) : "This mentor has not written a bio." %>
-</div>
+  <dt class="text-neutral-700 font-bold leading-tight"><%= t("models.mentor_profile.bio") %></dt>
+  <dd class="leading-tight"><%= account.bio.present? ? simple_format(h(account.bio)) : "This mentor has not written a bio." %></dd>
+</dl>
