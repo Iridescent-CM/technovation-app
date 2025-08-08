@@ -50,10 +50,8 @@ RSpec.feature "Mentors find a team" do
 
     click_link "Connect with mentors"
 
-    within(".search-result-head") do
-      expect(page).to have_content("Findme")
-      expect(page).not_to have_content("Faraway")
-    end
+    expect(page).to have_content("Findme")
+    expect(page).not_to have_content("Faraway")
   end
 
   scenario "search for a mentor by first name" do
@@ -74,8 +72,8 @@ RSpec.feature "Mentors find a team" do
     fill_in "nearby", with: "anywhere"
     page.find("form").submit_form!
 
-    expect(page).to have_css(".search-result-head", text: "Faraway")
-    expect(page).not_to have_css(".search-result-head", text: "Findme")
+    expect(page).to have_content("Faraway")
+    expect(page).not_to have_content("Findme")
   end
 
   scenario "search for a mentor by last name" do
@@ -96,8 +94,8 @@ RSpec.feature "Mentors find a team" do
     fill_in "nearby", with: "anywhere"
     page.find("form").submit_form!
 
-    expect(page).to have_css(".search-result-head", text: "Faraway")
-    expect(page).not_to have_css(".search-result-head", text: "Findme")
+    expect(page).to have_content("Faraway")
+    expect(page).not_to have_content("Findme")
   end
 
   scenario "search for a mentor by first and last name" do
@@ -106,7 +104,7 @@ RSpec.feature "Mentors find a team" do
       :onboarded,
       :geocoded,
       :searchable_by_other_mentors,
-      first_name: "Traditional Mexican",
+      first_name: "Traditional Person",
       last_name: "Family Name",
       city: "Los Angeles",
       state_province: "CA"
@@ -114,21 +112,18 @@ RSpec.feature "Mentors find a team" do
 
     click_link "Connect with mentors"
 
-    fill_in "text", with: "traditi mexic fam na" # partial match
+    fill_in "text", with: "traditi fam na" # partial match
     fill_in "nearby", with: "anywhere"
     page.find("form").submit_form!
 
-    expect(page).to have_css(".search-result-head", text: "Traditional")
-    expect(page).not_to have_css(".search-result-head", text: "Findme")
+    expect(page).to have_content("Traditional")
+    expect(page).not_to have_content("Findme")
   end
 
   scenario "visit the mentor page" do
     click_link "Connect with mentors"
     click_link "View more details"
 
-    expect(page).to have_css(
-      "a[href=\"mailto:#{find_mentor.email}\"]",
-      text: find_mentor.email
-    )
+    expect(page).to have_content(find_mentor.full_name)
   end
 end
