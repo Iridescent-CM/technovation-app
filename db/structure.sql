@@ -672,7 +672,6 @@ ALTER SEQUENCE public.community_connection_availability_slots_id_seq OWNED BY pu
 CREATE TABLE public.community_connections (
     id bigint NOT NULL,
     topic_sharing_response text,
-    chapter_ambassador_profile_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     ambassador_type character varying,
@@ -3876,13 +3875,6 @@ CREATE INDEX index_community_connections_on_ambassador ON public.community_conne
 
 
 --
--- Name: index_community_connections_on_chapter_ambassador_profile_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_community_connections_on_chapter_ambassador_profile_id ON public.community_connections USING btree (chapter_ambassador_profile_id);
-
-
---
 -- Name: index_consent_waivers_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4535,14 +4527,6 @@ ALTER TABLE ONLY public.consent_waivers
 
 
 --
--- Name: community_connections fk_rails_714931f495; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.community_connections
-    ADD CONSTRAINT fk_rails_714931f495 FOREIGN KEY (chapter_ambassador_profile_id) REFERENCES public.chapter_ambassador_profiles(id);
-
-
---
 -- Name: team_submission_gadget_types fk_rails_7528bbfcc1; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5162,6 +5146,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250729170321'),
 ('20250729170744'),
 ('20250730184414'),
-('20250805025429');
+('20250805025429'),
+('20250806213828');
 
 
