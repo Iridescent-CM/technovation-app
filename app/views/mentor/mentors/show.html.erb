@@ -1,18 +1,7 @@
-<%= render 'profiles/privileged_show',
-  title: t("views.mentor.mentors.show.title"),
-  account: @mentor.account %>
-
-<div class="grid grid--justify-space-around">
-  <div class="grid__col-sm-8 panel">
-    <h3 class="reset">
-      <%= t("views.mentor.mentors.show.teams",
-            name: @mentor.first_name) %>
-    </h3>
-
-    <ul class="reset team-list">
-      <%= render partial: 'mentor/mentors/team_preview',
-        collection: @mentor.teams.current,
-        locals: { profile: @mentor } %>
-    </ul>
-  </div>
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-1/2">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Viewing Mentor Profile" } do %>
+    <%= render "profiles/rebrand/public_show",
+      title: @mentor.first_name,
+      account: @mentor %>
+  <% end %>
 </div>
