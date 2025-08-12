@@ -27,6 +27,11 @@
       <span>
         - <%= @team_submission.development_platform_other %>
       </span>
+      <p>
+        URL:
+        <%= link_to @team_submission.development_platform_other_url,
+        @team_submission.development_platform_other_url %>
+      </p>
     <% end %>
   </p>
 

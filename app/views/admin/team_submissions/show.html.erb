@@ -195,6 +195,12 @@
                 Project URL: <%= link_to nil, @team_submission.thunkable_project_url, :target => "_blank" %>
               </li>
             </ul>
+          <% elsif @team_submission.other_devlopment_platform? %>
+            <ul>
+              <li class="overflow-wrap--break-word">
+                URL: <%= link_to nil, @team_submission.development_platform_other_url, :target => "_blank" %>
+              </li>
+            </ul>
           <% end %>
         <% else %>
           blank

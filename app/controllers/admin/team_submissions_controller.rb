@@ -109,6 +109,7 @@ module Admin
         :contest_rank,
         :business_plan_cache,
         :development_platform_other,
+        :development_platform_other_url,
         :source_code_cache,
         :thunkable_project_url,
         :scratch_project_url,
