@@ -82,8 +82,8 @@ class TeamSubmission < ActiveRecord::Base
       Rails.logger.warn("Published submission id=#{id} is missing required fields.")
     end
 
-    if developed_on?("Thunkable") || developed_on?("Scratch")
-      columns[:source_code_external_url] = copy_possible_thunkable_or_scratch_url
+    if development_platform_requires_project_url?
+      columns[:source_code_external_url] = development_platform_project_url
     end
 
     columns[:percent_complete] = calculate_percent_complete
@@ -627,6 +627,22 @@ class TeamSubmission < ActiveRecord::Base
       "#{development_platform} - #{development_platform_other}"
     else
       development_platform
+    end
+  end
+
+  def development_platform_requires_project_url?
+    developed_on?("Thunkable") ||
+      developed_on?("Scratch") ||
+      developed_on?("Code.org App Lab")
+  end
+
+  def development_platform_project_url
+    if developed_on?("Thunkable")
+      thunkable_project_url
+    elsif developed_on?("Scratch")
+      scratch_project_url
+    elsif developed_on?("Code.org App Lab")
+      code_org_app_lab_project_url
     end
   end
 
