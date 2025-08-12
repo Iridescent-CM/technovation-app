@@ -25,6 +25,9 @@
       <%= render "team_submissions/pieces/source_code_pieces/scratch",
         submission: @team_submission,
         source_code_uploader: @source_code_uploader %>
+    <% elsif @team_submission.developed_on?("Code.org App Lab") %>
+      <%= render "team_submissions/pieces/source_code_pieces/code_org_app_lab",
+        submission: @team_submission %>
     <% end %>
 
     <p class="py-2">

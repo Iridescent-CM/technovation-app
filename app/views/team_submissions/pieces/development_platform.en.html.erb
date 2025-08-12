@@ -34,7 +34,8 @@
             "App Inventor": "#app_inventor_fields",
             "Thunkable": "#thunkable_fields",
             "Other": "#other",
-            "Scratch": "#scratch_fields"
+            "Scratch": "#scratch_fields",
+            "Code.org App Lab": "#code_org_app_lab_fields",
           },
         },
         id: :team_submission_development_platform %>
@@ -111,6 +112,25 @@
         Enter the Scratch project page URL. To create a project page, click the orange
         "Share" button in your Scratch project. Then when the project page appears,
         click the Copy Link button. This is the URL you will enter here.
+      </p>
+    </div>
+
+    <div id="code_org_app_lab_fields" class="mt-8">
+      <p class="tw-hint">
+        We want to ask you one question about your use of Code.org App Lab.
+      </p>
+
+      <%= f.label :code_org_app_lab_project_url,
+        "What is the URL to your Code.org App Lab project?",
+        for: :team_submission_code_org_app_lab_project_url %>
+
+      <%= f.text_field :code_org_app_lab_project_url,
+        id: :team_submission_code_org_app_lab_project_url %>
+
+      <p class="tw-hint">
+        Enter the Code.org App Lab project page URL. To create a project page, click the
+        "Share" button in your Code.org App Lab project. Then click the "Copy Link to project" button.
+        This is the URL you will enter here.
       </p>
     </div>
 
