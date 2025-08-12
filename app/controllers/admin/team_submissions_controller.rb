@@ -112,6 +112,7 @@ module Admin
         :source_code_cache,
         :thunkable_project_url,
         :scratch_project_url,
+        :code_org_app_lab_project_url,
         screenshots_attributes: [:id, :_destroy]
       )
     end
