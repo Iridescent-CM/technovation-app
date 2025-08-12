@@ -70,6 +70,26 @@ RSpec.describe TeamSubmission do
     expect(submission.scratch_project_url).to eq("https://scratch.mit.edu/projects/12345")
   end
 
+  it "validates the code.org app lab URL" do
+    submission = FactoryBot.create(:submission, :complete)
+
+    submission.code_org_app_lab_project_url = "https://google.com"
+    expect(submission).not_to be_valid
+
+    submission.code_org_app_lab_project_url = "https://studio.code.org"
+    expect(submission).not_to be_valid
+
+    submission.code_org_app_lab_project_url = "https://studio.code.org/something"
+    expect(submission).not_to be_valid
+
+    submission.code_org_app_lab_project_url = "https://studio.code.org/not-projects/something"
+    expect(submission).not_to be_valid
+
+    submission.code_org_app_lab_project_url = "https://studio.code.org/projects/applab/12345"
+    expect(submission).to be_valid
+    expect(submission.code_org_app_lab_project_url).to eq("https://studio.code.org/projects/applab/12345")
+  end
+
   context "callbacks" do
     let(:submission) { FactoryBot.create(:submission) }
 
@@ -150,7 +170,8 @@ RSpec.describe TeamSubmission do
         "App Inventor" => 0,
         "Thunkable" => 6,
         "Other" => 5,
-        "Scratch" => 8
+        "Scratch" => 8,
+        "Code.org App Lab" => 9
       })
     end
   end
@@ -178,7 +199,8 @@ RSpec.describe TeamSubmission do
         "PhoneGap/Apache Cordova" => 4,
         "Other" => 5,
         "Thunkable Classic" => 7,
-        "Scratch" => 8
+        "Scratch" => 8,
+        "Code.org App Lab" => 9
       })
     end
   end
@@ -189,7 +211,8 @@ RSpec.describe TeamSubmission do
         "App Inventor",
         "Thunkable",
         "Other",
-        "Scratch"
+        "Scratch",
+        "Code.org App Lab"
       ])
     end
   end
@@ -209,6 +232,9 @@ RSpec.describe TeamSubmission do
 
       submission.development_platform = "Scratch"
       expect(submission.developed_on?("Scratch")).to be true
+
+      submission.development_platform = "Code.org App Lab"
+      expect(submission.developed_on?("Code.org App Lab")).to be true
     end
   end
 
@@ -400,6 +426,23 @@ RSpec.describe TeamSubmission do
     end
   end
 
+  describe "#code_org_app_lab_fields_complete?" do
+    it "returns true when all code.org app lab fields are complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Code.org App Lab"
+      submission.code_org_app_lab_project_url = "https://studio.code.org/projects/applab/12345"
+      expect(submission.code_org_app_lab_fields_complete?).to be true
+    end
+
+    it "returns false when code.org app lab project url is missing" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Code.org App Lab"
+      expect(submission.code_org_app_lab_fields_complete?).to be false
+    end
+  end
+
   describe "#other_fields_complete?" do
     it "returns true when all thunkable fields are complete" do
       submission = FactoryBot.create(:submission)
@@ -450,6 +493,28 @@ RSpec.describe TeamSubmission do
       submission.source_code_external_url = nil
 
       expect(submission.scratch_source_code_fields_complete?).to be false
+    end
+  end
+
+  describe "#code_org_app_lab_source_code_fields_complete?" do
+    it "returns true when code.org app lab project url is complete and all source code external fields are complete" do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Code.org App Lab"
+      submission.code_org_app_lab_project_url = "https://studio.code.org/projects/applab/12345"
+      submission.source_code_external_url = "https://studio.code.org/projects/applab/12345"
+
+      expect(submission.code_org_app_lab_source_code_fields_complete?).to be true
+    end
+
+    it "returns false when code.org app lab project url is complete and all source code external fields are incomplete " do
+      submission = FactoryBot.create(:submission)
+
+      submission.development_platform = "Code.org App Lab"
+      submission.code_org_app_lab_project_url = "https://studio.code.org/projects/applab/12345"
+      submission.source_code_external_url = nil
+
+      expect(submission.code_org_app_lab_source_code_fields_complete?).to be false
     end
   end
 

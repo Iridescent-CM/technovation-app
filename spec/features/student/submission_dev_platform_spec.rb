@@ -80,4 +80,25 @@ RSpec.feature "Students edit submission development platform" do
       expect(page).to have_link "https://scratch.mit.edu/projects/12345"
     end
   end
+
+  scenario "Choose Code.org App Lab" do
+    select "Code.org App Lab",
+      from: "Which coding language did your team use?"
+
+    click_button "Save"
+
+    expect(page).to have_css(
+      ".field_with_errors #team_submission_code_org_app_lab_project_url"
+    )
+
+    fill_in "What is the URL to your Code.org App Lab project?",
+      with: "https://studio.code.org/projects/applab/12345"
+
+    click_button "Save"
+
+    within(".development_platform.complete") do
+      expect(page).to have_content "Code.org App Lab"
+      expect(page).to have_link "https://studio.code.org/projects/applab/12345"
+    end
+  end
 end
