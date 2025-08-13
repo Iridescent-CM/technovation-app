@@ -1,0 +1,12 @@
+<%= form_with model: submission,
+  url: send("#{current_scope}_team_submission_url", submission),
+  local: true do |f| %>
+  <p>
+    <%= f.label :code_org_app_lab_project_url %>
+    <%= f.text_field :code_org_app_lab_project_url %>
+  </p>
+
+  <div class="flex flex-row justify-end">
+    <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-4" %>
+  </div>
+<% end %>

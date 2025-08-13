@@ -30,17 +30,15 @@
     <% end %>
   </p>
 
-  <% if @team_submission.developed_on?("Thunkable") %>
+  <% if @team_submission.development_platform_requires_project_url? %>
     <p>
-      Project url:
-      <%= link_to @team_submission.thunkable_project_url,
-      @team_submission.thunkable_project_url %>
-    </p>
-  <% elsif @team_submission.developed_on?("Scratch") && @team_submission.scratch_project_url.present? %>
-    <p>
-      Project url:
-      <%= link_to @team_submission.scratch_project_url,
-      @team_submission.scratch_project_url %>
+      <% if @team_submission.development_platform_project_url.present? %>
+        Project url:
+        <%= link_to @team_submission.development_platform_project_url,
+                    @team_submission.development_platform_project_url %>
+      <% else %>
+        You have not added your project url
+      <% end %>
     </p>
   <% elsif @team_submission.developed_on?("App Inventor") %>
     <p class="mt-4">
@@ -71,18 +69,15 @@
   attribute: :source_code_url,
   cta_when_empty: "Upload your technical work",
   cta_when_filled: "Change your upload" do %>
-  <% if @team_submission.developed_on?("Thunkable") %>
+  <% if @team_submission.development_platform_requires_project_url? %>
     <p>
-      Project url:
-      <%= link_to @team_submission.thunkable_project_url,
-        @team_submission.thunkable_project_url %>
-    </p>
-  <% elsif @team_submission.developed_on?("Scratch") &&
-    @team_submission.scratch_project_url.present?%>
-    <p>
-      Project url:
-      <%= link_to @team_submission.scratch_project_url,
-                  @team_submission.scratch_project_url %>
+      <% if @team_submission.development_platform_project_url.present? %>
+        Project url:
+        <%= link_to @team_submission.development_platform_project_url,
+          @team_submission.development_platform_project_url %>
+      <% else %>
+        You have not added your project url
+      <% end %>
     </p>
   <% else %>
     <p>

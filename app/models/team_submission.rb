@@ -19,7 +19,8 @@ class TeamSubmission < ActiveRecord::Base
     "App Inventor" => 0,
     "Thunkable" => 6,
     "Other" => 5,
-    "Scratch" => 8
+    "Scratch" => 8,
+    "Code.org App Lab" => 9
   }
 
   INACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
@@ -54,6 +55,7 @@ class TeamSubmission < ActiveRecord::Base
   before_validation :reset_development_platform_fields_for_thunkable
   before_validation :reset_development_platform_fields_for_other_platforms
   before_validation :reset_development_platform_fields_for_scratch
+  before_validation :reset_development_platform_fields_for_code_org_app_lab
 
   before_validation -> {
     return if thunkable_project_url.blank?
@@ -80,8 +82,8 @@ class TeamSubmission < ActiveRecord::Base
       Rails.logger.warn("Published submission id=#{id} is missing required fields.")
     end
 
-    if developed_on?("Thunkable") || developed_on?("Scratch")
-      columns[:source_code_external_url] = copy_possible_thunkable_or_scratch_url
+    if development_platform_requires_project_url?
+      columns[:source_code_external_url] = development_platform_project_url
     end
 
     columns[:percent_complete] = calculate_percent_complete
@@ -257,6 +259,10 @@ class TeamSubmission < ActiveRecord::Base
     presence: true,
     if: ->(s) { s.development_platform == "Thunkable" }
 
+  validates :code_org_app_lab_project_url,
+    presence: true,
+    if: ->(s) { s.development_platform == "Code.org App Lab" }
+
   validates :app_inventor_app_name,
     absence: {
       message: "Cannot add an App Inventor app name when Thunkable selected as the development platform."
@@ -273,6 +279,8 @@ class TeamSubmission < ActiveRecord::Base
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
 
   validates :scratch_project_url, scratch_share_url: true, allow_blank: true
+
+  validates :code_org_app_lab_project_url, code_org_app_lab_share_url: true, allow_blank: true
 
   validates :ai_description, presence: true, max_word_count: true,
     if: ->(team_submission) { team_submission.ai? }
@@ -622,6 +630,22 @@ class TeamSubmission < ActiveRecord::Base
     end
   end
 
+  def development_platform_requires_project_url?
+    developed_on?("Thunkable") ||
+      developed_on?("Scratch") ||
+      developed_on?("Code.org App Lab")
+  end
+
+  def development_platform_project_url
+    if developed_on?("Thunkable")
+      thunkable_project_url
+    elsif developed_on?("Scratch")
+      scratch_project_url
+    elsif developed_on?("Code.org App Lab")
+      code_org_app_lab_project_url
+    end
+  end
+
   def self.development_platform_options(team_submission)
     ACTIVE_DEVELOPMENT_PLATFORMS_ENUM.keys
       .reject { |platform| platform == "Scratch" && !team_submission.beginner_division? }
@@ -638,6 +662,10 @@ class TeamSubmission < ActiveRecord::Base
 
   def scratch?
     send(:Scratch?)
+  end
+
+  def code_org_app_lab?
+    send("Code.org App Lab?")
   end
 
   def app_inventor_fields_complete?
@@ -658,6 +686,12 @@ class TeamSubmission < ActiveRecord::Base
         scratch_project_url.present? && errors.attribute_names.exclude?(:scratch_project_url))
   end
 
+  def code_org_app_lab_fields_complete?
+    developed_on?("Code.org App Lab") &&
+      code_org_app_lab_project_url.present? &&
+      errors.attribute_names.exclude?(:code_org_app_lab_project_url)
+  end
+
   def other_fields_complete?
     developed_on?("Other")
   end
@@ -670,6 +704,11 @@ class TeamSubmission < ActiveRecord::Base
   def scratch_source_code_fields_complete?
     scratch_fields_complete? &&
       (source_code_external_url_fields_complete? || source_code.present?)
+  end
+
+  def code_org_app_lab_source_code_fields_complete?
+    code_org_app_lab_fields_complete? &&
+      source_code_external_url_fields_complete?
   end
 
   def source_code_external_url_fields_complete?
@@ -748,14 +787,6 @@ class TeamSubmission < ActiveRecord::Base
     app_name_changed? || team.name_changed? || super
   end
 
-  def copy_possible_thunkable_or_scratch_url
-    if developed_on?("Thunkable")
-      thunkable_project_url
-    elsif developed_on?("Scratch")
-      scratch_project_url
-    end
-  end
-
   def video_link_for(video_type)
     case video_type
     when "demo_video_link", "demo", :demo
@@ -779,6 +810,7 @@ class TeamSubmission < ActiveRecord::Base
       self.thunkable_account_email = nil
       self.thunkable_project_url = nil
       self.scratch_project_url = nil
+      self.code_org_app_lab_project_url = nil
     end
   end
 
@@ -788,6 +820,7 @@ class TeamSubmission < ActiveRecord::Base
       self.development_platform_other = nil
       self.scratch_project_url = nil
       self.app_inventor_app_name = nil
+      self.code_org_app_lab_project_url = nil
     end
   end
 
@@ -796,6 +829,7 @@ class TeamSubmission < ActiveRecord::Base
       self.thunkable_project_url = nil
       self.app_inventor_app_name = nil
       self.scratch_project_url = nil
+      self.code_org_app_lab_project_url = nil
     end
   end
 
@@ -804,6 +838,16 @@ class TeamSubmission < ActiveRecord::Base
       self.thunkable_project_url = nil
       self.app_inventor_app_name = nil
       self.development_platform_other = nil
+      self.code_org_app_lab_project_url = nil
+    end
+  end
+
+  def reset_development_platform_fields_for_code_org_app_lab
+    if development_platform == "Code.org App Lab"
+      self.thunkable_project_url = nil
+      self.app_inventor_app_name = nil
+      self.development_platform_other = nil
+      self.scratch_project_url = nil
     end
   end
 

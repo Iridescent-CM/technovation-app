@@ -45,12 +45,14 @@ module StudentHelper
       if submission.app_inventor_fields_complete? ||
           submission.thunkable_fields_complete? ||
           submission.scratch_fields_complete? ||
+          submission.code_org_app_lab_fields_complete? ||
           submission.other_fields_complete?
         :complete
       end
     when :source_code, :source_code_url
       if submission.thunkable_source_code_fields_complete? ||
           submission.scratch_source_code_fields_complete? ||
+          submission.code_org_app_lab_source_code_fields_complete? ||
           submission.source_code_url_complete?
         :complete
       end
@@ -82,6 +84,8 @@ module StudentHelper
       submission.thunkable_project_url
     elsif submission.developed_on?("Scratch")
       submission.source_code.present? ? submission.source_code_url : submission.scratch_project_url
+    elsif submission.developed_on?("Code.org App Lab")
+      submission.code_org_app_lab_project_url
     elsif submission.developed_on?("Other") || submission.developed_on?("App Inventor")
       submission.source_code_url
     end
