@@ -2442,6 +2442,7 @@ CREATE TABLE public.team_submissions (
     ai_usage boolean,
     ethics_description character varying,
     code_org_app_lab_project_url character varying
+    development_platform_other_url character varying
 );
 
 
@@ -5150,6 +5151,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250805025429'),
 ('20250806213828'),
 ('20250807161706'),
-('20250812160844');
+('20250812160844'),
+('20250812190630');
 
 

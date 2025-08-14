@@ -61,6 +61,7 @@ class TeamSubmission < ActiveRecord::Base
     return if thunkable_project_url.blank?
 
     self.thunkable_project_url = standardize_url(thunkable_project_url)
+    self.development_platform_other_url = standardize_url(development_platform_other_url)
     self.demo_video_link = standardize_url(demo_video_link)
     self.pitch_video_link = standardize_url(pitch_video_link)
   }
@@ -666,6 +667,10 @@ class TeamSubmission < ActiveRecord::Base
 
   def code_org_app_lab?
     send("Code.org App Lab?")
+  end
+
+  def other_devlopment_platform?
+    send(:Other?)
   end
 
   def app_inventor_fields_complete?

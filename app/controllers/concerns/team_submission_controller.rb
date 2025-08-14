@@ -244,6 +244,7 @@ module TeamSubmissionController
         :demo_video_link,
         :pitch_video_link,
         :development_platform_other,
+        :development_platform_other_url,
         :development_platform,
         :ai_usage,
         :app_inventor_app_name,
