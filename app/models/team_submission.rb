@@ -734,6 +734,16 @@ class TeamSubmission < ActiveRecord::Base
       errors.attribute_names.exclude?(:source_code_external_url)
   end
 
+  def learning_journey_complete?
+    if junior_division? || senior_division?
+      learning_journey.present? &&
+        information_legitimacy_description.present? &&
+        bibliography_url.present?
+    else
+      learning_journey.present?
+    end
+  end
+
   def additional_questions?
     seasons.last >= 2021
   end
