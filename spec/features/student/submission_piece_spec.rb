@@ -71,6 +71,41 @@ RSpec.feature "Students edit submission pieces" do
     end
   end
 
+  scenario "Upload a .pdf bibliography" do
+    click_link "Ideation"
+
+    within(".learning_journey.incomplete") do
+      click_link "Add your learning journey"
+    end
+
+    fill_in "team_submission_learning_journey", with: "Learning journey description"
+    fill_in "team_submission_information_legitimacy_description", with: "Another description"
+
+    attach_file(
+      "Upload your bibliography",
+      Rails.root + "spec/support/fixtures/bibliography.pdf"
+    )
+
+    click_button "Save"
+
+    within(".learning_journey.complete") do
+      expect(page).not_to have_link("Add your learning journey")
+
+      expect(page).to have_link(
+        "bibliography.pdf",
+        href: submission.reload.bibliography_url
+      )
+
+      expect(page).to have_link(
+        "Update your learning journey",
+        href: edit_student_team_submission_path(
+          submission,
+          piece: :learning_journey,
+        )
+      )
+    end
+  end
+
   scenario "Set the ethics description" do
     click_link "Ideation"
 

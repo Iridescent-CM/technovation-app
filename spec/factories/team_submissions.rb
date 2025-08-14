@@ -105,6 +105,7 @@ FactoryBot.define do
       after(:create) do |team_submission|
         team_submission.update_column(:source_code, "source_code.zip")
         team_submission.update_column(:business_plan, "business_plan.pdf")
+        team_submission.update_column(:bibliography, "bibliography.pdf")
         team_submission.update_column(:pitch_presentation, "slides.pdf")
         team_submission.screenshots.create!
         team_submission.screenshots.create!
@@ -123,6 +124,7 @@ FactoryBot.define do
       after(:create) do |team_submission|
         team_submission.update_column(:source_code, "source_code.zip")
         team_submission.update_column(:business_plan, "business_plan.pdf")
+        team_submission.update_column(:bibliography, "bibliography.pdf")
         team_submission.update_column(:pitch_presentation, "slides.pdf")
         team_submission.screenshots.create!
         team_submission.screenshots.create!
