@@ -22,6 +22,7 @@ class RequiredFields
 
     if submission.junior_division? || submission.senior_division?
       @fields << RequiredField.new(submission, :business_plan)
+      @fields << RequiredField.new(submission, :bibliography)
     end
 
     freeze
