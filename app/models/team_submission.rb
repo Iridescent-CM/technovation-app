@@ -304,6 +304,15 @@ class TeamSubmission < ActiveRecord::Base
   validates :gadget_type_ids, presence: {message: "At least one gadget type must be selected"},
     if: ->(team_submission) { team_submission.uses_gadgets? }
 
+  validates :learning_journey, presence: true,
+    max_word_count: ->(team_submission) {team_submission.learning_journey_max_word_count},
+    if: ->(team_submission) {team_submission.learning_journey.present?}
+
+  validates :information_legitimacy_description, presence: true, max_word_count: true,
+    if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
+      (team_submission.junior_division? || team_submission.senior_division?)}
+
+
   validates :pitch_video_link,
     format: {
       with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/
@@ -327,6 +336,10 @@ class TeamSubmission < ActiveRecord::Base
           and pitch videos are the same link. Please update one of the links."
       )
     end
+  end
+
+  def learning_journey_max_word_count
+    beginner_division? ? 200 : 100
   end
 
   delegate :name,
