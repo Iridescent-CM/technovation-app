@@ -117,7 +117,8 @@ class TeamSubmission < ActiveRecord::Base
   mount_uploader :source_code, FileProcessor
   mount_uploader :business_plan, FileProcessor
   mount_uploader :pitch_presentation, FileProcessor
-
+  mount_uploader :bibliography, BibliographyUploader
+  
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(team: :division)
@@ -366,6 +367,7 @@ class TeamSubmission < ActiveRecord::Base
     development_platform
     source_code_url
     business_plan_url
+    bibliography_url
     pitch_presentation_url
     ethics_description
   ].each do |piece|
@@ -752,6 +754,7 @@ class TeamSubmission < ActiveRecord::Base
     source_code
     business_plan
     pitch_presentation
+    bibliography
   ].each do |piece|
     define_method(:"#{piece}_filename") do
       url = send(:"#{piece}_url")
