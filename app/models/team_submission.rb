@@ -278,10 +278,9 @@ class TeamSubmission < ActiveRecord::Base
     allow_blank: true
 
   validates :thunkable_project_url, thunkable_share_url: true, allow_blank: true
-
   validates :scratch_project_url, scratch_share_url: true, allow_blank: true
-
   validates :code_org_app_lab_project_url, code_org_app_lab_share_url: true, allow_blank: true
+  validates :development_platform_other_url, url: true, allow_blank: true
 
   validates :ai_description, presence: true, max_word_count: true,
     if: ->(team_submission) { team_submission.ai? }
