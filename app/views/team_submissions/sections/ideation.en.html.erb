@@ -45,7 +45,8 @@
   cta_when_empty: "Add your learning journey",
   cta_when_filled: "Update your learning journey" do %>
 
-  <%= simple_format(@team_submission.learning_journey) %>
+  <%= render "team_submissions/learning_journey",
+    team_submission: @team_submission %>
 <% end %>
 
 <%= render 'application/templates/tw_thick_rule'%>

@@ -63,6 +63,14 @@ RSpec.feature "Student team submissions" do
     )
 
     expect(page).to have_link(
+      "Add your learning journey",
+      href: edit_student_team_submission_path(
+        submission,
+        piece: :learning_journey
+      )
+    )
+
+    expect(page).to have_link(
       "Upload images of your project",
       href: edit_student_team_submission_path(
         submission,

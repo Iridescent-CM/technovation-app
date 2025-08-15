@@ -1,0 +1,23 @@
+<dl>
+  <dt>Learning Journey</dt>
+  <dd>
+    <%= simple_format(@team_submission.learning_journey).presence || "-" %>
+  </dd>
+
+  <% if !@team_submission.beginner_division? %>
+    <dt>Explain how your team decided what information you gathered for your project was legitimate</dt>
+    <dd>
+      <%= simple_format(@team_submission.information_legitimacy_description.presence || "-") %>
+    </dd>
+
+    <dt>Bibliography</dt>
+    <dd>
+      <% if @team_submission.bibliography_url_complete? %>
+        <%= link_to @team_submission.bibliography_filename,
+          @team_submission.bibliography_url %>
+      <% else %>
+        -
+      <% end %>
+    </dd>
+  <% end %>
+</dl>

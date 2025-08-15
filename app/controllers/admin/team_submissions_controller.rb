@@ -98,6 +98,7 @@ module Admin
         :development_platform,
         :app_inventor_app_name,
         :learning_journey,
+        :information_legitimacy_description,
         :submission_type,
         :ai,
         :ai_description,

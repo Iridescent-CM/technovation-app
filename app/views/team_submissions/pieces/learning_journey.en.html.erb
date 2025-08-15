@@ -3,38 +3,113 @@
 <%= form_with(
     model: @team_submission,
     url: send("#{current_scope}_team_submission_path"),
+    html: { multipart: true },
     local: true
   ) do |f| %>
-    <%= hidden_field_tag :piece, piece_name %>
+	<%= hidden_field_tag :piece, piece_name %>
 
-  <div class="field">
-    <%= f.label :app_description,
-      "Describe your learning journey in a few sentences (200 words or less)",
-      for: :team_submission_learning_journey %>
+  <% if @team.division.beginner? %>
+    <div class="field">
+      <%= f.label :learning_journey,
+        "Describe your learning journey in a few sentences (200 words or less)",
+        for: :team_submission_learning_journey %>
 
-    <p class="tw-hint-strong italic text-base my-4">
-      What did your team learn (technically or otherwise)?
-      How did you overcome challenges? What resources did you use to build on (examples, tutorials, open source code)?
-    </p>
+      <p class="tw-hint-strong italic text-base my-4">
+        What did your team learn (technically or otherwise)?
+        How did you overcome challenges? What resources did you use to build on (examples, tutorials, open source code)?
+      </p>
 
-    <%= f.text_area :learning_journey,
-      id: :team_submission_learning_journey,
-      data: {
-        word_count: true,
-        word_count_limit: 200,
-      },
-      rows: 6 %>
+      <%= f.text_area :learning_journey,
+        id: :team_submission_learning_journey,
+        data: {
+          word_count: true,
+          word_count_limit: 200
+        },
+        rows: 6 %>
 
-    <p class="tw-hint word-counter">
-      Number of words typed:
-      <br />
-      <span class="word-count__total word-count--plenty-remaining">
+      <p class="tw-hint word-counter">
+        Number of words typed:
+        <br />
+        <span class="word-count__total word-count--plenty-remaining">
         0
-      </span>
-      /
-      <span class="word-count__limit"></span>
+      	</span>
+        /
+        <span class="word-count__limit"></span>
+      </p>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.label :learning_journey,
+        "Share what your team learned including how you overcame technical or non-technical challenges (max 100 words)",
+        for: :team_submission_learning_journey %>
+
+      <p class="tw-hint-strong italic text-base my-4">
+        Note: You will also include 2-6 images separately to help tell this story.
+      </p>
+
+      <%= f.text_area :learning_journey,
+        id: :team_submission_learning_journey,
+        data: {
+          word_count: true,
+          word_count_limit: 100,
+          word_count_details_container: "learning-journey-word-count"
+        },
+        rows: 6 %>
+
+      <p id="learning-journey-word-count" class="tw-hint word-counter">
+        Number of words typed:
+        <br />
+        <span class="word-count__total word-count--plenty-remaining">
+        0
+      	</span>
+        	/
+				<span class="word-count__limit"></span>
+      </p>
+    </div>
+
+    <div class="field">
+      <%= f.label :information_legitimacy_description,
+        "Explain how your team decided what information you gathered for your project was legitimate. (max 100 words)",
+        for: :team_submission_information_legitimacy_description %>
+
+      <%= f.text_area :information_legitimacy_description,
+        id: :team_submission_information_legitimacy_description,
+        data: {
+          word_count: true,
+          word_count_limit: 100,
+          word_count_details_container: "information-legitimacy-word-count"
+        },
+        rows: 6 %>
+
+      <p id="information-legitimacy-word-count" class="tw-hint word-counter">
+        Number of words typed:
+        <br />
+        <span class="word-count__total word-count--plenty-remaining">
+        	0
+      	</span>
+        /
+        <span class="word-count__limit"></span>
+      </p>
+    </div>
+
+    <p class="hint">
+      Submit your bibliography as a <span class="font-medium">PDF file</span>.
     </p>
-  </div>
+
+    <div class="field">
+      <%= f.label :bibliography, "Upload your bibliography", for: :team_submission_bibliography %>
+      <%= f.file_field :bibliography, id: "team_submission_bibliography", accept: ".pdf" %>
+      <%= f.hidden_field :bibliography_cache %>
+    </div>
+
+    <% if @team_submission.bibliography_url_complete? %>
+      <div class="field-existing-value">
+        Your team has previously uploaded
+        <%= link_to @team_submission.bibliography_filename,
+          @team_submission.bibliography_url %>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="submission-actions">
     <p class="btn-wrapper">
@@ -49,4 +124,3 @@
     </p>
   </div>
 <% end %>
-

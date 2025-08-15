@@ -32,7 +32,7 @@ module StudentHelper
     when :app_details
       :complete if submission.app_details.present?
     when :learning_journey
-      :complete if submission.learning_journey.present?
+      :complete if submission.learning_journey_complete?
     when :ethics_description
       :complete if submission.ethics_description.present?
     when :pitch_video

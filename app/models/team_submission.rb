@@ -117,7 +117,8 @@ class TeamSubmission < ActiveRecord::Base
   mount_uploader :source_code, FileProcessor
   mount_uploader :business_plan, FileProcessor
   mount_uploader :pitch_presentation, FileProcessor
-
+  mount_uploader :bibliography, BibliographyUploader
+  
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(team: :division)
@@ -304,6 +305,15 @@ class TeamSubmission < ActiveRecord::Base
   validates :gadget_type_ids, presence: {message: "At least one gadget type must be selected"},
     if: ->(team_submission) { team_submission.uses_gadgets? }
 
+  validates :learning_journey, presence: true,
+    max_word_count: ->(team_submission) {team_submission.learning_journey_max_word_count},
+    if: ->(team_submission) {team_submission.learning_journey.present?}
+
+  validates :information_legitimacy_description, presence: true, max_word_count: true,
+    if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
+      (team_submission.junior_division? || team_submission.senior_division?)}
+
+
   validates :pitch_video_link,
     format: {
       with: /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(.[a-zA-Z]{2,63})?/
@@ -327,6 +337,10 @@ class TeamSubmission < ActiveRecord::Base
           and pitch videos are the same link. Please update one of the links."
       )
     end
+  end
+
+  def learning_journey_max_word_count
+    beginner_division? ? 200 : 100
   end
 
   delegate :name,
@@ -353,6 +367,7 @@ class TeamSubmission < ActiveRecord::Base
     development_platform
     source_code_url
     business_plan_url
+    bibliography_url
     pitch_presentation_url
     ethics_description
   ].each do |piece|
@@ -721,6 +736,16 @@ class TeamSubmission < ActiveRecord::Base
       errors.attribute_names.exclude?(:source_code_external_url)
   end
 
+  def learning_journey_complete?
+    if junior_division? || senior_division?
+      learning_journey.present? &&
+        information_legitimacy_description.present? &&
+        bibliography_url.present?
+    else
+      learning_journey.present?
+    end
+  end
+
   def additional_questions?
     seasons.last >= 2021
   end
@@ -729,6 +754,7 @@ class TeamSubmission < ActiveRecord::Base
     source_code
     business_plan
     pitch_presentation
+    bibliography
   ].each do |piece|
     define_method(:"#{piece}_filename") do
       url = send(:"#{piece}_url")

@@ -2441,8 +2441,10 @@ CREATE TABLE public.team_submissions (
     returned_to_judging_pool_by_account_id integer,
     ai_usage boolean,
     ethics_description character varying,
-    code_org_app_lab_project_url character varying
-    development_platform_other_url character varying
+    code_org_app_lab_project_url character varying,
+    development_platform_other_url character varying,
+    information_legitimacy_description text,
+    bibliography character varying
 );
 
 
@@ -5152,6 +5154,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250806213828'),
 ('20250807161706'),
 ('20250812160844'),
-('20250812190630');
+('20250812190630'),
+('20250813172127'),
+('20250813211619');
 
 

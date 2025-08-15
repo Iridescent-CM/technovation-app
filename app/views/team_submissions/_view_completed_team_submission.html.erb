@@ -183,9 +183,23 @@
 <div class="mt-6">
   <%= render "application/templates/content_well" do %>
     <h3 class="mb-2">Learning Journey</h3>
-    <%= simple_format submission.learning_journey, class: "mb-3 space-y-6 text-base text-gray-600" %>
+    <div class="ml-4">
+      <p class="text-base font-medium">Learning Journey</p>
+      <%= simple_format submission.learning_journey, class: "mb-3 space-y-6 text-base text-gray-600" %>
 
-    <h3 class="mb-2">Ethics</h3>
+      <% if submission.team.division.name != "beginner" %>
+        <p class="text-base font-medium">Information Legitimacy Description</p>
+        <%= simple_format submission.information_legitimacy_description, class: "mb-3 space-y-6 text-base text-gray-600" %>
+
+        <p class="text-base font-medium">Bibliography</p>
+        <%= link_to "View your bibliography",
+          submission.bibliography_url,
+          class: "text-energetic-blue hover:text-energetic-blue text-base",
+          target: "_blank" %>
+      <% end %>
+    </div>
+
+    <h3 class="mb-2 mt-8">Ethics</h3>
     <%= simple_format submission.ethics_description, class: "mb-3 space-y-6 text-base text-gray-600" %>
 
     <div class="mt-8 flex flex-wrap gap-8">

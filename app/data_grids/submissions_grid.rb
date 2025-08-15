@@ -31,6 +31,7 @@ class SubmissionsGrid
 
   column :demo_video_link, header: "#{I18n.t("submissions.demo_video").upcase_first} link", order: false
   column :learning_journey, order: false
+  column :information_legitimacy_description, order: false
   column :pitch_video_link, order: false
   column :submission_type
   column :thunkable_project_url
