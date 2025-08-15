@@ -6,7 +6,7 @@
     html: { multipart: true },
     local: true
   ) do |f| %>
-    <%= hidden_field_tag :piece, piece_name %>
+	<%= hidden_field_tag :piece, piece_name %>
 
   <% if @team.division.beginner? %>
     <div class="field">
@@ -32,7 +32,7 @@
         <br />
         <span class="word-count__total word-count--plenty-remaining">
         0
-      </span>
+      	</span>
         /
         <span class="word-count__limit"></span>
       </p>
@@ -61,9 +61,9 @@
         <br />
         <span class="word-count__total word-count--plenty-remaining">
         0
-      </span>
-        /
-        <span class="word-count__limit"></span>
+      	</span>
+        	/
+				<span class="word-count__limit"></span>
       </p>
     </div>
 
@@ -85,8 +85,8 @@
         Number of words typed:
         <br />
         <span class="word-count__total word-count--plenty-remaining">
-        0
-      </span>
+        	0
+      	</span>
         /
         <span class="word-count__limit"></span>
       </p>

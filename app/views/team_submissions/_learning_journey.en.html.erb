@@ -1,7 +1,7 @@
 <dl>
   <dt>Learning Journey</dt>
   <dd>
-  <%= simple_format(@team_submission.learning_journey).presence || "-" %>
+    <%= simple_format(@team_submission.learning_journey).presence || "-" %>
   </dd>
 
   <% if !@team_submission.beginner_division? %>

@@ -210,33 +210,21 @@
       <p>
         Learning Journey:
         <br>
-        <% if @team_submission.learning_journey.present? %>
-          <%= @team_submission.learning_journey %>
-        <% else %>
-          blank
-        <% end %>
+        <% @team_submission.learning_journey.presence || "blank" %>
       </p>
 
       <% if !@team_submission.beginner_division? %>
         <p>
           Learning Journey Information Legitimacy:
           <br>
-          <% if @team_submission.information_legitimacy_description.present? %>
-            <%= @team_submission.information_legitimacy_description %>
-          <% else %>
-            blank
-          <% end %>
+          <% @team_submission.information_legitimacy_description.presence || "blank" %>
         </p>
       <% end %>
 
       <p>
         Ethics:
         <br>
-        <% if @team_submission.ethics_description.present? %>
-          <%= @team_submission.ethics_description %>
-        <% else %>
-          blank
-        <% end %>
+        <% @team_submission.ethics_description.presence || "blank" %>
       </p>
 
       <p>
