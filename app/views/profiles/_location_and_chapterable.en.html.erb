@@ -9,29 +9,29 @@
         <div class="mb-8">
           <% if current_account.valid_address? %>
             <p class="font-bold">Your current location</p>
-            <p><%= current_student.address_details %></p>
+            <p><%= current_account.address_details %></p>
           <% else %>
             <p class="font-bold">Your don't have a location set yet</p>
           <% end %>
         </div>
 
         <p>
-          <%= link_to current_account.valid_address? ? "Change your location" : "Set your location",
-            student_location_details_path(
-              return_to: student_profile_path(anchor: '!location')
-            ),
-            class: "tw-green-btn"
-          %>
+        <%= link_to current_account.valid_address? ? "Change your location" : "Set your location",
+          current_account.is_a_student? ?
+            student_location_details_path(return_to: student_profile_path, anchor: "!location") :
+            mentor_location_details_path(return_to: mentor_profile_path, anchor: "!location"),
+          class: "tw-green-btn"
+        %>
         </p>
       </div>
     </div>
 
     <div class="mt-8">
-      <p class="font-bold">
-        Your current <%= current_account.assigned_to_chapter? ? "chapter" : "club" %>
-      </p>
-
       <% if current_account.assigned_to_chapterable? %>
+        <p class="font-bold">
+          Your current <%= current_account.assigned_to_chapter? ? "Chapter" : "Club" %>
+        </p>
+
         <p><%= current_account.current_chapterable_assignment.chapterable.name.presence || "Name not set" %></p>
 
         <div class="mt-8">
@@ -41,7 +41,18 @@
           %>
         </div>
       <% else %>
-        <p>You are not assigned to a Chapter or Club</p>
+        <p class="font-bold">
+          Your current Chapter or Club
+        </p>
+
+        <p>You are not currently assigned to a Chapter or Club</p>
+
+        <div class="mt-8">
+          <%= link_to "Select a chapter or club",
+            new_chapterable_account_assignments_path,
+            class: "tw-green-btn"
+          %>
+        </div>
       <% end %>
     </div>
   </div>
