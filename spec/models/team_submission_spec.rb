@@ -646,6 +646,8 @@ RSpec.describe TeamSubmission do
         sub.update(development_platform: nil)
       elsif field.method_name == :source_code_url
         sub.remove_source_code!
+      elsif field.method_name == :ai_usage
+        sub.update(ai_usage: nil)
       else
         sub.update(field.method_name => nil)
       end

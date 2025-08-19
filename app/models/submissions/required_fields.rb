@@ -23,6 +23,7 @@ class RequiredFields
     if submission.junior_division? || submission.senior_division?
       @fields << RequiredField.new(submission, :business_plan)
       @fields << RequiredField.new(submission, :bibliography)
+      @fields << RequiredField.for(submission, :ai_usage)
     end
 
     freeze
@@ -47,6 +48,8 @@ class RequiredField
       RequiredDevPlatformField.new(submission, method_name)
     elsif method_name.to_sym == :source_code_url
       RequiredSourceCodeField.new(submission, method_name)
+    elsif method_name.to_sym == :ai_usage
+      RequiredAiUsageField.new(submission, method_name)
     else
       RequiredField.new(submission, method_name)
     end
@@ -110,5 +113,15 @@ class RequiredSourceCodeField < RequiredField
     else
       value.blank?
     end
+  end
+end
+
+class RequiredAiUsageField < RequiredField
+  def invalidate!
+    submission.ai_usage = nil
+  end
+
+  def blank?
+    value.nil?
   end
 end
