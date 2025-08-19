@@ -42,13 +42,12 @@ module StudentHelper
     when :screenshots
       :complete if submission.screenshots.many?
     when :development_platform
-      if submission.app_inventor_fields_complete? ||
+      development_platform_complete = submission.app_inventor_fields_complete? ||
           submission.thunkable_fields_complete? ||
           submission.scratch_fields_complete? ||
           submission.code_org_app_lab_fields_complete? ||
           submission.other_fields_complete?
-        :complete
-      end
+      :complete if development_platform_complete && (submission.beginner_division? || !submission.ai_usage.nil?)
     when :source_code, :source_code_url
       if submission.thunkable_source_code_fields_complete? ||
           submission.scratch_source_code_fields_complete? ||

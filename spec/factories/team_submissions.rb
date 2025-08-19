@@ -51,7 +51,8 @@ FactoryBot.define do
           ethics_description: "Filled in by factory!",
           development_platform: "Swift or XCode",
           demo_video_link: "http://example.com/demo",
-          pitch_video_link: "http://example.com/pitch"
+          pitch_video_link: "http://example.com/pitch",
+          ai_usage: true
         )
       end
     end
@@ -101,6 +102,7 @@ FactoryBot.define do
       pitch_video_link { "http://example.com/pitch" }
       demo_video_link { "http://example.com/demo" }
       development_platform { "Swift or XCode" }
+      ai_usage { true }
 
       after(:create) do |team_submission|
         team_submission.update_column(:source_code, "source_code.zip")
@@ -120,6 +122,7 @@ FactoryBot.define do
       pitch_video_link { "http://example.com/pitch" }
       demo_video_link { "http://example.com/demo" }
       development_platform { "Swift or XCode" }
+      ai_usage { true }
 
       after(:create) do |team_submission|
         team_submission.update_column(:source_code, "source_code.zip")

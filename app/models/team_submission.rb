@@ -305,13 +305,16 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(team_submission) { team_submission.uses_gadgets? }
 
   validates :learning_journey, presence: true,
-    max_word_count: ->(team_submission) {team_submission.learning_journey_max_word_count},
-    if: ->(team_submission) {team_submission.learning_journey.present?}
+    max_word_count: { max_word_count: 200 },
+    if: ->(team_submission) {team_submission.learning_journey.present? && team_submission.beginner_division? }
+
+  validates :learning_journey, presence: true, max_word_count: true,
+    if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
+      (team_submission.junior_division? || team_submission.senior_division?)}
 
   validates :information_legitimacy_description, presence: true, max_word_count: true,
     if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
       (team_submission.junior_division? || team_submission.senior_division?)}
-
 
   validates :pitch_video_link,
     format: {
@@ -336,10 +339,6 @@ class TeamSubmission < ActiveRecord::Base
           and pitch videos are the same link. Please update one of the links."
       )
     end
-  end
-
-  def learning_journey_max_word_count
-    beginner_division? ? 200 : 100
   end
 
   delegate :name,

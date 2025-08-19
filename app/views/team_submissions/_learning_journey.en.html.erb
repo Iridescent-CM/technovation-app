@@ -5,7 +5,7 @@
   </dd>
 
   <% if !@team_submission.beginner_division? %>
-    <dt>Explain how your team decided what information you gathered for your project was legitimate</dt>
+    <dt>Explain how your team decided whether the information gathered for your project was legitimate</dt>
     <dd>
       <%= simple_format(@team_submission.information_legitimacy_description.presence || "-") %>
     </dd>

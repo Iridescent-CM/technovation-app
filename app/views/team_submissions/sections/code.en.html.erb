@@ -27,11 +27,16 @@
       <span>
         - <%= @team_submission.development_platform_other %>
       </span>
-      <p>
-        URL:
-        <%= link_to @team_submission.development_platform_other_url,
-        @team_submission.development_platform_other_url %>
-      </p>
+      <br>
+      <span>
+        Optional - Project URL:
+        <% if  @team_submission.development_platform_other_url.present? %>
+          <%= link_to @team_submission.development_platform_other_url,
+          @team_submission.development_platform_other_url %>
+        <% else %>
+          blank
+        <% end %>
+      </span>
     <% end %>
   </p>
 

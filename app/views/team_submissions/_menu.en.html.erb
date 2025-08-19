@@ -244,7 +244,7 @@
           <%= link_to submission_progress_web_icon(
             submission,
             :business_plan,
-            "Your plan"
+            submission.junior_division? ? "Your plan" : "Your canvas"
           ),
           send(
             "#{current_scope}_team_submission_path",
