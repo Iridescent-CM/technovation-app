@@ -61,16 +61,22 @@
           target: "_blank",
           class: "tw-link"
         ) %>
-
-    <% elsif @team.junior? %>
-      Check out what to include in your user adoption plan
-      <%= link_to(
-        "here",
-        "https://docs.google.com/document/d/1VWqsYbForZO5PERUUwCwkUUmlijl_pkAOvGg3WVkwSs/edit?usp=sharing",
-        target: "_blank",
-        class: "tw-link"
-      ) %>
-  <% end %>
+        You can access a template for the
+        <%= link_to(
+          "Business Canvas here.",
+          "https://docs.google.com/document/d/1Wh82j11aW0VkqzADimacpKXI6ffHPPcaWD_NgETQ3ZU/edit?tab=t.0",
+          target: "_blank",
+          class: "tw-link"
+        ) %>
+      <% elsif @team.junior? %>
+        Check out what to include in your user adoption plan
+        <%= link_to(
+          "here",
+          "https://docs.google.com/document/d/1VWqsYbForZO5PERUUwCwkUUmlijl_pkAOvGg3WVkwSs/edit?usp=sharing",
+          target: "_blank",
+          class: "tw-link"
+        ) %>
+      <% end %>
     </p>
   <% else %>
     <p class="tw-hint-strong">
