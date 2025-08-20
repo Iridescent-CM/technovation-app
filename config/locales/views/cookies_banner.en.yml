@@ -1,6 +1,7 @@
 en:
+  immosquare-cookies:
+    document_title: Cookie Preferences
   cookies_banner:
-    header: Cookie Preferences
     body: By clicking “Accept All Cookies”, you agree to the storing of cookies on your device that will allow us to analyze site usage and assist in our marketing efforts.
     accept: Accept All Cookies
     refuse: Essential Cookies Only

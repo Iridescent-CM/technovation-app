@@ -2,8 +2,8 @@ require "dotenv"
 Dotenv.load
 
 require "vcr_helper"
-require "capybara/email/rspec"
 require "rspec/retry"
+require "factory_bot"
 require "pundit/rspec"
 
 Dir[Dir.pwd + "/spec/no_rails_support/**/*.rb"].each { |f| require f }

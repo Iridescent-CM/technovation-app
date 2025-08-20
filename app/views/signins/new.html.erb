@@ -18,12 +18,13 @@
 
       <%= f.button :submit,
                    t('views.signins.form.signin'),
+                    data: { turbo: false },
                    class: "tw-green-btn my-8 cursor-pointer" %>
 
       <p>
         <%= t("controllers.signins.new.no_account") %>
         <%= link_to t("controllers.signups.new.link"), signup_path,
-                    data: { turbolinks: false },
+                    data: { turbo: false },
                     class: "tw-link" %>
       </p>
 

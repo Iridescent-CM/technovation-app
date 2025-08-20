@@ -1,4 +1,4 @@
-$(document).on("turbolinks:load", function () {
+$(document).on("turbo:load", function () {
   const anchor = $(location).attr("hash");
 
   $("#tab-wrapper div.tw-tab-content>a").click(function (e) {

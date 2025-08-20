@@ -1,6 +1,8 @@
 <hr class="border-t border-gray-300 my-8">
 
-<%= simple_form_for waiver, url: send("#{current_scope}_consent_waivers_path", waiver) do |f| %>
+<%= simple_form_for waiver,
+  url: send("#{current_scope}_consent_waivers_path", waiver),
+  data: { turbo: false } do |f| %>
   <%= f.input :account_consent_token, as: :hidden %>
 
   <div class="mb-4">
@@ -37,7 +39,7 @@
 <% end %>
 
 <script>
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("turbo:load", function() {
   const acknowlegeCodeOfConduct1 = document.getElementById("read_and_understands_code_of_conduct");
   const acknowlegeCodeOfConduct2 = document.getElementById("acknowledges_consequences_of_code_of_conduct");
   const submitButton = document.getElementById("submit");

@@ -25,7 +25,7 @@
     <%= link_to "Start a new score",
                 new_judge_score_path,
                 class: "md-link-button link-button-success",
-                data: { turbolinks: false } %>
+                data: { turbo: false } %>
   </p>
 <% elsif @scores_in_progress.present? %>
   You have <%=  pluralize( @scores_in_progress.count, 'score' ) %> in progress.

@@ -113,8 +113,16 @@ module ChapterAmbassador
       RegionalPitchEvent.current.in_region(current_ambassador)
         .find(params[:id]).destroy
 
-      redirect_to chapter_ambassador_regional_pitch_events_url,
-        notice: "Regional pitch event was successfully deleted."
+      respond_to do |format|
+        format.html {
+          redirect_to chapter_ambassador_regional_pitch_events_url,
+            notice: "Regional pitch event was successfully deleted."
+        }
+
+        format.json {
+          render json: {notice: "Regional pitch event was successfully deleted."}
+        }
+      end
     end
 
     private

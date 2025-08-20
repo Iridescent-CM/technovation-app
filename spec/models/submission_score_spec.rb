@@ -196,12 +196,12 @@ RSpec.describe SubmissionScore do
 
         sub.complete!
         expect(
-          team_submission.reload.public_send("#{judging_round}_average_score")
+          team_submission.reload.public_send(:"#{judging_round}_average_score")
         ).to eq(5)
 
         sub.update(ideation_1: 4)
         expect(
-          team_submission.reload.public_send("#{judging_round}_average_score")
+          team_submission.reload.public_send(:"#{judging_round}_average_score")
         ).to eq(4)
 
         judge_profile2 = FactoryBot.create(:judge_profile)
@@ -215,7 +215,7 @@ RSpec.describe SubmissionScore do
 
         sub2.complete!
         expect(
-          team_submission.reload.public_send("#{judging_round}_average_score")
+          team_submission.reload.public_send(:"#{judging_round}_average_score")
         ).to eq(3)
       end
 
@@ -231,7 +231,7 @@ RSpec.describe SubmissionScore do
           round: round
         )
         expect(
-          team_submission.reload.public_send("#{judging_round}_average_score")
+          team_submission.reload.public_send(:"#{judging_round}_average_score")
         ).to be_zero
       end
 
@@ -286,29 +286,29 @@ RSpec.describe SubmissionScore do
 
             it "updates the team's total number of completed scores" do
               expect(team_submission
-                .public_send("complete_#{judging_round}_submission_scores_count")).to eq(2)
+                .public_send(:"complete_#{judging_round}_submission_scores_count")).to eq(2)
             end
 
             it "updates the team's total number of offical completed scores" do
               expect(team_submission
-                .public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(2)
+                .public_send(:"complete_#{judging_round}_official_submission_scores_count")).to eq(2)
             end
 
             it "recalculates the team's average score" do
               expect(team_submission
-                .public_send("#{judging_round}_average_score")).to eq(7.5)
+                .public_send(:"#{judging_round}_average_score")).to eq(7.5)
             end
 
             it "recalculates the team's score range (high score minus the low score)" do
               expect(team_submission
-                .public_send("#{judging_round}_score_range")).to eq(5)
+                .public_send(:"#{judging_round}_score_range")).to eq(5)
             end
 
             it "updates judy's total number of scored submissions" do
               judge_judy.reload
 
               expect(judge_judy
-                .public_send("#{judging_round}_scores_count")).to eq(1)
+                .public_send(:"#{judging_round}_scores_count")).to eq(1)
             end
           end
         end
@@ -324,29 +324,29 @@ RSpec.describe SubmissionScore do
 
             it "updates the team's total number of completed scores" do
               expect(team_submission
-                .public_send("complete_#{judging_round}_submission_scores_count")).to eq(3)
+                .public_send(:"complete_#{judging_round}_submission_scores_count")).to eq(3)
             end
 
-            it "updates the team's total number of offical completed scores" do
+            it "updates the team's total number of official completed scores" do
               expect(team_submission
-                .public_send("complete_#{judging_round}_official_submission_scores_count")).to eq(3)
+                .public_send(:"complete_#{judging_round}_official_submission_scores_count")).to eq(3)
             end
 
             it "recalculates the team's average score" do
               expect(team_submission
-                .public_send("#{judging_round}_average_score")).to eq(11.67)
+                .public_send(:"#{judging_round}_average_score")).to eq(11.67)
             end
 
             it "recalculates the team's score range (high score minus the low score)" do
               expect(team_submission
-                .public_send("#{judging_round}_score_range")).to eq(15)
+                .public_send(:"#{judging_round}_score_range")).to eq(15)
             end
 
             it "updates judy's total number of scored submissions" do
               judge_judy.reload
 
               expect(judge_judy
-                .public_send("#{judging_round}_scores_count")).to eq(2)
+                .public_send(:"#{judging_round}_scores_count")).to eq(2)
             end
           end
 

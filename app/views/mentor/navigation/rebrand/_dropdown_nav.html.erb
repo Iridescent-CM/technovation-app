@@ -3,14 +3,14 @@
     <li>
       <%= link_to "Switch to Chapter Ambassador Mode",
         chapter_ambassador_dashboard_path,
-        data: { turbolinks: false } %>
+        data: { turbo: false } %>
     </li>
   <% end %>
   <% if current_mentor.can_switch_to_judge? %>
     <li>
       <%= link_to "Switch to Judge Mode",
         judge_dashboard_path,
-        data: { turbolinks: false } %>
+        data: { turbo: false } %>
     </li>
   <% end %>
   <li>
