@@ -1,5 +1,6 @@
 module Mentor
   class TeamSubmissionFileUploadConfirmationsController < MentorController
+    layout "mentor_rebrand"
     def show
       job = ProcessUploadJob.perform_later(
         current_team.submission.id,
@@ -13,7 +14,7 @@ module Mentor
       @unprocessed_file_url = "//s3.amazonaws.com/#{params[:bucket]}/#{params[:key]}"
       @job = Job.find_by!(job_id: job.job_id)
 
-      render "student/team_submission_file_upload_confirmations/show"
+      render "team_submission_file_upload_confirmations/show"
     end
   end
 end
