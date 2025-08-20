@@ -34,7 +34,7 @@ class CertificatesGrid
       {
         :class => "view-details",
         "v-tooltip" => "'View certificate'",
-        :data => {turbolinks: false}
+        :data => {turbo: false}
       }
     )
   end

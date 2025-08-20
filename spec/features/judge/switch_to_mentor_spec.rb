@@ -21,6 +21,7 @@ RSpec.feature "Judges switching to mentor mode", :js do
 
       click_link "Mentor Mode"
 
+      expect(page).to have_content("Find a Chapter or Club")
       expect(judge.reload.is_a_mentor?).to eq(true)
     end
   end

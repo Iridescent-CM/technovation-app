@@ -5,11 +5,11 @@
         <% if activity.owner.present? %>
           <%= link_to activity.owner.name,
             admin_participant_path(activity.owner),
-            data: { turbolinks: false } %>
+            data: { turbo: false } %>
         <% else %>
           <%= link_to activity.trackable.name,
             admin_participant_path(activity.trackable),
-            data: { turbolinks: false } %>
+            data: { turbo: false } %>
         <% end %>
       </div>
 
@@ -49,7 +49,7 @@
       <td>
         <%= link_to activity.trackable.name,
           send("#{current_scope}_participant_path", activity.trackable),
-          data: { turbolinks: false } %>
+          data: { turbo: false } %>
       </td>
     <% else %>
       <td>–</td>
@@ -62,7 +62,7 @@
       <td>
         <%= link_to activity.recipient.name,
           send("#{current_scope}_participant_path", activity.trackable),
-          data: { turbolinks: false } %>
+          data: { turbo: false } %>
       </td>
     <% else %>
       <td>–</td>

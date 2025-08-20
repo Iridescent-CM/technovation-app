@@ -103,7 +103,7 @@ class StudentProfile < ActiveRecord::Base
 
   has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
 
-  after_commit :reset_parent, on: :update
+  after_update :reset_parent
 
   after_touch { team.touch }
 

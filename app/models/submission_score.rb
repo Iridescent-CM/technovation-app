@@ -1,7 +1,7 @@
 class SubmissionScore < ActiveRecord::Base
   include Seasoned
 
-  acts_as_paranoid
+  acts_as_paranoid after_restore_commit: true
 
   include Regioned
   regioned_source Team, through: :team_submission
