@@ -60,10 +60,12 @@ RSpec.describe "Registration invites", :js do
           end
 
           click_button "Send invitation"
+          expect(page).to have_content("You invited #{item[:select_option].split.first}")
         }.to change {
           UserInvitation.sent.count
         }.from(0).to(1)
 
+        sleep 1
         mail = ActionMailer::Base.deliveries.last
         expect(mail).to be_present, "no mail was sent"
 
@@ -82,6 +84,7 @@ RSpec.describe "Registration invites", :js do
       select "Judge", from: "Registration Type"
       fill_in "Email", with: "jugdge_invite@example.com"
       click_button "Send invitation"
+      expect(page).to have_content("You invited Judge")
 
       expect(UserInvitation.last.invited_by).to eq(admin.account)
     end

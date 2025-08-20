@@ -1,4 +1,4 @@
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("turbo:load", function() {
   $('.navigation .icon-navicon').on('click', function() {
     $(this).closest('.navigation').addClass('showing-menu');
   });

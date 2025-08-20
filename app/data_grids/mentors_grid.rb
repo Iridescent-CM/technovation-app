@@ -52,7 +52,7 @@ class MentorsGrid
     link_to(
       "view",
       send(:"#{current_scope}_participant_path", account),
-      data: {turbolinks: false}
+      data: {turbo: false}
     )
   end
 
@@ -137,7 +137,7 @@ class MentorsGrid
     :enum,
     select: (2015..Season.current.year).to_a.reverse,
     html: {
-     class: "and-or-field"
+      class: "and-or-field"
     },
     multiple: true do |value, scope, grid|
     scope.by_season(value)

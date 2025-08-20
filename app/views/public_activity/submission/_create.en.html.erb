@@ -10,7 +10,7 @@
     <td>
       <%= link_to activity.recipient.team_name,
         send("#{current_scope}_team_path", activity.recipient.team),
-        data: { turbolinks: false } %>
+        data: { turbo: false } %>
     </td>
   <% else %>
     <td>–</td>
@@ -23,7 +23,7 @@
     <td>
       <%= link_to activity.recipient.app_name || "(no_name)",
           send("#{current_scope}_team_submission_path", activity.recipient),
-          data: { turbolinks: false } %>
+          data: { turbo: false } %>
     </td>
   <% else %>
     <td>–</td>

@@ -9,7 +9,7 @@
 //= require submissions
 //= require dropzones
 
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('turbo:load', function () {
   $( ".accordion" ).accordion({
     collapsible: true,
     active: false,
