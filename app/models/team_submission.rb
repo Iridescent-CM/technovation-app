@@ -43,7 +43,7 @@ class TeamSubmission < ActiveRecord::Base
 
   include PublicActivity::Common
 
-  acts_as_paranoid
+  acts_as_paranoid after_restore_commit: true
 
   extend FriendlyId
   friendly_id :project_name_by_team_name,
@@ -79,7 +79,7 @@ class TeamSubmission < ActiveRecord::Base
   after_commit -> {
     columns = {}
 
-    if RequiredFields.new(self).any?(&:blank?) && published?
+    if Submissions::RequiredFields.new(self).any?(&:blank?) && published?
       Rails.logger.warn("Published submission id=#{id} is missing required fields.")
     end
 
@@ -118,7 +118,7 @@ class TeamSubmission < ActiveRecord::Base
   mount_uploader :business_plan, FileProcessor
   mount_uploader :pitch_presentation, FileProcessor
   mount_uploader :bibliography, BibliographyUploader
-  
+
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(team: :division)
@@ -307,16 +307,20 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(team_submission) { team_submission.uses_gadgets? }
 
   validates :learning_journey, presence: true,
-    max_word_count: { max_word_count: 200 },
-    if: ->(team_submission) {team_submission.learning_journey.present? && team_submission.beginner_division? }
+    max_word_count: {max_word_count: 200},
+    if: ->(team_submission) { team_submission.learning_journey.present? && team_submission.beginner_division? }
 
   validates :learning_journey, presence: true, max_word_count: true,
-    if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
-      (team_submission.junior_division? || team_submission.senior_division?)}
+    if: ->(team_submission) {
+          team_submission.information_legitimacy_description.present? &&
+            (team_submission.junior_division? || team_submission.senior_division?)
+        }
 
   validates :information_legitimacy_description, presence: true, max_word_count: true,
-    if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
-      (team_submission.junior_division? || team_submission.senior_division?)}
+    if: ->(team_submission) {
+          team_submission.information_legitimacy_description.present? &&
+            (team_submission.junior_division? || team_submission.senior_division?)
+        }
 
   validates :pitch_video_link,
     format: {
@@ -394,11 +398,11 @@ class TeamSubmission < ActiveRecord::Base
   def only_needs_to_submit?
     !published? &&
       team.qualified? &&
-      RequiredFields.new(self).all?(&:complete?)
+      Submissions::RequiredFields.new(self).all?(&:complete?)
   end
 
   def missing_pieces
-    missing_pieces = RequiredFields.new(self)
+    missing_pieces = Submissions::RequiredFields.new(self)
       .find_all(&:blank?)
       .map(&:method_name)
       .map(&:to_s)
@@ -449,13 +453,13 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def while_qualified(&block)
-    if team.qualified? && RequiredFields.new(self).all?(&:complete?)
+    if team.qualified? && Submissions::RequiredFields.new(self).all?(&:complete?)
       yield
     end
   end
 
   def while_unqualified(&block)
-    unless team.qualified? && RequiredFields.new(self).all?(&:complete?)
+    unless team.qualified? && Submissions::RequiredFields.new(self).all?(&:complete?)
       yield
     end
   end
@@ -533,10 +537,10 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def update_semifinals_score_range
-    scores = submission_scores.current.complete.semifinals
+    scores = submission_scores.current.complete.semifinals.reload
     if scores.any?
       range = scores.max_by(&:total).total - scores.min_by(&:total).total
-      update_column(:semifinals_score_range, range)
+      update!(semifinals_score_range: range)
     end
   end
 
@@ -590,7 +594,7 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   def complete?
-    RequiredFields.new(self).all?(&:complete?) && !!published_at
+    Submissions::RequiredFields.new(self).all?(&:complete?) && !!published_at
   end
   alias_method :is_complete, :complete?
 
@@ -601,7 +605,7 @@ class TeamSubmission < ActiveRecord::Base
   def calculate_percent_complete
     Rails.cache.delete("#{cache_key}/percent_complete")
     Rails.cache.fetch("#{cache_key}/percent_complete") do
-      required_fields = RequiredFields.new(self)
+      required_fields = Submissions::RequiredFields.new(self)
 
       total_needed = required_fields.size.to_f + 1
       # + 1 === publishing / submitting is now required

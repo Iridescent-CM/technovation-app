@@ -77,7 +77,7 @@ class SubmissionsGrid
       "#{request.base_url}#{project_path(sub)}",
       project_path(sub),
       target: :_blank,
-      data: {turbolinks: false}
+      data: {turbo: false}
     )
   end
 
@@ -170,7 +170,7 @@ class SubmissionsGrid
   end
 
   column :required_fields do |submission|
-    RequiredFields.new(submission).all?(&:complete?) ? "Complete" : "Incomplete"
+    Submissions::RequiredFields.new(submission).all?(&:complete?) ? "Complete" : "Incomplete"
   end
 
   column :team_qualified? do

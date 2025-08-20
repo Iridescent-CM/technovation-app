@@ -5,7 +5,7 @@
       <%= link_to "Start a new score",
                   new_judge_score_path,
                   class: "md-link-button link-button-success",
-                  data: { turbolinks: false } %>
+                  data: { turbo: false } %>
     <% else %>
       <not-started-scores-list
         :is-live-judge="<%= current_judge.live_event? %>"

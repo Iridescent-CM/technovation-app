@@ -1,5 +1,5 @@
 <%
-  value_is_complete = RequiredField.for(submission, attribute).complete?
+  value_is_complete = Submissions::RequiredField.for(submission, attribute).complete?
   base_path_name = "edit_#{scope}_team_submission_path"
   completion_css_class = value_is_complete ? :complete : :incomplete
   link_options ||= {}

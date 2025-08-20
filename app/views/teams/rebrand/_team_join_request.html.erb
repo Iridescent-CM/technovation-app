@@ -21,6 +21,7 @@
         <%= button_to(
           t("controllers.#{current_scope}.join_requests.create.link", name: team.name),
           send("#{current_scope}_join_requests_path",team_id: team.id),
+          data: { turbo: false },
           class: "tw-green-btn"
         ) %>
       </p>

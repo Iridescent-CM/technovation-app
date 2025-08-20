@@ -18,7 +18,7 @@ describe ParentalConsentPolicy do
       end
 
       context "when the parental consent is someone else's" do
-        let(:parental_consent) { FactoryBot.build(:parental_consent) }
+        let(:parental_consent) { FactoryBot.create(:parental_consent) }
 
         it "does not allow access" do
           expect(subject).not_to permit(student, parental_consent)

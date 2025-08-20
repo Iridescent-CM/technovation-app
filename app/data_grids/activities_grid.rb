@@ -34,7 +34,7 @@ class ActivitiesGrid
         link_to(
           value,
           send(
-            "#{current_scope}_#{resource_name}_path",
+            :"#{current_scope}_#{resource_name}_path",
             activity.trackable
           )
         )
@@ -58,7 +58,7 @@ class ActivitiesGrid
 
       format(activity.recipient.name) do |value|
         link_to activity.recipient.name,
-          send("#{current_scope}_#{resource_name}_path", activity.recipient)
+          send(:"#{current_scope}_#{resource_name}_path", activity.recipient)
       end
     else
       "–"
