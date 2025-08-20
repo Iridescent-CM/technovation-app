@@ -116,7 +116,7 @@ FactoryBot.define do
   end
 
   factory :team_membership, class: "Membership" do
-    association(:member) { FactoryBot.create(:student) }
-    association(:team)
+    member { association :member, member: FactoryBot.create(:student) }
+    team
   end
 end

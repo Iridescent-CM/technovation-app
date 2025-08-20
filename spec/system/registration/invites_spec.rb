@@ -63,13 +63,6 @@ RSpec.describe "Using registration invite codes", :js do
       let(:email_address) { "#{item[:registration_profile_type]}@example.com" }
       let(:register_at_any_time) { false }
 
-      after :each do
-        UserInvitation.destroy_all
-        LegalContact.destroy_all
-        ProgramInformation.destroy_all
-        Chapter.destroy_all
-      end
-
       context "when registration is open" do
         before do
           SeasonToggles.enable_signup(item[:profile_type])

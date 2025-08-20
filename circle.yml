@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@2
+  browser-tools: circleci/browser-tools@2.3.1
 
 jobs:
   build:
@@ -155,14 +155,14 @@ jobs:
       - restore_cache:
           name: Restore cached gems
           keys:
-            - v3-gem-cache-{{ checksum "Gemfile.lock" }}
-            - v3-gem-cache-
+            - v4-gem-cache-{{ checksum "Gemfile.lock" }}
+            - v4-gem-cache-
 
       - restore_cache:
           name: Restore cached node packages
           keys:
-            - v1-node-packages-cache-{{ checksum "yarn.lock" }}
-            - v1-node-packages-cache-
+            - v2-node-packages-cache-{{ checksum "yarn.lock" }}
+            - v2-node-packages-cache-
 
       - run:
           name: Install PostgreSQL
@@ -195,7 +195,7 @@ jobs:
 
       - save_cache:
           name: Cache gems
-          key: v3-gem-cache-{{ checksum "Gemfile.lock" }}
+          key: v4-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
@@ -205,7 +205,7 @@ jobs:
 
       - save_cache:
           name: Cache node packages
-          key: v1-node-packages-cache-{{ checksum "yarn.lock" }}
+          key: v2-node-packages-cache-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 

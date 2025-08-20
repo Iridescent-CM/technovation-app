@@ -134,7 +134,7 @@ RSpec.describe TeamSubmission do
             end
           end
 
-          context "when the submision is being published" do
+          context "when the submission is being published" do
             it "calls the job to update the student's program info" do
               expect(CRM::UpsertProgramInfoJob).to receive(:perform_later)
 
@@ -651,7 +651,7 @@ RSpec.describe TeamSubmission do
 
     expect(sub.reload).to be_complete
 
-    RequiredFields.new(sub).each do |field|
+    Submissions::RequiredFields.new(sub).each do |field|
       if field.method_name == :screenshots
         sub.screenshots.destroy_all
       elsif field.method_name == :development_platform_text
@@ -678,7 +678,7 @@ RSpec.describe TeamSubmission do
     let(:live_judge) { FactoryBot.create(:judge_profile) }
     let(:virtual_judge) { FactoryBot.create(:judge_profile) }
 
-    describe "for offical RPE" do
+    describe "for official RPE" do
       before(:each) do
         @rpe = FactoryBot.create(:event,
           name: "RPE",
@@ -722,7 +722,8 @@ RSpec.describe TeamSubmission do
           live_judge.submission_scores.create!({
             team_submission: sub,
             ideation_1: score,
-            completed_at: Time.current
+            completed_at: Time.current,
+            event_type: "live"
           })
         end
 
@@ -731,7 +732,8 @@ RSpec.describe TeamSubmission do
           virtual_judge.submission_scores.create!({
             team_submission: sub,
             ideation_1: score,
-            completed_at: Time.current
+            completed_at: Time.current,
+            event_type: "virtual"
           })
         end
 
@@ -748,7 +750,8 @@ RSpec.describe TeamSubmission do
           live_judge.submission_scores.create!({
             team_submission: sub,
             ideation_1: score,
-            completed_at: Time.current
+            completed_at: Time.current,
+            event_type: "live"
           })
         end
 
@@ -757,7 +760,8 @@ RSpec.describe TeamSubmission do
           virtual_judge.submission_scores.create!({
             team_submission: sub,
             ideation_1: score,
-            completed_at: Time.current
+            completed_at: Time.current,
+            event_type: "virtual"
           })
         end
 
@@ -765,7 +769,7 @@ RSpec.describe TeamSubmission do
       end
     end
 
-    describe "for unoffical RPE" do
+    describe "for unofficial RPE" do
       before(:each) do
         @rpe = FactoryBot.create(:event,
           name: "RPE",
@@ -787,13 +791,15 @@ RSpec.describe TeamSubmission do
         live_score = live_judge.submission_scores.create!({
           team_submission: sub,
           ideation_1: 5,
-          completed_at: Time.current
+          completed_at: Time.current,
+          event_type: "live"
         })
 
         virtual_score = virtual_judge.submission_scores.create!({
           team_submission: sub,
           ideation_1: 2,
-          completed_at: Time.current
+          completed_at: Time.current,
+          event_type: "virtual"
         })
 
         expect(sub.reload.quarterfinals_official_scores).to contain_exactly(virtual_score)
@@ -809,7 +815,8 @@ RSpec.describe TeamSubmission do
           live_judge.submission_scores.create!({
             team_submission: sub,
             ideation_1: score,
-            completed_at: Time.current
+            completed_at: Time.current,
+            event_type: "live"
           })
         end
 
@@ -818,7 +825,8 @@ RSpec.describe TeamSubmission do
           virtual_judge.submission_scores.create!({
             team_submission: sub,
             ideation_1: score,
-            completed_at: Time.current
+            completed_at: Time.current,
+            event_type: "virtual"
           })
         end
 
@@ -943,7 +951,7 @@ RSpec.describe TeamSubmission do
     let(:team_submission) { TeamSubmission.new }
 
     before do
-      allow(RequiredFields).to receive(:new).with(team_submission).and_return(required_fields)
+      allow(Submissions::RequiredFields).to receive(:new).with(team_submission).and_return(required_fields)
     end
 
     let(:required_fields) { [double("required fields", method_name: :app_name, blank?: true, complete?: false)] }

@@ -201,7 +201,7 @@ class ScoresGrid
       id: submission_score.team_submission
     )
 
-    link_to(project_page_link, project_page_link, target: :_blank, data: {turbolinks: false})
+    link_to(project_page_link, project_page_link, target: :_blank, data: {turbo: false})
   end
 
   column :project_page, html: false do |submission_score|
@@ -217,7 +217,7 @@ class ScoresGrid
       web_icon("list-ul", size: 16, remote: true),
       send(:"#{current_scope}_score_path", id: submission_score.id),
       data: {
-        turbolinks: false
+        turbo: false
       },
       class: "view-details"
     )
@@ -228,7 +228,7 @@ class ScoresGrid
       send(:"#{current_scope}_score_detail_path", id: submission_score.team_submission.id),
       {
         "v-tooltip" => "'Read score details'",
-        :data => {turbolinks: false}
+        :data => {turbo: false}
       }
     )
 

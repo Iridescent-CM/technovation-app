@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Students find a team" do
+RSpec.feature "Students find a team", js: true do
   let(:day_before_qfs) { ImportantDates.quarterfinals_judging_begins - 1.day }
   let(:current_season) { Season.new(day_before_qfs.year) }
 

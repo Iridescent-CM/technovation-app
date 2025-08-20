@@ -38,13 +38,13 @@ class ScoredSubmissionsGrid
       link_to(
         submission.team_name,
         send(:"#{current_scope}_team_path", submission.team),
-        turbolinks: true
+        turbo: true
       )
     when "admin"
       link_to(
         submission.team_name,
         admin_team_path(submission.team),
-        turbolinks: true
+        turbo: true
       )
     end
   end
@@ -57,13 +57,13 @@ class ScoredSubmissionsGrid
       link_to(
         submission.app_name,
         send(:"#{current_scope}_team_submission_path", submission),
-        turbolinks: true
+        turbo: true
       )
     when "admin"
       link_to(
         submission.app_name,
         admin_team_submission_path(submission),
-        turbolinks: true
+        turbo: true
       )
     end
   end
@@ -130,7 +130,7 @@ class ScoredSubmissionsGrid
       {
         :class => "view-details",
         "v-tooltip" => "'Read score details'",
-        :data => {turbolinks: false}
+        :data => {turbo: false}
       }
     )
 
@@ -143,7 +143,7 @@ class ScoredSubmissionsGrid
         :class => "open-public",
         "v-tooltip" => "'Open public page'",
         :target => :_blank,
-        :data => {turbolinks: false}
+        :data => {turbo: false}
       )
     else
       html

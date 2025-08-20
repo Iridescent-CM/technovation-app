@@ -89,6 +89,7 @@ RSpec.describe "Students request to join a team",
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request email was sent"
 
+      sleep 1
       mail = ActionMailer::Base.deliveries.last
 
       expect(mail.subject).to eq("A student has asked to join your team!")
@@ -120,6 +121,7 @@ RSpec.describe "Students request to join a team",
       click_button "Approve"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
 
@@ -181,6 +183,7 @@ RSpec.describe "Students request to join a team",
       click_button "Approve"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
       mail = ActionMailer::Base.deliveries.last
@@ -226,6 +229,7 @@ RSpec.describe "Students request to join a team",
       click_button "Decline"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request decline email was sent"
 
@@ -252,6 +256,7 @@ RSpec.describe "Students request to join a team",
       click_button "Decline"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request decline email was sent"
 

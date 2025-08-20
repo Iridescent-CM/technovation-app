@@ -69,9 +69,9 @@ class ChaptersGrid
       class: "and-or-field"
     },
     multiple: true do |values, scope|
-    scope.includes(program_information: { organization_types: :program_information_organization_types })
+    scope.includes(program_information: {organization_types: :program_information_organization_types})
       .references(:program_information_organization_types)
-      .where(program_information_organization_types: { organization_type_id: values })
+      .where(program_information_organization_types: {organization_type_id: values})
   end
 
   filter :season,
