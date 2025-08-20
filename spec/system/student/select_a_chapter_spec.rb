@@ -11,6 +11,7 @@ RSpec.describe "Students selecting a chapter", :js do
 
       choose chapter.name
       click_button "Save"
+      expect(page).to have_content("Meet your Chapter")
 
       expect(student.account.current_chapter).to eq(chapter)
     end
@@ -20,6 +21,7 @@ RSpec.describe "Students selecting a chapter", :js do
 
       choose chapter.name
       click_button "Save"
+      expect(page).to have_content("Meet your Chapter")
 
       student.reload
       expect(student.account.force_chapterable_selection?).to eq(false)
@@ -30,6 +32,7 @@ RSpec.describe "Students selecting a chapter", :js do
 
       choose "None of the Above"
       click_button "Save"
+      expect(page).to have_content("Meet your Ambassador")
 
       student.reload
       expect(student.account.no_chapterable_selected?).to eq(true)
@@ -40,6 +43,7 @@ RSpec.describe "Students selecting a chapter", :js do
 
       choose "None of the Above"
       click_button "Save"
+      expect(page).to have_content("Meet your Ambassador")
 
       student.reload
       expect(student.account.force_chapterable_selection?).to eq(false)
@@ -56,7 +60,9 @@ RSpec.describe "Students selecting a chapter", :js do
       sign_in(student)
 
       expect(page).to have_content("Unfortunately, there are no Chapters or Clubs currently active in your country")
+
       click_button "Acknowledge and Go To Dashboard"
+      expect(page).to have_content("Meet your Ambassador")
 
       student.reload
       expect(student.account.no_chapterables_available?).to eq(true)
@@ -66,7 +72,9 @@ RSpec.describe "Students selecting a chapter", :js do
       sign_in(student)
 
       expect(page).to have_content("Unfortunately, there are no Chapters or Clubs currently active in your country")
+
       click_button "Acknowledge and Go To Dashboard"
+      expect(page).to have_content("Meet your Ambassador")
 
       student.reload
       expect(student.account.force_chapterable_selection?).to eq(false)

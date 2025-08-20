@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@1.5.3
 
 jobs:
   build:
@@ -173,7 +173,7 @@ jobs:
           command: |
             sudo sed -i 's|http://archive.ubuntu.com|http://mirrors.rit.edu/ubuntu/|g' /etc/apt/sources.list
             sudo sed -i 's|http://security.ubuntu.com|http://mirrors.rit.edu/ubuntu/|g' /etc/apt/sources.list
-            
+
             sudo apt update
             sudo apt install wkhtmltopdf
 

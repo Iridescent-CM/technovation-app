@@ -27,11 +27,11 @@
     <%= filestack_js_init_tag %>
 
     <%= javascript_include_tag determine_manifest,
-      'data-turbolinks-track' => true %>
+      'data-turbo-track' => true %>
 
     <%= javascript_packs_with_chunks_tag "application" %>
     <%= javascript_packs_with_chunks_tag "application_rebrand" %>
-    <%= stylesheet_pack_tag 'application_rebrand', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application_rebrand', 'data-turbo-track': 'reload' %>
 
     <%= yield :js %>
   </head>
@@ -57,7 +57,6 @@
     <%= render(
       "immosquare-cookies/consent_banner",
       key: CookieNames::CONSENTED_TO_ALL_COOKIES,
-      document_name: t("cookies_banner.header"),
       refuse: t("cookies_banner.refuse"),
       accept: t("cookies_banner.accept"),
       text: t("cookies_banner.body")

@@ -12,28 +12,28 @@
 
     <%= link_to "Participants",
       admin_participants_path,
-      data: { turbolinks: false },
+      data: { turbo: false },
       class: al(admin_participants_path) %>
 
     <%= link_to "Unaffiliated Participants",
       admin_unaffiliated_participants_path,
-      data: { turbolinks: false },
+      data: { turbo: false },
       class: al(admin_unaffiliated_participants_path) %>
 
     <%= link_to "Teams",
       admin_teams_path,
-      data: { turbolinks: false },
+      data: { turbo: false },
       class: al(admin_teams_path) %>
 
     <%= link_to "Submissions",
       admin_team_submissions_path,
-      data: { turbolinks: false },
+      data: { turbo: false },
       class: al(admin_team_submissions_path) %>
 
     <% if current_profile.try(:super_admin?) %>
       <%= link_to "Publish Submissions",
         bulk_publish_admin_team_submissions_path,
-        data: { turbolinks: false },
+        data: { turbo: false },
         class: al(bulk_publish_admin_team_submissions_path) %>
     <% end %>
 
@@ -63,12 +63,12 @@
 
     <%= link_to "Paper Parental Consent Forms",
       admin_paper_parental_consents_path,
-      data: { turbolinks: false },
+      data: { turbo: false },
       class: al(admin_paper_parental_consents_path) %>
 
     <%= link_to "Paper Media Consent Forms",
       admin_paper_media_consents_path,
-      data: { turbolinks: false },
+      data: { turbo: false },
       class: al(admin_paper_media_consents_path) %>
 
     <%= link_to "Registration Invites",
@@ -106,7 +106,7 @@
     <%= link_to "Background jobs",
       "/sidekiq",
       target: :_blank,
-      data: { turbolinks: false } %>
+      data: { turbo: false } %>
   <% end %>
 
   <hr />
