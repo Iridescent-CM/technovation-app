@@ -118,7 +118,7 @@ class TeamSubmission < ActiveRecord::Base
   mount_uploader :business_plan, FileProcessor
   mount_uploader :pitch_presentation, FileProcessor
   mount_uploader :bibliography, BibliographyUploader
-  
+
   Division.names.keys.each do |division_name|
     scope division_name, -> {
       joins(team: :division)
@@ -305,16 +305,20 @@ class TeamSubmission < ActiveRecord::Base
     if: ->(team_submission) { team_submission.uses_gadgets? }
 
   validates :learning_journey, presence: true,
-    max_word_count: { max_word_count: 200 },
-    if: ->(team_submission) {team_submission.learning_journey.present? && team_submission.beginner_division? }
+    max_word_count: {max_word_count: 200},
+    if: ->(team_submission) { team_submission.learning_journey.present? && team_submission.beginner_division? }
 
   validates :learning_journey, presence: true, max_word_count: true,
-    if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
-      (team_submission.junior_division? || team_submission.senior_division?)}
+    if: ->(team_submission) {
+          team_submission.information_legitimacy_description.present? &&
+            (team_submission.junior_division? || team_submission.senior_division?)
+        }
 
   validates :information_legitimacy_description, presence: true, max_word_count: true,
-    if: ->(team_submission) {team_submission.information_legitimacy_description.present? &&
-      (team_submission.junior_division? || team_submission.senior_division?)}
+    if: ->(team_submission) {
+          team_submission.information_legitimacy_description.present? &&
+            (team_submission.junior_division? || team_submission.senior_division?)
+        }
 
   validates :pitch_video_link,
     format: {

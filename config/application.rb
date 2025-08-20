@@ -15,8 +15,7 @@ Bundler.require(*Rails.groups)
 module TechnovationApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
-    config.autoloader = :classic
+    config.load_defaults 7.0
     config.active_job.queue_adapter = ENV.fetch("ACTIVE_JOB_BACKEND") { :inline }
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -29,6 +28,7 @@ module TechnovationApp
 
     config.autoload_paths << Rails.root.join("app", "models", "**/")
     config.autoload_paths << Rails.root.join("app/models/data_analyses")
+    config.eager_load_paths << Rails.root.join("app/models/data_analyses")
 
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
     config.i18n.default_locale = :en
