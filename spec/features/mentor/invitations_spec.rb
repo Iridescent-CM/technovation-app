@@ -17,7 +17,7 @@ RSpec.feature "Mentors and invitations" do
       sign_in(mentor)
       visit mentor_mentor_invite_path(invite, mailer_token: mentor.mailer_token)
 
-      click_button "Accept"
+      click_button "Accept invitation"
 
       expect(team.reload.mentors).to eq([mentor])
     end

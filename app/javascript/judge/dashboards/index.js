@@ -14,7 +14,7 @@ Vue.config.errorHandler = function (err, vm, info) {
   })
 }
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('turbo:load', () => {
   const dashEl = document.querySelector('#judge-dashboard-scores-app')
 
   if (dashEl != undefined) {

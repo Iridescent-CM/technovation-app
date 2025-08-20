@@ -128,7 +128,7 @@ class ChapterAmbassadorsGrid
     link_to(
       "view",
       send(:"#{current_scope}_participant_path", account),
-      data: {turbolinks: false}
+      data: {turbo: false}
     )
   end
 

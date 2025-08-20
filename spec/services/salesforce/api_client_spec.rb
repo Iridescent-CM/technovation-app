@@ -54,7 +54,7 @@ RSpec.describe Salesforce::ApiClient do
   end
 
   let(:salesforce_client) { double("SalesforceClient") }
-  let(:student_profile) { FactoryBot.build(:student_profile) }
+  let(:student_profile) { FactoryBot.create(:student_profile) }
   let(:account) { student_profile.account }
   let(:profile_type) { "student" }
 
@@ -84,24 +84,22 @@ RSpec.describe Salesforce::ApiClient do
       end
 
       context "when setting up a student" do
-        let(:student_profile) { FactoryBot.build(:student_profile) }
+        let(:student_profile) { FactoryBot.create(:student_profile) }
         let(:account) { student_profile.account }
         let(:profile_type) { "student" }
 
         it "calls the insert! method to create a new 'program participant' record and includes student info" do
           expect(salesforce_client).to receive(:insert!).with(
             "Program_Participant__c",
-            {
-              Contact__c: salesforce_contact_id,
-              Platform_Participant_Id__c: account.id,
-              Year__c: Season.current.year,
-              Type__c: profile_type,
-              TG_Division__c: "#{student_profile.division.name} Division",
-              Pitch_Video__c: "",
-              Project_Link__c: "",
-              Submitted_Project__c: "Did Not Submit",
-              Team_Name__c: ""
-            }
+            Contact__c: salesforce_contact_id,
+            Platform_Participant_Id__c: account.id,
+            Year__c: Season.current.year,
+            Type__c: profile_type,
+            TG_Division__c: "#{student_profile.division.name} Division",
+            Pitch_Video__c: "",
+            Project_Link__c: "",
+            Submitted_Project__c: "Did Not Submit",
+            Team_Name__c: ""
           )
 
           salesforce_api_client.setup_account_for_current_season
@@ -109,21 +107,19 @@ RSpec.describe Salesforce::ApiClient do
       end
 
       context "when setting up a mentor" do
-        let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+        let(:mentor_profile) { FactoryBot.create(:mentor_profile) }
         let(:account) { mentor_profile.account }
         let(:profile_type) { "mentor" }
 
         it "calls the insert! method to create a new 'program participant' record and includes mentor info" do
           expect(salesforce_client).to receive(:insert!).with(
             "Program_Participant__c",
-            {
-              Contact__c: salesforce_contact_id,
-              Platform_Participant_Id__c: account.id,
-              Year__c: Season.current.year,
-              Type__c: profile_type,
-              Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
-              Mentor_Team_Status__c: "Not On Team"
-            }
+            Contact__c: salesforce_contact_id,
+            Platform_Participant_Id__c: account.id,
+            Year__c: Season.current.year,
+            Type__c: profile_type,
+            Mentor_Type__c: mentor_profile.mentor_types.pluck(:name).join(";"),
+            Mentor_Team_Status__c: "Not On Team"
           )
 
           salesforce_api_client.setup_account_for_current_season
@@ -138,7 +134,7 @@ RSpec.describe Salesforce::ApiClient do
     end
 
     context "when upserting a student" do
-      let(:student_profile) { FactoryBot.build(:student_profile) }
+      let(:student_profile) { FactoryBot.create(:student_profile) }
       let(:account) { student_profile.account }
       let(:profile_type) { "student" }
 
@@ -166,7 +162,7 @@ RSpec.describe Salesforce::ApiClient do
     end
 
     context "when upserting a mentor" do
-      let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+      let(:mentor_profile) { FactoryBot.create(:mentor_profile) }
       let(:account) { mentor_profile.account }
       let(:profile_type) { "mentor" }
 
@@ -252,7 +248,7 @@ RSpec.describe Salesforce::ApiClient do
         end
 
         context "when updating a mentor's program info" do
-          let(:mentor_profile) { FactoryBot.build(:mentor_profile) }
+          let(:mentor_profile) { FactoryBot.create(:mentor_profile) }
           let(:account) { mentor_profile.account }
           let(:profile_type) { "mentor" }
 
@@ -271,7 +267,7 @@ RSpec.describe Salesforce::ApiClient do
         end
 
         context "when updating a judge's program info" do
-          let(:judge_profile) { FactoryBot.build(:judge_profile) }
+          let(:judge_profile) { FactoryBot.create(:judge_profile) }
           let(:account) { judge_profile.account }
           let(:profile_type) { "judge" }
 

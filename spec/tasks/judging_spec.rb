@@ -41,7 +41,7 @@ RSpec.describe "Tasks: judging namespace" do
 
       expect {
         task.invoke(:notathing, sub.id)
-      }.to raise_error ArgumentError, /not a valid contest_rank/
+      }.to raise_error ActiveRecord::NotNullViolation, /null value in column "contest_rank"/
     end
   end
 end

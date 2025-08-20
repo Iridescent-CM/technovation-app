@@ -90,16 +90,14 @@ module Salesforce
         client.upsert!(
           "Contact",
           "Platform_Participant_Id__c",
-          {
-            Platform_Participant_Id__c: account.id,
-            FirstName: account.first_name,
-            LastName: account.last_name,
-            npe01__AlternateEmail__c: account.email,
-            npe01__Preferred_Email__c: "Alternate",
-            MailingCity: account.city,
-            MailingState: account.state_province,
-            MailingCountry: account.country
-          }.merge(additional_contact_info)
+          Platform_Participant_Id__c: account.id,
+          FirstName: account.first_name,
+          LastName: account.last_name,
+          npe01__AlternateEmail__c: account.email,
+          npe01__Preferred_Email__c: "Alternate",
+          MailingCity: account.city,
+          MailingState: account.state_province,
+          MailingCountry: account.country, **additional_contact_info
         )
       end
     end
@@ -108,12 +106,10 @@ module Salesforce
       handle_request "Creating #{profile_type} program participant info for account #{account.id}" do
         client.insert!(
           "Program_Participant__c",
-          {
-            Contact__c: contact_id,
-            Platform_Participant_Id__c: account.id,
-            Year__c: Season.current.year,
-            Type__c: profile_type
-          }.merge(program_participant_info)
+          Contact__c: contact_id,
+          Platform_Participant_Id__c: account.id,
+          Year__c: Season.current.year,
+          Type__c: profile_type, **program_participant_info
         )
       end
     end
@@ -122,9 +118,7 @@ module Salesforce
       handle_request "Updating #profile_type} program participant info for #{account.id}" do
         client.update!(
           "Program_Participant__c",
-          {
-            Id: program_participant_id
-          }.merge(program_participant_info)
+          Id: program_participant_id, **program_participant_info
         )
       end
     end
@@ -171,24 +165,18 @@ module Salesforce
         submission = account.student_profile.team.submission
 
         initial_program_participant_info.merge(
-          {
-            Pitch_Video__c: submission.pitch_video_link,
-            Project_Link__c: submission.present? ? project_url(submission) : "",
-            Submitted_Project__c: submission.published_at.present? ? "Submitted" : "Did Not Submit",
-            Team_Name__c: account.student_profile.team.name
-          }
+          Pitch_Video__c: submission.pitch_video_link,
+          Project_Link__c: submission.present? ? project_url(submission) : "",
+          Submitted_Project__c: submission.published_at.present? ? "Submitted" : "Did Not Submit",
+          Team_Name__c: account.student_profile.team.name
         )
       when "mentor"
         initial_program_participant_info.merge(
-          {
-            Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team"
-          }
+          Mentor_Team_Status__c: account.mentor_profile.current_teams.present? ? "On Team" : "Not On Team"
         )
       when "judge"
         initial_program_participant_info.merge(
-          {
-            Judging_Location__c: account.judge_profile.events.present? ? "RPE (In-person)" : "Platform (Virtual)"
-          }
+          Judging_Location__c: account.judge_profile.events.present? ? "RPE (In-person)" : "Platform (Virtual)"
         )
 
       else

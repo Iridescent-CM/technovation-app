@@ -11,6 +11,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
 
       choose chapter.name
       click_button "Save"
+      expect(page).to have_content("Meet your Chapter")
 
       expect(mentor.account.current_chapter).to eq(chapter)
     end
@@ -20,6 +21,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
 
       choose chapter.name
       click_button "Save"
+      expect(page).to have_content("Meet your Chapter")
 
       mentor.reload
       expect(mentor.account.force_chapterable_selection?).to eq(false)
@@ -30,6 +32,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
 
       choose "None of the Above"
       click_button "Save"
+      expect(page).to have_content("Meet your Ambassador")
 
       mentor.reload
       expect(mentor.account.no_chapterable_selected?).to eq(true)
@@ -40,6 +43,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
 
       choose "None of the Above"
       click_button "Save"
+      expect(page).to have_content("Meet your Ambassador")
 
       mentor.reload
       expect(mentor.account.force_chapterable_selection?).to eq(false)
@@ -52,6 +56,7 @@ RSpec.describe "Mentor selecting a chapter", :js do
       check "Allow teams to find you in search results and invite you to join"
       check "Indicate to teams that you can be an online, remote mentor"
       click_button "Save"
+      expect(page).to have_content("Meet your Ambassador")
 
       mentor.reload
       expect(mentor.virtual?).to eq(true)
@@ -67,7 +72,9 @@ RSpec.describe "Mentor selecting a chapter", :js do
       sign_in(mentor)
 
       expect(page).to have_content("Unfortunately, there are no Chapters or Clubs currently active in your country")
+
       click_button "Acknowledge and Go To Dashboard"
+      expect(page).to have_content("Meet your Ambassador")
 
       mentor.reload
       expect(mentor.account.no_chapterables_available?).to eq(true)
@@ -77,7 +84,9 @@ RSpec.describe "Mentor selecting a chapter", :js do
       sign_in(mentor)
 
       expect(page).to have_content("Unfortunately, there are no Chapters or Clubs currently active in your country")
+
       click_button "Acknowledge and Go To Dashboard"
+      expect(page).to have_content("Meet your Ambassador")
 
       mentor.reload
       expect(mentor.account.force_chapterable_selection?).to eq(false)
