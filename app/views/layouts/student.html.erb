@@ -4,7 +4,7 @@
 <% provide :main_header, render("application/templates/tg_green_header", heading: nil) %>
 
 <% content_for :js do %>
-  <%= javascript_packs_with_chunks_tag("student", data: { turbolinks_track: :reload }) %>
+  <%= javascript_packs_with_chunks_tag("student", data: { turbo_track: :reload }) %>
 <% end %>
 
 <%= render template: "layouts/application_rebrand" %>

@@ -1330,6 +1330,19 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
+"@hotwired/turbo-rails@^8.0.16":
+  version "8.0.16"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo-rails/-/turbo-rails-8.0.16.tgz#096f3bec8c3c04d4aac4dd0f75305c67b3db3501"
+  integrity sha512-Yxiy2x+N3eOIEDokvLzSrd08aI5RDKnFYDQFl2J/LuMEWTtPdY7oNP0F/gv/sSe5AV23Lwz4FitG/uNFXNM5tA==
+  dependencies:
+    "@hotwired/turbo" "^8.0.13"
+    "@rails/actioncable" ">=7.0"
+
+"@hotwired/turbo@^8.0.13":
+  version "8.0.13"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.13.tgz#ab35fda9d358432c8a872a833844b38cccb8c25b"
+  integrity sha512-M7qXUqcGab6G5PKOiwhgbByTtrPgKPFCTMNQ52QhzUEXEqmp0/ApEguUesh/FPiUjrmFec+3lq98KsWnYY2C7g==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.5.tgz#2cbaf9a89460da24b5ca6531b8bbfc23e1df50c7"
@@ -1614,6 +1627,11 @@
   dependencies:
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
+
+"@rails/actioncable@>=7.0":
+  version "8.0.201"
+  resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-8.0.201.tgz#f5ac6bfa3ac6f52f8a1c37b2661b66a61d4442e4"
+  integrity sha512-WiXZodvnK7u+wlu72DZydfV75x14HhzXI84sto9xcdsW1DMOHK+jYwQuuE/Wh/hKH5yajFIw/3DUP6MHDeGrbA==
 
 "@rails/webpacker@^5.4.0":
   version "5.4.3"
@@ -11408,19 +11426,17 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-turbolinks@^2.0.1:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vue-turbolinks/-/vue-turbolinks-2.1.0.tgz#fc7372d06d624aa3fb68231dc0b509719edc778f"
-  integrity sha512-Rgq9eUS2LgHVoSR58S0utW7g/aqLlVZ6uM7S1e02+xEUGKW1fqhUHQXea3p+cE59ldf+f3nz3Cc3HVO4MlrTFA==
-  dependencies:
-    vue "^2.2.4"
+vue-turbolinks@^2.2.0:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/vue-turbolinks/-/vue-turbolinks-2.2.2.tgz#6b7b5c4120f5586907ef977be4b63a734bf8cd36"
+  integrity sha512-pPO2Fr+1UgdhUK9dc5OhjLSeYi5LZAm/VZBXOVQgLHCO31bRjAof/+W/e/6SHCbnb1xdZb1gW5T9MX0k9ejSAQ==
 
 vue2-filters@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/vue2-filters/-/vue2-filters-0.3.0.tgz#3d6b71169fb14b32a2ddbfa45f94d9a0fdee1094"
   integrity sha512-/i2gHtSfedzbgaC6rHuWTggCW9G6mLWZQ8TQgYciE2ei9iOlyB4iobubNr/7APjoYmupFtXv125yZfXygPV2+A==
 
-vue@^2.2.4, vue@^2.6.11:
+vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==

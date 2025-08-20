@@ -1,8 +1,7 @@
 source "https://rubygems.org"
 ruby "3.1.2"
 
-gem "rails", "~> 6.1.7.0"
-gem "rack", ">= 2.2.13"
+gem "rails", "~>7.0.8.0"
 
 gem "puma", "~> 5.6.9"
 gem "pg", "~> 1.2"
@@ -26,9 +25,9 @@ gem "pundit", "~> 2.0"
 gem "autoprefixer-rails", "~> 6.7"
 gem "uglifier", "~> 3.2"
 
-gem "turbolinks", "~> 5.2"
+gem "turbo-rails", "~> 2.0.0"
 gem "jquery-rails", "~> 4.3"
-gem "jquery-ui-rails", "~> 7.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
+gem "jquery-ui-rails", "~> 8.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
 gem "lodash-rails", "~> 4.17"
 gem "dropzonejs-rails", "~> 0.8"
 gem "webpacker", "~> 5.x"
@@ -37,9 +36,10 @@ gem "cocoon", "~> 1.2"
 
 gem "sass-rails", "~> 6.0"
 gem "sprockets", "3.7.2"
+gem "sprockets-rails"
 gem "normalize-rails", "~> 4.1"
 
-gem "rails-i18n", "~> 6.0.0"
+gem "rails-i18n", "~> 7.0"
 gem "i18n-js", "~> 4.0"
 gem "clipboard-rails", "~> 1.7"
 gem "will_paginate", "~> 3.1"
@@ -105,15 +105,20 @@ gem "rexml", "~> 3.3.0"
 gem "immosquare-cookies"
 gem "zipline"
 
+group :development, :test do
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[mri mingw x64_mingw]
+end
+
 group :development do
   gem "pp_sql", "~> 0.2", require: false
   gem "active_record_query_trace", "~> 1.5"
   gem "letter_opener", "~> 1.6"
   gem "listen", "~> 3.1"
   gem "churn", "~> 1.0", require: false
-  gem "web-console", "~> 3.7"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
+  gem "web-console", "~> 4.0"
+  gem "spring", "~> 4.4"
+  gem "spring-watcher-listen", "~> 2.1"
   gem "bullet"
   gem "brakeman", require: false
 end

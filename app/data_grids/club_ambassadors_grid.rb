@@ -50,7 +50,7 @@ class ClubAmbassadorsGrid
     link_to(
       "view",
       send(:"#{current_scope}_participant_path", account),
-      data: {turbolinks: false}
+      data: {turbo: false}
     )
   end
 
@@ -87,18 +87,18 @@ class ClubAmbassadorsGrid
     :enum,
     header: "Onboarded (includes Club onboarding)",
     select: [
-     ["Yes, fully onboarded", true],
-     ["No, still onboarding", false]
+      ["Yes, fully onboarded", true],
+      ["No, still onboarding", false]
     ],
     filter_group: "common" do |value, scope, grid|
       if value == "true"
         scope
-          .where(club_ambassador_profiles: { onboarded: true })
-          .where(clubs: { onboarded: true })
+          .where(club_ambassador_profiles: {onboarded: true})
+          .where(clubs: {onboarded: true})
       else
         scope
-          .where(club_ambassador_profiles: { onboarded: false })
-          .or(scope.where(clubs: { onboarded: false }))
+          .where(club_ambassador_profiles: {onboarded: false})
+          .or(scope.where(clubs: {onboarded: false}))
       end
     end
 

@@ -64,7 +64,7 @@
                         v-else
                         :href="`/judge/scores/${score.id}`"
                         class="link-button link-button-small link-button-neutral"
-                        data-turbolinks="false">
+                        data-turbo="false">
                         View score
                       </a>
                     </td>

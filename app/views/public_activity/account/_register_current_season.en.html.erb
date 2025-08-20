@@ -10,7 +10,7 @@
     <td>
       <%= link_to activity.trackable.name,
         send("#{current_scope}_participant_path", activity.trackable),
-        data: { turbolinks: false } %>
+        data: { turbo: false } %>
     </td>
   <% else %>
     <td>–</td>
@@ -23,7 +23,7 @@
     <td>
       <%= link_to activity.recipient.name,
         send("#{current_scope}_participant_path", activity.trackable),
-        data: { turbolinks: false } %>
+        data: { turbo: false } %>
     </td>
   <% else %>
     <td>–</td>

@@ -27,7 +27,7 @@
           <td>
             <%= link_to 'View score',
               send("#{current_scope}_score_path", id: score.id),
-              data: { turbolinks: false } %>
+              data: { turbo: false } %>
           </td>
         </tr>
       <% end %>

@@ -41,14 +41,14 @@ class UnaffiliatedParticipantsGrid
       html = link_to(
         "View",
         admin_participant_path(account),
-        data: {turbolinks: false}
+        data: {turbo: false}
       )
       html += " | "
 
       html += link_to(
         "Assign to a chapter or club",
         new_admin_account_chapterable_account_assignment_path(account),
-        data: {turbolinks: false}
+        data: {turbo: false}
       )
     else
       link_to "Add to your #{current_ambassador.chapterable_type}",

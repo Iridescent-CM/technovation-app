@@ -26,7 +26,7 @@ class NullAccount < NullObject
   end
 
   def current_certificates
-    NullCertificates.new
+    ::NullCertificates.new
   end
 
   def update_column(*)

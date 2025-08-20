@@ -45,7 +45,7 @@ class ClubsGrid
     link_to("View",
       admin_club_path(club),
       class: "button small gray",
-      data: {turbolinks: false})
+      data: {turbo: false})
   end
 
   filter :country,

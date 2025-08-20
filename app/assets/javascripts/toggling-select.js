@@ -16,6 +16,6 @@ toggleAttachedField = function () {
 
 $(document).on("change", "[data-toggles]", toggleAttachedField);
 
-$(document).on("ready turbolinks:load", function() {
+$(document).on("ready turbo:load", function() {
   $('[data-toggles]').each(toggleAttachedField);
 });

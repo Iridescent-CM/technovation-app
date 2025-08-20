@@ -639,7 +639,7 @@ RSpec.describe TeamSubmission do
 
     expect(sub.reload).to be_complete
 
-    RequiredFields.new(sub).each do |field|
+    Submissions::RequiredFields.new(sub).each do |field|
       if field.method_name == :screenshots
         sub.screenshots.destroy_all
       elsif field.method_name == :development_platform_text
@@ -931,7 +931,7 @@ RSpec.describe TeamSubmission do
     let(:team_submission) { TeamSubmission.new }
 
     before do
-      allow(RequiredFields).to receive(:new).with(team_submission).and_return(required_fields)
+      allow(Submissions::RequiredFields).to receive(:new).with(team_submission).and_return(required_fields)
     end
 
     let(:required_fields) { [double("required fields", method_name: :app_name, blank?: true, complete?: false)] }

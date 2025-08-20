@@ -10,7 +10,7 @@ import ResultCard from '../components/ResultCard'
 
 Vue.use(Vue2Filters)
 
-document.addEventListener('turbolinks:load', () => {
+document.addEventListener('turbo:load', () => {
   const appElem = document.querySelector('#vue-enable-student-app')
 
   if (appElem) {

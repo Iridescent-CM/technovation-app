@@ -10,7 +10,7 @@
 //= require submissions
 //= require dropzones
 
-document.addEventListener("turbolinks:load", function () {
+document.addEventListener("turbo:load", function () {
   $("#bg-check-invite-btn").on("click", function (e) {
     $(this).addClass("button--disabled");
     $("#overlay").fadeIn(300);

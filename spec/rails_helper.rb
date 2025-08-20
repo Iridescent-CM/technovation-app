@@ -55,7 +55,6 @@ RSpec.configure do |config|
 
   config.include JudgingHelper
   config.include WebMock::API
-  config.include DataAnalyses, type: :feature
 
   config.include ExternalResourceHelper
 

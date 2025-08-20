@@ -4,9 +4,9 @@
 <% provide :main_header, render('application/templates/tg_green_header', heading: "Technovation Girls") %>
 
 <% content_for :js,
-  javascript_packs_with_chunks_tag("judge", data: { turbolinks_track: :reload }) %>
+  javascript_packs_with_chunks_tag("judge", data: { turbo_track: :reload }) %>
 
 <% provide :additional_css,
-  stylesheet_packs_with_chunks_tag("judge", data: { turbolinks_track: :reload }) %>
+  stylesheet_packs_with_chunks_tag("judge", data: { turbo_track: :reload }) %>
 
 <%= render template: "layouts/application_rebrand" %>

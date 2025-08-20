@@ -12,7 +12,7 @@ module StudentHelper
   end
 
   def completion_css(submission, piece)
-    submission.public_send("#{piece}_complete?") ?
+    submission.public_send(:"#{piece}_complete?") ?
       "complete" :
       "incomplete"
   end
@@ -24,7 +24,7 @@ module StudentHelper
     when :team_photo
       :complete if submission.team_photo_uploaded?
     when :app_name
-      if RequiredField.for(submission, :app_name).complete?
+      if Submissions::RequiredField.for(submission, :app_name).complete?
         :complete
       end
     when :app_description
@@ -43,10 +43,10 @@ module StudentHelper
       :complete if submission.screenshots.many?
     when :development_platform
       development_platform_complete = submission.app_inventor_fields_complete? ||
-          submission.thunkable_fields_complete? ||
-          submission.scratch_fields_complete? ||
-          submission.code_org_app_lab_fields_complete? ||
-          submission.other_fields_complete?
+        submission.thunkable_fields_complete? ||
+        submission.scratch_fields_complete? ||
+        submission.code_org_app_lab_fields_complete? ||
+        submission.other_fields_complete?
       :complete if development_platform_complete && (submission.beginner_division? || !submission.ai_usage.nil?)
     when :source_code, :source_code_url
       if submission.thunkable_source_code_fields_complete? ||

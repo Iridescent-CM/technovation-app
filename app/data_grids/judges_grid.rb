@@ -139,7 +139,7 @@ class JudgesGrid
     link_to(
       "view",
       send(:"#{current_scope}_participant_path", account, search_in_region: 1),
-      data: {turbolinks: false}
+      data: {turbo: false}
     )
   end
 

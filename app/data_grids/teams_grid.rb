@@ -166,8 +166,8 @@ class TeamsGrid
   column :actions, mandatory: true, html: true do |team|
     link_to(
       "view",
-      send("#{current_scope}_team_path", team),
-      data: {turbolinks: false}
+      send(:"#{current_scope}_team_path", team),
+      data: {turbo: false}
     )
   end
 
