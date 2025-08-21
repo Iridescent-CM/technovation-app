@@ -1,5 +1,3 @@
-require "./app/constants/badge_levels"
-
 class DetermineCertificates
   private
 
@@ -12,7 +10,7 @@ class DetermineCertificates
   end
 
   def eligible_types
-    types = CERTIFICATE_TYPES.keys.select do |certificate_type|
+    types = CertificateTypes::CERTIFICATE_TYPES.keys.select do |certificate_type|
       gets_certificate?(certificate_type)
     end
 
@@ -36,11 +34,11 @@ class DetermineCertificates
   end
 
   def gets_certificate?(certificate_type)
-    send("gets_#{certificate_type}_certificate?")
+    send(:"gets_#{certificate_type}_certificate?")
   end
 
   def needed_recipients(certificate_type)
-    send("needed_#{certificate_type}_recipients")
+    send(:"needed_#{certificate_type}_recipients")
   end
 
   def gets_quarterfinalist_certificate?
@@ -173,7 +171,7 @@ class DetermineCertificates
       !@account.judge_profile.suspended? &&
       !@account.judge_profile.events.any? &&
       @account.judge_profile.completed_scores.by_season(season).any? &&
-      @account.judge_profile.completed_scores.by_season(season).count == NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
+      @account.judge_profile.completed_scores.by_season(season).count == BadgeLevels::NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
   end
 
   def needed_bronze_judge_recipients
@@ -187,9 +185,9 @@ class DetermineCertificates
   def gets_silver_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count <= MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
+      @account.judge_profile.completed_scores.by_season(season).count <= BadgeLevels::MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
       (@account.judge_profile.events.any? ||
-       @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_SILVER_JUDGE)
+       @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_SILVER_JUDGE)
   end
 
   def needed_silver_judge_recipients
@@ -203,7 +201,7 @@ class DetermineCertificates
   def gets_gold_judge_certificate?
     @account.judge_profile.present? &&
       !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count >= MINIMUM_SCORES_FOR_GOLD_JUDGE
+      @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_GOLD_JUDGE
   end
 
   def needed_gold_judge_recipients

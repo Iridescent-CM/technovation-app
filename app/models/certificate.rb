@@ -1,7 +1,7 @@
 class Certificate < ApplicationRecord
   include Seasoned
 
-  enum cert_type: CERTIFICATE_TYPES
+  enum cert_type: CertificateTypes::CERTIFICATE_TYPES
 
   belongs_to :account
   belongs_to :team, required: false
@@ -9,15 +9,15 @@ class Certificate < ApplicationRecord
   mount_uploader :file, FileProcessor
 
   scope :judge_types, -> {
-    where(cert_type: JUDGE_CERTIFICATE_TYPES.keys)
+    where(cert_type: CertificateTypes::JUDGE_CERTIFICATE_TYPES.keys)
   }
 
   scope :student_types, -> {
-    where(cert_type: STUDENT_CERTIFICATE_TYPES.keys)
+    where(cert_type: CertificateTypes::STUDENT_CERTIFICATE_TYPES.keys)
   }
 
   scope :mentor_types, -> {
-    where(cert_type: MENTOR_CERTIFICATE_TYPES.keys)
+    where(cert_type: CertificateTypes::MENTOR_CERTIFICATE_TYPES.keys)
   }
 
   scope :for_team, ->(team) {

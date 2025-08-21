@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 ruby "3.1.2"
 
-gem "rails", "~> 6.1.7.0"
+gem "rails", "7.0.8"
 gem "rack", ">= 2.2.13"
 
 gem "puma", "~> 5.6.9"
@@ -28,7 +28,7 @@ gem "uglifier", "~> 3.2"
 
 gem "turbolinks", "~> 5.2"
 gem "jquery-rails", "~> 4.3"
-gem "jquery-ui-rails", "~> 7.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
+gem "jquery-ui-rails", "~> 8.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
 gem "lodash-rails", "~> 4.17"
 gem "dropzonejs-rails", "~> 0.8"
 gem "webpacker", "~> 5.x"
@@ -37,9 +37,10 @@ gem "cocoon", "~> 1.2"
 
 gem "sass-rails", "~> 6.0"
 gem "sprockets", "3.7.2"
+gem "sprockets-rails"
 gem "normalize-rails", "~> 4.1"
 
-gem "rails-i18n", "~> 6.0.0"
+gem "rails-i18n", "~> 7.0"
 gem "i18n-js", "~> 4.0"
 gem "clipboard-rails", "~> 1.7"
 gem "will_paginate", "~> 3.1"
@@ -112,8 +113,8 @@ group :development do
   gem "listen", "~> 3.1"
   gem "churn", "~> 1.0", require: false
   gem "web-console", "~> 3.7"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
+  gem "spring", "~> 4.4"
+  gem "spring-watcher-listen", "~> 2.1"
   gem "bullet"
   gem "brakeman", require: false
 end
