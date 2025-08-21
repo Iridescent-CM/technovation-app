@@ -156,12 +156,26 @@
 
 <div class="grid">
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
-    <% if @account.mentor_profile && @account.mentor_profile.chapterable_assignments.any? %>
-      <h3 class="reset">Chapter & club assignments</h3>
+    <h3 class="reset">Chapter & club assignments</h3>
 
-      <%= render 'admin/participants/chapterable_assignments',
-        chapterable_assignments: @account.mentor_profile.chapterable_assignments %>
-    <% end %>
+    <div class="panel" style="max-height: 400px; overflow-y: scroll;">
+      <% if @account.chapterable_assignments.any? %>
+        <% if @account.chapterable_assignments.current.any? %>
+          <h5>Current Assignments</h5>
+          <%= render 'admin/participants/chapterable_assignments',
+            chapterable_assignments: @account.chapterable_assignments.current %>
+        <% end %>
+
+        <% if @account.chapterable_assignments.past.any? %>
+          <h5>Previous Assignments</h5>
+
+          <%= render 'admin/participants/chapterable_assignments',
+            chapterable_assignments: @account.chapterable_assignments.past %>
+        <% end %>
+      <% else %>
+        <p>No current or previous assignments</p>
+      <% end %>
+    </div>
 
     <h3 class="reset">Profile debugging</h3>
 
