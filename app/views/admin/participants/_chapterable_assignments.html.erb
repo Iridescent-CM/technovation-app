@@ -1,26 +1,33 @@
-<div class="panel">
-  <ul>
-    <% chapterable_assignments.each do |chapterable_assignment| %>
-      <li>
-        <%= link_to chapterable_assignment.chapterable.name.presence || "Name not set",
-          send("admin_#{chapterable_assignment.chapterable_type.downcase}_path", chapterable_assignment.chapterable) %>
-        <% if chapterable_assignment.primary? %>
-          <span class="hint">*Primary</span>
-        <% end %>
-        <ul>
-          <li>
-            Type: <%= chapterable_assignment.chapterable_type %>
-          </li>
+<ul>
+  <% chapterable_assignments.each do |chapterable_assignment| %>
+    <li>
+      <%= link_to chapterable_assignment.chapterable.name.presence || "Name not set",
+        send("admin_#{chapterable_assignment.chapterable_type.downcase}_path", chapterable_assignment.chapterable) %>
+      <% if chapterable_assignment.primary? %>
+        <span class="hint">*Primary</span>
+      <% end %>
+      <ul>
+        <li>
+          Season: <%= chapterable_assignment.season %>
+        </li>
 
-          <li>
-            Id: <%= chapterable_assignment.chapterable.id %>
-          </li>
+        <li>
+          For: <%= chapterable_assignment.profile_type.titleize %>
+        </li>
 
-          <li>
-            Assignment By: <%= chapterable_assignment.assignment_by&.name&.presence || "<em>NA</em>".html_safe %>
-          </li>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
-</div>
+        <li>
+          Type: <%= chapterable_assignment.chapterable_type %>
+        </li>
+
+        <li>
+          Id: <%= chapterable_assignment.chapterable.id %>
+        </li>
+
+        <li>
+          Assignment By: <%= chapterable_assignment.assignment_by&.name&.presence || "<em>NA</em>".html_safe %>
+        </li>
+      </ul>
+    </li>
+  <% end %>
+</ul>
+
