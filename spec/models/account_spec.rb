@@ -1492,4 +1492,102 @@ RSpec.describe Account do
       end
     end
   end
+
+  describe "#chapterables_available_in_area?" do
+    before do
+      allow(ChapterSelector).to receive(:new).with(account: account).and_return(chapter_selector)
+      allow(ClubSelector).to receive(:new).with(account: account).and_return(club_selector)
+    end
+
+    let(:account) { FactoryBot.create(:account, :mentor) }
+    let(:chapter_selector) { instance_double(ChapterSelector) }
+    let(:club_selector) { instance_double(ClubSelector) }
+
+    before do
+      allow(chapter_selector).to receive(:call).and_return(chapter_selector_results)
+
+      allow(club_selector).to receive(:call).and_return(club_selector_results)
+    end
+
+    let(:chapter_selector_results) { {} }
+    let(:club_selector_results) { {} }
+
+    context "when chapters are available" do
+      let(:chapter_selector_results) do
+        {chapters_in_state_province: [{name: "Chapter X"}]}
+      end
+
+      it "returns true" do
+        expect(account.chapterables_available_in_area?).to eq(true)
+      end
+    end
+
+    context "when clubs are available" do
+      let(:club_selector_results) do
+        {clubs_in_state_province: [{name: "Club Y"}]}
+      end
+
+      it "returns true" do
+        expect(account.chapterables_available_in_area?).to eq(true)
+      end
+    end
+
+    context "when no chapters or clubs are available" do
+      let(:chapter_selector_results) { {} }
+      let(:club_selector_results) { {} }
+
+      it "returns false" do
+        expect(account.chapterables_available_in_area?).to eq(false)
+      end
+    end
+  end
+
+  describe "#no_chapterables_available_in_area?" do
+    before do
+      allow(ChapterSelector).to receive(:new).with(account: account).and_return(chapter_selector)
+      allow(ClubSelector).to receive(:new).with(account: account).and_return(club_selector)
+    end
+
+    let(:account) { FactoryBot.create(:account, :mentor) }
+    let(:chapter_selector) { instance_double(ChapterSelector) }
+    let(:club_selector) { instance_double(ClubSelector) }
+
+    before do
+      allow(chapter_selector).to receive(:call).and_return(chapter_selector_results)
+
+      allow(club_selector).to receive(:call).and_return(club_selector_results)
+    end
+
+    let(:chapter_selector_results) { {} }
+    let(:club_selector_results) { {} }
+
+    context "when no chapters or clubs are available" do
+      let(:chapter_selector_results) { {} }
+      let(:club_selector_results) { {} }
+
+      it "returns true" do
+        expect(account.no_chapterables_available_in_area?).to eq(true)
+      end
+    end
+
+    context "when chapters are available" do
+      let(:chapter_selector_results) do
+        {chapters_in_state_province: [{name: "Chapter M"}]}
+      end
+
+      it "returns false" do
+        expect(account.no_chapterables_available_in_area?).to eq(false)
+      end
+    end
+
+    context "when clubs are available" do
+      let(:club_selector_results) do
+        {clubs_in_state_province: [{name: "Club N"}]}
+      end
+
+      it "returns false" do
+        expect(account.no_chapterables_available_in_area?).to eq(false)
+      end
+    end
+  end
 end
