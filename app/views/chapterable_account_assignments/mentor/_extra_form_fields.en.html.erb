@@ -16,7 +16,10 @@
 
   <div class="mt-4 p-2 border" style="background-color: #f0f9ff;">
     <div>
-      <%= check_box_tag :mentor_profile_accepting_team_invites %>
+      <%= check_box_tag :mentor_profile_accepting_team_invites,
+        true,
+        current_account.mentor_profile.accepting_team_invites
+      %>
 
       <%= label_tag :mentor_profile_accepting_team_invites,
         "Allow teams to find you in search results and invite you to join",
@@ -24,7 +27,10 @@
     </div>
 
     <div class="mt-2">
-      <%= check_box_tag :mentor_profile_virtual %>
+      <%= check_box_tag :mentor_profile_virtual,
+        true,
+        current_account.mentor_profile.virtual?
+      %>
 
       <%= label_tag :mentor_profile_virtual,
         "Indicate to teams that you can be an online, remote mentor",
