@@ -38,9 +38,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   has_many :exports, as: :owner, dependent: :destroy
   has_many :regional_pitch_events
 
-  has_many :messages, as: :sender
-  has_many :multi_messages, as: :sender
-
   has_many :chapterable_assignments, as: :profile, class_name: "ChapterableAccountAssignment"
   has_many :chapter_links, dependent: :destroy
 
