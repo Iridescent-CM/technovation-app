@@ -234,10 +234,6 @@ Rails.application.routes.draw do
     resource :team_list, only: :show
 
     resources :judges, only: :index
-
-    resources :messages
-    resources :multi_messages
-    resources :message_deliveries, only: :create
   end
 
   namespace :club_ambassador do
