@@ -132,6 +132,7 @@
         <% elsif current_account.assigned_to_chapterable? %>
           <%= simple_form_for @chapterable_assignment do |f| %>
             <%= render "none_of_the_above_option" %>
+            <%= render "chapterable_account_assignments/mentor/extra_form_fields" %>
 
             <%= f.submit "Save", class: "tw-green-btn cursor-pointer mt-8" %>
           <% end %>
