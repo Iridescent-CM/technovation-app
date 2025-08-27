@@ -40,6 +40,14 @@
             class: "tw-green-btn"
           %>
         </div>
+      <% elsif current_account.no_chapterables_available_in_area? %>
+        <p class="font-bold">
+          Your current Chapter or Club
+        </p>
+
+        <p>
+          Currently, there are no Technovation chapters or clubs in your country.
+        </p>
       <% else %>
         <p class="font-bold">
           Your current Chapter or Club

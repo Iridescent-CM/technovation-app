@@ -1097,6 +1097,17 @@ class Account < ActiveRecord::Base
       !(mentor_profile.present? or judge_profile.present?)
   end
 
+  def chapterables_available_in_area?
+    chapters = ChapterSelector.new(account: self).call
+    clubs = ClubSelector.new(account: self).call
+
+    chapters.values.flatten.present? || clubs.values.flatten.present?
+  end
+
+  def no_chapterables_available_in_area?
+    !chapterables_available_in_area?
+  end
+
   def assigned_to_chapterable?
     assigned_to_chapter? || assigned_to_club?
   end
