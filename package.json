@@ -1,33 +1,6 @@
 {
-  "scripts": {
-    "test": "jest"
-  },
   "engines": {
     "node": ">=16.0.0 <17"
-  },
-  "jest": {
-    "roots": [
-      "spec/javascript"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "app/javascript"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "vue"
-    ],
-    "moduleNameMapper": {
-      "@appjs(.*)$": "<rootDir>/app/javascript/$1",
-      "@assetsjs(.*)$": "<rootDir>/app/assets/javascripts/$1",
-      "@vendorjs(.*)$": "<rootDir>/vendor/assets/javascripts/$1",
-      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
-    },
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.vue$": "@vue/vue2-jest"
-    }
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.3",
@@ -71,16 +44,10 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.3",
-    "@vue/vue2-jest": "26.0.1",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^26.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.1.0",
     "prettier": "2.7.1",
     "webpack-dev-server": "^3.11.3"
   }
