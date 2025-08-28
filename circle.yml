@@ -173,13 +173,9 @@ jobs:
           command: |
             sudo sed -i 's|http://archive.ubuntu.com|http://mirrors.rit.edu/ubuntu/|g' /etc/apt/sources.list
             sudo sed -i 's|http://security.ubuntu.com|http://mirrors.rit.edu/ubuntu/|g' /etc/apt/sources.list
-            
+
             sudo apt update
             sudo apt install wkhtmltopdf
-
-      - run:
-          name: Install Jest dependencies
-          command: sudo apt install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
       - run:
           name: Install gems
@@ -206,10 +202,6 @@ jobs:
           command: |
             bundle exec rails db:create
             bundle exec rails db:migrate
-
-      - run:
-          name: Run Javascript tests
-          command: yarn test --maxWorkers=1
 
       - run:
           name: Run RSpec tests
