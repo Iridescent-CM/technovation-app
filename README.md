@@ -62,12 +62,6 @@ Install imagemagick
 brew install imagemagick
 ```
 
-Install canvas polyfill requirements for Jest test runner
-
-```
-brew install pkg-config cairo libpng jpeg giflib
-```
-
 Install pdftk
 
 [https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)

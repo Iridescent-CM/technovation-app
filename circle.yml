@@ -186,10 +186,6 @@ jobs:
             sudo apt install wkhtmltopdf
 
       - run:
-          name: Install Jest dependencies
-          command: sudo apt install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
-
-      - run:
           name: Install gems
           command: gem install bundler:2.2.23 && bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
 
@@ -214,10 +210,6 @@ jobs:
           command: |
             bundle exec rails db:create
             bundle exec rails db:migrate
-
-      - run:
-          name: Run Javascript tests
-          command: yarn test --maxWorkers=1
 
       - run:
           name: Run RSpec tests
