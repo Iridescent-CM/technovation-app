@@ -29,9 +29,8 @@ module CheckrApiClient
         if candidate_resp.success?
           @candidate_id = candidate_resp_body[:id]
         else
-          error = candidate_resp_body[:error]
-          error_msg = error.is_a?(Array) ? error.join(", ") : error
-          handle_error(error_msg)
+          error = Array(candidate_resp_body[:error]).join(", ")
+          handle_error(error)
         end
       end
 
