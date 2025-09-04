@@ -1,80 +1,97 @@
-<%= render 'application/spinner' %>
+<%= render layout: "application/templates/dashboards/energetic_container", locals: {heading: "Background Check"} do %>
+  <div class="mb-4">
+    <p class="font-medium"><strong>Background Check Process</strong></p>
 
-<div class="grid grid--justify-center">
-  <div class="grid__col-sm-6">
-    <div class="grid grid--bleed">
-      <div class="grid__col-12">
-        <div class="panel">
-          <h3><strong>Background Check Process</strong></h3>
+    <p class="mb-4">
+      Technovation uses
+      <%= link_to "Checkr", "https://checkr.com/product/screenings/",
+        rel: "noopener noreferrer",
+        target: "_blank", class: "tw-link" %>,
+      a third-party screening service, to conduct our background checks.
 
-          <p>
-            Technovation uses
-            <%= link_to "Checkr", "https://checkr.com/product/screenings/",
-                        rel: "noopener noreferrer",
-                        target: "_blank" %>,
-            a third-party screening service, to conduct our background checks.
-            We complete these checks for mentors as a safety measure before
-            they are able to match with a Technovation team.
-          </p>
+      <% if current_scope == "mentor" %>
+        We complete these checks for mentors as a safety measure before
+        they are able to match with a Technovation team.
+      <% elsif current_scope == "chapter_ambassador" || current_scope == "club_ambassador" %>
+        We complete these checks for <%= current_scope.split("_").first.capitalize %> Ambassadors before they are granted
+        access to the students’ data such as names and email addresses.
+      <% end %>
+    </p>
 
-          <p>
-            After you click the “Request background check invitation” button, you will
-            receive an email invitation from Checkr with a link to their site. You will
-            be prompted on the Checkr site to provide the information required by your
-            country in order to perform a criminal background check. After submitting your
-            information, you can visit the
-            <%= link_to "Checkr Applicant Portal",
-                        "//applicant.checkr.com",
-                        target: "_blank" %>
-            to review the status of your check. Some checks may take up to 7-10 business days to complete.
-          </p>
+    <p class="mb-4">
+      After you click the “Request background check invitation” button, you will
+      receive an email invitation from Checkr with a link to their site. You will
+      be prompted on the Checkr site to provide the information required by your
+      country in order to perform a criminal background check. After submitting your
+      information, you can visit the
+      <%= link_to "Checkr Applicant Portal",
+        "//applicant.checkr_api_client.com",
+        target: "_blank", class: "tw-link" %>
+      to review the status of your check. Some checks may take up to 7-10 business days to complete.
+    </p>
 
-          <p>
-            You will receive an email from us when your background check clears. Once your
-            background check has cleared, you will be able to match with an existing Technovation
-            team or create a new team.
-          </p>
-        </div>
-      </div>
-
-      <div class="grid__col-12">
-        <div class="panel">
-          <h3>Security Information</h3>
-
-          <p>
-            You will enter all personally identifiable information needed to complete the background
-            check on the secure Checkr website. Technovation will not view or store this information
-            in our application. More information about Checkr’s security and data privacy is available
-            <%= link_to "on their site",
-                        "https://checkr.com/trust-and-security",
-                        target: "_blank" %>.
-          </p>
-
-          <p>
-            Checkr provides Technovation a secret, randomized token to keep track of the status of your
-            invitation request and background check. We view this information by logging into our administrative
-            Checkr dashboard. None of your information will be stored on our servers.
-          </p>
-
-          <p>
-            Please contact us at <%= mail_to ENV.fetch("HELP_EMAIL") %> with any questions or feedback.
-          </p>
-        </div>
-      </div>
-    </div>
+    <p>
+      You will receive an email from us when your background check clears. Once your
+      background check has cleared,
+      <% if current_scope == "mentor" %>
+        you will be able to match with an existing Technovation team or create a new team.
+      <% elsif current_scope == "chapter_ambassador" || current_scope == "club_ambassador" %>
+        and you have completed the other onboarding steps, you will be able to access the administrative
+        information for your chapter.
+      <% end %>
+    </p>
   </div>
 
-  <div class="grid__col-sm-5">
-    <div class="panel">
-      <h3><%= t("views.background_checks.new.international_title") %></h3>
-      <%= link_to "Request background check invitation",
-                  mentor_background_check_invitation_path,
-                  class: "button",
-                  id: "bg-check-invite-btn",
-                  data:{
-                    method: :post
-                  }
-      %>
-    </div>
+  <div class="mb-4">
+    <p class="font-semibold">Identification Documents</p>
+
+    <p class="mb-4">
+      In order to apply for a background check, volunteers whose location on
+      the Technovation platform is listed as in the United States must have a
+      Social Security Number (SSN). If your location is listed as within the
+      United States and you have an ITIN or other legal identifier number,
+      please reach out to the Technovation Team at
+      <%= mail_to "volunteers@technovation.org" %>
+      before requesting a background check.
+    </p>
+
+    <p>
+      If your location on the Technovation platform is listed as outside of
+      the United States, you will have the option to select from a list of
+      identifying documents requested by your country.
+    </p>
   </div>
-</div>
+
+  <div class="mb-8">
+    <p class="font-semibold">Security Information</p>
+
+    <p class="mb-4">
+      You will enter all personally identifiable information needed to complete the background
+      check on the secure Checkr website. Technovation will not view or store this information
+      in our application. More information about Checkr’s security and data privacy is available
+      <%= link_to "on their site",
+        "https://checkr.com/trust-and-security",
+        target: "_blank", class: "tw-link" %>.
+    </p>
+
+    <p class="mb-4">
+      Checkr provides Technovation a secret, randomized token to keep track of the status of your
+      invitation request and background check. We view this information by logging into our administrative
+      Checkr dashboard. None of your information will be stored on our servers.
+    </p>
+
+    <p>
+      Please contact us at <%= mail_to ENV.fetch("HELP_EMAIL") %> with any questions or feedback.
+    </p>
+  </div>
+
+  <div class="flex flex-row">
+    <%= link_to "Request background check invitation",
+      send("#{current_scope}_background_check_invitation_path"),
+      class: "tw-green-btn mx-auto",
+      id: "bg-check-invite-btn",
+      data:{
+        method: :post
+      } %>
+  </div>
+<% end %>
