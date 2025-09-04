@@ -12,31 +12,31 @@
 <div class="ml-8 mb-8">
   <ol role="list" class="space-y-4">
     <%= render "application/templates/sub_checklist_item",
-               name: "Brand Guidelines",
-               url: ENV.fetch("CHAPTER_AMBASSADOR_BRAND_GUIDELINES_URL"),
-               new_tab: true,
-               is_complete: false
+      name: "Brand Guidelines",
+      url: ENV.fetch("BRAND_GUIDELINES_URL"),
+      new_tab: true,
+      is_complete: false
     %>
 
     <%= render "application/templates/sub_checklist_item",
-               name: "Social Media Guidelines",
-               url: ENV.fetch("CHAPTER_AMBASSADOR_SOCIAL_MEDIA_GUIDELINES_URL"),
-               new_tab: true,
-               is_complete: false
+      name: "Social Media Guidelines",
+      url: ENV.fetch("SOCIAL_MEDIA_GUIDELINES_URL"),
+      new_tab: true,
+      is_complete: false
     %>
 
     <%= render "application/templates/sub_checklist_item",
-               name: "Code of Conduct",
-               url: ENV.fetch("CHAPTER_AMBASSADOR_CODE_OF_CONDUCT_URL"),
-               new_tab: true,
-               is_complete: false
+      name: "Code of Conduct",
+      url: ENV.fetch("CODE_OF_CONDUCT_URL"),
+      new_tab: true,
+      is_complete: false
     %>
 
     <%= render "application/templates/sub_checklist_item",
-               name: "Safety Page",
-               url: ENV.fetch("INTERNET_SAFETY_URL"),
-               new_tab: true,
-               is_complete: false
+      name: "Safety Page",
+      url: ENV.fetch("INTERNET_SAFETY_URL"),
+      new_tab: true,
+      is_complete: false
     %>
   </ol>
 </div>
