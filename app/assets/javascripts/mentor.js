@@ -17,8 +17,6 @@ document.addEventListener("turbo:load", function () {
     $("#spinner-text").text("Processing your request...");
   });
 
-  $("#background_check_candidate_ssn").mask("999-99-9999?");
-
   $(".show-hide").on("click", "a", function (e) {
     e.preventDefault();
     const state = $(this).data("state"),
