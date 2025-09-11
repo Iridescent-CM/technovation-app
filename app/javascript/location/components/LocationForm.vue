@@ -18,7 +18,8 @@
 
       <div v-if="suggestions.length" class="flash">
         We couldn't match exact results to the information that you gave us.<br />
-        Select a result below, or try the form fields again.
+        If the location you entered returns several options, please click the
+        one of the lines for the option that best matches your location.
       </div>
 
       <div class="p-6">
@@ -297,10 +298,13 @@ export default {
   },
 
   mounted() {
-    if (window.location.pathname === "/chapter_ambassador/chapter_location/edit") {
+    if (
+      window.location.pathname === "/chapter_ambassador/chapter_location/edit"
+    ) {
       this.openAlertMessage({ chapterableType: "chapter" });
-    }
-    else if (window.location.pathname === "/club_ambassador/club_location/edit") {
+    } else if (
+      window.location.pathname === "/club_ambassador/club_location/edit"
+    ) {
       this.openAlertMessage({ chapterableType: "club" });
     }
   },
@@ -600,8 +604,7 @@ export default {
 
       if (this.scopeName === "chapter_ambassador" && this.chapterId) {
         endpointRoot = `/chapter_ambassador/chapter_${pathPart}`;
-      }
-      else if (this.scopeName === "club_ambassador" && this.clubId) {
+      } else if (this.scopeName === "club_ambassador" && this.clubId) {
         endpointRoot = `/club_ambassador/club_${pathPart}`;
       } else {
         endpointRoot = `/${this.scopeName}/${pathPart}`;
@@ -643,36 +646,18 @@ export default {
 
 <style lang="scss" scoped>
 label:not(:first-child) {
-  margin: 2rem 0 0;
+  @apply mt-8;
 }
 
 .Rtable {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0;
-  padding: 0;
+  @apply flex flex-wrap m-0 p-0;
 }
 
 .suggestion {
-  transition: background-color 0.2s;
-
-  &:hover {
-    background: rgba(135, 206, 235, 0.7);
-  }
-
-  .Rtable-cell {
-    cursor: pointer;
-  }
+  @apply transition-colors duration-200 hover:bg-sky-200;
 }
 
 .Rtable-cell {
-  flex-grow: 1;
-  width: 100%; // Default to full width
-  overflow: hidden; // Or flex might break
-  list-style: none;
-}
-
-.Rtable--3cols > .Rtable-cell {
-  width: 33.33% !important;
+  @apply cursor-pointer flex-grow w-full overflow-hidden w-1/3;
 }
 </style>
