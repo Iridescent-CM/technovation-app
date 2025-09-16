@@ -4,7 +4,7 @@
   <p class="font-medium">Pitch Presentation Slides</p>
   <% if team.selected_regional_pitch_event.live? %>
     <% if submission.pitch_presentation_url_complete? %>
-      <div class="bg-gray-200 p-4 rounded">
+      <div class="bg-gray-200 p-4 rounded-sm">
         Your team has uploaded:
         <%= link_to submission.pitch_presentation_filename,
           submission.pitch_presentation_url %>

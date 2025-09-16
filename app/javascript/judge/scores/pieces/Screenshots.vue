@@ -10,7 +10,7 @@
       class="w-full lg:w-1/3 h-64 p-4 flex flex-col justify-center items-center"
     >
       <img
-        class="judge-screenshot-modal object-cover h-full w-full rounded"
+        class="judge-screenshot-modal object-cover h-full w-full rounded-sm"
         :src="filestackResizeUrl(screenshot.full)"
         :data-modal-url="screenshot.full"
         :data-modal-idx="i"

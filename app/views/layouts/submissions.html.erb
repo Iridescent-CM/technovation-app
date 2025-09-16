@@ -81,7 +81,7 @@
                 <%= link_to "Back: #{yield(:back_link_txt)}",
                             yield(:back_link),
                             data: { turbo: false },
-                            class: "submission-nav__back-btn w-auto px-4 py-2 rounded bg-tg-green text-white font-medium0"
+                            class: "submission-nav__back-btn w-auto px-4 py-2 rounded-sm bg-tg-green text-white font-medium0"
                 %>
               <% else %>
                 <span></span>
@@ -91,7 +91,7 @@
                 <%= link_to "Next: #{yield(:next_link_txt)}",
                             yield(:next_link),
                             data: { turbo: false },
-                            class: "submission-nav__next-btn w-auto px-4 py-2 rounded bg-tg-green text-white font-medium" %>
+                            class: "submission-nav__next-btn w-auto px-4 py-2 rounded-sm bg-tg-green text-white font-medium" %>
               <% end %>
             </nav>
           <% end %>

@@ -1,7 +1,7 @@
 <% provide :title, "Review Score" %>
 
 <% if current_scope == "mentor" %>
-  <div class="bg-gray-100 rounded shadow-md w-full mx-auto mb-8 p-8">
+  <div class="bg-gray-100 rounded-sm shadow-md w-full mx-auto mb-8 p-8">
     <h3>
       <span>Team</span>
       <%= link_to score.team_name, mentor_team_path(score.team) %>
