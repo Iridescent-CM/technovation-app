@@ -382,20 +382,6 @@ class Account < ActiveRecord::Base
       Team.none
   end
 
-  def chapter_ambassador
-    chapter_ambassador = ::NullChapterAmbassador.new
-
-    if valid_address?
-      chapter_ambassador = find_chapter_ambassador_by_state
-
-      unless chapter_ambassador.present?
-        chapter_ambassador = find_chapter_ambassador_by_country
-      end
-    end
-
-    chapter_ambassador
-  end
-
   scope :not_staff, -> {
     where.not("accounts.email ILIKE ?", "%joesak%")
   }
@@ -1247,51 +1233,6 @@ class Account < ActiveRecord::Base
       :state_province,
       :country
     ].any? { |attr| saved_change_to_attribute?(attr) }
-  end
-
-  def find_chapter_ambassador_by(query)
-    results = Account.current
-      .joins(:approved_chapter_ambassador_profile)
-      .not_staff
-      .where(
-        "chapter_ambassador_profiles.intro_summary NOT IN ('')
-        AND chapter_ambassador_profiles.intro_summary IS NOT NULL"
-      )
-      .where(query)
-
-    account = if address_details.blank?
-      results.first
-    else
-      results
-        .near(
-          address_details,
-          SearchMentors::EARTH_CIRCUMFERENCE
-        )
-        .first
-    end
-
-    if account
-      account.chapter_ambassador_profile
-    else
-      ::NullChapterAmbassador.new
-    end
-  end
-
-  def find_chapter_ambassador_by_state
-    find_chapter_ambassador_by({
-      "accounts.country" => country_code,
-      "accounts.state_province" => state_code
-    })
-  end
-
-  def find_chapter_ambassador_by_country
-    if country == "US"
-      ::NullChapterAmbassador.new
-    else
-      find_chapter_ambassador_by({
-        "accounts.country" => country_code
-      })
-    end
   end
 
   def update_mentor_searchability_status

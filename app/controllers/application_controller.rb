@@ -71,12 +71,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def chapter_ambassador
-    return @chapter_ambassador if defined?(@chapter_ambassador)
-
-    @chapter_ambassador = region_account.chapter_ambassador
-  end
-
   def save_redirected_path
     set_cookie(CookieNames::REDIRECTED_FROM, request.fullpath)
   end
