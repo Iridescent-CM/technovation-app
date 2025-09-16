@@ -28,9 +28,6 @@ Rails.application.configure do
     "Expires" => "#{1.year.from_now.to_formatted_s(:rfc822)}"
   }
 
-  # Compress JavaScripts and CSS.
-  config.assets.js_compressor = Uglifier.new(harmony: true)
-
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
