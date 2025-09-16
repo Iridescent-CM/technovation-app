@@ -658,6 +658,6 @@ label:not(:first-child) {
 }
 
 .Rtable-cell {
-  @apply cursor-pointer flex-grow w-full overflow-hidden w-1/3;
+  @apply cursor-pointer grow w-full overflow-hidden w-1/3;
 }
 </style>

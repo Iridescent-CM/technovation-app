@@ -8,7 +8,7 @@
       <% join_requests.each do |join_request| %>
         <li class="py-4">
           <div class="flex items-center space-x-4">
-            <div class="flex-shrink-0 self-start">
+            <div class="shrink-0 self-start">
               <%= link_to(
                 send(
                   "student_#{join_request.requestor_scope_name}_path",
@@ -51,7 +51,7 @@
                     confirm: t("views.application.confirm_approved", name: join_request.requestor_first_name),
                     positive: true
                   },
-                  class: "px-2 py-2 mr-2 rounded shadow-sm text-sm text-white hover:text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  class: "px-2 py-2 mr-2 rounded-sm shadow-xs text-sm text-white hover:text-white bg-green-500 hover:bg-green-600 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 ) %>
 
               <%= link_to(
@@ -61,7 +61,7 @@
                 method: :put,
                 confirm: t("views.application.confirm_declined", name: join_request.requestor_first_name),
               },
-              class: "px-2 py-2 rounded shadow-sm text-sm text-gray-100 hover:text-gray-100 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              class: "px-2 py-2 rounded-sm shadow-xs text-sm text-gray-100 hover:text-gray-100 bg-red-600 hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             ) %>
               </div>
             </div>

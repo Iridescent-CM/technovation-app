@@ -3,7 +3,7 @@
 
 <%= render 'public/dashboards/homepage_banner' if ENV.fetch("ENABLE_HOMEPAGE_BANNER", false) %>
 
-<div class="w-full lg:w-1/2 mx-auto border-2 shadow-md rounded">
+<div class="w-full lg:w-1/2 mx-auto border-2 shadow-md rounded-sm">
   <div class="p-8">
     <%= determine_homepage_content %>
   </div>
