@@ -23,7 +23,6 @@ gem "counter_culture", "~> 1.12"
 gem "pundit", "~> 2.0"
 
 gem "autoprefixer-rails", "~> 6.7"
-gem "uglifier", "~> 3.2"
 
 gem "turbo-rails", "~> 2.0.0"
 gem "stimulus-rails", "~> 1.3.0"
