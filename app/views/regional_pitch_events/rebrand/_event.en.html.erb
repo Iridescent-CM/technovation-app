@@ -1,6 +1,6 @@
 <% multiple_events ||= false %>
 
-<div class="<%= 'border-solid rounded border-4 p-4 mb-4' if multiple_events %>">
+<div class="<%= 'border-solid rounded-sm border-4 p-4 mb-4' if multiple_events %>">
   <% if current_scope != "judge" and
           event.at_team_capacity? and
             not current_team.attending_event?(event) %>

@@ -1,9 +1,9 @@
-<div class="shadow-lg border border-gray-300 rounded w-full mb-4 flex flex-col">
+<div class="shadow-lg border border-gray-300 rounded-sm w-full mb-4 flex flex-col">
   <div class="w-3/4 mx-auto">
     <%= image_tag mentor_preview.profile_image_url, class: "h-full w-full object-cover" %>
   </div>
 
-  <div class="p-4 flex-grow">
+  <div class="p-4 grow">
     <h3 class="font-medium mb-2"><%= mentor_preview.full_name %></h3>
     <p class="text-base mb-2">Email: <%= mentor_preview.email %></p>
     <p class="text-base mb-2">Location: <%= mentor_preview.address_details %></p>

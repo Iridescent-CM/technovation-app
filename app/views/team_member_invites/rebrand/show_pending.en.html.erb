@@ -19,7 +19,7 @@
         </strong>
 
         <div class="flex items-center text-sm my-1">
-          <svg class="mr-1 h-5 w-5 flex-shrink text-energetic-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <svg class="mr-1 h-5 w-5 shrink text-energetic-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
           </svg>
 
@@ -39,7 +39,7 @@
         <% @team.students.each do |student| %>
           <li class="py-2">
             <div class="flex items-center space-x-4">
-              <div class="flex-shrink-0 self-start">
+              <div class="shrink-0 self-start">
                 <%= image_tag student.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
               </div>
 
@@ -69,7 +69,7 @@
         <% @team.mentors.each do |mentor| %>
           <li class="py-2">
             <div class="flex items-center space-x-4">
-              <div class="flex-shrink-0 self-start">
+              <div class="shrink-0 self-start">
                 <%= image_tag mentor.profile_image_url, class: "rounded-tl-sm rounded-tr-xl rounded-bl-xl rounded-br-sm w-8 h-8" %>
               </div>
 

@@ -20,7 +20,7 @@
             validation-name="First name"
             @keyup="checkValidation"
             @blur="checkValidation"
-            class="flex-grow pr-2"
+            class="grow pr-2"
           />
 
           <FormulateInput
@@ -36,7 +36,7 @@
             validation-name="Last name"
             @keyup="checkValidation"
             @blur="checkValidation"
-            class="flex-grow pl-2"
+            class="grow pl-2"
           />
         </div>
 

@@ -22,7 +22,7 @@
           </div>
 
           <div class="md:hidden flex items-center">
-            <button class="outline-none mobile-menu-button">
+            <button class="outline-hidden mobile-menu-button">
               <svg class=" w-6 h-6 text-gray-500 hover:text-green-500 "
                   x-show="!showMenu"
                   fill="none"
@@ -49,7 +49,7 @@
           </div>
 
           <div class="items-end float-right">
-            <button class="outline-none mobile-menu-button py-4 px-2" @click="() => toggleMenu()">
+            <button class="outline-hidden mobile-menu-button py-4 px-2" @click="() => toggleMenu()">
               <svg class=" w-6 h-6 text-gray-500 hover:text-green-500 "
                   x-show="!showMenu"
                   fill="none"
