@@ -101,7 +101,7 @@ gem "net-smtp", require: false
 gem "net-imap", require: false
 gem "net-pop", require: false
 
-gem "rexml", "~> 3.3.0"
+gem "rexml", "~> 3.4.2"
 gem "immosquare-cookies"
 gem "zipline"
 
