@@ -12,6 +12,7 @@ require "capybara/rails"
 require "vcr_helper"
 require "geocoder_helper"
 require "rake"
+require "selenium-webdriver"
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -24,8 +25,18 @@ Capybara.automatic_label_click = true
 Capybara.default_max_wait_time = 5
 Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
 Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT", 31337)
+Capybara.register_driver :selenium_chrome_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument("--headless=new")
+  options.add_argument("--no-sandbox")
+  options.add_argument("--disable-dev-shm-usage")
+  options.add_argument("--window-size=1920,1080")
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
 
 WebMock.allow_net_connect!(net_http_connect_on_start: true)
+
 
 Rails.application.load_tasks
 
