@@ -1,7 +1,7 @@
 <% provide :title, "Search for a team" %>
 
 <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
-  <%= render "team_searches/rebrand/filter_options", account: account %>
+  <%= render "team_searches/filter_options", account: account %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Available Teams" } do %>
     <% if current_scope == "mentor" %>
