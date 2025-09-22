@@ -1,10 +1,6 @@
-<template>
   <div class="w-full lg:w-3/4 mx-auto">
-    <EnergeticContainer heading="Agree to our data terms">
-      <form
-        ref="dataUseTermsForm"
-        @submit.prevent="handleSubmit"
-      >
+    <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Agree to our data terms" } do %>
+      <%= form_with(url: terms_agreement_path, scope: :terms, local: true, data: {turbo: false}) do |f| %>
         <div>
           <h3 class="font-semibold text-xl">How Technovation Girls uses your data</h3>
 
@@ -20,7 +16,7 @@
             below is a summary.
           </p>
 
-          <ThickRule/>
+          <div class="border-b border-energetic-blue my-8"></div>
 
           <p>Technovation Girls is owned by a non-profit organization called Technovation.</p>
 
@@ -81,76 +77,16 @@
           <p>Thank you for helping us keep our students safe.</p>
 
           <div class="py-4 text-right">
-            <label for="terms_agreement_checkbox" class="m-0">
-              <input
-                type="checkbox"
-                id="terms_agreement_checkbox"
-                v-model="termsAgreed"
-                :disabled="isLocked"
-              />
-              I agree to these data use terms
-            </label>
+            <%= f.check_box :agree %>
+            <%= f.label :agree, "I agree to these data use terms" %>
           </div>
         </div>
 
-        <div class="text-right">
-          <button
-            ref="dataUseTermsSubmitButton"
-            type="submit"
-            id="terms_agreement_submit"
-            class="tw-green-btn"
-            :disabled="!termsAgreed"
-          >{{ submitButtonText }}</button>
+        <div class="flex justify-end">
+          <p class="btn-wrapper">
+            <%= f.submit "Submit", class: "tw-green-btn self-end" %>
+          </p>
         </div>
-      </form>
-    </EnergeticContainer>
+      <% end %>
+    <% end %>
   </div>
-</template>
-
-<script>
-import { createNamespacedHelpers } from 'vuex'
-import EnergeticContainer from "../../../components/rebrand/EnergeticContainer";
-import ThickRule from "../../../components/rebrand/ThickRule";
-
-const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
-
-export default {
-  name: 'data-use-terms',
-  components: {EnergeticContainer, ThickRule},
-
-  props: {
-    handleSubmit: {
-      type: Function,
-      default: function () {
-        if (!this.termsAgreed) return false
-        this.$router.push({ name: 'location' })
-      },
-    },
-
-    submitButtonText: {
-      type: String,
-      default: 'Next',
-    },
-  },
-
-  computed: {
-    ...mapState(['isLocked']),
-
-    termsAgreed: {
-      get () {
-        return this.$store.state.registration.termsAgreed
-      },
-
-      set (value) {
-        if (!this.isLocked) {
-          this.updateTermsAgreed({ termsAgreed: value });
-        }
-      },
-    },
-  },
-
-  methods: {
-    ...mapActions(['updateTermsAgreed']),
-  },
-}
-</script>

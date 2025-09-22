@@ -10,8 +10,6 @@ import { urlHelpers } from "utilities/utilities";
 
 import LocationForm from "../location/components/LocationForm";
 
-import "../terms_agreement";
-
 document.addEventListener("turbo:load", function () {
   const locationFormElems = document.querySelectorAll(
     ".vue-enable-location-form"
