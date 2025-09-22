@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@2
 
 jobs:
   build:
@@ -136,9 +136,19 @@ jobs:
 
     steps:
       - checkout
-      - browser-tools/install-browser-tools:
-          chrome-version: 128.0.6613.84 # TODO: remove when chromedriver downloads are fixed
-          firefox-version: 134.0.2
+
+
+      - run:
+          name: Download custom Chrome version
+          command: |
+            curl -fSL -o /tmp/google-chrome-stable_128.0.6613.84-1_amd64.deb \
+              https://mirror.cs.uchicago.edu/google-chrome/pool/main/g/google-chrome-stable/google-chrome-stable_128.0.6613.84-1_amd64.deb
+
+      - run:
+          name: Install custom Chrome version
+          command: |
+            sudo dpkg -i /tmp/google-chrome-stable_128.0.6613.84-1_amd64.deb || \
+            sudo apt-get -f install -y
 
       - run:
           name: Install libc6
@@ -173,7 +183,7 @@ jobs:
           command: |
             sudo sed -i 's|http://archive.ubuntu.com|http://mirrors.rit.edu/ubuntu/|g' /etc/apt/sources.list
             sudo sed -i 's|http://security.ubuntu.com|http://mirrors.rit.edu/ubuntu/|g' /etc/apt/sources.list
-            
+
             sudo apt update
             sudo apt install wkhtmltopdf
 
