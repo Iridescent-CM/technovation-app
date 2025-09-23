@@ -29,6 +29,18 @@ WebMock.allow_net_connect!(net_http_connect_on_start: true)
 
 Rails.application.load_tasks
 
+Capybara.register_driver :selenium_chrome_headless do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+
+  browser_options.add_argument("--headless=new")
+  browser_options.add_argument("--no-sandbox")
+  browser_options.add_argument("--disable-dev-shm-usage")
+  browser_options.add_argument("--disable-gpu")
+  browser_options.add_argument("--window-size=1200,1200")
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
 RSpec.configure do |config|
   config.fail_fast = ENV.fetch("RSPEC_FAIL_FAST", true)
   config.example_status_persistence_file_path = "./tmp/spec/examples.txt"
