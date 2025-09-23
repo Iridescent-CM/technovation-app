@@ -9,41 +9,25 @@ module DataGrids::Ambassador
     use_datagrid with: AccountsGrid,
 
       html_scope: ->(scope, user, params) {
-        if user.chapter_ambassador_profile&.national_view?
-          if params[:accounts_grid][:chapter].blank? && params[:accounts_grid][:club].blank?
-            scope
-              .in_region(user.chapterable)
-              .page(params[:page])
-          else
-            scope
-              .page(params[:page])
-          end
+        if user.chapter_ambassador_profile&.national_view? &&
+            params[:accounts_grid][:chapter].blank? &&
+            params[:accounts_grid][:club].blank?
+          scope
+            .in_region(user.chapterable)
+            .page(params[:page])
         else
           scope
-            .joins(:chapterable_assignments)
-            .where(
-              chapterable_assignments: {
-                chapterable_type: user.chapterable_type.capitalize,
-                chapterable_id: user.current_chapterable.id
-              }
-            )
             .page(params[:page])
         end
       },
 
       csv_scope: "->(scope, user, _params) {" \
         "if user.chapter_ambassador_profile&.national_view?;" \
-          "if params[:chapter].blank? && params[:club].blank?;" \
+          "&& params[:chapter].blank?" \
+          "&& params[:club].blank?;" \
             "scope.in_region(user.chapterable);" \
-          "else;" \
-            "scope;" \
-          "end;" \
         "else;" \
-          "scope.joins(:chapterable_assignments)" \
-          ".where(chapterable_assignments: {" \
-            "chapterable_type: user.chapterable_type.capitalize," \
-            "chapterable_id: user.current_chapterable.id" \
-          "});" \
+          "scope;" \
         "end;" \
       "}"
 

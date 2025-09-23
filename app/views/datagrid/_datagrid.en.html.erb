@@ -9,7 +9,12 @@
     url: form_url %>
 
   <h6>
-    <%= number_with_delimiter(grid.assets.count) %>
+    <% if grid.assets.count.class.to_s == "Hash" %>
+      <%= number_with_delimiter(grid.assets.count.size) %>
+    <% else %>
+      <%= number_with_delimiter(grid.assets.count) %>
+    <% end %>
+
     <%= model_name.humanize.downcase.pluralize(grid.assets.count) %>
     <%= verb %>
   </h6>

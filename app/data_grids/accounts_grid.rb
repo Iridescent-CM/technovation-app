@@ -588,22 +588,35 @@ class AccountsGrid
     },
     multiple: true,
     if: ->(g) { !g.admin } do |season_value, scope, grid|
-    if grid.chapter.present? || grid.club.present?
+    if grid.national_view && grid.chapter.blank? && grid.club.blank?
+      scope.by_season(season_value, match: grid.season_and_or)
+    else
       case grid.season_and_or
       when "match_any"
         scope
           .joins(:chapterable_assignments)
-          .where(chapterable_assignments: {season: season_value})
+          .where(
+            chapterable_assignments: {
+              chapterable_type: grid.current_account.current_chapterable.class.to_s,
+              chapterable_id: grid.current_account.current_chapterable.id,
+              season: season_value
+            }
+          )
           .distinct
-      else
+      when "match_all"
         scope
           .joins(:chapterable_assignments)
-          .where(chapterable_assignments: {season: season_value})
+          .where(
+            chapterable_assignments: {
+              chapterable_type: grid.current_account.current_chapterable.class.to_s,
+              chapterable_id: grid.current_account.current_chapterable.id,
+              season: season_value
+            }
+          )
           .group("accounts.id")
           .having("COUNT(DISTINCT chapterable_assignments.season) = ?", season_value.length)
+          .distinct
       end
-    else
-      scope.by_season(season_value, match: grid.season_and_or)
     end
   end
 
