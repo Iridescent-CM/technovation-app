@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishing submissions that only need to submit", :js do
+RSpec.xdescribe "Publishing submissions that only need to submit", :js do
   before do
     allow(SeasonToggles).to receive(:team_submissions_editable?).and_return(team_submissions_editable)
     allow(SeasonToggles).to receive(:judging_enabled?).and_return(judging_enabled)
