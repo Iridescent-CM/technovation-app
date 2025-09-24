@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resource :survey_reminder, only: :create
 
     resource :dashboard, only: :show
+    resource :curriculum, only: :show, controller: "curriculum"
 
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
