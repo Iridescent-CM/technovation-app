@@ -27,6 +27,10 @@ class AccountsGrid
     account.gender.present? ? account.gender : "-"
   end
 
+  column :seasons do |account|
+    account.seasons.join(", ")
+  end
+
   column :chapter,
     order: ->(scope) { scope.left_joins(:chapters).order("chapters.name") },
     if: ->(g) { g.admin || g.national_view } do |account|
