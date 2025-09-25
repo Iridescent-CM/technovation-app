@@ -427,7 +427,7 @@ GEM
       faraday-net_http (< 4.0.0)
       hashie (>= 1.2.0, < 6.0)
       jwt (>= 1.5.6)
-    rexml (3.3.9)
+    rexml (3.4.2)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -639,7 +639,7 @@ DEPENDENCIES
   rails_autoscale_agent
   redis
   restforce (~> 7.0.0)
-  rexml (~> 3.3.0)
+  rexml (~> 3.4.2)
   rspec-rails (~> 5.0)
   rspec-retry
   sass-rails (~> 6.0)
