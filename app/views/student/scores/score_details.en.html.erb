@@ -4,7 +4,7 @@
 
 <div class="container mx-auto w-8/12" id="student-score-details">
   <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Score Details'} do %>
-    <div class="bg-gray-200 rounded shadow-md w-full mx-auto mb-8 text-center">
+    <div class="bg-gray-200 rounded-sm shadow-md w-full mx-auto mb-8 text-center">
       <div class="p-6">
         <p class="text-4xl font-bold"> <%= @score.total %> / <%= @score.total_possible %></p>
         from<br />

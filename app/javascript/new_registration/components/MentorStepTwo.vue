@@ -10,12 +10,12 @@
           <FormulateInput name="firstName" id="firstName" type="text" label="First Name" placeholder="First Name"
             :validation="[['required'], ['matches', /^[^.-].*/]]" :validation-messages="{
               matches: 'Must start with an alphabetical character.'
-            }" validation-name="First name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pr-2" />
+            }" validation-name="First name" @keyup="checkValidation" @blur="checkValidation" class="grow pr-2" />
 
           <FormulateInput name="lastName" id="lastName" type="text" label="Last Name" placeholder="Last Name"
             :validation="[['required'], ['matches', /^[^.-].*/]]" :validation-messages="{
               matches: 'Must start with an alphabetical character.'
-            }" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation" class="flex-grow pl-2" />
+            }" validation-name="Last name" @keyup="checkValidation" @blur="checkValidation" class="grow pl-2" />
         </div>
 
         <FormulateInput name="gender" :options="genderOptions" type="select" placeholder="Select an option"

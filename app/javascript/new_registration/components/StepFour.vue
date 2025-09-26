@@ -30,7 +30,7 @@
         validation-name="Email address"
         @keyup="checkValidation"
         @blur="checkValidation"
-        class="flex-grow"
+        class="grow"
         v-model="setAccountEmailForParentOrAmbassadorProfile"
         :disabled="
           formValues.profileType === 'parent' ||
