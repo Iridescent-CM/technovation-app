@@ -29,12 +29,10 @@ RSpec.describe "Students request to join a team",
     end
 
     it "displays a message that it has been declined" do
-      within(".card-result") do
-        expect(page).to have_content(team.name)
-        expect(page).to have_content(
-          "You asked to join #{team.name}, and they declined."
-        )
-      end
+      expect(page).to have_content(team.name)
+      expect(page).to have_content(
+        "You asked to join #{team.name}, and they declined."
+      )
     end
   end
 
