@@ -40,7 +40,7 @@ RSpec.feature "Students find a team" do
 
         find(:css, "#location_type_nearme").click
 
-        expect(page).to have_css(".vue-search-result")
+        expect(page).to have_content(team.name)
       end
     end
   end
