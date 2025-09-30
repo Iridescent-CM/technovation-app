@@ -2,7 +2,10 @@
   <%= render "student/dashboards/side_nav" %>
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Add a mentor to your team" } do %>
-    <% if current_team.present? %>
+    <% if SeasonToggles.team_building_disabled? %>
+      <%= render "explanations/feature_not_available", feature: :team_invites %>
+    <% else %>
+      <% if current_team.present? %>
       <div class="mb-4">
         <% if current_student.team.mentors.any? %>
           <h4 class="text-xl font-medium mb-2">Mentor Status</h4>
@@ -63,6 +66,7 @@
       </div>
     <% else %>
       <p>When you are on a team, you will be able to search for mentors.</p>
+    <% end %>
     <% end %>
   <% end %>
 </div>
