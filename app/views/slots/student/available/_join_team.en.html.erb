@@ -16,7 +16,7 @@
           <div class="w-full md:w-64 justify-center items-center bg-white shadow-lg rounded-lg flex flex-col mt-8">
             <%= image_tag join_request.team_team_photo_url, class: "w-full h-auto object-cover rounded-t-lg" %>
             <div class="w-full p-4 justify-start flex flex-col">
-              <p class="font-bold"><%= join_request.team_name.titleize %></p>
+              <p class="font-bold"><%= join_request.team_name %></p>
               <p><%= join_request.team_primary_location %></p>
               <p><%= join_request.team_division_name.titleize %> Division</p>
 
