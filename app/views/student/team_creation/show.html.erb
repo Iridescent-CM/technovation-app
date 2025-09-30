@@ -1,0 +1,32 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "student/dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Create your team" } do %>
+    <% if current_student.is_on_team? %>
+      You're on a team!
+      Your team is called <%= current_team.name %>.
+      You can
+      <%= link_to "manage your team",
+        student_team_path(current_team),
+        class: "tw-link" %>
+    <% elsif SeasonToggles.team_building_disabled? %>
+      <%= render "explanations/feature_not_available", feature: :create_team %>
+    <% else %>
+      <p>
+        Start your own team or
+        <span>
+          <%= link_to("search for an existing team to join",
+            send("new_#{current_scope}_team_search_path"),
+            class: "tw-link") %>
+          . Know someone who wants to join your team? After creating the team, have them search by your team name and send you a request to join.
+        </span>
+      </p>
+      <div class="step-actions mt-8">
+        <%= link_to(
+          t("views.profile_requirements.create_join_team.links.create.text"),
+          send("new_#{current_scope}_team_path"),
+          class: "tw-green-btn") %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
