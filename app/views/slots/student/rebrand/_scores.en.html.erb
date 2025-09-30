@@ -1,30 +1,23 @@
-<div id="scores-and-certs" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue">
-  <div class="sm-header-wrapper ">
-    <p class="font-bold">Scores & Certificate</p>
-  </div>
-
-  <div class="tw-content-wrapper p-8">
-    <% if current_student.onboarded? && SeasonToggles.display_scores? %>
-      <% if current_team.submission.complete? || current_student.participated? %>
-        <% if current_team.submission.complete? %>
-          <p class="text-center">Congratulations, your team was a <%= current_team.submission.contest_rank %>!</p>
-        <% end %>
-        <% if current_student.took_program_survey? %>
-          <p class="mb-8">Thank you for participating this season! Click the button below to view your scores and certificate.</p>
-          <div class="step-actions text-center">
-            <%= link_to 'View your scores and certificate',
-                        student_scores_path,
-                        class: "tw-green-btn",
-                        disabled: !current_student.took_program_survey? %>
-          </div>
-        <% else %>
-          <%= render "student/scores/program_survey_requirement" %>
-        <% end %>
-      <% else %>
-        <%= render "student/scores/incomplete_submission" %>
-      <% end %>
-    <% else %>
-      <%= render 'explanations/feature_not_available', feature: :scores %>
+<% if current_student.onboarded? %>
+  <% if current_team.submission.complete? || current_student.participated? %>
+    <% if current_team.submission.complete? %>
+      <p class="text-center">Congratulations, your team was a <%= current_team.submission.contest_rank %>!</p>
     <% end %>
-  </div>
-</div>
+    <% if current_student.took_program_survey? %>
+      <p class="mb-8 text-center">
+        Thank you for participating this season!
+        Click the button below to view your scores and certificate.
+      </p>
+      <div class="step-actions text-center">
+        <%= link_to "View your scores and certificate",
+          student_scores_path,
+          class: "tw-green-btn",
+          disabled: !current_student.took_program_survey? %>
+      </div>
+    <% else %>
+      <%= render "student/scores/program_survey_requirement" %>
+    <% end %>
+  <% else %>
+    <%= render "student/scores/incomplete_submission" %>
+  <% end %>
+<% end %>
