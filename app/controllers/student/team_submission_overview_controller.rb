@@ -1,5 +1,5 @@
 module Student
-  class CurriculumController < StudentController
+  class TeamSubmissionOverviewController < StudentController
     include RequireParentalConsentSigned
     include RequireLocationIsSet
   end

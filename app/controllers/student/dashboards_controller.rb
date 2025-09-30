@@ -5,18 +5,10 @@ module Student
     include LocationStorageController
 
     def show
-      @regional_events = available_regional_events
-    end
-
-    private
-
-    def available_regional_events
-      if SeasonToggles.select_regional_pitch_event?
-        RegionalPitchEvent.available_to(
-          current_team.submission
-        )
-      else
-        RegionalPitchEvent.none
+      if SeasonToggles.display_scores_and_certs?
+        redirect_to student_scores_overview_path
+      elsif current_student.is_on_team?
+        redirect_to student_team_submission_overview_path
       end
     end
   end
