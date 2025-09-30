@@ -1,0 +1,56 @@
+  <nav class="p-4">
+    <ol role="list" class="space-y-4 mb-6 overflow-hidden">
+      <%= render "application/templates/side_nav_item",
+        name: "Build your team",
+        url: student_team_search_path,
+        is_active_item: al(student_team_search_path).present?
+      %>
+
+      <ol class="ml-6 space-y-4">
+        <%= render "application/templates/completion_step",
+          name: "Find your team",
+          url: student_team_search_path,
+          is_complete: current_team.present?,
+          is_active_item: al(student_team_search_path).present?
+        %>
+
+        <%= render "application/templates/completion_step",
+          name: "Create your team",
+          url: student_team_creation_path,
+          is_complete: current_team.present?,
+          is_active_item: al(student_team_creation_path).present?
+        %>
+
+        <%= render "application/templates/completion_step",
+          name: "Add a mentor to your team",
+          url: student_mentor_search_path,
+          is_complete: current_team.present? && current_team.mentors.any?,
+          is_active_item: al(student_mentor_search_path).present?
+        %>
+      </ol>
+
+      <%= render "application/templates/side_nav_item",
+        name: "Learn from the curriculum",
+        url: student_curriculum_path,
+        is_active_item: al(student_curriculum_path).present?
+      %>
+
+      <%= render "application/templates/side_nav_item",
+        name: "Submit your project",
+        url: student_team_submission_overview_path,
+        is_active_item: al(student_team_submission_overview_path).present?
+      %>
+
+      <%= render "application/templates/side_nav_item",
+        name: "Pitch your project",
+        url: student_regional_pitch_events_finder_path,
+        is_active_item: al(student_regional_pitch_events_finder_path).present?
+      %>
+
+      <%= render "application/templates/side_nav_item",
+        name: "Find your scores and certificates",
+        url: student_scores_path,
+        is_active_item: al(student_scores_path).present?
+      %>
+    </ol>
+  </nav>
