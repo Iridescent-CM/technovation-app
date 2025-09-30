@@ -7,7 +7,7 @@ RSpec.feature "Select regional pitch event toggles user controls" do
     let!(:rpe) { FactoryBot.create(:event, :chicago, :junior) }
 
     let(:sub) { FactoryBot.create(:submission, :chicago, :junior) }
-    let(:path) { student_dashboard_path(anchor: "live-events") }
+    let(:path) { student_regional_pitch_events_finder_path }
 
     before do
       sign_in(sub.team.students.sample)

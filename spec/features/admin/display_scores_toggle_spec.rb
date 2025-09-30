@@ -9,9 +9,8 @@ RSpec.feature "Toggling display of scores" do
     scenario "display scores on" do
       SeasonToggles.display_scores_on!
 
-      visit student_dashboard_path
+      visit student_scores_path
 
-      expect(page).to have_content("Scores & Certificate")
       expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
     end
 
@@ -19,9 +18,8 @@ RSpec.feature "Toggling display of scores" do
       SeasonToggles.display_scores_on!
       SeasonToggles.set_survey_link(:student, "Hello World", "https://google.com")
 
-      visit student_dashboard_path
+      visit student_scores_path
 
-      expect(page).to have_content("Scores & Certificate")
       expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
       expect(page).to have_selector(:link_or_button, "Complete Survey")
     end
@@ -29,10 +27,9 @@ RSpec.feature "Toggling display of scores" do
     scenario "display scores off" do
       SeasonToggles.display_scores_off!
 
-      visit student_dashboard_path
+      visit student_scores_path
 
-      expect(page).to have_content("Scores & Certificate")
-      expect(page).not_to have_css(".button", text: "View your scores and certificate")
+      expect(page).to have_content("Reading your scores and certificates is not available right now.")
     end
   end
 

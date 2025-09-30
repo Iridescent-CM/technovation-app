@@ -12,9 +12,7 @@ RSpec.describe "Students view scores", :js do
     student.account.took_program_survey!
 
     sign_in(student)
-    visit student_dashboard_path
-    click_button "Find your scores & certificates"
-    click_link "Scores"
+    visit student_scores_path
 
     expect(page).to have_content("Thank you for your participation")
     expect(page).to have_content(
@@ -34,8 +32,7 @@ RSpec.describe "Students view scores", :js do
     student.account.took_program_survey!
 
     sign_in(student)
-    click_button "Find your scores & certificates"
-    click_link "Scores"
+    visit student_scores_path
 
     expect(page).to have_selector("#student-finished-scores-table")
 
@@ -60,8 +57,7 @@ RSpec.describe "Students view scores", :js do
     student.account.took_program_survey!
 
     sign_in(student)
-    click_button "Find your scores & certificates"
-    click_link "Scores"
+    visit student_scores_path
 
     expect(page).to have_selector("#student-finished-scores-table")
 
@@ -83,6 +79,7 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
+    visit student_scores_path
     expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
     expect(page).to have_selector(:link_or_button, "Complete Survey")
   end
@@ -103,6 +100,7 @@ RSpec.describe "Students view scores", :js do
 
     student = submission.team.students.sample
     sign_in(student)
+    visit student_scores_path
     expect(page).to have_content("Before you can view your scores and certificates, please complete the post-season survey.")
     expect(page).to have_selector(:link_or_button, "Complete Survey")
   end
