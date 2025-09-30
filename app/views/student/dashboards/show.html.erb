@@ -1,77 +1,28 @@
 <% if not current_student.email_confirmed? %>
-  <%= render 'completion_steps/rebrand/confirm_changed_email',
-    profile: current_student %>
+  <%= render "completion_steps/rebrand/confirm_changed_email", profile: current_student %>
 <% else %>
-  <div id="vue-enable-student-app" class="hidden">
-    <%= content_tag :div,
-      nil,
-      id: "vue-data-registration",
-      data: {
-        current_account: AccountSerializer.new(current_account).serialized_json,
-        current_team: TeamSerializer.new(current_team).serialized_json,
-        current_submission: SubmissionSerializer.new(current_submission).serialized_json,
-        parental_consent: ConsentSerializer.new(current_student.parental_consent).serialized_json,
-        settings: { canDisplayScores: SeasonToggles.display_scores? }.to_json
-      } %>
-    <app
-      :profile-icons="{
-        profileIconStudent: '<%= asset_path('wizard-choose-profile__student-primary.svg') %>',
-        profileIconMentor: '<%= asset_path('wizard-choose-profile__mentor-secondary--female.svg') %>',
-        profileIconMentorMale: '<%= asset_path('wizard-choose-profile__mentor-secondary--male.svg') %>',
-      }"
-      :regional-pitch-events-enabled="<%= SeasonToggles.select_regional_pitch_event? %>"
-      :scores-and-certificates-enabled="<%= SeasonToggles.display_scores? %>"
-      <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-        survey-link-text="<%= SeasonToggles.survey_link(current_scope, "text") %>"
-        survey-link="<%= SeasonToggles.survey_link(
-          current_scope,
-          "url",
-          format_url: true,
-          account: current_account
-        ) %>"
+  <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+    <%= render "student/dashboards/side_nav" %>
+
+    <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Dashboard" } do %>
+      <p>
+        Welcome to Technovation Girls!
+      </p>
+
+      <% if SeasonToggles.team_building_enabled? && !current_student.is_on_team? %>
+        <p>
+          You are not on a team! You can
+          <%= link_to "find",
+            student_team_search_path,
+            class: "tw-link" %>
+          or
+          <%= link_to "create",
+            student_team_creation_path,
+            class: "tw-link" %>
+          a team.
+        </p>
       <% end %>
-    >
-      <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
-        <template slot="survey-links"><%= render 'program_survey' %></template>
-      <% end %>
-
-      <div slot="change-email">
-        <%= render 'profiles/email' %>
-      </div>
-
-      <div slot="change-password">
-        <%= render 'profiles/password' %>
-      </div>
-
-      <div slot="parental-consent">
-        <%= render 'student/profiles/rebrand/parent' %>
-      </div>
-
-      <div slot="find-team">
-        <%= render 'slots/student/rebrand/join_team' %>
-      </div>
-
-      <div id="create-team" slot="create-team">
-        <%= render 'student/dashboards/rebrand/create_team' %>
-      </div>
-
-      <div slot="find-mentor">
-        <%= render 'student/dashboards/rebrand/find_mentor' %>
-      </div>
-
-      <div slot="submission">
-        <%= render "slots/student/submissions" %>
-      </div>
-
-      <div slot="events">
-        <%= render 'slots/student/rebrand/events' %>
-      </div>
-
-      <div slot="scores">
-        <%= render 'slots/student/rebrand/scores' %>
-      </div>
-    </app>
-
-    <%= render 'program_survey_modal' %>
+    <% end %>
   </div>
+  <%= render "program_survey_modal" %>
 <% end %>
