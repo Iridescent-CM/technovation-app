@@ -10,6 +10,7 @@
         <% if SeasonToggles.display_scores_disabled? || current_student.onboarding? %>
           <%= render "explanations/feature_not_available", feature: :scores %>
         <% elsif current_student.incomplete_program_survey? %>
+          <p class="text-center">Congratulations, your team was a <%= current_team.submission.contest_rank %>!</p>
           <%= render "student/scores/program_survey_requirement" %>
         <% elsif current_team.submission.complete? %>
           <%= render "student/scores/scores_and_certificates" %>
