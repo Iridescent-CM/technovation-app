@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     resource :regional_pitch_event_selection, only: :create
     resource :regional_pitch_events_finder, only: :show, controller: "regional_pitch_events_finder"
     resources :regional_pitch_events, only: [:show, :index]
+    resource :scores_overview, only: :show, controller: "scores_overview"
     resources :scores, only: [:index, :show]
 
     resources :image_process_jobs, only: :create
