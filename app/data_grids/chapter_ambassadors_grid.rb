@@ -232,16 +232,12 @@ class ChapterAmbassadorsGrid
 
   filter :program_name do |value, scope|
     scope
-      .left_outer_joins(:chapter_ambassador_profile)
-      .left_outer_joins(chapter_ambassador_profile: :chapter)
-      .where("chapters.name ilike ?", "#{value}%")
+      .where("chapters.name ilike ?", "%#{value}%")
   end
 
   filter :organization_name do |value, scope|
     scope
-      .left_outer_joins(:chapter_ambassador_profile)
-      .left_outer_joins(chapter_ambassador_profile: :chapter)
-      .where("chapters.organization_name ilike ?", "#{value}%")
+      .where("chapters.organization_name ilike ?", "%#{value}%")
   end
 
   column_names_filter(
