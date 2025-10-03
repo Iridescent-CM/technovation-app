@@ -44,12 +44,7 @@ RSpec.describe SubmissionScore do
   end
 
   it "cannot be duplicated for the same submission and judge" do
-    team = Team.create!(
-      name: "A",
-      description: "B",
-      division: Division.senior
-    )
-
+    team = FactoryBot.create(:team, :senior)
     team_submission = TeamSubmission.create!(
       team_id: team.id,
       integrity_affirmed: true
@@ -88,7 +83,7 @@ RSpec.describe SubmissionScore do
   end
 
   it "calculates scores" do
-    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team = FactoryBot.create(:team, :senior)
     team_submission = TeamSubmission.create!(
       team_id: team.id,
       integrity_affirmed: true
@@ -110,7 +105,7 @@ RSpec.describe SubmissionScore do
   end
 
   it "calculates section totals" do
-    team = Team.create!(name: "A", description: "B", division: Division.senior)
+    team = FactoryBot.create(:team, :senior)
     team_submission = TeamSubmission.create!(
       team_id: team.id,
       integrity_affirmed: true
