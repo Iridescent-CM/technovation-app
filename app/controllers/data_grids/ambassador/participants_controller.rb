@@ -22,7 +22,7 @@ module DataGrids::Ambassador
       },
 
       csv_scope: "->(scope, user, _params) {" \
-        "if user.chapter_ambassador_profile&.national_view?;" \
+        "if user.chapter_ambassador_profile&.national_view?" \
           "&& params[:chapter].blank?" \
           "&& params[:club].blank?;" \
             "scope.in_region(user.chapterable);" \
