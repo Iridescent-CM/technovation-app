@@ -2,7 +2,10 @@
   <div class="signup-form-name-fields">
     <%= a.input :first_name %>
     <%= a.input :last_name %>
-    <%= a.input :phone_number %>
+
+    <% if !current_account.is_a_student? %>
+      <%= a.input :phone_number %>
+    <% end %>
   </div>
 
   <% if !a.object.chapter_ambassador? && !a.object.club_ambassador? %>
