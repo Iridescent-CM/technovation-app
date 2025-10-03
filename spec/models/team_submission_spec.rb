@@ -90,6 +90,18 @@ RSpec.describe TeamSubmission do
     expect(submission.code_org_app_lab_project_url).to eq("https://studio.code.org/projects/applab/12345")
   end
 
+  it "is invalid if the team does not have at least one student" do
+    team = FactoryBot.create(:team, members_count: 0)
+    submission = FactoryBot.build(:submission, team: team)
+    expect(submission).not_to be_valid
+  end
+
+  it "is valid when the team has at least one student" do
+    team = FactoryBot.create(:team, members_count: 2)
+    submission = FactoryBot.build(:submission, team: team)
+    expect(submission).to be_valid
+  end
+
   context "callbacks" do
     let(:submission) { FactoryBot.create(:submission) }
 

@@ -200,7 +200,10 @@ module TeamSubmissionController
   end
 
   def respond_according_to_presence
-    if current_team.submission.present?
+    if !current_team.has_students?
+      flash[:alert] = "Your team needs at least 1 student to start a submission."
+      redirect_back fallback_location: send(:"#{current_scope}_dashboard_path")
+    elsif current_team.submission.present?
       redirect_to send(:"#{current_scope}_team_submission_path", current_team.submission)
     else
       @team_submission = current_team.team_submissions.build

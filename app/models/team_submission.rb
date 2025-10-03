@@ -247,6 +247,8 @@ class TeamSubmission < ActiveRecord::Base
     end
   }
 
+  validate :team_has_students, on: :create
+
   validates :app_inventor_app_name,
     presence: true,
     if: ->(s) { s.development_platform == "App Inventor" }
@@ -793,6 +795,12 @@ class TeamSubmission < ActiveRecord::Base
   end
 
   private
+
+  def team_has_students
+    if !team.has_students?
+      errors.add(:base, "This team needs at least one student to create a submission")
+    end
+  end
 
   def standardize_url(url)
     return if url.blank?
