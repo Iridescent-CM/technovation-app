@@ -4,6 +4,13 @@ FactoryBot.define do
 
     team
 
+    before(:create) do |submission|
+      if submission.team && !submission.team.has_students?
+        student = FactoryBot.create(:student)
+        TeamRosterManaging.add(submission.team, student)
+      end
+    end
+
     transient do
       number_of_scores { 0 }
     end

@@ -168,7 +168,7 @@ FactoryBot.define do
       onboarded
 
       after(:create) do |m|
-        team = FactoryBot.create(:team, members_count: 0)
+        team = FactoryBot.create(:team, members_count: 1)
         FactoryBot.create(
           :team_membership,
           member: m,

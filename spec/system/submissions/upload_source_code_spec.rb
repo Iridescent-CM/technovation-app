@@ -6,6 +6,8 @@ RSpec.describe "Uploading technical work to submissions", :js do
       SeasonToggles.team_submissions_editable!
 
       user = FactoryBot.create(scope, :onboarded, :on_team)
+      student = FactoryBot.create(:student)
+      TeamRosterManaging.add(user.teams.first, student)
       user.teams.first.create_submission!({integrity_affirmed: true})
 
       visit "/logout"

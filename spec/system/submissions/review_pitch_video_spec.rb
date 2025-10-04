@@ -46,8 +46,7 @@ RSpec.describe "Reviewing the pitch video" do
       SeasonToggles.team_submissions_editable!
 
       mentor = FactoryBot.create(:mentor, :on_team)
-      team = mentor.teams.last
-      team.create_submission!(integrity_affirmed: true)
+      FactoryBot.create(:submission, team: mentor.teams.first)
 
       sign_in(mentor)
 

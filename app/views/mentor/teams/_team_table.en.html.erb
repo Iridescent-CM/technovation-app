@@ -65,11 +65,15 @@
                         <p class="tw-hint">Submissions are not editable at this time.</p>
                       <% end %>
                     <% elsif SeasonToggles.team_submissions_editable? %>
-                      <p>
-                        <%= link_to "Start submission",
-                          new_mentor_team_submission_path(team_id: team.id),
-                          class: "tw-green-btn small" %>
-                      </p>
+                      <% if team.has_students? %>
+                        <p>
+                          <%= link_to "Start submission",
+                            new_mentor_team_submission_path(team_id: team.id),
+                            class: "tw-green-btn small" %>
+                        </p>
+                      <% else %>
+                        <p class="tw-hint">Your team needs at least 1 student to start a submission.</p>
+                      <% end %>
                     <% else %>
                       <p class="tw-hint">Submissions may not be started at this time.</p>
                     <% end %>
