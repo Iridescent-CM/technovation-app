@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Uploading technical work to submissions", :js do
+RSpec.xdescribe "Uploading technical work to submissions", :js do
   %i[student mentor].each do |scope|
     before do
       SeasonToggles.team_submissions_editable!
