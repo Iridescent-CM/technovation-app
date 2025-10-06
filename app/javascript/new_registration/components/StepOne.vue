@@ -210,7 +210,7 @@ export default {
     },
     mentorProfileType() {
       return {
-        label: `<img src="${require("signup/mentor.png")}" alt="" class="mentor mb-2"> <span class="mentor s1-label-text">I am over 18 years old and will guide a team</span>`,
+        label: `<img src="${require("signup/mentor.png")}" alt="" class="mentor mb-2"> <span class="mentor s1-label-text">I am a mentor and/or educator who will support team(s) of students</span>`,
         value: "mentor",
         id: "mentor",
       };
