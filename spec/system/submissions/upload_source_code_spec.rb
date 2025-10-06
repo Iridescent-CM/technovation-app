@@ -11,6 +11,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
       visit "/logout"
       sign_in(user)
 
+
       if scope == :mentor
         click_link "Submit your Project"
       end
