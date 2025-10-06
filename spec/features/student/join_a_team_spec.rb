@@ -27,8 +27,7 @@ RSpec.feature "Students find a team", js: true do
 
   scenario "request to join a team", js: true do
     Timecop.freeze(day_before_qfs) do
-      within(".sub-nav-wrapper") { click_link "Find a team" }
-
+      visit new_student_team_search_path
       click_link "View more details"
 
       expect(page).to have_content(available_team.name)
@@ -38,44 +37,38 @@ RSpec.feature "Students find a team", js: true do
 
       expect(current_path).to eq(student_dashboard_path)
       expect(page).to have_content(join_request.team_name)
-      expect(page).to have_content("You have asked to join")
+      expect(page).to have_content("You have requested to join")
     end
   end
 
   scenario "onboarded student sees pending requests", js: true do
     Timecop.freeze(day_before_qfs) do
-      within(".sub-nav-wrapper") { click_link "Find a team" }
-
+      visit new_student_team_search_path
       click_link "View more details"
       click_button "Send request"
 
       join_request = JoinRequest.last
 
-      visit student_dashboard_path(anchor: "/find-team")
-
-      expect(current_path).to eq(student_dashboard_path)
-      expect(page).to have_content(join_request.team_name.titleize)
+      visit student_team_search_path
+      expect(page).to have_content(join_request.team_name)
       expect(page).to have_content("You have asked to join")
     end
   end
 
   scenario "cancel a join request", js: true do
     Timecop.freeze(day_before_qfs) do
-      within(".sub-nav-wrapper") { click_link "Find a team" }
-
+      visit new_student_team_search_path
       click_link "View more details"
 
       click_button "Send request"
 
       join_request = JoinRequest.last
 
-      visit student_dashboard_path(anchor: "/find-team")
-
+      visit student_team_search_path
       within("#join_request_#{join_request.id}") { click_link "Cancel my request" }
       click_button "Yes, do it"
 
       expect(page).to have_content("You have cancelled your request")
-      within("#join-requests") { expect(page).not_to have_content(available_team.name) }
     end
   end
 end

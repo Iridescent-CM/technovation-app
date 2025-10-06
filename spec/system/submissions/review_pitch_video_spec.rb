@@ -10,6 +10,7 @@ RSpec.describe "Reviewing the pitch video" do
       team.create_submission!(integrity_affirmed: true)
 
       sign_in(student)
+      click_link "Submit your project"
 
       click_link "Pitch video"
     end
@@ -29,6 +30,7 @@ RSpec.describe "Reviewing the pitch video" do
       )
 
       visit student_dashboard_path
+      click_link "Submit your project"
       click_link "Pitch"
       expect(page).to have_css(".pitch_video_link.incomplete")
     end

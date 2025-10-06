@@ -94,8 +94,7 @@ RSpec.describe "Students request to join a team",
     end
 
     it "the requesting student can see their pending request" do
-      click_button "Build your team"
-      click_button "Find your team"
+      click_link "Find your team"
       expect(page).to have_content("You have asked to join a team")
       expect(page).to have_content(team.name)
       expect(page).to have_content(team.primary_location)

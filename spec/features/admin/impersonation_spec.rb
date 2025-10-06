@@ -12,7 +12,7 @@ RSpec.feature "Admins impersonating other accounts" do
     visit admin_participant_path(student.account)
 
     click_link "Login as #{student.full_name}"
-    expect(current_path).to eq(student_dashboard_path)
+    expect(current_path).to eq(student_team_submission_overview_path)
 
     click_link "My Team"
     expect(current_path).to eq(student_team_path(student.team))

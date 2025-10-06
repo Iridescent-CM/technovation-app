@@ -16,7 +16,7 @@ RSpec.describe "Uploading technical work to submissions", :js do
       end
 
       if scope == :student
-        click_button "Submit your project"
+        click_link "Submit your project"
       end
 
       if scope == :mentor

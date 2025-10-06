@@ -18,6 +18,10 @@ Rails.application.routes.draw do
     resource :survey_reminder, only: :create
 
     resource :dashboard, only: :show
+    resource :team_search, only: :show, controller: "team_search"
+    resource :team_creation, only: :show, controller: "team_creation"
+    resource :mentor_search, only: :show, controller: "mentor_search"
+    resource :curriculum, only: :show, controller: "curriculum"
 
     resource :profile, only: [:show, :edit, :update]
     resource :basic_profile, only: :update
@@ -27,6 +31,7 @@ Rails.application.routes.draw do
     resources :team_locations, only: :edit
     resources :pending_teammates, only: :index
 
+    resource :team_submission_overview, only: :show, controller: "team_submission_overview"
     resources :team_submissions
     resources :team_submission_sections, only: :show
     resources :team_submission_video_link_reviews, only: [:new, :update]
@@ -47,8 +52,9 @@ Rails.application.routes.draw do
     resources :team_submission_pitch_presentations, only: [:new, :edit]
 
     resource :regional_pitch_event_selection, only: :create
-
+    resource :regional_pitch_events_finder, only: :show, controller: "regional_pitch_events_finder"
     resources :regional_pitch_events, only: [:show, :index]
+    resource :scores_overview, only: :show, controller: "scores_overview"
     resources :scores, only: [:index, :show]
 
     resources :image_process_jobs, only: :create
