@@ -22,7 +22,7 @@ RSpec.describe "Registration toggles", :js do
     it "allows mentors to register" do
       visit signup_path
 
-      expect(page).to have_content("I am over 18 years old and will guide a team")
+      expect(page).to have_content("I am a mentor and/or educator who will support team(s) of students")
     end
   end
 
@@ -59,7 +59,7 @@ RSpec.describe "Registration toggles", :js do
     it "does not allow mentors to register" do
       visit signup_path
 
-      expect(page).not_to have_content("I am over 18 years old and will guide a team")
+      expect(page).not_to have_content("I am a mentor and/or educator who will support team(s) of students")
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe "Registration toggles", :js do
 
       expect(page).not_to have_content("I am registering myself and am 13-18 years old")
       expect(page).not_to have_content("I am registering my 8-12 year old* daughter")
-      expect(page).not_to have_content("I am over 18 years old and will guide a team")
+      expect(page).not_to have_content("I am a mentor and/or educator who will support team(s) of students")
       expect(page).not_to have_content("I am over 18 years old and will judge submissions")
 
       expect(page).to have_content("Registration is currently closed")

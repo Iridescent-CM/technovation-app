@@ -40,7 +40,7 @@ RSpec.describe "Registration Step 1 - Selecting a Profile", :js do
       it "displays a mentor registration option" do
         visit signup_path
 
-        expect(page).to have_content("I am over 18 years old and will guide a team")
+        expect(page).to have_content("I am a mentor and/or educator who will support team(s) of students")
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe "Registration Step 1 - Selecting a Profile", :js do
       it "does not display a mentor registration option" do
         visit signup_path
 
-        expect(page).not_to have_content("I am over 18 years old and will guide a team")
+        expect(page).not_to have_content("I am a mentor and/or educator who will support team(s) of students")
       end
     end
 
