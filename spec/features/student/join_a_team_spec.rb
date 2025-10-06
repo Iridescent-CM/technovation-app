@@ -29,7 +29,7 @@ RSpec.feature "Students find a team", js: true do
     Timecop.freeze(day_before_qfs) do
       within(".sub-nav-wrapper") { click_link "Find a team" }
 
-      find(".tw-link", match: :first).click
+      click_link "View more details"
 
       expect(page).to have_content(available_team.name)
       click_button "Send request"
@@ -46,7 +46,7 @@ RSpec.feature "Students find a team", js: true do
     Timecop.freeze(day_before_qfs) do
       within(".sub-nav-wrapper") { click_link "Find a team" }
 
-      find(".tw-link", match: :first).click
+      click_link "View more details"
       click_button "Send request"
 
       join_request = JoinRequest.last
@@ -63,7 +63,7 @@ RSpec.feature "Students find a team", js: true do
     Timecop.freeze(day_before_qfs) do
       within(".sub-nav-wrapper") { click_link "Find a team" }
 
-      find(".tw-link", match: :first).click
+      click_link "View more details"
 
       click_button "Send request"
 

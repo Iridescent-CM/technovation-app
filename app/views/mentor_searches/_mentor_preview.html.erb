@@ -50,7 +50,7 @@
   <div class="px-4 py-4 sm:px-6">
     <div class="text-center">
       <%= link_to "View more details",
-        mentor_mentor_path(mentor_preview, review_before: true),
+        send("#{current_scope}_mentor_path", mentor_preview, review_before: true),
         class: "tw-green-btn block" %>
     </div>
   </div>
