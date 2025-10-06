@@ -8,7 +8,7 @@ RSpec.feature "Mentors registering", :js do
   end
 
   scenario "Mentor registration steps and fields" do
-    choose "I am over 18 years old and will guide a team"
+    choose "I am a mentor and/or educator who will support team(s) of students"
     click_button "Next"
 
     expect(page).to have_content("Mentor Information")
