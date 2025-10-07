@@ -195,7 +195,7 @@ Rails.application.routes.draw do
     resource :missing_participant_search, only: [:new, :show, :create]
     resources :missing_participant_locations, only: [:edit, :update]
 
-    resources :teams, only: :show, controller: "/ambassador/teams"
+    resources :teams, only: [:show, :create], controller: "/ambassador/teams"
     resources :teams, only: :index, controller: "/data_grids/ambassador/teams"
     resources :team_submissions, only: :show, controller: "/ambassador/team_submissions"
     resources :team_submissions, only: :index, controller: "/data_grids/ambassador/team_submissions"
@@ -276,7 +276,7 @@ Rails.application.routes.draw do
     resources :score_details, only: :show, controller: "/ambassador/score_details"
     resources :unaffiliated_participants, only: :index, controller: "/data_grids/ambassador/unaffiliated_participants"
 
-    resources :teams, only: :show, controller: "/ambassador/teams"
+    resources :teams, only: [:show, :create], controller: "/ambassador/teams"
     resources :teams, only: :index, controller: "/data_grids/ambassador/teams"
     resources :team_memberships, only: [:create, :destroy], controller: "/ambassador/team_memberships"
     resources :team_submissions, only: :show, controller: "/ambassador/team_submissions"

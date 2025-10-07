@@ -1,4 +1,4 @@
-module ClubAmbassador
+module Ambassador
   class ResourcesController < AmbassadorController
     skip_before_action :require_chapterable_and_ambassador_onboarded
 

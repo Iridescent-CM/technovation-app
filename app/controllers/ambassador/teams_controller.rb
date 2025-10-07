@@ -1,5 +1,7 @@
 module Ambassador
   class TeamsController < AmbassadorController
+    include Admin::TeamCreationConcern
+
     layout "ambassador"
 
     def show

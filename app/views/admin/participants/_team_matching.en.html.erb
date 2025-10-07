@@ -1,0 +1,38 @@
+<h4 class="reset">Help them with their team matching</h4>
+
+<div class="panel">
+  <%= form_tag(send("#{current_scope}_team_memberships_path")) do %>
+    <%= hidden_field_tag :account_id, profile.account_id %>
+
+    <h6>Add <%= profile.full_name %> to a team</h6>
+
+    <p>
+      <%= select_tag "team_id",
+        options_from_collection_for_select(@teams, "id", "name"),
+        prompt: "Select a team",
+        required: true,
+        class: "chosen"
+      %>
+    </p>
+
+    <p>
+      <%= submit_tag 'Add', class: "button" %>
+    </p>
+  <% end %>
+
+  <hr><br>
+
+  <%= form_tag(send("#{current_scope}_teams_path")) do %>
+    <%= hidden_field_tag :account_id, profile.account_id %>
+
+    <h6>Create a team for <%= profile.full_name %></h6>
+
+    <p>
+      <%= text_field_tag :team_name %>
+    </p>
+
+    <p>
+      <%= submit_tag "Create", class: "button" %>
+    </p>
+  <% end %>
+</div>
