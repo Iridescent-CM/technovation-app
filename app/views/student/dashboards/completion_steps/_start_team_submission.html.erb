@@ -1,16 +1,14 @@
 <% if SeasonToggles.team_submissions_editable? %>
-  <h1 class="content-heading">Start Your Team Submission</h1>
-
   <p>
     You and your teammates can begin submitting your app now!
     As you work through the curriculum, you can upload it in parts.
     You can also edit as much as you need to until the deadline!
   </p>
 
-  <div class="step-actions">
+  <div class="step-actions mt-8">
     <%= link_to 'Begin your submission',
       new_student_team_submission_path,
-      class: "button" %>
+      class: "tw-green-btn" %>
   </div>
 <% else %>
   <h1 class="content-heading">Your Team Submission</h1>
