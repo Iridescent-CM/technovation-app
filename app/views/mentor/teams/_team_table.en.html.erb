@@ -52,13 +52,13 @@
                             Your last step is to:<br />
                             <%= link_to "Review and submit now!",
                               send("#{current_scope}_published_team_submission_path", team.submission),
-                              class: "tw-green-btn small" %>
+                              class: "tw-green-btn small inline-block text-center" %>
                           </p>
                         <% else %>
                           <p>
                             <%= link_to "Edit submission",
                               mentor_team_submission_path(team.submission),
-                              class: "tw-green-btn small" %>
+                              class: "tw-green-btn small inline-block text-center" %>
                           </p>
                         <% end %>
                       <% else %>
