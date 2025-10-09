@@ -8,7 +8,10 @@ module Admin
       grid = params[:club_ambassadors_grid] ||= {}
       grid.merge(
         column_names: detect_extra_columns(grid),
-        season: params[:club_ambassadors_grid].present? ? params[:club_ambassadors_grid][:season] : Season.current.year
+        admin: true,
+        allow_state_search: true,
+        country: Array(params[:club_ambassadors_grid][:country]),
+        state_province: Array(params[:club_ambassadors_grid][:state_province])
       )
     end
   end
