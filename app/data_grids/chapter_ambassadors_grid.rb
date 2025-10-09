@@ -1,6 +1,8 @@
 class ChapterAmbassadorsGrid
   include Datagrid
 
+  attr_accessor :admin, :allow_state_search
+
   self.batch_size = 10
 
   scope do
@@ -248,6 +250,76 @@ class ChapterAmbassadorsGrid
       }, false)
         .left_outer_joins(:chapter_ambassador_profile)
     end
+
+  filter :country,
+    :enum,
+    header: "Country",
+    select: ->(g) {
+      CountryStateSelect.countries_collection
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(g) { g.admin } do |values|
+      clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
+
+      where(clauses.join(" OR "))
+    end
+
+  filter :state_province,
+    :enum,
+    header: "State / Province",
+    select: ->(g) {
+      CS.get(g.country[0]).map { |s| [s[1], s[0]] }
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
+      scope.where(country: grid.country)
+        .where(
+          StateClauses.for(
+            values: values,
+            countries: grid.country,
+            table_name: "accounts",
+            operator: "OR"
+          )
+        )
+    end
+
+  filter :city,
+    :enum,
+    select: ->(g) {
+      country = g.country[0]
+      state = g.state_province[0]
+      CS.get(country, state)
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
+    scope.where(
+      StateClauses.for(
+        values: grid.state_province[0],
+        countries: grid.country,
+        table_name: "accounts",
+        operator: "OR"
+      )
+    )
+      .where(
+        CityClauses.for(
+          values: values,
+          table_name: "accounts",
+          operator: "OR"
+        )
+      )
+  end
 
   filter :program_name do |value, scope|
     scope
