@@ -8,6 +8,8 @@ module RequestSigninHelper
     end
 
     post "/signins", params: {account: {email: signin.email, password: "secret1234"}}
+
+    sleep 2
   end
 
   def sign_out
