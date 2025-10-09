@@ -70,16 +70,35 @@ class ClubAmbassadorsGrid
 
   filter :assigned_to_club,
     :enum,
+    header: "Assigned to Club (only applies to current season)",
     select: [
       ["Yes", "yes"],
       ["No", "no"]
     ],
     filter_group: "common" do |value, scope, grid|
       if value == "yes"
-        scope.joins(:chapterable_assignments)
+        scope
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {season: Season.current.year})
       else
-        scope.left_outer_joins(:chapterable_assignments)
-          .where(chapterable_assignments: {id: nil})
+        scope
+      end
+    end
+
+  filter :club_status,
+    :enum,
+    header: "Club Status (only applies to current season)",
+    select: [
+      ["Active"],
+      ["Inactive"]
+    ],
+    filter_group: "common" do |value, scope, grid|
+      if value == "Active"
+        scope
+          .where("'#{Season.current.year}' = ANY (clubs.seasons)")
+      else
+        scope
+          .where.not("'#{Season.current.year}' = ANY (clubs.seasons)")
       end
     end
 
@@ -87,18 +106,18 @@ class ClubAmbassadorsGrid
     :enum,
     header: "Onboarded (includes Club onboarding)",
     select: [
-     ["Yes, fully onboarded", true],
-     ["No, still onboarding", false]
+      ["Yes, fully onboarded", true],
+      ["No, still onboarding", false]
     ],
     filter_group: "common" do |value, scope, grid|
       if value == "true"
         scope
-          .where(club_ambassador_profiles: { onboarded: true })
-          .where(clubs: { onboarded: true })
+          .where(club_ambassador_profiles: {onboarded: true})
+          .where(clubs: {onboarded: true})
       else
         scope
-          .where(club_ambassador_profiles: { onboarded: false })
-          .or(scope.where(clubs: { onboarded: false }))
+          .where(club_ambassador_profiles: {onboarded: false})
+          .or(scope.where(clubs: {onboarded: false}))
       end
     end
 
