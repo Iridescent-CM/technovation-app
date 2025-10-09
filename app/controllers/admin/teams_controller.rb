@@ -1,6 +1,7 @@
 module Admin
   class TeamsController < AdminController
     include DatagridController
+    include Admin::TeamCreationConcern
 
     use_datagrid with: TeamsGrid
 

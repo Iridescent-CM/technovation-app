@@ -36,8 +36,6 @@ module ChapterAmbassador
         .not_staff
         .inactive
         .limit(3)
-
-      flash.now[:alert] = "Note: This page may not show accurate data. We're working on updating it, please refer to the participants page for accurate numbers."
     end
   end
 end

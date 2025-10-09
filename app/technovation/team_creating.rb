@@ -16,11 +16,18 @@ class TeamCreating
       team.reverse_geocode
       team.save
 
-      context.redirect_to context.send("#{context.current_scope}_team_path", team),
-        success: I18n.t("controllers.teams.create.success")
+      sucess_message = if context.class.to_s.include?("Ambassador") ||
+          context.class.to_s.include?("Admin")
+        I18n.t("controllers.teams.create.admin.success", full_name: profile.full_name)
+      else
+        I18n.t("controllers.teams.create.success")
+      end
+
+      context.redirect_to context.send(:"#{context.current_scope}_team_path", team),
+        success: sucess_message
     else
       context.redirect_to(
-        context.send("edit_#{context.current_scope}_team_location_path", team),
+        context.send(:"edit_#{context.current_scope}_team_location_path", team),
         success: "Welcome to Technovation, #{team.name}! Please set the team's location"
       )
     end
