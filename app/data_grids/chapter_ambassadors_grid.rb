@@ -38,6 +38,10 @@ class ChapterAmbassadorsGrid
   column :email, mandatory: true
   column :id, header: "Participant ID"
 
+  column :seasons do |account|
+    account.seasons.join(", ")
+  end
+
   column :gender, header: "Gender Identity" do
     gender.presence || "-"
   end
