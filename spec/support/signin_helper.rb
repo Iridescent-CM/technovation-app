@@ -17,7 +17,7 @@ module SigninHelper
       click_button "Sign in"
     end
 
-    expect(page).to have_content("Welcome back!", wait: 10)
+    expect(page).to have_content("Welcome back!", wait: 2)
   end
 
   def sign_out
