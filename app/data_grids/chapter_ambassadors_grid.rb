@@ -1,6 +1,8 @@
 class ChapterAmbassadorsGrid
   include Datagrid
 
+  attr_accessor :admin, :allow_state_search
+
   self.batch_size = 10
 
   scope do
@@ -35,6 +37,10 @@ class ChapterAmbassadorsGrid
   column :last_name, mandatory: true
   column :email, mandatory: true
   column :id, header: "Participant ID"
+
+  column :seasons do |account|
+    account.seasons.join(", ")
+  end
 
   column :gender, header: "Gender Identity" do
     gender.presence || "-"
@@ -163,16 +169,35 @@ class ChapterAmbassadorsGrid
 
   filter :assigned_to_chapter,
     :enum,
+    header: "Assigned to Chapter (only applies to current season)",
     select: [
       ["Yes", "yes"],
       ["No", "no"]
     ],
     filter_group: "common" do |value, scope, grid|
       if value == "yes"
-        scope.joins(:chapterable_assignments)
+        scope
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {season: Season.current.year})
       else
-        scope.left_outer_joins(:chapterable_assignments)
-          .where(chapterable_assignments: {id: nil})
+        scope
+      end
+    end
+
+  filter :chapter_status,
+    :enum,
+    header: "Chapter Status (only applies to current season)",
+    select: [
+      ["Active"],
+      ["Inactive"]
+    ],
+    filter_group: "common" do |value, scope, grid|
+      if value == "Active"
+        scope
+          .where("'#{Season.current.year}' = ANY (chapters.seasons)")
+      else
+        scope
+          .where.not("'#{Season.current.year}' = ANY (chapters.seasons)")
       end
     end
 
@@ -229,6 +254,76 @@ class ChapterAmbassadorsGrid
       }, false)
         .left_outer_joins(:chapter_ambassador_profile)
     end
+
+  filter :country,
+    :enum,
+    header: "Country",
+    select: ->(g) {
+      CountryStateSelect.countries_collection
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(g) { g.admin } do |values|
+      clauses = values.flatten.map { |v| "accounts.country = '#{v}'" }
+
+      where(clauses.join(" OR "))
+    end
+
+  filter :state_province,
+    :enum,
+    header: "State / Province",
+    select: ->(g) {
+      CS.get(g.country[0]).map { |s| [s[1], s[0]] }
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(grid) { GridCanFilterByState.call(grid) } do |values, scope, grid|
+      scope.where(country: grid.country)
+        .where(
+          StateClauses.for(
+            values: values,
+            countries: grid.country,
+            table_name: "accounts",
+            operator: "OR"
+          )
+        )
+    end
+
+  filter :city,
+    :enum,
+    select: ->(g) {
+      country = g.country[0]
+      state = g.state_province[0]
+      CS.get(country, state)
+    },
+    filter_group: "more-specific",
+    multiple: true,
+    data: {
+      placeholder: "Select or start typing..."
+    },
+    if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
+    scope.where(
+      StateClauses.for(
+        values: grid.state_province[0],
+        countries: grid.country,
+        table_name: "accounts",
+        operator: "OR"
+      )
+    )
+      .where(
+        CityClauses.for(
+          values: values,
+          table_name: "accounts",
+          operator: "OR"
+        )
+      )
+  end
 
   filter :program_name do |value, scope|
     scope

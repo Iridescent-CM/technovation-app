@@ -12,7 +12,7 @@ module Admin
 
     def update
       ambassador = ChapterAmbassadorProfile.find(params.fetch(:id))
-      ambassador.public_send("#{params.fetch(:status)}!")
+      ambassador.public_send(:"#{params.fetch(:status)}!")
       redirect_back fallback_location: admin_chapter_ambassadors_path,
         success: "#{ambassador.full_name} was marked as #{params.fetch(:status)}"
     end
@@ -21,7 +21,10 @@ module Admin
       grid = params[:chapter_ambassadors_grid] ||= {}
       grid.merge(
         column_names: detect_extra_columns(grid),
-        season: params[:chapter_ambassadors_grid].present? ? params[:chapter_ambassadors_grid][:season] : Season.current.year
+        admin: true,
+        allow_state_search: true,
+        country: Array(params[:chapter_ambassadors_grid][:country]),
+        state_province: Array(params[:chapter_ambassadors_grid][:state_province])
       )
     end
   end
