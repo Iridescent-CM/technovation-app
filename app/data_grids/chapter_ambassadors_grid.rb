@@ -163,16 +163,35 @@ class ChapterAmbassadorsGrid
 
   filter :assigned_to_chapter,
     :enum,
+    header: "Assigned to Chapter (only applies to current season)",
     select: [
       ["Yes", "yes"],
       ["No", "no"]
     ],
     filter_group: "common" do |value, scope, grid|
       if value == "yes"
-        scope.joins(:chapterable_assignments)
+        scope
+          .joins(:chapterable_assignments)
+          .where(chapterable_assignments: {season: Season.current.year})
       else
-        scope.left_outer_joins(:chapterable_assignments)
-          .where(chapterable_assignments: {id: nil})
+        scope
+      end
+    end
+
+  filter :chapter_status,
+    :enum,
+    header: "Chapter Status (only applies to current season)",
+    select: [
+      ["Active"],
+      ["Inactive"]
+    ],
+    filter_group: "common" do |value, scope, grid|
+      if value == "Active"
+        scope
+          .where("'#{Season.current.year}' = ANY (chapters.seasons)")
+      else
+        scope
+          .where.not("'#{Season.current.year}' = ANY (chapters.seasons)")
       end
     end
 
