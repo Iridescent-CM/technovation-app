@@ -5,9 +5,11 @@
 
   <div class="p-4 flex-grow">
     <h3 class="font-medium mb-2"><%= mentor_preview.full_name %></h3>
-    <p class="text-base mb-2">Email: <%= mentor_preview.email %></p>
-    <p class="text-base mb-2">Location: <%= mentor_preview.address_details %></p>
-    <p class="text-base mb-2">Company/School Name: <%= mentor_preview.school_company_name %></p>
+      <p class="text-base mb-2">Location: <%= mentor_preview.address_details %></p>
+    <% if current_scope == "mentor" %>
+      <p class="text-base mb-2">Email: <%= mentor_preview.email %></p>
+      <p class="text-base mb-2">Company/School Name: <%= mentor_preview.school_company_name %></p>
+    <% end %>
 
     <div class="text-base mb-2">
       Mentor Expertise:
