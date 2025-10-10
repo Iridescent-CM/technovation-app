@@ -1,25 +1,45 @@
-<dl>
-  <dt>Name</dt>
-  <dd><%= current_student.full_name %></dd>
+<div id="basic-info" class="h-auto mb-auto rounded-md border-solid border-4 border-energetic-blue" >
+  <div class="sm-header-wrapper ">
+    <p class="font-bold">Basic Information</p>
+  </div>
 
-  <dt>School name</dt>
-  <dd><%= current_student.school_name %></dd>
+  <div id="information-wrapper" class="p-6 flex flex-col-reverse lg:flex-row lg:justify-between">
+    <div id="information-details">
+      <dl>
+        <dt>Name</dt>
+        <dd><%= current_student.full_name %></dd>
 
-  <dt>Birthdate</dt>
-  <dd><%= current_student.date_of_birth.strftime("%B %e, %Y") %></dd>
+        <dt>School name</dt>
+        <dd><%= current_student.school_name %></dd>
 
-  <dt>Team divisions depend on your age on this date</dt>
-  <dd><%= Division.cutoff_date.strftime("%B %e, %Y") %></dd>
+        <dt>Birthdate</dt>
+        <dd><%= current_student.date_of_birth.strftime("%B %e, %Y") %></dd>
 
-  <dt>Your age today</dt>
-  <dd><%= current_student.age %></dd>
+        <dt>Team divisions depend on your age on this date</dt>
+        <dd><%= Division.cutoff_date.strftime("%B %e, %Y") %></dd>
 
-  <dt>Your age on <%= Division.cutoff_date.strftime("%B %e, %Y") %></dt>
-  <dd><%= current_student.age_by_cutoff %></dd>
-</dl>
+        <dt>Your age today</dt>
+        <dd><%= current_student.age %></dd>
 
-<p>
-  <%= link_to "Change your basic profile details",
-    edit_profile_path,
-    class: "button" %>
-</p>
+        <dt>Your age on <%= Division.cutoff_date.strftime("%B %e, %Y") %></dt>
+        <dd><%= current_student.age_by_cutoff %></dd>
+      </dl>
+
+      <p>
+        <%= link_to "Change your basic profile details",
+                    edit_profile_path,
+                    class: "tw-green-btn" %>
+      </p>
+
+    </div>
+
+    <div id="profile-picture" class="flex flex-col items-center self-start mb-4">
+      <div>
+        <%= render 'profiles/filestack_profile_image_tag' %>
+      </div>
+      <div>
+        <%= render 'profiles/filestack_profile_image_upload' %>
+      </div>
+    </div>
+  </div>
+</div>
