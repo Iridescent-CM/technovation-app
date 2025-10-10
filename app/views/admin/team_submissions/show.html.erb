@@ -34,6 +34,12 @@
             class: "grid__cell--padding-sm-y"
           ) %>
 
+          <%= web_icon(
+            "flag-o",
+            text: "Season: #{@team_submission.seasons.to_sentence}",
+            class: "grid__cell--padding-sm-y"
+          ) %>
+
           <div class="grid__cell--padding-sm-y">
             <%= submission_progress_bar(@team_submission) %>
           </div>
