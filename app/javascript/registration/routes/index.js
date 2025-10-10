@@ -1,169 +1,148 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import store from '../store'
+import store from "../store";
 
-import DataUseTerms from '../components/DataUseTerms'
+import Location from "../components/Location";
 
-import Location from '../components/Location'
+import AgeVerification from "../components/AgeVerification";
+import ChooseProfile from "../components/ChooseProfile";
 
-import AgeVerification from '../components/AgeVerification'
-import ChooseProfile from '../components/ChooseProfile'
+import BasicProfile from "../components/BasicProfile";
 
-import BasicProfile from '../components/BasicProfile'
+import Login from "../components/Login";
+import ChangeEmail from "../components/ChangeEmail";
+import ChangePassword from "../components/ChangePassword";
 
-import Login from '../components/Login'
-import ChangeEmail from '../components/ChangeEmail'
-import ChangePassword from '../components/ChangePassword'
-
-Vue.use(VueRouter)
-
-const requireDataAgreement = (to, _from, next) => {
-  const notDataUseComponent = to.matched.some(record => record.name !== 'data-use')
-
-  if (notDataUseComponent && !store.state.registration.termsAgreed) {
-    next({ name: 'data-use' })
-  } else {
-    next()
-  }
-}
+Vue.use(VueRouter);
 
 const onLoginStep = () => {
-  return !!store.getters.readyForAccount
-}
+  return !!store.getters.readyForAccount;
+};
 
 const onChooseProfileStep = () => {
-  return !!(store.state.registration.termsAgreed &&
-            store.getters.isAgeSet &&
-              !store.state.registration.profileChoice)
-}
+  return !!(
+    store.state.registration.termsAgreed &&
+    store.getters.isAgeSet &&
+    !store.state.registration.profileChoice
+  );
+};
 
 const onBasicProfileStep = () => {
-  return !!(store.state.registration.termsAgreed &&
-            store.getters.isAgeSet &&
-              store.state.registration.profileChoice &&
-                store.getters.isLocationSet)
-}
+  return !!(
+    store.state.registration.termsAgreed &&
+    store.getters.isAgeSet &&
+    store.state.registration.profileChoice &&
+    store.getters.isLocationSet
+  );
+};
 
 const onLocationStep = () => {
-  return !!(store.state.registration.termsAgreed &&
-              store.getters.isAgeSet &&
-                store.state.registration.profileChoice)
-}
+  return !!(
+    store.state.registration.termsAgreed &&
+    store.getters.isAgeSet &&
+    store.state.registration.profileChoice
+  );
+};
 
 const onAgeStep = () => {
-  return !!store.state.registration.termsAgreed
-}
+  return !!store.state.registration.termsAgreed;
+};
 
 const getCurrentStep = () => {
   if (onLoginStep()) {
-    return 'login'
+    return "login";
   } else if (onBasicProfileStep()) {
-    return 'basic-profile'
+    return "basic-profile";
   } else if (onChooseProfileStep()) {
-    return 'choose-profile'
+    return "choose-profile";
   } else if (onAgeStep()) {
-    return 'age'
+    return "age";
   } else if (onLocationStep()) {
-    return 'location'
+    return "location";
   }
-
-  return 'data-use'
-}
+};
 
 export const routes = [
   {
-    path: '/',
+    path: "/",
     beforeEnter: (_to, _from, next) => {
-      next({ name: getCurrentStep() })
+      next({ name: getCurrentStep() });
     },
   },
   {
-    path: '/data-use',
-    name: 'data-use',
-    component: DataUseTerms,
-    meta: {
-      browserTitle: 'Step 1: Agreeement'
-    },
-  },
-  {
-    path: '/age',
-    name: 'age',
+    path: "/age",
+    name: "age",
     component: AgeVerification,
     meta: {
-      browserTitle: 'Step 3: Age'
+      browserTitle: "Step 3: Age",
     },
-    beforeEnter: requireDataAgreement,
   },
   {
-    path: '/region',
-    name: 'location',
+    path: "/region",
+    name: "location",
     component: Location,
     meta: {
-      browserTitle: 'Step 2: Region'
+      browserTitle: "Step 2: Region",
     },
-    beforeEnter: requireDataAgreement,
   },
   {
-    path: '/choose-profile',
-    name: 'choose-profile',
+    path: "/choose-profile",
+    name: "choose-profile",
     component: ChooseProfile,
     meta: {
-      browserTitle: 'Step 4: Choose your profile'
+      browserTitle: "Step 4: Choose your profile",
     },
-    beforeEnter: requireDataAgreement,
   },
   {
-    path: '/basic-profile',
-    name: 'basic-profile',
+    path: "/basic-profile",
+    name: "basic-profile",
     component: BasicProfile,
     meta: {
-      browserTitle: 'Step 5: Basic Profile'
+      browserTitle: "Step 5: Basic Profile",
     },
-    beforeEnter: requireDataAgreement,
   },
   {
-    path: '/signin',
-    name: 'login',
+    path: "/signin",
+    name: "login",
     component: Login,
     meta: {
-      browserTitle: 'Final step: Sign In'
+      browserTitle: "Final step: Sign In",
     },
     beforeEnter: (_to, _from, next) => {
-      requireDataAgreement(_to, _from, next)
-
       if (store.state.registration.isLocked) {
-        next({ name: 'basic-profile' })
+        next({ name: "basic-profile" });
       } else {
-        next()
+        next();
       }
     },
   },
   {
-    path: '/change-email',
-    name: 'change-email',
+    path: "/change-email",
+    name: "change-email",
     component: ChangeEmail,
     meta: {
-      browserTitle: 'Change your Email'
+      browserTitle: "Change your Email",
     },
   },
   {
-    path: '/change-password',
-    name: 'change-password',
+    path: "/change-password",
+    name: "change-password",
     component: ChangePassword,
     meta: {
-      browserTitle: 'Change your Password'
+      browserTitle: "Change your Password",
     },
   },
-]
+];
 
 export const router = new VueRouter({
   routes,
-})
+});
 
 router.afterEach((to, _from) => {
-  if(window && window.document && to.meta.browserTitle)
-    window.document.title = to.meta.browserTitle + " • Technovation"
-})
+  if (window && window.document && to.meta.browserTitle)
+    window.document.title = to.meta.browserTitle + " • Technovation";
+});
 
-export default router
+export default router;
+

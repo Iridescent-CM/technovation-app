@@ -13,15 +13,15 @@ module ForceTermsAgreement
     return if current_scope == "admin" || current_scope == "chapter_ambassador"
 
     if logged_in_and_has_profile && !current_account.terms_agreed? && !on_data_agreement_form
-      redirect_to edit_terms_agreement_path,
+      redirect_to new_terms_agreement_path,
         notice: t("controllers.application.no_data_agreement_on_file") and return
     end
   end
 
   def logged_in_and_has_profile
     current_account.authenticated? &&
-      current_account.respond_to?("#{current_scope}_profile") &&
-      !!current_account.send("#{current_scope}_profile")
+      current_account.respond_to?(:"#{current_scope}_profile") &&
+      !!current_account.send(:"#{current_scope}_profile")
   end
 
   def on_data_agreement_form
@@ -31,7 +31,7 @@ module ForceTermsAgreement
     )
 
     data_agreement_form_path = Rails.application.routes.recognize_path(
-      edit_terms_agreement_path
+      new_terms_agreement_path
     )
 
     original_request_path == data_agreement_form_path

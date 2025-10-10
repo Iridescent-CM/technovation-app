@@ -496,7 +496,7 @@ Rails.application.routes.draw do
     resource :docusign, only: :create, controller: "docusign"
   end
 
-  resource :terms_agreement, only: [:edit, :update]
+  resource :terms_agreement, only: [:new, :create]
   resource :chapterable_account_assignments, only: [:new, :create]
   post "unset_force_chapterable_selection", to: "chapterable_account_assignments#unset_force_chapterable_selection"
 
