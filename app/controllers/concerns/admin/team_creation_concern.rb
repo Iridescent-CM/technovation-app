@@ -15,6 +15,8 @@ module Admin::TeamCreationConcern
         self
       )
     else
+      flash[:error] = "There was an error creating this team: #{@team.errors.full_messages.join(", ")}"
+
       redirect_back fallback_location: send(:"#{current_scope}_participant_path", account)
     end
   end
