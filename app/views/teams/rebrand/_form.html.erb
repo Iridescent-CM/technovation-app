@@ -1,5 +1,6 @@
 <%= simple_form_for @team, 
-  url: (@team.id.present? ? send("#{current_scope}_team_path", @team) : send("#{current_scope}_teams_path")) do |f| %>
+  url: (@team.id.present? ? send("#{current_scope}_team_path", @team) : send("#{current_scope}_teams_path")),
+  data: {turbo: false} do |f| %>
     <div class="p-2">
       <%= f.input :name, label: "Team name" %>
 
