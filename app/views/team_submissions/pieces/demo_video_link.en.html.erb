@@ -4,7 +4,8 @@
   <%= form_with(
     model: @team_submission,
     url: send("#{current_scope}_team_submission_path"),
-    local: true
+    local: true,
+    data: { turbo: false }
   ) do |f| %>
     <%= hidden_field_tag :piece, piece_name %>
 
