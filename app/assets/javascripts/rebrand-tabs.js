@@ -21,4 +21,12 @@ $(document).on("turbo:load", function () {
   if (anchor.length > 0 && anchor === "#parent-tab-content") {
     $(`a[href*='#parent-tab-content']`).click();
   }
+
+  document
+    .getElementById("check-parental-consent-status")
+    .addEventListener("click", (e) => {
+      e.preventDefault();
+
+      document.getElementById("parental-tab").click();
+    });
 });
