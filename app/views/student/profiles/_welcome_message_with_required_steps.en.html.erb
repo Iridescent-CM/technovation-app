@@ -53,7 +53,10 @@
                 <%= required_step[:completed_details] %>
               </span>
             <% else %>
-              <%= link_to required_step[:link_to_complete_text], required_step[:link_to_complete], class: "text-sm text-energetic-blue italic hover:text-energetic-blue hover:underline" %>
+              <%= link_to required_step[:link_to_complete_text], required_step[:link_to_complete],
+                class: "text-sm text-energetic-blue italic hover:text-energetic-blue hover:underline",
+                id: "check-parental-consent-status"
+              %>
             <% end %>
           </span>
         </div>
