@@ -153,12 +153,18 @@ class TeamSubmission < ActiveRecord::Base
       .where("regional_pitch_events.id IS NULL")
   }
 
-  scope :by_chapterable, ->(chapterable_type, chapterable_id) do
-    joins(team: {students: {account: :chapterable_assignments}})
+  scope :by_chapterable, ->(chapterable_type, chapterable_id, season = nil) do
+    scope = joins(team: {students: {account: :chapterable_assignments}})
       .where(chapterable_assignments: {
         chapterable_type: chapterable_type.capitalize,
         chapterable_id: chapterable_id
       })
+
+    if season.present?
+      scope.by_season(season).where(chapterable_assignments: {season: season})
+    else
+      scope.where("chapterable_assignments.season::text = ANY (team_submissions.seasons)")
+    end
   end
 
   scope :with_pitch_presentations, -> { where.not(pitch_presentation: nil) }

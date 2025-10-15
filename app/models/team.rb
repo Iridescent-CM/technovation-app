@@ -194,17 +194,20 @@ class Team < ActiveRecord::Base
     where(accepting_student_requests: true)
   }
 
-  scope :by_chapterable, ->(chapterable_type, chapterable_id) do
-    joins(:memberships,
-      students: {
-        account: :chapterable_assignments
-      })
-      .where(
-        chapterable_assignments: {
-          chapterable_type: chapterable_type.capitalize,
-          chapterable_id: chapterable_id
-        }
-      )
+  scope :by_chapterable, ->(chapterable_type, chapterable_id, season = nil) do
+    scope = joins(students: { account: :chapterable_assignments})
+    .where(
+      chapterable_assignments: {
+        chapterable_type: chapterable_type.capitalize,
+        chapterable_id: chapterable_id
+      }
+    )
+
+    if season.present?
+      scope.by_season(season).where(chapterable_assignments: {season: season})
+    else
+      scope.where("chapterable_assignments.season::text = ANY (teams.seasons)")
+    end
   end
 
   belongs_to :division
