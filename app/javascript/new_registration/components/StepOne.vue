@@ -2,14 +2,6 @@
   <div id="step-one">
     <ContainerHeader header-text="How will you participate?" />
     <div id="profile-type" class="form-wrapper">
-      <div v-if="this.errorMessage.length > 0">
-        <div class="border-l-2 border-red-700 bg-red-50 p-2 mb-4">
-          <p class="text-left text-rose-900">
-            {{ this.errorMessage }}
-          </p>
-        </div>
-      </div>
-
       <div
         v-if="
           (this.inviteCode != null || this.teamInviteCode != null) &&
@@ -53,6 +45,14 @@
         >. For example, if you turn 13 on {{ exampleStudentBirthday }}, you will
         need to select “I am registering myself and am 13-18 years old.”
       </p>
+
+      <div v-if="this.errorMessage.length > 0">
+        <div class="border-l-2 border-red-700 bg-red-50 p-2 mt-10">
+          <p class="text-left text-rose-900">
+            {{ this.errorMessage }}
+          </p>
+        </div>
+      </div>
     </div>
 
     <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
