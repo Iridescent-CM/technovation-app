@@ -17,6 +17,10 @@ class TeamsGrid
     division.name.humanize
   end
 
+  column :seasons do
+    seasons.to_sentence
+  end
+
   column :event_name do
     event.name
   end
@@ -306,6 +310,34 @@ class TeamsGrid
             operator: "OR"
           )
         )
+    end
+
+  filter :chapter,
+    :enum,
+    header: "Chapter",
+    select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
+    filter_group: "more-specific",
+    if: ->(g) {
+      g.admin
+    },
+    data: {
+     placeholder: "Select a chapter"
+    } do |value, scope, grid|
+      scope.by_chapterable("Chapter", value, grid.season).distinct
+    end
+
+  filter :club,
+    :enum,
+    header: "Club",
+    select: Club.all.order(name: :asc).map { |c| [c.name, c.id] },
+    filter_group: "more-specific",
+    if: ->(g) {
+      g.admin
+    },
+    data: {
+      placeholder: "Select a club"
+    } do |value, scope, grid|
+      scope.by_chapterable("Club", value, grid.season).distinct
     end
 
   column_names_filter(

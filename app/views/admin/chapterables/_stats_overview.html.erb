@@ -48,6 +48,36 @@
               %>
             </td>
           </tr>
+          <tr>
+            <td>Teams</td>
+            <td><%= Team.current.by_chapterable(chapterable.class.name, chapterable.id).distinct.count %></td>
+            <td>
+              <%= link_to "View Details",
+                admin_teams_path(
+                  teams_grid: {
+                    chapter: chapterable_type == "chapter" ? chapterable : nil,
+                    club: chapterable_type == "club" ? chapterable : nil,
+                    season: Season.current.year
+                  }
+                )
+              %>
+            </td>
+          </tr>
+          <tr>
+            <td>Submissions</td>
+            <td><%= TeamSubmission.current.by_chapterable(chapterable.class.name, chapterable.id).distinct.count %></td>
+            <td>
+              <%= link_to "View Details",
+                admin_team_submissions_path(
+                  submissions_grid: {
+                    chapter: chapterable_type == "chapter" ? chapterable : nil,
+                    club: chapterable_type == "club" ? chapterable : nil,
+                    season: Season.current.year
+                  }
+                )
+              %>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

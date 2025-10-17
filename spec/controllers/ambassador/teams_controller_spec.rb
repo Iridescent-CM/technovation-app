@@ -70,7 +70,9 @@ RSpec.describe Ambassador::TeamsController do
           before do
             brazil_student.chapterable_assignments.create(
               account: brazil_student.account,
-              chapterable: brazil_chapter
+              chapterable: brazil_chapter,
+              season: Season.current.year,
+              primary: true
             )
 
             brazil_team.students << brazil_student

@@ -508,4 +508,115 @@ RSpec.describe Team do
       ])
     end
   end
+
+  describe ".by_chapterable(scope)" do
+    let(:chapter) { FactoryBot.create(:chapter) }
+    let(:club) { FactoryBot.create(:club) }
+
+    it "finds teams with students assigned to a chapter in the current season" do
+      team = FactoryBot.create(:team)
+      student = team.students.first
+
+      student.chapterable_assignments.destroy_all
+      student.chapterable_assignments.create(
+        chapterable: chapter,
+        account: student.account,
+        season: Season.current.year,
+        primary: true
+      )
+
+      results = Team.by_chapterable("Chapter", chapter.id, Season.current.year)
+      expect(results).to include(team)
+    end
+
+    it "finds teams with students assigned to a club in the current season" do
+      team = FactoryBot.create(:team)
+      student = team.students.first
+
+      student.chapterable_assignments.destroy_all
+      student.chapterable_assignments.create(
+        chapterable: club,
+        account: student.account,
+        season: Season.current.year,
+        primary: true
+      )
+
+      results = Team.by_chapterable("Club", club.id, Season.current.year)
+      expect(results).to include(team)
+    end
+
+    it "excludes teams from past seasons when filtering by current season" do
+      past_team = FactoryBot.create(:team, seasons: [Season.current.year - 1])
+      student = past_team.students.first
+      TeamRosterManaging.add(past_team, student)
+
+      student.chapterable_assignments.destroy_all
+      student.chapterable_assignments.create(
+        chapterable: chapter,
+        account: student.account,
+        season: Season.current.year - 1,
+        primary: true
+      )
+
+      results = Team.by_chapterable("Chapter", chapter.id, Season.current.year)
+      expect(results).not_to include(past_team)
+    end
+
+    it "includes the same team in multiple chapter filter results when students belong to different chapters" do
+      other_chapter = FactoryBot.create(:chapter)
+      team = FactoryBot.create(:team, members_count: 2)
+      student1 = team.students.first
+      student2 = team.students.second
+
+      student1.chapterable_assignments.destroy_all
+      student1.chapterable_assignments.create(
+        chapterable: chapter,
+        account: student1.account,
+        season: Season.current.year,
+        primary: true
+      )
+
+      student2.chapterable_assignments.destroy_all
+      student2.chapterable_assignments.create(
+        chapterable: other_chapter,
+        account: student2.account,
+        season: Season.current.year,
+        primary: true
+      )
+
+      results = Team.by_chapterable("Chapter", chapter.id, Season.current.year)
+      expect(results).to include(team)
+
+      other_chapter_results = Team.by_chapterable("Chapter", other_chapter.id, Season.current.year)
+      expect(other_chapter_results).to include(team)
+    end
+
+    it "finds teams where assignment season matches team season when no season parameter is included" do
+      current_team = FactoryBot.create(:team)
+      student = current_team.students.first
+      student.chapterable_assignments.destroy_all
+
+      current_chapter_assignment = student.chapterable_assignments.create(
+        chapterable: chapter,
+        account: student.account,
+        season: Season.current.year,
+        primary: true
+      )
+
+      past_chapter = FactoryBot.create(:chapter, seasons: [Season.current.year - 1])
+      past_team = FactoryBot.create(:team, seasons: [Season.current.year - 1])
+      TeamRosterManaging.add(past_team, student)
+
+      past_chapter_assignment = student.chapterable_assignments.create(
+        chapterable: past_chapter,
+        account: student.account,
+        season: Season.current.year - 1,
+        primary: true
+      )
+
+      current_chapter_results = Team.by_chapterable("Chapter", chapter.id)
+      expect(current_chapter_results).to include(current_team)
+      expect(current_chapter_results).not_to include(past_team)
+    end
+  end
 end
