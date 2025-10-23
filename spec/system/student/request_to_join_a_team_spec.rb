@@ -26,6 +26,7 @@ RSpec.describe "Students request to join a team",
       sign_in(student)
 
       visit new_student_team_search_path
+      expect(page).to have_current_path("/student/team_searches/new")
     end
 
     it "displays a message that it has been declined" do
@@ -49,6 +50,7 @@ RSpec.describe "Students request to join a team",
       sign_in(mentor)
 
       visit new_mentor_team_search_path
+      expect(page).to have_current_path("/mentor/team_searches/new")
     end
 
     it "displays a message that it has been declined" do
@@ -76,6 +78,8 @@ RSpec.describe "Students request to join a team",
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       visit new_student_join_request_path(team_id: team.id)
+      expect(page).to have_current_path(%r{^/student/join_requests/new\?})
+
       click_button "Send request"
     end
 
@@ -114,6 +118,7 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: student.mailer_token
       )
+      expect(page).to have_current_path(%r{/student/join_requests})
 
       click_button "Approve"
       click_button "Yes, do it"
@@ -149,6 +154,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.students.sample)
 
       visit student_team_path(team)
+      expect(page).to have_current_path(%r{/student/teams})
 
       expect {
         click_link "Approve"
@@ -161,6 +167,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.students.sample)
 
       visit student_team_path(team)
+      expect(page).to have_current_path(%r{/student/teams})
 
       expect {
         click_link "Decline"
@@ -177,6 +184,8 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: mentor.mailer_token
       )
+      expect(page).to have_current_path(%r{/mentor/join_requests/})
+
       click_button "Approve"
       click_button "Yes, do it"
 
@@ -193,6 +202,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.mentors.sample)
 
       visit mentor_team_students_path(team)
+      expect(page).to have_current_path(%r{/mentor/teams/.*/students})
 
       expect {
         click_link "Approve"
@@ -205,6 +215,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.mentors.sample)
 
       visit mentor_team_students_path(team)
+      expect(page).to have_current_path(%r{/mentor/teams/.*/students})
 
       expect {
         click_link "Decline"
@@ -222,6 +233,7 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: student.mailer_token
       )
+      expect(page).to have_current_path(%r{^/student/join_requests})
 
       click_button "Decline"
       click_button "Yes, do it"
@@ -249,6 +261,7 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: mentor.mailer_token
       )
+      expect(page).to have_current_path(%r{^/mentor/join_requests})
 
       click_button "Decline"
       click_button "Yes, do it"
