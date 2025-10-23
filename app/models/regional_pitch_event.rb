@@ -62,7 +62,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   validates :name,
     :starts_at,
     :ends_at,
-    :division_ids,
+    :division_id,
     :city,
     :venue_address,
     presence: true
@@ -137,8 +137,8 @@ class RegionalPitchEvent < ActiveRecord::Base
       name: name,
       city: city,
       venue_address: venue_address,
-      division_names: division_names,
-      division_ids: division_ids,
+      division_name: division_name,
+      division_id: division_id,
       day: day,
       date: date,
       time: time,
@@ -154,6 +154,10 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def friendly_name
     "#{name} in #{city} on #{date_time}"
+  end
+
+  def division_name
+    division.name
   end
 
   def division_names
