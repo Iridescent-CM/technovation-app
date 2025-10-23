@@ -6,7 +6,7 @@ module Admin
 
     def update
       SeasonToggles.configure(season_toggle_params)
-      redirect_to edit_admin_season_schedule_settings_path,
+      redirect_to admin_dashboard_path,
         success: "Season schedule saved!"
     end
 

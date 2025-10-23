@@ -17,12 +17,13 @@ module SigninHelper
       click_button "Sign in"
     end
 
-    expect(page).to have_content("Welcome back!", wait: 2)
+    expect(page).to have_content("Welcome back!")
   end
 
   def sign_out
     visit signout_path
 
+    expect(page).to have_current_path("/login")
     expect(page).to have_content("See you next time!")
   end
 end
