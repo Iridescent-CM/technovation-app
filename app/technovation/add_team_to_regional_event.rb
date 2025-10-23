@@ -26,7 +26,7 @@ class AddTeamToRegionalEvent
         :regional_pitch_events,
         :division,
         team_submissions: :submission_scores
-      ).where.not("divisions.id" => event.division_ids)
+      ).where.not("divisions.id" => event.division_id)
 
       incompatible_teams.each { |t| InvalidateExistingJudgeData.call(t) }
 
