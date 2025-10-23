@@ -4,6 +4,10 @@ class RegionalPitchEvent < ActiveRecord::Base
   include Regioned
   regioned_source Account, through: :ambassador
 
+  attr_accessor :capacity_enabled
+
+  before_validation :clear_capacity_if_capacity_disabled
+
   after_validation -> {
     AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.call(self)
   }
@@ -66,6 +70,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     :city,
     :venue_address,
     presence: true
+
+  validates :capacity, presence: true,
+    numericality: { only_integer: true, greater_than: 0 },
+    if: :capacity_enabled?
 
   delegate :state_province,
     :country,
@@ -200,6 +208,15 @@ class RegionalPitchEvent < ActiveRecord::Base
     else
       teams.length.to_i >= capacity.to_i
     end
+  end
+
+  def capacity_enabled?
+    capacity_enabled == "1" ||
+      (capacity.present? && capacity.to_i > 0)
+  end
+
+  def clear_capacity_if_capacity_disabled
+    self.capacity = nil unless capacity_enabled?
   end
 
   def name_with_friendly_country_prefix
