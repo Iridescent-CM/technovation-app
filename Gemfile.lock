@@ -648,7 +648,7 @@ DEPENDENCIES
   brakeman
   browser (~> 2.5)
   bullet
-  capybara (~> 3.0)
+  capybara (~> 3.40)
   capybara-email (~> 3.0)
   carmen (~> 1.1)
   carrierwave (~> 1.2)
