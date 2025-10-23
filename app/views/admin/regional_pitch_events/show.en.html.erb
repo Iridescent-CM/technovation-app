@@ -2,8 +2,15 @@
   <div class="grid__col-12">
     <div class="panel">
       <h3><%= @event.name %></h3>
+      <% if current_account.chapter_ambassador? %>
+        <%= link_to(
+          "Edit",
+          edit_chapter_ambassador_event_path(@event),
+          class: "button small",
+          data: {turbo: false}) %>
+      <% end %>
 
-      <div class="grid grid--bleed">
+      <div class="grid grid--bleed margin--t-large">
         <div class="grid__col-auto">
           <dl>
             <dt>Official event?</dt>
@@ -34,10 +41,9 @@
               <% end %>
             </dd>
 
-            <dt>Divisions</dt>
+            <dt>Division</dt>
 
-            <dd><%= @event.division_names %></dd>
-
+            <dd><%= @event.division_name %></dd>
 
             <% if current_account.admin? %>
               <dt>Ambassador:</dt>
