@@ -37,7 +37,7 @@ class RegionalPitchEvent < ActiveRecord::Base
     class_name: "ChapterAmbassadorProfile",
     foreign_key: :chapter_ambassador_profile_id
 
-  has_and_belongs_to_many :divisions
+  belongs_to :division
 
   has_and_belongs_to_many :judges,
     -> { includes(:account).references(:accounts) },
