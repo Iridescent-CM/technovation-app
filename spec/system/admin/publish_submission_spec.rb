@@ -28,6 +28,7 @@ RSpec.describe "Publishing a submission", :js do
 
         click_button "Yes, do it"
 
+        expect(page).to have_link("Unpublish")
         expect(submission.reload).to be_published
       end
     end
