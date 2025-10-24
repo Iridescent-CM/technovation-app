@@ -765,16 +765,6 @@ ALTER SEQUENCE public.divisions_id_seq OWNED BY public.divisions.id;
 
 
 --
--- Name: divisions_regional_pitch_events; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.divisions_regional_pitch_events (
-    division_id integer,
-    regional_pitch_event_id integer
-);
-
-
---
 -- Name: documents; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -4275,14 +4265,6 @@ ALTER TABLE ONLY public.program_information_organization_types
 
 
 --
--- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.divisions_regional_pitch_events
-    ADD CONSTRAINT fk_rails_1064d06b86 FOREIGN KEY (division_id) REFERENCES public.divisions(id);
-
-
---
 -- Name: program_information_meeting_formats fk_rails_11fb8da74a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4320,14 +4302,6 @@ ALTER TABLE ONLY public.judge_profile_judge_types
 
 ALTER TABLE ONLY public.regional_pitch_events_teams
     ADD CONSTRAINT fk_rails_24f0c96e18 FOREIGN KEY (team_id) REFERENCES public.teams(id);
-
-
---
--- Name: divisions_regional_pitch_events fk_rails_285ce9b10b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.divisions_regional_pitch_events
-    ADD CONSTRAINT fk_rails_285ce9b10b FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
 
 
 --
@@ -5058,6 +5032,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250902171015'),
 ('20250902171016'),
 ('20251022160639'),
+('20251024165952'),
 ('20251110201524');
 
 
