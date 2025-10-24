@@ -1,0 +1,59 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "student/dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Curriculum" } do %>
+    <div>
+      <p class="mb-10">
+        Learn how to make your project as strong as possible by following these lessons.
+        Most participants spend around 40+ hours working on their ideas.
+      </p>
+
+      <div class="mb-8">
+        <h4 class="text-xl font-medium mb-4">Students</h4>
+        <p>
+          <a href="https://technovationchallenge.org/technovation-curriculum/" class="tw-green-btn" target="_blank">
+            Go to Curriculum
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xl font-medium">Judging</h4>
+        <p class="mb-2">
+          Visit these helpful links to prepare your project for judging:
+        </p>
+        <ul class="list-disc ml-8">
+          <li>
+            <a href="https://technovationchallenge.org/submission-guidelines/" target="_blank">
+              Submission Guidelines (updated each season)
+            </a>
+          </li>
+
+          <li>
+            <a href="https://technovationchallenge.org/curriculum/judging-rubric/" target="_blank">
+              Judging Rubrics
+            </a>
+          </li>
+
+          <li>
+            <a href="https://technovationchallenge.org/program-timeline" target="_blank">
+              Suggested Milestones
+            </a>
+          </li>
+
+          <li>
+            <a href="https://technovationchallenge.org/award-structure/" target="_blank">
+              Awards Page
+            </a>
+          </li>
+
+          <li>
+            <a href="https://www.technovation.org/app-gallery/" target="_blank">
+              Apps and AI Inventions from Past Teams
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

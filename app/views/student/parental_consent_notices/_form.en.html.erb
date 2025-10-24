@@ -1,6 +1,7 @@
 <%= simple_form_for current_student,
   url: [:student, :parental_consent_notice],
-  method: :post do |f| %>
+  method: :post,
+  data: { turbo: false } do |f| %>
   <%= render 'signups/student_profile_parental_fields', f: f %>
 
   <%= f.button :submit,

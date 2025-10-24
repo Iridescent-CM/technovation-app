@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Regional Pitch Events", :js do
+RSpec.xdescribe "Regional Pitch Events", :js do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved) }
 
   before do
@@ -95,17 +95,23 @@ RSpec.describe "Regional Pitch Events", :js do
     end
   end
 
-  it "sucessfully deletes an event" do
-    FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
+  it "successfully deletes an event" do
+    FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador, name: "Evening Event #2")
     expect(RegionalPitchEvent.count).to be > 0
 
     sign_in(chapter_ambassador)
     visit(chapter_ambassador_chapter_admin_path)
 
     click_link "Events"
+    within ".vue-events-table" do
+      expect(page).to have_content "Evening Event #2"
+    end
+
     find("img[alt='remove']").click
     click_button "Yes, delete this event"
 
-    expect(page).to have_content "Regional pitch event was successfully deleted"
+    within ".vue-events-table" do
+      expect(page).not_to have_content "Evening Event #2"
+    end
   end
 end

@@ -34,12 +34,14 @@ RSpec.describe "Publishing submissions that only need to submit", :js do
         it "displays a Publish button" do
           click_link "Publish Submissions"
 
+          expect(page).to have_current_path("/admin/team_submissions/bulk_publish")
           expect(page).to have_link("Publish")
         end
 
         it "displays the submission's name" do
           click_link "Publish Submissions"
 
+          expect(page).to have_current_path("/admin/team_submissions/bulk_publish")
           expect(page).to have_link(submission.app_name)
         end
 
@@ -48,6 +50,8 @@ RSpec.describe "Publishing submissions that only need to submit", :js do
           click_link "Publish"
           click_button "Yes, do it"
 
+          expect(page).to have_current_path("/admin/team_submissions/bulk_publish")
+          expect(page).to have_text("There aren't any submissions needing to be published at this time.")
           expect(submission.reload).to be_published
         end
       end
@@ -58,6 +62,7 @@ RSpec.describe "Publishing submissions that only need to submit", :js do
         it "displays a message indicating there aren't any submissions to publish" do
           click_link "Publish Submissions"
 
+          expect(page).to have_current_path("/admin/team_submissions/bulk_publish")
           expect(page).to have_text("There aren't any submissions needing to be published at this time.")
         end
       end
@@ -69,6 +74,7 @@ RSpec.describe "Publishing submissions that only need to submit", :js do
       it "displays a message indicating when submissions can be published" do
         click_link "Publish Submissions"
 
+        expect(page).to have_current_path("/admin/team_submissions/bulk_publish")
         expect(page).to have_text("Submissions can only be published when editing submissions is turned off.")
       end
     end
@@ -79,6 +85,7 @@ RSpec.describe "Publishing submissions that only need to submit", :js do
       it "displays a message indicating when submissions can be published" do
         click_link "Publish Submissions"
 
+        expect(page).to have_current_path("/admin/team_submissions/bulk_publish")
         expect(page).to have_text("Submissions can't be published when judging is turned on.")
       end
     end

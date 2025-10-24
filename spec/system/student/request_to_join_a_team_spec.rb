@@ -26,15 +26,14 @@ RSpec.describe "Students request to join a team",
       sign_in(student)
 
       visit new_student_team_search_path
+      expect(page).to have_current_path("/student/team_searches/new")
     end
 
     it "displays a message that it has been declined" do
-      within(".card-result") do
-        expect(page).to have_content(team.name)
-        expect(page).to have_content(
-          "You asked to join #{team.name}, and they declined."
-        )
-      end
+      expect(page).to have_content(team.name)
+      expect(page).to have_content(
+        "You asked to join #{team.name}, and they declined."
+      )
     end
   end
 
@@ -51,6 +50,7 @@ RSpec.describe "Students request to join a team",
       sign_in(mentor)
 
       visit new_mentor_team_search_path
+      expect(page).to have_current_path("/mentor/team_searches/new")
     end
 
     it "displays a message that it has been declined" do
@@ -78,6 +78,8 @@ RSpec.describe "Students request to join a team",
       ActionMailer::Base.deliveries.clear
       sign_in(student)
       visit new_student_join_request_path(team_id: team.id)
+      expect(page).to have_current_path(%r{^/student/join_requests/new\?})
+
       click_button "Send request"
     end
 
@@ -89,14 +91,14 @@ RSpec.describe "Students request to join a team",
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request email was sent"
 
+      sleep 1
       mail = ActionMailer::Base.deliveries.last
 
       expect(mail.subject).to eq("A student has asked to join your team!")
     end
 
     it "the requesting student can see their pending request" do
-      click_button "Build your team"
-      click_button "Find your team"
+      click_link "Find your team"
       expect(page).to have_content("You have asked to join a team")
       expect(page).to have_content(team.name)
       expect(page).to have_content(team.primary_location)
@@ -116,10 +118,12 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: student.mailer_token
       )
+      expect(page).to have_current_path(%r{/student/join_requests})
 
       click_button "Approve"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
 
@@ -150,6 +154,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.students.sample)
 
       visit student_team_path(team)
+      expect(page).to have_current_path(%r{/student/teams})
 
       expect {
         click_link "Approve"
@@ -162,6 +167,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.students.sample)
 
       visit student_team_path(team)
+      expect(page).to have_current_path(%r{/student/teams})
 
       expect {
         click_link "Decline"
@@ -178,9 +184,12 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: mentor.mailer_token
       )
+      expect(page).to have_current_path(%r{/mentor/join_requests/})
+
       click_button "Approve"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request approval email was sent"
       mail = ActionMailer::Base.deliveries.last
@@ -193,6 +202,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.mentors.sample)
 
       visit mentor_team_students_path(team)
+      expect(page).to have_current_path(%r{/mentor/teams/.*/students})
 
       expect {
         click_link "Approve"
@@ -205,6 +215,7 @@ RSpec.describe "Students request to join a team",
       sign_in(team.mentors.sample)
 
       visit mentor_team_students_path(team)
+      expect(page).to have_current_path(%r{/mentor/teams/.*/students})
 
       expect {
         click_link "Decline"
@@ -222,10 +233,12 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: student.mailer_token
       )
+      expect(page).to have_current_path(%r{^/student/join_requests})
 
       click_button "Decline"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request decline email was sent"
 
@@ -248,10 +261,12 @@ RSpec.describe "Students request to join a team",
         JoinRequest.last,
         mailer_token: mentor.mailer_token
       )
+      expect(page).to have_current_path(%r{^/mentor/join_requests})
 
       click_button "Decline"
       click_button "Yes, do it"
 
+      sleep 1
       expect(ActionMailer::Base.deliveries.count).not_to be_zero,
         "No join request decline email was sent"
 

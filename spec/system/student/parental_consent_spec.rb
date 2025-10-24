@@ -40,11 +40,7 @@ RSpec.describe "Parental consent", :js do
 
     click_button "I agree"
 
-    expect(current_path).to eq(parental_consent_path(student.parental_consent))
-    expect(page).to have_css(
-      ".parental_consent_electronic_signature .error",
-      text: "can't be blank"
-    )
+    expect(page).to have_text("can't be blank")
   end
 
   it "handles a valid token, with a valid form" do

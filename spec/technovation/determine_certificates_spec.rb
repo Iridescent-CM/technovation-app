@@ -101,7 +101,7 @@ RSpec.describe DetermineCertificates do
       FactoryBot.create(:student, :quarterfinalist, account: mentor.account)
 
       expect(DetermineCertificates.new(mentor.account).eligible_types).to include("mentor_appreciation")
-      expect(DetermineCertificates.new(mentor.account).eligible_types).not_to include(*STUDENT_CERTIFICATE_TYPES.keys.map(&:to_s))
+      expect(DetermineCertificates.new(mentor.account).eligible_types).not_to include(*CertificateTypes::STUDENT_CERTIFICATE_TYPES.keys.map(&:to_s))
     end
   end
 

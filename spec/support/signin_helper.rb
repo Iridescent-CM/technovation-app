@@ -10,10 +10,12 @@ module SigninHelper
 
     visit signin_path
 
-    fill_in "Email", with: signin.email
-    fill_in "Password", with: signin.account.password || "secret1234"
+    within "#new_account" do
+      fill_in "Email", with: signin.email
+      fill_in "Password", with: signin.account.password || "secret1234"
 
-    click_button "Sign in"
+      click_button "Sign in"
+    end
 
     expect(page).to have_content("Welcome back!")
   end
@@ -21,6 +23,7 @@ module SigninHelper
   def sign_out
     visit signout_path
 
+    expect(page).to have_current_path("/login")
     expect(page).to have_content("See you next time!")
   end
 end

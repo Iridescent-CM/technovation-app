@@ -1,20 +1,23 @@
 class TermsAgreementsController < ApplicationController
   layout "application_rebrand"
-  def edit
-    render :edit
+
+  def new
   end
 
-  def update
-    account = Account.find_by(email: terms_agreement_params[:email])
+  def create
+    if terms_agreement_params[:agree] == "1"
+      current_account.set_terms_agreed(terms_agreement_params[:agree])
 
-    account.set_terms_agreed(terms_agreement_params[:terms_agreed])
-
-    render json: AccountSerializer.new(account).serialized_json
+      redirect_to public_dashboard_path
+    else
+      flash[:error] = "You must agree to the data terms"
+      render :new
+    end
   end
 
   private
 
   def terms_agreement_params
-    params.permit(:terms_agreed, :email)
+    params.require(:terms).permit(:agree)
   end
 end

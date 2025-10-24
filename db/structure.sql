@@ -1557,87 +1557,6 @@ ALTER SEQUENCE public.mentor_types_id_seq OWNED BY public.mentor_types.id;
 
 
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.messages (
-    id integer NOT NULL,
-    recipient_id integer,
-    recipient_type character varying,
-    sender_id integer,
-    sender_type character varying,
-    subject character varying,
-    body text,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    regarding_type character varying,
-    regarding_id integer,
-    sent_at timestamp without time zone,
-    delivered_at timestamp without time zone
-);
-
-
---
--- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.messages_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
-
-
---
--- Name: multi_messages; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.multi_messages (
-    id integer NOT NULL,
-    sender_type character varying NOT NULL,
-    sender_id integer NOT NULL,
-    regarding_type character varying NOT NULL,
-    regarding_id integer NOT NULL,
-    recipients public.hstore NOT NULL,
-    subject character varying,
-    body text NOT NULL,
-    sent_at timestamp without time zone,
-    delivered_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: multi_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.multi_messages_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: multi_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.multi_messages_id_seq OWNED BY public.multi_messages.id;
-
-
---
 -- Name: organization_types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2929,20 +2848,6 @@ ALTER TABLE ONLY public.mentor_types ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- Name: messages id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.messages_id_seq'::regclass);
-
-
---
--- Name: multi_messages id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.multi_messages ALTER COLUMN id SET DEFAULT nextval('public.multi_messages_id_seq'::regclass);
-
-
---
 -- Name: organization_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3435,22 +3340,6 @@ ALTER TABLE ONLY public.mentor_profiles
 
 ALTER TABLE ONLY public.mentor_types
     ADD CONSTRAINT mentor_types_pkey PRIMARY KEY (id);
-
-
---
--- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.messages
-    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
-
-
---
--- Name: multi_messages multi_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.multi_messages
-    ADD CONSTRAINT multi_messages_pkey PRIMARY KEY (id);
 
 
 --
@@ -5156,6 +5045,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250812160844'),
 ('20250812190630'),
 ('20250813172127'),
-('20250813211619');
+('20250813211619'),
+('20250826132546'),
+('20250902171014'),
+('20250902171015'),
+('20250902171016');
 
 

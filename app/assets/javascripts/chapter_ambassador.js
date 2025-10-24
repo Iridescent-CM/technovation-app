@@ -5,7 +5,7 @@
 //= require char-counter
 //= require saved-searches
 
-document.addEventListener("turbolinks:load", function() {
+document.addEventListener("turbo:load", function() {
   $("select.enum_filter").chosen({
     allow_single_deselect: true,
   });

@@ -24,7 +24,7 @@ RSpec.feature "Survey links" do
       expect(page).not_to have_css("#survey-modal")
 
       Timecop.travel(2.days.from_now) do
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
       end
     end
@@ -47,7 +47,7 @@ RSpec.feature "Survey links" do
       expect(page).not_to have_css("#survey-modal")
 
       Timecop.travel(2.days.from_now) do
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
       end
     end
@@ -59,15 +59,15 @@ RSpec.feature "Survey links" do
       expect(page).not_to have_css("#survey-modal")
 
       Timecop.travel(2.days.from_now) do
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
 
         user.account.reminded_about_survey!
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).not_to have_css("#survey-modal")
 
         Timecop.travel(2.days.from_now) do
-          visit send("#{scope}_dashboard_path")
+          visit send(:"#{scope}_dashboard_path")
           expect(page).to have_css("#survey-modal")
         end
       end
@@ -80,23 +80,23 @@ RSpec.feature "Survey links" do
       expect(page).not_to have_css("#survey-modal")
 
       Timecop.travel(2.days.from_now) do
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).to have_css("#survey-modal")
 
         user.account.reminded_about_survey!
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).not_to have_css("#survey-modal")
 
         Timecop.travel(2.days.from_now) do
-          visit send("#{scope}_dashboard_path")
+          visit send(:"#{scope}_dashboard_path")
           expect(page).to have_css("#survey-modal")
 
           user.account.reminded_about_survey!
-          visit send("#{scope}_dashboard_path")
+          visit send(:"#{scope}_dashboard_path")
           expect(page).not_to have_css("#survey-modal")
 
           Timecop.travel(2.days.from_now) do
-            visit send("#{scope}_dashboard_path")
+            visit send(:"#{scope}_dashboard_path")
             expect(page).not_to have_css("#survey-modal")
           end
         end
@@ -110,7 +110,7 @@ RSpec.feature "Survey links" do
       sign_in(user)
 
       Timecop.travel(2.days.from_now) do
-        visit send("#{scope}_dashboard_path")
+        visit send(:"#{scope}_dashboard_path")
         expect(page).not_to have_css("#survey-modal")
       end
     end

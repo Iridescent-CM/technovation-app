@@ -59,9 +59,6 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   has_many :team_submissions, through: :teams
 
-  has_many :messages, as: :regarding
-  has_many :multi_messages, as: :regarding
-
   validates :name,
     :starts_at,
     :ends_at,

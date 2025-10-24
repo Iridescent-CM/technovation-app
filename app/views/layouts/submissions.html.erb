@@ -1,10 +1,10 @@
 <% if current_session.authenticated? %>
   <% provide :session_bar, render("layouts/session_bar") %>
-  <% provide :global_nav_links, render('team_submissions/submission_nav_links') %>
+  <% provide :global_nav_links, render("team_submissions/submission_nav_links") %>
 <% end %>
 
 <% if current_scope == "student" %>
-  <% provide :drop_down, render('student/navigation/rebrand/dropdown_nav') %>
+  <% provide :drop_down, render("student/navigation/dropdown_nav") %>
 <% end %>
 
 <!DOCTYPE html>
@@ -30,11 +30,11 @@
     <%= filestack_js_init_tag %>
 
     <%= javascript_include_tag determine_manifest,
-      'data-turbolinks-track' => true %>
+      'data-turbo-track' => true %>
 
     <%= javascript_packs_with_chunks_tag "application", "submissions" %>
     <%= javascript_packs_with_chunks_tag "application_rebrand" %>
-    <%= stylesheet_pack_tag 'application_rebrand', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application_rebrand', 'data-turbo-track': 'reload' %>
 
     <%= yield :js %>
   </head>
@@ -80,7 +80,7 @@
               <% if content_for?(:back_link) %>
                 <%= link_to "Back: #{yield(:back_link_txt)}",
                             yield(:back_link),
-                            data: { turbolinks: false },
+                            data: { turbo: false },
                             class: "submission-nav__back-btn w-auto px-4 py-2 rounded bg-tg-green text-white font-medium0"
                 %>
               <% else %>
@@ -90,7 +90,7 @@
               <% if content_for?(:next_link) %>
                 <%= link_to "Next: #{yield(:next_link_txt)}",
                             yield(:next_link),
-                            data: { turbolinks: false },
+                            data: { turbo: false },
                             class: "submission-nav__next-btn w-auto px-4 py-2 rounded bg-tg-green text-white font-medium" %>
               <% end %>
             </nav>

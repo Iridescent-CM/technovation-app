@@ -1,0 +1,72 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "student/dashboards/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Add a mentor to your team" } do %>
+    <% if SeasonToggles.team_building_disabled? %>
+      <%= render "explanations/feature_not_available", feature: :team_invites %>
+    <% else %>
+      <% if current_team.present? %>
+      <div class="mb-4">
+        <% if current_student.team.mentors.any? %>
+          <h4 class="text-xl font-medium mb-2">Mentor Status</h4>
+          <p>Your team has <%= pluralize(current_student.team.mentors.count, "mentor") %>. You can have more than one.</p>
+        <% else %>
+          <p>Add one or more mentors to your team. Mentors guide you in completing your submission. You can ask someone you know to sign up as a mentor and join your team, or you can search for a mentor online.</p>
+        <% end %>
+      </div>
+
+      <%= link_to "Search for mentors",
+        new_student_mentor_search_path,
+        class: "tw-green-btn" %>
+
+      <h4 class="text-xl font-medium mt-8 mb-2">Mentor Invites</h4>
+
+      <% if current_team.pending_mentor_invite_ids.any? %>
+        <p>
+          Your team is awaiting a response from
+          <span class="font-bold"><%= pluralize(current_team.pending_mentor_invites.count, "mentor invite") %>.</span>
+        </p>
+      <% else %>
+        <p>Your team has no open invites to a mentor</p>
+      <% end %>
+
+      <% if current_team.pending_mentor_join_request_ids.any? %>
+        <p>
+          You have
+          <span class="font-bold"><%= pluralize(current_team.pending_mentor_join_requests.count, "mentor request") %></span>
+          waiting for you and your team members.
+        </p>
+      <% end %>
+
+      <% if current_team.pending_mentor_invite_ids.any? || current_team.pending_mentor_join_request_ids.any? %>
+        <%= link_to raw("Manage your invites &#8227;"), student_team_path(current_team, anchor: "!mentors"), class: "tw-link" %>
+      <% end %>
+
+        <div class="mt-8">
+        <%= render "application/templates/content_well" do %>
+          <h2 class="mb-2 text-lg text-gray-600">
+            Do you want more mentors?
+          </h2>
+
+          <%= form_with model: current_team,
+            data: { submit_on_change: true },
+            url: student_team_path(
+              current_team,
+              { format: :json }
+            ),
+            method: :patch do |f| %>
+
+            <%= f.check_box :accepting_mentor_requests,
+              id: :team_accepting_mentor_requests %>
+
+            <%= f.label :accepting_mentor_requests,
+              "Allow mentors to find your team and request to join", for: :team_accepting_mentor_requests %>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>When you are on a team, you will be able to search for mentors.</p>
+    <% end %>
+    <% end %>
+  <% end %>
+</div>

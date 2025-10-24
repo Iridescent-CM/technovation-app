@@ -39,6 +39,9 @@ RSpec.feature "background checks", js: true do
       sign_in(mentor)
 
       visit mentor_training_completion_path
+      expect(page).to have_current_path("/mentor/dashboard")
+      expect(page).to have_content("Thank you for completing the mentor training!")
+
       click_link "Consent Waiver"
       click_link "Sign Consent Waiver"
 
@@ -46,8 +49,12 @@ RSpec.feature "background checks", js: true do
       check "acknowledges_consequences_of_code_of_conduct"
       fill_in "consent_waiver_electronic_signature", with: "My sig"
       click_button "I agree"
+      expect(page).to have_content("Thank you for signing the consent waiver")
 
       visit mentor_bio_path
+      expect(page).to have_current_path("/mentor/bio")
+      expect(page).to have_content("Personal Summary")
+
       click_link "Add your summary"
       fill_in "mentor_profile_bio",
         with: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " \

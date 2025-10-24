@@ -18,4 +18,8 @@
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular "is", "are"
   inflect.irregular "analysis", "analyses"
+
+  inflect.acronym "CRM"
+  inflect.acronym "IP"
+  inflect.acronym "RSVP"
 end

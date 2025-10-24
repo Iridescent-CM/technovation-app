@@ -24,7 +24,7 @@ $(document).on("change", ".provide-preview", function (e) {
   reader.readAsDataURL($(this).prop("files")[0]);
 });
 
-document.addEventListener("turbolinks:load", function () {
+document.addEventListener("turbo:load", function () {
   const usesOtherGadgetTypeCheckbox = document.getElementById(
     "team_submission_gadget_type_ids_4"
   );

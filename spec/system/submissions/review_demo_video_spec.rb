@@ -10,6 +10,7 @@ RSpec.describe "Reviewing the demo/technical video" do
       team.create_submission!(integrity_affirmed: true)
 
       sign_in(student)
+      visit student_team_submission_overview_path
 
       click_link "Technical video"
     end
@@ -28,7 +29,7 @@ RSpec.describe "Reviewing the demo/technical video" do
         "//iframe[@src='https://player.vimeo.com/video/119811742']"
       )
 
-      visit student_dashboard_path
+      visit student_team_submission_overview_path
       click_link "Pitch"
       expect(page).to have_css(".demo_video_link.incomplete")
     end

@@ -8,7 +8,7 @@ end
 
 require "spec_helper"
 require "rspec/rails"
-require "capybara"
+require "capybara/rails"
 require "vcr_helper"
 require "geocoder_helper"
 require "rake"
@@ -55,7 +55,6 @@ RSpec.configure do |config|
 
   config.include JudgingHelper
   config.include WebMock::API
-  config.include DataAnalyses, type: :feature
 
   config.include ExternalResourceHelper
 

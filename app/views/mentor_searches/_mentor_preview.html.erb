@@ -1,0 +1,59 @@
+<div class="shadow-lg border border-gray-300 rounded w-full mb-4 flex flex-col">
+  <div class="w-3/4 mx-auto">
+    <%= image_tag mentor_preview.profile_image_url, class: "h-full w-full object-cover" %>
+  </div>
+
+  <div class="p-4 flex-grow">
+    <h3 class="font-medium mb-2"><%= mentor_preview.full_name %></h3>
+      <p class="text-base mb-2">Location: <%= mentor_preview.address_details %></p>
+    <% if current_scope == "mentor" %>
+      <p class="text-base mb-2">Email: <%= mentor_preview.email %></p>
+      <p class="text-base mb-2">Company/School Name: <%= mentor_preview.school_company_name %></p>
+    <% end %>
+
+    <div class="text-base mb-2">
+      Mentor Expertise:
+      <% if mentor_preview.expertises.any? %>
+        <ul class="list-disc ml-4">
+          <% mentor_preview.expertises.each do |expertise| %>
+            <li><%= expertise.name %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        None selected
+      <% end %>
+    </div>
+  </div>
+
+  <div class="px-4 pb-4">
+    <div class="flex flex-wrap gap-2 mb-3">
+      <% if mentor_preview.is_on_team? %>
+        <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-500 text-white">
+          <%= t("views.mentor_searches.new.mentor_preview.on_team") %>
+        </span>
+      <% else %>
+        <span class="px-3 py-1 rounded-full text-sm font-medium bg-orange-500 text-white">
+          <%= t("views.mentor_searches.new.mentor_preview.needs_team") %>
+        </span>
+      <% end %>
+
+      <% if mentor_preview.virtual? %>
+        <span class="px-3 py-1 rounded-full text-sm font-medium bg-pink-800 text-white">
+          <%= t("views.mentor_searches.new.mentor_preview.virtual") %>
+        </span>
+      <% else %>
+        <span class="px-3 py-1 rounded-full text-sm font-medium bg-purple-800 text-white">
+          <%= t("views.mentor_searches.new.mentor_preview.in_person") %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="px-4 py-4 sm:px-6">
+    <div class="text-center">
+      <%= link_to "View more details",
+        send("#{current_scope}_mentor_path", mentor_preview, review_before: true),
+        class: "tw-green-btn block" %>
+    </div>
+  </div>
+</div>

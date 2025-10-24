@@ -1,4 +1,4 @@
-$(document).on("turbolinks:load", function () {
+$(document).on("turbo:load", function () {
   const anchor = $(location).attr("hash");
 
   $("#tab-wrapper div.tw-tab-content>a").click(function (e) {
@@ -21,4 +21,12 @@ $(document).on("turbolinks:load", function () {
   if (anchor.length > 0 && anchor === "#parent-tab-content") {
     $(`a[href*='#parent-tab-content']`).click();
   }
+
+  document
+    .getElementById("check-parental-consent-status")
+    .addEventListener("click", (e) => {
+      e.preventDefault();
+
+      document.getElementById("parental-tab").click();
+    });
 });

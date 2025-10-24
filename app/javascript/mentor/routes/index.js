@@ -1,82 +1,81 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import RegistrationApp from 'registration/App'
-import TeamBuilding from 'mentor/components/TeamBuilding'
-import Submission from 'dashboard/components/Submission'
-import Curriculum from 'dashboard/components/Curriculum'
-import Scores from 'dashboard/components/Scores'
-import Events from 'dashboard/components/Events'
+import RegistrationApp from "registration/App";
+import TeamBuilding from "mentor/components/TeamBuilding";
+import Submission from "dashboard/components/Submission";
+import Scores from "dashboard/components/Scores";
+import Events from "dashboard/components/Events";
 
-import store from '../store'
+import store from "../store";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-import { routes as registrationRoutes } from 'registration/routes'
-import teamRoutes from './teams'
+import { routes as registrationRoutes } from "registration/routes";
+import teamRoutes from "./teams";
 
 const basicProfileRoute = registrationRoutes.find(
-  route => route.name === 'basic-profile'
-)
+  (route) => route.name === "basic-profile"
+);
 
 basicProfileRoute.props = {
   embedded: true,
-}
+};
 
 const loadOrRedirect = (to, from, next) => {
   try {
-    if (to.path === '/' && from.path === '/') {
-      next(getRootRoute())
+    if (to.path === "/" && from.path === "/") {
+      next(getRootRoute());
     } else {
-      next()
+      next();
     }
   } catch (err) {
-    console.error(err)
-    next()
+    console.error(err);
+    next();
   }
-}
+};
 
 export const getRootComponent = () => {
   if (canDisplayScores()) {
-    return Scores
+    return Scores;
   } else if (anyCurrentTeams()) {
-    return Submission
+    return Submission;
   } else {
-    return TeamBuilding
+    return TeamBuilding;
   }
-}
+};
 
 export const getRootRoute = () => {
   if (canDisplayScores()) {
-    return { name: 'scores' }
+    return { name: "scores" };
   }
 
   if (anyCurrentTeams()) {
-    return { name: 'submission' }
+    return { name: "submission" };
   }
 
-  if (isOnboarded())  {
-    return { name: 'find-team' }
+  if (isOnboarded()) {
+    return { name: "find-team" };
   }
 
-  return { name: store.getters['authenticated/nextOnboardingStep'] }
-}
+  return { name: store.getters["authenticated/nextOnboardingStep"] };
+};
 
 const anyCurrentTeams = () => {
-  return store.state.authenticated.currentTeams.length
-}
+  return store.state.authenticated.currentTeams.length;
+};
 
 const isOnboarded = () => {
-  return store.getters['authenticated/isOnboarded']
-}
+  return store.getters["authenticated/isOnboarded"];
+};
 
 const canDisplayScores = () => {
-  return store.getters['authenticated/canDisplayScores']
-}
+  return store.getters["authenticated/canDisplayScores"];
+};
 
 export const routes = [
   {
-    path: '/',
+    path: "/",
     component: getRootComponent(),
     props: {
       embedded: true,
@@ -84,96 +83,83 @@ export const routes = [
     beforeEnter: loadOrRedirect,
   },
   {
-    path: '/team',
+    path: "/team",
     component: TeamBuilding,
     props: {
-      stickySidebarClasses: ['grid__col-3'],
+      stickySidebarClasses: ["grid__col-3"],
       embedded: true,
     },
     beforeEnter: loadOrRedirect,
     children: teamRoutes,
     meta: {
-      routeId: 'team',
-      browserTitle: 'Build your Team',
+      routeId: "team",
+      browserTitle: "Build your Team",
     },
   },
   {
-    path: '/registration',
+    path: "/registration",
     component: RegistrationApp,
     props: {
       removeWhiteBackground: false,
-      stickySidebarClasses: ['grid__col-3'],
+      stickySidebarClasses: ["grid__col-3"],
       embedded: true,
     },
     beforeEnter: loadOrRedirect,
     children: registrationRoutes,
     meta: {
-      routeId: 'registration',
-      browserTitle: 'Registration',
+      routeId: "registration",
+      browserTitle: "Registration",
     },
   },
   {
-    path: '/submission',
-    name: 'submission',
+    path: "/submission",
+    name: "submission",
     component: Submission,
     props: {
-      stickySidebarClasses: ['grid__col-3'],
+      stickySidebarClasses: ["grid__col-3"],
     },
     beforeEnter: loadOrRedirect,
     meta: {
-      routeId: 'submission',
-      browserTitle: 'Submit your Project',
+      routeId: "submission",
+      browserTitle: "Submit your Project",
     },
   },
   {
-    path: '/curriculum',
-    name: 'curriculum',
-    component: Curriculum,
-    props: {
-      stickySidebarClasses: ['grid__col-3'],
-    },
-    beforeEnter: loadOrRedirect,
-    meta: {
-      routeId: 'curriculum',
-      browserTitle: 'Learn from the Curriculum',
-    },
-  },
-  {
-    path: '/events',
-    name: 'events',
+    path: "/events",
+    name: "events",
     component: Events,
     beforeEnter: loadOrRedirect,
     meta: {
-      routeId: 'events',
-      browserTitle: 'Find a Pitch Event',
+      routeId: "events",
+      browserTitle: "Find a Pitch Event",
     },
   },
   {
-    path: '/scores',
-    name: 'scores',
+    path: "/scores",
+    name: "scores",
     component: Scores,
     props: {
-      stickySidebarClasses: ['grid__col-3'],
+      stickySidebarClasses: ["grid__col-3"],
     },
     beforeEnter: loadOrRedirect,
     meta: {
-      routeId: 'scores',
-      browserTitle: 'View Scores & Certificates',
+      routeId: "scores",
+      browserTitle: "View Scores & Certificates",
     },
   },
   {
-    path: '*',
-    redirect: '/',
+    path: "*",
+    redirect: "/",
   },
-]
+];
 
 export const router = new VueRouter({
   routes,
-})
+});
 
 router.afterEach((to, _from) => {
-  if(window && window.document)
-    window.document.title = to.meta.browserTitle + " • Technovation"
-})
+  if (window && window.document)
+    window.document.title = to.meta.browserTitle + " • Technovation";
+});
 
-export default router
+export default router;

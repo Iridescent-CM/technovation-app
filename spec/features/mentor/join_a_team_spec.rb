@@ -61,10 +61,13 @@ RSpec.feature "Mentors join a team" do
       })
 
       click_link "Pending Team Invites & Join Requests"
+
+      expect(page).to have_css("#join_request_#{join_request.id}")
       within("#join_request_#{join_request.id}") { click_link "Cancel my request" }
       click_button "Yes, do it"
 
       expect(page).to have_content("You have cancelled your request")
+
       visit mentor_teams_path
       expect(page).not_to have_content(available_team.name)
     end

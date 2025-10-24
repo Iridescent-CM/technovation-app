@@ -8,6 +8,7 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
     expect(page).to have_content("Welcome back!")
 
     visit edit_admin_season_schedule_settings_path
+    expect(page).to have_current_path("/admin/season_schedule_settings/edit")
   end
 
   context "Checkbox controls" do
@@ -15,7 +16,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       uncheck_all_toggles
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.student_signup?).to eq(false)
       expect(SeasonToggles.mentor_signup?).to eq(false)
@@ -32,7 +37,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       check_all_toggles
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.student_signup?).to eq(true)
       expect(SeasonToggles.mentor_signup?).to eq(true)
@@ -55,7 +64,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       fill_in "Chapter ambassadors", with: ""
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.dashboard_text(:student)).to eq("")
       expect(SeasonToggles.dashboard_text(:mentor)).to eq("")
@@ -71,7 +84,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       fill_in "Chapter ambassadors", with: "Chapter ambassador notice"
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.dashboard_text(:student)).to eq("Student notice")
       expect(SeasonToggles.dashboard_text(:mentor)).to eq("Mentor notice")
@@ -92,7 +109,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       fill_in "season_toggles_mentor_survey_link_long_desc", with: ""
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.survey_link(:student, :text)).to eq("")
       expect(SeasonToggles.survey_link(:student, :url)).to eq("")
@@ -114,7 +135,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       fill_in "season_toggles_mentor_survey_link_long_desc", with: "mentor long desc"
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.survey_link(:student, :text)).to eq("student link text")
       expect(SeasonToggles.survey_link(:student, :url)).to eq("http://example.com/student")
@@ -132,7 +157,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       choose "Off"
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.judging_round).to eq("off")
     end
@@ -142,7 +171,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       choose "Quarterfinals"
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.judging_round).to eq("qf")
     end
@@ -152,7 +185,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       choose "Between rounds"
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.judging_round).to eq("between")
     end
@@ -162,7 +199,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       choose "Semifinals"
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.judging_round).to eq("sf")
     end
@@ -172,7 +213,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       choose "Finished"
 
       click_button "Review"
+      expect(page).to have_text("changes you are about to make")
+
       click_button "Save these settings"
+      expect(page).to have_current_path("/admin/dashboard")
+      expect(page).to have_text("Season schedule saved!")
 
       expect(SeasonToggles.judging_round).to eq("finished")
     end
@@ -187,7 +232,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         choose round
 
         click_button "Review"
+        expect(page).to have_text("changes you are about to make")
+
         click_button "Save these settings"
+        expect(page).to have_current_path("/admin/dashboard")
+        expect(page).to have_text("Season schedule saved!")
 
         expect(SeasonToggles.student_signup?).to eq(false)
         expect(SeasonToggles.mentor_signup?).to eq(false)
@@ -249,7 +298,11 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
         choose round
 
         click_button "Review"
+        expect(page).to have_text("changes you are about to make")
+
         click_button "Save these settings"
+        expect(page).to have_current_path("/admin/dashboard")
+        expect(page).to have_text("Season schedule saved!")
 
         expect(SeasonToggles.student_signup?).to eq(true)
         expect(SeasonToggles.mentor_signup?).to eq(true)

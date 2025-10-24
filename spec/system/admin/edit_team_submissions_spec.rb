@@ -23,7 +23,7 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "try to edit an existing submission" do
       create_authenticated_user_on_team(:student, submission: true)
 
-      click_button "Submit your project"
+      click_link "Submit your project"
 
       expect(page).to have_content(
         "Submitting your project is not available right now.\n" +
@@ -45,7 +45,7 @@ RSpec.describe "Toggling editable team submissions", :js do
       set_editable_team_submissions(false)
       create_authenticated_user_on_team(:student, submission: false)
 
-      click_button "Submit your project"
+      click_link "Submit your project"
 
       expect(page).to have_content(
         "Submitting your project is not available right now.\n" +
@@ -66,30 +66,28 @@ RSpec.describe "Toggling editable team submissions", :js do
     it "begin and edit a submission" do
       create_authenticated_user_on_team(:student, submission: false)
 
-      click_button "Submit your project"
+      click_link "Submit your project"
 
-      within("#your-submission") { click_link "Begin your submission" }
+      click_link "Begin your submission"
       check "team_submission[integrity_affirmed]"
       click_button "Start now!"
 
       expect(page).to have_css(".tw-gray-btn", text: "Upload your team photo")
 
       visit student_dashboard_path
-      click_button "Submit your project"
+      click_link "Submit your project"
 
-      within("#your-submission") do
-        expect(page).not_to have_content(
-          "Submitting your project is not available right now.\n" +
-          "Technovation staff has disabled this feature for everyone."
+      expect(page).not_to have_content(
+        "Submitting your project is not available right now.\n" +
+        "Technovation staff has disabled this feature for everyone."
+      )
+      expect(page).to have_link(
+        "Your project's name",
+        href: student_team_submission_path(
+          team.reload.submission,
+          piece: :app_name
         )
-        expect(page).to have_link(
-          "Your project's name",
-          href: student_team_submission_path(
-            team.reload.submission,
-            piece: :app_name
-          )
-        )
-      end
+      )
     end
   end
 end

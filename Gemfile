@@ -1,8 +1,7 @@
 source "https://rubygems.org"
 ruby "3.1.2"
 
-gem "rails", "~> 6.1.7.0"
-gem "rack", ">= 2.2.13"
+gem "rails", "~>7.0.8.0"
 
 gem "puma", "~> 5.6.9"
 gem "pg", "~> 1.2"
@@ -19,16 +18,17 @@ gem "textacular", "~> 5.1"
 gem "pdf-forms", "~> 1.2"
 
 gem "public_activity", "~> 2.0"
-gem "paranoia", "~> 2.4"
+gem "paranoia", "~> 3.0"
 gem "counter_culture", "~> 1.12"
 gem "pundit", "~> 2.0"
 
 gem "autoprefixer-rails", "~> 6.7"
-gem "uglifier", "~> 3.2"
 
-gem "turbolinks", "~> 5.2"
+gem "turbo-rails", "~> 2.0.0"
+gem "stimulus-rails", "~> 1.3.0"
+
 gem "jquery-rails", "~> 4.3"
-gem "jquery-ui-rails", "~> 7.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
+gem "jquery-ui-rails", "~> 8.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
 gem "lodash-rails", "~> 4.17"
 gem "dropzonejs-rails", "~> 0.8"
 gem "webpacker", "~> 5.x"
@@ -37,9 +37,10 @@ gem "cocoon", "~> 1.2"
 
 gem "sass-rails", "~> 6.0"
 gem "sprockets", "3.7.2"
+gem "sprockets-rails"
 gem "normalize-rails", "~> 4.1"
 
-gem "rails-i18n", "~> 6.0.0"
+gem "rails-i18n", "~> 7.0"
 gem "i18n-js", "~> 4.0"
 gem "clipboard-rails", "~> 1.7"
 gem "will_paginate", "~> 3.1"
@@ -91,7 +92,7 @@ gem "browser", "~> 2.5"
 
 gem "loofah", "~> 2.2"
 
-gem "dotenv-rails", "~> 2.7"
+gem "dotenv-rails", "~> 3.0"
 
 gem "pdfkit", "~> 0.8.7.0"
 
@@ -105,15 +106,22 @@ gem "rexml", "~> 3.3.0"
 gem "immosquare-cookies"
 gem "zipline"
 
+gem "factory_bot_rails", "~> 6.5.0"
+
+group :development, :test do
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[mri mingw x64_mingw]
+end
+
 group :development do
   gem "pp_sql", "~> 0.2", require: false
   gem "active_record_query_trace", "~> 1.5"
   gem "letter_opener", "~> 1.6"
   gem "listen", "~> 3.1"
   gem "churn", "~> 1.0", require: false
-  gem "web-console", "~> 3.7"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
+  gem "web-console", "~> 4.0"
+  gem "spring", "~> 4.4"
+  gem "spring-watcher-listen", "~> 2.1"
   gem "bullet"
   gem "brakeman", require: false
 end
@@ -126,10 +134,10 @@ group :test do
   gem "rails-controller-testing", "~> 1.0"
   gem "fakeredis", "~> 0.8", require: "fakeredis/rspec"
 
-  gem "capybara", "~> 3.0"
+  gem "capybara", "~> 3.40"
   gem "capybara-email", "~> 3.0"
   gem "selenium-webdriver"
-  gem "rspec-rails", "~> 5.0"
+  gem "rspec-rails", "~> 7.1"
   gem "rspec-retry"
 
   gem "pdf-reader", "~> 2.4"
@@ -150,8 +158,6 @@ group :production do
   gem "cloudflare-rails", "~> 2.0"
   gem "wkhtmltopdf-heroku", "2.12.6.1.pre.jammy"
 end
-
-gem "factory_bot_rails", "~> 4.11"
 
 group :legacy do
   # LEGACY MIGRATION

@@ -4,7 +4,7 @@ class DataAnalysis
   attr_reader :user
 
   def self.for(user, analysis_type)
-    "DataAnalyses::#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
+    "#{analysis_type.to_s.camelize}DataAnalysis".constantize.new(user)
   end
 
   def initialize(user)

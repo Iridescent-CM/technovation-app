@@ -177,8 +177,8 @@ class Account < ActiveRecord::Base
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 
-  enum referred_by: REFERRED_BY_OPTIONS
-  enum gender: GENDER_IDENTITY_OPTIONS
+  enum referred_by: ReferredByOptions::REFERRED_BY_OPTIONS
+  enum gender: GenderIdentityOptions::GENDER_IDENTITY_OPTIONS
 
   scope :by_query, ->(query) {
     sanitized = sanitize_sql_like(query)
@@ -380,20 +380,6 @@ class Account < ActiveRecord::Base
   def assigned_teams
     (judge_profile and judge_profile.assigned_teams) or
       Team.none
-  end
-
-  def chapter_ambassador
-    chapter_ambassador = ::NullChapterAmbassador.new
-
-    if valid_address?
-      chapter_ambassador = find_chapter_ambassador_by_state
-
-      unless chapter_ambassador.present?
-        chapter_ambassador = find_chapter_ambassador_by_country
-      end
-    end
-
-    chapter_ambassador
   end
 
   scope :not_staff, -> {
@@ -1247,51 +1233,6 @@ class Account < ActiveRecord::Base
       :state_province,
       :country
     ].any? { |attr| saved_change_to_attribute?(attr) }
-  end
-
-  def find_chapter_ambassador_by(query)
-    results = Account.current
-      .joins(:approved_chapter_ambassador_profile)
-      .not_staff
-      .where(
-        "chapter_ambassador_profiles.intro_summary NOT IN ('')
-        AND chapter_ambassador_profiles.intro_summary IS NOT NULL"
-      )
-      .where(query)
-
-    account = if address_details.blank?
-      results.first
-    else
-      results
-        .near(
-          address_details,
-          SearchMentors::EARTH_CIRCUMFERENCE
-        )
-        .first
-    end
-
-    if account
-      account.chapter_ambassador_profile
-    else
-      ::NullChapterAmbassador.new
-    end
-  end
-
-  def find_chapter_ambassador_by_state
-    find_chapter_ambassador_by({
-      "accounts.country" => country_code,
-      "accounts.state_province" => state_code
-    })
-  end
-
-  def find_chapter_ambassador_by_country
-    if country == "US"
-      ::NullChapterAmbassador.new
-    else
-      find_chapter_ambassador_by({
-        "accounts.country" => country_code
-      })
-    end
   end
 
   def update_mentor_searchability_status

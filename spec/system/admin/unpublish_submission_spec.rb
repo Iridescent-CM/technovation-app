@@ -22,6 +22,7 @@ RSpec.describe "Unpublishing a submission", :js do
         click_link "Unpublish"
         click_button "Yes, do it"
 
+        expect(page).to have_link("Publish")
         expect(submission.reload).not_to be_published
       end
     end

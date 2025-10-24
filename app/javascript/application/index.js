@@ -1,18 +1,19 @@
-import Vue from 'vue'
-import TurbolinksAdapter from 'vue-turbolinks'
+import Vue from "vue";
+import "@hotwired/turbo-rails";
+import TurbolinksAdapter from "vue-turbolinks";
 
-Vue.use(TurbolinksAdapter)
+Vue.use(TurbolinksAdapter);
 
-import '../application/sticky-header';
+import "../application/sticky-header";
 
-import { urlHelpers } from 'utilities/utilities';
+import { urlHelpers } from "utilities/utilities";
 
-import LocationForm from '../location/components/LocationForm';
+import LocationForm from "../location/components/LocationForm";
 
-import '../terms_agreement';
-
-document.addEventListener('turbolinks:load', function () {
-  const locationFormElems = document.querySelectorAll('.vue-enable-location-form');
+document.addEventListener("turbo:load", function () {
+  const locationFormElems = document.querySelectorAll(
+    ".vue-enable-location-form"
+  );
 
   for (let i = 0; i < locationFormElems.length; i += 1) {
     new Vue({
@@ -24,7 +25,7 @@ document.addEventListener('turbolinks:load', function () {
 
       methods: {
         goBack() {
-          const returnTo = urlHelpers.fetchGetParameterValue('return_to');
+          const returnTo = urlHelpers.fetchGetParameterValue("return_to");
           if (!!returnTo) {
             window.location.href = returnTo;
           } else {

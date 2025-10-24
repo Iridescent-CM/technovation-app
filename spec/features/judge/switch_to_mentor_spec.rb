@@ -17,10 +17,13 @@ RSpec.feature "Judges switching to mentor mode", :js do
 
     scenario "creating a new mentor profile for the judge" do
       sign_in(judge)
-      expect(judge.is_a_mentor?).to eq(false)
 
+      expect(page).to have_link("Mentor Mode")
+
+      expect(judge.is_a_mentor?).to eq(false)
       click_link "Mentor Mode"
 
+      expect(page).to have_content("Find a Chapter or Club")
       expect(judge.reload.is_a_mentor?).to eq(true)
     end
   end
