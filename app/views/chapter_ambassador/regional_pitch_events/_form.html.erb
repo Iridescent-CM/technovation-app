@@ -1,0 +1,99 @@
+<%= form_with(
+  model: [:chapter_ambassador, pitch_event],
+  local: true,
+  data: { turbo: false }
+) do |f| %>
+  <%= render "errors", record: pitch_event %>
+  <div class="grid">
+    <div class="grid__col-12 grid__col-lg-6">
+      <div class="field">
+        <%= f.label :name, "Event Name", for: :name %>
+        <%= f.text_field :name, id: :name, required: true  %>
+      </div>
+
+      <div class="field">
+        <%= f.label :city, for: :city %>
+        <%= f.text_field :city, id: :city, required: true  %>
+      </div>
+
+      <div class="field">
+        <%= f.label :venue_address, for: :venue_address %>
+        <%= f.text_field :venue_address, id: :venue_address, required: true  %>
+      </div>
+
+      <div class="field">
+        <%= f.label :starts_at, "Event starts at" %>
+        <%= f.datetime_local_field :starts_at, required: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :ends_at, "Event ends at" %>
+        <%= f.datetime_local_field :ends_at, required: true %>
+      </div>
+    </div>
+
+    <div class="grid__col-12 grid__col-lg-6">
+      <div class="field">
+        <label>Hosting Division</label>
+        <%= f.radio_button :division_id, Division.senior.id %>
+        <%= f.label :division_id, "Senior Division", value: Division.senior.id %>
+        <br>
+        <%= f.radio_button :division_id, Division.junior.id %>
+        <%= f.label :division_id, "Junior Division", value: Division.junior.id %>
+        <br>
+        <%= f.radio_button :division_id, Division.beginner.id %>
+        <%= f.label :division_id, "Beginner Division", value: Division.beginner.id %>
+      </div>
+
+      <div class="field margin--t-large">
+        <span class="inline-checkbox">
+          <%= f.check_box :capacity_enabled, id: "capacity_enabled", checked: pitch_event.capacity_enabled? %>
+          <%= f.label :capacity_enabled, "Set a cap on the number of teams that can attend" %>
+        </span>
+
+        <div id="capacity_input" style="display: none;" class="margin--t-large">
+          <%= f.label :capacity %>
+          <%= f.number_field :capacity, min: 1 %>
+        </div>
+      </div>
+
+      <div class="field margin--t-large">
+        <%= f.label :event_link, "Event URL (Optional)" %>
+        <%= f.url_field :event_link %>
+      </div>
+    </div>
+
+    <div class="grid__col-12">
+      <p>
+        <%= f.submit pitch_event.persisted? ? "Update" : "Create this event", class: "button" %>
+        or <%= link_to "cancel", chapter_ambassador_events_list_path %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    const capacityEnabledCheckbox = document.getElementById("capacity_enabled");
+
+    if (capacityEnabledCheckbox) {
+      const capacityInput = document.getElementById("capacity_input");
+      const capacityField = document.getElementById(
+          "regional_pitch_event_capacity"
+      );
+
+      if (capacityEnabledCheckbox.checked) {
+          capacityInput.style.display = "block";
+      }
+
+      capacityEnabledCheckbox.addEventListener("change", function () {
+          if (this.checked) {
+              capacityInput.style.display = "block";
+          } else {
+              capacityInput.style.display = "none";
+              capacityField.value = "";
+          }
+      });
+    }
+  })
+</script>

@@ -1,0 +1,21 @@
+<%= link_to(
+    "View",
+    send(:"#{current_scope}_event_path", event),
+    class: "button small gray",
+    data: { turbo: false }) %>
+
+<% if current_scope == "chapter_ambassador" %>
+  <%= link_to(
+    "Edit",
+    edit_chapter_ambassador_event_path(event),
+    class: "button small gray",
+    data: { turbo: false }) %>
+
+  <%= link_to "Delete",
+    chapter_ambassador_event_path(event),
+    class: "button small danger",
+    data: {
+      method: "delete",
+      confirm: "Are you sure you want to delete #{event.name}?",
+    } %>
+<% end %>
