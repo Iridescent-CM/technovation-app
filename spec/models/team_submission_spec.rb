@@ -685,7 +685,7 @@ RSpec.describe TeamSubmission do
           name: "RPE",
           starts_at: Date.today,
           ends_at: Date.today + 1.day,
-          division_ids: Division.senior.id,
+          division_id: Division.senior.id,
           city: "City",
           venue_address: "123 Street St.",
           unofficial: false)
@@ -776,7 +776,7 @@ RSpec.describe TeamSubmission do
           name: "RPE",
           starts_at: Date.today,
           ends_at: Date.today + 1.day,
-          division_ids: Division.senior.id,
+          division_id: Division.senior.id,
           city: "City",
           venue_address: "123 Street St.",
           unofficial: true)

@@ -1,6 +1,6 @@
 class AddTeamToRegionalEvent
   def self.call(event, team)
-    if event.divisions.exclude?(team.division)
+    if event.division != team.division
       raise IncompatibleDivisionError,
         "This team is not in the correct division for this event"
     end

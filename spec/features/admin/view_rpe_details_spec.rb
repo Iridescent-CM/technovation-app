@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.feature "Students view rpe details", js: true do
+RSpec.feature "Admin view rpe details", js: true do
   let(:super_admin) { FactoryBot.create(:super_admin) }
 
   before do
-    @rpe = FactoryBot.create(:rpe)
+    @rpe = FactoryBot.create(:rpe, :senior)
     @submissions = FactoryBot.create_list(:team_submission, 3, :senior, :complete)
     @submissions.each do |sub|
       @rpe.teams << sub.team
@@ -25,20 +25,18 @@ RSpec.feature "Students view rpe details", js: true do
   end
 
   scenario "Viewing a specific RPE displays all of the RPE details" do
-    expect(page).to have_link "view"
-    click_link "view"
+    click_link "View"
 
     expect(page).to have_content(@rpe.name)
     expect(page).to have_content(@rpe.ambassador.name)
     expect(page).to have_content(@rpe.officiality)
-    expect(page).to have_content(@rpe.division_names)
+    expect(page).to have_content(@rpe.division_name)
     expect(page).to have_content(@rpe.venue_address)
     expect(page).to have_content("No link provided.")
   end
 
   scenario "Viewing a specific RPE displays RPE team details" do
-    expect(page).to have_link "view"
-    click_link "view"
+    click_link "View"
 
     expect(page).to have_content("Teams (#{@rpe.teams_count})")
     @rpe.teams.each do |team|
@@ -61,8 +59,7 @@ RSpec.feature "Students view rpe details", js: true do
       event_ids: [@rpe.id]
     )
 
-    expect(page).to have_link "view"
-    click_link "view"
+    click_link "View"
 
     expect(page).to have_content("Judges (#{@rpe.judge_list.size})")
 

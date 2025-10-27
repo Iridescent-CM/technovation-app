@@ -47,7 +47,7 @@ class Team < ActiveRecord::Base
     not_staff
       .not_attending_live_event
       .joins(:division, :submission)
-      .where("divisions.id IN (?)", event.division_ids)
+      .where(division: event.division)
   }
 
   def self.sort_column

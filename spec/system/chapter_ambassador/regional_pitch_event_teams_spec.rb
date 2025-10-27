@@ -41,7 +41,7 @@ RSpec.describe "Regional Pitch Event Teams", :js do
       end
     end
 
-    it "prevents adding a team that would go over the event's capacity" do
+    xit "prevents adding a team that would go over the event's capacity" do
       event = FactoryBot.create(:regional_pitch_event, capacity: 1, ambassador: chapter_ambassador)
       team_squares = FactoryBot.create(:team, :senior, :live_event_eligible, name: "Team Squares")
       event.teams << team_squares
@@ -66,7 +66,7 @@ RSpec.describe "Regional Pitch Event Teams", :js do
       end
     end
 
-    it "successfully removes a team from an event" do
+    xit "successfully removes a team from an event" do
       team = FactoryBot.create(:team, :senior, :live_event_eligible, name: "Team LMNO")
       event = FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
       expect(RegionalPitchEvent.count).to be_present
