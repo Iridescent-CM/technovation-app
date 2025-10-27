@@ -6,7 +6,7 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   attr_accessor :capacity_enabled
 
-  before_validation :clear_capacity_if_capacity_disabled
+  before_validation :clear_capacity
 
   after_validation -> {
     AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.call(self)
@@ -215,7 +215,7 @@ class RegionalPitchEvent < ActiveRecord::Base
       (capacity.present? && capacity.to_i > 0)
   end
 
-  def clear_capacity_if_capacity_disabled
+  def clear_capacity
     self.capacity = nil unless capacity_enabled?
   end
 
