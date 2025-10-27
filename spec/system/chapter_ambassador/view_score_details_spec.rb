@@ -66,7 +66,7 @@ RSpec.describe "viewing score details page" do
     end
 
     context "when the team has attended an RPE" do
-      let!(:live_regional_pitch_event) { FactoryBot.create(:regional_pitch_event, :chicago, name: "Windy City Event", ambassador: chapter_ambassador) }
+      let!(:live_regional_pitch_event) { FactoryBot.create(:regional_pitch_event, :chicago, :senior, name: "Windy City Event", ambassador: chapter_ambassador) }
 
       before do
         live_regional_pitch_event.teams << team

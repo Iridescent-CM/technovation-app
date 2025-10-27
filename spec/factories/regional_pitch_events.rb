@@ -13,7 +13,7 @@ FactoryBot.define do
 
     seasons { [Season.current.year] }
 
-    division_ids { Division.pluck(:id) }
+    division_id { Division.junior.id }
 
     trait :brazil do
       association(:ambassador, factory: [:ambassador, :brazil])
@@ -28,11 +28,11 @@ FactoryBot.define do
     end
 
     trait :senior do
-      division_ids { [Division.senior.id] }
+      division_id { Division.senior.id }
     end
 
     trait :junior do
-      division_ids { [Division.junior.id] }
+      division_id { Division.junior.id }
     end
 
     trait :junior_at_team_capacity do

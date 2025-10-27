@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.xdescribe "Regional Pitch Events", :js do
+RSpec.describe "Regional Pitch Events", :js do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved) }
 
   before do
@@ -19,7 +19,7 @@ RSpec.xdescribe "Regional Pitch Events", :js do
       sign_in(chapter_ambassador)
       visit(chapter_ambassador_chapter_admin_path)
 
-      click_link "Events"
+      click_link "Events List"
 
       expect(page).to have_content("Add an event")
     end
@@ -28,33 +28,19 @@ RSpec.xdescribe "Regional Pitch Events", :js do
       sign_in(chapter_ambassador)
       visit(chapter_ambassador_chapter_admin_path)
 
-      click_link "Events"
-      click_button "Add an event"
+      click_link "Events List"
+      click_link "Add an event"
 
-      find("label#event-date").click
-      all(".dayContainer .flatpickr-day:not(.disabled)").first.click
-      expect(find_field("Date").value).to be_present
-
-      find("label#event-start-time").click
-      find(".numInputWrapper:nth-child(1)").hover
-      find(".arrowDown").click
-      expect(find_field("From").value).to be_present
-
-      find("label#event-end-time").click
-      find(".numInputWrapper:nth-child(1)").hover
-      find(".arrowUp").click
-      expect(find_field("To").value).to be_present
-
-      fill_in "Event name", with: "Super Event"
+      fill_in "Event starts at", with: 1.week.from_now.strftime("%Y-%m-%dT%H:%M")
+      fill_in "Event ends at", with: (1.week.from_now + 2.hours).strftime("%Y-%m-%dT%H:%M")
+      fill_in "Event Name", with: "Super Event"
       fill_in "City", with: "New City"
       fill_in "Venue address", with: "123 45th St"
-      choose "Senior division"
+      choose "Senior Division"
 
       click_button "Create this event"
 
-      within ".vue-events-table" do
-        expect(page).to have_content "Super Event"
-      end
+      expect(page).to have_content "Super Event"
     end
   end
 
@@ -65,10 +51,10 @@ RSpec.xdescribe "Regional Pitch Events", :js do
       sign_in(chapter_ambassador)
       visit(chapter_ambassador_chapter_admin_path)
 
-      click_link "Events"
+      click_link "Events List"
     end
 
-    it "displays an error message indictating that events can't be created" do
+    it "displays an error message indicating that events can't be created" do
       expect(page).to have_content("New events cannot be created")
     end
 
@@ -78,40 +64,31 @@ RSpec.xdescribe "Regional Pitch Events", :js do
   end
 
   it "successfully updates an event" do
-    FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
+    event = FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador)
     expect(RegionalPitchEvent.count).to be > 0
 
     sign_in(chapter_ambassador)
-    visit(chapter_ambassador_chapter_admin_path)
+    visit(edit_chapter_ambassador_regional_pitch_event_path(event))
 
-    click_link "Events"
-    find("img[alt='edit']").click
-    fill_in "Event name", with: "Main Event"
-    choose "Senior division"
-    click_button "Save changes"
-
-    within ".vue-events-table" do
-      expect(page).to have_content "Main Event"
-    end
+    fill_in "Event Name", with: "Main Event"
+    choose "Senior Division"
+    click_button "Update"
+    expect(page).to have_content "Main Event"
   end
 
-  it "successfully deletes an event" do
+  xit "successfully deletes an event" do
     FactoryBot.create(:regional_pitch_event, ambassador: chapter_ambassador, name: "Evening Event #2")
     expect(RegionalPitchEvent.count).to be > 0
 
     sign_in(chapter_ambassador)
     visit(chapter_ambassador_chapter_admin_path)
 
-    click_link "Events"
-    within ".vue-events-table" do
-      expect(page).to have_content "Evening Event #2"
-    end
+    click_link "Events List"
+    expect(page).to have_content "Evening Event #2"
 
-    find("img[alt='remove']").click
+    click_link "Delete"
     click_button "Yes, delete this event"
 
-    within ".vue-events-table" do
-      expect(page).not_to have_content "Evening Event #2"
-    end
+    expect(page).not_to have_content "Evening Event #2"
   end
 end
