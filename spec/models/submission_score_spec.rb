@@ -399,7 +399,7 @@ RSpec.describe SubmissionScore do
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
-      division_ids: Division.senior.id)
+      division_id: Division.senior.id)
 
     judge_profile.regional_pitch_events << rpe
     judge_profile.save!
@@ -429,7 +429,7 @@ RSpec.describe SubmissionScore do
       name: "RPE",
       starts_at: Date.today,
       ends_at: Date.today + 1.day,
-      division_ids: Division.senior.id)
+      division_id: Division.senior.id)
 
     judge_profile.regional_pitch_events << rpe
     judge_profile.save!
@@ -592,7 +592,7 @@ RSpec.describe SubmissionScore do
         name: "My RPE",
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id)
+        division_id: Division.senior.id)
 
       judge_profile.regional_pitch_events << rpe
       team.regional_pitch_events << rpe

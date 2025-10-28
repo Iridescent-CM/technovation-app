@@ -43,37 +43,20 @@ module ChapterAmbassador
         .find(params[:id])
     end
 
+    def new
+      @pitch_event = RegionalPitchEvent.new
+    end
+
     def create
       @pitch_event = current_ambassador
         .regional_pitch_events
         .new(pitch_event_params)
 
       if @pitch_event.save
-        respond_to do |format|
-          format.html {
-            redirect_to chapter_ambassador_path(@pitch_event),
-              notice: "Regional pitch event was successfully created."
-          }
-
-          format.json {
-            render json: @pitch_event.to_list_json.merge({
-              url: chapter_ambassador_regional_pitch_event_path(
-                @pitch_event,
-                format: :json
-              )
-            })
-          }
-        end
+        redirect_to chapter_ambassador_event_path(@pitch_event),
+          success: "Regional pitch event was successfully created."
       else
-        respond_to do |format|
-          format.html { render :new }
-
-          format.json {
-            render json: {
-              errors: @pitch_event.errors.messages
-            }, status: 400
-          }
-        end
+        render :new
       end
     end
 
@@ -83,29 +66,10 @@ module ChapterAmbassador
         .find(params[:id])
 
       if @pitch_event.update(pitch_event_params)
-        respond_to do |f|
-          f.html {
-            redirect_to chapter_ambassador_path(@pitch_event),
-              notice: "Regional pitch event was successfully updated."
-          }
-
-          f.json {
-            render json: @pitch_event.to_list_json.merge({
-              url: chapter_ambassador_regional_pitch_event_path(
-                @pitch_event,
-                format: :json
-              )
-            })
-          }
-        end
+        redirect_to chapter_ambassador_event_path(@pitch_event),
+          success: "Regional pitch event was successfully updated."
       else
-        respond_to do |f|
-          f.html { render :edit }
-
-          f.json {
-            render json: {errors: @pitch_event.errors}, status: 400
-          }
-        end
+        render :edit
       end
     end
 
@@ -113,16 +77,8 @@ module ChapterAmbassador
       RegionalPitchEvent.current.in_region(current_ambassador)
         .find(params[:id]).destroy
 
-      respond_to do |format|
-        format.html {
-          redirect_to chapter_ambassador_regional_pitch_events_url,
-            notice: "Regional pitch event was successfully deleted."
-        }
-
-        format.json {
-          render json: {notice: "Regional pitch event was successfully deleted."}
-        }
-      end
+      redirect_to chapter_ambassador_events_list_path,
+        success: "Regional pitch event was successfully deleted."
     end
 
     private
@@ -130,12 +86,17 @@ module ChapterAmbassador
     def pitch_event_params
       params.require(:regional_pitch_event).permit(
         :name,
+        :event_date,
+        :start_time,
+        :end_time,
         :starts_at,
         :ends_at,
         :city,
         :venue_address,
         :event_link,
+        :capacity_enabled,
         :capacity,
+        :division_id,
         division_ids: []
       )
     end
