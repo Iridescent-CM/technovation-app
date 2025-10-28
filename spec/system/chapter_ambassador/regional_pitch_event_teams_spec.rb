@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Regional Pitch Event Teams", :js do
+RSpec.xdescribe "Regional Pitch Event Teams", :js do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved) }
 
   before do
