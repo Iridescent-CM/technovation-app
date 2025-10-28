@@ -1,6 +1,5 @@
 module Mentor
   class PublishedTeamSubmissionsController < MentorController
-    layout "mentor_rebrand"
 
     def show
       @team_submission = TeamSubmission

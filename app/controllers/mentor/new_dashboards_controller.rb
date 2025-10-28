@@ -2,8 +2,6 @@ module Mentor
   class NewDashboardsController < MentorController
     include LocationStorageController
 
-    layout "mentor_rebrand"
-
     private
 
     def create_judge_mentor_on_dashboard

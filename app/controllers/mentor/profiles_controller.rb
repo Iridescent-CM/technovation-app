@@ -2,8 +2,6 @@ module Mentor
   class ProfilesController < MentorController
     include ProfileController
 
-    layout "mentor_rebrand"
-
     before_action :expertises, :mentor_types
 
     def profile_params

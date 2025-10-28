@@ -1,6 +1,5 @@
 module Mentor
   class JoinRequestsController < MentorController
-    layout "mentor_rebrand"
     before_action :require_onboarded
 
     def new

@@ -180,7 +180,7 @@ module TeamSubmissionController
       "application_rebrand"
     elsif action_name == "index" &&
         current_scope == "mentor"
-      "mentor_rebrand"
+      "mentor"
     else
       "submissions"
     end

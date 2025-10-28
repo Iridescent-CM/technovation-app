@@ -1,6 +1,5 @@
 module Mentor
   class TeamSubmissionFileUploadConfirmationsController < MentorController
-    layout "mentor_rebrand"
     def show
       job = ProcessUploadJob.perform_later(
         current_team.submission.id,
