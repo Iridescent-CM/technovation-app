@@ -1,12 +1,5 @@
 <% provide :root_path, mentor_dashboard_path %>
-<% provide :menu, render('mentor/navigation/global_nav') %>
+<% provide :drop_down, render("mentor/navigation/rebrand/dropdown_nav") %>
+<% provide :main_header, render("application/templates/tg_green_header", heading: nil) %>
 
-<% content_for :css do %>
-  <%= stylesheet_packs_with_chunks_tag("mentor", data: { turbo_track: :reload }) %>
-<% end %>
-
-<% content_for :js do %>
-  <%= javascript_packs_with_chunks_tag("mentor", defer: :defer, data: { turbo_track: :reload }) %>
-<% end %>
-
-<%= render template: "layouts/application" %>
+<%= render template: "layouts/application_rebrand" %>

@@ -1,7 +1,6 @@
 module Mentor
   class MentorInvitesController < MentorController
     before_action :require_onboarded
-    layout "mentor_rebrand"
 
     def show
       if SeasonToggles.judging_enabled_or_between?

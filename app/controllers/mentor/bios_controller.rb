@@ -1,6 +1,5 @@
 module Mentor
   class BiosController < MentorController
-    layout "mentor_rebrand"
 
     def update
       if bio_params[:bio].blank?
