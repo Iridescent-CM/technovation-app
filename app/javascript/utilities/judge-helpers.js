@@ -1,13 +1,13 @@
 function getJudgingRubricLink(division) {
   switch (division) {
     case "senior":
-      return "https://drive.google.com/file/d/1wotOPhnbT3IJbF8XhnsxT10jpl1EjRvy/view";
+      return process.env.SENIOR_DIVISION_JUDGING_RUBRIC_URL;
     case "junior":
-      return "https://drive.google.com/file/d/1UleYSyl9DlKEF2rIW6IuvqYPznWCo00b/view";
+      return process.env.JUNIOR_DIVISION_JUDGING_RUBRIC_URL;
     case "beginner":
-      return "https://drive.google.com/file/d/1shhyqenpvt-hZ34RiQdemEFpVTCOgmtj/view";
+      return process.env.BEGINNER_DIVISION_JUDGING_RUBRIC_URL;
     default:
-      return "https://technovationchallenge.org/curriculum/judging-rubric/";
+      return process.env.GENERAL_JUDGING_RUBRIC_URL;
   }
 }
 
