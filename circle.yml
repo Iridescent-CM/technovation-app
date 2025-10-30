@@ -18,6 +18,7 @@ jobs:
           AIRBRAKE_RAILS_ENV: test
           AWS_BUCKET_NAME: technovation-attachments-test
           BACKGROUND_CHECK_COUNTRY_CODES: "US,IN,CA"
+          BEGINNER_DIVISION_JUDGING_RUBRIC_URL: "https://some/judging-rubik-url"
           BING_MAPS_API_KEY: n-a
           CAMPAIGN_MONITOR_API_KEY: n-a
           CLUB_AMBASSADOR_TRAINING_URL: "https://some/training-url"
@@ -90,6 +91,7 @@ jobs:
           FAQ_URL: n-a
           FINALISTS_URL: "https://some/url"
           FILESTACK_API_KEY: n-a
+          GENERAL_JUDGING_RUBRIC_URL: "https://some/judging-rubrik-url"
           GOOGLE_ANALYTICS_ID: n-a
           GOOGLE_MAPS_API_KEY: n-a
           GOOGLE_PLACES_API_KEY: n-a
@@ -98,6 +100,7 @@ jobs:
           HOST_DOMAIN: localhost:31337
           INTERNET_SAFETY_URL: n-a
           IN_PERSON_SAFETY_URL: n-a
+          JUNIOR_DIVISION_JUDGING_RUBRIC_URL: "https://some/judging-rubik-url"
           JUDGE_MAXIMUM_NUMBER_OF_RECUSALS: 15
           JUDGE_SLACK_SIGNUP_URL: n-a
           JUDGE_TRAINING_URL: n-a
@@ -125,6 +128,7 @@ jobs:
           RAILS_ENV: test
           REDIS_URL: redis://127.0.0.1:6379/0
           REGIONAL_PITCH_EVENTS_FAQ_URL: 'https://some-url'
+          SENIOR_DIVISION_JUDGING_RUBRIC_URL: "https://some/judging-rubik-url"
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/bin/wkhtmltopdf
       - image: cimg/postgres:13.7
