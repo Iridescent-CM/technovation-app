@@ -1,8 +1,6 @@
 module Mentor
   class ScoresController < MentorController
 
-    layout "mentor_rebrand"
-
     def index
       @current_teams = current_mentor.teams.current.order("teams.name")
     end
