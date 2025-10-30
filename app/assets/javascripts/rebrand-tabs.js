@@ -22,11 +22,15 @@ $(document).on("turbo:load", function () {
     $(`a[href*='#parent-tab-content']`).click();
   }
 
-  document
-    .getElementById("check-parental-consent-status")
-    .addEventListener("click", (e) => {
+  const checkParentalConsentStatusLink = document.getElementById(
+    "check-parental-consent-status"
+  );
+
+  if (checkParentalConsentStatusLink) {
+    checkParentalConsentStatusLink.addEventListener("click", (e) => {
       e.preventDefault();
 
       document.getElementById("parental-tab").click();
     });
+  }
 });
