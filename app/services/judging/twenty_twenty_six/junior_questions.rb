@@ -91,10 +91,23 @@ module Judging
             idx: 3,
             section: "demo",
             submission_type: "",
+            ai_usage: true,
             field: :demo_3,
             worth: 5,
             text: %(
-              Do we explain the machine learning training and/or actual coding we did for 1 or 2 important parts of our app, other than the login screen?
+              Do we explain the generative AI process we used in either coding or building an AI model for the project, including tools and prompts?
+            )
+          ),
+
+          Question.new(
+            idx: 3,
+            section: "demo",
+            submission_type: "",
+            ai_usage: false,
+            field: :demo_3,
+            worth: 5,
+            text: %(
+              Do we explain what machine learning training and/or actual coding we did for 1-2 important parts of our app (not login screen)?
             )
           ),
 
