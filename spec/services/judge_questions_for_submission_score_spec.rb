@@ -8,7 +8,8 @@ describe JudgeQuestionsForSubmissionScore do
   }
   let(:submission_score) { instance_double(SubmissionScore) }
   let(:judge_questions_constructor) { double(JudgeQuestions) }
-  let(:submission_type) { TeamSubmission::MOBILE_APP_SUBMISSION_TYPE }
+  let(:submission_type) { "" }
+  let(:ai_usage) { true }
   let(:season) { 2021 }
   let(:division) { "senior" }
 
@@ -16,6 +17,7 @@ describe JudgeQuestionsForSubmissionScore do
     allow(submission_score).to receive(:seasons).and_return([season])
     allow(submission_score).to receive(:team_division_name).and_return(division)
     allow(submission_score).to receive(:team_submission_submission_type).and_return(submission_type)
+    allow(submission_score).to receive(:team_submission_ai_usage).and_return(ai_usage)
   end
 
   describe "#call" do
@@ -82,6 +84,54 @@ describe JudgeQuestionsForSubmissionScore do
       it "only returns Mobile App questions" do
         expect(judge_questions_for_submission_score).to include(mobile_app_question)
         expect(judge_questions_for_submission_score).not_to include(ai_project_question)
+      end
+    end
+  end
+
+  describe "filtering questions based on AI usage" do
+    before do
+      allow(judge_questions_constructor).to receive_message_chain(:new, :call).and_return(questions)
+    end
+
+    let(:questions) { [ai_usage_question, no_ai_usage_question, non_ai_usage_question] }
+    let(:ai_usage_question) do
+      Question.new(
+        section: "demo",
+        ai_usage: true,
+        text: "AI usage question"
+      )
+    end
+    let(:no_ai_usage_question) do
+      Question.new(
+        section: "demo",
+        ai_usage: false,
+        text: "no AI usage question"
+      )
+    end
+    let(:non_ai_usage_question) do
+      Question.new(
+        section: "demo",
+        text: "non-AI usage question"
+      )
+    end
+
+    context "when the submission uses AI" do
+      let(:ai_usage) { true }
+
+      it "returns the AI usage question (and non-AI related questions, where ai_usage is not defined on the question)" do
+        expect(judge_questions_for_submission_score).to include(ai_usage_question)
+        expect(judge_questions_for_submission_score).to include(non_ai_usage_question)
+        expect(judge_questions_for_submission_score).not_to include(no_ai_usage_question)
+      end
+    end
+
+    context "when the submission does not use AI" do
+      let(:ai_usage) { false }
+
+      it "returns the no-AI usage question (and non-AI related questions, where ai_usage is not defined on the question)" do
+        expect(judge_questions_for_submission_score).to include(no_ai_usage_question)
+        expect(judge_questions_for_submission_score).to include(non_ai_usage_question)
+        expect(judge_questions_for_submission_score).not_to include(ai_usage_question)
       end
     end
   end
