@@ -264,7 +264,8 @@ class SubmissionScore < ActiveRecord::Base
   validates_uniqueness_of :judge_profile_id,
     scope: [:team_submission_id, :deleted_at]
 
-  delegate :app_name,
+  delegate :ai_usage,
+    :app_name,
     :team_photo,
     :team_name,
     :team_division_name,
