@@ -14,13 +14,22 @@ module Judging
           ),
 
           Question.new(
+            idx: 2,
+            section: "project_details",
+            field: :project_details_2,
+            worth: 5,
+            text: %(
+              Do we explain how we made sure our app was safe for everyone and didn't hurt anyone or the planet?
+            )
+          ),
+
+          Question.new(
             idx: 1,
             section: "pitch",
             field: :pitch_1,
             worth: 5,
             text: %(
-              Does our pitch video clearly state the problem and show why
-              the problem is important to us and our community?
+              Does our pitch video clearly state the problem and explain why the problem is important to us and our community?
             )
           ),
 
@@ -50,7 +59,7 @@ module Judging
             field: :pitch_4,
             worth: 5,
             text: %(
-              Do we show how it is a better solution to what already exists?
+              Do we show how the app or Scratch project is a better solution to what already exists?
             )
           ),
 
@@ -61,7 +70,7 @@ module Judging
             field: :demo_1,
             worth: 5,
             text: %(
-              Do we show what app or Scratch project we built and what parts work successfully so far?
+              Do we give a demonstration of the working parts of the app or Scratch project we built?
             )
           ),
 
@@ -119,16 +128,6 @@ module Judging
             text: %(
               Do we share what we learned and the challenges we overcame through a combination of words and pictures (e.g. screenshots, prototypes)?
               Do we share any technical sources used/remixed and/or our favorite technical resource?
-            )
-          ),
-
-          Question.new(
-            idx: 2,
-            section: "ideation",
-            field: :ideation_2,
-            worth: 5,
-            text: %(
-               Do we explain what we learned about AI and how we used it in our project?
             )
           )
         ]

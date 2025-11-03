@@ -14,6 +14,16 @@ module Judging
           ),
 
           Question.new(
+            idx: 2,
+            section: "project_details",
+            field: :project_details_2,
+            worth: 5,
+            text: %(
+              Do we explain how we considered ethics in developing our app? Do we address one or more of the following aspects: data privacy, accessibility, energy consumption, impact on earth, bias and harm to particular groups?
+            )
+          ),
+
+          Question.new(
             idx: 1,
             section: "pitch",
             field: :pitch_1,
@@ -30,7 +40,7 @@ module Judging
             field: :pitch_2,
             worth: 5,
             text: %(
-              Do we explain how we researched the complexity of the problem?
+              Do we explain some of the research we did to understand the problem?
             )
           ),
 
@@ -60,8 +70,7 @@ module Judging
             field: :pitch_5,
             worth: 5,
             text: %(
-              Do we explain how we considered the ethics of our solution to make sure the solution will
-              only have a positive impact on direct or indirect users and the planet?
+              Do we talk about or include video footage of one or more target users providing feedback to us about our solution?
             )
           ),
 
@@ -83,7 +92,7 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we explain how the app was tested with users, what feedback was given, and how it affected the features of the app?
+              Do we explain who the end users are and show how the app was tested with them?
             )
           ),
 
@@ -118,7 +127,7 @@ module Judging
             field: :demo_4,
             worth: 5,
             text: %(
-              Do we show what doesn’t work yet and/or share future app features?
+              Do we describe our iterative development process through user feedback, testing, and (if applicable) AI prompt modification?
             )
           ),
 
@@ -148,8 +157,7 @@ module Judging
             field: :ideation_1,
             worth: 5,
             text: %(
-              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
-              Do we share any technical sources used/remixed and/or our favorite technical resource?
+              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)? Do we include how we overcame technical or non-technical challenges?
             )
           ),
 
@@ -159,7 +167,7 @@ module Judging
             field: :ideation_2,
             worth: 5,
             text: %(
-              Do we explain what we learned about AI and how we used it in our project?
+              Do we explain how we decided what information we gathered was legitimate?
             )
           ),
 
@@ -169,7 +177,7 @@ module Judging
             field: :ideation_3,
             worth: 5,
             text: %(
-              Do we describe how we overcame technical or non-technical challenges?
+              Do we share a bibliography of resources used and/or remixed as part of the project, including the use of generative AI tools (if applicable)?
             )
           )
         ]

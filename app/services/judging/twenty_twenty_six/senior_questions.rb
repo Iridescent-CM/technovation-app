@@ -9,7 +9,17 @@ module Judging
             field: :project_details_1,
             worth: 5,
             text: %(
-               Is our project description compelling and does it clearly state the problem and solution (maximum 100 words)?
+              Is our project description compelling and does it clearly state the problem and solution (maximum 100 words)?
+            )
+          ),
+
+          Question.new(
+            idx: 2,
+            section: "project_details",
+            field: :project_details_2,
+            worth: 5,
+            text: %(
+              Do we explain how we considered ethics in developing our app? Do we address one or more of the following aspects: data privacy, accessibility, energy consumption, impact on earth, bias and harm to particular groups?
             )
           ),
 
@@ -30,7 +40,7 @@ module Judging
             field: :pitch_2,
             worth: 5,
             text: %(
-              Do we explain how we researched the complexity of the problem?
+              Do we explain some of the research we did to understand the problem?
             )
           ),
 
@@ -61,8 +71,17 @@ module Judging
             field: :pitch_5,
             worth: 5,
             text: %(
-              Do we explain how we considered the ethics of our solution to make sure the solution will
-              only have a positive impact on direct or indirect users and the planet?
+              Do we talk about or include video footage of one or more target users providing feedback to us about our solution?
+            )
+          ),
+
+          Question.new(
+            idx: 6,
+            section: "pitch",
+            field: :pitch_6,
+            worth: 5,
+            text: %(
+              Do we briefly explain our business model and financial plans to launch and maintain our company?
             )
           ),
 
@@ -84,7 +103,7 @@ module Judging
             field: :demo_2,
             worth: 5,
             text: %(
-              Do we explain how the app was tested with users, what feedback was given, and how it affected the features of the app?
+              Do we explain who the end users are and show how the app was tested with them?
             )
           ),
 
@@ -119,7 +138,7 @@ module Judging
             field: :demo_4,
             worth: 5,
             text: %(
-              Do we show what doesn’t work yet and/or share future app features?
+              Do we describe our iterative development process through user feedback, testing, and (if applicable) AI prompt modification?
             )
           ),
 
@@ -129,8 +148,7 @@ module Judging
             field: :entrepreneurship_1,
             worth: 5,
             text: %(
-              Do we clearly explain our company and product description in a
-              well-written document accompanied by supporting graphics?
+              Do we concisely explain the problem, solution, and business’ value proposition? Do we include how we integrated feedback or advice from a business professional or entrepreneur?
             )
           ),
 
@@ -140,8 +158,7 @@ module Judging
             field: :entrepreneurship_2,
             worth: 5,
             text: %(
-              Do we show what market research the team has conducted to
-              identify target users and main competitors?
+              Do we demonstrate thorough market research by clearly identifying competitors, defining the target market, and outlining strategies to reach and serve users?
             )
           ),
 
@@ -151,17 +168,7 @@ module Judging
             field: :entrepreneurship_3,
             worth: 5,
             text: %(
-              Do we explain the marketing plan for how the team will get new users to use our app in its first year?
-            )
-          ),
-
-          Question.new(
-            idx: 4,
-            section: "entrepreneurship",
-            field: :entrepreneurship_4,
-            worth: 5,
-            text: %(
-              Do we show financial plans for starting the business and explain why they are realistic?
+              Do we demonstrate realistic company financial plans through cost structure and revenue streams?
             )
           ),
 
@@ -171,8 +178,7 @@ module Judging
             field: :ideation_1,
             worth: 5,
             text: %(
-              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)?
-              Do we share any technical sources used/remixed and/or our favorite technical resource?
+              Do we share what we learned through a combination of words and pictures (eg screenshots, prototypes)? Do we include how we overcame technical or non-technical challenges?
             )
           ),
 
@@ -182,7 +188,7 @@ module Judging
             field: :ideation_2,
             worth: 5,
             text: %(
-              Do we explain what we learned about AI and how we used it in our project?
+              Do we explain how we decided what information we gathered was legitimate?
             )
           ),
 
@@ -192,7 +198,7 @@ module Judging
             field: :ideation_3,
             worth: 5,
             text: %(
-              Do we describe how we overcame technical or non-technical challenges?
+              Do we share a bibliography of resources used and/or remixed as part of the project, including the use of generative AI tools (if applicable)?
             )
           )
         ]
