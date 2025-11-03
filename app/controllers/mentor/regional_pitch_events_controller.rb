@@ -1,8 +1,6 @@
 module Mentor
   class RegionalPitchEventsController < MentorController
 
-    layout "mentor_rebrand"
-
     def index
       @regional_events = RegionalPitchEvent.available_to(
         current_team.submission
