@@ -170,6 +170,7 @@ module Judge
     def score_params
       params.require(:submission_score).permit(
         :project_details_1,
+        :project_details_2,
         :project_details_comment,
         :project_details_comment_word_count,
         :ideation_1,
