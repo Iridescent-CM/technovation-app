@@ -169,7 +169,7 @@ class ChapterAmbassadorsGrid
 
   filter :assigned_to_chapter,
     :enum,
-    header: "Assigned to Chapter (only applies to current season)",
+    header: "Assigned to Chapter for #{Season.current.year} Season",
     select: [
       ["Yes", "yes"],
       ["No", "no"]
@@ -196,7 +196,7 @@ class ChapterAmbassadorsGrid
 
   filter :chapter_status,
     :enum,
-    header: "Chapter Status (only applies to current season)",
+    header: "Chapter Status for #{Season.current.year} Season",
     select: [
       ["Active"],
       ["Inactive"]
