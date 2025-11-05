@@ -76,7 +76,7 @@ class ClubAmbassadorsGrid
 
   filter :assigned_to_club,
     :enum,
-    header: "Assigned to Club (only applies to current season)",
+    header: "Assigned to Club for #{Season.current.year} Season",
     select: [
       ["Yes", "yes"],
       ["No", "no"]
@@ -99,7 +99,7 @@ class ClubAmbassadorsGrid
 
   filter :club_status,
     :enum,
-    header: "Club Status (only applies to current season)",
+    header: "Club Status for #{Season.current.year} Season",
     select: [
       ["Active"],
       ["Inactive"]
