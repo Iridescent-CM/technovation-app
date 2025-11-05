@@ -178,9 +178,19 @@ class ChapterAmbassadorsGrid
       if value == "yes"
         scope
           .joins(:chapterable_assignments)
-          .where(chapterable_assignments: {season: Season.current.year})
+          .where(
+            chapterable_assignments: {
+              season: Season.current.year
+            }
+          )
       else
         scope
+          .where.not(
+            id: ChapterableAccountAssignment.where(
+              season: Season.current.year,
+              profile_type: "ChapterAmbassadorProfile"
+            ).select(:account_id)
+          )
       end
     end
 
