@@ -42,6 +42,10 @@ class ChapterAmbassadorsGrid
     account.seasons.join(", ")
   end
 
+  column :seasons_assigned_to_a_chapter do |account|
+    account.chapterable_assignments.pluck(:season).uniq.sort.join(", ")
+  end
+
   column :gender, header: "Gender Identity" do
     gender.presence || "-"
   end
