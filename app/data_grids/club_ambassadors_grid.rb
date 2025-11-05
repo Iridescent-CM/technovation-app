@@ -88,6 +88,12 @@ class ClubAmbassadorsGrid
           .where(chapterable_assignments: {season: Season.current.year})
       else
         scope
+          .where.not(
+            id: ChapterableAccountAssignment.where(
+              season: Season.current.year,
+              profile_type: "ClubAmbassadorProfile"
+            ).select(:account_id)
+          )
       end
     end
 
