@@ -2195,7 +2195,8 @@ CREATE TABLE public.submission_scores (
     project_details_comment_word_count integer DEFAULT 0,
     demo_comment text,
     demo_comment_word_count integer DEFAULT 0,
-    demo_4 integer DEFAULT 0
+    demo_4 integer DEFAULT 0,
+    project_details_2 integer DEFAULT 0
 );
 
 
@@ -5049,6 +5050,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250826132546'),
 ('20250902171014'),
 ('20250902171015'),
-('20250902171016');
+('20250902171016'),
+('20251103210255');
 
 
