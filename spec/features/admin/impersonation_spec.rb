@@ -61,8 +61,6 @@ RSpec.feature "Admins impersonating other accounts" do
     expect(current_path).to eq(chapter_ambassador_dashboard_path)
 
     visit(chapter_ambassador_chapter_admin_path)
-    click_link "My Account"
-    expect(current_path).to eq(chapter_ambassador_profile_path)
 
     click_link "return to Admin mode"
     expect(current_path).to eq(admin_participant_path(chapter_ambassador.account))

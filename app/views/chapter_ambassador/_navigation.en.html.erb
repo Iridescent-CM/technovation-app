@@ -49,18 +49,13 @@
       class: al(chapter_ambassador_activities_path) %>
   <% end %>
 
-  <%= link_to "My Account",
-    chapter_ambassador_profile_path,
-    class: al(chapter_ambassador_profile_path) %>
-
   <%= link_to "Chapter Resources",
     chapter_ambassador_resources_path,
     class: al(chapter_ambassador_resources_path) %>
 
   <hr>
   <%= link_to "Logout", logout_path, data: { method: :delete } %>
-
-  <hr />
+  <hr>
 
   <%= link_to "Mentor Mode",
     mentor_dashboard_path,
