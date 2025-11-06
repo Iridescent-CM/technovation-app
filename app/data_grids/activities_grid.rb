@@ -91,7 +91,10 @@ class ActivitiesGrid
     end
   end
 
-  column :when, mandatory: true do |activity|
+  column :when,
+    order: "created_at desc",
+    order_desc: "created_at asc",
+    mandatory: true do |activity|
     format(activity.created_at) do |value|
       "#{time_ago_in_words(value)} ago"
     end
