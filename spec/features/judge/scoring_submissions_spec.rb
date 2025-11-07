@@ -34,7 +34,7 @@ RSpec.feature "scoring submissions", js: true do
     and_scores_the_entrepreneurship_section_perfectly
     and_scores_the_ideation_section_perfectly
 
-    then_the_review_page_displays_a_perfect_score_of 75
+    then_the_review_page_displays_a_perfect_score_of 80
     and_then_submits_the_score
   end
 
