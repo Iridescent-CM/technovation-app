@@ -4,6 +4,16 @@
   <%= link_to "Dashboard", chapter_ambassador_dashboard_path %>
 
   <% if current_ambassador.onboarded? %>
+    <%= link_to "Participants",
+      chapter_ambassador_participants_path,
+      data: { turbo: false },
+      class: al(chapter_ambassador_participants_path) %>
+
+    <%= link_to "Unaffiliated Participants",
+      chapter_ambassador_unaffiliated_participants_path,
+      data: { turbo: false },
+      class: al(chapter_ambassador_unaffiliated_participants_path) %>
+
     <%= link_to "Events",
       chapter_ambassador_events_path,
       data: { turbo: false },
@@ -23,16 +33,6 @@
       chapter_ambassador_judges_path,
       data: { turbo: false },
       class: al(chapter_ambassador_judges_path) %>
-
-    <%= link_to "Participants",
-      chapter_ambassador_participants_path,
-      data: { turbo: false },
-      class: al(chapter_ambassador_participants_path) %>
-
-    <%= link_to "Unaffiliated Participants",
-      chapter_ambassador_unaffiliated_participants_path,
-      data: { turbo: false },
-      class: al(chapter_ambassador_unaffiliated_participants_path) %>
 
     <%= link_to "Teams",
       chapter_ambassador_teams_path,
