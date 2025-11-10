@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "available-teams-list" do %>
+  <%= render "admin/regional_pitch_events/available_teams_list", event: @event, teams: @available_teams %>
+<% end %>
+
+<%= turbo_stream.replace "registered-teams-frame" do %>
+  <%= render "admin/regional_pitch_events/registered_teams", event: @event %>
+<% end %>
