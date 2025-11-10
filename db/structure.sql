@@ -4100,6 +4100,13 @@ CREATE INDEX index_team_submissions_on_judge_recusal_count ON public.team_submis
 
 
 --
+-- Name: index_teams_on_division_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_teams_on_division_id ON public.teams USING btree (division_id);
+
+
+--
 -- Name: index_teams_on_legacy_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5058,6 +5065,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250902171016'),
 ('20251022160639'),
 ('20251103210255'),
+('20251110201524'),
 ('20251118185601'),
 ('20251202174428');
 
