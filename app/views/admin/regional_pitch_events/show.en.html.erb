@@ -32,9 +32,9 @@
                     data: {
                       method: :patch,
                       confirm: "You are about to mark #{@event.name} as " +
-                              "<strong>" +
-                              (@event.unofficial? ? 'OFFICIAL' : 'UNOFFICIAL') +
-                              "</strong>"
+                        "<strong>" +
+                        (@event.unofficial? ? 'OFFICIAL' : 'UNOFFICIAL') +
+                        "</strong>"
                     },
                     class: "button small" %>
                 </p>
@@ -58,20 +58,20 @@
 
             <dd>
               <%= @event.starts_at
-                        .in_time_zone(@event.timezone)
-                        .strftime("%A, %B %e") %>
+                .in_time_zone(@event.timezone)
+                .strftime("%A, %B %e") %>
 
               <br />
 
               <%= @event.starts_at
-                        .in_time_zone(@event.timezone)
-                        .strftime("%-I:%M%P") %>
+                .in_time_zone(@event.timezone)
+                .strftime("%-I:%M%P") %>
 
               &ndash;
 
               <%= @event.ends_at
-                        .in_time_zone(@event.timezone)
-                        .strftime("%-I:%M%P %Z") %>
+                .in_time_zone(@event.timezone)
+                .strftime("%-I:%M%P %Z") %>
             </dd>
 
             <dt>Address:</dt>
@@ -113,128 +113,23 @@
               <%= @event.updated_at.strftime("%Y-%m-%d %H:%M %Z") %>
             </dd>
           </dl>
-
         </div>
       </div>
 
       <hr>
 
-      <div class="grid grid--bleed">
-        <div class="grid__col-auto" style="overflow-x:auto;">
-          <h5>Teams (<%= @event.teams.count %>)</h5>
+      <% if current_account.chapter_ambassador? %>
+        <%= turbo_frame_tag "available-teams-frame" do %>
+          <%= link_to "Add Teams",
+            available_teams_chapter_ambassador_event_path(@event),
+            class: "button small",
+            data: { turbo_frame: "available-teams-frame" } %>
+        <% end %>
+      <% end %>
 
-          <% if @event.teams.any? %>
-            <table class="margin--b-xxlarge">
-              <thead>
-              <tr>
-                <th>Team</th>
-                <th>Division</th>
-                <th>Submission</th>
-                <th style="padding-right: 20px;">Presentation Slides</th>
-                <th>Status</th>
-              </tr>
-              </thead>
-              <tbody>
-              <% @event.teams.each do |team| %>
-                <tr>
-                  <td>
-                    <%= link_to team.name,
-                      send(
-                        "#{current_scope}_team_path",
-                        team
-                      )
-                    %>
-                  </td>
-                  <td>
-                    <%= team.division_name %>
-                  </td>
-                  <td>
-                    <%= link_to team.submission.name,
-                      send(
-                        "#{current_scope}_team_submission_path",
-                        team.submission
-                      )
-                    %>
-                  </td>
-                  <td>
-                    <% if team.submission.pitch_presentation.present? %>
-                      <%= link_to "Download",
-                        team.submission.pitch_presentation_url,
-                        download: "#{team.submission.team.name.downcase.parameterize(separator: "_")}-#{team.submission.pitch_presentation.file.filename.downcase.gsub(/\s+/, "_")}",
-                        class: "button small",
-                        style: "margin: 4px 0 4px;"
-                      %>
-                    <% else %>
-                      -
-                    <% end %>
-                  </td>
-                  <td>
-                    <span class="pill pill-<%= team.status == 'ready' ? 'green' : 'orange' %>">
-                      <%= team.human_status %>
-                    </span>
-                  </td>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
+      <hr>
 
-            <% if @event.teams.any? { |t| t.submission.pitch_presentation.present? } %>
-              <div style="display: flex; justify-content: center;">
-                <%= link_to "Download All Presentation Slides",
-                  send(
-                    "#{current_scope}_event_bulk_download_submission_pitch_presentations_path",
-                    @event
-                  ),
-                  class: "button"
-                %>
-              </div>
-            <% end %>
-          <% else %>
-            <p>No teams yet.</p>
-          <% end %>
-
-          <h5>Judges (<%= @event.judge_list.size %>)</h5>
-          <% if @event.judge_list.any?  %>
-            <table>
-              <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Status</th>
-              </tr>
-              </thead>
-              <tbody>
-              <% @event.judge_list.each do |judge| %>
-                <tr>
-                  <td>
-                    <% if judge.is_a?(JudgeProfile) %>
-                      <%= link_to judge.name,
-                        send(
-                          "#{current_scope}_participant_path",
-                          judge.account
-                        )
-                      %>
-                    <% else %>
-                      Invited Judge
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= judge.email %>
-                  </td>
-                  <td>
-                    <span class="pill pill-<%= judge.status == 'ready' ? 'green' : 'red' %>">
-                      <%= judge.human_status %>
-                    </span>
-                  </td>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
-          <% else %>
-            <p>No judges yet.</p>
-          <% end %>
-        </div>
-      </div>
+      <%= render "admin/regional_pitch_events/registered_teams", event: @event %>
     </div>
 
     <% if current_account.admin? %>
