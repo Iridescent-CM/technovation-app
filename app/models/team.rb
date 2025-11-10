@@ -50,6 +50,13 @@ class Team < ActiveRecord::Base
       .where(division: event.division)
   }
 
+  scope :available_for_event, ->(event, ambassador) {
+    live_event_eligible(event)
+      .in_region(ambassador)
+      .includes(:division, submission: :team)
+      .order("teams.name")
+  }
+
   def self.sort_column
     :name
   end

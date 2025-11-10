@@ -26,10 +26,9 @@ module ChapterAmbassador
     def show
       @event = RegionalPitchEvent
         .includes(
-          judges: :current_account,
           teams: [
             :division,
-            submission: [:team, :screenshots]
+            :submission
           ]
         )
         .find(params[:id])
@@ -79,6 +78,22 @@ module ChapterAmbassador
 
       redirect_to chapter_ambassador_events_list_path,
         success: "Regional pitch event was successfully deleted."
+    end
+
+    def available_teams
+      @event = RegionalPitchEvent.in_region(current_ambassador)
+        .find(params[:id])
+      @available_teams = load_available_teams_for_event(@event)
+
+      if turbo_frame_request_id == "available-teams-frame"
+        render partial: "admin/regional_pitch_events/available_teams",
+          locals: { event: @event, teams: @available_teams }
+      elsif turbo_frame_request_id == "available-teams-list"
+        render partial: "admin/regional_pitch_events/available_teams_list",
+          locals: { event: @event, teams: @available_teams }
+      else
+        redirect_to chapter_ambassador_event_path(@event)
+      end
     end
 
     private
