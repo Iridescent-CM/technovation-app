@@ -1,0 +1,23 @@
+<tr id="<%=dom_id(team, :available) %>">
+  <td>
+    <%= team.name %>
+  </td>
+  <td>
+    <%= team.division_name %>
+  </td>
+  <td>
+    <%= team.submission.name %>
+  </td>
+  <td>
+    <% if at_capacity %>
+      <span>
+        Event is at capacity
+      </span>
+    <% else %>
+      <%= button_to "Add",
+        chapter_ambassador_event_event_teams_path(event, team_id: team.id),
+        method: :post,
+        class: "button" %>
+    <% end %>
+  </td>
+</tr>
