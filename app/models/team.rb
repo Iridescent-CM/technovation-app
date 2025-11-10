@@ -40,7 +40,7 @@ class Team < ActiveRecord::Base
   }
 
   scope :by_query, ->(query) {
-    where("teams.name ILIKE ?", "#{query}%")
+    where("teams.name ILIKE ?", "%#{query}%")
   }
 
   scope :live_event_eligible, ->(event) {
