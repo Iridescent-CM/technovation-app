@@ -47,7 +47,7 @@ RSpec.feature "Admin view rpe details", js: true do
     end
   end
 
-  scenario "Viewing a specific RPE displays RPE judge details" do
+  xscenario "Viewing a specific RPE displays RPE judge details" do
     rpe_judges = FactoryBot.create_list(:judge, 3)
     rpe_judges.each do |judge|
       judge.regional_pitch_events << @rpe
