@@ -102,4 +102,31 @@ RSpec.describe MentorProfile do
       ).to eq([intl_mentor])
     end
   end
+
+  describe "validations" do
+    let(:mentor) { FactoryBot.build(:mentor, bio: bio) }
+    let(:bio) {"a" * 100}
+
+    context "when a bio is between 100 and 1500 characters" do
+      it "is valid" do
+        expect(mentor).to be_valid
+      end
+    end
+
+    context "when a bio is less than 100 characters" do
+      let(:bio) {"a" * 50}
+
+      it "is not valid" do
+        expect(mentor).not_to be_valid
+      end
+    end
+
+    context "when a bio is more than 1500 characters" do
+      let(:bio) {"a" * 2000}
+
+      it "is not valid" do
+        expect(mentor).not_to be_valid
+      end
+    end
+  end
 end
