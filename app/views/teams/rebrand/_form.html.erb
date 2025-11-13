@@ -6,7 +6,10 @@
 
       <% if f.object.persisted? %>
         <%= f.input :description, label: t("models.team.description") %>
-      <% end %>
+        <span class="text-sm italic">
+          Use up to 1500 characters.
+        </span>
+    <% end %>
 
       <% action = f.object.persisted? ? :save : :create %>
 

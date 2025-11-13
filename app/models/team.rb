@@ -279,6 +279,8 @@ class Team < ActiveRecord::Base
   validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true
 
+  validates :description, length: { maximum: 1500 }, if: :description_changed?
+
   delegate :name, to: :division, prefix: true
 
   def random_id
