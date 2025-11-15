@@ -34,6 +34,10 @@ class ClubAmbassadorsGrid
     account.seasons.join(", ")
   end
 
+  column :seasons_assigned_to_a_club do |account|
+    account.chapterable_assignments.pluck(:season).uniq.sort.join(", ")
+  end
+
   column :gender, header: "Gender Identity" do
     gender.presence || "-"
   end
@@ -76,7 +80,7 @@ class ClubAmbassadorsGrid
 
   filter :assigned_to_club,
     :enum,
-    header: "Assigned to Club (only applies to current season)",
+    header: "Assigned to Club for #{Season.current.year} Season",
     select: [
       ["Yes", "yes"],
       ["No", "no"]
@@ -88,12 +92,18 @@ class ClubAmbassadorsGrid
           .where(chapterable_assignments: {season: Season.current.year})
       else
         scope
+          .where.not(
+            id: ChapterableAccountAssignment.where(
+              season: Season.current.year,
+              profile_type: "ClubAmbassadorProfile"
+            ).select(:account_id)
+          )
       end
     end
 
   filter :club_status,
     :enum,
-    header: "Club Status (only applies to current season)",
+    header: "Club Status for #{Season.current.year} Season",
     select: [
       ["Active"],
       ["Inactive"]

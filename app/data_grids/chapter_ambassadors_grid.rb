@@ -42,6 +42,10 @@ class ChapterAmbassadorsGrid
     account.seasons.join(", ")
   end
 
+  column :seasons_assigned_to_a_chapter do |account|
+    account.chapterable_assignments.pluck(:season).uniq.sort.join(", ")
+  end
+
   column :gender, header: "Gender Identity" do
     gender.presence || "-"
   end
@@ -169,7 +173,7 @@ class ChapterAmbassadorsGrid
 
   filter :assigned_to_chapter,
     :enum,
-    header: "Assigned to Chapter (only applies to current season)",
+    header: "Assigned to Chapter for #{Season.current.year} Season",
     select: [
       ["Yes", "yes"],
       ["No", "no"]
@@ -178,15 +182,25 @@ class ChapterAmbassadorsGrid
       if value == "yes"
         scope
           .joins(:chapterable_assignments)
-          .where(chapterable_assignments: {season: Season.current.year})
+          .where(
+            chapterable_assignments: {
+              season: Season.current.year
+            }
+          )
       else
         scope
+          .where.not(
+            id: ChapterableAccountAssignment.where(
+              season: Season.current.year,
+              profile_type: "ChapterAmbassadorProfile"
+            ).select(:account_id)
+          )
       end
     end
 
   filter :chapter_status,
     :enum,
-    header: "Chapter Status (only applies to current season)",
+    header: "Chapter Status for #{Season.current.year} Season",
     select: [
       ["Active"],
       ["Inactive"]
