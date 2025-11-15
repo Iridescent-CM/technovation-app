@@ -4,6 +4,16 @@
   <%= link_to "Dashboard", chapter_ambassador_dashboard_path %>
 
   <% if current_ambassador.onboarded? %>
+    <%= link_to "Participants",
+      chapter_ambassador_participants_path,
+      data: { turbo: false },
+      class: al(chapter_ambassador_participants_path) %>
+
+    <%= link_to "Unaffiliated Participants",
+      chapter_ambassador_unaffiliated_participants_path,
+      data: { turbo: false },
+      class: al(chapter_ambassador_unaffiliated_participants_path) %>
+
     <%= link_to "Events",
       chapter_ambassador_events_path,
       data: { turbo: false },
@@ -24,16 +34,6 @@
       data: { turbo: false },
       class: al(chapter_ambassador_judges_path) %>
 
-    <%= link_to "Participants",
-      chapter_ambassador_participants_path,
-      data: { turbo: false },
-      class: al(chapter_ambassador_participants_path) %>
-
-    <%= link_to "Unaffiliated Participants",
-      chapter_ambassador_unaffiliated_participants_path,
-      data: { turbo: false },
-      class: al(chapter_ambassador_unaffiliated_participants_path) %>
-
     <%= link_to "Teams",
       chapter_ambassador_teams_path,
       data: { turbo: false },
@@ -49,13 +49,13 @@
       class: al(chapter_ambassador_activities_path) %>
   <% end %>
 
-  <%= link_to "My Account",
-    chapter_ambassador_profile_path,
-    class: al(chapter_ambassador_profile_path) %>
+  <%= link_to "Chapter Resources",
+    chapter_ambassador_resources_path,
+    class: al(chapter_ambassador_resources_path) %>
 
+  <hr>
   <%= link_to "Logout", logout_path, data: { method: :delete } %>
-
-  <hr />
+  <hr>
 
   <%= link_to "Mentor Mode",
     mentor_dashboard_path,

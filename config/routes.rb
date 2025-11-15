@@ -167,6 +167,8 @@ Rails.application.routes.draw do
     resource :location_details, only: :show
 
     resource :chapter_admin, only: :show, controller: "chapter_admin"
+    resource :resources, only: :show, controller: "/ambassador/resources"
+
     resource :dashboard, only: :show
     resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
@@ -269,7 +271,7 @@ Rails.application.routes.draw do
     resource :community_connections, only: [:show, :new, :create, :edit, :update], controller: "/ambassador/community_connections"
 
     resource :club_admin, only: :show, controller: "club_admin"
-    resource :resources, only: :show
+    resource :resources, only: :show, controller: "/ambassador/resources"
 
     resources :participants, only: :show, controller: "/ambassador/participants"
     resources :participants, only: :index, controller: "/data_grids/ambassador/participants"
