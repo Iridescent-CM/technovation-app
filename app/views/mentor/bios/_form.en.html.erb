@@ -1,12 +1,6 @@
-<%= form_with model: current_mentor, url: mentor_bio_path, local: true do |f| %>
+<%= form_with model: current_mentor, url: mentor_bio_path, data: { turbo: false }, local: true  do |f| %>
   <%= f.label :bio, "Tell the students about yourself" %>
   <%= f.text_area :bio, id: "mentor_profile_bio" %>
-
-  <% if f.object.errors.any? %>
-    <div class="field_with_errors">
-      <span class="error"><%= f.object.errors[:bio][0] %></span>
-    </div>
-  <% end %>
 
   <%= content_tag :p, data: { keep_count_of: "#mentor_profile_bio" } do %>
     <span><%= (f.object.bio || "").length %></span>
