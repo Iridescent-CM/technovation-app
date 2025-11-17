@@ -251,52 +251,71 @@ RSpec.describe Team do
     expect(submission_updated).to be < submission.reload.updated_at
   end
 
-  context "unique name validation" do
-    it "ensures uniqueness within season" do
-      FactoryBot.create(:team, name: "Say My Name")
-      heisenberg = FactoryBot.build(:team, name: "Say My Name")
-      expect(heisenberg).not_to be_valid
-      expect(heisenberg.save).to be false
+  describe "validations" do
+    let(:team) { FactoryBot.build(:team, description: description) }
+    let(:description) {"a" * 100}
+
+    context "when a description is less than 1500 characters" do
+      it "is valid" do
+        expect(team).to be_valid
+      end
     end
 
-    it "ensures uniqueness across seasons" do
-      fring = FactoryBot.create(:team, name: "Say My Name")
-      fring.update(seasons: [Season.current.year - 1])
+    context "when a description is more than 1500 characters" do
+      let(:description) {"a" * 1600}
 
-      heisenberg = FactoryBot.build(:team, name: "Say My Name")
-      expect(heisenberg).not_to be_valid
-      expect(heisenberg.save).to be false
+      it "is not valid" do
+        expect(team).not_to be_valid
+      end
     end
 
-    it "allows reuse of deleted team names" do
-      fring = FactoryBot.create(:team, name: "Say My Name")
-      fring.destroy
+    context "unique name validation" do
+      it "ensures uniqueness within season" do
+        FactoryBot.create(:team, name: "Say My Name")
+        heisenberg = FactoryBot.build(:team, name: "Say My Name")
+        expect(heisenberg).not_to be_valid
+        expect(heisenberg.save).to be false
+      end
 
-      heisenberg = FactoryBot.create(:team, name: "Say My Name")
-      expect(heisenberg).to be_valid
-      expect(heisenberg.reload.id).not_to be_nil
-    end
+      it "ensures uniqueness across seasons" do
+        fring = FactoryBot.create(:team, name: "Say My Name")
+        fring.update(seasons: [Season.current.year - 1])
 
-    it "allows exceptions for past names" do
-      past_team = FactoryBot.create(:team, name: "Old Name")
-      past_team.update(seasons: [Season.current.year - 1])
+        heisenberg = FactoryBot.build(:team, name: "Say My Name")
+        expect(heisenberg).not_to be_valid
+        expect(heisenberg.save).to be false
+      end
 
-      student = FactoryBot.create(:student)
-      TeamRosterManaging.add(past_team, student)
+      it "allows reuse of deleted team names" do
+        fring = FactoryBot.create(:team, name: "Say My Name")
+        fring.destroy
 
-      new_team = FactoryBot.build(:team, name: "Old Name")
-      new_team.students << student
+        heisenberg = FactoryBot.create(:team, name: "Say My Name")
+        expect(heisenberg).to be_valid
+        expect(heisenberg.reload.id).not_to be_nil
+      end
 
-      expect(new_team).to be_valid
-      expect(new_team.save).to be true
-    end
+      it "allows exceptions for past names" do
+        past_team = FactoryBot.create(:team, name: "Old Name")
+        past_team.update(seasons: [Season.current.year - 1])
 
-    it "doesn't allow exceptions for current names" do
-      FactoryBot.create(:team, name: "Team Name")
-      team2 = FactoryBot.build(:team, name: "Team Name")
+        student = FactoryBot.create(:student)
+        TeamRosterManaging.add(past_team, student)
 
-      expect(team2).not_to be_valid
-      expect(team2.save).to be false
+        new_team = FactoryBot.build(:team, name: "Old Name")
+        new_team.students << student
+
+        expect(new_team).to be_valid
+        expect(new_team.save).to be true
+      end
+
+      it "doesn't allow exceptions for current names" do
+        FactoryBot.create(:team, name: "Team Name")
+        team2 = FactoryBot.build(:team, name: "Team Name")
+
+        expect(team2).not_to be_valid
+        expect(team2.save).to be false
+      end
     end
   end
 

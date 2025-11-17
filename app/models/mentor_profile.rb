@@ -162,8 +162,9 @@ class MentorProfile < ActiveRecord::Base
     presence: true
 
   validates :bio,
-    length: {minimum: 100},
-    allow_blank: true
+    length: { minimum: 100, maximum: 1500 },
+    allow_blank: true,
+    if: :bio_changed?
 
   def method_missing(method_name, *args) # standard:disable all
     account.public_send(method_name, *args) # standard:disable all

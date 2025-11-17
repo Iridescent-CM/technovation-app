@@ -11,6 +11,9 @@
 
 <% if f.object.persisted? %>
   <%= f.input :bio, label: "#{t('models.chapter_ambassador_profile.bio.signup_label')}" %>
+  <span class="text-sm italic">
+    Use up to 1500 characters.
+  </span>
 <% end %>
 
 <%= f.label :mentor_types, t('views.mentor.form.mentor_types'), class: "mt-6" %>
