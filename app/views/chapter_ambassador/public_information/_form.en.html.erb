@@ -49,7 +49,14 @@
   </div>
 
   <div>
-    <h3 class="mb-4">Chapter Links</h3>
+    <h3 class="mb-4">
+      Chapter Links
+      <br>
+      <span class="text-sm italic">
+        These can be added later
+      </span>
+    </h3>
+
 
     <%= f.simple_fields_for :chapter_links do |r| %>
       <%= render "chapter_ambassador/chapter/public_information/chapter_link_fields", f: r %>
