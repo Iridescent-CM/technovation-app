@@ -2364,7 +2364,9 @@ CREATE TABLE public.team_submissions (
     code_org_app_lab_project_url character varying,
     development_platform_other_url character varying,
     information_legitimacy_description text,
-    bibliography character varying
+    bibliography character varying,
+    promotes_wellbeing boolean,
+    promotes_wellbeing_description character varying
 );
 
 
@@ -5051,6 +5053,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250902171014'),
 ('20250902171015'),
 ('20250902171016'),
-('20251103210255');
+('20251103210255'),
+('20251118185601');
 
 

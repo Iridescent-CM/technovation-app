@@ -10,6 +10,7 @@
   <%= form_with(
     model: @team_submission,
     url: send("#{current_scope}_team_submission_path"),
+    data: { turbo: false },
     local: true
   ) do |f| %>
     <%= hidden_field_tag :piece, piece_name %>
@@ -132,6 +133,54 @@
           <span class="word-count__total word-count--plenty-remaining">
             0
           </span>
+          /
+          <span class="word-count__limit"></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="field mt-4">
+      <%= f.label :promotes_wellbeing,
+        t("submissions.promotes_wellbeing_question"),
+        for: :team_submission_promotes_wellbeing %>
+      <p class="tw-hint">
+        Learn more
+        <a href="https://technovationchallenge.org/award-structure/" target="_blank">here</a>
+      </p>
+
+      <%= f.select :promotes_wellbeing,
+        [["Yes", true], ["No", false]],
+        { include_blank: true },
+        data: {
+         toggles: {
+           "true": "#promotes_wellbeing_description"
+         },
+        },
+        class: "w-full lg:w-1/5",
+        id: :team_submission_promotes_wellbeing %>
+
+      <div id="promotes_wellbeing_description" class="mt-4">
+        <p class="tw-hint">
+          Please describe how your app gives users control, helps users protect
+          their focus, helps them be their best self, and helps make real connections
+          between people.
+        </p>
+
+        <%= f.text_area :promotes_wellbeing_description,
+          id: :team_submission_promotes_wellbeing_description,
+          data: {
+            word_count: true,
+            word_count_limit: 100,
+            word_count_details_container: "promotes-wellbeing-word-count"
+          },
+          rows: 5 %>
+
+        <p id="promotes-wellbeing-word-count" class="tw-hint word-counter">
+          Number of words typed:
+          <br>
+          <span class="word-count__total word-count--plenty-remaining">
+              0
+            </span>
           /
           <span class="word-count__limit"></span>
         </p>
