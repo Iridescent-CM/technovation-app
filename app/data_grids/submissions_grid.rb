@@ -129,6 +129,14 @@ class SubmissionsGrid
       .concat(description)
   end
 
+  column :promotes_wellbeing, if: ->(grid) { grid.admin } do
+    description = promotes_wellbeing? ? " - #{promotes_wellbeing_description}" : ""
+
+    ApplicationController.helpers
+      .humanize_boolean(promotes_wellbeing)
+      .concat(description)
+  end
+
   column :solves_hunger_or_food_waste, if: ->(grid) { grid.admin } do
     description = solves_hunger_or_food_waste? ? " - #{solves_hunger_or_food_waste_description}" : ""
 

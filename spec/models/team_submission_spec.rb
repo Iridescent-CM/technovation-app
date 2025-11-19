@@ -309,9 +309,9 @@ RSpec.describe TeamSubmission do
       end
     end
 
-    context "when only uses gadgets is true" do
+    context "when only promotes wellbeing is true" do
       before do
-        submission.update(uses_gadgets: true)
+        submission.update(promotes_wellbeing: true, promotes_wellbeing_description: "some wellbeing description")
       end
 
       it "returns true" do
@@ -332,8 +332,9 @@ RSpec.describe TeamSubmission do
           uses_open_ai_description: "Some description",
           solves_education: true,
           solves_education_description: "Some description",
-          uses_gadgets: true
-        )
+          promotes_wellbeing: true,
+          promotes_wellbeing_description: "Some description",
+          )
       end
 
       it "returns true" do

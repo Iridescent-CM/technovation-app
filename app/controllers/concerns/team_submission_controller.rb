@@ -247,6 +247,8 @@ module TeamSubmissionController
         :climate_change_description,
         :solves_education,
         :solves_education_description,
+        :promotes_wellbeing,
+        :promotes_wellbeing_description,
         :demo_video_link,
         :pitch_video_link,
         :development_platform_other,

@@ -70,6 +70,7 @@ class TeamSubmission < ActiveRecord::Base
     self.ai_description = "" if ai.blank?
     self.climate_change_description = "" if climate_change.blank?
     self.solves_education_description = "" if solves_education.blank?
+    self.promotes_wellbeing_description = "" if promotes_wellbeing.blank?
   }
 
   after_commit :update_student_info_in_crm
@@ -312,6 +313,9 @@ class TeamSubmission < ActiveRecord::Base
   validates :gadget_type_ids, presence: {message: "At least one gadget type must be selected"},
     if: ->(team_submission) { team_submission.uses_gadgets? }
 
+  validates :promotes_wellbeing_description, presence: true, max_word_count: true,
+    if: ->(team_submission) { team_submission.promotes_wellbeing? }
+
   validates :learning_journey, presence: true,
     max_word_count: {max_word_count: 200},
     if: ->(team_submission) { team_submission.learning_journey.present? && team_submission.beginner_division? }
@@ -425,7 +429,7 @@ class TeamSubmission < ActiveRecord::Base
       !game.nil? ||
       !uses_open_ai.nil? ||
       !solves_education.nil? ||
-      !uses_gadgets.nil?
+      !promotes_wellbeing.nil?
   end
 
   def team_photo_uploaded?

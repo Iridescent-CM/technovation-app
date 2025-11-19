@@ -8,3 +8,4 @@ en:
     uses_open_ai_question: "Did you use AI assistance such as ChatGPT at any point when working on your project?"
     solves_education_question: Does your submission address a problem in education?
     uses_gadgets_question: Does your submission use additional gadgets?
+    promotes_wellbeing_question: Does your project help people feel better about themselves and build real connections (not just more screen time)?
