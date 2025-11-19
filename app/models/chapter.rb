@@ -87,8 +87,7 @@ class Chapter < ActiveRecord::Base
     [
       name,
       summary,
-      primary_contact,
-      chapter_links
+      primary_contact
     ].all?(&:present?)
   end
 

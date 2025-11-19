@@ -117,7 +117,6 @@ class ChaptersGrid
 
   column :remaining_onboarding_tasks,
     preload: [
-      :chapter_links,
       :program_information,
       :legal_contact,
       :primary_contact,
@@ -138,7 +137,6 @@ class ChaptersGrid
 
   column :completed_onboarding_tasks,
     preload: [
-      :chapter_links,
       :program_information,
       :legal_contact,
       :primary_contact,

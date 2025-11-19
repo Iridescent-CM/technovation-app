@@ -128,16 +128,6 @@ RSpec.describe Chapter do
           end
         end
 
-        context "when the chapter has no chapter links" do
-          before do
-            chapter.update(chapter_links: [])
-          end
-
-          it "returns false" do
-            expect(chapter.onboarded?).to eq(false)
-          end
-        end
-
         context "when the chapter's HQ location is missing" do
           before do
             chapter.update(organization_headquarters_location: nil)
@@ -203,20 +193,17 @@ RSpec.describe Chapter do
         name: chapter_name,
         summary: chapter_summary,
         primary_contact: chapter_primary_contact,
-        chapter_links: chapter_links
       )
     end
 
     let(:chapter_name) { "Sample Chapter" }
     let(:chapter_summary) { "Sample chapter summary." }
     let(:chapter_primary_contact) { Account.new }
-    let(:chapter_links) { [ChapterLink.new] }
 
     context "when all of the chapter info has been completed" do
       let(:chapter_name) { "Technovation Tokyo" }
       let(:chapter_summary) { "We are Technovation Tokyo." }
       let(:chapter_primary_contact) { Account.new }
-      let(:chapter_links) { [ChapterLink.new] }
 
       it "returns true" do
         expect(chapter.chapter_info_complete?).to eq(true)
@@ -241,14 +228,6 @@ RSpec.describe Chapter do
 
     context "when the chapter's primary contact is missing" do
       let(:chapter_primary_contact) { nil }
-
-      it "returns false" do
-        expect(chapter.chapter_info_complete?).to eq(false)
-      end
-    end
-
-    context "when the chapter doesn't have any chapter links" do
-      let(:chapter_links) { [] }
 
       it "returns false" do
         expect(chapter.chapter_info_complete?).to eq(false)
