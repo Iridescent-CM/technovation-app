@@ -1,0 +1,25 @@
+<%= turbo_frame_tag "available-teams-frame" do %>
+  <div class="grid grid--bleed">
+    <div class="grid__col-auto" style="overflow-x:auto;">
+      <h5>Available Teams in Your Region</h5>
+
+      <%= form_with url: available_teams_chapter_ambassador_event_path(@event),
+        method: :get,
+        data: {
+          controller: "search",
+          turbo_frame: "available-teams-list",
+          turbo_action: "advance"
+        } do |f| %>
+
+        <%=  f.text_field :query,
+          value: params[:query],
+          placeholder: "Search teams by name",
+          data: {
+            action: "input->search#search",
+            turbo_submits_with: "Searching..." } %>
+      <% end %>
+
+      <%= render "admin/regional_pitch_events/available_teams_list", event: event, teams: teams %>
+    </div>
+  </div>
+<% end %>

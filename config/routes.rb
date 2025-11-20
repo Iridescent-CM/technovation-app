@@ -223,6 +223,8 @@ Rails.application.routes.draw do
 
     resources :events, controller: :regional_pitch_events do
       get :bulk_download_submission_pitch_presentations
+      get :available_teams, on: :member
+      resources :event_teams, only: [:create, :destroy]
     end
     get "events_list", to: "/data_grids/ambassador/events#index", as: "events_list"
 

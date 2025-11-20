@@ -1,0 +1,37 @@
+<tr id="<%= dom_id(team, :registered) %>">
+  <td>
+    <%= link_to team.name,
+      send("#{current_scope}_team_path", team) %>
+  </td>
+  <td>
+    <%= team.division_name %>
+  </td>
+  <td>
+    <%= link_to team.submission.name,
+      send("#{current_scope}_team_submission_path", team.submission) %>
+  </td>
+  <td>
+    <% if team.submission.pitch_presentation.present? %>
+      <%= link_to "Download",
+        team.submission.pitch_presentation_url,
+        download: "#{team.submission.team.name.downcase.parameterize(separator: "_")}-#{team.submission.pitch_presentation.file.filename.downcase.gsub(/\s+/, "_")}",
+        class: "button small",
+        style: "margin: 4px 0 4px;" %>
+    <% else %>
+      -
+    <% end %>
+  </td>
+  <td>
+    <span class="pill pill-<%= team.status == 'ready' ? 'green' : 'orange' %>">
+      <%= team.human_status %>
+    </span>
+  </td>
+  <% if current_account.chapter_ambassador? %>
+    <td>
+        <%= button_to "Remove",
+          chapter_ambassador_event_event_team_path(event, team),
+          method: :delete,
+          class: "button button--danger" %>
+      </td>
+  <% end %>
+</tr>

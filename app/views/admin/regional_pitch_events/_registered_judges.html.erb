@@ -1,0 +1,40 @@
+<h5>Judges (<%= event.judge_list.size %>)</h5>
+<% if event.judge_list.any?  %>
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% event.judge_list.each do |judge| %>
+      <tr>
+        <td>
+          <% if judge.is_a?(JudgeProfile) %>
+            <%= link_to judge.name,
+                        send(
+                          "#{current_scope}_participant_path",
+                          judge.account
+                        )
+            %>
+          <% else %>
+            Invited Judge
+          <% end %>
+        </td>
+        <td>
+          <%= judge.email %>
+        </td>
+        <td>
+                <span class="pill pill-<%= judge.status == 'ready' ? 'green' : 'red' %>">
+                  <%= judge.human_status %>
+                </span>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No judges yet.</p>
+<% end %>
