@@ -24,35 +24,5 @@
         </div>
       </div>
     </div>
-
-    <div class="tabs__content grid__col-sm-9 col--sticky-parent">
-      <div class="col--sticky-spacer">
-        <div class="col--sticky">
-          <div class="tabs__tab-content" id="students">
-            <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
-
-            <%= render "chapter_ambassador/chapter_admin/students" %>
-          </div>
-
-          <div class="tabs__tab-content" id="mentors">
-            <%= SeasonToggles.dashboard_text(:chapter_ambassador) %>
-
-            <%= render "chapter_ambassador/chapter_admin/mentors" %>
-          </div>
-
-          <div class="tabs__tab-content" id="inactivity">
-            <%= render "chapter_ambassador/chapter_admin/inactivity" %>
-          </div>
-
-          <div class="tabs__tab-content" id="recent-activity">
-            <%= render 'chapter_ambassador/chapter_admin/activity_feed' %>
-          </div>
-
-          <div class="tabs__tab-content" id="resources">
-            <%= render "ambassador/admin/chapterable_resources" %>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 <% end %>
