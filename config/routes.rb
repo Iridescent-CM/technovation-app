@@ -222,9 +222,12 @@ Rails.application.routes.draw do
     resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
     resources :events, controller: :regional_pitch_events do
-      get :bulk_download_submission_pitch_presentations
-      get :available_teams, on: :member
       resources :event_teams, only: [:create, :destroy]
+
+      get :available_teams, on: :member
+      get :bulk_download_submission_pitch_presentations
+
+      post :bulk_add_teams
     end
     get "events_list", to: "/data_grids/ambassador/events#index", as: "events_list"
 
