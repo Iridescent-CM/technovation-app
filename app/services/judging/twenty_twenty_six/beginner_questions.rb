@@ -89,7 +89,6 @@ module Judging
             idx: 3,
             section: "demo",
             submission_type: "",
-            ai_usage: true,
             field: :demo_3,
             worth: 5,
             text: %(
@@ -98,14 +97,13 @@ module Judging
           ),
 
           Question.new(
-            idx: 3,
+            idx: 4,
             section: "demo",
             submission_type: "",
-            ai_usage: false,
-            field: :demo_3,
+            field: :demo_4,
             worth: 5,
             text: %(
-              Do we explain what machine learning training and/or actual coding we did for 1-2 important parts of our app (not login screen)?
+              Do we explain the machine learning training and/or coding we did for 1 or 2 important parts of our app, other than the login screen?
             )
           ),
 
