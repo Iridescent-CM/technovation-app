@@ -8,7 +8,7 @@
         class="text-energetic-blue text-3xl"
       >
         <Icon name="file-o" class="inline" color="0075cf" />
-        Read the <span>{{ documentType }}</span> plan
+        Read the <span>{{ documentType }}</span>
       </a>
     </template>
 
@@ -29,10 +29,10 @@ export default {
     documentType() {
       switch (this.team.division) {
         case "senior":
-          return "business";
+          return "business canvas";
           break;
         case "junior":
-          return "user adoption";
+          return "user adoption plan";
           break;
       }
     },
