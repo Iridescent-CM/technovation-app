@@ -70,32 +70,41 @@ document.addEventListener("turbo:load", function () {
     });
   });
 
+  const toggleRegistrationInviteChapterableFields = (invitationProfileTypeValue, registerAtAnyTime) => {
+    const chapterSelect = document.getElementById("chapter");
+    const clubSelect = document.getElementById("club");
+
+    if (invitationProfileTypeValue == "chapter_ambassador") {
+      chapterSelect.style.display = "block";
+      clubSelect.style.display = "none";
+      registerAtAnyTime.checked = true;
+      registerAtAnyTime.disabled = true;
+    } else if (invitationProfileTypeValue == "club_ambassador") {
+      clubSelect.style.display = "block";
+      chapterSelect.style.display = "none";
+      registerAtAnyTime.checked = true;
+      registerAtAnyTime.disabled = true;
+    } else {
+      chapterSelect.style.display = "none";
+      clubSelect.style.display = "none";
+      registerAtAnyTime.checked = false;
+      registerAtAnyTime.disabled = false;
+    }
+  }
+
   const invitationProfileType = document.getElementById(
     "user_invitation_profile_type"
   );
 
   if (invitationProfileType) {
-    invitationProfileType.addEventListener("change", () => {
-      const registerAtAnyTime = document.getElementById(
-        "user_invitation_register_at_any_time"
-      );
-      const chapterSelect = document.getElementById("chapter");
-      const clubSelect = document.getElementById("club");
+    const registerAtAnyTime = document.getElementById(
+      "user_invitation_register_at_any_time"
+    );
 
-      if (invitationProfileType.value == "chapter_ambassador") {
-        chapterSelect.style.display = "block";
-        registerAtAnyTime.checked = true;
-        registerAtAnyTime.disabled = true;
-      } else if (invitationProfileType.value == "club_ambassador") {
-        clubSelect.style.display = "block";
-        registerAtAnyTime.checked = true;
-        registerAtAnyTime.disabled = true;
-      } else {
-        chapterSelect.style.display = "none";
-        clubSelect.style.display = "none";
-        registerAtAnyTime.checked = false;
-        registerAtAnyTime.disabled = false;
-      }
+    toggleRegistrationInviteChapterableFields(invitationProfileType.value, registerAtAnyTime)
+
+    invitationProfileType.addEventListener("change", () => {
+      toggleRegistrationInviteChapterableFields(invitationProfileType.value, registerAtAnyTime)
     });
   }
 
