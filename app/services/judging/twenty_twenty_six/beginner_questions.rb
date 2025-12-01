@@ -92,17 +92,6 @@ module Judging
             field: :demo_3,
             worth: 5,
             text: %(
-              Do we explain the generative AI process we used in either coding or building an AI model for the project, including tools and prompts?
-            )
-          ),
-
-          Question.new(
-            idx: 4,
-            section: "demo",
-            submission_type: "",
-            field: :demo_4,
-            worth: 5,
-            text: %(
               Do we explain the machine learning training and/or coding we did for 1 or 2 important parts of our app, other than the login screen?
             )
           ),
