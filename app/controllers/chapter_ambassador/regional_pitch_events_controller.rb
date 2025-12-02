@@ -26,12 +26,10 @@ module ChapterAmbassador
 
     def show
       @event = RegionalPitchEvent
-        .includes(
-          teams: [
-            :division,
-            :submission
-          ]
-        )
+        .current
+        .in_region(current_ambassador)
+        .includes(teams: [:division])
+        .includes(:team_submissions)
         .find(params[:id])
 
       render "admin/regional_pitch_events/show"
@@ -88,10 +86,10 @@ module ChapterAmbassador
 
       if turbo_frame_request_id == "available-teams-frame"
         render partial: "admin/regional_pitch_events/available_teams",
-          locals: { event: @event, teams: @available_teams }
+          locals: {event: @event, teams: @available_teams}
       elsif turbo_frame_request_id == "available-teams-list"
         render partial: "admin/regional_pitch_events/available_teams_list",
-          locals: { event: @event, teams: @available_teams }
+          locals: {event: @event, teams: @available_teams}
       else
         redirect_to chapter_ambassador_event_path(@event)
       end
