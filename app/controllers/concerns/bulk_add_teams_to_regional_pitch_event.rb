@@ -1,13 +1,8 @@
 module BulkAddTeamsToRegionalPitchEvent
   def bulk_add_teams
     @event = RegionalPitchEvent
-      .includes(
-        judges: :current_account,
-        teams: [
-          :division,
-          submission: [:team, :screenshots]
-        ]
-      )
+      .current
+      .in_region(current_ambassador)
       .find(params[:event_id])
 
     begin
