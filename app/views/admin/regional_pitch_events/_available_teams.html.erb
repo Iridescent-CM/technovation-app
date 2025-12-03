@@ -6,7 +6,7 @@
       <%= form_with url: available_teams_chapter_ambassador_event_path(@event),
         method: :get,
         data: {
-          controller: "search",
+          controller: "regional-pitch-event--team-search",
           turbo_frame: "available-teams-list",
           turbo_action: "advance"
         } do |f| %>
@@ -15,7 +15,7 @@
           value: params[:query],
           placeholder: "Search teams by name",
           data: {
-            action: "input->search#search",
+            action: "input->regional-pitch-event--team-search#search",
             turbo_submits_with: "Searching..." } %>
       <% end %>
 
