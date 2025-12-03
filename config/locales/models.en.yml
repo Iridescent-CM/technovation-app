@@ -69,6 +69,7 @@ en:
       date_of_birth: "Date of Birth"
       parent_guardian_email: "Parent or guardian's email"
       parent_guardian_name: "Parent or guardian's name"
+      parent_guardian_phone_number: "Parent or guardian's phone number"
       school_name: "School name"
 
     team:
