@@ -128,25 +128,7 @@
       <% end %>
 
       <%= render "admin/regional_pitch_events/registered_teams", event: @event %>
-
-      <hr>
-      <h4>Upload a CSV to Add Multiple Teams to "<%= @event.name %>"</h4>
-
-      <%= form_with(
-        url: chapter_ambassador_event_bulk_add_teams_path(@event),
-        local: true,
-        data: {turbo: false},
-        html: { method: :post }) do |form|
-      %>
-        <div>
-          <%= form.label :csv_file %>
-          <%= form.file_field :csv_file %>
-        </div>
-
-        <div>
-          <%= form.submit "Upload CSV" %>
-        </div>
-      <% end %>
+      <%= render "admin/regional_pitch_events/bulk_add_teams", event: @event %>
     </div>
 
     <% if current_account.admin? %>
