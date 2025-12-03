@@ -264,7 +264,7 @@ RSpec.describe StudentProfile do
 
   context "when the parent/guardian email address has been updated because of a paper parental consent" do
     let(:new_parent_guardian_email_address) do
-      ConsentForms::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+      ConsentForms::PARENT_GUARDIAN_EMAIL_ADDRESS_FOR_A_PAPER_CONSENT
     end
 
     it "does not update the parent/guardian in the CRM" do
