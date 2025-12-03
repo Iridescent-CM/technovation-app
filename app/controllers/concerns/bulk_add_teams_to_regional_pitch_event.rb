@@ -15,9 +15,8 @@ module BulkAddTeamsToRegionalPitchEvent
             row[:team_id] if row[:team_id].present?
           end.compact
 
-        result = DataProcessors::AssignTeamsToRegionalPitchEvent.new(team_ids:, rpe_id: @event.id).call
+        AssignTeamsToRegionalPitchEventJob.perform_now(regional_pitch_event_id: @event.id, team_ids:)
 
-        flash.now[:alert] = result.results
         render "admin/regional_pitch_events/show"
       end
     rescue SmarterCSV::MissingKeys
