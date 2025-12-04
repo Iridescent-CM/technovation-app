@@ -18,11 +18,11 @@ module DataProcessors
         elsif team.submission.blank?
           result = "#{team.name} does not have a submission"
         elsif team.events.include?(regional_pitch_event)
-          result = "#{team.name} is already assigned to this event"
+          result = "#{team.name} has already been assigned to this event"
         elsif team.events.present?
           result = "#{team.name} is already assigned to another event"
-        elsif regional_pitch_event.divisions.exclude? team.division
-          result = "#{team.name} is not in the correct division for this event (Event divisions: #{regional_pitch_event.divisions.map(&:name).to_sentence}, Team division: #{team.division.name})"
+        elsif regional_pitch_event.division != team.division
+          result = "#{team.name} is not in the correct division for this event (Event division: #{regional_pitch_event.division.name}, Team division: #{team.division.name})"
         else
           team.events << regional_pitch_event
 
