@@ -29,7 +29,9 @@
     <dt>Media Consent</dt>
     <dd>
       <% if profile.media_consent_signed? %>
-        <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
+        <%= web_icon("check-circle icon-green",
+                     text: profile.media_consent.consent_provided? ?
+                     "Signed, consent given" : "Signed, NO CONSENT") %>
       <% else %>
         <%= web_icon("exclamation-circle icon-red",
                      text: "Not signed... boo...") %>
