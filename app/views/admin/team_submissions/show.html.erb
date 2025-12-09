@@ -213,6 +213,16 @@
         <% end %>
       </p>
 
+      <% if @team_submission.senior_division? || @team_submission.junior_division? %>
+        <p>
+          <strong>
+            Did you use AI to help with your coding and/or to help you build your machine learning model?
+          </strong>
+
+          <%= humanize_boolean(@team_submission.ai_usage) %>
+        </p>
+      <% end %>
+
       <p>
         Learning Journey:
         <br>
