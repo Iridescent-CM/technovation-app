@@ -115,6 +115,14 @@ class AccountsGrid
     end
   end
 
+  column :parent_guardian_phone_number do
+    if student_profile.present?
+      student_profile.parent_guardian_phone_number
+    else
+      "-"
+    end
+  end
+
   column :school_name, order: ->(scope) {
     scope.includes(:student_profile)
       .references(:student_profiles)
