@@ -41,10 +41,18 @@ module Twilio
       end
 
       begin
-        client.messages.create(
+        response = client.messages.create(
           body: message_body,
           to: parent_guardian_phone_number,
           from: technovation_phone_number
+        )
+
+        student_profile.parental_consent_requests.create(
+          delivery_method: :sms,
+          external_message_id: response.sid,
+          recipient: response.to,
+          sent_at: Time.now,
+          season: Season.current.year
         )
       rescue => error
         error_message = "[TWILIO] Error sending SMS - #{error.message}"
