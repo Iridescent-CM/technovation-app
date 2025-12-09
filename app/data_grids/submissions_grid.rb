@@ -97,6 +97,15 @@ class SubmissionsGrid
       .concat(description)
   end
 
+  column :ai_usage, header: "AI usage for coding/machine learning model", if: ->(grid) { grid.admin } do |submission|
+    if submission.senior_division? || submission.junior_division?
+      ApplicationController.helpers
+        .humanize_boolean(submission.ai_usage)
+    else
+      "N/A"
+    end
+  end
+
   column :climate_change, header: "Helps solve climate change", if: ->(grid) { grid.admin } do
     description = climate_change? ? " - #{climate_change_description}" : ""
 
@@ -447,21 +456,21 @@ class SubmissionsGrid
       placeholder: "Select or start typing..."
     },
     if: ->(grid) { GridCanFilterByCity.call(grid) } do |values, scope, grid|
-      scope.where(
-        StateClauses.for(
-          values: grid.state_province,
-          countries: grid.country,
+    scope.where(
+      StateClauses.for(
+        values: grid.state_province,
+        countries: grid.country,
+        table_name: "teams",
+        operator: "OR"
+      )
+    )
+      .where(
+        CityClauses.for(
+          values: values,
           table_name: "teams",
           operator: "OR"
         )
       )
-        .where(
-          CityClauses.for(
-            values: values,
-            table_name: "teams",
-            operator: "OR"
-          )
-        )
   end
 
   filter :chapter,
@@ -489,7 +498,7 @@ class SubmissionsGrid
     data: {
       placeholder: "Select a club"
     } do |value, scope, grid|
-      scope.by_chapterable("Club", value, grid.season).distinct
+    scope.by_chapterable("Club", value, grid.season).distinct
   end
 
   column_names_filter(
