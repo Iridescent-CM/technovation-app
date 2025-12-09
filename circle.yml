@@ -121,6 +121,7 @@ jobs:
           GENERAL_NEWSLETTER_URL: "https://some/general/url"
           NEW_RELIC_LICENSE_KEY: n-a
           PARENT_CONSENT_PDF: n-a
+          PARENTAL_CONSENT_SMS_COUNTRY_CODES: "US,NG,BR,IN,GH"
           PARENT_RESOURCES_URL: n-a
           PDFTK_PATH: /usr/bin/pdftk
           PGHOST: 127.0.0.1
