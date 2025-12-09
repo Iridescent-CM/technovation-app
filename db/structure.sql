@@ -1579,6 +1579,42 @@ ALTER SEQUENCE public.organization_types_id_seq OWNED BY public.organization_typ
 
 
 --
+-- Name: parental_consent_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.parental_consent_requests (
+    id bigint NOT NULL,
+    student_profile_id bigint,
+    season smallint NOT NULL,
+    delivery_method integer NOT NULL,
+    external_message_id character varying,
+    recipient character varying,
+    sent_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: parental_consent_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.parental_consent_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: parental_consent_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.parental_consent_requests_id_seq OWNED BY public.parental_consent_requests.id;
+
+
+--
 -- Name: parental_consents; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2846,6 +2882,13 @@ ALTER TABLE ONLY public.organization_types ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
+-- Name: parental_consent_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.parental_consent_requests ALTER COLUMN id SET DEFAULT nextval('public.parental_consent_requests_id_seq'::regclass);
+
+
+--
 -- Name: parental_consents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3339,6 +3382,14 @@ ALTER TABLE ONLY public.mentor_types
 
 ALTER TABLE ONLY public.organization_types
     ADD CONSTRAINT organization_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: parental_consent_requests parental_consent_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.parental_consent_requests
+    ADD CONSTRAINT parental_consent_requests_pkey PRIMARY KEY (id);
 
 
 --
@@ -3934,6 +3985,13 @@ CREATE INDEX index_mentor_profiles_on_user_invitation_id ON public.mentor_profil
 
 
 --
+-- Name: index_parental_consent_requests_on_student_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_parental_consent_requests_on_student_profile_id ON public.parental_consent_requests USING btree (student_profile_id);
+
+
+--
 -- Name: index_parental_consents_on_seasons_and_upload_approval_status; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4279,6 +4337,14 @@ ALTER TABLE ONLY public.program_information_meeting_formats
 
 ALTER TABLE ONLY public.judge_profiles
     ADD CONSTRAINT fk_rails_185397937b FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
+
+
+--
+-- Name: parental_consent_requests fk_rails_1a8f53f69c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.parental_consent_requests
+    ADD CONSTRAINT fk_rails_1a8f53f69c FOREIGN KEY (student_profile_id) REFERENCES public.student_profiles(id);
 
 
 --
@@ -5035,6 +5101,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251022160639'),
 ('20251024165952'),
 ('20251110201524'),
-('20251119224512');
-
-
+('20251119224512'),
+('20251204225514');
