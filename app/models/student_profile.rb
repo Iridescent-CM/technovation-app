@@ -385,6 +385,11 @@ class StudentProfile < ActiveRecord::Base
       account.terms_agreed_at?
   end
 
+  def in_parental_consent_sms_country?
+    country_codes = ENV.fetch("PARENTAL_CONSENT_SMS_COUNTRY_CODES", "").split(",")
+    country_codes.include?(account.country_code)
+  end
+
   private
 
   def validate_valid_parent_email
