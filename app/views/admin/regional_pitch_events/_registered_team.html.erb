@@ -1,14 +1,16 @@
 <tr id="<%= dom_id(team, :registered) %>">
   <td>
     <%= link_to team.name,
-      send("#{current_scope}_team_path", team) %>
+      send("#{current_scope}_team_path", team),
+      data: { turbo: false } %>
   </td>
   <td>
     <%= team.division_name %>
   </td>
   <td>
     <%= link_to team.submission.name,
-      send("#{current_scope}_team_submission_path", team.submission) %>
+      send("#{current_scope}_team_submission_path", team.submission),
+      data: { turbo: false} %>
   </td>
   <td>
     <% if team.submission.pitch_presentation.present? %>
