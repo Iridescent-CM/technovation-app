@@ -7,7 +7,7 @@ module BulkAddTeamsToRegionalPitchEvent
 
     begin
       SmarterCSV.process(params[:csv_file], {
-        chunk_size: 100,
+        chunk_size: 200,
         required_keys: [:team_id]
       }) do |chunk|
         team_ids =
