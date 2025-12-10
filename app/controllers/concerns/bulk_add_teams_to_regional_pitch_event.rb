@@ -16,9 +16,9 @@ module BulkAddTeamsToRegionalPitchEvent
           end.compact
 
         AssignTeamsToRegionalPitchEventJob.perform_later(regional_pitch_event_id: @event.id, team_ids:)
-
-        redirect_to chapter_ambassador_event_path(@event), success: "Your CSV file was uploaded successfully! It will be processed soon!"
       end
+
+      redirect_to chapter_ambassador_event_path(@event), success: "Your CSV file was uploaded successfully! It will be processed soon!"
     rescue SmarterCSV::MissingKeys
       redirect_to chapter_ambassador_event_path(@event), error: 'Please ensure your CSV file contains a "Team Id" header.'
     end
