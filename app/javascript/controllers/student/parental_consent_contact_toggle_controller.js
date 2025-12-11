@@ -5,7 +5,7 @@ export default class extends Controller {
     return [ "emailField", "phoneNumberField", "checkbox"]
   }
 
-  connect() {
+  initialize() {
     this.toggle()
   }
 
@@ -18,12 +18,12 @@ export default class extends Controller {
   }
 
   showEmail(){
-    this.emailFieldTarget.style.display = "block";
+    this.emailFieldTarget.style.display = "block"
     this.phoneNumberFieldTarget.style.display = "none"
   }
 
   showPhone(){
     this.phoneNumberFieldTarget.style.display = "block"
-    this.emailFieldTarget.style.display = "none";
+    this.emailFieldTarget.style.display = "none"
   }
 }
