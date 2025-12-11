@@ -2,7 +2,7 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application";
+import { application } from "./application"
 
-import SearchController from "./search_controller";
-application.register("search", SearchController);
+import RegionalPitchEvent__TeamSearchController from "./regional_pitch_event/team_search_controller"
+application.register("regional-pitch-event--team-search", RegionalPitchEvent__TeamSearchController)
