@@ -81,6 +81,8 @@ class StudentProfile < ActiveRecord::Base
   has_one :parental_consent, -> { current }, dependent: :destroy
   accepts_nested_attributes_for :parental_consents
 
+  has_many :parental_consent_requests, dependent: :destroy
+
   has_one :signed_parental_consent,
     -> { current.signed },
     class_name: "ParentalConsent",
@@ -381,6 +383,11 @@ class StudentProfile < ActiveRecord::Base
       !account.email_confirmed_at.blank? &&
       account.valid_coordinates? &&
       account.terms_agreed_at?
+  end
+
+  def in_parental_consent_sms_country?
+    country_codes = ENV.fetch("PARENTAL_CONSENT_SMS_COUNTRY_CODES", "").split(",")
+    country_codes.include?(account.country_code)
   end
 
   private
