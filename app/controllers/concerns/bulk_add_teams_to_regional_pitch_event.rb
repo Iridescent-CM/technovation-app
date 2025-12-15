@@ -15,7 +15,11 @@ module BulkAddTeamsToRegionalPitchEvent
             row[:team_id] if row[:team_id].present?
           end.compact
 
-        AssignTeamsToRegionalPitchEventJob.perform_later(regional_pitch_event_id: @event.id, team_ids:)
+        AssignTeamsToRegionalPitchEventJob.perform_later(
+          regional_pitch_event_id: @event.id,
+          account_id: current_account.id,
+          team_ids:
+        )
       end
 
       redirect_to chapter_ambassador_event_path(@event), success: "Your CSV file was uploaded successfully! It will be processed soon!"
