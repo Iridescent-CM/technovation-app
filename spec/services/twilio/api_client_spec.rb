@@ -18,7 +18,7 @@ RSpec.describe Twilio::ApiClient do
   let(:host) { "test-technovation.org" }
   let(:twilio_client) { double("Twilio::REST::Client") }
   let(:messages) { double("messages") }
-  let(:response) { double("response", sid: "test_sid_value", to: "+12223334444") }
+  let(:response) { double("response", sid: "test_sid_value", to: "+12223334444", status: "queued")}
   let(:logger) { double("Logger") }
   let(:error_notifier) { double("Airbrake") }
 
