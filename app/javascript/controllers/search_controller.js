@@ -1,14 +1,12 @@
 import { Controller } from "@hotwired/stimulus";
+import { debounce } from "../utilities/utilities"
 
 export default class extends Controller {
-  connect() {
-    this.timeout = null;
+  initialize() {
+    this.submit = debounce(this.submit.bind(this), 300);
   }
 
   search() {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.element.requestSubmit();
-    }, 300);
+    this.element.requestSubmit();
   }
 }
