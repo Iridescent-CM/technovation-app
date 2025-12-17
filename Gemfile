@@ -22,6 +22,7 @@ gem "public_activity", "~> 2.0"
 gem "paranoia", "~> 3.0"
 gem "counter_culture", "~> 1.12"
 gem "pundit", "~> 2.0"
+gem "noticed", "~> 2.9.0"
 
 gem "autoprefixer-rails", "~> 6.7"
 
@@ -109,7 +110,7 @@ gem "zipline"
 
 gem "factory_bot_rails", "~> 6.5.0"
 
-gem 'twilio-ruby', '~> 7.8.7'
+gem "twilio-ruby", "~> 7.8.7"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
