@@ -1547,6 +1547,77 @@ ALTER SEQUENCE public.mentor_types_id_seq OWNED BY public.mentor_types.id;
 
 
 --
+-- Name: noticed_events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.noticed_events (
+    id bigint NOT NULL,
+    type character varying,
+    record_type character varying,
+    record_id bigint,
+    params jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    notifications_count integer
+);
+
+
+--
+-- Name: noticed_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.noticed_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: noticed_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.noticed_events_id_seq OWNED BY public.noticed_events.id;
+
+
+--
+-- Name: noticed_notifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.noticed_notifications (
+    id bigint NOT NULL,
+    type character varying,
+    event_id bigint NOT NULL,
+    recipient_type character varying NOT NULL,
+    recipient_id bigint NOT NULL,
+    read_at timestamp without time zone,
+    seen_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: noticed_notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.noticed_notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: noticed_notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.noticed_notifications_id_seq OWNED BY public.noticed_notifications.id;
+
+
+--
 -- Name: organization_types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2839,6 +2910,20 @@ ALTER TABLE ONLY public.mentor_types ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: noticed_events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_events ALTER COLUMN id SET DEFAULT nextval('public.noticed_events_id_seq'::regclass);
+
+
+--
+-- Name: noticed_notifications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_notifications ALTER COLUMN id SET DEFAULT nextval('public.noticed_notifications_id_seq'::regclass);
+
+
+--
 -- Name: organization_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3331,6 +3416,22 @@ ALTER TABLE ONLY public.mentor_profiles
 
 ALTER TABLE ONLY public.mentor_types
     ADD CONSTRAINT mentor_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: noticed_events noticed_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_events
+    ADD CONSTRAINT noticed_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: noticed_notifications noticed_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_notifications
+    ADD CONSTRAINT noticed_notifications_pkey PRIMARY KEY (id);
 
 
 --
@@ -3931,6 +4032,27 @@ CREATE INDEX index_mentor_profile_mentor_types_on_mentor_type_id ON public.mento
 --
 
 CREATE INDEX index_mentor_profiles_on_user_invitation_id ON public.mentor_profiles USING btree (user_invitation_id);
+
+
+--
+-- Name: index_noticed_events_on_record; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_noticed_events_on_record ON public.noticed_events USING btree (record_type, record_id);
+
+
+--
+-- Name: index_noticed_notifications_on_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_noticed_notifications_on_event_id ON public.noticed_notifications USING btree (event_id);
+
+
+--
+-- Name: index_noticed_notifications_on_recipient; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_noticed_notifications_on_recipient ON public.noticed_notifications USING btree (recipient_type, recipient_id);
 
 
 --
@@ -5035,6 +5157,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251022160639'),
 ('20251024165952'),
 ('20251110201524'),
-('20251119224512');
+('20251119224512'),
+('20251216215907'),
+('20251216215908');
 
 
