@@ -7,5 +7,5 @@ import { application } from "./application"
 import SearchController from "./search_controller"
 application.register("search", SearchController)
 
-import Student__ParentalConsentContactToggleController from "./student/parental_consent_contact_toggle_controller"
-application.register("student--parental-consent-contact-toggle", Student__ParentalConsentContactToggleController)
+import Students__ParentalConsentContactToggleController from "./students/parental_consent_contact_toggle_controller"
+application.register("students--parental-consent-contact-toggle", Students__ParentalConsentContactToggleController)

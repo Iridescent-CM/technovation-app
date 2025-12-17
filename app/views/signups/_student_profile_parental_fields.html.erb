@@ -1,8 +1,8 @@
-<div data-controller="student--parental-consent-contact-toggle">
+<div data-controller="students--parental-consent-contact-toggle">
   <%= f.input :parent_guardian_name,
     label: t('models.student_profile.parent_guardian_name') %>
 
-  <div data-student--parental-consent-contact-toggle-target="emailField">
+  <div data-students--parental-consent-contact-toggle-target="emailField">
     <%= f.input :parent_guardian_email,
       input_html: { placeholder: t("views.application.only_one_email") },
       label: t('models.student_profile.parent_guardian_email'),
@@ -13,13 +13,13 @@
     <%= check_box_tag :use_phone_number, 1,
       f.object.parent_guardian_phone_number.present?,
       data: {
-        action: "change->student--parental-consent-contact-toggle#toggle",
+        action: "change->students--parental-consent-contact-toggle#toggle",
         "student--parental_consent_contact_toggle_target": "checkbox" } %>
 
     <%= f.label :use_phone_number, "My parent or guardian doesn't have an email address" %>
   </div>
 
-  <div data-student--parental-consent-contact-toggle-target="phoneNumberField" style="display: none;">
+  <div data-students--parental-consent-contact-toggle-target="phoneNumberField" style="display: none;">
     <p class="mb-4">
       Parental consent forms are automatically sent to an email address.
       If you would like the forms to be sent via text message or WhatsApp,
