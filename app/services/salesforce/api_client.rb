@@ -21,7 +21,8 @@ module Salesforce
       },
       client_constructor: Restforce,
       logger: Rails.logger,
-      error_notifier: Airbrake
+      error_notifier: Airbrake,
+      secondary_error_notifier: IntegrationErrorNotifier
     )
 
       @account = account
@@ -40,6 +41,7 @@ module Salesforce
       @salesforce_enabled = ActiveModel::Type::Boolean.new.cast(enabled)
       @logger = logger
       @error_notifier = error_notifier
+      @secondary_error_notifier = secondary_error_notifier
     end
 
     def setup_account_for_current_season
@@ -85,7 +87,7 @@ module Salesforce
 
     private
 
-    attr_reader :account, :profile_type, :client, :salesforce_enabled, :logger, :error_notifier
+    attr_reader :account, :profile_type, :client, :salesforce_enabled, :logger, :error_notifier, :secondary_error_notifier
 
     def upsert_contact
       handle_request "Upserting account #{account.id}" do
@@ -193,8 +195,11 @@ module Salesforce
 
           block.call
         rescue => error
-          logger.error("[SALESFORCE] #{error}")
-          error_notifier.notify("[SALESFORCE] #{error}")
+          error_message = "[SALESFORCE] #{error}"
+
+          logger.error(error_message)
+          error_notifier.notify(error_message)
+          secondary_error_notifier.with(error_message:).deliver
         end
       else
         logger.info "[SALESFORCE DISABLED] #{message}"

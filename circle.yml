@@ -133,6 +133,7 @@ jobs:
           REDIS_URL: redis://127.0.0.1:6379/0
           REGIONAL_PITCH_EVENTS_FAQ_URL: 'https://some-url'
           SENIOR_DIVISION_JUDGING_RUBRIC_URL: "https://some/judging-rubik-url"
+          SLACK_URL_FOR_INTEGRATION_ERROR_NOTIFIER: n-a
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/bin/wkhtmltopdf
       - image: cimg/postgres:13.7

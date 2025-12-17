@@ -15,17 +15,19 @@ RSpec.describe Twilio::ApiClient do
   let(:api_account_sid) { "test_sid" }
   let(:api_auth_token) { "test_token" }
   let(:technovation_phone_number) { "+15555555555" }
-  let(:host) {"test-technovation.org"}
+  let(:host) { "test-technovation.org" }
   let(:twilio_client) { double("Twilio::REST::Client") }
   let(:messages) { double("messages") }
   let(:response) { double("response", sid: "test_sid_value") }
   let(:logger) { double("Logger") }
   let(:error_notifier) { double("Airbrake") }
 
-  let(:student_profile) {FactoryBot.create(
-    :student_profile,
-    parent_guardian_email: "email@email.com",
-    parent_guardian_phone_number: "+11231231234")
+  let(:student_profile) {
+    FactoryBot.create(
+      :student_profile,
+      parent_guardian_email: "email@email.com",
+      parent_guardian_phone_number: "+11231231234"
+    )
   }
 
   before do
@@ -42,3 +44,4 @@ RSpec.describe Twilio::ApiClient do
     end
   end
 end
+

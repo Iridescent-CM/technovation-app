@@ -5,7 +5,8 @@ module CheckrApiClient
       client_id: ENV.fetch("CHECKR_API_KEY"),
       base_url: ENV.fetch("CHECKR_API_BASE", "https://api.checkr.com"),
       logger: Rails.logger,
-      error_notifier: Airbrake
+      error_notifier: Airbrake,
+      secondary_error_notifier: IntegrationErrorNotifier
     )
 
       @connection = Faraday.new(
@@ -17,6 +18,7 @@ module CheckrApiClient
 
       @logger = logger
       @error_notifier = error_notifier
+      @secondary_error_notifier = secondary_error_notifier
       @candidate = candidate
       @candidate_id = candidate.background_check.candidate_id
     end
@@ -66,9 +68,11 @@ module CheckrApiClient
       if invitation_response.success?
         Result.new(success?: true, payload: invitation_response_body)
       else
-        error = "[CHECKR] Error requesting invitation for #{invitation_id} - #{invitation_response_body[:error]}"
-        logger.error(error)
-        error_notifier.notify(error)
+        error_message = "[CHECKR] Error requesting invitation for #{invitation_id} - #{invitation_response_body[:error]}"
+
+        logger.error(error_message)
+        error_notifier.notify(error_message)
+        secondary_error_notifier.with(error_message:).deliver
 
         Result.new(success?: false)
       end
@@ -76,7 +80,7 @@ module CheckrApiClient
 
     private
 
-    attr_reader :connection, :logger, :error_notifier, :candidate_id, :candidate
+    attr_reader :connection, :logger, :error_notifier, :secondary_error_notifier, :candidate_id, :candidate
 
     Result = Struct.new(:success?, :message, :payload, keyword_init: true)
 
@@ -113,13 +117,15 @@ module CheckrApiClient
         error_message: error
       )
 
-      log_error_msg = "[CHECKR] Error for account #{candidate.id} - #{error}"
-      logger.error(log_error_msg)
-      error_notifier.notify(log_error_msg)
+      error_message = "[CHECKR] Error for account #{candidate.id} - #{error}"
+
+      logger.error(error_message)
+      error_notifier.notify(error_message)
+      secondary_error_notifier.with(error_message:).deliver
     end
 
     def determine_package(candidate_country_code)
-      candidate_country_code == "US" ? "tasker_standard" : "international_basic_plus"
+      (candidate_country_code == "US") ? "tasker_standard" : "international_basic_plus"
     end
   end
 end
