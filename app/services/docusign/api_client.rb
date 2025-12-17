@@ -8,7 +8,8 @@ module Docusign
       authentication_service: Docusign::Authentication.new,
       http_client: Faraday,
       logger: Rails.logger,
-      error_notifier: Airbrake
+      error_notifier: Airbrake,
+      secondary_error_notifier: IntegrationErrorNotifier
     )
 
       @client = http_client.new(
@@ -22,6 +23,7 @@ module Docusign
       @api_account_id = api_account_id
       @logger = logger
       @error_notifier = error_notifier
+      @secondary_error_notifier = secondary_error_notifier
     end
 
     def send_chapter_affiliation_agreement(legal_contact:)
@@ -57,10 +59,11 @@ module Docusign
 
         Result.new(success?: true)
       else
-        error = "[DOCUSIGN] Error voiding document - #{response_body[:message]}"
+        error_message = "[DOCUSIGN] Error voiding document - #{response_body[:message]}"
 
-        logger.error(error)
-        error_notifier.notify(error)
+        logger.error(error_message)
+        error_notifier.notify(error_message)
+        secondary_error_notifier.with(error_message:).deliver
 
         Result.new(success?: false, message: "There was an error trying to void a document, please check the logs for more info.")
       end
@@ -68,7 +71,7 @@ module Docusign
 
     private
 
-    attr_reader :client, :api_account_id, :logger, :error_notifier
+    attr_reader :client, :api_account_id, :logger, :error_notifier, :secondary_error_notifier
 
     Result = Struct.new(:success?, :message, keyword_init: true)
 
@@ -91,10 +94,11 @@ module Docusign
 
         Result.new(success?: true)
       else
-        error = "[DOCUSIGN] Error sending document - #{response_body[:message]}"
+        error_message = "[DOCUSIGN] Error sending document - #{response_body[:message]}"
 
-        logger.error(error)
-        error_notifier.notify(error)
+        logger.error(error_message)
+        error_notifier.notify(error_message)
+        secondary_error_notifier.with(error_message:).deliver
 
         Result.new(success?: false, message: "There was an error trying to send your document, please check the logs for more info.")
       end

@@ -8,7 +8,8 @@ RSpec.describe Docusign::ApiClient do
       authentication_service: authentication_service,
       http_client: http_client,
       logger: logger,
-      error_notifier: error_notifier
+      error_notifier: error_notifier,
+      secondary_error_notifier: secondary_error_notifier
     )
   end
 
@@ -19,6 +20,7 @@ RSpec.describe Docusign::ApiClient do
   let(:http_client_instance) { double("Faraday instance") }
   let(:logger) { instance_double(ActiveSupport::Logger, error: true) }
   let(:error_notifier) { double("Airbrake") }
+  let(:secondary_error_notifier) { double(IntegrationErrorNotifier) }
 
   before do
     allow(http_client).to receive(:new).with(
@@ -31,6 +33,7 @@ RSpec.describe Docusign::ApiClient do
     ).and_return(http_client_instance)
 
     allow(error_notifier).to receive(:notify)
+    allow(secondary_error_notifier).to receive_message_chain(:with, :deliver)
   end
 
   context "sending documents" do
@@ -111,6 +114,14 @@ RSpec.describe Docusign::ApiClient do
 
         it "sends an error to Airbrake" do
           expect(error_notifier).to receive(:notify).with("[DOCUSIGN] Error sending document - ")
+
+          docusign_api_client.send_chapter_affiliation_agreement(
+            legal_contact: legal_contact
+          )
+        end
+
+        it "calls the secondary error notifier" do
+          expect(secondary_error_notifier).to receive_message_chain(:with, :deliver)
 
           docusign_api_client.send_chapter_affiliation_agreement(
             legal_contact: legal_contact
