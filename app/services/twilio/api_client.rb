@@ -8,7 +8,8 @@ module Twilio
       technovation_phone_number: ENV.fetch("TWILIO_PHONE_NUMBER"),
       host: ENV.fetch("HOST_DOMAIN"),
       logger: Rails.logger,
-      error_notifier: Airbrake
+      error_notifier: Airbrake,
+      secondary_error_notifier: IntegrationErrorNotifier
     )
 
       @api_account_sid = api_account_sid
@@ -17,6 +18,7 @@ module Twilio
       @host = host
       @logger = logger
       @error_notifier = error_notifier
+      @secondary_error_notifier = secondary_error_notifier
       @client = Twilio::REST::Client.new(api_account_sid, api_auth_token)
     end
 
@@ -44,16 +46,17 @@ module Twilio
           to: parent_guardian_phone_number,
           from: technovation_phone_number
         )
-      rescue Twilio::REST::RestError => e
-        error = "[TWILIO] Error sending SMS - #{e.message}"
+      rescue => error
+        error_message = "[TWILIO] Error sending SMS - #{error.message}"
 
-        logger.error(error)
-        error_notifier.notify(error)
+        logger.error(error_message)
+        error_notifier.notify(error_message)
+        secondary_error_notifier.with(error_message:).deliver
       end
     end
 
     private
 
-    attr_reader :client, :api_account_sid, :api_auth_token, :technovation_phone_number, :host, :logger, :error_notifier
+    attr_reader :client, :api_account_sid, :api_auth_token, :technovation_phone_number, :host, :logger, :error_notifier, :secondary_error_notifier
   end
 end
