@@ -174,6 +174,8 @@ class Account < ActiveRecord::Base
   has_many :registration_invites, class_name: "UserInvitation", foreign_key: :invited_by_id
   has_many :returned_to_judging_pool_team_submissions, class_name: "TeamSubmission", foreign_key: :returned_to_judging_pool_by_account_id
 
+  has_many :text_messages, dependent: :destroy
+
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 

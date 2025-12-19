@@ -131,17 +131,17 @@ RSpec.describe StudentProfile do
     end
   end
 
-  describe "in_parental_consent_sms_country?" do
+  describe "in_parental_consent_text_message_country?" do
     it "returns true when student country is in list of sms enabled countries" do
       student = FactoryBot.create(:student, :chicago)
 
-      expect(student.in_parental_consent_sms_country?).to eq(true)
+      expect(student.in_parental_consent_text_message_country?).to eq(true)
     end
 
     it "returns false when student country is not in list of sms enabled countries" do
       student = FactoryBot.create(:student, :najran)
 
-      expect(student.in_parental_consent_sms_country?).to eq(false)
+      expect(student.in_parental_consent_text_message_country?).to eq(false)
     end
   end
 
