@@ -106,7 +106,7 @@ class AmbassadorMailer < ApplicationMailer
     @name = account.first_name
     @event = event
     @assignment_result = assignment_result
-    @event_url = chapter_ambassador_regional_pitch_events_url
+    @event_url = chapter_ambassador_regional_pitch_event_url(@event)
 
     I18n.with_locale(account.locale) do
       mail to: account.email,
