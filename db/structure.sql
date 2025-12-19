@@ -2498,6 +2498,43 @@ ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
 
 
 --
+-- Name: text_messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.text_messages (
+    id bigint NOT NULL,
+    account_id bigint NOT NULL,
+    season smallint NOT NULL,
+    delivery_method integer NOT NULL,
+    message_type integer NOT NULL,
+    external_message_id character varying,
+    recipient character varying NOT NULL,
+    sent_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: text_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.text_messages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: text_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.text_messages_id_seq OWNED BY public.text_messages.id;
+
+
+--
 -- Name: unconfirmed_email_addresses; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -3071,6 +3108,13 @@ ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_
 
 
 --
+-- Name: text_messages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.text_messages ALTER COLUMN id SET DEFAULT nextval('public.text_messages_id_seq'::regclass);
+
+
+--
 -- Name: unconfirmed_email_addresses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3608,6 +3652,14 @@ ALTER TABLE ONLY public.team_submissions
 
 ALTER TABLE ONLY public.teams
     ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: text_messages text_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.text_messages
+    ADD CONSTRAINT text_messages_pkey PRIMARY KEY (id);
 
 
 --
@@ -4224,6 +4276,20 @@ CREATE INDEX index_teams_on_legacy_id ON public.teams USING btree (legacy_id);
 
 
 --
+-- Name: index_text_messages_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_text_messages_on_account_id ON public.text_messages USING btree (account_id);
+
+
+--
+-- Name: index_text_messages_on_message_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_text_messages_on_message_type ON public.text_messages USING btree (message_type);
+
+
+--
 -- Name: index_unconfirmed_email_addresses_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4724,6 +4790,14 @@ ALTER TABLE ONLY public.chapter_links
 
 
 --
+-- Name: text_messages fk_rails_cbe23a88f9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.text_messages
+    ADD CONSTRAINT fk_rails_cbe23a88f9 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
 -- Name: certificates fk_rails_ddedb55856; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5159,6 +5233,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251110201524'),
 ('20251119224512'),
 ('20251216215907'),
-('20251216215908');
+('20251216215908'),
+('20251219212654');
 
 

@@ -81,8 +81,6 @@ class StudentProfile < ActiveRecord::Base
   has_one :parental_consent, -> { current }, dependent: :destroy
   accepts_nested_attributes_for :parental_consents
 
-  has_many :parental_consent_requests, dependent: :destroy
-
   has_one :signed_parental_consent,
     -> { current.signed },
     class_name: "ParentalConsent",
@@ -385,8 +383,8 @@ class StudentProfile < ActiveRecord::Base
       account.terms_agreed_at?
   end
 
-  def in_parental_consent_sms_country?
-    country_codes = ENV.fetch("PARENTAL_CONSENT_SMS_COUNTRY_CODES", "").split(",")
+  def in_parental_consent_text_message_country?
+    country_codes = ENV.fetch("PARENTAL_CONSENT_TEXT_MESSAGE_COUNTRY_CODES", "").split(",")
     country_codes.include?(account.country_code)
   end
 
@@ -421,7 +419,7 @@ class StudentProfile < ActiveRecord::Base
 
     if saved_change_to_parent_guardian_phone_number? && parent_guardian_phone_number.present?
       reset_parental_consent
-      SendParentalConsentSmsJob.perform_later(profile_id: id)
+      SendParentalConsentTextMessageJob.perform_later(account_id: account.id)
     end
 
     if saved_change_to_parent_guardian_name? ||
