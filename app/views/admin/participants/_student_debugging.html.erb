@@ -24,8 +24,8 @@
       <% else %>
         <%= web_icon("exclamation-circle icon-red",
           text: "Not signed... boo...") %>
-        <% if profile.parental_consent_requests.any? %>
-          <%= render "admin/participants/parental_consent_requests",
+        <% if profile.account.text_messages.parental_consent.any? %>
+          <%= render "admin/participants/parental_consent_text_messages",
             profile: profile %>
         <% end %>
       <% end %>

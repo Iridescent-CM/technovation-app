@@ -13,10 +13,10 @@ class ProcessTwilioWebhookPayloadJob < ActiveJob::Base
     message_status = parsed_payload[:MessageStatus]
     error_code = parsed_payload[:ErrorCode]
     error_message = parsed_payload[:ErrorMessage]
-    parental_consent_request = ParentalConsentRequest.find_by(external_message_id: message_sid)
+    text_message = TextMessage.find_by(external_message_id: message_sid)
 
-    if parental_consent_request.present? && message_status != parental_consent_request.status
-      parental_consent_request.update(
+    if text_message.present? && message_status != text_message.status
+      text_message.update(
         status: message_status,
         error_code: error_code,
         error_message: error_message
