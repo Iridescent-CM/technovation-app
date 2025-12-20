@@ -2514,7 +2514,10 @@ CREATE TABLE public.text_messages (
     recipient character varying NOT NULL,
     sent_at timestamp(6) without time zone NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    status integer,
+    error_code character varying,
+    error_message text
 );
 
 
@@ -4293,6 +4296,13 @@ CREATE INDEX index_text_messages_on_message_type ON public.text_messages USING b
 
 
 --
+-- Name: index_text_messages_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_text_messages_on_status ON public.text_messages USING btree (status);
+
+
+--
 -- Name: index_unconfirmed_email_addresses_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -5243,6 +5253,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251202174428'),
 ('20251216215907'),
 ('20251216215908'),
-('20251219212654');
+('20251219212654'),
+('20251220033400');
 
 

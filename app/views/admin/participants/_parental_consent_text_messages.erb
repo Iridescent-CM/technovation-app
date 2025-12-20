@@ -1,7 +1,7 @@
 <div class="margin--t-large">
-  <p class="padding--l-large">SMS Requests</p>
+  <p class="padding--l-large">Text Messages</p>
   <ul>
-    <% profile.parental_consent_requests.current.order(created_at: :desc).each do |request| %>
+    <% profile.account.text_messages.parental_consent.current.order(created_at: :desc).each do |request| %>
       <li>
         Sent At:
         <%= request.sent_at.strftime("%B %e, %Y %l:%M %p") %>
