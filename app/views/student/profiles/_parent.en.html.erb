@@ -6,7 +6,8 @@
   <div id="parental-consent-wrapper" class="p-6" >
     <% if current_student.parental_consent_signed? %>
       <%= render "student/profiles/parent_signed" %>
-    <% elsif current_student.parent_guardian_email.blank? %>
+    <% elsif current_student.parent_guardian_email.blank? &&
+      current_student.parent_guardian_phone_number.blank? %>
       <%= render "student/profiles/parent_info_blank" %>
     <% else %>
       <%= render "student/profiles/parent_info_troubleshoot" %>

@@ -383,6 +383,11 @@ class StudentProfile < ActiveRecord::Base
       account.terms_agreed_at?
   end
 
+  def in_parental_consent_text_message_country?
+    country_codes = ENV.fetch("PARENTAL_CONSENT_TEXT_MESSAGE_COUNTRY_CODES", "").split(",")
+    country_codes.include?(account.country_code)
+  end
+
   private
 
   def validate_valid_parent_email
@@ -414,7 +419,7 @@ class StudentProfile < ActiveRecord::Base
 
     if saved_change_to_parent_guardian_phone_number? && parent_guardian_phone_number.present?
       reset_parental_consent
-      SendParentalConsentSmsJob.perform_later(profile_id: id)
+      SendParentalConsentTextMessageJob.perform_later(account_id: account.id)
     end
 
     if saved_change_to_parent_guardian_name? ||

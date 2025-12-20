@@ -18,7 +18,7 @@ RSpec.describe Twilio::ApiClient do
   let(:host) { "test-technovation.org" }
   let(:twilio_client) { double("Twilio::REST::Client") }
   let(:messages) { double("messages") }
-  let(:response) { double("response", sid: "test_sid_value") }
+  let(:response) { double("response", sid: "test_sid_value", to: "+12223334444") }
   let(:logger) { double("Logger") }
   let(:error_notifier) { double("Airbrake") }
 
@@ -36,11 +36,11 @@ RSpec.describe Twilio::ApiClient do
     allow(messages).to receive(:create).and_return(response)
   end
 
-  describe "#send_parental_consent_sms" do
-    it "sends an SMS message" do
+  describe "#send_parental_consent_text_message" do
+    it "sends a parental consent text message" do
       expect(messages).to receive(:create)
 
-      twilio_api_client.send_parental_consent_sms(student_profile: student_profile)
+      twilio_api_client.send_parental_consent_text_message(account: student_profile.account)
     end
   end
 end

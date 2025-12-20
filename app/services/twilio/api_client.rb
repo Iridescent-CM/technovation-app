@@ -22,29 +22,33 @@ module Twilio
       @client = Twilio::REST::Client.new(api_account_sid, api_auth_token)
     end
 
-    def send_parental_consent_sms(student_profile:)
-      token = student_profile.account.consent_token
+    def send_parental_consent_text_message(account:)
+      token = account.consent_token
       consent_url = edit_parental_consent_url(
         token: token,
         host: host
       )
 
-      parent_guardian_name = student_profile.parent_guardian_name
-      student_name = student_profile.full_name
+      parent_guardian_name = account.student_profile.parent_guardian_name
+      parent_guardian_phone_number = account.student_profile.parent_guardian_phone_number
+      student_name = account.student_profile.full_name
       message_body = "Hi #{parent_guardian_name}, #{student_name} has registered for the Technovation Girls program. " \
         "In order for her to participate, please click this link to complete the consent and media forms. #{consent_url}"
 
-      parent_guardian_phone_number = if Rails.env.production?
-        student_profile.parent_guardian_phone_number
-      else
-        ENV.fetch("TWILIO_TEST_PARENT_GUARDIAN_PHONE_NUMBER")
-      end
-
       begin
-        client.messages.create(
+        response = client.messages.create(
           body: message_body,
           to: parent_guardian_phone_number,
           from: technovation_phone_number
+        )
+
+        account.text_messages.create(
+          delivery_method: :sms,
+          message_type: :parental_consent,
+          external_message_id: response.sid,
+          recipient: response.to,
+          sent_at: Time.now,
+          season: Season.current.year
         )
       rescue => error
         error_message = "[TWILIO] Error sending SMS - #{error.message}"
