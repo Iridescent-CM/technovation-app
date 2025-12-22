@@ -233,11 +233,12 @@ RSpec.describe Docusign::ApiClient do
     context "when the DocuSign response is successful" do
       let(:docusign_response_successful) { true }
 
-      it "updates the document to be inactive and adds a 'voided at' timestamp" do
+      it "voids the document and marks it as inactive" do
         Timecop.freeze(Time.now) do
           expect(document).to receive(:update).with(
-            active: false,
-            voided_at: Time.now
+            status: "voided",
+            voided_at: Time.now,
+            active: false
           )
 
           docusign_api_client.void_document(document)
