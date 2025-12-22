@@ -49,7 +49,7 @@ module Docusign
 
       response_body = JSON.parse(response.body, symbolize_names: true)
 
-      if response.success?
+      if response.success? || document.expired?
         document.update(
           active: false,
           voided_at: Time.now

@@ -206,7 +206,14 @@ RSpec.describe Docusign::ApiClient do
   end
 
   describe "#void_document" do
-    let(:document) { instance_double(Document, docusign_envelope_id: "tyuip-876-cvbn") }
+    let(:document) do
+      instance_double(Document,
+        sent_at: document_sent_at,
+        expired?: false,
+        docusign_envelope_id: "tyuip-876-cvbn")
+    end
+
+    let(:document_sent_at) { Time.now }
 
     before do
       allow(http_client_instance).to receive(:put).and_return(mock_docusign_response)
@@ -231,6 +238,28 @@ RSpec.describe Docusign::ApiClient do
           expect(document).to receive(:update).with(
             active: false,
             voided_at: Time.now
+          )
+
+          docusign_api_client.void_document(document)
+        end
+      end
+
+      it "returns a successful result" do
+        result = docusign_api_client.void_document(document)
+
+        expect(result.success?).to eq(true)
+      end
+    end
+
+    context "when the document is more than 120 days old" do
+      let(:document_signed_at) { 121.days.ago }
+
+      it "voids the document and marks it as inactive" do
+        Timecop.freeze(Time.now) do
+          expect(document).to receive(:update).with(
+            status: "voided",
+            voided_at: Time.now,
+            active: false
           )
 
           docusign_api_client.void_document(document)
