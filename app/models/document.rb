@@ -19,6 +19,10 @@ class Document < ActiveRecord::Base
     signed? || off_platform?
   end
 
+  def expired?
+    !!sent_at&.before?(ENV.fetch("DOCUSIGN_NUM_DAYS_DOCUMENTS_EXPIRE_IN", 120).days.ago)
+  end
+
   def document_type
     case signer_type
     when "LegalContact"

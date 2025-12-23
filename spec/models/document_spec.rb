@@ -4,6 +4,7 @@ RSpec.describe Document do
   let(:document) do
     Document.new(
       status: document_status,
+      sent_at: document_sent_at,
       signed_at: document_signed_at,
       signer_type: document_signer_type
     )
@@ -11,6 +12,7 @@ RSpec.describe Document do
 
   let(:document_status) { "voided" }
   let(:document_signer_type) { "LegalContact" }
+  let(:document_sent_at) { Time.now }
   let(:document_signed_at) { nil }
 
   describe "#unsigned?" do
@@ -64,6 +66,33 @@ RSpec.describe Document do
         it "returns 'Chapter Affiliation Agreement'" do
           expect(document.document_type).to eq("Chapter Affiliation Agreement")
         end
+      end
+    end
+  end
+
+  describe "#expired?" do
+    context "when the document is less than 120 days old" do
+      let(:document_sent_at) { 119.days.ago }
+
+      it "returns false" do
+        expect(document.expired?).to eq(false)
+      end
+    end
+
+    context "when the document is more than 120 days old" do
+      let(:document_sent_at) { 121.days.ago }
+
+      it "returns true" do
+        expect(document.expired?).to eq(true)
+      end
+    end
+
+    context "when it's an off-platform document" do
+      let(:document_status) { "off-platform" }
+      let(:document_sent_at) { nil }
+
+      it "returns false" do
+        expect(document.expired?).to eq(false)
       end
     end
   end
