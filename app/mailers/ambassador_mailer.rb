@@ -114,6 +114,18 @@ class AmbassadorMailer < ApplicationMailer
     end
   end
 
+  def assigned_judges_to_event(account:, event:, assignment_result:)
+    @name = account.first_name
+    @event = event
+    @assignment_result = assignment_result
+    @event_url = chapter_ambassador_regional_pitch_event_url(@event)
+
+    I18n.with_locale(account.locale) do
+      mail to: account.email,
+        subject: "Your CSV has been processed for your event: #{@event.name}"
+    end
+  end
+
   def judge_joined_event(account, event, judge)
     @name = account.first_name
     @event = event

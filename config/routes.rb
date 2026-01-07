@@ -227,6 +227,7 @@ Rails.application.routes.draw do
       get :available_teams, on: :member
       get :bulk_download_submission_pitch_presentations
 
+      post :bulk_add_judges
       post :bulk_add_teams
     end
     get "events_list", to: "/data_grids/ambassador/events#index", as: "events_list"
