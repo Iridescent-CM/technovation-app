@@ -1,0 +1,24 @@
+<hr>
+<h4>Upload a CSV to Add Multiple Judges to this Event</h4>
+
+<%= form_with(
+  url: chapter_ambassador_event_bulk_add_judges_path(@event),
+  local: true,
+  data: {turbo: false},
+  html: { method: :post }) do |form|
+%>
+
+  <p style="margin: 16px 0 24px;">Instructions here...</p>
+
+  <div>
+    <%= form.file_field :csv_file, 
+      required: true,
+      accept: ".csv",
+      style: "width: 100%; padding: 8px; border: 1px solid oklch(87.2% 0.01 258.338); border-radius: 0.15rem; font-size: 1.2rem;"
+    %>
+  </div>
+
+  <div style="margin-top: 12px;">
+    <%= form.submit "Upload CSV", class: "button" %>
+  </div>
+<% end %>

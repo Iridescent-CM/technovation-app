@@ -1,5 +1,6 @@
 module ChapterAmbassador
   class RegionalPitchEventsController < ChapterAmbassadorController
+    include BulkAddJudgesToRegionalPitchEvent
     include BulkAddTeamsToRegionalPitchEvent
     include BulkDownloadSubmissionPitchPresentations
 
