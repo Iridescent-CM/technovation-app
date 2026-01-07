@@ -19,13 +19,13 @@ RSpec.describe AssignTeamsToRegionalPitchEventJob do
 
     allow(Account).to receive(:find).with(account.id).and_return(account)
 
-    allow(DataProcessors::AssignTeamsToRegionalPitchEvent).to receive_message_chain(:new, :call).and_return(assignment_result)
+    allow(BulkDataProcessors::AssignTeamsToRegionalPitchEvent).to receive_message_chain(:new, :call).and_return(assignment_result)
   end
 
   let(:assignment_result) { double("assignment_result", results: []) }
 
   it "calls the service that will assign teams to the specified event" do
-    expect(DataProcessors::AssignTeamsToRegionalPitchEvent).to receive_message_chain(:new, :call)
+    expect(BulkDataProcessors::AssignTeamsToRegionalPitchEvent).to receive_message_chain(:new, :call)
 
     AssignTeamsToRegionalPitchEventJob.perform_now(
       regional_pitch_event_id: regional_pitch_event.id,

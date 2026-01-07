@@ -1,4 +1,4 @@
-module DataProcessors
+module BulkDataProcessors
   class AssignJudgesToRegionalPitchEvent
     def initialize(regional_pitch_event:, judge_ids:)
       @regional_pitch_event = regional_pitch_event

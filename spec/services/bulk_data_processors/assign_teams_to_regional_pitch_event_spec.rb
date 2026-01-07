@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe DataProcessors::AssignTeamsToRegionalPitchEvent do
+RSpec.describe BulkDataProcessors::AssignTeamsToRegionalPitchEvent do
   let(:assign_teams_to_regional_pitch_event_service) do
-    DataProcessors::AssignTeamsToRegionalPitchEvent.new(regional_pitch_event:,
+    BulkDataProcessors::AssignTeamsToRegionalPitchEvent.new(regional_pitch_event:,
       team_ids:)
   end
 
