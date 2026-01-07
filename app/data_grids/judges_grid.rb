@@ -41,6 +41,10 @@ class JudgesGrid
     end
   end
 
+  column :judge_id, header: "Judge Id" do
+    judge_profile.id.presence || "-"
+  end
+
   column :virtual_or_live do
     if judge_profile.present?
       judge_profile.live_event? ? "Live" : "Virtual"
