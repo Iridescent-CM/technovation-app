@@ -20,7 +20,7 @@ class Document < ActiveRecord::Base
   end
 
   def expired?
-    !!sent_at&.before?(ENV.fetch("DOCUSIGN_NUM_DAYS_DOCUMENTS_EXPIRE_IN", 120).days.ago)
+    !!sent_at&.before?(ENV.fetch("DOCUSIGN_NUM_DAYS_DOCUMENTS_EXPIRE_IN", 120).to_i.days.ago)
   end
 
   def document_type
