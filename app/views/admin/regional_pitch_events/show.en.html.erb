@@ -129,6 +129,7 @@
 
       <%= render "admin/regional_pitch_events/registered_teams", event: @event %>
       <%= render "admin/regional_pitch_events/bulk_add_teams", event: @event %>
+      <%= render "admin/regional_pitch_events/bulk_add_judges", event: @event %>
     </div>
 
     <% if current_account.admin? %>
