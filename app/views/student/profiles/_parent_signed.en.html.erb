@@ -3,17 +3,22 @@
 </div>
 
 <dl>
-  <dt>Parent/guardian name</dt>
+  <dt><%= t("models.student_profile.parent_guardian_name") %></dt>
   <dd><%= current_student.parent_guardian_name %></dd>
 
-  <dt>Parent/guardian email</dt>
-  <dd><%= current_student.parent_guardian_email %></dd>
+  <dt><%= t("models.student_profile.parent_guardian_email") %></dt>
+  <dd><%= current_student.parent_guardian_email.presence || "N/A" %></dd>
 
-  <dt>Signed on:</dt>
+  <% if current_student.in_parental_consent_text_message_country? %>
+    <dt><%= t("models.student_profile.parent_guardian_phone_number") %></dt>
+    <dd><%= current_student.parent_guardian_phone_number.presence || "N/A" %></dd>
+  <% end %>
+
+  <dt>Signed on</dt>
   <dd><%= current_student.parental_consent.signed_at.strftime("%B %e, %Y") %></dd>
 </dl>
 
-<p>
+<p class="mb-2">
   <%= link_to "Change your parent/guardian details",
     new_student_parental_consent_notice_path(
       back: student_profile_path(anchor: "!parent")
@@ -21,4 +26,4 @@
     class: "tw-green-btn" %>
 </p>
 
-<p class="hint">Changing this email will send and require a new consent.</p>
+<p class="hint">Changing this email or phone number will send and require a new consent.</p>
