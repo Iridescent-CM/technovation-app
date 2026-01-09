@@ -26,6 +26,7 @@ module Twilio
       token = account.consent_token
       consent_url = edit_parental_consent_url(
         token: token,
+        source: "text_message",
         host: host
       )
 

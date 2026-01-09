@@ -49,6 +49,7 @@
 
   <div>
     <%= f.input :token, as: :hidden, input_html: { name: :token, value: params[:token] } %>
+    <%= hidden_field_tag :source, params[:source] %>
     <%= f.submit t("views.media_consents.submit"), class: "tw-green-btn cursor-pointer" %>
   </div>
 <% end %>
