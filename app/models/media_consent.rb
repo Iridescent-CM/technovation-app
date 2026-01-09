@@ -23,9 +23,6 @@ class MediaConsent < ActiveRecord::Base
     end
   }
 
-  after_commit :send_media_conent_confirmation_email_to_parent,
-    if: proc { |media_consent| media_consent.signed? }
-
   delegate :email, :full_name,
     to: :student_profile,
     prefix: true
@@ -44,11 +41,5 @@ class MediaConsent < ActiveRecord::Base
 
   def uploaded?
     uploaded_at.present?
-  end
-
-  private
-
-  def send_media_conent_confirmation_email_to_parent
-    ParentMailer.confirm_media_consent_finished(student_profile.id).deliver_later
   end
 end
