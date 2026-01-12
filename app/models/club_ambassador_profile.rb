@@ -22,6 +22,13 @@ class ClubAmbassadorProfile < ActiveRecord::Base
 
   after_update :update_onboarding_status
 
+  scope :current, -> {
+    joins(:current_account)
+  }
+
+  scope :onboarded, -> { where(onboarded: true) }
+  scope :onboarding, -> { where(onboarded: false) }
+
   def method_missing(method_name, *args) # standard:disable all
     account.public_send(method_name, *args) # standard:disable all
   rescue
