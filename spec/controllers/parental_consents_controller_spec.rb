@@ -49,7 +49,7 @@ RSpec.describe ParentalConsentsController do
 
       mail = ActionMailer::Base.deliveries[-2]
       expect(mail).to be_present,
-        "no notice to student about parental consent was sent"
+                      "no notice to student about parental consent was sent"
 
       expect(mail.to).to eq([student.email])
       expect(mail.subject).to eq(
@@ -116,18 +116,45 @@ RSpec.describe ParentalConsentsController do
       student = FactoryBot.create(:onboarded_student)
 
       expect {
-        patch :update, params: {id: student.parental_consent.id,
-                                parental_consent: FactoryBot.attributes_for(
-                                  :parental_consent,
-                                  student_profile_consent_token: student.consent_token
-                                )}
-      }.not_to change {
+        patch :update, params: {
+          id: student.parental_consent.id,
+          parental_consent: FactoryBot.attributes_for(
+            :parental_consent,
+            student_profile_consent_token: student.consent_token
+          )
+        }
+      }.not_to(change {
         ParentalConsent.nonvoid.count
-      }
+      })
 
       expect(response).to redirect_to(
         parental_consent_path(student.parental_consent)
       )
+    end
+
+    context "when the parent/guardian signs the parental consent via a text message link" do
+      it "sends the parent/guardian a confirmation through text message" do
+        student = FactoryBot.create(:onboarding_student)
+        student.update_columns(
+          parent_guardian_phone_number: "+15555555555",
+          parent_guardian_name: "parenty4"
+        )
+
+        expect(SendSignedConsentTextMessageJob).to receive(:perform_later)
+          .with(
+            account_id: student.account.id,
+            consent_type: :parental
+          )
+
+        patch :update, params: {
+          id: student.parental_consent.id,
+          source: "text_message",
+          parental_consent: FactoryBot.attributes_for(
+            :parental_consent,
+            student_profile_consent_token: student.consent_token
+          )
+        }
+      end
     end
   end
 
