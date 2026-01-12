@@ -514,6 +514,7 @@ Rails.application.routes.draw do
   resource :parental_consent, only: [:new, :edit]
   resources :parental_consents, only: [:show, :update]
   resource :media_consent, only: [:show, :edit, :update]
+  resource :signed_consents, only: [:show]
 
   resources :teams, only: :show
   resources :team_submission_pieces, only: :show
