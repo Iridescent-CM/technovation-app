@@ -1,20 +1,23 @@
 task onboard_missed_students!: :environment do
   StudentProfile.current.onboarding.find_each do |student|
     if student.can_be_marked_onboarded?
-      puts "Student##{student.id} should be onboarded"
       student.touch
+
+      puts "Student##{student.id} marked as onboarded"
     end
   end
 end
 
 task fix_student_onboarding!: :environment do
   StudentProfile.current.find_each do |student|
-    if student.can_be_marked_onboarded? and !student.onboarded
-      puts "Student##{student.id} should be onboarded"
+    if student.can_be_marked_onboarded? && !student.onboarded?
       student.touch
-    elsif !student.can_be_marked_onboarded? and student.onboarded
-      puts "Student##{student.id} should not be onboarded"
+
+      puts "Student ##{student.id} marked as onboarded"
+    elsif !student.can_be_marked_onboarded? && student.onboarded?
       student.touch
+
+      puts "Student ##{student.id} marked as still onboarding"
     end
   end
 end
