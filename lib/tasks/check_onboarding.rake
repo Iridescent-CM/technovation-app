@@ -22,6 +22,34 @@ task fix_student_onboarding!: :environment do
   end
 end
 
+task fix_chapter_ambassador_onboarding!: :environment do
+  ChapterAmbassadorProfile.current.find_each do |chapter_ambassador|
+    if chapter_ambassador.can_be_marked_onboarded? && !chapter_ambassador.onboarded?
+      chapter_ambassador.touch
+
+      puts "Chapter Ambassador ##{chapter_ambassador.id} marked as onboarded"
+    elsif !chapter_ambassador.can_be_marked_onboarded? && chapter_ambassador.onboarded?
+      chapter_ambassador.touch
+
+      puts "Chapter Ambassador ##{chapter_ambassador.id} marked as still onboarding"
+    end
+  end
+end
+
+task fix_club_ambassador_onboarding!: :environment do
+  ClubAmbassadorProfile.current.find_each do |club_ambassador|
+    if club_ambassador.can_be_marked_onboarded? && !club_ambassador.onboarded?
+      club_ambassador.touch
+
+      puts "Club Ambassador ##{club_ambassador.id} marked as onboarded"
+    elsif !club_ambassador.can_be_marked_onboarded? && club_ambassador.onboarded?
+      club_ambassador.touch
+
+      puts "Club Ambassador ##{club_ambassador.id} marked as still onboarding"
+    end
+  end
+end
+
 task check_onboarding: :environment do
   logger = Logger.new("tmp/check_onboarding.log")
 
