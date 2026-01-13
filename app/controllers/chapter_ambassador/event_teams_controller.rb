@@ -7,10 +7,10 @@ module ChapterAmbassador
       AddTeamToRegionalEvent.call(@event, @team)
       @event = RegionalPitchEvent
         .includes(
-         teams: [
-           :division,
-           :submission
-         ]
+          teams: [
+            :division,
+            :submission
+          ]
         )
         .find(params[:event_id])
       @available_teams = load_available_teams_for_event(@event)
@@ -45,17 +45,17 @@ module ChapterAmbassador
         .includes(
           :judges, :user_invitations,
           teams: [
-           :division,
-           :submission
-         ]
+            :division,
+            :submission
+          ]
         )
-      .find(params[:event_id])
+        .find(params[:event_id])
       @available_teams = load_available_teams_for_event(@event)
 
       respond_to do |format|
         format.html {
           redirect_to chapter_ambassador_event_path(@event),
-          notice: "Team removed"
+            notice: "Team removed"
         }
         format.turbo_stream
       end

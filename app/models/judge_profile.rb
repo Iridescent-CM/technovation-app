@@ -28,6 +28,23 @@ class JudgeProfile < ActiveRecord::Base
       .where("regional_pitch_events.id IS NULL")
   }
 
+  scope :available_for_events, ->(event, ambassador) {
+    not_attending_live_event
+      .in_region(ambassador)
+      .includes(:account)
+      .order("accounts.first_name")
+  }
+
+  scope :by_query, ->(query) {
+    includes(:account)
+      .where(
+        "accounts.first_name ILIKE ? OR " +
+        "accounts.last_name ILIKE ?",
+        "%#{query}%",
+        "%#{query}%"
+      )
+  }
+
   belongs_to :account, required: false
   accepts_nested_attributes_for :account
   validates_associated :account, if: -> { user_invitation.blank? }

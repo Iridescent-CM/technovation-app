@@ -1,40 +1,34 @@
-<h5>Judges (<%= event.judge_list.size %>)</h5>
-<% if event.judge_list.any?  %>
-  <table>
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% event.judge_list.each do |judge| %>
-      <tr>
-        <td>
-          <% if judge.is_a?(JudgeProfile) %>
-            <%= link_to judge.name,
-                        send(
-                          "#{current_scope}_participant_path",
-                          judge.account
-                        )
-            %>
-          <% else %>
-            Invited Judge
-          <% end %>
-        </td>
-        <td>
-          <%= judge.email %>
-        </td>
-        <td>
-                <span class="pill pill-<%= judge.status == 'ready' ? 'green' : 'red' %>">
-                  <%= judge.human_status %>
-                </span>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No judges yet.</p>
+<%= turbo_frame_tag "registered-judges-frame" do %>
+  <div class="grid grid--bleed">
+    <div class="grid__col-auto" style="overflow-x: auto;">
+      <h5>
+        <span id=registered-judge-count>
+          Judges (<%= event.judges.count %>)
+        </span>
+      </h5>
+
+      <% if event.judges.any? %>
+        <table class="table--hoverable" style="border-spacing: 0; width: 100%;">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th style="padding: 4px 8px;">Status</th>
+            <% if current_account.chapter_ambassador? %>
+              <th style="padding: 4px 8px;">Actions</th>
+            <% end %>
+          </tr>
+          </thead>
+
+          <tbody>
+            <% event.judges.each do |judge| %>
+              <%= render "admin/regional_pitch_events/registered_judge", judge: judge, event: event %>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No judges yet.</p>
+      <% end %>
+    </div>
+  </div>
 <% end %>

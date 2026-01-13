@@ -222,8 +222,10 @@ Rails.application.routes.draw do
     resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
     resources :events, controller: :regional_pitch_events do
+      resources :event_judges, only: [:create, :destroy]
       resources :event_teams, only: [:create, :destroy]
 
+      get :available_judges, on: :member
       get :available_teams, on: :member
       get :bulk_download_submission_pitch_presentations
 

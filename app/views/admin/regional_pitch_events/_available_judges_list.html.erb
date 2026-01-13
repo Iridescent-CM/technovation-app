@@ -1,0 +1,32 @@
+<%= turbo_frame_tag "available-judges-list" do %>
+  <% if judges.any? %>
+    <div>
+      <table class="table--hoverable" style="border-spacing: 0 .5rem; border-collapse: separate; width: 100%; table-layout: fixed" >
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody id="available-judges">
+        <% judges.each do |judge| %>
+          <%= render "admin/regional_pitch_events/available_judge",
+            judge: judge,
+            event: event %>
+        <% end %>
+        </tbody>
+      </table>
+      <div id="available-judges-pagination">
+        <%= will_paginate judges,
+          params: {
+            controller: "chapter_ambassador/regional_pitch_events",
+            action: "available_judges", id: event.id } %>
+      </div>
+    </div>
+  <% else %>
+    <p>
+      No judges available in your region.
+    </p>
+  <% end %>
+<% end %>
