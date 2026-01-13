@@ -19,10 +19,15 @@
     <dt>Parental Consent</dt>
     <dd>
       <% if profile.parental_consent_signed? %>
-        <%= web_icon("check-circle icon-green", text: "Signed! Yay!") %>
+        <%= web_icon("check-circle icon-green",
+          text: "Signed! Yay!") %>
       <% else %>
         <%= web_icon("exclamation-circle icon-red",
-                     text: "Not signed... boo...") %>
+          text: "Not signed... boo...") %>
+        <% if profile.account.text_messages.parental_consent.any? %>
+          <%= render "admin/participants/parental_consent_text_messages",
+            profile: profile %>
+        <% end %>
       <% end %>
     </dd>
 

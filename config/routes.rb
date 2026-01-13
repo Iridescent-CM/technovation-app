@@ -500,6 +500,7 @@ Rails.application.routes.draw do
 
   namespace :webhooks do
     resource :docusign, only: :create, controller: "docusign"
+    resource :twilio, only: :create, controller: "twilio"
   end
 
   resource :terms_agreement, only: [:new, :create]

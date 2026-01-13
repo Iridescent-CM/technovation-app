@@ -39,11 +39,13 @@ module Twilio
         response = client.messages.create(
           body: message_body,
           to: parent_guardian_phone_number,
-          from: technovation_phone_number
+          from: technovation_phone_number,
+          messaging_service_sid: ENV.fetch("TWILIO_MESSAGING_SERVICE_ID")
         )
 
         account.text_messages.create(
           delivery_method: :sms,
+          status: response.status,
           message_type: :parental_consent,
           external_message_id: response.sid,
           recipient: response.to,
