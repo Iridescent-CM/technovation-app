@@ -129,6 +129,19 @@
 
       <%= render "admin/regional_pitch_events/registered_teams", event: @event %>
       <%= render "admin/regional_pitch_events/bulk_add_teams", event: @event %>
+
+      <br><hr><br>
+
+      <% if current_account.chapter_ambassador? %>
+        <%= turbo_frame_tag "available-judges-frame" do %>
+          <%= link_to "Add Judges",
+            available_judges_chapter_ambassador_event_path(@event),
+            class: "button small",
+            data: { turbo_frame: "available-judges-frame" } %>
+        <% end %>
+      <% end %>
+
+      <%= render "admin/regional_pitch_events/registered_judges", event: @event %>
       <%= render "admin/regional_pitch_events/bulk_add_judges", event: @event %>
     </div>
 

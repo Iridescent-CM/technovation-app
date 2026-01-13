@@ -1,0 +1,25 @@
+<%= turbo_frame_tag "available-judges-frame" do %>
+  <div class="grid grid--bleed">
+    <div class="grid__col-auto" style="overflow-x:auto;">
+      <h5>Available Judges in Your Region</h5>
+
+      <%= form_with url: available_judges_chapter_ambassador_event_path(@event),
+        method: :get,
+        data: {
+          controller: "search",
+          turbo_frame: "available-judges-list",
+          turbo_action: "advance"
+        } do |f| %>
+
+        <%=  f.text_field :query,
+          value: params[:query],
+          placeholder: "Search judges by name",
+          data: {
+            action: "input->search#search",
+            turbo_submits_with: "Searching..." } %>
+      <% end %>
+
+      <%= render "admin/regional_pitch_events/available_judges_list", event: event, judges: judges %>
+    </div>
+  </div>
+<% end %>
