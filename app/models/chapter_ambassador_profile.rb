@@ -2,16 +2,6 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   include BackgroundCheckHelpers
   include OnboardingTasksConcern
 
-  scope :onboarded, -> {
-    approved.joins(:account)
-      .where("accounts.email_confirmed_at IS NOT NULL")
-  }
-
-  scope :not_staff, -> {
-    joins(:account)
-      .where.not("accounts.email ILIKE ?", "%joesak%")
-  }
-
   belongs_to :account
   accepts_nested_attributes_for :account
   validates_associated :account
@@ -48,6 +38,13 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
   }, allow_destroy: true
 
   after_update :update_onboarding_status
+
+  scope :current, -> {
+    joins(:current_account)
+  }
+
+  scope :onboarded, -> { where(onboarded: true) }
+  scope :onboarding, -> { where(onboarded: false) }
 
   def method_missing(method_name, *args) # standard:disable all
     account.public_send(method_name, *args) # standard:disable all

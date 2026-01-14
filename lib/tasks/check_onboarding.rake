@@ -1,20 +1,51 @@
 task onboard_missed_students!: :environment do
   StudentProfile.current.onboarding.find_each do |student|
     if student.can_be_marked_onboarded?
-      puts "Student##{student.id} should be onboarded"
       student.touch
+
+      puts "Student##{student.id} marked as onboarded"
     end
   end
 end
 
 task fix_student_onboarding!: :environment do
   StudentProfile.current.find_each do |student|
-    if student.can_be_marked_onboarded? and !student.onboarded
-      puts "Student##{student.id} should be onboarded"
+    if student.can_be_marked_onboarded? && !student.onboarded?
       student.touch
-    elsif !student.can_be_marked_onboarded? and student.onboarded
-      puts "Student##{student.id} should not be onboarded"
+
+      puts "Student ##{student.id} marked as onboarded"
+    elsif !student.can_be_marked_onboarded? && student.onboarded?
       student.touch
+
+      puts "Student ##{student.id} marked as still onboarding"
+    end
+  end
+end
+
+task fix_chapter_ambassador_onboarding!: :environment do
+  ChapterAmbassadorProfile.current.find_each do |chapter_ambassador|
+    if chapter_ambassador.can_be_marked_onboarded? && !chapter_ambassador.onboarded?
+      chapter_ambassador.touch
+
+      puts "Chapter Ambassador ##{chapter_ambassador.id} marked as onboarded"
+    elsif !chapter_ambassador.can_be_marked_onboarded? && chapter_ambassador.onboarded?
+      chapter_ambassador.touch
+
+      puts "Chapter Ambassador ##{chapter_ambassador.id} marked as still onboarding"
+    end
+  end
+end
+
+task fix_club_ambassador_onboarding!: :environment do
+  ClubAmbassadorProfile.current.find_each do |club_ambassador|
+    if club_ambassador.can_be_marked_onboarded? && !club_ambassador.onboarded?
+      club_ambassador.touch
+
+      puts "Club Ambassador ##{club_ambassador.id} marked as onboarded"
+    elsif !club_ambassador.can_be_marked_onboarded? && club_ambassador.onboarded?
+      club_ambassador.touch
+
+      puts "Club Ambassador ##{club_ambassador.id} marked as still onboarding"
     end
   end
 end
