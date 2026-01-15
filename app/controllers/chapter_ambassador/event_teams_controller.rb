@@ -1,5 +1,7 @@
 module ChapterAmbassador
   class EventTeamsController < ChapterAmbassadorController
+    include RegionalPitchEvents::AvailableTeams
+
     def create
       @event = RegionalPitchEvent.in_region(current_ambassador).find(params[:event_id])
       @team = Team.find(params[:team_id])
