@@ -2,22 +2,22 @@
   <div class="grid grid--bleed">
     <div class="grid__col-auto" style="overflow-x: auto;">
       <h5>
-        <span id=registered-judge-count>
+        <span>
           Judges (<%= event.judges.count %>)
         </span>
       </h5>
 
       <% if event.judges.any? %>
-        <table class="table--hoverable" style="border-spacing: 0; width: 100%;">
+        <table class="table--hoverable rpe-judges">
           <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th style="padding: 4px 8px;">Status</th>
-            <% if current_account.chapter_ambassador? %>
-              <th style="padding: 4px 8px;">Actions</th>
-            <% end %>
-          </tr>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Status</th>
+              <% if current_account.chapter_ambassador? %>
+                <th>Actions</th>
+              <% end %>
+            </tr>
           </thead>
 
           <tbody>

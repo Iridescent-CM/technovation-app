@@ -1,22 +1,24 @@
 <%= turbo_frame_tag "available-judges-list" do %>
   <% if judges.any? %>
     <div>
-      <table class="table--hoverable" style="border-spacing: 0 .5rem; border-collapse: separate; width: 100%; table-layout: fixed" >
+      <table class="table--hoverable rpe-judges">
         <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Status</th>
-        </tr>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
         </thead>
+
         <tbody id="available-judges">
-        <% judges.each do |judge| %>
-          <%= render "admin/regional_pitch_events/available_judge",
-            judge: judge,
-            event: event %>
-        <% end %>
+          <% judges.each do |judge| %>
+            <%= render "admin/regional_pitch_events/available_judge",
+              judge: judge,
+              event: event %>
+          <% end %>
         </tbody>
       </table>
+
       <div id="available-judges-pagination">
         <%= will_paginate judges,
           params: {

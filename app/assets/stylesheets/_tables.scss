@@ -6,6 +6,17 @@ table thead tr {
   }
 }
 
+table.rpe-judges,
+table.rpe-teams {
+  border-spacing: 0;
+  width: 100%;
+
+  th,
+  td {
+    padding: 4px 12px;
+  }
+}
+
 .table--hoverable {
   tr:hover {
     background-color: #f5f5f5;
