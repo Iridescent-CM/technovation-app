@@ -9,18 +9,18 @@
     <%= judge.email %>
   </td>
 
-  <td style="padding: 4px 12px;">
+  <td>
     <span class="pill pill-<%= judge.status == "ready" ? "green" : "orange" %>" style="white-space: nowrap;">
       <%= judge.human_status %>
     </span>
   </td>
 
   <% if current_account.chapter_ambassador? %>
-    <td style="padding: 4px 12px;">
+    <td>
       <%= button_to "Remove",
         chapter_ambassador_event_event_judge_path(event, judge),
         method: :delete,
         class: "button button--danger" %>
-  </td>
-<% end %>
+    </td>
+  <% end %>
 </tr>
