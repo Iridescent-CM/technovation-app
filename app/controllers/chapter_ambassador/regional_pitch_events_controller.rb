@@ -3,6 +3,8 @@ module ChapterAmbassador
     include BulkAddJudgesToRegionalPitchEvent
     include BulkAddTeamsToRegionalPitchEvent
     include BulkDownloadSubmissionPitchPresentations
+    include RegionalPitchEvents::AvailableJudges
+    include RegionalPitchEvents::AvailableTeams
 
     def index
       respond_to do |f|

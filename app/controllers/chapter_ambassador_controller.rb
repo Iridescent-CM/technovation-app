@@ -57,23 +57,4 @@ class ChapterAmbassadorController < ApplicationController
         error: "You must complete all onboarding tasks before accessing Chapter Admin Activity."
     end
   end
-
-  def load_available_teams_for_event(event)
-    teams = Team.available_for_event(event, current_ambassador)
-    teams = teams.by_query(params[:query]) if params[:query].present?
-
-    teams.paginate(page: params[:page], per_page: 20)
-  end
-
-  def load_available_judges_for_event(event)
-    judges = if params[:query].present?
-      JudgeProfile
-        .available_for_events(event, current_ambassador)
-        .by_query(params[:query])
-    else
-      JudgeProfile.available_for_events(event, current_ambassador)
-    end
-
-    judges.paginate(page: params[:page], per_page: 20)
-  end
 end

@@ -1,5 +1,7 @@
 module ChapterAmbassador
   class EventJudgesController < ChapterAmbassadorController
+    include RegionalPitchEvents::AvailableJudges
+
     def create
       @event = RegionalPitchEvent.in_region(current_ambassador).find(params[:event_id])
       @judge = JudgeProfile.find(params[:judge_id])
