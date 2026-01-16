@@ -1,10 +1,10 @@
 module ChapterAmbassador
   class RegionalPitchEventsController < ChapterAmbassadorController
-    include BulkAddJudgesToRegionalPitchEvent
-    include BulkAddTeamsToRegionalPitchEvent
     include BulkDownloadSubmissionPitchPresentations
     include RegionalPitchEvents::AvailableJudges
     include RegionalPitchEvents::AvailableTeams
+    include RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
+    include RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
 
     def index
       respond_to do |f|
