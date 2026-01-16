@@ -1,8 +1,10 @@
 module ChapterAmbassador
   class RegionalPitchEventsController < ChapterAmbassadorController
-    include BulkAddJudgesToRegionalPitchEvent
-    include BulkAddTeamsToRegionalPitchEvent
     include BulkDownloadSubmissionPitchPresentations
+    include RegionalPitchEvents::AvailableJudges
+    include RegionalPitchEvents::AvailableTeams
+    include RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
+    include RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
 
     def index
       respond_to do |f|
@@ -91,6 +93,22 @@ module ChapterAmbassador
       elsif turbo_frame_request_id == "available-teams-list"
         render partial: "admin/regional_pitch_events/available_teams_list",
           locals: {event: @event, teams: @available_teams}
+      else
+        redirect_to chapter_ambassador_event_path(@event)
+      end
+    end
+
+    def available_judges
+      @event = RegionalPitchEvent.in_region(current_ambassador)
+        .find(params[:id])
+      @available_judges = load_available_judges_for_event(@event)
+
+      if turbo_frame_request_id == "available-judges-frame"
+        render partial: "admin/regional_pitch_events/available_judges",
+          locals: {event: @event, judges: @available_judges}
+      elsif turbo_frame_request_id == "available-judges-list"
+        render partial: "admin/regional_pitch_events/available_judges_list",
+          locals: {event: @event, judges: @available_judges}
       else
         redirect_to chapter_ambassador_event_path(@event)
       end

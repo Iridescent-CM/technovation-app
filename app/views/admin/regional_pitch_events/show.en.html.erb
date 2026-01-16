@@ -61,7 +61,7 @@
                 .in_time_zone(@event.timezone)
                 .strftime("%A, %B %e") %>
 
-              <br />
+              <br>
 
               <%= @event.starts_at
                 .in_time_zone(@event.timezone)
@@ -78,7 +78,7 @@
 
             <dd>
               <%= @event.venue_address %>
-              <br />
+              <br>
               <%= @event.city %>
             </dd>
 
@@ -115,20 +115,37 @@
           </dl>
         </div>
       </div>
+    </div>
 
-      <hr>
+    <div class="panel">
+      <h3>Teams</h3>
 
       <% if current_account.chapter_ambassador? %>
         <%= turbo_frame_tag "available-teams-frame" do %>
           <%= link_to "Add Teams",
             available_teams_chapter_ambassador_event_path(@event),
-            class: "button small",
+            class: "button",
             data: { turbo_frame: "available-teams-frame" } %>
         <% end %>
       <% end %>
 
       <%= render "admin/regional_pitch_events/registered_teams", event: @event %>
       <%= render "admin/regional_pitch_events/bulk_add_teams", event: @event %>
+    </div>
+
+    <div class="panel">
+      <h3>Judges</h3>
+
+      <% if current_account.chapter_ambassador? %>
+        <%= turbo_frame_tag "available-judges-frame" do %>
+          <%= link_to "Add Judges",
+            available_judges_chapter_ambassador_event_path(@event),
+            class: "button",
+            data: { turbo_frame: "available-judges-frame" } %>
+        <% end %>
+      <% end %>
+
+      <%= render "admin/regional_pitch_events/registered_judges", event: @event %>
       <%= render "admin/regional_pitch_events/bulk_add_judges", event: @event %>
     </div>
 

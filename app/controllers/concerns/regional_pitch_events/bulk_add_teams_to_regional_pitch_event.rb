@@ -1,5 +1,5 @@
-module BulkAddJudgesToRegionalPitchEvent
-  def bulk_add_judges
+module RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
+  def bulk_add_teams
     @event = RegionalPitchEvent
       .current
       .in_region(current_ambassador)
@@ -8,23 +8,23 @@ module BulkAddJudgesToRegionalPitchEvent
     begin
       SmarterCSV.process(params[:csv_file], {
         chunk_size: 200,
-        required_keys: [:judge_id]
+        required_keys: [:team_id]
       }) do |chunk|
-        judge_ids =
+        team_ids =
           chunk.map do |row|
-            row[:judge_id] if row[:judge_id].present?
+            row[:team_id] if row[:team_id].present?
           end.compact
 
-        AssignJudgesToRegionalPitchEventJob.perform_later(
+        AssignTeamsToRegionalPitchEventJob.perform_later(
           regional_pitch_event_id: @event.id,
           account_id: current_account.id,
-          judge_ids:
+          team_ids:
         )
       end
 
       redirect_to chapter_ambassador_event_path(@event), success: "Your CSV file was uploaded successfully! It will be processed soon!"
     rescue SmarterCSV::MissingKeys
-      redirect_to chapter_ambassador_event_path(@event), error: 'Please ensure your CSV file contains a "Judge Id" header.'
+      redirect_to chapter_ambassador_event_path(@event), error: 'Please ensure your CSV file contains a "Team Id" header.'
     end
   end
 end

@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "available-judges-list" do %>
+  <%= render "admin/regional_pitch_events/available_judges_list", event: @event, judges: @available_judges %>
+<% end %>
+
+<%= turbo_stream.replace "registered-judges-frame" do %>
+  <%= render "admin/regional_pitch_events/registered_judges", event: @event %>
+<% end %>

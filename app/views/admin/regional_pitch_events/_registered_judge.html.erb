@@ -1,0 +1,26 @@
+<tr id="<%= dom_id(judge, :registered) %>">
+  <td>
+    <%= link_to judge.name,
+      send("#{current_scope}_participants_path", judge.account.id),
+      data: { turbo: false } %>
+  </td>
+
+  <td>
+    <%= judge.email %>
+  </td>
+
+  <td>
+    <span class="pill pill-<%= judge.status == "ready" ? "green" : "orange" %>" style="white-space: nowrap;">
+      <%= judge.human_status %>
+    </span>
+  </td>
+
+  <% if current_account.chapter_ambassador? %>
+    <td>
+      <%= button_to "Remove",
+        chapter_ambassador_event_event_judge_path(event, judge),
+        method: :delete,
+        class: "button button--danger" %>
+  </td>
+<% end %>
+</tr>

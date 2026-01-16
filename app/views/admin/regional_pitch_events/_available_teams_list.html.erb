@@ -1,25 +1,27 @@
 <%= turbo_frame_tag "available-teams-list" do %>
   <% if teams.any? %>
     <div>
-      <table class="table--hoverable" style="border-spacing: 0 .5rem; border-collapse: separate; width: 100%; table-layout: fixed" >
+      <table class="table--hoverable rpe-judges">
         <thead>
-        <tr>
-          <th>Team</th>
-          <th>Division</th>
-          <th>Submission</th>
-          <th>Actions</th>
-        </tr>
+          <tr>
+            <th>Team</th>
+            <th>Division</th>
+            <th>Submission</th>
+            <th>Actions</th>
+          </tr>
         </thead>
+
         <tbody id="available-teams">
-        <% at_capacity = event.at_team_capacity? %>
-        <% teams.each do |team| %>
-          <%= render "admin/regional_pitch_events/available_team",
-            team: team,
-            event: event,
-            at_capacity: at_capacity %>
-        <% end %>
+          <% at_capacity = event.at_team_capacity? %>
+          <% teams.each do |team| %>
+            <%= render "admin/regional_pitch_events/available_team",
+              team: team,
+              event: event,
+              at_capacity: at_capacity %>
+          <% end %>
         </tbody>
       </table>
+
       <div id="available-teams-pagination">
         <%= will_paginate teams,
           params: {
