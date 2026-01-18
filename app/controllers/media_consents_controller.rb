@@ -27,7 +27,7 @@ class MediaConsentsController < ApplicationController
 
     if @media_consent.update(media_consent_params.merge(signed_at: Time.current))
       if params[:source] == "text_message" && student_profile.parent_guardian_phone_number.present?
-        SendSignedConsentTextMessageJob.perform_later(account_id: student_profile.account.id, consent_type: :media)
+        SendSignedConsentTextMessageJob.perform_later(account_id: student_profile.account.id, message_type: :signed_media_consent)
       elsif student_profile.parent_guardian_email.present?
         ParentMailer.confirm_media_consent_finished(student_profile.id).deliver_later
       end

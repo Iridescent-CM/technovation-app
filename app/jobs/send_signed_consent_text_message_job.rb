@@ -1,11 +1,12 @@
 class SendSignedConsentTextMessageJob < ActiveJob::Base
   queue_as :default
 
-  def perform(account_id:, consent_type:)
+  def perform(account_id:, message_type:, delivery_method: :whatsapp)
     account = Account.find(account_id)
     Twilio::ApiClient.new.send_signed_consent_text_message(
       account: account,
-      consent_type: consent_type
+      message_type: message_type,
+      delivery_method: delivery_method
     )
   end
 end
