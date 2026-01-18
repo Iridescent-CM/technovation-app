@@ -43,7 +43,7 @@ class ParentalConsentsController < ApplicationController
 
     if @parental_consent.update(parental_consent_params)
       if params[:source] == "text_message" && student.parent_guardian_phone_number.present?
-        SendSignedConsentTextMessageJob.perform_later(account_id: student.account.id, consent_type: :parental)
+        SendSignedConsentTextMessageJob.perform_later(account_id: student.account.id, message_type: :signed_parental_consent)
       elsif student.parent_guardian_email.present?
         ParentMailer.confirm_parental_consent_finished(student.id).deliver_later
       end
