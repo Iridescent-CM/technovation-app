@@ -1,6 +1,6 @@
 class TextMessage < ActiveRecord::Base
   enum delivery_method: %i[sms whatsapp]
-  enum message_type: %i[parental_consent signed_parental_consent]
+  enum message_type: %i[parental_consent signed_parental_consent signed_media_consent]
 
   enum status: %i[
     queued
@@ -12,6 +12,7 @@ class TextMessage < ActiveRecord::Base
     receiving
     received
     accepted
+    read
   ]
 
   scope :current, -> {
