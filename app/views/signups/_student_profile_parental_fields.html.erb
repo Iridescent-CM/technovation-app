@@ -11,7 +11,7 @@
   </div>
 
   <% if f.object.in_parental_consent_text_message_country? && f.object.parent_guardian_email.blank? %>
-    <div>
+    <div class="mb-4">
       <%= check_box_tag :use_phone_number, 1,
         f.object.parent_guardian_phone_number.present?,
         data: {
@@ -22,13 +22,13 @@
     </div>
 
     <div data-students--parental-consent-contact-toggle-target="phoneNumberField" style="display: none;">
-      <p class="mb-4">
+      <p class="mb-6">
         Parental consent forms are automatically sent to an email address.
         If you would like the forms to be sent via text message or WhatsApp,
         please add your parent or guardian's phone number here.
         <br>
-        Note: Standard messaging rates apply. If SMS is not available,
-        we will try to send the message via WhatsApp.
+        By providing the phone number, you agree to receive text messages from Technovation.
+        Note: Standard messaging rates apply. If WhatsApp is unavailable, we will try via SMS.
       </p>
       <%= f.input :parent_guardian_phone_number,
         label: t('models.student_profile.parent_guardian_phone_number') %>
