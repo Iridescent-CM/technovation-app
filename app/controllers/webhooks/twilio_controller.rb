@@ -14,13 +14,9 @@ class Webhooks::TwilioController < Webhooks::BaseController
     twilio_signature = request.headers["X-Twilio-Signature"]
 
     if validator.validate(technovation_twilio_webhook_url, params, twilio_signature)
-      save_webhook_payload
+      save_webhook_payload(request.request_parameters.to_json)
     else
       head :unauthorized
     end
-  end
-
-  def save_webhook_payload
-    @webhook_payload ||= WebhookPayload.create!(body: request.request_parameters.to_json)
   end
 end
