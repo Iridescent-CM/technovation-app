@@ -142,7 +142,7 @@ RSpec.describe ParentalConsentsController do
         expect(SendSignedConsentTextMessageJob).to receive(:perform_later)
           .with(
             account_id: student.account.id,
-            consent_type: :parental
+            message_type: :signed_parental_consent
           )
 
         patch :update, params: {
