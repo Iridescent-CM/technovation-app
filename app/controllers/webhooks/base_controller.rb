@@ -9,8 +9,7 @@ class Webhooks::BaseController < ApplicationController
     raise NotImplementedError, "All webhook controllers must implement this functionality"
   end
 
-  def save_webhook_payload(payload = nil)
-    body = payload || request.body.read
-    @webhook_payload ||= WebhookPayload.create!(body: body)
+  def save_webhook_payload(payload)
+    @webhook_payload ||= WebhookPayload.create!(body: payload)
   end
 end
