@@ -78,6 +78,8 @@ gem "filestack-rails"
 
 gem "checkr-official", "~> 1.5", require: "checkr"
 
+gem "MailchimpTransactional", "~> 1.1.2"
+
 gem "countries", "~> 1.2", require: "countries/global"
 
 gem "city-state",

@@ -70,25 +70,28 @@ class RegistrationMailer < ApplicationMailer
   end
 
   def welcome_student(student)
-    @registration_opens = ImportantDates.registration_opens.strftime("%B %Y")
-    @official_start_of_season = ImportantDates.official_start_of_season.strftime("%B %d, %Y")
-    @team_registration_deadline = ImportantDates.team_registration_deadline.strftime("%B %d, %Y")
-    @season_submission_deadline = Season.submission_deadline
-    @season_submissions_open_month = ImportantDates.official_start_of_season.strftime("%B")
-    @season_year = Season.current.year
-    @root_url = root_url(mailer_token: student.mailer_token)
-    @dashboard_url = student_dashboard_url(mailer_token: student.mailer_token)
-    @program_timeline_url = ENV.fetch("PROGRAM_TIMELINE_URL")
-    @mentor_resources_url = ENV.fetch("MENTOR_RESOURCES_URL")
-    @internet_safety_url = ENV.fetch("INTERNET_SAFETY_URL")
-    @faq_url = ENV.fetch("FAQ_URL")
-    @submission_guidelines_url = ENV.fetch("SUBMISSION_GUIDELINES_URL")
-    @competition_rules_url = ENV.fetch("COMPETITION_RULES_URL")
+    merge_vars = {
+      REGISTRATION_OPENS: ImportantDates.registration_opens.strftime("%B %Y"),
+      OFFICIAL_START_OF_SEASON: ImportantDates.official_start_of_season.strftime("%B %d, %Y"),
+      TEAM_REGISTRATION_DEADLINE: ImportantDates.team_registration_deadline.strftime("%B %d, %Y"),
+      SEASON_SUBMISSION_DEADLINE: Season.submission_deadline,
+      SEASON_SUBMISSIONS_OPEN_MONth: ImportantDates.official_start_of_season.strftime("%B"),
+      SEASON_YEAR: Season.current.year,
+      ROOT_URL: root_url(mailer_token: student.mailer_token),
+      DASHBOARD_URL: student_dashboard_url(mailer_token: student.mailer_token),
+      PROGRAM_TIMELINE_URL: ENV.fetch("PROGRAM_TIMELINE_URL"),
+      MENTOR_RESOURCES_URL: ENV.fetch("MENTOR_RESOURCES_URL"),
+      INTERNET_SAFETY_URL: ENV.fetch("INTERNET_SAFETY_URL"),
+      FAQ_URL: ENV.fetch("FAQ_URL"),
+      SUBMISSION_GUIDELINES_URL: ENV.fetch("SUBMISSION_GUIDELINES_URL"),
+      COMPETITION_RULES_URL: ENV.fetch("COMPETITION_RULES_URL")
+    }
 
     I18n.with_locale(student.locale) do
       mail to: student.email,
-        subject: t("registration_mailer.welcome_student.subject",
-          season_year: @season_year)
+        subject: t("registration_mailer.welcome_student.subject", season_year: Season.current.year) do |f|
+        f.html { render_email_template("registration-student", merge_vars:) }
+      end
     end
   end
 

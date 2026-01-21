@@ -17,6 +17,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (2.0.1)
+    MailchimpTransactional (1.1.2)
+      excon (>= 0.76.0, < 1)
+      json (~> 2.1, >= 2.1.0)
     actioncable (7.0.8.7)
       actionpack (= 7.0.8.7)
       activesupport (= 7.0.8.7)
@@ -645,6 +648,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  MailchimpTransactional (~> 1.1.2)
   active_record_query_trace (~> 1.5)
   airbrake
   autoprefixer-rails (~> 6.7)
