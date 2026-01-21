@@ -26,6 +26,14 @@
             <% end %>
           </tbody>
         </table>
+
+        <div style="margin-top: 16px;">
+          <% if current_account.chapter_ambassador? %>
+            <%= button_to "Export Judge List to CSV",
+              chapter_ambassador_event_judge_list_exports_path(id: event),
+              class: "button button--gray" %>
+          <% end %>
+        </div>
       <% else %>
         <p>No judges yet.</p>
       <% end %>
