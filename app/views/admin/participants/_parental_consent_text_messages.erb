@@ -1,17 +1,17 @@
 <div class="margin--t-large">
   <p class="padding--l-large">Text Messages</p>
   <ul>
-    <% profile.account.text_messages.parental_consent.current.order(created_at: :desc).each do |request| %>
+    <% profile.account.text_messages.parental_consent.current.order(created_at: :desc).each do |text_message| %>
       <li>
         Sent At:
-        <%= request.sent_at.strftime("%B %e, %Y %l:%M %p") %>
+        <%= text_message.sent_at.strftime("%B %e, %Y %l:%M %p") %>
         -
         Status:
-        <%= request.status %>
+        <%= text_message.status %>
         <br>
-        <% if request.failed? || request.undelivered? %>
+        <% if text_message.failed? || text_message.undelivered? %>
           Error:
-          <%= request.error_message %>
+          <%= text_message.error_message %>
         <% end %>
       </li>
     <% end %>
