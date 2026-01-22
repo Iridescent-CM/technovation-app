@@ -226,27 +226,34 @@
       <h5>Learning Journey</h5>
 
       <p>
-        Learning Journey:
-        <br>
-        <% @team_submission.learning_journey.presence || "blank" %>
+        <strong>Learning Journey:</strong>
+        <%= @team_submission.learning_journey.presence || "blank" %>
       </p>
 
       <% if !@team_submission.beginner_division? %>
         <p>
-          Learning Journey Information Legitimacy:
-          <br>
-          <% @team_submission.information_legitimacy_description.presence || "blank" %>
+          <strong>Learning Journey Information Legitimacy:</strong>
+          <%= @team_submission.information_legitimacy_description.presence || "blank" %>
+        </p>
+        <p>
+          <strong>Bibliography:</strong>
+          <% if @team_submission.bibliography %>
+            <%= link_to @team_submission.bibliography_identifier,
+              @team_submission.bibliography_url,
+              target: :_blank %>
+          <% else %>
+            blank
+          <% end %>
         </p>
       <% end %>
 
       <p>
-        Ethics:
-        <br>
-        <% @team_submission.ethics_description.presence || "blank" %>
+        <strong>Ethics:</strong>
+        <%= @team_submission.ethics_description.presence || "blank" %>
       </p>
 
       <p>
-        Submission Type:
+        <strong>Submission Type:</strong>
         <% if !@team_submission.submission_type.nil? %>
           <%= @team_submission.submission_type %>
         <% else %>

@@ -94,6 +94,8 @@ class Questions
         description: submission.app_description,
 
         learning_journey: submission.learning_journey,
+        information_legitimacy_description: submission.information_legitimacy_description,
+        bibliography_url: submission.bibliography_url,
 
         development_platform: submission.development_platform_text,
 
