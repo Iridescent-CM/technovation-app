@@ -46,6 +46,8 @@ module ChapterAmbassador
 
     def new
       @pitch_event = RegionalPitchEvent.new
+      @pitch_event_start_date_range = "#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_YEAR")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_MONTH")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_DAY")}"
+      @pitch_event_end_date_range = "#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_YEAR")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_MONTH")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_DAY")}"
     end
 
     def create

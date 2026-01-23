@@ -2,10 +2,16 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from "./application";
 
-import SearchController from "./search_controller"
-application.register("search", SearchController)
+import DateFieldsController from "./date_fields_controller";
+application.register("date-fields", DateFieldsController);
 
-import Students__ParentalConsentContactToggleController from "./students/parental_consent_contact_toggle_controller"
-application.register("students--parental-consent-contact-toggle", Students__ParentalConsentContactToggleController)
+import SearchController from "./search_controller";
+application.register("search", SearchController);
+
+import Students__ParentalConsentContactToggleController from "./students/parental_consent_contact_toggle_controller";
+application.register(
+  "students--parental-consent-contact-toggle",
+  Students__ParentalConsentContactToggleController
+);
