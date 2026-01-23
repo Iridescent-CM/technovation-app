@@ -48,8 +48,7 @@ RSpec.describe ParentalConsentsController do
                               )}
 
       mail = ActionMailer::Base.deliveries[-2]
-      expect(mail).to be_present,
-                      "no notice to student about parental consent was sent"
+      expect(mail).to be_present, "no notice to student about parental consent was sent"
 
       expect(mail.to).to eq([student.email])
       expect(mail.subject).to eq(
