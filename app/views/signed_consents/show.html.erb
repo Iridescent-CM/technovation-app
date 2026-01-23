@@ -1,0 +1,58 @@
+<% provide :title, "Parental Consent Form and Electronic Media Release Consent Form" %>
+
+<%= render partial: "parental_consents/consent_status",
+  locals: {
+   parental_consent: @parental_consent,
+   media_consent: @media_consent
+  }
+%>
+
+<div class="prose consent-document prose-sm w-full max-w-full mt-10">
+  <div class="bg-white shadow-md border border-gray-300 rounded-lg p-6 mb-8">
+    <h3 class="border-b border-gray-600">Consent to Participate</h3>
+    <%= render "parental_consents/consent" %>
+    <div class="bg-gray-100 p-2">
+      <% if @parental_consent.signed? %>
+        <p>
+          <span class="font-medium">Student name: </span>
+          <%= @student_profile.full_name %>
+        </p>
+        <p>
+          <span class="font-medium">Electronic signature: </span>
+          <%= @parental_consent.electronic_signature %> signed on <%= @parental_consent.updated_at.strftime("%B %e, %Y") %>
+        </p>
+      <% else %>
+        <p>Parental consent not signed</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-md border border-gray-300 rounded-lg p-6 mb-8">
+    <h3 class="border-b border-gray-600">Electronic Media Release Consent Form</h3>
+    <%= render "media_consents/consent_terms" %>
+
+    <div class="bg-gray-100 p-2">
+      <p>
+        <span class="font-medium">Student name: </span>
+        <%= @student_profile.full_name %>
+      </p>
+      <% if @media_consent.signed? %>
+        <p>
+          <% if @media_consent.consent_provided? %>
+            [X] <%= t("views.media_consents.consent_provided.consent_yes") %><br>
+            [ ] <%= t("views.media_consents.consent_provided.consent_no") %>
+          <% else %>
+            [ ] <%= t("views.media_consents.consent_provided.consent_yes") %><br>
+            [X] <%= t("views.media_consents.consent_provided.consent_no") %>
+          <% end %>
+        </p>
+        <p>
+          <span class="font-medium">Electronic signature: </span>
+          <%= @media_consent.electronic_signature %> signed on <%= @media_consent.signed_at.strftime("%B %e, %Y") %>
+        </p>
+      <% else %>
+        <p>Media consent not signed</p>
+      <% end %>
+    </div>
+  </div>
+</div>

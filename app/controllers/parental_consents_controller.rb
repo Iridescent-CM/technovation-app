@@ -42,7 +42,13 @@ class ParentalConsentsController < ApplicationController
     @parental_consent = student.parental_consent
 
     if @parental_consent.update(parental_consent_params)
-      redirect_to edit_media_consent_path(token: token)
+      if params[:source] == "text_message" && student.parent_guardian_phone_number.present?
+        SendSignedConsentTextMessageJob.perform_later(account_id: student.account.id, consent_type: :parental)
+      elsif student.parent_guardian_email.present?
+        ParentMailer.confirm_parental_consent_finished(student.id).deliver_later
+      end
+
+      redirect_to edit_media_consent_path(token: token, source: params[:source])
     else
       render :edit
     end
@@ -59,6 +65,7 @@ class ParentalConsentsController < ApplicationController
   def parental_consent_params
     params.require(:parental_consent).permit(
       :student_profile_consent_token,
+      :source,
       :electronic_signature,
       :newsletter_opt_in
     ).tap do |tapped|
