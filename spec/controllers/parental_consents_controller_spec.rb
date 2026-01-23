@@ -147,7 +147,7 @@ RSpec.describe ParentalConsentsController do
 
         patch :update, params: {
           id: student.parental_consent.id,
-          source: "text_message",
+          notification_method: "text_message",
           parental_consent: FactoryBot.attributes_for(
             :parental_consent,
             student_profile_consent_token: student.consent_token
