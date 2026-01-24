@@ -142,12 +142,12 @@ RSpec.describe ParentalConsentsController do
         expect(SendSignedConsentTextMessageJob).to receive(:perform_later)
           .with(
             account_id: student.account.id,
-            consent_type: :parental
+            message_type: :signed_parental_consent
           )
 
         patch :update, params: {
           id: student.parental_consent.id,
-          source: "text_message",
+          notification_method: "text_message",
           parental_consent: FactoryBot.attributes_for(
             :parental_consent,
             student_profile_consent_token: student.consent_token

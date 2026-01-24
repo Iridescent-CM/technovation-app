@@ -2165,7 +2165,8 @@ CREATE TABLE public.student_profiles (
     updated_at timestamp without time zone NOT NULL,
     onboarded boolean DEFAULT false,
     deleted_at timestamp without time zone,
-    parent_guardian_phone_number character varying
+    parent_guardian_phone_number character varying,
+    parent_guardian_text_message_opted_in_at timestamp(6) without time zone
 );
 
 
@@ -5245,6 +5246,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251216215907'),
 ('20251216215908'),
 ('20251219212654'),
-('20251220033400');
+('20251220033400'),
+('20260113022239');
 
 
