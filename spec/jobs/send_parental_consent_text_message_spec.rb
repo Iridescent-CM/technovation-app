@@ -9,8 +9,8 @@ RSpec.describe SendParentalConsentTextMessageJob do
 
   it "calls the Twilio service that will send the parental consent text message" do
     expect(Twilio::ApiClient).to receive_message_chain(:new, :send_parental_consent_text_message)
-      .with(account: account)
+      .with(account: account, delivery_method: :whatsapp)
 
-    SendParentalConsentTextMessageJob.perform_now(account_id: account.id)
+    SendParentalConsentTextMessageJob.perform_now(account_id: account.id, delivery_method: :whatsapp)
   end
 end
