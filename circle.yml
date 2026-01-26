@@ -140,6 +140,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
         environment:
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    parallelism: 4
 
     steps:
       - checkout
@@ -210,7 +211,12 @@ jobs:
 
       - run:
           name: Run RSpec tests
-          command: bundle exec rspec --order rand
+          command: |
+            mkdir ~/rspec
+            circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
+
+      - store_test_results:
+          path: ~/rspec
 
       - store_artifacts:
           path: tmp/screenshots

@@ -145,6 +145,7 @@ group :test do
   gem "rspec-retry"
 
   gem "pdf-reader", "~> 2.4"
+  gem "rspec_junit_formatter"
 end
 
 group :development, :test do
