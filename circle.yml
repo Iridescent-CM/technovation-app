@@ -216,11 +216,11 @@ jobs:
       - run:
           name: Run RSpec tests
           command: |
-            mkdir ~/test-results
-            circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --format progress --format RspecJunitFormatter -o ~/test-results/rspec.xml" --verbose --split-by=timings
+            mkdir ~/rspec
+            circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
 
       - store_test_results:
-          path: ~/test-results
+          path: ~/rspec
 
       - store_artifacts:
           path: tmp/screenshots
