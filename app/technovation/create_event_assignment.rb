@@ -23,24 +23,20 @@ module CreateEventAssignment
         invite.events << event
       end
 
-      # FIXME "true" == ...
-      # make it a real boolean
-      if "true" == opts[:send_email]
-        if opts[:scope] == "Team"
-          invite.memberships.each do |membership|
-            EventMailer.invite(
-              membership.member_type,
-              membership.member_id,
-              event.id
-            ).deliver_later
-          end
-        else
+      if opts[:scope] == "Team"
+        invite.memberships.each do |membership|
           EventMailer.invite(
-            opts[:scope],
-            invite.id,
+            membership.member_type,
+            membership.member_id,
             event.id
           ).deliver_later
         end
+      else
+        EventMailer.invite(
+          opts[:scope],
+          invite.id,
+          event.id
+        ).deliver_later
       end
     end
   end
