@@ -32,12 +32,15 @@ module Twilio
 
       parent_guardian_name = account.student_profile.parent_guardian_name
       student_name = account.student_profile.full_name
-      message_body = "Hi #{parent_guardian_name}, #{student_name} has registered for the Technovation Girls program. " \
-        "In order for her to participate, please click this link to complete the consent and media forms. #{consent_url}"
 
       send_text_message(
         account: account,
-        message_body: message_body,
+        content_sid: ENV.fetch("TWILIO_PARENTAL_CONSENT_CONTENT_SID"),
+        content_variables: {
+          "1" => parent_guardian_name,
+          "2" => student_name,
+          "3" => consent_url
+        },
         message_type: :parental_consent,
         delivery_method: delivery_method
       )
@@ -50,15 +53,19 @@ module Twilio
         host: host
       )
 
-      consent_type = message_type == :signed_parental_consent ? "parental" : "media"
+      content_sid = message_type == :signed_parental_consent ?
+        ENV.fetch("TWILIO_SIGNED_PARENTAL_CONSENT_CONTENT_SID") : ENV.fetch("TWILIO_SIGNED_MEDIA_CONSENT_CONTENT_SID")
       parent_guardian_name = account.student_profile.parent_guardian_name
       student_name = account.student_profile.full_name
-      message_body = "Hi #{parent_guardian_name}, thank you for signing the #{consent_type} consent for #{student_name}. " \
-        "View your signed forms here: #{signed_consents_url}"
 
       send_text_message(
         account: account,
-        message_body: message_body,
+        content_sid: content_sid,
+        content_variables: {
+          "1" => parent_guardian_name,
+          "2" => student_name,
+          "3" => signed_consents_url
+        },
         message_type: message_type,
         delivery_method: delivery_method
       )
@@ -68,55 +75,29 @@ module Twilio
 
     attr_reader :client, :api_account_sid, :api_auth_token, :technovation_phone_number, :host, :logger, :error_notifier, :secondary_error_notifier
 
-    Result = Struct.new(:success?, :response, :error, keyword_init: true)
-
-    def send_text_message(account:, message_body:, message_type:, delivery_method: :whatsapp)
+    def send_text_message(account:, content_sid:, content_variables:, message_type:, delivery_method: :whatsapp)
       parent_guardian_phone_number = account.student_profile.parent_guardian_phone_number
+      prefix = delivery_method == :whatsapp ? "whatsapp:" : ""
 
-      result = if delivery_method == :sms
-       send_sms_message(recipient_phone_number: parent_guardian_phone_number, message_body: message_body)
-      else
-       send_whatsapp_message(recipient_phone_number: parent_guardian_phone_number, message_body: message_body)
-      end
-
-      if result.success?
-        account.text_messages.create(
-          delivery_method: delivery_method,
-          status: result.response.status,
-          message_type: message_type,
-          external_message_id: result.response.sid,
-          recipient: result.response.to,
-          sent_at: Time.now,
-          season: Season.current.year
-        )
-      else
-        handle_error(result.error)
-      end
-    end
-
-    def send_whatsapp_message(recipient_phone_number:, message_body:)
       response = client.messages.create(
-        body: message_body,
-        to: "whatsapp:#{recipient_phone_number}",
-        from: "whatsapp:#{ENV['TWILIO_WHATSAPP_PHONE_NUMBER']}"
-      )
-
-      Result.new(success?: true, response: response)
-    rescue => error
-      Result.new(success?: false, error: error)
-    end
-
-    def send_sms_message(recipient_phone_number:, message_body:)
-      response = client.messages.create(
-        body: message_body,
-        to: recipient_phone_number,
-        from: technovation_phone_number,
+        content_sid: content_sid,
+        content_variables: content_variables.to_json,
+        to: "#{prefix}#{parent_guardian_phone_number}",
+        from: "#{prefix}#{technovation_phone_number}",
         messaging_service_sid: ENV.fetch("TWILIO_MESSAGING_SERVICE_ID")
       )
 
-      Result.new(success?: true, response: response)
+      account.text_messages.create(
+        delivery_method: delivery_method,
+        status: response.status,
+        message_type: message_type,
+        external_message_id: response.sid,
+        recipient: response.to,
+        sent_at: Time.now,
+        season: Season.current.year
+      )
     rescue => error
-      Result.new(success?: false, error: error)
+      handle_error(error)
     end
 
     def handle_error(error)

@@ -25,7 +25,7 @@ class ProcessTwilioWebhookPayloadJob < ActiveJob::Base
         error_message: error_message
       )
 
-      if message_status == "failed" && channel_prefix == "whatsapp"
+      if (message_status == "failed" || message_status == "undelivered") && channel_prefix == "whatsapp"
         if text_message_type == :parental_consent
           SendParentalConsentTextMessageJob.perform_later(
             account_id: text_message.account_id,
