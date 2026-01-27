@@ -29,7 +29,7 @@ module Twilio
     def send_parental_consent_text_message
       consent_url = edit_parental_consent_url(
         token: consent_token,
-        notification_method: "text_message",
+        delivery_method: delivery_method,
         host: host
       )
 
