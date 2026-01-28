@@ -168,7 +168,7 @@ RSpec.describe FindEligibleSubmissionId do
       team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id,
+        division_id: Division.senior.id,
         unofficial: true)
 
       submission = FactoryBot.create(:submission, :complete, team: team)
@@ -217,7 +217,7 @@ RSpec.describe FindEligibleSubmissionId do
       team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id)
+        division_id: Division.senior.id)
 
       TeamSubmission.create!({
         integrity_affirmed: true,
@@ -445,7 +445,7 @@ RSpec.describe FindEligibleSubmissionId do
       team.regional_pitch_events << FactoryBot.create(:event,
         starts_at: Date.today,
         ends_at: Date.today + 1.day,
-        division_ids: Division.senior.id)
+        division_id: Division.senior.id)
 
       submission = FactoryBot.create(
         :submission,

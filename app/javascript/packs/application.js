@@ -9,6 +9,7 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import '../config/axios'
-import '../registration'
-import '../application'
+import "../config/axios";
+import "../registration";
+import "../application";
+import "../controllers";

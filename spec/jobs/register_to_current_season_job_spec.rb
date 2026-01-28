@@ -207,6 +207,25 @@ RSpec.describe RegisterToCurrentSeasonJob do
         profile.reload.training_complete?
       }.from(true).to(false)
     end
+
+    context "when a mentor has pending join requests" do
+      let(:mentor) { FactoryBot.create(:mentor) }
+      let!(:pending_mentor_join_request) { FactoryBot.create(:join_request, :pending, requestor: mentor) }
+
+      context "when the mentor is not registered to the current season (i.e. they're getting registered to the current season)" do
+        before do
+          mentor.account.update(seasons: [])
+        end
+
+        it "deletes the mentor's pending join requests" do
+          expect(mentor.pending_join_requests.count).to eq(1)
+
+          RegisterToCurrentSeasonJob.perform_now(mentor.account)
+
+          expect(mentor.mentor_profile.pending_join_requests.count).to eq(0)
+        end
+      end
+    end
   end
 
   context "judges" do

@@ -7,7 +7,7 @@ class EventsGrid
 
   scope do
     RegionalPitchEvent.current
-      .includes(:divisions, ambassador: :account)
+      .includes(:division, ambassador: :account)
       .references(:accounts)
   end
 
@@ -22,8 +22,8 @@ class EventsGrid
     event.ambassador.account.current_chapter&.name.presence || "-"
   end
 
-  column :divisions, mandatory: true, order: "divisions.name DESC" do
-    division_names
+  column :division, mandatory: true, order: "divisions.name DESC" do
+    division_name
   end
 
   column :official, mandatory: true do
@@ -63,9 +63,7 @@ class EventsGrid
   column :teams_count, header: "Team count", mandatory: true
 
   column :actions, mandatory: true, html: true do |event|
-    link_to "view",
-      send(:"#{current_scope}_event_path",
-        event)
+    render "data_grids/events/actions", { event: event, current_scope: current_scope }
   end
 
   column :created_at do

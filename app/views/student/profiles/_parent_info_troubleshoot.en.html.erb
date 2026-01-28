@@ -1,25 +1,27 @@
 <section class="flex flex-col space-y-6 mb-8">
   <p>A request for parent program permission and media consent was sent to:</p>
 
-  <div class="flex flex-col lg:flex-row justify-between">
-    <p>Name: <span class="font-bold"><%= current_student.parent_guardian_name %></span></p>
+  <p>Name: <span class="font-bold"><%= current_student.parent_guardian_name %></span></p>
+
+  <% if current_student.parent_guardian_email.present? %>
     <p>Email: <span class="font-bold"><%= current_student.parent_guardian_email %></span></p>
-  </div>
-
-  <div>
     <p>Ask the parent/guardian listed above to check their email inbox and spam folder.</p>
-  </div>
+  <% else %>
+    <p>Phone Number: <span class="font-bold"><%= current_student.parent_guardian_phone_number %></span></p>
+    <p>Ask the parent/guardian listed above to check their text messages.</p>
+  <% end %>
 
-  <div class="flex flex-col md:flex-row md:justify-center md:items-center md:space-x-4">
-    <%= link_to "Resend consent email",
-                student_parental_consent_notice_path,
-                data: { method: :post },
-                class:"tw-gold-btn"
-    %>
-    <%= link_to "Edit parent email",
-                new_student_parental_consent_notice_path,
-                class:"tw-green-btn"
-    %>
+  <div class="flex flex-col mx-auto md:flex-row md:justify-center md:items-center md:space-x-4">
+    <% if current_student.parent_guardian_email.present? %>
+      <%= link_to "Resend consent email",
+        student_parental_consent_notice_path,
+        data: { method: :post },
+        class:"tw-gold-btn" %>
+    <% end %>
+
+    <%= link_to (current_student.parent_guardian_email.present? ? "Edit parent email" : "Edit parent phone number"),
+      new_student_parental_consent_notice_path,
+      class: "tw-green-btn" %>
   </div>
 </section>
 

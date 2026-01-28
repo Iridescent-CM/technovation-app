@@ -112,6 +112,11 @@ jobs:
           SALESFORCE_CLIENT_SECRET: n-a
           SALESFORCE_REFRESH_TOKEN: n-a
           SUBMISSION_GUIDELINES_URL: n-a
+          TWILIO_ACCOUNT_SID: n-a
+          TWILIO_AUTH_TOKEN: n-a
+          TWILIO_MESSAGING_SERVICE_ID: "12345"
+          TWILIO_PHONE_NUMBER: +11231231234
+          TECHNOVATION_TWILIO_WEBHOOK_URL: "https://some/other/url"
           MENTOR_COHORT_INTEREST_FORM_URL: n-a
           MENTOR_RESOURCES_URL: n-a
           MENTOR_SLACK_SIGNUP_URL: n-a
@@ -120,6 +125,7 @@ jobs:
           GENERAL_NEWSLETTER_URL: "https://some/general/url"
           NEW_RELIC_LICENSE_KEY: n-a
           PARENT_CONSENT_PDF: n-a
+          PARENTAL_CONSENT_TEXT_MESSAGE_COUNTRY_CODES: "US,NG,BR,IN,GH"
           PARENT_RESOURCES_URL: n-a
           PDFTK_PATH: /usr/bin/pdftk
           PGHOST: 127.0.0.1
@@ -129,6 +135,7 @@ jobs:
           REDIS_URL: redis://127.0.0.1:6379/0
           REGIONAL_PITCH_EVENTS_FAQ_URL: 'https://some-url'
           SENIOR_DIVISION_JUDGING_RUBRIC_URL: "https://some/judging-rubik-url"
+          SLACK_URL_FOR_INTEGRATION_ERROR_NOTIFIER: n-a
           THUNKABLE_PROMO_IMAGE: n-a
           WKHTMLTOPDF_PATH: /usr/bin/wkhtmltopdf
       - image: cimg/postgres:13.7
@@ -137,6 +144,7 @@ jobs:
           password: $DOCKERHUB_PASSWORD
         environment:
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    parallelism: 4
 
     steps:
       - checkout
@@ -207,7 +215,12 @@ jobs:
 
       - run:
           name: Run RSpec tests
-          command: bundle exec rspec --order rand
+          command: |
+            mkdir ~/rspec
+            circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
+
+      - store_test_results:
+          path: ~/rspec
 
       - store_artifacts:
           path: tmp/screenshots

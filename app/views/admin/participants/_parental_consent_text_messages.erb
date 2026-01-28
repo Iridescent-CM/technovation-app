@@ -1,0 +1,19 @@
+<div class="margin--t-large">
+  <p class="padding--l-large">Text Messages</p>
+  <ul>
+    <% profile.account.text_messages.parental_consent.current.order(created_at: :desc).each do |text_message| %>
+      <li>
+        Sent At:
+        <%= text_message.sent_at.strftime("%B %e, %Y %l:%M %p") %>
+        -
+        Status:
+        <%= text_message.status %>
+        <br>
+        <% if text_message.failed? || text_message.undelivered? %>
+          Error:
+          <%= text_message.error_message %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

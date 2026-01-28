@@ -765,16 +765,6 @@ ALTER SEQUENCE public.divisions_id_seq OWNED BY public.divisions.id;
 
 
 --
--- Name: divisions_regional_pitch_events; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.divisions_regional_pitch_events (
-    division_id integer,
-    regional_pitch_event_id integer
-);
-
-
---
 -- Name: documents; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1557,6 +1547,77 @@ ALTER SEQUENCE public.mentor_types_id_seq OWNED BY public.mentor_types.id;
 
 
 --
+-- Name: noticed_events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.noticed_events (
+    id bigint NOT NULL,
+    type character varying,
+    record_type character varying,
+    record_id bigint,
+    params jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    notifications_count integer
+);
+
+
+--
+-- Name: noticed_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.noticed_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: noticed_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.noticed_events_id_seq OWNED BY public.noticed_events.id;
+
+
+--
+-- Name: noticed_notifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.noticed_notifications (
+    id bigint NOT NULL,
+    type character varying,
+    event_id bigint NOT NULL,
+    recipient_type character varying NOT NULL,
+    recipient_id bigint NOT NULL,
+    read_at timestamp without time zone,
+    seen_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: noticed_notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.noticed_notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: noticed_notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.noticed_notifications_id_seq OWNED BY public.noticed_notifications.id;
+
+
+--
 -- Name: organization_types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2103,7 +2164,9 @@ CREATE TABLE public.student_profiles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     onboarded boolean DEFAULT false,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    parent_guardian_phone_number character varying,
+    parent_guardian_text_message_opted_in_at timestamp(6) without time zone
 );
 
 
@@ -2436,6 +2499,46 @@ CREATE SEQUENCE public.teams_id_seq
 --
 
 ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
+
+
+--
+-- Name: text_messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.text_messages (
+    id bigint NOT NULL,
+    account_id bigint NOT NULL,
+    season smallint NOT NULL,
+    delivery_method integer NOT NULL,
+    message_type integer NOT NULL,
+    external_message_id character varying,
+    recipient character varying NOT NULL,
+    sent_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    status integer,
+    error_code character varying,
+    error_message text
+);
+
+
+--
+-- Name: text_messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.text_messages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: text_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.text_messages_id_seq OWNED BY public.text_messages.id;
 
 
 --
@@ -2851,6 +2954,20 @@ ALTER TABLE ONLY public.mentor_types ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: noticed_events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_events ALTER COLUMN id SET DEFAULT nextval('public.noticed_events_id_seq'::regclass);
+
+
+--
+-- Name: noticed_notifications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_notifications ALTER COLUMN id SET DEFAULT nextval('public.noticed_notifications_id_seq'::regclass);
+
+
+--
 -- Name: organization_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2995,6 +3112,13 @@ ALTER TABLE ONLY public.team_submissions ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_id_seq'::regclass);
+
+
+--
+-- Name: text_messages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.text_messages ALTER COLUMN id SET DEFAULT nextval('public.text_messages_id_seq'::regclass);
 
 
 --
@@ -3346,6 +3470,22 @@ ALTER TABLE ONLY public.mentor_types
 
 
 --
+-- Name: noticed_events noticed_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_events
+    ADD CONSTRAINT noticed_events_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: noticed_notifications noticed_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.noticed_notifications
+    ADD CONSTRAINT noticed_notifications_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: organization_types organization_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3519,6 +3659,14 @@ ALTER TABLE ONLY public.team_submissions
 
 ALTER TABLE ONLY public.teams
     ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: text_messages text_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.text_messages
+    ADD CONSTRAINT text_messages_pkey PRIMARY KEY (id);
 
 
 --
@@ -3946,6 +4094,27 @@ CREATE INDEX index_mentor_profiles_on_user_invitation_id ON public.mentor_profil
 
 
 --
+-- Name: index_noticed_events_on_record; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_noticed_events_on_record ON public.noticed_events USING btree (record_type, record_id);
+
+
+--
+-- Name: index_noticed_notifications_on_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_noticed_notifications_on_event_id ON public.noticed_notifications USING btree (event_id);
+
+
+--
+-- Name: index_noticed_notifications_on_recipient; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_noticed_notifications_on_recipient ON public.noticed_notifications USING btree (recipient_type, recipient_id);
+
+
+--
 -- Name: index_parental_consents_on_seasons_and_upload_approval_status; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -4100,10 +4269,38 @@ CREATE INDEX index_team_submissions_on_judge_recusal_count ON public.team_submis
 
 
 --
+-- Name: index_teams_on_division_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_teams_on_division_id ON public.teams USING btree (division_id);
+
+
+--
 -- Name: index_teams_on_legacy_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_teams_on_legacy_id ON public.teams USING btree (legacy_id);
+
+
+--
+-- Name: index_text_messages_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_text_messages_on_account_id ON public.text_messages USING btree (account_id);
+
+
+--
+-- Name: index_text_messages_on_message_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_text_messages_on_message_type ON public.text_messages USING btree (message_type);
+
+
+--
+-- Name: index_text_messages_on_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_text_messages_on_status ON public.text_messages USING btree (status);
 
 
 --
@@ -4271,14 +4468,6 @@ ALTER TABLE ONLY public.program_information_organization_types
 
 
 --
--- Name: divisions_regional_pitch_events fk_rails_1064d06b86; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.divisions_regional_pitch_events
-    ADD CONSTRAINT fk_rails_1064d06b86 FOREIGN KEY (division_id) REFERENCES public.divisions(id);
-
-
---
 -- Name: program_information_meeting_formats fk_rails_11fb8da74a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4316,14 +4505,6 @@ ALTER TABLE ONLY public.judge_profile_judge_types
 
 ALTER TABLE ONLY public.regional_pitch_events_teams
     ADD CONSTRAINT fk_rails_24f0c96e18 FOREIGN KEY (team_id) REFERENCES public.teams(id);
-
-
---
--- Name: divisions_regional_pitch_events fk_rails_285ce9b10b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.divisions_regional_pitch_events
-    ADD CONSTRAINT fk_rails_285ce9b10b FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
 
 
 --
@@ -4620,6 +4801,14 @@ ALTER TABLE ONLY public.admin_profiles
 
 ALTER TABLE ONLY public.chapter_links
     ADD CONSTRAINT fk_rails_ca99b2153e FOREIGN KEY (chapter_id) REFERENCES public.chapters(id);
+
+
+--
+-- Name: text_messages fk_rails_cbe23a88f9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.text_messages
+    ADD CONSTRAINT fk_rails_cbe23a88f9 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
@@ -5057,8 +5246,16 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250902171015'),
 ('20250902171016'),
 ('20251022160639'),
+('20251024165952'),
 ('20251103210255'),
+('20251110201524'),
 ('20251118185601'),
-('20251202174428');
+('20251119224512'),
+('20251202174428'),
+('20251216215907'),
+('20251216215908'),
+('20251219212654'),
+('20251220033400'),
+('20260113022239');
 
 

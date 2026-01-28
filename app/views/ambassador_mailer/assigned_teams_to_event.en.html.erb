@@ -1,0 +1,46 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Download your file"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Hi <%= @name %>,
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Your CSV has been processed for the following event:
+          <strong><%= @event.name %></strong>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          <p><strong>Here are the results:</strong></p>
+          <ul>
+            <% @assignment_result.results.each do |result| %>
+              <li><%= result %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block"
+          itemprop="handler"
+          itemscope
+          itemtype="http://schema.org/HttpActionHandler">
+
+          <%= link_to "Review Your Event",
+            @event_url,
+            class: "btn-primary",
+            role: "url" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Regards,<br />
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

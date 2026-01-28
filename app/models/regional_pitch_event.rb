@@ -4,6 +4,10 @@ class RegionalPitchEvent < ActiveRecord::Base
   include Regioned
   regioned_source Account, through: :ambassador
 
+  attr_accessor :capacity_enabled
+
+  before_validation :clear_capacity
+
   after_validation -> {
     AddTeamToRegionalEvent::RemoveIncompatibleDivisionTeams.call(self)
   }
@@ -23,7 +27,7 @@ class RegionalPitchEvent < ActiveRecord::Base
   scope :official, -> { where(unofficial: false) }
 
   scope :by_division, ->(division) {
-    joins(:divisions)
+    joins(:division)
       .where("divisions.name = ?", Division.names[division])
   }
 
@@ -37,7 +41,7 @@ class RegionalPitchEvent < ActiveRecord::Base
     class_name: "ChapterAmbassadorProfile",
     foreign_key: :chapter_ambassador_profile_id
 
-  has_and_belongs_to_many :divisions
+  belongs_to :division
 
   has_and_belongs_to_many :judges,
     -> { includes(:account).references(:accounts) },
@@ -62,10 +66,14 @@ class RegionalPitchEvent < ActiveRecord::Base
   validates :name,
     :starts_at,
     :ends_at,
-    :division_ids,
+    :division_id,
     :city,
     :venue_address,
     presence: true
+
+  validates :capacity, presence: true,
+    numericality: { only_integer: true, greater_than: 0 },
+    if: :capacity_enabled?
 
   delegate :state_province,
     :country,
@@ -137,8 +145,8 @@ class RegionalPitchEvent < ActiveRecord::Base
       name: name,
       city: city,
       venue_address: venue_address,
-      division_names: division_names,
-      division_ids: division_ids,
+      division_name: division_name,
+      division_id: division_id,
       day: day,
       date: date,
       time: time,
@@ -154,6 +162,10 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def friendly_name
     "#{name} in #{city} on #{date_time}"
+  end
+
+  def division_name
+    division.name
   end
 
   def division_names
@@ -198,6 +210,15 @@ class RegionalPitchEvent < ActiveRecord::Base
     end
   end
 
+  def capacity_enabled?
+    capacity_enabled == "1" ||
+      (capacity.present? && capacity.to_i > 0)
+  end
+
+  def clear_capacity
+    self.capacity = nil unless capacity_enabled?
+  end
+
   def name_with_friendly_country_prefix
     "#{FriendlyCountry.call(ambassador.account)} - #{name}"
   end
@@ -238,7 +259,7 @@ class TeamSubmissionEventScope < EventScope
   def execute
     if record.country === "US"
       scope.current
-        .joins(:divisions)
+        .joins(:division)
         .where("divisions.id = ?", record.division_id)
         .joins(ambassador: :account)
         .where(
@@ -247,7 +268,7 @@ class TeamSubmissionEventScope < EventScope
         )
     else
       scope.current
-        .joins(:divisions)
+        .joins(:division)
         .where("divisions.id = ?", record.division_id)
         .joins(ambassador: :account)
         .where("accounts.country = ?", record.country)

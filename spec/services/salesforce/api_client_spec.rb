@@ -17,7 +17,8 @@ RSpec.describe Salesforce::ApiClient do
       enabled: salesforce_enabled,
       client_constructor: client_constructor,
       logger: logger,
-      error_notifier: error_notifier
+      error_notifier: error_notifier,
+      secondary_error_notifier: secondary_error_notifier
     )
   end
 
@@ -34,6 +35,7 @@ RSpec.describe Salesforce::ApiClient do
   let(:client_constructor) { class_double(Restforce).as_stubbed_const }
   let(:logger) { double("Logger") }
   let(:error_notifier) { double("Airbrake") }
+  let(:secondary_error_notifier) { double(IntegrationErrorNotifier) }
 
   before do
     allow(client_constructor).to receive(:new).with(
@@ -51,6 +53,7 @@ RSpec.describe Salesforce::ApiClient do
     allow(logger).to receive(:info)
     allow(logger).to receive(:error)
     allow(error_notifier).to receive(:notify)
+    allow(secondary_error_notifier).to receive_message_chain(:with, :deliver)
   end
 
   let(:salesforce_client) { double("SalesforceClient") }
@@ -199,6 +202,12 @@ RSpec.describe Salesforce::ApiClient do
 
       it "notifies the error_notifier with the error" do
         expect(error_notifier).to receive(:notify).with("[SALESFORCE] #{error_message}")
+
+        salesforce_api_client.upsert_contact_info
+      end
+
+      it "calls the secondary error notifier" do
+        expect(secondary_error_notifier).to receive_message_chain(:with, :deliver)
 
         salesforce_api_client.upsert_contact_info
       end

@@ -354,7 +354,7 @@ en:
         form:
           submit: "Send the form"
         new:
-          title: "Email a consent form to your parent or guardian"
+          title: "Send a consent form to your parent or guardian"
 
       signups:
         new:

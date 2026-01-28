@@ -247,14 +247,16 @@ class StudentProfile < ActiveRecord::Base
     end
   end
 
-  def validate_parent_email
-    %i[parent_guardian_name parent_guardian_email].select { |a|
-      send(a).blank?
-    }.each do |a|
-      errors.add(a, :blank)
+  def validate_parent_contact_information
+    if parent_guardian_name.blank?
+      errors.add(:parent_guardian_name, :blank)
     end
 
-    validate_valid_parent_email
+     if parent_guardian_email.blank? && parent_guardian_phone_number.blank?
+      errors.add(:base, "Please provide either an email address or phone number for your parent or guardian")
+    end
+
+    validate_valid_parent_email if parent_guardian_email.present?
 
     errors.empty?
   end
@@ -381,6 +383,11 @@ class StudentProfile < ActiveRecord::Base
       account.terms_agreed_at?
   end
 
+  def in_parental_consent_text_message_country?
+    country_codes = ENV.fetch("PARENTAL_CONSENT_TEXT_MESSAGE_COUNTRY_CODES", "").split(",")
+    country_codes.include?(account.country_code)
+  end
+
   private
 
   def validate_valid_parent_email
@@ -388,7 +395,7 @@ class StudentProfile < ActiveRecord::Base
       Division.for_account(account).name == "beginner" ||
       (
         !parent_guardian_email_changed? &&
-        parent_guardian_email == ConsentForms::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+        parent_guardian_email == ConsentForms::PARENT_GUARDIAN_EMAIL_ADDRESS_FOR_A_PAPER_CONSENT
       )
 
     if !parent_guardian_email.match(
@@ -403,17 +410,16 @@ class StudentProfile < ActiveRecord::Base
   end
 
   def reset_parent
-    return if parent_guardian_email == ConsentForms::PARENT_GUARDIAN_EMAIL_ADDDRESS_FOR_A_PAPER_CONSENT
+    return if parent_guardian_email == ConsentForms::PARENT_GUARDIAN_EMAIL_ADDRESS_FOR_A_PAPER_CONSENT
 
-    if saved_change_to_parent_guardian_email? &&
-        parent_guardian_email.present?
-      if consent = parental_consent
-        consent.pending!
-      else
-        create_parental_consent!
-      end
-
+    if saved_change_to_parent_guardian_email? && parent_guardian_email.present?
+      reset_parental_consent
       ParentMailer.consent_notice(id).deliver_later
+    end
+
+    if saved_change_to_parent_guardian_phone_number? && parent_guardian_phone_number.present?
+      reset_parental_consent
+      SendParentalConsentTextMessageJob.perform_later(account_id: account.id)
     end
 
     if saved_change_to_parent_guardian_name? ||
@@ -422,6 +428,14 @@ class StudentProfile < ActiveRecord::Base
         account_id: account.id,
         profile_type: "student"
       )
+    end
+  end
+
+  def reset_parental_consent
+    if consent = parental_consent
+      consent.pending!
+    else
+      create_parental_consent!
     end
   end
 end

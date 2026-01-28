@@ -40,14 +40,21 @@ class Team < ActiveRecord::Base
   }
 
   scope :by_query, ->(query) {
-    where("teams.name ILIKE ?", "#{query}%")
+    where("teams.name ILIKE ?", "%#{query}%")
   }
 
   scope :live_event_eligible, ->(event) {
     not_staff
       .not_attending_live_event
       .joins(:division, :submission)
-      .where("divisions.id IN (?)", event.division_ids)
+      .where(division: event.division)
+  }
+
+  scope :available_for_event, ->(event, ambassador) {
+    live_event_eligible(event)
+      .in_region(ambassador)
+      .includes(:division, submission: :team)
+      .order("teams.name")
   }
 
   def self.sort_column

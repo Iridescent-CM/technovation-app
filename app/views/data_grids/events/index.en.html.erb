@@ -1,5 +1,16 @@
 <% provide :title, "Events" %>
 
+<% if current_account.chapter_ambassador? %>
+  <div class="panel">
+    <h3>Regional Pitch Events</h3>
+    <% if SeasonToggles.create_regional_pitch_event? %>
+      <p><%= link_to "Add an event", new_chapter_ambassador_regional_pitch_event_path, class: "button" %></p>
+    <% else %>
+     <p>New events cannot be created at this time.</p>
+    <% end %>
+  </div>
+<% end %>
+
 <%= render "datagrid/datagrid",
   grid: @events_grid,
   form_url: current_account.admin? ? admin_events_path : chapter_ambassador_events_list_path,

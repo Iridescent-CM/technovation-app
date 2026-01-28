@@ -224,7 +224,15 @@ Rails.application.routes.draw do
     resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
     resources :events, controller: :regional_pitch_events do
+      resources :event_judges, only: [:create, :destroy]
+      resources :event_teams, only: [:create, :destroy]
+
+      get :available_judges, on: :member
+      get :available_teams, on: :member
       get :bulk_download_submission_pitch_presentations
+
+      post :bulk_add_judges
+      post :bulk_add_teams
     end
     get "events_list", to: "/data_grids/ambassador/events#index", as: "events_list"
 
@@ -496,6 +504,7 @@ Rails.application.routes.draw do
 
   namespace :webhooks do
     resource :docusign, only: :create, controller: "docusign"
+    resource :twilio, only: :create, controller: "twilio"
   end
 
   resource :terms_agreement, only: [:new, :create]
@@ -510,6 +519,7 @@ Rails.application.routes.draw do
   resource :parental_consent, only: [:new, :edit]
   resources :parental_consents, only: [:show, :update]
   resource :media_consent, only: [:show, :edit, :update]
+  resource :signed_consents, only: [:show]
 
   resources :teams, only: :show
   resources :team_submission_pieces, only: :show

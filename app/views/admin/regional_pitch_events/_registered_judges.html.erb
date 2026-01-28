@@ -1,0 +1,42 @@
+<%= turbo_frame_tag "registered-judges-frame" do %>
+  <div class="grid grid--bleed">
+    <div class="grid__col-auto" style="overflow-x: auto;">
+      <h5>
+        <span>
+          Judges (<%= event.judges.count %>)
+        </span>
+      </h5>
+
+      <% if event.judges.any? %>
+        <table class="table--hoverable rpe-judges">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Status</th>
+              <% if current_account.chapter_ambassador? %>
+                <th>Actions</th>
+              <% end %>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% event.judges.each do |judge| %>
+              <%= render "admin/regional_pitch_events/registered_judge", judge: judge, event: event %>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div style="margin-top: 16px;">
+          <% if current_account.chapter_ambassador? %>
+            <%= button_to "Export Judge List to CSV",
+              chapter_ambassador_event_judge_list_exports_path(id: event),
+              class: "button button--gray" %>
+          <% end %>
+        </div>
+      <% else %>
+        <p>No judges yet.</p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

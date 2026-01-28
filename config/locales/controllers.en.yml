@@ -157,7 +157,7 @@ en:
 
       parental_consent_notices:
         create:
-          success: "Okay, we sent an email to your parent/guardian."
+          success: "Okay, we sent the parental consent to your parent or guardian."
 
       regional_pitch_event_selections:
         create:

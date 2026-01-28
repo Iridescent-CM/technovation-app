@@ -1,0 +1,14 @@
+<tr id="<%=dom_id(judge, :available) %>">
+  <td>
+    <%= judge.name %>
+  </td>
+  <td>
+    <%= judge.email %>
+  </td>
+  <td>
+    <%= button_to "Add",
+      chapter_ambassador_event_event_judges_path(event, judge_id: judge.id),
+      method: :post,
+      class: "button" %>
+  </td>
+</tr>
