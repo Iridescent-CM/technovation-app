@@ -21,14 +21,31 @@
         <%= f.text_field :venue_address, id: :venue_address, required: true  %>
       </div>
 
-      <div class="field">
-        <%= f.label :starts_at, "Event starts at" %>
-        <%= f.datetime_local_field :starts_at, required: true %>
-      </div>
+      <div data-controller="date-fields" >
+        <div class="field">
+          <%= f.label :starts_at, "Event starts at" %>
+          <%= f.date_field :starts_at,
+            required: true,
+            min: @pitch_event_start_date_range,
+            max: @pitch_event_end_date_range,
+            data: {
+              date_fields_target: "startDate",
+              action: "change->date-fields#setEndDateValues"
+            }
+          %>
+        </div>
 
-      <div class="field">
-        <%= f.label :ends_at, "Event ends at" %>
-        <%= f.datetime_local_field :ends_at, required: true %>
+        <div class="field">
+          <%= f.label :ends_at, "Event ends at" %>
+          <%= f.datetime_local_field :ends_at,
+            required: true,
+            min: @pitch_event_start_date_range,
+            max: @pitch_event_end_date_range,
+            data: {
+              date_fields_target: "endDate"
+            }
+          %>
+        </div>
       </div>
     </div>
 
