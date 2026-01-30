@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe Twilio::ApiClient do
   let(:twilio_api_client) do
     Twilio::ApiClient.new(
+      account: student_profile.account,
+      delivery_method: :whatsapp,
       api_account_sid: api_account_sid,
       api_auth_token: api_auth_token,
       technovation_phone_number: technovation_phone_number,
@@ -40,7 +42,7 @@ RSpec.describe Twilio::ApiClient do
     it "sends a parental consent text message" do
       expect(messages).to receive(:create)
 
-      twilio_api_client.send_parental_consent_text_message(account: student_profile.account, delivery_method: :whatsapp)
+      twilio_api_client.send_parental_consent_text_message
     end
   end
 end
