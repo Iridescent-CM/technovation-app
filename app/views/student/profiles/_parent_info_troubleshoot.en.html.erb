@@ -6,23 +6,47 @@
   <% if current_student.parent_guardian_email.present? %>
     <p>Email: <span class="font-bold"><%= current_student.parent_guardian_email %></span></p>
     <p>Ask the parent/guardian listed above to check their email inbox and spam folder.</p>
-  <% else %>
-    <p>Phone Number: <span class="font-bold"><%= current_student.parent_guardian_phone_number %></span></p>
-    <p>Ask the parent/guardian listed above to check their text messages.</p>
-  <% end %>
 
-  <div class="flex flex-col mx-auto md:flex-row md:justify-center md:items-center md:space-x-4">
-    <% if current_student.parent_guardian_email.present? %>
+    <div class="flex flex-col mx-auto md:flex-row md:justify-center md:items-center md:space-x-4">
       <%= link_to "Resend consent email",
         student_parental_consent_notice_path,
         data: { method: :post },
         class:"tw-gold-btn" %>
-    <% end %>
 
-    <%= link_to (current_student.parent_guardian_email.present? ? "Edit parent email" : "Edit parent phone number"),
-      new_student_parental_consent_notice_path,
-      class: "tw-green-btn" %>
-  </div>
+      <%= link_to "Edit parent email",
+        new_student_parental_consent_notice_path,
+        class: "tw-green-btn" %>
+    </div>
+  <% elsif current_student.can_send_parental_consent_text_message? %>
+    <p>Phone Number: <span class="font-bold"><%= current_student.parent_guardian_phone_number %></span></p>
+    <p>Ask the parent/guardian listed above to check their text messages.</p>
+
+    <div class="flex flex-col">
+      <div class="flex flex-col mx-auto md:flex-row md:justify-center md:items-center md:space-x-4">
+        <%= link_to "Resend consent text message",
+          student_parental_consent_notice_path,
+          data: { method: :post },
+          class:"tw-gold-btn" %>
+
+        <%= link_to "Edit parent phone number",
+          new_student_parental_consent_notice_path,
+          class: "tw-green-btn" %>
+      </div>
+
+      <div>
+        <p class="text-sm italic mt-2 text-center">
+          You have <%= current_student.parental_consent_text_messages_remaining %> resends remaining.
+        </p>
+      </div>
+    </div>
+  <% elsif current_student.parental_consent_text_message_limit_reached? %>
+    <p>Phone Number: <span class="font-bold"><%= current_student.parent_guardian_phone_number %></span></p>
+
+    <p>
+      Maximum text message resends reached. Please upload paper consent below
+      or contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for help.
+    </p>
+  <% end %>
 </section>
 
 <div class="bg-energetic-blue h-1 mb-8"></div>
