@@ -296,4 +296,49 @@ RSpec.describe StudentProfile do
       student_profile.update(parent_guardian_email: new_parent_guardian_email_address)
     end
   end
+
+  describe "#parental_consent_text_messages_remaining" do
+    let(:student) { FactoryBot.create(:student_profile) }
+
+    it "returns 5 when no messages are sent" do
+      expect(student.parental_consent_text_messages_remaining).to eq(5)
+    end
+
+    it "returns 1 when 4 text messages are sent" do
+      FactoryBot.create_list(:text_message, 4, :whatsapp, account: student.account)
+      expect(student.parental_consent_text_messages_remaining).to eq(1)
+    end
+  end
+
+  describe "#parental_consent_text_message_limit_reached?" do
+    let(:student) { FactoryBot.create(:student_profile, parent_guardian_phone_number: "+11234567890") }
+
+    it "returns false when 3 text messages are sent" do
+      FactoryBot.create_list(:text_message, 3, :whatsapp, account: student.account)
+      expect(student.parental_consent_text_message_limit_reached?).to be false
+    end
+
+    it "returns true when 5 text messages are sent" do
+      FactoryBot.create_list(:text_message, 5, :whatsapp, account: student.account)
+      expect(student.parental_consent_text_message_limit_reached?).to be true
+    end
+  end
+
+  describe "#can_send_parental_consent_text_message?" do
+    let(:student) { FactoryBot.create(:student_profile, parent_guardian_phone_number: "+11234567890") }
+
+    it "returns true when phone number is entered and text message limit is not reached" do
+      expect(student.can_send_parental_consent_text_message?).to be true
+    end
+
+    it "returns false when phone number is missing" do
+      student.update(parent_guardian_phone_number: nil)
+      expect(student.can_send_parental_consent_text_message?).to be false
+    end
+
+    it "returns false when 5 text messages are sent" do
+      FactoryBot.create_list(:text_message, 5, :whatsapp, account: student.account)
+      expect(student.can_send_parental_consent_text_message?).to be false
+    end
+  end
 end
