@@ -388,6 +388,21 @@ class StudentProfile < ActiveRecord::Base
     country_codes.include?(account.country_code)
   end
 
+  def can_send_parental_consent_text_message?
+    in_parental_consent_text_message_country? &&
+      parent_guardian_phone_number.present? &&
+      parental_consent_text_messages_remaining > 0
+  end
+
+  def parental_consent_text_message_limit_reached?
+    parent_guardian_phone_number.present? &&
+      parental_consent_text_messages_remaining == 0
+  end
+
+  def parental_consent_text_messages_remaining
+    ENV.fetch("MAXIMUM_NUMBER_OF_PARENTAL_CONSENT_TEXT_MESSAGES").to_i - account.text_messages.current.parental_consent.whatsapp.count
+  end
+
   private
 
   def validate_valid_parent_email
@@ -417,7 +432,7 @@ class StudentProfile < ActiveRecord::Base
       ParentMailer.consent_notice(id).deliver_later
     end
 
-    if saved_change_to_parent_guardian_phone_number? && parent_guardian_phone_number.present?
+    if saved_change_to_parent_guardian_phone_number? && can_send_parental_consent_text_message?
       reset_parental_consent
       SendParentalConsentTextMessageJob.perform_later(account_id: account.id)
     end
