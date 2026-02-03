@@ -11,8 +11,10 @@ class Student::ParentalConsentNoticesController < StudentController
       unless current_student.validate_parent_contact_information && current_student.save
         render :new and return
       end
-    else
+    elsif current_student.parent_guardian_email.present?
       ParentMailer.consent_notice(current_student.id).deliver_later
+    elsif current_student.can_send_parental_consent_text_message?
+      SendParentalConsentTextMessageJob.perform_later(account_id: current_student.account.id)
     end
 
     flash[:success] =
