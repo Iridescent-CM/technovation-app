@@ -6,7 +6,18 @@ module ChapterAmbassador
       @event = RegionalPitchEvent.in_region(current_ambassador).find(params[:event_id])
       @judge = JudgeProfile.find(params[:judge_id])
 
-      @judge.events << @event
+      CreateEventAssignment.call(@event, {
+        invites: {
+          "0" => [
+            {
+              scope: "JudgeProfile",
+              id: @judge.id,
+              email: @judge.email,
+              name: @judge.full_name
+            }
+          ]
+        }
+      })
 
       @event = RegionalPitchEvent.find(params[:event_id])
       @available_judges = load_available_judges_for_event(@event)
