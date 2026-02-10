@@ -8898,10 +8898,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@^10.0:
-  version "10.15.7"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.15.7.tgz#ad4c8f08432952d3283adbaa9a309c534f5a863d"
-  integrity sha512-imY0MR03NGefPcGzSYjWYz1GMIlniusEBXilswvKrHD/GMiTxA5jnsdjtK2IoRyXfEaqV7GWt6DM4YVjAZU8gw==
+sweetalert2@^11.0:
+  version "11.26.18"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.26.18.tgz#86077ab19cd55f36d709e01a9b72ac4aef4c778e"
+  integrity sha512-3O5feBqV+hTIOwCRKGuZGHosjiuBAKP/vpBl6vKFZeVYfCUGdXqXuuidn6YXHan3f6e62UdmnjwJBt8UtDVBhg==
 
 tailwindcss@^3.1.3:
   version "3.1.3"

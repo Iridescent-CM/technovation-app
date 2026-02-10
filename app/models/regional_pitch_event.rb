@@ -72,7 +72,7 @@ class RegionalPitchEvent < ActiveRecord::Base
     presence: true
 
   validates :capacity, presence: true,
-    numericality: { only_integer: true, greater_than: 0 },
+    numericality: {only_integer: true, greater_than: 0},
     if: :capacity_enabled?
 
   delegate :state_province,
@@ -213,6 +213,10 @@ class RegionalPitchEvent < ActiveRecord::Base
   def capacity_enabled?
     capacity_enabled == "1" ||
       (capacity.present? && capacity.to_i > 0)
+  end
+
+  def meets_requirement_to_assign_judges_to_teams?
+    teams.count >= ENV.fetch("MINIMUM_NUMBER_OF_TEAMS_ATTENDING_AN_RPE_TO_ENABLE_JUDGE_TO_TEAM_ASSIGNMENTS", 10).to_i
   end
 
   def clear_capacity

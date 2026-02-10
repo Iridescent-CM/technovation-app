@@ -36,13 +36,15 @@ class JudgeProfile < ActiveRecord::Base
   }
 
   scope :by_query, ->(query) {
-    includes(:account)
-      .where(
-        "accounts.first_name ILIKE ? OR " +
-        "accounts.last_name ILIKE ?",
-        "%#{query}%",
-        "%#{query}%"
-      )
+    if query.present?
+      joins(:account)
+        .where(
+          "accounts.first_name ILIKE ? OR " \
+          "accounts.last_name ILIKE ?",
+          "%#{query}%",
+          "%#{query}%"
+        )
+    end
   }
 
   belongs_to :account, required: false

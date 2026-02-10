@@ -1,0 +1,9 @@
+<ul id="judges-assigned-to-team" class="divide-y divide-gray-200" style="list-style-type: none; padding: 0;" role="list">
+  <% if judges_assigned_to_team.any? %>
+    <% judges_assigned_to_team.each do |judge| %>
+      <%= render "admin/regional_pitch_events/judges/judge_assigned_to_team", judge:, team: %>
+    <% end %>
+  <% else %>
+    <p id="no-judges-found">Currently, there aren't any judges assigned to this team.</p>
+  <% end %>
+</ul>

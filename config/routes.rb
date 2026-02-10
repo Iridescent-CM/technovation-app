@@ -228,6 +228,7 @@ Rails.application.routes.draw do
       resources :event_teams, only: [:create, :destroy]
 
       get :available_judges, on: :member
+      get :available_judges_for_team_assignment, on: :member
       get :available_teams, on: :member
       get :bulk_download_submission_pitch_presentations
 
