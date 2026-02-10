@@ -8,5 +8,9 @@ FactoryBot.define do
     recipient { "+11231231234" }
     sent_at { Time.now }
     season { Season.current.year }
+
+    trait :whatsapp do
+      delivery_method { :whatsapp }
+    end
   end
 end
