@@ -1,20 +1,49 @@
 <br><hr>
-<h5>Upload a CSV to Add Multiple Judges to this Event</h5>
+<h4 style="margin-top: 12px;">Upload a CSV to Add Multiple Judges to this Event</h4>
+
+<p>
+  Multiple judges can be added to an event via bulk upload using the
+  judge ID number. To find the judge ID:
+</p>
+
+<ul>
+  <li>Go to the <%= link_to "judges admin page", chapter_ambassador_judges_path %></li>
+  <li>Add "Judge ID" as an additional column</li>
+
+  <ul>
+    <li>Please apply any other filters to limit the search results to the judges you wish to add to the RPE</li>
+  </ul>
+
+  <li>Click "Export current results to CSV"
+
+  <ul>
+    <li>This CSV can then be uploaded to the event below</li>
+  </ul>
+</ul>
+
+<p><strong>Only CSVs that include a column with the header "Judge ID" can be uploaded.</strong></p>
+
+<p style="margin-top: 16px;">Also, please note:</p>
+
+<ul style="margin-bottom: 24px;">
+  <li>Judges who have not yet logged in for this season can only be added via the individual judge process</li>
+  <li>You should only add judges who have already agreed to be part of the event</li>
+</ul>
 
 <%= form_with(
   url: chapter_ambassador_event_bulk_add_judges_path(@event),
   local: true,
   data: {turbo: false},
-  html: { method: :post }) do |form|
-%>
-
-  <p style="margin: 16px 0 24px;">Instructions here...</p>
+  html: {
+    method: :post,
+    style: "background-color: #e5e5e5; padding: 20px 18px;"}
+) do |form| %>
 
   <div>
     <%= form.file_field :csv_file, 
       required: true,
       accept: ".csv",
-      style: "width: 100%; padding: 8px; border: 1px solid oklch(87.2% 0.01 258.338); border-radius: 0.15rem; font-size: 1.2rem;"
+      style: "width: 100%; background-color: #fff; padding: 8px; border: 1px solid oklch(87.2% 0.01 258.338); border-radius: 0.15rem; font-size: 1.2rem;"
     %>
   </div>
 
@@ -22,3 +51,10 @@
     <%= form.submit "Upload CSV", class: "button" %>
   </div>
 <% end %>
+
+<p class="hint" style="margin-top: 24px;">For a judge to successfully be added to an RPE:</p>
+
+<ul>
+  <li class="hint hint--above">They must be part of the current season</li>
+  <li class="hint hint--above">They must not already be attending this RPE or another RPE</li>
+</ul>
