@@ -1,7 +1,13 @@
 <% provide :title, "Parental Consent Form" %>
 
+<% if I18n.locale == :en %>
+  <%= link_to "View Spanish version", edit_parental_consent_path(lang: "es", **params.permit(:token)) %>
+<% else %>
+  <%= link_to "View English version", edit_parental_consent_path(lang: "en", **params.permit(:token)) %>
+<% end %>
+
 <div class="prose welcome-message prose-energetic-blue-600 prose-md text-gray-500 mt-2">
-  <%= render "welcome_message" %>
+  <%= render partial: "welcome_message" %>
 </div>
 
 <div class="max-w-full border-t h-1 bg-tg-green mt-4 mb-8"></div>

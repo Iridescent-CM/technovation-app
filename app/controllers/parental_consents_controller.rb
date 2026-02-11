@@ -18,6 +18,8 @@ class ParentalConsentsController < ApplicationController
   end
 
   def edit
+    @locale = params.fetch(:locale, :en).to_sym
+
     if student.present? && !student.consent_signed?
       @parental_consent = student.parental_consent || student.create_parental_consent!
       @parental_consent.student_profile_consent_token = params.fetch(:token)

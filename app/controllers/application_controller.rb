@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include ForceLocation
   include ForceChapterableSelection
 
+  before_action :set_locale_from_url_parameter
+
   protect_from_forgery with: :exception
 
   add_flash_types :success
@@ -135,5 +137,15 @@ class ApplicationController < ActionController::Base
 
   def current_profile_type
     "NO_PROFILE_TYPE_DEFINED_HERE"
+  end
+
+  private
+
+  def set_locale_from_url_parameter
+    I18n.locale = params[:lang].presence_in(I18n.available_locales.map(&:to_s)) || :en
+  end
+
+  def default_url_options
+    {lang: I18n.locale}
   end
 end
