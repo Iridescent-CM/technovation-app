@@ -38,7 +38,8 @@
           WhatsApp first and then use SMS if WhatsApp is not available. Note: Standard messaging rates apply.
         </p>
         <%= f.input :parent_guardian_phone_number,
-          label: t('models.student_profile.parent_guardian_phone_number') %>
+          label: t('models.student_profile.parent_guardian_phone_number'),
+          placeholder: "Enter the full phone number including country code (For example +1 for US, +234 for Nigeria)" %>
         <p class="hint">Changing this phone number will send and require a new consent.</p>
       <% end %>
     </div>

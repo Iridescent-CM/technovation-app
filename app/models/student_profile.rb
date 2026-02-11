@@ -119,6 +119,8 @@ class StudentProfile < ActiveRecord::Base
     end
   }
 
+  before_validation :normalize_parent_guardian_phone_number
+
   validates :school_name, presence: true
 
   validate :parent_guardian_email, -> { validate_valid_parent_email }
@@ -252,8 +254,15 @@ class StudentProfile < ActiveRecord::Base
       errors.add(:parent_guardian_name, :blank)
     end
 
-     if parent_guardian_email.blank? && parent_guardian_phone_number.blank?
+    if parent_guardian_email.blank? && parent_guardian_phone_number.blank?
       errors.add(:base, "Please provide either an email address or phone number for your parent or guardian")
+    end
+
+    if parent_guardian_phone_number.present?
+      phone_number = Phonelib.parse(parent_guardian_phone_number)
+      unless phone_number.valid?
+        errors.add(:parent_guardian_phone_number, :invalid)
+      end
     end
 
     validate_valid_parent_email if parent_guardian_email.present?
@@ -381,6 +390,15 @@ class StudentProfile < ActiveRecord::Base
       !account.email_confirmed_at.blank? &&
       account.valid_coordinates? &&
       account.terms_agreed_at?
+  end
+
+  def normalize_parent_guardian_phone_number
+    return if parent_guardian_phone_number.blank?
+
+    phone_number = Phonelib.parse(parent_guardian_phone_number)
+    if phone_number.valid?
+      self.parent_guardian_phone_number = phone_number.e164
+    end
   end
 
   def in_parental_consent_text_message_country?
