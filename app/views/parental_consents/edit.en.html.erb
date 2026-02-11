@@ -15,12 +15,15 @@
 
 <%= simple_form_for @parental_consent,
   html: {class: "consent-form"},
-  url:  parental_consent_path(@parental_consent, anchor: "parental-consent-form") do |f| %>
+  url:  parental_consent_path(@parental_consent, anchor: "parental-consent-form"),
+  data: {turbo: false} do |f| %>
 
   <%= render "errors", record: @parental_consent %>
 
   <div class="prose consent-document prose-sm w-full max-w-full mt-10">
-    <h3 class="border-b border-gray-600">Consent to Participate</h3>
+    <h3 class="border-b border-gray-600">
+      <%= t("views.consent_waivers.consent_to_participate") %>
+    </h3>
 
     <%= render "consent" %>
   </div>
@@ -28,7 +31,7 @@
   <div class="w-full border-gray-400 my-8"></div>
 
   <div id="parental-consent-form" class="my-4">
-    <%= label_tag t("views.parental_consents.student_name.label") %>
+    <%= label_tag t("views.consent_waivers.students_name") %>
     <%= text_field_tag nil, f.object.student_profile.full_name, disabled: "disabled" %>
   </div>
 
@@ -45,7 +48,7 @@
     <div class="mt-4 mb-8">
       <%= f.input :newsletter_opt_in,
         as: :boolean,
-        label: "It's okay for Technovation to send email to me (about every two months)"
+        label: t("views.parental_consents.newsletter_opt_in.label")
       %>
     </div>
   <% end %>

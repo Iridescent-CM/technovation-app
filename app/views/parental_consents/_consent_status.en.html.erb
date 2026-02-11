@@ -17,7 +17,7 @@
           <% end %>
 
           <span class="ml-4 text-sm font-medium text-gray-900">
-            Consent to Participate
+            <%= t("views.consent_waivers.consent_to_participate") %>
           </span>
         </span>
       </div>
@@ -47,7 +47,7 @@
           <% end %>
 
           <span class="ml-4 text-sm font-medium <%= parental_consent.signed? ? 'text-gray-900' : 'text-gray-500' %>">
-            Media Consent
+            <%= t("views.consent_waivers.media_consent") %>
           </span>
         </span>
       </div>

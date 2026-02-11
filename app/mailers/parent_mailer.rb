@@ -22,7 +22,7 @@ class ParentMailer < ApplicationMailer
 
     @parental_consent = @student_profile.parental_consent
 
-    I18n.with_locale(@student_profile.account.locale) do
+    I18n.with_locale(I18n.locale) do
       mail to: @student_profile.parent_guardian_email
     end
   end
@@ -33,7 +33,7 @@ class ParentMailer < ApplicationMailer
 
     @media_consent = @student_profile.media_consent
 
-    I18n.with_locale(@student_profile.account.locale) do
+    I18n.with_locale(I18n.locale) do
       mail to: @student_profile.parent_guardian_email
     end
   end

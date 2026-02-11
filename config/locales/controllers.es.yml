@@ -1,4 +1,4 @@
-es-MX:
+es:
   controllers:
     application:
       already_authenticated: "Ya has iniciado sesión."
@@ -45,6 +45,10 @@ es-MX:
         success: "¡Gracias por firmar el formulario de consentimiento de los padres!"
       new:
         unauthorized: "Lo sentimos, este símbolo de consentimiento no es válido."
+
+    media_consents:
+      update:
+        success_html: "Gracias por firmar los formularios. Su hija ya puede unirse a un equipo de Technovation Girls. Puede encontrar más información sobre cómo apoyar su participación en Technovation en nuestra página de <a href='https://technovationchallenge.org/parent-resources/' class='underline'>Recursos para Padres</a>."
 
     passwords:
       create:

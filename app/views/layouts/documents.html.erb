@@ -14,14 +14,26 @@
     <%= render "favicons" %>
 
     <%= javascript_packs_with_chunks_tag "application_rebrand" %>
+    <%= javascript_packs_with_chunks_tag "application" %>
+
     <%= stylesheet_pack_tag "application_rebrand", "data-turbo-track": "reload" %>
   </head>
 
   <body>
     <div class="w-full h-4 bg-energetic-blue"></div>
 
+    <div class="w-full mx-auto bg-blue-100 p-2 mb-4">
+      <div class="max-w-prose mx-auto px-8 block">
+        <div class="flex justify-end">
+          <div class="w-1/2">
+            <%= render "application/templates/language_selector" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="max-w-prose mx-auto px-8">
-      <%= image_tag "new_registration/tg-girls-logo.png", alt:"Technovation Girls Logo", id:"tg-logo", class:"w-72 -ml-6"%>
+      <%= image_tag "new_registration/tg-girls-logo.png", alt:"Technovation Girls Logo", id:"tg-logo", class:"w-72 -ml-6" %>
 
       <div id="flash">
         <% flash.each do |type, message| %>

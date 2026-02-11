@@ -7,6 +7,9 @@ import { application } from "./application";
 import DateFieldsController from "./date_fields_controller";
 application.register("date-fields", DateFieldsController);
 
+import LanguageSelectorController from "./language_selector_controller";
+application.register("language-selector", LanguageSelectorController);
+
 import ModalController from "./modal_controller";
 application.register("modal", ModalController);
 

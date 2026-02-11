@@ -46,7 +46,7 @@ class ParentalConsentsController < ApplicationController
         SendSignedConsentTextMessageJob.perform_later(
           account_id: student.account.id,
           message_type: :signed_parental_consent,
-          delivery_method: params[:delivery_method].to_sym,
+          delivery_method: params[:delivery_method].to_sym
         )
       elsif student.parent_guardian_email.present?
         ParentMailer.confirm_parental_consent_finished(student.id).deliver_later

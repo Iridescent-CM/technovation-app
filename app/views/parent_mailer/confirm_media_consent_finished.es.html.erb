@@ -4,20 +4,25 @@
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td class="content-block">
-          Dear <%= @student_profile.parent_guardian_name %>,
+          Estimado/a <%= @student_profile.parent_guardian_name %>,
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Below is a copy of your signed media consent form for <%= @student_profile.account.full_name %>'s participation in Technovation Girls <%= Season.current.year %>.
+          A continuación, encontrará una copia del formulario de
+          autorización de uso de imagen y medios firmado por el padre,
+          madre o tutor para la participación de
+          <%= @student_profile.account.full_name %>
+          en Technovation Girls
+          <%= Season.current.year %>.
         </td>
       </tr>
 
       <tr>
         <td class="content-block">
-          Thanks,<br>
-          The Technovation Team
+          Gracias.<br>
+          — El equipo de Technovation
         </td>
       </tr>
 

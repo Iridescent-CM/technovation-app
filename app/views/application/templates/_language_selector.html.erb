@@ -1,0 +1,15 @@
+<div data-controller="language-selector" 
+  data-language-selector-url-value="<%= request.path %>">
+  <%= select_tag "languages",
+    options_for_select(
+      [
+        ["English", "en"],
+        ["Spanish - español", "es"],
+      ],
+      I18n.locale.to_s
+    ),
+    data: { 
+      action: "change->language-selector#change"
+    } 
+  %>
+</div>

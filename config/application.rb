@@ -33,7 +33,7 @@ module TechnovationApp
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = [:en]
-    config.i18n.available_locales = [:en, :"es-MX"]
+    config.i18n.available_locales = [:en, :es, :"es-MX"]
 
     config.generators do |g|
       g.test_framework false

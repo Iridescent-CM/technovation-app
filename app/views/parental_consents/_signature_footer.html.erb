@@ -1,0 +1,12 @@
+<p>
+  <%= t("views.consent_waivers.students_name") %>:
+  <%= student_profile.account.full_name %>
+</p>
+
+<p>
+  <%= t("views.consent_waivers.electronic_signature") %><br>
+  <%= t("views.consent_waivers.signee_line", 
+    signee: consent.electronic_signature,
+    date: consent.signed_at.strftime("%B %e, %Y"))
+  %>
+</p>

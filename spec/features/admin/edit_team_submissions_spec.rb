@@ -76,7 +76,6 @@ RSpec.feature "Toggling editable team submissions" do
         expect(page).not_to have_link("Start submission")
         expect(page).to have_content("Submitting your project is not available right now.")
 
-
         visit mentor_team_path(team)
         expect(page).not_to have_link("Start this team's submission now")
 

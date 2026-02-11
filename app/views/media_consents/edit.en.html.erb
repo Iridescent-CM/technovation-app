@@ -14,7 +14,9 @@
   <%= render "errors", record: @media_consent %>
 
   <div class="prose consent-document prose-sm w-full max-w-full mt-8">
-    <h3 class="border-b border-gray-600">Media Consent</h3>
+    <h3 class="border-b border-gray-600">
+      <%= t("views.consent_waivers.media_consent") %>
+    </h3>
 
     <%= render "consent_terms" %>
   </div>
@@ -34,7 +36,7 @@
   </div>
 
   <div class="my-4">
-    <%= label_tag t("views.parental_consents.student_name.label") %>
+    <%= label_tag t("views.consent_waivers.students_name") %>
     <%= text_field_tag nil, f.object.student_profile.full_name, disabled: "disabled" %>
   </div>
 

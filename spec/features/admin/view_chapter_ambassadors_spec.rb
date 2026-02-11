@@ -32,4 +32,3 @@ RSpec.feature "Admins view Chapter Ambassador participant details" do
     expect(page).to have_content "Not assigned to chapter"
   end
 end
-

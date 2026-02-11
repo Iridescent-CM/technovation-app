@@ -1,4 +1,4 @@
-es-MX:
+es:
   language: "Español (México)"
 
   views:
@@ -7,7 +7,7 @@ es-MX:
       anywhere: "En cualquier lugar"
       approved: "aprobar"
       availability: "Disponibilidad"
-      cancel: 'cancelar'
+      cancel: "cancelar"
       complete_your_profile: "Sigue estos pasos para completar tu perfil"
       confirm_approved: "¿Estás segura que quieres aprobar a %{name}?"
       confirm_declined: "¿Estás segura que quieres rechazar a %{name}?"
@@ -34,9 +34,9 @@ es-MX:
       review_now: "Revisar ahora"
       save: "Guardar"
       search_near: "Buscar por ciudad"
-      signin: 'Ingresar'
-      signup: 'Registrarse'
-      signout: 'Salir'
+      signin: "Ingresar"
+      signup: "Registrarse"
+      signout: "Salir"
       site_title: "Technovation Girls"
       terms_of_use: "Términos y condiciones de uso"
       to_do: "Por terminar"
@@ -55,10 +55,15 @@ es-MX:
         title: "Información de tu cuenta"
 
     quick_links:
-        my_account: "Mi cuenta"
-        my_team: "Mi equipo"
+      my_account: "Mi cuenta"
+      my_team: "Mi equipo"
 
     consent_waivers:
+      consent_to_participate: "Consentimiento de los padres o tutores"
+      media_consent: "Autorización de uso de imagen y medios"
+      electronic_signature: "Firma electrónica"
+      students_name: "Nombre de la estudiante"
+      signee_line: "%{signee} firmado el %{date}"
       new:
         submit: "Estoy de acuerdo"
       show:
@@ -103,9 +108,20 @@ es-MX:
 
     parental_consents:
       new:
-        submit: "Estoy de acuerdo"
+        submit: "Acepto"
       show:
         signed: "%{student_name} ha recibido el concentimiento de %{parent_name} en la fecha %{date}"
+      electronic_signature:
+        label: "Su nombre"
+        placeholder: "Ingrese su nombre aquí como firma de consentimiento electrónico"
+      newsletter_opt_in:
+        label: "Acepto que Technovation me contacte por correo electrónico (aproximadamente cada dos meses)"
+
+    media_consents:
+      consent_provided:
+        consent_yes: "Otorgo mi permiso"
+        consent_no: "No otorgo mi permiso"
+      submit: "Enviar"
 
     passwords:
       new:
@@ -206,7 +222,7 @@ es-MX:
     signups:
       form:
         skills_and_interests_html: "Elegir campo(s) en los que se tiene experiencia"
-        confirm_password: 'Confirmar contraseña'
+        confirm_password: "Confirmar contraseña"
         required_fields: "Favor de contestar todos los campos. ¡Gracias! "
         signing_up_email: "Tu correo electrónico: %{email}"
         signup: "Registrar"
@@ -264,7 +280,6 @@ es-MX:
         find_a_mentor: "Encontrar un mentor"
         join_team: "Unirte a un equipo"
         my_team: "Mi equipo"
-
 
       parental_consent_notices:
         form:

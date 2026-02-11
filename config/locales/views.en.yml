@@ -81,6 +81,11 @@ en:
       my_team: "My Team"
 
     consent_waivers:
+      consent_to_participate: "Consent to Participate"
+      media_consent: "Media Consent"
+      electronic_signature: "Electronic Signature"
+      students_name: "Student's name"
+      signee_line: "%{signee} signed on %{date}"
       new:
         submit: "I agree"
       show:
@@ -114,11 +119,11 @@ en:
         submit: "I agree"
       show:
         signed: "%{student_name} received parental consent from %{parent_name} on %{date}"
-      student_name:
-        label: "Student's name"
       electronic_signature:
         label: "Your name"
         placeholder: "Please enter your name here as electronic consent"
+      newsletter_opt_in:
+        label: "It's okay for Technovation to send email to me (about every two months)"
 
     media_consents:
       consent_provided:

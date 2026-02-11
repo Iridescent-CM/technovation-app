@@ -4,7 +4,7 @@ RSpec.feature "Admin view background check datagrid", js: true do
   let(:admin) { FactoryBot.create(:admin) }
 
   before do
-    us_based_mentors =  FactoryBot.create_list(:mentor, 2, :geocoded)
+    us_based_mentors = FactoryBot.create_list(:mentor, 2, :geocoded)
     india_based_mentors = FactoryBot.create_list(:mentor, 2, :india)
 
     india_based_mentors.each do |mentor|
@@ -33,7 +33,7 @@ RSpec.feature "Admin view background check datagrid", js: true do
       within("tr#background_check_#{mentor.background_check.id}") do
         expect(page).to have_css("td.background_check", text: mentor.background_check.status.titleize)
 
-        invitation_status_text = mentor.account.country_code == "US" ? "-" : mentor.background_check.invitation_status.titleize
+        invitation_status_text = (mentor.account.country_code == "US") ? ("-") : (mentor.background_check.invitation_status.titleize)
         expect(page).to have_css("td.invitation_status", text: invitation_status_text)
       end
     end
