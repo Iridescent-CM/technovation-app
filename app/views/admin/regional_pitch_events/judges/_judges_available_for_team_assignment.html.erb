@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "judges-available-for-team-assignment" do %>
+  <ul id="available-judges" class="divide-y divide-gray-200" style="list-style-type: none; padding: 0;" role="list">
+    <% if judges_assigned_to_event.any? %>
+      <% judges_assigned_to_event.each do |judge| %>
+        <%= render "admin/regional_pitch_events/judges/judge_available_for_team_assignment", judge:, team: %>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <div style="display: flex; justify-content: space-around; margin-top: 12px;">
+    <%= will_paginate judges_assigned_to_event,
+      params: {
+        controller: "chapter_ambassador/regional_pitch_events",
+        action: "available_judges_for_team_assignment", id: event.id } %>
+  </div>
+<% end %>

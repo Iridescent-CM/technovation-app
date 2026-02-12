@@ -202,13 +202,13 @@ class Team < ActiveRecord::Base
   }
 
   scope :by_chapterable, ->(chapterable_type, chapterable_id, season = nil) do
-    scope = joins(students: { account: :chapterable_assignments})
-    .where(
-      chapterable_assignments: {
-        chapterable_type: chapterable_type.capitalize,
-        chapterable_id: chapterable_id
-      }
-    )
+    scope = joins(students: {account: :chapterable_assignments})
+      .where(
+        chapterable_assignments: {
+          chapterable_type: chapterable_type.capitalize,
+          chapterable_id: chapterable_id
+        }
+      )
 
     if season.present?
       scope.by_season(season).where(chapterable_assignments: {season: season})
@@ -282,11 +282,15 @@ class Team < ActiveRecord::Base
     after_remove: ->(team, event) { team.submission.touch }
 
   has_many :judge_assignments, -> { current }
+  has_many :assigned_judges,
+    through: :judge_assignments,
+    source: :assigned_judge,
+    source_type: "JudgeProfile"
 
   validates :name, presence: true, team_name_uniqueness: true
   validates :division, presence: true
 
-  validates :description, length: { maximum: 1500 }, if: :description_changed?
+  validates :description, length: {maximum: 1500}, if: :description_changed?
 
   delegate :name, to: :division, prefix: true
 

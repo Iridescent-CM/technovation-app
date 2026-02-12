@@ -100,6 +100,46 @@ module ChapterAmbassador
       end
     end
 
+    def available_judges_for_team_assignment
+      event = RegionalPitchEvent.in_region(current_ambassador)
+        .find(params[:id])
+      team = Team.find(params[:team_id])
+
+      judges_assigned_to_event = JudgeProfile
+        .by_query(params[:query].presence)
+        .joins(:regional_pitch_events)
+        .left_joins(:judge_assignments)
+        .where(regional_pitch_events: {id: event.id})
+        .where.not(
+          id: JudgeProfile
+            .joins(:judge_assignments)
+            .where(judge_assignments: {team_id: team.id})
+            .select(:id)
+        )
+        .distinct
+        .paginate(page: params[:page], per_page: 10)
+      judges_assigned_to_team = team
+        .assigned_judges
+        .paginate(page: params[:page], per_page: 10)
+
+      if turbo_frame_request_id == "judges-available-for-team-assignment"
+        render partial: "admin/regional_pitch_events/judges/judges_available_for_team_assignment",
+          locals: {
+            event:,
+            team:,
+            judges_assigned_to_event:
+          }
+      else
+        render partial: "admin/regional_pitch_events/judges/available_judges_for_team_assignment",
+          locals: {
+            event:,
+            team:,
+            judges_assigned_to_event:,
+            judges_assigned_to_team:
+          }
+      end
+    end
+
     def available_judges
       @event = RegionalPitchEvent.in_region(current_ambassador)
         .find(params[:id])

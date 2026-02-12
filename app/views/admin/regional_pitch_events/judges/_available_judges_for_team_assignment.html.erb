@@ -1,0 +1,44 @@
+<%= turbo_frame_tag :modal do %>
+  <template id="modal-content" data-controller="modal">
+    <swal-html>
+      <%= turbo_frame_tag "flash-messages", data: {
+        modal_target: "flashMessages"
+      } %>
+
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto" style="overflow-x:auto;">
+          <h5 style="margin-top: 0px;">Available Judges</h5>
+
+          <%= form_with url: available_judges_for_team_assignment_chapter_ambassador_event_path(event),
+            method: :get,
+            data: {
+              controller: "search",
+              turbo_frame: "judges-available-for-team-assignment"
+            } do |f| %>
+
+            <%= f.text_field :query,
+              value: params[:query],
+              placeholder: "Search judges by name",
+              data: {
+                action: "input->search#search",
+                turbo_submits_with: "Searching..." } %>
+
+            <%= f.hidden_field :team_id, value: team.id %>
+          <% end %>
+
+          <%= render "admin/regional_pitch_events/judges/judges_available_for_team_assignment",
+            event:,
+            team:,
+            judges_assigned_to_event: %>
+
+          <hr style="height: 2px; width: 100%; color: #9ca3af;">
+          <h5 style="margin-bottom: 0px;">Judges Assigned to this Team</h5>
+          <%= render "admin/regional_pitch_events/judges/judges_assigned_to_team",
+            event:,
+            team:,
+            judges_assigned_to_team: %>
+        </div>
+      </div>
+    </swal-html>
+  </template>  
+<% end %>

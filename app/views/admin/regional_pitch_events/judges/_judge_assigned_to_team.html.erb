@@ -1,0 +1,6 @@
+<%= render "admin/regional_pitch_events/judges/judge", judge: do %>
+  <%= button_to "Remove",
+    chapter_ambassador_judge_assignments_path(team_id: team.id, judge_id: judge.id),
+    method: :delete,
+    class: "button gray" %>
+<% end %>

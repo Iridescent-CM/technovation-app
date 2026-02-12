@@ -28,12 +28,10 @@ RSpec.describe ChapterAmbassador::JudgeAssignmentsController do
       )
 
       post :create, params: {
-        judge_assignment: {
-          judge_id: judge.id,
-          team_id: team1.id,
-          model_scope: "JudgeProfile"
-        }
-      }
+        judge_id: judge.id,
+        team_id: team1.id,
+        model_scope: "JudgeProfile"
+      }, xhr: true
 
       teams = GatherAssignedTeams.call(judge)
       expect(teams).to contain_exactly(team1, team3)
@@ -69,12 +67,10 @@ RSpec.describe ChapterAmbassador::JudgeAssignmentsController do
       SeasonToggles.set_judging_round(:qf)
 
       post :create, params: {
-        judge_assignment: {
-          judge_id: judge.id,
-          team_id: team1.id,
-          model_scope: "JudgeProfile"
-        }
-      }
+        judge_id: judge.id,
+        team_id: team1.id,
+        model_scope: "JudgeProfile"
+      }, xhr: true
 
       teams = GatherAssignedTeams.call(judge)
       expect(teams).to contain_exactly(team1, team3)
@@ -85,12 +81,10 @@ RSpec.describe ChapterAmbassador::JudgeAssignmentsController do
       )
 
       delete :destroy, params: {
-        judge_assignment: {
-          judge_id: judge.id,
-          team_id: team1.id,
-          model_scope: "JudgeProfile"
-        }
-      }
+        judge_id: judge.id,
+        team_id: team1.id,
+        model_scope: "JudgeProfile"
+      }, xhr: true
 
       expect(score.reload).to be_deleted
       expect(judge.submission_scores).to be_empty

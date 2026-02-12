@@ -1,0 +1,10 @@
+<%= turbo_stream.remove(@judge) %>
+
+<%= turbo_stream.append "available-judges",
+  partial: "admin/regional_pitch_events/judges/judge_available_for_team_assignment", 
+  locals: {judge: @judge, team: @team}
+%>
+
+<%= turbo_stream.append "flash-messages" do %>
+  <%= render "flash_messages" %>
+<% end %>

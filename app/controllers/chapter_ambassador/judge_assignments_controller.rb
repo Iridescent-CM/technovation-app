@@ -1,49 +1,36 @@
 module ChapterAmbassador
   class JudgeAssignmentsController < ChapterAmbassadorController
     def create
-      model = assignment_params.fetch(:model_scope).constantize
-      judge = model.find(assignment_params.fetch(:judge_id))
-      team = Team.find(assignment_params.fetch(:team_id))
+      @judge = JudgeProfile.find(params.fetch(:judge_id))
+      @team = Team.find(params.fetch(:team_id))
 
-      CreateJudgeAssignment.call(team: team, judge: judge)
+      CreateJudgeAssignment.call(team: @team, judge: @judge)
 
-      render json: {
-        flash: {
-          success: "You assigned #{judge.name} to #{team.name}"
-        }
-      }
+      flash.now[:success] = "Successfully assigned #{@judge.name} to #{@team.name}"
+
+      respond_to do |format|
+        format.turbo_stream
+      end
     end
 
     def destroy
-      model = assignment_params.fetch(:model_scope).constantize
-      judge = model.find(assignment_params.fetch(:judge_id))
+      @judge = JudgeProfile.find(params.fetch(:judge_id))
+      @team = Team.find(params.fetch(:team_id))
 
-      team = Team.find(assignment_params.fetch(:team_id))
+      @judge.assigned_teams.destroy(@team)
 
-      judge.assigned_teams.destroy(team)
-
-      unassigned_scores_in_event = judge.submission_scores
+      unassigned_scores_in_event = @judge.submission_scores
         .current_round
         .joins(team_submission: {team: :events})
-        .where("regional_pitch_events.id = ?", team.event.id)
-        .where.not(team_submission: judge.assigned_teams.map(&:submission))
+        .where("regional_pitch_events.id = ?", @team.event.id)
+        .where.not(team_submission: @judge.assigned_teams.map(&:submission))
       unassigned_scores_in_event.destroy_all
 
-      render json: {
-        flash: {
-          success: "You removed #{judge.name} from #{team.name}"
-        }
-      }
-    end
+      flash.now[:success] = "Successfully removed #{@judge.name} from #{@team.name}"
 
-    private
-
-    def assignment_params
-      params.require(:judge_assignment).permit(
-        :judge_id,
-        :team_id,
-        :model_scope
-      )
+      respond_to do |format|
+        format.turbo_stream
+      end
     end
   end
 end

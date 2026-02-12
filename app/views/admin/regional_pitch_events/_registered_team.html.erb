@@ -28,12 +28,24 @@
       <%= team.human_status %>
     </span>
   </td>
+
   <% if current_account.chapter_ambassador? %>
     <td>
+      <div style="display: flex; justify-content: space-between;">
+        <% if event.meets_requirement_to_assign_judges_to_teams? %>
+          <%= link_to "Manage Judges",
+            available_judges_for_team_assignment_chapter_ambassador_event_path(@event, team_id: team.id),
+            class: "button",
+            data: {
+              turbo_frame: "modal"
+            } %>
+        <% end %>
+
         <%= button_to "Remove",
           chapter_ambassador_event_event_team_path(event, team),
           method: :delete,
           class: "button button--danger" %>
-      </td>
+      </div>
+    </td>
   <% end %>
 </tr>
