@@ -37,8 +37,14 @@
           text messages from Technovation. We will automatically try to send the message via
           WhatsApp first and then use SMS if WhatsApp is not available. Note: Standard messaging rates apply.
         </p>
+        <%= f.input :parent_guardian_phone_country_code,
+          collection: ConsentForms.parental_consent_phone_country_code_options,
+          label: "Country Code",
+          selected: (f.object.parent_guardian_phone_number.present? ? "+#{Phonelib.parse(f.object.parent_guardian_phone_number).country_code}" : nil),
+          include_blank:"Select country code" %>
+
         <%= f.input :parent_guardian_phone_number,
-          label: t('models.student_profile.parent_guardian_phone_number') %>
+          label: t('models.student_profile.parent_guardian_phone_number'), input_html: { value: f.object.parent_guardian_local_phone_number } %>
         <p class="hint">Changing this phone number will send and require a new consent.</p>
       <% end %>
     </div>

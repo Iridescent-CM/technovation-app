@@ -376,6 +376,7 @@ GEM
     pdfkit (0.8.7.3)
     pg (1.6.2-x86_64-darwin)
     pg (1.6.2-x86_64-linux)
+    phonelib (0.10.16)
     pp (0.6.2)
       prettyprint
     pp_sql (0.2.10)
@@ -708,6 +709,7 @@ DEPENDENCIES
   pdf-reader (~> 2.4)
   pdfkit (~> 0.8.7.0)
   pg (~> 1.2)
+  phonelib
   pp_sql (~> 0.2)
   premailer-rails (~> 1.10)
   public_activity (~> 2.0)

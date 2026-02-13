@@ -311,7 +311,7 @@ RSpec.describe StudentProfile do
   end
 
   describe "#parental_consent_text_message_limit_reached?" do
-    let(:student) { FactoryBot.create(:student_profile, parent_guardian_phone_number: "+11234567890") }
+    let(:student) { FactoryBot.build(:student_profile, :with_parent_guardian_phone_number) }
 
     it "returns false when 3 text messages are sent" do
       FactoryBot.create_list(:text_message, 3, :whatsapp, account: student.account)
@@ -325,8 +325,7 @@ RSpec.describe StudentProfile do
   end
 
   describe "#can_send_parental_consent_text_message?" do
-    let(:student) { FactoryBot.create(:student_profile, parent_guardian_phone_number: "+11234567890") }
-
+    let(:student) { FactoryBot.build(:student_profile, :with_parent_guardian_phone_number) }
     it "returns true when phone number is entered and text message limit is not reached" do
       expect(student.can_send_parental_consent_text_message?).to be true
     end
@@ -339,6 +338,70 @@ RSpec.describe StudentProfile do
     it "returns false when 5 text messages are sent" do
       FactoryBot.create_list(:text_message, 5, :whatsapp, account: student.account)
       expect(student.can_send_parental_consent_text_message?).to be false
+    end
+  end
+
+  describe "parent guardian phone number" do
+    let(:student) { FactoryBot.build(:student_profile) }
+
+    context "when phone number includes parenthesis and dash characters" do
+      before do
+        student.parent_guardian_phone_country_code = "+1"
+        student.parent_guardian_phone_number = "(415) 236-2665"
+      end
+
+      it "formats the number to E.164 standard" do
+        expect(student).to be_valid
+        expect(student.parent_guardian_phone_number).to eq("+14152362665")
+      end
+    end
+
+    context "when phone number has no additional formatting or characters" do
+      before do
+        student.parent_guardian_phone_country_code = "+1"
+        student.parent_guardian_phone_number = "4152362665"
+      end
+
+      it "formats the number to E.164 standard" do
+        expect(student).to be_valid
+        expect(student.parent_guardian_phone_number).to eq("+14152362665")
+      end
+    end
+
+    context "when a user does not select a country code" do
+      before do
+        student.parent_guardian_phone_country_code = nil
+        student.parent_guardian_phone_number = "4152362665"
+      end
+
+      it "is invalid" do
+        expect(student).not_to be_valid
+        expect(student.errors[:parent_guardian_phone_country_code]).to include("must be selected")
+      end
+    end
+
+    context "when phone number includes alphanumeric characters" do
+      before do
+        student.parent_guardian_phone_country_code = "+1"
+        student.parent_guardian_phone_number = "415236abc"
+      end
+
+      it "is invalid" do
+        expect(student).not_to be_valid
+        expect(student.errors[:parent_guardian_phone_number]).to include("is not a valid phone number")
+      end
+    end
+
+    context "when phone number includes country code" do
+      before do
+        student.parent_guardian_phone_country_code = "+1"
+        student.parent_guardian_phone_number = "+14152362665"
+      end
+
+      it "does not double the country code" do
+        expect(student).to be_valid
+        expect(student.parent_guardian_phone_number).to eq("+14152362665")
+      end
     end
   end
 end
