@@ -224,6 +224,7 @@ Rails.application.routes.draw do
     resource :training_completion, only: :show, controller: "/ambassador/training_completion"
 
     resources :events, controller: :regional_pitch_events do
+      resources :event_judge_invitations, only: [:new, :create]
       resources :event_judges, only: [:create, :destroy]
       resources :event_teams, only: [:create, :destroy]
 
