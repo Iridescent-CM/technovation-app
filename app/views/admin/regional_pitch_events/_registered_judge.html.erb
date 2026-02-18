@@ -2,7 +2,7 @@
   <td>
     <% if judge.is_a?(JudgeProfile) %>
       <%= link_to judge.name,
-      send("#{current_scope}_participants_path", judge.account.id),
+      send("#{current_scope}_participant_path", judge.account.id),
       data: { turbo: false } %>
     <% else %>
       <%= judge.name.presence || "Invited Judge" %>
