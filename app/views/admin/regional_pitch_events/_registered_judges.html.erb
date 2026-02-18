@@ -3,11 +3,11 @@
     <div class="grid__col-auto" style="overflow-x: auto;">
       <h5>
         <span>
-          Judges (<%= event.judges.count %>)
+          Judges (<%= event.judge_list.count %>)
         </span>
       </h5>
 
-      <% if event.judges.any? %>
+      <% if event.judge_list.any? %>
         <table class="table--hoverable rpe-judges">
           <thead>
             <tr>
@@ -21,7 +21,7 @@
           </thead>
 
           <tbody>
-            <% event.judges.each do |judge| %>
+            <% event.judge_list.each do |judge| %>
               <%= render "admin/regional_pitch_events/registered_judge", judge: judge, event: event %>
             <% end %>
           </tbody>
