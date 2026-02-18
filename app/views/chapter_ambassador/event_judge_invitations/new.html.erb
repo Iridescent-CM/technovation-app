@@ -1,0 +1,20 @@
+<%= turbo_frame_tag :modal do %>
+  <template id="modal-content" data-controller="modal">
+    <swal-html>
+      <%= turbo_frame_tag "flash-messages", data: {
+        modal_target: "flashMessages"
+      } %>
+      <div class="grid grid--bleed">
+        <div class="grid__col-auto" style="overflow-x:auto;">
+          <h5 style="margin-top: 0px;">Invite New Judge</h5>
+          <p class="hint">
+            Invite a new judge who is not registered on the Technovation Girls platform.
+            <br>
+            Enter their email to invite them to register on the platform and judge this event.
+          </p>
+          <%= render "form", event: @event, invitation: @invitation %>
+        </div>
+      </div>
+    </swal-html>
+  </template>
+<% end %>
