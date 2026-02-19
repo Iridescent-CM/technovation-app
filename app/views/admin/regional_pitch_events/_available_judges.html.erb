@@ -2,6 +2,9 @@
   <div class="grid grid--bleed">
     <div class="grid__col-auto" style="overflow-x:auto;">
       <h5>Available Judges in Your Region</h5>
+      <p class="hint">
+        Clicking the "Add" button will send an email to the judge with details about this event.
+      </p>
 
       <%= form_with url: available_judges_chapter_ambassador_event_path(@event),
         method: :get,

@@ -16,6 +16,8 @@
             <dt>Official event?</dt>
 
             <dd>
+              <span class="hint">Technovation staff will mark events as official if all event requirements are met</span>
+              <br>
               <%= @event.unofficial? ? "no" : "yes" %>
 
               <% if current_account.admin? %>

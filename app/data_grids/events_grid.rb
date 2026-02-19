@@ -109,7 +109,6 @@ class EventsGrid
     :enum,
     select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
     filter_group: "common",
-    if: ->(g) { g.admin },
     html: {
       class: "and-or-field"
     } do |value|

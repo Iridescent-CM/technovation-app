@@ -30,7 +30,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
     ambassador = ChapterAmbassadorProfile.find(ambassador_id)
     event = RegionalPitchEvent.find(event_id)
 
-    filepath = "./tmp/#{event.name.parameterize}-#{list_type}.csv"
+    filepath = "./tmp/#{list_type}-#{event.name.parameterize}.csv"
 
     context_klass = context_klass_name.constantize
 
@@ -72,7 +72,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_team_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w[team submission division percent\ complete presentation city state\ or\ region country student\ emails mentor\ emails parent\ emails]
+      csv << %w[team submission division percent\ complete presentation project\ url city student\ emails mentor\ emails parent\ emails]
       event.teams.each do |item|
         student_emails = item.students.to_a.map { |student| student.email }
         mentor_emails = item.mentors.to_a.map { |mentor| mentor.email }
@@ -85,9 +85,8 @@ class ExportEventAttendeesJob < ActiveJob::Base
           item.division_name,
           item.submission.percent_complete,
           item.submission.pitch_presentation_url,
+          chapter_ambassador_team_submission_url(item.submission),
           item.city,
-          item.state,
-          item.country,
           student_emails.join(", "),
           mentor_emails.join(", "),
           parent_emails.join(", ")
