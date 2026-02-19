@@ -5,8 +5,8 @@ FactoryBot.define do
     ambassador
 
     name { "RPE" }
-    starts_at { Date.current }
-    ends_at { Date.current + 1.day }
+    starts_at { ImportantDates.rpe_start_date }
+    ends_at { ImportantDates.rpe_start_date + 1.day }
     city { "City" }
     venue_address { "123 Street St." }
     unofficial { false }
