@@ -333,8 +333,8 @@ RSpec.describe TeamSubmission do
           solves_education: true,
           solves_education_description: "Some description",
           promotes_wellbeing: true,
-          promotes_wellbeing_description: "Some description",
-          )
+          promotes_wellbeing_description: "Some description"
+        )
       end
 
       it "returns true" do
@@ -683,8 +683,8 @@ RSpec.describe TeamSubmission do
       before(:each) do
         @rpe = FactoryBot.create(:event,
           name: "RPE",
-          starts_at: Date.today,
-          ends_at: Date.today + 1.day,
+          starts_at: ImportantDates.rpe_start_date,
+          ends_at: ImportantDates.rpe_start_date + 1.day,
           division_id: Division.senior.id,
           city: "City",
           venue_address: "123 Street St.",
@@ -774,8 +774,8 @@ RSpec.describe TeamSubmission do
       before(:each) do
         @rpe = FactoryBot.create(:event,
           name: "RPE",
-          starts_at: Date.today,
-          ends_at: Date.today + 1.day,
+          starts_at: ImportantDates.rpe_start_date,
+          ends_at: ImportantDates.rpe_start_date + 1.day,
           division_id: Division.senior.id,
           city: "City",
           venue_address: "123 Street St.",
@@ -1030,7 +1030,6 @@ RSpec.describe TeamSubmission do
         past_team = FactoryBot.create(:team, seasons: [Season.current.year - 1])
         student = past_team.students.first
         past_submission = FactoryBot.create(:submission, team: past_team)
-
 
         student.chapterable_assignments.destroy_all
         student.chapterable_assignments.create(
