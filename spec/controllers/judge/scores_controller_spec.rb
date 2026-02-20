@@ -159,8 +159,8 @@ RSpec.describe Judge::ScoresController do
 
           rpe = FactoryBot.create(:event,
             name: "RPE",
-            starts_at: Date.today,
-            ends_at: Date.today + 1.day,
+            starts_at: ImportantDates.rpe_start_date,
+            ends_at: ImportantDates.rpe_start_date + 1.day,
             division_id: Division.senior.id,
             city: "City",
             venue_address: "123 Street St.",
@@ -239,8 +239,8 @@ RSpec.describe Judge::ScoresController do
 
           rpe = FactoryBot.create(:event,
             name: "RPE",
-            starts_at: Date.today,
-            ends_at: Date.today + 1.day,
+            starts_at: ImportantDates.rpe_start_date,
+            ends_at: ImportantDates.rpe_start_date + 1.day,
             division_id: Division.senior.id,
             city: "City",
             venue_address: "123 Street St.",

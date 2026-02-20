@@ -166,8 +166,8 @@ RSpec.describe FindEligibleSubmissionId do
       team = FactoryBot.create(:team)
 
       team.regional_pitch_events << FactoryBot.create(:event,
-        starts_at: Date.today,
-        ends_at: Date.today + 1.day,
+        starts_at: ImportantDates.rpe_start_date,
+        ends_at: ImportantDates.rpe_start_date + 1.day,
         division_id: Division.senior.id,
         unofficial: true)
 
@@ -215,8 +215,8 @@ RSpec.describe FindEligibleSubmissionId do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
       team.regional_pitch_events << FactoryBot.create(:event,
-        starts_at: Date.today,
-        ends_at: Date.today + 1.day,
+        starts_at: ImportantDates.rpe_start_date,
+        ends_at: ImportantDates.rpe_start_date + 1.day,
         division_id: Division.senior.id)
 
       TeamSubmission.create!({
@@ -443,8 +443,8 @@ RSpec.describe FindEligibleSubmissionId do
       judge = FactoryBot.create(:judge)
       team = FactoryBot.create(:team)
       team.regional_pitch_events << FactoryBot.create(:event,
-        starts_at: Date.today,
-        ends_at: Date.today + 1.day,
+        starts_at: ImportantDates.rpe_start_date,
+        ends_at: ImportantDates.rpe_start_date + 1.day,
         division_id: Division.senior.id)
 
       submission = FactoryBot.create(

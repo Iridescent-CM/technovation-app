@@ -75,6 +75,10 @@ class RegionalPitchEvent < ActiveRecord::Base
     numericality: {only_integer: true, greater_than: 0},
     if: :capacity_enabled?
 
+  validate :starts_at_within_rpe_date_range
+  validate :ends_at_within_rpe_date_range
+  validate :ends_at_after_starts_at
+
   delegate :state_province,
     :country,
     :timezone,
@@ -229,6 +233,32 @@ class RegionalPitchEvent < ActiveRecord::Base
 
   def update_teams_count(team = nil)
     update(teams_count: teams.count)
+  end
+
+  private
+
+  def starts_at_within_rpe_date_range
+    rpe_start_date = ImportantDates.rpe_start_date.strftime("%B %e")
+    rpe_end_date = ImportantDates.rpe_end_date.strftime("%B %e, %Y")
+
+    if starts_at < ImportantDates.rpe_start_date || starts_at > ImportantDates.rpe_end_date
+      errors.add(:starts_at, "Please select a start date between #{rpe_start_date} and #{rpe_end_date}")
+    end
+  end
+
+  def ends_at_within_rpe_date_range
+    rpe_start_date = ImportantDates.rpe_start_date.strftime("%B %e")
+    rpe_end_date = ImportantDates.rpe_end_date.strftime("%B %e, %Y")
+
+    if ends_at < ImportantDates.rpe_start_date || ends_at > ImportantDates.rpe_end_date
+      errors.add(:ends_at, "Please select an end date between #{rpe_start_date} and #{rpe_end_date}")
+    end
+  end
+
+  def ends_at_after_starts_at
+    if ends_at < starts_at
+      errors.add(:ends_at, "The end date must come after the start date")
+    end
   end
 end
 

@@ -397,8 +397,8 @@ RSpec.describe SubmissionScore do
 
     rpe = FactoryBot.create(:event,
       name: "RPE",
-      starts_at: Date.today,
-      ends_at: Date.today + 1.day,
+      starts_at: ImportantDates.rpe_start_date,
+      ends_at: ImportantDates.rpe_start_date + 1.day,
       division_id: Division.senior.id)
 
     judge_profile.regional_pitch_events << rpe
@@ -427,8 +427,8 @@ RSpec.describe SubmissionScore do
 
     rpe = FactoryBot.create(:event,
       name: "RPE",
-      starts_at: Date.today,
-      ends_at: Date.today + 1.day,
+      starts_at: ImportantDates.rpe_start_date,
+      ends_at: ImportantDates.rpe_start_date + 1.day,
       division_id: Division.senior.id)
 
     judge_profile.regional_pitch_events << rpe
@@ -590,8 +590,8 @@ RSpec.describe SubmissionScore do
       judge_profile = FactoryBot.create(:judge_profile)
       rpe = FactoryBot.create(:event,
         name: "My RPE",
-        starts_at: Date.today,
-        ends_at: Date.today + 1.day,
+        starts_at: ImportantDates.rpe_start_date,
+        ends_at: ImportantDates.rpe_start_date + 1.day,
         division_id: Division.senior.id)
 
       judge_profile.regional_pitch_events << rpe

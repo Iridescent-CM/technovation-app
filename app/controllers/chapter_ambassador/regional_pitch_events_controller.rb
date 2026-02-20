@@ -6,6 +6,8 @@ module ChapterAmbassador
     include RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
     include RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
 
+    before_action :set_rpe_date_ranges, only: [:new, :create, :edit, :update]
+
     def index
       respond_to do |f|
         f.html {}
@@ -46,8 +48,6 @@ module ChapterAmbassador
 
     def new
       @pitch_event = RegionalPitchEvent.new
-      @pitch_event_start_date_range = "#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_YEAR")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_MONTH")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_DAY")}"
-      @pitch_event_end_date_range = "#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_YEAR")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_MONTH")}-#{ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_DAY")}"
     end
 
     def create
@@ -174,6 +174,11 @@ module ChapterAmbassador
         :division_id,
         division_ids: []
       )
+    end
+
+    def set_rpe_date_ranges
+      @pitch_event_start_date_range = ImportantDates.rpe_start_date.strftime("%Y-%-m-%-e")
+      @pitch_event_end_date_range = ImportantDates.rpe_end_date.strftime("%Y-%-m-%-e")
     end
 
     class NullInvitation < Struct.new(:token)

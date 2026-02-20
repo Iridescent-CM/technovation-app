@@ -24,7 +24,7 @@
       <div data-controller="date-fields" >
         <div class="field">
           <%= f.label :starts_at, "Event starts at" %>
-          <%= f.date_field :starts_at,
+          <%= f.datetime_local_field :starts_at,
             required: true,
             min: @pitch_event_start_date_range,
             max: @pitch_event_end_date_range,

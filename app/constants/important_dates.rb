@@ -41,6 +41,20 @@ module ImportantDates
     Time.zone.local(year, month, day)
   end
 
+  def self.rpe_start_date
+    year = Integer(ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_YEAR"))
+    month = Integer(ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_MONTH"))
+    day = Integer(ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_BEGINS_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
+  def self.rpe_end_date
+    year = Integer(ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_YEAR"))
+    month = Integer(ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_MONTH"))
+    day = Integer(ENV.fetch("DATES_REGIONAL_PITCH_EVENTS_ENDS_DAY"))
+    Time.zone.local(year, month, day)
+  end
+
   def self.rpe_officiality_finalized
     year = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_YEAR"))
     month = Integer(ENV.fetch("DATES_RPE_OFFICIALITY_FINALIZED_MONTH"))
