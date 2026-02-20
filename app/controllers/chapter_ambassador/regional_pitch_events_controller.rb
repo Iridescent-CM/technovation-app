@@ -6,6 +6,7 @@ module ChapterAmbassador
     include RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
     include RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
 
+    before_action :require_create_regional_pitch_event_enabled, only: [:new, :create]
     before_action :set_rpe_date_ranges, only: [:new, :create, :edit, :update]
 
     def index
@@ -174,6 +175,13 @@ module ChapterAmbassador
         :division_id,
         division_ids: []
       )
+    end
+
+    def require_create_regional_pitch_event_enabled
+      unless SeasonToggles.create_regional_pitch_event?
+        redirect_to chapter_ambassador_events_list_path,
+          alert: "New events cannot be created at this time."
+      end
     end
 
     def set_rpe_date_ranges

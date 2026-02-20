@@ -123,11 +123,15 @@
       <h3>Teams</h3>
 
       <% if current_account.chapter_ambassador? %>
-        <%= turbo_frame_tag "available-teams-frame" do %>
-          <%= link_to "Add Teams",
-            available_teams_chapter_ambassador_event_path(@event),
-            class: "button",
-            data: { turbo_frame: "available-teams-frame" } %>
+        <% if SeasonToggles.add_teams_to_regional_pitch_event? %>
+          <%= turbo_frame_tag "available-teams-frame" do %>
+            <%= link_to "Add Teams",
+              available_teams_chapter_ambassador_event_path(@event),
+              class: "button",
+              data: { turbo_frame: "available-teams-frame" } %>
+          <% end %>
+        <% else %>
+          <p>Teams cannot be added to events at this time.</p>
         <% end %>
       <% end %>
 
@@ -139,15 +143,13 @@
       <h3>Judges</h3>
 
       <% if current_account.chapter_ambassador? %>
-        <div>
-          <div>
-            <%= turbo_frame_tag "available-judges-frame" do %>
-              <%= link_to "Add Judges",
-                available_judges_chapter_ambassador_event_path(@event),
-                class: "button",
-                data: { turbo_frame: "available-judges-frame" } %>
-            <% end %>
-          </div>
+        <% if SeasonToggles.add_teams_to_regional_pitch_event? %>
+          <%= turbo_frame_tag "available-judges-frame" do %>
+            <%= link_to "Add Judges",
+              available_judges_chapter_ambassador_event_path(@event),
+              class: "button",
+              data: { turbo_frame: "available-judges-frame" } %>
+          <% end %>
 
           <div class="margin--t-large">
             <%= link_to "Invite New Judge",
@@ -155,7 +157,9 @@
               class: "button",
               data: { turbo_frame: "modal" } %>
           </div>
-        </div>
+        <% else %>
+          <p>Judges cannot be added to events at this time.</p>
+        <% end %>
       <% end %>
 
       <%= render "admin/regional_pitch_events/registered_judges", event: @event %>
