@@ -1,11 +1,11 @@
 <tr id="<%= dom_id(judge, :registered) %>">
   <td>
-    <% if judge.is_a?(JudgeProfile) %>
+    <% if judge.pending_registration? %>
+      <%= judge.name.presence || "Invited Judge" %>
+    <% else %>
       <%= link_to judge.name,
       send("#{current_scope}_participant_path", judge.account.id),
       data: { turbo: false } %>
-    <% else %>
-      <%= judge.name.presence || "Invited Judge" %>
     <% end %>
   </td>
 
@@ -21,12 +21,11 @@
 
   <% if current_account.chapter_ambassador? %>
     <td>
-      <% if judge.is_a?(JudgeProfile) %>
-        <%= button_to "Remove",
-          chapter_ambassador_event_event_judge_path(event, judge),
-          method: :delete,
-          class: "button button--danger" %>
-      <% end %>
+      <%= button_to "Remove",
+        chapter_ambassador_event_event_judge_path(event, judge),
+        method: :delete,
+        params: { scope: judge.class.name },
+        class: "button button--danger" %>
     </td>
   <% end %>
 </tr>

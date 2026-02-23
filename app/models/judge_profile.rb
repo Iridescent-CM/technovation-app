@@ -235,6 +235,10 @@ class JudgeProfile < ActiveRecord::Base
     true
   end
 
+  def pending_registration?
+    false
+  end
+
   def onboarding?
     !onboarded?
   end
