@@ -1,8 +1,12 @@
 <tr id="<%= dom_id(judge, :registered) %>">
   <td>
-    <%= link_to judge.name,
-      send("#{current_scope}_participants_path", judge.account.id),
+    <% if judge.pending_registration? %>
+      <%= judge.name.presence || "Invited Judge" %>
+    <% else %>
+      <%= link_to judge.name,
+      send("#{current_scope}_participant_path", judge.account.id),
       data: { turbo: false } %>
+    <% end %>
   </td>
 
   <td>
@@ -20,6 +24,7 @@
       <%= button_to "Remove",
         chapter_ambassador_event_event_judge_path(event, judge),
         method: :delete,
+        params: { scope: judge.class.name },
         class: "button button--danger" %>
     </td>
   <% end %>

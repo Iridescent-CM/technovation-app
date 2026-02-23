@@ -1,0 +1,12 @@
+<%= turbo_stream.replace "registered-judges-frame" do %>
+  <%= render "admin/regional_pitch_events/registered_judges", event: @event %>
+<% end %>
+
+<%= turbo_stream.replace "judge-invitations-form" do %>
+  <%= render "chapter_ambassador/event_judge_invitations/form",
+    event: @event, invitation: @invitation %>
+<% end %>
+
+<%= turbo_stream.append "flash-messages" do %>
+  <%= render "flash_messages" %>
+<% end %>

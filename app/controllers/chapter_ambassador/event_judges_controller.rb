@@ -33,14 +33,14 @@ module ChapterAmbassador
 
     def destroy
       @event = RegionalPitchEvent.in_region(current_ambassador).find(params[:event_id])
-      @judge = JudgeProfile.includes(:current_account).find(params[:id])
+      @attendee = params[:scope].constantize.find(params[:id])
 
-      if @event.attendees.include?(@judge)
-        InvalidateExistingJudgeData.call(@judge, removing: true, event: @event)
+      if @event.attendees.include?(@attendee)
+        InvalidateExistingJudgeData.call(@attendee, removing: true, event: @event)
 
         EventMailer.notify_removed(
-          "JudgeProfile",
-          @judge.id,
+          @attendee.class.name,
+          @attendee.id,
           @event.id
         ).deliver_later
       end

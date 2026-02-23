@@ -129,6 +129,7 @@ class UserInvitation < ApplicationRecord
   def pending?
     !registered?
   end
+  alias_method :pending_registration?, :pending?
 
   def human_status
     case status

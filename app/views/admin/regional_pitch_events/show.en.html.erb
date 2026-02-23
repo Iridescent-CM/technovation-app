@@ -139,12 +139,23 @@
       <h3>Judges</h3>
 
       <% if current_account.chapter_ambassador? %>
-        <%= turbo_frame_tag "available-judges-frame" do %>
-          <%= link_to "Add Judges",
-            available_judges_chapter_ambassador_event_path(@event),
-            class: "button",
-            data: { turbo_frame: "available-judges-frame" } %>
-        <% end %>
+        <div>
+          <div>
+            <%= turbo_frame_tag "available-judges-frame" do %>
+              <%= link_to "Add Judges",
+                available_judges_chapter_ambassador_event_path(@event),
+                class: "button",
+                data: { turbo_frame: "available-judges-frame" } %>
+            <% end %>
+          </div>
+
+          <div class="margin--t-large">
+            <%= link_to "Invite New Judge",
+              new_chapter_ambassador_event_event_judge_invitation_path(@event),
+              class: "button",
+              data: { turbo_frame: "modal" } %>
+          </div>
+        </div>
       <% end %>
 
       <%= render "admin/regional_pitch_events/registered_judges", event: @event %>

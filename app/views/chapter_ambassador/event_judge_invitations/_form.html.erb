@@ -1,0 +1,19 @@
+<%= form_with(
+      url: chapter_ambassador_event_event_judge_invitations_path(event),
+      model: invitation,
+      id: "judge-invitations-form",
+      data: { turbo: true }
+    ) do |f| %>
+
+  <div class="field">
+    <%= f.label :name, "Name (optional)" %>
+    <%= f.text_field :name, placeholder: "Optional" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "Email (required)" %>
+    <%= f.email_field :email, required: true, placeholder: "Email"  %>
+  </div>
+
+  <%= f.submit "Send Invitation", class: "button" %>
+<% end %>
