@@ -92,6 +92,7 @@ class Questions
 
         name: submission.app_name,
         description: submission.app_description,
+        ethics_description: submission.ethics_description,
 
         learning_journey: submission.learning_journey,
         information_legitimacy_description: submission.information_legitimacy_description,
