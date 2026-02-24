@@ -1,6 +1,8 @@
 module ParentalConsentPhone
   extend ActiveSupport::Concern
 
+  include PhoneNumberValidation
+
   included do
     before_validation :format_parent_guardian_phone_number,
       if: -> { parent_guardian_phone_number.present? && parent_guardian_phone_country_code.present? }
@@ -35,11 +37,11 @@ module ParentalConsentPhone
   end
 
   def parent_guardian_local_phone_number
-    Phonelib.parse(parent_guardian_phone_number).national
+    local_phone_number(parent_guardian_phone_number)
   end
 
   def parent_guardian_friendly_phone_number
-    Phonelib.parse(parent_guardian_phone_number).full_international
+    friendly_phone_number(parent_guardian_phone_number)
   end
 
   private
@@ -49,10 +51,10 @@ module ParentalConsentPhone
   end
 
   def format_parent_guardian_phone_number
-    formatted_phone_number = Phonelib.parse("#{parent_guardian_phone_country_code}#{parent_guardian_phone_number}")
-    return unless formatted_phone_number.valid?
-
-    self.parent_guardian_phone_number = formatted_phone_number.e164
+    self.parent_guardian_phone_number = format_phone_number(
+      parent_guardian_phone_number,
+      parent_guardian_phone_country_code
+    )
   end
 
   def valid_parent_guardian_phone_number
@@ -60,8 +62,7 @@ module ParentalConsentPhone
       errors.add(:parent_guardian_phone_country_code, "must be selected")
     end
 
-    parsed_phone_number = Phonelib.parse(parent_guardian_phone_number)
-    unless parsed_phone_number.valid?
+    unless valid_phone_number?(parent_guardian_phone_number)
       errors.add(:parent_guardian_phone_number, "is not a valid phone number")
     end
   end
