@@ -20,15 +20,15 @@ RSpec.describe Twilio::ApiClient do
   let(:host) { "test-technovation.org" }
   let(:twilio_client) { double("Twilio::REST::Client") }
   let(:messages) { double("messages") }
-  let(:response) { double("response", sid: "test_sid_value", to: "+12223334444", status: "queued")}
+  let(:response) { double("response", sid: "test_sid_value", to: "+14152362665", status: "queued")}
   let(:logger) { double("Logger") }
   let(:error_notifier) { double("Airbrake") }
 
   let(:student_profile) {
     FactoryBot.create(
       :student_profile,
+      :with_parent_guardian_phone_number,
       parent_guardian_email: "email@email.com",
-      parent_guardian_phone_number: "+11231231234"
     )
   }
 

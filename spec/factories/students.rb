@@ -153,6 +153,11 @@ FactoryBot.define do
       end
     end
 
+    trait :with_parent_guardian_phone_number do
+      parent_guardian_phone_number { "4152362665"}
+      parent_guardian_phone_country_code { "+1" }
+    end
+
     before(:create) do |s, e|
       if e.not_onboarded
         s.build_parental_consent

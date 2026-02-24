@@ -4,10 +4,6 @@ class Student::ParentalConsentNoticesController < StudentController
       current_student.assign_attributes(profile_params)
       current_student.validate_parent_contact_information
 
-      if profile_params[:parent_guardian_phone_number].present?
-        current_student.parent_guardian_text_message_opted_in_at = Time.current
-      end
-
       unless current_student.validate_parent_contact_information && current_student.save
         render :new and return
       end
@@ -30,7 +26,8 @@ class Student::ParentalConsentNoticesController < StudentController
       params.require(:student_profile).permit(
         :parent_guardian_email,
         :parent_guardian_name,
-        :parent_guardian_phone_number
+        :parent_guardian_phone_number,
+        :parent_guardian_phone_country_code
       )
     end
   end

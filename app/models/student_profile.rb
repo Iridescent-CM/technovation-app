@@ -7,6 +7,8 @@ class StudentProfile < ActiveRecord::Base
   include Casting::Client
   delegate_missing_methods
 
+  include ParentalConsentPhone
+
   alias_attribute :school_company_name, :school_name
 
   scope :current, -> {
@@ -381,26 +383,6 @@ class StudentProfile < ActiveRecord::Base
       !account.email_confirmed_at.blank? &&
       account.valid_coordinates? &&
       account.terms_agreed_at?
-  end
-
-  def in_parental_consent_text_message_country?
-    country_codes = ENV.fetch("PARENTAL_CONSENT_TEXT_MESSAGE_COUNTRY_CODES", "").split(",")
-    country_codes.include?(account.country_code)
-  end
-
-  def can_send_parental_consent_text_message?
-    in_parental_consent_text_message_country? &&
-      parent_guardian_phone_number.present? &&
-      parental_consent_text_messages_remaining > 0
-  end
-
-  def parental_consent_text_message_limit_reached?
-    parent_guardian_phone_number.present? &&
-      parental_consent_text_messages_remaining == 0
-  end
-
-  def parental_consent_text_messages_remaining
-    ENV.fetch("MAXIMUM_NUMBER_OF_PARENTAL_CONSENT_TEXT_MESSAGES").to_i - account.text_messages.current.parental_consent.whatsapp.count
   end
 
   private
