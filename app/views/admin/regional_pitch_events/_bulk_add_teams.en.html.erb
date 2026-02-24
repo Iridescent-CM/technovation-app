@@ -1,56 +1,60 @@
 <br><hr>
 <h4 style="margin-top: 12px;">Upload a CSV to Add Multiple Teams to this Event</h4>
 
-<p>
-  Multiple teams can be added to an event via bulk upload using the team
-  ID number. To find the team ID:
-</p>
-
-<ul>
-  <li>Go to the <%= link_to "teams admin page", chapter_ambassador_teams_path %></li>
-  <li>Add "Team ID" as an additional column</li>
+<% if SeasonToggles.add_teams_to_regional_pitch_event? %>
+  <p>
+    Multiple teams can be added to an event via bulk upload using the team
+    ID number. To find the team ID:
+  </p>
 
   <ul>
-    <li>Apply any other filters to limit the search results to the teams you wish to add to
-      the RPE</li>
+    <li>Go to the <%= link_to "teams admin page", chapter_ambassador_teams_path %></li>
+    <li>Add "Team ID" as an additional column</li>
+
+    <ul>
+      <li>Apply any other filters to limit the search results to the teams you wish to add to
+        the RPE</li>
+    </ul>
+
+    <li>Click "Export current results to CSV"</li>
+
+    <ul>
+      <li>This CSV can then be uploaded to the event below</li>
+    </ul>
   </ul>
 
-  <li>Click "Export current results to CSV"</li>
+  <p style="margin-bottom: 20px;"><strong>Only CSVs that include a column with the header "Team ID" can be uploaded.</strong></p>
+
+  <%= form_with(
+    url: chapter_ambassador_event_bulk_add_teams_path(@event),
+    local: true,
+    data: {turbo: false},
+    html: {
+      method: :post,
+      style: "background-color: #e5e5e5; padding: 20px 18px;"}
+  ) do |form| %>
+
+    <div>
+      <%= form.file_field :csv_file,
+        required: true,
+        accept: ".csv",
+        style: "width: 100%; background-color: #fff; padding: 8px; border: 1px solid oklch(87.2% 0.01 258.338); border-radius: 0.15rem; font-size: 1.2rem;"
+      %>
+    </div>
+
+    <div style="margin-top: 12px;">
+      <%= form.submit "Upload CSV", class: "button" %>
+    </div>
+  <% end %>
+
+  <p class="hint" style="margin-top: 24px;">For a team to successfully be added to an RPE:</p>
 
   <ul>
-    <li>This CSV can then be uploaded to the event below</li>
+    <li class="hint hint--above">They must be part of the current season</li>
+    <li class="hint hint--above">They must be in the division set for the RPE</li>
+    <li class="hint hint--above">They must have a submission in progress</li>
+    <li class="hint hint--above">They must not already be attending this RPE or another RPE</li>
   </ul>
-</ul>
-
-<p style="margin-bottom: 20px;"><strong>Only CSVs that include a column with the header "Team ID" can be uploaded.</strong></p>
-
-<%= form_with(
-  url: chapter_ambassador_event_bulk_add_teams_path(@event),
-  local: true,
-  data: {turbo: false},
-  html: {
-    method: :post,
-    style: "background-color: #e5e5e5; padding: 20px 18px;"}
-) do |form| %>
-
-  <div>
-    <%= form.file_field :csv_file, 
-      required: true,
-      accept: ".csv",
-      style: "width: 100%; background-color: #fff; padding: 8px; border: 1px solid oklch(87.2% 0.01 258.338); border-radius: 0.15rem; font-size: 1.2rem;"
-    %>
-  </div>
-
-  <div style="margin-top: 12px;">
-    <%= form.submit "Upload CSV", class: "button" %>
-  </div>
+<% else %>
+  <p>Teams cannot be uploaded to events at this time.</p>
 <% end %>
-
-<p class="hint" style="margin-top: 24px;">For a team to successfully be added to an RPE:</p>
-
-<ul>
-  <li class="hint hint--above">They must be part of the current season</li>
-  <li class="hint hint--above">They must be in the division set for the RPE</li>
-  <li class="hint hint--above">They must have a submission in progress</li>
-  <li class="hint hint--above">They must not already be attending this RPE or another RPE</li>
-</ul>

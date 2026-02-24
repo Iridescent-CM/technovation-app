@@ -5,6 +5,7 @@ module ChapterAmbassador
     include RegionalPitchEvents::AvailableTeams
     include RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
     include RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
+    include RegionalPitchEvents::RequireCreateRegionalPitchEventEnabled
 
     before_action :set_rpe_date_ranges, only: [:new, :create, :edit, :update]
 
