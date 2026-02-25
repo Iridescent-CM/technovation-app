@@ -34,6 +34,10 @@ class ClubAmbassadorsGrid
     account.seasons.join(", ")
   end
 
+  column :onboarded do
+    club_ambassador_profile.onboarded? ? "yes" : "no"
+  end
+
   column :seasons_assigned_to_a_club do |account|
     account.chapterable_assignments.pluck(:season).uniq.sort.join(", ")
   end
@@ -54,6 +58,26 @@ class ClubAmbassadorsGrid
 
   column :country do
     FriendlyCountry.new(self).country_name
+  end
+
+  column :remaining_club_ambassador_onboarding_tasks,
+    preload: [
+      :background_check,
+      club_ambassador_profile: [
+        :volunteer_agreement
+      ]
+    ] do
+    club_ambassador_profile.incomplete_onboarding_tasks.to_sentence
+  end
+
+  column :completed_club_ambassador_onboarding_tasks,
+    preload: [
+      :background_check,
+      club_ambassador_profile: [
+        :volunteer_agreement
+      ]
+    ] do
+    club_ambassador_profile.complete_onboarding_tasks.to_sentence
   end
 
   column :actions, mandatory: true, html: true do |account|
