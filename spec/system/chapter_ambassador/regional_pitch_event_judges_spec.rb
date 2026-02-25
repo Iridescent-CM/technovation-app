@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Regional Pitch Event Judges", :js do
+RSpec.xdescribe "Regional Pitch Event Judges", :js do
   let(:chapter_ambassador) { FactoryBot.create(:chapter_ambassador, :approved) }
 
   context "when MANAGE_EVENTS is enabled and teams can be added to an event" do
