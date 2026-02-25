@@ -25,6 +25,17 @@ class ClubsGrid
     by_season(value)
   end
 
+  filter(:visible_on_map, :xboolean)
+
+  filter(:onboarded,
+    :enum,
+    select: [
+      ["Yes, fully onboarded", true],
+      ["No, still onboarding", false]
+    ]) do |value|
+    where(onboarded: value)
+  end
+
   column :name, header: "Name", mandatory: true
 
   column :city
@@ -39,6 +50,20 @@ class ClubsGrid
 
   column :seasons do
     seasons.to_sentence
+  end
+
+  column :primary_contact_name, preload: [:primary_contact] do
+    primary_contact&.full_name.presence || "-"
+  end
+
+  column :primary_contact_email_address, preload: [:primary_contact] do
+    primary_contact&.email.presence || "-"
+  end
+
+  column :visible_on_map, header: "Visible on map"
+
+  column :onboarded do
+    onboarded? ? "yes" : "no"
   end
 
   column :actions, mandatory: true, html: true do |club|
