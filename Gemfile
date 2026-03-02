@@ -1,8 +1,7 @@
 source "https://rubygems.org"
 ruby "3.1.2"
 
-gem "rails", "~>7.0.8.0"
-gem "concurrent-ruby", "1.3.4"
+gem "rails", "7.1.0"
 
 gem "puma", "~> 5.6.9"
 gem "pg", "~> 1.2"
@@ -19,7 +18,7 @@ gem "textacular", "~> 5.1"
 
 gem "pdf-forms", "~> 1.2"
 
-gem "public_activity", "~> 2.0"
+gem "public_activity", "~> 3.0"
 gem "paranoia", "~> 3.0"
 gem "counter_culture", "~> 3.0"
 gem "pundit", "~> 2.0"
@@ -106,7 +105,7 @@ gem "net-imap", require: false
 gem "net-pop", require: false
 
 gem "rexml", "~> 3.3.0"
-gem "immosquare-cookies"
+gem "immosquare-cookies", "~> 2.0"
 gem "zipline"
 
 gem "factory_bot_rails", "~> 6.5.0"
@@ -162,7 +161,7 @@ group :production do
   gem "hiredis", "~> 0.6"
   gem "rack-timeout", "~> 0.5"
   gem "rails_autoscale_agent"
-  gem "cloudflare-rails", "~> 2.0"
+  gem "cloudflare-rails", "~> 6.2"
   gem "wkhtmltopdf-heroku", "2.12.6.1.pre.jammy"
 end
 
