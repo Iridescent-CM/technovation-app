@@ -1,6 +1,9 @@
 class MentorInvite < TeamMemberInvite
   default_scope -> { where(invitee_type: "MentorProfile") }
 
+  enum decline_reason: %i[timezone_concern already_mentoring unavailable]
+  validates :decline_reason, presence: true, if: :declined?
+
   def after_accept
     TeamRosterManaging.add(team, invitee)
   end

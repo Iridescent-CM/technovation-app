@@ -2300,7 +2300,8 @@ CREATE TABLE public.team_member_invites (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     invitee_type character varying,
-    inviter_type character varying
+    inviter_type character varying,
+    decline_reason integer
 );
 
 
@@ -5259,7 +5260,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251219212654'),
 ('20251220033400'),
 ('20260113022239'),
+('20260223233518');
 ('20260304231209'),
 ('20260304231230');
-
-

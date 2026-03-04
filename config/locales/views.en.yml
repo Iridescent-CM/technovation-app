@@ -404,6 +404,10 @@ en:
         missing: "We're sorry, but this invitation appears to be missing. Either the token is incorrect, or the invitation was removed by the team."
         invites_disabled_by_judging: "Sorry, but team invitations are currently disabled because judging has already begun."
         join_team_disabled_by_judging: "Sorry, but you cannot join a team because judging has already begun."
+      decline_reasons:
+        timezone_concern: "I’m not based near the team’s time zone or have concerns about working with a team in that time zone."
+        already_mentoring: "I’m already supporting a team(s) for the season and cannot mentor additional teams."
+        unavailable: "I am not available to mentor this team."
 
     team_searches:
       new:
