@@ -1,0 +1,26 @@
+<%= form_with(
+  url: mentor_team_member_invite_path(invite),
+  method: :put,
+  scope: :team_member_invite,
+  local: true,
+  data: { turbo: false }
+  ) do |f| %>
+
+  <%= f.select :decline_reason,
+    MentorInvite.decline_reasons.keys.map { |k|
+      [t("views.team_member_invites.decline_reasons.#{k}"), k]
+    },
+    { prompt: true },
+    { required: true } %>
+
+  <%= f.hidden_field :status, value: :declined %>
+
+  <p class="tw-hint mt-4">
+    If you cannot mentor additional teams, please go to the Basic Information section on your profile
+    and update your profile to not be searchable to other students.
+  </p>
+
+  <div class="flex justify-center mt-8">
+    <%= f.submit "Decline Invitation", class: "tw-red-btn cursor-pointer" %>
+  </div>
+<% end %>

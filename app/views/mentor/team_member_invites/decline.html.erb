@@ -1,0 +1,16 @@
+<%= turbo_frame_tag :modal do %>
+  <template id="modal-content" data-controller="modal">
+    <swal-html>
+      <%= turbo_frame_tag "flash-messages", data: {
+        modal_target: "flashMessages"
+      } %>
+      <div>
+        <h5 style="margin-top: 0px;">Decline Invitation for <%= @invite.team.name %></h5>
+        <p class="hint">
+          Please select a reason for declining this invitation
+        </p>
+        <%= render "decline_form", invite: @invite %>
+      </div>
+    </swal-html>
+  </template>
+<% end %>

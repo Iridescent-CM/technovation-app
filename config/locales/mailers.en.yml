@@ -51,6 +51,11 @@ en:
       subject: "You're invited to join a Technovation team!"
     invite_mentor:
       subject: "You're invited to be a mentor for a Technovation team!"
+    mentor_invite_declined:
+      decline_reasons:
+        timezone_concern: "They are not able to meet your availability needs due to time zone differences."
+        already_mentoring: "They are already working with a team this season."
+        unavailable: "They are not available for mentoring."
 
     join_request:
       extra:
