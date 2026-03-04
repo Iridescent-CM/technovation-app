@@ -73,6 +73,26 @@ RSpec.describe Mentor::TeamMemberInvitesController do
       )
       expect(invite.reload).to be_pending
     end
+
+    context "declining an invite" do
+      it "declines the invite with a reason" do
+        put :update, params: {
+          id: invite.invite_token,
+          team_member_invite: { status: :declined, decline_reason: :timezone_concern }
+        }
+
+        expect(invite.reload).to be_declined
+      end
+
+      it "sends an email to each student on the team" do
+        expect {
+          put :update, params: {
+            id: invite.invite_token,
+            team_member_invite: { status: :declined, decline_reason: :already_mentoring }
+          }
+        }.to change { ActionMailer::Base.deliveries.count }.by(invite.team.students.count)
+      end
+    end
   end
 
   describe "mentor chapterable assignments" do
