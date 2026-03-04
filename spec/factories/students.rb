@@ -156,6 +156,7 @@ FactoryBot.define do
     trait :with_parent_guardian_phone_number do
       parent_guardian_phone_number { "4152362665"}
       parent_guardian_phone_country_code { "+1" }
+      parent_guardian_text_message_opt_in { "1" }
     end
 
     before(:create) do |s, e|
