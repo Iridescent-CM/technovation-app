@@ -133,7 +133,9 @@ Rails.application.routes.draw do
     resources :image_process_jobs, only: :create
     resources :job_statuses, only: :show
 
-    resources :team_member_invites, except: [:edit, :index]
+    resources :team_member_invites, except: [:edit, :index] do
+      get :decline, on: :member
+    end
     resources :join_requests, except: [:index, :edit]
     resources :mentor_invites, only: [:show, :update, :destroy]
 
