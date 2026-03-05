@@ -25,7 +25,7 @@ class MediaConsentsController < ApplicationController
     @media_consent = find_media_consent
     @parental_consent = find_parental_consent
 
-    if @media_consent.update(media_consent_params.merge(signed_at: Time.current))
+    if @media_consent.update(media_consent_params)
       if %w[sms whatsapp].include?(params[:delivery_method]) && student_profile.parent_guardian_phone_number.present?
         SendSignedConsentTextMessageJob.perform_later(
           account_id: student_profile.account.id,
@@ -67,6 +67,9 @@ class MediaConsentsController < ApplicationController
     params.require(:media_consent).permit(
       :electronic_signature,
       :consent_provided
-    )
+    ).tap do |media_consent_params|
+      media_consent_params[:signed_at] = Time.current
+      media_consent_params[:locale] = I18n.locale
+    end
   end
 end

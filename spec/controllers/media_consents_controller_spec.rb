@@ -86,16 +86,23 @@ RSpec.describe MediaConsentsController do
       FactoryBot.create(:media_consent, :unsigned, student_profile: student)
     end
 
-    context "when the media consent is saved sucessfully (i.e. valid values are provided)" do
+    context "when the media consent is saved successfully (i.e. valid values are provided)" do
+      let(:locale) { "es" }
+
       before do
         patch :update, params: {
           id: student.media_consent.id,
+          lang: locale,
           token: student.account.consent_token,
           media_consent: {
             electronic_signature: "Smarty Party Pants",
             consent_provided: "false"
           }
         }
+      end
+
+      it "saves the locale the media consent form was viewed/signed in" do
+        expect(MediaConsent.last.locale).to eq(locale)
       end
 
       it "redirects in order to view the media consent" do

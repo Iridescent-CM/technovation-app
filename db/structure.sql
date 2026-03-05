@@ -1257,7 +1257,8 @@ CREATE TABLE public.media_consents (
     uploaded_at timestamp without time zone,
     upload_approval_status integer DEFAULT 0,
     upload_approved_at timestamp without time zone,
-    upload_rejected_at timestamp without time zone
+    upload_rejected_at timestamp without time zone,
+    locale character varying DEFAULT 'en'::character varying
 );
 
 
@@ -1666,7 +1667,8 @@ CREATE TABLE public.parental_consents (
     uploaded_at timestamp without time zone,
     upload_approval_status integer DEFAULT 0,
     upload_approved_at timestamp without time zone,
-    upload_rejected_at timestamp without time zone
+    upload_rejected_at timestamp without time zone,
+    locale character varying DEFAULT 'en'::character varying
 );
 
 
@@ -5256,6 +5258,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251216215908'),
 ('20251219212654'),
 ('20251220033400'),
-('20260113022239');
+('20260113022239'),
+('20260304231209'),
+('20260304231230');
 
 

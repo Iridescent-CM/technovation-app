@@ -72,8 +72,9 @@ class ParentalConsentsController < ApplicationController
       :delivery_method,
       :electronic_signature,
       :newsletter_opt_in
-    ).tap do |tapped|
-      tapped[:status] = :signed
+    ).tap do |parental_consent_params|
+      parental_consent_params[:status] = :signed
+      parental_consent_params[:locale] = I18n.locale
     end
   end
 end
