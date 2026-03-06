@@ -57,6 +57,7 @@ RSpec.feature "background check invitation" do
 
     expect(chapter_ambassador.reload.background_check).to be_present
     expect(chapter_ambassador.background_check.internal_invitation_status).to eq("invitation_sent")
+
   end
 
   scenario "Chapter ambassadors will see an error message if their last name is less than 2 characters when trying to request a background check invitation" do
