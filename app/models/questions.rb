@@ -56,8 +56,14 @@ class Questions
 
   def as_json(*args, &block)
     if submission.developed_on?("Thunkable")
-      source_code_url_label = "Open this project in Thunkable"
+      source_code_url_label = "Open this project on Thunkable"
       source_code_url = submission.thunkable_project_url
+    elsif submission.developed_on?("Scratch")
+      source_code_url_label = "Open this project on Scratch"
+      source_code_url = submission.scratch_project_url
+    elsif submission.developed_on?("Code.org App Lab")
+      source_code_url_label = "Open this project on Code.org"
+      source_code_url = submission.code_org_app_lab_project_url
     else
       source_code_url_label = "Download the source code"
       source_code_url = submission.source_code_url
