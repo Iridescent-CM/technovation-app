@@ -34,7 +34,7 @@ module ChapterAmbassador
       @event = RegionalPitchEvent
         .current
         .in_region(current_ambassador)
-        .includes(teams: [:division])
+        .includes(teams: [:division, :assigned_judges])
         .includes(:team_submissions)
         .find(params[:id])
 

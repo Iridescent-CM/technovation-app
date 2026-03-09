@@ -14,6 +14,12 @@
   </td>
 
   <td>
+    <span id="<%= dom_id(judge, :teams_count) %>">
+      <%= judge.assigned_teams_for_event(event).count %>
+    </span>
+  </td>
+
+  <td>
     <span class="pill pill-<%= judge.status == "ready" ? "green" : "orange" %>" style="white-space: nowrap;">
       <%= judge.human_status %>
     </span>
