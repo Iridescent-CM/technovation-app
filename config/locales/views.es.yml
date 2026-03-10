@@ -64,6 +64,7 @@ es:
       electronic_signature: "Firma electrónica"
       students_name: "Nombre de la estudiante"
       signee_line: "%{signee} firmado el %{date}"
+      sign_the_forms: "Firmar los formularios"
       new:
         submit: "Estoy de acuerdo"
       show:

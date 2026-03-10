@@ -70,6 +70,7 @@ en:
       parent_guardian_email: "Parent or guardian's email"
       parent_guardian_name: "Parent or guardian's name"
       parent_guardian_phone_number: "Parent or guardian's phone number"
+      parent_guardian_consent_locale: "Language to send consent form in"
       school_name: "School name"
 
     team:

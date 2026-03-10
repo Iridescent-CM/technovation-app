@@ -28,7 +28,8 @@ class Student::ParentalConsentNoticesController < StudentController
         :parent_guardian_name,
         :parent_guardian_phone_number,
         :parent_guardian_phone_country_code,
-        :parent_guardian_text_message_opt_in
+        :parent_guardian_text_message_opt_in,
+        :parent_guardian_consent_locale
       )
     end
   end
