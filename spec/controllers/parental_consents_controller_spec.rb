@@ -95,6 +95,22 @@ RSpec.describe ParentalConsentsController do
         )
     end
 
+    describe "saving the locale/language the parental consent was viewed/signed in" do
+      let(:locale) { "es" }
+      let(:student) { FactoryBot.create(:onboarding_student) }
+
+      it "saves the locale the parental consent form was viewed/signed in" do
+        patch :update, params: {id: student.parental_consent.id,
+                                lang: locale,
+                                parental_consent: FactoryBot.attributes_for(
+                                  :parental_consent,
+                                  student_profile_consent_token: student.consent_token
+                                ).merge(newsletter_opt_in: "1")}
+
+        expect(ParentalConsent.last.locale).to eq(locale)
+      end
+    end
+
     it "redirects to the media consent form" do
       student = FactoryBot.create(:onboarding_student)
 

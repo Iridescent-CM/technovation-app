@@ -16,7 +16,16 @@
       <% end %>
     </dd>
 
-    <dt>Parental Consent</dt>
+    <dt>
+      Parental Consent
+
+      <% if profile.parental_consent_signed? %>
+        <small style="font-weight: normal; font-style: italic; color: #6b7280;">
+          (<%= I18n.t("languages.#{profile.parental_consent.locale}") %>)
+        </small>
+      <% end %>
+    </dt>
+
     <dd>
       <% if profile.parental_consent_signed? %>
         <%= web_icon("check-circle icon-green",
@@ -31,7 +40,16 @@
       <% end %>
     </dd>
 
-    <dt>Media Consent</dt>
+    <dt>
+      Media Consent
+
+      <% if profile.media_consent_signed? %>
+        <small style="font-weight: normal; font-style: italic; color: #6b7280;">
+          (<%= I18n.t("languages.#{profile.media_consent.locale}") %>)
+        </small>
+      <% end %>
+    </dt>
+
     <dd>
       <% if profile.media_consent_signed? %>
         <%= web_icon("check-circle icon-green",
