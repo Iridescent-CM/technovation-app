@@ -4,11 +4,11 @@ class ParentMailer < ApplicationMailer
     @name = profile.parent_guardian_name
     @student_name = profile.full_name
 
-    if token = profile.account.consent_token
-      @url = edit_parental_consent_url(token: token)
+    if (token = profile.account.consent_token)
+      @url = edit_parental_consent_url(token: token, lang: profile.parent_guardian_consent_locale)
       @dashboard_url = student_dashboard_url(anchor: "/parental-consent")
 
-      I18n.with_locale(profile.account.locale) do
+      I18n.with_locale(profile.parent_guardian_consent_locale) do
         mail to: profile.parent_guardian_email
       end
     else
