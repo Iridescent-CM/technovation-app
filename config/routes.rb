@@ -200,9 +200,6 @@ Rails.application.routes.draw do
     resources :student_conversions, only: :create
     resources :mentor_to_judge_conversions, only: :create
 
-    resource :missing_participant_search, only: [:new, :show, :create]
-    resources :missing_participant_locations, only: [:edit, :update]
-
     resources :teams, only: [:show, :create], controller: "/ambassador/teams"
     resources :teams, only: :index, controller: "/data_grids/ambassador/teams"
     resources :team_submissions, only: :show, controller: "/ambassador/team_submissions"
