@@ -560,7 +560,7 @@ RSpec.describe Account do
 
       FactoryBot.create(:mentor_invite, :pending, invitee: pending_mentor)
       FactoryBot.create(:mentor_invite, :accepted, invitee: accepted_mentor)
-      FactoryBot.create(:mentor_invite, :declined, invitee: declined_mentor)
+      FactoryBot.create(:mentor_invite, :declined,  invitee: declined_mentor, decline_reason: :unavailable)
 
       expect(Account.mentors_pending_invites).to eq([pending_mentor.account])
     end

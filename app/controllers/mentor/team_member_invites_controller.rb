@@ -10,13 +10,18 @@ module Mentor
         invite_token: params.fetch(:id)
       )
 
-        invite.update(invite_params)
+        if invite.update(invite_params)
+          redirect_based_on_status(invite)
+        end
 
-        redirect_based_on_status(invite)
       else
         redirect_to mentor_dashboard_path,
           alert: t("controllers.invites.update.failure")
       end
+    end
+
+    def decline
+      @invite = current_mentor.mentor_invites.pending.find_by(invite_token: params[:id])
     end
 
     private
@@ -26,7 +31,8 @@ module Mentor
         @path = mentor_team_path(invite.team)
         @msg = t("controllers.team_member_invites.update.success")
       else
-        @path = mentor_dashboard_path
+        MentorInviteDeclined.call(invite)
+        @path = mentor_pending_team_requests_path
         @msg = t("controllers.team_member_invites.update.not_accepted")
       end
 
@@ -34,7 +40,7 @@ module Mentor
     end
 
     def invite_params
-      params.require(:team_member_invite).permit(:status)
+      params.require(:team_member_invite).permit(:status, :decline_reason)
     end
 
     def current_profile

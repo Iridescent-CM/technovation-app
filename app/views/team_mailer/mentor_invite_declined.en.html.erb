@@ -1,0 +1,44 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Download your file"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Dear <%= @student_first_name %>,
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          We are excited that you are building your team to participate in Technovation this season.
+          Unfortunately,
+          <strong><%= @mentor_full_name %></strong>
+          is not available to serve as a mentor for your team due to the following reason:
+          <br>
+          <ul>
+            <li><%= t("team_mailer.mentor_invite_declined.decline_reasons.#{@decline_reason}") %></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          We have many other mentors available to work with students and would encourage you to visit our mentor matching page
+          to look for another available mentor or reach out to your Chapter or Club Ambassador if you are working with a Technovation chapter or club.
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block"
+            itemprop="handler"
+            itemscope
+            itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to "Find a mentor", @url, class: "btn-primary", itemprop: "url" %>
+        </td>
+      </tr>
+      <tr>
+        <td class="content-block">
+          Regards,<br />
+          The Technovation Team
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

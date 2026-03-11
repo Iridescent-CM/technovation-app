@@ -97,6 +97,17 @@ class TeamMailer < ApplicationMailer
     end
   end
 
+  def mentor_invite_declined(student, invite)
+    @student_first_name = student.first_name
+    @mentor_full_name = invite.invitee.full_name
+    @decline_reason = invite.decline_reason
+    @url = student_mentor_search_url(mailer_token: student.mailer_token)
+
+    I18n.with_locale(student.locale) do
+      mail to: student.email, subject: "A mentor is unable to join your team"
+    end
+  end
+
   def join_request(recipient, join_request)
     @first_name = join_request.requestor_first_name
     @role_name = join_request.requestor_scope_name
