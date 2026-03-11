@@ -6,7 +6,9 @@ export default class extends Controller {
   }
 
   initialize() {
-    this.toggle()
+    if (this.hasCheckboxTarget) {
+      this.toggle();
+    }
   }
 
   toggle(){
