@@ -1,0 +1,9 @@
+<% provide :title, "Invite Details" %>
+
+<div class="container mx-auto flex flex-col lg:flex-row justify-around w-full lg:w-1/2">
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Invite Details"} do %>
+    <h3>
+      <%= t("views.join_requests.show.accepted") %>
+    </h3>
+  <% end %>
+</div>
