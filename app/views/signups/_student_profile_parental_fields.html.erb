@@ -27,16 +27,22 @@
           or contact <%= mail_to ENV.fetch("HELP_EMAIL") %> for help.
         </p>
       <% else %>
-        <p class="mb-6">
-          Parental consent forms are automatically sent to an email address. Add your parent
-          or guardian's phone number here if you would like the forms to be sent via WhatsApp
-          or text message. Please get permission from your parent or guardian to share their
-          phone number before you add it here.
-          <br>
-          By providing the phone number, you agree that your parent or guardian may receive
-          text messages from Technovation. We will automatically try to send the message via
-          WhatsApp first and then use SMS if WhatsApp is not available. Note: Standard messaging rates apply.
+        <p class="mb-4">
+          Parental consent forms are automatically sent to an email address.
+          Have your parent or guardian enter their phone number below to receive program consent
+          forms via WhatsApp or SMS instead. Your phone number is only shared with Twilio,
+          the company that sends our SMS messages. We will never share or sell your phone
+          number to any other third party service.
         </p>
+
+        <div class="mb-6">
+          <%= f.input :parent_guardian_text_message_opt_in,
+            as: :boolean,
+            label: "I agree to receive text messages via SMS or WhatsApp from Technovation
+              at the phone number provided for the purpose of receiving program consent forms.
+              Standard message and data rates may apply. Reply STOP to opt out at any time." %>
+        </div>
+
         <%= f.input :parent_guardian_phone_country_code,
           collection: ConsentForms.parental_consent_phone_country_code_options,
           label: "Country Code",

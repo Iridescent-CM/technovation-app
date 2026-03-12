@@ -348,6 +348,7 @@ RSpec.describe StudentProfile do
       before do
         student.parent_guardian_phone_country_code = "+1"
         student.parent_guardian_phone_number = "(415) 236-2665"
+        student.parent_guardian_text_message_opt_in = "1"
       end
 
       it "formats the number to E.164 standard" do
@@ -360,6 +361,7 @@ RSpec.describe StudentProfile do
       before do
         student.parent_guardian_phone_country_code = "+1"
         student.parent_guardian_phone_number = "4152362665"
+        student.parent_guardian_text_message_opt_in = "1"
       end
 
       it "formats the number to E.164 standard" do
@@ -372,6 +374,7 @@ RSpec.describe StudentProfile do
       before do
         student.parent_guardian_phone_country_code = nil
         student.parent_guardian_phone_number = "4152362665"
+        student.parent_guardian_text_message_opt_in = "1"
       end
 
       it "is invalid" do
@@ -384,6 +387,7 @@ RSpec.describe StudentProfile do
       before do
         student.parent_guardian_phone_country_code = "+1"
         student.parent_guardian_phone_number = "415236abc"
+        student.parent_guardian_text_message_opt_in = "1"
       end
 
       it "is invalid" do
@@ -396,6 +400,7 @@ RSpec.describe StudentProfile do
       before do
         student.parent_guardian_phone_country_code = "+1"
         student.parent_guardian_phone_number = "+14152362665"
+        student.parent_guardian_text_message_opt_in = "1"
       end
 
       it "does not double the country code" do
