@@ -4,6 +4,9 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
+  config.enable_reloading = false
+
+  # Code is not reloaded between requests.
   config.cache_classes = !ENV["USE_DOTENV"].present?
 
   # Eager load code on boot. This eager loads most of Rails and
@@ -16,9 +19,8 @@ Rails.application.configure do
   config.consider_all_requests_local = ENV["USE_DOTENV"].present?
   config.action_controller.perform_caching = !ENV["USE_DOTENV"].present?
 
-  # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
-  # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  # Assume all access to the app is happening through a SSL-terminating reverse proxy.
+  config.assume_ssl = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -51,11 +53,14 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = ENV.fetch("FORCE_SSL") { "true" } === "true"
 
+  # Don't log any deprecations.
+  config.active_support.report_deprecations = false
+
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
   config.log_level = :info
 
-  # Prepend all log lines with the following tags.
+  # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [:request_id]
 
   # Use a different cache store in production.
@@ -75,6 +80,9 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
+
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
@@ -90,9 +98,6 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
-
-  # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = {host: ENV.fetch("HOST_DOMAIN")}
 
