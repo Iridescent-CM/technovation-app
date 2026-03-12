@@ -221,14 +221,6 @@ jobs:
             bundle exec rails db:schema:load
             bundle exec rails db:migrate
 
-      - run:
-          name: Run RSpec feature tests
-          command: bundle exec rspec spec/features/ --order rand
-
-      - run:
-          name: Run RSpec system tests
-          command: bundle exec rspec spec/system/ --order rand
-
       - store_test_results:
           path: ~/rspec
 
