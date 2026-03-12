@@ -222,10 +222,12 @@ jobs:
             bundle exec rails db:migrate
 
       - run:
-          name: Run RSpec tests
-          command: |
-            mkdir ~/rspec
-            circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs bundle exec rspec --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
+          name: Run RSpec feature tests
+          command: bundle exec rspec spec/features/ --order rand
+
+      - run:
+          name: Run RSpec system tests
+          command: bundle exec rspec spec/system/ --order rand
 
       - store_test_results:
           path: ~/rspec

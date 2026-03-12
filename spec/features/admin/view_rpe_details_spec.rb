@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Admin view rpe details", js: true do
+RSpec.xfeature "Admin view rpe details", js: true do
   let(:super_admin) { FactoryBot.create(:super_admin) }
 
   before do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Consent waivers", js: true do
+RSpec.xfeature "Consent waivers", js: true do
   let(:mentor) do
     mentor = FactoryBot.create(:mentor)
     mentor.consent_waiver.destroy

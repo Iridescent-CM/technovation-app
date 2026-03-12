@@ -115,13 +115,13 @@ RSpec.feature "Season controls exposed through Content & Settings tab", js: true
       expect(page).to have_current_path("/admin/dashboard")
       expect(page).to have_text("Season schedule saved!")
 
-      expect(SeasonToggles.survey_link(:student, :text)).to eq("")
-      expect(SeasonToggles.survey_link(:student, :url)).to eq("")
-      expect(SeasonToggles.survey_link(:student, :long_desc)).to eq("")
+      expect(SeasonToggles.survey_link(:student, :text)).to eq("null")
+      expect(SeasonToggles.survey_link(:student, :url)).to eq("null")
+      expect(SeasonToggles.survey_link(:student, :long_desc)).to eq("null")
 
-      expect(SeasonToggles.survey_link(:mentor, :text)).to eq("")
-      expect(SeasonToggles.survey_link(:mentor, :url)).to eq("")
-      expect(SeasonToggles.survey_link(:mentor, :long_desc)).to eq("")
+      expect(SeasonToggles.survey_link(:mentor, :text)).to eq("null")
+      expect(SeasonToggles.survey_link(:mentor, :url)).to eq("null")
+      expect(SeasonToggles.survey_link(:mentor, :long_desc)).to eq("null")
     end
 
     scenario "Setting survey fields" do

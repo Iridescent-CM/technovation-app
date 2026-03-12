@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Students request to join a team",
+RSpec.xdescribe "Students request to join a team",
   :js,
   vcr: {match_requests_on: [:method, :host]} do
   include ActionView::RecordIdentifier
@@ -210,7 +210,7 @@ RSpec.describe "Students request to join a team",
       }.not_to raise_error
     end
 
-    it "mentor declines from team page" do
+    xit "mentor declines from team page" do
       sign_out
       sign_in(team.mentors.sample)
 

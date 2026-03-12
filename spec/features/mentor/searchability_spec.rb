@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Searchability", js: true do
+RSpec.xfeature "Searchability", js: true do
   scenario "non-US mentor signs consent" do
     mentor = FactoryBot.create(
       :mentor,

@@ -22,7 +22,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 
 Capybara.automatic_label_click = true
 Capybara.default_max_wait_time = 5
-Capybara.javascript_driver = ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
+Capybara.javascript_driver = :selenium_headless
+Capybara.server = :puma, {Silent: true} # To clean up your test output
 Capybara.server_port = ENV.fetch("CAPYBARA_SERVER_PORT", 31337)
 
 WebMock.allow_net_connect!(net_http_connect_on_start: true)
@@ -76,7 +77,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    driven_by ENV.fetch("JAVASCRIPT_DRIVER", "selenium_chrome_headless").to_sym
+    driven_by :selenium_headless
   end
 
   config.before(:each, js: true) do
