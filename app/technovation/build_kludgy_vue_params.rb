@@ -31,7 +31,7 @@ module BuildKludgyVueParams
     pars = {}
 
     attrs_groups.map.with_index do |attrs, i|
-      pars[i] = [kludgy_invite_attrs(attrs)]
+      pars[i.to_s] = [kludgy_invite_attrs(attrs)]
     end
 
     pars
