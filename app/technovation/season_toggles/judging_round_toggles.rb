@@ -1,4 +1,4 @@
-require "season_toggles/boolean_toggler"
+require_relative "boolean_toggler"
 
 class SeasonToggles
   module JudgingRoundToggles
