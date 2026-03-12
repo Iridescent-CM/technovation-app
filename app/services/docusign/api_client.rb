@@ -1,3 +1,6 @@
+require "faraday"
+require "faraday/httpclient"
+
 module Docusign
   class ApiClient
     include ActionView::Helpers::TextHelper
@@ -19,7 +22,10 @@ module Docusign
           "Accept" => "application/json",
           "Content-Type" => "application/json"
         }
-      )
+      ) do |f|
+        f.adapter :httpclient
+      end
+
       @api_account_id = api_account_id
       @logger = logger
       @error_notifier = error_notifier
