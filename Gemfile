@@ -99,6 +99,8 @@ gem "dotenv-rails", "~> 3.0"
 gem "pdfkit", "~> 0.8.7.0"
 
 gem "restforce", "~> 7.0.0"
+gem "faraday", "~> 2.0"
+gem "faraday-httpclient", "~> 2.0"
 
 gem "net-smtp", require: false
 gem "net-imap", require: false
