@@ -58,7 +58,9 @@ RSpec.configure do |config|
 
   config.include ExternalResourceHelper
 
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = [
+    "#{::Rails.root}/spec/fixtures"
+  ]
   config.use_transactional_fixtures = true
   config.global_fixtures = :all
 
