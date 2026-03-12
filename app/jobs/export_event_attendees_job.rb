@@ -52,12 +52,13 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_judge_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w[name email company status explanation number\ of\ assigned\ teams assigned\ teams]
+      csv << %w[judge\ id name email company status explanation number\ of\ assigned\ teams assigned\ teams]
       event.judge_list.each do |item|
         assigned_teams = item.assigned_teams_for_event(event).to_a
           .map { |team| team.name }
 
         csv << [
+          item.id,
           item.name,
           item.email,
           item.company_name,
@@ -72,7 +73,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_team_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w[team submission division percent\ complete presentation project\ url city student\ emails mentor\ emails parent\ emails]
+      csv << %w[id team submission division percent\ complete presentation project\ url city student\ emails mentor\ emails parent\ emails]
       event.teams.each do |item|
         student_emails = item.students.to_a.map { |student| student.email }
         mentor_emails = item.mentors.to_a.map { |mentor| mentor.email }
@@ -80,6 +81,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
           .map { |student| student.parent_guardian_email }
 
         csv << [
+          item.id,
           item.name,
           item.submission.app_name,
           item.division_name,
