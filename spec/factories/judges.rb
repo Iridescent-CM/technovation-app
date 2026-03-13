@@ -88,6 +88,30 @@ FactoryBot.define do
       country { "IN" }
     end
 
+    trait :with_technical_experience_opt_in do
+      after(:create) do |judge|
+        judge.update_column(:technical_experience_opt_in, true)
+      end
+    end
+
+    trait :with_technical_skills do
+      after(:create) do |judge|
+        judge.technical_skills << FactoryBot.create(:technical_skill)
+      end
+    end
+
+    trait :with_ai_experience do
+      after(:create) do |judge|
+        judge.update_column(:ai_experience, true)
+      end
+    end
+
+    trait :with_technical_experience_complete do
+      with_technical_experience_opt_in
+      with_technical_skills
+      with_ai_experience
+    end
+
     before(:create) do |j, e|
       attrs = {
         city: e.city,
