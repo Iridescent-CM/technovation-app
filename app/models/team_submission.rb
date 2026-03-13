@@ -698,7 +698,7 @@ class TeamSubmission < ActiveRecord::Base
     send("Code.org App Lab?")
   end
 
-  def other_devlopment_platform?
+  def other_development_platform?
     send(:Other?)
   end
 

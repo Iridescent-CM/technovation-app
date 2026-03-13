@@ -64,9 +64,13 @@ class Questions
     elsif submission.developed_on?("Code.org App Lab")
       source_code_url_label = "Open this project on Code.org"
       source_code_url = submission.code_org_app_lab_project_url
-    else
-      source_code_url_label = "Download the source code"
-      source_code_url = submission.source_code_url
+    elsif submission.other_development_platform? && submission.development_platform_other_url.present?
+      source_code_url_label = "View this project"
+      source_code_url = submission.development_platform_other_url
+    end
+
+    if submission.source_code_url.present?
+      download_source_code_url = submission.source_code_url
     end
 
     {
@@ -120,8 +124,9 @@ class Questions
         pitch_video_id: submission.video_id(:pitch).first(5),
         pitch_video_url: judge_embed_code_path(submission, piece: :pitch),
 
-        source_code_url_label: source_code_url_label,
-        source_code_url: source_code_url,
+        source_code_url_label: source_code_url_label.presence,
+        source_code_url: source_code_url.presence,
+        download_source_code_url: download_source_code_url.presence,
 
         business_plan_url: submission.business_plan_url,
         pitch_presentation_url: submission.pitch_presentation_url
