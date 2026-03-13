@@ -311,6 +311,7 @@ Rails.application.routes.draw do
     resource :profile_image_upload_confirmation, only: :show
 
     resource :dashboard, only: :show
+    resource :judge_information, only: [:edit, :update], controller: "/judge/judge_information"
 
     resources :consent_waivers, only: [:new, :create, :show]
     resource :survey_answers, except: [:index, :destroy, :show]

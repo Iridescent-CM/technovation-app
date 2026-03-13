@@ -114,6 +114,16 @@ en:
     judge:
       form:
         judge_types: "As a judge you may call me a..."
+      judge_information:
+        technical_opt_in:
+          heading: "Technical Judge Opt In"
+          label: "I have hands-on technical experience and can independently review source code without using AI tools, agents, or assistants"
+        technical_experience:
+          heading: "Technical Experience"
+          label: "Which languages or technologies do you have real-world experience with? This list reflects the technologies commonly used for Technovation projects."
+        ai_experience:
+          heading: "AI Experience"
+          label: "Do you have experience training and/or building AI models or machine learning systems?"
 
     parental_consents:
       new:

@@ -1,0 +1,50 @@
+<% if !current_judge.email_confirmed? %>
+  <%= render "completion_steps/rebrand/confirm_changed_email", profile: current_judge %>
+<% else %>
+  <div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-6">
+    <p>
+      Technical experience is optional. Judges without technical experience will still be invited to review submissions.
+    </p>
+  </div>
+  <% if current_judge.judge_information_completed? %>
+    <div class="mb-6">
+      <p class="font-medium">
+        <%= t("views.judge.judge_information.technical_opt_in.heading") %>
+      </p>
+      <div class="ml-4">
+        <p class="italic"><%= t("views.judge.judge_information.technical_opt_in.label") %></p>
+        <p class="font-medium"><%= current_judge.technical_experience_opt_in? ? "Yes" : "No" %></p>
+      </div>
+    </div>
+    
+    <% if current_judge.technical_experience_opt_in? %>
+      <div class="mb-6">
+        <p class="font-medium"><%= t("views.judge.judge_information.technical_experience.heading") %></p>
+        <div class="ml-4">
+          <p class="italic"><%= t("views.judge.judge_information.technical_experience.label") %></p>
+          <ul class="list-disc ml-6 font-medium">
+            <% current_judge.technical_skills.order(:order).each do |skill| %>
+              <li><%= skill.name %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mb-6">
+        <p class="font-medium"><%= t("views.judge.judge_information.ai_experience.heading") %></p>
+        <div class="ml-4">
+          <p class="italic"><%= t("views.judge.judge_information.ai_experience.label") %></p>
+          <p class="font-medium"><%= current_judge.ai_experience? ? "Yes" : "No" %></p>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="mb-6"> Please update your technical experience to complete this step.</p>
+  <% end %>
+  <div class="text-center">
+    <%= link_to "Update Technical Experience",
+      edit_judge_judge_information_path, class: "tw-green-btn" %>
+  </div>
+<% end %>
+
+

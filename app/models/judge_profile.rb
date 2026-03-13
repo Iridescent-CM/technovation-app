@@ -61,12 +61,7 @@ class JudgeProfile < ActiveRecord::Base
     end
   }
 
-  before_validation -> {
-    if technical_experience_opt_in == false || technical_experience_opt_in.nil?
-      self.ai_experience = nil
-      judge_profile_technical_skills.destroy_all
-    end
-  }
+  before_validation :clear_technical_details, if: -> { technical_experience_opt_in_changed? }
 
   attr_accessor :destroyed
   after_destroy -> { self.destroyed = true }
@@ -135,7 +130,7 @@ class JudgeProfile < ActiveRecord::Base
   validates :company_name, :job_title,
     presence: true
 
-  validate :technical_details_required, if: -> { technical_experience_opt_in == true }
+  validate :technical_details, if: -> { technical_experience_opt_in == true }
 
   delegate :first_name,
     to: :account,
@@ -271,9 +266,10 @@ class JudgeProfile < ActiveRecord::Base
       account.email_confirmed? &&
       consent_signed? &&
       training_completed? &&
-      technical_experience_completed?
+      judge_information_completed?
   end
-  def technical_experience_completed?
+
+  def judge_information_completed?
     !technical_experience_opt_in.nil? &&
       (!technical_experience_opt_in || (technical_skills.any? && !ai_experience.nil?))
   end
@@ -287,12 +283,19 @@ class JudgeProfile < ActiveRecord::Base
     )
   end
 
-  def technical_details_required
+  def technical_details
     if technical_skills.empty?
       errors.add(:technical_skills, "Please select at least one option")
     end
     if ai_experience.nil?
       errors.add(:ai_experience, "Please select yes or no")
+    end
+  end
+
+  def clear_technical_details
+    if technical_experience_opt_in == false || technical_experience_opt_in.nil?
+      self.ai_experience = nil
+      judge_profile_technical_skills.destroy_all
     end
   end
 end
