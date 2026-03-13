@@ -12,6 +12,7 @@ require "capybara/rails"
 require "vcr_helper"
 require "geocoder_helper"
 require "rake"
+require "selenium_error_patch"
 
 ActiveRecord::Migration.maintain_test_schema!
 
