@@ -61,6 +61,13 @@ class JudgeProfile < ActiveRecord::Base
     end
   }
 
+  before_validation -> {
+    if technical_experience_opt_in == false || technical_experience_opt_in.nil?
+      self.ai_experience = nil
+      judge_profile_technical_skills.destroy_all
+    end
+  }
+
   attr_accessor :destroyed
   after_destroy -> { self.destroyed = true }
 
@@ -87,6 +94,12 @@ class JudgeProfile < ActiveRecord::Base
 
   has_many :judge_types,
     through: :judge_profile_judge_types
+
+  has_many :judge_profile_technical_skills,
+    dependent: :destroy
+
+  has_many :technical_skills,
+    through: :judge_profile_technical_skills
 
   has_and_belongs_to_many :regional_pitch_events, -> { current }
   has_and_belongs_to_many :events, -> { current },
@@ -121,6 +134,8 @@ class JudgeProfile < ActiveRecord::Base
 
   validates :company_name, :job_title,
     presence: true
+
+  validate :technical_details_required, if: -> { technical_experience_opt_in == true }
 
   delegate :first_name,
     to: :account,
@@ -255,7 +270,12 @@ class JudgeProfile < ActiveRecord::Base
     account &&
       account.email_confirmed? &&
       consent_signed? &&
-      training_completed?
+      training_completed? &&
+      technical_experience_completed?
+  end
+  def technical_experience_completed?
+    !technical_experience_opt_in.nil? &&
+      (!technical_experience_opt_in || (technical_skills.any? && !ai_experience.nil?))
   end
 
   private
@@ -265,5 +285,14 @@ class JudgeProfile < ActiveRecord::Base
       account_id: account.id,
       profile_type: "judge"
     )
+  end
+
+  def technical_details_required
+    if technical_skills.empty?
+      errors.add(:technical_skills, "Please select at least one option")
+    end
+    if ai_experience.nil?
+      errors.add(:ai_experience, "Please select yes or no")
+    end
   end
 end
