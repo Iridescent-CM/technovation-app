@@ -1085,6 +1085,38 @@ ALTER SEQUENCE public.judge_profile_judge_types_id_seq OWNED BY public.judge_pro
 
 
 --
+-- Name: judge_profile_technical_skills; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.judge_profile_technical_skills (
+    id bigint NOT NULL,
+    judge_profile_id bigint NOT NULL,
+    technical_skill_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: judge_profile_technical_skills_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.judge_profile_technical_skills_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: judge_profile_technical_skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.judge_profile_technical_skills_id_seq OWNED BY public.judge_profile_technical_skills.id;
+
+
+--
 -- Name: judge_profiles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1107,7 +1139,9 @@ CREATE TABLE public.judge_profiles (
     quarterfinals_scores_count integer DEFAULT 0 NOT NULL,
     semifinals_scores_count integer DEFAULT 0,
     suspended boolean DEFAULT false,
-    recusal_scores_count integer DEFAULT 0 NOT NULL
+    recusal_scores_count integer DEFAULT 0 NOT NULL,
+    technical_experience_opt_in boolean,
+    ai_experience boolean
 );
 
 
@@ -2506,6 +2540,38 @@ ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
 
 
 --
+-- Name: technical_skills; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.technical_skills (
+    id bigint NOT NULL,
+    name character varying,
+    "order" integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: technical_skills_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.technical_skills_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: technical_skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.technical_skills_id_seq OWNED BY public.technical_skills.id;
+
+
+--
 -- Name: text_messages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2867,6 +2933,13 @@ ALTER TABLE ONLY public.judge_profile_judge_types ALTER COLUMN id SET DEFAULT ne
 
 
 --
+-- Name: judge_profile_technical_skills id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_technical_skills ALTER COLUMN id SET DEFAULT nextval('public.judge_profile_technical_skills_id_seq'::regclass);
+
+
+--
 -- Name: judge_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3119,6 +3192,13 @@ ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_
 
 
 --
+-- Name: technical_skills id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technical_skills ALTER COLUMN id SET DEFAULT nextval('public.technical_skills_id_seq'::regclass);
+
+
+--
 -- Name: text_messages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3367,6 +3447,14 @@ ALTER TABLE ONLY public.judge_assignments
 
 ALTER TABLE ONLY public.judge_profile_judge_types
     ADD CONSTRAINT judge_profile_judge_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: judge_profile_technical_skills judge_profile_technical_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_technical_skills
+    ADD CONSTRAINT judge_profile_technical_skills_pkey PRIMARY KEY (id);
 
 
 --
@@ -3663,6 +3751,14 @@ ALTER TABLE ONLY public.team_submissions
 
 ALTER TABLE ONLY public.teams
     ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: technical_skills technical_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.technical_skills
+    ADD CONSTRAINT technical_skills_pkey PRIMARY KEY (id);
 
 
 --
@@ -4018,6 +4114,20 @@ CREATE INDEX index_judge_profile_judge_types_on_judge_profile_id ON public.judge
 --
 
 CREATE INDEX index_judge_profile_judge_types_on_judge_type_id ON public.judge_profile_judge_types USING btree (judge_type_id);
+
+
+--
+-- Name: index_judge_profile_technical_skills_on_judge_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_profile_technical_skills_on_judge_profile_id ON public.judge_profile_technical_skills USING btree (judge_profile_id);
+
+
+--
+-- Name: index_judge_profile_technical_skills_on_technical_skill_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_profile_technical_skills_on_technical_skill_id ON public.judge_profile_technical_skills USING btree (technical_skill_id);
 
 
 --
@@ -4528,6 +4638,14 @@ ALTER TABLE ONLY public.team_submissions
 
 
 --
+-- Name: judge_profile_technical_skills fk_rails_3638da77e2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_technical_skills
+    ADD CONSTRAINT fk_rails_3638da77e2 FOREIGN KEY (judge_profile_id) REFERENCES public.judge_profiles(id);
+
+
+--
 -- Name: mentor_profile_mentor_types fk_rails_38b0d3141a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4669,6 +4787,14 @@ ALTER TABLE ONLY public.mentor_profile_expertises
 
 ALTER TABLE ONLY public.regional_pitch_events_teams
     ADD CONSTRAINT fk_rails_96288d546f FOREIGN KEY (regional_pitch_event_id) REFERENCES public.regional_pitch_events(id);
+
+
+--
+-- Name: judge_profile_technical_skills fk_rails_98f9bba10a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_profile_technical_skills
+    ADD CONSTRAINT fk_rails_98f9bba10a FOREIGN KEY (technical_skill_id) REFERENCES public.technical_skills(id);
 
 
 --
@@ -5264,6 +5390,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260223233518'),
 ('20260304231209'),
 ('20260304231230'),
-('20260310205057');
-
-
+('20260310205057'),
+('20260312213946'),
+('20260312214123'),
+('20260312214300'),
+('20260312214323');
