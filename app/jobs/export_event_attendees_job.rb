@@ -73,10 +73,11 @@ class ExportEventAttendeesJob < ActiveJob::Base
 
   def prepare_team_csv(event, filepath)
     CSV.open(filepath, "wb+") do |csv|
-      csv << %w[team\ id team submission division percent\ complete presentation project\ url city student\ emails mentor\ emails parent\ emails]
+      csv << %w[team\ id team submission division percent\ complete presentation project\ url city student\ emails mentor\ emails judge\ emails parent\ emails]
       event.teams.each do |item|
         student_emails = item.students.to_a.map { |student| student.email }
         mentor_emails = item.mentors.to_a.map { |mentor| mentor.email }
+        judge_emails = item.assigned_judges.to_a.map { |judge| judge.email }
         parent_emails = item.students.to_a
           .map { |student| student.parent_guardian_email }
 
@@ -91,6 +92,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
           item.city,
           student_emails.join(", "),
           mentor_emails.join(", "),
+          judge_emails.join(", "),
           parent_emails.join(", ")
         ]
       end
@@ -111,7 +113,7 @@ class ExportEventAttendeesJob < ActiveJob::Base
         filename: export["file"],
         url: export.file_url,
         update_url: send(
-          "#{profile.account.scope_name}_export_download_path",
+          :"#{profile.account.scope_name}_export_download_path",
           export
         )
       })
