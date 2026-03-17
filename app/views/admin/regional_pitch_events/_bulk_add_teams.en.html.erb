@@ -26,7 +26,7 @@
   <p style="margin-bottom: 20px;"><strong>Only CSVs that include a column with the header "Team ID" can be uploaded.</strong></p>
 
   <%= form_with(
-    url: chapter_ambassador_event_bulk_add_teams_path(@event),
+    url: send(:"#{current_scope}_event_bulk_add_teams_path", @event),
     local: true,
     data: {turbo: false},
     html: {
