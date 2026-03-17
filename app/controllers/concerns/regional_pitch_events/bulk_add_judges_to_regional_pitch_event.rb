@@ -1,9 +1,15 @@
 module RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
   def bulk_add_judges
-    @event = RegionalPitchEvent
-      .current
-      .in_region(current_ambassador)
-      .find(params[:event_id])
+    @event = if current_scope == "admin"
+      RegionalPitchEvent
+        .current
+        .find(params[:event_id])
+    else
+      RegionalPitchEvent
+        .current
+        .in_region(current_ambassador)
+        .find(params[:event_id])
+    end
 
     begin
       SmarterCSV.process(params[:csv_file], {
@@ -22,9 +28,9 @@ module RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
         )
       end
 
-      redirect_to chapter_ambassador_event_path(@event), success: "Your CSV file was uploaded successfully! It will be processed soon!"
+      redirect_to send(:"#{current_scope}_event_path", @event), success: "Your CSV file was uploaded successfully! It will be processed soon!"
     rescue SmarterCSV::MissingKeys
-      redirect_to chapter_ambassador_event_path(@event), error: 'Please ensure your CSV file contains a "Judge Id" header.'
+      redirect_to send(:"#{current_scope}_event_path", @event), error: 'Please ensure your CSV file contains a "Judge Id" header.'
     end
   end
 end

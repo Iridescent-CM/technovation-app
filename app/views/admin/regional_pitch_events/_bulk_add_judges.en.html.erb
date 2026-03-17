@@ -32,7 +32,7 @@
   </ul>
 
   <%= form_with(
-    url: chapter_ambassador_event_bulk_add_judges_path(@event),
+    url: send(:"#{current_scope}_event_bulk_add_judges_path", @event),
     local: true,
     data: {turbo: false},
     html: {
