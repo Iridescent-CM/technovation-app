@@ -14,9 +14,7 @@
   </td>
 
   <td>
-    <span id="<%= dom_id(judge, :teams_count) %>">
-      <%= judge.assigned_teams_for_event(event).count %>
-    </span>
+    <%= render "admin/regional_pitch_events/judge_teams_count", judge: judge, event: event %>
   </td>
 
   <td>

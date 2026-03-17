@@ -10,13 +10,9 @@
 <% end %>
 
 <%= turbo_stream.replace dom_id(@team, :judge_count) do %>
-  <span id="<%= dom_id(@team, :judge_count) %>">
-    <%= @team.assigned_judges.count %>
-  </span>
+  <%= render "admin/regional_pitch_events/team_judge_count", team: @team %>
 <% end %>
 
 <%= turbo_stream.replace dom_id(@judge, :teams_count) do %>
-  <span id="<%= dom_id(@judge, :teams_count) %>">
-    <%= @judge.assigned_teams_for_event(@team.event).count %>
-  </span>
+  <%= render "admin/regional_pitch_events/judge_teams_count", judge: @judge, event: @team.event %>
 <% end %>

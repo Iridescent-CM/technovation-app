@@ -13,9 +13,7 @@
       data: { turbo: false} %>
   </td>
   <td>
-    <span id="<%= dom_id(team, :judge_count) %>">
-      <%= team.assigned_judges.size %>
-    </span>
+    <%= render "admin/regional_pitch_events/team_judge_count", team: team %>
   </td>
   <td>
     <% if team.submission.pitch_presentation.present? %>
