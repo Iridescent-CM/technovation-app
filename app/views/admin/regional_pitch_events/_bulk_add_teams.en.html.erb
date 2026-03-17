@@ -8,7 +8,7 @@
   </p>
 
   <ul>
-    <li>Go to the <%= link_to "teams admin page", chapter_ambassador_teams_path %></li>
+    <li>Go to the <%= link_to "teams admin page", send(:"#{current_scope}_teams_path") %></li>
     <li>Add "Team ID" as an additional column</li>
 
     <ul>
