@@ -8,3 +8,11 @@
 <%= turbo_stream.append "flash-messages" do %>
   <%= render "flash_messages" %>
 <% end %>
+
+<%= turbo_stream.replace dom_id(@team, :judge_count) do %>
+  <%= render "admin/regional_pitch_events/team_judge_count", team: @team %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(@judge, :teams_count) do %>
+  <%= render "admin/regional_pitch_events/judge_teams_count", judge: @judge, event: @team.event %>
+<% end %>

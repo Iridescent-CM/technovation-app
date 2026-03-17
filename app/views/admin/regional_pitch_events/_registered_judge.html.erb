@@ -14,6 +14,10 @@
   </td>
 
   <td>
+    <%= render "admin/regional_pitch_events/judge_teams_count", judge: judge, event: event %>
+  </td>
+
+  <td>
     <span class="pill pill-<%= judge.status == "ready" ? "green" : "orange" %>" style="white-space: nowrap;">
       <%= judge.human_status %>
     </span>

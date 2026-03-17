@@ -13,6 +13,9 @@
       data: { turbo: false} %>
   </td>
   <td>
+    <%= render "admin/regional_pitch_events/team_judge_count", team: team %>
+  </td>
+  <td>
     <% if team.submission.pitch_presentation.present? %>
       <%= link_to "Download",
         team.submission.pitch_presentation_url,
