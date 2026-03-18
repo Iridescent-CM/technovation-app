@@ -123,6 +123,7 @@ FactoryBot.define do
       if e.onboarded
         j.training_completed_without_save!
         j.survey_completed_without_save!
+        j.technical_experience_opt_in = false
       end
 
       attrs.merge(
