@@ -52,10 +52,11 @@
     <p class="py-2">
       Get some help putting your slides together in the
       <%= link_to "pitch presentation unit",
-        "https://technovationchallenge.org/curriculum/pitch-4-create-a-pitch-presentation/",
+        team.division.beginner? ?
+          "https://technovationchallenge.org/courses/beginner-division-curriculum/lessons/preparing-to-pitch-beginner/" :
+          "https://technovationchallenge.org/courses/senior-division-curriculum/lessons/preparing-to-pitch/",
         target: "_blank",
-        class: "tw-link"
-      %>
+        class: "tw-link" %>
     </p>
   <% else %>
     <p>
