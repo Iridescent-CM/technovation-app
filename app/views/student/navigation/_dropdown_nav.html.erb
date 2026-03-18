@@ -1,9 +1,12 @@
-<li class="md:hidden"><a href="/student/dashboard#/curriculum">Curriculum</a></li>
+<li>
+  <%= link_to "Curriculum",
+    student_curriculum_path,
+    class: "md:hidden" %>
+</li>
 <li>
   <%= link_to "Dashboard",
-              student_dashboard_path,
-              class: "md:hidden"
-  %>
+    student_dashboard_path,
+    class: "md:hidden" %>
 </li>
 <li class="md:hidden"><a href="https://www.technovation.org/about/">About</a></li>
 <li><a href="https://www.youtube.com/watch?v=sXZjUdTMVOU">Using Your Dashboard</a></li>
@@ -13,17 +16,16 @@
 <% if SeasonToggles.survey_link_available?(current_scope, current_account) %>
   <li>
     <%= link_to SeasonToggles.survey_link(current_scope, "text"),
-                SeasonToggles.survey_link(
-                  current_scope, "url",
-                  format_url: true,
-                  account: current_account
-                ),
-                target: "_blank"
-    %>
+      SeasonToggles.survey_link(
+        current_scope, "url",
+        format_url: true,
+        account: current_account
+      ),
+      target: "_blank" %>
   </li>
 <% end %>
 <li>
   <% if current_account.authenticated? %>
-    <%= link_to t('views.application.signout'), signout_path, class: 'text-sm' %>
+    <%= link_to t("views.application.signout"), signout_path, class: "text-sm" %>
   <% end %>
 </li>
