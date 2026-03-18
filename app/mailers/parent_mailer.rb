@@ -46,7 +46,7 @@ class ParentMailer < ApplicationMailer
     @parent_resources_url = ENV.fetch("PARENT_RESOURCES_URL")
     @submission_guidelines_url = ENV.fetch("SUBMISSION_GUIDELINES_URL")
 
-    I18n.with_locale(@student_profile.account.locale) do
+    I18n.with_locale(@student_profile.parental_consent.locale) do
       mail to: @student_profile.parent_guardian_email
     end
   end
