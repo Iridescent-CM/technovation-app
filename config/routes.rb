@@ -197,7 +197,6 @@ Rails.application.routes.draw do
     resources :scores, only: :show, controller: "/ambassador/scores"
     resources :score_details, only: :show, controller: "/ambassador/score_details"
     resources :unaffiliated_participants, only: :index, controller: "/data_grids/ambassador/unaffiliated_participants"
-    resources :participant_sessions, only: [:show, :destroy]
 
     resources :student_conversions, only: :create
     resources :mentor_to_judge_conversions, only: :create
