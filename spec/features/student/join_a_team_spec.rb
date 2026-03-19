@@ -33,11 +33,13 @@ RSpec.feature "Students find a team", js: true do
       expect(page).to have_content(available_team.name)
       click_button "Send request"
 
-      join_request = JoinRequest.last
       sleep 1
 
       expect(current_path).to eq(student_dashboard_path)
+
+      join_request = JoinRequest.last
       expect(page).to have_content(join_request.team_name)
+
       expect(page).to have_content("You have requested to join")
     end
   end
@@ -48,11 +50,13 @@ RSpec.feature "Students find a team", js: true do
       click_link "View more details"
       click_button "Send request"
 
-      join_request = JoinRequest.last
       sleep 1
 
       visit student_team_search_path
+
+      join_request = JoinRequest.last
       expect(page).to have_content(join_request.team_name)
+
       expect(page).to have_content("You have asked to join")
     end
   end
@@ -64,11 +68,13 @@ RSpec.feature "Students find a team", js: true do
 
       click_button "Send request"
 
-      join_request = JoinRequest.last
       sleep 1
 
       visit student_team_search_path
+
+      join_request = JoinRequest.last
       within("#join_request_#{join_request.id}") { click_link "Cancel my request" }
+
       click_button "Yes, do it"
 
       expect(page).to have_content("You have cancelled your request")
