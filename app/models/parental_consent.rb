@@ -96,10 +96,14 @@ class ParentalConsent < ActiveRecord::Base
     end
 
     if Rails.env.production? &&
-       (student_profile.division.junior? || student_profile.division.senior?) &&
-       student_profile.parent_guardian_email.present?
-      # TODO: entire test suite requires rewrite due to "wait: 3.days"
-      ParentMailer.thank_you(student_profile.id).deliver_later(wait: 3.days)
+        (student_profile.division.junior? || student_profile.division.senior?) &&
+        student_profile.parent_guardian_email.present?
+      ParentMailer
+        .thank_you(student_profile.id)
+        .deliver_later(
+          wait:
+            ENV.fetch("NUM_HOURS_TO_DELAY_SENDING_PARENT_THANK_YOU_EMAIL_AFTER_PARENTAL_CONSENT_HAS_BEEN_SIGNED", 72).to_i.hours
+        )
     end
   end
 
