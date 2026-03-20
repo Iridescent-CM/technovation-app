@@ -30,8 +30,14 @@ module Ambassador
 
       TeamRosterManaging.remove(team, member)
 
-      redirect_to chapter_ambassador_team_path(team),
-        success: "You have removed #{member.name} from this team"
+      if team.deleted_at.present?
+        redirect_to chapter_ambassador_teams_path,
+          success: "You have removed #{member.name} from #{team.name}. The team was also deleted because there are no remaining members."
+      else
+        redirect_to chapter_ambassador_team_path(team),
+          success: "You have removed #{member.name} from this team"
+      end
+
     end
   end
 end
