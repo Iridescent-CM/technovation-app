@@ -21,6 +21,7 @@
         team.submission.pitch_presentation_url,
         download: "#{team.submission.team.name.downcase.parameterize(separator: "_")}-#{team.submission.pitch_presentation.file.filename.downcase.gsub(/\s+/, "_")}",
         class: "button small",
+        target: "_blank",
         style: "margin: 4px 0 4px;" %>
     <% else %>
       -
