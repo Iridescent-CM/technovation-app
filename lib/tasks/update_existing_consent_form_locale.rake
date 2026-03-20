@@ -1,5 +1,4 @@
-desc "Update existing parental/guardian and media consent files with en locale"
-task update_locale_on_all_existing_consent_forms: :environment do
-  ParentalConsent.where(locale: nil).update_all(locale: "en")
-  MediaConsent.where(locale: nil).update_all(locale: "en")
+desc "Update existing student profile parental/guardian consent email with en locale"
+task update_all_existing_student_profile_parental_consent_email_locales: :environment do
+  StudentProfile.where(parent_guardian_consent_locale: nil).update_all(parent_guardian_consent_locale: "en")
 end
