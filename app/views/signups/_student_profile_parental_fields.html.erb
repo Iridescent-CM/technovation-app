@@ -1,13 +1,30 @@
 <div data-controller="students--parental-consent-contact-toggle">
   <%= f.input :parent_guardian_name,
-    label: t('models.student_profile.parent_guardian_name') %>
+    label: t("models.student_profile.parent_guardian_name") %>
 
   <div data-students--parental-consent-contact-toggle-target="emailField">
     <%= f.input :parent_guardian_email,
-      input_html: { placeholder: t("views.application.only_one_email") },
-      label: t('models.student_profile.parent_guardian_email'),
+      input_html: {
+        placeholder: t("views.application.only_one_email"),
+        style: "margin-bottom: 0;"
+      },
+      label: t("models.student_profile.parent_guardian_email"),
       as: :email %>
     <p class="hint">Changing this email will send and require a new consent.</p>
+
+    <%= f.label :parent_guardian_consent_locale,
+      t("models.student_profile.parent_guardian_consent_locale")
+    %>
+
+    <%= f.select :parent_guardian_consent_locale,
+      options_for_select(
+        [
+          ["English", "en"],
+          ["Spanish - español", "es"]
+        ]
+      )
+    %>
+    <br>
   </div>
 
   <% if f.object.in_parental_consent_text_message_country? && f.object.parent_guardian_email.blank? %>
@@ -50,7 +67,7 @@
           include_blank:"Select country code" %>
 
         <%= f.input :parent_guardian_phone_number,
-          label: t('models.student_profile.parent_guardian_phone_number'), input_html: { value: f.object.parent_guardian_local_phone_number } %>
+          label: t("models.student_profile.parent_guardian_phone_number"), input_html: { value: f.object.parent_guardian_local_phone_number } %>
         <p class="hint">Changing this phone number will send and require a new consent.</p>
       <% end %>
     </div>

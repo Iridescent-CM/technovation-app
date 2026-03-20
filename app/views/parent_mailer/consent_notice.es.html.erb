@@ -1,0 +1,92 @@
+<tr>
+  <td class="content-wrap">
+    <meta itemprop="name" content="Confirm Email"/>
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="content-block">
+          Estimado/a <%= @name %>,
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Le escribimos para informarle que su hija,
+          <strong><%= @student_name %></strong>,
+          se ha registrado en Technovation Girls.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Technovation Girls es el programa insignia de la organización sin fines
+          de lucro Technovation, y representa la competencia de emprendimiento
+          tecnológico para niñas más grande del mundo. El programa ofrece a
+          niñas de todo el mundo la oportunidad de aprender las habilidades
+          necesarias para convertirse en emprendedoras y líderes tecnológicas.
+          Cada año, Technovation Girls desafía a niñas de entre 8 y 18 años
+          a desarrollar un proyecto tecnológico que aborde un problema de su
+          comunidad. En 2024, cerca de 11,000 niñas de 69 países crearon
+          colectivamente 3,200 soluciones de base tecnológica para los problemas
+          que más les preocupan, incluyendo la salud mental, la contaminación
+          del aire, el acceso a la educación y más.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Para poder participar, su hija necesita su autorización. Por favor,
+          revise el formulario de consentimiento de participación de los padres
+          o tutores y el formulario de autorización de uso de imagen y medios en
+          este enlace y fírmelos electrónicamente lo antes posible. Una vez que
+          haya firmado los formularios, recibirá una copia de estos por correo
+          electrónico.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+          <%= link_to t("views.consent_waivers.sign_the_forms"), @url, class: "btn-primary", itemprop: "url" %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Por favor, utilice el botón <strong>"Firmar los formularios"</strong>
+          que aparece arriba; no responda a este correo electrónico para otorgar
+          su consentimiento.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Si no puede utilizar el botón de arriba, su hija puede volver a
+          enviarle este correo o descargar el formulario desde su panel de control
+          (<%= link_to "dashboard", @dashboard_url, itemprop: "url" %>).
+          Si aún tiene dudas, envíenos un correo electrónico a
+          <%= mail_to ENV.fetch("HELP_EMAIL") %>.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          Su hija no podrá participar en este programa hasta que contemos con su
+          autorización. Para obtener más información sobre nuestro programa,
+          visite
+          <%= link_to nil, 'https://technovationchallenge.org', itemprop: "url" %>.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          ¡Gracias por apoyar a su hija en su trayectoria con Technovation!
+        </td>
+      </tr>
+
+      <tr>
+        <td class="content-block">
+          — El equipo de Technovation
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
