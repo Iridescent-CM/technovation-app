@@ -53,8 +53,8 @@
       Get some help putting your slides together in the
       <%= link_to "pitch presentation unit",
         team.division.beginner? ?
-          "https://technovationchallenge.org/courses/beginner-division-curriculum/lessons/preparing-to-pitch-beginner/" :
-          "https://technovationchallenge.org/courses/senior-division-curriculum/lessons/preparing-to-pitch/",
+          ENV.fetch("BEGINNER_DIVISION_PITCH_PRESENTATION_LESSON_URL") :
+          ENV.fetch("JUNIOR_AND_SENIOR_DIVISION_PITCH_PRESENTATION_LESSON_URL"),
         target: "_blank",
         class: "tw-link" %>
     </p>
