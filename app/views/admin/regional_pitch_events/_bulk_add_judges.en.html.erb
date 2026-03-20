@@ -8,7 +8,7 @@
   </p>
 
   <ul>
-    <li>Go to the <%= link_to "judges admin page", chapter_ambassador_judges_path %></li>
+    <li>Go to the <%= link_to "judges admin page", send(:"#{current_scope}_judges_path") %></li>
     <li>Add "Judge ID" as an additional column</li>
 
     <ul>
@@ -32,7 +32,7 @@
   </ul>
 
   <%= form_with(
-    url: chapter_ambassador_event_bulk_add_judges_path(@event),
+    url: send(:"#{current_scope}_event_bulk_add_judges_path", @event),
     local: true,
     data: {turbo: false},
     html: {

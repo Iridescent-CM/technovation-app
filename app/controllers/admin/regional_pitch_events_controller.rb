@@ -2,6 +2,8 @@ module Admin
   class RegionalPitchEventsController < AdminController
     include DatagridController
     include BulkDownloadSubmissionPitchPresentations
+    include RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
+    include RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
 
     use_datagrid with: EventsGrid
 
