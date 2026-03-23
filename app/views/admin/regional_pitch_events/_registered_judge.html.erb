@@ -12,10 +12,12 @@
   <td>
     <%= judge.email %>
   </td>
-
-  <td>
-    <%= render "admin/regional_pitch_events/judge_teams_count", judge: judge, event: event %>
-  </td>
+  
+  <% if show_team_and_judge_assignment_count?(event) %>
+    <td>
+      <%= render "admin/regional_pitch_events/judge_teams_count", judge: judge, event: event %>
+    </td>
+  <% end %>
 
   <td>
     <span class="pill pill-<%= judge.status == "ready" ? "green" : "orange" %>" style="white-space: nowrap;">

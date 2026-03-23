@@ -13,7 +13,9 @@
             <tr>
               <th>Name</th>
               <th>Email</th>
-              <th>Assigned Teams Count</th>
+              <% if show_team_and_judge_assignment_count?(event) %>
+                <th>Assigned Teams Count</th>
+              <% end %>
               <th>Status</th>
               <% if current_account.chapter_ambassador? %>
                 <th>Actions</th>
