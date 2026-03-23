@@ -849,7 +849,7 @@ class Account < ActiveRecord::Base
     if ambassador?
       !!ENV.fetch("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", false) && is_a_judge?
     elsif is_a_mentor?
-      !!ENV.fetch("ENABLE_JUDGE_MODE_FOR_ALL_MENTORS", false)
+      !!ENV.fetch("ENABLE_JUDGE_MODE_FOR_ALL_MENTORS", false) && !mentor_profile.is_on_team?
     else
       false
     end

@@ -1,4 +1,5 @@
 class JudgeController < ApplicationController
+  before_action :require_mentor_not_on_team
   before_action :create_judge_mentor_on_dashboard
 
   include Authenticated
@@ -64,6 +65,15 @@ class JudgeController < ApplicationController
     unless current_judge.onboarded?
       redirect_to judge_dashboard_path,
         error: "You need to finish your onboarding to judge scores"
+    end
+  end
+
+  def require_mentor_not_on_team
+    return if !current_account.authenticated?
+
+    if current_account.is_a_mentor? && current_account.mentor_profile.is_on_team?
+      redirect_to mentor_dashboard_path,
+        error: t("controllers.judge.dashboards.show.mentor_on_team_error")
     end
   end
 end
