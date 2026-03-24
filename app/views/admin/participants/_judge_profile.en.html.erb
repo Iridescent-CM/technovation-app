@@ -1,8 +1,8 @@
 <dl class="profile-info">
-  <dt><%= t('models.judge_profile.company_name') %></dt>
+  <dt><%= t("models.judge_profile.company_name") %></dt>
   <dd><%= profile.company_name %></dd>
 
-  <dt><%= t('models.judge_profile.job_title') %></dt>
+  <dt><%= t("models.judge_profile.job_title") %></dt>
   <dd><%= profile.job_title %></dd>
 
   <dt><%= t('models.judge_profile.judge_types') %></dt>
@@ -17,4 +17,29 @@
       No judge types selected
     <% end %>
   </dd>
+  
+  <dt><%= t("models.judge_profile.technical_experience_opt_in") %></dt>
+  <dd>
+    <%= humanize_boolean(profile.technical_experience_opt_in) %>
+  </dd>
+  
+  <% if profile.technical_experience_opt_in? %>
+    <dt><%= t("models.judge_profile.technical_skills") %></dt>
+    <dd>
+      <% if profile.technical_skills.any? %>
+        <ul>
+          <% profile.technical_skills.each do |skill| %>
+            <li><%= skill.name %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        No technical skills selected
+      <% end %>
+    </dd>
+    
+    <dt><%= t("models.judge_profile.ai_experience") %></dt>
+    <dd>
+      <%= humanize_boolean(profile.ai_experience) %>
+    </dd>
+  <% end %>
 </dl>
