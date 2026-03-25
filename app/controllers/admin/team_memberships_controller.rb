@@ -35,8 +35,13 @@ module Admin
         TeamRosterManaging.remove(team, account.student_profile)
       end
 
-      redirect_to admin_team_path(team),
-        success: "You have removed #{account.full_name} from this team"
+      if team.deleted?
+        redirect_to admin_teams_path,
+          success: "You have removed #{account.full_name} from #{team.name}. The team was also deleted because there are no remaining members."
+      else
+        redirect_to admin_team_path(team),
+          success: "You have removed #{account.full_name} from this #{team.name}"
+      end
     end
   end
 end
