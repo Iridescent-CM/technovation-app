@@ -580,7 +580,7 @@ class SubmissionScore < ActiveRecord::Base
   def update_removed_from_judging_pool
     team_submission.reload
 
-    if team_submission.judge_recusal_count >= 5
+    if team_submission.judge_recusal_count >= ENV.fetch("NUM_JUDGE_RECUSALS_TO_REMOVE_SUBMISSION_FROM_JUDGING_POOL").to_i
       team_submission.update(removed_from_judging_pool: true)
     end
   end
