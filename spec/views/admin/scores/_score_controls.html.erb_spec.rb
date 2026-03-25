@@ -27,8 +27,8 @@ RSpec.describe "admin/scores/_score_controls.html.erb", type: :view do
       let(:score_submission_pending_approval) { true }
       let(:score_submission_deleted) { false }
 
-      it "renders a button to approve the score" do
-        expect(rendered).to have_button("Approve this score")
+      it "renders a button to mark the score as reviewed" do
+        expect(rendered).to have_button("Mark as Reviewed")
       end
 
       it "renders a button to delete the score" do
@@ -48,8 +48,8 @@ RSpec.describe "admin/scores/_score_controls.html.erb", type: :view do
         expect(rendered).to have_button("Delete this score")
       end
 
-      it "does not render a button to approve the score" do
-        expect(rendered).not_to have_button("Approve this score")
+      it "does not render a button to mark the score as reviewed" do
+        expect(rendered).not_to have_button("Mark as Reviewed")
       end
 
       it "does not render a button to restore the score" do
@@ -65,8 +65,8 @@ RSpec.describe "admin/scores/_score_controls.html.erb", type: :view do
         expect(rendered).to have_button("Restore this score")
       end
 
-      it "does not render a button to approve the score" do
-        expect(rendered).not_to have_button("Approve this score")
+      it "does not render a button to mark the score as reviewed" do
+        expect(rendered).not_to have_button("Mark as Reviewed")
       end
 
       it "does not render a button to delete the score" do
@@ -82,8 +82,8 @@ RSpec.describe "admin/scores/_score_controls.html.erb", type: :view do
         expect(rendered).to have_button("Restore this score")
       end
 
-      it "does not render a button to approve the score" do
-        expect(rendered).not_to have_button("Approve this score")
+      it "does not render a button to mark the score as reviewed" do
+        expect(rendered).not_to have_button("Mark as Reviewed")
       end
 
       it "does not render a button to delete the score" do
