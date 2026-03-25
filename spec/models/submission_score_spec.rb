@@ -480,7 +480,7 @@ RSpec.describe SubmissionScore do
   end
 
   describe "updating removed_from_judging_pool based on judge recusal count" do
-    context "when the judge recusal count is less than or equal to 4" do
+    context "when the judge recusal count is less than 4" do
       it "leaves the submission from the judging pool" do
         team = FactoryBot.create(:team)
         team_submission = FactoryBot.create(
@@ -496,7 +496,7 @@ RSpec.describe SubmissionScore do
       end
     end
 
-    context "when the judge recusal count is greater than 4" do
+    context "when the judge recusal count is 4" do
       it "removes the submission from the judging pool" do
         judge = FactoryBot.create(:judge)
         team = FactoryBot.create(:team)
@@ -504,7 +504,7 @@ RSpec.describe SubmissionScore do
           :submission,
           :complete,
           team: team,
-          judge_recusal_count: 4,
+          judge_recusal_count: 3,
           removed_from_judging_pool: false
         )
 
