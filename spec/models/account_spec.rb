@@ -1197,10 +1197,14 @@ RSpec.describe Account do
         allow(ENV).to receive(:fetch).with("ENABLE_CHAPTER_AMBASSADOR_SWITCH_TO_JUDGE", any_args).and_return(false)
       end
 
-      it "allows only mentors" do
+      it "allows only mentors who are not on a team" do
         expect(FactoryBot.create(:student).can_switch_to_judge?).to be false
         expect(FactoryBot.create(:mentor).can_switch_to_judge?).to be true
         expect(FactoryBot.create(:chapter_ambassador).can_switch_to_judge?).to be false
+      end
+
+      it "does not allow mentors who are on a team" do
+        expect(FactoryBot.create(:mentor, :on_team).can_switch_to_judge?).to be false
       end
     end
 
