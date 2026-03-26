@@ -33,6 +33,9 @@ en:
       company_name: "Company name"
       job_title: "Job title"
       judge_types: "Judge types"
+      technical_experience_opt_in: "Technical experience opt in"
+      technical_skills: "Technical skills"
+      ai_experience: "AI experience"
 
     mentor:
       expertise_names: "Expertise"

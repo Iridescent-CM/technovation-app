@@ -41,6 +41,18 @@ class JudgesGrid
     end
   end
 
+  column :technical_experience_opt_in do
+    ApplicationController.helpers.humanize_boolean(judge_profile.technical_experience_opt_in)
+  end
+
+  column :technical_skills do
+    judge_profile.technical_skills.map(&:name).join(", ").presence || "-"
+  end
+
+  column :ai_experience, header: "AI experience" do
+    ApplicationController.helpers.humanize_boolean(judge_profile.ai_experience)
+  end
+
   column :judge_id, header: "Judge Id" do
     judge_profile.id.presence || "-"
   end
