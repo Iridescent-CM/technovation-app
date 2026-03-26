@@ -222,8 +222,12 @@ class AccountsGrid
   end
 
   column :media_consent do |account, grid|
-    if account.student_profile.present? && account.student_profile.media_consent.present?
-      account.student_profile.media_consent.consent_provided ? "Yes" : "No"
+    if account.student_profile.present?
+      if account.student_profile.media_consent_signed?
+        account.student_profile.media_consent.consent_provided? ? "Yes" : "No"
+      else
+        "Not signed"
+      end
     else
       "-"
     end
