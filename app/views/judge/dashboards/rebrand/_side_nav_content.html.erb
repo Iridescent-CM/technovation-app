@@ -3,33 +3,28 @@
   <div class="whitespace-nowrap">
     <% if current_judge.consent_signed? %>
       <%= web_icon(
-            "check-circle",
-            class: "icon--green ml-4",
-            text: "Consent Signed"
-          ) %>
+        "check-circle",
+        class: "icon--green ml-4",
+        text: "Consent Signed") %>
     <% else %>
       <%= web_icon(
-            "circle-o",
-            class: "ml-4"
-          ) %>
+        "circle-o",
+        class: "ml-4") %>
       <%= link_to "Consent Waiver",
-                  new_judge_consent_waiver_path(
-                    token: current_judge.account.consent_token
-                  ) %>
+        new_judge_consent_waiver_path(
+        token: current_judge.account.consent_token) %>
     <% end %>
   </div>
-
+  
   <div class="whitespace-nowrap">
     <% if current_judge.training_completed? %>
       <%= web_icon(
-            "check-circle",
-            class: "icon--green ml-4"
-          ) %>
+        "check-circle",
+        class: "icon--green ml-4") %>
     <% else %>
       <%= web_icon(
-            "circle-o",
-            class: "ml-4"
-          ) %>
+        "circle-o",
+        class: "ml-4") %>
     <% end  %>
 
     <% if SeasonToggles.judging_enabled? || SeasonToggles.judge_registration_open? %>
@@ -42,6 +37,21 @@
         Judge Training
       </span>
     <% end %>
+  </div>
+  
+  <div class="tw-tab-content whitespace-nowrap">
+    <a id="judge-information-tab" href="#judge-information-tab-content" data-heading="Judge Information">
+      <% if current_judge.judge_information_completed? %>
+        <%= web_icon(
+          "check-circle",
+          class: "icon--green ml-4") %>
+      <% else %>
+        <%= web_icon(
+          "circle-o",
+          class: "ml-4") %>
+      <% end %>
+      Judge Information
+    </a>
   </div>
 </div>
 

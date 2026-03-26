@@ -60,4 +60,51 @@ RSpec.describe JudgeProfile do
       end
     end
   end
+
+  describe "#judge_information_completed?" do
+    let(:judge) { FactoryBot.create(:judge) }
+
+    it "is incomplete when technical_experience_opt_in is nil" do
+      expect(judge.judge_information_completed?).to be false
+    end
+
+    it "is complete when technical_experience_opt_in is false" do
+      judge.update_column(:technical_experience_opt_in, false)
+      expect(judge.judge_information_completed?).to be true
+    end
+
+    it "is complete when technical_experience_opt_in is true with technical_skills and ai_experience" do
+      judge = FactoryBot.create(:judge, :with_technical_experience_complete)
+      expect(judge.judge_information_completed?).to be true
+    end
+  end
+
+  describe "clearing technical details when technical_experience_opt_in is false" do
+    it "clears technical_skills and ai_experience" do
+      judge = FactoryBot.create(:judge, :with_technical_experience_complete)
+      judge.update(technical_experience_opt_in: false)
+      judge.reload
+
+      expect(judge.technical_skills).to be_empty
+      expect(judge.ai_experience).to be_nil
+    end
+  end
+
+  describe "validation" do
+    it "requires technical_skills when technical_experience_opt_in is true" do
+      judge = FactoryBot.create(:judge, :with_technical_experience_opt_in, :with_ai_experience)
+      expect(judge).not_to be_valid
+    end
+
+    it "requires ai_experience when technical_experience_opt_in is true" do
+      judge = FactoryBot.create(:judge, :with_technical_experience_opt_in, :with_technical_skills)
+      expect(judge).not_to be_valid
+    end
+
+    it "does not require technical_skills or ai_experience when technical_experience_opt_in is false" do
+      judge = FactoryBot.create(:judge)
+      judge.update_column(:technical_experience_opt_in, false)
+      expect(judge).to be_valid
+    end
+  end
 end

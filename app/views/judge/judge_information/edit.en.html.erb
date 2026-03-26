@@ -1,0 +1,69 @@
+<% if !current_judge.email_confirmed? %>
+  <%= render "completion_steps/rebrand/confirm_changed_email", profile: current_judge %>
+<% else %>
+  <div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+    <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Judge Information" } do %>
+      <%= form_with(
+        model: current_judge,
+        url: judge_judge_information_path,
+        method: :patch,
+        local: true,
+        data: { turbo: false }
+      ) do |f| %>
+        
+        <div class="mb-6">
+          <p class="font-medium">
+            <%= t("views.judge.judge_information.technical_opt_in.heading") %>
+          </p>
+          <p class="mb-4">
+            Technical experience is optional. Judges without technical experience will still be invited to review submissions.
+          </p>
+          <%= f.label :technical_experience_opt_in, t("views.judge.judge_information.technical_opt_in.label") %>
+          <%= f.select :technical_experience_opt_in,
+            [["Yes", true], ["No", false]],
+            {
+              include_blank: "Select one",
+              selected: current_judge.technical_experience_opt_in
+            },
+            data: {
+              toggles: { "true": "#technical-details" }
+            } %>
+          <p class="tw-hint">
+            Please select only if you are comfortable evaluating code and technical implementations. If you are unsure, please select no.
+          </p>
+        </div>
+        
+        <div id="technical-details">
+          <div class="mb-6">
+            <p class="font-medium">
+              <%= t("views.judge.judge_information.technical_experience.heading") %>
+            </p>
+            <%= f.label :technical_skills, t("views.judge.judge_information.technical_experience.label") %>
+            <%= f.collection_check_boxes :technical_skill_ids, TechnicalSkill.order(:order), :id, :name do |s| %>
+              <div>
+                <%= s.check_box %>
+                <%= s.label { s.text } %>
+              </div>
+            <% end %>
+          </div>
+          <div class="mb-6">
+            <p class="font-medium">
+              <%= t("views.judge.judge_information.ai_experience.heading") %>
+            </p>
+            <%= f.label :ai_experience, t("views.judge.judge_information.ai_experience.label") %>
+            <%= f.select :ai_experience,
+              [["Yes", true], ["No", false]],
+              {
+               include_blank: "Select one",
+               selected: current_judge.ai_experience
+              } %>
+          </div>
+        </div>
+        
+        <p>
+          <%= f.submit "Save", class: "tw-green-btn cursor-pointer" %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
