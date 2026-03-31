@@ -16,6 +16,7 @@ class InvalidateExistingJudgeData
         .where("regional_pitch_events.id = ?", event.id)
 
       event_scores_by_this_judge.destroy_all
+      participant.judge_assignments.where(team: event.teams).destroy_all
       participant.events.destroy(event)
     end
   end

@@ -37,6 +37,30 @@ RSpec.describe ChapterAmbassador::EventAssignmentsController do
     end
   end
 
+  describe "DELETE #destroy" do
+    it "destroys the judge's team assignments in the event" do
+      judge = FactoryBot.create(:judge)
+      team = FactoryBot.create(:team, :submitted)
+      chapter_ambassador = FactoryBot.create(:chapter_ambassador)
+      event = FactoryBot.create(:event, ambassador: chapter_ambassador)
+
+      event.teams << team
+      event.judges << judge
+      judge.assigned_teams << team
+
+      sign_in(chapter_ambassador)
+      expect {
+        delete :destroy, params: {
+          event_assignment: {
+            event_id: event.id,
+            attendee_id: judge.id,
+            attendee_scope: "JudgeProfile"
+          }
+        }
+      }.to change { judge.assigned_teams.count }.by(-1)
+    end
+  end
+
   private
 
   def post_create(event:, invites: {})
