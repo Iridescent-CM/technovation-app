@@ -52,6 +52,33 @@ export default {
               <input type="radio" id="content-does-not-belong-to-team" name="judge-recusal-reason" value="content_does_not_belong_to_team">
               <label for="content-does-not-belong-to-team">Content doesn't belong to the team</label>
             </div>
+            <div id="recusal-flagged-contents" style="display: none; margin-left: 1.5rem;">
+              <p>Select all that apply:</p>
+              <div>
+                <input type="checkbox" id="problem-or-project-description" name="recusal-flagged-contents" value="problem_or_project_description">
+                <label for="problem-or-project-description">Problem or Project Description</label>
+              </div>
+              <div>
+                <input type="checkbox" id="pitch-video" name="recusal-flagged-contents" value="pitch_video">
+                <label for="pitch-video">Pitch Video</label>
+              </div>
+              <div>
+                <input type="checkbox" id="technical-video" name="recusal-flagged-contents" value="technical_video">
+                <label for="technical-video">Technical Video</label>
+              </div>
+              <div>
+                <input type="checkbox" id="learning-journey" name="recusal-flagged-contents" value="learning_journey">
+                <label for="learning-journey">Learning Journey</label>
+              </div>
+              <div>
+                <input type="checkbox" id="user-adoption-plan" name="recusal-flagged-contents" value="user_adoption_plan">
+                <label for="user-adoption-plan">User Adoption Plan</label>
+              </div>
+              <div>
+                <input type="checkbox" id="business-canvas" name="recusal-flagged-contents" value="business_canvas">
+                <label for="business-canvas">Business Canvas</label>
+              </div>
+            </div>
             <div>
               <input type="radio" id="other" name="judge-recusal-reason" value="other">
               <label for="other">Other</label>
@@ -85,6 +112,22 @@ export default {
             }
 
             characterCountEl.innerHTML = characterCount.toString();
+          });
+
+          const contentCheckboxEls = document.querySelector("#recusal-flagged-contents");
+          const radioEls = document.querySelectorAll('input[name="judge-recusal-reason"]');
+
+          radioEls.forEach((radio) => {
+            radio.addEventListener("change", () => {
+              if (radio.value === "content_does_not_belong_to_team") {
+                contentCheckboxEls.style.display = "block";
+              } else {
+                contentCheckboxEls.style.display = "none";
+                document.querySelectorAll('input[name="recusal-flagged-contents"]').forEach((checkbox) => {
+                  checkbox.checked = false;
+                });
+              }
+            });
           });
         },
         preConfirm: () => {
@@ -124,7 +167,21 @@ export default {
             );
           }
 
-          return { judgeRecusalReason, judgeRecusalComment };
+          const judgeRecusalFlaggedContents = [
+            ...document.querySelectorAll('input[name="recusal-flagged-contents"]:checked')
+          ].map((checkbox) => ({ name: checkbox.value }));
+
+          if (
+            judgeRecusalReason === "content_does_not_belong_to_team" &&
+            judgeRecusalFlaggedContents.length === 0
+          ) {
+            Swal.showValidationMessage(
+              "Please select at least one content item that does not belong to the team."
+            );
+            return false;
+          }
+
+          return { judgeRecusalReason, judgeRecusalComment, judgeRecusalFlaggedContents };
         },
         confirmButtonText: "Remove me from this submission",
         confirmButtonColor: "#3FA428",
@@ -142,6 +199,7 @@ export default {
             submission_score: {
               judge_recusal_reason: formValues.judgeRecusalReason,
               judge_recusal_comment: formValues.judgeRecusalComment,
+              judge_recusal_flagged_contents_attributes: formValues.judgeRecusalFlaggedContents,
             },
           }
         );
@@ -184,6 +242,12 @@ export default {
     display: flex;
     width: 50%;
     float: right;
+  }
+
+  #recusal-flagged-contents p {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-bottom: 0.3rem;
   }
 }
 

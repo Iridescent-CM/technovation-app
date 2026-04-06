@@ -214,7 +214,8 @@ module Judge
         :downloaded_source_code,
         :downloaded_business_plan,
         :judge_recusal_reason,
-        :judge_recusal_comment
+        :judge_recusal_comment,
+        judge_recusal_flagged_contents_attributes: [:name]
       )
     end
   end

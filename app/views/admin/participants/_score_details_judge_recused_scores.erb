@@ -15,12 +15,10 @@
           <%= link_to score.judge_name,
             send("#{current_scope}_participant_path", id: score.judge_profile.account_id) %>
         </td>
-
-        <% if score.judge_recusal_reason.humanize === "Other" %>
-          <td><%= content_tag :span, score.judge_recusal_reason.humanize + ": " + score.judge_recusal_comment %></td>
-        <% else %>
-          <td><%= content_tag :span, score.judge_recusal_reason.humanize %></td>
-        <% end %>
+        
+        <td>
+          <%= render "admin/participants/judge_recusal_reason", score: score %>
+        </td>
 
         <td><%= score.round.humanize %></td>
       </tr>
