@@ -16,5 +16,16 @@ RSpec.describe Student::RegionalPitchEventsFinderController do
       get :show
       expect(assigns[:regional_events]).to be_empty
     end
+
+    it "does not load non-selectable (closed) events" do
+      student = FactoryBot.create(:student, :submitted, :junior)
+      event = FactoryBot.create(:event, :junior, selectable: false)
+
+      sign_in(student)
+
+      SeasonToggles.select_regional_pitch_event_on!
+      get :show
+      expect(assigns[:regional_events]).to be_empty
+    end
   end
 end

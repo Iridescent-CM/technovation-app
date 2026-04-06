@@ -172,6 +172,7 @@ module ChapterAmbassador
         :event_link,
         :capacity_enabled,
         :capacity,
+        :selectable,
         :division_id,
         division_ids: []
       )

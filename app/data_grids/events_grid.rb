@@ -30,6 +30,10 @@ class EventsGrid
     unofficial? ? "unofficial" : "official"
   end
 
+  column :selectable, header: "Event Availability" do
+    selectable? ? "Open" : "Closed"
+  end
+
   column :date, order: "regional_pitch_events.starts_at"
 
   column :time
