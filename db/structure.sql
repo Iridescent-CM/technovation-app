@@ -2045,7 +2045,8 @@ CREATE TABLE public.regional_pitch_events (
     unofficial boolean DEFAULT true,
     seasons text[] DEFAULT '{}'::text[],
     teams_count integer DEFAULT 0,
-    capacity integer
+    capacity integer,
+    selectable boolean DEFAULT true NOT NULL
 );
 
 
@@ -5457,6 +5458,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260312214123'),
 ('20260312214300'),
 ('20260312214323'),
-('20260331220350');
+('20260331220350'),
+('20260402233018');
 
 
