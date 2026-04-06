@@ -1,0 +1,6 @@
+<%= score.judge_recusal_reason.humanize %>
+<% if score.content_does_not_belong_to_team? %>
+  - <%= score.recusal_flagged_content %>
+<% elsif score.other? %>
+  - <%= score.judge_recusal_comment %>
+<% end %>

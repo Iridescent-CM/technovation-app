@@ -63,6 +63,9 @@ class SubmissionScore < ActiveRecord::Base
     other: "other"
   }
 
+  has_many :judge_recusal_flagged_contents, dependent: :destroy
+  accepts_nested_attributes_for :judge_recusal_flagged_contents
+
   belongs_to :team_submission, counter_cache: true
 
   counter_culture :team_submission,
@@ -562,6 +565,10 @@ class SubmissionScore < ActiveRecord::Base
 
   def pending_approval?
     complete? && !approved?
+  end
+
+  def recusal_flagged_content
+    judge_recusal_flagged_contents.map { |c| c.name.humanize }.join(", ")
   end
 
   private

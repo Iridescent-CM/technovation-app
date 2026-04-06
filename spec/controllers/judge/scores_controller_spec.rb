@@ -292,28 +292,48 @@ RSpec.describe Judge::ScoresController do
       })
     end
 
-    before do
-      set_judging_round(:QF)
-      sign_in(judge)
-
-      patch :judge_recusal, params: {
-        score_id: score.id,
-        submission_score: {
-          judge_recusal_reason: "other",
-          judge_recusal_comment: "Wakarimasen"
-        }
-      }
-    end
-
+    before { set_judging_round(:QF) }
     after { reset_judging_round }
 
-    it "saves the recusal reason and comment" do
-      expect(score.reload.judge_recusal_reason).to eq("other")
-      expect(score.reload.judge_recusal_comment).to eq("Wakarimasen")
+    context "when the recusal reason is other" do
+      before do
+        sign_in(judge)
+        patch :judge_recusal, params: {
+          score_id: score.id,
+          submission_score: {
+            judge_recusal_reason: "other",
+            judge_recusal_comment: "Wakarimasen"
+          }
+        }
+      end
+
+      it "saves the recusal reason and comment" do
+        expect(score.reload.judge_recusal_reason).to eq("other")
+        expect(score.reload.judge_recusal_comment).to eq("Wakarimasen")
+      end
+
+      it "sets the judge recusal flag" do
+        expect(score.reload.judge_recusal).to eq(true)
+      end
     end
 
-    it "sets the judge recusal flag" do
-      expect(score.reload.judge_recusal).to eq(true)
+    context "when the recusal reason is content_does_not_belong_to_team" do
+      before do
+        sign_in(judge)
+        patch :judge_recusal, params: {
+          score_id: score.id,
+          submission_score: {
+            judge_recusal_reason: "content_does_not_belong_to_team",
+            judge_recusal_flagged_contents_attributes: [
+              { name: "pitch_video" },
+              { name: "technical_video" }
+            ]
+          }
+        }
+      end
+      it "saves the recusal flagged content" do
+        expect(score.reload.judge_recusal_flagged_contents.map(&:name)).to contain_exactly("pitch_video", "technical_video")
+      end
     end
   end
 end
