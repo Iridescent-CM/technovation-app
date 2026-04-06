@@ -42,6 +42,15 @@
                 </p>
               <% end %>
             </dd>
+            
+            <dt>Event visibility</dt>
+            <dd>
+              <span class="hint">When "Public", teams can select this event.</span>
+              <br>
+              <span class="hint">When "Private", only you can assign teams to this event.</span>
+              <br>
+              <%= @event.selectable? ? "Public" : "Private" %>
+            </dd>
 
             <dt>Division</dt>
 
