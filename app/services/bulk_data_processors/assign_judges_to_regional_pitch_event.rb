@@ -20,8 +20,13 @@ module BulkDataProcessors
         else
           judge_profile.events << regional_pitch_event
 
-          result = "Assigned #{judge_profile.name} to #{regional_pitch_event.name}"
+          EventMailer.invite(
+            "JudgeProfile",
+            judge_profile.id,
+            regional_pitch_event.id
+          ).deliver_later
 
+          result = "Assigned #{judge_profile.name} to #{regional_pitch_event.name}"
         end
 
         results << result
