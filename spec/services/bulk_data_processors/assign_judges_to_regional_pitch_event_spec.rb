@@ -12,12 +12,22 @@ RSpec.describe BulkDataProcessors::AssignJudgesToRegionalPitchEvent do
   let(:judge_2) { FactoryBot.create(:judge) }
   let(:judge_3) { FactoryBot.create(:judge) }
 
+  before do
+    allow(EventMailer).to receive_message_chain(:invite, :deliver_later)
+  end
+
   it "assigns judges to the RPE" do
     assign_judges_to_regional_pitch_event_service.call
 
     expect(regional_pitch_event.judges.map(&:name)).to include(judge_1.name)
     expect(regional_pitch_event.judges.map(&:name)).to include(judge_2.name)
     expect(regional_pitch_event.judges.map(&:name)).to include(judge_3.name)
+  end
+
+  it "makes three calls to send each judge an invite email" do
+    assign_judges_to_regional_pitch_event_service.call
+
+    expect(EventMailer).to have_received(:invite).exactly(3).times
   end
 
   context "when a judge id doesn't exist" do
