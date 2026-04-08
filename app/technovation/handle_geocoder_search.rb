@@ -35,7 +35,7 @@ module HandleGeocoderSearch
   def self.handle_possible_insert_of_palestine_multi_result(geocoded_results)
     return geocoded_results if geocoded_results.many? || geocoded_results.none?
 
-    if geocoded_results.first.country.downcase == "israel"
+    if geocoded_results.first.country&.downcase == "israel"
       palestine_copy = geocoded_results.first.dup
       palestine_copy.id = SecureRandom.hex(4)
       palestine_copy.state = palestine_copy.state_code = nil
