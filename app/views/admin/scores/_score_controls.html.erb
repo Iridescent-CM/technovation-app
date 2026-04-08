@@ -8,12 +8,12 @@
       data: { confirm: "You are about to RESTORE this score" }
     %>
     <% elsif score.pending_approval? %>
-      <%= button_to "Approve this score",
+      <%= button_to "Mark as Reviewed",
         admin_score_approvals_path(id: score.id),
         method: :post,
         class: "button",
         data: {
-          confirm: "You are about to APPROVE this score",
+          confirm: "You are about to mark this score as REVIEWED",
           positive: "true",
         }
       %>
