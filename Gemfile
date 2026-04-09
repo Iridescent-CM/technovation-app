@@ -20,7 +20,7 @@ gem "pdf-forms", "~> 1.2"
 
 gem "public_activity", "~> 2.0"
 gem "paranoia", "~> 3.0"
-gem "counter_culture", "~> 1.12"
+gem "counter_culture", "~> 3.0"
 gem "pundit", "~> 2.0"
 gem "noticed", "~> 2.9.0"
 
