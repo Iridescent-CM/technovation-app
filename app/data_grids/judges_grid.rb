@@ -77,6 +77,12 @@ class JudgesGrid
     asset.judge_profile.semifinals_scores_count
   end
 
+  column :deleted_scores_count,
+    header: "Deleted Scores",
+    order: "judge_profiles.deleted_scores_count" do |asset, grid|
+    asset.judge_profile.deleted_scores_count
+  end
+
   column :recusals_count,
     header: "Recusals",
     order: "judge_profiles.recusal_scores_count" do |asset, grid|

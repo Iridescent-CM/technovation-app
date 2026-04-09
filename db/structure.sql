@@ -1140,6 +1140,7 @@ CREATE TABLE public.judge_profiles (
     semifinals_scores_count integer DEFAULT 0,
     suspended boolean DEFAULT false,
     recusal_scores_count integer DEFAULT 0 NOT NULL,
+    deleted_scores_count integer DEFAULT 0 NOT NULL,
     technical_experience_opt_in boolean,
     ai_experience boolean
 );
@@ -5394,4 +5395,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260312213946'),
 ('20260312214123'),
 ('20260312214300'),
-('20260312214323');
+('20260312214323'),
+('20260323193301');
+
+
