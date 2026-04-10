@@ -78,6 +78,15 @@
         <%= f.label :event_link, "Event URL (Optional)" %>
         <%= f.url_field :event_link %>
       </div>
+      
+      <div class="field">
+        <label>Event Availability</label>
+        <%= f.radio_button :selectable, true %>
+        <%= f.label :selectable_true, "Open - teams can find and select this event" %>
+        <br>
+        <%= f.radio_button :selectable, false %>
+        <%= f.label :selectable_false, "Closed - only teams you assign will see this event" %>
+      </div>
     </div>
 
     <div class="grid__col-12">

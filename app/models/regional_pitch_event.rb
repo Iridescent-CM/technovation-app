@@ -26,6 +26,8 @@ class RegionalPitchEvent < ActiveRecord::Base
   scope :unofficial, -> { where(unofficial: true) }
   scope :official, -> { where(unofficial: false) }
 
+  scope :selectable, -> { where(selectable: true) }
+
   scope :by_division, ->(division) {
     joins(:division)
       .where("divisions.name = ?", Division.names[division])
@@ -293,6 +295,7 @@ class TeamSubmissionEventScope < EventScope
   def execute
     if record.country === "US"
       scope.current
+        .selectable
         .joins(:division)
         .where("divisions.id = ?", record.division_id)
         .joins(ambassador: :account)
@@ -302,6 +305,7 @@ class TeamSubmissionEventScope < EventScope
         )
     else
       scope.current
+        .selectable
         .joins(:division)
         .where("divisions.id = ?", record.division_id)
         .joins(ambassador: :account)

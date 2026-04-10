@@ -42,6 +42,15 @@
                 </p>
               <% end %>
             </dd>
+            
+            <dt>Event availability</dt>
+            <dd>
+              <span class="hint">When "Open", teams can select this event.</span>
+              <br>
+              <span class="hint">When "Closed", only you can assign teams to this event.</span>
+              <br>
+              <%= @event.selectable? ? "Open" : "Closed" %>
+            </dd>
 
             <dt>Division</dt>
 
