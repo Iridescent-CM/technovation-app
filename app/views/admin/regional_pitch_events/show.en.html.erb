@@ -133,6 +133,13 @@
         <% else %>
           <p>Teams cannot be added to events at this time.</p>
         <% end %>
+      <% elsif current_account.admin? %>
+        <%= turbo_frame_tag "available-teams-frame" do %>
+          <%= link_to "Add Teams",
+            available_teams_admin_event_path(@event),
+            class: "button",
+            data: { turbo_frame: "available-teams-frame" } %>
+        <% end %>
       <% end %>
 
       <%= render "admin/regional_pitch_events/registered_teams", event: @event %>

@@ -15,7 +15,7 @@
       </span>
     <% else %>
       <%= button_to "Add",
-        chapter_ambassador_event_event_teams_path(event, team_id: team.id),
+        send("#{current_scope}_event_event_teams_path", event, team_id: team.id),
         method: :post,
         class: "button" %>
     <% end %>

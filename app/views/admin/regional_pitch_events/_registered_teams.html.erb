@@ -19,7 +19,7 @@
             <% end %>
             <th style="padding-right: 20px;">Presentation Slides</th>
             <th>Status</th>
-            <% if current_account.chapter_ambassador? %>
+            <% if current_account.chapter_ambassador? || current_account.admin? %>
               <th>Actions</th>
             <% end %>
           </tr>
