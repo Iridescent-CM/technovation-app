@@ -1176,6 +1176,38 @@ CREATE TABLE public.judge_profiles_regional_pitch_events (
 
 
 --
+-- Name: judge_recusal_flagged_contents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.judge_recusal_flagged_contents (
+    id bigint NOT NULL,
+    submission_score_id bigint NOT NULL,
+    name integer NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: judge_recusal_flagged_contents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.judge_recusal_flagged_contents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: judge_recusal_flagged_contents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.judge_recusal_flagged_contents_id_seq OWNED BY public.judge_recusal_flagged_contents.id;
+
+
+--
 -- Name: judge_types; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -2947,6 +2979,13 @@ ALTER TABLE ONLY public.judge_profiles ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: judge_recusal_flagged_contents id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_recusal_flagged_contents ALTER COLUMN id SET DEFAULT nextval('public.judge_recusal_flagged_contents_id_seq'::regclass);
+
+
+--
 -- Name: judge_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3463,6 +3502,14 @@ ALTER TABLE ONLY public.judge_profile_technical_skills
 
 ALTER TABLE ONLY public.judge_profiles
     ADD CONSTRAINT judge_profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: judge_recusal_flagged_contents judge_recusal_flagged_contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_recusal_flagged_contents
+    ADD CONSTRAINT judge_recusal_flagged_contents_pkey PRIMARY KEY (id);
 
 
 --
@@ -4142,6 +4189,13 @@ CREATE INDEX index_judge_profiles_on_recusal_scores_count ON public.judge_profil
 --
 
 CREATE INDEX index_judge_profiles_on_user_invitation_id ON public.judge_profiles USING btree (user_invitation_id);
+
+
+--
+-- Name: index_judge_recusal_flagged_contents_on_submission_score_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_judge_recusal_flagged_contents_on_submission_score_id ON public.judge_recusal_flagged_contents USING btree (submission_score_id);
 
 
 --
@@ -4838,6 +4892,14 @@ ALTER TABLE ONLY public.screenshots
 
 
 --
+-- Name: judge_recusal_flagged_contents fk_rails_a1d30dd457; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.judge_recusal_flagged_contents
+    ADD CONSTRAINT fk_rails_a1d30dd457 FOREIGN KEY (submission_score_id) REFERENCES public.submission_scores(id);
+
+
+--
 -- Name: submission_scores fk_rails_afdf541e79; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -5394,4 +5456,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260312213946'),
 ('20260312214123'),
 ('20260312214300'),
-('20260312214323');
+('20260312214323'),
+('20260331220350');
+
+

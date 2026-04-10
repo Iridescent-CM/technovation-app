@@ -15,11 +15,13 @@
           <td><%= score.team_name %></td>
           <td>
             <%= link_to score.team_submission_app_name,
-                        admin_team_submission_path(score.team_submission_id),
-                        class: "cta-link" %>
+              admin_team_submission_path(score.team_submission_id),
+              class: "cta-link" %>
           </td>
-          <td><%= content_tag :span, score.judge_recusal_reason.humanize, title: score.judge_recusal_comment %></td>
-          <td><%= score.round.humanize %></itd>
+          <td>
+            <%= render "admin/participants/judge_recusal_reason", score: score %>
+          </td>
+          <td><%= score.round.humanize %></td>
         </tr>
       <% end %>
     </tbody>
