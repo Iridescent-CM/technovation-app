@@ -78,6 +78,20 @@
         <%= f.label :event_link, "Event URL (Optional)" %>
         <%= f.url_field :event_link %>
       </div>
+      
+      <div class="field">
+        <label>Event Visibility</label>
+        <p class="hint">
+          Events are public by default and teams can select them from their dashboard.
+          <br>
+          Please change the visibility if you would like the event to be private.
+        </p>
+        <%= f.radio_button :selectable, true %>
+        <%= f.label :selectable_true, "Public - teams can find and select this event" %>
+        <br>
+        <%= f.radio_button :selectable, false %>
+        <%= f.label :selectable_false, "Private - only teams you add will see this event" %>
+      </div>
     </div>
 
     <div class="grid__col-12">

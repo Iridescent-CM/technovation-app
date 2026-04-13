@@ -30,6 +30,10 @@ class EventsGrid
     unofficial? ? "unofficial" : "official"
   end
 
+  column :selectable, header: "Event visibility" do
+    selectable? ? "public" : "private"
+  end
+
   column :date, order: "regional_pitch_events.starts_at"
 
   column :time
@@ -134,6 +138,17 @@ class EventsGrid
     :enum,
     select: ["official", "unofficial"] do |value|
     send(value)
+  end
+
+  filter :selectable,
+    :enum,
+    header: "Event visibility",
+    select: [
+     ["Public", true],
+     ["Private", false]
+    ],
+    filter_group: "common" do |value, scope|
+    scope.where(selectable: value)
   end
 
   filter :country,
