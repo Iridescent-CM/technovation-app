@@ -19,6 +19,7 @@ RSpec.describe "admin/participants/_judge_debugging.html.erb", type: :view do
       valid_coordinates?: true,
       survey_completed?: true,
       training_completed?: true,
+      judge_information_completed?: true,
       mentor_profile: {},
       browser_name: "Mosiac",
       browser_version: "1.0",
