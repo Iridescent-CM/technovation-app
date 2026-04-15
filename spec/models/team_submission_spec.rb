@@ -48,6 +48,10 @@ RSpec.describe TeamSubmission do
     submission.thunkable_project_url = "https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4"
     expect(submission).to be_valid
     expect(submission.thunkable_project_url).to eq("https://x.thunkable.com/projectPage/47d800b3aa47590210ad662249e63dd4")
+
+    submission.thunkable_project_url = "https://ai.thunkable.com/hikari/preview/abc123"
+    expect(submission).to be_valid
+    expect(submission.thunkable_project_url).to eq("https://ai.thunkable.com/hikari/preview/abc123")
   end
 
   it "validates the scratch URL" do
