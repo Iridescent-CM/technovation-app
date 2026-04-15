@@ -2,6 +2,7 @@ source "https://rubygems.org"
 ruby "3.1.2"
 
 gem "rails", "~>7.0.8.0"
+gem "concurrent-ruby", "1.3.4"
 
 gem "puma", "~> 5.6.9"
 gem "pg", "~> 1.2"
@@ -20,7 +21,7 @@ gem "pdf-forms", "~> 1.2"
 
 gem "public_activity", "~> 2.0"
 gem "paranoia", "~> 3.0"
-gem "counter_culture", "~> 1.12"
+gem "counter_culture", "~> 3.0"
 gem "pundit", "~> 2.0"
 gem "noticed", "~> 2.9.0"
 
