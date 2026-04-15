@@ -4,30 +4,23 @@
   <% elsif SeasonToggles.semifinals_judging? %>
     <p>Welcome to the second round of online judging, also known as Semifinals!</p>
   <% end %>
-
-  <p>
-    Tell your network that you’re judging using our
-    <%= link_to "\"Proud Technovation Judge\"",
-      "https://www.canva.com/design/DAGi884p760/x16ToDSAkEQwbE8FjvBHQQ/view?utm_content=DAGi884p760&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink&mode=preview",
-      class: "tw-link"
-    %>
-    social templates.
-  </p>
+  
+  <%= render "judge/dashboards/onboarded/rebrand/social_media_templates" %>
 </div>
 
 <div>
-  <%= render 'judge/dashboards/rebrand/important_dates' %>
+  <%= render "judge/dashboards/rebrand/important_dates" %>
 </div>
 
 <% if CanStartNewScore.(current_judge) %>
   <p class="mb-4">Click on the button below to open a submission and start scoring.</p>
   <p class="mb-8">
     <%= link_to "Start a new score",
-                new_judge_score_path,
-                class: "md-link-button link-button-success",
-                data: { turbo: false } %>
+      new_judge_score_path,
+      class: "md-link-button link-button-success",
+      data: { turbo: false } %>
   </p>
 <% elsif @scores_in_progress.present? %>
-  You have <%=  pluralize( @scores_in_progress.count, 'score' ) %> in progress.
+  You have <%=  pluralize( @scores_in_progress.count, "score" ) %> in progress.
   View the submissions tab to continue scoring.
 <% end %>
