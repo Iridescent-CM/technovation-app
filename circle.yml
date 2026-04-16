@@ -104,6 +104,7 @@ jobs:
           JUNIOR_DIVISION_JUDGING_RUBRIC_URL: "https://some/judging-rubik-url"
           JUDGE_MAXIMUM_NUMBER_OF_RECUSALS: 15
           JUDGE_SLACK_SIGNUP_URL: n-a
+          JUDGE_SOCIAL_MEDIA_TEMPLATES_URL: "https://some/social-media-templates-url"
           JUDGE_TRAINING_URL: n-a
           NUM_JUDGE_RECUSALS_TO_REMOVE_SUBMISSION_FROM_JUDGING_POOL: 4
           PRIVACY_EMAIL_ADDRESS: n-a
