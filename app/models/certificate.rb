@@ -1,7 +1,7 @@
 class Certificate < ApplicationRecord
   include Seasoned
 
-  enum cert_type: CertificateTypes::CERTIFICATE_TYPES
+  enum :cert_type, CertificateTypes::CERTIFICATE_TYPES
 
   belongs_to :account
   belongs_to :team, required: false

@@ -49,14 +49,14 @@ class SubmissionScore < ActiveRecord::Base
     update_column(:dropped_at, nil)
   }
 
-  enum round: %w[
+  enum :round, %w[
     quarterfinals
     semifinals
     finals
     off
   ]
 
-  enum judge_recusal_reason: {
+  enum :judge_recusal_reason, {
     submission_not_in_english: "submission_not_in_english",
     knows_team: "knows_team",
     content_does_not_belong_to_team: "content_does_not_belong_to_team",

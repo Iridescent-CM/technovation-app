@@ -1,5 +1,5 @@
 class UserInvitation < ApplicationRecord
-  enum profile_type: %i[
+  enum :profile_type, %i[
     chapter_ambassador
     judge
     mentor
@@ -8,7 +8,7 @@ class UserInvitation < ApplicationRecord
     club_ambassador
   ]
 
-  enum status: %i[
+  enum :status, %i[
     sent
     opened
     registered
@@ -234,7 +234,7 @@ class UserInvitation < ApplicationRecord
 
   def inviting_existing_judge_to_be_a_chapter_or_club_ambassador?
     profile_type.to_s == "chapter_ambassador" or
-      profile_type.to_s == "club_ambassador"  and
+      profile_type.to_s == "club_ambassador" and
       Account.joins(:judge_profile)
         .where("lower(trim(both ' ' from email)) = ?", email)
         .exists?

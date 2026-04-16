@@ -11,8 +11,8 @@ class ChapterAmbassadorProfile < ActiveRecord::Base
     foreign_key: "account_id",
     required: false
 
-  enum status: %i[pending approved declined spam]
-  enum organization_status: {
+  enum :status, %i[pending approved declined spam]
+  enum :organization_status, {
     employee: "employee",
     volunteer: "volunteer"
   }

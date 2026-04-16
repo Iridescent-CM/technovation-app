@@ -3,7 +3,7 @@ require "aws-sdk"
 
 module Legacy
   class Team < LegacyModel
-    enum division: [:ms, :hs, :x]
+    enum :division, [:ms, :hs, :x]
 
     has_many :team_requests, -> { where(approved: true) }
     has_many :users, through: :team_requests

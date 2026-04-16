@@ -1,5 +1,5 @@
 class ChapterLink < ApplicationRecord
-  enum name: %i[
+  enum :name, %i[
     twitter
     facebook
     youtube

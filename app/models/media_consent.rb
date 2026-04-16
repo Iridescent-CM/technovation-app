@@ -1,5 +1,5 @@
 class MediaConsent < ActiveRecord::Base
-  enum upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, _prefix: true
+  enum :upload_approval_status, ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, prefix: true
 
   belongs_to :student_profile
 
