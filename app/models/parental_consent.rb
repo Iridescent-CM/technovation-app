@@ -2,13 +2,13 @@ class ParentalConsent < ActiveRecord::Base
   include Seasoned
 
   # If these change, you will need to update dataclips
-  enum status: %i[
+  enum :status, %i[
     pending
     signed
     voided
   ]
 
-  enum upload_approval_status: ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, _prefix: true
+  enum :upload_approval_status, ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES, prefix: true
 
   belongs_to :student_profile
 
