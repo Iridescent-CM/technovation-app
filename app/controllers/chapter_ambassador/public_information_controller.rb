@@ -27,6 +27,7 @@ module ChapterAmbassador
         :summary,
         :primary_account_id,
         :visible_on_map,
+        :open_to_public,
         chapter_links_attributes: [
           :id,
           :_destroy,

@@ -45,6 +45,8 @@ class ChaptersGrid
 
   filter(:visible_on_map, :xboolean)
 
+  filter(:open_to_public, :xboolean)
+
   filter :country,
     :enum,
     header: "Country",
@@ -218,6 +220,10 @@ class ChaptersGrid
   end
 
   column :visible_on_map, header: "Visible on map"
+
+  column :open_to_public, header: "Open to Public" do
+    open_to_public? ? "Yes" : "No"
+  end
 
   column :child_safeguarding_policy_and_process, preload: :program_information do
     program_information&.child_safeguarding_policy_and_process.presence || "-"

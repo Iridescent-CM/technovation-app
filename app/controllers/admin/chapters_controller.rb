@@ -48,7 +48,8 @@ module Admin
         :name,
         :summary,
         :organization_headquarters_location,
-        :visible_on_map
+        :visible_on_map,
+        :open_to_public
       )
     end
 

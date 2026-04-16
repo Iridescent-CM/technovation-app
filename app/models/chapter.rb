@@ -56,6 +56,8 @@ class Chapter < ActiveRecord::Base
       .where("documents.id IS NULL")
   }
 
+  scope :open_to_public, -> { where(open_to_public: true) }
+
   delegate :seasons_chapter_affiliation_agreement_is_valid_for, to: :legal_contact
 
   def affiliation_agreement
