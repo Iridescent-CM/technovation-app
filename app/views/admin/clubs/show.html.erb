@@ -36,6 +36,16 @@
               </p>
             </dd>
 
+            <dt>Public Map Visibility</dt>
+            <dd>
+              <%= @club.visible_on_map? ? "Display on map" : "Do not display on map" %>
+            </dd>
+
+            <dt>Club Privacy</dt>
+            <dd>
+              <%= @club.open_to_public? ? "Public" : "Private — invite only" %>
+            </dd>
+
             <%= render partial: "admin/chapterables/season_status",
               locals: { chapterable: @club } %>
 

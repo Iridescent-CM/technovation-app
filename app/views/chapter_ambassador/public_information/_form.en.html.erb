@@ -92,6 +92,24 @@
                 label: false %>
   </div>
 
+  <div>
+    <h3 class="mt-8 mb-4">Chapter Privacy</h3>
+
+    <p class="text-base mb-4">
+      Control whether your chapter appears in the chapter selection list for participants.
+      <br>
+      Private chapters are invite only and will not appear in the chapter selection list.
+    </p>
+
+    <%= f.input :open_to_public,
+      as: :radio_buttons,
+      collection: [
+        ["Public — appears in chapter selection for anyone to join", true],
+        ["Private — invite only, won't appear in chapter selection", false]
+      ],
+      label: false %>
+  </div>
+
   <p class="mt-8">
     <%= f.submit "Save", class: "tw-green-btn" %>
       or
