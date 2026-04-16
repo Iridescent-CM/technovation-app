@@ -38,6 +38,19 @@ describe ChapterSelector do
           end
         end
 
+        context "when the los angeles chapter is not open to the public" do
+          before do
+            los_angeles_chapter.update(open_to_public: false)
+          end
+
+          it "does not include the los angeles chapter in the results" do
+            expect(chapter_selector.call).to eq({
+              chapters_in_state_province: [],
+              chapters_in_country: [chicago_chapter]
+            })
+          end
+        end
+
         context "when the account already belongs to the los angeles chapter" do
           before do
             account.chapterable_assignments.delete_all
