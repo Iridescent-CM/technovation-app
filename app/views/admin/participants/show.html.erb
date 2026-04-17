@@ -1,4 +1,4 @@
-<% provide :title, "Viewing #{@account.scope_name.titleize}" %>
+<% provide :title, "Viewing #{@account.full_name}" %>
 
 <div class="grid">
   <div class="grid__col-auto grid__col--bleed-x grid__col--bleed-y">
@@ -12,7 +12,7 @@
       <% end %>
 
       <div class="grid">
-        <div class="grid__col-4">
+        <div class="grid__col-3">
           <% if params[:review_before] || params[:back] %>
             <div class="grid__cell">
               <%= link_to params[:back] ||= :back, class: "button secondary" do %>
@@ -26,101 +26,164 @@
             class: "thumbnail-lg grid__cell-img" %>
 
           <h3 class="reset" style="margin-top: 1rem;"><%= @account.full_name %></h3>
-          <h5 class="reset"><%= @account.scope_name.titleize %> Profile</h5>
+
+          <%
+            profile_types = %w[student mentor judge chapter_ambassador club_ambassador admin]
+            present_profiles = profile_types.select { |t| @account.public_send("#{t}_profile").present? }
+          %>
+
+          <div class="profile-roles" style="margin: 0.5rem 0;">
+            <% if present_profiles.any? %>
+              <% present_profiles.each do |type| %>
+                <span class="pill pill-green" style="margin-right: 0.25rem; margin-bottom: 0.25rem;">
+                  <%= type.titleize %>
+                </span>
+              <% end %>
+            <% else %>
+              <span class="italic">No profiles</span>
+            <% end %>
+          </div>
 
           <p>
             <%= link_to "Login as #{@account.full_name}",
               admin_participant_session_path(@account),
               class: "button secondary small" %>
           </p>
+
+          <p>
+            <%= link_to 'Edit participant',
+              edit_admin_participant_path(@account),
+              class: "button secondary small" %>
+          </p>
         </div>
 
-        <div class="grid__col-4">
-          <dl class="profile-info">
-            <dt><%= t('models.account.full_name') %></dt>
-            <dd><%= @account.full_name %></dd>
+        <div class="grid__col-9">
+          <style>
+            .participant-card { margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: #fafafa; border: 1px solid #eee; border-radius: 4px; }
+            .participant-card .profile-info dt { break-after: avoid; }
+            .participant-card .profile-info dd { break-inside: avoid; margin-bottom: 0.5rem; }
+          </style>
 
-            <dt><%= t('models.account.email') %></dt>
-            <dd><%= mail_to @account.email %></dd>
+          <section class="participant-card">
+            <div class="grid">
+              <div class="grid__col-6">
+                <dl class="profile-info">
+                  <dt><%= t('models.account.email') %></dt>
+                <dd><%= mail_to @account.email %></dd>
 
-            <% if !@account.student_profile %>
-              <dt><%= t('models.account.phone_number') %></dt>
-              <dd><%= @account.phone_number.presence || "-" %></dd>
-            <% end %>
+                <% if !@account.student_profile %>
+                  <dt><%= t('models.account.phone_number') %></dt>
+                  <dd><%= @account.phone_number.presence || "-" %></dd>
+                <% end %>
 
-            <dt><%= t('models.account.age') %></dt>
-            <dd>
-              <%= @account.date_of_birth.present? ? @account.age : "-" %>
-            </dd>
+                <dt><%= t('models.account.age') %></dt>
+                <dd>
+                  <%= @account.date_of_birth.present? ? @account.age : "-" %>
+                </dd>
 
-            <% if @account.student? %>
-              <dt><%= t('models.account.division') %></dt>
-              <dd><%= @account.division.name.capitalize %></dd>
-            <% end %>
+                <% if @account.student? %>
+                  <dt><%= t('models.account.division') %></dt>
+                  <dd><%= @account.division.name.capitalize %></dd>
+                <% end %>
+              </dl>
+            </div>
 
-            <dt>Seasons</dt>
-            <dd><%= @account.seasons.to_sentence %></dd>
+            <div class="grid__col-6">
+              <dl class="profile-info">
+                <dt>Seasons</dt>
+                <dd><%= @account.seasons.to_sentence %></dd>
 
-            <% unless @account.student_profile.present? %>
-              <dt><%= t('models.account.gender') %></dt>
-              <dd><%= @account.gender %></dd>
-            <% end %>
+                <% unless @account.student_profile.present? %>
+                  <dt><%= t('models.account.gender') %></dt>
+                  <dd><%= @account.gender %></dd>
+                <% end %>
 
-            <dt><%= t('models.account.address') %></dt>
-            <dd>
-              <%= @account.address_details %>
+                <dt><%= t('models.account.address') %></dt>
+                <dd>
+                  <%= @account.address_details %>
 
-              <p>
-                <%= link_to "Edit location",
-                  edit_admin_profile_location_path(
-                    @account,
-                    return_to: admin_participant_path(@account)
-                  ),
-                  class: "button secondary small" %>
-              </p>
-            </dd>
-          </dl>
+                  <p>
+                    <%= link_to "Edit location",
+                      edit_admin_profile_location_path(
+                        @account,
+                        return_to: admin_participant_path(@account)
+                      ),
+                      class: "button secondary small" %>
+                  </p>
+                </dd>
+              </dl>
+            </div>
+          </div>
+          </section>
 
-          <% if @account.student_profile.present? ||
-            @account.is_a_mentor? ||
-            @account.chapter_ambassador? ||
-            @account.club_ambassador?
-          %>
+          <% assignable_profile_types = %w[student mentor chapter_ambassador club_ambassador] %>
 
-            <dl class="chapterable-info">
-              <% if @account.assigned_to_chapterable? %>
-                <%= render partial: "admin/participants/assigned_to_chapterable",
-                  locals: { account: @account, chapterable_assignment: @account.current_chapterable_assignment } %>
-              <% else %>
-                <%= render "admin/participants/not_assigned_to_chapterable",
-                  account: @account %>
+          <% present_profiles.each do |type| %>
+            <section class="participant-card">
+              <h5 class="reset" style="margin-bottom: 0.75rem;"><%= type.titleize %> Profile</h5>
+              <div style="column-count: 2; column-gap: 2rem;">
+                <%= render "admin/participants/#{type}_profile",
+                  profile: @account.public_send("#{type}_profile") %>
+              </div>
+
+              <% if type == "mentor" && @account.mentor_profile.bio.present? %>
+                <dl style="margin-top: 1rem;">
+                  <dt><%= t('models.profile.bio') %></dt>
+                  <dd><%= simple_format h(@account.mentor_profile.bio) %></dd>
+                </dl>
               <% end %>
-            </dl>
+
+              <% if assignable_profile_types.include?(type) %>
+                <%
+                  profile = @account.public_send("#{type}_profile")
+                  assignment = @account.current_chapterable_assignments.find_by(
+                    profile_type: profile.class.name,
+                    profile_id: profile.id
+                  )
+                  chapterable_word = case type
+                    when "chapter_ambassador" then "chapter"
+                    when "club_ambassador" then "club"
+                    else "chapter or club"
+                    end
+                %>
+
+                <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                  <% if assignment %>
+                    <p style="margin: 0;">
+                      Assigned to <%= assignment.chapterable_type.downcase %>
+                      <strong>
+                        <%= link_to assignment.chapterable.name.presence || "Name not set",
+                          send("admin_#{assignment.chapterable_type.downcase}_path", assignment.chapterable) %>
+                      </strong>
+                      <% if assignment.chapterable_type == "Chapter" && @account.friendly_chapter_organization_name.present? %>
+                        (<%= @account.friendly_chapter_organization_name %>)
+                      <% end %>
+                      <% if assignment.assignment_by.present? %>
+                        &middot; assigned by
+                        <% if assignment.assignment_by.is_a?(Account) %>
+                          <%= link_to assignment.assignment_by.name, admin_participant_path(assignment.assignment_by) %>
+                        <% else %>
+                          <%= assignment.assignment_by.name %>
+                        <% end %>
+                      <% end %>
+                    </p>
+                    <%= link_to "Edit",
+                      edit_admin_account_chapterable_account_assignment_path(@account, assignment),
+                      class: "button secondary small" %>
+                  <% else %>
+                    <p style="margin: 0;">
+                      <span class="italic"><%= "Not assigned to #{chapterable_word}" %></span>
+                    </p>
+                    <%= link_to "Assign to #{chapterable_word}",
+                      new_admin_account_chapterable_account_assignment_path(@account),
+                      class: "button secondary small" %>
+                  <% end %>
+                </div>
+              <% end %>
+            </section>
           <% end %>
         </div>
 
-        <div class="grid__col-4">
-          <%= render(
-            "admin/participants/#{@account.scope_name.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")}_profile",
-            profile: @account.public_send("#{@account.scope_name}_profile")
-          ) %>
-
-          <%= link_to 'Edit participant',
-            edit_admin_participant_path(@account),
-            class: "button secondary small" %>
-        </div>
-
-        <% if @account.mentor_profile %>
-          <div class="grid__col-12 grid__col--bleed-y">
-            <dl>
-              <dt><%= t('models.profile.bio') %></dt>
-
-              <dd>
-                <%= simple_format h(@account.mentor_profile.bio) %>
-              </dd>
-            </dl>
-          </div>
-        <% end %>
       </div>
     </div>
 

@@ -6,7 +6,7 @@ class SeasonFlag
   end
 
   def text
-    "#{type.titleize} #{account.scope_name.humanize.downcase}"
+    type.titleize
   end
 
   def type
