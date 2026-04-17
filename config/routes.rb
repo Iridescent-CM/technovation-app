@@ -438,6 +438,8 @@ Rails.application.routes.draw do
 
         post :bulk_add_judges
         post :bulk_add_teams
+        resources :event_teams, only: [:create, :destroy]
+        get :available_teams, on: :member
       end
 
     resources :event_participations,
