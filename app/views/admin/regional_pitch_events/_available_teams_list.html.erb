@@ -25,7 +25,7 @@
       <div id="available-teams-pagination">
         <%= will_paginate teams,
           params: {
-            controller: 'chapter_ambassador/regional_pitch_events',
+            controller: "#{current_scope}/regional_pitch_events",
             action: "available_teams", id: event.id } %>
       </div>
     </div>
