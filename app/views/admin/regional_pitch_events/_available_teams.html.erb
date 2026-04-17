@@ -3,7 +3,7 @@
     <div class="grid__col-auto" style="overflow-x:auto;">
       <h5>Available Teams in Your Region</h5>
 
-      <%= form_with url: available_teams_chapter_ambassador_event_path(@event),
+      <%= form_with url: send("available_teams_#{current_scope}_event_path", @event),
         method: :get,
         data: {
           controller: "search",
