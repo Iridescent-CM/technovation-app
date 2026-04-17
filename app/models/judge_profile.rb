@@ -2,7 +2,7 @@ class JudgeProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
-  enum industry: %i[
+  enum :industry, %i[
     Science
     Technology
     Engineering

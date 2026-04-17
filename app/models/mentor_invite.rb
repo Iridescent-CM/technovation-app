@@ -1,7 +1,7 @@
 class MentorInvite < TeamMemberInvite
   default_scope -> { where(invitee_type: "MentorProfile") }
 
-  enum decline_reason: {
+  enum :decline_reason, {
     timezone_concern: 10,
     already_mentoring: 20,
     unavailable: 30

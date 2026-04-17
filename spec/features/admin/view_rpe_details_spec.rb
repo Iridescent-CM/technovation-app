@@ -29,7 +29,7 @@ RSpec.feature "Admin view rpe details", js: true do
 
     expect(page).to have_content(@rpe.name)
     expect(page).to have_content(@rpe.ambassador.name)
-    expect(page).to have_content(@rpe.officiality)
+    expect(page).to have_content(@rpe.unofficial? ? "no" : "yes")
     expect(page).to have_content(@rpe.division_name)
     expect(page).to have_content(@rpe.venue_address)
     expect(page).to have_content("No link provided.")

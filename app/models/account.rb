@@ -8,7 +8,7 @@ class Account < ActiveRecord::Base
     46986
   ]
 
-  enum admin_status: %w[
+  enum :admin_status, %w[
     not_admin
     temporary_password
     full_admin
@@ -179,8 +179,8 @@ class Account < ActiveRecord::Base
   has_one :background_check, dependent: :destroy
   accepts_nested_attributes_for :background_check
 
-  enum referred_by: ReferredByOptions::REFERRED_BY_OPTIONS
-  enum gender: GenderIdentityOptions::GENDER_IDENTITY_OPTIONS
+  enum :referred_by, ReferredByOptions::REFERRED_BY_OPTIONS
+  enum :gender, GenderIdentityOptions::GENDER_IDENTITY_OPTIONS
 
   scope :by_query, ->(query) {
     sanitized = sanitize_sql_like(query)

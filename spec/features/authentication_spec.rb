@@ -4,7 +4,7 @@ RSpec.feature "Authentication" do
   def reload_cookie_names
     # daily server restart causes reload IRL, here we have to force re-evaluation of constants
     Object.send(:remove_const, "CookieNames")
-    load "cookie_names.rb"
+    load Rails.root.join("app/constants/cookie_names.rb")
   end
 
   {judge: %i[chapter_ambassador student admin],

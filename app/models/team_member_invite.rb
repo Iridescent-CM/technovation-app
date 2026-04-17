@@ -1,5 +1,5 @@
 class TeamMemberInvite < ActiveRecord::Base
-  enum status: %i[pending accepted declined deleted]
+  enum :status, %i[pending accepted declined deleted]
 
   scope :for_students, -> {
     where("invitee_type IS NULL OR invitee_type = ?", "StudentProfile")

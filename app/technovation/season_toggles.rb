@@ -1,10 +1,10 @@
-require "season_toggles/signup_toggles"
-require "season_toggles/dashboard_notices"
-require "season_toggles/survey_links"
-require "season_toggles/team_toggles"
-require "season_toggles/regional_pitch_event_toggles"
-require "season_toggles/judging_round_toggles"
-require "season_toggles/score_toggles"
+require_relative "season_toggles/signup_toggles"
+require_relative "season_toggles/dashboard_notices"
+require_relative "season_toggles/survey_links"
+require_relative "season_toggles/team_toggles"
+require_relative "season_toggles/regional_pitch_event_toggles"
+require_relative "season_toggles/judging_round_toggles"
+require_relative "season_toggles/score_toggles"
 
 class SeasonToggles
   include SignupToggles
@@ -18,12 +18,12 @@ class SeasonToggles
   class << self
     def configure(attrs)
       with_proper_dependency_order(attrs) do |ordered_attrs|
-        ordered_attrs.each { |k, v| send("#{k}=", v) }
+        ordered_attrs.each { |k, v| send(:"#{k}=", v) }
       end
     end
 
     def disabled?(feature)
-      send("#{feature.feature_name}_disabled?")
+      send(:"#{feature.feature_name}_disabled?")
     end
 
     private
