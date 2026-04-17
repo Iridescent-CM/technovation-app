@@ -15,6 +15,8 @@ module BulkDataProcessors
           result = "Could not find judge with ID: #{judge_id}"
         elsif !judge_profile.current_season?
           result = "#{judge_profile.name} is not a part of the current season"
+        elsif judge_profile.account.mentor_profile&.is_on_team?
+          result = "#{judge_profile.name} is mentoring a team"
         elsif judge_profile.events.include?(regional_pitch_event)
           result = "#{judge_profile.name} has already been assigned to this event"
         else

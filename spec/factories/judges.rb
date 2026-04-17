@@ -140,7 +140,9 @@ FactoryBot.define do
       end
 
       if e.mentor
-        j.account.build_mentor_profile(FactoryBot.attributes_for(:mentor))
+        mentor_profile = j.account.build_mentor_profile(FactoryBot.attributes_for(:mentor))
+
+        mentor_profile.mentor_types << FactoryBot.create(:mentor_type)
       end
 
       if e.onboarded && !j.can_be_marked_onboarded?

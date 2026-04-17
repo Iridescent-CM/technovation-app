@@ -46,6 +46,22 @@ RSpec.describe BulkDataProcessors::AssignJudgesToRegionalPitchEvent do
     end
   end
 
+  context "when a judge is also a mentoring a team" do
+    let(:judge_1) { FactoryBot.create(:judge, mentor: true) }
+    let(:team) { FactoryBot.create(:team) }
+
+    before do
+      FactoryBot.create(:team_membership, team:, member: judge_1.account.mentor_profile)
+    end
+
+    it "doesn't add the judge to the RPE" do
+      result = assign_judges_to_regional_pitch_event_service.call
+
+      expect(regional_pitch_event.judges).not_to include(judge_1)
+      expect(result.results).to include("#{judge_1.name} is mentoring a team")
+    end
+  end
+
   context "when a judge is already assigned to this RPE" do
     before do
       judge_1.events << regional_pitch_event
