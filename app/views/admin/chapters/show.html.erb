@@ -38,6 +38,11 @@
               <%= @chapter.visible_on_map? ?  "Display on map" : "Do not display on map" %>
             </dd>
 
+            <dt>Chapter Privacy</dt>
+            <dd>
+              <%= @chapter.open_to_public? ? "Public" : "Private — invite only" %>
+            </dd>
+
             <dt>Chapter Links</dt>
             <dd>
               <% if @chapter.chapter_links.present? %>

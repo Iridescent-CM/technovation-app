@@ -38,6 +38,19 @@ describe ClubSelector do
           end
         end
 
+        context "when the los angeles club is not open to the public" do
+          before do
+            los_angeles_club.update(open_to_public: false)
+          end
+
+          it "does not include the los angeles club in the results" do
+            expect(club_selector.call).to eq({
+              clubs_in_state_province: [],
+              clubs_in_country: [chicago_club]
+            })
+          end
+        end
+
         context "when the account already belongs to the los angeles club" do
           before do
             account.chapterable_assignments.delete_all

@@ -41,6 +41,7 @@ class ClubSelector
   def select_clubs(where:, where_not: {})
     Club
       .current
+      .open_to_public
       .includes(:primary_contact)
       .where(where)
       .where.not(where_not)

@@ -61,6 +61,24 @@
       label: false %>
   </div>
 
+  <div>
+    <h3 class="mt-8 mb-4">Club Privacy</h3>
+
+    <p class="text-base mb-4">
+      Control whether your club appears in the club selection list for participants.
+      <br>
+      Private clubs are invite only and will not appear in the club selection list.
+    </p>
+
+    <%= f.input :open_to_public,
+      as: :radio_buttons,
+      collection: [
+        ["Public — appears in club selection for anyone to join", true],
+        ["Private — invite only, won't appear in club selection", false]
+      ],
+      label: false %>
+  </div>
+
   <p class="mt-8">
     <%= f.submit "Save", class: "tw-green-btn" %>
       or

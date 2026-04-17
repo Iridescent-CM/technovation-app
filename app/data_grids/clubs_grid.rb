@@ -27,6 +27,8 @@ class ClubsGrid
 
   filter(:visible_on_map, :xboolean)
 
+  filter(:open_to_public, :xboolean)
+
   filter(:onboarded,
     :enum,
     select: [
@@ -60,7 +62,13 @@ class ClubsGrid
     primary_contact&.email.presence || "-"
   end
 
-  column :visible_on_map, header: "Visible on map"
+  column :visible_on_map, header: "Visible on map" do
+    visible_on_map? ? "Yes" : "No"
+  end
+
+  column :open_to_public, header: "Open to Public" do
+    open_to_public? ? "Yes" : "No"
+  end
 
   column :onboarded do
     onboarded? ? "yes" : "no"

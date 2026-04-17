@@ -30,6 +30,8 @@ class Club < ActiveRecord::Base
   validates :name, presence: true
   validates :summary, length: {maximum: 1000}
 
+  scope :open_to_public, -> { where(open_to_public: true) }
+
   after_update :update_onboarding_status
 
   def assign_address_details(geocoded)

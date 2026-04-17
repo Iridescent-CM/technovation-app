@@ -43,7 +43,8 @@ module Admin
       params.require(:club).permit(
         :id,
         :name,
-        :summary
+        :summary,
+        :open_to_public
       )
     end
 

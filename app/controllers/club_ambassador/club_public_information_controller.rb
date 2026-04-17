@@ -25,7 +25,8 @@ module ClubAmbassador
         :name,
         :summary,
         :primary_account_id,
-        :visible_on_map
+        :visible_on_map,
+        :open_to_public
       )
     end
   end

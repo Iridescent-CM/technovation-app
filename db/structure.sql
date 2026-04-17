@@ -533,7 +533,8 @@ CREATE TABLE public.chapters (
     primary_account_id bigint,
     created_at timestamp without time zone,
     updated_at timestamp without time zone,
-    seasons text[] DEFAULT '{}'::text[]
+    seasons text[] DEFAULT '{}'::text[],
+    open_to_public boolean DEFAULT true NOT NULL
 );
 
 
@@ -610,7 +611,8 @@ CREATE TABLE public.clubs (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     onboarded boolean DEFAULT false,
-    seasons text[] DEFAULT '{}'::text[]
+    seasons text[] DEFAULT '{}'::text[],
+    open_to_public boolean DEFAULT true NOT NULL
 );
 
 
@@ -5461,6 +5463,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260312214323'),
 ('20260331220350'),
 ('20260402233018'),
-('20260323193301');
+('20260323193301'),
+('20260416120000'),
+('20260416120001');
 
 
