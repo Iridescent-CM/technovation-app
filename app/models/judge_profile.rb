@@ -28,8 +28,15 @@ class JudgeProfile < ActiveRecord::Base
       .where("regional_pitch_events.id IS NULL")
   }
 
+  scope :not_matched_as_mentor, -> {
+    where.not(
+      account_id: MentorProfile.joins(:current_teams).distinct.select(:account_id)
+    )
+  }
+
   scope :available_for_events, ->(event, ambassador) {
     not_attending_live_event
+      .not_matched_as_mentor
       .in_region(ambassador)
       .includes(:account)
       .order("accounts.first_name")

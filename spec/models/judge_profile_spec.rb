@@ -37,6 +37,25 @@ RSpec.describe JudgeProfile do
     end
   end
 
+  describe ".not_matched_as_mentor" do
+    it "includes judges with no mentor profile" do
+      judge = FactoryBot.create(:judge)
+      expect(JudgeProfile.not_matched_as_mentor).to include(judge)
+    end
+
+    it "includes judges with a mentor profile not on a team" do
+      mentor = FactoryBot.create(:mentor, :has_judge_profile)
+      judge_with_mentor_profile = mentor.account.judge_profile
+      expect(JudgeProfile.not_matched_as_mentor).to include(judge_with_mentor_profile)
+    end
+
+    it "excludes judges with a mentor profile on a team" do
+      mentor = FactoryBot.create(:mentor, :on_team, :has_judge_profile)
+      judge_with_mentor_profile = mentor.account.judge_profile
+      expect(JudgeProfile.not_matched_as_mentor).not_to include(judge_with_mentor_profile)
+    end
+  end
+
   context "callbacks" do
     let(:judge) { FactoryBot.create(:judge) }
 
