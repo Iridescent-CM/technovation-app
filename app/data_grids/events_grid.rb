@@ -9,6 +9,7 @@ class EventsGrid
     RegionalPitchEvent.current
       .includes(:division, ambassador: :account)
       .references(:accounts)
+      .distinct
   end
 
   column :ambassador_name,
