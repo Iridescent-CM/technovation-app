@@ -17,7 +17,9 @@ class EventsGrid
 
   column :name, mandatory: true
 
-  column :chapter, mandatory: true,
+  column :chapter,
+    if: ->(g) { g.admin },
+    mandatory: true,
     order: ->(scope) { scope.left_joins(ambassador: {account: :chapters}).order("chapters.name") } do |event|
     event.ambassador.account.current_chapter&.name.presence || "-"
   end
@@ -67,7 +69,7 @@ class EventsGrid
   column :teams_count, header: "Team count", mandatory: true
 
   column :actions, mandatory: true, html: true do |event|
-    render "data_grids/events/actions", { event: event, current_scope: current_scope }
+    render "data_grids/events/actions", {event: event, current_scope: current_scope}
   end
 
   column :created_at do
@@ -115,7 +117,8 @@ class EventsGrid
     filter_group: "common",
     html: {
       class: "and-or-field"
-    } do |value|
+    },
+    if: ->(g) { g.admin } do |value|
     by_chapter(value)
   end
 
@@ -144,8 +147,8 @@ class EventsGrid
     :enum,
     header: "Event visibility",
     select: [
-     ["Public", true],
-     ["Private", false]
+      ["Public", true],
+      ["Private", false]
     ],
     filter_group: "common" do |value, scope|
     scope.where(selectable: value)
