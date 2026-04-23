@@ -8,10 +8,10 @@ module ParentalConsentPhone
       if: -> { parent_guardian_phone_number.present? && parent_guardian_phone_country_code.present? }
 
     validate :valid_parent_guardian_phone_number,
-      if: -> { parent_guardian_phone_number.present? || parent_guardian_phone_country_code.present? }
+      if: -> { parent_guardian_phone_number_changed? || parent_guardian_phone_country_code.present? }
 
     validate :parent_guardian_text_message_opt_in_accepted,
-      if: -> { parent_guardian_phone_number.present? || parent_guardian_phone_country_code.present? }
+      if: -> { parent_guardian_phone_number_changed? || parent_guardian_phone_country_code.present? }
 
     before_save :set_parent_guardian_text_message_opted_in_at,
       if: -> { parent_guardian_phone_number.present? && parent_guardian_phone_number_changed? }
