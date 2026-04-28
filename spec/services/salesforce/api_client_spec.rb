@@ -57,7 +57,7 @@ RSpec.describe Salesforce::ApiClient do
   end
 
   let(:salesforce_client) { double("SalesforceClient") }
-  let(:student_profile) { FactoryBot.create(:student_profile) }
+  let(:student_profile) { FactoryBot.create(:student_profile, :on_team, :submitted) }
   let(:account) { student_profile.account }
   let(:profile_type) { "student" }
 
@@ -87,8 +87,9 @@ RSpec.describe Salesforce::ApiClient do
       end
 
       context "when setting up a student" do
-        let(:student_profile) { FactoryBot.create(:student_profile) }
+        let(:student_profile) { FactoryBot.create(:student_profile, :on_team, :submitted) }
         let(:account) { student_profile.account }
+        let(:submission) { student_profile.team.submission }
         let(:profile_type) { "student" }
 
         it "calls the insert! method to create a new 'program participant' record and includes student info" do
@@ -99,10 +100,11 @@ RSpec.describe Salesforce::ApiClient do
             Year__c: Season.current.year,
             Type__c: profile_type,
             TG_Division__c: "#{student_profile.division.name} Division",
-            Pitch_Video__c: "",
-            Project_Link__c: "",
-            Submitted_Project__c: "Did Not Submit",
-            Team_Name__c: ""
+            Pitch_Video__c: submission.pitch_video_link,
+            Project_Link__c: Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: submission),
+            Submitted_Project__c: "Submitted",
+            Team_Name__c: student_profile.team.name,
+            Award_Contest_Rank__c: submission.contest_rank.humanize.titleize
           )
 
           salesforce_api_client.setup_account_for_current_season
@@ -296,6 +298,7 @@ RSpec.describe Salesforce::ApiClient do
         context "when updating a student's program info" do
           let(:student_profile) { FactoryBot.create(:student_profile, :on_team, :submitted) }
           let(:account) { student_profile.account }
+          let(:submission) { student_profile.team.submission }
           let(:profile_type) { "student" }
 
           it "calls update! to update the 'program participant' info for the student" do
@@ -307,7 +310,8 @@ RSpec.describe Salesforce::ApiClient do
                 Pitch_Video__c: student_profile.team.submission.pitch_video_link,
                 Project_Link__c: Rails.application.routes.url_helpers.url_for(controller: "projects", action: "show", id: student_profile.team.submission),
                 Submitted_Project__c: "Submitted",
-                Team_Name__c: student_profile.team.name
+                Team_Name__c: student_profile.team.name,
+                Award_Contest_Rank__c: submission.contest_rank.humanize.titleize
               }
             )
 
