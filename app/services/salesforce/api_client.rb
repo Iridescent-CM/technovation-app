@@ -99,6 +99,7 @@ module Salesforce
           LastName: account.last_name,
           npe01__AlternateEmail__c: account.email,
           npe01__Preferred_Email__c: "Alternate",
+          OtherPhone: account.phone_number,
           MailingCity: account.city,
           MailingState: account.state_province,
           MailingCountry: account.country, **additional_contact_info
@@ -172,7 +173,8 @@ module Salesforce
           Pitch_Video__c: submission.pitch_video_link,
           Project_Link__c: submission.present? ? project_url(submission) : "",
           Submitted_Project__c: submission.published_at.present? ? "Submitted" : "Did Not Submit",
-          Team_Name__c: account.student_profile.team.name
+          Team_Name__c: account.student_profile.team.name,
+          Award_Contest_Rank__c: submission.contest_rank&.humanize&.titleize
         )
       when "mentor"
         initial_program_participant_info.merge(
