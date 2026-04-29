@@ -152,7 +152,6 @@ RSpec.describe Salesforce::ApiClient do
           LastName: account.last_name,
           npe01__AlternateEmail__c: account.email,
           npe01__Preferred_Email__c: "Alternate",
-          OtherPhone: account.phone_number,
           Birthdate: account.date_of_birth,
           MailingCity: account.city,
           MailingState: account.state_province,
@@ -181,7 +180,6 @@ RSpec.describe Salesforce::ApiClient do
           LastName: account.last_name,
           npe01__AlternateEmail__c: account.email,
           npe01__Preferred_Email__c: "Alternate",
-          OtherPhone: account.phone_number,
           MailingCity: account.city,
           MailingState: account.state_province,
           MailingCountry: account.country

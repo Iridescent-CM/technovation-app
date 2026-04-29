@@ -99,7 +99,6 @@ module Salesforce
           LastName: account.last_name,
           npe01__AlternateEmail__c: account.email,
           npe01__Preferred_Email__c: "Alternate",
-          OtherPhone: account.phone_number,
           MailingCity: account.city,
           MailingState: account.state_province,
           MailingCountry: account.country, **additional_contact_info
