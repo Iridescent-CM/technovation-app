@@ -35,7 +35,7 @@ brew install asdf
 asdf plugin-add ruby
 asdf plugin-add nodejs
 
-asdf install ruby 2.6.4
+asdf install ruby 3.1.2
 asdf install nodejs <latest-version>
 ```
 
