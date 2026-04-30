@@ -13,7 +13,7 @@ Production: [![CircleCI](https://circleci.com/gh/Iridescent-CM/technovation-app/
 We use BrowserStack to [test for cross-browser compatibility](https://www.browserstack.com/) so that we can support a worldwide community of volunteers!
 
 ## Rails Docs:
-[http://api.rubyonrails.org/v5.1.6](api.rubyonrails.org/v5.1.6)
+[Rails 7 documentation](https://guides.rubyonrails.org/v7.0/)
 
 ## Installation and Setup
 
@@ -27,7 +27,7 @@ Install homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-Install asdf, ruby 2.6.4, nodejs <latest-version>
+Install asdf, ruby 3.1.2, nodejs <latest-version>
 
 ```
 brew install asdf
@@ -75,17 +75,12 @@ Install wkhtmltopdf
 git clone git@github.com:Iridescent-CM/technovation-app.git
 ```
 
-Move the `.env` file that your team should have given you Dropbox access to
+For the most up-to-date ENV settings, copy them from the Heroku QA envirnoment.
 
-```
-cd technovation-app
-mv <PATH-TO-.ENV-FILE> .
-```
-
-Switch to ruby 2.6.4 (this creates the `.tool-versions` file and you won't have to do it again)
+Switch to ruby 3.1.2 (this creates the `.tool-versions` file and you won't have to do it again)
 Switch to nodejs <latest-version>
 ```
-asdf local ruby 2.6.4
+asdf local ruby 3.1.2
 asdf local nodejs <latest-version>
 ```
 
