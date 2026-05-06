@@ -165,16 +165,14 @@ jobs:
           name: Install Node.js
           command: |
             set -euo pipefail
-            NODE_VERSION=26.1.0
+            NODE_VERSION=20.18.3
             ARCH=linux-x64
             curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-${ARCH}.tar.xz" -o /tmp/node.tar.xz
             sudo mkdir -p /opt/node
             sudo tar -xJf /tmp/node.tar.xz -C /opt/node --strip-components=1
             rm /tmp/node.tar.xz
             echo 'export PATH=/opt/node/bin:$PATH' >> "$BASH_ENV"
-            echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> "$BASH_ENV"
             export PATH="/opt/node/bin:$PATH"
-            export NODE_OPTIONS=--openssl-legacy-provider
             node --version
             sudo env "PATH=$PATH" npm install -g yarn@1.22.22
 

@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "26.1.0"
+    "node": "20.18.3"
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.3",

@@ -40,8 +40,8 @@ RUN apt-get update -qq && apt-get upgrade -y \
   && rm /tmp/wkhtmltox.deb \
   && rm -rf /var/lib/apt/lists/*
 
-# Node 26 + yarn (see package.json engines)
-RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash - \
+# Node 20 LTS + yarn (see package.json engines)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
   && apt-get update -qq \
   && apt-get install -y --no-install-recommends nodejs \
   && npm install -g yarn \
