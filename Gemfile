@@ -1,7 +1,7 @@
 source "https://rubygems.org"
-ruby "3.1.2"
+ruby "3.4.9"
 
-gem "rails", "7.2.2"
+gem "rails", "7.2.3.1"
 
 gem "puma", "~> 5.6.9"
 gem "pg", "~> 1.2"
@@ -80,9 +80,10 @@ gem "checkr-official", "~> 1.5", require: "checkr"
 
 gem "countries", "~> 1.2", require: "countries/global"
 
+#TODO: Set back to keep-list-updated once tested
 gem "city-state",
   git: "https://github.com/Iridescent-CM/city-state.git",
-  branch: "keep-list-updated"
+  branch: "changes-for-ruby-3.2"
 
 gem "carmen", "~> 1.1"
 
@@ -114,6 +115,7 @@ gem "factory_bot_rails", "~> 6.5.0"
 
 gem "twilio-ruby", "~> 7.8.7"
 gem "phonelib"
+gem "csv"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -134,6 +136,7 @@ group :development do
 end
 
 group :test do
+  gem "simplecov", require: false
   gem "timecop", "~> 0.9"
   gem "vcr", "~> 6.1"
   gem "webmock", "~> 3.17"
