@@ -918,6 +918,7 @@ class TeamSubmission < ActiveRecord::Base
     [
       :app_name,
       :published_at,
+      :contest_rank,
       :pitch_video_link
     ].any? { |attr| saved_change_to_attribute?(attr) }
   end

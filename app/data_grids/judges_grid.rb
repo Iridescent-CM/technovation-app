@@ -16,6 +16,7 @@ class JudgesGrid
       .includes(judge_profile: :events)
       .includes(:mentor_profile)
       .references(:judge_profiles, :regional_pitch_events)
+      .distinct
       .where("judge_profiles.id IS NOT NULL")
   end
 

@@ -4,6 +4,17 @@
   <p class="hint">
     Students must do these things to be eligible to compete
   </p>
+  
+  <dl>
+    <dt>Onboarded</dt>
+    <dd>
+      <% if profile.onboarded? %>
+        <%= web_icon("check-circle icon-green", text: "Yes") %>
+      <% else %>
+        <%= web_icon("exclamation-circle icon-red", text: "No") %>
+      <% end %>
+    </dd>
+  </dl>
 
   <dl>
     <dt>Data Terms</dt>
