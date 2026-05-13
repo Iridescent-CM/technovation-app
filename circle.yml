@@ -5,9 +5,10 @@ orbs:
 
 jobs:
   build:
+    resource_class: large
     working_directory: ~/technovation-girls
     docker:
-      - image: cimg/ruby:3.1.2-browsers
+      - image: cimg/ruby:3.4.9-browsers
         auth:
           username: technovationdocker
           password: $DOCKERHUB_PASSWORD
@@ -153,11 +154,29 @@ jobs:
           password: $DOCKERHUB_PASSWORD
         environment:
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-    parallelism: 4
+        command: postgres -c shared_buffers=64MB -c work_mem=4MB -c maintenance_work_mem=64MB -c max_connections=100
+    parallelism: 3
 
     steps:
       - checkout
       - browser-tools/install_browser_tools
+
+      - run:
+          name: Install Node.js
+          command: |
+            set -euo pipefail
+            NODE_VERSION=26.1.0
+            ARCH=linux-x64
+            curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-${ARCH}.tar.xz" -o /tmp/node.tar.xz
+            sudo mkdir -p /opt/node
+            sudo tar -xJf /tmp/node.tar.xz -C /opt/node --strip-components=1
+            rm /tmp/node.tar.xz
+            echo 'export PATH=/opt/node/bin:$PATH' >> "$BASH_ENV"
+            echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> "$BASH_ENV"
+            export PATH="/opt/node/bin:$PATH"
+            export NODE_OPTIONS=--openssl-legacy-provider
+            node --version
+            sudo env "PATH=$PATH" npm install -g yarn@1.22.22
 
       - run:
           name: Install libc6
@@ -172,16 +191,16 @@ jobs:
       - restore_cache:
           name: Restore cached node packages
           keys:
-            - v2-node-packages-cache-{{ checksum "yarn.lock" }}
-            - v2-node-packages-cache-
+            - v3-node-packages-cache-{{ checksum "yarn.lock" }}
+            - v3-node-packages-cache-
 
       - run:
           name: Install PostgreSQL
           command: |
             wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-            echo "deb http://apt-archive.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
-            sudo apt update
-            sudo apt install postgresql-client-13
+            echo "deb https://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+            sudo apt-get update -qq
+            sudo apt-get install -y postgresql-client-13
 
       - run:
           name: Install pdftk
@@ -198,7 +217,7 @@ jobs:
 
       - run:
           name: Install gems
-          command: gem install bundler:2.2.23 && bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
+          command: gem install bundler:2.3.19 && bundle check --path=vendor/bundle || bundle install --without development --path=vendor/bundle --jobs 4 --retry 3
 
       - save_cache:
           name: Cache gems
@@ -212,7 +231,7 @@ jobs:
 
       - save_cache:
           name: Cache node packages
-          key: v2-node-packages-cache-{{ checksum "yarn.lock" }}
+          key: v3-node-packages-cache-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
@@ -222,6 +241,10 @@ jobs:
             bundle exec rails db:create
             bundle exec rails db:schema:load
             bundle exec rails db:migrate
+
+      - run:
+          name: Compile Webpacker packs (test)
+          command: bundle exec rails webpacker:compile
 
       - run:
           name: Run RSpec tests
@@ -243,21 +266,23 @@ jobs:
           fingerprints:
             - "32:c4:d8:7f:60:e0:56:7d:e9:ee:f5:04:e1:9c:2d:4e"
 
-      - deploy:
+      - run:
           name: Deploy Preview to Heroku
           command: |
-            if [ "${CIRCLE_BRANCH}" == "preview" ]; then
-              git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-preview.git preview:master
+            if [ "${CIRCLE_BRANCH}" = "preview" ]; then
+              git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/technovation-preview.git "${CIRCLE_BRANCH}:master"
             fi
+          when: on_success
 
-      - deploy:
+      - run:
           name: Deploy QA to Heroku
           command: |
-            if [ "${CIRCLE_BRANCH}" == "qa" ]; then
-              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation-qa.git qa:master
+            if [ "${CIRCLE_BRANCH}" = "qa" ]; then
+              git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/technovation-qa.git "${CIRCLE_BRANCH}:master"
             fi
+          when: on_success
 
-      - deploy:
+      - run:
           name: Deploy Production to Heroku
           command: |
             if [ "${CIRCLE_BRANCH}" == "production" ]; then
