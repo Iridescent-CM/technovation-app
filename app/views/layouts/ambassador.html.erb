@@ -17,7 +17,7 @@
 
     <%= stylesheet_link_tag 'chapter_ambassador', media: 'all' %>
 
-    <%= stylesheet_packs_with_chunks_tag("application", "chapter_ambassador", data: { turbo_track: :reload }) %>
+    <%= stylesheet_pack_tag("application", "chapter_ambassador", data: { turbo_track: :reload }) %>
 
     <%= yield :css %>
 
@@ -28,7 +28,7 @@
 
     <%= javascript_include_tag 'chapter_ambassador', 'data-turbo-track' => true %>
 
-    <%= javascript_packs_with_chunks_tag("application", "chapter_ambassador", data: { turbo_track: :reload }) %>
+    <%= javascript_pack_tag("application", "chapter_ambassador", data: { turbo_track: :reload }) %>
 
     <%= yield :js %>
   </head>

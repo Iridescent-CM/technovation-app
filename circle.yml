@@ -165,7 +165,7 @@ jobs:
           name: Install Node.js
           command: |
             set -euo pipefail
-            NODE_VERSION=20.18.3
+            NODE_VERSION=26.1.0
             ARCH=linux-x64
             curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-${ARCH}.tar.xz" -o /tmp/node.tar.xz
             sudo mkdir -p /opt/node
@@ -241,8 +241,8 @@ jobs:
             bundle exec rails db:migrate
 
       - run:
-          name: Compile Webpacker packs (test)
-          command: bundle exec rails webpacker:compile
+          name: Compile Shakapacker packs (test)
+          command: bundle exec rails shakapacker:compile
 
       - run:
           name: Run RSpec tests
