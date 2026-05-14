@@ -107,7 +107,7 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 To compile and hot reload assets, run the following in a new terminal window
 
 ```
-./bin/webpack-dev-server
+./bin/shakapacker-dev-server
 ```
 
 ## Docker
@@ -170,7 +170,7 @@ Open [http://localhost:3000](http://localhost:3000). Postgres is also published 
 For Webpack dev server with hot reload, run it inside the `web` container and publish port **3035** (add `3035:3035` under `web.ports` in `docker-compose.yml` if it is not already there), then:
 
 ```
-docker compose exec web ./bin/webpack-dev-server -b 0.0.0.0
+docker compose exec web ./bin/shakapacker-dev-server -b 0.0.0.0
 ```
 
 ### Builds and secrets (`.dockerignore`)

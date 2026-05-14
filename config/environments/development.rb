@@ -96,8 +96,6 @@ Rails.application.configure do
 
   config.middleware.use(SpoofIp, ENV.fetch("DEV_SPOOF_IP") { "127.0.0.1" })
 
-  config.webpacker.check_yarn_integrity = true
-
   # Enable Bullet gem to get alerts about N+1 queries
   config.after_initialize do
     Bullet.enable = true

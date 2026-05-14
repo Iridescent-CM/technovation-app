@@ -10,7 +10,7 @@ WORKDIR /app
 # System dependencies:
 # - build tools for native gems
 # - postgresql client libs for pg gem
-# - node/yarn for webpacker
+# - node/yarn for Shakapacker
 # - imagemagick, pdftk for PDF/image features
 # - wkhtmltopdf: official bookworm .deb (installs on trixie; supports amd64 + arm64)
 # - libs for node-canvas
@@ -40,12 +40,17 @@ RUN apt-get update -qq && apt-get upgrade -y \
   && rm /tmp/wkhtmltox.deb \
   && rm -rf /var/lib/apt/lists/*
 
-# Node 26 + yarn (see package.json engines)
-RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash - \
-  && apt-get update -qq \
-  && apt-get install -y --no-install-recommends nodejs \
-  && npm install -g yarn \
-  && rm -rf /var/lib/apt/lists/*
+# Node.js — keep NODE_VERSION in sync with package.json engines.node
+ARG NODE_VERSION=26.1.0
+RUN NODE_OS_ARCH="$(if [ "$TARGETARCH" = "arm64" ]; then echo arm64; else echo x64; fi)" \
+  && curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${NODE_OS_ARCH}.tar.xz" -o /tmp/node.tar.xz \
+  && mkdir -p /opt/node \
+  && tar -xJf /tmp/node.tar.xz -C /opt/node --strip-components=1 \
+  && rm /tmp/node.tar.xz \
+  && ln -sf /opt/node/bin/node /usr/local/bin/node \
+  && ln -sf /opt/node/bin/npm /usr/local/bin/npm \
+  && ln -sf /opt/node/bin/npx /usr/local/bin/npx \
+  && npm install -g yarn@1.22.22
 
 # Ruby dependencies (BUNDLED WITH in Gemfile.lock)
 COPY Gemfile Gemfile.lock ./

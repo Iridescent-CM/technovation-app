@@ -32,9 +32,8 @@
     <%= javascript_include_tag determine_manifest,
       'data-turbo-track' => true %>
 
-    <%= javascript_packs_with_chunks_tag "application", "submissions" %>
-    <%= javascript_packs_with_chunks_tag "application_rebrand" %>
-    <%= stylesheet_pack_tag 'application_rebrand', 'data-turbo-track': 'reload' %>
+    <%= javascript_pack_tag "application", "submissions", "application_rebrand" %>
+    <%= stylesheet_pack_tag 'application_rebrand', data: { turbo_track: :reload } %>
 
     <%= yield :js %>
   </head>

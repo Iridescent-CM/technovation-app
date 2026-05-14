@@ -243,8 +243,8 @@ jobs:
             bundle exec rails db:migrate
 
       - run:
-          name: Compile Webpacker packs (test)
-          command: bundle exec rails webpacker:compile
+          name: Compile Shakapacker packs (test)
+          command: bundle exec rails shakapacker:compile
 
       - run:
           name: Run RSpec tests
