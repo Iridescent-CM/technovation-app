@@ -113,6 +113,4 @@ Rails.application.configure do
     expires_in: 1.day,
     compress: true
   }
-
-  config.webpacker.check_yarn_integrity = false
 end

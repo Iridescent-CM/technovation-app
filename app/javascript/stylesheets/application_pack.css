@@ -1,0 +1,2 @@
+/* Styles for the `application` webpack entry. Required so stylesheet_pack_tag("application")
+   can resolve CSS in public/packs/manifest.json (Shakapacker reads entrypoints.*.assets.css). */

@@ -11,7 +11,7 @@
 
     <%= stylesheet_link_tag 'admin', media: 'all' %>
 
-    <%= stylesheet_packs_with_chunks_tag("application", "admin", data: { turbo_track: :reload }) %>
+    <%= stylesheet_pack_tag("application", "admin", data: { turbo_track: :reload }) %>
 
     <%= csrf_meta_tags %>
 
@@ -19,7 +19,7 @@
     <%= filestack_js_init_tag %>
 
     <%= javascript_include_tag 'admin', 'data-turbo-track' => true %>
-    <%= javascript_packs_with_chunks_tag("application", "admin", data: { turbo_track: :reload }) %>
+    <%= javascript_pack_tag("application", "admin", data: { turbo_track: :reload }) %>
   </head>
 
   <body>
