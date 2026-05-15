@@ -43,9 +43,9 @@ Vue.use(VueFormulate, {
   rules: {
     studentAge: ({ value }, division) =>
       verifyStudentAge({ birthday: value, division }),
-    mentorAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
-    judgeAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
-    chapterAmbassadorAge: ({ value }) => verifyOlderThanEighteen({ birthday: value }),
+    mentorAge: ({ value }) => !value || verifyOlderThanEighteen({ birthday: value }),
+    judgeAge: ({ value }) => !value || verifyOlderThanEighteen({ birthday: value }),
+    chapterAmbassadorAge: ({ value }) => !value || verifyOlderThanEighteen({ birthday: value }),
   },
   slotComponents: {
     label: "CustomLabel",

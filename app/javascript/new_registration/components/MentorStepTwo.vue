@@ -74,6 +74,12 @@
           type="date"
           label="Birthday"
           placeholder="Birthday"
+          :validation="birthdayValidation"
+          :validation-messages="{
+            after: 'Please enter a valid birthday.',
+            before: 'Please enter a valid birthday.',
+          }"
+          validation-name="Birthday"
           @keyup="checkValidation"
           @blur="checkValidation"
           @change="checkValidation"
@@ -194,6 +200,7 @@
 
 <script>
 import axios from "axios";
+import { DateTime } from "luxon";
 
 import { airbrake } from "utilities/utilities";
 import ContainerHeader from "./ContainerHeader";
@@ -243,6 +250,7 @@ export default {
         validationErrorMessages.some((message) => {
           return (
             message.indexOf("years old to participate") >= 0 ||
+            message.indexOf("Please enter a valid birthday") >= 0 ||
             message.indexOf("Personal summary must be at least") >= 0
           );
         })
@@ -288,6 +296,13 @@ export default {
   created() {
     this.getMentorExpertiseOptions();
     this.getMentorTypeOptions();
+  },
+  computed: {
+    birthdayValidation() {
+      const today = DateTime.now().toFormat("MM/dd/yyyy");
+
+      return `mentor_age|after:01/01/1900|before:${today}`;
+    },
   },
   props: {
     formValues: {

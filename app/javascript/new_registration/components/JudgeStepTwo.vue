@@ -24,6 +24,10 @@
           @keyup="checkValidation" @blur="checkValidation" @input="checkValidation" />
 
         <FormulateInput name="dateOfBirth" id="dateOfBirth" type="date" label="Birthday" placeholder="Birthday"
+          :validation="birthdayValidation" :validation-messages="{
+            after: 'Please enter a valid birthday.',
+            before: 'Please enter a valid birthday.'
+          }" validation-name="Birthday"
           @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
 
         <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
@@ -75,6 +79,7 @@
 
 <script>
 import axios from 'axios';
+import { DateTime } from 'luxon';
 
 import { airbrake } from 'utilities/utilities'
 import ContainerHeader from "./ContainerHeader";
@@ -120,6 +125,12 @@ export default {
             return message.indexOf('Phone number is invalid') >= 0
           })
         ) ||
+        validationErrorMessages.some((message) => {
+          return (
+            message.indexOf('years old to participate') >= 0 ||
+            message.indexOf('Please enter a valid birthday') >= 0
+          )
+        }) ||
         hasjudgeTypeChecked === false) {
         this.hasValidationErrors = true
       } else {
@@ -146,6 +157,13 @@ export default {
   },
   created() {
     this.getJudgeTypeOptions();
+  },
+  computed: {
+    birthdayValidation() {
+      const today = DateTime.now().toFormat('MM/dd/yyyy')
+
+      return `judge_age|after:01/01/1900|before:${today}`
+    }
   },
   props: {
     formValues: {
