@@ -4,7 +4,16 @@ module Admin
 
     helper_method :grid_params
 
-    use_datagrid with: ScoredSubmissionsGrid
+    use_datagrid with: ScoredSubmissionsGrid,
+      html_scope: ->(scope, _user, params) {
+        AdminScoresSubmissionScope.call(
+          scope,
+          round: AdminScoresSubmissionScope.resolve_round(params)
+        ).page(params[:page])
+      },
+      csv_scope: "->(scope, _user, params) { " \
+        "AdminScoresSubmissionScope.call(scope, round: AdminScoresSubmissionScope.resolve_round(params)) " \
+        "}"
 
     before_action -> {
       unless request.xhr?
