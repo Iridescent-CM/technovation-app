@@ -109,7 +109,7 @@ class StudentProfile < ActiveRecord::Base
 
   after_touch { team.touch }
 
-  attr_accessor :destroyed
+  attr_accessor :destroyed, :public_registration
   after_destroy -> { self.destroyed = true }
 
   after_commit -> {
@@ -124,6 +124,7 @@ class StudentProfile < ActiveRecord::Base
   validates :school_name, presence: true
 
   validate :parent_guardian_email, -> { validate_valid_parent_email }
+  validate :validate_student_age_for_registration, if: :public_registration?
 
   delegate :electronic_signature,
     :signed_at,
@@ -386,6 +387,32 @@ class StudentProfile < ActiveRecord::Base
   end
 
   private
+
+  def public_registration?
+    public_registration == true
+  end
+
+  def validate_student_age_for_registration
+    return if account.blank? || account.date_of_birth.blank?
+
+    age = account.age_by_cutoff
+    valid_range = if account.parent_registered?
+      8..12
+    else
+      13..18
+    end
+
+    return if valid_range.cover?(age)
+
+    message = if account.parent_registered?
+      "must be between 8 and 12 years old by the cutoff date"
+    else
+      "must be between 13 and 18 years old by the cutoff date"
+    end
+
+    account.errors.add(:date_of_birth, message)
+    errors.add(:account, :invalid)
+  end
 
   def validate_valid_parent_email
     return if parent_guardian_email.blank? ||
