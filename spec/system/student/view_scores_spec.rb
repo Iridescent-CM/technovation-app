@@ -37,6 +37,16 @@ RSpec.describe "Students view scores", :js do
     expect(page).to have_selector("#student-finished-scores-table")
 
     expect(page).to have_content("Scores Explained")
+
+    click_link("View details")
+
+    expect(page).to have_content("Score Details")
+    expect(page).to have_link("Back to scores", href: student_scores_path)
+
+    click_link("Back to scores")
+
+    expect(page).to have_current_path(student_scores_path)
+    expect(page).to have_selector("#student-finished-scores-table")
   end
 
   it "view SF scores if program survey is completed" do

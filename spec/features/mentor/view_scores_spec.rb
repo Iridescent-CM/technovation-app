@@ -21,6 +21,16 @@ RSpec.feature "Mentors view scores" do
     click_link("View Scores & Certificates")
 
     expect(page).to have_content("View details")
+
+    click_link("View details")
+
+    expect(page).to have_content("Score Details")
+    expect(page).to have_link("Back to scores", href: mentor_scores_path)
+
+    click_link("Back to scores")
+
+    expect(page).to have_current_path(mentor_scores_path)
+    expect(page).to have_content("View details")
   end
 
   scenario "view SF scores" do
