@@ -345,8 +345,10 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.4)
-    nokogiri (1.18.9)
+    nokogiri (1.18.10)
       mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.18.10-arm64-darwin)
       racc (~> 1.4)
     normalize-rails (4.1.1)
     noticed (2.9.3)
@@ -370,6 +372,7 @@ GEM
       ruby-rc4
       ttfunk
     pdfkit (0.8.7.3)
+    pg (1.6.2-arm64-darwin)
     pg (1.6.2-x86_64-darwin)
     pg (1.6.2-x86_64-linux)
     phonelib (0.10.16)
@@ -640,6 +643,8 @@ GEM
       zip_kit (~> 6, >= 6.2.0, < 7)
 
 PLATFORMS
+  arm64-darwin
+  arm64-darwin-25
   x86_64-darwin-20
   x86_64-darwin-21
   x86_64-linux
