@@ -137,6 +137,9 @@ class JudgeProfile < ActiveRecord::Base
   validates :company_name, :job_title,
     presence: true
 
+  validate :require_judge_types_for_registration,
+    if: -> { account&.public_registration? }
+
   validate :technical_details, if: -> { technical_experience_opt_in == true }
 
   delegate :first_name,
@@ -282,6 +285,12 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   private
+
+  def require_judge_types_for_registration
+    return if judge_type_ids.compact.present?
+
+    errors.add(:judge_types, :blank)
+  end
 
   def update_judge_info_in_crm(_event)
     CRM::UpsertProgramInfoJob.perform_later(

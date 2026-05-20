@@ -2,8 +2,13 @@ require "rails_helper"
 
 describe ValidationErrorMessagesConverter do
   let(:validation_error_messages_converter) {
-    ValidationErrorMessagesConverter.new(errors: errors, error_key_conversions: error_key_conversions)
+    ValidationErrorMessagesConverter.new(
+      errors: errors,
+      record: record,
+      error_key_conversions: error_key_conversions
+    )
   }
+  let(:record) { nil }
   let(:errors) { [] }
   let(:error_key_conversions) { {} }
 
@@ -82,6 +87,28 @@ describe ValidationErrorMessagesConverter do
 
       it "removes it from the error messages" do
         expect(validation_error_messages_converter.full_errors).not_to include("Mentor profile expertises is invalid")
+      end
+    end
+
+    context "when the associated account has detailed errors" do
+      let(:account) { Account.new }
+      let(:profile) { StudentProfile.new(account: account) }
+      let(:record) { profile }
+      let(:errors) { profile.errors }
+
+      before do
+        account.errors.add(:date_of_birth, "must be between 13 and 18 years old by the cutoff date")
+        profile.errors.add(:account, :invalid)
+      end
+
+      it "includes nested account error messages" do
+        expect(validation_error_messages_converter.full_errors.join).to include(
+          "13 and 18 years old"
+        )
+      end
+
+      it "removes the generic account invalid message" do
+        expect(validation_error_messages_converter.full_errors).not_to include("Account is invalid")
       end
     end
   end

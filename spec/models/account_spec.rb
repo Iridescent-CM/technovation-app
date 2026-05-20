@@ -196,9 +196,11 @@ RSpec.describe Account do
             email: "ccara55@example.com",
             password: "abc1239876",
             gender: "Non-binary",
+            terms_agreed_at: Time.current,
             judge_profile: JudgeProfile.new(
               job_title: "VIP",
-              company_name: "VIC"
+              company_name: "VIC",
+              judge_types: [FactoryBot.create(:judge_type)]
             ),
             meets_minimum_age_requirement: meets_minimum_age_requirement
           )
