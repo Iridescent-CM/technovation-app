@@ -53,6 +53,8 @@ module Salesforce
     end
 
     def upsert_contact_info
+      return unless account.current_season?
+
       upsert_contact
     end
 
