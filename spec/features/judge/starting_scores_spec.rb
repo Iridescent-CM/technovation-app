@@ -149,7 +149,7 @@ RSpec.feature "starting scores", js: true do
   end
 
   def they_will_see_welcome_text_on_their_dashboard
-    expect(page).to have_content("Welcome to the online judging portal for the first round of Technovation Judging!")
+    expect(page).to have_content("Welcome to the second round of online judging, also known as Semifinals!")
   end
 
   def they_will_see_helper_text_on_their_dashboard
