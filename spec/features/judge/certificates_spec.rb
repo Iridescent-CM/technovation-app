@@ -34,7 +34,7 @@ RSpec.feature "Judge certificates" do
     sign_in(judge)
 
     click_link("dashboard-tab")
-    expect(page).to have_content("Welcome to the online judging portal for the first round of Technovation Judging!")
+    expect(page).to have_content("Welcome to the second round of online judging, also known as Semifinals!")
 
     click_link "Your judge certificate"
     expect(page).to have_content("Certificates are currently unavailable.")
