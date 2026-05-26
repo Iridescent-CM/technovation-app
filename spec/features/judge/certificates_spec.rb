@@ -66,7 +66,10 @@ RSpec.feature "Judge certificates" do
     sign_in(judge)
 
     click_link("dashboard-tab")
-    expect(page).to have_content("Thank you for your help scoring and giving valuable feedback to Technovation teams.")
+    expect(page).to have_content("Thank you for your help in scoring and giving valuable feedback to Technovation teams.")
+    expect(page).to have_content(
+      "Your judging certificate will be available after #{ImportantDates.certificates_available.to_date.to_fs(:short_ordinal)}."
+    )
 
     click_link "Your judge certificate"
     expect(page).to have_content("Certificates are currently unavailable.")
