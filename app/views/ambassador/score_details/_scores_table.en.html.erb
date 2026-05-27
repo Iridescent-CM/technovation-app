@@ -5,8 +5,13 @@
         <tr class="<%= (current_account.admin? && score.deleted?) ? "background-color--subtle-red" : "" %>">
           <td><%= score.total %> / <%= score.total_possible %></td>
           <td>
-            <%= link_to score.judge_name,
-              send("#{current_scope}_participant_path", id: score.judge_profile.account_id) %>
+            <% judge_name = chapter_ambassador_masked_judge_name(score: score, account: current_account) %>
+            <% if chapter_ambassador_can_link_to_judge?(score: score, account: current_account) %>
+              <%= link_to judge_name,
+                send("#{current_scope}_participant_path", id: score.judge_profile.account_id) %>
+            <% else %>
+              <%= judge_name %>
+            <% end %>
           </td>
           <td class="official-info"><%= score.official? ? "official" : "unofficial" %></td>
 

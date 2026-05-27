@@ -116,6 +116,99 @@ RSpec.feature "Chapter Ambassador views scores" do
 
       expect(page).to have_content("Semifinals average")
     end
+
+    scenario "score drilldown masks judge name and hides judge profile link when judge is not on chapter RPE" do
+      submission = FactoryBot.create(:submission, :complete)
+      judge = FactoryBot.create(:judge_profile, first_name: "Alice")
+      judge.account.update!(last_name: "Baker")
+
+      submission.team.students.each do |student|
+        student.chapterable_assignments.destroy_all
+
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
+
+      FactoryBot.create(
+        :submission_score,
+        :complete,
+        team_submission: submission,
+        judge_profile: judge
+      )
+
+      click_link "Scores"
+      within_results_page_with("#team_submission_#{submission.id}") do
+        find("a.view-details").click
+      end
+
+      within "#complete-quarterfinal-scores" do
+        expect(page).to have_content("Alice B.")
+        expect(page).not_to have_content("Alice Baker")
+        expect(page).not_to have_link("Alice B.", href: chapter_ambassador_participant_path(judge.account_id))
+
+        click_link "View score"
+      end
+
+      within ".admin-score-header" do
+        expect(page).to have_content("Alice B.")
+        expect(page).not_to have_content("Alice Baker")
+        expect(page).not_to have_link("Alice B.", href: chapter_ambassador_participant_path(judge.account_id))
+        expect(page).not_to have_content("Score comes from")
+      end
+    end
+
+    scenario "score drilldown allows judge profile link when judge attends chapter RPE" do
+      submission = FactoryBot.create(:submission, :complete)
+      judge = FactoryBot.create(:judge_profile, first_name: "Lina")
+      judge.account.update!(last_name: "Carver")
+      regional_pitch_event = FactoryBot.create(
+        :regional_pitch_event,
+        ambassador: chapter_ambassador.chapter_ambassador_profile
+      )
+
+      submission.team.students.each do |student|
+        student.chapterable_assignments.destroy_all
+
+        student.chapterable_assignments.create(
+          chapterable: chapter_ambassador.chapterable,
+          account: student.account,
+          season: Season.current.year,
+          primary: true
+        )
+      end
+
+      regional_pitch_event.teams << submission.team
+      regional_pitch_event.judges << judge
+
+      FactoryBot.create(
+        :submission_score,
+        :complete,
+        :live,
+        team_submission: submission,
+        judge_profile: judge
+      )
+
+      click_link "Scores"
+      within_results_page_with("#team_submission_#{submission.id}") do
+        find("a.view-details").click
+      end
+
+      within "#complete-quarterfinal-scores" do
+        expect(page).to have_link("Lina C.", href: chapter_ambassador_participant_path(judge.account_id))
+        expect(page).not_to have_content("Lina Carver")
+
+        click_link "View score"
+      end
+
+      within ".admin-score-header" do
+        expect(page).to have_link("Lina C.", href: chapter_ambassador_participant_path(judge.account_id))
+        expect(page).not_to have_content("Score comes from")
+      end
+    end
   end
 
   context "before scores set to display" do
