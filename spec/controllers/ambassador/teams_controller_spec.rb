@@ -60,6 +60,38 @@ RSpec.describe Ambassador::TeamsController do
         end
       end
 
+      context "when viewing teams with `search_in_region` set to a truthy value" do
+        let(:search_in_region) { 1 }
+
+        context "when viewing a team in the same region" do
+          let(:brazil_team) { FactoryBot.create(:team, :brazil) }
+
+          before do
+            get :show, params: {
+              id: brazil_team.id,
+              search_in_region: search_in_region
+            }
+          end
+
+          it "returns an OK 200 success status code" do
+            expect(response.status).to eq(200)
+          end
+        end
+
+        context "when viewing a team in a different region" do
+          let(:chicago_team) { FactoryBot.create(:team, :chicago) }
+
+          it "raises an 'ActiveRecord::RecordNotFound' error" do
+            expect {
+              get :show, params: {
+                id: chicago_team.id,
+                search_in_region: search_in_region
+              }
+            }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+      end
+
       context "when a chapter ambassador does not have the 'national view' ability" do
         let(:national_view) { false }
 

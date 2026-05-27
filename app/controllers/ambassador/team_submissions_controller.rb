@@ -3,7 +3,7 @@ module Ambassador
     layout "ambassador"
 
     def show
-      @team_submission = if current_ambassador.national_view?
+      @team_submission = if current_ambassador.national_view? || params[:search_in_region].present?
         TeamSubmission.in_region(current_ambassador.chapter)
           .friendly.find(params[:id])
       else
