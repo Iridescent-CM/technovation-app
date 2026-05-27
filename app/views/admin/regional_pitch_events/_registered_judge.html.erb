@@ -4,7 +4,11 @@
       <%= judge.name.presence || "Invited Judge" %>
     <% else %>
       <%= link_to judge.name,
-      send("#{current_scope}_participant_path", judge.account.id),
+      send(
+        "#{current_scope}_participant_path",
+        judge.account.id,
+        **(current_account.chapter_ambassador? ? {search_in_region: 1} : {})
+      ),
       data: { turbo: false } %>
     <% end %>
   </td>
