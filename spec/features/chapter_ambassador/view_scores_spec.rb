@@ -119,7 +119,7 @@ RSpec.feature "Chapter Ambassador views scores" do
 
     scenario "score drilldown masks judge name and hides judge profile link when judge is not on chapter RPE" do
       submission = FactoryBot.create(:submission, :complete)
-      judge = FactoryBot.create(:judge_profile, first_name: "Alice")
+      judge = FactoryBot.create(:judge_profile, :brazil, first_name: "Alice")
       judge.account.update!(last_name: "Baker")
 
       submission.team.students.each do |student|
@@ -158,12 +158,17 @@ RSpec.feature "Chapter Ambassador views scores" do
         expect(page).not_to have_content("Alice Baker")
         expect(page).not_to have_link("Alice B.", href: chapter_ambassador_participant_path(judge.account_id))
         expect(page).not_to have_content("Score comes from")
+
+        expect(page).to have_content("Country")
+        expect(page).to have_content("Brazil")
+        expect(page).not_to have_content("Salvador")
+        expect(page).not_to have_content("Bahia")
       end
     end
 
     scenario "score drilldown allows judge profile link when judge attends chapter RPE" do
       submission = FactoryBot.create(:submission, :complete)
-      judge = FactoryBot.create(:judge_profile, first_name: "Lina")
+      judge = FactoryBot.create(:judge_profile, :brazil, first_name: "Lina")
       judge.account.update!(last_name: "Carver")
       regional_pitch_event = FactoryBot.create(
         :regional_pitch_event,
@@ -207,6 +212,11 @@ RSpec.feature "Chapter Ambassador views scores" do
       within ".admin-score-header" do
         expect(page).to have_link("Lina C.", href: chapter_ambassador_participant_path(judge.account_id))
         expect(page).not_to have_content("Score comes from")
+
+        expect(page).to have_content("Country")
+        expect(page).to have_content("Brazil")
+        expect(page).not_to have_content("Salvador")
+        expect(page).not_to have_content("Bahia")
       end
     end
   end
