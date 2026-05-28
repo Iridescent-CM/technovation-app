@@ -205,7 +205,7 @@ export default {
   mounted() {
     if (this.isCompletingTooFast()) {
       this.displayCompletingTooFastAlert();
-    } else if (this.totalScore === this.totalPossibleScore) {
+    } else if (!this.isScoreIncomplete && this.totalScore === this.totalPossibleScore) {
       this.displayPerfectScoreAlert();
     }
   },
