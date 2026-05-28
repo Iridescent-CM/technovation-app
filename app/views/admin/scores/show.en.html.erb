@@ -75,7 +75,14 @@
         <span>Score comes from</span>
         <%= @score.judge_profile.address_details %>
       </h5>
+    <% elsif is_chapter_ambassador %>
+      <h5>
+        <span>Country</span>
+        <%= @score.judge_profile.country %>
+      </h5>
+    <% end %>
 
+    <% if is_admin %>
       <h5>
         <span>Clicked Pitch Video</span>
         <%= @score.clicked_pitch_video? ? "Yes" : "No" %>
