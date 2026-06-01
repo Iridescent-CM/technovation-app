@@ -30,6 +30,7 @@
   </dl>
 
   <% scores = current_account.admin? ? @submission.scores_including_deleted : @submission.scores %>
+  <% hide_incomplete_scores = current_account.chapter_ambassador_profile.present? %>
 
   <% if current_account.is_admin? or SeasonToggles.display_scores? %>
 
@@ -39,11 +40,13 @@
         scores: scores.semifinals.complete %>
     </div>
 
-    <h5>Incomplete Semifinals scores</h5>
-    <div id="incomplete-semifinal-scores">
-      <%= render "ambassador/score_details/scores_table",
-        scores: scores.semifinals.incomplete %>
-    </div>
+    <% unless hide_incomplete_scores %>
+      <h5>Incomplete Semifinals scores</h5>
+      <div id="incomplete-semifinal-scores">
+        <%= render "ambassador/score_details/scores_table",
+          scores: scores.semifinals.incomplete %>
+      </div>
+    <% end %>
 
   <% end %>
 
@@ -53,11 +56,13 @@
       scores: scores.quarterfinals.complete %>
   </div>
 
-  <h5>Incomplete Quarterfinal scores</h5>
-  <div id="incomplete-quarterfinal-scores">
-    <%= render "ambassador/score_details/scores_table",
-      scores: scores.judge_not_deleted.quarterfinals.incomplete %>
-  </div>
+  <% unless hide_incomplete_scores %>
+    <h5>Incomplete Quarterfinal scores</h5>
+    <div id="incomplete-quarterfinal-scores">
+      <%= render "ambassador/score_details/scores_table",
+        scores: scores.judge_not_deleted.quarterfinals.incomplete %>
+    </div>
+  <% end %>
 
   <% if current_account.is_admin? %>
     <h5>Recusals</h5>
