@@ -1,22 +1,26 @@
-<p class="text-xl text-center mb-8">
-  Thank you for completing the survey and participating in the Technovation program.
-  Find your scores and comments from the judges below!
-</p>
+<% if @all_scores.any? %>
+  <p class="text-xl text-center mb-8">
+    Thank you for completing the survey and participating in the Technovation program.
+    Find your scores and comments from the judges below!
+  </p>
+<% end %>
 
-<div class="bg-energetic-blue rounded w-full lg:w-3/4 mx-auto shadow-md mb-16">
-  <div class="p-8 text-center">
-    <% if @quarterfinals_scores.any? %>
-      <%= render "student/scores/average_score",
-                 scores: @quarterfinals_scores,
-                 round: :quarterfinals %>
-    <% end %>
-    <% if @semifinals_scores.any? %>
-      <%= render "student/scores/average_score",
-                 scores: @semifinals_scores,
-                 round: :semifinals %>
-    <% end %>
+<% if @quarterfinals_scores.any? || @semifinals_scores.any? %>
+  <div class="bg-energetic-blue rounded w-full lg:w-3/4 mx-auto shadow-md mb-16">
+    <div class="p-8 text-center">
+      <% if @quarterfinals_scores.any? %>
+        <%= render "student/scores/average_score",
+                   scores: @quarterfinals_scores,
+                   round: :quarterfinals %>
+      <% end %>
+      <% if @semifinals_scores.any? %>
+        <%= render "student/scores/average_score",
+                   scores: @semifinals_scores,
+                   round: :semifinals %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div id="student-finished-scores" class="mb-10">
   <% if @all_scores.any? || @deleted_online_scores&.any? %>
@@ -28,6 +32,8 @@
   <% end %>
 </div>
 
-<div class="mb-10">
-  <%= render "student/scores/score_explanation" %>
-</div>
+<% if @all_scores.any? %>
+  <div class="mb-10">
+    <%= render "student/scores/score_explanation" %>
+  </div>
+<% end %>

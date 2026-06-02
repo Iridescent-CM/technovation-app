@@ -108,6 +108,8 @@ RSpec.describe "Students view scores", :js do
     expect(page).to have_selector("#student-finished-scores-table")
     expect(page).to have_content("Score deleted")
     expect(page).not_to have_link("View details")
+    expect(page).not_to have_content("Average Quarterfinals Score")
+    expect(page).not_to have_content("Find your scores and comments from the judges below")
   end
 
   it "view SF scores page if program survey is not completed" do
