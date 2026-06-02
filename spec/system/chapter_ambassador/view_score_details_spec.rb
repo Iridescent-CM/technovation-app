@@ -114,11 +114,8 @@ RSpec.describe "viewing score details page" do
           end
         end
 
-        it "displays incomplete quarterfinal scores" do
-          within "#incomplete-quarterfinal-scores" do
-            expect(page).to have_content("30 / 90")
-            expect(page).to have_content("View score")
-          end
+        it "hides incomplete quarterfinal scores" do
+          expect(page).not_to have_css("#incomplete-quarterfinal-scores")
         end
 
         it "does not display complete semifinal scores" do
@@ -222,11 +219,8 @@ RSpec.describe "viewing score details page" do
         end
       end
 
-      it "displays incomplete quarterfinal scores" do
-        within "#incomplete-quarterfinal-scores" do
-          expect(page).to have_content("30 / 90")
-          expect(page).to have_content("View score")
-        end
+      it "hides incomplete quarterfinal scores" do
+        expect(page).not_to have_css("#incomplete-quarterfinal-scores")
       end
 
       it "displays complete semifinal scores" do
@@ -236,11 +230,8 @@ RSpec.describe "viewing score details page" do
         end
       end
 
-      it "displays incomplete semifinal scores" do
-        within "#incomplete-semifinal-scores" do
-          expect(page).to have_content("30 / 90")
-          expect(page).to have_content("View score")
-        end
+      it "hides incomplete semifinal scores" do
+        expect(page).not_to have_css("#incomplete-semifinal-scores")
       end
     end
 

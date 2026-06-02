@@ -94,6 +94,17 @@ feature "chapter ambassadors switch to judge mode from chapter ambassador dashbo
 
       expect(page).not_to have_link("Judge Mode")
     end
+
+    scenario "chapter ambassadors with a judge profile cannot reach the judge dashboard by URL" do
+      chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved, :has_judge_profile)
+
+      sign_in(chapter_ambassador)
+
+      visit judge_dashboard_path
+
+      expect(current_path).to eq(chapter_ambassador_dashboard_path)
+      expect(page).to have_content("You don't have permission to go there!")
+    end
   end
 end
 

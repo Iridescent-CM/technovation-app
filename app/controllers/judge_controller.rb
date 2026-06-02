@@ -4,6 +4,8 @@ class JudgeController < ApplicationController
 
   include Authenticated
 
+  before_action :require_ambassador_can_switch_to_judge
+
   layout "judge"
   helper_method :current_judge,
     :current_profile,
@@ -75,5 +77,16 @@ class JudgeController < ApplicationController
       redirect_to mentor_dashboard_path,
         error: t("controllers.judge.dashboards.show.mentor_on_team_error")
     end
+  end
+
+  def require_ambassador_can_switch_to_judge
+    return if !current_account.authenticated?
+    return if !current_account.ambassador?
+    return if current_account.can_switch_to_judge?
+
+    redirect_to send(
+      "#{current_account.scope_name.sub(/^\w+_r/, "r")}_dashboard_path"
+    ),
+      error: t("controllers.application.unauthorized")
   end
 end

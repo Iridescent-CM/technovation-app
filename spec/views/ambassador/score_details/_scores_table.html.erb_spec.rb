@@ -2,6 +2,10 @@ require "rails_helper"
 
 RSpec.describe "ambassador/score_details/_scores_table.html.erb", type: :view do
   before do
+    allow(view).to receive(:chapter_ambassador_can_link_to_judge?)
+      .with(score: score_submission, account: current_account)
+      .and_return(can_link_to_judge)
+
     render partial: "ambassador/score_details/scores_table",
       locals: {scores: scores, current_account: current_account, current_scope: current_scope}
   end
@@ -15,7 +19,12 @@ RSpec.describe "ambassador/score_details/_scores_table.html.erb", type: :view do
       team_name: "Dream Team",
       team_submission_app_name: "Dreamy App",
       judge_name: "Judge Dredd",
-      judge_profile: double("judge_profile", account_id: 333),
+      judge_profile: double(
+        "judge_profile",
+        id: 333,
+        account_id: 333,
+        account: double("judge_account", first_name: "Judge", last_name: "Dredd")
+      ),
       total: 75,
       total_possible: 80,
       official?: score_submission_offical,
@@ -29,9 +38,12 @@ RSpec.describe "ambassador/score_details/_scores_table.html.erb", type: :view do
 
   let(:current_account) {
     instance_double(Account,
-      admin?: current_account_admin)
+      admin?: current_account_admin,
+      chapter_ambassador_profile: chapter_ambassador_profile)
   }
   let(:current_account_admin) { false }
+  let(:chapter_ambassador_profile) { double("chapter_ambassador_profile") }
+  let(:can_link_to_judge) { true }
 
   let(:current_scope) { "chapter_ambassador" }
 
@@ -43,8 +55,22 @@ RSpec.describe "ambassador/score_details/_scores_table.html.erb", type: :view do
       expect(rendered).to have_content("75 / 80")
     end
 
-    it "displays a link to the judge who scored the submission" do
-      expect(rendered).to have_link("Judge Dredd")
+    it "displays the masked judge name" do
+      expect(rendered).to have_content("Judge D.")
+      expect(rendered).not_to have_content("Judge Dredd")
+    end
+
+    it "displays a link to the judge when they are chapter-connected" do
+      expect(rendered).to have_link("Judge D.")
+    end
+
+    context "when the judge is not chapter-connected" do
+      let(:can_link_to_judge) { false }
+
+      it "does not display a link to the judge" do
+        expect(rendered).to have_content("Judge D.")
+        expect(rendered).not_to have_link("Judge D.")
+      end
     end
 
     context "when a score is offical" do
@@ -78,7 +104,13 @@ RSpec.describe "ambassador/score_details/_scores_table.html.erb", type: :view do
 
   context "as an admin" do
     let(:current_account_admin) { true }
+    let(:chapter_ambassador_profile) { nil }
     let(:current_scope) { "admin" }
+
+    it "displays the full judge name and link" do
+      expect(rendered).to have_link("Judge Dredd")
+      expect(rendered).not_to have_content("Judge D.")
+    end
 
     context "when a score is marked as deleted" do
       let(:score_submission_deleted) { true }

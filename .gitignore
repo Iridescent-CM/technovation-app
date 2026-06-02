@@ -45,3 +45,5 @@ yarn-debug.log*
 .yarn-integrity
 
 claude/*
+vendor/bundle/*
+vendor/cache/*

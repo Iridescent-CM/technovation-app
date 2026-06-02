@@ -234,6 +234,18 @@ RSpec.describe Salesforce::ApiClient do
         salesforce_api_client.upsert_contact_info
       end
     end
+
+    context "when the account is not in the current season" do
+      let(:student_profile) { FactoryBot.create(:student_profile, :past) }
+      let(:account) { student_profile.account }
+      let(:profile_type) { "student" }
+
+      it "does not call upsert! to update contact info in Salesforce" do
+        expect(salesforce_client).not_to receive(:upsert!)
+
+        salesforce_api_client.upsert_contact_info
+      end
+    end
   end
 
   describe "#upsert_program_info" do

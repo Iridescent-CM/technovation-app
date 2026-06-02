@@ -25,19 +25,26 @@ class NewRegistrationController < ApplicationController
   end
 
   def create
-    case params[:profileType]
-    when "student"
-      @profile = StudentProfile.new(student_params)
-    when "parent"
-      @profile = StudentProfile.new(parent_params)
-    when "mentor"
-      @profile = MentorProfile.new(mentor_params)
-    when "judge"
-      @profile = JudgeProfile.new(judge_params)
-    when "chapter_ambassador"
-      @profile = ChapterAmbassadorProfile.new(chapter_ambassador_params)
-    when "club_ambassador"
-      @profile = ClubAmbassadorProfile.new(club_ambassador_params)
+    gate = RegistrationCreateGate.new(
+      profile_type: params[:profileType],
+      invite_code: params[:inviteCode],
+      team_invite_code: params[:team_invite_code]
+    ).call
+
+    unless gate.valid?
+      return render json: {
+        errors: {},
+        full_error_messages: gate.errors
+      }, status: :unprocessable_entity
+    end
+
+    @profile = build_profile
+
+    unless @profile
+      return render json: {
+        errors: {},
+        full_error_messages: ["Invalid profile type"]
+      }, status: :unprocessable_entity
     end
 
     if @profile.save
@@ -49,7 +56,10 @@ class NewRegistrationController < ApplicationController
         enable_redirect: false
       )
     else
-      errors = ValidationErrorMessagesConverter.new(errors: @profile.errors)
+      errors = ValidationErrorMessagesConverter.new(
+        errors: @profile.errors,
+        record: @profile
+      )
 
       render json: {
         errors: errors.individual_errors,
@@ -59,6 +69,32 @@ class NewRegistrationController < ApplicationController
   end
 
   private
+
+  def build_profile
+    profile = case params[:profileType]
+    when "student"
+      StudentProfile.new(student_params)
+    when "parent"
+      StudentProfile.new(parent_params)
+    when "mentor"
+      MentorProfile.new(mentor_params)
+    when "judge"
+      JudgeProfile.new(judge_params)
+    when "chapter_ambassador"
+      ChapterAmbassadorProfile.new(chapter_ambassador_params)
+    when "club_ambassador"
+      ClubAmbassadorProfile.new(club_ambassador_params)
+    end
+
+    mark_public_registration(profile) if profile
+
+    profile
+  end
+
+  def mark_public_registration(profile)
+    profile.account.public_registration = true
+    profile.public_registration = true if profile.is_a?(StudentProfile)
+  end
 
   def student_params
     {

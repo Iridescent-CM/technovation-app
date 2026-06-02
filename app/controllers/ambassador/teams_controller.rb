@@ -5,7 +5,7 @@ module Ambassador
     layout "ambassador"
 
     def show
-      @team = if current_ambassador.national_view?
+      @team = if current_ambassador.national_view? || params[:search_in_region].present?
         Team.in_region(current_ambassador.chapter)
           .find(params.fetch(:id))
       else

@@ -33,7 +33,8 @@ class Account < ActiveRecord::Base
     :skip_existing_password,
     :confirm_sentence,
     :admin_making_changes,
-    :inviting_new_admin
+    :inviting_new_admin,
+    :public_registration
 
   has_one :student_profile, dependent: :destroy
   has_one :mentor_profile, dependent: :destroy
@@ -602,8 +603,13 @@ class Account < ActiveRecord::Base
     length: {
       minimum: 8,
       on: :create,
-      if: :temporary_password?
+      if: -> { not_admin? && public_registration? }
     }
+
+  validates :terms_agreed_at,
+    presence: true,
+    on: :create,
+    if: -> { not_admin? && public_registration? }
 
   validates :password,
     length: {
@@ -1172,6 +1178,10 @@ class Account < ActiveRecord::Base
 
   def current_profile
     public_send(:"#{scope_name}_profile")
+  end
+
+  def public_registration?
+    public_registration == true
   end
 
   private
