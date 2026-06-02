@@ -19,9 +19,10 @@
 </div>
 
 <div id="student-finished-scores" class="mb-10">
-  <% if @all_scores.any? %>
+  <% if @all_scores.any? || @deleted_online_scores&.any? %>
     <%= render "student/scores/scores",
-               scores: @all_scores %>
+               scores: @all_scores,
+               deleted_scores: @deleted_online_scores %>
   <% else %>
     <p>Sorry, there are no available finished scores!</p>
   <% end %>

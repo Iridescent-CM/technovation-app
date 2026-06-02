@@ -94,6 +94,22 @@ RSpec.describe "Students view scores", :js do
     expect(page).to have_selector(:link_or_button, "Complete Survey")
   end
 
+  it "shows 'Score deleted' row when an online score was removed due to RPE move" do
+    submission = FactoryBot.create(:submission, :complete)
+    score = FactoryBot.create(:submission_score, :complete, team_submission: submission)
+    score.destroy
+
+    student = submission.team.students.sample
+    student.account.took_program_survey!
+
+    sign_in(student)
+    visit student_scores_path
+
+    expect(page).to have_selector("#student-finished-scores-table")
+    expect(page).to have_content("Score deleted")
+    expect(page).not_to have_link("View details")
+  end
+
   it "view SF scores page if program survey is not completed" do
     submission = FactoryBot.create(
       :submission,
