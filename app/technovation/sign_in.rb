@@ -31,7 +31,7 @@ module SignIn
 
     if signin_options[:enable_redirect] == true
       context.redirect_to(
-        (context.remove_cookie(CookieNames::REDIRECTED_FROM) or
+        (safe_html_redirect_path(context.remove_cookie(CookieNames::REDIRECTED_FROM)) or
           context.send(*Array(signin_options[:redirect_to]))),
         success: signin_options[:message]
       )
@@ -39,6 +39,14 @@ module SignIn
   end
 
   private
+
+  def self.safe_html_redirect_path(path)
+    return nil if path.blank?
+    return nil if path.match?(/\.(?:json|xml|csv|pdf|xlsx?)(\?|$)/i)
+
+    path
+  end
+  private_class_method :safe_html_redirect_path
 
   def self.after_signin_path(signin, context)
     last_profile_used = context.remove_cookie(CookieNames::LAST_PROFILE_USED)
