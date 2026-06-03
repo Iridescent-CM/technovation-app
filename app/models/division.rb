@@ -1,7 +1,7 @@
 class Division < ActiveRecord::Base
   SENIOR_DIVISION_AGE = 16
 
-  enum name: {
+  enum :name, {
     beginner: 3,
     junior: 1,
     senior: 0,

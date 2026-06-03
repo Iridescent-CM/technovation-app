@@ -19,7 +19,7 @@
 
     <%= stylesheet_link_tag determine_manifest %>
 
-    <%= stylesheet_packs_with_chunks_tag "application" %>
+    <%= stylesheet_pack_tag "application" %>
 
     <%= yield :css %>
 
@@ -29,7 +29,7 @@
     <%= javascript_include_tag determine_manifest,
       'data-turbo-track' => true %>
 
-    <%= javascript_packs_with_chunks_tag "application" %>
+    <%= javascript_pack_tag "application" %>
 
     <%= yield :js %>
   </head>

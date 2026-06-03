@@ -7,7 +7,7 @@ FactoryBot.define do
 
     after(:build) do |judge_profile|
       if judge_profile.judge_types.empty?
-        judge_profile.judge_types << FactoryBot.create(:judge_type)
+        judge_profile.judge_types << JudgeType.find_by!(name: "Educator")
       end
     end
 

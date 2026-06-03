@@ -200,7 +200,7 @@ RSpec.describe Account do
             judge_profile: JudgeProfile.new(
               job_title: "VIP",
               company_name: "VIC",
-              judge_types: [FactoryBot.create(:judge_type)]
+              judge_types: [JudgeType.find_by!(name: "Educator")]
             ),
             meets_minimum_age_requirement: meets_minimum_age_requirement
           )

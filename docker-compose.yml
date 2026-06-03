@@ -1,0 +1,75 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -lc "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3000"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+    environment:
+      RAILS_ENV: development
+      RACK_ENV: development
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/technovation-app_development
+      REDIS_URL: redis://redis:6379/0
+      WKHTMLTOPDF_PATH: /usr/bin/wkhtmltopdf
+      DB_POOL_SIZE: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -lc "bundle exec sidekiq -v -e development -q default -q mailers"
+    volumes:
+      - .:/app:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+    environment:
+      RAILS_ENV: development
+      RACK_ENV: development
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/technovation-app_development
+      REDIS_URL: redis://redis:6379/0
+      WKHTMLTOPDF_PATH: /usr/bin/wkhtmltopdf
+      SIDEKIQ_DB_POOL_SIZE: 25
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d technovation-app_development"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  bundle:
+  node_modules:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,49 @@
+# Git and editor
+.git
+.gitignore
+.github
+.cursor
+.vscode
+
+# Secrets and local env (never bake into images)
+.env
+.env.*
+
+# Bundler / Ruby (installed in image; compose may use a named volume)
+.bundle
+vendor/bundle
+
+# Node (installed in image; compose uses a named volume for node_modules)
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.yarn-integrity
+
+# Rails runtime and caches
+log
+tmp
+storage
+.byebug_history
+
+# Compiled frontend
+public/packs
+public/packs-test
+public/assets
+
+# Tests and CI artifacts
+coverage
+spec
+test
+
+# Uploads and dumps
+public/uploads
+*.dump
+latest.dump
+output.txt
+
+# OS and misc
+.DS_Store
+*.backup
+.heroku-configs
+churn*

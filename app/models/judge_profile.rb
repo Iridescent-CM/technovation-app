@@ -2,7 +2,7 @@ class JudgeProfile < ActiveRecord::Base
   include Regioned
   regioned_source Account
 
-  enum industry: %i[
+  enum :industry, %i[
     Science
     Technology
     Engineering
@@ -134,11 +134,8 @@ class JudgeProfile < ActiveRecord::Base
     -> { current.complete.quarterfinals },
     class_name: "SubmissionScore"
 
-  validates :company_name, :job_title,
-    presence: true
-
-  validate :require_judge_types_for_registration,
-    if: -> { account&.public_registration? }
+  validates :company_name, :job_title, presence: true
+  validates :judge_types, presence: true, if: -> { account&.public_registration? }
 
   validate :technical_details, if: -> { technical_experience_opt_in == true }
 
@@ -285,12 +282,6 @@ class JudgeProfile < ActiveRecord::Base
   end
 
   private
-
-  def require_judge_types_for_registration
-    return if judge_type_ids.compact.present?
-
-    errors.add(:judge_types, :blank)
-  end
 
   def update_judge_info_in_crm(_event)
     CRM::UpsertProgramInfoJob.perform_later(
