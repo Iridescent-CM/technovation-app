@@ -18,8 +18,8 @@
 
   <p class="text-justify mb-2">
     <span class="font-bold">Semifinals will take place from
-    <%= ImportantDates.semifinals_judging_begins.to_date.to_s(:short_ordinal) %> -
-    <%= ImportantDates.semifinals_judging_ends.to_date.to_s(:short_ordinal) %></span>, the number of scores you finish in both rounds will determine what judge certificate you receive.
+    <%= ImportantDates.semifinals_judging_begins.to_date.to_fs(:short_ordinal) %> -
+    <%= ImportantDates.semifinals_judging_ends.to_date.to_fs(:short_ordinal) %></span>, the number of scores you finish in both rounds will determine what judge certificate you receive.
   </p>
 
   <p class="text-justify mb-2">
@@ -36,7 +36,7 @@
   <p class="text-justify mb-2">
     <span class="font-bold">
       Login after
-      <%= ImportantDates.certificates_available.to_date.to_s(:short_ordinal) %>
+      <%= ImportantDates.certificates_available.to_date.to_fs(:short_ordinal) %>
       to view and download your certificate
     </span>
   </p>
@@ -46,8 +46,4 @@
     <li><span class="font-bold">5-10 submissions:</span> Head Judge</li>
     <li><span class="font-bold">11+ submissions:</span> Judge Advisor</li>
   </ul>
-  
-  <p class="text-justify mt-4">
-    View our <a class="tw-link" href="https://technovationchallenge.org/judge-resources/" target="_blank">Judge Resource page</a> for more information.
-  </p>
 </div>

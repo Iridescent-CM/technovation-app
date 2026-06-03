@@ -5,6 +5,12 @@ FactoryBot.define do
     company_name { "FactoryBot" }
     job_title { "Engineer" }
 
+    after(:build) do |judge_profile|
+      if judge_profile.judge_types.empty?
+        judge_profile.judge_types << FactoryBot.create(:judge_type)
+      end
+    end
+
     transient do
       sequence(:email) { |n| "factory-judge-#{n}@example.com" }
       first_name { "Judge" }

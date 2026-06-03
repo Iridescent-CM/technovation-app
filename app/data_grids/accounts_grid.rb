@@ -524,39 +524,52 @@ class AccountsGrid
 
   filter :name_email,
     header: "Name or Email",
-    filter_group: "more-specific" do |value|
+    filter_group: "more-specific" do |value, scope|
       names = value.strip.downcase.split(" ").map { |n|
         I18n.transliterate(n).gsub("'", "''")
       }
-      fuzzy_search({
-        first_name: names.first,
-        last_name: names.last || names.first,
-        email: names.first
-      }, false) # false enables OR search
+      first_name = names.first
+      last_name = names.last || names.first
+      email = names.first
+
+      scope.where(
+        "(accounts.first_name::text % :first_name) OR " \
+        "(accounts.last_name::text % :last_name) OR " \
+        "(accounts.email::text % :email)",
+        first_name: first_name,
+        last_name: last_name,
+        email: email
+      )
     end
 
   filter :first_name,
     header: "First name (exact spelling)",
-    filter_group: "more-specific" do |value|
-      basic_search({
-        first_name: value
-      })
+    filter_group: "more-specific" do |value, scope|
+      scope.where(
+        "to_tsvector('english', accounts.first_name::text) @@ " \
+        "plainto_tsquery('english', ?::text)",
+        value
+      )
     end
 
   filter :last_name,
     header: "Last name (exact spelling)",
-    filter_group: "more-specific" do |value|
-      basic_search({
-        last_name: value
-      })
+    filter_group: "more-specific" do |value, scope|
+      scope.where(
+        "to_tsvector('english', accounts.last_name::text) @@ " \
+        "plainto_tsquery('english', ?::text)",
+        value
+      )
     end
 
   filter :email,
     header: "Email (exact spelling)",
-    filter_group: "more-specific" do |value|
-      basic_search({
-        email: value
-      })
+    filter_group: "more-specific" do |value, scope|
+      scope.where(
+        "to_tsvector('english', accounts.email::text) @@ " \
+        "plainto_tsquery('english', ?::text)",
+        value
+      )
     end
 
   filter :parent_or_guardian_name,
@@ -564,11 +577,11 @@ class AccountsGrid
     filter_group: "more-specific" do |value, scope|
       scope.includes(:student_profile)
         .references(:student_profiles)
-        .basic_search({
-          student_profiles: {
-            parent_guardian_name: value
-          }
-        })
+        .where(
+          "to_tsvector('english', student_profiles.parent_guardian_name::text) @@ " \
+          "plainto_tsquery('english', ?::text)",
+          value
+        )
     end
 
   filter :parent_or_guardian_email,
@@ -576,11 +589,11 @@ class AccountsGrid
     filter_group: "more-specific" do |value, scope|
       scope.includes(:student_profile)
         .references(:student_profiles)
-        .basic_search({
-          student_profiles: {
-            parent_guardian_email: value
-          }
-        })
+        .where(
+          "to_tsvector('english', student_profiles.parent_guardian_email::text) @@ " \
+          "plainto_tsquery('english', ?::text)",
+          value
+        )
     end
 
   filter :season,

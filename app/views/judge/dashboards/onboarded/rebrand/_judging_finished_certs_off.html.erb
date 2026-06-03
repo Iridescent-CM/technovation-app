@@ -7,13 +7,13 @@
 </h2>
 
 <p class="mb-3">
-  Thank you for your help scoring and giving valuable feedback to
+  Thank you for your help in scoring and giving valuable feedback to
   Technovation teams.
 </p>
 
 <p class="mb-3">
-  Your judging certificate will be available
-  <%= ImportantDates.certificates_available.strftime("%B %e") %>.
+  Your judging certificate will be available after
+  <%= ImportantDates.certificates_available.to_date.to_fs(:short_ordinal) %>.
 </p>
 
 <p>

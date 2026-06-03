@@ -57,6 +57,36 @@ RSpec.describe SigninsController do
       expect(response).to redirect_to(student_dashboard_path)
     end
 
+    context "REDIRECTED_FROM cookie" do
+      it "ignores a stale JSON redirect and routes to the judge dashboard" do
+        judge = FactoryBot.create(:judge)
+        controller.set_cookie(CookieNames::REDIRECTED_FROM, "/judge/scores.json")
+
+        post :create, params: {
+          account: {
+            email: judge.account.email,
+            password: "secret1234"
+          }
+        }
+
+        expect(response).to redirect_to(judge_dashboard_path)
+      end
+
+      it "honours a valid HTML redirect after login" do
+        student = FactoryBot.create(:student)
+        controller.set_cookie(CookieNames::REDIRECTED_FROM, "/student/teams/1")
+
+        post :create, params: {
+          account: {
+            email: student.email,
+            password: "secret1234"
+          }
+        }
+
+        expect(response).to redirect_to("/student/teams/1")
+      end
+    end
+
     it "sends parent emails for past students registering again" do
       student = FactoryBot.create(
         :onboarded_student,

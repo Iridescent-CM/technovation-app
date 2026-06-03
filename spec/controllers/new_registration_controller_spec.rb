@@ -13,6 +13,8 @@ RSpec.describe NewRegistrationController do
       let(:chapter) { FactoryBot.create(:chapter) }
 
       before do
+        SeasonToggles.registration_closed!
+
         post :create, params: {
           profileType: "chapter_ambassador",
           inviteCode: registration_invite.admin_permission_token,
@@ -51,6 +53,8 @@ RSpec.describe NewRegistrationController do
       let(:club) { FactoryBot.create(:club) }
 
       before do
+        SeasonToggles.registration_closed!
+
         post :create, params: {
           profileType: "club_ambassador",
           inviteCode: registration_invite.admin_permission_token,

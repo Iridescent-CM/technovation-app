@@ -12,6 +12,7 @@ RSpec.describe "New registration", type: :request do
         gender: "Non-binary",
         email: "personxyz@example.com",
         password: "12345678",
+        dataTermsAgreedTo: true,
         studentParentGuardianName: "Mursmiss Parentente",
         studentParentGuardianEmail: "mrmsparents@example.com",
         studentSchoolName: "Top School 1",
@@ -26,10 +27,15 @@ RSpec.describe "New registration", type: :request do
   let(:date_of_birth) { (Division.cutoff_date - 15.years) }
 
   describe "Account#parent_registered?" do
+    subject(:registered_account) do
+      post new_registration_path, params: params
+
+      Account.find_by!(email: params[:new_registration][:email])
+    end
+
     before do
       allow(SignIn).to receive(:call)
-
-      post new_registration_path, params: params
+      SeasonToggles.registration_open!
     end
 
     context "when a parent is registering (a beginner student)" do
@@ -37,7 +43,7 @@ RSpec.describe "New registration", type: :request do
       let(:date_of_birth) { (Division.cutoff_date - 8.years) }
 
       it "sets the parent_registered? flag to true" do
-        expect(Account.last.parent_registered?).to eq(true)
+        expect(registered_account.parent_registered?).to eq(true)
       end
     end
 
@@ -46,26 +52,35 @@ RSpec.describe "New registration", type: :request do
       let(:date_of_birth) { (Division.cutoff_date - 13.years) }
 
       it "sets the parent_registered? flag to false" do
-        expect(Account.last.parent_registered?).to eq(false)
+        expect(registered_account.parent_registered?).to eq(false)
       end
     end
 
-    context "when a it's a mentor account" do
+    context "when a mentor is registering" do
+      let(:profile_type) { "mentor" }
+      let(:date_of_birth) { nil }
+
       before do
-        FactoryBot.create(:mentor)
+        mentor_type = FactoryBot.create(:mentor_type)
+        params[:new_registration][:mentorTypes] = [mentor_type.id]
       end
 
       it "sets the parent_registered? flag to false" do
-        expect(Account.last.parent_registered?).to eq(false)
+        expect(registered_account.parent_registered?).to eq(false)
       end
     end
 
     context "when a judge is registering" do
       let(:profile_type) { "judge" }
-      let(:date_of_birth) { (Division.cutoff_date - 26.years) }
+      let(:date_of_birth) { nil }
+
+      before do
+        judge_type = FactoryBot.create(:judge_type)
+        params[:new_registration][:judgeTypes] = [judge_type.id]
+      end
 
       it "sets the parent_registered? flag to false" do
-        expect(Account.last.parent_registered?).to eq(false)
+        expect(registered_account.parent_registered?).to eq(false)
       end
     end
   end

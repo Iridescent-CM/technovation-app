@@ -38,6 +38,16 @@ RSpec.feature "scoring submissions", js: true do
     and_then_submits_the_score
   end
 
+  scenario "perfect score alert is not shown when navigating to review score without scoring" do
+    given_there_is_a_submission_from_a_beginner_team_that_needs_scoring
+    and_a_judge_is_logged_in
+
+    when_the_judge_starts_a_new_scoring_session
+    and_navigates_directly_to_the_review_score_page
+
+    then_the_perfect_score_alert_is_not_shown
+  end
+
   scenario "when a senior team receives a perfect score" do
     given_there_is_a_submission_from_a_senior_team_that_needs_scoring
     and_a_judge_is_logged_in
@@ -75,6 +85,15 @@ RSpec.feature "scoring submissions", js: true do
   def when_the_judge_starts_a_new_scoring_session
     click_link("Start a new score")
     click_link("Start Score")
+  end
+
+  def and_navigates_directly_to_the_review_score_page
+    execute_script("window.location.hash = '/review-score'")
+    expect(page).to have_content("Total Score")
+  end
+
+  def then_the_perfect_score_alert_is_not_shown
+    expect(page).not_to have_content("You've entered a perfect score")
   end
 
   def and_scores_the_project_details_section_perfectly

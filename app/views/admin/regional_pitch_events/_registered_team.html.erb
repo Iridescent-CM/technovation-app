@@ -1,7 +1,11 @@
 <tr id="<%= dom_id(team, :registered) %>">
   <td>
     <%= link_to team.name,
-      send("#{current_scope}_team_path", team),
+      send(
+        "#{current_scope}_team_path",
+        team,
+        **(current_account.chapter_ambassador? ? {search_in_region: 1} : {})
+      ),
       data: { turbo: false } %>
   </td>
   
@@ -11,7 +15,11 @@
   
   <td>
     <%= link_to team.submission.name,
-      send("#{current_scope}_team_submission_path", team.submission),
+      send(
+        "#{current_scope}_team_submission_path",
+        team.submission,
+        **(current_account.chapter_ambassador? ? {search_in_region: 1} : {})
+      ),
       data: { turbo: false} %>
   </td>
   
