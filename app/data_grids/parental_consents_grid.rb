@@ -1,5 +1,5 @@
 class ParentalConsentsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :allow_state_search
 

@@ -447,12 +447,18 @@ class SubmissionScore < ActiveRecord::Base
     team_submission.team.division.beginner?
   end
 
-  def total(season = Season.current.year)
-    JudgeQuestions
-      .new(division: team_division_name, season: season)
+  def self.scoring_fields_for(season:, division:)
+    @scoring_fields_cache ||= {}
+    @scoring_fields_cache[[season, division]] ||= JudgeQuestions
+      .new(division: division, season: season)
       .call
       .uniq(&:field)
-      .sum { |question| instance_eval(question.field.to_s) }
+      .map(&:field)
+  end
+
+  def total(season = Season.current.year)
+    self.class.scoring_fields_for(season: season, division: team_division_name)
+      .sum { |field| public_send(field) }
   end
 
   def total_for_question(question)

@@ -1,14 +1,12 @@
 class ScoresGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :allow_state_search, :current_account
-
-  self.batch_size = 10
 
   scope do
     SubmissionScore.judge_not_deleted
       .includes({judge_profile: [:account, :events]})
-      .includes({team_submission: {team: :division}})
+      .includes({team_submission: {team: [:division, :regional_pitch_events]}})
       .references(:teams, :team_submissions)
   end
 
@@ -137,7 +135,7 @@ class ScoresGrid
   end
 
   column :official do
-    official? ? "yes" : "no"
+    official ? "yes" : "no"
   end
 
   column :event_name do
@@ -147,7 +145,15 @@ class ScoresGrid
   column :event_type
 
   column :country do
-    FriendlyCountry.call(team)
+    if team.country_code.present?
+      FriendlyCountry.call(
+        OpenStruct.new(address_details: team.country_code),
+        source: :country_code,
+        prefix: true
+      )
+    else
+      ""
+    end
   end
 
   column :id
