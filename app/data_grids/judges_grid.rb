@@ -1,9 +1,7 @@
 class JudgesGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :allow_state_search, :current_account, :current_judging_round
-
-  self.batch_size = 10
 
   def self.current_judging_round
     round = SeasonToggles.current_judging_round(full_name: true)

@@ -1,9 +1,7 @@
 class AccountsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :national_view, :current_account, :allow_state_search
-
-  self.batch_size = 1_000
 
   scope do
     Account.not_admin

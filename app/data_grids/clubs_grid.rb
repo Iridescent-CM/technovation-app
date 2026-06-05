@@ -1,7 +1,5 @@
 class ClubsGrid
-  include Datagrid
-
-  self.batch_size = 10
+  include ApplicationGrid
 
   scope do
     Club.order(id: :desc)

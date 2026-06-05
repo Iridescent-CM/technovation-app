@@ -1,7 +1,5 @@
 class ActivitiesGrid
-  include Datagrid
-
-  self.batch_size = 10
+  include ApplicationGrid
 
   scope do
     PublicActivity::Activity.distinct

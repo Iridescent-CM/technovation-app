@@ -1,7 +1,5 @@
 class ChaptersGrid
-  include Datagrid
-
-  self.batch_size = 10
+  include ApplicationGrid
 
   scope do
     Chapter.order(id: :desc)
