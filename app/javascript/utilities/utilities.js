@@ -1,10 +1,23 @@
 import AirbrakeClient from 'airbrake-js';
 
-export const airbrake = new AirbrakeClient({
-  projectId: process.env.AIRBRAKE_PROJECT_ID,
-  projectKey: process.env.AIRBRAKE_PROJECT_KEY,
-  environment: process.env.AIRBRAKE_RAILS_ENV,
-});
+const noopAirbrake = {
+  notify: () => Promise.resolve({}),
+  wrap: (fn) => fn,
+  wrapArguments: (args) => args,
+  call: (fn, ...args) => fn(...args),
+};
+
+const airbrakeProjectId = process.env.AIRBRAKE_PROJECT_ID;
+const airbrakeProjectKey = process.env.AIRBRAKE_PROJECT_KEY;
+
+export const airbrake =
+  airbrakeProjectId && airbrakeProjectKey
+    ? new AirbrakeClient({
+        projectId: airbrakeProjectId,
+        projectKey: airbrakeProjectKey,
+        environment: process.env.AIRBRAKE_RAILS_ENV,
+      })
+    : noopAirbrake;
 
 export const isProduction = () => {
   return process.env.HOST_DOMAIN == "my.technovationchallenge.org"
