@@ -434,6 +434,9 @@ Rails.application.routes.draw do
     resources :events,
       controller: :regional_pitch_events,
       only: [:index, :show, :edit, :update] do
+        resources :event_teams, only: [:create, :destroy]
+
+        get :available_teams, on: :member
         get :bulk_download_submission_pitch_presentations
 
         post :bulk_add_judges
