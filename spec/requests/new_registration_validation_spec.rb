@@ -113,7 +113,7 @@ RSpec.describe "New registration validation", type: :request do
 
     context "when registering as a judge without judge types" do
       let(:profile_type) { "judge" }
-      let(:date_of_birth) { nil }
+      let(:date_of_birth) { 30.years.ago.to_s }
 
       before do
         base_params[:new_registration].merge!(
@@ -130,6 +130,29 @@ RSpec.describe "New registration validation", type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(JSON.parse(response.body)["full_error_messages"].join).to match(/judge type/i)
+      end
+    end
+
+    context "when registering as a judge without a date of birth" do
+      let(:profile_type) { "judge" }
+      let(:date_of_birth) { nil }
+
+      before do
+        base_params[:new_registration].merge!(
+          judgeSchoolCompanyName: "Court House",
+          judgeJobTitle: "Main Judge",
+          judgeTypes: [JudgeType.find_by!(name: "Educator").id]
+        )
+        base_params[:new_registration].delete(:studentParentGuardianName)
+        base_params[:new_registration].delete(:studentParentGuardianEmail)
+        base_params[:new_registration].delete(:studentSchoolName)
+      end
+
+      it "returns unprocessable entity with a date of birth error" do
+        register
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)["full_error_messages"].join).to match(/date of birth/i)
       end
     end
   end

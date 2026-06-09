@@ -34,4 +34,26 @@ RSpec.feature "Judges registering", :js do
     fill_in "Password", with: "secret12345"
     click_button "Submit this form"
   end
+
+  scenario "Birthday is required to advance past Judge Information step" do
+    choose "I am over 18 years old and will judge submissions"
+    click_button "Next"
+
+    expect(page).to have_content("Judge Information")
+
+    fill_in "First Name", with: "Funshine"
+    fill_in "Last Name", with: "Bear"
+    check "I confirm that I am 18 years or older"
+    select "Prefer not to say", from: "Gender Identity"
+    fill_in "Company Name", with: "Care-a-Lot"
+    fill_in "Job Title", with: "Class clown"
+    check "Educator"
+
+    expect(page).to have_button("Next", disabled: true)
+
+    find("#dateOfBirth").click
+    find("#firstName").click
+
+    expect(page).to have_content("Birthday is required")
+  end
 end
