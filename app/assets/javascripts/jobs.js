@@ -48,6 +48,10 @@ watchJobs = function() {
           $jobsToast
             .removeClass("waiting")
             .addClass("ready");
+        } else if (data.status === "failed") {
+          $jobsToast.removeClass("ready waiting")
+            .find(".when-ready")
+            .html("");
         } else {
           $jobsToast.removeClass("ready").addClass("waiting");
           $whenReady.html("");

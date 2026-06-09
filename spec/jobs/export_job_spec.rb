@@ -48,5 +48,28 @@ RSpec.describe ExportJob do
 
       expect(AccountsGrid).to have_received(:new).with(expected_params)
     end
+
+    it "marks the job as failed when export raises an error" do
+      admin = FactoryBot.create(:admin)
+
+      allow(AccountsGrid).to receive(:new).and_raise(StandardError, "export failed")
+      allow(ActionCable).to receive(:server).and_return(double(:server).as_null_object)
+
+      expect {
+        ExportJob.perform_later(
+          admin.id,
+          "AdminProfile",
+          "AccountsGrid",
+          {},
+          "Admin::ParticipantsController",
+          "->(scope, user, params) { scope }",
+          "filename",
+          "csv"
+        )
+      }.to raise_error(StandardError, "export failed")
+
+      job = Job.find_by!(owner: admin)
+      expect(job.status).to eq("failed")
+    end
   end
 end

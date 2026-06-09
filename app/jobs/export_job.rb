@@ -31,6 +31,22 @@ class ExportJob < ActiveJob::Base
     broadcast(db_job, profile)
   end
 
+  rescue_from(StandardError) do |error|
+    db_job = Job.find_by(job_id: job_id)
+
+    if db_job
+      db_job.update_column(:status, "failed")
+
+      profile_id = arguments[0]
+      profile_type = arguments[1]
+      profile = profile_type.constantize.find_by(id: profile_id)
+
+      broadcast(db_job, profile) if profile
+    end
+
+    raise error
+  end
+
   def perform(
     profile_id,
     profile_type,
