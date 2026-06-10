@@ -76,11 +76,19 @@ class ExportJob < ActiveJob::Base
         .call(scope, profile, params)
     end
 
-    csv = grid.public_send("to_#{format}")
+    File.open(filepath, "wb") do |f|
+      if format == "csv"
+        require "csv"
 
-    File.open(filepath, "wb+") do |f|
-      f.write(csv)
-      f.close
+        CSV(f) do |csv|
+          csv << grid.header
+          grid.send(:each_with_batches) do |asset|
+            csv << grid.row_for(asset)
+          end
+        end
+      else
+        f.write(grid.public_send("to_#{format}"))
+      end
     end
 
     profile.exports.create!(
