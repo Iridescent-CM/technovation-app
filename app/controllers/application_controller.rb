@@ -74,6 +74,8 @@ class ApplicationController < ActionController::Base
   end
 
   def save_redirected_path
+    return if request.format.json?
+
     set_cookie(CookieNames::REDIRECTED_FROM, request.fullpath)
   end
 

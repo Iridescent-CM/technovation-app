@@ -4,7 +4,7 @@ class Document < ActiveRecord::Base
   before_save :set_status
   after_save -> { signer.update_onboarding_status }
 
-  enum status: {
+  enum :status, {
     sent: "sent",
     signed: "signed",
     "off-platform": "off-platform",

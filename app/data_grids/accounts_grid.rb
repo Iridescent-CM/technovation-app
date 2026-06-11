@@ -1,9 +1,21 @@
 class AccountsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :national_view, :current_account, :allow_state_search
 
-  self.batch_size = 1_000
+  CSV_EXPORT_PRELOADS = [
+    :background_check,
+    :consent_waiver,
+    :chapter_ambassador_profile,
+    :club_ambassador_profile,
+    {current_chapter_assignments: :chapterable},
+    {current_club_assignments: :chapterable},
+    {
+      student_profile: [:parental_consents, :media_consent, :current_teams],
+      mentor_profile: [:expertises, :current_teams, {mentor_profile_mentor_types: :mentor_type}],
+      judge_profile: [:regional_pitch_events, {judge_profile_judge_types: :judge_type}]
+    }
+  ].freeze
 
   scope do
     Account.not_admin
@@ -45,7 +57,7 @@ class AccountsGrid
 
   column :mentor_types do
     if mentor_profile.present?
-      mentor_profile.mentor_profile_mentor_types.joins(:mentor_type).pluck(:name).join(", ")
+      mentor_profile.mentor_profile_mentor_types.map { |type| type.mentor_type.name }.join(", ")
     else
       "-"
     end
@@ -61,7 +73,7 @@ class AccountsGrid
 
   column :judge_types, if: ->(g) { g.admin } do
     if judge_profile.present?
-      judge_profile.judge_profile_judge_types.joins(:judge_type).pluck(:name).join(", ")
+      judge_profile.judge_profile_judge_types.map { |type| type.judge_type.name }.join(", ")
     else
       "-"
     end
@@ -172,8 +184,14 @@ class AccountsGrid
   end
 
   column :team_names, header: "Team name(s)" do
-    if student_profile.present? or mentor_profile.present?
-      teams.current.map(&:name).to_sentence
+    profile_teams = if student_profile.present?
+      student_profile.current_teams
+    elsif mentor_profile.present?
+      mentor_profile.current_teams
+    end
+
+    if profile_teams.present?
+      profile_teams.map(&:name).to_sentence
     else
       "-"
     end
@@ -819,5 +837,11 @@ class AccountsGrid
       .where(country: current_account.current_chapterable.read_attribute(:country))
       .order(name: :asc)
       .map { |c| [c.name, c.id] }
+  end
+
+  protected
+
+  def append_column_preload(relation)
+    super(relation.preload(*CSV_EXPORT_PRELOADS))
   end
 end

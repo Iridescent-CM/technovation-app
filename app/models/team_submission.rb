@@ -97,14 +97,14 @@ class TeamSubmission < ActiveRecord::Base
     end
   }, on: :update
 
-  enum submission_type: SUBMISSION_TYPES_ENUM
-  enum development_platform: ALL_DEVELOPMENT_PLATFORMS_ENUM
+  enum :submission_type, SUBMISSION_TYPES_ENUM
+  enum :development_platform, ALL_DEVELOPMENT_PLATFORMS_ENUM
 
   def developed_on?(platform_name)
     development_platform == platform_name
   end
 
-  enum contest_rank: %w[
+  enum :contest_rank, %w[
     quarterfinalist
     semifinalist
     regional_honoree

@@ -1,6 +1,53 @@
 require "rails_helper"
 
 RSpec.describe ParentalConsentsController do
+  describe "GET #show" do
+    let(:student) { FactoryBot.create(:onboarding_student) }
+    let(:parental_consent) { student.parental_consent }
+
+    context "when no one is signed in (guest)" do
+      it "redirects to the root path instead of raising" do
+        expect {
+          get :show, params: {id: parental_consent.id}
+        }.not_to raise_error
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "when a student who does not own the consent is signed in" do
+      it "redirects to the root path" do
+        sign_in(FactoryBot.create(:onboarding_student))
+
+        get :show, params: {id: parental_consent.id}
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "when the owning student is signed in" do
+      it "renders the show template" do
+        sign_in(student)
+
+        get :show, params: {id: parental_consent.id}
+
+        expect(assigns(:parental_consent)).to eq(parental_consent)
+        expect(response).to render_template(:show)
+      end
+    end
+
+    context "when an admin is signed in" do
+      it "renders the show template" do
+        sign_in(:admin)
+
+        get :show, params: {id: parental_consent.id}
+
+        expect(assigns(:parental_consent)).to eq(parental_consent)
+        expect(response).to render_template(:show)
+      end
+    end
+  end
+
   describe "PATCH #update" do
     it "preserves the token on a validation error" do
       student = FactoryBot.create(:onboarding_student)

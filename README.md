@@ -107,8 +107,75 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 To compile and hot reload assets, run the following in a new terminal window
 
 ```
-./bin/webpack-dev-server
+./bin/shakapacker-dev-server
 ```
+
+## Docker
+
+You can run the app with **Docker Compose** instead of installing Ruby, Node, Postgres, and Redis locally. The stack uses `Dockerfile` at the repo root and `docker-compose.yml`.
+
+### What runs
+
+| Service   | Role |
+|-----------|------|
+| `web`     | Rails server on port **3000** (source mounted from your machine) |
+| `worker`  | Sidekiq (`default` and `mailers` queues) |
+| `postgres` | PostgreSQL **14**; user/password `postgres` / `postgres` |
+| `redis`   | Redis **7** |
+
+Compose sets `DATABASE_URL`, `REDIS_URL`, `RAILS_ENV`, `RACK_ENV`, and `WKHTMLTOPDF_PATH` for the app containers. You still need a **`.env`** file in the project root for other secrets and config (same as the native setup above).
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) with Compose (v2: `docker compose`).
+
+### First-time setup
+
+1. Clone the repo and place `.env` in the project root.
+2. Build and start everything:
+
+   ```
+   docker compose up --build
+   ```
+
+3. In another terminal, prepare the database (migrations, etc.) once:
+
+   ```
+   docker compose exec web bundle exec rails db:prepare
+   ```
+
+   Add seed data if your team uses it:
+
+   ```
+   docker compose exec web bundle exec rails db:seed
+   ```
+
+Open [http://localhost:3000](http://localhost:3000). Postgres is also published on **5432** and Redis on **6379** on localhost if you need them from tools outside Docker.
+
+### Image details (`Dockerfile`)
+
+- Base image: **Ruby 3.4.9** (slim), aligned with the `Gemfile` Ruby version.
+- **Node 26** and Yarn for the front end; `bundle install` and `yarn install` run at build time.
+- System packages include build tools, `libpq`, ImageMagick, `pdftk-java`, wkhtmltopdf (amd64/arm64), and libraries used by native gems (e.g. node-canvas).
+- Default image command (without Compose overriding it) runs `rails db:prepare` then `rails s` on `0.0.0.0:3000`. Ports **3000** and **3035** are declared for the app and Webpack dev server.
+
+### Compose behavior
+
+- **`web`** mounts the repo at `/app` with a named volume for Bundler (`bundle`) and another for `node_modules` so installs persist between runs.
+- **`worker`** uses the same image and volumes and connects to the same DB and Redis.
+- **`postgres`** uses a healthcheck so `web` and `worker` start after the DB is ready.
+
+### Assets in Docker
+
+For Webpack dev server with hot reload, run it inside the `web` container and publish port **3035** (add `3035:3035` under `web.ports` in `docker-compose.yml` if it is not already there), then:
+
+```
+docker compose exec web ./bin/shakapacker-dev-server -b 0.0.0.0
+```
+
+### Builds and secrets (`.dockerignore`)
+
+`.dockerignore` keeps `.env` and other local files out of the **image build context** so secrets are not baked into layers. With Compose, your working tree is still bind-mounted into `/app`, so the app reads `.env` from the host at runtime.
 
 ## User type logins:
 

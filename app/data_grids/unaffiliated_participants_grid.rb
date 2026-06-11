@@ -1,9 +1,7 @@
 class UnaffiliatedParticipantsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :allow_state_search
-
-  self.batch_size = 1_000
 
   scope do
     Account

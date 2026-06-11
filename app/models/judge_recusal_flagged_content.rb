@@ -1,7 +1,7 @@
 class JudgeRecusalFlaggedContent < ActiveRecord::Base
   belongs_to :submission_score
 
-  enum name: {
+  enum :name, {
     problem_or_project_description: 10,
     pitch_video: 20,
     technical_video: 30,

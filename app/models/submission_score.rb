@@ -49,14 +49,14 @@ class SubmissionScore < ActiveRecord::Base
     update_column(:dropped_at, nil)
   }
 
-  enum round: %w[
+  enum :round, %w[
     quarterfinals
     semifinals
     finals
     off
   ]
 
-  enum judge_recusal_reason: {
+  enum :judge_recusal_reason, {
     submission_not_in_english: "submission_not_in_english",
     knows_team: "knows_team",
     content_does_not_belong_to_team: "content_does_not_belong_to_team",
@@ -447,12 +447,18 @@ class SubmissionScore < ActiveRecord::Base
     team_submission.team.division.beginner?
   end
 
-  def total(season = Season.current.year)
-    JudgeQuestions
-      .new(division: team_division_name, season: season)
+  def self.scoring_fields_for(season:, division:)
+    @scoring_fields_cache ||= {}
+    @scoring_fields_cache[[season, division]] ||= JudgeQuestions
+      .new(division: division, season: season)
       .call
       .uniq(&:field)
-      .sum { |question| instance_eval(question.field.to_s) }
+      .map(&:field)
+  end
+
+  def total(season = Season.current.year)
+    self.class.scoring_fields_for(season: season, division: team_division_name)
+      .sum { |field| public_send(field) }
   end
 
   def total_for_question(question)

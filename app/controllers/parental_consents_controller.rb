@@ -1,6 +1,8 @@
 class ParentalConsentsController < ApplicationController
   layout "documents"
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   def show
     @parental_consent = authorize ParentalConsent.find(params.fetch(:id))
   end
@@ -59,6 +61,11 @@ class ParentalConsentsController < ApplicationController
   end
 
   private
+
+  def user_not_authorized
+    redirect_to root_path,
+      alert: t("controllers.parental_consents.show.unauthorized")
+  end
 
   def student(opts = {})
     opts[:token] ||= params.fetch(:token) { "" }

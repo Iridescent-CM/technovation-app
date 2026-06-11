@@ -1,9 +1,7 @@
 class MentorsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin
-
-  self.batch_size = 10
 
   scope do
     Account.includes(

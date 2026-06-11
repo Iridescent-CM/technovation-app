@@ -6,12 +6,16 @@ if Rails.env.production?
   abort("The Rails environment is running in production mode!")
 end
 
+require 'simplecov'
 require "spec_helper"
 require "rspec/rails"
 require "capybara/rails"
 require "vcr_helper"
 require "geocoder_helper"
 require "rake"
+require "selenium_error_patch"
+
+SimpleCov.start "rails"
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -58,7 +62,9 @@ RSpec.configure do |config|
 
   config.include ExternalResourceHelper
 
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = [
+    "#{::Rails.root}/spec/fixtures"
+  ]
   config.use_transactional_fixtures = true
   config.global_fixtures = :all
 

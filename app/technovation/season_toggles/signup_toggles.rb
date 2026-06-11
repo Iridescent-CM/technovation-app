@@ -1,5 +1,5 @@
-require "season_toggles/boolean_toggler"
-require "season_toggles/judging_round_dependency"
+require_relative "boolean_toggler"
+require_relative "judging_round_dependency"
 
 class SeasonToggles
   module SignupToggles
@@ -22,15 +22,15 @@ class SeasonToggles
 
     module ClassMethods
       SCOPES.each do |scope|
-        define_method("#{scope}_signup=") do |value|
+        define_method(:"#{scope}_signup=") do |value|
           store.set("#{scope}_signup", with_bool_validation(value))
         end
 
-        define_method("#{scope}_signup?") do
+        define_method(:"#{scope}_signup?") do
           convert_to_bool(store.get("#{scope}_signup"))
         end
 
-        alias_method "#{scope}_registration_open?", "#{scope}_signup?"
+        alias_method :"#{scope}_registration_open?", :"#{scope}_signup?"
       end
 
       def registration_open?
@@ -58,15 +58,15 @@ class SeasonToggles
       end
 
       def disable_signup(scope)
-        send("#{scope}_signup=", false)
+        send(:"#{scope}_signup=", false)
       end
 
       def enable_signup(scope)
-        send("#{scope}_signup=", true)
+        send(:"#{scope}_signup=", true)
       end
 
       def signup_enabled?(scope)
-        send("#{scope}_signup?")
+        send(:"#{scope}_signup?")
       end
 
       def signup_disabled?(scope)

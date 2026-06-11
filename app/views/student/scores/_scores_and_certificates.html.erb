@@ -1,4 +1,4 @@
-<% if current_team.submission.complete? && current_team.submission.scores.complete.any? %>
+<% if current_team.submission.complete? && (current_team.submission.scores.complete.any? || @deleted_online_scores&.any?) %>
   <div class="text-center mt-8 mb-8">
     <p class="mb-4 text-2xl text-tg-magenta uppercase font-bold">
       Congratulations, your team was a <%= current_team.submission.contest_rank %>!
