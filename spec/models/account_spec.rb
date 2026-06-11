@@ -89,13 +89,35 @@ RSpec.describe Account do
 
     describe "date of birth" do
       context "for judges" do
-        let(:judge) {
-          FactoryBot.create(:judge,
-            account: FactoryBot.build(:account, date_of_birth: date_of_birth))
-        }
+        context "when a new judge doesn't have a date of birth" do
+          let(:judge) {
+            FactoryBot.build(:judge,
+              account: FactoryBot.build(:account, date_of_birth: nil))
+          }
 
-        context "when a judge doesn't have a date of birth" do
-          let(:date_of_birth) { nil }
+          it "is not valid" do
+            expect(judge).not_to be_valid
+          end
+        end
+
+        context "when a new judge has a date of birth" do
+          let(:judge) {
+            FactoryBot.build(:judge,
+              account: FactoryBot.build(:account, date_of_birth: 30.years.ago))
+          }
+
+          it "is valid" do
+            expect(judge).to be_valid
+          end
+        end
+
+        context "when an existing judge doesn't have a date of birth" do
+          let(:judge) { FactoryBot.create(:judge) }
+
+          before do
+            judge.account.update_column(:date_of_birth, nil)
+            judge.account.reload
+          end
 
           it "is valid" do
             expect(judge).to be_valid
@@ -196,6 +218,7 @@ RSpec.describe Account do
             email: "ccara55@example.com",
             password: "abc1239876",
             gender: "Non-binary",
+            date_of_birth: 30.years.ago,
             terms_agreed_at: Time.current,
             judge_profile: JudgeProfile.new(
               job_title: "VIP",
