@@ -56,6 +56,42 @@ RSpec.describe JudgeProfile do
     end
   end
 
+  describe ".by_query" do
+    let!(:judge) do
+      FactoryBot.create(:judge).tap do |j|
+        j.account.update_columns(
+          first_name: "Adabelle",
+          last_name: "Lovelaceton",
+          email: "ada.unique@judges.example.com"
+        )
+      end
+    end
+
+    it "matches on first name" do
+      expect(JudgeProfile.by_query("Adabelle")).to include(judge)
+    end
+
+    it "matches on last name" do
+      expect(JudgeProfile.by_query("Lovelaceton")).to include(judge)
+    end
+
+    it "matches on email" do
+      expect(JudgeProfile.by_query("ada.unique")).to include(judge)
+    end
+
+    it "excludes judges that do not match the query" do
+      other = FactoryBot.create(:judge).tap do |j|
+        j.account.update_columns(
+          first_name: "Grace",
+          last_name: "Hopperson",
+          email: "grace@navy.example.com"
+        )
+      end
+
+      expect(JudgeProfile.by_query("ada.unique")).not_to include(other)
+    end
+  end
+
   context "callbacks" do
     let(:judge) { FactoryBot.create(:judge) }
 

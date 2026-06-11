@@ -46,10 +46,10 @@ class JudgeProfile < ActiveRecord::Base
     if query.present?
       joins(:account)
         .where(
-          "accounts.first_name ILIKE ? OR " \
-          "accounts.last_name ILIKE ?",
-          "%#{query}%",
-          "%#{query}%"
+          "accounts.first_name ILIKE :query OR " \
+          "accounts.last_name ILIKE :query OR " \
+          "accounts.email ILIKE :query",
+          query: "%#{query}%"
         )
     end
   }
