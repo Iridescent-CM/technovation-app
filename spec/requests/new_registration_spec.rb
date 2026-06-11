@@ -74,7 +74,7 @@ RSpec.describe "New registration", type: :request do
 
     context "when a judge is registering" do
       let(:profile_type) { "judge" }
-      let(:date_of_birth) { nil }
+      let(:date_of_birth) { (Division.cutoff_date - 25.years) }
       let!(:judge_type) { JudgeType.find_by!(name: "Educator") }
 
       before do
