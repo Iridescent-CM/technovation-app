@@ -18,9 +18,9 @@ class TeamSubmission < ActiveRecord::Base
   ACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {
     "App Inventor" => 0,
     "Thunkable" => 6,
-    "Other" => 5,
     "Scratch" => 8,
-    "Code.org App Lab" => 9
+    "Code.org App Lab" => 9,
+    "Other" => 5
   }
 
   INACTIVE_DEVELOPMENT_PLATFORMS_ENUM = {

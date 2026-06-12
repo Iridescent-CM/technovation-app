@@ -185,9 +185,9 @@ RSpec.describe TeamSubmission do
       expect(TeamSubmission::ACTIVE_DEVELOPMENT_PLATFORMS_ENUM).to eq({
         "App Inventor" => 0,
         "Thunkable" => 6,
-        "Other" => 5,
         "Scratch" => 8,
-        "Code.org App Lab" => 9
+        "Code.org App Lab" => 9,
+        "Other" => 5
       })
     end
   end
@@ -226,9 +226,9 @@ RSpec.describe TeamSubmission do
       expect(TeamSubmission::DEVELOPMENT_PLATFORMS).to eq([
         "App Inventor",
         "Thunkable",
-        "Other",
         "Scratch",
-        "Code.org App Lab"
+        "Code.org App Lab",
+        "Other"
       ])
     end
   end
