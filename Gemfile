@@ -1,8 +1,7 @@
 source "https://rubygems.org"
-ruby "3.1.2"
+ruby "3.4.9"
 
-gem "rails", "~>7.0.8.0"
-gem "concurrent-ruby", "1.3.4"
+gem "rails", "7.2.3.1"
 
 gem "puma", "~> 5.6.9"
 gem "pg", "~> 1.2"
@@ -19,7 +18,7 @@ gem "textacular", "~> 5.1"
 
 gem "pdf-forms", "~> 1.2"
 
-gem "public_activity", "~> 2.0"
+gem "public_activity", "~> 3.0"
 gem "paranoia", "~> 3.0"
 gem "counter_culture", "~> 3.0"
 gem "pundit", "~> 2.0"
@@ -34,7 +33,7 @@ gem "jquery-rails", "~> 4.3"
 gem "jquery-ui-rails", "~> 8.0", git: "https://github.com/jquery-ui-rails/jquery-ui-rails.git"
 gem "lodash-rails", "~> 4.17"
 gem "dropzonejs-rails", "~> 0.8"
-gem "webpacker", "~> 5.x"
+gem "shakapacker", "~> 10.0"
 
 gem "cocoon", "~> 1.2"
 
@@ -81,9 +80,10 @@ gem "checkr-official", "~> 1.5", require: "checkr"
 
 gem "countries", "~> 1.2", require: "countries/global"
 
+#TODO: Set back to keep-list-updated once tested
 gem "city-state",
   git: "https://github.com/Iridescent-CM/city-state.git",
-  branch: "keep-list-updated"
+  branch: "changes-for-ruby-3.2"
 
 gem "carmen", "~> 1.1"
 
@@ -100,19 +100,22 @@ gem "dotenv-rails", "~> 3.0"
 gem "pdfkit", "~> 0.8.7.0"
 
 gem "restforce", "~> 7.0.0"
+gem "faraday", "~> 2.0"
+gem "faraday-httpclient", "~> 2.0"
 
 gem "net-smtp", require: false
 gem "net-imap", require: false
 gem "net-pop", require: false
 
 gem "rexml", "~> 3.3.0"
-gem "immosquare-cookies"
+gem "immosquare-cookies", "~> 2.0"
 gem "zipline"
 
 gem "factory_bot_rails", "~> 6.5.0"
 
 gem "twilio-ruby", "~> 7.8.7"
 gem "phonelib"
+gem "csv"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -133,6 +136,7 @@ group :development do
 end
 
 group :test do
+  gem "simplecov", require: false
   gem "timecop", "~> 0.9"
   gem "vcr", "~> 6.1"
   gem "webmock", "~> 3.17"
@@ -162,7 +166,7 @@ group :production do
   gem "hiredis", "~> 0.6"
   gem "rack-timeout", "~> 0.5"
   gem "rails_autoscale_agent"
-  gem "cloudflare-rails", "~> 2.0"
+  gem "cloudflare-rails", "~> 6.2"
   gem "wkhtmltopdf-heroku", "2.12.6.1.pre.jammy"
 end
 

@@ -1,7 +1,5 @@
 class LegalDocumentsGrid
-  include Datagrid
-
-  self.batch_size = 10
+  include ApplicationGrid
 
   scope do
     Document.order(created_at: :desc)

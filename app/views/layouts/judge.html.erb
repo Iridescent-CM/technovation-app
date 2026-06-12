@@ -1,12 +1,9 @@
+<% append_javascript_pack_tag "judge", defer: true, async: false %>
+<% append_stylesheet_pack_tag "judge" %>
+
 <% provide :root_path, judge_dashboard_path %>
 <% provide :global_nav_links, render('judge/navigation/rebrand/global_nav_links') %>
 <% provide :drop_down, render('judge/navigation/rebrand/dropdown_nav') %>
 <% provide :main_header, render('application/templates/tg_green_header', heading: "Technovation Girls") %>
-
-<% content_for :js,
-  javascript_packs_with_chunks_tag("judge", data: { turbo_track: :reload }) %>
-
-<% provide :additional_css,
-  stylesheet_packs_with_chunks_tag("judge", data: { turbo_track: :reload }) %>
 
 <%= render template: "layouts/application_rebrand" %>

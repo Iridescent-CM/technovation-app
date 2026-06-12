@@ -1,8 +1,11 @@
 require "rails_helper"
 
 RSpec.feature "chapter ambassadors switch to mentor mode", :js do
+  let(:chapter_ambassador) do
+    FactoryBot.create(:chapter_ambassador, :approved)
+  end
+
   scenario "a chapter ambassador switches to mentor mode with a mentor profile" do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
     CreateMentorProfile.call(chapter_ambassador)
 
     sign_in(chapter_ambassador)
@@ -14,8 +17,6 @@ RSpec.feature "chapter ambassadors switch to mentor mode", :js do
   end
 
   scenario "a chapter ambassador switches to mentor mode without a mentor profile" do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
-
     sign_in(chapter_ambassador)
     click_link "Mentor Mode"
     expect(page).to have_selector("a", text: "Switch to Chapter Ambassador Mode", visible: false)
@@ -24,12 +25,15 @@ RSpec.feature "chapter ambassadors switch to mentor mode", :js do
   end
 
   scenario "a chapter ambassador switches back to chapter ambassador mode from mentor mode" do
-    chapter_ambassador = FactoryBot.create(:chapter_ambassador, :approved)
-
     sign_in(chapter_ambassador)
-    click_link "Mentor Mode"
 
-    visit chapter_ambassador_dashboard_path
+    click_link "Mentor Mode"
+    expect(page).to have_content("Mentor Training")
+
+    find("span", text: "Chapter Ambassador").click
+    click_link "Switch to Chapter Ambassador Mode"
+
+    expect(page).to have_content("Chapter Ambassador Dashboard")
     expect(current_path).to eq(chapter_ambassador_dashboard_path)
   end
 

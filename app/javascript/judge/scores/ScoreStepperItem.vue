@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="flex justify-between">
+      <div v-if="showSectionProgress || sectionScore" class="flex justify-between">
         <div v-if="showSectionProgress" class="ml-8">
           <SectionProgressIcons :section="sectionName" />
         </div>

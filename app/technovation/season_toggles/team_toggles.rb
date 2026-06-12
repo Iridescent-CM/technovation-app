@@ -1,5 +1,5 @@
-require "season_toggles/boolean_toggler"
-require "season_toggles/judging_round_dependency"
+require_relative "boolean_toggler"
+require_relative "judging_round_dependency"
 
 class SeasonToggles
   module TeamToggles

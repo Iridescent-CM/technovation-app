@@ -1,3 +1,6 @@
+require "faraday"
+require "faraday/httpclient"
+
 module CheckrApiClient
   class ApiClient
     def initialize(
@@ -14,6 +17,7 @@ module CheckrApiClient
         headers: {"Content-Type" => "application/json"}
       ) do |conn|
         conn.request :authorization, :basic, client_id, ""
+        conn.adapter :httpclient
       end
 
       @logger = logger

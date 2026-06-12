@@ -1,3 +1,117 @@
+@use "sass:color";
+
+#immosquare-cookies-container {
+  --immosquare-cookies-color: #004b99;
+  --immosquare-cookies-bg: #f8f9fa;
+  --immosquare-cookies-border: #dee2e6;
+  --immosquare-cookies-text: #6c757d;
+  --immosquare-cookies-primary: #0d6efd;
+  --immosquare-cookies-secondary: #6c757d;
+  --immosquare-cookies-btn-color: white;
+}
+
+.immosquare-cookies-banner {
+  z-index: 1050 !important;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 1.5rem;
+  max-width: 50%;
+}
+
+.immosquare-cookies-card {
+  background-color: var(--immosquare-cookies-bg);
+  border: 1px solid var(--immosquare-cookies-border);
+  border-radius: 0.375rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+}
+
+.immosquare-cookies-header {
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.immosquare-cookies-content {
+  margin-bottom: 1.5rem;
+}
+
+.immosquare-cookies-text {
+  color: var(--immosquare-cookies-text);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.immosquare-cookies-link-text {
+  margin-right: 0.25rem;
+}
+
+.immosquare-cookies-link-separator {
+  margin: 0 0.25rem;
+}
+
+.immosquare-cookies-link {
+  color: var(--immosquare-cookies-color);
+  text-decoration: none;
+  font-weight: 700;
+
+  &:hover {
+    color: scale(#004b99, 0.9);
+    text-decoration: underline;
+  }
+}
+
+.immosquare-cookies-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.immosquare-cookies-btn {
+  color: var(--immosquare-cookies-btn-color);
+  background-color: var(--immosquare-cookies-color);
+  border: 1px solid var(--immosquare-cookies-color);
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:hover {
+    background-color: scale(#004b99, 0.9);
+    border-color: scale(#004b99, 0.9);
+    color: var(--immosquare-cookies-btn-color);
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .immosquare-cookies-banner {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .immosquare-cookies-card {
+    padding: 1rem;
+  }
+}
+
 #immosquare-cookies-container {
   background-color: #f1f5f9;
   height: 9rem;

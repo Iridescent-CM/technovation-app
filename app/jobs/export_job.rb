@@ -31,6 +31,22 @@ class ExportJob < ActiveJob::Base
     broadcast(db_job, profile)
   end
 
+  rescue_from(StandardError) do |error|
+    db_job = Job.find_by(job_id: job_id)
+
+    if db_job
+      db_job.update_column(:status, "failed")
+
+      profile_id = arguments[0]
+      profile_type = arguments[1]
+      profile = profile_type.constantize.find_by(id: profile_id)
+
+      broadcast(db_job, profile) if profile
+    end
+
+    raise error
+  end
+
   def perform(
     profile_id,
     profile_type,
@@ -60,11 +76,19 @@ class ExportJob < ActiveJob::Base
         .call(scope, profile, params)
     end
 
-    csv = grid.public_send("to_#{format}")
+    File.open(filepath, "wb") do |f|
+      if format == "csv"
+        require "csv"
 
-    File.open(filepath, "wb+") do |f|
-      f.write(csv)
-      f.close
+        CSV(f) do |csv|
+          csv << grid.header
+          grid.send(:each_with_batches) do |asset|
+            csv << grid.row_for(asset)
+          end
+        end
+      else
+        f.write(grid.public_send("to_#{format}"))
+      end
     end
 
     profile.exports.create!(

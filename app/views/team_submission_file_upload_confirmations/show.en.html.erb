@@ -1,5 +1,5 @@
-<% provide :js, javascript_packs_with_chunks_tag('job_process') %>
-<% provide :css, stylesheet_packs_with_chunks_tag('job_process') %>
+<% append_javascript_pack_tag "job_process" %>
+<% append_stylesheet_pack_tag "job_process" %>
 
 <div class="container mx-auto flex flex-col w-full lg:w-1/2">
   <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: 'Upload Confirmed'} do %>

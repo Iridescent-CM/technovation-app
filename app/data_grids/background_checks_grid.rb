@@ -1,7 +1,5 @@
 class BackgroundChecksGrid
-  include Datagrid
-
-  self.batch_size = 10
+  include ApplicationGrid
 
   scope do
     BackgroundCheck.order(created_at: :desc)
