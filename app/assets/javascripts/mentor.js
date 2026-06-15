@@ -34,5 +34,7 @@ document.addEventListener("turbo:load", function () {
     }
   });
 
-  $(".accordion").accordion();
+  if ($.fn.accordion) {
+    $(".accordion").accordion();
+  }
 });
