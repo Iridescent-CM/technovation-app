@@ -98,6 +98,7 @@ export const resetState = (state) => {
     location: "",
     division: "",
     photo: "",
+    screenshots: [],
   };
   state.score = {
     id: null,
