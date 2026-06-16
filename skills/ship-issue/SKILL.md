@@ -11,7 +11,8 @@ Run the full pipeline that takes a GitHub issue from a plan to verified, evidenc
 
 ```mermaid
 flowchart LR
-  Plan["plan-github-issue"] --> G2{"--auto?"}
+  Sync["checkout qa + pull"] --> Plan["plan-github-issue"]
+  Plan --> G2{"--auto?"}
   G2 -->|no| ApprovePlan["user approves plan"]
   G2 -->|yes| Branch
   ApprovePlan --> Branch["branch-from-issue"]
@@ -62,6 +63,7 @@ When **Mode** is `autonomous`, skip the approval gates below and continue throug
 
 **Safety stops that still apply in autonomous mode** (these are not gates — the pipeline stops and surfaces the failure):
 
+- Dirty working tree or non-fast-forward `qa` at Stage 0 sync (no auto-stash or workaround)
 - Failing tests after the retry budget (`implement-plan` Step 5)
 - Critical or Important findings from `code-review` (Stage 6)
 - Verification evidence gaps (`verify-fix-evidence`, Stage 7)
@@ -69,6 +71,24 @@ When **Mode** is `autonomous`, skip the approval gates below and continue throug
 - Dirty tree, branch-name mismatch, no commits, push rejection, or PR creation failure (`push-pr-issue`)
 - Any child-skill blocker (dirty tree at branch creation, pre-commit hook failure, etc.)
 - Loop-back to plan when the plan itself is wrong (re-run Stage 1; in autonomous mode, Stage 2 auto-approves the revised plan)
+
+## Stage 0: Sync
+
+**Before the preflight checklist and before Stage 1**, verify the working tree is clean, then land on a fully-synced `qa`:
+
+```bash
+git status --porcelain                        # non-empty -> hard-stop (do NOT carry dirt to qa)
+git checkout qa 2>/dev/null || git checkout -b qa origin/qa   # handles no-local-qa
+git pull --ff-only origin qa                  # non-fast-forward -> hard-stop (no merge commits)
+```
+
+**Hard-stop conditions (stop immediately, surface the error, do not proceed):**
+
+- `git status --porcelain` is non-empty — do not rely on `git checkout` to catch this; it silently carries uncommitted changes onto `qa` when there are no conflicts.
+- `git pull --ff-only` fails — local `qa` has diverged from `origin/qa`; do not create an accidental merge commit.
+- `origin/qa` does not exist — stop and ask the user which base branch to use.
+
+**Autonomous mode:** a dirty tree or a non-fast-forward `qa` is a **hard-stop** in autonomous mode. Do not auto-stash or attempt any workaround.
 
 ## Preflight
 
@@ -244,6 +264,7 @@ When the pipeline stops on a blocker, record the affected stage as `❌ blocked 
 Copy this checklist and track progress as you go:
 
 ```
+- [ ] Stage 0: Sync — checkout qa + git pull origin qa
 - [ ] Stage 1: Plan (delegate to plan-github-issue)
 - [ ] Stage 2: Plan-approval gate
 - [ ] Stage 3: Branch (delegate to branch-from-issue)
