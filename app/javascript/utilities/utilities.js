@@ -31,7 +31,26 @@ function createAirbrakeClient() {
     projectKey: airbrakeProjectKey,
     environment: process.env.AIRBRAKE_RAILS_ENV,
   })
-  client.addFilter((notice) => (isBrowserExtensionNotice(notice) ? null : notice))
+  client.addFilter((notice) => {
+    if (isBrowserExtensionNotice(notice)) return null
+
+    // "Failed to fetch" comes from airbrake-js's own delivery fetch failing
+    // (offline / tab closing / ad-blocker) — not from our app code. Attach
+    // context so these entries are diagnosable in Airbrake (issue #6250).
+    const isFailedToFetch = notice.errors.some(
+      (e) => e.type === 'TypeError' && /Failed to fetch/i.test(e.message || '')
+    )
+    if (isFailedToFetch) {
+      notice.params = {
+        ...notice.params,
+        online: navigator.onLine,
+        visibilityState: document.visibilityState,
+        url: window.location.href,
+      }
+    }
+
+    return notice
+  })
   return client
 }
 
