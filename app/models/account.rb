@@ -636,6 +636,7 @@ class Account < ActiveRecord::Base
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_a_mentor? && !is_chapter_ambassador? && !club_ambassador? }
   validates :date_of_birth, presence: true, if: -> { is_a_judge? && new_record? }
   validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_a_mentor? || is_chapter_ambassador? || club_ambassador?) && new_record? }
+  validate :must_meet_minimum_age_requirement, if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && date_of_birth.present? && date_of_birth_changed? }
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
@@ -1211,6 +1212,12 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def must_meet_minimum_age_requirement
+    if age && age < 18
+      errors.add(:date_of_birth, "must indicate you are at least 18 years old")
+    end
   end
 
   def create_account_created_activity

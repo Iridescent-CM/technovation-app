@@ -359,6 +359,84 @@ RSpec.describe Account do
       end
     end
 
+    describe "minimum age on date of birth changes" do
+      context "for a judge" do
+        let(:judge) {
+          FactoryBot.create(:judge,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "is invalid when the birthdate is changed to make them younger than 18" do
+          judge.account.date_of_birth = 17.years.ago
+
+          expect(judge.account).not_to be_valid
+          expect(judge.account.errors[:date_of_birth])
+            .to include("must indicate you are at least 18 years old")
+        end
+
+        it "is valid when the birthdate is changed but still 18 or older" do
+          judge.account.date_of_birth = 25.years.ago
+
+          expect(judge.account).to be_valid
+        end
+
+        it "is valid when the birthdate is left unchanged" do
+          expect(judge.account).to be_valid
+        end
+
+        it "is valid when the birthdate is exactly 18 years ago today" do
+          judge.account.date_of_birth = 18.years.ago.to_date
+
+          expect(judge.account).to be_valid
+        end
+
+        it "is invalid when they only turn 18 tomorrow" do
+          judge.account.date_of_birth = (18.years.ago + 1.day).to_date
+
+          expect(judge.account).not_to be_valid
+        end
+      end
+
+      context "for a chapter ambassador" do
+        let(:chapter_ambassador) {
+          FactoryBot.create(:chapter_ambassador,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "is invalid when the birthdate is changed to make them younger than 18" do
+          chapter_ambassador.account.date_of_birth = 17.years.ago
+
+          expect(chapter_ambassador.account).not_to be_valid
+        end
+      end
+
+      context "for a club ambassador" do
+        let(:club_ambassador) {
+          FactoryBot.create(:club_ambassador,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "is invalid when the birthdate is changed to make them younger than 18" do
+          club_ambassador.account.date_of_birth = 17.years.ago
+
+          expect(club_ambassador.account).not_to be_valid
+        end
+      end
+
+      context "for a mentor (excluded because converted students may be 14+)" do
+        let(:mentor) {
+          FactoryBot.create(:mentor,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "stays valid when the birthdate is changed to under 18" do
+          mentor.account.date_of_birth = 15.years.ago
+
+          expect(mentor.account).to be_valid
+        end
+      end
+    end
+
     describe "phone number" do
       it "allows phone numbers with valid characters" do
         account = FactoryBot.create(:account)
