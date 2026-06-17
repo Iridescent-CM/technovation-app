@@ -151,5 +151,9 @@ module FillPdfs
 
   class GenericPDFFiller
     include FillPdfs
+
+    def full_text
+      ""
+    end
   end
 end
