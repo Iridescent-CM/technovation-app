@@ -16,6 +16,12 @@
     <%= link_to t("views.chapter_ambassadors.navigation.chapter_admin_activity"),
                 chapter_ambassador_participants_path,
                 class: al(chapter_ambassador_participants_path) + " sub-nav-item"%>
+
+    <% if SeasonToggles.display_scores? %>
+      <%= link_to "Certificates",
+                  chapter_ambassador_certificates_path,
+                  class: al(chapter_ambassador_certificates_path) + " sub-nav-item"%>
+    <% end %>
   </nav>
 </div>
 

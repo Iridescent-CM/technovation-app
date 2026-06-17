@@ -83,7 +83,7 @@ class Account < ActiveRecord::Base
   has_many :current_clubs,
     through: :current_club_assignments,
     source: :chapterable,
-    source_type: "Clubs"
+    source_type: "Club"
 
   has_many :certificates, dependent: :destroy
 
@@ -131,10 +131,10 @@ class Account < ActiveRecord::Base
   has_many :current_grand_prize_winner_certificates, -> { current.grand_prize_winner },
     class_name: "Certificate"
 
-  has_many :appreciation_certificates, -> { mentor_appreciation },
+  has_many :appreciation_certificates, -> { mentor },
     class_name: "Certificate"
 
-  has_many :current_appreciation_certificates, -> { current.mentor_appreciation },
+  has_many :current_appreciation_certificates, -> { current.mentor },
     class_name: "Certificate"
 
   has_many :general_judge_certificates, -> { general_judge },
@@ -165,6 +165,12 @@ class Account < ActiveRecord::Base
     class_name: "Certificate"
 
   has_many :current_judge_certificates, -> { current.judge_types },
+    class_name: "Certificate"
+
+  has_many :ambassador_appreciation_certificates, -> { ambassador_appreciation },
+    class_name: "Certificate"
+
+  has_many :current_ambassador_appreciation_certificates, -> { current.ambassador_appreciation },
     class_name: "Certificate"
 
   has_many :void_consent_waivers,

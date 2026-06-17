@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "pdf_forms"
+require "./lib/certificate_template_paths"
 
 Dir[Rails.root.join("lib/fill_pdfs/*.rb")].each { |f| require f }
 
@@ -109,15 +110,39 @@ module FillPdfs
   end
 
   def get_value(recipient, field_name)
-    if ["full_text"].include?(field_name)
-      public_send(field_name)
+    if description_field?(field_name)
+      full_text
+    elsif recipient_name_field?(field_name)
+      recipient.full_name
+    elsif division_field?(field_name)
+      recipient.division
     else
       recipient.public_send(field_name)
     end
   end
 
+  def description_field?(field_name)
+    field_name == "full_text" ||
+      field_name.match?(/Description/i) ||
+      field_name.match?(/\AText Field \d+\z/) ||
+      field_name.match?(/\Adescription\z/i)
+  end
+
+  def recipient_name_field?(field_name)
+    field_name.match?(/\ARecipient( \d+)?\z/) ||
+      field_name.match?(/\ARecipientName( \d+)?\z/) ||
+      field_name == "Recipient Name" ||
+      field_name == "Name"
+  end
+
+  def division_field?(field_name)
+    field_name.match?(/\ADIVISION\z/i) ||
+      field_name.match?(/\Adivision\z/) ||
+      field_name == "LEVEL"
+  end
+
   def pathname
-    "./lib/certs/#{season}/#{type}.pdf"
+    CertificateTemplatePaths.for(recipient: recipient, type: type, season: season)
   end
 
   def tmp_output

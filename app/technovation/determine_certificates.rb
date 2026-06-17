@@ -34,6 +34,8 @@ class DetermineCertificates
   end
 
   def gets_certificate?(certificate_type)
+    return false if CertificateTypes::MANUAL_ONLY_CERTIFICATE_TYPES.include?(certificate_type.to_sym)
+
     send(:"gets_#{certificate_type}_certificate?")
   end
 
@@ -104,18 +106,7 @@ class DetermineCertificates
   end
 
   def gets_special_prize_winner_certificate?
-    return false if !@account.student?
-
-    team = @account.student_profile.team
-    !team.nil? && team.submission.special_prize_winner?
-  end
-
-  def needed_special_prize_winner_recipients
-    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
-      []
-    else
-      [CertificateRecipient.new(:special_prize_winner, @account, team: @account.student_profile.team)]
-    end
+    false
   end
 
   def gets_finalist_certificate?
@@ -148,17 +139,17 @@ class DetermineCertificates
     end
   end
 
-  def gets_mentor_appreciation_certificate?
+  def gets_mentor_certificate?
     @account.mentor_profile.present? &&
       @account.mentor_profile.teams.by_season(season).any?
   end
 
-  def needed_mentor_appreciation_recipients
+  def needed_mentor_recipients
     @account.mentor_profile.teams.by_season(season).select { |team|
       !@account.appreciation_certificates.by_season(season).for_team(team).any? &&
         team.submission.percent_complete > 50
     }.map { |team|
-      CertificateRecipient.new(:mentor_appreciation, @account, team: team)
+      CertificateRecipient.new(:mentor, @account, team: team)
     }
   end
 
@@ -214,5 +205,23 @@ class DetermineCertificates
 
   def gets_rpe_winner_certificate?
     false # handled off platform
+  end
+
+  def gets_ambassador_appreciation_certificate?
+    profile = @account.chapter_ambassador_profile || @account.club_ambassador_profile
+    return false unless profile&.onboarded?
+
+    assignment = @account.current_primary_chapterable_assignment
+    return false unless assignment.present?
+
+    assignment.chapterable.present? && assignment.chapterable.onboarded?
+  end
+
+  def needed_ambassador_appreciation_recipients
+    if @account.certificates.ambassador_types.by_season(season).any?
+      []
+    else
+      [CertificateRecipient.new(:ambassador_appreciation, @account)]
+    end
   end
 end

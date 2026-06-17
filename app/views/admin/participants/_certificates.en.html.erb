@@ -107,5 +107,26 @@
       <% end %>
       <div class="grid__col-1"></div>
     <% end %>
+
+    <% if account.ambassador? %>
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %>
+        <%= hidden_field_tag :account_id, account.id %>
+
+        <h6 class="reset">Ambassador certificate</h6>
+        <p>
+          <%= select_tag :certificate_type,
+              options_for_select(CertificateTypes::AMBASSADOR_CERTIFICATE_TYPES.keys.map { |t|
+                [t.to_s.humanize.titleize, t]
+              }),
+              prompt: "Select type",
+              required: true,
+              class: "chosen" %>
+        </p>
+        <p>
+          <%= submit_tag 'Award', class: "button" %>
+        </p>
+      <% end %>
+      <div class="grid__col-1"></div>
+    <% end %>
   </div>
 </div>
