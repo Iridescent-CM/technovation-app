@@ -66,6 +66,18 @@ RSpec.describe Admin::ParticipantsController do
         expect(response.body).to include(student.account.email)
       end
     end
+
+    context "while impersonating a non-admin participant (issue #6254)" do
+      it "redirects instead of raising NoMethodError when the active session is a non-admin" do
+        student = FactoryBot.create(:student)
+        student.account.regenerate_session_token
+        controller.set_cookie(CookieNames::SESSION_TOKEN, student.account.session_token)
+
+        get :index
+
+        expect(response).to have_http_status(:redirect)
+      end
+    end
   end
 
   it "reconsiders student's team division on dob change" do
