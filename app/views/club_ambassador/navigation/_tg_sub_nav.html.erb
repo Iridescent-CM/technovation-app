@@ -15,5 +15,11 @@
     <%= link_to t("views.club_ambassadors.navigation.club_admin_activity"),
                 club_ambassador_participants_path,
                 class: al(club_ambassador_participants_path) + " sub-nav-item"%>
+
+    <% if SeasonToggles.display_scores? %>
+      <%= link_to "Certificates",
+                  club_ambassador_certificates_path,
+                  class: al(club_ambassador_certificates_path) + " sub-nav-item"%>
+    <% end %>
   </nav>
 </div>

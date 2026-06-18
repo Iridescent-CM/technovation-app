@@ -66,7 +66,7 @@ RSpec.describe DetermineCertificates do
     it "awards a mentor appreciation certificate" do
       mentor = FactoryBot.create(:mentor, :complete_submission, number_of_teams: 1)
       expect(DetermineCertificates.new(mentor.account).needed).to contain_exactly(
-        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: mentor.current_teams.last)
+        CertificateRecipient.new(:mentor, mentor.account, team: mentor.current_teams.last)
       )
     end
 
@@ -77,7 +77,7 @@ RSpec.describe DetermineCertificates do
       end
 
       expected = team_submissions.map do |team|
-        CertificateRecipient.new(:mentor_appreciation, mentor.account, team: team)
+        CertificateRecipient.new(:mentor, mentor.account, team: team)
       end
       expect(DetermineCertificates.new(mentor.account).needed).to match_array(expected)
     end
@@ -100,7 +100,7 @@ RSpec.describe DetermineCertificates do
       mentor = FactoryBot.create(:mentor, number_of_teams: 1)
       FactoryBot.create(:student, :quarterfinalist, account: mentor.account)
 
-      expect(DetermineCertificates.new(mentor.account).eligible_types).to include("mentor_appreciation")
+      expect(DetermineCertificates.new(mentor.account).eligible_types).to include("mentor")
       expect(DetermineCertificates.new(mentor.account).eligible_types).not_to include(*CertificateTypes::STUDENT_CERTIFICATE_TYPES.keys.map(&:to_s))
     end
   end
@@ -112,7 +112,7 @@ RSpec.describe DetermineCertificates do
         FactoryBot.create(:score, :complete, judge_profile: user.account.judge_profile)
       end
 
-      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w[mentor_appreciation bronze_judge])
+      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w[mentor bronze_judge])
     end
   end
 
@@ -269,6 +269,79 @@ RSpec.describe DetermineCertificates do
         cert_type: :silver_judge)
 
       expect(DetermineCertificates.new(judge.account).needed).to be_empty
+    end
+  end
+
+  context "for ambassador" do
+    def make_fully_onboarded_chapter_ambassador
+      ambassador = FactoryBot.create(:ambassador)
+      ambassador.update_column(:onboarded, true)
+      chapter = ambassador.account.current_primary_chapter
+      chapter.update_column(:onboarded, true)
+      ambassador
+    end
+
+    def make_fully_onboarded_club_ambassador
+      ambassador = FactoryBot.create(:club_ambassador)
+      ambassador.update_column(:onboarded, true)
+      club = ambassador.account.current_clubs.first
+      club.update_column(:onboarded, true)
+      ambassador
+    end
+
+    it "awards ambassador appreciation for a fully onboarded chapter ambassador" do
+      ambassador = make_fully_onboarded_chapter_ambassador
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to contain_exactly(
+        CertificateRecipient.new(:ambassador_appreciation, ambassador.account)
+      )
+    end
+
+    it "awards ambassador appreciation for a fully onboarded club ambassador" do
+      ambassador = make_fully_onboarded_club_ambassador
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to contain_exactly(
+        CertificateRecipient.new(:ambassador_appreciation, ambassador.account)
+      )
+    end
+
+    it "does not award when the ambassador profile is not onboarded" do
+      ambassador = FactoryBot.create(:ambassador, training_completed_at: nil)
+      ambassador.update_column(:onboarded, false)
+      ambassador.account.current_primary_chapter.update_column(:onboarded, true)
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to be_empty
+    end
+
+    it "does not award when the chapter is not onboarded" do
+      ambassador = make_fully_onboarded_chapter_ambassador
+      ambassador.account.current_primary_chapter.update_column(:onboarded, false)
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to be_empty
+    end
+
+    it "does not award when the club is not onboarded" do
+      ambassador = make_fully_onboarded_club_ambassador
+      ambassador.account.current_clubs.first.update_column(:onboarded, false)
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to be_empty
+    end
+
+    it "does not award when not assigned to a chapter or club" do
+      ambassador = make_fully_onboarded_chapter_ambassador
+      ambassador.account.chapterable_assignments.destroy_all
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to be_empty
+    end
+
+    it "does not re-award if an ambassador certificate already exists" do
+      ambassador = make_fully_onboarded_chapter_ambassador
+
+      FactoryBot.create(:certificate,
+        account: ambassador.account,
+        cert_type: :ambassador_appreciation)
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to be_empty
     end
   end
 end

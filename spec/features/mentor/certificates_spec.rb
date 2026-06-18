@@ -62,7 +62,7 @@ RSpec.feature "Mentor certificates" do
     expect {
       FillPdfs.call(mentor.account)
     }.to change {
-      mentor.certificates.current.mentor_appreciation.count
+      mentor.certificates.current.mentor.count
     }.from(0).to(2)
 
     sign_in(mentor)

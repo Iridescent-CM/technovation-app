@@ -20,6 +20,10 @@ class Certificate < ApplicationRecord
     where(cert_type: CertificateTypes::MENTOR_CERTIFICATE_TYPES.keys)
   }
 
+  scope :ambassador_types, -> {
+    where(cert_type: CertificateTypes::AMBASSADOR_CERTIFICATE_TYPES.keys)
+  }
+
   scope :for_team, ->(team) {
     where(team: team)
   }
