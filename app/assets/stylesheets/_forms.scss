@@ -210,6 +210,12 @@ select {
   }
 }
 
+.minimum-age-error__message {
+  color: $alert-txt;
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
 .while-waiting {
   transition: 0.2s opacity;
   opacity: 0;
