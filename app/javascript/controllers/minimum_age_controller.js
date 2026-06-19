@@ -12,9 +12,16 @@ export default class extends Controller {
 
     this.errorElement = this.buildErrorElement();
     this.boundValidate = this.validate.bind(this);
-    this.selects.forEach((select) =>
-      select.addEventListener("change", this.boundValidate)
-    );
+    this.jqueryListeners = [];
+    this.selects.forEach((select) => {
+      select.addEventListener("change", this.boundValidate);
+
+      if (window.jQuery) {
+        const $select = window.jQuery(select);
+        $select.on("change.minimumAge", this.boundValidate);
+        this.jqueryListeners.push($select);
+      }
+    });
     this.validate();
   }
 
@@ -22,6 +29,11 @@ export default class extends Controller {
     if (this.selects) {
       this.selects.forEach((select) =>
         select.removeEventListener("change", this.boundValidate)
+      );
+    }
+    if (this.jqueryListeners) {
+      this.jqueryListeners.forEach(($select) =>
+        $select.off("change.minimumAge")
       );
     }
     this.setSubmitDisabled(false);
@@ -86,14 +98,12 @@ export default class extends Controller {
   }
 
   buildErrorElement() {
-    // Mirror Rails' `.field_with_errors > .error` markup so the message picks
-    // up the app's existing red validation-error styling.
     const wrapper = document.createElement("div");
-    wrapper.className = "field_with_errors minimum-age-error";
+    wrapper.className = "minimum-age-error";
     wrapper.style.display = "none";
 
     const message = document.createElement("p");
-    message.className = "error";
+    message.className = "minimum-age-error__message";
     message.textContent = `You must be at least ${this.minimumValue} years old.`;
 
     wrapper.appendChild(message);
