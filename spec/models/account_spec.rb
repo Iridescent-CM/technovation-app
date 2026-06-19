@@ -885,6 +885,64 @@ RSpec.describe Account do
     end
   end
 
+  describe ".mentors_matched" do
+    it "includes mentors with current teams" do
+      unmatched_mentor = FactoryBot.create(:mentor, :onboarded)
+      matched_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+
+      past_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+      past_mentor.teams.each do |team|
+        team.update_column(:seasons, [Season.current.year - 1])
+      end
+
+      expect(Account.mentors_matched).to include(matched_mentor.account)
+      expect(Account.mentors_matched).not_to include(unmatched_mentor.account)
+      expect(Account.mentors_matched).not_to include(past_mentor.account)
+    end
+
+    it "excludes students with current teams" do
+      matched_student = FactoryBot.create(:student, :on_team)
+
+      expect(Account.mentors_matched).not_to include(matched_student.account)
+    end
+
+    it "does not return duplicate mentor accounts" do
+      mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+      team = FactoryBot.create(:team, members_count: 0)
+      TeamRosterManaging.add(team, mentor)
+
+      expect(Account.mentors_matched.where(id: mentor.account.id).count).to eq(1)
+    end
+  end
+
+  describe ".mentors_unmatched" do
+    it "includes mentors without current teams" do
+      unmatched_mentor = FactoryBot.create(:mentor, :onboarded)
+      matched_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+
+      past_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+      past_mentor.teams.each do |team|
+        team.update_column(:seasons, [Season.current.year - 1])
+      end
+
+      expect(Account.mentors_unmatched).to include(unmatched_mentor.account)
+      expect(Account.mentors_unmatched).to include(past_mentor.account)
+      expect(Account.mentors_unmatched).not_to include(matched_mentor.account)
+    end
+
+    it "excludes students without current teams" do
+      unmatched_student = FactoryBot.create(:student)
+
+      expect(Account.mentors_unmatched).not_to include(unmatched_student.account)
+    end
+
+    it "does not return duplicate mentor accounts" do
+      mentor = FactoryBot.create(:mentor, :onboarded)
+
+      expect(Account.mentors_unmatched.where(id: mentor.account.id).count).to eq(1)
+    end
+  end
+
   describe ".unmatched" do
     it "returns students without current teams" do
       judge = FactoryBot.create(:judge)

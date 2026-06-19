@@ -434,6 +434,18 @@ class Account < ActiveRecord::Base
     joins(mentor_profile: :current_teams).includes(:mentor_profile, :chapter_ambassador_profile)
   }
 
+  scope :mentors_matched, -> {
+    joins(:mentor_profile).where(
+      mentor_profiles: {id: MentorProfile.joins(:current_teams).select(:id)}
+    )
+  }
+
+  scope :mentors_unmatched, -> {
+    joins(:mentor_profile).where.not(
+      mentor_profiles: {id: MentorProfile.joins(:current_teams).select(:id)}
+    )
+  }
+
   scope :students_matched_with_a_team, -> {
     joins(student_profile: :current_teams).includes(:student_profile, :mentor_profile, :chapter_ambassador_profile)
   }

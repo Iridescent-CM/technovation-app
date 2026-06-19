@@ -74,7 +74,11 @@ class MentorsGrid
       ["Mentors with open join requests to teams", "mentors_pending_requests"]
     ],
     filter_group: "common" do |value, scope|
-    scope.send(value)
+    case value
+    when "matched" then scope.mentors_matched
+    when "unmatched" then scope.mentors_unmatched
+    else scope.send(value)
+    end
   end
 
   filter :has_judge_profile,
