@@ -119,8 +119,9 @@ RSpec.describe Account do
             judge.account.reload
           end
 
-          it "is valid" do
-            expect(judge).to be_valid
+          it "is not valid" do
+            expect(judge.account).not_to be_valid
+            expect(judge.account.errors[:date_of_birth]).to include("can't be blank")
           end
         end
       end
@@ -394,6 +395,15 @@ RSpec.describe Account do
           judge.account.date_of_birth = (18.years.ago + 1.day).to_date
 
           expect(judge.account).not_to be_valid
+        end
+
+        it "is invalid when a stored under-18 birthdate is left unchanged" do
+          judge.account.update_column(:date_of_birth, 16.years.ago.to_date)
+          judge.account.reload
+
+          expect(judge.account).not_to be_valid
+          expect(judge.account.errors[:date_of_birth])
+            .to include("must indicate you are at least 18 years old")
         end
       end
 
