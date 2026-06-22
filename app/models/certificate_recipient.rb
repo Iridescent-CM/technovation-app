@@ -72,6 +72,15 @@ class CertificateRecipient
     ]
   end
 
+  def self.from_certificate(certificate)
+    new(
+      certificate.cert_type,
+      certificate.account,
+      team: certificate.team,
+      season: certificate.season
+    )
+  end
+
   def self.from_state(state)
     certificate_type, account_id, team_id, season = state
 

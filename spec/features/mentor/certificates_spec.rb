@@ -71,4 +71,30 @@ RSpec.feature "Mentor certificates" do
 
     expect(page).to have_link("Open your certificate", count: 2)
   end
+
+  scenario "mentor with a previous season certificate can download it" do
+    mentor = FactoryBot.create(:mentor, :onboarded)
+    mentor.account.took_program_survey!
+    team = FactoryBot.create(:team)
+
+    TeamRosterManaging.add(team, mentor)
+    certificate = FactoryBot.create(
+      :certificate,
+      account: mentor.account,
+      team: team,
+      season: 2019,
+      cert_type: :mentor
+    )
+
+    sign_in(mentor)
+    click_link "Scores & Certificates"
+    click_link "Certificates"
+
+    expect(page).to have_content("Previous Certificates")
+    expect(page).to have_link(
+      "Download your certificate",
+      href: certificate_download_path(certificate)
+    )
+    expect(page).to have_content("2019")
+  end
 end

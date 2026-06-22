@@ -1,1 +1,0 @@
-export PATH=$PATH:$HOME/vendor/pdftk/bin

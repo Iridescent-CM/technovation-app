@@ -137,7 +137,6 @@ jobs:
           PARENTAL_CONSENT_TEXT_MESSAGE_COUNTRY_CODES: "US,NG,BR,IN,GH"
           PARENT_RESOURCES_URL: n-a
           PARENT_SAMPLE_COMMUNICATION_PLAN_URL: n-a
-          PDFTK_PATH: /usr/bin/pdftk
           PGHOST: 127.0.0.1
           PGUSER: root
           PROGRAM_TIMELINE_URL: n-a
@@ -203,8 +202,8 @@ jobs:
             sudo apt-get install -y postgresql-client-13
 
       - run:
-          name: Install pdftk
-          command: sudo apt install pdftk
+          name: Install ghostscript for certificate PDF rendering
+          command: sudo apt install -y ghostscript
 
       - run:
           name: Install wkhtmltopdf

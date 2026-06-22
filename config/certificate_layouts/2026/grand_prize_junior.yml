@@ -1,0 +1,22 @@
+---
+page_width: 792.0
+page_height: 612.0
+fields:
+  RecipientName 2:
+    x: 81.0
+    "y": 285.5
+    width: 630.0
+    height: 25.8
+    align: left
+    size: 12
+    color: "#000000"
+    font_style: normal
+  Text Field 10:
+    x: 109.4
+    "y": 164.8
+    width: 565.9
+    height: 95.2
+    align: left
+    size: 12
+    color: "#000000"
+    font_style: normal

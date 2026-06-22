@@ -1,0 +1,22 @@
+---
+page_width: 792.0
+page_height: 612.0
+fields:
+  Recipient 2:
+    x: 421.9
+    "y": 362.8
+    width: 394.6
+    height: 25.8
+    align: left
+    size: 12
+    color: "#000000"
+    font_style: bold
+  MentorDescription:
+    x: 421.9
+    "y": 118.0
+    width: 315.4
+    height: 223.4
+    align: left
+    size: 12
+    color: "#000000"
+    font_style: normal

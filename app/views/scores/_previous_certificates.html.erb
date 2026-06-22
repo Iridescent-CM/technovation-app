@@ -35,7 +35,7 @@
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <%= link_to "Download your certificate",
-                certificate.file_url,
+                certificate_download_path(certificate),
                 target: "_blank",
                 class: "tw-green-btn"
             %>

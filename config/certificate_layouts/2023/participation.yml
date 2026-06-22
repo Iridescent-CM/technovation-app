@@ -1,0 +1,22 @@
+---
+page_width: 792.0
+page_height: 612.0
+fields:
+  full_name:
+    x: 90.7
+    "y": 268.6
+    width: 592.0
+    height: 47.3
+    align: left
+    size: 18
+    color: "#041e42"
+    font_style: bold
+  full_text:
+    x: 90.7
+    "y": 174.7
+    width: 591.4
+    height: 89.3
+    align: left
+    size: 14
+    color: "#041e42"
+    font_style: bold

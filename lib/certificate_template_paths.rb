@@ -1,5 +1,13 @@
 module CertificateTemplatePaths
   FIRST_SEASON = 2026
+  FIRST_JUDGE_TIER_SEASON = 2025
+
+  LEGACY_JUDGE_TEMPLATES = {
+    bronze_judge: "certified_judge",
+    silver_judge: "head_judge",
+    gold_judge: "judge_advisor",
+    general_judge: "certified_judge"
+  }.freeze
 
   module_function
 
@@ -11,7 +19,7 @@ module CertificateTemplatePaths
       return "#{directory}/#{filename}" if filename
     end
 
-    "#{directory}/#{legacy_filename(type)}.pdf"
+    "#{directory}/#{legacy_filename(type, season: season)}.pdf"
   end
 
   def filename_for_2026(recipient:, type:)
@@ -44,12 +52,25 @@ module CertificateTemplatePaths
     "grand_prize_#{division}.pdf"
   end
 
-  def legacy_filename(type)
+  def legacy_filename(type, season:)
     case type.to_sym
     when :mentor
       "mentor_appreciation"
     when :grand_prize_winner
       "grand_prize_winner"
+    when :bronze_judge, :silver_judge, :gold_judge
+      if season >= FIRST_JUDGE_TIER_SEASON
+        type.to_s
+      else
+        LEGACY_JUDGE_TEMPLATES.fetch(type.to_sym)
+      end
+    when :general_judge
+      legacy_name = "general_judge"
+      if File.exist?("./lib/certs/#{season}/#{legacy_name}.pdf")
+        legacy_name
+      else
+        LEGACY_JUDGE_TEMPLATES.fetch(:general_judge)
+      end
     else
       type.to_s
     end

@@ -1,0 +1,31 @@
+---
+page_width: 792.0
+page_height: 612.0
+fields:
+  Region Name:
+    x: 119.7
+    "y": 334.1
+    width: 552.3
+    height: 33.8
+    align: left
+    size: 24
+    color: "#252526"
+    font_style: normal
+  Recipient Name:
+    x: 122.3
+    "y": 211.1
+    width: 547.1
+    height: 33.8
+    align: left
+    size: 15
+    color: "#252526"
+    font_style: normal
+  app name:
+    x: 120.8
+    "y": 135.9
+    width: 551.5
+    height: 33.8
+    align: left
+    size: 15
+    color: "#252526"
+    font_style: normal

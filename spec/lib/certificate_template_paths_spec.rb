@@ -25,6 +25,20 @@ RSpec.describe CertificateTemplatePaths do
 
         expect(path).to eq("./lib/certs/2025/mentor_appreciation.pdf")
       end
+
+      it "maps pre-2025 judge tiers to legacy template names" do
+        expect(described_class.for(recipient: recipient, type: :bronze_judge, season: 2020))
+          .to eq("./lib/certs/2020/certified_judge.pdf")
+        expect(described_class.for(recipient: recipient, type: :silver_judge, season: 2020))
+          .to eq("./lib/certs/2020/head_judge.pdf")
+        expect(described_class.for(recipient: recipient, type: :gold_judge, season: 2020))
+          .to eq("./lib/certs/2020/judge_advisor.pdf")
+      end
+
+      it "uses tiered judge template names from 2025 onward" do
+        expect(described_class.for(recipient: recipient, type: :silver_judge, season: 2025))
+          .to eq("./lib/certs/2025/silver_judge.pdf")
+      end
     end
 
     context "when the season is 2026" do

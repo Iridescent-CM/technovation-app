@@ -1,32 +1,13 @@
 #!/usr/bin/env ruby
 
-require "pdf_forms"
+require "./lib/certificate_layouts"
+require "./lib/certificate_generators/base"
+require "./lib/certificate_generators/generator"
 require "./lib/certificate_template_paths"
 
 Dir[Rails.root.join("lib/fill_pdfs/*.rb")].each { |f| require f }
 
 module FillPdfs
-  def self.pdftk_wrapper
-    return @@pdftk_wrapper if defined?(@@pdftk_wrapper)
-    # PROD settings:
-    # heroku config:set LD_LIBRARY_PATH=/app/vendor/pdftk/lib --app APPNAME
-    # heroku config:set PDFTK_PATH=pdftk --app APPNAME
-    #
-    # DEV settings:
-    # -- use `which pdftk` to find your executable path
-    # -- install via homebrew or apt-get if needed
-    #
-    # assuming this typical executable path:
-    # echo "PDFTK_PATH=/usr/bin/pdftk" >> .env
-
-    @@pdftk_wrapper = PdfForms::PdftkWrapper.new(ENV.fetch("PDFTK_PATH"))
-  end
-
-  if Rails.env.production?
-    # forcing this var to be set in production
-    ENV.fetch("LD_LIBRARY_PATH")
-  end
-
   def self.call(account, **options)
     season = options.fetch(:season) { Season.current.year }
 
@@ -36,18 +17,24 @@ module FillPdfs
   end
 
   def self.fill(recipient)
+    build_filler(recipient).generate_certificate
+  end
+
+  def self.render_pdf(recipient)
+    build_filler(recipient).render_pdf
+  end
+
+  def self.build_filler(recipient)
     certificate_type = recipient.certificate_type
 
     generator_klass_name = "fill_pdfs/#{certificate_type}"
     generator_klass = generator_klass_name.camelize.safe_constantize
 
-    generator = if !!generator_klass
+    if !!generator_klass
       generator_klass.new(recipient, certificate_type)
     else
       GenericPDFFiller.new(recipient, certificate_type)
     end
-
-    generator.generate_certificate
   end
 
   attr_reader :recipient, :account, :team, :type, :season
@@ -61,36 +48,36 @@ module FillPdfs
   end
 
   def generate_certificate
-    raise "PDF is not editable" if pdf.fields.empty?
-    fill_form
+    layout = CertificateLayouts.for(template_path: pathname)
+
+    fill_form(layout)
     attach_uploaded_certificate_from_tmp_file_to_account
     account.certificates.public_send(type).current
   end
 
+  def render_pdf
+    layout = CertificateLayouts.for(template_path: pathname)
+    pdf_data(layout)
+  end
+
   private
-
-  def field_values
-    Hash[pdf.fields.map { |f| [f.name, get_value(recipient, f.name)] }]
-  end
-
-  def pdf
-    raise IOError, "file not found - #{pathname}" unless File.exist?(pathname)
-    PdfForms::Pdf.new(pathname, FillPdfs.pdftk_wrapper)
-  end
 
   def skip_enabled?
     ENV.fetch("DO_NOT_FILL_CERTIFICATES", false)
   end
 
-  def fill_form
+  def fill_form(layout)
+    File.binwrite(tmp_output, pdf_data(layout))
+  end
+
+  def pdf_data(layout)
     if !Rails.env.production? && skip_enabled?
-      FileUtils.cp(pathname, tmp_output)
+      File.binread(pathname)
     else
-      FillPdfs.pdftk_wrapper.fill_form(
-        pathname,
-        tmp_output,
-        field_values,
-        flatten: true
+      CertificateGenerators::Generator.generate(
+        filler: self,
+        template_path: pathname,
+        layout: layout
       )
     end
   end
@@ -107,38 +94,6 @@ module FillPdfs
     attrs.merge!(team: team) if team.present?
 
     account.certificates.create!(attrs)
-  end
-
-  def get_value(recipient, field_name)
-    if description_field?(field_name)
-      full_text
-    elsif recipient_name_field?(field_name)
-      recipient.full_name
-    elsif division_field?(field_name)
-      recipient.division
-    else
-      recipient.public_send(field_name)
-    end
-  end
-
-  def description_field?(field_name)
-    field_name == "full_text" ||
-      field_name.match?(/Description/i) ||
-      field_name.match?(/\AText Field \d+\z/) ||
-      field_name.match?(/\Adescription\z/i)
-  end
-
-  def recipient_name_field?(field_name)
-    field_name.match?(/\ARecipient( \d+)?\z/) ||
-      field_name.match?(/\ARecipientName( \d+)?\z/) ||
-      field_name == "Recipient Name" ||
-      field_name == "Name"
-  end
-
-  def division_field?(field_name)
-    field_name.match?(/\ADIVISION\z/i) ||
-      field_name.match?(/\Adivision\z/) ||
-      field_name == "LEVEL"
   end
 
   def pathname
