@@ -1,9 +1,21 @@
 class AccountsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :national_view, :current_account, :allow_state_search
 
-  self.batch_size = 1_000
+  CSV_EXPORT_PRELOADS = [
+    :background_check,
+    :consent_waiver,
+    :chapter_ambassador_profile,
+    :club_ambassador_profile,
+    {current_chapter_assignments: :chapterable},
+    {current_club_assignments: :chapterable},
+    {
+      student_profile: [:parental_consents, :media_consent, :current_teams],
+      mentor_profile: [:expertises, :current_teams, {mentor_profile_mentor_types: :mentor_type}],
+      judge_profile: [:regional_pitch_events, {judge_profile_judge_types: :judge_type}]
+    }
+  ].freeze
 
   scope do
     Account.not_admin
@@ -45,7 +57,7 @@ class AccountsGrid
 
   column :mentor_types do
     if mentor_profile.present?
-      mentor_profile.mentor_profile_mentor_types.joins(:mentor_type).pluck(:name).join(", ")
+      mentor_profile.mentor_profile_mentor_types.map { |type| type.mentor_type.name }.join(", ")
     else
       "-"
     end
@@ -61,7 +73,7 @@ class AccountsGrid
 
   column :judge_types, if: ->(g) { g.admin } do
     if judge_profile.present?
-      judge_profile.judge_profile_judge_types.joins(:judge_type).pluck(:name).join(", ")
+      judge_profile.judge_profile_judge_types.map { |type| type.judge_type.name }.join(", ")
     else
       "-"
     end
@@ -172,8 +184,14 @@ class AccountsGrid
   end
 
   column :team_names, header: "Team name(s)" do
-    if student_profile.present? or mentor_profile.present?
-      teams.current.map(&:name).to_sentence
+    profile_teams = if student_profile.present?
+      student_profile.current_teams
+    elsif mentor_profile.present?
+      mentor_profile.current_teams
+    end
+
+    if profile_teams.present?
+      profile_teams.map(&:name).to_sentence
     else
       "-"
     end
@@ -324,7 +342,7 @@ class AccountsGrid
   filter :chapter,
     :enum,
     header: "Chapter (students, mentors and ChAs only)",
-    select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
+    select: ->(g) { AccountsGrid.chapter_filter_options },
     filter_group: "common",
     if: ->(g) {
       g.admin
@@ -338,7 +356,7 @@ class AccountsGrid
   filter :club,
     :enum,
     header: "Club (students, mentors and ChAs only)",
-    select: Club.all.order(name: :asc).map { |c| [c.name, c.id] },
+    select: ->(g) { AccountsGrid.club_filter_options },
     filter_group: "common",
     if: ->(g) {
       g.admin
@@ -807,6 +825,26 @@ class AccountsGrid
     multiple: true
   )
 
+  def self.chapter_filter_options
+    Rails.cache.fetch("accounts_grid/chapter_filter_options", expires_in: 1.hour) do
+      Chapter.order(name: :asc).pluck(:name, :id)
+    end
+  end
+
+  def self.club_filter_options
+    Rails.cache.fetch("accounts_grid/club_filter_options", expires_in: 1.hour) do
+      Club.order(name: :asc).pluck(:name, :id)
+    end
+  end
+
+  def to_csv(*)
+    with_csv_export_preloads { super }
+  end
+
+  def each_with_batches(&block)
+    with_csv_export_preloads { super(&block) }
+  end
+
   def get_chapters_for_national_view
     Chapter
       .where(country: current_account.current_chapterable.read_attribute(:country))
@@ -819,5 +857,22 @@ class AccountsGrid
       .where(country: current_account.current_chapterable.read_attribute(:country))
       .order(name: :asc)
       .map { |c| [c.name, c.id] }
+  end
+
+  protected
+
+  def append_column_preload(relation)
+    relation = super(relation)
+    relation = relation.preload(*CSV_EXPORT_PRELOADS) if @csv_export
+    relation
+  end
+
+  private
+
+  def with_csv_export_preloads
+    @csv_export = true
+    yield
+  ensure
+    @csv_export = false
   end
 end

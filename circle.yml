@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  browser-tools: circleci/browser-tools@2.3.1
+  browser-tools: circleci/browser-tools@2.4.2
 
 jobs:
   build:
@@ -172,7 +172,9 @@ jobs:
             sudo tar -xJf /tmp/node.tar.xz -C /opt/node --strip-components=1
             rm /tmp/node.tar.xz
             echo 'export PATH=/opt/node/bin:$PATH' >> "$BASH_ENV"
+            echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> "$BASH_ENV"
             export PATH="/opt/node/bin:$PATH"
+            export NODE_OPTIONS=--openssl-legacy-provider
             node --version
             sudo env "PATH=$PATH" npm install -g yarn@1.22.22
 

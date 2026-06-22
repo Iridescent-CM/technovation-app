@@ -36,6 +36,8 @@ RSpec.describe "New registration", type: :request do
     before do
       allow(SignIn).to receive(:call)
       SeasonToggles.registration_open!
+
+      post new_registration_path, params: params
     end
 
     context "when a parent is registering (a beginner student)" do
@@ -72,10 +74,10 @@ RSpec.describe "New registration", type: :request do
 
     context "when a judge is registering" do
       let(:profile_type) { "judge" }
-      let(:date_of_birth) { nil }
+      let(:date_of_birth) { (Division.cutoff_date - 25.years) }
+      let!(:judge_type) { JudgeType.find_by!(name: "Educator") }
 
       before do
-        judge_type = FactoryBot.create(:judge_type)
         params[:new_registration][:judgeTypes] = [judge_type.id]
       end
 

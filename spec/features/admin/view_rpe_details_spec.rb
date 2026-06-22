@@ -47,6 +47,30 @@ RSpec.feature "Admin view rpe details", js: true do
     end
   end
 
+  scenario "Admin can add and remove a team from the RPE" do
+    available_team = FactoryBot.create(:team_submission, :senior, :complete).team
+
+    click_link "View"
+
+    click_link "Add Teams"
+
+    within "##{ActionView::RecordIdentifier.dom_id(available_team, :available)}" do
+      click_button "Add"
+    end
+
+    within "#registered-teams-frame" do
+      expect(page).to have_content(available_team.name)
+    end
+
+    within "##{ActionView::RecordIdentifier.dom_id(available_team, :registered)}" do
+      click_button "Remove"
+    end
+
+    expect(page).not_to have_css(
+      "##{ActionView::RecordIdentifier.dom_id(available_team, :registered)}"
+    )
+  end
+
   xscenario "Viewing a specific RPE displays RPE judge details" do
     rpe_judges = FactoryBot.create_list(:judge, 3)
     rpe_judges.each do |judge|

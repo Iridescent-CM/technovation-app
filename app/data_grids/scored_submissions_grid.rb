@@ -1,9 +1,7 @@
 class ScoredSubmissionsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :allow_state_search, :current_account
-
-  self.batch_size = 10
 
   scope do
     TeamSubmission.complete.current

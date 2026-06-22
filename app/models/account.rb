@@ -83,7 +83,7 @@ class Account < ActiveRecord::Base
   has_many :current_clubs,
     through: :current_club_assignments,
     source: :chapterable,
-    source_type: "Clubs"
+    source_type: "Club"
 
   has_many :certificates, dependent: :destroy
 
@@ -131,10 +131,10 @@ class Account < ActiveRecord::Base
   has_many :current_grand_prize_winner_certificates, -> { current.grand_prize_winner },
     class_name: "Certificate"
 
-  has_many :appreciation_certificates, -> { mentor_appreciation },
+  has_many :appreciation_certificates, -> { mentor },
     class_name: "Certificate"
 
-  has_many :current_appreciation_certificates, -> { current.mentor_appreciation },
+  has_many :current_appreciation_certificates, -> { current.mentor },
     class_name: "Certificate"
 
   has_many :general_judge_certificates, -> { general_judge },
@@ -165,6 +165,12 @@ class Account < ActiveRecord::Base
     class_name: "Certificate"
 
   has_many :current_judge_certificates, -> { current.judge_types },
+    class_name: "Certificate"
+
+  has_many :ambassador_appreciation_certificates, -> { ambassador_appreciation },
+    class_name: "Certificate"
+
+  has_many :current_ambassador_appreciation_certificates, -> { current.ambassador_appreciation },
     class_name: "Certificate"
 
   has_many :void_consent_waivers,
@@ -428,6 +434,18 @@ class Account < ActiveRecord::Base
     joins(mentor_profile: :current_teams).includes(:mentor_profile, :chapter_ambassador_profile)
   }
 
+  scope :mentors_matched, -> {
+    joins(:mentor_profile).where(
+      mentor_profiles: {id: MentorProfile.joins(:current_teams).select(:id)}
+    )
+  }
+
+  scope :mentors_unmatched, -> {
+    joins(:mentor_profile).where.not(
+      mentor_profiles: {id: MentorProfile.joins(:current_teams).select(:id)}
+    )
+  }
+
   scope :students_matched_with_a_team, -> {
     joins(student_profile: :current_teams).includes(:student_profile, :mentor_profile, :chapter_ambassador_profile)
   }
@@ -634,7 +652,9 @@ class Account < ActiveRecord::Base
     format: {with: /\A[0-9+\-\s]+\z/, message: "can only contain numbers, dashes, and +"}
 
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_a_mentor? && !is_chapter_ambassador? && !club_ambassador? }
+  validates :date_of_birth, presence: true, if: -> { is_a_judge? }
   validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_a_mentor? || is_chapter_ambassador? || club_ambassador?) && new_record? }
+  validate :must_meet_minimum_age_requirement, if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && date_of_birth.present? }
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
@@ -1210,6 +1230,12 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def must_meet_minimum_age_requirement
+    if age && age < 18
+      errors.add(:date_of_birth, "must indicate you are at least 18 years old")
+    end
   end
 
   def create_account_created_activity

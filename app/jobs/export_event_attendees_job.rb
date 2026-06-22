@@ -26,6 +26,20 @@ class ExportEventAttendeesJob < ActiveJob::Base
     broadcast(db_job, ambassador)
   end
 
+  rescue_from(StandardError) do |error|
+    db_job = Job.find_by(job_id: job_id)
+
+    if db_job
+      db_job.update_column(:status, "failed")
+
+      ambassador = ChapterAmbassadorProfile.find_by(id: arguments.first)
+
+      broadcast(db_job, ambassador) if ambassador
+    end
+
+    raise error
+  end
+
   def perform(ambassador_id, event_id, context_klass_name, list_type)
     ambassador = ChapterAmbassadorProfile.find(ambassador_id)
     event = RegionalPitchEvent.find(event_id)

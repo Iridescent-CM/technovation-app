@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 module FillPdfs
-  class MentorAppreciation
+  class Mentor
     include FillPdfs
 
     def full_text

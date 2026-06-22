@@ -372,8 +372,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.10-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.10-arm64-darwin)
-      racc (~> 1.4)
     normalize-rails (4.1.1)
     noticed (2.9.3)
       rails (>= 6.1.0)

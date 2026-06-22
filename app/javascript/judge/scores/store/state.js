@@ -39,5 +39,6 @@ export default {
     description: "",
     development_platform: "",
     deadline: "",
+    screenshots: [],
   },
 };

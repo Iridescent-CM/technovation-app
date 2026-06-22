@@ -16,7 +16,7 @@
 
         <%=  f.text_field :query,
           value: params[:query],
-          placeholder: "Search judges by name",
+          placeholder: "Search judges by name or email",
           data: {
             action: "input->search#search",
             turbo_submits_with: "Searching..." } %>

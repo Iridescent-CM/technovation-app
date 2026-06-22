@@ -45,6 +45,8 @@ es:
         success: "¡Gracias por firmar el formulario de consentimiento de los padres!"
       new:
         unauthorized: "Lo sentimos, este símbolo de consentimiento no es válido."
+      show:
+        unauthorized: "No tienes permiso para ver ese consentimiento de los padres."
 
     media_consents:
       update:

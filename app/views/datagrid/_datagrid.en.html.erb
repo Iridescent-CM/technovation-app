@@ -1,6 +1,8 @@
 <%
   extra_count ||= false
   verb ||= "found"
+  paginated_assets = grid.assets
+  total_count = paginated_assets.total_entries
 %>
 
 <div class="panel">
@@ -9,13 +11,13 @@
     url: form_url %>
 
   <h6>
-    <% if grid.assets.count.class.to_s == "Hash" %>
-      <%= number_with_delimiter(grid.assets.count.size) %>
+    <% if total_count.class.to_s == "Hash" %>
+      <%= number_with_delimiter(total_count.size) %>
     <% else %>
-      <%= number_with_delimiter(grid.assets.count) %>
+      <%= number_with_delimiter(total_count) %>
     <% end %>
 
-    <%= model_name.humanize.downcase.pluralize(grid.assets.count) %>
+    <%= model_name.humanize.downcase.pluralize(total_count) %>
     <%= verb %>
   </h6>
 
@@ -25,7 +27,7 @@
 
   <%= yield %>
 
-  <% if csv_export_supported?(grid) %>
+  <% if total_count > 0 %>
     <p>
       <%= link_to "Export current results to CSV", "#",
         data: {
@@ -36,10 +38,10 @@
   <% end %>
 
   <div class="table--scrollable">
-    <%= datagrid_table(grid) %>
+    <%= datagrid_table(grid, paginated_assets) %>
   </div>
 
-  <%= will_paginate grid.assets %>
+  <%= will_paginate paginated_assets %>
 </div>
 
 <%= content_tag :div, class: "modal", id: "export_csv" do %>
@@ -63,7 +65,7 @@
       <% end %>
 
       <dt>Total accounts</dt>
-      <dd><%= grid.assets.count %></dd>
+      <dd><%= total_count %></dd>
     </dl>
 
     <%= form_with(

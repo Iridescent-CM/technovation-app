@@ -1,9 +1,7 @@
 class SubmissionsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :allow_state_search
-
-  self.batch_size = 10
 
   scope do
     TeamSubmission.includes(:screenshots, team: :division).references(:teams)

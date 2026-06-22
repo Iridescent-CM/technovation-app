@@ -1,9 +1,7 @@
 class EventsGrid
-  include Datagrid
+  include ApplicationGrid
 
   attr_accessor :admin, :allow_state_search
-
-  self.batch_size = 10
 
   scope do
     RegionalPitchEvent.current

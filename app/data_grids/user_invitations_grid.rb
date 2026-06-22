@@ -1,5 +1,5 @@
 class UserInvitationsGrid
-  include Datagrid
+  include ApplicationGrid
 
   scope do
     UserInvitation.includes(:account, :invited_by).order(created_at: :desc)

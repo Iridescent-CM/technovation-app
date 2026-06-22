@@ -89,16 +89,39 @@ RSpec.describe Account do
 
     describe "date of birth" do
       context "for judges" do
-        let(:judge) {
-          FactoryBot.create(:judge,
-            account: FactoryBot.build(:account, date_of_birth: date_of_birth))
-        }
+        context "when a new judge doesn't have a date of birth" do
+          let(:judge) {
+            FactoryBot.build(:judge,
+              account: FactoryBot.build(:account, date_of_birth: nil))
+          }
 
-        context "when a judge doesn't have a date of birth" do
-          let(:date_of_birth) { nil }
+          it "is not valid" do
+            expect(judge).not_to be_valid
+          end
+        end
+
+        context "when a new judge has a date of birth" do
+          let(:judge) {
+            FactoryBot.build(:judge,
+              account: FactoryBot.build(:account, date_of_birth: 30.years.ago))
+          }
 
           it "is valid" do
             expect(judge).to be_valid
+          end
+        end
+
+        context "when an existing judge doesn't have a date of birth" do
+          let(:judge) { FactoryBot.create(:judge) }
+
+          before do
+            judge.account.update_column(:date_of_birth, nil)
+            judge.account.reload
+          end
+
+          it "is not valid" do
+            expect(judge.account).not_to be_valid
+            expect(judge.account.errors[:date_of_birth]).to include("can't be blank")
           end
         end
       end
@@ -196,11 +219,12 @@ RSpec.describe Account do
             email: "ccara55@example.com",
             password: "abc1239876",
             gender: "Non-binary",
+            date_of_birth: 30.years.ago,
             terms_agreed_at: Time.current,
             judge_profile: JudgeProfile.new(
               job_title: "VIP",
               company_name: "VIC",
-              judge_types: [FactoryBot.create(:judge_type)]
+              judge_types: [JudgeType.find_by!(name: "Educator")]
             ),
             meets_minimum_age_requirement: meets_minimum_age_requirement
           )
@@ -332,6 +356,93 @@ RSpec.describe Account do
           it "is valid" do
             expect(chapter_ambassador).to be_valid
           end
+        end
+      end
+    end
+
+    describe "minimum age on date of birth changes" do
+      context "for a judge" do
+        let(:judge) {
+          FactoryBot.create(:judge,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "is invalid when the birthdate is changed to make them younger than 18" do
+          judge.account.date_of_birth = 17.years.ago
+
+          expect(judge.account).not_to be_valid
+          expect(judge.account.errors[:date_of_birth])
+            .to include("must indicate you are at least 18 years old")
+        end
+
+        it "is valid when the birthdate is changed but still 18 or older" do
+          judge.account.date_of_birth = 25.years.ago
+
+          expect(judge.account).to be_valid
+        end
+
+        it "is valid when the birthdate is left unchanged" do
+          expect(judge.account).to be_valid
+        end
+
+        it "is valid when the birthdate is exactly 18 years ago today" do
+          judge.account.date_of_birth = 18.years.ago.to_date
+
+          expect(judge.account).to be_valid
+        end
+
+        it "is invalid when they only turn 18 tomorrow" do
+          judge.account.date_of_birth = (18.years.ago + 1.day).to_date
+
+          expect(judge.account).not_to be_valid
+        end
+
+        it "is invalid when a stored under-18 birthdate is left unchanged" do
+          judge.account.update_column(:date_of_birth, 16.years.ago.to_date)
+          judge.account.reload
+
+          expect(judge.account).not_to be_valid
+          expect(judge.account.errors[:date_of_birth])
+            .to include("must indicate you are at least 18 years old")
+        end
+      end
+
+      context "for a chapter ambassador" do
+        let(:chapter_ambassador) {
+          FactoryBot.create(:chapter_ambassador,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "is invalid when the birthdate is changed to make them younger than 18" do
+          chapter_ambassador.account.date_of_birth = 17.years.ago
+
+          expect(chapter_ambassador.account).not_to be_valid
+        end
+      end
+
+      context "for a club ambassador" do
+        let(:club_ambassador) {
+          FactoryBot.create(:club_ambassador,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "is invalid when the birthdate is changed to make them younger than 18" do
+          club_ambassador.account.date_of_birth = 17.years.ago
+
+          expect(club_ambassador.account).not_to be_valid
+        end
+      end
+
+      context "for a mentor (excluded because converted students may be 14+)" do
+        let(:mentor) {
+          FactoryBot.create(:mentor,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
+        }
+
+        it "stays valid when the birthdate is changed to under 18" do
+          mentor.account.date_of_birth = 15.years.ago
+
+          expect(mentor.account).to be_valid
         end
       end
     end
@@ -781,6 +892,64 @@ RSpec.describe Account do
 
       expect(Account.matched).not_to include(unmatched_mentor.account)
       expect(Account.matched).not_to include(past_mentor.account)
+    end
+  end
+
+  describe ".mentors_matched" do
+    it "includes mentors with current teams" do
+      unmatched_mentor = FactoryBot.create(:mentor, :onboarded)
+      matched_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+
+      past_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+      past_mentor.teams.each do |team|
+        team.update_column(:seasons, [Season.current.year - 1])
+      end
+
+      expect(Account.mentors_matched).to include(matched_mentor.account)
+      expect(Account.mentors_matched).not_to include(unmatched_mentor.account)
+      expect(Account.mentors_matched).not_to include(past_mentor.account)
+    end
+
+    it "excludes students with current teams" do
+      matched_student = FactoryBot.create(:student, :on_team)
+
+      expect(Account.mentors_matched).not_to include(matched_student.account)
+    end
+
+    it "does not return duplicate mentor accounts" do
+      mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+      team = FactoryBot.create(:team, members_count: 0)
+      TeamRosterManaging.add(team, mentor)
+
+      expect(Account.mentors_matched.where(id: mentor.account.id).count).to eq(1)
+    end
+  end
+
+  describe ".mentors_unmatched" do
+    it "includes mentors without current teams" do
+      unmatched_mentor = FactoryBot.create(:mentor, :onboarded)
+      matched_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+
+      past_mentor = FactoryBot.create(:mentor, :onboarded, :on_team)
+      past_mentor.teams.each do |team|
+        team.update_column(:seasons, [Season.current.year - 1])
+      end
+
+      expect(Account.mentors_unmatched).to include(unmatched_mentor.account)
+      expect(Account.mentors_unmatched).to include(past_mentor.account)
+      expect(Account.mentors_unmatched).not_to include(matched_mentor.account)
+    end
+
+    it "excludes students without current teams" do
+      unmatched_student = FactoryBot.create(:student)
+
+      expect(Account.mentors_unmatched).not_to include(unmatched_student.account)
+    end
+
+    it "does not return duplicate mentor accounts" do
+      mentor = FactoryBot.create(:mentor, :onboarded)
+
+      expect(Account.mentors_unmatched.where(id: mentor.account.id).count).to eq(1)
     end
   end
 
