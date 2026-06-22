@@ -1,8 +1,11 @@
 import { Controller } from "@hotwired/stimulus";
 
-// Validates the assembled date_of_birth `<select>`s against a minimum age.
-// The year dropdown alone cannot enforce the minimum (a year 18 ago paired
-// with a month/day still to come is under 18), so this checks the full date.
+// Validates the assembled date_of_birth `<select>`s when the form is submitted,
+// mirroring the server-side rules (date of birth is required and the judge must
+// be at least the minimum age). On an invalid submit it blocks the submission
+// and shows an inline error in the same `.field_with_errors > .error` markup the
+// rest of the form uses. The Save button stays enabled, consistent with how
+// first/last name validation behaves.
 export default class extends Controller {
   static values = { minimum: Number };
 
@@ -10,33 +13,60 @@ export default class extends Controller {
     this.selects = Array.from(this.element.querySelectorAll("select"));
     if (this.selects.length < 3) return;
 
+    this.form = this.element.closest("form");
+    if (!this.form) return;
+
     this.errorElement = this.buildErrorElement();
-    this.boundValidate = this.validate.bind(this);
-    this.selects.forEach((select) =>
-      select.addEventListener("change", this.boundValidate)
-    );
-    this.validate();
+    this.boundValidateOnSubmit = this.validateOnSubmit.bind(this);
+    this.form.addEventListener("submit", this.boundValidateOnSubmit);
   }
 
   disconnect() {
-    if (this.selects) {
-      this.selects.forEach((select) =>
-        select.removeEventListener("change", this.boundValidate)
-      );
+    if (this.form && this.boundValidateOnSubmit) {
+      this.form.removeEventListener("submit", this.boundValidateOnSubmit);
     }
-    this.setSubmitDisabled(false);
   }
 
-  validate() {
-    const birthdate = this.selectedBirthdate();
+  validateOnSubmit(event) {
+    const message = this.errorMessage();
 
-    if (birthdate && this.ageOn(new Date(), birthdate) < this.minimumValue) {
-      this.errorElement.style.display = "";
-      this.setSubmitDisabled(true);
+    if (message) {
+      // preventDefault blocks the submit; stopImmediatePropagation keeps the
+      // event from bubbling to the document-level jQuery UJS handler, which
+      // would otherwise disable the submit button (via data-disable-with) and
+      // leave it stuck disabled since the form never actually submits.
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      this.showError(message);
+      this.errorElement.scrollIntoView({ block: "center", behavior: "smooth" });
     } else {
-      this.errorElement.style.display = "none";
-      this.setSubmitDisabled(false);
+      this.hideError();
     }
+  }
+
+  // Returns the error string to display, or null when the date is valid.
+  errorMessage() {
+    if (!this.allFragmentsSelected()) {
+      return "Date of birth is required.";
+    }
+
+    const birthdate = this.selectedBirthdate();
+    if (birthdate === null) {
+      return "Date of birth is required.";
+    }
+
+    if (this.ageOn(new Date(), birthdate) < this.minimumValue) {
+      return `You must be at least ${this.minimumValue} years old.`;
+    }
+
+    return null;
+  }
+
+  allFragmentsSelected() {
+    return ["1i", "2i", "3i"].every((fragment) => {
+      const select = this.selectForFragment(fragment);
+      return select && select.value !== "";
+    });
   }
 
   selectedBirthdate() {
@@ -57,11 +87,18 @@ export default class extends Controller {
     return birthdate;
   }
 
-  valueForFragment(fragment) {
-    const select = this.selects.find((element) =>
+  selectForFragment(fragment) {
+    return this.selects.find((element) =>
       element.name.includes(`(${fragment})`)
     );
-    return select ? parseInt(select.value, 10) : NaN;
+  }
+
+  valueForFragment(fragment) {
+    const select = this.selectForFragment(fragment);
+    if (!select || select.value === "") return NaN;
+
+    const parsed = parseInt(select.value, 10);
+    return Number.isNaN(parsed) ? NaN : parsed;
   }
 
   ageOn(today, birthdate) {
@@ -76,13 +113,13 @@ export default class extends Controller {
     return age;
   }
 
-  setSubmitDisabled(disabled) {
-    const form = this.element.closest("form");
-    if (!form) return;
-    const submit = form.querySelector(
-      'input[type="submit"], button[type="submit"]'
-    );
-    if (submit) submit.disabled = disabled;
+  showError(message) {
+    this.messageElement.textContent = message;
+    this.errorElement.style.display = "";
+  }
+
+  hideError() {
+    this.errorElement.style.display = "none";
   }
 
   buildErrorElement() {
@@ -92,11 +129,10 @@ export default class extends Controller {
     wrapper.className = "field_with_errors minimum-age-error";
     wrapper.style.display = "none";
 
-    const message = document.createElement("p");
-    message.className = "error";
-    message.textContent = `You must be at least ${this.minimumValue} years old.`;
+    this.messageElement = document.createElement("span");
+    this.messageElement.className = "error";
 
-    wrapper.appendChild(message);
+    wrapper.appendChild(this.messageElement);
     this.element.appendChild(wrapper);
     return wrapper;
   }

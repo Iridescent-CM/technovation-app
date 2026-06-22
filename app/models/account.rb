@@ -652,9 +652,9 @@ class Account < ActiveRecord::Base
     format: {with: /\A[0-9+\-\s]+\z/, message: "can only contain numbers, dashes, and +"}
 
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_a_mentor? && !is_chapter_ambassador? && !club_ambassador? }
-  validates :date_of_birth, presence: true, if: -> { is_a_judge? && new_record? }
+  validates :date_of_birth, presence: true, if: -> { is_a_judge? }
   validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_a_mentor? || is_chapter_ambassador? || club_ambassador?) && new_record? }
-  validate :must_meet_minimum_age_requirement, if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && date_of_birth.present? && date_of_birth_changed? }
+  validate :must_meet_minimum_age_requirement, if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && date_of_birth.present? }
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
