@@ -1,0 +1,22 @@
+---
+page_width: 792.0
+page_height: 612.0
+fields:
+  full_name:
+    x: 36.0
+    "y": 264.0
+    width: 720.0
+    height: 44.4
+    align: left
+    size: 34
+    color: "#000000"
+    font_style: normal
+  team_name:
+    x: 42.0
+    "y": 156.8
+    width: 720.0
+    height: 44.4
+    align: left
+    size: 24
+    color: "#000000"
+    font_style: normal

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resource :survey_completion, only: :show
 
+  resources :certificate_downloads, only: :show
+
   namespace :student do
     resource :location_details, only: :show
     resource :current_location, only: :show

@@ -11,7 +11,7 @@ WORKDIR /app
 # - build tools for native gems
 # - postgresql client libs for pg gem
 # - node/yarn for Shakapacker
-# - imagemagick, pdftk for PDF/image features
+# - imagemagick, ghostscript for PDF/image features
 # - wkhtmltopdf: official bookworm .deb (installs on trixie; supports amd64 + arm64)
 # - libs for node-canvas
 RUN apt-get update -qq && apt-get upgrade -y \
@@ -24,7 +24,7 @@ RUN apt-get update -qq && apt-get upgrade -y \
   libpq-dev \
   postgresql-client \
   imagemagick \
-  pdftk-java \
+  ghostscript \
   libcairo2-dev \
   libpango1.0-dev \
   libjpeg-dev \

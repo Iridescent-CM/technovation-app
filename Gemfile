@@ -16,7 +16,8 @@ gem "smarter_csv", "~> 1.0"
 
 gem "textacular", "~> 5.1"
 
-gem "pdf-forms", "~> 1.2"
+gem "prawn", "~> 2.5"
+gem "hexapdf", "~> 1.0"
 
 gem "public_activity", "~> 3.0"
 gem "paranoia", "~> 3.0"

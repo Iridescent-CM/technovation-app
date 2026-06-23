@@ -18,5 +18,12 @@
     <% else %>
       <%= render "explanations/feature_not_available", feature: :scores %>
     <% end %>
+
+    <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Previous Certificates</h3>
+        <%= render "scores/previous_certificates", current_scope: "student" %>
+      </div>
+    <% end %>
   <% end %>
 </div>

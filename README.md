@@ -62,9 +62,11 @@ Install imagemagick
 brew install imagemagick
 ```
 
-Install pdftk
+Install ghostscript (required for certificate PDF generation)
 
-[https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
+```
+brew install ghostscript
+```
 
 Install wkhtmltopdf
 
@@ -156,7 +158,7 @@ Open [http://localhost:3000](http://localhost:3000). Postgres is also published 
 
 - Base image: **Ruby 3.4.9** (slim), aligned with the `Gemfile` Ruby version.
 - **Node 26** and Yarn for the front end; `bundle install` and `yarn install` run at build time.
-- System packages include build tools, `libpq`, ImageMagick, `pdftk-java`, wkhtmltopdf (amd64/arm64), and libraries used by native gems (e.g. node-canvas).
+- System packages include build tools, `libpq`, ImageMagick, Ghostscript, wkhtmltopdf (amd64/arm64), and libraries used by native gems (e.g. node-canvas).
 - Default image command (without Compose overriding it) runs `rails db:prepare` then `rails s` on `0.0.0.0:3000`. Ports **3000** and **3035** are declared for the app and Webpack dev server.
 
 ### Compose behavior

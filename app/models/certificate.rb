@@ -57,6 +57,10 @@ class Certificate < ApplicationRecord
     end
   end
 
+  def previous?
+    season != Season.current.year
+  end
+
   def description
     title = cert_type.humanize.titleize
 
