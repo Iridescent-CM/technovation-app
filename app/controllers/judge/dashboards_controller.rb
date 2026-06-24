@@ -8,8 +8,7 @@ module Judge
       @previous_certificates = current_account.certificates.judge_types.previous_certificates
 
       if SeasonToggles.display_scores?
-        certificate = current_account.current_judge_certificates.last
-        @certificate_file_url = certificate&.file_url
+        @certificate = current_account.current_judge_certificates.last
       end
     end
 

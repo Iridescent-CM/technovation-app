@@ -5,12 +5,9 @@ class CertificateDownloadsController < ApplicationController
   before_action :set_certificate
 
   def show
-    if @certificate.account_id != current_account.id
-      head :forbidden
-      return
-    end
+    return head :forbidden unless authorized?
 
-    unless @certificate.previous?
+    if @certificate.file.present?
       redirect_to @certificate.file_url, allow_other_host: true
       return
     end
@@ -26,6 +23,10 @@ class CertificateDownloadsController < ApplicationController
   end
 
   private
+
+  def authorized?
+    @certificate.account_id == current_account.id || current_account.admin?
+  end
 
   def require_signed_in_account
     return if current_account.authenticated?

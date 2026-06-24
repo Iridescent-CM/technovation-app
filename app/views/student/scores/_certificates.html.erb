@@ -25,7 +25,7 @@
   <div class="certificates-btn-wrapper">
     <% if @highest_current_certificate %>
       <%= link_to "Open your #{@highest_current_certificate.cert_type == 'completion' ? 'quarterfinalist' : @highest_current_certificate.cert_type} certificate",
-                  @highest_current_certificate.file_url,
+                  certificate_download_path(@highest_current_certificate),
                   target: "_blank",
                   class: "tw-green-btn" %>
     <% else %>

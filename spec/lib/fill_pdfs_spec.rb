@@ -16,6 +16,16 @@ RSpec.describe FillPdfs do
     }
   end
 
+  it "creates certificate records without attaching a file" do
+    student = FactoryBot.create(:student, :quarterfinalist)
+
+    FillPdfs.call(student.account)
+
+    cert = student.certificates.current.quarterfinalist.last
+    expect(cert).to be_present
+    expect(cert.file).not_to be_present
+  end
+
   it "does not generate a certificate for onboarding judges" do
     judge = FactoryBot.create(:judge)
 
