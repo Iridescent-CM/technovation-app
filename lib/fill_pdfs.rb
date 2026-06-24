@@ -48,10 +48,7 @@ module FillPdfs
   end
 
   def generate_certificate
-    layout = CertificateLayouts.for(template_path: pathname)
-
-    fill_form(layout)
-    attach_uploaded_certificate_from_tmp_file_to_account
+    create_certificate_record
     account.certificates.public_send(type).current
   end
 
@@ -66,8 +63,11 @@ module FillPdfs
     ENV.fetch("DO_NOT_FILL_CERTIFICATES", false)
   end
 
-  def fill_form(layout)
-    File.binwrite(tmp_output, pdf_data(layout))
+  def create_certificate_record
+    attrs = {season: season, cert_type: type.to_sym}
+    attrs[:team] = team if team.present?
+
+    account.certificates.create!(attrs)
   end
 
   def pdf_data(layout)
@@ -82,26 +82,8 @@ module FillPdfs
     end
   end
 
-  def attach_uploaded_certificate_from_tmp_file_to_account
-    file = File.new(tmp_output)
-
-    attrs = {
-      file: file,
-      season: season,
-      cert_type: type.to_sym
-    }
-
-    attrs.merge!(team: team) if team.present?
-
-    account.certificates.create!(attrs)
-  end
-
   def pathname
     CertificateTemplatePaths.for(recipient: recipient, type: type, season: season)
-  end
-
-  def tmp_output
-    "./tmp/#{season}-#{type}-#{recipient.id}-#{recipient.team_id}.pdf"
   end
 
   class GenericPDFFiller

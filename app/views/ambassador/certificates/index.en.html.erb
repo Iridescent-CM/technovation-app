@@ -11,7 +11,7 @@
           </p>
           <div class="my-8 text-center">
             <%= link_to "View your certificate",
-              @current_certificates.last.file_url,
+              certificate_download_path(@current_certificates.last),
               class: "tw-green-btn shadow-md",
               target: :_blank %>
           </div>

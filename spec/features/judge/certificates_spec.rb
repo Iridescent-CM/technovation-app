@@ -207,7 +207,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_bronze_judge_certificates.last.file_url
+      href: certificate_download_path(judge.current_bronze_judge_certificates.last)
     )
   end
 
@@ -235,7 +235,7 @@ RSpec.feature "Judge certificates" do
       expect(page).to have_css("#judge-certificate")
       expect(page).to have_link(
         "View your certificate",
-        href: judge.current_silver_judge_certificates.last.file_url
+        href: certificate_download_path(judge.current_silver_judge_certificates.last)
       )
     end
   end
@@ -266,7 +266,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_gold_judge_certificates.last.file_url
+      href: certificate_download_path(judge.current_gold_judge_certificates.last)
     )
   end
 
@@ -296,7 +296,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_silver_judge_certificates.last.file_url
+      href: certificate_download_path(judge.current_silver_judge_certificates.last)
     )
   end
 
@@ -326,7 +326,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_css("#judge-certificate")
     expect(page).to have_link(
       "View your certificate",
-      href: judge.current_gold_judge_certificates.last.file_url
+      href: certificate_download_path(judge.current_gold_judge_certificates.last)
     )
   end
 

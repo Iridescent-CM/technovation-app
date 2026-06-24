@@ -19,7 +19,7 @@
 
       <div class="admin-actions-buttons">
         <%= link_to "View this certificate",
-          @certificate.file_url,
+          certificate_download_path(@certificate),
           class: "button",
           :target => "_blank"
         %>

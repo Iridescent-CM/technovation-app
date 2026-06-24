@@ -6,7 +6,7 @@ RSpec.describe CertificateJob do
     allow(Season).to receive(:current).and_return(season_with_templates)
   end
 
-  it "fills and attaches PDFs" do
+  it "creates certificate records" do
     mentor = FactoryBot.create(:mentor, :onboarded, :on_team, :complete_submission)
     team = mentor.current_teams.last
 
@@ -43,7 +43,7 @@ RSpec.describe CertificateJob do
     job = Job.find_by(job_id: job_id)
 
     expect(job.payload).to eq({
-      "fileUrl" => mentor.current_appreciation_certificates.last.file_url
+      "fileUrl" => certificate_download_path(mentor.current_appreciation_certificates.last)
     })
   end
 end

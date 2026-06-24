@@ -69,7 +69,7 @@ RSpec.feature "Student certificates" do
       click_link("Certificates")
       expect(page).to have_link(
         "Open your quarterfinalist certificate",
-        href: student.certificates.quarterfinalist.current.last.file_url
+        href: certificate_download_path(student.certificates.quarterfinalist.current.last)
       )
     end
 
@@ -120,7 +120,7 @@ RSpec.feature "Student certificates" do
       click_link("Certificates")
       expect(page).to have_link(
         "Open your participation certificate",
-        href: student.certificates.participation.current.last.file_url
+        href: certificate_download_path(student.certificates.participation.current.last)
       )
     end
 

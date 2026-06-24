@@ -24,7 +24,7 @@ class CertificateJob < ActiveJob::Base
         db_job.update_columns(
           status: "complete",
           payload: {
-            fileUrl: cert.file_url
+            fileUrl: Rails.application.routes.url_helpers.certificate_download_path(cert)
           }
         )
       else
