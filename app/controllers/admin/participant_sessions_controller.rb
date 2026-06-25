@@ -1,5 +1,7 @@
 module Admin
   class ParticipantSessionsController < AdminController
+    skip_before_action :require_current_admin, only: :destroy
+
     before_action :set_admin_id_performing_impersonation, only: :show
     before_action :delete_admin_id_performing_impersonation, only: :destroy
 

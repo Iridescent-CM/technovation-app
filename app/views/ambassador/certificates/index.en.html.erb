@@ -1,0 +1,29 @@
+<div class="container mx-auto flex flex-col lg:flex-row justify-around gap-6 w-full lg:w-3/4">
+  <%= render "ambassador/certificates/side_nav" %>
+
+  <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Certificates" } do %>
+    <% if SeasonToggles.display_scores? %>
+      <% if @current_certificates.any? %>
+        <div id="ambassador-certificate">
+          <p class="mt-4">
+            Thank you for participating in this season of Technovation Girls.
+            Please click the button below to access your certificate.
+          </p>
+          <div class="my-8 text-center">
+            <%= link_to "View your certificate",
+              @current_certificates.last.file_url,
+              class: "tw-green-btn shadow-md",
+              target: :_blank %>
+          </div>
+        </div>
+      <% else %>
+        <p>
+          You don't have a certificate for this season.
+          Please contact <%= mail_to ENV.fetch("HELP_EMAIL") %> if you believe this is an error.
+        </p>
+      <% end %>
+    <% else %>
+      <p>Certificates are currently unavailable.</p>
+    <% end %>
+  <% end %>
+</div>

@@ -172,6 +172,7 @@ Rails.application.routes.draw do
     resource :resources, only: :show, controller: "/ambassador/resources"
 
     resource :dashboard, only: :show
+    resources :certificates, only: :index, controller: "/ambassador/certificates"
     resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
 
@@ -254,6 +255,7 @@ Rails.application.routes.draw do
 
   namespace :club_ambassador do
     resource :dashboard, only: :show
+    resources :certificates, only: :index, controller: "/ambassador/certificates"
     resource :profile, only: [:show, :edit, :update]
 
     resource :current_location, only: :show

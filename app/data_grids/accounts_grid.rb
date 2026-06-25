@@ -342,7 +342,7 @@ class AccountsGrid
   filter :chapter,
     :enum,
     header: "Chapter (students, mentors and ChAs only)",
-    select: Chapter.all.order(name: :asc).map { |c| [c.name, c.id] },
+    select: ->(g) { AccountsGrid.chapter_filter_options },
     filter_group: "common",
     if: ->(g) {
       g.admin
@@ -356,7 +356,7 @@ class AccountsGrid
   filter :club,
     :enum,
     header: "Club (students, mentors and ChAs only)",
-    select: Club.all.order(name: :asc).map { |c| [c.name, c.id] },
+    select: ->(g) { AccountsGrid.club_filter_options },
     filter_group: "common",
     if: ->(g) {
       g.admin
@@ -825,6 +825,26 @@ class AccountsGrid
     multiple: true
   )
 
+  def self.chapter_filter_options
+    Rails.cache.fetch("accounts_grid/chapter_filter_options", expires_in: 1.hour) do
+      Chapter.order(name: :asc).pluck(:name, :id)
+    end
+  end
+
+  def self.club_filter_options
+    Rails.cache.fetch("accounts_grid/club_filter_options", expires_in: 1.hour) do
+      Club.order(name: :asc).pluck(:name, :id)
+    end
+  end
+
+  def to_csv(*)
+    with_csv_export_preloads { super }
+  end
+
+  def each_with_batches(&block)
+    with_csv_export_preloads { super(&block) }
+  end
+
   def get_chapters_for_national_view
     Chapter
       .where(country: current_account.current_chapterable.read_attribute(:country))
@@ -842,6 +862,17 @@ class AccountsGrid
   protected
 
   def append_column_preload(relation)
-    super(relation.preload(*CSV_EXPORT_PRELOADS))
+    relation = super(relation)
+    relation = relation.preload(*CSV_EXPORT_PRELOADS) if @csv_export
+    relation
+  end
+
+  private
+
+  def with_csv_export_preloads
+    @csv_export = true
+    yield
+  ensure
+    @csv_export = false
   end
 end

@@ -34,6 +34,8 @@ class DetermineCertificates
   end
 
   def gets_certificate?(certificate_type)
+    return false if CertificateTypes::MANUAL_ONLY_CERTIFICATE_TYPES.include?(certificate_type.to_sym)
+
     send(:"gets_#{certificate_type}_certificate?")
   end
 
@@ -104,18 +106,7 @@ class DetermineCertificates
   end
 
   def gets_special_prize_winner_certificate?
-    return false if !@account.student?
-
-    team = @account.student_profile.team
-    !team.nil? && team.submission.special_prize_winner?
-  end
-
-  def needed_special_prize_winner_recipients
-    if @account.certificates.student_types.by_season(season).for_team(@account.student_profile.team).any?
-      []
-    else
-      [CertificateRecipient.new(:special_prize_winner, @account, team: @account.student_profile.team)]
-    end
+    false
   end
 
   def gets_finalist_certificate?
@@ -148,17 +139,17 @@ class DetermineCertificates
     end
   end
 
-  def gets_mentor_appreciation_certificate?
+  def gets_mentor_certificate?
     @account.mentor_profile.present? &&
       @account.mentor_profile.teams.by_season(season).any?
   end
 
-  def needed_mentor_appreciation_recipients
+  def needed_mentor_recipients
     @account.mentor_profile.teams.by_season(season).select { |team|
       !@account.appreciation_certificates.by_season(season).for_team(team).any? &&
         team.submission.percent_complete > 50
     }.map { |team|
-      CertificateRecipient.new(:mentor_appreciation, @account, team: team)
+      CertificateRecipient.new(:mentor, @account, team: team)
     }
   end
 
@@ -166,10 +157,24 @@ class DetermineCertificates
     false # Only valid for seasons before 2019
   end
 
+  def mapped_judge_certificate_type
+    return unless TemporaryJudgeCertificateOverrides.applies?(season)
+
+    TemporaryJudgeCertificateOverrides.cert_type_for(@account.id)
+  end
+
+  def judge_certificate_base_eligible?
+    @account.judge_profile.present? && !@account.judge_profile.suspended?
+  end
+
   def gets_bronze_judge_certificate?
-    @account.judge_profile.present? &&
-      !@account.judge_profile.suspended? &&
-      !@account.judge_profile.events.any? &&
+    return false unless judge_certificate_base_eligible?
+
+    if (mapped = mapped_judge_certificate_type)
+      return mapped == :bronze_judge
+    end
+
+    !@account.judge_profile.events.any? &&
       @account.judge_profile.completed_scores.by_season(season).any? &&
       @account.judge_profile.completed_scores.by_season(season).count == BadgeLevels::NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
   end
@@ -183,9 +188,13 @@ class DetermineCertificates
   end
 
   def gets_silver_judge_certificate?
-    @account.judge_profile.present? &&
-      !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count <= BadgeLevels::MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
+    return false unless judge_certificate_base_eligible?
+
+    if (mapped = mapped_judge_certificate_type)
+      return mapped == :silver_judge
+    end
+
+    @account.judge_profile.completed_scores.by_season(season).count <= BadgeLevels::MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
       (@account.judge_profile.events.any? ||
        @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_SILVER_JUDGE)
   end
@@ -199,9 +208,13 @@ class DetermineCertificates
   end
 
   def gets_gold_judge_certificate?
-    @account.judge_profile.present? &&
-      !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_GOLD_JUDGE
+    return false unless judge_certificate_base_eligible?
+
+    if (mapped = mapped_judge_certificate_type)
+      return mapped == :gold_judge
+    end
+
+    @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_GOLD_JUDGE
   end
 
   def needed_gold_judge_recipients
@@ -214,5 +227,23 @@ class DetermineCertificates
 
   def gets_rpe_winner_certificate?
     false # handled off platform
+  end
+
+  def gets_ambassador_appreciation_certificate?
+    profile = @account.chapter_ambassador_profile || @account.club_ambassador_profile
+    return false unless profile&.onboarded?
+
+    assignment = @account.current_primary_chapterable_assignment
+    return false unless assignment.present?
+
+    assignment.chapterable.present? && assignment.chapterable.onboarded?
+  end
+
+  def needed_ambassador_appreciation_recipients
+    if @account.certificates.ambassador_types.by_season(season).any?
+      []
+    else
+      [CertificateRecipient.new(:ambassador_appreciation, @account)]
+    end
   end
 end
