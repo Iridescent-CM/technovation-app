@@ -157,10 +157,24 @@ class DetermineCertificates
     false # Only valid for seasons before 2019
   end
 
+  def mapped_judge_certificate_type
+    return unless TemporaryJudgeCertificateOverrides.applies?(season)
+
+    TemporaryJudgeCertificateOverrides.cert_type_for(@account.id)
+  end
+
+  def judge_certificate_base_eligible?
+    @account.judge_profile.present? && !@account.judge_profile.suspended?
+  end
+
   def gets_bronze_judge_certificate?
-    @account.judge_profile.present? &&
-      !@account.judge_profile.suspended? &&
-      !@account.judge_profile.events.any? &&
+    return false unless judge_certificate_base_eligible?
+
+    if (mapped = mapped_judge_certificate_type)
+      return mapped == :bronze_judge
+    end
+
+    !@account.judge_profile.events.any? &&
       @account.judge_profile.completed_scores.by_season(season).any? &&
       @account.judge_profile.completed_scores.by_season(season).count == BadgeLevels::NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
   end
@@ -174,9 +188,13 @@ class DetermineCertificates
   end
 
   def gets_silver_judge_certificate?
-    @account.judge_profile.present? &&
-      !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count <= BadgeLevels::MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
+    return false unless judge_certificate_base_eligible?
+
+    if (mapped = mapped_judge_certificate_type)
+      return mapped == :silver_judge
+    end
+
+    @account.judge_profile.completed_scores.by_season(season).count <= BadgeLevels::MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
       (@account.judge_profile.events.any? ||
        @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_SILVER_JUDGE)
   end
@@ -190,9 +208,13 @@ class DetermineCertificates
   end
 
   def gets_gold_judge_certificate?
-    @account.judge_profile.present? &&
-      !@account.judge_profile.suspended? &&
-      @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_GOLD_JUDGE
+    return false unless judge_certificate_base_eligible?
+
+    if (mapped = mapped_judge_certificate_type)
+      return mapped == :gold_judge
+    end
+
+    @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_GOLD_JUDGE
   end
 
   def needed_gold_judge_recipients
