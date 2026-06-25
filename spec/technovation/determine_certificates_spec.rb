@@ -272,6 +272,65 @@ RSpec.describe DetermineCertificates do
     end
   end
 
+  context "2026 judge certificate overrides" do
+    let(:season_2026) { instance_double(Season, year: 2026) }
+
+    before { allow(Season).to receive(:current).and_return(season_2026) }
+
+    it "awards mapped gold judge with no scores" do
+      account = FactoryBot.create(:account, id: 60314)
+      judge = FactoryBot.create(:judge, account: account)
+
+      expect(DetermineCertificates.new(account).needed).to contain_exactly(
+        CertificateRecipient.new(:gold_judge, account)
+      )
+    end
+
+    it "awards mapped silver judge even when score count would yield bronze" do
+      account = FactoryBot.create(:account, id: 295714)
+      judge = FactoryBot.create(:judge, account: account)
+
+      5.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(account).eligible_types).to contain_exactly("silver_judge")
+      expect(DetermineCertificates.new(account).needed).to contain_exactly(
+        CertificateRecipient.new(:silver_judge, account)
+      )
+    end
+
+    it "falls back to score-based logic for unmapped judges" do
+      judge = FactoryBot.create(:judge)
+
+      5.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:bronze_judge, judge.account)
+      )
+    end
+
+    it "does not award a certificate to a suspended mapped judge" do
+      account = FactoryBot.create(:account, id: 60314)
+      judge = FactoryBot.create(:judge, account: account)
+
+      judge.suspend!
+
+      expect(DetermineCertificates.new(account).needed).to be_empty
+    end
+
+    it "does not apply overrides outside the 2026 season" do
+      allow(Season).to receive(:current).and_return(season_with_templates)
+
+      account = FactoryBot.create(:account, id: 60314)
+      FactoryBot.create(:judge, account: account)
+
+      expect(DetermineCertificates.new(account).needed).to be_empty
+    end
+  end
+
   context "for ambassador" do
     def make_fully_onboarded_chapter_ambassador
       ambassador = FactoryBot.create(:ambassador)
