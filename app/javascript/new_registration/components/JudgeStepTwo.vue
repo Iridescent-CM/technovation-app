@@ -25,14 +25,14 @@
 
         <FormulateInput name="dateOfBirth" id="dateOfBirth" type="date" label="Birthday" placeholder="Birthday"
           :validation="birthdayValidation" :validation-messages="{
+            required: 'Birthday is required.',
             after: 'Please enter a valid birthday.',
             before: 'Please enter a valid birthday.'
           }" validation-name="Birthday"
           @keyup="checkValidation" @blur="checkValidation" @change="checkValidation" />
 
         <p class="italic text-sm -mt-6 mb-8" style="margin-top: -12px;">
-          We use date of birth as a way to gain insight into who volunteers to judge.<br>
-          This info is optional.
+          We use date of birth as a way to gain insight into who volunteers to judge.
         </p>
 
         <FormulateInput name="phoneNumber" id="phoneNumber" type="tel"
@@ -118,6 +118,7 @@ export default {
       if (document.getElementById('firstName').value.length === 0 ||
         document.getElementById('lastName').value.length === 0 ||
         !document.getElementById('meetsMinimumAgeRequirement').checked ||
+        document.getElementById('dateOfBirth').value.length === 0 ||
         document.getElementById('judgeSchoolCompanyName').value.length === 0 ||
         document.getElementById('judgeJobTitle').value.length === 0 ||
         (document.getElementById('phoneNumber').value.length > 0 &&
@@ -162,7 +163,7 @@ export default {
     birthdayValidation() {
       const today = DateTime.now().toFormat('MM/dd/yyyy')
 
-      return `judge_age|after:01/01/1900|before:${today}`
+      return `required|judge_age|after:01/01/1900|before:${today}`
     }
   },
   props: {

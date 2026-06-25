@@ -1,6 +1,7 @@
 module CertificateTypes
   MENTOR_CERTIFICATE_TYPES = {
-    mentor_appreciation: 1
+    mentor: 1,
+    coach: 14
   }
 
   STUDENT_CERTIFICATE_TYPES = {
@@ -8,9 +9,14 @@ module CertificateTypes
     quarterfinalist: 0,
     semifinalist: 4,
     regional_honoree: 9,
-    special_prize_winner: 10,
     finalist: 11,
-    grand_prize_winner: 12
+    grand_prize_winner: 12,
+    break_the_scroll_prize: 15,
+    climate_prize: 16,
+    empowered_excellence: 17,
+    student_ambassador: 18,
+    student_club_leader: 19,
+    lead_student_ambassador: 20
   }
 
   JUDGE_CERTIFICATE_TYPES = {
@@ -24,13 +30,29 @@ module CertificateTypes
   }
 
   PAST_CERTIFICATE_TYPES = {
-    general_judge: 5
+    general_judge: 5,
+    special_prize_winner: 10
   }
+
+  AMBASSADOR_CERTIFICATE_TYPES = {
+    ambassador_appreciation: 13
+  }
+
+  MANUAL_ONLY_CERTIFICATE_TYPES = %i[
+    coach
+    break_the_scroll_prize
+    climate_prize
+    empowered_excellence
+    student_ambassador
+    student_club_leader
+    lead_student_ambassador
+  ].freeze
 
   CERTIFICATE_TYPES = MENTOR_CERTIFICATE_TYPES.merge(
     **STUDENT_CERTIFICATE_TYPES,
     **JUDGE_CERTIFICATE_TYPES,
     **OFF_PLATFORM_CERTIFICATE_TYPES,
-    **PAST_CERTIFICATE_TYPES
+    **PAST_CERTIFICATE_TYPES,
+    **AMBASSADOR_CERTIFICATE_TYPES
   )
 end

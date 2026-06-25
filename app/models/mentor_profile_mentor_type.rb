@@ -7,6 +7,8 @@ class MentorProfileMentorType < ActiveRecord::Base
   private
 
   def update_mentor_info_in_crm
+    return if mentor_profile.account.blank?
+
     CRM::UpsertProgramInfoJob.perform_later(
       account_id: mentor_profile.account.id,
       profile_type: "mentor"

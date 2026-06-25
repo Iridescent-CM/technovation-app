@@ -25,13 +25,13 @@
       <div id="available-teams-pagination">
         <%= will_paginate teams,
           params: {
-            controller: 'chapter_ambassador/regional_pitch_events',
+            controller: "#{current_scope}/regional_pitch_events",
             action: "available_teams", id: event.id } %>
       </div>
     </div>
   <% else %>
     <p>
-      No teams available in your region.
+      <%= current_account.admin? ? "No teams available." : "No teams available in your region." %>
     </p>
   <% end %>
 <% end %>

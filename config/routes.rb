@@ -172,6 +172,7 @@ Rails.application.routes.draw do
     resource :resources, only: :show, controller: "/ambassador/resources"
 
     resource :dashboard, only: :show
+    resources :certificates, only: :index, controller: "/ambassador/certificates"
     resources :data_analyses, only: :show
     resource :profile, only: [:show, :edit, :update]
 
@@ -254,6 +255,7 @@ Rails.application.routes.draw do
 
   namespace :club_ambassador do
     resource :dashboard, only: :show
+    resources :certificates, only: :index, controller: "/ambassador/certificates"
     resource :profile, only: [:show, :edit, :update]
 
     resource :current_location, only: :show
@@ -434,6 +436,9 @@ Rails.application.routes.draw do
     resources :events,
       controller: :regional_pitch_events,
       only: [:index, :show, :edit, :update] do
+        resources :event_teams, only: [:create, :destroy]
+
+        get :available_teams, on: :member
         get :bulk_download_submission_pitch_presentations
 
         post :bulk_add_judges

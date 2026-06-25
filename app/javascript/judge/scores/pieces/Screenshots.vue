@@ -2,10 +2,10 @@
   <div
     id="screenshots-nav"
     class="flex flex-col lg:flex-row flex-wrap"
-    :data-modal-last="submission.screenshots.length - 1"
+    :data-modal-last="screenshots.length - 1"
   >
     <div
-      v-for="(screenshot, i) in submission.screenshots"
+      v-for="(screenshot, i) in screenshots"
       :key="screenshot.id"
       class="w-full lg:w-1/3 h-64 p-4 flex flex-col justify-center items-center"
     >
@@ -24,7 +24,12 @@ import { mapState } from 'vuex'
 import {getFilestackResizeUrl} from "../../../utilities/filestack-helpers";
 
 export default {
-  computed: mapState(['submission']),
+  computed: {
+    ...mapState(['submission']),
+    screenshots() {
+      return this.submission.screenshots || []
+    },
+  },
   methods: {
     filestackResizeUrl(screenshotUrl) {
       return getFilestackResizeUrl(screenshotUrl, 300)
