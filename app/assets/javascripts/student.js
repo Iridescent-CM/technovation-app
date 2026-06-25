@@ -10,9 +10,11 @@
 //= require dropzones
 
 document.addEventListener('turbo:load', function () {
-  $( ".accordion" ).accordion({
-    collapsible: true,
-    active: false,
-    heightStyle: "content",
-  });
+  if ($.fn.accordion) {
+    $( ".accordion" ).accordion({
+      collapsible: true,
+      active: false,
+      heightStyle: "content",
+    });
+  }
 });

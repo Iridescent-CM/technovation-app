@@ -2,7 +2,7 @@ require "rails_helper"
 require "fill_pdfs"
 
 RSpec.feature "Judge certificates" do
-  let(:season_with_templates) { instance_double(Season, year: 2025) }
+  let(:season_with_templates) { instance_double(Season, year: 2026) }
 
   before do
     allow(Season).to receive(:current).and_return(season_with_templates)

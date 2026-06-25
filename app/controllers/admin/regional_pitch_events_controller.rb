@@ -2,6 +2,7 @@ module Admin
   class RegionalPitchEventsController < AdminController
     include DatagridController
     include BulkDownloadSubmissionPitchPresentations
+    include RegionalPitchEvents::AdminAvailableTeams
     include RegionalPitchEvents::BulkAddJudgesToRegionalPitchEvent
     include RegionalPitchEvents::BulkAddTeamsToRegionalPitchEvent
 
@@ -29,6 +30,21 @@ module Admin
       @event = RegionalPitchEvent.find(params[:id])
       @event.update(regional_pitch_event_params)
       redirect_to admin_event_path(@event), success: "Changes were saved!"
+    end
+
+    def available_teams
+      @event = RegionalPitchEvent.find(params[:id])
+      @available_teams = load_available_teams_for_event(@event)
+
+      if turbo_frame_request_id == "available-teams-frame"
+        render partial: "admin/regional_pitch_events/available_teams",
+          locals: {event: @event, teams: @available_teams}
+      elsif turbo_frame_request_id == "available-teams-list"
+        render partial: "admin/regional_pitch_events/available_teams_list",
+          locals: {event: @event, teams: @available_teams}
+      else
+        redirect_to admin_event_path(@event)
+      end
     end
 
     private
