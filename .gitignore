@@ -49,3 +49,6 @@ yarn-debug.log*
 claude/*
 vendor/bundle/*
 vendor/cache/*
+
+.idea/
+.cursor/plans/
