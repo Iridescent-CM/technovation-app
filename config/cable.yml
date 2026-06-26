@@ -10,3 +10,6 @@ production:
   channel_prefix: technovation_app_production
   ssl_params:
     verify_mode: <%= OpenSSL::SSL::VERIFY_NONE %>
+
+perf:
+  adapter: async
