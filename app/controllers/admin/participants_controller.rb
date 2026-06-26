@@ -127,7 +127,7 @@ module Admin
 
     def load_participant_for_show
       Account
-        .includes(
+        .preload(
           :division,
           :background_check,
           :consent_waiver,
@@ -139,7 +139,7 @@ module Admin
             mentor_profile: [
               :expertises,
               {mentor_profile_mentor_types: :mentor_type},
-              {current_teams: {mentors: :account}}
+              :current_teams
             ],
             judge_profile: [
               {judge_profile_judge_types: :judge_type},
