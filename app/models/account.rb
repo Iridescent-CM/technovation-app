@@ -1139,7 +1139,7 @@ class Account < ActiveRecord::Base
   end
 
   def current_primary_chapter
-    current_chapter_assignments.find_by(primary: true)&.chapterable
+    primary_chapterable_assignment_from(current_chapter_assignments)&.chapterable
   end
 
   def assigned_to_club?
@@ -1151,7 +1151,7 @@ class Account < ActiveRecord::Base
   end
 
   def current_primary_club
-    current_club_assignments.find_by(primary: true)&.chapterable
+    primary_chapterable_assignment_from(current_club_assignments)&.chapterable
   end
 
   def current_chapterable_assignment
@@ -1159,7 +1159,8 @@ class Account < ActiveRecord::Base
   end
 
   def current_primary_chapterable_assignment
-    current_chapterable_assignments.find_by(primary: true) || ::NullChapterableAccountAssignment.new
+    primary_chapterable_assignment_from(current_chapterable_assignments) ||
+      ::NullChapterableAccountAssignment.new
   end
 
   def last_seasons_primary_chapterable_assignment
@@ -1205,6 +1206,14 @@ class Account < ActiveRecord::Base
   end
 
   private
+
+  def primary_chapterable_assignment_from(assignments)
+    if assignments.loaded?
+      assignments.find(&:primary?)
+    else
+      assignments.find_by(primary: true)
+    end
+  end
 
   def self.survey_reminder_max_times
     2
