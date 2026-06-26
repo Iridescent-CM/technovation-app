@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include FilestackHelper
+
   SCOPES = %w[
     student
     mentor
