@@ -1,13 +1,13 @@
 import { Controller } from "@hotwired/stimulus";
 
 // Validates the assembled date_of_birth `<select>`s when the form is submitted,
-// mirroring the server-side rules (date of birth is required and the judge must
-// be at least the minimum age). On an invalid submit it blocks the submission
+// mirroring the server-side rules (date of birth may be required or optional,
+// and when provided must meet the minimum age). On an invalid submit it blocks
 // and shows an inline error in the same `.field_with_errors > .error` markup the
 // rest of the form uses. The Save button stays enabled, consistent with how
 // first/last name validation behaves.
 export default class extends Controller {
-  static values = { minimum: Number };
+  static values = { minimum: Number, optional: Boolean };
 
   connect() {
     this.selects = Array.from(this.element.querySelectorAll("select"));
@@ -46,12 +46,24 @@ export default class extends Controller {
 
   // Returns the error string to display, or null when the date is valid.
   errorMessage() {
+    if (this.optionalValue && this.noFragmentsSelected()) {
+      return null;
+    }
+
     if (!this.allFragmentsSelected()) {
+      if (this.optionalValue) {
+        return "Please enter a complete date of birth.";
+      }
+
       return "Date of birth is required.";
     }
 
     const birthdate = this.selectedBirthdate();
     if (birthdate === null) {
+      if (this.optionalValue) {
+        return "Please enter a complete date of birth.";
+      }
+
       return "Date of birth is required.";
     }
 
@@ -60,6 +72,17 @@ export default class extends Controller {
     }
 
     return null;
+  }
+
+  noFragmentsSelected() {
+    return !this.anyFragmentSelected();
+  }
+
+  anyFragmentSelected() {
+    return ["1i", "2i", "3i"].some((fragment) => {
+      const select = this.selectForFragment(fragment);
+      return select && select.value !== "";
+    });
   }
 
   allFragmentsSelected() {

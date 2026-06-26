@@ -433,16 +433,71 @@ RSpec.describe Account do
         end
       end
 
-      context "for a mentor (excluded because converted students may be 14+)" do
+      context "for a mentor" do
         let(:mentor) {
           FactoryBot.create(:mentor,
             account: FactoryBot.create(:account, date_of_birth: 30.years.ago))
         }
 
-        it "stays valid when the birthdate is changed to under 18" do
-          mentor.account.date_of_birth = 15.years.ago
+        it "is invalid when the birthdate is changed to make them younger than 18" do
+          mentor.account.date_of_birth = 17.years.ago
+
+          expect(mentor.account).not_to be_valid
+          expect(mentor.account.errors[:date_of_birth])
+            .to include("must indicate you are at least 18 years old")
+        end
+
+        it "is valid when the birthdate is changed but still 18 or older" do
+          mentor.account.date_of_birth = 25.years.ago
 
           expect(mentor.account).to be_valid
+        end
+
+        it "is valid when the birthdate is left unchanged" do
+          expect(mentor.account).to be_valid
+        end
+
+        it "is valid when date of birth is blank" do
+          mentor.account.date_of_birth = nil
+
+          expect(mentor.account).to be_valid
+        end
+
+        it "is valid when adding a birthdate that is 18 or older" do
+          mentor.account.update_column(:date_of_birth, nil)
+          mentor.account.reload
+          mentor.account.date_of_birth = 25.years.ago.to_date
+
+          expect(mentor.account).to be_valid
+        end
+
+        it "is invalid when adding a birthdate that makes them younger than 18" do
+          mentor.account.update_column(:date_of_birth, nil)
+          mentor.account.reload
+          mentor.account.date_of_birth = 17.years.ago.to_date
+
+          expect(mentor.account).not_to be_valid
+          expect(mentor.account.errors[:date_of_birth])
+            .to include("must indicate you are at least 18 years old")
+        end
+
+        it "stays valid when a stored under-18 birthdate is left unchanged" do
+          mentor.account.update_column(:date_of_birth, 15.years.ago.to_date)
+          mentor.account.reload
+
+          expect(mentor.account).to be_valid
+        end
+
+        it "is valid when the birthdate is exactly 18 years ago today" do
+          mentor.account.date_of_birth = 18.years.ago.to_date
+
+          expect(mentor.account).to be_valid
+        end
+
+        it "is invalid when they only turn 18 tomorrow" do
+          mentor.account.date_of_birth = (18.years.ago + 1.day).to_date
+
+          expect(mentor.account).not_to be_valid
         end
       end
     end

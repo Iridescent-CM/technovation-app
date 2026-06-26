@@ -9,7 +9,13 @@
   </div>
 
   <% if !a.object.chapter_ambassador? && !a.object.club_ambassador? %>
-    <% dob_wrapper_data = a.object.is_a_judge? ? { controller: "minimum-age", minimum_age_minimum_value: 18 } : {} %>
+    <% dob_wrapper_data = if a.object.is_a_judge?
+         { controller: "minimum-age", minimum_age_minimum_value: 18 }
+       elsif a.object.is_a_mentor?
+         { controller: "minimum-age", minimum_age_minimum_value: 18, minimum_age_optional_value: true }
+       else
+         {}
+       end %>
     <%= content_tag :div, data: dob_wrapper_data do %>
       <%= a.input :date_of_birth,
         as: :date,
