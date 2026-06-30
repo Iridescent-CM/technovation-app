@@ -19,7 +19,16 @@ class ApplicationController < ActionController::Base
     :current_profile_type,
     :current_session,
     :get_cookie,
-    :chapter_ambassador
+    :chapter_ambassador,
+    :needs_filestack?
+
+  def needs_filestack!
+    @needs_filestack = true
+  end
+
+  def needs_filestack?
+    @needs_filestack == true
+  end
 
   rescue_from "ActionController::ParameterMissing" do |e|
     if e.message.include?("token")
