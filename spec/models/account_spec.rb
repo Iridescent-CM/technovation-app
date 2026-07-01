@@ -500,6 +500,22 @@ RSpec.describe Account do
           expect(mentor.account).not_to be_valid
         end
       end
+
+      context "for an account that is both a judge and a mentor" do
+        let(:dual_role_account) {
+          FactoryBot.create(:judge, mentor: true,
+            account: FactoryBot.create(:account, date_of_birth: 30.years.ago)).account
+        }
+
+        it "is invalid when a stored under-18 birthdate is left unchanged, even though the mentor role did not change it" do
+          dual_role_account.update_column(:date_of_birth, 16.years.ago.to_date)
+          dual_role_account.reload
+
+          expect(dual_role_account).not_to be_valid
+          expect(dual_role_account.errors[:date_of_birth])
+            .to include("must indicate you are at least 18 years old")
+        end
+      end
     end
 
     describe "phone number" do

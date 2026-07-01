@@ -1243,12 +1243,9 @@ class Account < ActiveRecord::Base
 
   def validate_minimum_age_on_date_of_birth?
     return false unless date_of_birth.present?
+    return true if is_a_judge? || is_chapter_ambassador? || club_ambassador?
 
-    if is_a_mentor?
-      date_of_birth_changed?
-    else
-      is_a_judge? || is_chapter_ambassador? || club_ambassador?
-    end
+    is_a_mentor? && date_of_birth_changed?
   end
 
   def must_meet_minimum_age_requirement

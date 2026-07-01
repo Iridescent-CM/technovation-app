@@ -16,11 +16,12 @@
        else
          {}
        end %>
+    <% dob_start_year = [f.object.youngest_birth_year, a.object.date_of_birth&.year].compact.max %>
     <%= content_tag :div, data: dob_wrapper_data do %>
       <%= a.input :date_of_birth,
         as: :date,
         prompt: true,
-        start_year: f.object.youngest_birth_year,
+        start_year: dob_start_year,
         end_year: f.object.oldest_birth_year,
         input_html: { class: "chosen dob_field" } %>
     <% end %>
