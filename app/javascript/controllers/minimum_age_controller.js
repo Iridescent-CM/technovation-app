@@ -17,6 +17,7 @@ export default class extends Controller {
     if (!this.form) return;
 
     this.errorElement = this.buildErrorElement();
+    this.initialBirthdateKey = this.currentBirthdateKey();
     this.boundValidateOnSubmit = this.validateOnSubmit.bind(this);
     this.form.addEventListener("submit", this.boundValidateOnSubmit);
   }
@@ -67,6 +68,16 @@ export default class extends Controller {
       return "Date of birth is required.";
     }
 
+    // Mentors may keep an existing under-18 DOB unchanged; the server only
+    // enforces 18+ when date_of_birth_changed? — mirror that on submit.
+    if (
+      this.optionalValue &&
+      this.initialBirthdateKey !== null &&
+      this.currentBirthdateKey() === this.initialBirthdateKey
+    ) {
+      return null;
+    }
+
     if (this.ageOn(new Date(), birthdate) < this.minimumValue) {
       return `You must be at least ${this.minimumValue} years old.`;
     }
@@ -108,6 +119,23 @@ export default class extends Controller {
       return null;
     }
     return birthdate;
+  }
+
+  currentBirthdateKey() {
+    if (this.noFragmentsSelected()) return "";
+
+    if (!this.allFragmentsSelected()) return null;
+
+    const birthdate = this.selectedBirthdate();
+    if (!birthdate) return null;
+
+    return this.formatBirthdateKey(birthdate);
+  }
+
+  formatBirthdateKey(birthdate) {
+    return `${birthdate.getFullYear()}-${
+      birthdate.getMonth() + 1
+    }-${birthdate.getDate()}`;
   }
 
   selectForFragment(fragment) {
