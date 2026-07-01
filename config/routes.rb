@@ -406,7 +406,11 @@ Rails.application.routes.draw do
 
     resources :profile_locations, only: :edit
 
-    resources :teams, except: :destroy
+    resources :teams, except: :destroy do
+      collection do
+        post :set_semifinalists
+      end
+    end
     resources :team_submissions, except: :destroy do
       resource :judge_assignments, only: :create
       resources :screenshots, only: [:new, :create]

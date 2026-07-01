@@ -1,0 +1,48 @@
+<%= content_tag :div,
+  class: "modal",
+  id: "set_semifinalists_csv",
+  data: {
+    heading: "Set Semifinalists from CSV",
+    width: "600px"
+  } do %>
+  <div class="modal-content">
+    <p style="text-align: left;">
+      Upload a CSV listing semifinalist submissions. The file must include a
+      <strong>Submission ID</strong> column (semicolon- or comma-separated).
+    </p>
+
+    <%= form_with(
+      url: set_semifinalists_admin_teams_path,
+      local: true,
+      data: { turbo: false },
+      html: {
+        method: :post,
+        style: "background-color: #e5e5e5; padding: 20px 18px;"
+      }
+    ) do |form| %>
+      <div>
+        <%= form.file_field :csv_file,
+          required: true,
+          accept: ".csv",
+          style: "width: 100%; background-color: #fff; padding: 8px; border: 1px solid oklch(87.2% 0.01 258.338); border-radius: 0.15rem; font-size: 1.2rem;"
+        %>
+      </div>
+
+      <div style="margin-top: 12px;">
+        <%= form.submit "Upload CSV", class: "button" %>
+        or
+        <%= link_to "cancel", "#", class: "close" %>
+      </div>
+    <% end %>
+
+    <p class="hint" style="margin-top: 24px; text-align: left;">
+      Only current-season submissions listed in the CSV will be updated to
+      semifinalist. After uploading, use the
+      <%= link_to "semifinalist snippet",
+        admin_semifinalist_snippet_path(format: :text),
+        target: "_blank",
+        rel: "noopener" %>
+      for blog post copy.
+    </p>
+  </div>
+<% end %>
