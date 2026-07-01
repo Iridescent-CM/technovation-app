@@ -654,7 +654,7 @@ class Account < ActiveRecord::Base
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_a_mentor? && !is_chapter_ambassador? && !club_ambassador? }
   validates :date_of_birth, presence: true, if: -> { is_a_judge? }
   validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_a_mentor? || is_chapter_ambassador? || club_ambassador?) && new_record? }
-  validate :must_meet_minimum_age_requirement, if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && date_of_birth.present? }
+  validate :must_meet_minimum_age_requirement, if: :validate_minimum_age_on_date_of_birth?
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
@@ -1239,6 +1239,13 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def validate_minimum_age_on_date_of_birth?
+    return false unless date_of_birth.present?
+    return true if is_a_judge? || is_chapter_ambassador? || club_ambassador?
+
+    is_a_mentor? && date_of_birth_changed?
   end
 
   def must_meet_minimum_age_requirement

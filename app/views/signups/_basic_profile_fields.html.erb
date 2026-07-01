@@ -9,12 +9,19 @@
   </div>
 
   <% if !a.object.chapter_ambassador? && !a.object.club_ambassador? %>
-    <% dob_wrapper_data = a.object.is_a_judge? ? { controller: "minimum-age", minimum_age_minimum_value: 18 } : {} %>
+    <% dob_wrapper_data = if a.object.is_a_judge?
+         { controller: "minimum-age", minimum_age_minimum_value: 18 }
+       elsif a.object.is_a_mentor?
+         { controller: "minimum-age", minimum_age_minimum_value: 18, minimum_age_optional_value: true }
+       else
+         {}
+       end %>
+    <% dob_start_year = [f.object.youngest_birth_year, a.object.date_of_birth&.year].compact.max %>
     <%= content_tag :div, data: dob_wrapper_data do %>
       <%= a.input :date_of_birth,
         as: :date,
         prompt: true,
-        start_year: f.object.youngest_birth_year,
+        start_year: dob_start_year,
         end_year: f.object.oldest_birth_year,
         input_html: { class: "chosen dob_field" } %>
     <% end %>
