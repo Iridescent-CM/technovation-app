@@ -1,10 +1,7 @@
 module Admin
   class TeamsController < AdminController
-    include AdminHelper
     include DatagridController
     include Admin::TeamCreationConcern
-
-    before_action :require_super_admin, only: [:set_semifinalists]
 
     use_datagrid with: TeamsGrid
 

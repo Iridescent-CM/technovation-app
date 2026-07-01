@@ -30,15 +30,16 @@ RSpec.describe Admin::TeamsController do
       expect(flash[:success]).to include("Updated 1 submissions")
     end
 
-    it "redirects non-super admins" do
+    it "updates submissions for admins" do
       sign_in(admin)
 
       post :set_semifinalists, params: {
         csv_file: csv_upload("Submission ID\n#{sub1.id}\n")
       }
 
-      expect(sub1.reload).not_to be_semifinalist
-      expect(response).to redirect_to(root_path)
+      expect(sub1.reload).to be_semifinalist
+      expect(response).to redirect_to(admin_teams_path)
+      expect(flash[:success]).to include("Updated 1 submissions")
     end
 
     it "shows an error when the CSV is missing the submission id column" do

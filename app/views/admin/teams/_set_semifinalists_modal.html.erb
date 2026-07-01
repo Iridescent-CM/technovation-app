@@ -37,7 +37,12 @@
 
     <p class="hint" style="margin-top: 24px; text-align: left;">
       Only current-season submissions listed in the CSV will be updated to
-      semifinalist.
+      semifinalist. After uploading, use the
+      <%= link_to "semifinalist snippet",
+        admin_semifinalist_snippet_path(format: :text),
+        target: "_blank",
+        rel: "noopener" %>
+      for blog post copy.
     </p>
   </div>
 <% end %>
