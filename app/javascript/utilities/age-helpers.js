@@ -1,44 +1,45 @@
-import { DateTime, Interval } from 'luxon';
+import { DateTime, Interval } from "luxon";
 
-import { divisionCutoffDate } from './technovation-dates.js'
+import { divisionCutoffDate } from "./technovation-dates.js";
 
 function ageToday(birthday) {
   return Math.floor(
-    Interval
-      .fromDateTimes(DateTime.fromISO(birthday), DateTime.now())
-      .length('years')
-  )
+    Interval.fromDateTimes(DateTime.fromISO(birthday), DateTime.now()).length(
+      "years"
+    )
+  );
 }
 
-function calculateAgeByDivisionCutoffDate({birthday}) {
+function calculateAgeByDivisionCutoffDate({ birthday }) {
   return Math.floor(
-    Interval
-      .fromDateTimes(DateTime.fromISO(birthday), divisionCutoffDate())
-      .length('years')
-  )
+    Interval.fromDateTimes(
+      DateTime.fromISO(birthday),
+      divisionCutoffDate()
+    ).length("years")
+  );
 }
 
-function verifyStudentAge({birthday, division}) {
-  const age = calculateAgeByDivisionCutoffDate({birthday})
+function verifyStudentAge({ birthday, division }) {
+  const age = calculateAgeByDivisionCutoffDate({ birthday });
 
-  if (division === 'beginner') {
-    return (age >= 8 && age <= 12)
+  if (division === "beginner") {
+    return age >= 8 && age <= 12;
   } else {
-    return (age >= 13 && age <= 18)
+    return age >= 13 && age <= 18;
   }
 }
 
-function verifyOlderThanEighteen({birthday}) {
-  return (ageToday(birthday) >= 18)
+function verifyOlderThanEighteen({ birthday }) {
+  return ageToday(birthday) >= 18;
 }
 
 function exampleStudentBirthday() {
-  return divisionCutoffDate().minus({ days: 4 }).toFormat('MMMM d, yyyy')
+  return divisionCutoffDate().minus({ days: 4 }).toFormat("MMMM d, yyyy");
 }
 
 export {
   verifyStudentAge,
   verifyOlderThanEighteen,
   calculateAgeByDivisionCutoffDate,
-  exampleStudentBirthday
-}
+  exampleStudentBirthday,
+};

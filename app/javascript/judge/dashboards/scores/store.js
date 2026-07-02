@@ -37,7 +37,7 @@ export default new Vuex.Store({
     },
 
     notStartedSubmissions(state) {
-      return state.scores.not_started
+      return state.scores.not_started;
     },
   },
 

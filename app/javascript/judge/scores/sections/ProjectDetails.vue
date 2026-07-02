@@ -8,7 +8,7 @@
       next-section="pitch"
       next-button-text="Learning Journey"
     >
-      <template v-slot:main-content>
+      <template #main-content>
         <div class="mb-6">
           <p class="font-bold text-lg">Project Name</p>
           <p class="text-lg">{{ submission.name }}</p>

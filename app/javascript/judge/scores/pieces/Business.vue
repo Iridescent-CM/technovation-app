@@ -4,8 +4,8 @@
       <a
         :href="submission.business_plan_url"
         target="_blank"
-        @click="trackBusinessPlanDownload"
         class="text-energetic-blue text-3xl"
+        @click="trackBusinessPlanDownload"
       >
         <Icon name="file-o" class="inline" color="0075cf" />
         Read the <span>{{ documentType }}</span>
@@ -30,10 +30,10 @@ export default {
       switch (this.team.division) {
         case "senior":
           return "business canvas";
-          break;
         case "junior":
           return "user adoption plan";
-          break;
+        default:
+          return "";
       }
     },
   },

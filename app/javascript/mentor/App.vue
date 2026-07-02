@@ -48,11 +48,48 @@ import DashboardMenu from "./DashboardMenu";
 import DashboardHeader from "./DashboardHeader";
 
 export default {
-  name: "app",
+  name: "App",
 
   components: {
     DashboardMenu,
     DashboardHeader,
+  },
+
+  props: {
+    surveyLink: {
+      type: String,
+      required: false,
+      default: "",
+    },
+
+    surveyLinkText: {
+      type: String,
+      required: false,
+      default: "",
+    },
+
+    profileIcons: {
+      type: Object,
+      default() {
+        return {
+          profileIconMentor: "",
+          profileIconMentorMale: "",
+          profileIconStudent: "",
+        };
+      },
+    },
+
+    regionalPitchEventsEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+
+    scoresAndCertificatesEnabled: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   data() {
@@ -102,43 +139,6 @@ export default {
         },
       ],
     };
-  },
-
-  props: {
-    surveyLink: {
-      type: String,
-      required: false,
-      default: "",
-    },
-
-    surveyLinkText: {
-      type: String,
-      required: false,
-      default: "",
-    },
-
-    profileIcons: {
-      type: Object,
-      default() {
-        return {
-          profileIconMentor: "",
-          profileIconMentorMale: "",
-          profileIconStudent: "",
-        };
-      },
-    },
-
-    regionalPitchEventsEnabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-
-    scoresAndCertificatesEnabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
   },
 };
 </script>

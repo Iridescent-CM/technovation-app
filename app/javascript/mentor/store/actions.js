@@ -1,5 +1,5 @@
 export default {
-  initApp ({ commit }, dataset) {
-    commit('htmlDataset', dataset)
+  initApp({ commit }, dataset) {
+    commit("htmlDataset", dataset);
   },
-}
+};

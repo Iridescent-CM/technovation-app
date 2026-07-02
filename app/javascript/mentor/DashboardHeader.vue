@@ -1,8 +1,8 @@
 <script>
-import DashboardHeader from 'components/DashboardHeader'
+import DashboardHeader from "components/DashboardHeader";
 
 export default {
-  name: 'mentor-dashboard-header',
+  name: "MentorDashboardHeader",
   extends: DashboardHeader,
-}
+};
 </script>

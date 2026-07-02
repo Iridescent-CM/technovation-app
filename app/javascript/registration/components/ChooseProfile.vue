@@ -1,31 +1,23 @@
 <template>
   <form class="panel panel--contains-bottom-bar panel--contains-top-bar">
-    <div class="panel__top-bar">
-      Choose your profile type
-    </div>
+    <div class="panel__top-bar">Choose your profile type</div>
 
-    <div class="panel__content" v-if="profileOptions.length">
+    <div v-if="profileOptions.length" class="panel__content">
       <div v-if="!isLocked" class="grid grid--justify-space-around">
-        <div class="grid__col-12">
-          Due to your age, you can be a:
-        </div>
+        <div class="grid__col-12">Due to your age, you can be a:</div>
 
         <div
-          :class="[
-            'opacity--50',
-            'hover--opacity-75',
-            getCSSForOption(option)
-          ]"
           v-for="option in profileOptions"
           :key="option"
+          :class="['opacity--50', 'hover--opacity-75', getCSSForOption(option)]"
         >
           <label class="text-align--center">
             <img :src="getProfileIconSrc(option)" />
 
             <input
+              v-model="profileChoice"
               type="radio"
               name="profileChoice"
-              v-model="profileChoice"
               :value="option"
             />
             {{ option }}
@@ -39,13 +31,16 @@
       </div>
     </div>
 
-    <div class="panel__content" v-else-if="!profileOptions.length">
+    <div v-else-if="!profileOptions.length" class="panel__content">
       <div class="grid grid--justify-space-around">
         <div class="grid__col-12">
           <p>You must be at least 10 years old by World Summit to sign up.</p>
           <p>
             Although you cannot take part in our competition, you can use our
-            <a href="https://technovationchallenge.org/curriculum-intro/registered/new/">curriculum</a>
+            <a
+              href="https://technovationchallenge.org/curriculum-intro/registered/new/"
+              >curriculum</a
+            >
             to work on a project on your own.
           </p>
         </div>
@@ -53,128 +48,127 @@
     </div>
 
     <div class="panel__bottom-bar">
-      <a
-        class="button float--left"
-        @click.prevent="navigateBack"
-      >
-        Back
-      </a>
-      <br clear="all">
+      <a class="button float--left" @click.prevent="navigateBack"> Back </a>
+      <br clear="all" />
     </div>
   </form>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers } from "vuex";
 
-const { mapState, mapGetters, mapActions } = createNamespacedHelpers('registration')
+const { mapState, mapGetters, mapActions } =
+  createNamespacedHelpers("registration");
 
 export default {
+  beforeRouteEnter(_to, from, next) {
+    next((vm) => {
+      if (vm.isAgeSet) {
+        next();
+      } else {
+        vm.$router.replace(from.path);
+      }
+    });
+  },
   props: {
     profileIcons: {
       type: Object,
-      default () {
+      default() {
         return {
-          profileIconMentor: '',
-          profileIconMentorMale: '',
-          profileIconStudent: '',
-        }
+          profileIconMentor: "",
+          profileIconMentorMale: "",
+          profileIconStudent: "",
+        };
       },
     },
-  },
-
-  beforeRouteEnter (_to, from, next) {
-    next(vm => {
-      if (vm.isAgeSet) {
-        next()
-      } else {
-        vm.$router.replace(from.path)
-      }
-    })
   },
 
   computed: {
-    ...mapState(['months', 'birthMonth', 'genderIdentity', 'isLocked']),
+    ...mapState(["months", "birthMonth", "genderIdentity", "isLocked"]),
 
-    ...mapGetters(['getAge', 'getAgeByCutoff', 'isAgeSet', 'getBirthdate']),
+    ...mapGetters(["getAge", "getAgeByCutoff", "isAgeSet", "getBirthdate"]),
 
     profileChoice: {
-      get () {
-        return this.$store.state.registration.profileChoice
+      get() {
+        return this.$store.state.registration.profileChoice;
       },
 
-      set (choice) {
-        this.$store.commit('registration/profileChoice', choice)
+      set(choice) {
+        this.$store.commit("registration/profileChoice", choice);
       },
     },
 
-    profileOptions () {
+    profileOptions() {
+      /* eslint-disable vue/no-side-effects-in-computed-properties */
       if (this.getAgeByCutoff < 10) {
-        this.profileChoice = null
-        return []
+        this.profileChoice = null;
+        return [];
       }
 
       if (this.getAge() < 18) {
-        this.profileChoice = 'student'
-        return ['student']
+        this.profileChoice = "student";
+        return ["student"];
       }
 
       if (this.getAgeByCutoff > 18) {
-        this.profileChoice = 'mentor'
-        return ['mentor']
+        this.profileChoice = "mentor";
+        return ["mentor"];
       }
 
       if (this.getAge() == 18 && this.getAgeByCutoff < 19) {
-        return ['mentor', 'student']
+        return ["mentor", "student"];
       }
 
-      this.profileChoice = null
-      return []
+      this.profileChoice = null;
+      return [];
+      /* eslint-enable vue/no-side-effects-in-computed-properties */
     },
   },
 
   watch: {
-    profileChoice (value) {
-      this.updateProfileChoice(value)
+    profileChoice(value) {
+      this.updateProfileChoice(value);
     },
 
-    profileOptions (arr) {
-      if (arr.length === 1) this.profileChoice = arr[0]
+    profileOptions(arr) {
+      if (arr.length === 1) this.profileChoice = arr[0];
     },
   },
 
   methods: {
-    ...mapActions(['updateProfileChoice']),
+    ...mapActions(["updateProfileChoice"]),
 
-    navigateBack () {
-      this.$router.push({ name: 'age' })
+    navigateBack() {
+      this.$router.push({ name: "age" });
     },
 
-    getProfileIconSrc (choice) {
+    getProfileIconSrc(choice) {
       if (choice) {
-        const capitalizedChoice = choice.charAt(0).toUpperCase() + choice.slice(1)
+        const capitalizedChoice =
+          choice.charAt(0).toUpperCase() + choice.slice(1);
 
-        if (choice === 'mentor' && this.$store.state.registration.genderIdentity === 'Male') {
-          return this.profileIcons.profileIconMentorMale
+        if (
+          choice === "mentor" &&
+          this.$store.state.registration.genderIdentity === "Male"
+        ) {
+          return this.profileIcons.profileIconMentorMale;
         } else {
-          return this.profileIcons[`profileIcon${capitalizedChoice}`]
+          return this.profileIcons[`profileIcon${capitalizedChoice}`];
         }
       } else {
-        return ''
+        return "";
       }
     },
 
-    getCSSForOption (option) {
-      if (this.profileOptions.length === 1)
-        return 'opacity--100 grid__col-6'
+    getCSSForOption(option) {
+      if (this.profileOptions.length === 1) return "opacity--100 grid__col-6";
 
-      if (this.profileChoice === option)
-        return 'opacity--100 grid__col-auto'
+      if (this.profileChoice === option) return "opacity--100 grid__col-auto";
 
-      return 'grid__col-auto'
+      return "grid__col-auto";
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

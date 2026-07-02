@@ -1,37 +1,37 @@
 export const digStateData = (state, key, property, conditionFunc) => {
   if (state[key]) {
-    const data = state[key].data
+    const data = state[key].data;
 
     if (data) {
-      const value = state[key].data[property]
+      const value = state[key].data[property];
 
       if (!conditionFunc) {
-        return value
+        return value;
       } else if (value) {
-        return conditionFunc(value)
+        return conditionFunc(value);
       } else {
-        return undefined
+        return undefined;
       }
     } else {
-      return undefined
+      return undefined;
     }
   } else {
-    return undefined
+    return undefined;
   }
-}
+};
 
-export const digStateAttributes  = (state, key, attribute, conditionFunc) => {
-  const attributes = digStateData(state, key, 'attributes')
+export const digStateAttributes = (state, key, attribute, conditionFunc) => {
+  const attributes = digStateData(state, key, "attributes");
 
   if (attributes) {
-    const value = attributes[attribute]
+    const value = attributes[attribute];
 
     if (value != undefined && conditionFunc) {
-      return conditionFunc(value)
+      return conditionFunc(value);
     } else {
-      return value
+      return value;
     }
   } else {
-    return undefined
+    return undefined;
   }
-}
+};

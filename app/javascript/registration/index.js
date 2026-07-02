@@ -1,28 +1,38 @@
-import Vue from 'vue'
-import Vue2Filters from 'vue2-filters'
+import Vue from "vue";
+import Vue2Filters from "vue2-filters";
 
-import router from './routes'
-import store from './store'
+import router from "./routes";
+import store from "./store";
 
-import App from './App'
+import App from "./App";
 
-Vue.use(Vue2Filters)
+Vue.use(Vue2Filters);
 
-document.addEventListener('turbo:load', () => {
-  const wizardElem = document.querySelector('#vue-enable-signup-wizard')
+document.addEventListener("turbo:load", () => {
+  const wizardElem = document.querySelector("#vue-enable-signup-wizard");
 
   if (wizardElem) {
-    const rootElem = document.getElementById('vue-data-registration')
-    const { data } = JSON.parse(rootElem.dataset.previousAttempt)
-    const { attributes, relationships } = data
-    let storePromise
+    const rootElem = document.getElementById("vue-data-registration");
+    const { data } = JSON.parse(rootElem.dataset.previousAttempt);
+    const { attributes, relationships } = data;
+    let storePromise;
 
-    if (data.type === 'account') {
-      const currentAccount = Object.assign({}, store.state.registration, attributes, relationships)
-      storePromise = store.dispatch('registration/initAccount', currentAccount)
+    if (data.type === "account") {
+      const currentAccount = Object.assign(
+        {},
+        store.state.registration,
+        attributes,
+        relationships
+      );
+      storePromise = store.dispatch("registration/initAccount", currentAccount);
     } else {
-      const previousAttempt = Object.assign({}, store.state.registration, attributes, relationships)
-      storePromise = store.dispatch('registration/initWizard', previousAttempt)
+      const previousAttempt = Object.assign(
+        {},
+        store.state.registration,
+        attributes,
+        relationships
+      );
+      storePromise = store.dispatch("registration/initWizard", previousAttempt);
     }
 
     storePromise.then(() => {
@@ -33,7 +43,7 @@ document.addEventListener('turbo:load', () => {
         components: {
           App,
         },
-      })
-    })
+      });
+    });
   }
-})
+});

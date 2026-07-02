@@ -4,61 +4,93 @@
     <p class="inline-radio">
       <input
         id="season_toggles_judging_round_off"
+        v-model="$store.state.judging_round"
         type="radio"
         value="off"
-        v-model="$store.state.judging_round"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label for="season_toggles_judging_round_off">Off</label>
-      <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Before judging: Judges cannot judge'" />
+      <icon
+        v-tooltip.right="'Before judging: Judges cannot judge'"
+        name="question-circle"
+        :size="16"
+        color="00529B"
+      />
     </p>
     <p class="inline-radio">
       <input
         id="season_toggles_judging_round_qf"
+        v-model="$store.state.judging_round"
         type="radio"
         value="qf"
-        v-model="$store.state.judging_round"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label for="season_toggles_judging_round_qf">Quarterfinals</label>
-      <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Judges can now judge either virtually or their assigned submissions'" />
+      <icon
+        v-tooltip.right="
+          'Judges can now judge either virtually or their assigned submissions'
+        "
+        name="question-circle"
+        :size="16"
+        color="00529B"
+      />
     </p>
     <p class="inline-radio">
       <input
         id="season_toggles_judging_round_between"
+        v-model="$store.state.judging_round"
         type="radio"
         value="between"
-        v-model="$store.state.judging_round"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label for="season_toggles_judging_round_between">Between rounds</label>
-      <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Judges now see the &quot;between rounds&quot; screen'" />
+      <icon
+        v-tooltip.right="'Judges now see the &quot;between rounds&quot; screen'"
+        name="question-circle"
+        :size="16"
+        color="00529B"
+      />
     </p>
     <p class="inline-radio">
       <input
         id="season_toggles_judging_round_sf"
+        v-model="$store.state.judging_round"
         type="radio"
         value="sf"
-        v-model="$store.state.judging_round"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label for="season_toggles_judging_round_sf">Semifinals</label>
-      <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'Judges can now judge semifinals submissions'" />
+      <icon
+        v-tooltip.right="'Judges can now judge semifinals submissions'"
+        name="question-circle"
+        :size="16"
+        color="00529B"
+      />
     </p>
     <p class="inline-radio">
       <input
         id="season_toggles_judging_round_finished"
+        v-model="$store.state.judging_round"
         type="radio"
         value="finished"
-        v-model="$store.state.judging_round"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label for="season_toggles_judging_round_finished">Finished</label>
-      <icon name="question-circle" :size="16" color="00529B" v-tooltip.right="'After judging: judges cannot judge'" />
+      <icon
+        v-tooltip.right="'After judging: judges cannot judge'"
+        name="question-circle"
+        :size="16"
+        color="00529B"
+      />
     </p>
 
     <p class="margin--t-large">
-      <a href="https://docs.google.com/document/d/1bFN0yf2M0RrpdxBaq4tudNfhcvGetifY3v1gnHvkV20/" class="small" target="_blank">View judging document</a>
+      <a
+        href="https://docs.google.com/document/d/1bFN0yf2M0RrpdxBaq4tudNfhcvGetifY3v1gnHvkV20/"
+        class="small"
+        target="_blank"
+        >View judging document</a
+      >
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint">
@@ -69,27 +101,22 @@
 </template>
 
 <script>
-import { VTooltip } from 'v-tooltip'
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import 'components/tooltip.scss'
-import Icon from 'components/Icon'
+import "components/tooltip.scss";
+import Icon from "components/Icon";
 
 export default {
-  name: 'judging-section',
+  name: "JudgingSection",
 
   components: {
     Icon,
   },
 
   computed: {
-    ...mapGetters([
-      'judgingEnabled',
-      'isSuperAdmin'
-    ])
-  }
-}
+    ...mapGetters(["judgingEnabled", "isSuperAdmin"]),
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

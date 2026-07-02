@@ -236,6 +236,10 @@ jobs:
             - ~/.cache/yarn
 
       - run:
+          name: Run lint checks
+          command: yarn lint
+
+      - run:
           name: Setup database
           command: |
             bundle exec rails db:create

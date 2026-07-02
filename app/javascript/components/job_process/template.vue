@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :class="['status', statusClass]">
-      <icon name="spinner" size="16" class="spin" v-if="showLoading" />
+      <icon v-if="showLoading" name="spinner" size="16" class="spin" />
       {{ statusMsg }}
     </div>
 
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { urlHelpers } from 'utilities/utilities'
-import Icon from '../Icon'
+import { urlHelpers } from "utilities/utilities";
+import Icon from "../Icon";
 
 export default {
   components: {
@@ -24,84 +24,88 @@ export default {
     statusUrl: {
       type: String,
       required: true,
-    }
+    },
   },
 
-  data () {
+  data() {
     return {
       interval: null,
-      statusCode: 'init',
-    }
-  },
-
-  mounted () {
-    this.interval = setInterval(() => {
-      window.axios.get(this.statusUrl).then(({ data }) => {
-        this.handleJSON(data)
-      })
-    }, 500)
-  },
-
-  destroyed () {
-    clearInterval(this.interval)
+      statusCode: "init",
+    };
   },
 
   computed: {
-    showLoading () {
-      return this.statusCode !== 'complete' && this.statusCode !== 'error'
+    showLoading() {
+      return this.statusCode !== "complete" && this.statusCode !== "error";
     },
 
-    backUrl () {
-      return this.fetchGetParameterValue('back') || '/'
+    backUrl() {
+      return this.fetchGetParameterValue("back") || "/";
     },
 
-    statusMsg () {
-      switch(this.statusCode) {
-        case 'init':
-          return 'Creating a job for your file...'
-        case 'queued':
-          return 'Your file is waiting in line...'
-        case 'busy':
-          return 'Your file is being processed...'
-        case 'error':
-          return 'There was an error processing your file, please try again'
-        case 'complete':
-          return 'Your file is ready!'
+    statusMsg() {
+      switch (this.statusCode) {
+        case "init":
+          return "Creating a job for your file...";
+        case "queued":
+          return "Your file is waiting in line...";
+        case "busy":
+          return "Your file is being processed...";
+        case "error":
+          return "There was an error processing your file, please try again";
+        case "complete":
+          return "Your file is ready!";
+        default:
+          return "";
       }
     },
 
-    statusClass () {
-      switch(this.statusCode) {
-        case 'init':
-          return 'yellow'
-        case 'queued':
-          return 'green-waiting'
-        case 'busy':
-          return 'green-busy'
-        case 'error':
-          return 'red'
-        case 'complete':
-          return 'green-complete'
+    statusClass() {
+      switch (this.statusCode) {
+        case "init":
+          return "yellow";
+        case "queued":
+          return "green-waiting";
+        case "busy":
+          return "green-busy";
+        case "error":
+          return "red";
+        case "complete":
+          return "green-complete";
+        default:
+          return "";
       }
     },
+  },
+
+  mounted() {
+    this.interval = setInterval(() => {
+      window.axios.get(this.statusUrl).then(({ data }) => {
+        this.handleJSON(data);
+      });
+    }, 500);
+  },
+
+  destroyed() {
+    clearInterval(this.interval);
   },
 
   methods: {
     fetchGetParameterValue: urlHelpers.fetchGetParameterValue,
 
-    handleJSON (json) {
-      this.statusCode = json.status
+    handleJSON(json) {
+      this.statusCode = json.status;
 
-      if (this.statusCode === 'complete' || this.statusCode === 'error') {
-        clearInterval(this.interval)
+      if (this.statusCode === "complete" || this.statusCode === "error") {
+        clearInterval(this.interval);
       }
     },
 
-    goBack () {
-      window.location.href = this.backUrl
-    }
+    goBack() {
+      window.location.href = this.backUrl;
+    },
   },
-}
+};
 </script>
 
 <style scoped>

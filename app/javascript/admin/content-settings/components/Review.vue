@@ -7,8 +7,13 @@
         <div ref="signupFieldStudents" class="review-label">
           <p>
             Students
-            <strong :class="{ on: formData.student_signup, off: !formData.student_signup }">
-              {{ formData.student_signup ? 'yes' : 'no' }}
+            <strong
+              :class="{
+                on: formData.student_signup,
+                off: !formData.student_signup,
+              }"
+            >
+              {{ formData.student_signup ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -19,10 +24,10 @@
             <strong
               :class="{
                 on: formData.mentor_signup,
-                off: !formData.mentor_signup
+                off: !formData.mentor_signup,
               }"
             >
-              {{ formData.mentor_signup ? 'yes' : 'no' }}
+              {{ formData.mentor_signup ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -33,10 +38,10 @@
             <strong
               :class="{
                 on: formData.judge_signup,
-                off: !formData.judge_signup
+                off: !formData.judge_signup,
               }"
             >
-              {{ formData.judge_signup ? 'yes' : 'no' }}
+              {{ formData.judge_signup ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -44,20 +49,18 @@
 
       <div class="review-panel">
         <h4 class="reset">Dashboard Notices</h4>
-        <div
-          v-for="(label, key) in noticesFields"
-          :key="key"
-        >
+        <div v-for="(label, key) in noticesFields" :key="key">
           <p class="review-label">{{ label }}</p>
           <p
             v-if="formData[key] === ''"
-            class="hint"
             :ref="`noticeFieldHint${label.replace(' ', '')}`"
-          >Not filled in, nothing will appear</p>
-          <p
-            v-else
-            :ref="`noticeFieldLabel${label.replace(' ', '')}`
-          ">{{ formData[key] }}</p>
+            class="hint"
+          >
+            Not filled in, nothing will appear
+          </p>
+          <p v-else :ref="`noticeFieldLabel${label.replace(' ', '')}`">
+            {{ formData[key] }}
+          </p>
         </div>
       </div>
 
@@ -69,32 +72,33 @@
 
           <p
             v-if="formData[key].text === '' || formData[key].url === ''"
-            class="hint"
             :ref="`surveyFieldTextUrlHint${label}`"
-          >Not filled in completely, nothing will appear.</p>
+            class="hint"
+          >
+            Not filled in completely, nothing will appear.
+          </p>
 
           <template v-else>
-            <p
-              class="part-of-many"
-              :ref="`surveyFieldText${label}`"
-            >{{ formData[key].text }}</p>
-            <p
-              class="part-of-many"
-              :ref="`surveyFieldUrl${label}`"
-            >{{ formData[key].url }}</p>
+            <p :ref="`surveyFieldText${label}`" class="part-of-many">
+              {{ formData[key].text }}
+            </p>
+            <p :ref="`surveyFieldUrl${label}`" class="part-of-many">
+              {{ formData[key].url }}
+            </p>
           </template>
 
           <p class="review-label-subset">(optional popup modal text)</p>
 
           <p
             v-if="formData[key].long_desc === ''"
-            class="hint"
             :ref="`surveyFieldDescHint${label}`"
-          >Not filled in, nothing will appear</p>
-          <p
-            v-else
-            :ref="`surveyFieldDesc${label}`"
-          >{{ formData[key].long_desc }}</p>
+            class="hint"
+          >
+            Not filled in, nothing will appear
+          </p>
+          <p v-else :ref="`surveyFieldDesc${label}`">
+            {{ formData[key].long_desc }}
+          </p>
         </div>
       </div>
 
@@ -106,10 +110,10 @@
             <strong
               :class="{
                 on: formData.team_building_enabled,
-                off: !formData.team_building_enabled
+                off: !formData.team_building_enabled,
               }"
             >
-              {{ formData.team_building_enabled ? 'yes' : 'no' }}
+              {{ formData.team_building_enabled ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -119,10 +123,10 @@
             <strong
               :class="{
                 on: formData.team_submissions_editable,
-                off: !formData.team_submissions_editable
+                off: !formData.team_submissions_editable,
               }"
             >
-              {{ formData.team_submissions_editable ? 'yes' : 'no' }}
+              {{ formData.team_submissions_editable ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -136,10 +140,10 @@
             <strong
               :class="{
                 on: formData.create_regional_pitch_event,
-                off: !formData.create_regional_pitch_event
+                off: !formData.create_regional_pitch_event,
               }"
             >
-              {{ formData.create_regional_pitch_event ? 'yes' : 'no' }}
+              {{ formData.create_regional_pitch_event ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -150,10 +154,10 @@
             <strong
               :class="{
                 on: formData.select_regional_pitch_event,
-                off: !formData.select_regional_pitch_event
+                off: !formData.select_regional_pitch_event,
               }"
             >
-              {{ formData.select_regional_pitch_event ? 'yes' : 'no' }}
+              {{ formData.select_regional_pitch_event ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -164,10 +168,10 @@
             <strong
               :class="{
                 on: formData.add_teams_to_regional_pitch_event,
-                off: !formData.add_teams_to_regional_pitch_event
+                off: !formData.add_teams_to_regional_pitch_event,
               }"
             >
-              {{ formData.add_teams_to_regional_pitch_event ? 'yes' : 'no' }}
+              {{ formData.add_teams_to_regional_pitch_event ? "yes" : "no" }}
             </strong>
           </p>
         </div>
@@ -175,10 +179,9 @@
 
       <div class="review-panel">
         <h4 class="reset">Judging Round</h4>
-        <p
-          ref="judgingRoundField"
-          class="review-label"
-        >{{ judgingRound[formData.judging_round] }}</p>
+        <p ref="judgingRoundField" class="review-label">
+          {{ judgingRound[formData.judging_round] }}
+        </p>
       </div>
 
       <div class="review-panel">
@@ -189,57 +192,52 @@
             <strong
               :class="{
                 on: formData.display_scores,
-                off: !formData.display_scores
+                off: !formData.display_scores,
               }"
             >
-              {{ formData.display_scores ? 'yes' : 'no' }}
+              {{ formData.display_scores ? "yes" : "no" }}
             </strong>
           </p>
         </div>
       </div>
     </div>
 
-    <div
-      v-if="isSuperAdmin"
-      class="notice warning"
-    >
+    <div v-if="isSuperAdmin" class="notice warning">
       The changes you are about to make are for {{ environmentName() }}.
 
-      <p v-if="isProduction()">
-        Please double check everything before saving.
-      </p>
+      <p v-if="isProduction()">Please double check everything before saving.</p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import { isProduction, isQa } from '../../../utilities/utilities'
+import { isProduction, isQa } from "../../../utilities/utilities";
 
 export default {
-  name: 'review-and-save-settings-section',
+  name: "ReviewAndSaveSettingsSection",
 
-  data () {
+  data() {
     return {
       noticesFields: {
-        student_dashboard_text: 'Students',
-        mentor_dashboard_text: 'Mentors',
-        judge_dashboard_text: 'Judges',
-        chapter_ambassador_dashboard_text: 'Chapter Ambassadors',
+        student_dashboard_text: "Students",
+        mentor_dashboard_text: "Mentors",
+        judge_dashboard_text: "Judges",
+        chapter_ambassador_dashboard_text: "Chapter Ambassadors",
       },
       surveysFields: {
-        student_survey_link: 'Students',
-        mentor_survey_link: 'Mentors',
+        student_survey_link: "Students",
+        mentor_survey_link: "Mentors",
       },
       judgingRound: {
-        off: 'Off',
-        qf: 'Quarterfinals',
-        between: 'Between rounds',
-        sf: 'Semifinals',
-        finished: 'Finished',
-      }
-    }
+        off: "Off",
+        qf: "Quarterfinals",
+        between: "Between rounds",
+        sf: "Semifinals",
+        finished: "Finished",
+      },
+    };
   },
 
   methods: {
@@ -247,21 +245,17 @@ export default {
 
     environmentName() {
       if (isProduction()) {
-        return "PRODUCTION"
+        return "PRODUCTION";
       } else if (isQa()) {
-        return "QA"
+        return "QA";
       } else {
-        return "your local environment"
+        return "your local environment";
       }
     },
   },
 
   computed: {
-    ...mapGetters([
-      'judgingEnabled',
-      'formData',
-      'isSuperAdmin'
-    ]),
-  }
-}
+    ...mapGetters(["judgingEnabled", "formData", "isSuperAdmin"]),
+  },
+};
 </script>

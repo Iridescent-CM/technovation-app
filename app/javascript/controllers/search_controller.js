@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { debounce } from "../utilities/utilities"
+import { debounce } from "../utilities/utilities";
 
 export default class extends Controller {
   initialize() {

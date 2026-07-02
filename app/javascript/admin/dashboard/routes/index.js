@@ -1,36 +1,36 @@
-import VueRouter from 'vue-router'
+import VueRouter from "vue-router";
 
-import Mentors from '../components/MentorsSection'
-import Students from '../components/StudentsSection'
-import TopCountries from '../components/TopCountriesSection'
+import Mentors from "../components/MentorsSection";
+import Students from "../components/StudentsSection";
+import TopCountries from "../components/TopCountriesSection";
 
 export const routes = [
   {
-    path: '/',
+    path: "/",
     redirect: {
-      name: 'students',
+      name: "students",
     },
   },
   {
-    path: '/students',
-    name: 'students',
+    path: "/students",
+    name: "students",
     component: Students,
   },
   {
-    path: '/mentors',
-    name: 'mentors',
+    path: "/mentors",
+    name: "mentors",
     component: Mentors,
   },
   {
-    path: '/top_countries',
-    name: 'top_countries',
+    path: "/top_countries",
+    name: "top_countries",
     component: TopCountries,
     props: {
       hideTotal: true,
     },
   },
-]
+];
 
 export const router = new VueRouter({
   routes,
-})
+});

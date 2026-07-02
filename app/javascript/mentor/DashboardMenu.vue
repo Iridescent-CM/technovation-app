@@ -7,7 +7,11 @@
       :condition-to-complete="true"
     >
       Complete your Profile
-      <div slot="subnav" class="tabs-menu__child-menu" v-if="registrationPagesActive">
+      <div
+        v-if="registrationPagesActive"
+        slot="subnav"
+        class="tabs-menu__child-menu"
+      >
         <registration-menu />
       </div>
     </tab-link>
@@ -19,7 +23,7 @@
       :condition-to-complete="isConsentSigned && isOnTeam"
     >
       Build your Team
-      <div slot="subnav" class="tabs-menu__child-menu" v-if="teamPagesActive">
+      <div v-if="teamPagesActive" slot="subnav" class="tabs-menu__child-menu">
         <team-menu />
       </div>
     </tab-link>
@@ -39,7 +43,8 @@
       :disabled-tooltip="submissionDisabledTooltipMessage"
       :condition-to-enable="isConsentSigned && isOnTeam"
       :condition-to-complete="submissionComplete"
-    >Submit your Project</tab-link>
+      >Submit your Project</tab-link
+    >
 
     <tab-link
       :class="eventsTabLinkClasses"
@@ -51,36 +56,31 @@
       Find a Pitch Event
     </tab-link>
 
-
     <tab-link
       :class="scoresTabLinkClasses"
       :to="{ name: 'scores', meta: { active: scoresPagesActive } }"
       :disabled-tooltip="tooltips.SCORES_AND_CERTIFICATES_AVAILABLE_LATER"
       :condition-to-enable="scoresAndCertificatesEnabled"
       :condition-to-complete="false"
-    >View Scores & Certificates</tab-link>
+      >View Scores & Certificates</tab-link
+    >
   </ul>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import menuMixin from 'mixins/menu'
-import tooltipsMixin from 'mixins/tooltips'
+import { createNamespacedHelpers } from "vuex";
+import menuMixin from "mixins/menu";
+import tooltipsMixin from "mixins/tooltips";
 
-const { mapGetters } = createNamespacedHelpers('authenticated')
+const { mapGetters } = createNamespacedHelpers("authenticated");
 
-import TabLink from 'tabs/components/TabLink'
+import TabLink from "tabs/components/TabLink";
 
-import RegistrationMenu from 'registration/DashboardMenu'
-import TeamMenu from './menus/Team'
+import RegistrationMenu from "registration/DashboardMenu";
+import TeamMenu from "./menus/Team";
 
 export default {
-  name: 'dashboard-menu',
-
-  mixins: [
-    menuMixin,
-    tooltipsMixin,
-  ],
+  name: "DashboardMenu",
 
   components: {
     TabLink,
@@ -88,90 +88,100 @@ export default {
     TeamMenu,
   },
 
+  mixins: [menuMixin, tooltipsMixin],
+
   computed: {
-    ...mapGetters(['isOnTeam', 'isConsentSigned', 'isOnboarded', 'nextOnboardingStep']),
+    ...mapGetters([
+      "isOnTeam",
+      "isConsentSigned",
+      "isOnboarded",
+      "nextOnboardingStep",
+    ]),
 
-    rootTeamRoute () {
+    rootTeamRoute() {
       if (this.isOnboarded) {
-        return { name: 'find-team', meta: { active: this.teamPagesActive } }
+        return { name: "find-team", meta: { active: this.teamPagesActive } };
       } else {
-        return { name: this.nextOnboardingStep, meta: { active: this.teamPagesActive } }
+        return {
+          name: this.nextOnboardingStep,
+          meta: { active: this.teamPagesActive },
+        };
       }
     },
 
-    submissionComplete () {
-      return false
+    submissionComplete() {
+      return false;
     },
 
-    registrationTabLinkClasses () {
+    registrationTabLinkClasses() {
       return {
-        'tabs__menu-link--active': this.registrationPagesActive,
-      }
+        "tabs__menu-link--active": this.registrationPagesActive,
+      };
     },
 
-    teamTabLinkClasses () {
+    teamTabLinkClasses() {
       return {
-        'tabs__menu-link--active': this.teamPagesActive,
-      }
+        "tabs__menu-link--active": this.teamPagesActive,
+      };
     },
 
-    curriculumTabLinkClasses () {
+    curriculumTabLinkClasses() {
       return {
-        'tabs__menu-link--active': this.curriculumPagesActive,
-      }
+        "tabs__menu-link--active": this.curriculumPagesActive,
+      };
     },
 
-    submissionTabLinkClasses () {
+    submissionTabLinkClasses() {
       return {
-        'tabs__menu-link--active': this.submissionPagesActive,
-      }
+        "tabs__menu-link--active": this.submissionPagesActive,
+      };
     },
 
-    eventsTabLinkClasses () {
+    eventsTabLinkClasses() {
       return {
-        'tabs__menu-link--active': this.eventsPagesActive,
-      }
+        "tabs__menu-link--active": this.eventsPagesActive,
+      };
     },
 
-    scoresTabLinkClasses () {
+    scoresTabLinkClasses() {
       return {
-        'tabs__menu-link--active': this.scoresPagesActive,
-      }
+        "tabs__menu-link--active": this.scoresPagesActive,
+      };
     },
 
-    scoresPagesActive () {
-      return this.subRouteIsActive('scores')
+    scoresPagesActive() {
+      return this.subRouteIsActive("scores");
     },
 
-    eventsPagesActive () {
-      return this.subRouteIsActive('events')
+    eventsPagesActive() {
+      return this.subRouteIsActive("events");
     },
 
-    submissionPagesActive () {
-      return this.subRouteIsActive('submission')
+    submissionPagesActive() {
+      return this.subRouteIsActive("submission");
     },
 
-    teamPagesActive () {
-      return this.subRouteIsActive('team')
+    teamPagesActive() {
+      return this.subRouteIsActive("team");
     },
 
-    curriculumPagesActive () {
-      return this.subRouteIsActive('curriculum')
+    curriculumPagesActive() {
+      return this.subRouteIsActive("curriculum");
     },
 
-    registrationPagesActive () {
-      return this.subRouteIsActive('registration')
+    registrationPagesActive() {
+      return this.subRouteIsActive("registration");
     },
 
-    submissionDisabledTooltipMessage () {
+    submissionDisabledTooltipMessage() {
       if (!this.isOnTeam && !this.isConsentSigned)
-        return this.tooltips.mentor.submissions.MUST_SIGN_CONSENT_ON_TEAM
+        return this.tooltips.mentor.submissions.MUST_SIGN_CONSENT_ON_TEAM;
 
       if (!this.isConsentSigned)
-        return this.tooltips.mentor.submissions.MUST_SIGN_CONSENT
+        return this.tooltips.mentor.submissions.MUST_SIGN_CONSENT;
 
-      return this.tooltips.mentor.submissions.MUST_BE_ON_TEAM
+      return this.tooltips.mentor.submissions.MUST_BE_ON_TEAM;
     },
   },
-}
+};
 </script>

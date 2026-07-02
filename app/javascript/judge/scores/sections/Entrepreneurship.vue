@@ -8,7 +8,7 @@
       prev-section="demo"
       next-section="ideation"
     >
-      <template v-slot:main-content>
+      <template #main-content>
         <business />
       </template>
     </GenericJudgingContainer>

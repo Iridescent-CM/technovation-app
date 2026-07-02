@@ -3,7 +3,7 @@
     <h3>
       Students
       <span v-if="getTotal('students') && !hideTotal">
-        ({{ getTotal('students') }})
+        ({{ getTotal("students") }})
       </span>
     </h3>
 
@@ -23,43 +23,42 @@
       <pie-chart
         :url="returningStudentsEndpoint"
         :chart-data="returningStudentsChartData"
-        @pieChartInitialized="addChartDataToCache"
         :color-range="{
           start: 'rgba(54, 162, 235, 1)',
           end: 'rgba(255, 206, 86, 1)',
         }"
+        @pieChartInitialized="addChartDataToCache"
       />
     </div>
   </div>
 </template>
 
 <script>
-import DashboardSection from './DashboardSection'
+import DashboardSection from "./DashboardSection";
 
 export default {
-  name: 'students-section',
+  name: "StudentsSection",
 
   extends: DashboardSection,
 
   computed: {
-    onboardingStudentsEndpoint () {
-      return this.$store.getters.getChartEndpoint('onboarding_students')
+    onboardingStudentsEndpoint() {
+      return this.$store.getters.getChartEndpoint("onboarding_students");
     },
 
-    onboardingStudentsChartData () {
-      return this.$store.getters.getCachedChartData('onboarding_students')
+    onboardingStudentsChartData() {
+      return this.$store.getters.getCachedChartData("onboarding_students");
     },
 
-    returningStudentsEndpoint () {
-      return this.$store.getters.getChartEndpoint('returning_students')
+    returningStudentsEndpoint() {
+      return this.$store.getters.getChartEndpoint("returning_students");
     },
 
-    returningStudentsChartData () {
-      return this.$store.getters.getCachedChartData('returning_students')
+    returningStudentsChartData() {
+      return this.$store.getters.getCachedChartData("returning_students");
     },
   },
-}
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

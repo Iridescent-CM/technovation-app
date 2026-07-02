@@ -1,21 +1,20 @@
-import Vue from 'vue'
+import Vue from "vue";
 
 export default {
-  htmlDataset (state, dataset) {
+  htmlDataset(state, dataset) {
     [
-      'chapterableAmbassador',
-      'chapterAmbassador',
-      'currentAccount',
-      'currentMentor',
-      'consentWaiver',
-      'backgroundCheck',
-      'settings',
-    ].forEach(key => {
-      if (dataset[key])
-        Vue.set(state, key, JSON.parse(dataset[key]))
-    })
+      "chapterableAmbassador",
+      "chapterAmbassador",
+      "currentAccount",
+      "currentMentor",
+      "consentWaiver",
+      "backgroundCheck",
+      "settings",
+    ].forEach((key) => {
+      if (dataset[key]) Vue.set(state, key, JSON.parse(dataset[key]));
+    });
 
     if (dataset.currentTeams)
-      Vue.set(state, 'currentTeams', JSON.parse(dataset.currentTeams).data)
+      Vue.set(state, "currentTeams", JSON.parse(dataset.currentTeams).data);
   },
-}
+};

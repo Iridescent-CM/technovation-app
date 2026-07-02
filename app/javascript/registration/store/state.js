@@ -1,13 +1,13 @@
 export default {
   isReady: false,
   isLocked: false,
-  apiRoot: 'registration',
-  apiMethod: 'post',
+  apiRoot: "registration",
+  apiMethod: "post",
   wizardToken: null,
   token: null,
 
   termsAgreed: null,
-  termsAgreedDate: '',
+  termsAgreedDate: "",
 
   birthYear: null,
   birthMonth: null,
@@ -33,7 +33,7 @@ export default {
   jobTitle: null,
   mentorType: null,
   expertiseIds: [],
-  bio: '',
+  bio: "",
 
   referredBy: null,
   referredByOther: null,
@@ -53,5 +53,5 @@ export default {
     { label: "12 - December", value: "12" },
   ],
 
-  email: '',
-}
+  email: "",
+};

@@ -12,6 +12,6 @@
 
 <script>
 export default {
-  name: 'scores',
-}
+  name: "Scores",
+};
 </script>

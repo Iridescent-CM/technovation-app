@@ -4,39 +4,29 @@
 
     <Password
       id="password"
+      v-model="password"
       autocomplete="new-password"
       placeholder="Use at least 8 characters"
-      v-model="password"
       name="account[password]"
       :toggle="true"
       :secure-length="8"
       @score="showScore"
     />
 
-    <div
-      v-if="nextStepEnabled"
-      :class="['flash', flashForStrength]"
-    >
+    <div v-if="nextStepEnabled" :class="['flash', flashForStrength]">
       {{ strengthNextStepMsg }}
     </div>
   </div>
 </template>
 
 <script>
-import Password from 'vue-password-strength-meter'
+import Password from "vue-password-strength-meter";
 
 export default {
-  name: 'password-validation',
+  name: "PasswordValidation",
 
   components: {
     Password,
-  },
-
-  data () {
-    return {
-      score: 0,
-      password: '',
-    }
   },
 
   props: {
@@ -46,44 +36,51 @@ export default {
     },
   },
 
+  data() {
+    return {
+      score: 0,
+      password: "",
+    };
+  },
+
   computed: {
-    nextStepEnabled () {
-      return this.password.length >= 8
+    nextStepEnabled() {
+      return this.password.length >= 8;
     },
 
-    strengthNextStepMsg () {
+    strengthNextStepMsg() {
       if (this.score > 2) {
-        return "Your password looks good! You're ready for the next step!"
+        return "Your password looks good! You're ready for the next step!";
       } else if (this.score > 0) {
-        return "Your password looks okay, but you can go to the next step."
+        return "Your password looks okay, but you can go to the next step.";
       } else {
-        return "Your password looks weak, and we recommend that you make it stronger, but you can go to the next step."
+        return "Your password looks weak, and we recommend that you make it stronger, but you can go to the next step.";
       }
     },
 
-    flashForStrength () {
+    flashForStrength() {
       if (this.score > 2) {
-        return 'flash--success'
+        return "flash--success";
       } else if (this.score > 0) {
-        return ''
+        return "";
       } else {
-        return 'flash--alert'
+        return "flash--alert";
       }
     },
   },
 
   watch: {
-    nextStepEnabled (bool) {
-      this.$emit('input', bool)
+    nextStepEnabled(bool) {
+      this.$emit("input", bool);
     },
   },
 
   methods: {
-    showScore (score) {
-      this.score = score
+    showScore(score) {
+      this.score = score;
     },
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -107,8 +104,9 @@ export default {
     }
 
     &:focus {
-      border-color: #903D54 !important;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06), 0 0 5px rgba(144, 61, 84, 0.7);
+      border-color: #903d54 !important;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06),
+        0 0 5px rgba(144, 61, 84, 0.7);
       outline: none !important;
     }
   }

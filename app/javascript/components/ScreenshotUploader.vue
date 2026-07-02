@@ -7,7 +7,7 @@
         ideas.
       </p>
 
-      <button @click="uploadFile" class="tw-green-btn small">
+      <button class="tw-green-btn small" @click="uploadFile">
         + Add {{ prefix }} {{ maxFiles }} {{ object }}
       </button>
     </template>
@@ -21,11 +21,11 @@
       Sort your images in the order that you want the judges to see them:
     </p>
 
-    <ol v-dragula id="sortable-list" class="submission-pieces__screenshots">
+    <ol id="sortable-list" v-dragula class="submission-pieces__screenshots">
       <li
-        class="sortable-list__item draggable screenshot-wrapper"
         v-for="screenshot in screenshots"
         :key="screenshot.id"
+        class="sortable-list__item draggable screenshot-wrapper"
         :data-db-id="screenshot.id"
       >
         <img
@@ -49,14 +49,7 @@
 <script>
 import * as filestack from "filestack-js";
 export default {
-  name: "screenshot-uploader",
-
-  data() {
-    return {
-      maxAllowed: 6,
-      screenshots: [],
-    };
-  },
+  name: "ScreenshotUploader",
 
   props: {
     sortUrl: {
@@ -80,9 +73,28 @@ export default {
     },
   },
 
-  mounted() {
-    var vm = this;
+  data() {
+    return {
+      maxAllowed: 6,
+      screenshots: [],
+    };
+  },
 
+  computed: {
+    maxFiles() {
+      return this.maxAllowed - this.screenshots.length;
+    },
+
+    object() {
+      return this.maxFiles > 1 ? "images" : "image";
+    },
+
+    prefix() {
+      return this.maxFiles > 1 ? "up to" : "";
+    },
+  },
+
+  mounted() {
     this.loadScreenshots();
 
     window.vueDragula.eventBus.$on("drop", (args) => {
@@ -112,20 +124,6 @@ export default {
         }, 100);
       });
     });
-  },
-
-  computed: {
-    maxFiles() {
-      return this.maxAllowed - this.screenshots.length;
-    },
-
-    object() {
-      return this.maxFiles > 1 ? "images" : "image";
-    },
-
-    prefix() {
-      return this.maxFiles > 1 ? "up to" : "";
-    },
   },
 
   methods: {

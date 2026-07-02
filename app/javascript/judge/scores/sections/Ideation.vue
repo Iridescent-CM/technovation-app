@@ -7,7 +7,7 @@
       next-section="review-score"
       next-button-text="Review Score"
     >
-      <template v-slot:main-content>
+      <template #main-content>
         <p class="font-bold text-lg">Project Name</p>
         <p class="mb-6">{{ submission.name }}</p>
 

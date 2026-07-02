@@ -1,35 +1,33 @@
 <template>
   <form class="panel panel--contains-bottom-bar panel--contains-top-bar">
-    <div class="panel__top-bar">
-      What is your birthdate?
-    </div>
+    <div class="panel__top-bar">What is your birthdate?</div>
 
     <div class="panel__content grid">
       <div class="grid__col-7 grid__col--bleed">
         <label for="year">Year</label>
         <vue-select
+          v-model="year"
           :select-on-tab="true"
           input-id="year"
           :options="years"
-          v-model="year"
           :disabled="!!currentAccount"
         />
 
         <label for="month">Month</label>
         <vue-select
+          v-model="month"
           :select-on-tab="true"
           input-id="month"
           :options="months"
-          v-model="month"
           :disabled="!!currentAccount"
         />
 
         <label for="day">Day</label>
         <vue-select
+          v-model="day"
           :select-on-tab="true"
           input-id="day"
           :options="days"
-          v-model="day"
           :disabled="!!currentAccount"
         />
       </div>
@@ -37,11 +35,14 @@
       <div class="grid__col-5 grid__col--bleed padding--t-l-large">
         <dl v-if="age">
           <dt>Your age today</dt>
-          <dd>You are <strong>{{ age }}</strong> years old.</dd>
+          <dd>
+            You are <strong>{{ age }}</strong> years old.
+          </dd>
 
           <dt class="margin--t-xlarge">Your age during World Summit</dt>
           <dd>
-            You will be <strong>{{ getAgeByCutoff }}</strong> on {{ cutoffDay }}.
+            You will be <strong>{{ getAgeByCutoff }}</strong> on
+            {{ cutoffDay }}.
           </dd>
         </dl>
       </div>
@@ -52,9 +53,9 @@
         <dl>
           <dt class="color--secondary">Beginner Division</dt>
           <dd>
-          Team members are between 8-12 years old as of {{ cutoffDay }}.
+            Team members are between 8-12 years old as of {{ cutoffDay }}.
           </dd>
-        
+
           <dt class="color--secondary">Junior Division</dt>
           <dd>
             Team members are between 13-15 years old as of {{ cutoffDay }}.
@@ -65,17 +66,11 @@
             Team members are between 16-18 years old as of {{ cutoffDay }}.
           </dd>
         </dl>
-        
       </div>
     </div>
 
     <div class="panel__bottom-bar">
-      <a
-        class="button float--left"
-        @click.prevent="navigateBack"
-      >
-        Back
-      </a>
+      <a class="button float--left" @click.prevent="navigateBack"> Back </a>
       <button
         type="submit"
         class="button"
@@ -89,11 +84,12 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import VueSelect from 'vue-select'
+import { createNamespacedHelpers } from "vuex";
+import VueSelect from "vue-select";
 
-const { mapGetters, mapActions, mapState } = createNamespacedHelpers('registration')
-const { mapState: mapAuthState } = createNamespacedHelpers('authenticated')
+const { mapGetters, mapActions, mapState } =
+  createNamespacedHelpers("registration");
+const { mapState: mapAuthState } = createNamespacedHelpers("authenticated");
 
 export default {
   components: {
@@ -101,174 +97,180 @@ export default {
   },
 
   computed: {
-    ...mapState(['months', 'birthMonth', 'cutoff']),
+    ...mapState(["months", "birthMonth", "cutoff"]),
 
-    ...mapAuthState(['currentAccount']),
+    ...mapAuthState(["currentAccount"]),
 
-    ...mapGetters(['isAgeSet', 'getAge', 'getAgeByCutoff', 'getBirthdate']),
+    ...mapGetters(["isAgeSet", "getAge", "getAgeByCutoff", "getBirthdate"]),
 
     profileChoice: {
-      get () {
-        return this.$store.state.registration.profileChoice
+      get() {
+        return this.$store.state.registration.profileChoice;
       },
 
-      set (choice) {
-        this.$store.commit('registration/profileChoice', choice)
+      set(choice) {
+        this.$store.commit("registration/profileChoice", choice);
       },
     },
 
     genderIdentity: {
-      get () {
-        return this.$store.state.registration.genderIdentity
+      get() {
+        return this.$store.state.registration.genderIdentity;
       },
 
-      set (identity) {
-        this.$store.commit('registration/genderIdentity', identity)
+      set(identity) {
+        this.$store.commit("registration/genderIdentity", identity);
       },
     },
 
-    age () {
-      return this.getAge()
+    age() {
+      return this.getAge();
     },
 
-    nextStepEnabled () {
-      return this.isAgeSet
+    nextStepEnabled() {
+      return this.isAgeSet;
     },
 
     year: {
-      get () {
-        return this.getBirthdate.split('-')[0]
+      get() {
+        return this.getBirthdate.split("-")[0];
       },
 
-      set (year) {
-        this.$store.commit('registration/birthYear', year)
+      set(year) {
+        this.$store.commit("registration/birthYear", year);
       },
     },
 
     month: {
-      get () {
-        return this.birthMonth
+      get() {
+        return this.birthMonth;
       },
 
-      set (month) {
-        this.$store.commit('registration/birthMonth', month)
+      set(month) {
+        this.$store.commit("registration/birthMonth", month);
       },
     },
 
     day: {
-      get () {
-        return this.getBirthdate.split('-')[2]
+      get() {
+        return this.getBirthdate.split("-")[2];
       },
 
-      set (day) {
-        this.$store.commit('registration/birthDay', day)
+      set(day) {
+        this.$store.commit("registration/birthDay", day);
       },
     },
 
-    cutoffDay () {
+    cutoffDay() {
       return this.cutoff.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
-        year: "numeric"
+        year: "numeric",
       });
     },
 
-    divisionExplanation () {
-      return "If you choose to be a student, and all of your teammates are " +
-             "also under 15 before " + this.cutoffDay + ", " +
-             "your team will be in the Junior Division."
+    divisionExplanation() {
+      return (
+        "If you choose to be a student, and all of your teammates are " +
+        "also under 15 before " +
+        this.cutoffDay +
+        ", " +
+        "your team will be in the Junior Division."
+      );
     },
 
-    years () {
+    years() {
       // making it reverse, highest number on top
-      const endYear = new Date().getFullYear() - 110
+      const endYear = new Date().getFullYear() - 110;
 
-      let startYear = endYear + 101
-      let years = []
+      let startYear = endYear + 101;
+      let years = [];
 
       while (startYear >= endYear) {
-        years.push((startYear--).toString())
+        years.push((startYear--).toString());
       }
 
-      return years
+      return years;
     },
 
-    days () {
-      let startDay = 1
-      let days = []
+    days() {
+      let startDay = 1;
+      let days = [];
 
       while (startDay <= this.monthEndDay) {
-        days.push((startDay++).toString())
+        days.push((startDay++).toString());
       }
 
-      return days
+      return days;
     },
 
-    monthEndDay () {
-      if (!this.month) return 31
+    monthEndDay() {
+      if (!this.month) return 31;
 
-      switch(parseInt(this.month.value)) {
+      switch (parseInt(this.month.value)) {
         case 4:
         case 6:
         case 9:
-        case 11: return 30
+        case 11:
+          return 30;
 
-        case 2: return this.februaryEndDay
+        case 2:
+          return this.februaryEndDay;
 
-        default: return 31
+        default:
+          return 31;
       }
     },
 
-    februaryEndDay () {
-      const year = parseInt(this.year) || 0
+    februaryEndDay() {
+      const year = parseInt(this.year) || 0;
 
-      const isLeapYear = !!year && (year & 3) == 0 && (
-        (year % 25) != 0 || (year & 15) == 0
-      )
+      const isLeapYear =
+        !!year && (year & 3) == 0 && (year % 25 != 0 || (year & 15) == 0);
 
       if (!!year && !isLeapYear) {
-        return 28
+        return 28;
       } else {
-        return 29
+        return 29;
       }
-    }
+    },
   },
 
   watch: {
-    getAgeByCutoff (value) {
-      if (value && value < 19 && this.genderIdentity !== 'Male') {
-        this.profileChoice = 'student'
-      } else if (value && value < 19 && this.genderIdentity === 'Male') {
-        this.genderIdentity = null
+    getAgeByCutoff(value) {
+      if (value && value < 19 && this.genderIdentity !== "Male") {
+        this.profileChoice = "student";
+      } else if (value && value < 19 && this.genderIdentity === "Male") {
+        this.genderIdentity = null;
       }
     },
 
-    year (value) {
-      this.updateBirthdate({ year: value, month: this.month, day: this.day })
+    year(value) {
+      this.updateBirthdate({ year: value, month: this.month, day: this.day });
     },
 
-    month (value) {
-      this.updateBirthdate({ year: this.year, month: value, day: this.day })
+    month(value) {
+      this.updateBirthdate({ year: this.year, month: value, day: this.day });
     },
 
-    day (value) {
-      this.updateBirthdate({ year: this.year, month: this.month, day: value })
+    day(value) {
+      this.updateBirthdate({ year: this.year, month: this.month, day: value });
     },
   },
 
   methods: {
-    ...mapActions(['updateBirthdate']),
+    ...mapActions(["updateBirthdate"]),
 
-    handleSubmit () {
-      if (!this.nextStepEnabled) return false
-      this.$router.push({ name: 'choose-profile' })
+    handleSubmit() {
+      if (!this.nextStepEnabled) return false;
+      this.$router.push({ name: "choose-profile" });
     },
 
-    navigateBack () {
-      this.$router.push({ name: 'location' })
+    navigateBack() {
+      this.$router.push({ name: "location" });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

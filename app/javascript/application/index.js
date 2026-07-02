@@ -26,7 +26,7 @@ document.addEventListener("turbo:load", function () {
       methods: {
         goBack() {
           const returnTo = urlHelpers.fetchGetParameterValue("return_to");
-          if (!!returnTo) {
+          if (returnTo) {
             window.location.href = returnTo;
           } else {
             window.history.back();

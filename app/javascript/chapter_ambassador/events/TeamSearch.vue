@@ -3,8 +3,8 @@
     type="team"
     add-btn-text="+ Add teams"
     search-placeholder="Search by team or submission name"
-    :handleSelection="handleSelection"
-    :handleDeselection="handleDeselection"
+    :handle-selection="handleSelection"
+    :handle-deselection="handleDeselection"
     :event="event"
   >
     <template slot="table-headers">
@@ -23,42 +23,42 @@
       <p>There are no more teams available to add to your event.</p>
 
       <p>
-        To be eligible, teams must have started their submission
-        and not be attending other events.
+        To be eligible, teams must have started their submission and not be
+        attending other events.
       </p>
 
       <p>
-        You can try searching for teams that are not in your region,
-        but are close enough to travel to your event.
+        You can try searching for teams that are not in your region, but are
+        close enough to travel to your event.
       </p>
     </template>
   </attendee-search>
 </template>
 
 <script>
-  import EventBus from '../../components/EventBus';
+import EventBus from "../../components/EventBus";
 
-  import AttendeeSearch from './AttendeeSearch'
+import AttendeeSearch from "./AttendeeSearch";
 
-  export default {
-    components: {
-      AttendeeSearch,
+export default {
+  components: {
+    AttendeeSearch,
+  },
+
+  props: ["eventBusId", "event"],
+
+  methods: {
+    handleSelection(item) {
+      EventBus.$emit("TeamSearch.selected-" + this.eventBusId, item);
+
+      this.$store.commit("addTeam", item);
     },
 
-    props: ["eventBusId", "event"],
+    handleDeselection(item) {
+      EventBus.$emit("TeamSearch.deselected-" + this.eventBusId, item);
 
-    methods: {
-      handleSelection (item) {
-        EventBus.$emit("TeamSearch.selected-" + this.eventBusId, item);
-
-        this.$store.commit('addTeam', item)
-      },
-
-      handleDeselection (item) {
-        EventBus.$emit("TeamSearch.deselected-" + this.eventBusId, item);
-
-        this.$store.commit('removeTeam', item)
-      },
+      this.$store.commit("removeTeam", item);
     },
-  };
+  },
+};
 </script>

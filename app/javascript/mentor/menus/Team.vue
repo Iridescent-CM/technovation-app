@@ -1,8 +1,8 @@
 <template>
   <ul class="tabs__menu">
     <tab-link
-      :to="{ name: 'mentor-training' }"
       id="mentor_training"
+      :to="{ name: 'mentor-training' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="isTrainingComplete"
       :condition-to-enable="true"
@@ -64,11 +64,11 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers } from "vuex";
 
-const { mapGetters } = createNamespacedHelpers('authenticated')
+const { mapGetters } = createNamespacedHelpers("authenticated");
 
-import TabLink from 'tabs/components/TabLink'
+import TabLink from "tabs/components/TabLink";
 
 export default {
   components: {
@@ -77,66 +77,70 @@ export default {
 
   computed: {
     ...mapGetters([
-      'isTrainingComplete',
-      'isBackgroundCheckClear',
-      'isBackgroundCheckWaived',
-      'isBioFilled',
-      'isOnTeam',
-      'isConsentSigned',
-      'consentWaiverSignedAtEpoch',
-      'backgroundCheckUpdatedAtEpoch',
-      'canJoinTeams',
+      "isTrainingComplete",
+      "isBackgroundCheckClear",
+      "isBackgroundCheckWaived",
+      "isBioFilled",
+      "isOnTeam",
+      "isConsentSigned",
+      "consentWaiverSignedAtEpoch",
+      "backgroundCheckUpdatedAtEpoch",
+      "canJoinTeams",
     ]),
 
-    trainingStatusLabel () {
+    trainingStatusLabel() {
       if (this.isTrainingComplete) {
-        return 'You completed training!'
+        return "You completed training!";
       } else {
-        return 'Everything you need to know'
+        return "Everything you need to know";
       }
     },
 
-    bioLabel () {
+    bioLabel() {
       if (this.isBioFilled) {
-        return 'Thank you for your summary!'
+        return "Thank you for your summary!";
       } else {
-        return 'Tell us more about yourself'
+        return "Tell us more about yourself";
       }
     },
 
-    consentStatusLabel () {
+    consentStatusLabel() {
       if (this.isConsentSigned) {
-        return `Signed on ${new Date(this.consentWaiverSignedAtEpoch).toDateString()}`
+        return `Signed on ${new Date(
+          this.consentWaiverSignedAtEpoch
+        ).toDateString()}`;
       } else {
-        return 'You must sign the consent waiver to volunteer'
+        return "You must sign the consent waiver to volunteer";
       }
     },
 
-    backgroundCheckStatusLabel () {
+    backgroundCheckStatusLabel() {
       if (this.isBackgroundCheckWaived) {
-        return 'Not required at this time'
+        return "Not required at this time";
       } else if (this.isBackgroundCheckClear) {
-        return `Cleared on ${new Date(this.backgroundCheckUpdatedAtEpoch).toDateString()}`
+        return `Cleared on ${new Date(
+          this.backgroundCheckUpdatedAtEpoch
+        ).toDateString()}`;
       } else {
-        return 'You must pass a background check to volunteer'
+        return "You must pass a background check to volunteer";
       }
     },
 
-    findTeamLabel () {
+    findTeamLabel() {
       if (this.isOnTeam) {
-        return `You are on a team`
+        return `You are on a team`;
       } else {
-        return 'Look for an existing team to join'
+        return "Look for an existing team to join";
       }
     },
 
-    createTeamLabel () {
+    createTeamLabel() {
       if (this.isOnTeam) {
-        return `You are on the team`
+        return `You are on the team`;
       } else {
-        return 'Form a new team with others'
+        return "Form a new team with others";
       }
     },
   },
-}
+};
 </script>

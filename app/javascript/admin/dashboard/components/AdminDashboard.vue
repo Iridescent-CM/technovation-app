@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs tabs--vertical grid" id="admin-dashboard">
+  <div id="admin-dashboard" class="tabs tabs--vertical grid">
     <ul class="tabs__menu grid__col-md-3">
       <router-link
         tag="li"
@@ -7,9 +7,7 @@
         active-class="tabs__menu-link--active"
         :to="{ name: 'students' }"
       >
-        <button role="button" class="tabs__menu-button">
-          Students
-        </button>
+        <button role="button" class="tabs__menu-button">Students</button>
       </router-link>
 
       <router-link
@@ -18,9 +16,7 @@
         active-class="tabs__menu-link--active"
         :to="{ name: 'mentors' }"
       >
-        <button role="button" class="tabs__menu-button">
-          Mentors
-        </button>
+        <button role="button" class="tabs__menu-button">Mentors</button>
       </router-link>
 
       <router-link
@@ -29,9 +25,7 @@
         active-class="tabs__menu-link--active"
         :to="{ name: 'top_countries' }"
       >
-        <button role="button" class="tabs__menu-button">
-          Top Countries
-        </button>
+        <button role="button" class="tabs__menu-button">Top Countries</button>
       </router-link>
     </ul>
 
@@ -41,22 +35,21 @@
 
 <script>
 export default {
-  name: 'admin-dashboard',
+  name: "AdminDashboard",
 
   props: {
     chartEndpoints: {
       type: Object,
-      default () {
-        return {}
+      default() {
+        return {};
       },
     },
   },
 
-  created () {
-    this.$store.commit('addChartEndpoints', this.chartEndpoints)
+  created() {
+    this.$store.commit("addChartEndpoints", this.chartEndpoints);
   },
-}
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

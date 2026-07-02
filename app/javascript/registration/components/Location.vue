@@ -1,70 +1,70 @@
 <template>
   <location-form
+    v-model="locationData"
     :wizard-token="wizardToken"
     :scope-name="apiRoot"
-    :handleBack="handleBack"
-    :handleConfirm="handleConfirm"
-    :showFinalCancel="false"
-    :showBackBtn="true"
-    v-model="locationData"
+    :handle-back="handleBack"
+    :handle-confirm="handleConfirm"
+    :show-final-cancel="false"
+    :show-back-btn="true"
   ></location-form>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers } from "vuex";
 
-import { debounce } from 'utilities/utilities'
-import LocationForm from 'location/components/LocationForm'
+import { debounce } from "utilities/utilities";
+import LocationForm from "location/components/LocationForm";
 
-const { mapActions, mapState } = createNamespacedHelpers('registration')
+const { mapActions, mapState } = createNamespacedHelpers("registration");
 
 export default {
-  name: 'location',
+  name: "Location",
 
   components: {
     LocationForm,
   },
 
   created() {
-    this.debouncedLocationUpdate = debounce(newLocation => {
-      this.updateLocation(newLocation)
-    }, 500)
+    this.debouncedLocationUpdate = debounce((newLocation) => {
+      this.updateLocation(newLocation);
+    }, 500);
   },
 
   computed: {
-    ...mapState(['wizardToken', 'apiRoot']),
+    ...mapState(["wizardToken", "apiRoot"]),
 
     locationData: {
       get() {
-        return this.$store.getters.getLocation
+        return this.$store.getters.getLocation;
       },
 
       set(location) {
-        this.$store.commit('registration/location', location)
+        this.$store.commit("registration/location", location);
       },
     },
   },
 
   methods: {
-    ...mapActions(['updateLocation']),
+    ...mapActions(["updateLocation"]),
 
-    handleBack () {
-      this.$router.push({ name: 'data-use' })
+    handleBack() {
+      this.$router.push({ name: "data-use" });
     },
 
-    handleConfirm () {
-      this.$router.push({ name: 'age' })
+    handleConfirm() {
+      this.$router.push({ name: "age" });
     },
   },
 
   watch: {
-    locationData (newLocation, oldLocation) {
+    locationData(newLocation, oldLocation) {
       const locationChanged = Object.keys(newLocation).some((key) => {
-        return newLocation[key] !== oldLocation[key]
-      })
+        return newLocation[key] !== oldLocation[key];
+      });
 
-      if (locationChanged) this.debouncedLocationUpdate(newLocation)
+      if (locationChanged) this.debouncedLocationUpdate(newLocation);
     },
   },
-}
+};
 </script>

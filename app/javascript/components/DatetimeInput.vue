@@ -1,38 +1,33 @@
 <template>
-  <input
-    ref="input"
-    class="flatpickr"
-    type="text"
-    v-model="flatpickrValue"
-  />
+  <input ref="input" v-model="flatpickrValue" class="flatpickr" type="text" />
 </template>
 
 <script>
-  import flatpickr from "flatpickr";
+import flatpickr from "flatpickr";
 
-  export default {
-    name: "flatpickr-input",
+export default {
+  name: "FlatpickrInput",
 
-    data () {
-      return {
-        flatpickrValue: this.value,
-      };
+  props: ["value", "options"],
+
+  data() {
+    return {
+      flatpickrValue: this.value,
+    };
+  },
+
+  watch: {
+    value(newValue) {
+      this.flatpickrValue = newValue;
     },
 
-    props: ["value", "options"],
-
-    watch: {
-      value (newValue) {
-        this.flatpickrValue = newValue;
-      },
-
-      flatpickrValue () {
-        this.$emit("input", this.flatpickrValue);
-      },
+    flatpickrValue() {
+      this.$emit("input", this.flatpickrValue);
     },
+  },
 
-    mounted() {
-      flatpickr(this.$refs.input, this.options);
-    },
-  }
+  mounted() {
+    flatpickr(this.$refs.input, this.options);
+  },
+};
 </script>

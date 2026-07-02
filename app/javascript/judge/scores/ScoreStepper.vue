@@ -1,5 +1,7 @@
 <template>
-  <div class="lg:sticky lg:top-8 w-full lg:w-1/3 rounded-md border-solid border-4 border-energetic-blue h-fit-content">
+  <div
+    class="lg:sticky lg:top-8 w-full lg:w-1/3 rounded-md border-solid border-4 border-energetic-blue h-fit-content"
+  >
     <div class="bg-energetic-blue text-white p-2">
       <p class="font-bold">Score</p>
     </div>
@@ -37,29 +39,28 @@
 </template>
 
 <script>
-import ScoreStepperItem from './ScoreStepperItem'
+import ScoreStepperItem from "./ScoreStepperItem";
 
 export default {
-  computed: {
-    sections () {
-      return this.$store.getters.sections
-    },
-
-    totalScore () {
-      return this.$store.getters.totalScore
-    },
-
-    totalPossibleScore () {
-      return this.$store.getters.totalPossibleScore
-    },
-
-    isScoreComplete () {
-      return this.$store.getters.isScoreComplete
-    }
-  },
-
   components: {
-    ScoreStepperItem
-  }
-}
+    ScoreStepperItem,
+  },
+  computed: {
+    sections() {
+      return this.$store.getters.sections;
+    },
+
+    totalScore() {
+      return this.$store.getters.totalScore;
+    },
+
+    totalPossibleScore() {
+      return this.$store.getters.totalPossibleScore;
+    },
+
+    isScoreComplete() {
+      return this.$store.getters.isScoreComplete;
+    },
+  },
+};
 </script>

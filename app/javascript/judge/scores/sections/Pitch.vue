@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <template>
       <div>
         <GenericJudgingContainer
@@ -8,7 +8,7 @@
           next-section="demo"
           prev-section="project_details"
         >
-          <template v-slot:main-content>
+          <template #main-content>
             <PitchVideoLink />
           </template>
         </GenericJudgingContainer>
@@ -18,25 +18,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
-import PitchVideoLink from '../pieces/PitchVideoLink'
+import PitchVideoLink from "../pieces/PitchVideoLink";
 
 export default {
   computed: {
-    ...mapState(['team', 'submission']),
+    ...mapState(["team", "submission"]),
 
-    nextSection () {
-      return this.team.division === 'senior' ?
-        'entrepreneurship' :
-        'overall'
+    nextSection() {
+      return this.team.division === "senior" ? "entrepreneurship" : "overall";
     },
   },
 
   components: {
     GenericJudgingContainer,
-    PitchVideoLink
+    PitchVideoLink,
   },
-}
+};
 </script>

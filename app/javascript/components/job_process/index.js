@@ -1,9 +1,9 @@
-import Vue from 'vue'
+import Vue from "vue";
 
-import JpTemplate from './template'
+import JpTemplate from "./template";
 
-document.addEventListener('turbo:load', () => {
-  const el = document.querySelector("#job-process-app")
+document.addEventListener("turbo:load", () => {
+  const el = document.querySelector("#job-process-app");
 
   if (el != undefined) {
     new Vue({
@@ -11,6 +11,6 @@ document.addEventListener('turbo:load', () => {
       components: {
         JpTemplate,
       },
-    })
+    });
   }
-})
+});

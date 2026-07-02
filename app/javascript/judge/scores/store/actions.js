@@ -1,22 +1,22 @@
 export const validateScore = ({ commit, state }) => {
-  let problemSections = []
+  let problemSections = [];
 
-  state.questions.forEach(q => {
+  state.questions.forEach((q) => {
     if (q.score < 1) {
-      problemSections.push(q.section)
+      problemSections.push(q.section);
     }
-  })
+  });
 
   Object.keys(state.score.comments).forEach((section) => {
-    const comment = state.score.comments[section]
-    const minWordCount = 20
+    const comment = state.score.comments[section];
+    const minWordCount = 20;
 
-    if (state.team.division === 'beginner' && section === 'entrepreneurship') {
-      return true
+    if (state.team.division === "beginner" && section === "entrepreneurship") {
+      return true;
     } else if (comment.word_count < minWordCount) {
-      problemSections.push(section)
+      problemSections.push(section);
     }
-  })
+  });
 
-  commit('setProblemSections', problemSections)
-}
+  commit("setProblemSections", problemSections);
+};

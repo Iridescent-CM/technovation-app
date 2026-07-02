@@ -1,18 +1,18 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import AdminDashboard from './components/AdminDashboard'
-import StudentsSection from './components/StudentsSection'
-import MentorsSection from './components/MentorsSection'
-import PieChart from '@appjs/components/PieChart'
+import AdminDashboard from "./components/AdminDashboard";
+import StudentsSection from "./components/StudentsSection";
+import MentorsSection from "./components/MentorsSection";
+import PieChart from "@appjs/components/PieChart";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-import store from './store'
-import { router } from './routes'
+import store from "./store";
+import { router } from "./routes";
 
-document.addEventListener('turbo:load', () => {
-  const pieChartElements = document.querySelectorAll('.vue-enable-pie-chart')
+document.addEventListener("turbo:load", () => {
+  const pieChartElements = document.querySelectorAll(".vue-enable-pie-chart");
 
   if (pieChartElements.length) {
     for (let i = 0; i < pieChartElements.length; i += 1) {
@@ -22,14 +22,14 @@ document.addEventListener('turbo:load', () => {
         components: {
           PieChart,
         },
-      })
+      });
     }
   }
 
   /**
    * Admin Dashboards
    */
-  const adminDashboardElement = document.getElementById('admin-dashboard')
+  const adminDashboardElement = document.getElementById("admin-dashboard");
 
   if (adminDashboardElement) {
     new Vue({
@@ -39,13 +39,15 @@ document.addEventListener('turbo:load', () => {
       components: {
         AdminDashboard,
       },
-    })
+    });
   }
 
   /**
    * Chapter Ambassador Dashboards
    */
-  const studentsSectionElement = document.getElementById('chapter-ambassador-admin-students-section')
+  const studentsSectionElement = document.getElementById(
+    "chapter-ambassador-admin-students-section"
+  );
 
   if (studentsSectionElement) {
     new Vue({
@@ -54,10 +56,12 @@ document.addEventListener('turbo:load', () => {
       components: {
         StudentsSection,
       },
-    })
+    });
   }
 
-  const mentorsSectionElement = document.getElementById('chapter-ambassador-admin-mentors-section')
+  const mentorsSectionElement = document.getElementById(
+    "chapter-ambassador-admin-mentors-section"
+  );
 
   if (mentorsSectionElement) {
     new Vue({
@@ -66,6 +70,6 @@ document.addEventListener('turbo:load', () => {
       components: {
         MentorsSection,
       },
-    })
+    });
   }
-})
+});

@@ -8,8 +8,8 @@
 
         <div class="formulate-input-wrapper name-group">
           <FormulateInput
-            name="firstName"
             id="firstName"
+            name="firstName"
             type="text"
             label="First Name"
             placeholder="First Name"
@@ -18,14 +18,14 @@
               matches: 'Must start with an alphabetical character.',
             }"
             validation-name="First name"
+            class="flex-grow pr-2"
             @keyup="checkValidation"
             @blur="checkValidation"
-            class="flex-grow pr-2"
           />
 
           <FormulateInput
-            name="lastName"
             id="lastName"
+            name="lastName"
             type="text"
             label="Last Name"
             placeholder="Last Name"
@@ -34,15 +34,15 @@
               matches: 'Must start with an alphabetical character.',
             }"
             validation-name="Last name"
+            class="flex-grow pl-2"
             @keyup="checkValidation"
             @blur="checkValidation"
-            class="flex-grow pl-2"
           />
         </div>
 
         <FormulateInput
-          name="meetsMinimumAgeRequirement"
           id="meetsMinimumAgeRequirement"
+          name="meetsMinimumAgeRequirement"
           type="checkbox"
           label="I confirm that I am 18 years or older"
           validation="required"
@@ -56,22 +56,22 @@
         />
 
         <FormulateInput
+          id="genderIdentity"
           name="gender"
           :options="genderOptions"
           type="select"
           placeholder="Select an option"
           validation="required"
           validation-name="Gender identity"
+          label="Gender Identity"
+          input-class="ChapterAmbassadorSelectClass"
           @keyup="checkValidation"
           @blur="checkValidation"
-          label="Gender Identity"
-          id="genderIdentity"
-          input-class="ChapterAmbassadorSelectClass"
         />
 
         <FormulateInput
-          name="clubAmbassadorJobTitle"
           id="clubAmbassadorJobTitle"
+          name="clubAmbassadorJobTitle"
           type="text"
           label="Job Title"
           placeholder="Job Title"
@@ -82,17 +82,17 @@
         />
 
         <FormulateInput
-          name="clubName"
           id="clubName"
+          name="clubName"
           type="text"
           label="Club Name"
-          readOnly="true"
+          read-only="true"
           disabled="true"
         />
 
         <FormulateInput
-          name="phoneNumber"
           id="phoneNumber"
+          name="phoneNumber"
           type="tel"
           :validation="[['matches', /^([\+\(\s.\-\/\d]{5,30}|)$/]]"
           :validation-messages="{ matches: 'Phone number is invalid.' }"
@@ -107,7 +107,7 @@
 
     <div class="registration-btn-wrapper">
       <PreviousButton @prev="$emit('prev')" />
-      <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
+      <NextButton :disabled="hasValidationErrors" @next="$emit('next')" />
     </div>
   </div>
 </template>
@@ -129,6 +129,12 @@ export default {
     PreviousButton,
     NextButton,
   },
+  props: {
+    formValues: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       inviteCode: new URLSearchParams(document.location.search).get(
@@ -137,6 +143,9 @@ export default {
       genderOptions: ["Female", "Male", "Non-binary", "Prefer not to say"],
       hasValidationErrors: true,
     };
+  },
+  async created() {
+    await this.getClubName();
   },
   methods: {
     async getClubName() {
@@ -178,15 +187,6 @@ export default {
         this.hasValidationErrors = false;
       }
     },
-  },
-  props: {
-    formValues: {
-      type: Object,
-      required: true,
-    },
-  },
-  async created() {
-    await this.getClubName();
   },
 };
 </script>

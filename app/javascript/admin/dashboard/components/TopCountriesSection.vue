@@ -3,7 +3,7 @@
     <h3>
       Top Countries
       <span v-if="getTotal('top_countries') && !hideTotal">
-        ({{ getTotal('top_countries') }})
+        ({{ getTotal("top_countries") }})
       </span>
     </h3>
 
@@ -18,24 +18,23 @@
 </template>
 
 <script>
-import DashboardSection from './DashboardSection'
+import DashboardSection from "./DashboardSection";
 
 export default {
-  name: 'top-countries-section',
+  name: "TopCountriesSection",
 
   extends: DashboardSection,
 
   computed: {
-    topCountriesEndpoint () {
-      return this.$store.getters.getChartEndpoint('top_countries')
+    topCountriesEndpoint() {
+      return this.$store.getters.getChartEndpoint("top_countries");
     },
 
-    topCountriesChartData () {
-      return this.$store.getters.getCachedChartData('top_countries')
+    topCountriesChartData() {
+      return this.$store.getters.getCachedChartData("top_countries");
     },
   },
-}
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

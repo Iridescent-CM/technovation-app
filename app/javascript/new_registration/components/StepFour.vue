@@ -4,21 +4,22 @@
 
     <div id="email-password" class="form-wrapper">
       <h1
-        class="text-tg-green text-2xl text-left mb-6"
         v-if="formValues.profileType === 'mentor'"
+        class="text-tg-green text-2xl text-left mb-6"
       >
         This is an account for a mentor
       </h1>
       <h1
-        class="text-tg-green text-2xl text-left mb-6"
         v-else-if="formValues.profileType === 'judge'"
+        class="text-tg-green text-2xl text-left mb-6"
       >
         This is an account for a judge
       </h1>
 
       <FormulateInput
-        name="email"
         id="email"
+        v-model="setAccountEmailForParentOrAmbassadorProfile"
+        name="email"
         type="email"
         :label="
           formValues.profileType === 'parent'
@@ -28,33 +29,32 @@
         placeholder="Email address"
         :validation="emailValidation"
         validation-name="Email address"
-        @keyup="checkValidation"
-        @blur="checkValidation"
         class="flex-grow"
-        v-model="setAccountEmailForParentOrAmbassadorProfile"
         :disabled="
           formValues.profileType === 'parent' ||
           formValues.profileType === 'chapter_ambassador' ||
           formValues.profileType === 'club_ambassador'
         "
+        @keyup="checkValidation"
+        @blur="checkValidation"
       />
 
       <p
-        class="text-left text-sm mb-12"
         v-if="formValues.profileType === 'judge'"
+        class="text-left text-sm mb-12"
       >
         Please use your company email if you want your employer to know you
         volunteered with Technovation.
       </p>
-      <p class="text-left text-sm mb-12" v-else>
+      <p v-else class="text-left text-sm mb-12">
         Please choose a personal, permanent email. A school or company email
         might block us from sending important messages to you.
       </p>
 
       <div class="double-wide">
         <FormulateInput
-          name="password"
           id="password"
+          name="password"
           type="password"
           label="Password"
           placeholder="At least 8 characters"
@@ -91,10 +91,43 @@ export default {
     ContainerHeader,
     PreviousButton,
   },
+  props: {
+    formValues: {
+      type: Object,
+      required: true,
+    },
+    isLoading: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       hasValidationErrors: true,
     };
+  },
+  computed: {
+    setAccountEmailForParentOrAmbassadorProfile: {
+      get() {
+        if (this.formValues.profileType === "parent") {
+          return this.formValues.studentParentGuardianEmail;
+        } else if (
+          this.formValues.profileType === "chapter_ambassador" ||
+          this.formValues.profileType === "club_ambassador"
+        ) {
+          return this.formValues.email;
+        } else {
+          return this.formValues.email;
+        }
+      },
+      set(accountEmailVal) {
+        // eslint-disable-next-line vue/no-mutating-props
+        this.formValues.email = accountEmailVal;
+      },
+    },
+    emailValidation() {
+      return "required|email";
+    },
   },
   methods: {
     checkValidation() {
@@ -116,36 +149,6 @@ export default {
       } else {
         this.hasValidationErrors = false;
       }
-    },
-  },
-  props: {
-    formValues: {
-      type: Object,
-      required: true,
-    },
-    isLoading: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  computed: {
-    setAccountEmailForParentOrAmbassadorProfile: {
-      get() {
-        if (this.formValues.profileType === "parent") {
-          return this.formValues.studentParentGuardianEmail;
-        } else if (this.formValues.profileType === "chapter_ambassador" ||
-          this.formValues.profileType === "club_ambassador") {
-          return this.formValues.email;
-        } else {
-          return this.formValues.email;
-        }
-      },
-      set(accountEmailVal) {
-        this.formValues.email = accountEmailVal;
-      },
-    },
-    emailValidation() {
-      return "required|email";
     },
   },
 };

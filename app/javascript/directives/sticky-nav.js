@@ -7,34 +7,34 @@
  * Will apply: class="sticky-nav col-3 background-white"
  */
 
-let navIsSticky = false
-let globalTopNavHeight = 0
-let navBar = null
-let containingElement = null
-let classes = []
+let navIsSticky = false;
+let globalTopNavHeight = 0;
+let navBar = null;
+let containingElement = null;
+let classes = [];
 
-function setStickyNav () {
+function setStickyNav() {
   if (containingElement && navBar) {
-    const siblingContent = navBar.nextElementSibling
-    const stickyPoint = parseInt(window.pageYOffset, 10)
-    const appOffset = parseInt(containingElement.offsetTop, 10)
+    const siblingContent = navBar.nextElementSibling;
+    const stickyPoint = parseInt(window.pageYOffset, 10);
+    const appOffset = parseInt(containingElement.offsetTop, 10);
 
-    navIsSticky = stickyPoint + globalTopNavHeight >= appOffset
+    navIsSticky = stickyPoint + globalTopNavHeight >= appOffset;
 
     if (navIsSticky) {
-      navBar.classList.add('sticky-nav')
+      navBar.classList.add("sticky-nav");
       classes.forEach((currentClass) => {
-        navBar.classList.add(currentClass)
-      })
-      navBar.style.marginTop = `${globalTopNavHeight}px`
-      siblingContent.style.paddingTop = `${navBar.offsetHeight}px`
+        navBar.classList.add(currentClass);
+      });
+      navBar.style.marginTop = `${globalTopNavHeight}px`;
+      siblingContent.style.paddingTop = `${navBar.offsetHeight}px`;
     } else {
-      navBar.classList.remove('sticky-nav')
+      navBar.classList.remove("sticky-nav");
       classes.forEach((currentClass) => {
-        navBar.classList.remove(currentClass)
-      })
-      navBar.style.marginTop = '0px'
-      siblingContent.style.paddingTop = '0px'
+        navBar.classList.remove(currentClass);
+      });
+      navBar.style.marginTop = "0px";
+      siblingContent.style.paddingTop = "0px";
     }
   }
 }
@@ -42,19 +42,22 @@ function setStickyNav () {
 export default {
   inserted: (el, binding, vnode) => {
     if (binding.value && binding.value.constructor === Array) {
-      classes = binding.value
+      classes = binding.value;
     }
 
-    globalTopNavHeight = parseInt(document.querySelector('.header-container').offsetHeight, 10)
-    containingElement = vnode.context.$el
-    navBar = el
+    globalTopNavHeight = parseInt(
+      document.querySelector(".header-container").offsetHeight,
+      10
+    );
+    containingElement = vnode.context.$el;
+    navBar = el;
 
-    navBar.setAttribute('data-sticky-nav', true)
+    navBar.setAttribute("data-sticky-nav", true);
 
-    window.addEventListener('scroll', setStickyNav)
+    window.addEventListener("scroll", setStickyNav);
   },
 
-  unbind: (el, binding, vnode) => {
-    window.removeEventListener('scroll', setStickyNav)
+  unbind: (_el, _binding, _vnode) => {
+    window.removeEventListener("scroll", setStickyNav);
   },
-}
+};

@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-import EventsTable from './EventsTable'
-import EventForm from './EventForm'
+import EventsTable from "./EventsTable";
+import EventForm from "./EventForm";
 
-import "flatpickr/dist/themes/material_green.css"
-import "../../components/tooltip.scss"
+import "flatpickr/dist/themes/material_green.css";
+import "../../components/tooltip.scss";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
@@ -15,28 +15,26 @@ const store = new Vuex.Store({
   },
 
   mutations: {
-    addTeam (state, team) {
+    addTeam(state, team) {
       const idx = state.teams.findIndex((t) => {
-        return t.id === team.id
-      })
+        return t.id === team.id;
+      });
 
-      if (idx === -1)
-        state.teams.push(team)
+      if (idx === -1) state.teams.push(team);
     },
 
-    removeTeam (state, team) {
+    removeTeam(state, team) {
       const idx = state.teams.findIndex((t) => {
-        return t.id === team.id
-      })
+        return t.id === team.id;
+      });
 
-      if (idx !== -1)
-        state.teams.splice(idx, 1)
+      if (idx !== -1) state.teams.splice(idx, 1);
     },
-  }
-})
+  },
+});
 
-document.addEventListener('turbo:load', () => {
-  const appEl = document.querySelector("#app")
+document.addEventListener("turbo:load", () => {
+  const appEl = document.querySelector("#app");
 
   if (appEl != undefined) {
     new Vue({

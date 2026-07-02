@@ -1,14 +1,12 @@
 <template>
-  <div v-if="isLoading" class="loading">
-    Loading...
-  </div>
+  <div v-if="isLoading" class="loading">Loading...</div>
 
   <div v-else-if="hasError" class="error">
     Error. Please let the dev team know.
   </div>
 
   <div v-else>
-    <div class="tabs tabs--vertical grid" id="admin-content-settings">
+    <div id="admin-content-settings" class="tabs tabs--vertical grid">
       <ul class="tabs__menu grid__col-md-3">
         <router-link
           ref="registrationLink"
@@ -35,9 +33,7 @@
           active-class="tabs__menu-link--active"
           :to="{ name: 'notices' }"
         >
-          <button role="button" class="tabs__menu-button">
-            Notices
-          </button>
+          <button role="button" class="tabs__menu-button">Notices</button>
         </router-link>
 
         <router-link
@@ -47,9 +43,7 @@
           active-class="tabs__menu-link--active"
           :to="{ name: 'surveys' }"
         >
-          <button role="button" class="tabs__menu-button">
-            Surveys
-          </button>
+          <button role="button" class="tabs__menu-button">Surveys</button>
         </router-link>
 
         <router-link
@@ -95,9 +89,7 @@
           active-class="tabs__menu-link--active"
           :to="{ name: 'judging' }"
         >
-          <button role="button" class="tabs__menu-button">
-            Judging
-          </button>
+          <button role="button" class="tabs__menu-button">Judging</button>
         </router-link>
 
         <router-link
@@ -124,24 +116,25 @@
 
     <div class="margin--t-large text-align--right">
       <router-link
-        v-if="this.currentRoute !== 'review'"
+        v-if="currentRoute !== 'review'"
         ref="reviewLink"
         tag="button"
         class="button primary"
         :to="{ name: 'review' }"
-      >Review</router-link>
+        >Review</router-link
+      >
       <button
         v-else-if="isSuperAdmin"
         ref="submitButton"
         type="submit"
         class="button primary"
         @click.prevent="isProduction() ? confirmSaveSettings() : saveSettings()"
-      >Save these settings</button>
-      <a
-        ref="cancelButton"
-        class="button secondary"
-        :href="cancelButtonUrl"
-      >Cancel</a>
+      >
+        Save these settings
+      </button>
+      <a ref="cancelButton" class="button secondary" :href="cancelButtonUrl"
+        >Cancel</a
+      >
     </div>
 
     <div ref="formData"></div>
@@ -149,14 +142,14 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2'
-import { mapGetters, mapMutations } from 'vuex'
+import Swal from "sweetalert2";
+import { mapGetters } from "vuex";
 
-import Icon from 'components/Icon'
-import { isProduction } from '../../../utilities/utilities'
+import Icon from "components/Icon";
+import { isProduction } from "../../../utilities/utilities";
 
 export default {
-  name: 'admin-content-settings',
+  name: "AdminContentSettings",
 
   components: {
     Icon,
@@ -169,92 +162,90 @@ export default {
     },
   },
 
-  created () {
-    this.$store.dispatch("init").then(() => {
-      this.isLoading = false
-    }).catch((err) => {
-      console.error(err)
-      this.isLoading = false
-      this.hasError = true
-    })
-  },
-
-  data () {
+  data() {
     return {
       isLoading: true,
-      hasError: false
-    }
+      hasError: false,
+    };
+  },
+
+  created() {
+    this.$store
+      .dispatch("init")
+      .then(() => {
+        this.isLoading = false;
+      })
+      .catch((err) => {
+        console.error(err);
+        this.isLoading = false;
+        this.hasError = true;
+      });
   },
 
   computed: {
-    ...mapGetters([
-      'judgingEnabled',
-      'formData',
-      'isSuperAdmin'
-    ]),
+    ...mapGetters(["judgingEnabled", "formData", "isSuperAdmin"]),
 
     currentRoute() {
-      return this.$route.name
+      return this.$route.name;
     },
   },
 
   methods: {
     isProduction,
 
-    saveSettings () {
-      this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData)
-      document.getElementById('season_schedule').submit()
+    saveSettings() {
+      this.$refs.formData.innerHTML = this.buildFormInputsMarkup(this.formData);
+      document.getElementById("season_schedule").submit();
     },
 
-    confirmSaveSettings () {
+    confirmSaveSettings() {
       Swal.fire({
-        title: 'PRODUCTION SETTINGS',
-        html: 'You are about to update settings on Production!<br>Are you sure you want to continue?',
-        background: '#fecaca',
-        confirmButtonText: 'Yes, save settings',
-        confirmButtonColor: '#28A880',
+        title: "PRODUCTION SETTINGS",
+        html: "You are about to update settings on Production!<br>Are you sure you want to continue?",
+        background: "#fecaca",
+        confirmButtonText: "Yes, save settings",
+        confirmButtonColor: "#28A880",
         showCancelButton: true,
         focusCancel: true,
       }).then((result) => {
         if (result.isConfirmed) {
-         this.saveSettings();
+          this.saveSettings();
         }
-      })
+      });
     },
 
-    buildFormInputsMarkup (formData, prefix = 'season_toggles') {
-      let markup = ''
+    buildFormInputsMarkup(formData, prefix = "season_toggles") {
+      let markup = "";
 
       Object.keys(formData).forEach((key) => {
-        const inputName = `${prefix}[${key}]`
-        let inputValue
+        const inputName = `${prefix}[${key}]`;
+        let inputValue;
 
         if (formData[key] === false) {
-          inputValue = 0
+          inputValue = 0;
         } else if (formData[key] === true) {
-          inputValue = 1
+          inputValue = 1;
         } else {
-          inputValue = formData[key]
+          inputValue = formData[key];
         }
 
-        if (inputValue !== null && typeof inputValue === 'object') {
-          markup += this.buildFormInputsMarkup(inputValue, inputName)
+        if (inputValue !== null && typeof inputValue === "object") {
+          markup += this.buildFormInputsMarkup(inputValue, inputName);
         } else {
-          inputValue = String(inputValue).replace(/"/g, '&quot;')
+          inputValue = String(inputValue).replace(/"/g, "&quot;");
           markup += `
             <input
               type="hidden"
               name="${inputName}"
               value="${inputValue}"
-            />`
+            />`;
         }
-      })
+      });
 
-      return markup
+      return markup;
     },
   },
-}
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
